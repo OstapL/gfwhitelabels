@@ -27,7 +27,7 @@ gulp.task('styles', function () {
     .pipe(sass({
         includePaths: [config.bootstrapDir, './node_modules/tether/', ]
     }).on('error', sass.logError))
-// .pipe(rename({suffix: '.min', prefix : ''}))
+    .pipe(rename({basename: 'main', prefix : ''}))
 // .pipe(autoprefixer({browsers: ['last 15 versions'], cascade: false}))
 // .pipe(cleanCSS())
     .pipe(gulp.dest(config.publicDir + '/css'))
