@@ -1,0 +1,437 @@
+<!DOCTYPE html>
+<html class="no-js" lang="ru">
+
+<head>
+
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!-- Bootstrap -->
+	<!-- <link rel="stylesheet" href="css/bootstrap.min.css"> -->
+	<link rel="stylesheet" href="css/main.css" type="text/css" charset="utf-8"/>
+	<!-- тут пока что подключаю не минифицированый main.css так как у меня выдает ошибку компиляции при минификации, когда разберусь от чего тогда подключу минифицированиый -->
+</head>
+
+<body>
+	<header class="header">
+		<nav class="navbar bg-inverse navbar-dark">
+			<button class="navbar-toggler hidden-lg-up" type="button" data-toggle="collapse" data-target="#exCollapsingNavbar2">
+				&#9776;
+			</button>
+
+			<div class="pseudo-block">
+				
+			</div>
+
+			<a class="navbar-brand mobile-logo" href="#">
+				<img class=" hidden" src="img/main_logo.png" alt="">
+			</a>
+			
+			<div class="collapse navbar-toggleable-md" id="exCollapsingNavbar2">
+				<!-- logo -->
+				<div class="logo  hidden">
+					
+					<a class="navbar-brand hidden" href="#">
+						<img class=" hidden" src="img/main_logo.png" alt="">
+					</a>
+				</div>
+				<!-- main menu left part-->
+				<ul class="nav navbar-nav pull-left">
+					<li class="nav-item active">
+						<a class="nav-link" href="#">About us 
+							<i class="fa fa-angle-down"></i>
+
+						</a>
+						<div class="list-container">
+							<ul class="submenu list-unstyled">
+								<li>
+									<a class="nav-link" href="#">Overview</a>
+								</li>
+								<li>
+									<a class="nav-link" href="#">Team</a>
+								</li>
+								<li>
+									<a class="nav-link" href="#">Partners</a>
+								</li>
+								<li>
+									<a class="nav-link" href="#">Contact Us</a>
+								</li>
+								<li>
+									<a class="nav-link" href="#">Careers</a>
+								</li>
+								<li>
+									<a class="nav-link" href="#">In the News</a>
+								</li>
+							</ul>
+						</div>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">Resource center <i class="fa fa-angle-down"></i></a>
+						<div class="list-container two-columns">
+							<ul class="  submenu list-unstyled">
+								<li class="nav-link-sm">
+									<p>For Investors</p>
+									
+								</li>
+								<li>
+									<a class="nav-link" href="">Investor Tutorial</a>
+									
+								</li>
+								<li>
+									<a class="nav-link" href="">Educational Materials</a>
+									
+								</li>
+								<li>
+									
+									<a class="nav-link" href="">FAQ</a>
+								</li>
+							</ul>
+
+							<ul class="  submenu list-unstyled">
+								<li class="nav-link-sm">
+									<p>For Businesses</p>
+								</li>
+								<li>
+									<a class="nav-link" href="">Business Tutorials</a>
+								</li>
+								<li>
+									<a class="nav-link" href="">Campaign Material</a>
+								</li>
+								<li>
+									<a class="nav-link" href="">Success Guide</a>
+								</li>
+								<li>
+									<a class="nav-link" href="">Capital Raise Caculator</a>
+								</li>
+								<li>
+									<a class="nav-link" href="">What's My Business Worth?</a>
+								</li>
+								<li>
+									<a class="nav-link" href="">FAQ</a>
+								</li>
+							</ul>
+						</div>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">Advisor network 
+							<i class="fa fa-angle-down"></i>
+						</a>
+						<div class="list-container">
+							<ul class="  submenu list-unstyled">
+								<li>
+									<a class="nav-link" href="">About</a>
+								</li>
+
+								<li>
+									<a class="nav-link" href="">FAQ</a>
+								</li>
+							</ul>
+						</div>
+					</li>
+
+				</ul>
+
+				<!-- main menu right part-->
+				<ul class="nav navbar-nav pull-right">
+
+					<li class="nav-item notification text-center">
+						<a href="#">
+							<i class="fa fa-bell-o ">
+								<span class="count-notific">5</span>
+							</i>
+						</a>
+
+						<div class="list-container ">
+
+							<ul class="submenu list-unstyled ">
+								<li class="clearfix title nav-link">
+									<span class="pull-left "><b>5 pending</b> comments</span>
+									<a class=" pull-right" href="#">view all</a>
+								</li>
+
+								<li class="clearfix nav-link">
+									<span class="pull-left ">Maria Kravchuk wrote...</span>
+									<i class=" pull-right">just now</i>
+								</li>
+								<li class="clearfix nav-link">
+									<span class="pull-left ">Maria Kravchuk wrote...</span>
+									<i class=" pull-right">just now</i>
+								</li>
+								<li class="clearfix nav-link">
+									<span class="pull-left ">Maria Kravchuk wrote...</span>
+									<i class=" pull-right">just now</i>
+								</li>
+								<li class="clearfix nav-link">
+									<span class="pull-left ">Maria Kravchuk wrote...</span>
+									<i class=" pull-right">just now</i>
+								</li>
+								<li class="clearfix nav-link">
+									<span class="pull-left ">Maria Kravchuk wrote...</span>
+									<i class=" pull-right">just now</i>
+								</li>
+							</ul>
+						</div>
+					</li>
+
+					<li class="nav-item notification text-center">
+						<a href="#">
+							<i class="fa fa-envelope-o">
+								<span class="count-notific">5</span>
+							</i>
+						</a>
+					</li>
+
+					<li class="nav-item user-info">
+						<a class="nav-link user-info-name" href="#">
+							<span >
+								<i class="fa fa-user"></i>
+							</span>
+							Maria Kravchuk
+						</a>
+
+						<div class="list-container user-info-drop">
+							<ul class="submenu list-unstyled ">
+								<li>
+									<a class="nav-link" href="">Account</a>
+								</li>
+
+								<li>
+									<a class="nav-link" href="">Issuer Dashboard</a>
+								</li>
+								<li>
+									<a class="nav-link" href="">Investor Dashboard</a>
+								</li>
+								<li>
+									<a class="nav-link" href="">Log Out</a>
+								</li>
+							</ul>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</nav>
+
+	</header>
+	
+	<section class="header_title p50">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-6">
+					<h1 class="text-uppercase">Invest in Smartbe</h1>
+				</div>
+				<div class="col-lg-6 text-lg-right">
+					<ol class="breadcrumb pull-right">
+						<li class="breadcrumb-item"><a href="#">Home</a></li>
+						<li class="breadcrumb-item"><a href="#">Explore</a></li>
+						<li class="breadcrumb-item"><a href="#">Smartbe</a></li>
+						<li class="breadcrumb-item active">invest in smartbe</li>
+					</ol>
+				</div>
+			</div>
+		</section>
+
+		<section class="invest pt50">
+			<div class="container">
+				<!-- START LEFT BLOCK-->
+				
+				<div class="col-md-7">
+					<div class="row">
+						<h2 class="text-uppercase">Investment</h2>
+						<div class="form-section clearfix">
+							<form class="invest_form clearfix" action="">
+								<div class="form-group user_email email row">
+									<label for="id_user_email" class="col-md-3 form-control-label text-md-right">Investment Amount</label>
+									<div class="col-sm-9">
+										<input type="namber" class="form-control " id="id_user_email" name="user_email" placeholder="$2,500">
+										<span class="help-block">$10 of payment processing fee. Your money will be returned to you if the campaign doesn't reach the target goal ($500,000).
+										</span> 
+									</div>
+								</div>
+								<section class="personal_information">
+									<h2 class="text-uppercase pt50">Personal Information
+										<span class="small-text">Required by United States banking laws. This information is transmitted securely and will never be used for any purpose beyond executing your investment. You only have to do this once.</span>
+									</h2>
+									<div class="form-group row clearfix">
+										<label class="col-md-3 text-md-right" for="id_first_name">Full Legal Name</label>
+										<div class="col-md-9">
+											<input class="   form-control" id="id_first_name" name="first_name" placeholder="" type="text" value="">
+											<span class="help-block"></span>
+										</div>
+									</div>
+									<div class="form-group row clearfix">
+										<label class="col-md-3 text-md-right" for="id_first_name">Phone number</label>
+										<div class="col-md-9">
+											<input class="   form-control" id="id_first_name" name="first_name" placeholder="" type="text" value="">
+											<span class="help-block"></span>
+										</div>
+									</div>
+									<div class="form-group row clearfix">
+										<label class="col-md-3 text-md-right" for="id_first_name">Street Address 1</label>
+										<div class="col-md-9">
+											<input class="   form-control" id="id_first_name" name="first_name" placeholder="" type="text" value="">
+											<span class="help-block"></span>
+										</div>
+									</div>
+									<div class="form-group row clearfix">
+										<label class="col-md-3 text-md-right" for="id_first_name">Street Address 2</label>
+										<div class="col-md-9">
+											<input class="   form-control" id="id_first_name" name="first_name" placeholder="" type="text" value="">
+											<span class="help-block"></span>
+										</div>
+									</div>
+									<div class="row">
+										<div class="col-md-12 col-lg-6">
+											<div class="form-group row clearfix ">
+												<div class="col-lg-6 col-md-2 text-md-right">
+													<label for="id_zip_code">Zip Code</label>
+												</div>
+												<div class="col-lg-6 col-md-8">
+													<input class="form-control" id="id_zip_code" name="zip_code" placeholder="Zip Code" type="text" value="">
+												</div>
+											</div>
+										</div>
+										<div class="col-md-12 col-lg-6">
+											<div class="form-group row clearfix city_state">
+												<div class="col-lg-4 col-md-3 col-xs-4  text-md-right">
+													<label for="id_city_state">City/State</label>
+												</div>
+												<div class="col-lg-6 col-md-8 col-xs-8">
+													<span class="change_state_city" data-input-id="id_city_state">
+														<span class="input-value">City/State</span>
+														<i class="fa fa-pencil-square-o"></i>
+													</span>
+
+												</div>
+											</div>
+										</div>
+									</div>
+									<div class="row">
+
+										<div class="col-md-12 col-lg-6">
+											<div class="form-group row clearfix ">
+												<div class="col-lg-6 col-md-2 text-md-right">
+													<label for="id_date_of_birth">Date of Birth</label>
+												</div>
+												<div class="col-lg-6 col-md-9">
+													<input class="form-control" id="id_date_of_birth" name="date_of_birth" type="date" value="">
+												</div>
+											</div>
+										</div>
+										<div class="col-md-12 col-lg-6">
+											<div class="form-group row clearfix ">
+												<div class="col-lg-6 col-md-2 text-md-right">
+													<label for="id_phone">SSN</label>
+												</div>
+												<div class="col-lg-6 col-md-9">
+													<input class="form-control" id="id_ssn" name="ssn" placeholder="XXX-XX-XXXX" type="text" value="" data-original-title="" title="">
+												</div>
+											</div>
+										</div>
+									</div>
+								</section>
+							</form>
+						</div>
+					</div>
+				</div>
+				<!-- END LEFT BLOCK-->
+				<!-- START RIGHT BLOCK-->
+				
+				<div class="col-md-4 pull-right">
+					<div class="row">
+						<h2>PERKS
+<span class="small-text">Investor Perks are not intended to affect the value of the security and investors should evaluate the merits of each investment without regard to any Investor Perks.</span>
+						</h2>
+						<div class="list-group">
+  <a href="#" class="list-group-item list-group-item-action active">
+    <h5 class="list-group-item-heading">$500 Investments</h5>
+    <p class="list-group-item-text">A one year subscription plus a gorgeous Peloton Long-Sleeve T-SHIRT. One subscription covers an unlimited amount of users so that every member of your family would be able to use the bike and access Peloton content from their own personal </p>
+  </a>
+  <a href="#" class="list-group-item list-group-item-action">
+    <h5 class="list-group-item-heading">$1,000 Investments </h5>
+    <p class="list-group-item-text">FULLY LOADED PACKAGE: The Peloton Bike plus Peloton headphones, Peloton biking shoes, a Peloton heart rate monitor, the Peloton hand weights, a Peloton shirt, and a Peloton sweat mat (you're going to need it!).</p>
+  </a>
+  <a href="#" class="list-group-item list-group-item-action">
+    <h5 class="list-group-item-heading">$5,000 Investments</h5>
+    <p class="list-group-item-text">The Peloton Bike (and all of the accessories) AND a trip for two to NYC to meet the team and teach (or take) your very own class in the Peloton Studio, to be accessible to all Peloton riders via on-demand classes! (USA ONLY)</p>
+  </a>
+</div>
+					</div>
+				</div>
+				<!-- END RIGHT BLOCK-->
+			</div>
+		</section>
+
+		<footer class="footer_new">
+			<div class="container">
+				<div class="row">
+					<div class="col-lg-3">
+						<div class="footer_title border_bottom">
+							<h4>About us</h4>
+						</div>
+						<a href="">Overview</a>
+						<a href="">Team</a>
+						<a href="">Partners</a>
+						<a href="">Contacy Us</a>
+						<a href="">Careers</a>
+						<a href="">In the News</a>
+						<a href="">FAQ</a>
+						<a href="">Blog</a>
+					</div>
+					<div class="col-lg-3">
+						<div class="footer_title border_bottom">
+							<h4>Investor resources</h4>
+						</div>
+						<a href="">Investor Tutorial</a>
+						<a href="">Education Material</a>
+						<div class="footer_title border_bottom">
+							<h4>Business recources</h4>
+						</div>
+						<a href="">Business Tutorial</a>
+						<a href="">Success Guide</a>
+						<a href="">Capital Raise Calculator</a>
+						<a href="">What's me Business Worth?</a>
+					</div>
+					<div class="col-lg-3">
+						<div class="footer_title border_bottom">
+							<h4>Advisor network</h4>
+						</div>
+						<a href="">About</a>
+						<a href="">FAQ</a>
+					</div>
+					<div class="col-lg-3">
+						<div class="footer_title border_bottom">
+							<h4>Legal</h4>
+						</div>
+						<a href="">Terms</a>
+						<a href="">Privacy</a>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col-lg-12">
+						<div class="company">
+							<span>©GROWTHFOUNTAIN 2016.</span>
+							<p>Made with love for great people</p>
+						</div>
+					</div>
+				</div>
+			</div>
+		</footer>
+		<!-- Здесь пишем код -->
+
+
+		<div class="hidden"></div>
+
+	<!--[if lt IE 9]>
+	<script src="libs/html5shiv/es5-shim.min.js"></script>
+	<script src="libs/html5shiv/html5shiv.min.js"></script>
+	<script src="libs/html5shiv/html5shiv-printshiv.min.js"></script>
+	<script src="libs/respond/respond.min.js"></script>
+	<![endif]-->
+
+	<!-- Load Scripts Start -->
+	<!-- <script src="http://code.jquery.com/jquery-1.9.1.js"></script> -->
+	<script src="js/jquery.min.js"></script>
+	<script src="js/common.js"></script>
+
+
+</body>
+</html>
