@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html class="no-js" lang="ru">
+
+<head>
+
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+		<!-- Bootstrap -->
+		<!-- <link rel="stylesheet" href="css/bootstrap.min.css"> -->
+		<link rel="stylesheet" href="css/main.css" type="text/css" charset="utf-8"/>
+<!-- тут пока что подключаю не минифицированый main.css так как у меня выдает ошибку компиляции при минификации, когда разберусь от чего тогда подключу минифицированиый -->
+		<link rel="stylesheet" href="css/font-awesome.min.css" type="text/css" charset="utf-8"/>
+		<link rel="stylesheet" href="css/bootstrap-select.css">
+		<link rel="stylesheet" href="css/bootstrap-slider.min.css">
+		
+</head>
+
+<body>
+	<header class="header">
+		<nav class="navbar bg-inverse navbar-dark">
+			<button class="navbar-toggler hidden-lg-up" type="button" data-toggle="collapse" data-target="#exCollapsingNavbar2">
+			&#9776;
+			</button>
+
+			<div class="pseudo-block">
+				
+			</div>
+
+			<a class="navbar-brand mobile-logo" href="#">
+				<img class=" hidden" src="img/main_logo.png" alt="">
+			</a>
+			
+			<div class="collapse navbar-toggleable-md" id="exCollapsingNavbar2">
+				<!-- logo -->
+				<div class="logo  hidden">
+					
+				<a class="navbar-brand hidden" href="#">
+					<img class=" hidden" src="img/main_logo.png" alt="">
+				</a>
+				</div>
+				<!-- main menu left part-->
+				<ul class="nav navbar-nav pull-left">
+
+					<li class="nav-item">
+						<a class="nav-link" href="#">
+							<i class="fa fa-search"></i>
+							Explorer 
+						</a>
+					</li>
+
+					<li class="nav-item active">
+						<a class="nav-link" href="#">About us 
+							<i class="fa fa-angle-down"></i>
+
+						</a>
+						<div class="list-container">
+							<ul class="submenu list-unstyled">
+								<li>
+									<a class="btn" href="#">Overview</a>
+								</li>
+								<li>
+									<a class="btn" href="#">Team</a>
+								</li>
+								<li>
+									<a class="btn" href="#">Partners</a>
+								</li>
+								<li>
+									<a class="btn" href="#">Contact Us</a>
+								</li>
+								<li>
+									<a class="btn" href="#">Careers</a>
+								</li>
+								<li>
+									<a class="btn" href="#">In the News</a>
+								</li>
+							</ul>
+						</div>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">Resource center <i class="fa fa-angle-down"></i></a>
+						<div class="list-container two-columns">
+							<ul class="  submenu list-unstyled">
+								<li class="btn-sm">
+									<p>For Investors</p>
+									
+								</li>
+								<li>
+									<a class="btn" href="">Investor Tutorial</a>
+									
+								</li>
+								<li>
+									<a class="btn" href="">Educational Materials</a>
+									
+								</li>
+								<li>
+									
+									<a class="btn" href="">FAQ</a>
+								</li>
+							</ul>
+
+							<ul class="  submenu list-unstyled">
+								<li class="btn-sm">
+									<p>For Businesses</p>
+								</li>
+								<li>
+									<a class="btn" href="">Business Tutorials</a>
+								</li>
+								<li>
+									<a class="btn" href="">Campaign Material</a>
+								</li>
+								<li>
+									<a class="btn" href="">Success Guide</a>
+								</li>
+								<li>
+									<a class="btn" href="">Capital Raise Caculator</a>
+								</li>
+								<li>
+									<a class="btn" href="">What's My Business Worth?</a>
+								</li>
+								<li>
+									<a class="btn" href="">FAQ</a>
+								</li>
+							</ul>
+						</div>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">Advisor network 
+							<i class="fa fa-angle-down"></i>
+						</a>
+						<div class="list-container">
+							<ul class="  submenu list-unstyled">
+								<li>
+									<a class="btn" href="">About</a>
+								</li>
+									
+								<li>
+									<a class="btn" href="">FAQ</a>
+								</li>
+							</ul>
+						</div>
+					</li>
+
+				</ul>
+
+				<!-- main menu right part-->
+				<ul class="nav navbar-nav pull-right">
+
+					<li class="nav-item notification text-center">
+						<a href="#">
+							<i class="fa fa-bell-o ">
+								<span class="count-notific">5</span>
+							</i>
+						</a>
+
+						<div class="list-container ">
+
+							<ul class="submenu list-unstyled ">
+								<li class="clearfix title btn">
+									<span class="pull-left "><b>5 pending</b> comments</span>
+									<a class=" pull-right" href="#">view all</a>
+								</li>
+									
+								<li class="clearfix btn">
+									<span class="pull-left ">Maria Kravchuk wrote...</span>
+									<i class=" pull-right">just now</i>
+								</li>
+								<li class="clearfix btn">
+									<span class="pull-left ">Maria Kravchuk wrote...</span>
+									<i class=" pull-right">just now</i>
+								</li>
+								<li class="clearfix btn">
+									<span class="pull-left ">Maria Kravchuk wrote...</span>
+									<i class=" pull-right">just now</i>
+								</li>
+								<li class="clearfix btn">
+									<span class="pull-left ">Maria Kravchuk wrote...</span>
+									<i class=" pull-right">just now</i>
+								</li>
+								<li class="clearfix btn">
+									<span class="pull-left ">Maria Kravchuk wrote...</span>
+									<i class=" pull-right">just now</i>
+								</li>
+							</ul>
+						</div>
+					</li>
+
+					<li class="nav-item notification text-center">
+						<a href="#">
+							<i class="fa fa-envelope-o">
+								<span class="count-notific">5</span>
+							</i>
+						</a>
+					</li>
+
+					<li class="nav-item user-info">
+						<a class="nav-link user-info-name" href="#">
+							<span >
+								<i class="fa fa-user"></i>
+							</span>
+							Maria Kravchuk
+						</a>
+
+						<div class="list-container user-info-drop">
+							<ul class="submenu list-unstyled ">
+								<li>
+									<a class="btn" href="">Account</a>
+								</li>
+									
+								<li>
+									<a class="btn" href="">Issuer Dashboard</a>
+								</li>
+								<li>
+									<a class="btn" href="">Investor Dashboard</a>
+								</li>
+								<li>
+									<a class="btn" href="">Log Out</a>
+								</li>
+							</ul>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</nav>
+	</header>
+	
+	<section class="header_title">
+		<div class="container-fluid">
+		<div class="row">
+			<div class="col-sm-6">
+				<h2>Account</h2>
+			</div>
+			<div class="col-sm-6 text-sm-right">
+				<a href="/">Home</a>
+				<span>/</span>
+				<a href="">About Us</a>
+				<span>/</span>
+				<span class="curent">Account</span>
+			</div>
+		</div>
+	</section>
+
+	<div class="container-fluid profile">
+		<div class="row">
+			<div class="col-md-9 col-md-offset-3 col-sm-12 col-sm-offset-0">
+
+				<!-- account tabs -->
+				<ul class="nav nav-tabs profile-tabs">
+		            <li class="nav-item " aria-expanded="false">
+		                <a href="#account_info"  data-toggle="tab" role="tab" class="active nav-link uppercase" aria-expanded="true">Account information</a>
+		            </li>
+		            <li class="nav-item ">
+		                <a href="#financial_info" data-toggle="tab" role="tab" class=" nav-link uppercase" aria-expanded="true">Financial information</a>
+		            </li>
+		            <li class="nav-item">
+		                <a href="#investment_preferences" data-toggle="tab" role="tab" class=" nav-link uppercase" aria-expanded="true">Investment preferences</a>
+		            </li>
+		        </ul>
+
+			</div>
+		</div>
+
+		<!-- Tab panes -->
+        <div class="tab-content profile-tabs-content ">
+
+            <div class="tab-pane fade active in" id="account_info" aria-expanded="true">
+
+            	<div class="row">
+
+					<section class="form-section clearfix">
+						<form class="" method="post" action="/user/update_profile/" role="form">
+							<div class="form-body clearfix">
+
+								<div class="col-sm-4 col-md-3">
+									<aside class="left-block">
+
+										<h5 class="widget-title font-alt">Mariya Kravchuk</h5>
+
+										<div class="dropzone__image drop-photo dz-clickable dropzone"></div>
+
+										<input type="hidden" name="image" id="id_image" value="80">
+										
+										<div class="drop-image-title text-xs-center">
+											<span>
+												Drop your profile picture here
+											</span>
+											<div></div>
+											<i class="fa fa-camera"></i>
+										</div>
+
+									</aside>
+								</div>
+
+
+								<div class="col-md-9 col-sm-8">
+									<section class="right-block">
+
+										<input type="hidden" name="csrfmiddlewaretoken" value="yESg0wjxGit5mThFEPpr4H7OH5sbUIFB">
+
+										<div class="form-group row clearfix">
+
+											<div class="col-md-3 text-md-right">
+												<label for="id_first_name">First name</label>
+											</div>
+
+											<div class="col-md-8">
+												<input class="   form-control" id="id_first_name" name="first_name" placeholder="First name" type="text" value="">
+
+												<span class="help-block"></span>
+											</div>
+
+										</div> 
+
+										<div class="form-group row clearfix">
+
+											<div class="col-md-3 text-md-right">
+												<label for="id_last_name">Last name</label>
+											</div>
+
+											<div class="col-md-8">
+												<input class="   form-control" id="id_last_name" name="last_name" placeholder="Last name" type="text" value="">
+
+												<span class="help-block"></span>
+											</div>
+
+										</div> 
+
+										<div class="form-group row clearfix">
+
+											<div class="col-md-3 text-md-right">
+												<label for="id_street_address_1">Street Address 1</label>
+											</div>
+
+											<div class="col-md-8">
+												<input class="   form-control" id="id_street_address_1" name="street_addres_2" placeholder="Street Address 1" type="text" value="">
+
+												<span class="help-block"></span>
+											</div>
+
+										</div> 
+
+										<div class="form-group row clearfix street_address_2">
+
+											<div class="col-md-3 text-md-right ">
+												<label for="id_street_address_2">Street Address 2</label>
+											</div>
+   
+											<div class="col-md-8">
+												<input class="   form-control" id="id_street_address_2" name="street_addres_2" placeholder="Street Address 2" type="text" value="">
+
+												<span class="help-block"></span>
+											</div>
+
+										</div> 
+
+										<div class="row">
+	
+											<div class="col-md-12 col-lg-6">
+												<div class="form-group row clearfix ">
+													<div class="col-lg-6 col-md-3 text-md-right">
+														<label for="id_zip_code">Zip Code</label>
+													</div>
+													<div class="col-lg-6 col-md-8">
+														<input class="form-control" id="id_zip_code" name="zip_code" placeholder="Zip Code" type="text" value="">
+													</div>
+												</div>
+											</div>
+											<div class="col-md-12 col-lg-6">
+												<div class="form-group row clearfix city_state">
+													<div class="col-lg-4 col-md-3 col-xs-4  text-md-right">
+														<label for="id_city_state">City/State</label>
+													</div>
+													<div class="col-lg-6 col-md-8 col-xs-8">
+														<span class="change_state_city" data-input-id='id_city_state'>
+															<span  class="input-value">City/State</span>
+															<i class="fa fa-pencil-square-o"></i>
+														</span>
+														<input class="form-control" id="id_city_state" name="city_state" placeholder="City/State" type="text" value="">
+													</div>
+												</div>
+											</div>
+										</div>
+
+										<div class="row">
+											<div class="col-md-12 col-lg-6">
+												<div class="form-group row clearfix ">
+													<div class="col-lg-6 col-md-3 text-md-right">
+														<label for="id_phone">Phone</label>
+													</div>
+													<div class="col-lg-6 col-md-8">
+														<input class="form-control" id="id_phone" name="phone" placeholder="Phone" type="text" value="">
+													</div>
+												</div>
+											</div>
+											<div class="col-md-12 col-lg-6">
+												<div class="form-group row clearfix ">
+													<div class="col-lg-4 col-md-3 text-md-right">
+														<label for="id_date_of_birth">Date of Birth</label>
+													</div>
+													<div class="col-lg-6 col-md-8">
+														<input class="form-control" id="id_date_of_birth" name="date_of_birth"  type="date" value="">
+													</div>
+												</div>
+											</div>
+										</div>
+
+										
+			 
+										<div class="form-group row clearfix">
+											<div class="col-md-11">
+												<div class="controls ">
+													<button type="submit" class="bg-inverse btn btn-secondary btn-lg pull-right"> Save </button>
+												</div>
+											</div>
+										</div>
+
+									</section>
+								</div>
+							</div>
+						</form>
+					</section>
+            	</div>
+
+            </div>
+
+            <!-- financial information -->
+            <div class="tab-pane fade" id="financial_info" aria-expanded="true">
+
+            	<div class="row">
+
+					<section class="form-section clearfix">
+						<form class="" method="post" action="/user/update_profile/" role="form">
+							<div class="form-body clearfix">
+
+								<div class="col-sm-4 col-md-3">
+									<aside class="left-block">
+
+										<h5 class="widget-title font-alt">Mariya Kravchuk</h5>
+
+										<div class="dropzone__image drop-photo dz-clickable dropzone"></div>
+
+										<input type="hidden" name="image" id="id_image" value="80">
+										
+										<div class="selected-area-info text-xs-left">
+											<i class="fa fa-info-circle"></i>
+											<span>The selected area will be displayed on your dashboard</span>
+										</div>
+
+										<div class="drop-image-title text-xs-center">
+											<span>
+												Drop your profile picture here
+											</span>
+											<div></div>
+											<i class="fa fa-camera"></i>
+										</div>
+
+									</aside>
+								</div>
+
+
+								<div class="col-md-9 col-sm-8">
+									<section class="right-block">
+
+										<input type="hidden" name="csrfmiddlewaretoken" value="yESg0wjxGit5mThFEPpr4H7OH5sbUIFB">
+
+										<div class="form-group row clearfix">
+
+											<div class="col-md-3 text-md-right">
+												<label for="id_first_name">Bank Name</label>
+											</div>
+
+											<div class="col-md-8">
+												<input class=" form-control" id="id_first_name" name="first_name" placeholder="Firs name" type="text" value="">
+
+												<span class="help-block"></span>
+											</div>
+
+										</div> 
+
+										<div class="form-group row clearfix">
+
+											<div class="col-md-3 text-md-right">
+												<label for="id_last_name">Bank Address</label>
+											</div>
+
+											<div class="col-md-8">
+												<input class="   form-control" id="id_last_name" name="last_name" placeholder="Last name" type="text" value="">
+
+												<span class="help-block"></span>
+											</div>
+
+										</div> 
+
+										<div class="row">
+	
+											<div class="col-md-12 col-lg-6">
+												<div class="form-group row clearfix ">
+													<div class="col-lg-6 col-md-3 text-md-right">
+														<label for="id_zip_code">Zip Code</label>
+													</div>
+													<div class="col-lg-6 col-md-8">
+														<input class="form-control" id="id_zip_code" name="zip_code" placeholder="Zip Code" type="text" value="">
+													</div>
+												</div>
+											</div>
+											<div class="col-md-12 col-lg-6">
+												<div class="form-group row clearfix city_state">
+													<div class="col-lg-4 col-md-3 col-xs-4 text-md-right">
+														<label for="id_city_state">City/State</label>
+													</div>
+													<div class="col-lg-6 col-md-8 col-xs-8">
+														<span class="change_state_city" data-input-id='id_city_state'>
+															<span  class="input-value">City/State</span>
+															<i class="fa fa-pencil-square-o"></i>
+														</span>
+														<input class="form-control" id="id_city_state" name="city_state" placeholder="City/State" type="text" value="">
+													</div>
+												</div>
+											</div>
+										</div>
+
+										<div class="form-group row clearfix">
+
+											<div class="col-md-3 text-md-right">
+												<label for="id_account_number">Account Number</label>
+											</div>
+
+											<div class="col-md-8">
+												<input class="form-control" id="id_account_number" name="account_number" placeholder="Account Number" type="text" value="">
+
+												<span class="help-block"></span>
+											</div>
+
+										</div> 
+
+										<div class="form-group row clearfix ">
+
+											<div class="col-md-3 text-md-right ">
+												<label for="id_re-enter">Re-Enter</label>
+											</div>
+   
+											<div class="col-md-8">
+												<input class="form-control" id="id_re-enter" name="re-enter" placeholder="Re-Enter" type="text" value="">
+
+												<span class="help-block"></span>
+											</div>
+
+										</div> 
+
+										<div class="form-group row clearfix">
+
+											<div class="col-md-3 text-md-right ">
+												<label for="id_routing_number">Routing Number</label>
+											</div>
+   
+											<div class="col-md-8">
+												<input class="form-control" id="id_routing_number" name="routing_number" placeholder="Routing Number" type="text" value="">
+
+												<span class="help-block"></span>
+											</div>
+
+										</div> 
+
+										<div class="form-group row">
+											<div class="col-md-3 col-xs-5 text-xs-right ">
+												<label for="">Acount Type</label>
+											</div>
+
+											<div class="col-md-8">
+
+												<label class="radio-inline">
+													<input type="radio" name="account_type" id="account_type_1" value="">
+													Checking
+												</label>
+
+												<label class="radio-inline">
+													<input type="radio" name="account_type" id="account_type_2" value="">
+													Saving
+												</label>
+
+											</div>
+										</div>
+
+										<div class="form-group row">
+											<div class="col-md-3 col-xs-5 text-xs-right ">
+												<label for="">Check Type</label>
+											</div>
+
+											<div class="col-md-8">
+
+												<label class="radio-inline">
+													<input type="radio" name="check_type" id="check_type_1" value="">
+													Checking
+												</label>
+
+												<label class="radio-inline">
+													<input type="radio" name="check_type" id="check_type_2" value="">
+													Saving
+												</label>
+
+											</div>
+										</div>
+
+										<div class="form-group row clearfix">
+
+											<div class="col-md-3 text-md-right ">
+												<label for="id_name_on_bank_account">Name on Bank Account</label>
+											</div>
+   
+											<div class="col-md-8">
+												<input class="form-control" id="id_name_on_bank_account" name="name_on_bank_account" placeholder="Name on Bank Account" type="text" value="">
+
+												<span class="help-block"></span>
+											</div>
+
+										</div> 
+
+										<div class="form-group row clearfix">
+
+											<div class="col-md-3 text-md-right ">
+												<label for="id_ssn">SSN</label>
+											</div>
+   
+											<div class="col-md-8">
+												<input class="form-control" id="id_ssn" name="ssn" placeholder="XXX-XX-7495" type="text" value="" >
+
+												<span class="help-block"></span>
+											</div>
+
+										</div> 
+
+										<div class="form-group row">
+											<div class="col-sm-11">
+												<div class="investors-warning">
+													<i class="fa fa-exclamation-triangle"></i>
+													<span class="warning-text">
+														Investors are limited to 12 month investment totals ranging from $2,000 - $100,000 based on income and net worth. Please update your financial information to see your limit.
+													</span>
+												</div>
+											</div>
+										</div>
+
+										<div class="range-lines">
+											<div class="form-group row">
+												<div class="col-md-3 text-md-right ">
+													<label for="">Annual income</label>
+												</div>
+
+												<div class="col-md-8">
+													<input class=" input-md form-control" id="id_annual_income" min="0" name="annual_income" placeholder="Annual income" type="number" value="0" data-value="0" >
+												</div>
+											</div>
+
+											<div class="form-group row">
+												<div class="col-md-3 text-md-right ">
+													<label for="">Net worth</label>
+												</div>
+												<div class="col-md-8">
+													<input class=" input-md form-control" id="id_net_worth" min="0" name="net_worth" placeholder="Net worth" type="number" value="0" data-value="0">
+												</div>
+											</div>
+										</div>
+
+										<div class="form-group row clearfix">
+											<div class="col-md-11">
+												<div class="controls ">
+													<button type="submit" class="bg-inverse btn btn-secondary btn-lg pull-right"> Save </button>
+												</div>
+											</div>
+										</div>
+
+									</section>
+								</div>
+							</div>
+						</form>
+					</section>
+            	</div>
+
+            </div>
+
+            <!-- investment preferences -->
+            <div class="tab-pane  fade" id="investment_preferences" aria-expanded="true">
+
+            	<div class="row">
+
+					<section class="form-section clearfix">
+						<form class="" method="post" action="/user/update_profile/" role="form">
+							<div class="form-body clearfix">
+
+								<div class="col-sm-4 col-md-3">
+									<aside class="left-block">
+
+										<h5 class="widget-title font-alt">Mariya Kravchuk</h5>
+
+										<div class="dropzone__image drop-photo dz-clickable dropzone"></div>
+
+										<input type="hidden" name="image" id="id_image" value="80">
+										
+										<div class="drop-image-title text-xs-center">
+											<span>
+												Drop your profile picture here
+											</span>
+											<div></div>
+											<i class="fa fa-camera"></i>
+										</div>
+
+									</aside>
+								</div>
+
+
+								<div class="col-md-9 col-sm-8">
+									<section class="right-block">
+
+										<input type="hidden" name="csrfmiddlewaretoken" value="yESg0wjxGit5mThFEPpr4H7OH5sbUIFB">
+
+										<div class="form-group row clearfix">
+
+											<div class="col-md-11 col-md-offset-1 ">
+												<label for="id_where_grow_up">Where did you grow up?</label>
+											</div>
+
+											<div class="col-md-10 col-md-offset-1 col-lg-8">
+												<textarea name="" id="id_where_grow_up" class="form-control" rows="1"></textarea>
+
+												<!-- <span class="help-block"></span> -->
+											</div>
+
+										</div> 
+
+										<div class="form-group row clearfix">
+
+											<div class="col-md-11 col-md-offset-1">
+												<label for="id_where_go_college">Where did you go to college?</label>
+											</div>
+
+											<div class="col-md-10 col-md-offset-1 col-lg-8">
+												<textarea name="" id="id_where_go_college" class="form-control" rows="1"></textarea>
+
+												<!-- <span class="help-block"></span> -->
+											</div>
+
+										</div>
+
+										<div class="form-group row clearfix select-group">
+
+											<div class="col-md-11 col-md-offset-1">
+												<label for="id_select_industries">Please, select all the industries  that interest you.</label>
+											</div>
+
+											<div class="col-md-10 col-md-offset-1 col-lg-8">
+												<select name="select_industries" id="id_select_industries" class="c-select form-control">
+													<option>Metal</option>
+													<option>Wood</option>
+													<option>Machine</option>
+													<option>IT</option>
+													<option>Nature</option>
+												</select>
+
+												<!-- <span class="help-block"></span> -->
+											</div>
+
+										</div>
+
+										<div class="form-group row clearfix select-group">
+
+											<div class="col-md-11 col-md-offset-1">
+												<label for="id_select_industries">Please, select geographic areas you are most interested in.</label>
+											</div>
+
+											<div class="col-md-10 col-md-offset-1 col-lg-8">
+												<select name="select_industries" id="id_select_industries" class="c-select form-control">
+													<option>Asia</option>
+													<option>North America</option>
+													<option>Europe</option>
+													<option>Australia</option>
+													<option>Ukraine</option>
+												</select>
+
+												<!-- <span class="help-block"></span> -->
+											</div>
+
+										</div>
+
+										<div class="form-group row clearfix">
+
+											<div class="col-md-11 col-md-offset-1">
+												<label for="id_have_ever_invested">Have you ever invested in any of the following?</label>
+											</div>
+
+											<div class="col-md-10 col-md-offset-1 col-lg-8">
+												<textarea name="have_ever_invested" id="id_have_ever_invested" class="form-control" rows="1"></textarea>
+
+												<!-- <span class="help-block"></span> -->
+											</div>
+
+										</div>
+
+										<div class="form-group row clearfix">
+
+											<div class="col-md-11 col-md-offset-1">
+												<label for="id_yours_investment_goals">What are yours investment goals?</label>
+											</div>
+
+											<div class="col-md-10 col-md-offset-1 col-lg-8 ">
+												<textarea name="yours_investment_goals" id="id_yours_investment_goals" class="form-control" rows="1"></textarea>
+
+												<!-- <span class="help-block"></span> -->
+											</div>
+
+										</div>
+
+										<div class="form-group row clearfix">
+
+											<div class="col-md-11 col-md-offset-1">
+												<label for="id_important_attributes">What are the most important attributes you consider before investing?</label>
+											</div>
+
+											<div class="col-md-10 col-md-offset-1 col-lg-8">
+												<textarea name="important_attributes" id="id_important_attributes" class="form-control" rows="1"></textarea>
+
+												<!-- <span class="help-block"></span> -->
+											</div>
+
+										</div>
+			 
+										<div class="form-group row clearfix">
+											<div class="col-md-11 col-lg-9">
+												<div class="controls ">
+													<button type="submit" class="bg-inverse btn btn-secondary btn-lg pull-right"> Save </button>
+												</div>
+											</div>
+										</div>
+
+									</section>
+								</div>
+							</div>
+						</form>
+					</section>
+            	</div>
+
+            </div>
+        </div>
+
+		<!-- popover content for ssn field -->
+        <div class="popover-content-ssn">
+			<i class="fa fa-info-circle"></i>
+			<span>Why do we need this? I know it seems terribly invasive but we are required to obtain your socialsecurity number for two reasons, 1) regulators require we comply with know your customer and anti-money laundering rules and; 2) companies will need to provide you with tax information based on your investment.  Don’t worry, we’re obsessive about your privacy.</span>
+		</div>
+
+	</div>
+
+
+
+
+
+
+
+	<footer class="footer_new">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-3">
+					<div class="footer_title border_bottom">
+						<h4>About us</h4>
+					</div>
+					<a href="">Overview</a>
+					<a href="">Team</a>
+					<a href="">Partners</a>
+					<a href="">Contacy Us</a>
+					<a href="">Careers</a>
+					<a href="">In the News</a>
+					<a href="">FAQ</a>
+					<a href="">Blog</a>
+				</div>
+				<div class="col-lg-3">
+					<div class="footer_title border_bottom">
+						<h4>Investor resources</h4>
+					</div>
+					<a href="">Investor Tutorial</a>
+					<a href="">Education Material</a>
+					<div class="footer_title border_bottom">
+						<h4>Business recources</h4>
+					</div>
+					<a href="">Business Tutorial</a>
+					<a href="">Success Guide</a>
+					<a href="">Capital Raise Calculator</a>
+					<a href="">What's me Business Worth?</a>
+				</div>
+				<div class="col-lg-3">
+					<div class="footer_title border_bottom">
+						<h4>Advisor network</h4>
+					</div>
+					<a href="">About</a>
+					<a href="">FAQ</a>
+				</div>
+				<div class="col-lg-3">
+					<div class="footer_title border_bottom">
+						<h4>Legal</h4>
+					</div>
+					<a href="">Terms</a>
+					<a href="">Privacy</a>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="company">
+						<span>©GROWTHFOUNTAIN 2016.</span>
+						<p>Made with love for great people</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer>
+	<!-- Здесь пишем код -->
+
+
+	<div class="hidden"></div>
+
+	<!--[if lt IE 9]>
+	<script src="libs/html5shiv/es5-shim.min.js"></script>
+	<script src="libs/html5shiv/html5shiv.min.js"></script>
+	<script src="libs/html5shiv/html5shiv-printshiv.min.js"></script>
+	<script src="libs/respond/respond.min.js"></script>
+	<![endif]-->
+
+	<!-- Load Scripts Start -->
+		<!-- <script src="http://code.jquery.com/jquery-1.9.1.js"></script> -->
+		<script src="js/underscore.js"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
+		<script src="js/backbone.js"></script>
+		<script src="js/tether.min.js"></script>
+		<script src="js/bootstrap-slider.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+		<script src="js/bootstrap-select.js"></script>
+		<script src="js/my_script.js"></script>
+	<!-- Load Scripts End -->
+
+</body>
+</html>

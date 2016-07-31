@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html class="no-js" lang="ru">
+
+<head>
+
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+		<!-- Bootstrap -->
+		<!-- <link rel="stylesheet" href="css/bootstrap.min.css"> -->
+		<link rel="stylesheet" href="css/main.css" type="text/css" charset="utf-8"/>
+<!-- тут пока что подключаю не минифицированый main.css так как у меня выдает ошибку компиляции при минификации, когда разберусь от чего тогда подключу минифицированиый -->
+		<link rel="stylesheet" href="css/font-awesome.min.css" type="text/css" charset="utf-8"/>
+		<link rel="stylesheet" href="css/bootstrap-select.css">
+</head>
+
+<body>
+	<header class="header">
+		<nav class="navbar bg-inverse navbar-dark">
+			<button class="navbar-toggler hidden-lg-up" type="button" data-toggle="collapse" data-target="#exCollapsingNavbar2">
+			&#9776;
+			</button>
+
+			<div class="pseudo-block">
+				
+			</div>
+
+			<a class="navbar-brand mobile-logo" href="#">
+				<img class=" hidden" src="img/main_logo.png" alt="">
+			</a>
+			
+			<div class="collapse navbar-toggleable-md" id="exCollapsingNavbar2">
+				<!-- logo -->
+				<div class="logo  hidden">
+					
+				<a class="navbar-brand hidden" href="#">
+					<img class=" hidden" src="img/main_logo.png" alt="">
+				</a>
+				</div>
+				<!-- main menu left part-->
+				<ul class="nav navbar-nav pull-left">
+					<li class="nav-item active">
+						<a class="nav-link" href="#">About us 
+							<i class="fa fa-angle-down"></i>
+
+						</a>
+						<div class="list-container">
+							<ul class="submenu list-unstyled">
+								<li>
+									<a class="nav-link" href="#">Overview</a>
+								</li>
+								<li>
+									<a class="nav-link" href="#">Team</a>
+								</li>
+								<li>
+									<a class="nav-link" href="#">Partners</a>
+								</li>
+								<li>
+									<a class="nav-link" href="#">Contact Us</a>
+								</li>
+								<li>
+									<a class="nav-link" href="#">Careers</a>
+								</li>
+								<li>
+									<a class="nav-link" href="#">In the News</a>
+								</li>
+							</ul>
+						</div>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">Resource center <i class="fa fa-angle-down"></i></a>
+						<div class="list-container two-columns">
+							<ul class="  submenu list-unstyled">
+								<li class="nav-link-sm">
+									<p>For Investors</p>
+									
+								</li>
+								<li>
+									<a class="nav-link" href="">Investor Tutorial</a>
+									
+								</li>
+								<li>
+									<a class="nav-link" href="">Educational Materials</a>
+									
+								</li>
+								<li>
+									
+									<a class="nav-link" href="">FAQ</a>
+								</li>
+							</ul>
+
+							<ul class="  submenu list-unstyled">
+								<li class="nav-link-sm">
+									<p>For Businesses</p>
+								</li>
+								<li>
+									<a class="nav-link" href="">Business Tutorials</a>
+								</li>
+								<li>
+									<a class="nav-link" href="">Campaign Material</a>
+								</li>
+								<li>
+									<a class="nav-link" href="">Success Guide</a>
+								</li>
+								<li>
+									<a class="nav-link" href="">Capital Raise Caculator</a>
+								</li>
+								<li>
+									<a class="nav-link" href="">What's My Business Worth?</a>
+								</li>
+								<li>
+									<a class="nav-link" href="">FAQ</a>
+								</li>
+							</ul>
+						</div>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">Advisor network 
+							<i class="fa fa-angle-down"></i>
+						</a>
+						<div class="list-container">
+							<ul class="  submenu list-unstyled">
+								<li>
+									<a class="nav-link" href="">About</a>
+								</li>
+									
+								<li>
+									<a class="nav-link" href="">FAQ</a>
+								</li>
+							</ul>
+						</div>
+					</li>
+
+				</ul>
+
+				<!-- main menu right part-->
+				<ul class="nav navbar-nav pull-right">
+
+					<li class="nav-item notification text-center">
+						<a href="#">
+							<i class="fa fa-bell-o ">
+								<span class="count-notific">5</span>
+							</i>
+						</a>
+
+						<div class="list-container ">
+
+							<ul class="submenu list-unstyled ">
+								<li class="clearfix title nav-link">
+									<span class="pull-left "><b>5 pending</b> comments</span>
+									<a class=" pull-right" href="#">view all</a>
+								</li>
+									
+								<li class="clearfix nav-link">
+									<span class="pull-left ">Maria Kravchuk wrote...</span>
+									<i class=" pull-right">just now</i>
+								</li>
+								<li class="clearfix nav-link">
+									<span class="pull-left ">Maria Kravchuk wrote...</span>
+									<i class=" pull-right">just now</i>
+								</li>
+								<li class="clearfix nav-link">
+									<span class="pull-left ">Maria Kravchuk wrote...</span>
+									<i class=" pull-right">just now</i>
+								</li>
+								<li class="clearfix nav-link">
+									<span class="pull-left ">Maria Kravchuk wrote...</span>
+									<i class=" pull-right">just now</i>
+								</li>
+								<li class="clearfix nav-link">
+									<span class="pull-left ">Maria Kravchuk wrote...</span>
+									<i class=" pull-right">just now</i>
+								</li>
+							</ul>
+						</div>
+					</li>
+
+					<li class="nav-item notification text-center">
+						<a href="#">
+							<i class="fa fa-envelope-o">
+								<span class="count-notific">5</span>
+							</i>
+						</a>
+					</li>
+
+					<li class="nav-item user-info">
+						<a class="nav-link user-info-name" href="#">
+							<span >
+								<i class="fa fa-user"></i>
+							</span>
+							Maria Kravchuk
+						</a>
+
+						<div class="list-container user-info-drop">
+							<ul class="submenu list-unstyled ">
+								<li>
+									<a class="nav-link" href="">Account</a>
+								</li>
+									
+								<li>
+									<a class="nav-link" href="">Issuer Dashboard</a>
+								</li>
+								<li>
+									<a class="nav-link" href="">Investor Dashboard</a>
+								</li>
+								<li>
+									<a class="nav-link" href="">Log Out</a>
+								</li>
+							</ul>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</nav>
+
+	</header>
+
+	<section class="main_block">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-6 col-md-12">
+					<div class="red_opacity">
+						<div class="vert"></div>
+						<div class="vertical_align_container">
+							<h3 class="form-group">A new way to invest or raise capital.</h3>
+							<p>Through our partnership with <a href="">Growth Fountain</a>, we're pleased to introduce Equity Crowdfunding. With this innovative program:</p>
+							<ul class="row">
+								<li>- Investors and entrepreneurs can connect to enrich each other.</li>
+								<li>- Investors receive equity for their contributions to small businesses.</li>
+								<li>- Entrepreneurs can raise capital for their businesses through these contributions.</li>
+								<li>- Opportunities are available on local and national levels.</li>
+								<li>- Economic growth is spurred by greater exposure and interest.</li>
+							</ul>
+						</div>
+					</div>
+				</div>
+				<div class="col-lg-6 col-md-12">
+					<div class="logo_container">
+						<div class="vertical_align_container">
+							<img src="img/logo.png" alt="">
+							<div class="text-center">
+								<p>Powered by</p>
+								<img src="img/gf_logo_nosub.png" alt="">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="text_block_white">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-6 col-md-12 text-uppercase">
+					<p><b>To get started, </b>click on “Invest” to browse current opportunities or “Raise Capital” to create a new fund-sourcing campaign.</p>
+				</div>
+				<div class="col-lg-6 col-md-12">
+					<div class="text-center">
+						<a href="" class="btn btn-info text-uppercase">Invest</a>
+						<div class="circle_or">or</div>
+						<a href="" class="btn btn-info-dark text-uppercase">Raise capital</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="jeanne_footer">
+		<div class="container">
+			<div class="row text-lg-center">
+				<div class="col-lg-4 col-md-6 col-sm-12 text-md-right">
+					<div class="container_block">
+						<img src="img/footer_com_logo.png" alt="">
+					</div>
+				</div>
+				<div class="col-lg-6 col-md-6 col-sm-12">
+					<div class="container_block text-left">
+						<h5>Need help getting your idea started?</h5>
+						<p>"Build" Business Solutions offer everything from business loans and credit cards to business checking and savings products. Let us help you take your concept or business to the next level.</p>
+					</div>
+				</div>
+				<div class="col-lg-2 col-md-12">
+					<div class="small_container_block">
+						<h6 class="form-group text-uppercase">Ready to <b>build</b> your business</h6>
+						<a href="#" class="btn btn-primary text-uppercase">Start today</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<!-- Здесь пишем код -->
+
+
+	<div class="hidden"></div>
+
+	<!--[if lt IE 9]>
+	<script src="libs/html5shiv/es5-shim.min.js"></script>
+	<script src="libs/html5shiv/html5shiv.min.js"></script>
+	<script src="libs/html5shiv/html5shiv-printshiv.min.js"></script>
+	<script src="libs/respond/respond.min.js"></script>
+	<![endif]-->
+
+	<!-- Load Scripts Start -->
+         <script src="http://code.jquery.com/jquery-1.9.1.js"></script>
+    	<script src="js/bootstrap.min.js"></script>
+    	<script src="js/my_script.js"></script>
+	<!-- Load Scripts End -->
+
+</body>
+</html>

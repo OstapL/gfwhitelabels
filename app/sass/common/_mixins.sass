@@ -1,0 +1,18 @@
+@mixin ellipsis() 
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+
+=calc-rem($px)
+	font-size: $px / 16 + rem
+
+=placeholder
+  &::-webkit-input-placeholder
+    @content
+  &:-moz-placeholder
+    @content
+  &::-moz-placeholder
+    @content
+  &:-ms-input-placeholder
+    @content
+

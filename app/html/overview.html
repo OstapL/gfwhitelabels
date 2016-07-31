@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html class="no-js" lang="ru">
+
+<head>
+
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+		<!-- Bootstrap -->
+		<!-- <link rel="stylesheet" href="css/bootstrap.min.css"> -->
+		<link rel="stylesheet" href="css/main.css" type="text/css" charset="utf-8"/>
+<!-- тут пока что подключаю не минифицированый main.css так как у меня выдает ошибку компиляции при минификации, когда разберусь от чего тогда подключу минифицированиый -->
+		<link rel="stylesheet" href="css/font-awesome.min.css" type="text/css" charset="utf-8"/>
+		<link rel="stylesheet" href="css/bootstrap-select.css">
+</head>
+
+<body>
+	<header class="header">
+		<nav class="navbar bg-inverse navbar-dark">
+			<button class="navbar-toggler hidden-lg-up" type="button" data-toggle="collapse" data-target="#exCollapsingNavbar2">
+			&#9776;
+			</button>
+
+			<div class="pseudo-block">
+				
+			</div>
+
+			<a class="navbar-brand mobile-logo" href="#">
+				<img class=" hidden" src="img/main_logo.png" alt="">
+			</a>
+			
+			<div class="collapse navbar-toggleable-md" id="exCollapsingNavbar2">
+				<!-- logo -->
+				<div class="logo  hidden">
+					
+				<a class="navbar-brand hidden" href="#">
+					<img class=" hidden" src="img/main_logo.png" alt="">
+				</a>
+				</div>
+				<!-- main menu left part-->
+				<ul class="nav navbar-nav pull-left">
+
+					<li class="nav-item">
+						<a class="nav-link" href="#">
+							<i class="fa fa-search"></i>
+							Explorer 
+						</a>
+					</li>
+
+					<li class="nav-item active">
+						<a class="nav-link" href="#">About us 
+							<i class="fa fa-angle-down"></i>
+
+						</a>
+						<div class="list-container">
+							<ul class="submenu list-unstyled">
+								<li>
+									<a class="btn" href="#">Overview</a>
+								</li>
+								<li>
+									<a class="btn" href="#">Team</a>
+								</li>
+								<li>
+									<a class="btn" href="#">Partners</a>
+								</li>
+								<li>
+									<a class="btn" href="#">Contact Us</a>
+								</li>
+								<li>
+									<a class="btn" href="#">Careers</a>
+								</li>
+								<li>
+									<a class="btn" href="#">In the News</a>
+								</li>
+							</ul>
+						</div>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">Resource center <i class="fa fa-angle-down"></i></a>
+						<div class="list-container two-columns">
+							<ul class="  submenu list-unstyled">
+								<li class="btn-sm">
+									<p>For Investors</p>
+									
+								</li>
+								<li>
+									<a class="btn" href="">Investor Tutorial</a>
+									
+								</li>
+								<li>
+									<a class="btn" href="">Educational Materials</a>
+									
+								</li>
+								<li>
+									
+									<a class="btn" href="">FAQ</a>
+								</li>
+							</ul>
+
+							<ul class="  submenu list-unstyled">
+								<li class="btn-sm">
+									<p>For Businesses</p>
+								</li>
+								<li>
+									<a class="btn" href="">Business Tutorials</a>
+								</li>
+								<li>
+									<a class="btn" href="">Campaign Material</a>
+								</li>
+								<li>
+									<a class="btn" href="">Success Guide</a>
+								</li>
+								<li>
+									<a class="btn" href="">Capital Raise Caculator</a>
+								</li>
+								<li>
+									<a class="btn" href="">What's My Business Worth?</a>
+								</li>
+								<li>
+									<a class="btn" href="">FAQ</a>
+								</li>
+							</ul>
+						</div>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">Advisor network 
+							<i class="fa fa-angle-down"></i>
+						</a>
+						<div class="list-container">
+							<ul class="  submenu list-unstyled">
+								<li>
+									<a class="btn" href="">About</a>
+								</li>
+									
+								<li>
+									<a class="btn" href="">FAQ</a>
+								</li>
+							</ul>
+						</div>
+					</li>
+
+				</ul>
+
+				<!-- main menu right part-->
+				<ul class="nav navbar-nav pull-right">
+
+					<li class="nav-item notification text-center">
+						<a href="#">
+							<i class="fa fa-bell-o ">
+								<span class="count-notific">5</span>
+							</i>
+						</a>
+
+						<div class="list-container ">
+
+							<ul class="submenu list-unstyled ">
+								<li class="clearfix title btn">
+									<span class="pull-left "><b>5 pending</b> comments</span>
+									<a class=" pull-right" href="#">view all</a>
+								</li>
+									
+								<li class="clearfix btn">
+									<span class="pull-left ">Maria Kravchuk wrote...</span>
+									<i class=" pull-right">just now</i>
+								</li>
+								<li class="clearfix btn">
+									<span class="pull-left ">Maria Kravchuk wrote...</span>
+									<i class=" pull-right">just now</i>
+								</li>
+								<li class="clearfix btn">
+									<span class="pull-left ">Maria Kravchuk wrote...</span>
+									<i class=" pull-right">just now</i>
+								</li>
+								<li class="clearfix btn">
+									<span class="pull-left ">Maria Kravchuk wrote...</span>
+									<i class=" pull-right">just now</i>
+								</li>
+								<li class="clearfix btn">
+									<span class="pull-left ">Maria Kravchuk wrote...</span>
+									<i class=" pull-right">just now</i>
+								</li>
+							</ul>
+						</div>
+					</li>
+
+					<li class="nav-item notification text-center">
+						<a href="#">
+							<i class="fa fa-envelope-o">
+								<span class="count-notific">5</span>
+							</i>
+						</a>
+					</li>
+
+					<li class="nav-item user-info">
+						<a class="nav-link user-info-name" href="#">
+							<span >
+								<i class="fa fa-user"></i>
+							</span>
+							Maria Kravchuk
+						</a>
+
+						<div class="list-container user-info-drop">
+							<ul class="submenu list-unstyled ">
+								<li>
+									<a class="btn" href="">Account</a>
+								</li>
+									
+								<li>
+									<a class="btn" href="">Issuer Dashboard</a>
+								</li>
+								<li>
+									<a class="btn" href="">Investor Dashboard</a>
+								</li>
+								<li>
+									<a class="btn" href="">Log Out</a>
+								</li>
+							</ul>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</nav>
+	</header>
+	
+	<section class="header_title">
+		<div class="container">
+		<div class="row">
+			<div class="col-lg-6">
+				<h2>Overview</h2>
+			</div>
+			<div class="col-lg-6 text-lg-right">
+				<a href="/">Home</a>
+				<span>/</span>
+				<a href="">About Us</a>
+				<span>/</span>
+				<span class="curent">Overview</span>
+			</div>
+		</div>
+	</section>
+
+	<!-- Overview section -->
+	<section class="text_block">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="main_text first">
+						<h1>Overview</h1>
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-lg-4 pull-lg-right">
+					<div class="sidebar_title">
+						<h4>Overview</h4>
+					</div>
+					<ul class="sidebar_link">
+						<li>
+							<a href="" class="active">Overview</a>
+						</li>
+						<li>
+							<a href="">Team</a>
+						</li>
+						<li>
+							<a href="">Partners</a>
+						</li>
+						<li>
+							<a href="">Contact Us</a>
+						</li>
+						<li>
+							<a href="">Careers</a>
+						</li>
+						<li>
+							<a href="">In the News</a>
+						</li>
+					</ul>
+				</div>
+				<div class="col-lg-8 pull-lg-right">
+					<!-- <div class="main_text first">
+						<h2>Overview</h2>
+					</div> -->
+					<div class="main_text">
+						<h3>Overview</h3>
+
+						<p>
+							We banded together with a simple mission – to connect small businesses to all the tools they need to succeed – including financial, human and social capital. Our goal is to level the playing field and make things easy for entrepreneurs to focus on what matters – their product or service!
+
+							Please feel free to take advantage of all of the tools, tutorials and calculators we have available on our platform, including:
+						</p>
+
+						<ul>
+							<li>
+								<i>Raise Capital:</i> Access our investor network to raise financial capital for your company
+							</li>
+							<li>
+								<i>Advisor Network:</i> We intend to help companies connect with individuals who have been there, done that and who might be able to give the right advice
+							</li>
+							<li>
+								<i>Education Material:</i> How does investing in Regulation Crowdfunding offerings actually work?
+							</li>
+
+							<li>
+								<i>Success Guide: </i>This tool can help your company prepare your fundraising campaign
+							</li>
+
+							<li>
+								<i>Investor and Business Tutorials:</i> Delve deeper into the rules and obligations of Regulation Crowdfunding
+							</li>
+
+							<li>
+								<i>Capital Raise Calculator: </i>This tool helps you understand how much money you might need to raise to accomplish your goals
+							</li>
+
+							<li>
+								<i>What’s my Business Worth?: </i>This tool helps you benchmark valuations for similar companies
+							</li>
+
+							<li>
+								<i>Blog:</i> Read and contribute to GrowthFountain’s Blog!
+							</li>
+
+							<li>
+								<i>FAQ: </i>Scroll through our Frequently Asked Questions to gain additional insight into how it all works
+								Together, we can help support entrepreneurs and grow businesses that otherwise might not have had this opportunity.
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Meet the Team section -->
+	<section class="text_block">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="main_text first">
+						<h1>Meet the Team</h1>
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-lg-4 pull-lg-right">
+					<div class="sidebar_title">
+						<h4>Overview</h4>
+					</div>
+					<ul class="sidebar_link">
+						<li>
+							<a href="">Overview</a>
+						</li>
+						<li>
+							<a href="" class="active">Team</a>
+						</li>
+						<li>
+							<a href="">Partners</a>
+						</li>
+						<li>
+							<a href="">Contact Us</a>
+						</li>
+						<li>
+							<a href="">Careers</a>
+						</li>
+						<li>
+							<a href="">In the News</a>
+						</li>
+					</ul>
+				</div>
+				<div class="col-lg-8 pull-lg-right">
+					<!-- <div class="main_text first">
+						<h2>Overview</h2>
+					</div> -->
+					<div class="main_text">
+						<h3>Team</h3>
+						<div class="row">
+							<figure class="col-sm-6">
+							    <p>
+							    	<img src="img/pages/ken.jpg" alt="" />
+							    </p>
+							    <figcaption>Kenneth Staut, CFA</figcaption>
+							</figure>
+							<figure class="col-sm-6">
+							    <p>
+							    	<img src="img/pages/leon.jpg" alt="" />
+							    </p>
+							    <figcaption>Leon Stiel</figcaption>
+							</figure>
+						</div>
+
+						<div class="row">
+							<figure class="col-sm-6">
+							    <p>
+							    	<img src="img/pages/kevin.jpg" alt="" />
+							    </p>
+							    <figcaption>Kevin Matuszewski</figcaption>
+							</figure>
+							<figure class="col-sm-6">
+							    <p>
+							    	<img src="img/pages/kim.jpg" alt="" />
+							    </p>
+							    <figcaption>Kimberly Russo </figcaption>
+							</figure>
+						</div>
+
+						<div class="row">
+							<figure class="col-sm-6">
+							    <p>
+							    	<img src="img/pages/joe.jpg" alt="" />
+							    </p>
+							    <figcaption>Joe Esposito, CFA</figcaption>
+							</figure>
+							<figure class="col-sm-6">
+							    <p>
+							    	<img src="img/pages/dave.jpg" alt="" />
+							    </p>
+							    <figcaption>Dave Lurvey</figcaption>
+							</figure>
+						</div>
+						<div class="row">
+							<figure class="col-sm-6">
+							    <p>
+							    	<img src="img/pages/joe.jpg" alt="" />
+							    </p>
+							    <figcaption>Joe Esposito, CFA</figcaption>
+							</figure>
+							<figure class="col-sm-6">
+							    <p>
+							    	<img src="img/pages/andrew.jpg" alt="" />
+							    </p>
+							    <figcaption>Andrew Kim</figcaption>
+							</figure>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<!-- Partner Section -->
+	<section class="text_block">
+		<div class="container">
+			<div class="row">
+				<div class="col-sm-12">
+					<div class="main_text first">
+						<h1>Partners</h1>
+					</div>
+				</div>
+			</div>
+
+			<div class="row">
+				<div class="col-lg-4 pull-lg-right">
+					<div class="sidebar_title">
+						<h4>Partners</h4>
+					</div>
+					<ul class="sidebar_link">
+						<li>
+							<a href="">Overview</a>
+						</li>
+						<li>
+							<a href="">Team</a>
+						</li>
+						<li>
+							<a href="" class="active">Partners</a>
+						</li>
+						<li>
+							<a href="">Contact Us</a>
+						</li>
+						<li>
+							<a href="">Careers</a>
+						</li>
+						<li>
+							<a href="">In the News</a>
+						</li>
+					</ul>
+				</div>
+				<div class="col-lg-8 pull-lg-right">
+					<!-- <div class="main_text first">
+						<h2>Overview</h2>
+					</div> -->
+					<div class="main_text">
+						<h3>Partners</h3>
+
+						<p>
+							 At GrowthFountain, we have formed strategic partners with the credit union industry. As we focus on providing entrepreneurs with all the tools they need to succeed…well, Credit Unions focus on the same thing! As well as the cumulative affect local business will have on the community. We make perfect partners.
+						</p>
+
+						<div class="row">
+							<figure class="col-sm-6">
+							    <p>
+							    	<img src="img/pages/callahan.png" alt="" />
+							    </p>
+							    <figcaption></figcaption>
+							</figure>
+						</div>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<footer class="footer_new">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-3">
+					<div class="footer_title border_bottom">
+						<h4>About us</h4>
+					</div>
+					<a href="">Overview</a>
+					<a href="">Team</a>
+					<a href="">Partners</a>
+					<a href="">Contacy Us</a>
+					<a href="">Careers</a>
+					<a href="">In the News</a>
+					<a href="">FAQ</a>
+					<a href="">Blog</a>
+				</div>
+				<div class="col-lg-3">
+					<div class="footer_title border_bottom">
+						<h4>Investor resources</h4>
+					</div>
+					<a href="">Investor Tutorial</a>
+					<a href="">Education Material</a>
+					<div class="footer_title border_bottom">
+						<h4>Business recources</h4>
+					</div>
+					<a href="">Business Tutorial</a>
+					<a href="">Success Guide</a>
+					<a href="">Capital Raise Calculator</a>
+					<a href="">What's me Business Worth?</a>
+				</div>
+				<div class="col-lg-3">
+					<div class="footer_title border_bottom">
+						<h4>Advisor network</h4>
+					</div>
+					<a href="">About</a>
+					<a href="">FAQ</a>
+				</div>
+				<div class="col-lg-3">
+					<div class="footer_title border_bottom">
+						<h4>Legal</h4>
+					</div>
+					<a href="">Terms</a>
+					<a href="">Privacy</a>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="company">
+						<span>©GROWTHFOUNTAIN 2016.</span>
+						<p>Made with love for great people</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer>
+	<!-- Здесь пишем код -->
+
+
+	<div class="hidden"></div>
+
+	<!--[if lt IE 9]>
+	<script src="libs/html5shiv/es5-shim.min.js"></script>
+	<script src="libs/html5shiv/html5shiv.min.js"></script>
+	<script src="libs/html5shiv/html5shiv-printshiv.min.js"></script>
+	<script src="libs/respond/respond.min.js"></script>
+	<![endif]-->
+
+	<!-- Load Scripts Start -->
+		<!-- <script src="http://code.jquery.com/jquery-1.9.1.js"></script> -->
+		<script src="js/jquery.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+		<script src="js/bootstrap-select.js"></script>
+		<script src="js/my_script.js"></script>
+	<!-- Load Scripts End -->
+
+</body>
+</html>

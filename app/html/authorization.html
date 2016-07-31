@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html class="no-js" lang="ru">
+
+<head>
+
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+		<!-- Bootstrap -->
+		<!-- <link rel="stylesheet" href="css/bootstrap.min.css"> -->
+		<link rel="stylesheet" href="css/main.css" type="text/css" charset="utf-8"/>
+<!-- тут пока что подключаю не минифицированый main.css так как у меня выдает ошибку компиляции при минификации, когда разберусь от чего тогда подключу минифицированиый -->
+		<link rel="stylesheet" href="css/font-awesome.min.css" type="text/css" charset="utf-8"/>
+		<link rel="stylesheet" href="css/bootstrap-select.css">
+</head>
+
+<body>
+	<header class="header">
+		<nav class="navbar bg-inverse navbar-dark">
+			<button class="navbar-toggler hidden-lg-up" type="button" data-toggle="collapse" data-target="#exCollapsingNavbar2">
+			&#9776;
+			</button>
+
+			<div class="pseudo-block">
+				
+			</div>
+
+			<a class="navbar-brand mobile-logo" href="#">
+				<img class=" hidden" src="img/main_logo.png" alt="">
+			</a>
+			
+			<div class="collapse navbar-toggleable-md" id="exCollapsingNavbar2">
+				<!-- logo -->
+				<div class="logo  hidden">
+					
+				<a class="navbar-brand hidden" href="#">
+					<img class=" hidden" src="img/main_logo.png" alt="">
+				</a>
+				</div>
+				<!-- main menu left part-->
+				<ul class="nav navbar-nav pull-left">
+					<li class="nav-item">
+						<a class="nav-link" href="#">
+							<i class="fa fa-search"></i>
+							Explorer 
+						</a>
+					</li>
+					
+					<li class="nav-item active">
+						<a class="nav-link" href="#">About us 
+							<i class="fa fa-angle-down"></i>
+
+						</a>
+						<div class="list-container">
+							<ul class="submenu list-unstyled">
+								<li>
+									<a class="btn" href="#">Overview</a>
+								</li>
+								<li>
+									<a class="btn" href="#">Team</a>
+								</li>
+								<li>
+									<a class="btn" href="#">Partners</a>
+								</li>
+								<li>
+									<a class="btn" href="#">Contact Us</a>
+								</li>
+								<li>
+									<a class="btn" href="#">Careers</a>
+								</li>
+								<li>
+									<a class="btn" href="#">In the News</a>
+								</li>
+							</ul>
+						</div>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">Resource center <i class="fa fa-angle-down"></i></a>
+						<div class="list-container two-columns">
+							<ul class="  submenu list-unstyled">
+								<li class="btn-sm">
+									<p>For Investors</p>
+									
+								</li>
+								<li>
+									<a class="btn" href="">Investor Tutorial</a>
+									
+								</li>
+								<li>
+									<a class="btn" href="">Educational Materials</a>
+									
+								</li>
+								<li>
+									
+									<a class="btn" href="">FAQ</a>
+								</li>
+							</ul>
+
+							<ul class="  submenu list-unstyled">
+								<li class="btn-sm">
+									<p>For Businesses</p>
+								</li>
+								<li>
+									<a class="btn" href="">Business Tutorials</a>
+								</li>
+								<li>
+									<a class="btn" href="">Campaign Material</a>
+								</li>
+								<li>
+									<a class="btn" href="">Success Guide</a>
+								</li>
+								<li>
+									<a class="btn" href="">Capital Raise Caculator</a>
+								</li>
+								<li>
+									<a class="btn" href="">What's My Business Worth?</a>
+								</li>
+								<li>
+									<a class="btn" href="">FAQ</a>
+								</li>
+							</ul>
+						</div>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">Advisor network 
+							<i class="fa fa-angle-down"></i>
+						</a>
+						<div class="list-container">
+							<ul class="  submenu list-unstyled">
+								<li>
+									<a class="btn" href="">About</a>
+								</li>
+									
+								<li>
+									<a class="btn" href="">FAQ</a>
+								</li>
+							</ul>
+						</div>
+					</li>
+
+				</ul>
+
+				<!-- main menu right part-->
+				<ul class="nav navbar-nav pull-right">
+
+					<li class="nav-item notification text-center">
+						<a href="#">
+							<i class="fa fa-bell-o ">
+								<span class="count-notific">5</span>
+							</i>
+						</a>
+
+						<div class="list-container ">
+
+							<ul class="submenu list-unstyled ">
+								<li class="clearfix title btn">
+									<span class="pull-left "><b>5 pending</b> comments</span>
+									<a class=" pull-right" href="#">view all</a>
+								</li>
+									
+								<li class="clearfix btn">
+									<span class="pull-left ">Maria Kravchuk wrote...</span>
+									<i class=" pull-right">just now</i>
+								</li>
+								<li class="clearfix btn">
+									<span class="pull-left ">Maria Kravchuk wrote...</span>
+									<i class=" pull-right">just now</i>
+								</li>
+								<li class="clearfix btn">
+									<span class="pull-left ">Maria Kravchuk wrote...</span>
+									<i class=" pull-right">just now</i>
+								</li>
+								<li class="clearfix btn">
+									<span class="pull-left ">Maria Kravchuk wrote...</span>
+									<i class=" pull-right">just now</i>
+								</li>
+								<li class="clearfix btn">
+									<span class="pull-left ">Maria Kravchuk wrote...</span>
+									<i class=" pull-right">just now</i>
+								</li>
+							</ul>
+						</div>
+					</li>
+
+					<li class="nav-item notification text-center">
+						<a href="#">
+							<i class="fa fa-envelope-o">
+								<span class="count-notific">5</span>
+							</i>
+						</a>
+					</li>
+
+					<li class="nav-item user-info">
+						<a class="nav-link user-info-name" href="#">
+							<span >
+								<i class="fa fa-user"></i>
+							</span>
+							Maria Kravchuk
+						</a>
+
+						<div class="list-container user-info-drop">
+							<ul class="submenu list-unstyled ">
+								<li>
+									<a class="btn" href="">Account</a>
+								</li>
+									
+								<li>
+									<a class="btn" href="">Issuer Dashboard</a>
+								</li>
+								<li>
+									<a class="btn" href="">Investor Dashboard</a>
+								</li>
+								<li>
+									<a class="btn" href="">Log Out</a>
+								</li>
+							</ul>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</nav>
+	</header>
+
+	<div class="container">
+		<div class="row text_block">
+			<div class="col-sm-12 main_text">
+				<h1>
+					Sign Up
+				</h1>
+			</div>
+		</div>
+	</div>
+
+	<!-- main content of sighn up/login -->
+	<section class="authorization container">
+
+	    <div class="row">
+
+			<div class="col-lg-6">
+
+		        <div class="embed-responsive embed-responsive-16by9 boxshadow">
+			        <iframe class="embed-responsive-item" src="https://player.vimeo.com/video/170651597?title=0&amp;byline=0&amp;portrait=0" data-webkitallowfullscreen="" data-mozallowfullscreen="" data-allowfullscreen="">
+			        </iframe>
+			     </div>
+	        </div>
+
+	        <div class="forms-block">
+
+				<div class="col-lg-6">
+
+	                <!-- Nav Tabs -->
+	                <div class="row">
+	                	<div class="col-lg-offset-3 col-lg-9 col-sm-offset-3">
+	                		
+			                <ul class="nav nav-tabs login-tabs">
+
+			                    <li class="nav-item " aria-expanded="false">
+			                        <a href="#mini-one"  data-toggle="tab" class="active nav-link " aria-expanded="true">Login</a>
+			                    </li>
+			                    <li class="nav-item">
+			                        <a href="#mini-two" data-toggle="tab" class="nav-link " aria-expanded="true">Sign Up</a>
+			                    </li>
+
+			                </ul>
+	                	</div>
+	                </div>
+	                <!-- End Nav Tabs -->
+
+	                <!-- Tab panes -->
+	                <div class="tab-content authorization-tabs-content ">
+
+	                    <div class="tab-pane fade in active" id="mini-one" aria-expanded="true">
+
+	                        <!-- Login Form -->
+	                        <div class="row">
+
+	                        	<section class="form-section">
+
+		                            <form class="login-form" action="/accounts/login/" method="post">
+
+		                              <input type="hidden" name="csrfmiddlewaretoken" value="3lHm0g2mrl3UQHSQU5Lj6ccr6vVnA75T">
+
+		                                <div class="clearfix">
+
+		                                    <!-- Username -->
+		                                    <input type="hidden" name="next" value="">
+
+											<div class="form-group clearfix">
+											  
+											    <div class="col-lg-3 col-sm-3  text-md-right">
+											      <label for="id_login">E-mail</label>
+											    </div>
+
+											    <div class="col-md-6 col-lg-7">
+											      <input autofocus="autofocus" class=" input-md form-control" id="id_login" name="login" placeholder="E-mail адрес" type="email">
+											      
+											      <span class="help-block"></span>
+											    </div>
+											  
+											</div> 
+
+											<div class="form-group clearfix">
+
+											    <div class=" col-lg-3 col-sm-3 text-md-right">
+											    	<label for="id_password">Пароль</label>
+											    </div>
+
+											    <div class="col-md-6 col-lg-7">
+											    	<input class=" input-md form-control" id="id_password" name="password" placeholder="Пароль" type="password">
+											      
+											      <span class="help-block"></span>
+											    </div>
+
+											</div> 
+
+		                                    <div class="socialaccount_ballot clearfix">
+		                                    	<div class=" col-lg-3 col-sm-6 col-xs-5 text-sm-right">
+		                                    		<p>Or login with</p>
+		                                    	</div>
+
+		                                    	<div class="col-sm-6 col-xs-7 col-lg-6">
+			                                        <ul class="social-icons list-inline clearfix">
+			                                            <li>
+			                                                <a class="fa fa-facebook social-icon-color facebook" data-original-title="facebook" href="/accounts/facebook/login/?process=login"></a>
+			                                            </li>
+			                                            <li>
+			                                                <a class="fa fa-google-plus social-icon-color googleplus" data-original-title="Google Plus" href="/accounts/google/login/?process=login"></a>
+			                                            </li>
+			                                            <li>
+			                                                <a class="fa fa-linkedin social-icon-color linkedin" data-original-title="Linkedin" href="/accounts/linkedin_oauth2/login/?process=login"></a>
+			                                            </li>
+			                                        </ul>
+		                                    	</div>
+		                                     </div>
+
+		                                </div>
+
+		                                <div class="form-group clearfix">
+
+		                                	<div class=" col-lg-6 col-xs-6 text-md-right">
+		                                        <a href="/accounts/password/reset/" id="forget-password" class="forget-password">Forgot Password?</a>
+		                                	</div>
+
+		                                	<div class="col-xs-6">
+		                                        <button class="pull-md-left  pull-xs-right bg-inverse submit-btn btn btn-lg" id="login-btn">Login</button>
+		                                	</div>
+
+		                                </div>
+		                            </form>
+	                            </section>
+	                        </div>
+	                        <!-- End Login Form -->
+	                    </div>
+	                    
+	                    <div class="tab-pane fade" id="mini-two" aria-expanded="false">
+
+	                        <!-- Registry Form -->
+	                        <div class="row">
+	                        	<section class="form-section">
+
+	                            <form class="form-horizontal no-gutter-right" action="/accounts/signup/" method="post">
+
+	                                    <input type="hidden" name="csrfmiddlewaretoken" value="3lHm0g2mrl3UQHSQU5Lj6ccr6vVnA75T">
+
+										<div class="form-group clearfix">
+										  
+										    <div class="col-lg-3 col-sm-3  text-md-right">
+										      <label for="id_first_name">First Name</label>
+										    </div>
+
+										    <div class="col-md-6 col-lg-7">
+										      <input class=" input-md form-control" id="id_first_name" maxlength="30" name="first_name" placeholder="First Name" type="text">
+										      
+										      <span class="help-block"></span>
+										    </div>
+										  
+										</div> 
+
+										<div class="form-group wpcf7-form-control-wrap   last_name clearfix">
+										  
+										    <div class="col-lg-3 col-sm-3  text-md-right">
+										      <label for="id_last_name">Last Name</label>
+										    </div>
+
+										    <div class="col-md-6 col-lg-7">
+										      <input class=" input-md form-control" id="id_last_name" maxlength="30" name="last_name" placeholder="Last Name" type="text">
+										      
+										      <span class="help-block"></span>
+										    </div>
+										  
+										</div>
+
+										<div class="form-group wpcf7-form-control-wrap   email clearfix">
+										  
+										    <div class="col-lg-3 col-sm-3  text-md-right">
+										      <label for="id_email">E-mail</label>
+										    </div>
+										    <div class="col-md-6 col-lg-7">
+										      <input class=" input-md form-control" id="id_email" name="email" placeholder="E-mail адрес" type="email">
+										      
+										      <span class="help-block"></span>
+										    </div>
+										  
+										</div> 
+
+										<div class="form-group wpcf7-form-control-wrap   password1 clearfix">
+										  
+										    <div class="col-lg-3 col-sm-3  text-md-right">
+										      <label for="id_password1">Пароль</label>
+										    </div>
+
+										    <div class="col-md-6 col-lg-7">
+										      <input class=" input-md form-control" id="id_password1" name="password1" placeholder="Пароль" type="password">
+										      
+										      <span class="help-block"></span>
+										    </div>
+										  
+										</div> 
+
+										<div class="form-group wpcf7-form-control-wrap   password2 clearfix">
+										  
+										    <div class="col-lg-3 col-sm-3  text-md-right">
+										      <label for="id_password2">Пароль (еще раз)</label>
+										    </div>
+
+										    <div class="col-md-6 col-lg-7">
+										      <input class=" input-md form-control" id="id_password2" name="password2" placeholder="Пароль (еще раз)" type="password">
+										      
+										      <span class="help-block"></span>
+										    </div>
+										  
+										</div> 
+
+										<div class="form-group   signature clearfix">
+										  <div class="col-sm-12">
+											  <label for="id_signature" class="pseudo-checkbox">
+											      <input id="id_signature" name="signature" type="checkbox">
+											      I consent to electronic signature and electronic delivery of documentation
+											  </label>
+										  </div>
+										</div>
+
+										<div class="form-group terms_conditions clearfix">
+											<div class="col-sm-12">
+											  <label for="id_terms_conditions" class="pseudo-checkbox">
+											      <input id="id_signature" name="terms_conditions" type="checkbox">
+											      I consent to the <a href="/pages/terms/" target="_blank">Terms of Use</a> and <a href="/pages/privacy" target="_blank">Privacy Policy</a>
+											  </label>
+										  </div>
+										</div>
+
+	                                    <div class="form-group form-actions text-sm-center">
+	                                    	<div class="col-lg-10 col-md-9 col-xs-12 clearfix">
+	                                         	<button type="submit" id="register-submit-btn" class="bg-inverse pull-right btn-primary submit-btn btn btn-lg  uppercase">Submit</button>
+	                                    	</div>
+	                                    </div>
+	                                </form>
+								</section>
+	                        </div>
+	                        <!-- End Registry Form -->
+	                    </div>
+	                </div>
+
+		        </div>
+	        </div>
+	    </div>
+	</section>
+
+	<footer class="footer_new">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-3">
+					<div class="footer_title border_bottom">
+						<h4>About us</h4>
+					</div>
+					<a href="">Overview</a>
+					<a href="">Team</a>
+					<a href="">Partners</a>
+					<a href="">Contacy Us</a>
+					<a href="">Careers</a>
+					<a href="">In the News</a>
+					<a href="">FAQ</a>
+					<a href="">Blog</a>
+				</div>
+				<div class="col-lg-3">
+					<div class="footer_title border_bottom">
+						<h4>Investor resources</h4>
+					</div>
+					<a href="">Investor Tutorial</a>
+					<a href="">Education Material</a>
+					<div class="footer_title border_bottom">
+						<h4>Business recources</h4>
+					</div>
+					<a href="">Business Tutorial</a>
+					<a href="">Success Guide</a>
+					<a href="">Capital Raise Calculator</a>
+					<a href="">What's me Business Worth?</a>
+				</div>
+				<div class="col-lg-3">
+					<div class="footer_title border_bottom">
+						<h4>Advisor network</h4>
+					</div>
+					<a href="">About</a>
+					<a href="">FAQ</a>
+				</div>
+				<div class="col-lg-3">
+					<div class="footer_title border_bottom">
+						<h4>Legal</h4>
+					</div>
+					<a href="">Terms</a>
+					<a href="">Privacy</a>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="company">
+						<span>©GROWTHFOUNTAIN 2016.</span>
+						<p>Made with love for great people</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer>
+	<!-- Здесь пишем код -->
+
+
+	<div class="hidden"></div>
+
+	<!--[if lt IE 9]>
+	<script src="libs/html5shiv/es5-shim.min.js"></script>
+	<script src="libs/html5shiv/html5shiv.min.js"></script>
+	<script src="libs/html5shiv/html5shiv-printshiv.min.js"></script>
+	<script src="libs/respond/respond.min.js"></script>
+	<![endif]-->
+
+	<!-- Load Scripts Start -->
+		<!-- <script src="http://code.jquery.com/jquery-1.9.1.js"></script> -->
+		<script src="js/jquery.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+		<script src="js/bootstrap-select.js"></script>
+		<script src="js/my_script.js"></script>
+	<!-- Load Scripts End -->
+
+</body>
+</html>

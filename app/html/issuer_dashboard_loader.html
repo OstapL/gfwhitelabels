@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+		<!-- Bootstrap -->
+		<!-- <link rel="stylesheet" href="css/bootstrap.min.css"> -->
+		<link rel="stylesheet" href="css/main.css" type="text/css" charset="utf-8"/>
+<!-- тут пока что подключаю не минифицированый main.css так как у меня выдает ошибку компиляции при минификации, когда разберусь от чего тогда подключу минифицированиый -->
+		<link rel="stylesheet" href="css/font-awesome.min.css" type="text/css" charset="utf-8"/>
+		<link rel="stylesheet" href="css/bootstrap-select.css">
+</head>
+<body>
+
+	<div class="loader_overlay">
+		<div class="loader"></div>
+	</div>
+	<header class="header">
+		<nav class="navbar bg-inverse navbar-dark">
+			<button class="navbar-toggler hidden-lg-up" type="button" data-toggle="collapse" data-target="#exCollapsingNavbar2">
+			&#9776;
+			</button>
+
+			<div class="pseudo-block">
+				
+			</div>
+
+			<a class="navbar-brand mobile-logo" href="#">
+				<img class=" hidden" src="img/main_logo.png" alt="">
+			</a>
+			
+			<div class="collapse navbar-toggleable-md" id="exCollapsingNavbar2">
+				<!-- logo -->
+				<div class="logo  hidden">
+					
+				<a class="navbar-brand hidden" href="#">
+					<img class=" hidden" src="img/main_logo.png" alt="">
+				</a>
+				</div>
+				<!-- main menu left part-->
+				<ul class="nav navbar-nav pull-left">
+					<li class="nav-item active">
+						<a class="nav-link" href="#">About us 
+							<i class="fa fa-angle-down"></i>
+
+						</a>
+						<div class="list-container">
+							<ul class="submenu list-unstyled">
+								<li>
+									<a class="btn" href="#">Overview</a>
+								</li>
+								<li>
+									<a class="btn" href="#">Team</a>
+								</li>
+								<li>
+									<a class="btn" href="#">Partners</a>
+								</li>
+								<li>
+									<a class="btn" href="#">Contact Us</a>
+								</li>
+								<li>
+									<a class="btn" href="#">Careers</a>
+								</li>
+								<li>
+									<a class="btn" href="#">In the News</a>
+								</li>
+							</ul>
+						</div>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">Resource center <i class="fa fa-angle-down"></i></a>
+						<div class="list-container two-columns">
+							<ul class="  submenu list-unstyled">
+								<li class="btn-sm">
+									<p>For Investors</p>
+									
+								</li>
+								<li>
+									<a class="btn" href="">Investor Tutorial</a>
+									
+								</li>
+								<li>
+									<a class="btn" href="">Educational Materials</a>
+									
+								</li>
+								<li>
+									
+									<a class="btn" href="">FAQ</a>
+								</li>
+							</ul>
+
+							<ul class="  submenu list-unstyled">
+								<li class="btn-sm">
+									<p>For Businesses</p>
+								</li>
+								<li>
+									<a class="btn" href="">Business Tutorials</a>
+								</li>
+								<li>
+									<a class="btn" href="">Campaign Material</a>
+								</li>
+								<li>
+									<a class="btn" href="">Success Guide</a>
+								</li>
+								<li>
+									<a class="btn" href="">Capital Raise Caculator</a>
+								</li>
+								<li>
+									<a class="btn" href="">What's My Business Worth?</a>
+								</li>
+								<li>
+									<a class="btn" href="">FAQ</a>
+								</li>
+							</ul>
+						</div>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">Advisor network 
+							<i class="fa fa-angle-down"></i>
+						</a>
+						<div class="list-container">
+							<ul class="  submenu list-unstyled">
+								<li>
+									<a class="btn" href="">About</a>
+								</li>
+									
+								<li>
+									<a class="btn" href="">FAQ</a>
+								</li>
+							</ul>
+						</div>
+					</li>
+
+				</ul>
+
+				<!-- main menu right part-->
+				<ul class="nav navbar-nav pull-right">
+
+					<li class="nav-item notification text-center">
+						<a href="#">
+							<i class="fa fa-bell-o ">
+								<span class="count-notific">5</span>
+							</i>
+						</a>
+
+						<div class="list-container ">
+
+							<ul class="submenu list-unstyled ">
+								<li class="clearfix title btn">
+									<span class="pull-left "><b>5 pending</b> comments</span>
+									<a class=" pull-right" href="#">view all</a>
+								</li>
+									
+								<li class="clearfix btn">
+									<span class="pull-left ">Maria Kravchuk wrote...</span>
+									<i class=" pull-right">just now</i>
+								</li>
+								<li class="clearfix btn">
+									<span class="pull-left ">Maria Kravchuk wrote...</span>
+									<i class=" pull-right">just now</i>
+								</li>
+								<li class="clearfix btn">
+									<span class="pull-left ">Maria Kravchuk wrote...</span>
+									<i class=" pull-right">just now</i>
+								</li>
+								<li class="clearfix btn">
+									<span class="pull-left ">Maria Kravchuk wrote...</span>
+									<i class=" pull-right">just now</i>
+								</li>
+								<li class="clearfix btn">
+									<span class="pull-left ">Maria Kravchuk wrote...</span>
+									<i class=" pull-right">just now</i>
+								</li>
+							</ul>
+						</div>
+					</li>
+
+					<li class="nav-item notification text-center">
+						<a href="#">
+							<i class="fa fa-envelope-o">
+								<span class="count-notific">5</span>
+							</i>
+						</a>
+					</li>
+
+					<li class="nav-item user-info">
+						<a class="nav-link user-info-name" href="#">
+							<span >
+								<i class="fa fa-user"></i>
+							</span>
+							Maria Kravchuk
+						</a>
+
+						<div class="list-container user-info-drop">
+							<ul class="submenu list-unstyled ">
+								<li>
+									<a class="btn" href="">Account</a>
+								</li>
+									
+								<li>
+									<a class="btn" href="">Issuer Dashboard</a>
+								</li>
+								<li>
+									<a class="btn" href="">Investor Dashboard</a>
+								</li>
+								<li>
+									<a class="btn" href="">Log Out</a>
+								</li>
+							</ul>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</nav>
+
+	</header>
+
+<!-- NEW -->
+	
+	<section class="header_title">
+		<div class="container">
+		<div class="row">
+			<div class="col-lg-6">
+				<h2>Issuer dashboard</h2>
+			</div>
+			<div class="col-lg-6 text-lg-right">
+				<a href="/">Home</a>
+				<span>/</span>
+				<a href="">Advisor netrwork</a>
+				<span>/</span>
+				<span class="curent">FAQ</span>
+			</div>
+		</div>
+	</section>
+
+	<section class="second">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-4">
+					<div class="img_under_text">
+						<img src="img/test.png" alt="">
+						<h3 class="text-uppercase">company logo</h3>
+						<div class="timer_day">19 days left</div>
+					</div>
+				</div>
+				<div class="col-md-8 col-sm-12">
+					<div class="col-md-3 col-sm-6">
+						<a class="dashboard-stat dashboard-stat-v2 grey" href="#">
+							<div class="visual">
+								<i class="fa fa-bar-chart"></i>
+							</div>
+							<div class="details">
+								<div class="number">
+									<span data-counter="counterup" data-value="1349">1349</span>
+								</div>
+								<div class="desc">New Feedbacks</div>
+							</div>
+						</a>
+					</div>
+					<div class="col-md-3 col-sm-6">
+						<a class="dashboard-stat dashboard-stat-v2 grey" href="#">
+							<div class="visual">
+								<i class="fa fa-briefcase"></i>
+							</div>
+							<div class="details">
+								<div class="number">
+									<span data-counter="counterup" data-value="1349">1349</span>
+								</div>
+								<div class="desc"> Number of Investors </div>
+							</div>
+						</a>
+					</div>
+					<div class="col-md-3 col-sm-6">
+						<a class="dashboard-stat dashboard-stat-v2 grey" href="#">
+							<div class="visual">
+								<i class="fa fa-users"></i>
+							</div>
+							<div class="details">
+								<div class="number">
+									<span data-counter="counterup" data-value="1349">1,5K</span>
+								</div>
+								<div class="desc"> Page Views </div>
+							</div>
+						</a>
+					</div>
+					<div class="col-md-3 col-sm-6">
+						<a class="dashboard-stat dashboard-stat-v2 grey" href="#">
+							<div class="visual">
+								<i class="fa fa-comments"></i>
+							</div>
+							<div class="details">
+								<div class="number">
+									<span data-counter="counterup" data-value="1349">456</span>
+								</div>
+								<div class="desc"> New Interactions </div>
+							</div>
+						</a>
+					</div>
+					<div class="col-md-11 col-sm-11">
+						<div class="tpl-progress">
+								<progress class="progress big_prog" value="50" max="100">0%</progress>
+								<span class="circle_progress" style="width: 50%">
+									<i class="fa fa-circle-o"></i>
+								</span>
+								<span class="text_position" style="left: 50%">12 May<br><i class="progress_money">$750K Raised</i></span>
+						</div>
+						<div class="progress_description">
+							<div class="pull-left">
+								<p class="text-uppercase">1 may</p>
+								<span>Beginning of campaigne</span>
+							</div>
+							<div class="pull-right text-lg-right">
+								<p>1 june</p>
+								<span>End of campaign</span>
+							</div>
+							<div class="clear"></div>
+						</div>
+					</div>
+					<div class="col-md-1 col-sm-1">
+						<div class="right_fixed_text text-lg-center">
+							<span>$500K<i>Goal</i></span>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4"></div>
+				<div class="col-md-8 col-sm-12 text-lg-center">
+					<a href="" class="btn btn-secondary btn-md active view_campaing">view campaign <i class="fa fa-angle-right" aria-hidden="true"></i></a>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="grafic">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="portlet light portlet-fit bordered">
+						<div class="portlet-title portlet-hei75">
+							<div class="caption">
+								<i class="icon-settings font-dark"></i>
+								<span class="font-dark sbold text-uppercase font-alt title-size">Investments</span>
+							</div>
+							<div class="actions">
+								<div class="btn-group btn-group-devided" data-toggle="buttons">
+									<label class="btn btn-transparent dark btn-outline btn-circle btn-sm active">
+										<input type="radio" name="options" class="toggle" id="option1">Actions</label>
+									<label class="btn btn-transparent dark btn-outline btn-circle btn-sm">
+										<input type="radio" name="options" class="toggle" id="option2">Settings</label>
+								</div>
+							</div>
+						</div>
+						<div class="portlet-body">
+							<div id="chart_2" class="chart">
+								<canvas class="flot-base" width="1299" height="300" style="direction: ltr; position: absolute; left: 0px; top: 0px; width: 1299px; height: 300px;"></canvas>
+								<div class="flot-text">
+									<div class="flot-x-axis flot-x1-axis xAxis x1Axis">
+										<div class="">1 MAY</div>
+										<div class="flot-tick-label tickLabel">2 MAY</div>
+										<div class="flot-tick-label tickLabel">3 MAY</div>
+										<div class="flot-tick-label tickLabel">4 MAY</div>
+										<div class="flot-tick-label tickLabel">5 MAY</div>
+										<div class="flot-tick-label tickLabel">6 MAY</div>
+										<div class="flot-tick-label tickLabel">7 MAY</div>
+										<div class="flot-tick-label tickLabel">8 MAY</div>
+										<div class="flot-tick-label tickLabel">9 MAY</div>
+										<div class="flot-tick-label tickLabel">10 MAY</div>
+										<div class="flot-tick-label tickLabel">11 MAY</div>
+										<div class="flot-tick-label tickLabel">12 MAY</div>
+										<div class="flot-tick-label tickLabel">13 MAY</div>
+										<div class="flot-tick-label tickLabel">14 MAY</div>
+										<div class="flot-tick-label tickLabel">15 MAY</div>
+									</div>
+									<div class="flot-y-axis flot-y1-axis yAxis y1Axis">
+										<div class="flot-tick-label tickLabel">0</div>
+										<div class="flot-tick-label tickLabel">10</div>
+										<div class="flot-tick-label tickLabel">20</div>
+										<div class="flot-tick-label tickLabel">30</div>
+										<div class="flot-tick-label tickLabel">40</div>
+										<div class="flot-tick-label tickLabel">50</div>
+										<div class="flot-tick-label tickLabel">60</div>
+										<div class="flot-tick-label tickLabel">70</div>
+										<div class="flot-tick-label tickLabel">80</div>
+										<div class="flot-tick-label tickLabel">90</div>
+										<div class="flot-tick-label tickLabel">100</div>
+										<div class="flot-tick-label tickLabel">110</div>
+										<div class="flot-tick-label tickLabel">120</div>
+										<div class="flot-tick-label tickLabel">130</div>
+										<div class="flot-tick-label tickLabel">140</div>
+									</div>
+								</div>
+								<canvas class="flot-overlay" width="1299" height="300" style="direction: ltr; position: absolute; left: 0px; top: 0px; width: 1299px; height: 300px;"></canvas>
+								<div class="legend">
+									<table>
+										<tbody>
+											<tr>
+												<td class="legendLabel">Unique Visits</td>
+											</tr>
+											<tr>
+												<td class="legendLabel">Page Views</td>
+											</tr>
+										</tbody>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	
+	<section class="third">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="portlet-title tabbable-line margin_title">
+						<div class="caption">
+							<i class="icon-bubbles font-dark hide"></i>
+							<span class="font-dark text-uppercase font-alt title-size">Investor question & answer</span>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-5">
+					<div class="portlet light bordered">
+						<div class="portlet-title tabbable-line">
+							<ul class="nav nav-tabs font-alt two_check text-uppercase">
+								<li class="active">
+									<a href="#portlet_comments_1" data-toggle="tab"> New </a>
+								</li>
+								<li>
+									<a href="#portlet_comments_2" data-toggle="tab"> Answered </a>
+								</li>
+							</ul>
+						</div>
+						<div class="portlet-body all_comments">
+							<div class="tab-content">
+								<div class="tab-pane active" id="portlet_comments_1">
+									<!-- BEGIN: Comments -->
+									<div class="mt-comments hei434">
+										<div class="mt-comment">
+											<div class="mt-comment-img">
+												<img src="img/avatar1.jpg"> </div>
+											<div class="mt-comment-body">
+											<div class="mt-comment-info">
+												<span class="mt-comment-author">Maria Kravchuk</span>
+												<span class="mt-comment-date">26 Feb, 10:30AM</span>
+											</div>
+											<div class="mt-comment-text"> Lorem Ipsum is simply dummy text of the printing and typesetting industry. </div>
+												<!--<div class="mt-comment-details">
+													<span class="mt-comment-status mt-comment-status-pending">Pending</span>
+													<ul class="mt-comment-actions">
+														<li>
+															<a href="#">Quick Edit</a>
+														</li>
+														<li>
+															<a href="#">View</a>
+														</li>
+														<li>
+															<a href="#">Delete</a>
+														</li>
+													</ul>
+												</div>-->
+											</div>
+										</div>
+										<div class="mt-comment">
+											<div class="mt-comment-img">
+												<img src="img/avatar1.jpg"> </div>
+											<div class="mt-comment-body">
+											<div class="mt-comment-info">
+												<span class="mt-comment-author">Michael Baker</span>
+												<span class="mt-comment-date">26 Feb, 10:30AM</span>
+											</div>
+											<div class="mt-comment-text"> Lorem Ipsum is simply dummy text of the printing and typesetting industry. </div>
+											</div>
+										</div>
+										<div class="mt-comment">
+											<div class="mt-comment-img">
+												<img src="img/avatar1.jpg"> </div>
+											<div class="mt-comment-body">
+											<div class="mt-comment-info">
+												<span class="mt-comment-author">Michael Baker</span>
+												<span class="mt-comment-date">26 Feb, 10:30AM</span>
+											</div>
+											<div class="mt-comment-text"> Lorem Ipsum is simply dummy text of the printing and typesetting industry. </div>
+											</div>
+										</div>
+										<div class="mt-comment">
+											<div class="mt-comment-img">
+												<img src="img/avatar1.jpg"> </div>
+											<div class="mt-comment-body">
+											<div class="mt-comment-info">
+												<span class="mt-comment-author">Michael Baker</span>
+												<span class="mt-comment-date">26 Feb, 10:30AM</span>
+											</div>
+											<div class="mt-comment-text"> Lorem Ipsum is simply dummy text of the printing and typesetting industry. </div>
+											</div>
+										</div>
+										<div class="mt-comment">
+											<div class="mt-comment-img">
+												<img src="img/avatar1.jpg"> </div>
+											<div class="mt-comment-body">
+											<div class="mt-comment-info">
+												<span class="mt-comment-author">Michael Baker</span>
+												<span class="mt-comment-date">26 Feb, 10:30AM</span>
+											</div>
+											<div class="mt-comment-text"> Lorem Ipsum is simply dummy text of the printing and typesetting industry. </div>
+											</div>
+										</div>
+										<div class="mt-comment">
+											<div class="mt-comment-img">
+												<img src="img/avatar1.jpg"> </div>
+											<div class="mt-comment-body">
+											<div class="mt-comment-info">
+												<span class="mt-comment-author">Michael Baker</span>
+												<span class="mt-comment-date">26 Feb, 10:30AM</span>
+											</div>
+											<div class="mt-comment-text"> Lorem Ipsum is simply dummy text of the printing and typesetting industry. </div>
+											</div>
+										</div>
+									</div>
+									<!-- END: Comments -->
+								</div>
+								<div class="tab-pane" id="portlet_comments_2">
+									<!-- BEGIN: Comments -->
+									<div class="mt-comments">
+										<div class="mt-comment">
+											<div class="mt-comment-img">
+												<img src="img/avatar6.jpg"> </div>
+											<div class="mt-comment-body">
+											<div class="mt-comment-info">
+												<span class="mt-comment-author">Michael Baker</span>
+												<span class="mt-comment-date">26 Feb, 10:30AM</span>
+											</div>
+											<div class="mt-comment-text"> Lorem Ipsum is simply dummy text of the printing and typesetting industry. </div>
+											</div>
+										</div>
+										<div class="mt-comment">
+											<div class="mt-comment-img">
+												<img src="img/avatar6.jpg"> </div>
+											<div class="mt-comment-body">
+											<div class="mt-comment-info">
+												<span class="mt-comment-author">Michael Baker</span>
+												<span class="mt-comment-date">26 Feb, 10:30AM</span>
+											</div>
+											<div class="mt-comment-text"> Lorem Ipsum is simply dummy text of the printing and typesetting industry. </div>
+											</div>
+										</div>
+										<div class="mt-comment">
+											<div class="mt-comment-img">
+												<img src="img/avatar6.jpg"> </div>
+											<div class="mt-comment-body">
+											<div class="mt-comment-info">
+												<span class="mt-comment-author">Michael Baker</span>
+												<span class="mt-comment-date">26 Feb, 10:30AM</span>
+											</div>
+											<div class="mt-comment-text"> Lorem Ipsum is simply dummy text of the printing and typesetting industry. </div>
+											</div>
+										</div>
+									</div>
+									<!-- END: Comments -->
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-7">
+					<div class="leave_comments">
+						<div class="mt-comments write_com">
+							<div class="mt-comment">
+								<div class="mt-comment-img">
+									<img src="img/avatar1.jpg">
+								</div>
+								<div class="mt-comment-body">
+									<div class="mt-comment-info">
+										<span class="mt-comment-author left_bl">Michael Baker</span>
+										<span class="mt-comment-date left_bl">26 Feb, 10:30AM</span>
+									</div>
+									<div class="mt-comment-text comments_margin"> Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry.</div>
+										<div class="mt-comment-details">
+											<ul class="mt-comment-actions on_left_side">
+												<li>
+													<a href="#">Rejected</a>
+												</li>
+												<li>
+													|
+												</li>
+												<li>
+													<a href="#">Responce</a>
+												</li>
+											</ul>
+										</div>
+									</div>
+								</div>
+							</div>
+							<form class="form">
+								<textarea name="text" id="text" class="input-md form-control" rows="8" placeholder="Text" maxlength="400"></textarea>
+								<br>
+								<input type="button" class="btn add_comment_btn" name="" value="SUBMIT">
+							</form>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<section class="social_footer">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="newsletter-label font-alt descc_title">
+						Danger zone
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="container">
+			<div class="row">
+				<div class="col-md-3">
+					<div class="text_and_button">
+						<a href="#" class="btn btn-lg btn_link">material change</a>
+					</div>
+				</div>
+				<div class="col-md-9">
+					<div class="text_and_button">
+						<p>Do you have new information that a reasonable would consider important in deciding whether or not to purchase your securities? If so, click here to amend your offering.</p>
+					</div>
+				</div>
+				<div class="col-md-3">
+					<div class="text_and_button">
+						<a href="#" class="btn btn-lg btn_link red">cancel campaign</a>
+					</div>
+				</div>
+				<div class="col-md-9">
+					<div class="text_and_button">
+						<p>Click here to cancel your offering</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+
+
+<!-- /NEW -->
+
+
+	<footer class="footer_new">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-3">
+					<div class="footer_title border_bottom">
+						<h4>About us</h4>
+					</div>
+					<a href="">Overview</a>
+					<a href="">Team</a>
+					<a href="">Partners</a>
+					<a href="">Contacy Us</a>
+					<a href="">Careers</a>
+					<a href="">In the News</a>
+					<a href="">FAQ</a>
+					<a href="">Blog</a>
+				</div>
+				<div class="col-lg-3">
+					<div class="footer_title border_bottom">
+						<h4>Investor resources</h4>
+					</div>
+					<a href="">Investor Tutorial</a>
+					<a href="">Education Material</a>
+					<div class="footer_title border_bottom">
+						<h4>Business recources</h4>
+					</div>
+					<a href="">Business Tutorial</a>
+					<a href="">Success Guide</a>
+					<a href="">Capital Raise Calculator</a>
+					<a href="">What's me Business Worth?</a>
+				</div>
+				<div class="col-lg-3">
+					<div class="footer_title border_bottom">
+						<h4>Advisor network</h4>
+					</div>
+					<a href="">About</a>
+					<a href="">FAQ</a>
+				</div>
+				<div class="col-lg-3">
+					<div class="footer_title border_bottom">
+						<h4>Legal</h4>
+					</div>
+					<a href="">Terms</a>
+					<a href="">Privacy</a>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="company">
+						<span>©GROWTHFOUNTAIN 2016.</span>
+						<p>Made with love for great people</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer>
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="js/jquery.min.js" type="text/javascript"></script>
+    <script src="js/bootstrap.min.js"></script>
+        <!-- END PAGE LEVEL PLUGINS -->
+        <!-- BEGIN THEME GLOBAL SCRIPTS -->
+        <script src="js/graf.js" type="text/javascript"></script>
+        <script type="text/javascript">
+        	function e() {
+			 return 10 * Math.random() - 5;
+			}
+
+        	function i(e, i, t) {
+                    $('<div id="tooltip">' + t + "</div>").css({
+                        position: "absolute",
+                        display: "none",
+                        top: i + 5,
+                        left: e + 15,
+                        border: "1px solid #333",
+                        padding: "4px",
+                        color: "#fff",
+                        "border-radius": "3px",
+                        "background-color": "#333",
+                        opacity: .8
+                    }).appendTo("body").fadeIn(200)
+                }
+                    var t = [
+                            [1, e()],
+                            [2, e()],
+                            [3, 2 + e()],
+                            [4, 3 + e()],
+                            [5, 5 + e()],
+                            [6, 10 + e()],
+                            [7, 15 + e()],
+                            [8, 20 + e()],
+                            [9, 25 + e()],
+                            [10, 30 + e()],
+                            [11, 35 + e()],
+                            [12, 25 + e()],
+                            [13, 15 + e()],
+                            [14, 20 + e()],
+                            [15, 45 + e()],
+                            [16, 50 + e()],
+                            [17, 65 + e()],
+                            [18, 70 + e()],
+                            [19, 85 + e()],
+                            [20, 80 + e()],
+                            [21, 75 + e()],
+                            [22, 80 + e()],
+                            [23, 75 + e()],
+                            [24, 70 + e()],
+                            [25, 65 + e()],
+                            [26, 75 + e()],
+                            [27, 80 + e()],
+                            [28, 85 + e()],
+                            [29, 90 + e()],
+                            [30, 95 + e()]
+                        ],
+                        a = [
+                            [1, e() - 5],
+                            [2, e() - 5],
+                            [3, e() - 5],
+                            [4, 6 + e()],
+                            [5, 5 + e()],
+                            [6, 20 + e()],
+                            [7, 25 + e()],
+                            [8, 36 + e()],
+                            [9, 26 + e()],
+                            [10, 38 + e()],
+                            [11, 39 + e()],
+                            [12, 50 + e()],
+                            [13, 51 + e()],
+                            [14, 12 + e()],
+                            [15, 13 + e()],
+                            [16, 14 + e()],
+                            [17, 15 + e()],
+                            [18, 15 + e()],
+                            [19, 16 + e()],
+                            [20, 17 + e()],
+                            [21, 18 + e()],
+                            [22, 19 + e()],
+                            [23, 20 + e()],
+                            [24, 21 + e()],
+                            [25, 14 + e()],
+                            [26, 24 + e()],
+                            [27, 25 + e()],
+                            [28, 26 + e()],
+                            [29, 27 + e()],
+                            [30, 31 + e()]
+                        ],
+                        r = ($.plot($("#chart_2"), [{
+                            data: t,
+                            label: "Invested amount",
+                            lines: {
+                                lineWidth: 1
+                            },
+                            shadowSize: 0
+                        }, {
+                            data: a,
+                            label: "Page Views",
+                            lines: {
+                                lineWidth: 1
+                            },
+                            shadowSize: 0
+                        }], {
+                            series: {
+                                lines: {
+                                    show: !0,
+                                    lineWidth: 2,
+                                    fill: !0,
+                                    fillColor: {
+                                        colors: [{
+                                            opacity: .05
+                                        }, {
+                                            opacity: .01
+                                        }]
+                                    }
+                                },
+                                points: {
+                                    show: !0,
+                                    radius: 3,
+                                    lineWidth: 1
+                                },
+                                shadowSize: 2
+                            },
+                            grid: {
+                                hoverable: !0,
+                                clickable: !0,
+                                tickColor: "#eee",
+                                borderColor: "#eee",
+                                borderWidth: 1
+                            },
+                            colors: ["#d12610", "#37b7f3", "#52e136"],
+                            xaxis: {
+                                ticks: 11,
+                                tickDecimals: 0,
+                                tickColor: "#eee"
+                            },
+                            yaxis: {
+                                ticks: 11,
+                                tickDecimals: 0,
+                                tickColor: "#eee"
+                            }
+                        }), null);
+                    $("#chart_2").bind("plothover", function(e, t, a) {
+                        if ($("#x").text(t.x.toFixed(2)), $("#y").text(t.y.toFixed(2)), a) {
+                            if (r != a.dataIndex) {
+                                r = a.dataIndex, $("#tooltip").remove();
+                                var o = a.datapoint[0].toFixed(2),
+                                    s = a.datapoint[1].toFixed(2);
+                                i(a.pageX, a.pageY, a.series.label + " of " + o + " = " + s)
+                            }
+                        } else $("#tooltip").remove(), r = null
+                    })
+        </script>
+        <!-- END THEME GLOBAL SCRIPTS -->
+        <!-- BEGIN PAGE LEVEL SCRIPTS -->
+        <!-- END PAGE LEVEL SCRIPTS -->
+        <!-- BEGIN THEME LAYOUT SCRIPTS -->
+</body>
+</html>

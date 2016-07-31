@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html class="no-js" lang="ru">
+
+<head>
+
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+		<!-- Bootstrap -->
+		<!-- <link rel="stylesheet" href="css/bootstrap.min.css"> -->
+		<link rel="stylesheet" href="css/main.css" type="text/css" charset="utf-8"/>
+<!-- тут пока что подключаю не минифицированый main.css так как у меня выдает ошибку компиляции при минификации, когда разберусь от чего тогда подключу минифицированиый -->
+		<link rel="stylesheet" href="css/font-awesome.min.css" type="text/css" charset="utf-8"/>
+		<link rel="stylesheet" href="css/bootstrap-select.css">
+	<link rel="stylesheet" type="text/css" href="css/slick.css">
+	<link rel="stylesheet" type="text/css" href="css/slick-theme.css">
+</head>
+
+<body>
+	<header class="header">
+		<nav class="navbar bg-inverse navbar-dark">
+			<button class="navbar-toggler hidden-lg-up" type="button" data-toggle="collapse" data-target="#exCollapsingNavbar2">
+			&#9776;
+			</button>
+
+			<div class="pseudo-block">
+				
+			</div>
+
+			<a class="navbar-brand mobile-logo" href="#">
+				<img class=" hidden" src="img/main_logo.png" alt="">
+			</a>
+			
+			<div class="collapse navbar-toggleable-md" id="exCollapsingNavbar2">
+				<!-- logo -->
+				<div class="logo  hidden">
+					
+				<a class="navbar-brand hidden" href="#">
+					<img class=" hidden" src="img/main_logo.png" alt="">
+				</a>
+				</div>
+				<!-- main menu left part-->
+				<ul class="nav navbar-nav pull-left">
+					<li class="nav-item active">
+						<a class="nav-link" href="#">About us 
+							<i class="fa fa-angle-down"></i>
+
+						</a>
+						<div class="list-container">
+							<ul class="submenu list-unstyled">
+								<li>
+									<a class="nav-link" href="#">Overview</a>
+								</li>
+								<li>
+									<a class="nav-link" href="#">Team</a>
+								</li>
+								<li>
+									<a class="nav-link" href="#">Partners</a>
+								</li>
+								<li>
+									<a class="nav-link" href="#">Contact Us</a>
+								</li>
+								<li>
+									<a class="nav-link" href="#">Careers</a>
+								</li>
+								<li>
+									<a class="nav-link" href="#">In the News</a>
+								</li>
+							</ul>
+						</div>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">Resource center <i class="fa fa-angle-down"></i></a>
+						<div class="list-container two-columns">
+							<ul class="  submenu list-unstyled">
+								<li class="nav-link-sm">
+									<p>For Investors</p>
+									
+								</li>
+								<li>
+									<a class="nav-link" href="">Investor Tutorial</a>
+									
+								</li>
+								<li>
+									<a class="nav-link" href="">Educational Materials</a>
+									
+								</li>
+								<li>
+									
+									<a class="nav-link" href="">FAQ</a>
+								</li>
+							</ul>
+
+							<ul class="  submenu list-unstyled">
+								<li class="nav-link-sm">
+									<p>For Businesses</p>
+								</li>
+								<li>
+									<a class="nav-link" href="">Business Tutorials</a>
+								</li>
+								<li>
+									<a class="nav-link" href="">Campaign Material</a>
+								</li>
+								<li>
+									<a class="nav-link" href="">Success Guide</a>
+								</li>
+								<li>
+									<a class="nav-link" href="">Capital Raise Caculator</a>
+								</li>
+								<li>
+									<a class="nav-link" href="">What's My Business Worth?</a>
+								</li>
+								<li>
+									<a class="nav-link" href="">FAQ</a>
+								</li>
+							</ul>
+						</div>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">Advisor network 
+							<i class="fa fa-angle-down"></i>
+						</a>
+						<div class="list-container">
+							<ul class="  submenu list-unstyled">
+								<li>
+									<a class="nav-link" href="">About</a>
+								</li>
+									
+								<li>
+									<a class="nav-link" href="">FAQ</a>
+								</li>
+							</ul>
+						</div>
+					</li>
+
+				</ul>
+
+				<!-- main menu right part-->
+				<ul class="nav navbar-nav pull-right">
+
+					<li class="nav-item notification text-center">
+						<a href="#">
+							<i class="fa fa-bell-o ">
+								<span class="count-notific">5</span>
+							</i>
+						</a>
+
+						<div class="list-container ">
+
+							<ul class="submenu list-unstyled ">
+								<li class="clearfix title nav-link">
+									<span class="pull-left "><b>5 pending</b> comments</span>
+									<a class=" pull-right" href="#">view all</a>
+								</li>
+									
+								<li class="clearfix nav-link">
+									<span class="pull-left ">Maria Kravchuk wrote...</span>
+									<i class=" pull-right">just now</i>
+								</li>
+								<li class="clearfix nav-link">
+									<span class="pull-left ">Maria Kravchuk wrote...</span>
+									<i class=" pull-right">just now</i>
+								</li>
+								<li class="clearfix nav-link">
+									<span class="pull-left ">Maria Kravchuk wrote...</span>
+									<i class=" pull-right">just now</i>
+								</li>
+								<li class="clearfix nav-link">
+									<span class="pull-left ">Maria Kravchuk wrote...</span>
+									<i class=" pull-right">just now</i>
+								</li>
+								<li class="clearfix nav-link">
+									<span class="pull-left ">Maria Kravchuk wrote...</span>
+									<i class=" pull-right">just now</i>
+								</li>
+							</ul>
+						</div>
+					</li>
+
+					<li class="nav-item notification text-center">
+						<a href="#">
+							<i class="fa fa-envelope-o">
+								<span class="count-notific">5</span>
+							</i>
+						</a>
+					</li>
+
+					<li class="nav-item user-info">
+						<a class="nav-link user-info-name" href="#">
+							<span >
+								<i class="fa fa-user"></i>
+							</span>
+							Maria Kravchuk
+						</a>
+
+						<div class="list-container user-info-drop">
+							<ul class="submenu list-unstyled ">
+								<li>
+									<a class="nav-link" href="">Account</a>
+								</li>
+									
+								<li>
+									<a class="nav-link" href="">Issuer Dashboard</a>
+								</li>
+								<li>
+									<a class="nav-link" href="">Investor Dashboard</a>
+								</li>
+								<li>
+									<a class="nav-link" href="">Log Out</a>
+								</li>
+							</ul>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</nav>
+
+	</header>
+	
+	<section class="header_title">
+		<div class="container">
+		<div class="row">
+			<div class="col-lg-6">
+				<h2>List</h2>
+			</div>
+			<div class="col-lg-6 text-lg-right">
+				<a href="/">Home</a>
+				<span>/</span>
+				<a href="">Resource center</a>
+				<span>/</span>
+				<span class="curent">Business tutorials</span>
+			</div>
+		</div>
+	</section>
+	<br>
+	<section>
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-4">
+					<h2>ul</h2>
+					<ul>
+						<li>First item</li>
+						<li>Second item</li>
+						<li>Third item
+							<ul>
+								<li>First item</li>
+								<li>Second item</li>
+								<li>Third item</li>
+							</ul>
+						</li>
+						<li>Fourth item</li>
+						<li>Fifth item</li>
+					</ul>
+				</div>
+				<div class="col-lg-4">
+					<h2>ol</h2>
+					<ol>
+						<li>First item</li>
+						<li>Second item</li>
+						<li>Third item
+							<ol>
+								<li>First item</li>
+								<li>Second item</li>
+								<li>Third item</li>
+							</ol>
+						</li>
+						<li>Fourth item</li>
+						<li>Fifth item</li>
+					</ol>
+				</div>
+				<div class="col-lg-4">
+					<h2>EMPHASIS</h2>
+					<p>
+						<small>This line of text is meant to be treated as fine print.</small>
+					</p>
+					<p>
+						<strong>Rendered as bold text</strong>
+					</p>
+					<p>
+						<em>Rendered as italicized text</em>
+					</p>
+					<p>
+						<span class="serif">Rendered as italicized text</span>
+					</p>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<footer class="footer_new">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-3">
+					<div class="footer_title border_bottom">
+						<h4>About us</h4>
+					</div>
+					<a href="">Overview</a>
+					<a href="">Team</a>
+					<a href="">Partners</a>
+					<a href="">Contacy Us</a>
+					<a href="">Careers</a>
+					<a href="">In the News</a>
+					<a href="">FAQ</a>
+					<a href="">Blog</a>
+				</div>
+				<div class="col-lg-3">
+					<div class="footer_title border_bottom">
+						<h4>Investor resources</h4>
+					</div>
+					<a href="">Investor Tutorial</a>
+					<a href="">Education Material</a>
+					<div class="footer_title border_bottom">
+						<h4>Business recources</h4>
+					</div>
+					<a href="">Business Tutorial</a>
+					<a href="">Success Guide</a>
+					<a href="">Capital Raise Calculator</a>
+					<a href="">What's me Business Worth?</a>
+				</div>
+				<div class="col-lg-3">
+					<div class="footer_title border_bottom">
+						<h4>Advisor network</h4>
+					</div>
+					<a href="">About</a>
+					<a href="">FAQ</a>
+				</div>
+				<div class="col-lg-3">
+					<div class="footer_title border_bottom">
+						<h4>Legal</h4>
+					</div>
+					<a href="">Terms</a>
+					<a href="">Privacy</a>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="company">
+						<span>©GROWTHFOUNTAIN 2016.</span>
+						<p>Made with love for great people</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer>
+	<!-- Здесь пишем код -->
+
+
+	<div class="hidden"></div>
+
+	<!--[if lt IE 9]>
+	<script src="libs/html5shiv/es5-shim.min.js"></script>
+	<script src="libs/html5shiv/html5shiv.min.js"></script>
+	<script src="libs/html5shiv/html5shiv-printshiv.min.js"></script>
+	<script src="libs/respond/respond.min.js"></script>
+	<![endif]-->
+
+	<!-- Load Scripts Start -->
+		<!-- <script src="http://code.jquery.com/jquery-1.9.1.js"></script> -->
+		<script src="js/jquery.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+		<script src="js/bootstrap-select.js"></script>
+		<script src="js/my_script.js"></script>
+	<!-- Load Scripts End -->
+    <script src="js/slick.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		$(document).on('ready', function() {
+			$(".regular").slick({
+				dots: true,
+				infinite: true,
+				slidesToShow: 1,
+				slidesToScroll: 1
+			});
+		});
+	</script>
+
+</body>
+</html>

@@ -1,0 +1,233 @@
+.popover {
+	padding-left: 15px;
+
+	border: 1px $total_sum_progresbar solid;
+
+	.popover-title {
+		display: none;
+	}
+
+	&.bs-tether-element-attached-bottom {
+		.popover-arrow {
+			border-top-color: $total_sum_progresbar;
+		}
+	}
+
+	.popover-content {
+		@include calc-rem(11);
+
+		color: $total_sum_progresbar;
+
+		i {
+			position: absolute;
+			top: 13px;
+			left: 10px;
+		}
+	}
+}
+
+.profile {
+	padding-top: 40px;
+
+	// hide all popovers content source block
+	[class*='popover-content'] {
+		display: none;
+	}
+
+	.left-block {
+		margin-top: -50px;
+	}
+
+	.right-block {
+		margin-top: 30px;
+	}
+
+
+	.profile-tabs {
+		margin-bottom: 20px;
+
+		border-bottom: none;
+
+		li.nav-item {
+			margin-right:3%;
+			margin-left: 0;
+
+			min-width: 150px;
+		    width: 29%;
+		    max-width: 240px;
+
+			text-align: center;
+
+			&:last-child {
+				margin-right: 0;
+			}
+
+			a.nav-link {
+				@include calc-rem(12);
+
+				padding: 5px 15px;
+
+				border-radius: 20px;
+
+				text-transform: uppercase;
+				color: $tab_authorization_text;
+				letter-spacing: 2px;
+
+				&.active {
+					border-color: $active_tab_authorization $active_tab_authorization $active_tab_authorization;
+				}
+			}
+		}
+	}
+
+	.profile-tabs-content {
+		.drop-photo {
+			min-height: 135px;
+			margin-top: 5px;
+
+			background: $border_color;
+			border: 1px $grey solid;
+		}
+
+		.selected-area-info {
+			position: relative;
+
+			padding: 5px 0 0 20px;
+			margin-bottom: -5px;
+
+			i,
+			span {
+				display: inline-block;
+
+				color: $total_sum_progresbar;
+				font-size: 11px;
+			}
+
+			i {
+				position: absolute;
+				top: 7px;
+				left: 5px;
+			}
+		}
+
+		.drop-image-title {
+			margin-top: 17px;
+
+			span {
+				@include calc-rem(14);
+
+				color: $footer_text;
+			}
+
+			i {
+				@include calc-rem(28);
+
+				margin-top: 17px;
+
+				color: $footer_text;
+			}
+		}
+	}
+
+	.investors-warning {
+		@include calc-rem(14);
+
+		position: relative;
+
+		padding: 10px 20px;
+		padding-left: 35px;
+		margin-top: 60px;
+		margin-bottom: 20px;
+
+		border: 1px $text_warning_block_color solid;
+
+		color:$text_warning_block_color;
+
+		i {
+			position: absolute;
+			top: 14px;
+			left: 10px;
+		}
+	}
+
+	.select-group {
+		select {
+			max-width: 554px;
+		}
+	}
+
+	// тут переопределяем стили для елементов формы которые заданы в pages.scss
+	.form-section {
+		.street_address_2 label {
+			color: $footer_text;
+		}
+
+		.city_state {
+			position: relative;
+			z-index: 50;
+
+			input {
+				display: none;
+			}
+
+			span.change_state_city {
+				position: absolute;
+				top: 6px;
+				left: 15px;
+
+				cursor: pointer;
+
+				.input-value {
+					@include ellipsis();
+
+					display: inline-block;
+					max-width: 150px;
+					margin-right: 20px;
+
+					text-decoration: underline;
+				}
+
+				i {
+					vertical-align: super;
+				}
+			}
+		}
+
+		textarea {
+			max-width: 554px;
+		}
+
+		input[type='date'] {
+			height: 35px;// непонятно по какой причине высота этого элемента больше чем 38пкс
+		}
+	}
+
+	@media screen and (max-width:991px) {
+		.right-block {
+			margin-top: 15px;
+		}
+	}
+
+	@media screen and (max-width:767px) {
+		.left-block,
+		.right-block {
+			margin-top: 0;
+		}
+	}
+
+	@media screen and (max-width: 543px) {
+		padding-top: 20px;
+
+		.profile-tabs { 
+			li.nav-item {
+				margin-right:3%;
+				margin-left: 0;
+				margin-top: 1.5rem;
+
+				min-width: 150px;
+			    width: 100%;
+			    max-width: 100%;
+			}
+		}
+	}
+}

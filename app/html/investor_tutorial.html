@@ -1,0 +1,457 @@
+<!DOCTYPE html>
+<html class="no-js" lang="ru">
+
+<head>
+
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+		<!-- Bootstrap -->
+		<!-- <link rel="stylesheet" href="css/bootstrap.min.css"> -->
+		<link rel="stylesheet" href="css/main.css" type="text/css" charset="utf-8"/>
+<!-- тут пока что подключаю не минифицированый main.css так как у меня выдает ошибку компиляции при минификации, когда разберусь от чего тогда подключу минифицированиый -->
+		<link rel="stylesheet" href="css/font-awesome.min.css" type="text/css" charset="utf-8"/>
+		<link rel="stylesheet" href="css/bootstrap-select.css">
+	<link rel="stylesheet" type="text/css" href="css/slick.css">
+	<link rel="stylesheet" type="text/css" href="css/slick-theme.css">
+</head>
+
+<body>
+	<header class="header">
+		<nav class="navbar bg-inverse navbar-dark">
+			<button class="navbar-toggler hidden-lg-up" type="button" data-toggle="collapse" data-target="#exCollapsingNavbar2">
+			&#9776;
+			</button>
+
+			<div class="pseudo-block">
+				
+			</div>
+
+			<a class="navbar-brand mobile-logo" href="#">
+				<img class=" hidden" src="img/main_logo.png" alt="">
+			</a>
+			
+			<div class="collapse navbar-toggleable-md" id="exCollapsingNavbar2">
+				<!-- logo -->
+				<div class="logo  hidden">
+					
+				<a class="navbar-brand hidden" href="#">
+					<img class=" hidden" src="img/main_logo.png" alt="">
+				</a>
+				</div>
+				<!-- main menu left part-->
+				<ul class="nav navbar-nav pull-left">
+					<li class="nav-item">
+						<a class="nav-link" href="#">
+							<i class="fa fa-search"></i>
+							Explorer 
+						</a>
+					</li>
+					
+					<li class="nav-item active">
+						<a class="nav-link" href="#">About us 
+							<i class="fa fa-angle-down"></i>
+
+						</a>
+						<div class="list-container">
+							<ul class="submenu list-unstyled">
+								<li>
+									<a class="btn" href="#">Overview</a>
+								</li>
+								<li>
+									<a class="btn" href="#">Team</a>
+								</li>
+								<li>
+									<a class="btn" href="#">Partners</a>
+								</li>
+								<li>
+									<a class="btn" href="#">Contact Us</a>
+								</li>
+								<li>
+									<a class="btn" href="#">Careers</a>
+								</li>
+								<li>
+									<a class="btn" href="#">In the News</a>
+								</li>
+							</ul>
+						</div>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">Resource center <i class="fa fa-angle-down"></i></a>
+						<div class="list-container two-columns">
+							<ul class="  submenu list-unstyled">
+								<li class="btn-sm">
+									<p>For Investors</p>
+									
+								</li>
+								<li>
+									<a class="btn" href="">Investor Tutorial</a>
+									
+								</li>
+								<li>
+									<a class="btn" href="">Educational Materials</a>
+									
+								</li>
+								<li>
+									
+									<a class="btn" href="">FAQ</a>
+								</li>
+							</ul>
+
+							<ul class="  submenu list-unstyled">
+								<li class="btn-sm">
+									<p>For Businesses</p>
+								</li>
+								<li>
+									<a class="btn" href="">Business Tutorials</a>
+								</li>
+								<li>
+									<a class="btn" href="">Campaign Material</a>
+								</li>
+								<li>
+									<a class="btn" href="">Success Guide</a>
+								</li>
+								<li>
+									<a class="btn" href="">Capital Raise Caculator</a>
+								</li>
+								<li>
+									<a class="btn" href="">What's My Business Worth?</a>
+								</li>
+								<li>
+									<a class="btn" href="">FAQ</a>
+								</li>
+							</ul>
+						</div>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="#">Advisor network 
+							<i class="fa fa-angle-down"></i>
+						</a>
+						<div class="list-container">
+							<ul class="  submenu list-unstyled">
+								<li>
+									<a class="btn" href="">About</a>
+								</li>
+									
+								<li>
+									<a class="btn" href="">FAQ</a>
+								</li>
+							</ul>
+						</div>
+					</li>
+
+				</ul>
+
+				<!-- main menu right part-->
+				<ul class="nav navbar-nav pull-right">
+
+					<li class="nav-item notification text-center">
+						<a href="#">
+							<i class="fa fa-bell-o ">
+								<span class="count-notific">5</span>
+							</i>
+						</a>
+
+						<div class="list-container ">
+
+							<ul class="submenu list-unstyled ">
+								<li class="clearfix title btn">
+									<span class="pull-left "><b>5 pending</b> comments</span>
+									<a class=" pull-right" href="#">view all</a>
+								</li>
+									
+								<li class="clearfix btn">
+									<span class="pull-left ">Maria Kravchuk wrote...</span>
+									<i class=" pull-right">just now</i>
+								</li>
+								<li class="clearfix btn">
+									<span class="pull-left ">Maria Kravchuk wrote...</span>
+									<i class=" pull-right">just now</i>
+								</li>
+								<li class="clearfix btn">
+									<span class="pull-left ">Maria Kravchuk wrote...</span>
+									<i class=" pull-right">just now</i>
+								</li>
+								<li class="clearfix btn">
+									<span class="pull-left ">Maria Kravchuk wrote...</span>
+									<i class=" pull-right">just now</i>
+								</li>
+								<li class="clearfix btn">
+									<span class="pull-left ">Maria Kravchuk wrote...</span>
+									<i class=" pull-right">just now</i>
+								</li>
+							</ul>
+						</div>
+					</li>
+
+					<li class="nav-item notification text-center">
+						<a href="#">
+							<i class="fa fa-envelope-o">
+								<span class="count-notific">5</span>
+							</i>
+						</a>
+					</li>
+
+					<li class="nav-item user-info">
+						<a class="nav-link user-info-name" href="#">
+							<span >
+								<i class="fa fa-user"></i>
+							</span>
+							Maria Kravchuk
+						</a>
+
+						<div class="list-container user-info-drop">
+							<ul class="submenu list-unstyled ">
+								<li>
+									<a class="btn" href="">Account</a>
+								</li>
+									
+								<li>
+									<a class="btn" href="">Issuer Dashboard</a>
+								</li>
+								<li>
+									<a class="btn" href="">Investor Dashboard</a>
+								</li>
+								<li>
+									<a class="btn" href="">Log Out</a>
+								</li>
+							</ul>
+						</div>
+					</li>
+				</ul>
+			</div>
+		</nav>
+
+	</header>
+	
+	<section class="header_title">
+		<div class="container">
+		<div class="row">
+			<div class="col-lg-6">
+				<h2>Business tutorials</h2>
+			</div>
+			<div class="col-lg-6 text-lg-right">
+				<a href="/">Home</a>
+				<span>/</span>
+				<a href="">Resource center</a>
+				<span>/</span>
+				<span class="curent">Business tutorials</span>
+			</div>
+		</div>
+	</section>
+
+	<section class="regular slider">
+		<div class="item">
+			<div class="one_item">
+				<img src="img/slide_img/shutterstock_151501652.jpg" alt="">
+				<div class="slider_text">
+					<b>Get started</b>
+					<span class="big_text">Sign up</span>
+					<p>You will need to be signed in to gain full access to the<br>growthfountain website</p>
+					<p>Once you're registered, you can join discussions, acces our<br> full suite of tools and make investments</p>
+				</div>
+				<div class="slide_bottom_text">
+					<p>Up next:</p>
+					<span class="medium_text">A revolution</span>
+				</div>
+			</div>
+		</div>
+		<div class="item">
+			<div class="one_item">
+				<img src="img/slide_img/shutterstock_200408042.jpg" alt="">
+				<div class="slider_text">
+					<p>What is equity crowdfunding?</p>
+					<span class="big_text">A revolution</span>
+					<p>"For the first time, ordinary americans will be able<br> to go online and invest in entrepreneurs that they<br> belive in" - president Obama</p>
+				</div>
+			</div>
+		</div>
+		<div class="item">
+			<div class="one_item">
+				<img src="img/slide_img/shutterstock_231344695.jpg" alt="">
+				<div class="slider_text">
+					<p>HOW CAN I LEARN MORE?</p>
+					<span class="big_text">browse</span>
+					<p>CHECK OUT THE unique BUSINESSES RAISING MONEY ON GROWTHFOUNTAIn; it could be your neighbor, an entrepreneur in your community or the next facebook or google</p>
+					<p>DISCOVER investments that INTEREST YOU. FOLLOW THEIR PROGRESS WHILE YOU LEARN MORE ABOUT THEIR BUSINESS, PRODUCTS, AND OFFERING</p>
+				</div>
+			</div>
+		</div>
+		<div class="item">
+			<div class="one_item">
+				<img src="img/slide_img/shutterstock_262335101.jpg" alt="">
+				<div class="slider_text">
+					<p>Before MAKING AN investMENT, YOU NEED TO DO YOUR</p>
+					<span class="big_text">Research</span>
+					<p>Each company RAISING MONEY UNDER REGULATION CROWDFUNDING must DISCLOSE SIGNIFICANT INFORMATION TO POTENTIAL INVESTORS. Make sure to view their form c and do your research; it includes EVERYTHING from Financial records to PRODUCT INFORMATION TO THE VARIOUS risks associated with INVESTMENT</p>
+					<p>You’ll also be able to see bios for ALL OFFICERS, directors and 20%+ voting shareholders. If you have additional questions, you can ask management questions through our built in communication channel</p>
+				</div>
+			</div>
+		</div>
+		<div class="item">
+			<div class="one_item">
+				<img src="img/slide_img/shutterstock_314380265.jpg" alt="">
+				<div class="slider_text">
+					<p>How much can i invest?</p>
+					<span class="big_text">give me a number</span>
+					<p>You are legally allowed to invest between $2,000 and $100,000 annually based on your income and wealth</p>
+					<a href="">(click to launch our investor calculator)</a>
+				</div>
+			</div>
+		</div>
+		<div class="item">
+			<div class="one_item">
+				<img src="img/slide_img/shutterstock_321452279.jpg" alt="">
+				<div class="slider_text">
+					<p>Should i invest?</p>
+					<span class="big_text">risks</span>
+					<p>Roughly one-half of small businesses fail within five years. for those that succeed, the time horizon to create value for shareholders tends to be 7+ years.  please set your expectations accordingly</p>
+					<p>You should understand that you may lose your entire investment. If you are risk-averse, are just starting to invest, have only a little money to invest or need the money in the short term, crowdfunding investments likely are not for you</p>
+					<p>Investments also carry liquidity risk. you will be limited in your ability to resell your investment for the first year – and you may need to hold your investment for an indefinite period of time as no secondary market currently exists</p>
+					<p>Be sure to read about Specific risks associated with each offering in their Form C</p>
+				</div>
+			</div>
+		</div>
+		<div class="item">
+			<div class="one_item">
+				<img src="img/slide_img/shutterstock_323615741.jpg" alt="">
+				<div class="slider_text">
+					<span class="big_text"></span>
+					<p>You are legally allowed to invest between $2,000 and $100,000 annually based on your income and wealth</p>
+					<a href="">(click to launch our investor calculator)</a>
+				</div>
+			</div>
+		</div>
+		<div class="item">
+			<div class="one_item">
+				<img src="img/slide_img/shutterstock_332291144.jpg" alt="">
+				<div class="slider_text">
+					<p>Before MAKING AN investMENT, YOU NEED TO DO YOUR</p>
+					<span class="big_text">Research</span>
+					<p>Each company RAISING MONEY UNDER REGULATION CROWDFUNDING must DISCLOSE SIGNIFICANT INFORMATION TO POTENTIAL INVESTORS. Make sure to view their form c and do your research; it includes EVERYTHING from Financial records to PRODUCT INFORMATION TO THE VARIOUS risks associated with INVESTMENT</p>
+					<p>You’ll also be able to see bios for ALL OFFICERS, directors and 20%+ voting shareholders. If you have additional questions, you can ask management questions through our built in communication channel</p>
+				</div>
+			</div>
+		</div>
+		<div class="item">
+			<div class="one_item">
+				<img src="img/slide_img/shutterstock_344201303.jpg" alt="">
+				<div class="slider_text">
+					<p>Before MAKING AN investMENT, YOU NEED TO DO YOUR</p>
+					<span class="big_text">Research</span>
+					<p>Each company RAISING MONEY UNDER REGULATION CROWDFUNDING must DISCLOSE SIGNIFICANT INFORMATION TO POTENTIAL INVESTORS. Make sure to view their form c and do your research; it includes EVERYTHING from Financial records to PRODUCT INFORMATION TO THE VARIOUS risks associated with INVESTMENT</p>
+					<p>You’ll also be able to see bios for ALL OFFICERS, directors and 20%+ voting shareholders. If you have additional questions, you can ask management questions through our built in communication channel</p>
+				</div>
+			</div>
+		</div>
+		<div class="item">
+			<div class="one_item">
+				<img src="img/slide_img/shutterstock_361948769.jpg" alt="">
+				<div class="slider_text">
+					<p>Before MAKING AN investMENT, YOU NEED TO DO YOUR</p>
+					<span class="big_text">Research</span>
+					<p>Each company RAISING MONEY UNDER REGULATION CROWDFUNDING must DISCLOSE SIGNIFICANT INFORMATION TO POTENTIAL INVESTORS. Make sure to view their form c and do your research; it includes EVERYTHING from Financial records to PRODUCT INFORMATION TO THE VARIOUS risks associated with INVESTMENT</p>
+					<p>You’ll also be able to see bios for ALL OFFICERS, directors and 20%+ voting shareholders. If you have additional questions, you can ask management questions through our built in communication channel</p>
+				</div>
+			</div>
+		</div>
+		<div class="item">
+			<div class="one_item">
+				<img src="img/slide_img/shutterstock_387341530.jpg" alt="">
+				<div class="slider_text">
+					<p>Before MAKING AN investMENT, YOU NEED TO DO YOUR</p>
+					<span class="big_text">Research</span>
+					<p>Each company RAISING MONEY UNDER REGULATION CROWDFUNDING must DISCLOSE SIGNIFICANT INFORMATION TO POTENTIAL INVESTORS. Make sure to view their form c and do your research; it includes EVERYTHING from Financial records to PRODUCT INFORMATION TO THE VARIOUS risks associated with INVESTMENT</p>
+					<p>You’ll also be able to see bios for ALL OFFICERS, directors and 20%+ voting shareholders. If you have additional questions, you can ask management questions through our built in communication channel</p>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<footer class="footer_new">
+		<div class="container">
+			<div class="row">
+				<div class="col-lg-3">
+					<div class="footer_title border_bottom">
+						<h4>About us</h4>
+					</div>
+					<a href="">Overview</a>
+					<a href="">Team</a>
+					<a href="">Partners</a>
+					<a href="">Contacy Us</a>
+					<a href="">Careers</a>
+					<a href="">In the News</a>
+					<a href="">FAQ</a>
+					<a href="">Blog</a>
+				</div>
+				<div class="col-lg-3">
+					<div class="footer_title border_bottom">
+						<h4>Investor resources</h4>
+					</div>
+					<a href="">Investor Tutorial</a>
+					<a href="">Education Material</a>
+					<div class="footer_title border_bottom">
+						<h4>Business recources</h4>
+					</div>
+					<a href="">Business Tutorial</a>
+					<a href="">Success Guide</a>
+					<a href="">Capital Raise Calculator</a>
+					<a href="">What's me Business Worth?</a>
+				</div>
+				<div class="col-lg-3">
+					<div class="footer_title border_bottom">
+						<h4>Advisor network</h4>
+					</div>
+					<a href="">About</a>
+					<a href="">FAQ</a>
+				</div>
+				<div class="col-lg-3">
+					<div class="footer_title border_bottom">
+						<h4>Legal</h4>
+					</div>
+					<a href="">Terms</a>
+					<a href="">Privacy</a>
+				</div>
+			</div>
+			<div class="row">
+				<div class="col-lg-12">
+					<div class="company">
+						<span>©GROWTHFOUNTAIN 2016.</span>
+						<p>Made with love for great people</p>
+					</div>
+				</div>
+			</div>
+		</div>
+	</footer>
+	<!-- Здесь пишем код -->
+
+
+	<div class="hidden"></div>
+
+	<!--[if lt IE 9]>
+	<script src="libs/html5shiv/es5-shim.min.js"></script>
+	<script src="libs/html5shiv/html5shiv.min.js"></script>
+	<script src="libs/html5shiv/html5shiv-printshiv.min.js"></script>
+	<script src="libs/respond/respond.min.js"></script>
+	<![endif]-->
+
+	<!-- Load Scripts Start -->
+		<!-- <script src="http://code.jquery.com/jquery-1.9.1.js"></script> -->
+		<script src="js/jquery.min.js"></script>
+		<script src="js/bootstrap.min.js"></script>
+		<script src="js/bootstrap-select.js"></script>
+		<script src="js/my_script.js"></script>
+	<!-- Load Scripts End -->
+    <script src="js/slick.js" type="text/javascript" charset="utf-8"></script>
+	<script type="text/javascript">
+		$(document).on('ready', function() {
+			$(".regular").slick({
+				dots: true,
+				infinite: true,
+				slidesToShow: 1,
+				slidesToScroll: 1
+			});
+		});
+	</script>
+
+</body>
+</html>
