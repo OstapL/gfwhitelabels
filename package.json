@@ -16,5 +16,8 @@
     "bootstrap": "^4.0.0-alpha.2",
     "tether": "*",
     "bootstrap-slider": "*"
+  },
+  "dependencies": {
+    "font-awesome": "^4.6.3"
   }
 }

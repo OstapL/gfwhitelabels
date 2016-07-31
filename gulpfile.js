@@ -25,7 +25,7 @@ gulp.task('browser-sync', ['styles', 'scripts'], function() {
 gulp.task('styles', function () {
     return gulp.src('app/sass/entry.sass')
     .pipe(sass({
-        includePaths: [config.bootstrapDir, './node_modules/tether/', ]
+        includePaths: [config.bootstrapDir, './node_modules/tether/',  './node_modules/font-awesome/scss']
     }).on('error', sass.logError))
     .pipe(rename({basename: 'main', prefix : ''}))
 // .pipe(autoprefixer({browsers: ['last 15 versions'], cascade: false}))
