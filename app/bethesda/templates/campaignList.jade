@@ -12,39 +12,40 @@ section.small-section.filter
                             option Fintech
                             option Internet
 
-        .col-lg-3
-            .one_drop
-                select.selectpicker
-                    option Stage
+                .col-lg-3
+                    .one_drop
+                        select.selectpicker
+                            option Stage
 
-        .col-lg-3
-            .one_drop
-                select.selectpicker
-                    option Locations
+                .col-lg-3
+                    .one_drop
+                        select.selectpicker
+                            option Locations
 
-        .col-lg-3
-            .one_drop
-                select .selectpicker
-                    option Deal type
+                .col-lg-3
+                    .one_drop
+                        select .selectpicker
+                            option Deal type
 
-    .create-alert-block
+            .create-alert-block
+                .row
+                    .col-sm-9.col-lg-10
+                        a(href="#").pull-right.btn.text-uppercase create alert
+
+                    .col-sm-3.col-lg-2
+                        select.selectpicker(data-style="btn-sm btn-default btn")
+                            option(checked="checked" value="0") Order by
+section
+    .container#campaignList
         .row
-            .col-sm-9.col-lg-10.create_alert
-                a(href="#").pull-right.btn.btn-default.text-uppercase create alert
+            for campaign in campaigns
 
-        .col-sm-3 col-lg-2
-            select.selectpicker(data-style="btn-sm btn-default btn")
-                option(checked="checked" value="0") Order by
-
-    .container#campaignList.row
-        for campaign in campaigns
-
-            .col-lg-4
-                a(href=Urls['campaign-detail'](campaign.id)).block_link
+                .col-lg-4
+                    a(href=Urls['campaign-detail'](campaign.id)).block_link
                     .one_block
                         .for_img
                             img(
-                                src=campaign.id+'?crop=smart&size=350x209'
+                                src='../img/test.png'
                                 alt=campaign.company.name
                             )
 
@@ -52,43 +53,43 @@ section.small-section.filter
                                 .title
                                     h3 Pre money valuation: $#{campaign.premoney_valuation}
 
-                            .small_text
-                                p #{campaign.company.tagline.substr(0, 120)}
+                                .small_text
+                                    p #{campaign.company.tagline.substr(0, 120)}
 
-                            .ico_cont
-                                a(href=Urls['campaign-detail'](campaign.id) + '#members')
-                                    i.fa.fa-users
-                                a(href=Urls['campaign-detail'](campaign.id) + '#perks')
-                                    i.fa.fa-gift
+                                .ico_cont
+                                    a(href=Urls['campaign-detail'](campaign.id) + '#members')
+                                        i.fa.fa-users
+                                    a(href=Urls['campaign-detail'](campaign.id) + '#perks')
+                                        i.fa.fa-gift
 
-                            .bottom_pr
-                                if campaign.security_type == false
-                                    p Price per share: $#{campaign.security_type_data.price_per_share}
-                                    p Number of shares: $#{campaign.security_type_data.amount_of_shares}
-                                else
-                                    p % Revenue: #{campaign.security_type_data.percentage_revenue}
-                                    p Cap: #{campaign.security_type_data.cap}
-                                    p Expiration Date: #{campaign.security_type_data.expiration_date}
+                                .bottom_pr
+                                    if campaign.security_type == false
+                                        p Price per share: $#{campaign.security_type_data.price_per_share}
+                                        p Number of shares: $#{campaign.security_type_data.amount_of_shares}
+                                    else
+                                        p % Revenue: #{campaign.security_type_data.percentage_revenue}
+                                        p Cap: #{campaign.security_type_data.cap}
+                                        p Expiration Date: #{campaign.security_type_data.expiration_date}
 
 
                         .title
                             h3= campaign.company.name
                             span.place
                                 i.fa.fa-map-marker= campaign.company.city + ' ' + campaign.company.state
-                                    .clear
-                                        .description
-                                            p= campaign.pitch.substr(0,250)
+                            .clear
+                        .description
+                            p= campaign.pitch.substr(0,250)
 
-                                .progress_bar_container
-                                    span.left_text= campaign.progress % Funded
-                                    span.right_text 
-                                        b $#{campaign.amount_raised} of #{campaign.minimum_raise}
-                                    .clear
-                                        progress.progress(value=campaign.progress max="100") #{campaign.progress} %
+                        .progress_bar_container
+                            span.left_text= campaign.progress % Funded
+                            span.right_text 
+                                b $#{campaign.amount_raised} of #{campaign.minimum_raise}
+                            .clear
+                                progress.progress(value=campaign.progress max="100") #{campaign.progress} %
 
-                                .bottom_text
-                                    span.left_desc
-                                        b Security: #{campaign.get_security_type_display}
-                                    span.right_desc
-                                        b Industry: Lorem ipsum
-                                    .clear
+                        .bottom_text
+                            span.left_desc
+                                b Security: #{campaign.get_security_type_display}
+                            span.right_desc
+                                b Industry: Lorem ipsum
+                            .clear
