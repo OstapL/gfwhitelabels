@@ -23,7 +23,7 @@ gulp.task('browser-sync', ['styles', 'scripts'], function() {
 });
 
 gulp.task('styles', function () {
-    return gulp.src('app/sass/entry.sass')
+    return gulp.src('app/sass/mixins_all.sass')
     .pipe(sass({
         includePaths: [config.bootstrapDir, './node_modules/tether/',  './node_modules/font-awesome/scss']
     }).on('error', sass.logError))
