@@ -1,33 +1,3 @@
-// Фукнции
-=mt($time)
-    transition: all $time ease
-    -webkit-transition: all $time ease-in-out
-    -moz-transition: all $time ease-in-out
-    -ms-transition: all $time ease-in-out
-    -o-transition: all $time ease-in-out
-    transition: all $time ease-in-out
-
-=ellipsis() 
-    overflow: hidden;
-    white-space: nowrap;
-    text-overflow: ellipsis;
-
-=calc-rem($px)                                                                    
-    font-size: $px / 16 + rem                                                     
-                                                                                  
-=calc-rem-padding($px)
-    padding-top: $px / 16 + rem
-    padding-bottom: $px / 16 + rem
-
-=placeholder                                                                      
-  &::-webkit-input-placeholder                                                    
-    @content                                                                      
-  &:-moz-placeholder                                                              
-    @content                                                                      
-  &::-moz-placeholder                                                             
-    @content                                                                      
-  &:-ms-input-placeholder                                                         
-    @content  
 
 /* сostum button begin */
 
@@ -157,47 +127,7 @@
 /* costum alert begin */
 
 
-/*Typhography*/
-h1,h2,h3,h4,h5,h6
-	font-weight: 300
-h1
-	+calc-rem(30)
-	letter-spacing: 6px
-	color: $black
-	.small-text
-		+calc-rem(14)
-		letter-spacing: 2.8px
-		display: block
-h2
-	+calc-rem(24)
-	letter-spacing: 4.8px
-	.small-text
-		+calc-rem(11)
-		letter-spacing: 2.2px
-		color: $boulder
-		display: block
-h3
-	+calc-rem(18)
-	letter-spacing: 3.6px
-	.small-text
-		+calc-rem(11)
-		letter-spacing: 2.2px
-		color: $boulder
-		display: block
-h4
-	+calc-rem(16)
-	letter-spacing: 3.2px
-	.small-text
-		+calc-rem(11)
-		letter-spacing: 2.2px
-		color: $boulder
-		display: block
-h5
-	+calc-rem(14)
-	letter-spacing: 2.8px
-h6
-	+calc-rem(13)
-	letter-spacing: 2.6px
+
 
 /*дополнительный клас для Заголовков*/
 .border-bottom
@@ -209,15 +139,7 @@ h6
 	background-color: $alabaster
 	font-family: $dosis
 
-.breadcrumb
-	background: none
-	> li
-		text-transform: uppercase
-		+calc-rem(11)
-		font-family: $dosis
-		letter-spacing: 2.2px
-		a
-			color: $black
+
 
 .pt50
 	padding-top: 50px
