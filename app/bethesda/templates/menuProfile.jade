@@ -1,0 +1,30 @@
+if user.token != ""
+    li.nav-item.notification.text-center
+        a(href="#")
+            i.fa.fa-envelope-o
+            span.count-notific 5
+
+    li.nav-item.user-info
+        a(href="#").nav-link.user-info-name
+            span
+                i.fa.fa-user
+                #{user.first_name} #{user.last_name}
+    
+
+    .list-container.user-info-drop
+        ul.submenu.list-unstyled 
+            li
+                a(href="#").nav-link Profile
+            li
+                a(href="#").nav-link Issuer Dashboard
+            li
+                a(href="#").nav-link Investor Dashboard
+            li
+                a(href="#").nav-link Logout
+        
+else
+    li.nav-item
+        a(href="#") Login
+    
+    li.nav-item
+        a(href="#") Signup
