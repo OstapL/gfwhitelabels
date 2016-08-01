@@ -3,15 +3,15 @@ define(function() {
         list: Backbone.View.extend({
             initialize: function(options) {
                 this.collection = options.collection;
-                this.template = options.template;
             },
 
             render: function() {
                 require(['bootstrap-select',], () => {
+                    this.$el.html('');
                     this.$el.append(
-                        _.template(this.template)({
+                        window.campaignList({
                             serverUrl: serverUrl,
-                            models: this.collection.models
+                            campaigns: this.collection.toJSON()
                         })
                     );
                     this.$el.find('.selectpicker').selectpicker()

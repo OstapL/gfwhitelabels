@@ -100,7 +100,7 @@ requirejs.config({
     //the paths config could be for a directory.
 });
 
-requirejs(['templates/templates.js'], function() {
+requirejs(['/templates/templates.js'], function() {
 
 _.extend(app, Backbone.Events);
 app.getUrls();
@@ -110,8 +110,8 @@ app.on('urlsReady', function() {
     let appRoutes = Backbone.Router.extend({
         routes: {
           '': 'mainPage',
-          'campaigns/': 'campaignList',
-          'campaigns/:id/': 'campaignDetail',
+          'api/campaign': 'campaignList',
+          'api/campaign/:id': 'campaignDetail',
           'campaign/:id/invest': 'campaignInvest',
           'page/:id/': 'pageDetail',
           'account/profile/': 'accountProfile',
