@@ -7,7 +7,7 @@ define(function() {
 
             render: function() {
                 loadCss('/css/bootstrap-select.css');
-                require(['js/bootstrap-select1',], () => {
+                require(['js/bootstrap-select',], () => {
                     this.$el.html('');
                     this.$el.append(
                         window.campaignList({
