@@ -1,0 +1,175 @@
+.container
+    .row.pt70
+        .col-sm-12
+            h1 Sign Up
+        section.authorization.container
+            .row
+                .col-lg-6
+                    .embed-responsive.embed-responsive-16by9.boxshadow
+                        iframe(
+                            embed-responsive-item="true" 
+                            src="https://player.vimeo.com/video/170651597?title=0&amp;byline=0&amp;portrait=0" 
+                            data-webkitallowfullscreen="" 
+                            data-mozallowfullscreen="" 
+                            data-allowfullscreen=""
+                        )
+                .forms-block
+                    .col-lg-6
+                        .row
+                            .col-lg-offset-3.col-lg-9.col-sm-offset-3
+                                ul.nav.nav-tabs.login-tabs
+                                    li.nav-item
+                                        a(
+                                            href="#mini-one" 
+                                            data-toggle="tab" 
+                                            aria-expanded="trueLogin"
+                                        ).active.nav-link  Log in
+                                    li.nav-item
+                                        a(
+                                            href="#mini-two" 
+                                            data-toggle="tab" 
+                                            aria-expanded="true"
+                                        ).nav-link Sign Up
+                        .tab-content.authorization-tabs-content 
+                            #mini-one.tab-pane.fade.in.active(aria-expanded="true")
+                                .row
+                                    section.form-section
+                                        form(action="" method="post").login-form
+                                            .clearfix
+                                                .form-group.clearfix
+                                                    .col-lg-3.col-sm-3.text-md-right
+                                                        label(for="email") Email
+                                                    .col-md-6.col-lg-7
+                                                        input(
+                                                            autofocus="autofocus"
+                                                            name="email"
+                                                            placeholder="Email"
+                                                            type="email"
+                                                        )#email.input-md.form-control
+                                                        span.help-block
+                                                .form-group.clearfix
+                                                    .col-lg-3.col-sm-3.text-md-right
+                                                        label(for="password") Password
+                                                    .col-md-6.col-lg-7
+                                                        input(
+                                                            name="password" 
+                                                            placeholder="Password" 
+                                                            type="password"
+                                                        )#password.input-md.form-control
+                                                        span.help-block
+                                                .socialaccount_ballot.clearfix
+                                                    .col-lg-3.col-sm-6.col-xs-5.text-sm-right
+                                                        p Or login with
+                                                    .col-sm-6.col-xs-7.col-lg-6
+                                                        ul.social-icons.list-inline.clearfix
+                                                            li
+                                                                a(
+                                                                    data-original-title="facebook" 
+                                                                    href="/accounts/facebook/login/?process=login"
+                                                                ).fa.fa-facebook.social-icon-color.facebook 
+                                                            li
+                                                                a(
+                                                                    data-original-title="Google Plus" 
+                                                                    href="/accounts/google/login/?process=login"
+                                                                ).fa.fa-google-plus.social-icon-color.googleplus
+                                                            li
+                                                                a(
+                                                                    data-original-title="Linkedin" 
+                                                                    href="/accounts/linkedin_oauth2/login/?process=login"
+                                                                ).fa.fa-linkedin.social-icon-color.linkedin
+                                            .form-group.clearfix
+                                                .col-lg-6.col-xs-6.text-md-right
+                                                    a(
+                                                        href="/accounts/password/reset/"
+                                                    )#forget-password.forget-password Forgot Password?
+                                                .col-xs-6
+                                                    button#login-btnLogin.pull-md-left.pull-xs-right.bg-inverse.submit-btn.btn.btn-lg
+                            #mini-two.tab-pane.fade(aria-expanded="false")
+                                .row
+                                    section.form-section
+                                        form(
+                                            action="/accounts/signup/"
+                                            method="post"
+                                        ).form-horizontal.no-gutter-right
+                                            .form-group.clearfix
+                                                .col-lg-3.col-sm-3.text-md-right
+                                                    label(for="first_name") First Name
+                                                .col-md-6.col-lg-7
+                                                    input(
+                                                        maxlength="30" 
+                                                        name="first_name" 
+                                                        placeholder="First Name" 
+                                                        type="text"
+                                                    )#first_name.input-md.form-control
+                                                    span.help-block
+                                            .form-group.last_name.clearfix
+                                                .col-lg-3.col-sm-3.text-md-right
+                                                    label(for="last_name") Last Name
+                                                .col-md-6.col-lg-7
+                                                    input(
+                                                        maxlength="30" 
+                                                        name="last_name" 
+                                                        placeholder="Last Name" 
+                                                        type="text"
+                                                    )#last_name.input-md.form-control
+                                                    span.help-block
+                                            .form-group.email.clearfix
+                                                .col-lg-3.col-sm-3.text-md-right
+                                                    label(for="email") Email
+                                                .col-md-6.col-lg-7
+                                                    input(
+                                                        name="email" 
+                                                        placeholder="Email" 
+                                                        type="email"
+                                                    )#email.input-md.form-control
+                                                    span.help-block
+                                            .form-group.password1.clearfix
+                                                .col-lg-3.col-sm-3.text-md-right
+                                                    label(for="password1") Password
+                                                .col-md-6.col-lg-7
+                                                    input(
+                                                        name="password1" 
+                                                        placeholder="Password" 
+                                                        type="password"
+                                                    )#password1.input-md.form-control
+                                                    span.help-block
+                                            .form-group.password2.clearfix
+                                                .col-lg-3.col-sm-3.text-md-right
+                                                    label(for="password2") Repeat password
+                                                .col-md-6.col-lg-7
+                                                    input(
+                                                        name="password2" 
+                                                        placeholder="Repeat password" 
+                                                        type="password"
+                                                    )#password2.input-md.form-control
+                                                    span.help-block
+                                            .form-group.signature.clearfix
+                                                .col-sm-12
+                                                    label(for="signature").pseudo-checkbox
+                                                        input(
+                                                          name="signature" 
+                                                          type="checkbox"
+                                                        )#signature 
+                                                        span I consent to electronic signature and electronic delivery of documentation
+                                            .form-group.terms_conditions.clearfix
+                                                .col-sm-12
+                                                    label(for="terms_conditions").pseudo-checkbox
+                                                        input(
+                                                          name="terms_conditions" 
+                                                          type="checkbox"
+                                                        )#signature 
+                                                        span I consent to the 
+                                                        a(
+                                                            href="/pages/terms/" 
+                                                            target="_blank"
+                                                        ) Terms of Use 
+                                                        span and 
+                                                        a(
+                                                            href="/pages/privacy"
+                                                            target="_blank"
+                                                        ) Privacy Policy
+                                            .form-group.form-actions.text-sm-center
+                                                .col-lg-10.col-md-9.col-xs-12.clearfix
+                                                    button(
+                                                        type="submit" 
+                                                    )#register-submit-btn.bg-inverse.pull-right.btn-primary.submit-btn.btn.btn-lg.uppercase    Submit
