@@ -9,7 +9,7 @@ define('views/menu', function() {
                 this.$el.html(
                     window.menuPage({
                         serverUrl: serverUrl,
-                        user: app.user,
+                        user: app.user.toJSON(),
                         Urls: Urls,
                     })
                 );
@@ -38,7 +38,6 @@ define('views/menu', function() {
                     window.menuProfile({
                         serverUrl: serverUrl,
                         user: app.user.toJSON(),
-                        model: app.user,
                         Urls: Urls,
                     })
                 );
