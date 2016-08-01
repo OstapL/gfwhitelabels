@@ -88,3 +88,6 @@ Session.vim
 *~
 # auto-generated tag files
 tags
+
+# do not push compiled js files
+app/html/compiled_t/*

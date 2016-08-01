@@ -19,6 +19,11 @@
     "tether": "*"
   },
   "dependencies": {
-    "font-awesome": "^4.6.3"
+    "backbone": "^1.3.3",
+    "backbone-validation": "^0.11.5",
+    "express": "^4.14.0",
+    "font-awesome": "^4.6.3",
+    "pug": "^2.0.0-beta4",
+    "require": "^2.4.20"
   }
 }
