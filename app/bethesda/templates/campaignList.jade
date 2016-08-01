@@ -40,7 +40,7 @@ section.small-section.filter
         for campaign in campaigns
 
             .col-lg-4
-                a(href="Urls['campaign-detail'](= campaign.id)").block_link
+                a(href=Urls['campaign-detail'](campaign.id)).block_link
                     .one_block
                         .for_img
                             img(
@@ -56,19 +56,19 @@ section.small-section.filter
                                 p #{campaign.company.tagline.substr(0, 120)}
 
                             .ico_cont
-                                a(href=campaign.get_absolute_url+'#members')
+                                a(href=Urls['campaign-detail'](campaign.id) + '#members')
                                     i.fa.fa-users
-                                a(href=campaign.get_absolute_url+'#perks')
+                                a(href=Urls['campaign-detail'](campaign.id) + '#perks')
                                     i.fa.fa-gift
 
                             .bottom_pr
                                 if campaign.security_type == false
-                                    p Price per share: $= campaign.security_type_data.price_per_share
-                                    p Number of shares: $= campaign.security_type_data.amount_of_shares
+                                    p Price per share: $#{campaign.security_type_data.price_per_share}
+                                    p Number of shares: $#{campaign.security_type_data.amount_of_shares}
                                 else
-                                    p % Revenue: = campaign.security_type_data.percentage_revenue
-                                    p Cap: = campaign.security_type_data.cap
-                                    p Expiration Date: = campaign.security_type_data.expiration_date
+                                    p % Revenue: #{campaign.security_type_data.percentage_revenue}
+                                    p Cap: #{campaign.security_type_data.cap}
+                                    p Expiration Date: #{campaign.security_type_data.expiration_date}
 
 
                         .title

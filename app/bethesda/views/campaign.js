@@ -6,7 +6,8 @@ define(function() {
             },
 
             render: function() {
-                require(['bootstrap-select',], () => {
+                loadCss('/css/bootstrap-select.css');
+                require(['js/bootstrap-select1',], () => {
                     this.$el.html('');
                     this.$el.append(
                         window.campaignList({
@@ -35,7 +36,7 @@ define(function() {
                     'photoswipe-ui-default', 
                     ], (appears, PhotoSwipe, PhotoSwipeUI_Default) => {
                         this.$el.html(
-                            _.template(this.template)({
+                            window.campaignDetail({
                                 serverUrl: serverUrl,
                                 Urls: Urls,
                                 model: this.model
