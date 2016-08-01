@@ -1,5 +1,8 @@
 // TODO добавить анимацию ховерам, появлению блока с меню(ховер на пунктах главного меню)
 header
+  .navbar-toggleable-md::after
+    clear: none
+
   .bg-inverse
     background-color: transparent
     background: -webkit-linear-gradient(to right, $menu_backgound_from, $menu_backgound_to)
@@ -241,6 +244,9 @@ header
 
 
   @media screen and (max-width: 991px)
+    .navbar-nav
+      padding: 14px 0 0 0
+
     .navbar-toggler
       margin-top: 2px
       color: rgba($menu_text_color, .5)
@@ -279,6 +285,7 @@ header
     .navbar .navbar-brand
       margin-top: 6px
       width: 15%
+
     .navbar-nav .nav-item.user-info a.user-info-name span
       display: none
 
@@ -331,6 +338,7 @@ header
         outline: none
         padding-left: 40px
         height: 45px
+        color: $menu_text_color
 
       .btn
         border: none
