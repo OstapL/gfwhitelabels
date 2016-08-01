@@ -1,0 +1,36 @@
+mixin breadcrumbs(title, subtitle, data)
+    .container.pt50
+        .row
+            .col-lg-8
+                h1.text-uppercase= title
+                    span.small-text= subtitle
+            .col-lg-4
+                ol.breadcrumb.pull-right
+                    each elem in data
+                        li.breadcumbs-item
+                            a(href=elem[1])= elem[0]
+
+mixin fieldBlock(name, data, attr)
+    if attr.type == 'checkbox'
+        div(class=attr.class)
+            label(for=name).pseudo-checkbox
+                input(
+                  name=name
+                  type="checkbox"
+                  id=name
+                )
+                | #{attr.text}
+    else
+        div(class="form-group row " + name )
+            div(class=attr.class1 + " text-md-right")
+                label(for=name)= name
+            div(class=attr.class2)
+                input(
+                    id=name
+                    name=name
+                    placeholder=name
+                    type=attr.type ? attr.type : 'text'
+                    value=data
+                  ).form-control
+                span.help-block 
+
