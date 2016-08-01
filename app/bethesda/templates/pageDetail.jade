@@ -1,12 +1,7 @@
-section.header_title
-    .container
-    .row
-        .col-lg-6
-            h2= page.title
-        .col-lg-6 text-lg-right
-            a(href="/")
-            span /
-            span.curent= page.title
+include mixins.jade
+
++breadcrumbs(page.title, 'Subtitle', [['home', '/',], [ 'current', page.get_absolute_url]])
 
 section.text_block
-    .container= page.content
+    .container
+        .row!= page.content
