@@ -6,7 +6,7 @@ include mixins.jade
             h1 Sign Up
         section.authorization.container
             .row
-                .col-lg-7
+                .col-lg-6
                     .embed-responsive.embed-responsive-16by9.boxshadow
                         iframe(
                             embed-responsive-item="true" 
@@ -15,10 +15,11 @@ include mixins.jade
                             data-mozallowfullscreen="" 
                             data-allowfullscreen=""
                         )
+                .col-lg-2
                 .forms-block
-                    .col-lg-5
+                    .col-lg-4
                         .row
-                            .col-lg-offset-3.col-lg-9.col-sm-offset-3
+                            .col-lg-10.text-lg-right
                                 ul.nav.nav-tabs.login-tabs
                                     li.nav-item
                                         a(
@@ -49,10 +50,10 @@ include mixins.jade
                                                     type: 'password'
                                                 })
                                                 .socialaccount_ballot.clearfix
-                                                    .col-lg-3.col-sm-6.col-xs-5.text-sm-right
+                                                    .col-lg-12.col-sm-12.col-xs-12.text-sm-left
                                                         p Or login with
-                                                    .col-sm-6.col-xs-7.col-lg-6
-                                                        ul.social-icons.list-inline.clearfix
+                                                    .col-sm-12.col-xs-12.col-lg-12
+                                                        ul.social-icons.list-inline.clearfix.text-lg-left
                                                             li
                                                                 a(
                                                                     data-original-title="facebook" 
@@ -72,9 +73,9 @@ include mixins.jade
                                                 .col-lg-6.col-xs-6.text-md-right
                                                     a(
                                                         href="/accounts/password/reset/"
-                                                    )#forget-password.forget-password Forgot Password?
+                                                    )#forget-password Forgot Password?
                                                 .col-xs-6
-                                                    button#login-btnLogin.pull-md-left.pull-xs-right.bg-inverse.submit-btn.btn.btn-lg
+                                                    button#login-btnLogin.pull-md-left.pull-xs-right.btn.text-uppercase Login
                             #mini-two.tab-pane.fade(aria-expanded="false")
                                 .row
                                     section.form-section
@@ -132,4 +133,4 @@ include mixins.jade
                                                 .col-lg-10.col-md-9.col-xs-12.clearfix
                                                     button(
                                                         type="submit" 
-                                                    )#register-submit-btn.bg-inverse.pull-right.btn-primary.submit-btn.btn.btn-lg.uppercase    Submit
+                                                    )#register-submit-btn.bg-inverse.pull-right.btn-primary.btn.uppercase Submit
