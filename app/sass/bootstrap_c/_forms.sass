@@ -12,12 +12,19 @@ select.form-control
 	//общие стили для лейблов
 	label
 		@include calc-rem(14)
-		margin-top: 7px
-		font-weight: 600
+		font-weight: 700
 		color: $black_bg
+		padding-top: 6px
 		// стили для инлайн радиобатонов
 		&.radio-inline
 			font-weight: 500
+			position: relative;
+			display: inline-block;
+			padding-left: 1.25rem;
+			margin-bottom: 0;
+			font-weight: normal;
+			vertical-align: middle;
+			cursor: pointer;
 			& + .radio-inline
 				margin-top: 7px
 			input[type='radio']
@@ -104,3 +111,7 @@ select.form-control
 		max-width: 554px
 	input[type='date'] 
 		height: 36px// непонятно по какой причине высота этого элемента больше чем 38пкс
+	.help-block
+		+calc-rem(11)
+		letter-spacing: 1.2px
+		color: $boulder

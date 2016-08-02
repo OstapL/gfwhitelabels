@@ -30,7 +30,7 @@ section.small-section.filter
             .create-alert-block
                 .row
                     .col-sm-9.col-lg-10
-                        a(href="#").pull-right.btn.text-uppercase create alert
+                        a(href="#").pull-right.btn.create-alert-btn.text-uppercase create alert
 
                     .col-sm-3.col-lg-2
                         select.form-control
@@ -84,16 +84,16 @@ section.campaing-list
                         .progress_bar_container
                             span.left_text= campaign.progress % Funded
                             span.right_text 
-                                b $#{campaign.amount_raised}
+                                b $#{campaign.amount_raised} 
                                 | of #{campaign.minimum_raise}
                             .clear
                                 progress.progress(value=campaign.progress max="100") #{campaign.progress} %
 
                         .bottom_text
                             span.left_desc
-                                b Security: 
+                                b Security:
                                 | #{campaign.get_security_type_display}
                             span.right_desc
-                                b Industry:
+                                b Industry: 
                                 | Lorem ipsum
                             .clear
