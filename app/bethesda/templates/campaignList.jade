@@ -30,12 +30,12 @@ section.small-section.filter
             .create-alert-block
                 .row
                     .col-sm-9.col-lg-10
-                        a(href="#").pull-right.btn.text-uppercase create alert
+                        a(href="#").pull-right.btn.create-alert-btn.text-uppercase create alert
 
                     .col-sm-3.col-lg-2
                         select.form-control
                             option(checked="checked" value="0") Order by
-section
+section.campaing-list
     .container#campaignList
         .row
             for campaign in campaigns
@@ -50,7 +50,7 @@ section
                             )
 
                             .more_inform
-                                .title
+                                .title.text-center
                                     h3 Pre money valuation: $#{campaign.premoney_valuation}
 
                                 .small_text
@@ -75,7 +75,8 @@ section
                         .title
                             h3= campaign.company.name
                             span.place
-                                i.fa.fa-map-marker= campaign.company.city + ' ' + campaign.company.state
+                                i.fa.fa-map-marker
+                                = campaign.company.city + ' ' + campaign.company.state
                             .clear
                         .description
                             p= campaign.pitch.substr(0,250)
@@ -83,13 +84,16 @@ section
                         .progress_bar_container
                             span.left_text= campaign.progress % Funded
                             span.right_text 
-                                b $#{campaign.amount_raised} of #{campaign.minimum_raise}
+                                b $#{campaign.amount_raised} 
+                                | of #{campaign.minimum_raise}
                             .clear
                                 progress.progress(value=campaign.progress max="100") #{campaign.progress} %
 
                         .bottom_text
                             span.left_desc
-                                b Security: #{campaign.get_security_type_display}
+                                b Security:
+                                | #{campaign.get_security_type_display}
                             span.right_desc
-                                b Industry: Lorem ipsum
+                                b Industry: 
+                                | Lorem ipsum
                             .clear
