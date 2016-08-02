@@ -45,7 +45,7 @@ section.campaing-list
                     .one_block
                         .for_img
                             img(
-                                src='../img/test.png'
+                                src='/img/test.png'
                                 alt=campaign.company.name
                             )
 
@@ -82,7 +82,7 @@ section.campaing-list
                             p= campaign.pitch.substr(0,250)
 
                         .progress_bar_container
-                            span.left_text= campaign.progress % Funded
+                            span.left_text #{campaign.progress} % Funded
                             span.right_text 
                                 b $#{campaign.amount_raised} 
                                 | of #{campaign.minimum_raise}
