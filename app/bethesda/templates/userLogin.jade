@@ -1,10 +1,12 @@
+include mixins.jade
+
 .container
-    .row.pt70
+    .row.pt50
         .col-sm-12
             h1 Sign Up
         section.authorization.container
             .row
-                .col-lg-6
+                .col-lg-7
                     .embed-responsive.embed-responsive-16by9.boxshadow
                         iframe(
                             embed-responsive-item="true" 
@@ -14,7 +16,7 @@
                             data-allowfullscreen=""
                         )
                 .forms-block
-                    .col-lg-6
+                    .col-lg-5
                         .row
                             .col-lg-offset-3.col-lg-9.col-sm-offset-3
                                 ul.nav.nav-tabs.login-tabs
@@ -36,27 +38,16 @@
                                     section.form-section
                                         form(action="" method="post").login-form
                                             .clearfix
-                                                .form-group.clearfix
-                                                    .col-lg-3.col-sm-3.text-md-right
-                                                        label(for="email") Email
-                                                    .col-md-6.col-lg-7
-                                                        input(
-                                                            autofocus="autofocus"
-                                                            name="email"
-                                                            placeholder="Email"
-                                                            type="email"
-                                                        )#email.input-md.form-control
-                                                        span.help-block
-                                                .form-group.clearfix
-                                                    .col-lg-3.col-sm-3.text-md-right
-                                                        label(for="password") Password
-                                                    .col-md-6.col-lg-7
-                                                        input(
-                                                            name="password" 
-                                                            placeholder="Password" 
-                                                            type="password"
-                                                        )#password.input-md.form-control
-                                                        span.help-block
+                                                +fieldBlock("email", '', {
+                                                    class1: 'col-lg-3 col-md-3', 
+                                                    class2: 'col-lg-7 col-md-7', 
+                                                    type: 'email',
+                                                })
+                                                +fieldBlock("password", '', {
+                                                    class1: 'col-lg-3 col-md-3', 
+                                                    class2: 'col-lg-7 col-md-7', 
+                                                    type: 'password'
+                                                })
                                                 .socialaccount_ballot.clearfix
                                                     .col-lg-3.col-sm-6.col-xs-5.text-sm-right
                                                         p Or login with
@@ -91,73 +82,41 @@
                                             action="/accounts/signup/"
                                             method="post"
                                         ).form-horizontal.no-gutter-right
-                                            .form-group.clearfix
-                                                .col-lg-3.col-sm-3.text-md-right
-                                                    label(for="first_name") First Name
-                                                .col-md-6.col-lg-7
-                                                    input(
-                                                        maxlength="30" 
-                                                        name="first_name" 
-                                                        placeholder="First Name" 
-                                                        type="text"
-                                                    )#first_name.input-md.form-control
-                                                    span.help-block
-                                            .form-group.last_name.clearfix
-                                                .col-lg-3.col-sm-3.text-md-right
-                                                    label(for="last_name") Last Name
-                                                .col-md-6.col-lg-7
-                                                    input(
-                                                        maxlength="30" 
-                                                        name="last_name" 
-                                                        placeholder="Last Name" 
-                                                        type="text"
-                                                    )#last_name.input-md.form-control
-                                                    span.help-block
-                                            .form-group.email.clearfix
-                                                .col-lg-3.col-sm-3.text-md-right
-                                                    label(for="email") Email
-                                                .col-md-6.col-lg-7
-                                                    input(
-                                                        name="email" 
-                                                        placeholder="Email" 
-                                                        type="email"
-                                                    )#email.input-md.form-control
-                                                    span.help-block
-                                            .form-group.password1.clearfix
-                                                .col-lg-3.col-sm-3.text-md-right
-                                                    label(for="password1") Password
-                                                .col-md-6.col-lg-7
-                                                    input(
-                                                        name="password1" 
-                                                        placeholder="Password" 
-                                                        type="password"
-                                                    )#password1.input-md.form-control
-                                                    span.help-block
-                                            .form-group.password2.clearfix
-                                                .col-lg-3.col-sm-3.text-md-right
-                                                    label(for="password2") Repeat password
-                                                .col-md-6.col-lg-7
-                                                    input(
-                                                        name="password2" 
-                                                        placeholder="Repeat password" 
-                                                        type="password"
-                                                    )#password2.input-md.form-control
-                                                    span.help-block
-                                            .form-group.signature.clearfix
-                                                .col-sm-12
-                                                    label(for="signature").pseudo-checkbox
-                                                        input(
-                                                          name="signature" 
-                                                          type="checkbox"
-                                                        )#signature 
-                                                        span I consent to electronic signature and electronic delivery of documentation
+                                            +fieldBlock("first_name", '', {
+                                                class1: 'col-lg-3 col-md-3', 
+                                                class2: 'col-lg-7 col-md-7', 
+                                            })
+                                            +fieldBlock("last_name", '', {
+                                                class1: 'col-lg-3 col-md-3', 
+                                                class2: 'col-lg-7 col-md-7', 
+                                            })
+                                            +fieldBlock("email", '', {
+                                                class1: 'col-lg-3 col-md-3', 
+                                                class2: 'col-lg-7 col-md-7', 
+                                                type: 'email',
+                                            })
+                                            +fieldBlock("password1", '', {
+                                                class1: 'col-lg-3 col-md-3', 
+                                                class2: 'col-lg-7 col-md-7', 
+                                                type: 'password',
+                                            })
+                                            +fieldBlock("password2", '', {
+                                                class1: 'col-lg-3 col-md-3', 
+                                                class2: 'col-lg-7 col-md-7', 
+                                                type: 'password',
+                                            })
+                                            +fieldBlock("signature", '', {
+                                                class: 'col-lg-12 col-md-12', 
+                                                text: 'I consent to electronic signature and electronic delivery of documentation',
+                                                type: 'checkbox',
+                                            })
                                             .form-group.terms_conditions.clearfix
                                                 .col-sm-12
                                                     label(for="terms_conditions").pseudo-checkbox
                                                         input(
                                                           name="terms_conditions" 
                                                           type="checkbox"
-                                                        )#signature 
+                                                        )#terms_condition 
                                                         span I consent to the 
                                                         a(
                                                             href="/pages/terms/" 
@@ -168,6 +127,7 @@
                                                             href="/pages/privacy"
                                                             target="_blank"
                                                         ) Privacy Policy
+
                                             .form-group.form-actions.text-sm-center
                                                 .col-lg-10.col-md-9.col-xs-12.clearfix
                                                     button(

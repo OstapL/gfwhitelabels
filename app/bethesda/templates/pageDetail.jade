@@ -1,0 +1,7 @@
+include mixins.jade
+
++breadcrumbs(page.title, 'Subtitle', [['home', '/',], [ 'current', page.get_absolute_url]])
+
+section.text_block
+    .container
+        .row!= page.content
