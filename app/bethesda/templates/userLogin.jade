@@ -74,8 +74,8 @@ include mixins.jade
                                                     a(
                                                         href="/accounts/password/reset/"
                                                     )#forget-password Forgot Password?
-                                                .col-xs-6
-                                                    button#login-btnLogin.pull-md-left.pull-xs-right.btn.text-uppercase Login
+                                                .col-xs-5
+                                                    button#login-btnLogin.btn.text-uppercase Login
                             #mini-two.tab-pane.fade(aria-expanded="false")
                                 .row
                                     section.form-section
@@ -107,12 +107,12 @@ include mixins.jade
                                                 type: 'password',
                                             })
                                             +fieldBlock("signature", '', {
-                                                class: 'col-lg-12 col-md-12', 
+                                                class: 'col-lg-10 col-md-10', 
                                                 text: 'I consent to electronic signature and electronic delivery of documentation',
                                                 type: 'checkbox',
                                             })
                                             .form-group.terms_conditions.clearfix
-                                                .col-sm-12
+                                                .col-sm-10
                                                     label(for="terms_conditions").pseudo-checkbox
                                                         input(
                                                           name="terms_conditions" 
@@ -132,5 +132,5 @@ include mixins.jade
                                             .form-group.form-actions.text-sm-center
                                                 .col-lg-10.col-md-9.col-xs-12.clearfix
                                                     button(
-                                                        type="submit" 
-                                                    )#register-submit-btn.bg-inverse.pull-right.btn-primary.btn.uppercase Submit
+                                                        type="button" 
+                                                    )#register-submit-btn.pull-lg-right.btn.text-uppercase Submit
