@@ -1,16 +1,11 @@
 include mixins.jade
 
-section.header_title 
-.container 
-.row 
-    .col-sm-6 
-        h2 Account
-    .col-sm-6.text-sm-right 
-        a(href="/") Home
-        span
-        a(href="#") About Us
-        span
-        span.curent Account
++breadcrumbs('Account', '', 
+    [
+        ['Home', '/'],
+        ['Account', '']
+    ]
+)
 
 .container.profile 
     .row 
