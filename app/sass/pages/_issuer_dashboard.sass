@@ -8,7 +8,7 @@
 		img
 			width: 100%
 
-		h3
+		h2
 			z-index: 2
 			width: 100%
 			text-align: center
@@ -19,20 +19,65 @@
 			-ms-transform: translate(-50%,-50%)
 			-webkit-transform: translate(-50%,-50%)
 			transform: translate(-50%,-50%)
+			font-family: $dosis
 
 		.timer_day
 			position: absolute
 			z-index: 1
 			background: $red
-			padding: 0 10px
+			padding: 0 13px
 			color: $white
 			border-radius: 3px
 			position: absolute
-			right: 11px
-			top: 11px
+			right: 13px
+			top: 15px
 			font-weight: bold
 			font-size: 14px
 			line-height: 27px
+
+		.share-block
+			width: 240px
+			position: absolute
+			left: 0
+			right: 0
+			bottom: 12px
+			margin: auto
+
+			.share-btn
+				width: 230px
+				font-size: 12px
+				border-radius: 15px
+				background: $light_grey
+				border-color: $light_grey
+
+			.social-dark
+				position: absolute
+				bottom: -48px
+				left: 0
+				right: 0
+				margin: auto
+				display: none
+
+				a
+					width: 48px
+					line-height: 46px
+					background: $social_bg
+					color: $social_color
+					border: 1px solid $social_bg
+					display: inline-block
+					font-size: 20px
+					margin: 0 -2px
+
+				:hover
+					border-color: $border_color
+
+		.share-block:hover
+			bottom: 0
+			padding-bottom: 12px
+
+			.social-dark
+				display: block
+
 
 .dashboard-stat.grey
 	background: $light_grey
@@ -65,8 +110,8 @@
 .dashboard-stat.grey
 	.details
 		position: absolute
-		right: 15px
-		padding-right: 15px
+		right: 25px
+		top: 3px
 		text-align: right
 
 		.number
@@ -78,12 +123,12 @@
 
 .tpl-progress
 	position: relative
-	padding-top: 38px
+	padding-top: 56px
 
 	.big_prog
 		display: block
 		width: 100%
-		height: 2px
+		height: 4px
 		margin-bottom: 11px
 		color: $black_text
 
@@ -101,17 +146,18 @@
 		-webkit-font-smoothing: antialiased
 		-moz-osx-font-smoothing: grayscale
 		position: absolute
-		margin-top: -19px
+		margin-top: -21px
 		text-align: right
 		margin-right: 12px
 
 		i
 			font-weight: bold
 			background: #fff
+			font-size: 13px
 
 	.text_position
 		margin-left: -39px
-		top: 0
+		top: 24px
 		position: absolute
 		text-align: center
 		line-height: 23px
@@ -135,41 +181,42 @@
 
 .right_fixed_text
 	position: absolute
-	right: 11px
-	top: 17px
+	right: 19px
+	top: 37px
 	bottom: 0
 	margin: auto
 	color: $grey
 
+	b
+		font-size: 18px
+		display: block
+		line-height: 1rem
+
 	span
 		line-height: 23px
-		font-size: 18px
-
-		i
-			font-size: 14px
-			font-style: normal
-			display: block
-			line-height: 1em
+		font-size: 14px
 
 .view_campaing
 	border: none
-	padding: 0 25px
+	padding: 0 40px
+	margin-top: 19px
 	line-height: 26px
+	font-size: 12px
+	line-height: 28px
 
 .grafic
 	border-top: 1px solid $border_color
-	margin-top: 70px
-	padding-top: 85px
+	margin-top: 51px
+	padding-top: 50px
 
 .third
-	margin-top: 75px
+	margin-top: 94px
 
 .title-size
-	font-size: 25px
-	letter-spacing: 7.5px
-	margin-bottom: 15px
-	display: block
-	margin-bottom: 35px
+	letter-spacing: 2.3px
+	font-family: $dosis
+	font-weight: 500
+	margin-bottom: 25px
 
 .bars,
 .chart,
@@ -202,19 +249,19 @@
     border: 1px solid $border_color
 
 .portlet-body
-	padding: 10px 20px 20px
+	padding: 10px 0 20px 0
 
 .portlet.light>.portlet-title
 	border-bottom: 1px solid $border_color
-	padding: 12px 20px 0 0
-	min-height: 57px
-	margin: 0 15px
+	padding: 12px 20px 22px 0
+	min-height: 50px
+	margin: 0 7px 0 7px
 
 	&>.caption
 		display: inline-block
 		font-size: 18px
 		line-height: 18px
-		padding: 10px 0 0 0
+		padding: 15px 0 0 0
 
 	&>.actions .dropdown-menu li>a
 		color: #555
@@ -233,6 +280,8 @@
 	text-align: left
 	color: $grey
 	padding: 15px 20px 10px
+	font-family: $dosis
+	letter-spacing: 0.5rem
 
 	&>.nav-tabs
 		background: 0 0
@@ -253,8 +302,8 @@
 		color: $black_text
 
 .portlet>.portlet-title>.nav-tabs>li a
-	line-height: 42px
-	padding: 0 10px
+	line-height: 36px
+	padding: 0 20px
 	color: $grey
 
 .all_comments
@@ -285,7 +334,7 @@
 
 .mt-comments
 	.mt-comment
-		padding: 10px
+		padding: 20px 10px 6px 22px
 		margin: 0 0 10px
 
 		.mt-comment-img 
@@ -302,15 +351,15 @@
 			overflow: hidden
 
 			.mt-comment-text
-				color: $grey;
-				line-height: 1.3em;
+				color: $black
+				line-height: 1.3em
 
 			.mt-comment-info
 				.mt-comment-date
-					display: inline-block;
-					float: right;
-					font-size: 11px;
-					margin: 0;
+					display: inline-block
+					float: right
+					font-size: 11px
+					margin: 0
 					color: $grey
 
 			.mt-comment-info:after,
@@ -357,6 +406,7 @@
 							text-decoration: none
 	
 	.mt-comment:hover
+		background: $light_grey
 		.mt-comment-body
 			.mt-comment-details
 				.mt-comment-actions
