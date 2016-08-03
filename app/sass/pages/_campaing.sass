@@ -82,8 +82,10 @@
 		.for_img
 			.more_inform
 				opacity: 1
-				z-index: 5
 				+mt(0.2s)
+
+				.ico_cont
+					z-index: 3
 
 .one_block
 	width: 100%
@@ -98,6 +100,7 @@
 		height: 209px
 		overflow: hidden
 		position: relative
+		z-index: 1;
 
 		img
 			width: 100%
@@ -155,9 +158,11 @@
 					margin-bottom: 0
 
 			.ico_cont
-				width: 100%
 				padding-top: 6px
 				position: relative
+				z-index: 1
+				display: inline-block
+				display: none
 
 				a
 					z-index: 6
