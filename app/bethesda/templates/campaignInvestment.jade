@@ -1,0 +1,23 @@
+include mixins.jade
+
++breadcrumbs('Invest', 'make world better place', 
+    [
+        ['Home', '/'], 
+        ['Explore', Urls['campaign-list']()],  
+        [campaign.company.name, Urls['campaign-detail'](campaign.id)], 
+        ['Invest in ' + campaign.company.name, '']
+    ]
+)
+
+.container.investment
+    +fieldBlock("first_name", '', {
+        class1: 'col-lg-3 col-md-3', 
+        class2: 'col-lg-7 col-md-7', 
+        type: 'text'
+    })
+
+    +fieldBlock("email", '', {
+        class1: 'col-lg-3 col-md-3', 
+        class2: 'col-lg-7 col-md-7', 
+        type: 'email'
+    })

@@ -7,8 +7,12 @@ mixin breadcrumbs(title, subtitle, data)
             .col-lg-4
                 ol.breadcrumb.pull-right
                     each elem in data
-                        li.breadcumbs-item
-                            a(href=elem[1])= elem[0]
+                        - let active = (elem[1] == '') ? 'active' : ''
+                        li.breadcumbs-item(class=" " + active)
+                            if elem[1] == ''
+                                = elem[0]
+                            else
+                                a(href=elem[1])= elem[0]
 
 mixin fieldBlock(name, data, attr)
     if attr.type == 'checkbox'
