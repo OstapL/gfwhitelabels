@@ -27,21 +27,11 @@
 }
 
 .profile {
-	padding-top: 40px;
 
 	// hide all popovers content source block
 	[class*='popover-content'] {
 		display: none;
 	}
-
-	.left-block {
-		margin-top: -50px;
-	}
-
-	.right-block {
-		margin-top: 30px;
-	}
-
 
 	.profile-tabs {
 		margin-bottom: 20px;
@@ -202,22 +192,7 @@
 		}
 	}
 
-	@media screen and (max-width:991px) {
-		.right-block {
-			margin-top: 15px;
-		}
-	}
-
-	@media screen and (max-width:767px) {
-		.left-block,
-		.right-block {
-			margin-top: 0;
-		}
-	}
-
 	@media screen and (max-width: 543px) {
-		padding-top: 20px;
-
 		.profile-tabs { 
 			li.nav-item {
 				margin-right:3%;

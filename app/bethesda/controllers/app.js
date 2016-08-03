@@ -135,7 +135,7 @@ app.on('urlsReady', function() {
         },
 
         campaignList: function() {
-            requirejs(['models/campaign', 'views/campaign', ], function(model, view, campaignListT) {
+            requirejs(['models/campaign', 'views/campaign', ], function(model, view) {
                 app.collections.campaigns = new model.collection();
                 app.collections.campaigns.fetch({
                     success: (collection, response, options) => {
@@ -143,7 +143,6 @@ app.on('urlsReady', function() {
                         $('#content').html('');
                         app.views.campaigns = new view.list({
                             el: '#content',
-                            template: campaignListT,
                             collection: collection, 
                         });
                         app.views.campaigns.render();
@@ -167,7 +166,17 @@ app.on('urlsReady', function() {
                         });
                         */
                         app.hideLoading();
-                    }
+                    },
+                    error: (model, response, options) => {
+                        // ToDo
+                        // Move that check to global check
+                        if(response.responseJSON.detail == 'Invalid token.') {
+                            localStorage.removeItem('token');
+                            localStorage.removeItem('user');
+                            window.location.reload();
+                        }
+                    },
+
                 });
             });
         },
@@ -321,15 +330,15 @@ app.on('urlsReady', function() {
             });
             app.menu.render();
 
-            app.profile = new menu.notification({
+            app.notification = new menu.notification({
                 el: '#menuNotification',
             });
-            app.profile.render();
+            app.notification.render();
 
-            app.notification = new menu.profile({
+            app.profile = new menu.profile({
                 el: '#menuProfile',
             });
-            app.notification.render();
+            app.profile.render();
         });
         app.routers.navigate(
             window.location.pathname + '#',

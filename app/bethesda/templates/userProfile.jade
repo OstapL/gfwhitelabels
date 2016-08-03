@@ -7,9 +7,9 @@ include mixins.jade
     ]
 )
 
-.container.profile 
+.container.profile.pt-50
     .row 
-        .col-md-9.col-md-offset-3.col-sm-12.col-sm-offset-0 
+        .col-md-9.col-md-offset-3.col-sm-12.col-sm-offset-0.offset-lg-2
             ul.nav.nav-tabs.profile-tabs 
                 li.nav-item(aria-expanded="false")
                     a(
@@ -73,7 +73,7 @@ include mixins.jade
                                             +fieldBlock("phone", user.phone, {'class1': 'col-lg-6 col-md-6', 'class2': 'col-lg-6 col-md-6', 'type': 'text'})
                                         
                                         .col-md-12.col-lg-8
-                                            +fieldBlock("dob", user.dob, {'class1': 'col-lg-2 col-md-6', 'class2': 'col-lg-4 col-md-6', 'type': 'text'})
+                                            +fieldBlock("dob", user.dob, {'class1': 'col-lg-2 col-md-6', 'class2': 'col-lg-4 col-md-6', 'type': 'date'})
                                     
          
                                     .form-group.row.clearfix 
@@ -81,7 +81,7 @@ include mixins.jade
                                             .controls  
                                                 button(
                                                     type="submit"
-                                                ).bg-inverse.btn.btn-secondary.btn-lg.pull-right Save 
+                                                ).bg-inverse.btn.btn-primary.btn-lg.pull-right Save 
 
         #financial_info.tab-pane.fade(aria-expanded="true")
             .row 
@@ -112,10 +112,10 @@ include mixins.jade
                                     +fieldBlock("ssn", user, {'class1': 'col-lg-2 col-md-6', 'class2': 'col-lg-6 col-md-6', 'type': 'text'})
                                     +fieldBlock("ssn", user, {'class1': 'col-lg-2 col-md-6', 'class2': 'col-lg-6 col-md-6', 'type': 'text'})
 
-                                    .form-group row 
+                                    .form-group.row 
                                         .col-sm-11 
                                             .investors-warning 
-                                                i.fa fa-exclamation-triangle 
+                                                i.fa.fa-exclamation-triangle 
                                                 span.warning-text 
                                                     | Investors are limited to 12 month investment totals ranging from $2,000 - $100,000 based on income and net worth. Please update your financial information to see your limit.
 

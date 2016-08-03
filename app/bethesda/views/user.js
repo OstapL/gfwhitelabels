@@ -70,7 +70,14 @@ define(function() {
 
                 this.model.set(data);
                 if(this.model.isValid(true)) {
-                    this.model.save();
+                    this.model.save({}, {
+                        success: (model, response, status) => {
+                            defaultSaveActions.success(this, response);
+                        },
+                        error: (model, response, status) => {
+                            defaultSaveActions.error(this, response);
+                        }
+                    });
                 }
             },
 

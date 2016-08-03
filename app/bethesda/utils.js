@@ -80,7 +80,9 @@ var defaultSaveActions = {
             s += xhr.statusText;
             view.$.prepend("<div class='alert alert-warning' role='alert'>" + s + "<div>");
         }
-        $('.alert').scrollTo();
+        if(view.$el.find('.alert').length) {
+            view.$el.find('.alert').scrollTo();
+        }
         app.hideLoading();
       }
 };

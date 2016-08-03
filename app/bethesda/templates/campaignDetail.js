@@ -89,7 +89,7 @@ define(function () {
             </div>
             <div class="row">
               <div class="col-md-12 text-center">
-                <form action="http://192.168.99.100:8000/campaigns/1/invest/" class="form form-horizontal margin-bottom-20" method="get">
+                <form action="/api/campaign/<%= model.id %>/invest" class="form form-horizontal margin-bottom-20" method="get">
                   <div class="row">
                     <div class="col-md-5">
                       <h3 class="margin-top-20">I'D LIKE TO INVEST:</h3>

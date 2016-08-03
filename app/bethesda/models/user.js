@@ -23,7 +23,11 @@
                         success: (data) => {
                             localStorage.setItem('user', JSON.stringify(this.toJSON()));
                             app.trigger('userReady', data);
-                        }
+                        },
+                        error: (err) => {
+                            localStorage.removeItem('token');
+                            window.location = '/account/login/';
+                        },
                     });
                 } else {
                     userData = JSON.parse(userData);

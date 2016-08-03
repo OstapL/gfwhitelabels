@@ -42,6 +42,7 @@ define('views/menu', function() {
                 this.$el.html(
                     window.menuNotification({
                         serverUrl: serverUrl,
+                        user: app.user.toJSON(),
                         nofiticaiton: [],
                         Urls: Urls,
                     })
