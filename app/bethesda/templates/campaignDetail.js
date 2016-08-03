@@ -1,6 +1,6 @@
 define(function () {
     return ` <!-- Home Section -->
-        <% let campaign = model.attributes; %>
+
             <section class="home-section bg-dark-alfa-70 parallax-2 fixed-height-small" data-background="https://s3.amazonaws.com/growthfountain-development/filer_public/60/0e/600e5642-6b02-4a9b-b901-c651f2f62b5b/1.jpg" id="home" style="background-image: url(&quot;https://s3.amazonaws.com/growthfountain-development/filer_public/60/0e/600e5642-6b02-4a9b-b901-c651f2f62b5b/1.jpg&quot;);">
     <div class="js-height-parent container" style="height: 600px">
       <!-- Hero Content -->
@@ -114,32 +114,30 @@ define(function () {
 
   <!-- Section -->
   <section class="campaign-section">
-    <div class="container relative">
+    <div class="container relative profile">
       <!-- Row -->
       <div class="row">
         <!-- Col -->
         <div class="col-sm-12">
           <!-- Nav Tabs -->
-          <div class="text-lg-center margin-bottom-40 mb-xs-30">
-            <ul class="nav nav-tabs tpl-minimal-tabs">
-              <li class="">
-                <a href="http://192.168.99.100:8000/campaigns/1/#mini-one" data-toggle="tab" aria-expanded="false">OUR COMPANY</a>
+            <ul class="nav nav-tabs profile-tabs"  role="tablist">
+              <li class="nav-item">
+                <a class="nav-link uppercase" href="#mini-one" data-toggle="tab" role="tab">OUR COMPANY</a>
               </li>
-              <li class="">
-                <a href="http://192.168.99.100:8000/campaigns/1/#mini-two" data-toggle="tab" aria-expanded="false">WHY CHOOSE US?</a>
+              <li class="nav-item">
+                <a class="nav-link uppercase" href="#mini-two" data-toggle="tab" role="tab">WHY CHOOSE US?</a>
               </li>
-              <li class="active">
-                <a href="http://192.168.99.100:8000/campaigns/1/#mini-three" data-toggle="tab" aria-expanded="true">SPEAK WITH US</a>
+              <li class="nav-item">
+                <a class="nav-link uppercase active" href="#mini-three" data-toggle="tab" role="tab">SPEAK WITH US</a>
               </li>
-              <li>
-                <a href="http://192.168.99.100:8000/campaigns/1/#mini-four" data-toggle="tab">SPECIFICS AND EXTRAS</a>
+              <li class="nav-item">
+                <a class="nav-link uppercase" href="#mini-four" data-toggle="tab" role="tab">SPECIFICS AND EXTRAS</a>
               </li>
             </ul>
-          </div>
           <!-- End Nav Tabs -->
 
           <!-- Tab panes -->
-          <div class="tab-content tpl-minimal-tabs-cont section-text">
+          <div class="tab-content">
             <div class="tab-pane text-center" id="mini-one">
               <h2>WHAT YOU ARE INVESTING IN</h2>
               <p>Becky's Bakery is a Pittsburgh bakery. Its gluten free cupcakes and 100+ sinful sweets have been a tradition for the last 40 years. In fact, there's been a bakery in continuous operation at the flagship Shadyside store for over 100 years.</p>
@@ -220,7 +218,7 @@ define(function () {
                 </div>
               </div>
             </div>
-            <div class="tab-pane fade" id="mini-four">
+            <div class="tab-pane" id="mini-four">
               <div class="row">
                 <div class="col-md-8">
                   <!-- fundraising details -->
@@ -353,6 +351,7 @@ define(function () {
         </div>
 
     </div>
+    <script src='/js/bootstrap.js'>
     <script src='/js/jquery.appear.js'>
         $(".count-number").appear(function(){
                                 var count = $(this);
