@@ -1,0 +1,15 @@
+.popover
+	padding-left: 15px
+	border: 1px $total_sum_progresbar solid
+	.popover-title
+		display: none
+	&.bs-tether-element-attached-bottom
+		.popover-arrow
+			border-top-color: $total_sum_progresbar
+	.popover-content
+		@include calc-rem(11)
+		color: $total_sum_progresbar
+		i
+			position: absolute
+			top: 13px
+			left: 10px
