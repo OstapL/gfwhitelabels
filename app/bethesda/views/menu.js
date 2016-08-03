@@ -1,10 +1,6 @@
 define('views/menu', function() {
     return {
         menu: Backbone.View.extend({
-            initialize: function(options) {
-                this.template = options.template;
-            },
-
             render: function() {
                 this.$el.html(
                     window.menuPage({
@@ -22,10 +18,6 @@ define('views/menu', function() {
                 'click .logout': 'logout',
             },
 
-            initialize: function(options) {
-                this.template = options.template;
-            },
-
             logout: function(event) {
                 app.routers.navigate(
                     event.target.pathname, 
@@ -38,6 +30,19 @@ define('views/menu', function() {
                     window.menuProfile({
                         serverUrl: serverUrl,
                         user: app.user.toJSON(),
+                        Urls: Urls,
+                    })
+                );
+                return this;
+            },
+        }),
+
+        notification: Backbone.View.extend({
+            render: function() {
+                this.$el.html(
+                    window.menuNotification({
+                        serverUrl: serverUrl,
+                        nofiticaiton: [],
                         Urls: Urls,
                     })
                 );

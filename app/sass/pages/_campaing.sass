@@ -13,6 +13,35 @@
 
 		.btn
 			padding: 6px 35px 5px 20px
+			background: #fff
+			border-color: #cccccc
+			color: $black_text
+
+			&:hover
+				background: #cccccc
+				border-color: #adadad
+
+			.filter-option
+				line-height: 2.1
+
+		.dropdown-menu>li>a
+			display: block
+			padding: 3px 20px
+			clear: both
+			font-weight: 400
+			line-height: 1.42857143
+			color: #333
+			white-space: nowrap
+
+			.check-mark
+				font: normal normal normal 14px/1 FontAwesome
+				font-size: inherit
+				text-rendering: auto
+				-webkit-font-smoothing: antialiased
+
+			.check-mark:before
+				content: "\f00c"
+
 
 	// block with create alert btn
 	.create-alert-block

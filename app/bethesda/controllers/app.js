@@ -112,7 +112,7 @@ app.on('urlsReady', function() {
           '': 'mainPage',
           'api/campaign': 'campaignList',
           'api/campaign/:id': 'campaignDetail',
-          'api/campaign/:id/invest': 'campaignInvest',
+          'api/campaign/:id/invest': 'campaignInvestment',
           'page/:id/': 'pageDetail',
           'account/profile': 'accountProfile',
           'account/login/': 'login',
@@ -190,17 +190,14 @@ app.on('urlsReady', function() {
             });
         },
                                                                                       
-        campaignInvest: function(id) {
-            requirejs(['models/campaign', 'models/investment', ], (model, investModel, view, campaignInvestmentT) => {
+        campaignInvestment: function(id) {
+            requirejs(['models/campaign', 'models/investment', 'views/campaign', ], (model, investModel, view) => {
 
                 app.getModel('campaign', model.model, id, function(campaignModel) {
                     var i = new view.investment({
                         el: '#content',
                         model: new investModel.model(),
                         campaignModel: campaignModel,
-                        template: campaignInvestmentT.investment,
-                        thankYouView: view.investmentThankYou,
-                        thankYouT: campaignInvestmentT.thankyou
                     });
                     i.render();
                     //app.views.campaign[id].render();
@@ -324,10 +321,10 @@ app.on('urlsReady', function() {
             });
             app.menu.render();
 
-            /*app.profile = new menu.notification({
-                el: '.header'
+            app.profile = new menu.notification({
+                el: '#menuNotification',
             });
-            app.profile.render();*/
+            app.profile.render();
 
             app.notification = new menu.profile({
                 el: '#menuProfile',

@@ -82,15 +82,12 @@ define(function() {
                 'submit form': 'submit',
             },
             initialize: function(options) {
-                this.template = options.template;
                 this.campaignModel = options.campaignModel;
-                this.investmentThankYou = options.thankYouView;
-                this.investmentThankYouT = options.thankYouT;
             },
 
             render: function() {
                 this.$el.html(
-                    _.template(this.template)({
+                    window.campaignInvestment({
                         serverUrl: serverUrl,
                         Urls: Urls,
                         campaignModel: this.campaignModel,
@@ -127,7 +124,6 @@ define(function() {
                                 el: '#content',
                                 model: data,
                                 campaignModel: this.campaignModel,
-                                template: this.investmentThankYouT
                             });
                             app.views.investment.render();
                             app.cache[window.location.pathname] = app.views.investment.$el.html();
@@ -147,7 +143,7 @@ define(function() {
 
             render: function() {
                 this.$el.html(
-                    _.template(this.template)({
+                    window.campaignInvestmentThankYou({
                         serverUrl: serverUrl,
                         Urls: Urls,
                         investment: this.model,
