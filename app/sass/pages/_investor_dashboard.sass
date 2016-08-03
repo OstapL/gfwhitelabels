@@ -35,7 +35,7 @@
 		margin: 25px 0 49px 0
 
 		.img_column
-			width: 350px
+			width: 31.81%
 			height: 284px
 			overflow: hidden;
 			position: relative
@@ -43,15 +43,10 @@
 			border: 1px solid $border_color
 			border-right: none
 
-			img
-				width: 100%
-				position: relative
-
 			.img_tab
 				padding: 0 10px
 				background: rgba(246, 150, 121, 0.8)
 				line-height: 26px
-				font-size: 14px
 				font-weight: bold
 				color: $white
 				position: absolute
@@ -63,7 +58,6 @@
 				padding: 6px 10px
 				background: rgba(246, 150, 121, 0.8)
 				line-height: 14px
-				font-size: 14px
 				font-weight: bold
 				color: $white
 				position: absolute
@@ -75,7 +69,6 @@
 				padding: 6px 10px
 				background: #aed07c
 				line-height: 14px
-				font-size: 14px
 				font-weight: bold
 				color: $white
 				position: absolute
@@ -96,12 +89,12 @@
 				color: #fff
 	
 			p
-				z-index: 2
 				font-size: 23px
 				letter-spacing: 5.1px
 				font-family: $dosis
 				color: $white
 				position: absolute
+				text-align: center
 				left: 50%
 				top: 50%
 				width: 100%
@@ -109,8 +102,8 @@
 				-webkit-transform: translate(-50%,-50%)
 				transform: translate(-50%,-50%)
 
-		.right_columns
-			width: 569px
+		.right-columns
+			width: 51.72%
 			float: left
 
 			.one_line
@@ -135,8 +128,6 @@
 					width: 66.666666%
 
 				span
-					font-size: 14px
-					letter-spacing: 100%
 					margin: 0 0 0 30px
 					line-height: 32px
 
@@ -150,15 +141,15 @@
 					font-size: 18px
 		
 		.big_columns
-			width: 762px
+			width: 69.27%
 
-		.right_columns.small
-			width: 476px
+		.right-columns.small-column
+			width: 43.27%
 
 		.right_buttons
 			padding: 5px 0
 			min-height: 166px
-			width: 284px
+			width: 24.81%
 			border: 1px solid $border_color
 			border-left: none
 			float: left
@@ -179,7 +170,7 @@
 					text-decoration: none
 
 	.bottom_column
-		width: 760px
+		width: 68.09%
 		float: right
 		border: 1px solid $border_color
 		border-top: none
@@ -276,3 +267,99 @@
 
 			:hover
 				text-decoration: underline
+
+
+@media only screen and (max-width : 992px)
+	.investor_table
+		.one_table
+			.img_column
+				width: 70%
+				height: auto
+				float: none
+				margin: 15px auto
+				border: none
+
+				img
+					width: 100%
+
+			.right-columns
+				border-left: 1px solid $border-color
+
+			.big_columns
+
+			.right-columns.small-column
+				width: 70%
+
+			.right_buttons
+				width: 30%
+
+		.bottom_column
+			width: 100%
+			border-left: 1px solid $border-color
+
+			.cancel_invest
+				margin-top: -22px
+
+@media only screen and (max-width : 580px)
+	.investor_table
+
+		.big-tabs
+			margin-bottom: 46px
+
+			&>li
+				float: left
+				height: 55px
+
+				a
+					color: $black_text
+					padding: 16px 10px 10px 10px
+					text-transform: uppercase
+					letter-spacing: 3.9px
+					font-size: 18px
+
+				.for_select
+					float: right
+					width: 180px
+					margin-top: -11px
+
+			.active
+				a
+					border: 1px solid $border_color
+					border-bottom: none
+
+		.tpl-tabs-cont
+			padding: 25px 0
+		.one_table
+			.img_column
+				width: 100%
+				height: auto
+				float: none
+				margin: 15px auto
+				border: none
+
+				img
+					width: 100%
+
+			.right-columns
+				border-left: 1px solid $border-color
+
+				.one_line
+					.col40
+						width: 54%
+
+					.col60
+						width: 46%
+
+			.right-columns.small-column
+				width: 100%
+
+			.right_buttons
+				width: 100%
+				border-left: 1px solid $border-color
+
+		.bottom_column
+			width: 100%
+			border-left: 1px solid $border-color
+
+			.cancel_invest
+				margin-top: 10px
