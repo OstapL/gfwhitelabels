@@ -112,9 +112,9 @@ app.on('urlsReady', function() {
           '': 'mainPage',
           'api/campaign': 'campaignList',
           'api/campaign/:id': 'campaignDetail',
-          'campaign/:id/invest': 'campaignInvest',
+          'api/campaign/:id/invest': 'campaignInvest',
           'page/:id/': 'pageDetail',
-          'account/profile/': 'accountProfile',
+          'account/profile': 'accountProfile',
           'account/login/': 'login',
           'account/logout/': 'logout',
           'account/dashboard/issuer': 'dashboardIssuer',
@@ -173,7 +173,7 @@ app.on('urlsReady', function() {
         },
 
         campaignDetail: function(id) {
-            requirejs(['models/campaign', 'views/campaign', ], (model, view, campaignDetailT) => {
+            requirejs(['models/campaign', 'views/campaign', '/templates_js/campaignDetail.js', ], (model, view, campaignDetailT) => {
 
                 app.getModel('campaign', model.model, id, function(model) {
                     app.views.campaign[id] = new view.detail({
@@ -213,8 +213,7 @@ app.on('urlsReady', function() {
         },
 
         accountProfile: function() {
-            requirejs(['models/user', ], (model, view, template) => {
-
+            requirejs(['views/user', ], (view) => {
                 var i = new view.profile({
                     el: '#content',
                     model: app.user,

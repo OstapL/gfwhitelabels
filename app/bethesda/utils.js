@@ -127,7 +127,7 @@ Backbone.sync = function(method, model, options){
   options.beforeSend = function(xhr){
     //xhr.setRequestHeader('X-CSRFToken', getCSRF());
     let token = localStorage.getItem('token');
-    if (token !== "") {
+    if (token !== null && token !== "") {
         xhr.setRequestHeader('Authorization', 'Token ' + token);
     }
   };
