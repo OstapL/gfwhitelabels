@@ -321,10 +321,10 @@ app.on('urlsReady', function() {
             });
             app.menu.render();
 
-            /*app.profile = new menu.notification({
-                el: '.header'
+            app.profile = new menu.notification({
+                el: '#menuNotification',
             });
-            app.profile.render();*/
+            app.profile.render();
 
             app.notification = new menu.profile({
                 el: '#menuProfile',
