@@ -1,7 +1,6 @@
 define(function () {
-    return ` <!-- Home Section -->
-
-            <section class="home-section bg-dark-alfa-70 parallax-2 fixed-height-small" data-background="https://s3.amazonaws.com/growthfountain-development/filer_public/60/0e/600e5642-6b02-4a9b-b901-c651f2f62b5b/1.jpg" id="home" style="background-image: url(&quot;https://s3.amazonaws.com/growthfountain-development/filer_public/60/0e/600e5642-6b02-4a9b-b901-c651f2f62b5b/1.jpg&quot;);">
+    return `
+  <section class="home-section bg-dark-alfa-70 parallax-2 fixed-height-small" data-background="https://s3.amazonaws.com/growthfountain-development/filer_public/60/0e/600e5642-6b02-4a9b-b901-c651f2f62b5b/1.jpg" id="home" style="background-image: url(&quot;https://s3.amazonaws.com/growthfountain-development/filer_public/60/0e/600e5642-6b02-4a9b-b901-c651f2f62b5b/1.jpg&quot;);">
     <div class="js-height-parent container" style="height: 600px">
       <!-- Hero Content -->
       <div class="home-content">
@@ -122,7 +121,7 @@ define(function () {
           <!-- Nav Tabs -->
             <ul class="nav nav-tabs profile-tabs"  role="tablist">
               <li class="nav-item">
-                <a class="nav-link uppercase" href="#mini-one" data-toggle="tab" role="tab">OUR COMPANY</a>
+                <a class="nav-link uppercase" href="#mini-one" data-toggle="tab" aria-expanded="false">OUR COMPANY</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link uppercase" href="#mini-two" data-toggle="tab" role="tab">WHY CHOOSE US?</a>
@@ -364,5 +363,11 @@ define(function () {
         });
     </script>
 
-</div>`
+</div>
+
+</div>
+
+    <script src="js/jquery.min.js"></script>
+    <script src="js/bootstrap.js"></script> 
+    `
 });
