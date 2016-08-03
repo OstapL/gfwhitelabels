@@ -1,19 +1,21 @@
 .investor_table
-	margin: 62px auto;
+	margin: 47px auto;
 
 	.tpl_tabs
-	border-color: $border_color
+		border-color: $border_color
 
-	.nav-tabs
+	.big-tabs
+		margin-bottom: 46px
+
 		&>li
 			float: left
-			height: 35px
+			height: 55px
 
 			a
 				color: $black_text
-				padding: 16px 39px 10px 39px
+				padding: 16px 40px 10px 40px
 				text-transform: uppercase
-				letter-spacing: 3.6px
+				letter-spacing: 3.9px
 				font-size: 18px
 
 			.for_select
@@ -30,52 +32,50 @@
 		padding: 25px 0
 	
 	.one_table
-		margin: 25px 0 57px 0
+		margin: 25px 0 49px 0
 
 		.img_column
-			width: 348px
-			height: 282px
+			width: 31.81%
+			height: 284px
 			overflow: hidden;
 			position: relative
 			float: left
 			border: 1px solid $border_color
 			border-right: none
 
-			img
-				width: 100%
-				position: relative
-
 			.img_tab
 				padding: 0 10px
 				background: $red
 				line-height: 26px
-				text-align: center
-				font-size: 11px
 				font-weight: bold
 				color: $white
-				text-align: center
 				position: absolute
-				letter-spacing: 2.2px
 				top: 13px
 				right: 13px
 				border-radius: 3px
-				text-transform: uppercase
 
-			.img_tab_red
+			.end-date
 				padding: 6px 10px
-				background: #ff0000
+				background: $red
 				line-height: 14px
-				text-align: center
-				font-size: 11px
 				font-weight: bold
 				color: $white
-				text-align: center
+				position: absolute
+				top: 63px
+				right: 13px
+				border-radius: 3px
+
+			.successfull
+				padding: 6px 10px
+				background: #aed07c
+				line-height: 14px
+				font-weight: bold
+				color: $white
 				position: absolute
 				letter-spacing: 2.2px
 				top: 13px
 				right: 13px
 				border-radius: 3px
-				text-transform: uppercase
 
 			b
 				letter-spacing: 0.35px
@@ -89,11 +89,12 @@
 				color: #fff
 	
 			p
-				z-index: 2
-				font-size: 24px
-				letter-spacing: 4.8px
+				font-size: 23px
+				letter-spacing: 5.1px
+				font-family: $dosis
 				color: $white
 				position: absolute
+				text-align: center
 				left: 50%
 				top: 50%
 				width: 100%
@@ -101,13 +102,20 @@
 				-webkit-transform: translate(-50%,-50%)
 				transform: translate(-50%,-50%)
 
-		.right_columns
-			width: 569px
+		.right-columns
+			width: 51.72%
 			float: left
 
 			.one_line
-				.col50
-					width: 50%
+				.col40
+					width: 40%
+					border: 1px solid $border_color
+					border-left: none
+					float: left
+					margin-bottom: -1px
+
+				.col60
+					width: 60%
 					border: 1px solid $border_color
 					border-left: none
 					float: left
@@ -119,29 +127,29 @@
 				.col66
 					width: 66.666666%
 
-				.col50
-					span
-						font-size: 14px
-						letter-spacing: 100%
-						margin: 0 0 0 15px
-						line-height: 32px
+				span
+					margin: 0 0 0 30px
+					line-height: 32px
 
-					span.light_grey
-						color: $footer_text
+				span.light_grey
+					color: $footer_text
 
-					span.dark_grey
-						color: $grey
+				span.dark_grey
+					color: $grey
+
+				span.bold-grey
+					font-size: 18px
 		
 		.big_columns
-			width: 762px
+			width: 69.27%
 
-		.right_columns.small
-			width: 476px
+		.right-columns.small-column
+			width: 43.27%
 
 		.right_buttons
 			padding: 5px 0
 			min-height: 166px
-			width: 285px
+			width: 24.81%
 			border: 1px solid $border_color
 			border-left: none
 			float: left
@@ -149,7 +157,8 @@
 			h4
 				font-size: 18px
 				text-align: center
-				margin-top: 10px
+				margin-top: 14px
+				letter-spacing: 0.5px
 
 			.one_btn
 				color: $blue
@@ -161,7 +170,7 @@
 					text-decoration: none
 
 	.bottom_column
-		width: 760px
+		width: 68.09%
 		float: right
 		border: 1px solid $border_color
 		border-top: none
@@ -178,7 +187,7 @@
 				text-align: center
 
 				b
-					color: #5f5f5f
+					color: $black_text
 					font-size: 18px
 					margin: 0
 					line-height: 1em
@@ -187,7 +196,7 @@
 					font-weight: 400
 
 				span
-					color: #a3a3a3
+					color: $black_text
 					font-size: 11px
 					margin: 0
 					line-height: 1em
@@ -204,7 +213,7 @@
 				text-align: center
 
 				b
-					color: #5f5f5f
+					color: $black_text
 					font-size: 18px
 					margin: 0
 					line-height: 1em
@@ -213,7 +222,7 @@
 					font-weight: 400
 
 				span
-					color: #a3a3a3
+					color: $black_text
 					font-size: 11px
 					margin: 0
 					line-height: 1em
@@ -229,15 +238,14 @@
 
 		.view_campaign
 			background-color: $light_grey
-			padding: 0 59px
+			padding: 0 45px
 			text-decoration: none
-			letter-spacing: 200%
-			font-size: 11px
+			font-size: 12px
 			border-radius: 3px
-			line-height: 22px
+			line-height: 25px
 			border: 2px solid $light_grey
-			color: $grey
-			margin: 12px auto 0 auto
+			color: $black_text
+			margin: 13px auto 0 auto
 			+mt(.2s)
 			
 		:hover
@@ -246,12 +254,12 @@
 
 
 		.cancel_invest
-			padding-right: 11px
+			padding-right: 5px
 			font-size: 11px
 			height: 15px
-			margin-top: -16px
+			margin-top: -12px
 			text-align: right
-			padding-bottom: 31px
+			padding-bottom: 27px
 
 			a
 				color: $black_text
@@ -259,3 +267,99 @@
 
 			:hover
 				text-decoration: underline
+
+
+@media only screen and (max-width : 992px)
+	.investor_table
+		.one_table
+			.img_column
+				width: 70%
+				height: auto
+				float: none
+				margin: 15px auto
+				border: none
+
+				img
+					width: 100%
+
+			.right-columns
+				border-left: 1px solid $border-color
+
+			.big_columns
+
+			.right-columns.small-column
+				width: 70%
+
+			.right_buttons
+				width: 30%
+
+		.bottom_column
+			width: 100%
+			border-left: 1px solid $border-color
+
+			.cancel_invest
+				margin-top: -22px
+
+@media only screen and (max-width : 580px)
+	.investor_table
+
+		.big-tabs
+			margin-bottom: 46px
+
+			&>li
+				float: left
+				height: 55px
+
+				a
+					color: $black_text
+					padding: 16px 10px 10px 10px
+					text-transform: uppercase
+					letter-spacing: 3.9px
+					font-size: 18px
+
+				.for_select
+					float: right
+					width: 180px
+					margin-top: -11px
+
+			.active
+				a
+					border: 1px solid $border_color
+					border-bottom: none
+
+		.tpl-tabs-cont
+			padding: 25px 0
+		.one_table
+			.img_column
+				width: 100%
+				height: auto
+				float: none
+				margin: 15px auto
+				border: none
+
+				img
+					width: 100%
+
+			.right-columns
+				border-left: 1px solid $border-color
+
+				.one_line
+					.col40
+						width: 54%
+
+					.col60
+						width: 46%
+
+			.right-columns.small-column
+				width: 100%
+
+			.right_buttons
+				width: 100%
+				border-left: 1px solid $border-color
+
+		.bottom_column
+			width: 100%
+			border-left: 1px solid $border-color
+
+			.cancel_invest
+				margin-top: 10px
