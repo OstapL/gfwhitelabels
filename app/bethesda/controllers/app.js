@@ -1,4 +1,6 @@
 let app = {
+    $: jQuery,
+
     collections: {
     },
 
@@ -219,17 +221,24 @@ app.on('urlsReady', function() {
         },
 
         accountProfile: function() {
-            requirejs(['views/user', ], (view) => {
-                var i = new view.profile({
-                    el: '#content',
-                    model: app.user,
-                });
-                i.render();
-                //app.views.campaign[id].render();
-                app.cache[window.location.pathname] = i.$el.html();
+            if(app.user.get('token') != '') {
+                requirejs(['views/user', ], (view) => {
+                    var i = new view.profile({
+                        el: '#content',
+                        model: app.user,
+                    });
+                    i.render();
+                    //app.views.campaign[id].render();
+                    app.cache[window.location.pathname] = i.$el.html();
 
-                app.hideLoading();
-            });
+                    app.hideLoading();
+                });
+            } else {
+                app.routers.navigate(
+                    '/account/login/', 
+                    {trigger: true, replace: true}
+                );
+            }
         },
 
         issuerDashboard: function() {

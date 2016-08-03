@@ -24,9 +24,9 @@
                             localStorage.setItem('user', JSON.stringify(this.toJSON()));
                             app.trigger('userReady', data);
                         },
-                        error: (err) => {
+                        error: (model, xhr, status) => {
                             localStorage.removeItem('token');
-                            window.location = '/account/login/';
+                            defaultSaveActions.error(app, xhr, status, '');
                         },
                     });
                 } else {
