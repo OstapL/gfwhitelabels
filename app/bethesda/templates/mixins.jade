@@ -9,7 +9,7 @@ mixin breadcrumbs(title, subtitle, data)
                     ol.breadcrumb.pull-right
                         each elem in data
                             - let active = (elem[1] == '') ? 'active' : ''
-                            li.breadcumb-item(class=" " + active)
+                            li.breadcrumb-item(class=" " + active)
                                 if elem[1] == ''
                                     = elem[0]
                                 else

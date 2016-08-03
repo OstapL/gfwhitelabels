@@ -82,8 +82,11 @@
 		.for_img
 			.more_inform
 				opacity: 1
-				z-index: 5
 				+mt(0.2s)
+
+				.ico_cont
+					z-index: 3
+					display: inline-block
 
 .one_block
 	width: 100%
@@ -125,7 +128,6 @@
 			height: 100%
 			background: rgba(255,255,255, 0.96)
 			text-align: center
-			z-index: 1
 			+mt(0.2s)
 
 			.title
@@ -155,9 +157,11 @@
 					margin-bottom: 0
 
 			.ico_cont
-				width: 100%
 				padding-top: 6px
 				position: relative
+				z-index: 3
+				display: inline-block
+				display: none
 
 				a
 					z-index: 6
@@ -173,6 +177,9 @@
 
 					i.fa-gift
 						font-size: 20px
+
+			.ico_cont:hover
+				display: inline-block
 
 			.bottom_pr
 				width: 100%
