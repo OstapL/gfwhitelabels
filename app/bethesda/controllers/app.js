@@ -112,11 +112,13 @@ app.on('urlsReady', function() {
           '': 'mainPage',
           'api/campaign': 'campaignList',
           'api/campaign/:id': 'campaignDetail',
-          'campaign/:id/invest': 'campaignInvest',
+          'api/campaign/:id/invest': 'campaignInvest',
           'page/:id/': 'pageDetail',
-          'account/profile/': 'accountProfile',
+          'account/profile': 'accountProfile',
           'account/login/': 'login',
           'account/logout/': 'logout',
+          'account/dashboard/issuer': 'dashboardIssuer',
+          'account/dashboard/investor': 'dashboardInvestor',
         },
         back: function(event) {
             var url = event.target.pathname;
@@ -171,7 +173,7 @@ app.on('urlsReady', function() {
         },
 
         campaignDetail: function(id) {
-            requirejs(['models/campaign', 'views/campaign', ], (model, view, campaignDetailT) => {
+            requirejs(['models/campaign', 'views/campaign', '/templates_js/campaignDetail.js', ], (model, view, campaignDetailT) => {
 
                 app.getModel('campaign', model.model, id, function(model) {
                     app.views.campaign[id] = new view.detail({
@@ -189,7 +191,7 @@ app.on('urlsReady', function() {
         },
                                                                                       
         campaignInvest: function(id) {
-            requirejs(['models/campaign', 'models/investment', 'views/campaign', ], (model, investModel, view, campaignInvestmentT) => {
+            requirejs(['models/campaign', 'models/investment', ], (model, investModel, view, campaignInvestmentT) => {
 
                 app.getModel('campaign', model.model, id, function(campaignModel) {
                     var i = new view.investment({
@@ -211,7 +213,37 @@ app.on('urlsReady', function() {
         },
 
         accountProfile: function() {
-            requirejs(['models/user', 'views/user', ], (model, view, template) => {
+            requirejs(['views/user', ], (view) => {
+                var i = new view.profile({
+                    el: '#content',
+                    model: app.user,
+                });
+                i.render();
+                //app.views.campaign[id].render();
+                app.cache[window.location.pathname] = i.$el.html();
+
+                app.hideLoading();
+            });
+        },
+
+        issuerDashboard: function() {
+            requirejs(['models/user', ], (model, view, template) => {
+
+                var i = new view.profile({
+                    el: '#content',
+                    model: app.user,
+                    template: template.profile,
+                });
+                i.render();
+                //app.views.campaign[id].render();
+                app.cache[window.location.pathname] = i.$el.html();
+
+                app.hideLoading();
+            });
+        },
+
+        investorDashboard: function() {
+            requirejs(['models/user', ], (model, view, template) => {
 
                 var i = new view.profile({
                     el: '#content',
@@ -341,8 +373,6 @@ app.on('urlsReady', function() {
             }
         }
     });
-
-
     Backbone.history.start({pushState: true});
 });
 });

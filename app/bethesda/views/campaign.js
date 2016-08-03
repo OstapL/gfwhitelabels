@@ -31,12 +31,11 @@ define(function() {
                 loadCss('/css/photoswipe.css');
                 loadCss('/css/default-skin.css');
                 require([
-                    'jquery.appear', 
-                    'photoswipe', 
-                    'photoswipe-ui-default', 
+                    '/js/photoswipe.js', 
+                    '/js/photoswipe-ui-default.js', 
                     ], (appears, PhotoSwipe, PhotoSwipeUI_Default) => {
                         this.$el.html(
-                            window.campaignDetail({
+                            _.template(this.template)({
                                 serverUrl: serverUrl,
                                 Urls: Urls,
                                 model: this.model
@@ -49,17 +48,7 @@ define(function() {
                         });
 
                         setTimeout(() => {
-                            this.$el.find(".count-number").appear(function(){
-                                var count = $(this);
-                                count.countTo({
-                                    from: 0,
-                                    to: count.html(),
-                                    speed: 1300,
-                                    refreshInterval: 60,
-                               });
-                            });
-
-                            require(['photoswipe_run',], () => {
+                            require(['/js/photoswipe_run.js',], () => {
                                 window.PhotoSwipe = PhotoSwipe;
                                 window.PhotoSwipeUI_Default = PhotoSwipeUI_Default;
                                 initPhotoSwipeFromDOM('#gallery1');

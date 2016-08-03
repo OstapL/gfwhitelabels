@@ -30,7 +30,7 @@ define(function() {
                         defaultSaveActions.success(this, xhr);
                         if(xhr.hasOwnProperty('key')) {
                             localStorage.setItem('token', xhr.key);
-                            window.location = '/account/profile/' //data.next ? data.next : '/account/profile'
+                            window.location = '/account/profile' //data.next ? data.next : '/account/profile'
                         } else {
                             Backbone.Validation.callbacks.invalid(                                 
                               form, '', 'Server return no authentication data'
@@ -63,9 +63,6 @@ define(function() {
             events: {
                 'submit form': 'update',
             },
-            initialize: function(options) {
-                this.template = options.template;
-            },
 
             update: function(event) {
                 event.preventDefault();
@@ -78,15 +75,14 @@ define(function() {
             },
 
             render: function() {
-                requirejs(['dropzone',], (dropzone) => {
+                requirejs(['/js/dropzone.js',], (dropzone) => {
                     this.$el.html(
-                        _.template(this.template)({
+                        window.userProfile({
                             serverUrl: serverUrl,
-                            model: app.user,
-                            user: app.user.attributes,
+                            user: app.user.toJSON(),
                         })
                     );
-                    createFileDropzone('image', 'avatars', '', function() { console.log('hello'); });
+                    //createFileDropzone('image', 'avatars', '', function() { console.log('hello'); });
                     return this;
                 });
             },

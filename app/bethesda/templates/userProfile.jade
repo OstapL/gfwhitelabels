@@ -1,16 +1,4 @@
-mixin fieldBlock(name, data, attr)
-    div(class=".form-group.row.#{input}.clearfix ")
-        div(class="#{attr.class1}.text-md-right")
-            label(for=name)= name
-        div(class="#{attr.class2}")
-            input(
-                id=name
-                name=name
-                placeholder=data[name].name
-                type=attr.type ? attr.type : 'text'
-                value=data[name]
-              ).form-control
-            span.help-block 
+include mixins.jade
 
 section.header_title 
 .container 
@@ -74,23 +62,23 @@ section.header_title
                                             
                                     .col-md-9.col-sm-8 
                                         section.right-block 
-                                            +fieldBlock("first_name", user, {class1: 'col-lg-6 col-md-6', class2: 'col-lg6 col-md6', type: 'text'})
-                                            +fieldBlock("last_name", user, {'class1': 'col-lg-6 col-md-6', 'class2': 'col-lg6 col-md6', 'type': 'text'})
-                                            +fieldBlock("street_address_1", user, {'class1': 'col-lg-6 col-md-6', 'class2': 'col-lg6 col-md6', 'type': 'text'})
-                                            +fieldBlock("street_address_2", user, {'class1': 'col-lg-6 col-md-6', 'class2': 'col-lg6 col-md6', 'type': 'text'})
+                                            +fieldBlock("first_name", user.first_name, {class1: 'col-lg-6 col-md-6', class2: 'col-lg6 col-md6', type: 'text'})
+                                            +fieldBlock("last_name", user.last_name, {'class1': 'col-lg-6 col-md-6', 'class2': 'col-lg6 col-md6', 'type': 'text'})
+                                            +fieldBlock("street_address_1", user.street_address_1, {'class1': 'col-lg-6 col-md-6', 'class2': 'col-lg6 col-md6', 'type': 'text'})
+                                            +fieldBlock("street_address_2", user.street_address_2, {'class1': 'col-lg-6 col-md-6', 'class2': 'col-lg6 col-md6', 'type': 'text'})
                                             .row 
                                                 .col-md-12.col-lg-6 
-                                                    +fieldBlock("zip_code", user, {'class1': 'col-lg-6 col-md-6', 'class2': 'col-lg6 col-md6', 'type': 'text'})
+                                                    +fieldBlock("zip_code", user.zip_code, {'class1': 'col-lg-6 col-md-6', 'class2': 'col-lg6 col-md6', 'type': 'text'})
                                                     
                                                 .col-md-12.col-lg-6 
-                                                    +fieldBlock("city_state", user, {'class1': 'col-lg-6 col-md-6', 'class2': 'col-lg6 col-md6', 'type': 'text'})
+                                                    +fieldBlock("city_state", user.city_state, {'class1': 'col-lg-6 col-md-6', 'class2': 'col-lg6 col-md6', 'type': 'text'})
 
                                             .row 
                                                 .col-md-12.col-lg-6 
-                                                    +fieldBlock("phone", user, {'class1': 'col-lg-6 col-md-6', 'class2': 'col-lg6 col-md6', 'type': 'text'})
+                                                    +fieldBlock("phone", user.phone, {'class1': 'col-lg-6 col-md-6', 'class2': 'col-lg6 col-md6', 'type': 'text'})
                                                 
                                                 .col-md-12 col-lg-6 
-                                                    +fieldBlock("dob", user, {'class1': 'col-lg-6 col-md-6', 'class2': 'col-lg6 col-md6', 'type': 'text'})
+                                                    +fieldBlock("dob", user.dob, {'class1': 'col-lg-6 col-md-6', 'class2': 'col-lg6 col-md6', 'type': 'text'})
                                             
                  
                                             .form-group.row.clearfix 

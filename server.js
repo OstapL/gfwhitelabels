@@ -9,6 +9,7 @@ app.use("/css", express.static('app/html/css'));
 app.use("/js", express.static('app/html/js'));
 app.use("/views", express.static('app/bethesda/views'));
 app.use("/models", express.static('app/bethesda/models'));
+app.use("/templates_js", express.static('app/bethesda/templates'));
 app.use("/templates", express.static('app/html/compiled_t'));
 
 app.get('/*',function(req,res){
