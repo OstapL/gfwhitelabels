@@ -130,7 +130,11 @@ define(function() {
                             app.hideLoading();
                         });
                 } else {
-                    this.$el.find('.has-error').scrollTo();
+                    if(this.$('.alert').length) {
+                        this.$('.alert').scrollTo();
+                    } else  {
+                        this.$el.find('.has-error').scrollTo();
+                    }
                 }
             },
         }),

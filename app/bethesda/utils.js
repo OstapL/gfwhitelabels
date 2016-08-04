@@ -33,9 +33,13 @@ _.extend(Backbone.Validation.callbacks, {
         if($el.length == 0) {
             $el = view.$('form > .alert-warning');
 
+            if(Array.isArray(error) !== true)
+                error = [error]
+
             // If we don't have alert-warning - we should create it as 
             // first element in form
             if($el.length == 0) {
+
                 $el = $('<div class="alert alert-warning" role="alert">' +
                     error.join(',') + '</div>');
                 view.$('form').prepend($el);
