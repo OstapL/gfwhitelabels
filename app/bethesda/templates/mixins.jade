@@ -17,14 +17,14 @@ mixin breadcrumbs(title, subtitle, data)
 
 mixin fieldBlock(name, data, attr)
     if attr.type == 'checkbox'
-        div(class=attr.class)
-            label(for=name).pseudo-checkbox
+        div(class="form-group row " + name )
+            div(class=(attr.class1 ? attr.class1 : 'col-md-2') + ' text-md-right text-xs-right')
                 input(
-                  name=name
-                  type="checkbox"
-                  id=name
-                )
-                | #{attr.text}
+                    id=name
+                    type="checkbox"
+                ).form-check-input
+            div(class=attr.class2  ? attr.class2 : 'col-md-10')
+                label(for=name).text-justify #{attr.text}
     else
         div(class="form-group row " + name )
             label(class=attr.class1 + " text-md-right" for=name)= name
