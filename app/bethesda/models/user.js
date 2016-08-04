@@ -35,7 +35,7 @@
                     app.trigger('userReady', userData);
                 }
             } else {
-                app.trigger('userReady', {});
+                app.trigger('userReady', {id: ''});
             }
         },
 

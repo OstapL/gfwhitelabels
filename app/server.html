@@ -123,6 +123,12 @@
       <div class="hidden"></div>
 
       <script src="/js/libs.js"></script>
+      <script>
+$('body').on('click', '.auth-pop', function() {
+console.log('clicked');
+  $('#loginModal').modal();
+});
+   </script>
 
     </body>
 </html>
