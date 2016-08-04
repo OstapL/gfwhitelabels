@@ -1,4 +1,6 @@
 let app = {
+    $: jQuery,
+
     collections: {
     },
 
@@ -135,7 +137,7 @@ app.on('urlsReady', function() {
         },
 
         campaignList: function() {
-            requirejs(['models/campaign', 'views/campaign', ], function(model, view, campaignListT) {
+            requirejs(['models/campaign', 'views/campaign', ], function(model, view) {
                 app.collections.campaigns = new model.collection();
                 app.collections.campaigns.fetch({
                     success: (collection, response, options) => {
@@ -143,7 +145,6 @@ app.on('urlsReady', function() {
                         $('#content').html('');
                         app.views.campaigns = new view.list({
                             el: '#content',
-                            template: campaignListT,
                             collection: collection, 
                         });
                         app.views.campaigns.render();
@@ -167,7 +168,17 @@ app.on('urlsReady', function() {
                         });
                         */
                         app.hideLoading();
-                    }
+                    },
+                    error: (model, response, options) => {
+                        // ToDo
+                        // Move that check to global check
+                        if(response.responseJSON.detail == 'Invalid token.') {
+                            localStorage.removeItem('token');
+                            localStorage.removeItem('user');
+                            window.location.reload();
+                        }
+                    },
+
                 });
             });
         },
@@ -210,17 +221,24 @@ app.on('urlsReady', function() {
         },
 
         accountProfile: function() {
-            requirejs(['views/user', ], (view) => {
-                var i = new view.profile({
-                    el: '#content',
-                    model: app.user,
-                });
-                i.render();
-                //app.views.campaign[id].render();
-                app.cache[window.location.pathname] = i.$el.html();
+            if(app.user.get('token') != '') {
+                requirejs(['views/user', ], (view) => {
+                    var i = new view.profile({
+                        el: '#content',
+                        model: app.user,
+                    });
+                    i.render();
+                    //app.views.campaign[id].render();
+                    app.cache[window.location.pathname] = i.$el.html();
 
-                app.hideLoading();
-            });
+                    app.hideLoading();
+                });
+            } else {
+                app.routers.navigate(
+                    '/account/login/', 
+                    {trigger: true, replace: true}
+                );
+            }
         },
 
         issuerDashboard: function() {
@@ -321,15 +339,15 @@ app.on('urlsReady', function() {
             });
             app.menu.render();
 
-            /*app.profile = new menu.notification({
-                el: '.header'
-            });
-            app.profile.render();*/
-
-            app.notification = new menu.profile({
-                el: '#menuProfile',
+            app.notification = new menu.notification({
+                el: '#menuNotification',
             });
             app.notification.render();
+
+            app.profile = new menu.profile({
+                el: '#menuProfile',
+            });
+            app.profile.render();
         });
         app.routers.navigate(
             window.location.pathname + '#',

@@ -23,7 +23,11 @@
                         success: (data) => {
                             localStorage.setItem('user', JSON.stringify(this.toJSON()));
                             app.trigger('userReady', data);
-                        }
+                        },
+                        error: (model, xhr, status) => {
+                            localStorage.removeItem('token');
+                            defaultSaveActions.error(app, xhr, status, '');
+                        },
                     });
                 } else {
                     userData = JSON.parse(userData);

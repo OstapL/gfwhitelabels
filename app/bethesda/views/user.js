@@ -30,7 +30,9 @@ define(function() {
                         defaultSaveActions.success(this, xhr);
                         if(xhr.hasOwnProperty('key')) {
                             localStorage.setItem('token', xhr.key);
-                            window.location = '/account/profile' //data.next ? data.next : '/account/profile'
+                            setTimeout(function() {
+                                window.location = '/account/profile' //data.next ? data.next : '/account/profile'
+                            }, 100);
                         } else {
                             Backbone.Validation.callbacks.invalid(                                 
                               form, '', 'Server return no authentication data'
@@ -70,7 +72,14 @@ define(function() {
 
                 this.model.set(data);
                 if(this.model.isValid(true)) {
-                    this.model.save();
+                    this.model.save({}, {
+                        success: (model, response, status) => {
+                            defaultSaveActions.success(this, response);
+                        },
+                        error: (model, response, status) => {
+                            defaultSaveActions.error(this, response);
+                        }
+                    });
                 }
             },
 

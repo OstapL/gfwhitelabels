@@ -13,6 +13,35 @@
 
 		.btn
 			padding: 6px 35px 5px 20px
+			background: #fff
+			border-color: #cccccc
+			color: $black_text
+
+			&:hover
+				background: #cccccc
+				border-color: #adadad
+
+			.filter-option
+				line-height: 2.1
+
+		.dropdown-menu>li>a
+			display: block
+			padding: 3px 20px
+			clear: both
+			font-weight: 400
+			line-height: 1.42857143
+			color: #333
+			white-space: nowrap
+
+			.check-mark
+				font: normal normal normal 14px/1 FontAwesome
+				font-size: inherit
+				text-rendering: auto
+				-webkit-font-smoothing: antialiased
+
+			.check-mark:before
+				content: "\f00c"
+
 
 	// block with create alert btn
 	.create-alert-block
@@ -53,8 +82,11 @@
 		.for_img
 			.more_inform
 				opacity: 1
-				z-index: 5
 				+mt(0.2s)
+
+				.ico_cont
+					z-index: 3
+					display: inline-block
 
 .one_block
 	width: 100%
@@ -96,7 +128,6 @@
 			height: 100%
 			background: rgba(255,255,255, 0.96)
 			text-align: center
-			z-index: 1
 			+mt(0.2s)
 
 			.title
@@ -126,9 +157,11 @@
 					margin-bottom: 0
 
 			.ico_cont
-				width: 100%
 				padding-top: 6px
 				position: relative
+				z-index: 3
+				display: inline-block
+				display: none
 
 				a
 					z-index: 6
@@ -144,6 +177,9 @@
 
 					i.fa-gift
 						font-size: 20px
+
+			.ico_cont:hover
+				display: inline-block
 
 			.bottom_pr
 				width: 100%

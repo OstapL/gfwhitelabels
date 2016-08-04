@@ -1,18 +1,19 @@
 mixin breadcrumbs(title, subtitle, data)
-    .container.pt50
-        .row
-            .col-lg-8
-                h1.text-uppercase= title
-                    span.small-text= subtitle
-            .col-lg-4
-                ol.breadcrumb.pull-right
-                    each elem in data
-                        - let active = (elem[1] == '') ? 'active' : ''
-                        li.breadcumbs-item(class=" " + active)
-                            if elem[1] == ''
-                                = elem[0]
-                            else
-                                a(href=elem[1])= elem[0]
+    section.header_title.p50
+        .container
+            .row
+                .col-lg-8
+                    h1.text-uppercase= title
+                        span.small-text= subtitle
+                .col-lg-4
+                    ol.breadcrumb.pull-right
+                        each elem in data
+                            - let active = (elem[1] == '') ? 'active' : ''
+                            li.breadcrumb-item(class=" " + active)
+                                if elem[1] == ''
+                                    = elem[0]
+                                else
+                                    a(href=elem[1])= elem[0]
 
 mixin fieldBlock(name, data, attr)
     if attr.type == 'checkbox'

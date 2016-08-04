@@ -75,12 +75,14 @@ var defaultSaveActions = {
               );
             }
         }
-        else if(response.hasOwnProperty('statusText')) {
+        else if(xhr.hasOwnProperty('statusText')) {
             let s = '<strong>Errors:</strong> ';
             s += xhr.statusText;
             view.$.prepend("<div class='alert alert-warning' role='alert'>" + s + "<div>");
         }
-        $('.alert').scrollTo();
+        if(view.$el.find('.alert').length) {
+            view.$el.find('.alert').scrollTo();
+        }
         app.hideLoading();
       }
 };

@@ -38,7 +38,7 @@ define(function() {
                             _.template(this.template)({
                                 serverUrl: serverUrl,
                                 Urls: Urls,
-                                model: this.model
+                                model: this.model.toJSON()
                             })
                         );
 

@@ -32,20 +32,31 @@
 
     <header class="header">
     <nav class="navbar bg-inverse navbar-dark">
-    <button class="navbar-toggler hidden-lg-up" type="button" data-toggle="collapse" data-target="#exCollapsingNavbar2">
-      &#9776;
-    </button>
-    <div class="collapse navbar-toggleable-md" id="exCollapsingNavbar2">
-      <a class="navbar-brand" href="/">
-        <img src="/img/logo.png" alt="">
-      </a>
-      <ul class="nav navbar-nav pull-left" id="menuList">
-      </ul>
-      <ul class="nav navbar-nav pull-right" id="menuProfile">
-      </ul>
-    </div>
-    </nav>
+        <a class="navbar-brand" href="/">
+            <img src="/img/logo.png" alt="">
+        </a>
+        <div class="collapse navbar-toggleable-md full-height" id="exCollapsingNavbar2">
+            <ul class="nav navbar-nav pull-left" id="menuList">
+            </ul>
 
+          <form class="form-inline hidden-lg-up">
+            <input class="form-control" type="text" placeholder="search for companies">
+            <button class="btn" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+          </form>
+        </div>
+        <div class="navbar-toggleable-md pull-right">
+            <ul class="nav navbar-nav" id="menuProfile">
+            </ul>
+        </div>
+        <div class="navbar-toggleable-md pull-right">
+            <ul class="nav navbar-nav" id="menuNotification">
+            </ul>
+        </div>
+
+      <button class="navbar-toggler hidden-lg-up" type="button" data-toggle="collapse" data-target="#exCollapsingNavbar2">
+        <i class="fa fa-bars"></i>
+      </button>
+    </nav>
     </header>
 
     <div class="page" id="page">
