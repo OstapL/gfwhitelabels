@@ -235,6 +235,8 @@ app.on('urlsReady', function() {
 
         accountProfile: function() {
             app.on('menuReady', function(data) {
+                // Dirty hack, fix that
+                if(window.location.pathname == '/account/profile') {
                 console.log('account profile');
                 if(app.user.get('token') != '') {
                     requirejs(['views/user', ], (view) => {
@@ -253,6 +255,7 @@ app.on('urlsReady', function() {
                         '/account/login/', 
                         {trigger: true, replace: true}
                     );
+                }
                 }
             });
         },
@@ -347,7 +350,7 @@ app.on('urlsReady', function() {
 
     app.user = new userModel();
 
-    app.on('userReady', function(data){
+    app.on('userLoaded', function(data){
         app.user.url = serverUrl + Urls['rest_user_details']();
         // if user is not authenticated - add login/sign up popup
         if(data.id == '') {
@@ -390,6 +393,7 @@ app.on('urlsReady', function() {
                 el: '#menuProfile',
             });
             app.profile.render();
+            app.trigger('menuReady');
         });
         app.routers.navigate(
             window.location.pathname + '#',
@@ -399,6 +403,12 @@ app.on('urlsReady', function() {
     });
 
     app.user.load();
+
+    app.trigger('userReady');
+
+    $('body').on('click', '.auth-pop', function() {
+        $('#loginModal').modal();
+    });
 
     $('body').on('click', 'a', function(event) {
         var href = event.currentTarget.getAttribute('href');
@@ -417,12 +427,16 @@ app.on('urlsReady', function() {
                     url, 
                     {trigger: true, replace: false}
                 );
+                app.trigger('userReady');
+                app.trigger('menuReady');
             } else {
                 $('#content').html(app.cache[url]);
                 app.routers.navigate(
                     url, 
                     {trigger: false, replace: false}
                 );
+                app.trigger('userReady');
+                app.trigger('menuReady');
                 app.hideLoading();
             }
         }
