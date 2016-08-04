@@ -24,7 +24,7 @@ include mixins.jade
                         })
                 section.personal_information.pt30
                     h2.text-uppercase.dosis Personal Information
-                        span.small-text.text-lowercase.open-sans Required by United States banking laws. This information is transmitted securely and will never be used for any purpose beyond executing your investment. You only have to do this once.
+                        span.small-text.open-sans Required by United States banking laws. This information is transmitted securely and will never be used for any purpose beyond executing your investment. You only have to do this once.
                     +fieldBlock("Full Legal Name", '', {
                         class1: 'col-lg-3 col-md-3', 
                         class2: 'col-lg-9 col-md-9', 
@@ -230,11 +230,12 @@ include mixins.jade
                         .col-md-10.offset-md-2
                              a(
                              href=""
-                             ) Subscription agreement
+                             ).link-2 Subscription agreement
                     +fieldBlock('agree', '', {
                         type: 'checkbox',
                         text: 'I agree to the terms of the Subscription Agreement specific to this issuer.'
                     })
+
                     .form-group.row
                         .col-md-12
                             .controls
@@ -245,7 +246,7 @@ include mixins.jade
     .col-md-4.pull-right
         .row
             h2.text-uppercase.dosis PERKS
-            span.small-text.open-sans Investor Perks are not intended to affect the value of the security and investors should evaluate the merits of each investment without regard to any Investor Perks.
+                span.small-text.open-sans Investor Perks are not intended to affect the value of the security and investors should evaluate the merits of each investment without regard to any Investor Perks.
             .list-group.list-group-border-invest.m30
                 a(
                 href=""
@@ -264,30 +265,29 @@ include mixins.jade
                 href=""
                 ).list-group-item.list-group-item-action
                     h3.list-group-item-heading 
-                        span.text-color-puerto_rico $500 Investments
+                        span.text-color-puerto_rico $500
+                        |  Investments
                     p.list-group-item-text.text-justify The Peloton Bike (and all of the accessories) AND a trip for two to NYC to meet the team and teach (or take) your very own class in the Peloton Studio, to be accessible to all Peloton riders via on-demand classes! (USA ONLY)
         .row
             h2.text-uppercase.m30.dosis Investment Summary
-            .jumbotron.jumbotron-fluid
+            .jumbotron.jumbotron-fluid.investment-summary
                 .container
-                    .col-md-6
-                        h5.row Raising
-                        p.row.font-weight-bold $500,000 - $1,000,000
-                    .col-md-6
+                    .col-md-7
+                        .row
+                            h5 Raising
+                            p.font-weight-bold $500,000 - $1,000,000
+                    .col-md-5
                         .row
                             h5 Committed
-                        .row
                             p.font-weight-bold $2,256
                 .container
-                    .col-md-6
+                    .col-md-7
                         .row
                             h5 Offering deadline
-                        .row
                             p.font-weight-bold Sep 14, 2016
-                    .col-md-6
+                    .col-md-5
                         .row
                             h5 Type of security
-                        .row
                             p.font-weight-bold Equity
                         
 
