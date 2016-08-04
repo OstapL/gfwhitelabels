@@ -115,6 +115,7 @@ app.on('urlsReady', function() {
           'api/campaign': 'campaignList',
           'api/campaign/:id': 'campaignDetail',
           'api/campaign/:id/invest': 'campaignInvestment',
+          'sketches/:name': 'sketches',
           'page/:id/': 'pageDetail',
           'account/profile': 'accountProfile',
           'account/login/': 'login',
@@ -133,6 +134,18 @@ app.on('urlsReady', function() {
                     {trigger: false, replace: false}
                 );
             }
+            app.hideLoading();
+        },
+
+        sketches: function(name) {
+
+            let templateName = 'sketches' + name.charAt(0).toUpperCase() + name.slice(1);
+            $('#content').append(
+                window[templateName]({
+                    serverUrl: serverUrl,
+                    Urls: Urls,
+                })
+            );
             app.hideLoading();
         },
 
@@ -221,24 +234,27 @@ app.on('urlsReady', function() {
         },
 
         accountProfile: function() {
-            if(app.user.get('token') != '') {
-                requirejs(['views/user', ], (view) => {
-                    var i = new view.profile({
-                        el: '#content',
-                        model: app.user,
-                    });
-                    i.render();
-                    //app.views.campaign[id].render();
-                    app.cache[window.location.pathname] = i.$el.html();
+            app.on('menuReady', function(data) {
+                console.log('account profile');
+                if(app.user.get('token') != '') {
+                    requirejs(['views/user', ], (view) => {
+                        var i = new view.profile({
+                            el: '#content',
+                            model: app.user,
+                        });
+                        i.render();
+                        //app.views.campaign[id].render();
+                        app.cache[window.location.pathname] = i.$el.html();
 
-                    app.hideLoading();
-                });
-            } else {
-                app.routers.navigate(
-                    '/account/login/', 
-                    {trigger: true, replace: true}
-                );
-            }
+                        app.hideLoading();
+                    });
+                } else {
+                    app.routers.navigate(
+                        '/account/login/', 
+                        {trigger: true, replace: true}
+                    );
+                }
+            });
         },
 
         issuerDashboard: function() {
@@ -380,9 +396,6 @@ app.on('urlsReady', function() {
             {trigger: true, replace: true}
         );
         console.log('user ready');
-    });
-    app.on('menuReady', function(){
-        console.log('menu ready');
     });
 
     app.user.load();
