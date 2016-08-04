@@ -2,10 +2,10 @@ mixin breadcrumbs(title, subtitle, data)
     section.header_title.p50
         .container
             .row
-                .col-lg-8
+                .pull-left
                     h1.text-uppercase= title
                         span.small-text= subtitle
-                .col-lg-4
+                .pull-right
                     ol.breadcrumb.pull-right
                         each elem in data
                             - let active = (elem[1] == '') ? 'active' : ''
