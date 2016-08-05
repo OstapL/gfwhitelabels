@@ -10,14 +10,282 @@ include mixins.jade
 )
 
 .container.investment
-    +fieldBlock("first_name", '', {
-        class1: 'col-lg-3 col-md-3', 
-        class2: 'col-lg-7 col-md-7', 
-        type: 'text'
-    })
+    //START LEFT BLOCK
+    .col-md-7
+        h2.text-uppercase.dosis Investment
+        .form-section.clearfix.pt30
+            form(metod="post" action="").invest_form.clearfix
+                +fieldBlock("Investment Amount", '', {
+                        class1: 'col-lg-3 col-md-3', 
+                        class2: 'col-lg-9 col-md-9', 
+                        type: 'text',
+                        placeholder: '$2,500',
+                        text: "$10 of payment processing fee. Your money will be returned to you if the campaign doesn't reach the target goal ($500,000)."
+                        })
+                section.personal_information.pt30
+                    h2.text-uppercase.dosis Personal Information
+                        span.small-text.open-sans Required by United States banking laws. This information is transmitted securely and will never be used for any purpose beyond executing your investment. You only have to do this once.
+                    +fieldBlock("Full Legal Name", '', {
+                        class1: 'col-lg-3 col-md-3', 
+                        class2: 'col-lg-9 col-md-9', 
+                        type: 'text',
+                        })
+                    +fieldBlock("Phone number", '', {
+                        class1: 'col-lg-3 col-md-3', 
+                        class2: 'col-lg-9 col-md-9', 
+                        type: 'text',
+                        placeholder: '',
+                        })
+                    +fieldBlock("Street Address 1", '', {
+                        class1: 'col-lg-3 col-md-3', 
+                        class2: 'col-lg-9 col-md-9', 
+                        type: 'text',
+                        placeholder: '',
+                        })
+                    +fieldBlock("Street Address 2", '', {
+                        class1: 'col-lg-3 col-md-3', 
+                        class2: 'col-lg-9 col-md-9', 
+                        type: 'text',
+                        placeholder: '',
+                        }).street_address_2
+                    .row
+                        .col-lg-6
+                            +fieldBlock("Zip Code", '', {
+                                class1: 'col-lg-6 col-md-3', 
+                                class2: 'col-lg-6 col-md-9', 
+                                type: 'text',
+                                placeholder: '',
+                                })
+                        .col-lg-6
+                            label.col-lg-6 City/State
+                            .col-lg-6.text-md-right
+                                span.change_state_city
+                                    span.input-value New York, NY
+                                        i.fa.fa-pencil-square-o
+                    .row
+                        .col-lg-6
+                            +fieldBlock("Date of Birth", '', {
+                                class1: 'col-lg-6 col-md-3', 
+                                class2: 'col-lg-6 col-md-9', 
+                                type: 'date',
+                                placeholder: '',
+                                })
+                        .col-lg-6
+                            +fieldBlock("SSN", '', {
+                                class1: 'col-lg-6 col-md-3', 
+                                class2: 'col-lg-6 col-md-8', 
+                                type: 'text',
+                                placeholder: 'ХХХ-ХХ-XXXX',
+                                })
+                section.payment-information.pt30.border-bottom.profile
+                    h2.text-uppercase.dosis Payment information
+                        span.small-text.open-sans Link your bank account or manually enter your bank account details.
+                    .col-md-9.offset-md-3
+                        ul.nav.nav-tabs.profile-tabs.pt30
+                            li(aria-expanded="true").nav-item
+                                a(
+                                href="#link"
+                                data-toggle="tab"
+                                role="tab"
+                                aria-expanded="true"
+                                ).nav-link.uppercase.active link
+                            li(aria-expanded="true").nav-item
+                                a(
+                                href="#bank_account"
+                                data-toggle="tab"
+                                role="tab"
+                                aria-expanded="true"
+                                ).nav-link.uppercase bank account
+                    .row.tab-content.investment-tabs-content
+                        #link.tab-pane.active(aria-expanded="true")
+                            .col-md-3.col-xs-3
+                                figure.figure.payment-inform-link
+                                    a(
+                                    href=""
+                                    )
+                                        img(
+                                        src="/img/investment/JPMorgan-Chase-Bank.png"
+                                        ).figure-img.img-fluid.img-rounded
+                            .col-md-3.col-xs-3
+                                figure.figure.payment-inform-link
+                                    a(
+                                    href=""
+                                    )
+                                        img(
+                                        src="/img/investment/2000px-Bank_of_America_logo.png"
+                                        ).figure-img.img-fluid.img-rounded
+                            .col-md-3.col-xs-3
+                                figure.figure.payment-inform-link
+                                    a(
+                                    href=""
+                                    )
+                                        img(
+                                        src="/img/investment/WellsFargoLogo1.png"
+                                        ).figure-img.img-fluid.img-rounded
+                            .col-md-3.col-xs-3
+                                figure.figure.payment-inform-link
+                                    a(
+                                    href=""
+                                    )
+                                        img(
+                                        src="/img/investment/Citibank-logo.png"
+                                        ).figure-img.img-fluid.img-rounded
+                            .col-md-3.col-xs-3
+                                figure.figure.payment-inform-link
+                                    a(
+                                    href=""
+                                    )
+                                        img(
+                                        src="/img/investment/comp_1_logo-usbank-siteheader.png"
+                                        ).figure-img.img-fluid.img-rounded
+                            .col-md-3.col-xs-3
+                                figure.figure.payment-inform-link
+                                    a(
+                                    href=""
+                                    )
+                                        img(
+                                        src="/img/investment/usaa-logo-horizontal.png"
+                                        ).figure-img.img-fluid.img-rounded
+                            .col-md-3.col-xs-3
+                                figure.figure.payment-inform-link
+                                    a(
+                                    href=""
+                                    )
+                                        img(
+                                        src="/img/investment/fidelity.png"
+                                        ).figure-img.img-fluid.img-rounded
+                            .col-md-3.col-xs-3
+                                figure.figure.payment-inform-link
+                                    a(
+                                    href=""
+                                    )
+                                        img(
+                                        src="/img/investment/pnc_main_logo.png"
+                                        ).figure-img.img-fluid.img-rounded
+                            .col-md-3.col-xs-3
+                                figure.figure.payment-inform-link
+                                    a(
+                                    href=""
+                                    )
+                                        img(
+                                        src="/img/investment/capital_one_360_checking.png"
+                                        ).figure-img.img-fluid.img-rounded
+                            .col-md-3.col-xs-3
+                                figure.figure.payment-inform-link
+                                    a(
+                                    href=""
+                                    )
+                                        img(
+                                        src="/img/investment/TDBank.png"
+                                        ).figure-img.img-fluid.img-rounded
+                            .col-md-3.col-xs-3
+                                figure.figure.payment-inform-link
+                                    a(
+                                    href=""
+                                    )
+                                        img(
+                                        src="/img/investment/suntrust.png"
+                                        ).figure-img.img-fluid.img-rounded
+                            .col-md-3.col-xs-3
+                                figure.figure.payment-inform-link
+                                    a(
+                                    href=""
+                                    )
+                                        img(
+                                        src="/img/investment/navyfederal.png"
+                                        ).figure-img.img-fluid.img-rounded
+                            .col-md-3.col-xs-3
+                                figure.figure.payment-inform-link
+                                    a(
+                                    href=""
+                                    )
+                                        img(
+                                        src="/img/investment/charles.png"
+                                        ).figure-img.img-fluid.img-rounded
+                            .col-md-12
+                                <span class="help-block">GrowyhFountain does not store your bank login credentials.</span>
+                        #bank_account.tab-pane.fade(aria-expanded="true")
 
-    +fieldBlock("email", '', {
-        class1: 'col-lg-3 col-md-3', 
-        class2: 'col-lg-7 col-md-7', 
-        type: 'email'
-    })
+                section.varification.pt30
+                    h2.text-uppercase.dosis VERIFICATION
+                    +fieldBlock('is_reviewed_edu_material', '', {
+                        class1: 'col-md-2',
+                        class2: 'col-md-10',
+                        type: 'checkbox',
+                        text: 'have reviewed and understand the education material on GrowthFountain. I understand that GrowthFountain does not offer investment advice or recommendations, and that I have made my own investment decision.'
+                    })
+                    +fieldBlock('is_understand_terms', '', {
+                        type: 'checkbox',
+                        text: 'I understand that it may be difficult to resell securities purchased on GrowthFountain.'
+                    })
+                    +fieldBlock('is_resell_difficult', '', {
+                        type: 'checkbox',
+                        text: 'I understand that it may be difficult to resell securities purchased on GrowthFountain.'
+                    })
+                    +fieldBlock('is_startup_risk', '', {
+                        type: 'checkbox',
+                        text: 'I understand that investing in start-ups and small businesses listed on GrowthFountain is very risky, and that I should not invest any funds unless I can afford to lose my entire investment.'
+                    })
+                    .form-group.row
+                        .col-md-10.offset-md-2
+                             a(
+                             href=""
+                             ).link-2 Subscription agreement
+                    +fieldBlock('agree', '', {
+                        type: 'checkbox',
+                        text: 'I agree to the terms of the Subscription Agreement specific to this issuer.'
+                    })
+
+                    .form-group.row
+                        .col-md-12
+                            .controls
+                                button(
+                                type="submit").btn.btn-lg.btn-primary.pull-right invest
+    //END LEFT BLOCK
+    //START RIGHT BLOCK
+    .col-md-4.pull-right
+        .row
+            h2.text-uppercase.dosis PERKS
+                span.small-text.open-sans Investor Perks are not intended to affect the value of the security and investors should evaluate the merits of each investment without regard to any Investor Perks.
+            .list-group.list-group-border-invest.m30
+                a(
+                href="#"
+                ).list-group-item.list-group-item-action
+                    h3.list-group-item-heading
+                        span.text-color-puerto_rico $500
+                        |  Investments
+                    p.list-group-item-text.text-justify A one year subscription plus a gorgeous Peloton Long-Sleeve T-SHIRT. One subscription covers an unlimited amount of users so that every member of your family would be able to use the bike and access Peloton content from their own personal
+                a(
+                href="#"
+                ).list-group-item.list-group-item-action.active
+                    h3.list-group-item-heading $500 Investments
+                        i.fa.fa-check
+                    p.list-group-item-text.text-justify FULLY LOADED PACKAGE: The Peloton Bike plus Peloton headphones, Peloton biking shoes, a Peloton heart rate monitor, the Peloton hand weights, a Peloton shirt, and a Peloton sweat mat (you're going to need it!).
+                a(
+                href="#"
+                ).list-group-item.list-group-item-action
+                    h3.list-group-item-heading 
+                        span.text-color-puerto_rico $500
+                        |  Investments
+                    p.list-group-item-text.text-justify The Peloton Bike (and all of the accessories) AND a trip for two to NYC to meet the team and teach (or take) your very own class in the Peloton Studio, to be accessible to all Peloton riders via on-demand classes! (USA ONLY)
+        .row
+            h2.text-uppercase.m30.dosis Investment Summary
+            .jumbotron.jumbotron-fluid.investment-summary
+                .container
+                    .col-md-7
+                        .row
+                            h5 Raising
+                            p.font-weight-bold $500,000 - $1,000,000
+                    .col-md-5
+                        .row
+                            h5 Committed
+                            p.font-weight-bold $2,256
+                .container
+                    .col-md-7
+                        .row
+                            h5 Offering deadline
+                            p.font-weight-bold Sep 14, 2016
+                    .col-md-5
+                        .row
+                            h5 Type of security
+                            p.font-weight-bold Equity

@@ -22,7 +22,7 @@
                         url: serverUrl + Urls['rest_user_details'](),
                         success: (data) => {
                             localStorage.setItem('user', JSON.stringify(this.toJSON()));
-                            app.trigger('userReady', data);
+                            app.trigger('userLoaded', data);
                         },
                         error: (model, xhr, status) => {
                             localStorage.removeItem('token');
@@ -32,10 +32,10 @@
                 } else {
                     userData = JSON.parse(userData);
                     this.set(userData);
-                    app.trigger('userReady', userData);
+                    app.trigger('userLoaded', userData);
                 }
             } else {
-                app.trigger('userReady', {id: ''});
+                app.trigger('userLoaded', {id: ''});
             }
         },
 

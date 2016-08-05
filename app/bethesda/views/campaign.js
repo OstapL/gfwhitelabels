@@ -35,10 +35,10 @@ define(function() {
                     '/js/photoswipe-ui-default.js', 
                     ], (appears, PhotoSwipe, PhotoSwipeUI_Default) => {
                         this.$el.html(
-                            _.template(this.template)({
+                            window.campaignDetail({
                                 serverUrl: serverUrl,
                                 Urls: Urls,
-                                model: this.model.toJSON()
+                                campaign: this.model.toJSON()
                             })
                         );
 
@@ -130,7 +130,11 @@ define(function() {
                             app.hideLoading();
                         });
                 } else {
-                    this.$el.find('.has-error').scrollTo();
+                    if(this.$('.alert').length) {
+                        this.$('.alert').scrollTo();
+                    } else  {
+                        this.$el.find('.has-error').scrollTo();
+                    }
                 }
             },
         }),

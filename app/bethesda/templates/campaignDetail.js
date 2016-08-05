@@ -99,7 +99,7 @@ define(function () {
                       </div>
                     </div>
                     <div class="col-md-4 nopadding">
-                      <input type="submit" class="btn light_blue btn-mod text-uppercase pull-md-left invest_btn" value="invest">
+                      <a href="/api/campaign/<%= model.id %>/invest" class="btn light_blue btn-mod text-uppercase pull-md-left invest_btn">Invest</a>
                     </div>
                   </div>
                 </form>
