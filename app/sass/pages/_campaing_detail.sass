@@ -6,6 +6,8 @@
 	top: 0
 	left: 0
 	background: rgba(17, 17, 17, .7)
+.js-height-parent
+	height: 545px
 
 .home-section
 	position: relative
@@ -16,6 +18,7 @@
 	-moz-background-size: cover
 	-o-background-size: cover
 	background-size: cover
+
 .home-content
 	position: relative
 	display: table
@@ -23,14 +26,14 @@
 	height: 100%
 	text-align: center
 
-  .home-text
+.home-text
 	display: table-cell
-	height: 100%
 	vertical-align: middle
 	color: $white
 	padding-top: 60px
 	img
 	  max-width: 50%
+
 .hs-line-14
 	margin-top: 0
 	position: relative
@@ -44,11 +47,91 @@
 	
 .big-icon
 	display: block
-	margin: 0 auto 20px
+	margin: 45px auto 30px
 	text-align: center
 	line-height: 88px
 	+calc-rem(72)
 	color: rgba(255,255,255, .97)
 
+.small-icon
+	display: block
+	margin: 25px auto 10px
+	text-align: center
+	+calc-rem(36)
+	color: rgba(255,255,255, .97)
+
 .link-campaing-detail
-	+calc-rem(25)
+	+calc-rem(18)
+	color: $white
+	padding: 10px
+
+.social-link
+	padding: 15px 0
+
+.top-info
+
+	&:before
+		width: 100%
+		background-color: $black
+		opacity: .5
+		position: absolute
+		z-index: 1
+		content: ''
+		height: 85px
+		left: 0
+		bottom: 0
+
+	.top-info-wrap
+		position: relative
+		z-index: 999
+		h2
+			letter-spacing: 2.4px
+			color: $white
+			padding-bottom: 10px
+		span
+			color: #fff
+			margin-bottom: 2px
+
+		.btn
+			margin-top: 7px
+
+.campaigndetail
+	h1
+		letter-spacing: .75px
+		margin-bottom: 0
+	h2
+		letter-spacing: .6px
+	p
+		margin-bottom: 7px
+		color: $small-text
+
+	.pt25
+		padding-top: 25px
+	
+	.committed
+		+calc-rem(24)
+		font-weight: 700
+		color: $puerto_rico
+		line-height: 0
+	.wrap
+		padding-top: 20px
+	.investors
+		position: relative
+		left: 0
+		bottom: 13px
+		img
+			width: 33px
+			height: 33px
+			margin: 1px
+
+	.share
+		padding-top: 22px
+		a
+			+calc-rem(24)
+			padding: 0 10px
+.no-padding-img
+	padding: 0 5px 10px 5px 
+	
+.menu-fixed
+	position: fixed
+	top: 0

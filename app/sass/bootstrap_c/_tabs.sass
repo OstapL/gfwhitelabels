@@ -1,0 +1,18 @@
+// нужно переделать займусь сам - Остап 
+.tabs-scroll
+	position: relative
+	.navbar
+		padding: 35px 0
+		.nav-pills
+			.nav-link
+				color: $small-text
+				+calc-rem(14)
+				+mt(.2s)
+				padding: 0 0 25px 0
+				margin-right: 30px
+				&:hover
+					border-bottom: solid 2px $puerto_rico
+					color: $link-1-hover
+			.nav-link.active
+				background-color: transparent
+				border-bottom: solid 2px $puerto_rico
