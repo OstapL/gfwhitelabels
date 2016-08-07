@@ -121,6 +121,7 @@
 			font-size: 12px
 			color: $grey
 
+
 .tpl-progress
 	position: relative
 	padding-top: 56px
@@ -197,7 +198,6 @@
 		font-size: 14px
 
 .view_campaing
-	border: none
 	padding: 0 40px
 	margin-top: 19px
 	line-height: 26px
@@ -240,6 +240,7 @@
     float: right
     display: inline-block
     padding: 6px 0
+    margin-right: 25px
 
 .btn-circle
     border-radius: 25px!important
@@ -251,17 +252,19 @@
 .portlet-body
 	padding: 10px 0 20px 0
 
+.grafic-padding
+	padding: 21px 28px
+
 .portlet.light>.portlet-title
 	border-bottom: 1px solid $border_color
-	padding: 12px 20px 22px 0
+	padding: 12px 0 14px 0
 	min-height: 50px
-	margin: 0 7px 0 7px
 
 	&>.caption
 		display: inline-block
 		font-size: 18px
 		line-height: 18px
-		padding: 15px 0 0 0
+		padding: 10px 0 4px 24px
 
 	&>.actions .dropdown-menu li>a
 		color: #555
@@ -270,8 +273,9 @@
 .portlet>.portlet-title>.actions>.btn-group>.btn,
 .portlet>.portlet-title>.actions>.btn-group>.btn.btn-sm,
 .portlet>.portlet-title>.actions>.btn.btn-sm
-	padding: 4px 10px
+	padding: 4px 5px
 	font-size: 13px
+	margin-top: 5px
 	line-height: 1.5
 	border: 2px solid #53575b
 	margin-left: 4px
@@ -306,17 +310,20 @@
 	padding: 0 20px
 	color: $grey
 
+.portlet.comments-body
+	padding: 0 8px
+
 .all_comments
 	height: 334px
 	overflow-y: scroll
 
 .leave_comments
-	min-height: 393px
+	padding-bottom: 25px
 	border: 1px solid $border_color
 
 	.write_com
 		margin: 0 auto
-		padding: 11px 0
+		padding: 0
 		border-bottom: 1px solid $border_color
 
 	.form
@@ -324,17 +331,17 @@
 		padding-right: 2.5%
 
 		textarea
-			width: 92.5%
+			width: 85.5%
 			border-radius: 3px
 			height: 136px
 			float: right
 			resize: none
 			margin-top: 22px
-			margin-bottom: 15px
+			margin-bottom: 18px
 
 .mt-comments
 	.mt-comment
-		padding: 20px 10px 6px 22px
+		padding: 20px 2px 6px 15px
 		margin: 0 0 10px
 
 		.mt-comment-img 
@@ -346,20 +353,24 @@
 				border-radius: 50%!important
 
 		.mt-comment-body
-			padding-left: 10px
+			padding-left: 20px
 			position: relative
 			overflow: hidden
+
+			.comments_margin
+				margin-top: 10px
 
 			.mt-comment-text
 				color: $black
 				line-height: 1.3em
 
 			.mt-comment-info
+				margin-top: -5px
 				.mt-comment-date
 					display: inline-block
 					float: right
 					font-size: 11px
-					margin: 0
+					margin: 2px 0 0 0
 					color: $grey
 
 			.mt-comment-info:after,
@@ -379,6 +390,11 @@
 				color: #060606
 				letter-spacing: 5px
 
+			.mt-comment-author.no-float
+				float: none
+				display: block
+				margin: 0
+
 			.mt-comment-details
 				margin: 10px 0 0
 
@@ -387,7 +403,7 @@
 					color: $blue_light
 
 				.mt-comment-actions
-					display: none
+					opacity: 0
 					float: right
 					padding: 0
 					margin: 0
@@ -399,24 +415,35 @@
 						margin: 0
 
 						&>a
-							color: $light_grey
+							color: $black_text
 
 						a:hover
 							color: $grey
 							text-decoration: none
+
+			.mt-comment-date.no-float
+				float: none
+				display: block
+				margin: 0
+
+			.new-comments-details
+				float: none !important
+
+				li
+					padding: 0 !important
 	
 	.mt-comment:hover
 		background: $light_grey
 		.mt-comment-body
 			.mt-comment-details
 				.mt-comment-actions
-					display: inline-block
+					opacity: 1
 
 .social_footer
 	width: 100%
 	border-top: 1px solid $border_color
-	margin-top: 85px
-	padding-top: 75px
+	margin-top: 50px
+	padding-top: 47px
 	padding-bottom: 75px
 
 	.descc_title
@@ -441,3 +468,4 @@
 		.btn_link:hover
 			color: #ef3239
 			border: 2px solid #ef3239
+			background: none
