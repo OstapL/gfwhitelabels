@@ -2,6 +2,30 @@ define(function() {
     let r = {
         model: Backbone.Model.extend({
             urlRoot: serverUrl + '/api/investment',
+            getFields: function(type, cb) {
+                $.ajax({
+                    url: this.urlRoot,
+                    type: 'OPTIONS',
+                    dataType: 'json',
+                    beforeSend: function(xhr) {
+                      // ToDo
+                      // Create that function as a default for beforeSend
+                      let token = localStorage.getItem('token');
+                      if (token !== null && token !== "") {
+                          xhr.setRequestHeader('Authorization', 'Token ' + token);
+                      }
+                    },
+                    success: (response) => {
+                        cb(response.actions[type])
+                    },
+                    error: (xhr, error) => {
+                        // ToDo
+                        // Show global error message
+                        console.log('cant get fields ');
+                        console.log(xhr, error);
+                    },
+                })
+            },
             validation: {
               amount: {
                 required: true,
@@ -20,6 +44,7 @@ define(function() {
                     }
                 }
               },
+              /*
               bank_name: {
                 required: true,
                 minLength: 2,
@@ -33,6 +58,15 @@ define(function() {
                 required: true,
                 pattern: 'digits',
               },
+              address: {
+                required: true,
+                minLength: 7,
+              },
+              city: {
+                required: true,
+                minLength: 2,
+              },
+              */
               ssn: {
                 required: true,
                 minLength: 9,
@@ -45,17 +79,9 @@ define(function() {
                 required: true,
                 minLength: 7,
               },
-              address: {
-                required: true,
-                minLength: 7,
-              },
               zip_code: {
                 required: true,
                 minLength: 5,
-              },
-              city: {
-                required: true,
-                minLength: 2,
               },
               dob: {
                 required: true,
@@ -72,7 +98,7 @@ define(function() {
                 required: true,
                 msg: 'It is required that you acknowledge the above'
               },
-              subscription_agreement: {
+              agree: {
                 required: true,
                 msg: 'It is required that you acknowledge the above'
               },

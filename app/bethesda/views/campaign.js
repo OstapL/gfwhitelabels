@@ -83,6 +83,7 @@ define(function() {
             },
             initialize: function(options) {
                 this.campaignModel = options.campaignModel;
+                this.fields = options.fields;
             },
 
             render: function() {
@@ -90,6 +91,7 @@ define(function() {
                     window.campaignInvestment({
                         serverUrl: serverUrl,
                         Urls: Urls,
+                        fields: this.fields,
                         campaignModel: this.campaignModel,
                         campaign: this.campaignModel.toJSON()
                     })

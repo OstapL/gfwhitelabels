@@ -55,7 +55,7 @@ include mixins.jade
                                         div
                                             i.fa.fa-camera 
                                     
-                            .col-md-9.col-sm-8 
+                            .col-md-9.col-sm-8
                                 section.right-block 
                                     +fieldBlock("first_name", user.first_name, {'class1': 'col-lg-2 col-md-6', 'class2': 'col-lg-6 col-md-6', 'type': 'text'})
                                     +fieldBlock("last_name", user.last_name, {'class1': 'col-lg-2 col-md-6', 'class2': 'col-lg-6 col-md-6', 'type': 'text'})
@@ -92,25 +92,17 @@ include mixins.jade
 
                             .col-md-9.col-sm-8 
                                 section.right-block 
-                                    +fieldBlock("first_name", user, {'class1': 'col-lg-2 col-md-6', 'class2': 'col-lg-6 col-md-6', 'type': 'text'})
-                                    +fieldBlock("last_name", user, {'class1': 'col-lg-2 col-md-6', 'class2': 'col-lg-6 col-md-6', 'type': 'text'})
-                                    +fieldBlock("street_address_1", user, {'class1': 'col-lg-2 col-md-6', 'class2': 'col-lg-6 col-md-6', 'type': 'text'})
-                                    +fieldBlock("street_address_2", user, {'class1': 'col-lg-2 col-md-6', 'class2': 'col-lg-6 col-md-6', 'type': 'text'})
-                                    .row 
-                                        .col-md-12.col-lg-6 
-                                            +fieldBlock("zip_code", user, {'class1': 'col-lg-2 col-md-6', 'class2': 'col-lg-6 col-md-6', 'type': 'text'})
-                                            
-                                        .col-md-12.col-lg-6 
-                                            +fieldBlock("city_state", user, {'class1': 'col-lg-2 col-md-6', 'class2': 'col-lg-6 col-md-6', 'type': 'text'})
-                                        
-                                    +fieldBlock("account_number", user, {'class1': 'col-lg-2 col-md-6', 'class2': 'col-lg-6 col-md-6', 'type': 'text'})
-                                    +fieldBlock("account_number_re", user, {'class1': 'col-lg-2 col-md-6', 'class2': 'col-lg-6 col-md-6', 'type': 'text'})
-                                    +fieldBlock("routing_number", user, {'class1': 'col-lg-2 col-md-6', 'class2': 'col-lg-6 col-md-6', 'type': 'text'})
-                                    +fieldBlock("account_type", user, {'class1': 'col-lg-2 col-md-6', 'class2': 'col-lg-6 col-md-6', 'type': 'text'})
-                                    +fieldBlock("check_type", user, {'class1': 'col-lg-2 col-md-6', 'class2': 'col-lg-6 col-md-6', 'type': 'text'})
-                                    +fieldBlock("name_on_bank_account", user, {'class1': 'col-lg-2 col-md-6', 'class2': 'col-lg-6 col-md-6', 'type': 'text'})
-                                    +fieldBlock("ssn", user, {'class1': 'col-lg-2 col-md-6', 'class2': 'col-lg-6 col-md-6', 'type': 'text'})
-                                    +fieldBlock("ssn", user, {'class1': 'col-lg-2 col-md-6', 'class2': 'col-lg-6 col-md-6', 'type': 'text'})
+                                    +fieldBlock("first_name", user.first_name, {'class1': 'col-lg-2 col-md-6', 'class2': 'col-lg-6 col-md-6', 'type': 'text'})
+                                    +fieldBlock("last_name", user.last_name, {'class1': 'col-lg-2 col-md-6', 'class2': 'col-lg-6 col-md-6', 'type': 'text'})
+                                    +fieldBlock("street_address_1", user.stret_address_1, {'class1': 'col-lg-2 col-md-6', 'class2': 'col-lg-6 col-md-6', 'type': 'text'})
+                                    +fieldBlock("street_address_2", user.stret_address_1, {'class1': 'col-lg-2 col-md-6', 'class2': 'col-lg-6 col-md-6', 'type': 'text'})
+                                    +fieldBlock("account_number", user.account_number, {'class1': 'col-lg-2 col-md-6', 'class2': 'col-lg-6 col-md-6', 'type': 'text'})
+                                    +fieldBlock("account_number_re", user.account_number_rc, {'class1': 'col-lg-2 col-md-6', 'class2': 'col-lg-6 col-md-6', 'type': 'text'})
+                                    +fieldBlock("routing_number", user.routing_number, {'class1': 'col-lg-2 col-md-6', 'class2': 'col-lg-6 col-md-6', 'type': 'text'})
+                                    +fieldBlock("account_type", user.account_type, {'class1': 'col-lg-2 col-md-6', 'class2': 'col-lg-6 col-md-6', 'type': 'text'})
+                                    +fieldBlock("check_type", user.check_type, {'class1': 'col-lg-2 col-md-6', 'class2': 'col-lg-6 col-md-6', 'type': 'text'})
+                                    +fieldBlock("name_on_bank_account", user.name_on_bank_account, {'class1': 'col-lg-2 col-md-6', 'class2': 'col-lg-6 col-md-6', 'type': 'text'})
+                                    +fieldBlock("ssn", user.ssn, {'class1': 'col-lg-2 col-md-6', 'class2': 'col-lg-6 col-md-6', 'type': 'text'})
 
                                     .form-group.row 
                                         .col-sm-11 
@@ -143,13 +135,13 @@ include mixins.jade
                         .col-md-9.col-sm-8 
 
                             section.right-block 
-                                +fieldBlock("where_grow_up", user, {'class1': 'col-lg-2 col-md-6', 'class2': 'col-lg-6 col-md-6', 'type': 'text'})
-                                +fieldBlock("where_go_college", user, {'class1': 'col-lg-2 col-md-6', 'class2': 'col-lg-6 col-md-6', 'type': 'text'})
-                                +fieldBlock("industries", user, {'class1': 'col-lg-2 col-md-6', 'class2': 'col-lg-6 col-md-6', 'type': 'text'})
-                                +fieldBlock("locations", user, {'class1': 'col-lg-2 col-md-6', 'class2': 'col-lg-6 col-md-6', 'type': 'text'})
-                                +fieldBlock("interested", user, {'class1': 'col-lg-2 col-md-6', 'class2': 'col-lg-6 col-md-6', 'type': 'text'})
-                                +fieldBlock("investment_goals", user, {'class1': 'col-lg-2 col-md-6', 'class2': 'col-lg-6 col-md-6', 'type': 'text'})
-                                +fieldBlock("important_attributes", user, {'class1': 'col-lg-2 col-md-6', 'class2': 'col-lg-6 col-md-6', 'type': 'text'})
+                                +fieldBlock("where_grow_up", user.where_grow_up, {'class1': 'col-lg-2 col-md-6', 'class2': 'col-lg-6 col-md-6', 'type': 'text'})
+                                +fieldBlock("where_go_college", user.where_ho_college, {'class1': 'col-lg-2 col-md-6', 'class2': 'col-lg-6 col-md-6', 'type': 'text'})
+                                +fieldBlock("industries", user.industries, {'class1': 'col-lg-2 col-md-6', 'class2': 'col-lg-6 col-md-6', 'type': 'text'})
+                                +fieldBlock("locations", user.locations, {'class1': 'col-lg-2 col-md-6', 'class2': 'col-lg-6 col-md-6', 'type': 'text'})
+                                +fieldBlock("interested", user.interested, {'class1': 'col-lg-2 col-md-6', 'class2': 'col-lg-6 col-md-6', 'type': 'text'})
+                                +fieldBlock("investment_goals", user.investment_goals, {'class1': 'col-lg-2 col-md-6', 'class2': 'col-lg-6 col-md-6', 'type': 'text'})
+                                +fieldBlock("important_attributes", user.important_attributes, {'class1': 'col-lg-2 col-md-6', 'class2': 'col-lg-6 col-md-6', 'type': 'text'})
      
                                 .form-group.row.clearfix 
                                     .col-md-11.col-lg-9 

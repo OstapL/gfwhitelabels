@@ -116,10 +116,10 @@ app.on('urlsReady', function() {
           'api/campaign/:id': 'campaignDetail',
           'api/campaign/:id/invest': 'campaignInvestment',
           'sketches/:name': 'sketches',
-          'page/:id/': 'pageDetail',
+          'page/:id': 'pageDetail',
           'account/profile': 'accountProfile',
-          'account/login/': 'login',
-          'account/logout/': 'logout',
+          'account/login': 'login',
+          'account/logout': 'logout',
           'account/dashboard/issuer': 'dashboardIssuer',
           'account/dashboard/investor': 'dashboardInvestor',
         },
@@ -197,13 +197,12 @@ app.on('urlsReady', function() {
         },
 
         campaignDetail: function(id) {
-            requirejs(['models/campaign', 'views/campaign', '/templates_js/campaignDetail.js', ], (model, view, campaignDetailT) => {
+            requirejs(['models/campaign', 'views/campaign', ], (model, view, campaignDetailT) => {
 
                 app.getModel('campaign', model.model, id, function(model) {
                     app.views.campaign[id] = new view.detail({
                         el: '#content',
                         model: model,
-                        template: campaignDetailT,
                     });
                     app.views.campaign[id].render();
                     app.cache[window.location.pathname] = app.views.campaign[id].$el.html();
@@ -218,18 +217,21 @@ app.on('urlsReady', function() {
             requirejs(['models/campaign', 'models/investment', 'views/campaign', ], (model, investModel, view) => {
 
                 app.getModel('campaign', model.model, id, function(campaignModel) {
-                    var i = new view.investment({
-                        el: '#content',
-                        model: new investModel.model(),
-                        campaignModel: campaignModel,
-                    });
-                    i.render();
-                    //app.views.campaign[id].render();
-                    //app.cache[window.location.pathname] = app.views.campaign[id].$el.html();
+                    $.ajax(_.extend({
+                            url: serverUrl + Urls['investment-list'](),
+                    }, defaultOptionsRequest)).done((response) => {
+                        var i = new view.investment({
+                            el: '#content',
+                            model: new investModel.model(),
+                            campaignModel: campaignModel,
+                            fields: response.actions.POST
+                        });
+                        i.render();
+                        //app.cache[window.location.pathname] = app.views.campaign[id].$el.html();
 
-                    app.hideLoading();
+                        app.hideLoading();
+                    })
                 });
-
             });
         },
 
@@ -240,19 +242,25 @@ app.on('urlsReady', function() {
                 console.log('account profile');
                 if(app.user.get('token') != '') {
                     requirejs(['views/user', ], (view) => {
-                        var i = new view.profile({
-                            el: '#content',
-                            model: app.user,
-                        });
-                        i.render();
-                        //app.views.campaign[id].render();
-                        app.cache[window.location.pathname] = i.$el.html();
+                        $.ajax(_.extend({
+                                url: serverUrl + Urls['rest_user_details'](),
+                            }, defaultOptionsRequest)
+                        ).done((response) => {
+                            var i = new view.profile({
+                                el: '#content',
+                                model: app.user,
+                                fields: response.actions.PUT
+                            });
+                            i.render();
+                            //app.views.campaign[id].render();
+                            app.cache[window.location.pathname] = i.$el.html();
 
-                        app.hideLoading();
+                            app.hideLoading();
+                        });
                     });
                 } else {
                     app.routers.navigate(
-                        '/account/login/', 
+                        '/account/login', 
                         {trigger: true, replace: true}
                     );
                 }
@@ -325,14 +333,29 @@ app.on('urlsReady', function() {
         },
 
         login: function(id) {
-            requirejs(['views/user', ], (userView, userT) => {
-                let loginView = new userView.login({
-                    el: '#content',
-                    template: userT,
-                })
-                loginView.render();
-                app.cache[window.location.pathname] = loginView.$el.html();
-                app.hideLoading();
+            requirejs(['views/user', ], (userView) => {
+                var a1 = $.ajax(_.extend({
+                        url: serverUrl + Urls['rest_login'](),
+                    }, defaultOptionsRequest));
+                var a2 = $.ajax(_.extend({
+                        url: serverUrl + Urls['rest_register'](),
+                    }, defaultOptionsRequest));
+                $.when(a1, a2).done((r1, r2) => {
+                    let loginView = new userView.login({
+                        el: '#content',
+                        login_fields: r1[0].actions.POST,
+                        register_fields: r2[0].actions.POST
+                    })
+                    loginView.render();
+                    app.cache[window.location.pathname] = loginView.$el.html();
+                    app.hideLoading();
+                }).fail((xhr, error) =>  {
+                    // ToDo
+                    // Show global error message
+                    console.log('cant get fields ');
+                    console.log(xhr, error);
+                    app.hideLoading();
+                });
             });
         },
 
