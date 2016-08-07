@@ -23,7 +23,7 @@ _.extend(Backbone.Validation.callbacks, {
         }
 
         $group.removeClass('has-error');
-        $group.find('.help-block').html(error).addClass('hide');
+        $group.find('.help-block').html('').addClass('hide');
     },
     invalid: function (view, attr, error, selector) {
         var $el = view.$('[name=' + attr + ']');
@@ -91,6 +91,18 @@ var defaultSaveActions = {
       }
 };
 
+var defaultOptionsRequest = {
+    type: 'OPTIONS',
+    dataType: 'json',
+    beforeSend: function(xhr) {
+      // ToDo
+      // Create that function as a default for beforeSend
+      let token = localStorage.getItem('token');
+      if (token !== null && token !== "") {
+          xhr.setRequestHeader('Authorization', 'Token ' + token);
+      }
+    },
+};
 
 (function($) {
     $.fn.scrollTo = function() {

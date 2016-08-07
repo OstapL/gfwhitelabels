@@ -16,25 +16,35 @@ mixin breadcrumbs(title, subtitle, data)
                                     a(href=elem[1])= elem[0]
 
 mixin fieldBlock(name, data, attr)
+
+    // If we did not created fields vocabulary
+    // Assume it is empty field
+    if fields[name] == null
+        - console.log('bad field', name);
+        - fields[name] = {}
+        - fields[name]['label'] = name
+        - fields[name]['required'] = false
+
     if attr.type == 'checkbox'
         div(class="form-group row " + name )
             div(class=(attr.class1 ? attr.class1 : 'col-md-2') + ' text-md-right text-xs-right')
                 input(
                     id=name
+                    name=name
+                    value=data
                     type="checkbox"
                 ).form-check-input
             div(class=attr.class2  ? attr.class2 : 'col-md-10')
                 label(for=name).text-justify #{attr.text}
     else
-        div(class="form-group row " + name )
-            label(class=attr.class1 + " text-md-right" for=name)= name
+        div(class="form-group row " + name + (fields[name].required == true ? ' required ' : ' '))
+            label(class=attr.class1 + " text-md-right" for=name)= fields[name].label
             div(class=attr.class2)
                 input(
                     id=name
                     name=name
-                    placeholder=attr.placeholder ? attr.placeholder : name
+                    placeholder=attr.placeholder ? attr.placeholder : fields[name].label
                     type=attr.type ? attr.type : 'text'
                     value=data
                   ).form-control
                 div.help-block= attr.text
-
