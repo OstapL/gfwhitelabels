@@ -134,9 +134,17 @@
 	padding: 0 5px 10px 5px 
 
 .about
+	padding-bottom: 30px
 	.card
 		margin-top: 50px
 		border: none
+		&::before
+			position: absolute
+			width: 100%
+			height: 100%
+			content: ''
+			background-color: rgba(17,17,17, 0.5)
+
 		.card-img
 			border-radius: 0
 		h3
@@ -175,6 +183,7 @@
 			height: 180px
 
 .document
+	padding-bottom: 50px
 	h2
 		margin-bottom: 20px
 	h3
@@ -194,6 +203,7 @@
 			+calc-rem(24)
 			margin-right: 5px
 .overview
+	padding-bottom: 50px
 	h3
 		padding: 20px 0
 	.fundraising
@@ -223,6 +233,76 @@
 				p
 					color: $small-text
 					margin-bottom: 0
+.risks
+	padding-bottom: 15px
+.faq
+	padding-bottom: 15px
+//Accordion
+#accordion
+	.collapse
+		padding: 10px 20px
+	.list-group-item-action
+		display: block
+		padding: 10px 20px
+		position: relative
+		border: solid 1px $gallery
+		margin-top: 10px
+		+calc-rem(14)
+		font-weight: 700
+		&.active
+			background-color: $alabaster
+			color: $black
+			+calc-rem(14)
+			font-weight: 700
+			border: solid 1px $gallery
+		i
+			position: absolute
+			right: 15px
+			vertical-align: middle
 
+.ask
+	padding-bottom: 50px
+	.form-section
+		input
+			border: none
+			border-bottom: solid 1px $gallery
+			width: 100%
+			outline: none
+			padding: 3px 10px
+.border-top
+	border-top: solid 1px $gallery
 
+.comments
+	.col-lg-1
+		padding: 0
+	.col-lg-11
+		padding-right: 0
+		padding-left: 10px
+	img
+		width: 55px
+		height: 55px
+		display: inline-block
+		//float: left
+		//margin-right: 15px
+	.comments-wrap
+		display: inline-block
+		//width: 89%
+		.name-comments
+			+calc-rem(14)
+			letter-spacing: 2.8px
+			color: $black
+		.date-comments
+			+calc-rem(11)
+			color: $small-text
+		.responce
 
+			li
+				padding-left: 5px
+				display: inline-block
+		p
+			margin-bottom: 5px
+.like
+	h2
+		margin-bottom: 0
+	i
+		color: $wild_willow
