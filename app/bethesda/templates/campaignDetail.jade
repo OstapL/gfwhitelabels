@@ -1,21 +1,367 @@
-section#home(data-background='https://s3.amazonaws.com/growthfountain-development/filer_public/60/0e/600e5642-6b02-4a9b-b901-c651f2f62b5b/1.jpg', style='background-image: url("https://s3.amazonaws.com/growthfountain-development/filer_public/60/0e/600e5642-6b02-4a9b-b901-c651f2f62b5b/1.jpg");').home-section.bg-dark-alfa-70.parallax-2.fixed-height-small
-      .js-height-parent.container(style='height: 600px')
-        // Hero Content
-        .home-content
-          .home-text.text-lg-center
-            h1.hs-line-14.font-alt.margin-bottom-50.mb-xs-30 #{ campaign.company.name }
-            .local-scroll
-              a.big-icon.link-6.lightbox-gallery-1.mfp-iframe(href='https://www.youtube.com/watch?v=eE-zAcJusWU')
-                i.fa.fa-play-circle-o
-              a(href=campaign.company.website).link-6.link-campaing-detail #{ campaign.company.website }
-              .row.d-inline-dlock
-                a(href="")
-                  i.fa.fa-facebook
-                a(href="")
-                  i.fa.fa-twitter
-                a(href="")
-                  i.fa.fa-instagram
-                a(href="")
-                  i.fa.fa-linkedin
+section#home(style="background-image: url(#{ campaign.get_header_image })").home-section.bg-dark-alfa-70.parallax-2.fixed-height-small
+			.js-height-parent.container
+				// Hero Content
+				.home-content
+					.home-text.text-lg-center
+						h1.hs-line-14.font-alt.margin-bottom-50.mb-xs-30 #{ campaign.company.name }
+						.local-scroll
+							a.big-icon.link-6.lightbox-gallery-1.mfp-iframe(href=campaign.video)
+								i.fa.fa-play-circle-o
+							a(href=campaign.company.website).link-6.link-campaing-detail #{ campaign.company.website }
+							.row.social-link
+								a(href="").link-6.link-campaing-detail
+									i.fa.fa-facebook
+								a(href="").link-6.link-campaing-detail
+									i.fa.fa-twitter
+								a(href="").link-6.link-campaing-detail
+									i.fa.fa-instagram
+								a(href="").link-6.link-campaing-detail
+									i.fa.fa-linkedin
 
-        // End Hero Content
+				// End Hero Content
+			.top-info
+				.container
+					.top-info-wrap.row
+						.col-lg-2
+							span Pre-Money Valuation
+							h2.font-weight-bold #{ campaign.premoney_valuation }
+						.col-lg-2
+							span Type of Security
+							h2.font-weight-bold Equity
+						.col-lg-2
+							span Days Left
+							h2.font-weight-bold 120
+						.col-lg-4.pull-right
+							a(href="").btn.btn-primary.text-uppercase.pull-right invest in #{ campaign.company.name }
+section.campaigndetail.pt50
+	.container.mt85
+		.row
+			.col-lg-6
+				h1 Smartbe is the first intelligent baby stroller of the new generation.
+				.row.pt25
+					.col-lg-4
+						a(href="").link-1
+							i.fa.fa-map-marker
+							|  #{ campaign.company.city }, #{ campaign.company.state }
+					.col-lg-6
+						a(href="").link-1
+							i.fa.fa-calendar-check-o
+							|  Founded in #{ campaign.company.founding_date }
+				.row
+					.col-lg-12.share
+						p.font-weight-bold.d-inline-block Share:
+						.d-inline-block
+							a(href="").link-1
+								i.fa.fa-facebook
+							a(href="").link-1
+								i.fa.fa-twitter
+							a(href="").link-1
+								i.fa.fa-linkedin
+							a(href="").link-1
+								i.fa.fa-google-plus
+
+
+			.col-lg-6
+
+				.progress_bar_container
+					span Less than 20% Funded
+					span.pull-right Committed 
+						span.committed $15,000
+					.clear
+					progress(value="20" max="100").progress
+				.pt25
+					.row.col-lg-7
+						p Target
+						h2.font-weight-bold $500,000 - $1,000,000 #{ campaign.company.minimum_raise }  #{ campaign.company.maximum_raise }
+					.row.col-lg-5.pull-right
+						p Minimum Investment
+						h2.font-weight-bold $200 #{ campaign.company.minimum_increment }
+					.row.col-lg-12
+						.wrap.d-inline-block
+							p Investors
+							h2.font-weight-bold 17
+						.investors.d-inline-block
+							a(href="")
+								<img src="/img/avatar1.jpg" alt="..." class="img-circle">
+							a(href="")
+								<img src="/img/avatar6.jpg" alt="..." class="img-circle">
+							a(href="")
+								<img src="/img/avatar1.jpg" alt="..." class="img-circle">
+							a(href="")
+								<img src="/img/avatar6.jpg" alt="..." class="img-circle">
+							a(href="")
+								<img src="/img/avatar1.jpg" alt="..." class="img-circle">
+						a(href="").link-1 see all...
+section.border-bottom
+	.container.tabs-scroll
+		nav( data-toggle="sticky-onscroll").navbar.navbar-default.sticky
+			ul.nav.nav-pills
+				li.nav-item.text-uppercase
+					a(href="#about").nav-link.active About
+				li.nav-item.text-uppercase
+					a(href="#team").nav-link Team
+				li.nav-item.text-uppercase
+					a(href="#documents").nav-link Documents
+				li.nav-item.text-uppercase
+					a(href="#overview").nav-link Overview and terms
+				li.nav-item.text-uppercase
+					a(href="#risks").nav-link risks
+				li.nav-item.text-uppercase
+					a(href="#faq").nav-link faq
+				li.nav-item.text-uppercase
+					a(href="#ask").nav-link Ask a Question
+				a(href="").btn.btn-primary.text-uppercase.pull-right invest
+section.container
+	.scrollspy-example(data-spy="scroll"
+	data-target="#navbar-example2"
+	data-offset="0"
+	)
+	section.about.row
+		.col-lg-12
+			h2#about.dosis.p50.text-uppercase.text-lg-center About smartbe
+			p Smartbe is the first intelligent baby stroller of the new generation. Smartbe is a revolutionary concept as regards design and functionality that solves real parents and baby needs. Smartbe applies state of the art technology through innovative, minimalist and safe design. We have built a new baby stroller with all the needed intelligence to provide new levels of child safety and comfort never before imagined together in a stroller. Smartbe fulfills all US & European Safety Regulations also going beyond, providing safety features not possible without the addition of electricity and leading edge mobile technology.
+			h3.pt50.text-lg-center Our Edge
+			p Smartbe is the all-in-one solution that provides more than 10 safety, security, comfort and convenience-enhancing functions managed by Android and IOS smartphones and smartwatches. 
+			p All the technologies being used in Smartbe have already been used and extensively tested in other industries so we are very optimistic we can meet our launch goals. The breakthrough is that these technologies are being applied to create not only an industry disrupting, electrically powered stroller with killer functionality, but also a stylish, minimalist device designed to fit every parent’s needs and desires.
+		.col-lg-12
+			.col-lg-3.no-padding-img
+				img(src="/img/other_img/1.png" alt="").img-fluid
+			.col-lg-3.no-padding-img
+				img(src="/img/other_img/1.png" alt="").img-fluid
+			.col-lg-3.no-padding-img
+				img(src="/img/other_img/1.png" alt="").img-fluid
+			.col-lg-3.no-padding-img
+				img(src="/img/other_img/1.png" alt="").img-fluid
+			.col-lg-3.no-padding-img
+				img(src="/img/other_img/1.png" alt="").img-fluid
+			.col-lg-3.no-padding-img
+				img(src="/img/other_img/1.png" alt="").img-fluid
+			.col-lg-3.no-padding-img
+				img(src="/img/other_img/1.png" alt="").img-fluid
+			.col-lg-3.no-padding-img
+				img(src="/img/other_img/1.png" alt="").img-fluid
+		.col-lg-4
+			.card.card-inverse
+				img(src="/img/other_img/3.png" alt="").card-img
+				.card-img-overlay
+					.card-title
+						a(href="").small-icon.link-6
+								i.fa.fa-play-circle-o
+					h3.card-text.text-lg-center Title for Optional Video 1
+		.col-lg-4
+			.card.card-inverse
+				img(src="/img/other_img/3.png" alt="").card-img
+				.card-img-overlay
+					.card-title
+						a(href="").small-icon.link-6
+								i.fa.fa-play-circle-o
+					h3.card-text.text-lg-center Title for Optional Video 2
+		.col-lg-4
+			.card.card-inverse
+				img(src="/img/other_img/3.png" alt="").card-img
+				.card-img-overlay
+					.card-title
+						a(href="").small-icon.link-6
+								i.fa.fa-play-circle-o
+					h3.card-text.text-lg-center Title for Optional Video 3
+		.col-lg-12.pt50
+			h3.text-lg-center Articles and Press
+		.articles_press
+			.col-lg-3
+				.card.card-inverse
+					img(src="/img/other_img/6.png" alt="").card-img
+					.card-img-overlay
+						.card-title
+							p.card-text.font-weight-bold Smartbe is the first intelligent baby stroller of the new generation
+							p.card-text Smartbe is a revolutionary concept as regards design and ...
+							img(src="/img/icon-campaign.jpg", alt="").icon-campaign.d-inline-block
+							a(href="").card-text.links.d-inline-block bizwest.com
+			.col-lg-3
+				.card.card-inverse
+					img(src="/img/other_img/6.png" alt="").card-img
+					.card-img-overlay
+						.card-title
+							p.card-text.font-weight-bold Smartbe is the first intelligent baby stroller of the new generation
+							p.card-text Smartbe is a revolutionary concept as regards design and ...
+							img(src="/img/icon-campaign.jpg", alt="").icon-campaign.d-inline-block
+							a(href="").card-text.links.d-inline-block bizwest.com
+			.col-lg-3
+				.card.card-inverse
+					img(src="/img/other_img/6.png" alt="").card-img
+					.card-img-overlay
+						.card-title
+							p.card-text.font-weight-bold Smartbe is the first intelligent baby stroller of the new generation
+							p.card-text Smartbe is a revolutionary concept as regards design and ...
+							img(src="/img/icon-campaign.jpg", alt="").icon-campaign.d-inline-block
+							a(href="").card-text.links.d-inline-block bizwest.com
+			.col-lg-3
+				.card.card-inverse
+					img(src="/img/other_img/6.png" alt="").card-img
+					.card-img-overlay
+						.card-title
+							p.card-text.font-weight-bold Smartbe is the first intelligent baby stroller of the new generation
+							p.card-text Smartbe is a revolutionary concept as regards design and ...
+							img(src="/img/icon-campaign.jpg", alt="").icon-campaign.d-inline-block
+							a(href="").card-text.links.d-inline-block bizwest.com
+			.col-lg-12.pt50
+				h3.text-lg-center Why We are Raising Capital, and What We’ll Do with It
+				p Smartbe is a revolutionary new concept and the contributors will be part of that change. We’ve chosen Indiegogo to spread this new concept to the community. Crowdfunding is one of the tools of the modern world change where everyone cooperates and joins in to support an idea and benefit from it. With your support we will get this product to market much faster, and we can start changing the way we take our babies for a ride, providing new levels of comfort and safety never possible before. We want to drastically improve the out-of-home experience of babies and those that care for them. Together, we will make Smartbe come true.
+
+
+
+	section.row.team
+		h2#team.dosis.p50.text-uppercase.text-lg-center.col-lg-12 Team
+		.col-lg-4.text-lg-center
+			.card
+				img(src="/img/avatar80_8.jpg" alt="").img-circle
+				.card-block
+					h4.card-title.text-uppercase Jan Mertz
+					p.card-text
+						small.text-muted CEO
+					p.card-text Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque mollis lacus augue, a hendrerit leo tristique vitae. Consectetur adipiscing elit. Integer posuere erat a ante. Mauris non ipsum molestie, sagittis elit ac, vulputate odio.
+
+		.col-lg-4.text-lg-center
+			.card
+				img(src="/img/avatar80_8.jpg" alt="").img-circle
+				.card-block
+					h4.card-title.text-uppercase Maria Mertz
+					p.card-text
+						small.text-muted CEO
+					p.card-text Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque mollis lacus augue, a hendrerit leo tristique vitae. Consectetur adipiscing elit. Integer posuere erat a ante. Mauris non ipsum molestie, sagittis elit ac, vulputate odio.
+		.col-lg-4.text-lg-center
+			.card
+				img(src="/img/avatar80_8.jpg" alt="").img-circle
+				.card-block
+					h4.card-title.text-uppercase Alex Klarck
+					p.card-text
+						small.text-muted General Councel
+					p.card-text Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque mollis lacus augue, a hendrerit leo tristique vitae. Consectetur adipiscing elit. Integer posuere erat a ante. Mauris non ipsum molestie, sagittis elit ac, vulputate odio.
+		
+	section.document.row
+		h2#documents.col-lg-12.dosis.pt50.text-uppercase.text-lg-center Documents
+		.col-lg-8.offset-lg-2
+			.col-lg-4
+				p Official filing on SEC.gov
+				a(href="")
+					img(src="/img/lrg_US_Department_of_State35.gif").img-document.d-inline-block
+					h3.d-inline-block Form C
+			.col-lg-4
+				p Company documents
+				a(href="")
+					i.fa.fa-file-pdf-o.d-inline-block
+					h3.d-inline-block Financials
+			.col-lg-4.row
+				p Company documents
+				a(href="")
+					i.fa.fa-file-powerpoint-o.d-inline-block
+					h3.d-inline-block Investor Presentation
+	section.overview
+		h2#overview.col-lg-12.dosis.pt50.text-uppercase.text-lg-center overview and terms
+		h3.col-lg-12.text-lg-center Fundraising Description
+		.col-lg-8.offset-lg-2.fundraising
+			.jumbotron.jumbotron-fluid
+				.container
+					.col-lg-4
+						p Pre-Money Valuation
+						h2.font-weight-bold $2,000,000
+					.col-lg-4
+						p Price per Share
+						h2.font-weight-bold $200
+					.col-lg-4
+						p Target Minimum Raise Amonunt
+						h2.font-weight-bold $500,000
+					.col-lg-4
+						p Type of Security
+						h2.font-weight-bold Equity
+					.col-lg-4
+						p Minimum Investment
+						h2.font-weight-bold $100
+					.col-lg-4
+						p Target Maximum Raise Amount
+						h2.font-weight-bold $1,000,000
+		h3.col-lg-12.text-lg-center Perks
+		.perks
+			.col-lg-4
+				.jumbotron.jumbotron-fluid
+					.container
+						h3 $500 Investments
+						p.text-justify A one year subscription plus a gorgeous Peloton Long-Sleeve T-SHIRT. One subscription covers an unlimited amount of users so that every member of your family would be able to use the bike and access Peloton content from their own personal 
+
+			.col-lg-4
+				.jumbotron.jumbotron-fluid
+					.container
+						h3 $1,000 Investments
+						p.text-justify FULLY LOADED PACKAGE: The Peloton Bike plus Peloton headphones, Peloton biking shoes, a Peloton heart rate monitor, the Peloton hand weights, a Peloton shirt, and a Peloton sweat mat (you're going to need it!)
+			.col-lg-4
+				.jumbotron.jumbotron-fluid
+					.container
+						h3 $5,000 Investments
+						p.text-justify The Peloton Bike (and all of the accessories) AND a trip for two to NYC to meet the team and teach (or take) your very own class in the Peloton Studio, to be accessible to all Peloton riders via on-demand classes! (USA ONLY)
+		h3.col-lg-12.text-lg-center Investors
+		.investors
+			.col-lg-10.offset-lg-1
+				.col-lg-3.text-lg-center
+					.card
+						img(src="/img/avatar80_8.jpg" alt="").img-circle
+						.card-block
+							h4.card-title.text-uppercase Jan Mertz
+							p.card-text
+								small.text-muted CEO
+				.col-lg-3.text-lg-center
+					.card
+						img(src="/img/avatar80_8.jpg" alt="").img-circle
+						.card-block
+							h4.card-title.text-uppercase Jan Mertz
+							p.card-text
+								small.text-muted CEO
+				.col-lg-3.text-lg-center
+					.card
+						img(src="/img/avatar80_8.jpg" alt="").img-circle
+						.card-block
+							h4.card-title.text-uppercase Jan Mertz
+							p.card-text
+								small.text-muted CEO
+				.col-lg-3.text-lg-center
+					.card
+						img(src="/img/avatar80_8.jpg" alt="").img-circle
+						.card-block
+							h4.card-title.text-uppercase Jan Mertz
+							p.card-text
+								small.text-muted CEO
+				.col-lg-3.text-lg-center
+					.card
+						img(src="/img/avatar80_8.jpg" alt="").img-circle
+						.card-block
+							h4.card-title.text-uppercase Jan Mertz
+							p.card-text
+								small.text-muted CEO
+				.col-lg-3.text-lg-center
+					.card
+						img(src="/img/avatar80_8.jpg" alt="").img-circle
+						.card-block
+							h4.card-title.text-uppercase Jan Mertz
+							p.card-text
+								small.text-muted CEO
+				.col-lg-3.text-lg-center
+					.card
+						img(src="/img/avatar80_8.jpg" alt="").img-circle
+						.card-block
+							h4.card-title.text-uppercase Jan Mertz
+							p.card-text
+								small.text-muted CEO
+				.col-lg-3.text-lg-center
+					.card
+						img(src="/img/avatar80_8.jpg" alt="").img-circle
+						.card-block
+							h4.card-title.text-uppercase Jan Mertz
+							p.card-text
+								small.text-muted CEO
+				.col-lg-12.text-lg-center
+					a(href="").link-4 See All Investors
+	section.risks
+		h2#risks.col-lg-12.dosis.pt50.text-uppercase.text-lg-center Risks
+	
+
+
+
+script(src='/js/nav_sticky.js')
