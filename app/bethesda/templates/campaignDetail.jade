@@ -32,7 +32,7 @@ section#home(style="background-image: url(" + campaign.get_header_image + ")").h
 					span Days Left
 					h2.font-weight-bold 120
 				.col-lg-4.pull-right
-					a(href="").btn.btn-primary.btn-lg.text-uppercase.pull-right invest in #{ campaign.company.name }
+					a(href=Urls['campaign-invest'](campaign.id)).btn.btn-primary.btn-lg.text-uppercase.pull-right invest in #{ campaign.company.name }
 
 section.campaigndetail.pt50
 	.container.mt85
@@ -129,23 +129,31 @@ section
 				h3.pt50.text-lg-center Our Edge
 				p Smartbe is the all-in-one solution that provides more than 10 safety, security, comfort and convenience-enhancing functions managed by Android and IOS smartphones and smartwatches. 
 				p All the technologies being used in Smartbe have already been used and extensively tested in other industries so we are very optimistic we can meet our launch goals. The breakthrough is that these technologies are being applied to create not only an industry disrupting, electrically powered stroller with killer functionality, but also a stylish, minimalist device designed to fit every parent’s needs and desires.
-			.col-lg-12
+			#gallery1.col-lg-12
 				.col-lg-3.no-padding-img
-					img(src="/img/campaign/smartbe-intelligent-stroller_1.jpg" alt="").img-fluid
+					a(href="/img/campaign/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
+						img(src="/img/campaign/smartbe-intelligent-stroller_1.jpg" alt="").img-fluid
 				.col-lg-3.no-padding-img
-					img(src="/img/campaign/smartbe-intelligent-stroller_2.jpg" alt="").img-fluid
+					a(href="/img/campaign/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
+						img(src="/img/campaign/smartbe-intelligent-stroller_2.jpg" alt="").img-fluid
 				.col-lg-3.no-padding-img
-					img(src="/img/campaign/smartbe-intelligent-stroller_3.jpg" alt="").img-fluid
+					a(href="/img/campaign/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
+						img(src="/img/campaign/smartbe-intelligent-stroller_3.jpg" alt="").img-fluid
 				.col-lg-3.no-padding-img
-					img(src="/img/campaign/smartbe-intelligent-stroller_4.jpg" alt="").img-fluid
+					a(href="/img/campaign/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
+						img(src="/img/campaign/smartbe-intelligent-stroller_4.jpg" alt="").img-fluid
 				.col-lg-3.no-padding-img
-					img(src="/img/campaign/smartbe-intelligent-stroller_5.jpg" alt="").img-fluid
+					a(href="/img/campaign/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
+						img(src="/img/campaign/smartbe-intelligent-stroller_5.jpg" alt="").img-fluid
 				.col-lg-3.no-padding-img
-					img(src="/img/campaign/smartbe-intelligent-stroller_6.jpg" alt="").img-fluid
+					a(href="/img/campaign/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
+						img(src="/img/campaign/smartbe-intelligent-stroller_6.jpg" alt="").img-fluid
 				.col-lg-3.no-padding-img
-					img(src="/img/campaign/smartbe-intelligent-stroller_7.jpg" alt="").img-fluid
+					a(href="/img/campaign/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
+						img(src="/img/campaign/smartbe-intelligent-stroller_7.jpg" alt="").img-fluid
 				.col-lg-3.no-padding-img
-					img(src="/img/campaign/smartbe-intelligent-stroller_8.jpg" alt="").img-fluid
+					a(href="/img/campaign/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
+						img(src="/img/campaign/smartbe-intelligent-stroller_8.jpg" alt="").img-fluid
 			.col-lg-4
 				.card.card-inverse
 					img(src="/img/Smartbe-Intelligent-Stroller-5.jpg" alt="").card-img

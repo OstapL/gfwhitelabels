@@ -2,11 +2,11 @@
 // Rewrite with promise
 let userModel = Backbone.Model.extend({
     defaults: {
-        token: ''
+        token: '',
     },
 
     is_anonymous: function() {
-        return this.get('username') == '';
+        return this.get('token') == '';
     },
 
     get_full_name: function() {
@@ -24,7 +24,8 @@ let userModel = Backbone.Model.extend({
                     url: serverUrl + Urls['rest_user_details'](),
                     success: (data) => {
                         localStorage.setItem('user', JSON.stringify(this.toJSON()));
-                        app.trigger('userLoaded', data);
+                        app.trigger('userLoaded', this.toJSON());
+                        app.routers.mainPage(); // TODO: FIX THAT !!!
                     },
                     error: (model, xhr, status) => {
                         localStorage.removeItem('token');
