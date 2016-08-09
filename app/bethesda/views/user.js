@@ -36,8 +36,8 @@ define(function() {
                         if(xhr.hasOwnProperty('key')) {
                             localStorage.setItem('token', xhr.key);
                             setTimeout(function() {
-                                window.location = '/account/profile' //data.next ? data.next : '/account/profile'
-                            }, 100);
+                                window.location = '/' //data.next ? data.next : '/account/profile'
+                            }, 200);
                         } else {
                             Backbone.Validation.callbacks.invalid(                                 
                               form, '', 'Server return no authentication data'

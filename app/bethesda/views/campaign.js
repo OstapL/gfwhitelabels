@@ -33,7 +33,7 @@ define(function() {
                 require([
                     '/js/photoswipe.js', 
                     '/js/photoswipe-ui-default.js', 
-                    ], (appears, PhotoSwipe, PhotoSwipeUI_Default) => {
+                    ], (PhotoSwipe, PhotoSwipeUI_Default) => {
                         this.$el.html(
                             window.campaignDetail({
                                 serverUrl: serverUrl,
@@ -147,10 +147,10 @@ define(function() {
                     alert('show popover');
                 }
 
-                this.$('.perks').each((i, el) => {
+                this.$('.perk').each((i, el) => {
                     if(parseInt(el.dataset.from) <= amount) {
-                        $('.perks').removeClass('active');
-                        $('.perks .fa-check').remove();
+                        $('.perk').removeClass('active');
+                        $('.perk .fa-check').remove();
                         el.classList.add('active');
                         $(el).find('.list-group-item-heading').append('<i class="fa fa-check"></i>');
                     }
