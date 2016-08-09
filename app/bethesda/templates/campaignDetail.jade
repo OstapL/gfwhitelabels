@@ -1,38 +1,38 @@
 section#home(style="background-image: url(#{ campaign.get_header_image })").home-section.bg-dark-alfa-70.parallax-2.fixed-height-small
-			.js-height-parent.container
-				// Hero Content
-				.home-content
-					.home-text.text-lg-center
-						h1.hs-line-14.font-alt.margin-bottom-50.mb-xs-30 #{ campaign.company.name }
-						.local-scroll
-							a.big-icon.link-6.lightbox-gallery-1.mfp-iframe(href=campaign.video)
-								i.fa.fa-play-circle-o
-							a(href=campaign.company.website).link-6.link-campaing-detail #{ campaign.company.website }
-							.row.social-link
-								a(href="").link-6.link-campaing-detail
-									i.fa.fa-facebook
-								a(href="").link-6.link-campaing-detail
-									i.fa.fa-twitter
-								a(href="").link-6.link-campaing-detail
-									i.fa.fa-instagram
-								a(href="").link-6.link-campaing-detail
-									i.fa.fa-linkedin
+	.js-height-parent.container
+		// Hero Content
+		.home-content
+			.home-text.text-lg-center
+				h1.hs-line-14.font-alt.margin-bottom-50.mb-xs-30 #{ campaign.company.name }
+				.local-scroll
+					a.big-icon.link-6.lightbox-gallery-1.mfp-iframe(href=campaign.video)
+						i.fa.fa-play-circle-o
+					a(href=campaign.company.website).link-6.link-campaing-detail #{ campaign.company.website }
+					.row.social-link
+						a(href="").link-6.link-campaing-detail
+							i.fa.fa-facebook
+						a(href="").link-6.link-campaing-detail
+							i.fa.fa-twitter
+						a(href="").link-6.link-campaing-detail
+							i.fa.fa-instagram
+						a(href="").link-6.link-campaing-detail
+							i.fa.fa-linkedin
 
 				// End Hero Content
-			.top-info
-				.container
-					.top-info-wrap
-						.col-lg-2
-							span Pre-Money Valuation
-							h2.font-weight-bold #{ campaign.premoney_valuation }
-						.col-lg-2
-							span Type of Security
-							h2.font-weight-bold Equity
-						.col-lg-2
-							span Days Left
-							h2.font-weight-bold 120
-						.col-lg-4.pull-right
-							a(href="").btn.btn-primary.btn-lg.text-uppercase.pull-right invest in #{ campaign.company.name }
+	.top-info
+		.container
+			.top-info-wrap
+				.col-lg-2
+					span Pre-Money Valuation
+					h2.font-weight-bold #{ campaign.premoney_valuation }
+				.col-lg-2
+					span Type of Security
+					h2.font-weight-bold Equity
+				.col-lg-2
+					span Days Left
+					h2.font-weight-bold 120
+				.col-lg-4.pull-right
+					a(href="").btn.btn-primary.btn-lg.text-uppercase.pull-right invest in #{ campaign.company.name }
 section.campaigndetail.pt50
 	.container.mt85
 		.col-lg-6
