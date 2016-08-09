@@ -1,0 +1,10 @@
+include mixins.jade
+
++breadcrumbs(page.title, 'Thank you', [['home', '/',], [ 'Investment', '']])
+
+section.text_block
+    .container
+        .alert.alert-success(role="alert")
+            strong Thank you
+            |  You succesfully invest into #{ campaign.company.name }
+            p Share #{ investment.share_amount }, price: #{ investment.price_per_share }

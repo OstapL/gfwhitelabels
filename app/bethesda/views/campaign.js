@@ -122,14 +122,11 @@ define(function() {
                                 {trigger: false, replace: false}
                             );
 
-                            app.views.investment = {};
-                            app.views.investment = new this.investmentThankYou({
-                                el: '#content',
-                                model: data,
-                                campaignModel: this.campaignModel,
-                            });
-                            app.views.investment.render();
-                            app.cache[window.location.pathname] = app.views.investment.$el.html();
+                            $('#content').html(investmentThankYou({
+                                investment: data,
+                                campaign: this.campaignModel.toJSON()
+                            }));
+                            app.cache[window.location.pathname] = $('#content').html();
                             app.hideLoading();
                         });
                 } else {

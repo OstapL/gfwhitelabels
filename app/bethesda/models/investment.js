@@ -49,15 +49,17 @@ define(function() {
                 required: true,
                 minLength: 2,
               },
+              */
               account_number: {
                 required: true,
                 minLength: 2,
                 maxLength: 17,
               },
-              routing_number: {
+              route_number: {
                 required: true,
                 pattern: 'digits',
               },
+              /*
               address: {
                 required: true,
                 minLength: 7,
