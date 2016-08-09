@@ -80,6 +80,7 @@ define(function() {
         investment: Backbone.View.extend({
             events: {
                 'submit form': 'submit',
+                'keyup #amount': 'amountUpdate',
             },
             initialize: function(options) {
                 this.campaignModel = options.campaignModel;
@@ -139,6 +140,22 @@ define(function() {
                     }
                 }
             },
+
+            amountUpdate: function(e) {
+                var amount = parseInt(e.currentTarget.value);
+                if(amount >= 5000) {
+                    alert('show popover');
+                }
+
+                this.$('.perks').each((i, el) => {
+                    if(parseInt(el.dataset.from) <= amount) {
+                        $('.perks').removeClass('active');
+                        $('.perks .fa-check').remove();
+                        el.classList.add('active');
+                        $(el).find('.list-group-item-heading').append('<i class="fa fa-check"></i>');
+                    }
+                });
+            }
         }),
 
         investmentThankYou: Backbone.View.extend({

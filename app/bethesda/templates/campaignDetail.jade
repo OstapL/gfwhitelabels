@@ -5,7 +5,7 @@ section#home(style="background-image: url(" + campaign.get_header_image + ")").h
 					.home-text.text-lg-center
 						h1.hs-line-14.font-alt.margin-bottom-50.mb-xs-30 #{ campaign.company.name }
 						.local-scroll
-							a.big-icon.link-6.lightbox-gallery-1.mfp-iframe(href=campaign.video)
+							a.big-icon.link-6.youtube_popup(data-toggle="modal" data-target="#videoModal")
 								i.fa.fa-play-circle-o
 							a(href=campaign.company.website).link-6.link-campaing-detail #{ campaign.company.website }
 							.row.social-link
@@ -21,7 +21,7 @@ section#home(style="background-image: url(" + campaign.get_header_image + ")").h
 				// End Hero Content
 			.top-info
 				.container
-					.top-info-wrap.row
+					.top-info-wrap
 						.col-lg-2
 							span Pre-Money Valuation
 							h2.font-weight-bold #{ campaign.premoney_valuation }
@@ -32,70 +32,74 @@ section#home(style="background-image: url(" + campaign.get_header_image + ")").h
 							span Days Left
 							h2.font-weight-bold 120
 						.col-lg-4.pull-right
-                            a(href=Urls['campaign_invest'](campaign.id)).btn.btn-primary.text-uppercase.pull-right invest in #{ campaign.company.name }
+							a(href=Urls['campaign-invest'](campaign.id)).btn.btn-primary.btn-lg.text-uppercase.pull-right invest in #{ campaign.company.name }
 section.campaigndetail.pt50
 	.container.mt85
-		.row
-			.col-lg-6
-				h1 Smartbe is the first intelligent baby stroller of the new generation.
-				.row.pt25
-					.col-lg-4
+		.col-lg-6
+			h1 Smartbe is the first intelligent baby stroller of the new generation.
+			.row.pt20
+				.col-lg-4
+					a(href="").link-1
+						i.fa.fa-map-marker
+						|  #{ campaign.company.city }, #{ campaign.company.state }
+				.col-lg-6
+					a(href="").link-1
+						i.fa.fa-calendar-check-o
+						|  Founded in #{ campaign.company.founding_date }
+			.row
+				.col-lg-12.share
+					span.font-weight-bold.d-inline-block Share:
+					.d-inline-block
 						a(href="").link-1
-							i.fa.fa-map-marker
-							|  #{ campaign.company.city }, #{ campaign.company.state }
-					.col-lg-6
+							i.fa.fa-facebook
 						a(href="").link-1
-							i.fa.fa-calendar-check-o
-							|  Founded in #{ campaign.company.founding_date }
-				.row
-					.col-lg-12.share
-						p.font-weight-bold.d-inline-block Share:
-						.d-inline-block
-							a(href="").link-1
-								i.fa.fa-facebook
-							a(href="").link-1
-								i.fa.fa-twitter
-							a(href="").link-1
-								i.fa.fa-linkedin
-							a(href="").link-1
-								i.fa.fa-google-plus
+							i.fa.fa-twitter
+						a(href="").link-1
+							i.fa.fa-linkedin
+						a(href="").link-1
+							i.fa.fa-google-plus
 
 
-			.col-lg-6
-
-				.progress_bar_container
-					span Less than 20% Funded
-					span.pull-right Committed 
-						span.committed $15,000
-					.clear
-					progress(value="20" max="100").progress
-				.pt25
-					.row.col-lg-7
-						p Target
-						h2.font-weight-bold $500,000 - $1,000,000 #{ campaign.company.minimum_raise }  #{ campaign.company.maximum_raise }
-					.row.col-lg-5.pull-right
-						p Minimum Investment
-						h2.font-weight-bold $200 #{ campaign.company.minimum_increment }
-					.row.col-lg-12
-						.wrap.d-inline-block
-							p Investors
-							h2.font-weight-bold 17
-						.investors.d-inline-block
-							a(href="")
-								<img src="/img/avatar1.jpg" alt="..." class="img-circle">
-							a(href="")
-								<img src="/img/avatar6.jpg" alt="..." class="img-circle">
-							a(href="")
-								<img src="/img/avatar1.jpg" alt="..." class="img-circle">
-							a(href="")
-								<img src="/img/avatar6.jpg" alt="..." class="img-circle">
-							a(href="")
-								<img src="/img/avatar1.jpg" alt="..." class="img-circle">
-						a(href="").link-1 see all...
-section.border-bottom
+		.col-lg-6
+			.progress_bar_container
+				span Less than 20% Funded
+				span.pull-right Committed 
+					span.committed $15,000
+				.clear
+				progress(value="20" max="100").progress
+			.pt20
+				.row.col-lg-8
+					p Target
+					h2.font-weight-bold $500,000 - $1,000,000 #{ campaign.company.minimum_raise }  #{ campaign.company.maximum_raise }
+				.row.col-lg-4.pull-right
+					p Minimum Investment
+					h2.font-weight-bold $200 #{ campaign.company.minimum_increment }
+				.row.col-lg-12
+					.wrap.d-inline-block
+						p Investors
+						h2.font-weight-bold 17
+					.investors.d-inline-block
+						ul
+							li
+								a(href="")
+									<img src="/img/avatar1.jpg" alt="..." class="img-circle">
+							li
+								a(href="")
+									<img src="/img/avatar6.jpg" alt="..." class="img-circle">
+							li
+								a(href="")
+									<img src="/img/avatar1.jpg" alt="..." class="img-circle">
+							li
+								a(href="")
+									<img src="/img/avatar6.jpg" alt="..." class="img-circle">
+							li
+								a(href="")
+									<img src="/img/avatar1.jpg" alt="..." class="img-circle">
+					a(href="").link-1 see all...
+section.border-bottom-scroll
 	.container.tabs-scroll
 		nav( data-toggle="sticky-onscroll").navbar.navbar-default.sticky
-			ul.nav.nav-pills
+			ul.nav.nav-pills.nav-pills-campaign
 				li.nav-item.text-uppercase
 					a(href="#about").nav-link.active About
 				li.nav-item.text-uppercase
@@ -110,7 +114,7 @@ section.border-bottom
 					a(href="#faq").nav-link faq
 				li.nav-item.text-uppercase
 					a(href="#ask").nav-link Ask a Question
-                a(href=Urls['campaign_invest'](campaign.id)).btn.btn-primary.text-uppercase.pull-right invest
+				a(href=Urls['campaign-invest'](campaign.id)).btn.btn-primary.btn-lg.text-uppercase.pull-right invest
 section
 	.scrollspy-example(data-spy="scroll"
 	data-target="#navbar-example2"
@@ -119,7 +123,7 @@ section
 	section.about.border-bottom
 		.container
 			.col-lg-12
-				h2#about.dosis.p50.text-uppercase.text-lg-center About smartbe
+				h2#about.dosis.text-uppercase.text-lg-center About smartbe
 				p Smartbe is the first intelligent baby stroller of the new generation. Smartbe is a revolutionary concept as regards design and functionality that solves real parents and baby needs. Smartbe applies state of the art technology through innovative, minimalist and safe design. We have built a new baby stroller with all the needed intelligence to provide new levels of child safety and comfort never before imagined together in a stroller. Smartbe fulfills all US  European Safety Regulations also going beyond, providing safety features not possible without the addition of electricity and leading edge mobile technology.
 				h3.pt50.text-lg-center Our Edge
 				p Smartbe is the all-in-one solution that provides more than 10 safety, security, comfort and convenience-enhancing functions managed by Android and IOS smartphones and smartwatches. 
@@ -165,7 +169,7 @@ section
 							a(href="").small-icon.link-6
 									i.fa.fa-play-circle-o
 						h3.card-text.text-lg-center Title for Optional Video 3
-			.col-lg-12.pt50
+			.col-lg-12
 				h3.text-lg-center Articles and Press
 			.articles_press
 				.col-lg-3
@@ -204,7 +208,7 @@ section
 								p.card-text Smartbe is a revolutionary concept as regards design and ...
 								img(src="/img/icon-campaign.jpg", alt="").icon-campaign.d-inline-block
 								a(href="").card-text.links.d-inline-block bizwest.com
-				.col-lg-12.pt50
+				.col-lg-12
 					h3.text-lg-center Why We are Raising Capital, and What We’ll Do with It
 					p Smartbe is a revolutionary new concept and the contributors will be part of that change. We’ve chosen Indiegogo to spread this new concept to the community. Crowdfunding is one of the tools of the modern world change where everyone cooperates and joins in to support an idea and benefit from it. With your support we will get this product to market much faster, and we can start changing the way we take our babies for a ride, providing new levels of comfort and safety never possible before. We want to drastically improve the out-of-home experience of babies and those that care for them. Together, we will make Smartbe come true.
 
@@ -310,74 +314,74 @@ section
 				.investors
 					.col-lg-10.offset-lg-1
 						.col-lg-3.text-lg-center
-							a(href="").link-1
+							a(href="")
 								.card
 									img(src="/img/campaign/avatar1.jpg" alt="").img-circle
 									.card-block
 										h4.card-title.text-uppercase Jan Mertz
 										p.card-text
-											small.text-muted CEO
+											small.text-muted New York, NY
 						.col-lg-3.text-lg-center
-							a(href="").link-1
+							a(href="")
 								.card
 									img(src="/img/campaign/avatar2.jpg" alt="").img-circle
 									.card-block
 										h4.card-title.text-uppercase Jan Mertz
 										p.card-text
-											small.text-muted CEO
+											small.text-muted New York, NY
 						.col-lg-3.text-lg-center
-							a(href="").link-1
+							a(href="")
 								.card
 									img(src="/img/campaign/avatar3.jpg" alt="").img-circle
 									.card-block
-										h4.card-title.text-uppercase Jan Mertz
+										h4.card-title.text-uppercase Lusy Johnson
 										p.card-text
-											small.text-muted CEO
+											small.text-muted New York, NY
 						.col-lg-3.text-lg-center
-							a(href="").link-1
+							a(href="")
 								.card
 									img(src="/img/campaign/avatar4.jpg" alt="").img-circle
 									.card-block
 										h4.card-title.text-uppercase Jan Mertz
 										p.card-text
-											small.text-muted CEO
+											small.text-muted New York, NY
 						.col-lg-3.text-lg-center
-							a(href="").link-1
+							a(href="")
 								.card
 									img(src="/img/campaign/avatar1.jpg" alt="").img-circle
 									.card-block
-										h4.card-title.text-uppercase Jan Mertz
+										h4.card-title.text-uppercase Lusy Mertz
 										p.card-text
-											small.text-muted CEO
+											small.text-muted New York, NY
 						.col-lg-3.text-lg-center
-							a(href="").link-1
+							a(href="")
 								.card
 									img(src="/img/campaign/avatar5.jpg" alt="").img-circle
 									.card-block
 										h4.card-title.text-uppercase Jan Mertz
 										p.card-text
-											small.text-muted CEO
+											small.text-muted New York, NY
 						.col-lg-3.text-lg-center
-							a(href="").link-1
+							a(href="")
 								.card
 									img(src="/img/campaign/avatar2.jpg" alt="").img-circle
 									.card-block
 										h4.card-title.text-uppercase Jan Mertz
 										p.card-text
-											small.text-muted CEO
+											small.text-muted New York, NY
 						.col-lg-3.text-lg-center
-							a(href="").link-1
+							a(href="")
 								.card
 									img(src="/img/campaign/avatar3.jpg" alt="").img-circle
 									.card-block
 										h4.card-title.text-uppercase Jan Mertz
 										p.card-text
-											small.text-muted CEO
+											small.text-muted New York, NY
 						.col-lg-12.text-lg-center
 							a(href="").link-4 See All Investors
 	section.risks.border-bottom
 		.container
-			h2#risks.col-lg-12.dosis.pt50.text-uppercase.text-lg-center Risks
+			h2#risks.col-lg-12.dosis.text-uppercase.text-lg-center Risks
 			.col-lg-8.offset-lg-2
 				#accordion(role="tablist" aria-multiselectable="true")
 					.panel.panel-default
@@ -429,7 +433,7 @@ section
 	
 	section.faq.border-bottom
 		.container
-			h2#faq.col-lg-12.dosis.pt50.text-uppercase.text-lg-center FAQ
+			h2#faq.col-lg-12.dosis.text-uppercase.text-lg-center FAQ
 			.col-lg-8.offset-lg-2
 				#accordion(role="tablist" aria-multiselectable="true")
 					.panel.panel-default
@@ -487,9 +491,11 @@ section
 					form
 						input(type="text" placeholder="Type your question here...")
 				.col-lg-4
-					a(href="").btn.btn-primary.text-uppercase.pull-right ask question
+					a(href="").btn.btn-primary.btn-lg.text-uppercase.pull-right ask question
+
 			.col-lg-8.offset-lg-2.pt50.comments
 				.col-lg-12
+					.hr
 					.col-lg-1
 						img(src="/img/avatar10.jpg" alt="").img-circle
 					.col-lg-11
@@ -533,7 +539,7 @@ section
 				h2.p50
 					i.fa.fa-thumbs-up
 					|  I’d Like to Invest in Smartbe!
-				a(href="").btn.btn-primary.text-uppercase iNVEST IN #{ campaign.company.name }
+				a(href="").btn.btn-primary.btn-lg.text-uppercase iNVEST IN #{ campaign.company.name }
 
 
 

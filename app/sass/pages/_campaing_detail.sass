@@ -85,7 +85,7 @@
 		position: relative
 		z-index: 999
 		h2
-			letter-spacing: 2.4px
+			letter-spacing: .6px
 			color: $white
 			padding-bottom: 10px
 		span
@@ -99,14 +99,15 @@
 	h1
 		letter-spacing: .75px
 		margin-bottom: 0
+		font-weight: 300
 	h2
 		letter-spacing: .6px
 	p
 		margin-bottom: 7px
 		color: $small-text
 
-	.pt25
-		padding-top: 25px
+	.pt20
+		padding-top: 20px
 	
 	.committed
 		+calc-rem(24)
@@ -114,15 +115,19 @@
 		color: $puerto_rico
 		line-height: 0
 	.wrap
-		padding-top: 20px
+		padding-top: 5px
 	.investors
-		position: relative
-		left: 0
-		bottom: 13px
-		img
-			width: 33px
-			height: 33px
-			margin: 1px
+		ul
+			position: relative
+			bottom: 10px
+			padding-left: 10px
+			padding-right: 5px
+			> li
+				padding: 5px
+				display: inline-block
+			img
+				width: 35px
+				height: 35px
 
 	.share
 		padding-top: 22px
@@ -130,11 +135,20 @@
 			+calc-rem(24)
 			padding: 0 10px
 
+
 .no-padding-img
 	padding: 0 5px 10px 5px 
 
 .about
 	padding-bottom: 30px
+	h2
+		padding-top: 50px
+		padding-bottom: 30px
+		margin-bottom: 0
+	h3
+		padding-top: 50px
+		padding-bottom: 25px
+		margin-bottom: 0
 	.card
 		margin-top: 50px
 		border: none
@@ -151,6 +165,7 @@
 			color: $white
 	.articles_press
 		.card
+			margin-top: 0
 			&::before
 				position: absolute
 				width: 100%
@@ -174,6 +189,9 @@
 					height: 12px
 					margin-right: 5px
 .team, .investors
+	a, a:hover
+		color: $black
+
 	.card
 		border: none
 		.card-title
@@ -185,7 +203,7 @@
 .document
 	padding-bottom: 50px
 	h2
-		margin-bottom: 20px
+		margin-bottom: 30px
 	h3
 		letter-spacing: .35px
 	.img-document
@@ -205,9 +223,12 @@
 .overview
 	padding-bottom: 50px
 	h3
-		padding: 20px 0
+		padding-top: 30px
+		padding-bottom: 25px
+		margin-bottom: 0
 	.fundraising
 		.jumbotron
+			margin-bottom: 0
 			background-color: $puerto_rico
 			.container
 				padding-left: 20px
@@ -224,6 +245,7 @@
 					padding-right: 5px
 	.perks
 		.jumbotron
+			margin-bottom: 0
 			min-height: 175px
 			.container
 				padding-left: 20px
@@ -235,11 +257,19 @@
 					margin-bottom: 0
 .risks
 	padding-bottom: 15px
+	h2
+		padding-top: 50px
+		padding-bottom: 20px
+		margin-bottom: 0
 .faq
 	padding-bottom: 15px
+	h2
+		padding-top: 50px
+		padding-bottom: 20px
+		margin-bottom: 0
 //Accordion
 #accordion
-	.collapse
+	.panel-collapse
 		padding: 10px 20px
 	.list-group-item-action
 		display: block
@@ -256,11 +286,16 @@
 			font-weight: 700
 			border: solid 1px $gallery
 		i
-			position: absolute
+			top: 50%
 			right: 15px
-			vertical-align: middle
+			-ms-transform: translate(-50%,-50%)
+			-webkit-transform: translate(-50%,-50%)
+			transform: translate(-50%,-50%)
+			position: absolute
 
 .ask
+	h2
+		margin-bottom: 0
 	padding-bottom: 50px
 	.form-section
 		input
@@ -269,14 +304,17 @@
 			width: 100%
 			outline: none
 			padding: 3px 10px
-.border-top
-	border-top: solid 1px $gallery
 
+	.hr
+		width: 100%
+		height: 1px
+		background-color: #e7e7e7
+		margin-bottom: 50px
 .comments
 	.col-lg-1
 		padding: 0
 	.col-lg-11
-		padding-right: 0
+		padding-right: 10px
 		padding-left: 10px
 	img
 		width: 55px
@@ -304,5 +342,6 @@
 .like
 	h2
 		margin-bottom: 0
+		letter-spacing: 1px
 	i
 		color: $wild_willow

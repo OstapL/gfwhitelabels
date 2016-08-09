@@ -116,7 +116,7 @@ app.on('urlsReady', function() {
           'api/campaign/:id': 'campaignDetail',
           'api/campaign/:id/invest': 'campaignInvestment',
           'sketches/:name': 'sketches',
-          'page/:id': 'pageDetail',
+          'page/:id/': 'pageDetail',
           'account/profile': 'accountProfile',
           'account/login': 'login',
           'account/logout': 'logout',
