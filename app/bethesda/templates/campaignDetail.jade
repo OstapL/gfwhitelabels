@@ -1,4 +1,4 @@
-section#home(style="background-image: url(#{ campaign.get_header_image })").home-section.bg-dark-alfa-70.parallax-2.fixed-height-small
+section#home(style="background-image: url(" + campaign.get_header_image + ")").home-section.bg-dark-alfa-70.parallax-2.fixed-height-small
 			.js-height-parent.container
 				// Hero Content
 				.home-content
@@ -32,7 +32,7 @@ section#home(style="background-image: url(#{ campaign.get_header_image })").home
 							span Days Left
 							h2.font-weight-bold 120
 						.col-lg-4.pull-right
-							a(href="").btn.btn-primary.text-uppercase.pull-right invest in #{ campaign.company.name }
+                            a(href=Urls['campaign_invest'](campaign.id)).btn.btn-primary.text-uppercase.pull-right invest in #{ campaign.company.name }
 section.campaigndetail.pt50
 	.container.mt85
 		.row
@@ -110,7 +110,7 @@ section.border-bottom
 					a(href="#faq").nav-link faq
 				li.nav-item.text-uppercase
 					a(href="#ask").nav-link Ask a Question
-				a(href="").btn.btn-primary.text-uppercase.pull-right invest
+                a(href=Urls['campaign_invest'](campaign.id)).btn.btn-primary.text-uppercase.pull-right invest
 section
 	.scrollspy-example(data-spy="scroll"
 	data-target="#navbar-example2"
