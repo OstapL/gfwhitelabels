@@ -6,6 +6,8 @@
 	top: 0
 	left: 0
 	background: rgba(17, 17, 17, .7)
+.js-height-parent
+	height: 545px
 
 .home-section
 	position: relative
@@ -26,12 +28,12 @@
 
 .home-text
 	display: table-cell
-	height: 100%
 	vertical-align: middle
 	color: $white
 	padding-top: 60px
 	img
 	  max-width: 50%
+
 .hs-line-14
 	margin-top: 0
 	position: relative
@@ -45,11 +47,305 @@
 	
 .big-icon
 	display: block
-	margin: 0 auto 20px
+	margin: 45px auto 30px
 	text-align: center
 	line-height: 88px
 	+calc-rem(72)
 	color: rgba(255,255,255, .97)
 
+.small-icon
+	display: block
+	margin: 45px auto 20px
+	text-align: center
+	+calc-rem(36)
+	color: rgba(255,255,255, .97)
+
 .link-campaing-detail
-	+calc-rem(25)
+	+calc-rem(18)
+	color: $white
+	padding: 10px
+
+.social-link
+	padding: 15px 0
+
+.top-info
+
+	&:before
+		width: 100%
+		background-color: $black
+		opacity: .5
+		position: absolute
+		z-index: 1
+		content: ''
+		height: 85px
+		left: 0
+		bottom: 0
+
+	.top-info-wrap
+		position: relative
+		z-index: 999
+		h2
+			letter-spacing: .6px
+			color: $white
+			padding-bottom: 10px
+		span
+			color: #fff
+			margin-bottom: 2px
+
+		.btn
+			margin-top: 7px
+
+.campaigndetail
+	h1
+		letter-spacing: .75px
+		margin-bottom: 0
+		font-weight: 300
+	h2
+		letter-spacing: .6px
+	p
+		margin-bottom: 7px
+		color: $small-text
+
+	.pt20
+		padding-top: 20px
+	
+	.committed
+		+calc-rem(24)
+		font-weight: 700
+		color: $puerto_rico
+		line-height: 0
+	.wrap
+		padding-top: 5px
+	.investors
+		ul
+			position: relative
+			bottom: 10px
+			padding-left: 10px
+			padding-right: 5px
+			> li
+				padding: 5px
+				display: inline-block
+			img
+				width: 35px
+				height: 35px
+
+	.share
+		padding-top: 22px
+		a
+			+calc-rem(24)
+			padding: 0 10px
+
+
+.no-padding-img
+	padding: 0 5px 10px 5px 
+
+.about
+	padding-bottom: 30px
+	h2
+		padding-top: 50px
+		padding-bottom: 30px
+		margin-bottom: 0
+	h3
+		padding-top: 50px
+		padding-bottom: 25px
+		margin-bottom: 0
+	.card
+		margin-top: 50px
+		border: none
+		&::before
+			position: absolute
+			width: 100%
+			height: 100%
+			content: ''
+			background-color: rgba(17,17,17, 0.5)
+
+		.card-img
+			border-radius: 0
+		h3
+			color: $white
+			padding-top: 5px
+			
+	.articles_press
+		.card
+			margin-top: 0
+			&::before
+				position: absolute
+				width: 100%
+				height: 100%
+				content: ''
+				background-color: rgba(17,17,17, 0.5)
+			margin-top: 20px
+			.card-img-overlay
+				padding-left: 10px
+				padding-top: 15px
+				padding-right: 5px
+				.card-text
+					line-height: 14px
+					letter-spacing: .35px
+					color: $white
+				.links
+					font-size: $font-size-sm
+					margin-bottom: 10px
+				.icon-campaign
+					width: 12px
+					height: 12px
+					margin-right: 5px
+.team, .investors
+	a, a:hover
+		color: $black
+
+	.card
+		border: none
+		.card-title
+			margin-bottom: 0
+		.img-circle
+			width: 180px
+			height: 180px
+
+.document
+	padding-bottom: 50px
+	h2
+		margin-bottom: 30px
+	h3
+		letter-spacing: .35px
+	.img-document
+		width: 28px
+		height: 28px
+		position: relative;
+		bottom: 5px;
+		margin-right: 5px;
+	a
+		+calc-rem(18)
+		color: $small-text
+		&:hover, focus
+			color: $puerto_rico
+		i
+			+calc-rem(24)
+			margin-right: 5px
+.overview
+	padding-bottom: 50px
+	h3
+		padding-top: 30px
+		padding-bottom: 25px
+		margin-bottom: 0
+	.fundraising
+		.jumbotron
+			margin-bottom: 0
+			background-color: $puerto_rico
+			.container
+				padding-left: 20px
+				padding-right: 20px
+				p
+					color: $white
+					margin-bottom: 5px
+					margin-top: 10px
+				h2
+					color: $white
+					letter-spacing: .6px
+				.col-lg-4
+					padding-left: 5px
+					padding-right: 5px
+	.perks
+		.jumbotron
+			margin-bottom: 0
+			min-height: 175px
+			.container
+				padding-left: 20px
+				padding-right: 20px
+				h3
+					padding: 0
+				p
+					color: $small-text
+					margin-bottom: 0
+.risks
+	padding-bottom: 15px
+	h2
+		padding-top: 50px
+		padding-bottom: 20px
+		margin-bottom: 0
+.faq
+	padding-bottom: 15px
+	h2
+		padding-top: 50px
+		padding-bottom: 20px
+		margin-bottom: 0
+//Accordion
+#accordion
+	.panel-collapse
+		padding: 10px 20px
+	.list-group-item-action
+		display: block
+		padding: 10px 20px
+		position: relative
+		border: solid 1px $gallery
+		margin-top: 10px
+		+calc-rem(14)
+		font-weight: 700
+		&.active
+			background-color: $alabaster
+			color: $black
+			+calc-rem(14)
+			font-weight: 700
+			border: solid 1px $gallery
+		i
+			top: 50%
+			right: 15px
+			-ms-transform: translate(-50%,-50%)
+			-webkit-transform: translate(-50%,-50%)
+			transform: translate(-50%,-50%)
+			position: absolute
+
+.ask
+	h2
+		margin-bottom: 0
+	padding-bottom: 50px
+	.form-section
+		input
+			border: none
+			border-bottom: solid 1px $gallery
+			width: 100%
+			outline: none
+			padding: 3px 10px
+
+	.hr
+		width: 100%
+		height: 1px
+		background-color: #e7e7e7
+		margin-bottom: 50px
+.comments
+	.col-lg-1
+		padding: 0
+	.col-lg-11
+		padding-right: 10px
+		padding-left: 10px
+	img
+		width: 55px
+		height: 55px
+		display: inline-block
+		//float: left
+		//margin-right: 15px
+	.comments-wrap
+		display: inline-block
+		//width: 89%
+		.name-comments
+			+calc-rem(14)
+			letter-spacing: 2.8px
+			color: $black
+		.date-comments
+			+calc-rem(11)
+			color: $small-text
+		.responce
+		
+			li
+				padding-left: 5px
+				display: inline-block
+				i
+					margin-right: 5px
+		p
+			margin-bottom: 5px
+.like
+	h2
+		margin-bottom: 0
+		letter-spacing: 1px
+	i
+		color: $wild_willow

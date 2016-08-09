@@ -43,7 +43,7 @@ select.form-control
 			color: $white
 	textarea
 		min-height: 38px
-	.pseudo-checkbox// для задаванния своего вида чекбокса
+	.pseudo-checkbox,.form-check-input// для задаванния своего вида чекбокса
 		position: relative
 		z-index: 10
 		padding-left: 30px
@@ -62,7 +62,7 @@ select.form-control
 			right: 0
 			z-index: 9
 			opacity: 0
-			&:checked + i
+			&:checked
 				background: green
 			
 	.pseudo-radio// для задаванния своего вида радио
@@ -97,16 +97,15 @@ select.form-control
 		span.change_state_city 
 			position: absolute
 			top: 6px
-			left: 15px
+			right: 0
 			cursor: pointer
 			.input-value
 				@include ellipsis()
 				display: inline-block
 				max-width: 150px
-				margin-right: 20px
 				text-decoration: underline
 			i
-				vertical-align: super
+				margin-left: 10px
 	textarea 
 		max-width: 554px
 	input[type='date'] 
@@ -116,3 +115,4 @@ select.form-control
 		letter-spacing: 1px
 		color: $boulder
 		padding-top: 10px
+		line-height: 14px

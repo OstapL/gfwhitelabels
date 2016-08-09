@@ -1,9 +1,58 @@
+// нужно переделать займусь сам - Остап 
+.tabs-scroll
+	position: relative
+	.navbar
+		.nav-pills
+			padding: 10px 0
+			.nav-link
+				color: $small-text
+				+calc-rem(14)
+				+mt(.2s)
+				padding: 0 0 25px 0
+				margin-right: 30px
+				letter-spacing: 2.8px
+				&:hover
+					border-bottom: solid 2px $puerto_rico
+					color: $link-1-hover
+			.nav-link.active
+				background-color: transparent
+				border-bottom: solid 2px $puerto_rico
+.sticky
+.is-sticky
+	position: fixed
+	left: 0
+	right: 0
+	top: 0
+	z-index: 1000
+	width: 100%
+	background-color: rgba(248,248,248,0.8)
+	.nav-pills
+		width: 1140px
+		padding-left: 30px!important
+		padding-right: 30px!important
+		margin: auto
+		padding-top: 10px!important
+		padding-bottom: 0px!important
+		position: relative
 
-.big-tabs
-	margin-bottom: 50px
-
-	.nav-item
-		.nav-link
-			padding: 0.7rem 2.5rem
-			font-size: 1.2rem
-			letter-spacing: 3px
+//PROFILETABS
+.profile
+	.profile-tabs
+		margin-bottom: 20px
+		border-bottom: none
+		li.nav-item
+			margin-right: 3%
+			margin-left: 0
+			min-width: 100px
+			text-align: center
+			&:last-child
+				margin-right: 0
+			a.nav-link
+				+calc-rem(12)
+				padding: 5px 15px
+				border-radius: 20px
+				text-transform: uppercase
+				color: $tab_authorization_text
+				letter-spacing: 2px
+				&.active
+					border-color: $active_tab_authorization $active_tab_authorization $active_tab_authorization

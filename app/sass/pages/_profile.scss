@@ -1,47 +1,8 @@
-
 .profile {
 
 	// hide all popovers content source block
 	[class*='popover-content'] {
-		display: none;
-	}
-
-	.profile-tabs {
-		margin-bottom: 20px;
-
-		border-bottom: none;
-
-		li.nav-item {
-			margin-right:3%;
-			margin-left: 0;
-
-			min-width: 150px;
-		    width: 29%;
-		    max-width: 240px;
-
-			text-align: center;
-
-			&:last-child {
-				margin-right: 0;
-			}
-
-			a.nav-link {
-				@include calc-rem(12);
-
-				padding: 5px 15px;
-
-				border-radius: 20px;
-
-				text-transform: uppercase;
-				color: $tab_authorization_text;
-				letter-spacing: 2px;
-
-				&.active {
-					border-color: $active_tab_authorization $active_tab_authorization $active_tab_authorization;
-				}
-			}
-		}
-	}
+		display: none; }
 
 	.profile-tabs-content {
 		.drop-photo {
