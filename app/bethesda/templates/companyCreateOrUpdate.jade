@@ -90,9 +90,19 @@ section.create-company.container
 				placeholder: 'Your Company Slogan',
 				})
 			.form-group.row.clearfix
-				label.col-md-3.text-md-right Description
-				textarea(placeholder="$Description" rows="4").col-md-9.form-control
-			.form-group.row.clearfix.col-lg-6
-				label.col-md-3.text-md-right Description
+				label.col-lg-3.text-lg-right Description
+				.col-lg-9
+					textarea(placeholder="Description" rows="4").form-control
+			.form-group.row.clearfix
+				label.col-lg-3.text-lg-right Corporate Structure
+				.col-lg-4
+					select.custom-select
+						option(checked="checked" value="0") C Corporate
+				+fieldBlock("Date of Organization", '', {
+					class1: 'col-lg-2 col-md-3', 
+					class2: 'col-lg-3 col-md-9', 
+					type: 'date',
+					})
+
 				
 
