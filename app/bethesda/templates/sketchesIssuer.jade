@@ -2,396 +2,96 @@ include mixins.jade
 
 +breadcrumbs(page.title, 'Subtitle', [['home', '/',], [ 'current', page.get_absolute_url]])
 
-section.second
-	.container
-		.row
-			.col-md-4
-				.img_under_text
-					img(src="/img/test.png" alt="")
-					h2.text-uppercase company logo
-					.timer_day 19 Days Left
-					.share-block
-						a.btn.btn-primary.share-btn.text-uppercase()
-							i.fa.fa-share share campaing
-						.social-dark.text-lg-center
-							a(href="")
-								i.fa.fa-envelope-o
-							a(href="")
-								i.fa.fa-twitter
-							a(href="")
-								i.fa.fa-facebook
-							a(href="")
-								i.fa.fa-google-plus
-							a(href="")
-								i.fa.fa-linkedin
+section.create-company.container
+	//START LEFT BLOCK
+	.col-lg-3
+		.jumbotron.jumbotron-fluid
+			.raise-funds
+				h4.font-weight-bold Raise funds
+					.small-text (10% Done)
+			#accordion(role="tablist" aria-multiselectable="true")
+				.panel.panel-default
+					.panel-heading(role="tab")
+						a(data-toggle="collapse"
+						data-parent="#accordion"
+						href="#company"
+						aria-expanded="true"
+						).list-group-item.active
+							i.fa.fa-briefcase
+							|  Company
+							span.pull-right
+								i.fa.fa-angle-down
+					#company(role="tabpanel").panel-collapse.collapse.in
+						.list-group
+							a(href="#").list-group-item.list-group-item-action.active Company
+				.panel.panel-default
+					.panel-heading(role="tab")
+						a(data-toggle="collapse"
+						data-parent="#accordion"
+						href="#campaign"
+						aria-expanded="true"
+						).list-group-item
+							i.fa.fa-bar-chart
+							|  Campaign
+							span.pull-right
+								i.fa.fa-angle-left
+					#campaign(role="tabpanel").panel-collapse.collapse
+						.list-group
+							a(href="#").list-group-item.list-group-item-action General Information
+							a(href="#").list-group-item.list-group-item-action Media
+							a(href="#").list-group-item.list-group-item-action Team Members
+							a(href="#").list-group-item.list-group-item-action Specifics
+							a(href="#").list-group-item.list-group-item-action Perks
+				.panel.panel-default
+					.panel-heading(role="tab")
+						a(data-toggle="collapse"
+						data-parent="#accordion"
+						href="#form_c"
+						aria-expanded="true"
+						).list-group-item
+							i.fa.fa-university
+							|  form c
+							span.pull-right
+								i.fa.fa-angle-left
+					#form_c(role="tabpanel").panel-collapse.collapse
+						.list-group
+							a(href="#").list-group-item.list-group-item-action form c
+		.jumbotron.jumbotron-fluid
+			.education-link-wrap
+				h4.font-weight-bold
+					i.fa.fa-book
+					|  education Links
+				.nav
+					li.nav-item
+						a(href="#").nav-link.link-3 Issuer Tutorial
+					li.nav-item
+						a(href="#").nav-link.link-3 Success Guide
+					li.nav-item
+						a(href="#").nav-link.link-3 What's My Business Worth?
+					li.nav-item
+						a(href="#").nav-link.link-3 How Much Should I Raise?
 
-			.col-md-2.col-sm-6
-				a.dashboard-stat.dashboard-stat-v2.grey(href="")
-					.visual
-						i.fa.fa-bar-chart
-					.details
-						.number
-							span(
-								data-counter="counterup"
-								data-value="1349"
-							) 1349
-						.desc New Feedbacks
-			.col-md-2.col-sm-6
-				a.dashboard-stat.dashboard-stat-v2.grey(href="")
-					.visual
-						i.fa.fa-briefcase
-					.details
-						.number
-							span(
-								data-counter="counterup"
-								data-value="1349"
-							) 1349
-						.desc Number of Investors
-			.col-md-2.col-sm-6
-				a.dashboard-stat.dashboard-stat-v2.grey(href="")
-					.visual
-						i.fa.fa-users
-					.details
-						.number
-							span(
-								data-counter="counterup"
-								data-value="1500"
-							) 1,5K
-						.desc Page Views
-			.col-md-2.col-sm-6
-				a.dashboard-stat.dashboard-stat-v2.grey(href="")
-					.visual
-						i.fa.fa-comments
-					.details
-						.number
-							span(
-								data-counter="counterup"
-								data-value="456"
-							) 456
-						.desc ew Interactions
-			.col-md-7.col-sm-7
-				.tpl-progress
-					progress.progress.big_prog(
-						value="21"
-						max="100"
-					) 21%
-					span.circle_progress(
-						style="width:21%"
-					)
-						i.fa.fa-circle-o
-					span.text_position(
-						style="left:21%"
-					) 12 May
-						br
-						| $750K Raised
-				.progress_description
-					.pull-left
-						p.text-uppercase 1 may
-						span Begining of campaigne
-					.pull-right.text-lg-right
-						p 1 june
-						span End of campaign
-					.clearfix
-			.col-md-1.col-sm-1
-				.right_fixed_text.text-lg-center
-					b $500K
-					span Goal
-			.col-md-8.col-sm-12.text-lg-center
-				a.btn.btn-secondary.text-uppercase.view_campaing(href="") view campaing
-					i.fa.fa-angle-right(
-						aria-hidden="true"
-					)
 
-section.grafic
-	.container
-		.row
-			.col-md-12
-				.portlet.light.portlet-fit.bordered
-					.portlet-title.portlet-hei75
-						.caption
-							i.icon-settings.font-dark
-							h1.text-uppercase Investments
-						.actions
-							.btn-group.btn-group-devided(
-								data-toggle="buttons"
-							)
-								label.btn.btn-transparent.dark.btn-outline.btn-circle.btn-sm.active
-									input.toggle#option1(
-										type="radio"
-										name="options"
-									) 
-									| Actions
-								label.btn.btn-transparent.dark.btn-outline.btn-circle.btn-sm
-									input.toggle#option2(
-										type="radio"
-										name="options"
-									) 
-									| Settings
-					.portlet-body.grafic-padding
-						.chart#chart_2
-							canvas.flot-base(
-								width="1299"
-								height="300"
-								style="direction: ltr; position: absolute; left: 0px; top: 0px; width: 1299; height: 300px"
-							)
-							.flot-text
-								.flot-x-axis.flot-x1-axis.xAxis.x1Axis
-									div 1 MAY
-									.flot-tick-label.tickLabel 2 MAY
-									.flot-tick-label.tickLabel 3 MAY
-									.flot-tick-label.tickLabel 4 MAY
-									.flot-tick-label.tickLabel 5 MAY
-									.flot-tick-label.tickLabel 6 MAY
-									.flot-tick-label.tickLabel 7 MAY
-									.flot-tick-label.tickLabel 8 MAY
-									.flot-tick-label.tickLabel 9 MAY
-									.flot-tick-label.tickLabel 10 MAY
-									.flot-tick-label.tickLabel 11 MAY
-									.flot-tick-label.tickLabel 12 MAY
-									.flot-tick-label.tickLabel 13 MAY
-									.flot-tick-label.tickLabel 14 MAY
-									.flot-tick-label.tickLabel 15 MAY
-								.flot-y-axis.flot-y1-axis.yAxis.y1Axis
-									.flot-tick-label.tickLabel 0
-									.flot-tick-label.tickLabel 10
-									.flot-tick-label.tickLabel 20
-									.flot-tick-label.tickLabel 30
-									.flot-tick-label.tickLabel 40
-									.flot-tick-label.tickLabel 50
-									.flot-tick-label.tickLabel 60
-									.flot-tick-label.tickLabel 70
-									.flot-tick-label.tickLabel 80
-									.flot-tick-label.tickLabel 90
-									.flot-tick-label.tickLabel 100
-									.flot-tick-label.tickLabel 110
-									.flot-tick-label.tickLabel 120
-									.flot-tick-label.tickLabel 130
-									.flot-tick-label.tickLabel 140
-							canvas.flot-overlay(
-								width="1299"
-								height="300"
-								style="direction: ltr; position: absolute; left: 0px; top: 0px; width: 1299px; height: 300px;"
-							)
-							.legend
-								table
-									tr
-										td.legendLabel Unique Visits
-									tr
-										td.legendLabel Page Views
+	//START RIGHT BLOCK
+	.col-lg-8
+		h2.text-uppercase.text-lg-center.text-xs-center Company
+		form(metod="post" action="").form-section
+			+fieldBlock("Company Name", '', {
+				class1: 'col-lg-3 col-md-3',
+				class2: 'col-lg-9 col-md-9',
+				type: 'text',
+				placeholder: 'Company Name',
+				})
+			+fieldBlock("Tagline", '', {
+				class1: 'col-lg-3 col-md-3',
+				class2: 'col-lg-9 col-md-9',
+				type: 'text',
+				placeholder: 'Your Company Slogan',
+				})
+			.form-group.row.clearfix
+				label.col-md-3.text-md-right Description
+				textarea(placeholder="$Description" rows="4").col-md-9.form-control
+			.form-group.row.clearfix.col-lg-6
+				label.col-md-3.text-md-right Description
+				
 
-section.third
-	.container
-		.row
-			.col-md-12
-				.portlet-title.tabbable-line.margin_title
-					.caption
-						i.icon-bubbles.font-dark.hide
-						h2.title-size.text-uppercase Investor question & answer
-			.col-md-5
-				.portlet.comments-body.light.bordered
-					.portlet-title.tabbable-line
-						ul.nav.nav-tabs#myTab(
-							role="tablist"
-						)
-							li.nav-item
-								a.nav-link.active.text-uppercase#home-tab(
-									data-toggle="tab"
-									href="#home"
-									role="tab"
-									aria-controls="home"
-									aria-expanded="true"
-								) New
-							li.nav-item
-								a.nav-link.text-uppercase#profile-tab(
-									data-toggle="tab"
-									href="#profile"
-									role="tab"
-									aria-controls="home"
-									aria-expanded="false"
-								) Answered
-					.portlet-body.all_comments
-						.tab-content#myTabContent
-							.tab-pane.fade.active.in#home(
-								role="tabpanel"
-								aria-labelledby="home-tab"
-								aria-expanded="true"
-							)
-								.mt-comments.hei434
-									.mt-comment
-										.mt-comment-img
-											img(
-												src="/img/avatar1.jpg"
-											)
-										.mt-comment-body
-											.mt-comment-info
-												span.mt-comment-author Maria Kravchuk
-												span.mt-comment-date 26 Feb, 10:30AM
-											.mt-comment-text Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua... 
-									.mt-comment
-										.mt-comment-img
-											img(
-												src="/img/avatar1.jpg"
-											)
-										.mt-comment-body
-											.mt-comment-info
-												span.mt-comment-author Maria Kravchuk
-												span.mt-comment-date 26 Feb, 10:30AM
-											.mt-comment-text Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua... 
-											.mt-comment-details
-												span.mt-comment-status.mt-comment-status-pending Pending
-												ul.mt-comment-actions
-													li
-														a(href="") Quick Edit
-													li
-														a(href="") View
-													li
-														a(href="") Delete
-									.mt-comment
-										.mt-comment-img
-											img(
-												src="/img/avatar1.jpg"
-											)
-										.mt-comment-body
-											.mt-comment-info
-												span.mt-comment-author Maria Kravchuk
-												span.mt-comment-date 26 Feb, 10:30AM
-											.mt-comment-text Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua... 
-									.mt-comment
-										.mt-comment-img
-											img(
-												src="/img/avatar1.jpg"
-											)
-										.mt-comment-body
-											.mt-comment-info
-												span.mt-comment-author Maria Kravchuk
-												span.mt-comment-date 26 Feb, 10:30AM
-											.mt-comment-text Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua... 
-									.mt-comment
-										.mt-comment-img
-											img(
-												src="/img/avatar1.jpg"
-											)
-										.mt-comment-body
-											.mt-comment-info
-												span.mt-comment-author Maria Kravchuk
-												span.mt-comment-date 26 Feb, 10:30AM
-											.mt-comment-text Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua... 
-									.mt-comment
-										.mt-comment-img
-											img(
-												src="/img/avatar1.jpg"
-											)
-										.mt-comment-body
-											.mt-comment-info
-												span.mt-comment-author Maria Kravchuk
-												span.mt-comment-date 26 Feb, 10:30AM
-											.mt-comment-text Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua... 
-							.tab-pane.fade.active.in#profile(
-								role="tabpanel"
-								aria-labelledby="profile-tab"
-								aria-expanded="false"
-							)
-								.mt-comments.hei434
-									.mt-comment
-										.mt-comment-img
-											img(
-												src="/img/avatar1.jpg"
-											)
-										.mt-comment-body
-											.mt-comment-info
-												span.mt-comment-author Maria Kravchuk
-												span.mt-comment-date 26 Feb, 10:30AM
-											.mt-comment-text Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua... 
-									.mt-comment
-										.mt-comment-img
-											img(
-												src="/img/avatar1.jpg"
-											)
-										.mt-comment-body
-											.mt-comment-info
-												span.mt-comment-author Maria Kravchuk
-												span.mt-comment-date 26 Feb, 10:30AM
-											.mt-comment-text Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua... 
-									.mt-comment
-										.mt-comment-img
-											img(
-												src="/img/avatar1.jpg"
-											)
-										.mt-comment-body
-											.mt-comment-info
-												span.mt-comment-author Maria Kravchuk
-												span.mt-comment-date 26 Feb, 10:30AM
-											.mt-comment-text Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua... 
-									.mt-comment
-										.mt-comment-img
-											img(
-												src="/img/avatar1.jpg"
-											)
-										.mt-comment-body
-											.mt-comment-info
-												span.mt-comment-author Maria Kravchuk
-												span.mt-comment-date 26 Feb, 10:30AM
-											.mt-comment-text Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua... 
-									.mt-comment
-										.mt-comment-img
-											img(
-												src="/img/avatar1.jpg"
-											)
-										.mt-comment-body
-											.mt-comment-info
-												span.mt-comment-author Maria Kravchuk
-												span.mt-comment-date 26 Feb, 10:30AM
-											.mt-comment-text Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua... 
-			.col-md-7
-				.leave_comments
-					.mt-comments.write_com
-						.mt-comment
-							.mt-comment-img
-								img(src="/img/avatar1.jpg")
-							.mt-comment-body
-								.mt-comment-info
-									span.mt-comment-author.no-float.left_bl Michael Baker
-									span.mt-comment-date.no-float.left_bl 26 Feb, 10:30AM
-								.mt-comment-text.comments_margin Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry.Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum is simply dummy text of the printing and typesetting industry.Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-									.mt-comment-details
-										ul.mt-comment-actions.new-comments-details.on_left_side
-											li
-												a(href="#") Rejected
-											li |
-											li
-												a(href="#") Responce
-						form.form
-							textarea.input-md.form-control#text(
-								name="text"
-								rows="8"
-								placeholder="Text"
-								maxlength="400"
-							)
-							br
-							input.btn.btn-primary(
-								type="button"
-								name=""
-								value="SUBMIT"
-							)
-
-section.social_footer
-	.container
-		.row
-			.col-md-12
-				h2.title-size.text-uppercase Danger Zone
-	.container
-		.row
-			.col-md-3
-				.text_and_button
-					a.btn.btn-lg.btn_link material change
-
-			.col-md-9
-				.text_and_button
-					p Do you have new information that a reasonable would consider important in deciding whether or not to purchase your securities? If so, click here to amend your offering.
-			.col-md-3
-				.text_and_button
-					a.btn.btn-lg.btn_link cancel campaign
-
-			.col-md-9
-				.text_and_button
-					p Click here to cancel your offering
