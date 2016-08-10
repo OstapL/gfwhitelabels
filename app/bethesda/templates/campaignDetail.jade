@@ -548,7 +548,7 @@ section
 				h2.p50
 					i.fa.fa-thumbs-up
 					|  I’d Like to Invest in Smartbe!
-				a(href="").btn.btn-primary.btn-lg.text-uppercase iNVEST IN #{ campaign.company.name }
+				a(data-toggle="modal" data-target="#sing_up").btn.btn-primary.btn-lg.text-uppercase iNVEST IN #{ campaign.company.name }
 
 
 //MODAL
@@ -558,7 +558,8 @@ section
 			.modal-header
 				button(type="button" class="close" data-dismiss="modal" aria-label="Close")
 					span(aria-hidden="true")
-					h4#videoModal(class="modal-title") Modal title
+						i.fa.fa-times
+				h4#videoModal(class="modal-title") Modal title
 			.modal-body
 			.embed-responsive.embed-responsive-16by9
 				iframe.embed-responsive-item(src="//www.youtube.com/embed/zpOULjyy-n8?rel=0" allowfullscreen="true")
@@ -566,6 +567,50 @@ section
 				button(type="button" class="btn btn-secondary" data-dismiss="modal") Close
 				button(type="button" class="btn btn-primary") Save changes
 
+//modal sing_up
+#sing_up.modal.fade(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")
+	.modal-dialog(role="document")
+		.modal-content
+			.modal-header
+				button(type="button" class="close" data-dismiss="modal" aria-label="Close")
+					span(aria-hidden="true")
+						i.fa.fa-times
+				h2#sing_up(class="modal-title").text-lg-center.text-uppercase sign up
+			.modal-body
+				.container.form-section
+					form.col-lg-10.offset-lg-1.border-bottom
+						.form-group.row.clearfix.required
+							input#first_name(type="text" placeholder="First name").form-control
+						.form-group.row.clearfix.required
+							input#last_name(type="text" placeholder="Last name").form-control
+						.form-group.row.clearfix.required
+							input#email(type="email" placeholder="E-mail").form-control
+						.form-group.row.clearfix.required
+							input#password(type="password" placeholder="Password").form-control
+						.form-group.row.clearfix.required
+							input#re_password(type="password" placeholder="Re-enter password").form-control
+						.form-group.row.clearfix.required
+							.row
+								.col-lg-6
+									input(type="checkbox")
+									p I agree to the
+										a(href="") Terms of Service
+										|  and 
+										a(href="")  Privacy Policy.
+								.col-lg-6
+										button.btn.btn-lg.btn-primary.text-uppercase.pull-right sing up
+						button.btn.btn-block.btn-lg.text-uppercase.pull-right
+							i.fa.fa-facebook
+							|  SIGN UP with Facebook
+						button.btn.btn-block.btn-lg.text-uppercase.pull-right
+							i.fa.fa-linkedin
+							|  SIGN UP with linkedin
+						button.btn.btn-block.btn-lg.text-uppercase.pull-right
+							i.fa.fa-google-plus
+							|  SIGN UP with Google
+			.modal-footer.text-lg-center
+				span Have an account?
+					a(href="") Log In
 
 .pswp(tabindex="-1" role="dialog" aria-hidden="true")
 	//Background of PhotoSwipe. 
