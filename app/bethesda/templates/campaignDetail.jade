@@ -1,3 +1,5 @@
+include mixins.jade
+
 section#home(style="background-image: url(" + campaign.get_header_image + ")").home-section.bg-dark-alfa-70.parallax-2.fixed-height-small
 	.js-height-parent.container
 		// Hero Content
@@ -555,17 +557,9 @@ section
 #videoModal.modal.fade(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")
 	.modal-dialog(role="document")
 		.modal-content
-			.modal-header
-				button(type="button" class="close" data-dismiss="modal" aria-label="Close")
-					span(aria-hidden="true")
-						i.fa.fa-times
-				h4#videoModal(class="modal-title") Modal title
-			.modal-body
 			.embed-responsive.embed-responsive-16by9
 				iframe.embed-responsive-item(src="//www.youtube.com/embed/zpOULjyy-n8?rel=0" allowfullscreen="true")
-			.modal-footer
-				button(type="button" class="btn btn-secondary" data-dismiss="modal") Close
-				button(type="button" class="btn btn-primary") Save changes
+
 
 //modal sing_up
 #sing_up.modal.fade(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")
@@ -591,26 +585,32 @@ section
 							input#re_password(type="password" placeholder="Re-enter password").form-control
 						.form-group.row.clearfix.required
 							.row
-								.col-lg-6
-									input(type="checkbox")
-									p I agree to the
-										a(href="") Terms of Service
+								.col-lg-12
+									label
+										input(type="checkbox")
+										|  I consent to electronic signature and electronic delivery of documentation
+									label
+										input(type="checkbox")
+										|  I agree to the
+										a(href="")  Terms of Service
 										|  and 
 										a(href="")  Privacy Policy.
-								.col-lg-6
-										button.btn.btn-lg.btn-primary.text-uppercase.pull-right sing up
-						button.btn.btn-block.btn-lg.text-uppercase.pull-right
+									.col-lg-12.text-lg-center
+											button.btn.btn-lg.btn-primary.text-uppercase sing up
+									.col-lg-12.border-bottom.or
+										span or
+						button.btn.btn-block.btn-lg.btn-facebook.text-uppercase
 							i.fa.fa-facebook
 							|  SIGN UP with Facebook
-						button.btn.btn-block.btn-lg.text-uppercase.pull-right
+						button.btn.btn-block.btn-lg.btn-linkedin.text-uppercase
 							i.fa.fa-linkedin
 							|  SIGN UP with linkedin
-						button.btn.btn-block.btn-lg.text-uppercase.pull-right
+						button.btn.btn-block.btn-lg.btn-google.text-uppercase
 							i.fa.fa-google-plus
 							|  SIGN UP with Google
 			.modal-footer.text-lg-center
 				span Have an account?
-					a(href="") Log In
+					a(href="")  Log In
 
 .pswp(tabindex="-1" role="dialog" aria-hidden="true")
 	//Background of PhotoSwipe. 
