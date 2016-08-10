@@ -1,0 +1,38 @@
+include mixins.jade
+
++breadcrumbs('Congratulations!', '', 
+    [
+        ['Home', '/'],
+        ['Explore', '/'],
+        ['Smartbe', '/'],
+        ['Invest in smartbe', '']
+    ]
+)
+
+.container
+    .row
+        .col-sm-8.offset-sm-2
+            h2.text-xs-center.thankyou-title #[i(aria-hidden="true").fa.fa-thumbs-o-up] You have invested $2,500 in SMARTBE
+
+    .row
+        .col-sm-8.offset-sm-2.pt30
+            hr
+    
+    .row
+        .col-sm-12
+            .result-info-block.m-x-auto
+                ul.info-text-block.list-unstyled.pt30
+                    li #[span Transaction ID:] #[strong 123098489019284]
+                    li #[span Amount of Shares:] #[strong 10]
+                    li #[span Perks:] #[strong Fully Loaded Package]
+                    li #[span Investment Terms:] #[strong Revenue Share]
+
+                .info-btn-block.pt50
+                    a(href="/user/issuer_dashboard/").btn.btn-lg.btn-secondary INVESTOR DASHBOARD &nbsp;
+                        i.fa.fa-angle-down
+
+
+
+
+
+
