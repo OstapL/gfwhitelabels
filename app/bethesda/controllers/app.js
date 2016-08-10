@@ -119,6 +119,7 @@ app.on('urlsReady', function() {
           'page/:id/': 'pageDetail',
           'page/:id': 'pageDetail',
           'account/profile': 'accountProfile',
+          'company/create': 'createCompany',
           'account/login': 'login',
           'account/logout': 'logout',
           'account/dashboard/issuer': 'dashboardIssuer',
@@ -246,7 +247,6 @@ app.on('urlsReady', function() {
 
         accountProfile: function() {
             if(!app.user.is_anonymous()) {
-                // Dirty hack, fix that
                 requirejs(['views/user', ], (view) => {
                     $.ajax(_.extend({
                             url: serverUrl + Urls['rest_user_details'](),
@@ -256,6 +256,33 @@ app.on('urlsReady', function() {
                             el: '#content',
                             model: app.user,
                             fields: response.actions.PUT
+                        });
+                        i.render();
+                        //app.views.campaign[id].render();
+                        //app.cache[window.location.pathname] = i.$el.html();
+
+                        app.hideLoading();
+                    });
+                });
+            } else {
+                app.routers.navigate(
+                    '/account/login', 
+                    {trigger: true, replace: true}
+                );
+            }
+        },
+
+        createCompany: function() {
+            if(!app.user.is_anonymous()) {
+                requirejs(['models/company', 'views/company', ], (model, view) => {
+                    let company = new model.model();
+                    $.ajax(_.extend({
+                            url: company.urlRoot,
+                        }, defaultOptionsRequest)
+                    ).done((response) => {
+                        var i = new view.createOrUpdate({
+                            el: '#content',
+                            fields: response.actions.POST
                         });
                         i.render();
                         //app.views.campaign[id].render();

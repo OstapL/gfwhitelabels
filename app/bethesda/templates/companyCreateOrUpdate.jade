@@ -1,0 +1,98 @@
+include mixins.jade
+
++breadcrumbs('Create Company', 'Help Button', [['home', '/',], [ 'current', page.get_absolute_url]])
+
+- var fields = {}
+section.create-company.container
+	//START LEFT BLOCK
+	.col-lg-3
+		.jumbotron.jumbotron-fluid
+			.raise-funds
+				h4.font-weight-bold Raise funds
+					.small-text (10% Done)
+			#accordion(role="tablist" aria-multiselectable="true")
+				.panel.panel-default
+					.panel-heading(role="tab")
+						a(data-toggle="collapse"
+						data-parent="#accordion"
+						href="#company"
+						aria-expanded="true"
+						).list-group-item.active
+							i.fa.fa-briefcase
+							|  Company
+							span.pull-right
+								i.fa.fa-angle-down
+					#company(role="tabpanel").panel-collapse.collapse.in
+						.list-group
+							a(href="#").list-group-item.list-group-item-action.active Company
+				.panel.panel-default
+					.panel-heading(role="tab")
+						a(data-toggle="collapse"
+						data-parent="#accordion"
+						href="#campaign"
+						aria-expanded="true"
+						).list-group-item
+							i.fa.fa-bar-chart
+							|  Campaign
+							span.pull-right
+								i.fa.fa-angle-left
+					#campaign(role="tabpanel").panel-collapse.collapse
+						.list-group
+							a(href="#").list-group-item.list-group-item-action General Information
+							a(href="#").list-group-item.list-group-item-action Media
+							a(href="#").list-group-item.list-group-item-action Team Members
+							a(href="#").list-group-item.list-group-item-action Specifics
+							a(href="#").list-group-item.list-group-item-action Perks
+				.panel.panel-default
+					.panel-heading(role="tab")
+						a(data-toggle="collapse"
+						data-parent="#accordion"
+						href="#form_c"
+						aria-expanded="true"
+						).list-group-item
+							i.fa.fa-university
+							|  form c
+							span.pull-right
+								i.fa.fa-angle-left
+					#form_c(role="tabpanel").panel-collapse.collapse
+						.list-group
+							a(href="#").list-group-item.list-group-item-action form c
+		.jumbotron.jumbotron-fluid
+			.education-link-wrap
+				h4.font-weight-bold
+					i.fa.fa-book
+					|  education Links
+				.nav
+					li.nav-item
+						a(href="#").nav-link.link-3 Issuer Tutorial
+					li.nav-item
+						a(href="#").nav-link.link-3 Success Guide
+					li.nav-item
+						a(href="#").nav-link.link-3 What's My Business Worth?
+					li.nav-item
+						a(href="#").nav-link.link-3 How Much Should I Raise?
+
+
+	//START RIGHT BLOCK
+	.col-lg-8
+		h2.text-uppercase.text-lg-center.text-xs-center Company
+		form(metod="post" action="").form-section
+			+fieldBlock("Company Name", '', {
+				class1: 'col-lg-3 col-md-3',
+				class2: 'col-lg-9 col-md-9',
+				type: 'text',
+				placeholder: 'Company Name',
+				})
+			+fieldBlock("Tagline", '', {
+				class1: 'col-lg-3 col-md-3',
+				class2: 'col-lg-9 col-md-9',
+				type: 'text',
+				placeholder: 'Your Company Slogan',
+				})
+			.form-group.row.clearfix
+				label.col-md-3.text-md-right Description
+				textarea(placeholder="$Description" rows="4").col-md-9.form-control
+			.form-group.row.clearfix.col-lg-6
+				label.col-md-3.text-md-right Description
+				
+
