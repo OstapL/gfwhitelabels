@@ -198,7 +198,7 @@ app.on('urlsReady', function() {
         },
 
         campaignDetail: function(id) {
-            requirejs(['models/campaign', 'views/campaign', ], (model, view, campaignDetailT) => {
+            requirejs(['models/campaign', 'views/campaign', ], (model, view) => {
 
                 app.getModel('campaign', model.model, id, function(model) {
                     app.views.campaign[id] = new view.detail({
@@ -206,7 +206,7 @@ app.on('urlsReady', function() {
                         model: model,
                     });
                     app.views.campaign[id].render();
-                    app.cache[window.location.pathname] = app.views.campaign[id].$el.html();
+                    //app.cache[window.location.pathname] = app.views.campaign[id].$el.html();
                     $('#content').scrollTo();
 
                     app.hideLoading();
@@ -230,6 +230,7 @@ app.on('urlsReady', function() {
                             });
                             i.render();
                             //app.cache[window.location.pathname] = app.views.campaign[id].$el.html();
+                            $('#content').scrollTo();
 
                             app.hideLoading();
                         })

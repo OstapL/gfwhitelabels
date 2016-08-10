@@ -79,7 +79,7 @@ gulp.task('views', function buildHTML() {
           compileDebug: 0,
     }))
     .pipe(concat('templates.js'))
-    .pipe(gulp.dest(config.publicDir + '/compiled_t'));
+    .pipe(gulp.dest(config.publicDir + '/templates'));
 });
 
 
