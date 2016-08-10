@@ -10,7 +10,7 @@ app.use("/js", express.static('app/html/js'));
 app.use("/views", express.static('app/bethesda/views'));
 app.use("/models", express.static('app/bethesda/models'));
 app.use("/templates_js", express.static('app/bethesda/templates'));
-app.use("/templates", express.static('app/html/compiled_t'));
+app.use("/templates", express.static('app/html/templates'));
 
 app.get('/*',function(req,res){
   res.sendFile(path.join(__dirname+'/app/server.html'));

@@ -91,6 +91,7 @@ tags
 
 # do not push compiled js files
 app/html/compiled_t/*
+app/html/templates/*
 
 # do not push libs.js compiled file
 app/html/js/libs.js
