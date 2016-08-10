@@ -14,7 +14,8 @@ define(function() {
                 this.$el.html(
                     window.userLogin({
                         login_fields: this.login_fields,
-                        register_fields: this.register_fields
+                        register_fields: this.register_fields,
+                        login: window.location.pathname.indexOf('login') != -1
                     })
                 );
                 return this;

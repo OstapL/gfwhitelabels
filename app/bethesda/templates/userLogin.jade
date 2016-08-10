@@ -23,18 +23,20 @@ include mixins.jade
                                 ul.nav.nav-tabs.login-tabs
                                     li.nav-item
                                         a(
-                                            href="#mini-one" 
+                                            href="#login" 
                                             data-toggle="tab" 
                                             aria-expanded="trueLogin"
-                                        ).active.nav-link  Log in
+                                            class="nav-link " + (login == 1 ? "active" : "")
+                                        ).nav-link  Log in
                                     li.nav-item
                                         a(
-                                            href="#mini-two" 
+                                            href="#signup" 
                                             data-toggle="tab" 
                                             aria-expanded="true"
+                                            class="nav-link " + (login == 0 ? "active" : "")
                                         ).nav-link Sign Up
                         .tab-content.authorization-tabs-content 
-                            #mini-one.tab-pane.fade.in.active(aria-expanded="true")
+                            #login(class="tab-pane fade " + (login == 1 ? "in active" : "") aria-expanded=(login == 1))
                                 .row
                                     section.form-section
                                         form(action="" method="post").login-form
@@ -77,7 +79,7 @@ include mixins.jade
                                                     )#forget-password Forgot Password?
                                                 .col-xs-5
                                                     button#login-btnLogin.btn.text-uppercase Login
-                            #mini-two.tab-pane.fade(aria-expanded="false")
+                            #signup(class="tab-pane fade " + (login == 0 ? "in active" : "") aria-expanded=(login == 0))
                                 .row
                                     section.form-section
                                         form(

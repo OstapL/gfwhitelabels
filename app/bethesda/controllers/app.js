@@ -44,7 +44,12 @@ let app = {
     },
 
     hideLoading: function() {
-        $('.loader_overlay').hide();
+        $('.loader_overlay').animate({
+            opacity: 0
+        }, 500, function() {
+            $(this).css('display', 'none');
+            $(this).css('opacity', '1');
+        });
     },
 
     showError: function(form, type, errors) {
@@ -121,6 +126,7 @@ app.on('urlsReady', function() {
           'account/profile': 'accountProfile',
           'company/create': 'createCompany',
           'account/login': 'login',
+          'account/signup': 'login',
           'account/logout': 'logout',
           'account/dashboard/issuer': 'dashboardIssuer',
           'account/dashboard/investor': 'dashboardInvestor',
@@ -364,7 +370,7 @@ app.on('urlsReady', function() {
         },
 
         login: function(id) {
-            requirejs(['views/user', ], (userView) => {
+            requirejs(['views/user'], (userView) => {
                 var a1 = $.ajax(_.extend({
                         url: serverUrl + Urls['rest_login'](),
                     }, defaultOptionsRequest));
