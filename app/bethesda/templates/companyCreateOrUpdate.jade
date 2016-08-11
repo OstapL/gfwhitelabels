@@ -6,9 +6,9 @@ include mixins.jade
 section.create-company.container
 	//START LEFT BLOCK
 	.col-lg-3
-		.jumbotron.jumbotron-fluid
+		.jumbotron.jumbotron-fluid.row
 			.raise-funds
-				h4.font-weight-bold Raise funds
+				h4.font-weight-bold.text-uppercase.m-b-0 Raise funds
 					.small-text (10% Done)
 			#accordion(role="tablist" aria-multiselectable="true")
 				.panel.panel-default
@@ -57,20 +57,21 @@ section.create-company.container
 					#form_c(role="tabpanel").panel-collapse.collapse
 						.list-group
 							a(href="#").list-group-item.list-group-item-action form c
-		.jumbotron.jumbotron-fluid
+		.row
 			.education-link-wrap
-				h4.font-weight-bold
-					i.fa.fa-book
-					|  education Links
-				.nav
-					li.nav-item
-						a(href="#").nav-link.link-3 Issuer Tutorial
-					li.nav-item
-						a(href="#").nav-link.link-3 Success Guide
-					li.nav-item
-						a(href="#").nav-link.link-3 What's My Business Worth?
-					li.nav-item
-						a(href="#").nav-link.link-3 How Much Should I Raise?
+				.jumbotron.jumbotron-fluid
+					h4.font-weight-bold.text-uppercase
+						i.fa.fa-book
+						|  education Links
+					.nav
+						li.nav-item
+							a(href="#").nav-link.link-3 Issuer Tutorial
+						li.nav-item
+							a(href="#").nav-link.link-3 Success Guide
+						li.nav-item
+							a(href="#").nav-link.link-3 What's My Business Worth?
+						li.nav-item
+							a(href="#").nav-link.link-3 How Much Should I Raise?
 
 
 	//START RIGHT BLOCK
@@ -93,16 +94,85 @@ section.create-company.container
 				label.col-lg-3.text-lg-right Description
 				.col-lg-9
 					textarea(placeholder="Description" rows="4").form-control
-			.form-group.row.clearfix
-				label.col-lg-3.text-lg-right Corporate Structure
+			.form-group.row.m-t-2.clearfix
+				.col-lg-3.text-lg-right
+					label Corporate Structure
 				.col-lg-4
 					select.custom-select
 						option(checked="checked" value="0") C Corporate
-				+fieldBlock("Date of Organization", '', {
-					class1: 'col-lg-2 col-md-3', 
-					class2: 'col-lg-3 col-md-9', 
-					type: 'date',
-					})
+				.col-lg-5
+					label.date Date of Organization
+					input(type="date").form-control
+			.border-bottom
+			+fieldBlock("Street Address", '', {
+				class1: 'col-lg-3 col-md-3',
+				class2: 'col-lg-9 col-md-9',
+				type: 'text',
+				})
+			+fieldBlock("Optional Address", '', {
+				class1: 'col-lg-3 col-md-3',
+				class2: 'col-lg-9 col-md-9',
+				type: 'text',
+				})
+			.row
+				.col-lg-6
+					+fieldBlock("Zip_code", '', {
+						class1: 'col-lg-6 col-md-3', 
+						class2: 'col-lg-6 col-md-9', 
+						type: 'text',
+						})
+				.col-lg-6.city_state
+					label.col-lg-6.text-md-right City/State
+					.col-lg-6
+						span.change_state_city
+							span.input-value New York, NY
+								i.fa.fa-pencil-square-o
+			.row.m-b-0
+				.col-lg-6
+					+fieldBlock("Phone", '', {
+						class1: 'col-lg-6 col-md-3', 
+						class2: 'col-lg-6 col-md-9', 
+						type: 'text',
+						})
+				.col-lg-6
+					+fieldBlock("Website", '', {
+						class1: 'col-lg-6 col-md-3', 
+						class2: 'col-lg-6 col-md-9', 
+						type: 'text',
+						placeholder: 'http://www.',
+						})
+			.border-bottom.m-t-2
+			.row.m-b-0
+				.col-lg-6
+					+fieldBlock("Twitter", '', {
+						class1: 'col-lg-6 col-md-3', 
+						class2: 'col-lg-6 col-md-9', 
+						type: 'text',
+						})
+				.col-lg-6
+					+fieldBlock("Facebook", '', {
+						class1: 'col-lg-6 col-md-3', 
+						class2: 'col-lg-6 col-md-9', 
+						type: 'text',
+						})
+			.row.m-b-0
+				.col-lg-6
+					+fieldBlock("Instagram", '', {
+						class1: 'col-lg-6 col-md-3', 
+						class2: 'col-lg-6 col-md-9', 
+						type: 'text',
+						})
+				.col-lg-6
+					+fieldBlock("LinkedIn", '', {
+						class1: 'col-lg-6 col-md-3', 
+						class2: 'col-lg-6 col-md-9', 
+						type: 'text',
+						})
+			.row.m-t-2
+				.col-lg-6.pull-right
+					.col-lg-6
+						button(href="").btn.btn-lg.btn-primary.text-uppercase.pull-right save
+					.col-lg-6
+						button(href="").btn.btn-lg.btn-secondary.text-uppercase preview
 
-				
 
