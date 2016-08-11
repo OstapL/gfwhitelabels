@@ -84,28 +84,28 @@ include mixins.jade
 									data-toggle="tab"
 									role="tab"
 									aria-expanded="true"
-									).nav-link.uppercase bank account
+									).nav-link.text-uppercase.active bank account
 								li(aria-expanded="true").nav-item
 									a(
 									href="#link"
 									data-toggle="tab"
 									role="tab"
 									aria-expanded="true"
-									).nav-link.uppercase link
+									).nav-link.text-uppercase link
+
 						.row.tab-content.investment-tabs-content
-                            #bank_account.tab-pane.fade(aria-expanded="true")
-                                
-                                +fieldBlock("route_number", '', {
-                                    class1: 'col-lg-3 col-md-3',
-                                    class2: 'col-lg-9 col-md-9',
-                                    type: 'text',
-                                })
-                                +fieldBlock("account_number", '', {
-                                    class1: 'col-lg-3 col-md-3',
-                                    class2: 'col-lg-9 col-md-9',
-                                    type: 'text',
-                                })
-							#link.tab-pane.active(aria-expanded="true")
+							#bank_account.tab-pane.active.in(aria-expanded="true")
+								+fieldBlock("route_number", '', {
+									class1: 'col-lg-3 col-md-3',
+									class2: 'col-lg-9 col-md-9',
+									type: 'text',
+									})
+								+fieldBlock("account_number", '', {
+									class1: 'col-lg-3 col-md-3',
+									class2: 'col-lg-9 col-md-9',
+									type: 'text',
+									})
+							#link.tab-pane.fade(aria-expanded="true")
 								.col-md-3.col-xs-3
 									figure.figure.payment-inform-link
 										a(
@@ -211,8 +211,7 @@ include mixins.jade
 											src="/img/investment/charles.png"
 											).figure-img.img-fluid.img-rounded
 								.col-md-12
-									<span class="help-block">GrowthFountain does not store your bank login credentials.</span>
-
+									span.help-block GrowthFountain does not store your bank login credentials
 
 					section.varification.pt50
 						h2.text-uppercase.dosis VERIFICATION
