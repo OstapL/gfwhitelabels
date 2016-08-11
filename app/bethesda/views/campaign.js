@@ -123,6 +123,7 @@ define(function() {
                             );
 
                             $('#content').html(investmentThankYou({
+                                Urls: Urls,
                                 investment: data,
                                 campaign: this.campaignModel.toJSON()
                             }));
