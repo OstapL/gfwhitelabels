@@ -44,7 +44,12 @@ let app = {
     },
 
     hideLoading: function() {
-        $('.loader_overlay').hide();
+        $('.loader_overlay').animate({
+            opacity: 0
+        }, 500, function() {
+            $(this).css('display', 'none');
+            $(this).css('opacity', '1');
+        });
     },
 
     showError: function(form, type, errors) {
@@ -119,7 +124,9 @@ app.on('urlsReady', function() {
           'page/:id/': 'pageDetail',
           'page/:id': 'pageDetail',
           'account/profile': 'accountProfile',
+          'company/create': 'createCompany',
           'account/login': 'login',
+          'account/signup': 'login',
           'account/logout': 'logout',
           'account/dashboard/issuer': 'dashboardIssuer',
           'account/dashboard/investor': 'dashboardInvestor',
@@ -198,7 +205,7 @@ app.on('urlsReady', function() {
         },
 
         campaignDetail: function(id) {
-            requirejs(['models/campaign', 'views/campaign', ], (model, view, campaignDetailT) => {
+            requirejs(['models/campaign', 'views/campaign', ], (model, view) => {
 
                 app.getModel('campaign', model.model, id, function(model) {
                     app.views.campaign[id] = new view.detail({
@@ -206,7 +213,7 @@ app.on('urlsReady', function() {
                         model: model,
                     });
                     app.views.campaign[id].render();
-                    app.cache[window.location.pathname] = app.views.campaign[id].$el.html();
+                    //app.cache[window.location.pathname] = app.views.campaign[id].$el.html();
                     $('#content').scrollTo();
 
                     app.hideLoading();
@@ -230,6 +237,7 @@ app.on('urlsReady', function() {
                             });
                             i.render();
                             //app.cache[window.location.pathname] = app.views.campaign[id].$el.html();
+                            $('#content').scrollTo();
 
                             app.hideLoading();
                         })
@@ -245,7 +253,6 @@ app.on('urlsReady', function() {
 
         accountProfile: function() {
             if(!app.user.is_anonymous()) {
-                // Dirty hack, fix that
                 requirejs(['views/user', ], (view) => {
                     $.ajax(_.extend({
                             url: serverUrl + Urls['rest_user_details'](),
@@ -255,6 +262,33 @@ app.on('urlsReady', function() {
                             el: '#content',
                             model: app.user,
                             fields: response.actions.PUT
+                        });
+                        i.render();
+                        //app.views.campaign[id].render();
+                        //app.cache[window.location.pathname] = i.$el.html();
+
+                        app.hideLoading();
+                    });
+                });
+            } else {
+                app.routers.navigate(
+                    '/account/login', 
+                    {trigger: true, replace: true}
+                );
+            }
+        },
+
+        createCompany: function() {
+            if(!app.user.is_anonymous()) {
+                requirejs(['models/company', 'views/company', ], (model, view) => {
+                    let company = new model.model();
+                    $.ajax(_.extend({
+                            url: company.urlRoot,
+                        }, defaultOptionsRequest)
+                    ).done((response) => {
+                        var i = new view.createOrUpdate({
+                            el: '#content',
+                            fields: response.actions.POST
                         });
                         i.render();
                         //app.views.campaign[id].render();
@@ -336,7 +370,7 @@ app.on('urlsReady', function() {
         },
 
         login: function(id) {
-            requirejs(['views/user', ], (userView) => {
+            requirejs(['views/user'], (userView) => {
                 var a1 = $.ajax(_.extend({
                         url: serverUrl + Urls['rest_login'](),
                     }, defaultOptionsRequest));

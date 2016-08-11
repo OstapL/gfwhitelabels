@@ -80,19 +80,31 @@ include mixins.jade
 							ul.nav.nav-tabs.profile-tabs
 								li(aria-expanded="true").nav-item
 									a(
-									href="#link"
-									data-toggle="tab"
-									role="tab"
-									aria-expanded="true"
-									).nav-link.uppercase.active link
-								li(aria-expanded="true").nav-item
-									a(
 									href="#bank_account"
 									data-toggle="tab"
 									role="tab"
 									aria-expanded="true"
 									).nav-link.uppercase bank account
+								li(aria-expanded="true").nav-item
+									a(
+									href="#link"
+									data-toggle="tab"
+									role="tab"
+									aria-expanded="true"
+									).nav-link.uppercase link
 						.row.tab-content.investment-tabs-content
+                            #bank_account.tab-pane.fade(aria-expanded="true")
+                                
+                                +fieldBlock("route_number", '', {
+                                    class1: 'col-lg-3 col-md-3',
+                                    class2: 'col-lg-9 col-md-9',
+                                    type: 'text',
+                                })
+                                +fieldBlock("account_number", '', {
+                                    class1: 'col-lg-3 col-md-3',
+                                    class2: 'col-lg-9 col-md-9',
+                                    type: 'text',
+                                })
 							#link.tab-pane.active(aria-expanded="true")
 								.col-md-3.col-xs-3
 									figure.figure.payment-inform-link
@@ -200,18 +212,6 @@ include mixins.jade
 											).figure-img.img-fluid.img-rounded
 								.col-md-12
 									<span class="help-block">GrowthFountain does not store your bank login credentials.</span>
-							#bank_account.tab-pane.fade(aria-expanded="true")
-								
-								+fieldBlock("route_number", '', {
-									class1: 'col-lg-3 col-md-3',
-									class2: 'col-lg-9 col-md-9',
-									type: 'text',
-								})
-								+fieldBlock("account_number", '', {
-									class1: 'col-lg-3 col-md-3',
-									class2: 'col-lg-9 col-md-9',
-									type: 'text',
-								})
 
 
 					section.varification.pt50
