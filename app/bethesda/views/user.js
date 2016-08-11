@@ -76,23 +76,6 @@ define(function() {
                 'submit form': 'update',
             },
 
-            update: function(event) {
-                event.preventDefault();
-                let data = $(event.target).serializeObject();
-
-                this.model.set(data);
-                if(this.model.isValid(true)) {
-                    this.model.save({}, {
-                        success: (model, response, status) => {
-                            defaultSaveActions.success(this, response);
-                        },
-                        error: (model, response, status) => {
-                            defaultSaveActions.error(this, response);
-                        }
-                    });
-                }
-            },
-
             render: function() {
                 requirejs(['/js/dropzone.js',], (dropzone) => {
                     this.$el.html(
@@ -102,9 +85,38 @@ define(function() {
                             fields: this.fields
                         })
                     );
-                    //createFileDropzone('image', 'avatars', '', function() { console.log('hello'); });
+                    createFileDropzone(
+                        'image', 
+                        'avatars', '', 
+                        (data) => {
+                            this.model.save({
+                                image: data.file_id,
+                            }, {
+                                patch: true
+                            }).then((model) => {
+                                localStorage.setItem('user', JSON.stringify(this.model.toJSON()));
+                            });
+                        }
+                    );
                     return this;
                 });
+            },
+
+            update: function(event) {
+                event.preventDefault();
+                let data = $(event.target).serializeObject();
+
+                this.model.set(data);
+                if(this.model.isValid(true)) {
+                    this.model.save(data, {
+                        success: (model, response, status) => {
+                            defaultSaveActions.success(this, response);
+                        },
+                        error: (model, response, status) => {
+                            defaultSaveActions.error(this, response);
+                        }
+                    });
+                }
             },
         }),
     

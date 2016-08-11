@@ -13,7 +13,8 @@ include mixins.jade
             form(method="post" action="").form
                 .drop-photo-block
                     h5.widget-title.font-alt #{user.first_name} #{user.last_name}
-                    .dropzone__image.drop-photo.dz-clickable.dropzone 
+                    .dropzone__image.drop-photo.dz-clickable.dropzone
+                        img(src=user.image)
                     input(
                         type="hidden" 
                         name="image" 
