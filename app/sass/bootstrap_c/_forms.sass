@@ -29,18 +29,22 @@ select.form-control
 				margin-top: 7px
 			input[type='radio']
 				margin-right: 15px
+
+	.dob label
+		padding-left: 0
+
 	input[type="text"]
 		@include placeholder
 			color: #a3a3a3
 	button[type='submit']
-		@include mt(.2s)
-		border: none
-		background: $profile_btn_submit
-		text-transform: uppercase
-		letter-spacing: 2px
+		// @include mt(.2s)
+		// border: none
+		// background: $profile_btn_submit
+		// text-transform: uppercase
+		// letter-spacing: 2px
 		&:hover
-			background: rgba($profile_btn_submit, 0.8)
-			color: $white
+			// background: rgba($profile_btn_submit, 0.8)
+			// color: $white
 	textarea
 		min-height: 38px
 	.pseudo-checkbox,.form-check-input// для задаванния своего вида чекбокса

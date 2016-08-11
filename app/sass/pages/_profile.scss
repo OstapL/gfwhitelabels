@@ -2,56 +2,62 @@
 
 	// hide all popovers content source block
 	[class*='popover-content'] {
-		display: none; }
+		display: none;
+	}
 
-	.profile-tabs-content {
-		.drop-photo {
-			min-height: 135px;
-			margin-top: 5px;
+	.profile-tabs.nav-tabs li.nav-item a.nav-link {
+		border-radius: 20px;
+	}
 
-			background: $border_color;
-			border: 1px $grey solid;
+	.drop-photo {
+		min-height: 135px;
+		margin-top: 5px;
+
+		background: $border_color;
+		border: 1px $grey solid;
+	}
+
+	.selected-area-info {
+		position: relative;
+
+		padding: 5px 0 0 20px;
+		margin-bottom: -5px;
+
+		i,
+		span {
+			display: inline-block;
+
+			color: $total_sum_progresbar;
+			font-size: 11px;
 		}
 
-		.selected-area-info {
-			position: relative;
-
-			padding: 5px 0 0 20px;
-			margin-bottom: -5px;
-
-			i,
-			span {
-				display: inline-block;
-
-				color: $total_sum_progresbar;
-				font-size: 11px;
-			}
-
-			i {
-				position: absolute;
-				top: 7px;
-				left: 5px;
-			}
-		}
-
-		.drop-image-title {
-			margin-top: 17px;
-
-			span {
-				@include calc-rem(14);
-
-				color: $footer_text;
-			}
-
-			i {
-				@include calc-rem(28);
-
-				margin-top: 17px;
-
-				color: $footer_text;
-			}
+		i {
+			position: absolute;
+			top: 7px;
+			left: 5px;
 		}
 	}
+
+	.drop-image-title {
+		margin-top: 17px;
+		margin-bottom: 30px;
+
+		span {
+			@include calc-rem(14);
+
+			color: $footer_text;
+		}
+
+		i {
+			@include calc-rem(28);
+
+			margin-top: 17px;
+
+			color: $footer_text;
+		}
+	}
+	// .profile-tabs-content {   
+	// }
 
 	.investors-warning {
 		@include calc-rem(14);
@@ -125,6 +131,15 @@
 			height: 35px;// непонятно по какой причине высота этого элемента больше чем 38пкс
 		}
 	}
+
+	// @media screen and (max-width: 1200px) {
+	// 	.profile-tabs.nav-tabs {
+	// 		text-align: center;
+	// 		li.nav-item {
+	// 			float: none;
+	// 		}
+	// 	}
+	// }
 
 	@media screen and (max-width: 543px) {
 		.profile-tabs { 

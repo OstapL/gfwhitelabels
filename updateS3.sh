@@ -11,4 +11,4 @@ aws s3 cp server.html s3://growthfountain-frontend/
 
 # copy views, controllers, models
 cd bethesda/
-aws s3 cp . s3://growthfountain-frontend/
+aws s3 cp . s3://growthfountain-frontend/ --recursive --exclude ".git"
