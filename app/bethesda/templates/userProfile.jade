@@ -10,17 +10,19 @@ include mixins.jade
 .container.profile.pt-50
     .row 
         aside.col-xl-3
-            h5.widget-title.font-alt #{user.first_name} #{user.last_name}
-            .dropzone__image.drop-photo.dz-clickable.dropzone 
-            input(
-                type="hidden" 
-                name="image" 
-                value="80"
-            )#image
-            .drop-image-title.text-xs-center 
-                span Drop your profile picture here
-                div
-                    i.fa.fa-camera 
+            form(method="post" action="").form
+                .drop-photo-block
+                    h5.widget-title.font-alt #{user.first_name} #{user.last_name}
+                    .dropzone__image.drop-photo.dz-clickable.dropzone 
+                    input(
+                        type="hidden" 
+                        name="image" 
+                        value="80"
+                    )#image
+                    .drop-image-title.text-xs-center 
+                        span Drop your profile picture here
+                        div
+                            i.fa.fa-camera 
 
 
         .col-xl-9.col-lg-12
@@ -56,23 +58,27 @@ include mixins.jade
                                 .form-body.clearfix 
                                     .col-xs-12
                                         section.right-block 
-                                            +fieldBlock("first_name", user.first_name, {'class1': 'col-lg-3 col-md-6', 'class2': 'col-lg-7 col-md-6', 'type': 'text'})
-                                            +fieldBlock("last_name", user.last_name, {'class1': 'col-lg-3 col-md-6', 'class2': 'col-lg-7 col-md-6', 'type': 'text'})
-                                            +fieldBlock("street_address_1", user.street_address_1, {'class1': 'col-lg-3 col-md-6', 'class2': 'col-lg-7 col-md-6', 'type': 'text'})
-                                            +fieldBlock("street_address_2", user.street_address_2, {'class1': 'col-lg-3 col-md-6', 'class2': 'col-lg-7 col-md-6', 'type': 'text'})
+                                            +fieldBlock("first_name", user.first_name, {'class1': 'col-md-3 offset-md-1 offset-lg-0', 'class2': 'col-lg-7 col-md-6', 'type': 'text'})
+                                            +fieldBlock("last_name", user.last_name, {'class1': 'col-md-3 offset-md-1 offset-lg-0', 'class2': 'col-lg-7 col-md-6', 'type': 'text'})
+                                            +fieldBlock("street_address_1", user.street_address_1, {'class1': 'col-md-3 offset-md-1 offset-lg-0', 'class2': 'col-lg-7 col-md-6', 'type': 'text'})
+                                            +fieldBlock("street_address_2", user.street_address_2, {'class1': 'col-md-3 offset-md-1 offset-lg-0', 'class2': 'col-lg-7 col-md-6', 'type': 'text'})
                                             .row 
                                                 .col-md-12.col-lg-6
-                                                    +fieldBlock("zip_code", user.zip_code, {'class1': 'col-lg-6 col-md-6', 'class2': 'col-lg-6 col-md-6', 'type': 'text'})
+                                                    +fieldBlock("zip_code", user.zip_code, {'class1': 'col-lg-6 col-md-4', 'class2': 'col-lg-6 col-md-6', 'type': 'text'})
                                                     
                                                 .col-md-12.col-lg-6
-                                                    +fieldBlock("city_state", user.city_state, {'class1': 'col-lg-3 col-md-6', 'class2': 'col-lg-5 col-md-6', 'type': 'text'})
+                                                    +fieldBlock("city_state", user.city_state, {'class1': 'col-lg-3 col-md-4', 'class2': 'col-lg-5 col-md-6', 'type': 'text'})
+
+                                                    span(data-input-id="id_city_state").change_state_city
+                                                        span.input-value City/State
+                                                        i.fa.fa-pencil-square-o
 
                                             .row 
-                                                .col-md-12.col-lg-6
-                                                    +fieldBlock("phone", user.phone, {'class1': 'col-lg-6 col-md-6', 'class2': 'col-lg-6 col-md-6', 'type': 'text'})
+                                                .col-md-12.col-lg-6   
+                                                    +fieldBlock("phone", user.phone, {'class1': 'col-lg-6 col-md-4', 'class2': 'col-lg-6 col-md-6', 'type': 'text'})
                                                 
                                                 .col-md-12.col-lg-6
-                                                    +fieldBlock("dob", user.dob, {'class1': 'col-lg-3 col-md-6', 'class2': 'col-lg-5 col-md-6', 'type': 'date'})
+                                                    +fieldBlock("dob", user.dob, {'class1': 'col-lg-3 col-md-4', 'class2': 'col-lg-5 col-md-6', 'type': 'date'})
                                             
                  
                                             .form-group.row.clearfix 
@@ -90,17 +96,17 @@ include mixins.jade
 
                                     .col-xs-12
                                         section.right-block 
-                                            +fieldBlock("first_name", user.first_name, {'class1': 'col-lg-3 col-md-6', 'class2': 'col-lg-7 col-md-6', 'type': 'text'})
-                                            +fieldBlock("last_name", user.last_name, {'class1': 'col-lg-3 col-md-6', 'class2': 'col-lg-7 col-md-6', 'type': 'text'})
-                                            +fieldBlock("street_address_1", user.stret_address_1, {'class1': 'col-lg-3 col-md-6', 'class2': 'col-lg-7 col-md-6', 'type': 'text'})
-                                            +fieldBlock("street_address_2", user.stret_address_1, {'class1': 'col-lg-3 col-md-6', 'class2': 'col-lg-7 col-md-6', 'type': 'text'})
-                                            +fieldBlock("account_number", user.account_number, {'class1': 'col-lg-3 col-md-6', 'class2': 'col-lg-7 col-md-6', 'type': 'text'})
-                                            +fieldBlock("account_number_re", user.account_number_rc, {'class1': 'col-lg-3 col-md-6', 'class2': 'col-lg-7 col-md-6', 'type': 'text'})
-                                            +fieldBlock("routing_number", user.routing_number, {'class1': 'col-lg-3 col-md-6', 'class2': 'col-lg-7 col-md-6', 'type': 'text'})
-                                            +fieldBlock("account_type", user.account_type, {'class1': 'col-lg-3 col-md-6', 'class2': 'col-lg-7 col-md-6', 'type': 'text'})
-                                            +fieldBlock("check_type", user.check_type, {'class1': 'col-lg-3 col-md-6', 'class2': 'col-lg-7 col-md-6', 'type': 'text'})
-                                            +fieldBlock("name_on_bank_account", user.name_on_bank_account, {'class1': 'col-lg-3 col-md-6', 'class2': 'col-lg-7 col-md-6', 'type': 'text'})
-                                            +fieldBlock("ssn", user.ssn, {'class1': 'col-lg-3 col-md-6', 'class2': 'col-lg-7 col-md-6', 'type': 'text'})
+                                            +fieldBlock("first_name", user.first_name, {'class1': 'col-md-3 offset-md-1 offset-lg-0', 'class2': 'col-lg-7 col-md-6', 'type': 'text'})
+                                            +fieldBlock("last_name", user.last_name, {'class1': 'col-md-3 offset-md-1 offset-lg-0', 'class2': 'col-lg-7 col-md-6', 'type': 'text'})
+                                            +fieldBlock("street_address_1", user.stret_address_1, {'class1': 'col-md-3 offset-md-1 offset-lg-0', 'class2': 'col-lg-7 col-md-6', 'type': 'text'})
+                                            +fieldBlock("street_address_2", user.stret_address_1, {'class1': 'col-md-3 offset-md-1 offset-lg-0', 'class2': 'col-lg-7 col-md-6', 'type': 'text'})
+                                            +fieldBlock("account_number", user.account_number, {'class1': 'col-md-3 offset-md-1 offset-lg-0', 'class2': 'col-lg-7 col-md-6', 'type': 'text'})
+                                            +fieldBlock("account_number_re", user.account_number_rc, {'class1': 'col-md-3 offset-md-1 offset-lg-0', 'class2': 'col-lg-7 col-md-6', 'type': 'text'})
+                                            +fieldBlock("routing_number", user.routing_number, {'class1': 'col-md-3 offset-md-1 offset-lg-0', 'class2': 'col-lg-7 col-md-6', 'type': 'text'})
+                                            +fieldBlock("account_type", user.account_type, {'class1': 'col-md-3 offset-md-1 offset-lg-0', 'class2': 'col-lg-7 col-md-6', 'type': 'text'})
+                                            +fieldBlock("check_type", user.check_type, {'class1': 'col-md-3 offset-md-1 offset-lg-0', 'class2': 'col-lg-7 col-md-6', 'type': 'text'})
+                                            +fieldBlock("name_on_bank_account", user.name_on_bank_account, {'class1': 'col-md-3 offset-md-1 offset-lg-0', 'class2': 'col-lg-7 col-md-6', 'type': 'text'})
+                                            +fieldBlock("ssn", user.ssn, {'class1': 'col-md-3 offset-md-1 offset-lg-0', 'class2': 'col-lg-7 col-md-6', 'type': 'text'})
 
                                             .form-group.row 
                                                 .col-sm-11 
@@ -109,9 +115,9 @@ include mixins.jade
                                                         span.warning-text 
                                                             | Investors are limited to 12 month investment totals ranging from $2,000 - $100,000 based on income and net worth. Please update your financial information to see your limit.
 
-                                            +fieldBlock("annual_income", user.annual_income, {'class1': 'col-lg-3 col-md-6', 'class2': 'col-lg-7 col-md-6', 'type': 'text'})
-                                            +fieldBlock("net_worth", user.net_worth, {'class1': 'col-lg-3 col-md-6', 'class2': 'col-lg-7 col-md-6', 'type': 'text'})
-                                            
+                                            +fieldBlock("annual_income", user[annual_income], {'class1': 'col-md-3 offset-md-1 offset-lg-0', 'class2': 'col-lg-7 col-md-6', 'type': 'text'})
+                                            +fieldBlock("net_worth", user[net_worth], {'class1': 'col-md-3 offset-md-1 offset-lg-0', 'class2': 'col-lg-7 col-md-6', 'type': 'text'})
+                                              
 
                                             .form-group.row.clearfix 
                                                 .col-md-10
@@ -132,27 +138,27 @@ include mixins.jade
                                 .col-xs-12
 
                                     section.right-block 
-                                        +fieldBlock("where_grow_up", user.where_grow_up, {'class1': 'col-lg-3 col-md-6', 'class2': 'col-lg-7 col-md-6', 'type': 'text'})
-                                        +fieldBlock("where_go_college", user.where_ho_college, {'class1': 'col-lg-3 col-md-6', 'class2': 'col-lg-7 col-md-6', 'type': 'text'})
-                                        +fieldBlock("industries", user.industries, {'class1': 'col-lg-3 col-md-6', 'class2': 'col-lg-7 col-md-6', 'type': 'text'})
-                                        +fieldBlock("locations", user.locations, {'class1': 'col-lg-3 col-md-6', 'class2': 'col-lg-7 col-md-6', 'type': 'text'})
-                                        +fieldBlock("interested", user.interested, {'class1': 'col-lg-3 col-md-6', 'class2': 'col-lg-7 col-md-6', 'type': 'text'})
-                                        +fieldBlock("investment_goals", user.investment_goals, {'class1': 'col-lg-3 col-md-6', 'class2': 'col-lg-7 col-md-6', 'type': 'text'})
-                                        +fieldBlock("important_attributes", user.important_attributes, {'class1': 'col-lg-3 col-md-6', 'class2': 'col-lg-7 col-md-6', 'type': 'text'})
+                                        +fieldBlock("where_grow_up", user.where_grow_up, {'class1': 'col-md-3 offset-md-1 offset-lg-0', 'class2': 'col-lg-7 col-md-6', 'type': 'text'})
+                                        +fieldBlock("where_go_college", user.where_ho_college, {'class1': 'col-md-3 offset-md-1 offset-lg-0', 'class2': 'col-lg-7 col-md-6', 'type': 'text'})
+                                        +fieldBlock("industries", user.industries, {'class1': 'col-md-3 offset-md-1 offset-lg-0', 'class2': 'col-lg-7 col-md-6', 'type': 'text'})
+                                        +fieldBlock("locations", user.locations, {'class1': 'col-md-3 offset-md-1 offset-lg-0', 'class2': 'col-lg-7 col-md-6', 'type': 'text'})
+                                        +fieldBlock("interested", user.interested, {'class1': 'col-md-3 offset-md-1 offset-lg-0', 'class2': 'col-lg-7 col-md-6', 'type': 'text'})
+                                        +fieldBlock("investment_goals", user.investment_goals, {'class1': 'col-md-3 offset-md-1 offset-lg-0', 'class2': 'col-lg-7 col-md-6', 'type': 'text'})
+                                        +fieldBlock("important_attributes", user.important_attributes, {'class1': 'col-md-3 offset-md-1 offset-lg-0', 'class2': 'col-lg-7 col-md-6', 'type': 'text'})
              
                                         .form-group.row.clearfix 
-                                            .col-lg-10 
+                                            .col-md-10 
                                                 .controls  
                                                     button(
                                                         type="submit"
                                                     ).btn.btn-primary.btn-lg.pull-right SAVE 
                                         
-    //- .popover-content-ssn 
-    //- i.fa.fa-info-circle 
-    //-     span Why do we need this? I know it seems terribly invasive but we are required to obtain your socialsecurity number for two reasons, 
-    //-     br
-    //-     | 1) regulators require we comply with know your customer and anti-money laundering rules and; 
-    //-     br 
-    //-     | 2) companies will need to provide you with tax information based on your investment.  
-    //-     br
-    //-     | Don’t worry, we’re obsessive about your privacy.
+    .popover-content-ssn 
+        i.fa.fa-info-circle 
+        span Why do we need this? I know it seems terribly invasive but we are required to obtain your socialsecurity number for two reasons, 
+        br
+        | 1) regulators require we comply with know your customer and anti-money laundering rules and; 
+        br 
+        | 2) companies will need to provide you with tax information based on your investment.  
+        br
+        | Don’t worry, we’re obsessive about your privacy.

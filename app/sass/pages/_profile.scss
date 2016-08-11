@@ -9,53 +9,65 @@
 		border-radius: 20px;
 	}
 
-	.drop-photo {
-		min-height: 135px;
-		margin-top: 5px;
+	.drop-photo-block {
+		.drop-photo {
+			min-height: 135px;
+			margin-top: 5px;
 
-		background: $border_color;
-		border: 1px $grey solid;
-	}
-
-	.selected-area-info {
-		position: relative;
-
-		padding: 5px 0 0 20px;
-		margin-bottom: -5px;
-
-		i,
-		span {
-			display: inline-block;
-
-			color: $total_sum_progresbar;
-			font-size: 11px;
+			background: $border_color;
+			border: 1px $grey solid;
 		}
+		
+		.selected-area-info {
+			position: relative;
 
-		i {
-			position: absolute;
-			top: 7px;
-			left: 5px;
+			padding: 5px 0 0 20px;
+			margin-bottom: -5px;
+
+			i,
+			span {
+				display: inline-block;
+
+				color: $total_sum_progresbar;
+				font-size: 11px;
+			}
+
+			i {
+				position: absolute;
+				top: 7px;
+				left: 5px;
+			}
 		}
-	}
-
-	.drop-image-title {
-		margin-top: 17px;
-		margin-bottom: 30px;
-
-		span {
-			@include calc-rem(14);
-
-			color: $footer_text;
-		}
-
-		i {
-			@include calc-rem(28);
-
+		
+		.drop-image-title {
 			margin-top: 17px;
+			margin-bottom: 30px;
 
-			color: $footer_text;
+			span {
+				@include calc-rem(14);
+
+				color: $footer_text;
+			}
+
+			i {
+				@include calc-rem(28);
+
+				margin-top: 17px;
+
+				color: $footer_text;
+			}
 		}
+
+		@media screen and (max-width: 1200px) {
+			margin: 0 auto;
+
+			width: 255px;
+		}
+
 	}
+
+
+
 	// .profile-tabs-content {   
 	// }
 
@@ -86,6 +98,28 @@
 		}
 	}
 
+	span.change_state_city {
+		position: absolute;
+		top: 6px;
+		left: 121px;
+
+		cursor: pointer;
+
+		.input-value {
+			@include ellipsis();
+
+			display: inline-block;
+			max-width: 150px;
+			margin-right: 20px;
+
+			text-decoration: underline;
+		}
+
+		i {
+			vertical-align: super;
+		}
+	}
+
 	// тут переопределяем стили для елементов формы которые заданы в pages.scss
 	.form-section {
 		.street_address_2 label {
@@ -100,27 +134,7 @@
 				display: none;
 			}
 
-			span.change_state_city {
-				position: absolute;
-				top: 6px;
-				left: 15px;
-
-				cursor: pointer;
-
-				.input-value {
-					@include ellipsis();
-
-					display: inline-block;
-					max-width: 150px;
-					margin-right: 20px;
-
-					text-decoration: underline;
-				}
-
-				i {
-					vertical-align: super;
-				}
-			}
+			
 		}
 
 		textarea {
@@ -132,14 +146,25 @@
 		}
 	}
 
-	// @media screen and (max-width: 1200px) {
-	// 	.profile-tabs.nav-tabs {
-	// 		text-align: center;
-	// 		li.nav-item {
-	// 			float: none;
-	// 		}
-	// 	}
-	// }
+	@media screen and (min-width:992px) and (max-width: 1199px) {
+		.profile-tabs.nav-tabs {
+			text-align: center;
+			li.nav-item {
+				display: inline-block;
+				float: none;
+			}
+		}
+	}
+
+	@media screen and (max-width: 991px) {
+		.profile-tabs.nav-tabs {
+			text-align: center;
+			li.nav-item {
+				display: inline;
+				float: none;
+			}
+		}
+	}
 
 	@media screen and (max-width: 543px) {
 		.profile-tabs { 
