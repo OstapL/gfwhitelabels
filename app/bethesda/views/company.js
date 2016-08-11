@@ -41,6 +41,9 @@ define(function() {
                                 {trigger: true, replace: true}
                             );
 
+                        }).
+                        fail((xhr, status, text) => {
+                            defaultSaveActions.error(this, xhr, status, text, this.fields);
                         });
                 } else {
                     if(this.$('.alert').length) {

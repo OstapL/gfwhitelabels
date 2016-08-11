@@ -2,7 +2,6 @@ include mixins.jade
 
 +breadcrumbs('Create Company', 'Help Button', [['home', '/',], [ 'current', page.get_absolute_url]])
 
-- var fields = {}
 section.create-company.container
 	//START LEFT BLOCK
 	.col-lg-3
@@ -78,13 +77,15 @@ section.create-company.container
 	.col-lg-8
 		h2.text-uppercase.text-lg-center.text-xs-center Company
 		form(metod="post" action="").form-section
-			+fieldBlock("Company Name", '', {
+			input(type='hidden' name='state' value='NY' id='state')
+			input(type='hidden' name='city' value='New York' id='city')
+			+fieldBlock("name", '', {
 				class1: 'col-lg-3 col-md-3',
 				class2: 'col-lg-9 col-md-9',
 				type: 'text',
 				placeholder: 'Company Name',
 				})
-			+fieldBlock("Tagline", '', {
+			+fieldBlock("tagline", '', {
 				class1: 'col-lg-3 col-md-3',
 				class2: 'col-lg-9 col-md-9',
 				type: 'text',
@@ -104,19 +105,19 @@ section.create-company.container
 					label.date Date of Organization
 					input(type="date").form-control
 			.border-bottom
-			+fieldBlock("Street Address", '', {
+			+fieldBlock("address_1", '', {
 				class1: 'col-lg-3 col-md-3',
 				class2: 'col-lg-9 col-md-9',
 				type: 'text',
 				})
-			+fieldBlock("Optional Address", '', {
+			+fieldBlock("address_2", '', {
 				class1: 'col-lg-3 col-md-3',
 				class2: 'col-lg-9 col-md-9',
 				type: 'text',
 				})
 			.row
 				.col-lg-6
-					+fieldBlock("Zip_code", '', {
+					+fieldBlock("zip_code", '', {
 						class1: 'col-lg-6 col-md-3', 
 						class2: 'col-lg-6 col-md-9', 
 						type: 'text',
@@ -129,13 +130,13 @@ section.create-company.container
 								i.fa.fa-pencil-square-o
 			.row.m-b-0
 				.col-lg-6
-					+fieldBlock("Phone", '', {
+					+fieldBlock("phone", '', {
 						class1: 'col-lg-6 col-md-3', 
 						class2: 'col-lg-6 col-md-9', 
 						type: 'text',
 						})
 				.col-lg-6
-					+fieldBlock("Website", '', {
+					+fieldBlock("website", '', {
 						class1: 'col-lg-6 col-md-3', 
 						class2: 'col-lg-6 col-md-9', 
 						type: 'text',
@@ -144,26 +145,26 @@ section.create-company.container
 			.border-bottom.m-t-2
 			.row.m-b-0
 				.col-lg-6
-					+fieldBlock("Twitter", '', {
+					+fieldBlock("twitter", '', {
 						class1: 'col-lg-6 col-md-3', 
 						class2: 'col-lg-6 col-md-9', 
 						type: 'text',
 						})
 				.col-lg-6
-					+fieldBlock("Facebook", '', {
+					+fieldBlock("facebook", '', {
 						class1: 'col-lg-6 col-md-3', 
 						class2: 'col-lg-6 col-md-9', 
 						type: 'text',
 						})
 			.row.m-b-0
 				.col-lg-6
-					+fieldBlock("Instagram", '', {
+					+fieldBlock("instagram", '', {
 						class1: 'col-lg-6 col-md-3', 
 						class2: 'col-lg-6 col-md-9', 
 						type: 'text',
 						})
 				.col-lg-6
-					+fieldBlock("LinkedIn", '', {
+					+fieldBlock("linkedin", '', {
 						class1: 'col-lg-6 col-md-3', 
 						class2: 'col-lg-6 col-md-9', 
 						type: 'text',
@@ -171,8 +172,6 @@ section.create-company.container
 			.row.m-t-2
 				.col-lg-6.pull-right
 					.col-lg-6
-						button(href="").btn.btn-lg.btn-primary.text-uppercase.pull-right save
+						button(type="submit").btn.btn-lg.btn-primary.text-uppercase.pull-right save
 					.col-lg-6
-						button(href="").btn.btn-lg.btn-secondary.text-uppercase preview
-
-
+						a(href="").btn.btn-lg.btn-secondary.text-uppercase preview

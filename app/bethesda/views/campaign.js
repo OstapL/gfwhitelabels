@@ -175,5 +175,41 @@ define(function() {
             },
         }),
 
+        generalInformation: Backbone.View.extend({
+            initialize: function(options) {
+                this.fields = options.fields;
+            },
+
+            render: function() {
+                this.$el.html(
+                    window.campaignGeneralInformation({
+                        serverUrl: serverUrl,
+                        Urls: Urls,
+                        fields: this.fields,
+                        campaign: this.model.toJSON(),
+                    })
+                );
+                return this;
+            },
+        }),
+
+        media: Backbone.View.extend({
+            initialize: function(options) {
+                this.fields = options.fields;
+            },
+
+            render: function() {
+                this.$el.html(
+                    window.campaignMedia({
+                        serverUrl: serverUrl,
+                        Urls: Urls,
+                        fields: this.fields,
+                        campaign: this.model.toJSON(),
+                    })
+                );
+                return this;
+            },
+        })
+
     }
 });

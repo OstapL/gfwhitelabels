@@ -46,7 +46,7 @@ _.extend(Backbone.Validation.callbacks, {
             }
             else {
                 $el.html(
-                 $el.html() + '<p>' + error.join(',') + '</p>'
+                 $el.html() + '<p><b>' + view.fields[attr].label + ':</b> ' + error.join(',') + '</p>'
                 );
             }
         }
@@ -70,7 +70,7 @@ var defaultSaveActions = {
             this._success(response);
         }
     },
-    error: (view, xhr, status, text) => {
+    error: (view, xhr, status, text, fields) => {
         if(xhr.hasOwnProperty('responseJSON')) {
             let data = xhr.responseJSON;
             for (let key in data)  {                                                 

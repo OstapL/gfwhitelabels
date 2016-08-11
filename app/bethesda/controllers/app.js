@@ -14,7 +14,6 @@ let app = {
         page: [],
     },
 
-
     routers: {},
     cache: {},
 
@@ -124,7 +123,12 @@ app.on('urlsReady', function() {
           'page/:id/': 'pageDetail',
           'page/:id': 'pageDetail',
           'account/profile': 'accountProfile',
-          'company/create': 'createCompany',
+          'company/create': 'companyCreate',
+          'campaign/general_information/:id': 'campaignGeneralInformation',
+          'campaign/media/:id': 'campaignMedia',
+          'campaign/team_members/:id': 'campaignTeamMembers',
+          'campaign/specifics/:id': 'campaignSpecifics',
+          'campaign/perks/:id': 'campaignPerks',
           'account/login': 'login',
           'account/signup': 'login',
           'account/logout': 'logout',
@@ -278,7 +282,7 @@ app.on('urlsReady', function() {
             }
         },
 
-        createCompany: function() {
+        companyCreate: function() {
             if(!app.user.is_anonymous()) {
                 requirejs(['models/company', 'views/company', ], (model, view) => {
                     let company = new model.model();
@@ -288,7 +292,68 @@ app.on('urlsReady', function() {
                     ).done((response) => {
                         var i = new view.createOrUpdate({
                             el: '#content',
-                            fields: response.actions.POST
+                            fields: response.actions.POST,
+                            model: company
+                        });
+                        i.render();
+                        //app.views.campaign[id].render();
+                        //app.cache[window.location.pathname] = i.$el.html();
+
+                        app.hideLoading();
+                    });
+                });
+            } else {
+                app.routers.navigate(
+                    '/account/login', 
+                    {trigger: true, replace: true}
+                );
+            }
+        },
+
+        campaignGeneralInformation: function(company_id) {
+            if(!app.user.is_anonymous()) {
+                requirejs(['models/campaign', 'views/campaign', ], (model, view) => {
+                    let campaign = new model.model({
+                        company: company_id
+                    });
+                    $.ajax(_.extend({
+                            url: campaign.urlRoot + '/general_infomation',
+                        }, defaultOptionsRequest)
+                    ).done((response) => {
+                        var i = new view.generalInformation({
+                            el: '#content',
+                            fields: {},
+                            model: campaign
+                        });
+                        i.render();
+                        //app.views.campaign[id].render();
+                        //app.cache[window.location.pathname] = i.$el.html();
+
+                        app.hideLoading();
+                    });
+                });
+            } else {
+                app.routers.navigate(
+                    '/account/login', 
+                    {trigger: true, replace: true}
+                );
+            }
+        },
+
+        campaignMedia: function(id) {
+            if(!app.user.is_anonymous()) {
+                requirejs(['models/campaign', 'views/campaign', ], (model, view) => {
+                    let campaign = new model.model({
+                        id: id
+                    });
+                    $.ajax(_.extend({
+                            url: campaign.urlRoot + '/media',
+                        }, defaultOptionsRequest)
+                    ).done((response) => {
+                        var i = new view.media({
+                            el: '#content',
+                            fields: {},
+                            model: campaign
                         });
                         i.render();
                         //app.views.campaign[id].render();
