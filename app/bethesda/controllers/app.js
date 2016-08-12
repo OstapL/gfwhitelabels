@@ -42,13 +42,18 @@ let app = {
         $('.loader_overlay').show();
     },
 
-    hideLoading: function() {
-        $('.loader_overlay').animate({
-            opacity: 0
-        }, 500, function() {
-            $(this).css('display', 'none');
-            $(this).css('opacity', '1');
-        });
+    hideLoading: function(time) {
+        time = time || 500;
+        if(time > 0) {
+            $('.loader_overlay').animate({
+                opacity: 0
+            }, time, function() {
+                $(this).css('display', 'none');
+                $(this).css('opacity', '1');
+            });
+        } else {
+            $('.loader_overlay').css('display', 'block');
+        }
     },
 
     showError: function(form, type, errors) {
@@ -645,6 +650,7 @@ app.on('urlsReady', function() {
                 app.trigger('userReady');
                 app.trigger('menuReady');
             } else {
+                app.hideLoading();
                 $('#content').html(app.cache[url]);
                 app.routers.navigate(
                     url, 
@@ -652,7 +658,6 @@ app.on('urlsReady', function() {
                 );
                 app.trigger('userReady');
                 app.trigger('menuReady');
-                app.hideLoading();
             }
         }
     });
