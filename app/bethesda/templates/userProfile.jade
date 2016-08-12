@@ -14,11 +14,11 @@ include mixins.jade
                 .drop-photo-block
                     h5.widget-title.font-alt #{user.first_name} #{user.last_name}
                     .dropzone__image.drop-photo.dz-clickable.dropzone
-                        img(src=user.image)
+                        img(src=serverUrl + Urls['thumb2_list'](user.image))
                     input(
                         type="hidden" 
                         name="image" 
-                        value="80"
+                        value=user.image
                     )#image
                     .drop-image-title.text-xs-center 
                         span Drop your profile picture here
@@ -30,7 +30,7 @@ include mixins.jade
             ul.nav.nav-tabs.profile-tabs 
                 li.nav-item(aria-expanded="false")
                     a(
-                        href="#account_info"  
+                        href="#account_info"
                         data-toggle="tab" 
                         aria-expanded="true"
                         role="tab"
