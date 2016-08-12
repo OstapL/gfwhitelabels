@@ -209,6 +209,60 @@ define(function() {
                 );
                 return this;
             },
+        }),
+
+        teamMembers: Backbone.View.extend({
+            initialize: function(options) {
+                this.fields = options.fields;
+            },
+
+            render: function() {
+                this.$el.html(
+                    window.campaignTeamMembers({
+                        serverUrl: serverUrl,
+                        Urls: Urls,
+                        fields: this.fields,
+                        campaign: this.model.toJSON(),
+                    })
+                );
+                return this;
+            },
+        }),
+
+        specifics: Backbone.View.extend({
+            initialize: function(options) {
+                this.fields = options.fields;
+            },
+
+            render: function() {
+                this.$el.html(
+                    window.campaignSpecifics({
+                        serverUrl: serverUrl,
+                        Urls: Urls,
+                        fields: this.fields,
+                        campaign: this.model.toJSON(),
+                    })
+                );
+                return this;
+            },
+        }),
+
+        perks: Backbone.View.extend({
+            initialize: function(options) {
+                this.fields = options.fields;
+            },
+
+            render: function() {
+                this.$el.html(
+                    window.campaignPerks({
+                        serverUrl: serverUrl,
+                        Urls: Urls,
+                        fields: this.fields,
+                        campaign: this.model.toJSON(),
+                    })
+                );
+                return this;
+            },
         })
 
     }

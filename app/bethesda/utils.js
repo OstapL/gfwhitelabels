@@ -82,7 +82,7 @@ var defaultSaveActions = {
         else if(xhr.hasOwnProperty('statusText')) {
             let s = '<strong>Errors:</strong> ';
             s += xhr.statusText;
-            view.$.prepend("<div class='alert alert-warning' role='alert'>" + s + "<div>");
+            view.$el.find('form').prepend("<div class='alert alert-warning' role='alert'>" + s + "<div>");
         }
         if(view.$el.find('.alert').length) {
             view.$el.find('.alert').scrollTo();
@@ -301,16 +301,28 @@ function createFileDropzone(name, folderName, renameTo, onSuccess) {
   console.log('params', params);
 
   let dropbox = new Dropzone(".dropzone__" + name, {
-      url: Urls['file_uploader'](),
+      url: serverUrl + Urls['image2-list'](),
       paramName: name,
-      params: params
+      params: params,
+      previewTemplate: `<div class="dz-details">
+          <img data-dz-thumbnail />
+        </div>
+        <div class="dz-progress"><span class="dz-upload" data-dz-uploadprogress></span></div>
+        <div class="dz-error-message"><span data-dz-errormessage></span></div>`,
+      headers: {
+          'Authorization':  'Token ' + localStorage.getItem('token'),
+          'Cache-Control': null,
+          'X-Requested-With': null
+      }
   });
 
-  $('.dropzone__' + name).addClass('dropzone').html('Drop file here');
+  $('.dropzone__' + name).addClass('dropzone')//.html('Drop file here');
 
+  /*
   dropbox.on('sending', function(data) {
       data.xhr.setRequestHeader("X-CSRFToken", getCSRF());   
   });
+  */
 
   dropbox.on('addedfile', function(file) {
       _(this.files).each((f, i) => {
@@ -323,6 +335,7 @@ function createFileDropzone(name, folderName, renameTo, onSuccess) {
 
   dropbox.on("success", (file, data) => {
       data = JSON.parse(data);
+      $('.dz-details').html('<img src="' + data.url + '" />');
       if(typeof onSuccess != 'undefined') {
         onSuccess(data);
       }

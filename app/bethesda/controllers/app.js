@@ -370,6 +370,96 @@ app.on('urlsReady', function() {
             }
         },
 
+        campaignTeamMembers: function(id) {
+            if(!app.user.is_anonymous()) {
+                requirejs(['models/campaign', 'views/campaign', ], (model, view) => {
+                    let campaign = new model.model({
+                        id: id
+                    });
+                    $.ajax(_.extend({
+                            url: campaign.urlRoot + '/team_members',
+                        }, defaultOptionsRequest)
+                    ).done((response) => {
+                        var i = new view.teamMembers({
+                            el: '#content',
+                            fields: {},
+                            model: campaign
+                        });
+                        i.render();
+                        //app.views.campaign[id].render();
+                        //app.cache[window.location.pathname] = i.$el.html();
+
+                        app.hideLoading();
+                    });
+                });
+            } else {
+                app.routers.navigate(
+                    '/account/login', 
+                    {trigger: true, replace: true}
+                );
+            }
+        },
+
+        campaignSpecifics: function(id) {
+            if(!app.user.is_anonymous()) {
+                requirejs(['models/campaign', 'views/campaign', ], (model, view) => {
+                    let campaign = new model.model({
+                        id: id
+                    });
+                    $.ajax(_.extend({
+                            url: campaign.urlRoot + '/specifics',
+                        }, defaultOptionsRequest)
+                    ).done((response) => {
+                        var i = new view.specifics({
+                            el: '#content',
+                            fields: {},
+                            model: campaign
+                        });
+                        i.render();
+                        //app.views.campaign[id].render();
+                        //app.cache[window.location.pathname] = i.$el.html();
+
+                        app.hideLoading();
+                    });
+                });
+            } else {
+                app.routers.navigate(
+                    '/account/login', 
+                    {trigger: true, replace: true}
+                );
+            }
+        },
+
+        campaignPerks: function(id) {
+            if(!app.user.is_anonymous()) {
+                requirejs(['models/campaign', 'views/campaign', ], (model, view) => {
+                    let campaign = new model.model({
+                        id: id
+                    });
+                    $.ajax(_.extend({
+                            url: campaign.urlRoot + '/perks',
+                        }, defaultOptionsRequest)
+                    ).done((response) => {
+                        var i = new view.perks({
+                            el: '#content',
+                            fields: {},
+                            model: campaign
+                        });
+                        i.render();
+                        //app.views.campaign[id].render();
+                        //app.cache[window.location.pathname] = i.$el.html();
+
+                        app.hideLoading();
+                    });
+                });
+            } else {
+                app.routers.navigate(
+                    '/account/login', 
+                    {trigger: true, replace: true}
+                );
+            }
+        },
+
         issuerDashboard: function() {
             requirejs(['models/user', ], (model, view, template) => {
 
