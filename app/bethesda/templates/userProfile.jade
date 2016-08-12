@@ -14,7 +14,7 @@ include mixins.jade
                 .drop-photo-block
                     h5.widget-title.font-alt #{user.first_name} #{user.last_name}
                     .dropzone__image.drop-photo.dz-clickable.dropzone
-                        img(src=serverUrl + Urls['thumb2_list'](user.image))
+                        img(src=app.user.get_thumbnail('.dropzone__image img'))
                     input(
                         type="hidden" 
                         name="image" 
