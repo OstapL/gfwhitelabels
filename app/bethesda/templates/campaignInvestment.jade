@@ -23,6 +23,16 @@ include mixins.jade
               placeholder: '$2,500',
               text: "$10 of payment processing fee. Your money will be returned to you if the campaign doesn't reach the target goal ($500,000)."
               })
+
+          // popover content for amount field
+          div.popover-content-amount-campaign
+            i.fa.fa-info-circle
+            span Investors are limited to 12 month investment totals ranging from $2,000 - $100,000 based on income and net worth.Please update your financial information to see your limit:
+
+            +fieldBlock("annual_income", user[annual_income], {'class1': 'col-md-4', 'class2': 'col-md-8', 'type': 'text'})
+
+            +fieldBlock("net_worth", user[net_worth], {'class1': 'col-md-4', 'class2': 'col-md-8', 'type': 'text'})
+
           section.personal_information.pt30
             h2.text-uppercase.dosis Personal Information
               span.small-text.open-sans Required by United States banking laws. This information is transmitted securely and will never be used for any purpose beyond executing your investment. You only have to do this once.
