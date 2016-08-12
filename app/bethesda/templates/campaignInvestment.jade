@@ -23,6 +23,16 @@ include mixins.jade
               placeholder: '$2,500',
               text: "$10 of payment processing fee. Your money will be returned to you if the campaign doesn't reach the target goal ($500,000)."
               })
+
+          // popover content for amount field
+          div.popover-content-amount-campaign
+            i.fa.fa-info-circle
+            span Investors are limited to 12 month investment totals ranging from $2,000 - $100,000 based on income and net worth.Please update your financial information to see your limit:
+
+            +fieldBlock("annual_income", user[annual_income], {'class1': 'col-md-4', 'class2': 'col-md-8', 'type': 'text'})
+
+            +fieldBlock("net_worth", user[net_worth], {'class1': 'col-md-4', 'class2': 'col-md-8', 'type': 'text'})
+
           section.personal_information.pt30
             h2.text-uppercase.dosis Personal Information
               span.small-text.open-sans Required by United States banking laws. This information is transmitted securely and will never be used for any purpose beyond executing your investment. You only have to do this once.
@@ -48,10 +58,10 @@ include mixins.jade
               }).street_address_2
             .row
               .col-lg-7.p-l-2
-                .form-group.row.required
-                  label.col-lg-5.text-lg-right Zip code
-                  .col-lg-7
-                    input(type="text" placeholder="Zip code").form-control
+                +fieldBlock("zip_code", '', {
+                  class1: 'col-lg-5',
+                  class2: 'col-lg-7',
+                  })
               .col-lg-5.city_state
                 label.col-lg-6 City/State
                 .col-lg-6
@@ -60,10 +70,11 @@ include mixins.jade
                       i.fa.fa-pencil-square-o
             .row
               .col-lg-7.no-margin-bottom.p-l-2
-                .form-group.row.required
-                  label.col-lg-5.text-lg-right Date of Birth
-                  .col-lg-7
-                    input(type="date" ).form-control
+                +fieldBlock("dob", '', {
+                  class1: 'col-lg-5',
+                  class2: 'col-lg-7',
+                  type: 'date',
+                  })
               .col-lg-5.no-margin-bottom
                 +fieldBlock("ssn", '', {
                   class1: 'col-lg-5 col-md-3', 

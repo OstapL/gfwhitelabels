@@ -334,8 +334,11 @@ function createFileDropzone(name, folderName, renameTo, onSuccess) {
   });
 
   dropbox.on("success", (file, data) => {
-      data = JSON.parse(data);
-      $('.dz-details').html('<img src="' + data.url + '" />');
+      //data = JSON.parse(data);
+      // FixME
+      // What a crap ?!
+      $('.dropzone__' + name + ' img').remove();
+      $('.dropzone__' + name).prepend('<img src="' + data.url + '" />');
       if(typeof onSuccess != 'undefined') {
         onSuccess(data);
       }

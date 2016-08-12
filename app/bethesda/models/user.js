@@ -42,6 +42,18 @@ let userModel = Backbone.Model.extend({
         }
     },
 
+    get_thumbnail: function(selector) {
+        $.ajax({
+            url: serverUrl + Urls['thumb2_list'](this.get('image')),
+            dataType: 'json'
+        }).then((json) => {
+            // FixME
+            // as a temp fix
+            $(selector).attr('src', json.url);
+            //return json.url;
+        });
+    },
+
     // ToDo
     // Move login function from views/user.js to model
     /*
