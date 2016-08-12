@@ -33,7 +33,7 @@ let app = {
             callback(this.models[name][id]);
         }
     },
-    
+
     /* 
      * Misc Display Functions 
      *
@@ -62,7 +62,7 @@ let app = {
         // ToDo
         // Create template/message.js
         // And use messages dynamicly base on the message type
-        
+
 
         if(msgBox.length == 0) {
             $(form).prepend(`<div class="alert alert-warning" role="alert">
@@ -71,7 +71,7 @@ let app = {
         }
         $('.loader_overlay').hide();
     },
-    
+
     /*
      * Strip /api in urls
      * and remove all urls not related to API
@@ -147,7 +147,7 @@ app.on('urlsReady', function() {
             } else {
                 $('#content').html(app.cache[event.target.pathname]);
                 app.routers.navigate(
-                    event.target.pathname, 
+                    event.target.pathname,
                     {trigger: false, replace: false}
                 );
             }
@@ -175,7 +175,7 @@ app.on('urlsReady', function() {
                         $('#content').html('');
                         app.views.campaigns = new view.list({
                             el: '#content',
-                            collection: collection, 
+                            collection: collection,
                         });
                         app.views.campaigns.render();
 
@@ -229,7 +229,7 @@ app.on('urlsReady', function() {
                 });
             });
         },
-                                                                                      
+
         campaignInvestment: function(id) {
             if(!app.user.is_anonymous()) {
                 requirejs(['models/campaign', 'models/investment', 'views/campaign', ], (model, investModel, view) => {
@@ -254,7 +254,7 @@ app.on('urlsReady', function() {
                 });
             } else {
                 app.routers.navigate(
-                    '/account/login', 
+                    '/account/login',
                     {trigger: true, replace: true}
                 );
             }
@@ -281,7 +281,7 @@ app.on('urlsReady', function() {
                 });
             } else {
                 app.routers.navigate(
-                    '/account/login', 
+                    '/account/login',
                     {trigger: true, replace: true}
                 );
             }
@@ -309,7 +309,7 @@ app.on('urlsReady', function() {
                 });
             } else {
                 app.routers.navigate(
-                    '/account/login', 
+                    '/account/login',
                     {trigger: true, replace: true}
                 );
             }
@@ -339,7 +339,7 @@ app.on('urlsReady', function() {
                 });
             } else {
                 app.routers.navigate(
-                    '/account/login', 
+                    '/account/login',
                     {trigger: true, replace: true}
                 );
             }
@@ -369,7 +369,7 @@ app.on('urlsReady', function() {
                 });
             } else {
                 app.routers.navigate(
-                    '/account/login', 
+                    '/account/login',
                     {trigger: true, replace: true}
                 );
             }
@@ -399,7 +399,7 @@ app.on('urlsReady', function() {
                 });
             } else {
                 app.routers.navigate(
-                    '/account/login', 
+                    '/account/login',
                     {trigger: true, replace: true}
                 );
             }
@@ -429,7 +429,7 @@ app.on('urlsReady', function() {
                 });
             } else {
                 app.routers.navigate(
-                    '/account/login', 
+                    '/account/login',
                     {trigger: true, replace: true}
                 );
             }
@@ -459,7 +459,7 @@ app.on('urlsReady', function() {
                 });
             } else {
                 app.routers.navigate(
-                    '/account/login', 
+                    '/account/login',
                     {trigger: true, replace: true}
                 );
             }
@@ -504,18 +504,24 @@ app.on('urlsReady', function() {
                     id: id
                 });
 
+                let collection = new model.collection()
+
                 element.fetch({
                     success: (response) => {
-                        app.models.page[id] = model;
-                        app.views.page[id] = new view.detail({
-                            el: '#content',
-                            model: element,
-                            template: pageDetailT,
-                        });
-                        app.views.page[id].render();
-                        app.cache[window.location.pathname] = app.views.page[id].$el.html();
+                        collection.fetch({
+                            success: (response) => {
+                                app.models.page[id] = model;
+                                app.views.page[id] = new view.detail({
+                                    el: '#content',
+                                    model: element,
+                                    related_pages: collection.toJSON(),
+                                });
+                                app.views.page[id].render();
+                                app.cache[window.location.pathname] = app.views.page[id].$el.html();
 
-                        app.hideLoading();
+                                app.hideLoading();
+                        }
+                        });
                     }
                 });
             });
@@ -637,14 +643,14 @@ app.on('urlsReady', function() {
             event.preventDefault();
             app.showLoading();
 
-            // If we already have that url in cache - we will just update browser location 
+            // If we already have that url in cache - we will just update browser location
             // and set cache version of the page
             // overise we will trigger app router function
             var url = href;
 
             if(app.cache.hasOwnProperty(url) == false) {
                 app.routers.navigate(
-                    url, 
+                    url,
                     {trigger: true, replace: false}
                 );
                 app.trigger('userReady');
@@ -653,7 +659,7 @@ app.on('urlsReady', function() {
                 app.hideLoading();
                 $('#content').html(app.cache[url]);
                 app.routers.navigate(
-                    url, 
+                    url,
                     {trigger: false, replace: false}
                 );
                 app.trigger('userReady');
