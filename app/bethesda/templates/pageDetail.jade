@@ -2,10 +2,20 @@ include mixins.jade
 
 +breadcrumbs(page.title, 'Subtitle', [['home', '/',], [ 'current', page.get_absolute_url]])
 
-section.text_block
+section
     .container
-        .row!= page.created
-        .row!= page.mark_current_regexes
-        .row!= page.meta_description
-        .row!= page.move_url
-        .row!= related_pages
+        .row
+            .col-lg-3.pull-lg-left
+                .sidebar_title 
+                    h4 See Also
+                ul.sidebar_link
+                    each p, i in related_pages
+                        li
+                            a(href=p.page_url) #{ p.title }
+            .col-lg-9.pull-lg-right
+                each content_items, i in page.page_content_items
+                    p.content #{ content_items.content_item.content_html }
+                    //each content, k in content_items.content_item
+                        p.content #{ content }, #{ k }
+                ul
+                    li!= page.created
