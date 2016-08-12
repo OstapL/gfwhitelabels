@@ -7,6 +7,7 @@ define(function() {
 
     r.collection = Backbone.Collection.extend({
         model: r.model,
+        url: serverUrl + '/api/pages/',
     });
 
     return r;
