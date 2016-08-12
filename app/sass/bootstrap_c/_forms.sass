@@ -7,13 +7,16 @@ select.form-control
 
 // стили общие, но есть дополнения которие используются в файле profile, invest
 .form-section// каждая форма будет в таком контейнере
+	.required
+		label
+			color: $black_bg
 	img
 		max-width: 100%// будет перенесен в файл общих стилей
 	//общие стили для лейблов
 	label
 		@include calc-rem(14)
 		font-weight: 700
-		color: $black_bg
+		color: $small-text
 		padding-top: 6px
 		// стили для инлайн радиобатонов
 		&.radio-inline
