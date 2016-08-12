@@ -27,7 +27,7 @@ include mixins.jade
 
 
         .col-xl-9.col-lg-12
-            ul.nav.nav-tabs.profile-tabs 
+            ul.nav.nav-tabs.profile-tabs
                 li.nav-item(aria-expanded="false")
                     a(
                         href="#account_info"
@@ -50,7 +50,7 @@ include mixins.jade
                         aria-expanded="true"
                     ).nav-link.uppercase Investment preferences
 
-            .tab-content.profile-tabs-content  
+            .tab-content.profile-tabs-content.mt30
 
                 #account_info.tab-pane.fade.active.in(aria-expanded="true")
                     .row 
@@ -83,7 +83,7 @@ include mixins.jade
                                             
                  
                                             .form-group.row.clearfix 
-                                                .col-md-10 
+                                                .col-md-10.mt30
                                                     .controls  
                                                         button(
                                                             type="submit"
@@ -109,8 +109,12 @@ include mixins.jade
                                             +fieldBlock("name_on_bank_account", user.name_on_bank_account, {'class1': 'col-md-3 offset-md-1 offset-lg-0', 'class2': 'col-lg-7 col-md-6', 'type': 'text'})
                                             +fieldBlock("ssn", user.ssn, {'class1': 'col-md-3 offset-md-1 offset-lg-0', 'class2': 'col-lg-7 col-md-6', 'type': 'text'})
 
+                                            .row
+                                                .col-sm-7.offset-lg-3
+                                                    hr.mt30.mb50
+
                                             .form-group.row 
-                                                .col-sm-11 
+                                                .col-sm-10 
                                                     .investors-warning 
                                                         i.fa.fa-exclamation-triangle 
                                                         span.warning-text 
@@ -121,7 +125,7 @@ include mixins.jade
                                               
 
                                             .form-group.row.clearfix 
-                                                .col-md-10
+                                                .col-md-10.mt30
                                                     .controls  
                                                         button(
                                                             type="submit"
@@ -148,7 +152,7 @@ include mixins.jade
                                         +fieldBlock("important_attributes", user.important_attributes, {'class1': 'col-md-3 offset-md-1 offset-lg-0', 'class2': 'col-lg-7 col-md-6', 'type': 'text'})
              
                                         .form-group.row.clearfix 
-                                            .col-md-10 
+                                            .col-md-10.mt30
                                                 .controls  
                                                     button(
                                                         type="submit"
