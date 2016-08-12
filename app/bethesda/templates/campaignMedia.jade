@@ -74,17 +74,78 @@ section.create-company-general.container
 
 
   //START RIGHT BLOCK
-  .col-lg-8
+  .col-lg-9
     h2.text-uppercase.dosis.text-lg-center.text-xs-center Media
-    .row
-      .col-lg-7
-        .col-lg-4
-          label.pull-right Header Image
-        .col-lg-8.text-lg-center
-          p Drop your photo here or click to upload
-          i.fa.fa-camera
+    form(metod="post" action="").form-section
+      .row.m-b-2
+        .col-lg-7
+          .col-lg-5
+            span.pull-right.font-weight-bold Header Image
+          .col-lg-7.text-lg-center
+            p Drop your photo here or click to upload
+            i.fa.fa-camera
+        .col-lg-5.p-l-1.p-r-3
+          img(src="/img/test.png" alt="Responsive image").img-fluid
+
+      .row.m-b-2
+        .col-lg-7
+          .col-lg-5
+            span.pull-right.font-weight-bold Thumbnail Picture
+          .col-lg-7.text-lg-center
+            p Drop your photo here or click to upload
+            i.fa.fa-camera
+        .col-lg-5.p-l-1.p-r-3
+          img(src="/img/test.png" alt="Responsive image").img-fluid
+
+        .col-lg-12.border-bottom.m-l-1.m-t-1
+      .col-lg-12
+        h3.text-lg-center.m-b-1 Recommended Additional Media
+      .row.m-b-2
+        .col-lg-7
+          .col-lg-5
+            span.pull-right.font-weight-bold Thumbnail Picture
+          .col-lg-7.text-lg-center
+            p Drop your photo here or click to upload
+            i.fa.fa-camera
+        .col-lg-5.p-l-1.p-r-3
+          img(src="/img/test.png" alt="Responsive image").img-fluid
+
+      .row.m-b-2
+        .col-lg-7
+          +fieldBlock("Main Video for Campaign", '', {
+            class1: 'col-lg-5 col-md-5',
+            class2: 'col-lg-7 col-md-7',
+            type: 'text',
+            placeholder: 'http://www.'
+            })
+        
+        .col-lg-5.p-l-1.p-r-3
+          .embed-responsive.embed-responsive-16by9
+            iframe.embed-responsive-item(src="//www.youtube.com/embed/zpOULjyy-n8?rel=0" allowfullscreen="true")
+      
+      .row.m-b-2
+        .col-lg-7
+          .form-group.row
+            .col-lg-5
+              label.text-lg-right.font-weight-bold Optional Video for Campaign
+            .col-lg-7
+              input(type="text" placeholder="Title").form-control.m-b-2
+              input(type="text" placeholder="http://www.").form-control.m-b-2
+
+              a(href="").link-2 Add Another Video
+        .col-lg-5.p-l-1.p-r-3
+          .embed-responsive.embed-responsive-16by9
+            iframe.embed-responsive-item(src="//www.youtube.com/embed/zpOULjyy-n8?rel=0" allowfullscreen="true")
+      
+      .col-lg-12.border-bottom.m-l-1.m-t-1
+      .col-lg-12
+        h3.text-lg-center.m-b-1 Articles and Press
+      .row.m-b-2
+        +fieldBlock("Question", '', {
+          class1: 'col-lg-4 col-md-4',
+          class2: 'col-lg-8 col-md-8',
+          type: 'text',
+          })
 
 
-      .col-lg-5
-        img(src="/img/test.png" alt="Responsive image").img-fluid
     
