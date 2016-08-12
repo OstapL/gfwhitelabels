@@ -1,5 +1,13 @@
+// hide all popovers content source block
+[class*='popover-content']
+	display: none
+
 .popover
-	padding-left: 15px
+
+	[class*='popover-content']
+		display: inline-block
+
+	// padding-left: 15px
 	border: 1px $total_sum_progresbar solid
 	.popover-title
 		display: none
@@ -8,8 +16,19 @@
 			border-top-color: $total_sum_progresbar
 	.popover-content
 		@include calc-rem(11)
+
+		padding: 8px 25px
+
 		color: $total_sum_progresbar
+
+		label
+			@include calc-rem(13)
+
+			padding-top: 6px
+
+			font-weight: 700
+			color: $black_text
 		i
 			position: absolute
 			top: 13px
-			left: 10px
+			left: 10px 

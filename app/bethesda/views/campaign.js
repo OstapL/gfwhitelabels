@@ -142,7 +142,22 @@ define(function() {
             amountUpdate: function(e) {
                 var amount = parseInt(e.currentTarget.value);
                 if(amount >= 5000) {
-                    alert('show popover');
+
+                    $('#amount').popover({
+                        placement: function(context, src) {
+                            $(context).addClass('amount-popover');
+                            return 'top';
+                        },
+                        html: true,
+                        content: function(){
+                            var content = $('.invest_form').find('.popover-content-amount-campaign').html();
+                            return content;
+                        }
+                    });
+
+                    $('#amount').popover('show');
+                } else {
+                    $('#amount').popover('dispose');
                 }
 
                 this.$('.perk').each((i, el) => {
