@@ -94,7 +94,8 @@ define(function() {
                         Urls: Urls,
                         fields: this.fields,
                         campaignModel: this.campaignModel,
-                        campaign: this.campaignModel.toJSON()
+                        campaign: this.campaignModel.toJSON(),
+                        user: app.user.toJSON()
                     })
                 );
                 return this;
