@@ -4,4 +4,8 @@ include mixins.jade
 
 section.text_block
     .container
-        .row!= page.content
+        .row!= page.created
+        .row!= page.mark_current_regexes
+        .row!= page.meta_description
+        .row!= page.move_url
+        .row!= related_pages
