@@ -13,7 +13,7 @@ include mixins.jade
   //START LEFT BLOCK
   .row
     .col-lg-7
-      h2.text-uppercase.dosis Investment
+      h2.text-uppercase.dosis.m-t-0 Investment
       .form-section.clearfix
         form(metod="post" action="").invest_form.clearfix
           +fieldBlock("amount", '', {
@@ -33,7 +33,7 @@ include mixins.jade
 
             +fieldBlock("net_worth", user[net_worth], {'class1': 'col-md-4', 'class2': 'col-md-8', 'type': 'text'})
 
-          section.personal_information.pt30
+          section.personal_information
             h2.text-uppercase.dosis Personal Information
               span.small-text.open-sans Required by United States banking laws. This information is transmitted securely and will never be used for any purpose beyond executing your investment. You only have to do this once.
             +fieldBlock("name", '', {
@@ -100,7 +100,7 @@ include mixins.jade
                 .col-md-12
                   span.help-block GrowthFountain does not store your bank login credentials
 
-          section.varification.pt50
+          section.varification
             h2.text-uppercase.dosis VERIFICATION
             +fieldBlock('is_reviewed_edu_material', '1', {
               class1: 'col-md-2',
@@ -140,7 +140,7 @@ include mixins.jade
     //END LEFT BLOCK
     //START RIGHT BLOCK
     .col-lg-4.pull-right
-      h2.text-uppercase.dosis PERKS
+      h2.text-uppercase.dosis.m-t-0 PERKS
         span.small-text.open-sans Investor Perks are not intended to affect the value of the security and investors should evaluate the merits of each investment without regard to any Investor Perks.
       .list-group.list-group-border-invest.invest-right-margin
         a(href="#" data-from='500' data-to='1000').list-group-item.list-group-item-action.perk
@@ -158,7 +158,7 @@ include mixins.jade
             span.text-color-puerto_rico $1500
             |  Investments
           p.list-group-item-text.text-justify The Peloton Bike (and all of the accessories) AND a trip for two to NYC to meet the team and teach (or take) your very own class in the Peloton Studio, to be accessible to all Peloton riders via on-demand classes! (USA ONLY)
-      h2.text-uppercase.pt50.dosis Investment Summary
+      h2.text-uppercase.dosis Investment Summary
       .jumbotron.jumbotron-fluid.investment-summary
         .container
           .col-md-7
@@ -173,8 +173,8 @@ include mixins.jade
           .col-md-7
             .row
               span Offering deadline
-              p.font-weight-bold Sep 14, 2016
+              p.font-weight-bold.m-b-0 Sep 14, 2016
           .col-md-5
             .row
               span Type of security
-              p.font-weight-bold Equity
+              p.font-weight-bold.m-b-0 Equity
