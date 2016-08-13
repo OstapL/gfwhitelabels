@@ -12,6 +12,7 @@ var gulp        = require('gulp'),
 
 var config = {
     bootstrapDir: './node_modules/bootstrap/scss',
+    bourbonDir: './node_modules/bourbon/app/assets/stylesheets',
     tatherDir: './node_modules/tether',
     fontAwesomeDir: './node_modules/font-awesome/scss',
     publicDir: './app/html',
@@ -30,7 +31,8 @@ gulp.task('styles', function () {
     return gulp.src('app/sass/mixins_all.sass')
     .pipe(sass({
         includePaths: [
-            config.bootstrapDir, 
+            config.bootstrapDir,
+            config.bourbonDir, 
             config.tetherDir,  
             config.fontAwesomeDir
         ]
