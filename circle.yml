@@ -5,7 +5,6 @@ machine:
 dependencies:
     override:
         - npm install
-        - bundle install
         - sudo pip install awscli
     
     cache_directories:
