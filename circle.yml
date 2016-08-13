@@ -1,0 +1,18 @@
+machine:
+  node:
+    version:  4.2.0
+
+dependencies:
+  override:
+    - npm install
+    - bundle install
+    - sudo pip install awscli
+    
+    cache_directories:
+    - "node_modules"
+
+deployment:
+ aws:
+  branch: master
+  commands:
+    - ./deploy.sh
