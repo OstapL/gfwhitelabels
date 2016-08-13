@@ -32,8 +32,8 @@ gulp.task('styles', function () {
     .pipe(sass({
         includePaths: [
             config.bootstrapDir,
-            config.bourbonDir, 
-            config.tetherDir,  
+            require('node-bourbon').includePaths,
+            config.tetherDir,
             config.fontAwesomeDir
         ]
     }).on('error', sass.logError))
