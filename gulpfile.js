@@ -3,7 +3,6 @@ var gulp        = require('gulp'),
     autoprefixer= require('gulp-autoprefixer'),
     cleanCSS    = require('gulp-clean-css'),
     rename      = require('gulp-rename'),
-    browserSync = require('browser-sync').create(),
     concat      = require('gulp-concat'),
     uglify      = require('gulp-uglify');
     pug         = require('gulp-pug');
@@ -19,6 +18,7 @@ var config = {
 };
 
 gulp.task('browser-sync', ['styles', 'scripts'], function() {
+    var browserSync = require('browser-sync').create();
     browserSync.init({
         server: {
                     baseDir: config.publicDir
@@ -41,7 +41,7 @@ gulp.task('styles', function () {
 // .pipe(autoprefixer({browsers: ['last 15 versions'], cascade: false}))
 // .pipe(cleanCSS())
     .pipe(gulp.dest(config.publicDir + '/css'))
-    .pipe(browserSync.stream());
+    //.pipe(browserSync.stream());
 });
 
 gulp.task('scripts', function() {
