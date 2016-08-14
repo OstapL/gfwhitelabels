@@ -25,22 +25,22 @@ section#home(style="background-image: url(" + campaign.get_header_image + ")").h
 		.container
 			.top-info-wrap
 				.col-lg-2
-					span Pre-Money Valuation
+					p Pre-Money Valuation
 					h2.font-weight-bold #{ campaign.premoney_valuation }
 				.col-lg-2
-					span Type of Security
+					p Type of Security
 					h2.font-weight-bold Equity
 				.col-lg-2
-					span Days Left
+					p Days Left
 					h2.font-weight-bold 120
 				.col-lg-4.pull-right
 					a(href=Urls['campaign-invest'](campaign.id)).btn.btn-primary.btn-lg.text-uppercase.pull-right invest in #{ campaign.company.name }
 
-section.campaigndetail.pt50
-	.container.mt85
+section.campaigndetail
+	.container
 		.col-lg-6
 			h1 Smartbe is the first intelligent baby stroller of the new generation.
-			.row.pt20
+			.row.mt25
 				.col-lg-4
 					a(href="").link-1
 						i.fa.fa-map-marker
@@ -63,25 +63,25 @@ section.campaigndetail.pt50
 							i.fa.fa-google-plus
 
 
-		.col-lg-6
+		.col-lg-6.right-block-investors.p-l-0
 			.progress_bar_container
 				span Less than 20% Funded
 				span.pull-right Committed 
 					span.committed $15,000
 				.clear
 				progress(value="20" max="100").progress
-			.pt20
+			.mt25
 				.row.col-lg-8
 					p Target
 					h2.font-weight-bold $500,000 - $1,000,000 #{ campaign.company.minimum_raise }  #{ campaign.company.maximum_raise }
 				.row.col-lg-4.pull-right
 					p Minimum Investment
 					h2.font-weight-bold $200 #{ campaign.company.minimum_increment }
-				.row.col-lg-12
-					.wrap.d-inline-block
+				.row.col-lg-12.investors-block
+					.col-lg-2.p-l-0
 						p Investors
 						h2.font-weight-bold 17
-					.investors.d-inline-block
+					.col-lg-10.p-l-0
 						ul
 							li
 								a(href="")
@@ -98,7 +98,7 @@ section.campaigndetail.pt50
 							li
 								a(href="")
 									<img src="/img/avatar1.jpg" alt="..." class="img-circle">
-					a(href="").link-1 see all...
+							a(href="#").link-1 see all...
 section.border-bottom-scroll
 	.container.tabs-scroll
 		nav( data-toggle="sticky-onscroll").navbar.navbar-default.sticky
@@ -123,15 +123,15 @@ section
 	data-target="#navbar-example2"
 	data-offset="0"
 	)
-	section.about.border-bottom
+	section.about-detail.border-bottom
 		.container
 			.col-lg-12
 				h2#about.dosis.text-uppercase.text-lg-center About smartbe
 				p Smartbe is the first intelligent baby stroller of the new generation. Smartbe is a revolutionary concept as regards design and functionality that solves real parents and baby needs. Smartbe applies state of the art technology through innovative, minimalist and safe design. We have built a new baby stroller with all the needed intelligence to provide new levels of child safety and comfort never before imagined together in a stroller. Smartbe fulfills all US  European Safety Regulations also going beyond, providing safety features not possible without the addition of electricity and leading edge mobile technology.
-				h3.pt50.text-lg-center Our Edge
+				h3.text-lg-center Our Edge
 				p Smartbe is the all-in-one solution that provides more than 10 safety, security, comfort and convenience-enhancing functions managed by Android and IOS smartphones and smartwatches. 
 				p All the technologies being used in Smartbe have already been used and extensively tested in other industries so we are very optimistic we can meet our launch goals. The breakthrough is that these technologies are being applied to create not only an industry disrupting, electrically powered stroller with killer functionality, but also a stylish, minimalist device designed to fit every parent’s needs and desires.
-			#gallery1.col-lg-12
+			#gallery1.col-lg-12.pt50.photo-gallegy
 				.col-lg-3.no-padding-img
 					a(href="/img/campaign/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
 						img(src="/img/campaign/smartbe-intelligent-stroller_1.jpg" alt="").img-fluid
@@ -189,7 +189,7 @@ section
 						.card-img-overlay
 							.card-title
 								p.card-text.font-weight-bold Smartbe is the first intelligent baby stroller of the new generation
-								p.card-text Smartbe is a revolutionary concept as regards design and ...
+								p.card-text.intro Smartbe is a revolutionary concept as regards design and ...
 								img(src="/img/icon-campaign.jpg", alt="").icon-campaign.d-inline-block
 								a(href="").card-text.links.d-inline-block bizwest.com
 				.col-lg-3
@@ -198,7 +198,7 @@ section
 						.card-img-overlay
 							.card-title
 								p.card-text.font-weight-bold Smartbe is the first intelligent baby stroller of the new generation
-								p.card-text Smartbe is a revolutionary concept as regards design and ...
+								p.card-text.intro Smartbe is a revolutionary concept as regards design and ...
 								img(src="/img/icon-campaign.jpg", alt="").icon-campaign.d-inline-block
 								a(href="").card-text.links.d-inline-block bizwest.com
 				.col-lg-3
@@ -207,7 +207,7 @@ section
 						.card-img-overlay
 							.card-title
 								p.card-text.font-weight-bold Smartbe is the first intelligent baby stroller of the new generation
-								p.card-text Smartbe is a revolutionary concept as regards design and ...
+								p.card-text.intro Smartbe is a revolutionary concept as regards design and ...
 								img(src="/img/icon-campaign.jpg", alt="").icon-campaign.d-inline-block
 								a(href="").card-text.links.d-inline-block bizwest.com
 				.col-lg-3
@@ -216,7 +216,7 @@ section
 						.card-img-overlay
 							.card-title
 								p.card-text.font-weight-bold Smartbe is the first intelligent baby stroller of the new generation
-								p.card-text Smartbe is a revolutionary concept as regards design and ...
+								p.card-text.intro Smartbe is a revolutionary concept as regards design and ...
 								img(src="/img/icon-campaign.jpg", alt="").icon-campaign.d-inline-block
 								a(href="").card-text.links.d-inline-block bizwest.com
 				.col-lg-12
@@ -227,7 +227,7 @@ section
 
 	section.team.border-bottom
 		.container
-			h2#team.dosis.p50.text-uppercase.text-lg-center.col-lg-12 Team
+			h2#team.dosis.text-uppercase.text-lg-center.col-lg-12 Team
 			a(href="").link-1
 				.col-lg-4.text-lg-center
 					.card
@@ -236,17 +236,39 @@ section
 							h4.card-title.text-uppercase Jan Mertz
 							p.card-text
 								small.text-muted CEO
-							p.card-text Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque mollis lacus augue, a hendrerit leo tristique vitae. Consectetur adipiscing elit. Integer posuere erat a ante. Mauris non ipsum molestie, sagittis elit ac, vulputate odio.
+							a(href="#").link-1
+								i.fa.fa-facebook
+							a(href="#").link-1
+								i.fa.fa-linkedin
+							p.card-text.text-justify Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque mollis lacus augue, a hendrerit leo tristique vitae. Consectetur adipiscing elit. Integer posuere erat a ante. Mauris non ipsum molestie, sagittis elit ac, vulputate odio.
+							.d-block.text-lg-left.cite_education
+								a(href="#").link-1.text-lg-left
+									i.fa.fa-home.p-l-0
+									|  Pittsburgh, PA
+								a(href="#").link-1.pull-right
+									i.fa.fa-graduation-cap
+									|  Dickinson College
 
-			.col-lg-4.text-lg-center
-				a(href="").link-1
-					.card
+			.col-lg-4
+				a(href="")
+					.card.text-lg-center
 						img(src="/img/campaign/avatar2.jpg" alt="").img-circle
 						.card-block
 							h4.card-title.text-uppercase Maria Mertz
 							p.card-text
 								small.text-muted CEO
-							p.card-text Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque mollis lacus augue, a hendrerit leo tristique vitae. Consectetur adipiscing elit. Integer posuere erat a ante. Mauris non ipsum molestie, sagittis elit ac, vulputate odio.
+							a(href="#").link-1
+								i.fa.fa-facebook
+							a(href="#").link-1
+								i.fa.fa-linkedin
+							p.card-text.text-justify Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque mollis lacus augue, a hendrerit leo tristique vitae. Consectetur adipiscing elit. Integer posuere erat a ante. Mauris non ipsum molestie, sagittis elit ac, vulputate odio.
+							.d-block.text-lg-left.cite_education
+								a(href="#").link-1.text-lg-left
+									i.fa.fa-home.p-l-0
+									|  Pittsburgh, PA
+								a(href="#").link-1.pull-right
+									i.fa.fa-graduation-cap
+									|  Dickinson College
 			.col-lg-4.text-lg-center
 				a(href="").link-1
 					.card
@@ -255,18 +277,28 @@ section
 							h4.card-title.text-uppercase Alex Klarck
 							p.card-text
 								small.text-muted General Councel
-							p.card-text Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque mollis lacus augue, a hendrerit leo tristique vitae. Consectetur adipiscing elit. Integer posuere erat a ante. Mauris non ipsum molestie, sagittis elit ac, vulputate odio.
-			
+							a(href="#").link-1
+								i.fa.fa-facebook
+							a(href="#").link-1
+								i.fa.fa-linkedin
+							p.card-text.text-justify Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque mollis lacus augue, a hendrerit leo tristique vitae. Consectetur adipiscing elit. Integer posuere erat a ante. Mauris non ipsum molestie, sagittis elit ac, vulputate odio.
+							.d-block.text-lg-left.cite_education
+								a(href="#").link-1.text-lg-left
+									i.fa.fa-home.p-l-0
+									|  Pittsburgh, PA
+								a(href="#").link-1.pull-right
+									i.fa.fa-graduation-cap
+									|  Dickinson College
 	section.document.border-bottom
 		.container
 			.row
-				h2#documents.col-lg-12.dosis.pt50.text-uppercase.text-lg-center Documents
+				h2#documents.col-lg-12.dosis.text-uppercase.text-lg-center Documents
 				.col-lg-8.offset-lg-2
 					.col-lg-4
 						p Official filing on SEC.gov
 						a(href="")
 							img(src="/img/lrg_US_Department_of_State35.gif").img-document.d-inline-block
-							h3.d-inline-block Form C
+							h3.d-inline-block  Form C
 					.col-lg-4
 						p Company documents
 						a(href="")
@@ -277,10 +309,10 @@ section
 						a(href="")
 							i.fa.fa-file-powerpoint-o.d-inline-block
 							h3.d-inline-block Investor Presentation
-	section.overview.border-bottom
+	section.overview
 		.container
 			.row
-				h2#overview.col-lg-12.dosis.pt50.text-uppercase.text-lg-center overview and terms
+				h2#overview.col-lg-12.dosis.text-uppercase.text-lg-center overview and terms
 				h3.col-lg-12.text-lg-center Fundraising Description
 				.col-lg-8.offset-lg-2.fundraising
 					.jumbotron.jumbotron-fluid
@@ -303,93 +335,96 @@ section
 							.col-lg-4
 								p Target Maximum Raise Amount
 								h2.font-weight-bold $1,000,000
-				h3.col-lg-12.text-lg-center Perks
-				.perks
-					.col-lg-4
-						.jumbotron.jumbotron-fluid
-							.container
-								h3 $500 Investments
-								p.text-justify A one year subscription plus a gorgeous Peloton Long-Sleeve T-SHIRT. One subscription covers an unlimited amount of users so that every member of your family would be able to use the bike and access Peloton content from their own personal 
+				
+	section.perks.container
+		h3.col-lg-12.text-lg-center Perkss
+		.col-lg-4
+			.jumbotron.jumbotron-fluid
+				.container
+					h3 $500 Investments
+					p.text-justify A one year subscription plus a gorgeous Peloton Long-Sleeve T-SHIRT. One subscription covers an unlimited amount of users so that every member of your family would be able to use the bike and access Peloton content from their own personal 
 
-					.col-lg-4
-						.jumbotron.jumbotron-fluid
-							.container
-								h3 $1,000 Investments
-								p.text-justify FULLY LOADED PACKAGE: The Peloton Bike plus Peloton headphones, Peloton biking shoes, a Peloton heart rate monitor, the Peloton hand weights, a Peloton shirt, and a Peloton sweat mat (you're going to need it!)
-					.col-lg-4
-						.jumbotron.jumbotron-fluid
-							.container
-								h3 $5,000 Investments
-								p.text-justify The Peloton Bike (and all of the accessories) AND a trip for two to NYC to meet the team and teach (or take) your very own class in the Peloton Studio, to be accessible to all Peloton riders via on-demand classes! (USA ONLY)
-				h3.col-lg-12.text-lg-center Investors
-				.investors
-					.col-lg-10.offset-lg-1
-						.col-lg-3.text-lg-center
-							a(href="")
-								.card
-									img(src="/img/campaign/avatar1.jpg" alt="").img-circle
-									.card-block
-										h4.card-title.text-uppercase Jan Mertz
-										p.card-text
-											small.text-muted New York, NY
-						.col-lg-3.text-lg-center
-							a(href="")
-								.card
-									img(src="/img/campaign/avatar2.jpg" alt="").img-circle
-									.card-block
-										h4.card-title.text-uppercase Jan Mertz
-										p.card-text
-											small.text-muted New York, NY
-						.col-lg-3.text-lg-center
-							a(href="")
-								.card
-									img(src="/img/campaign/avatar3.jpg" alt="").img-circle
-									.card-block
-										h4.card-title.text-uppercase Lusy Johnson
-										p.card-text
-											small.text-muted New York, NY
-						.col-lg-3.text-lg-center
-							a(href="")
-								.card
-									img(src="/img/campaign/avatar4.jpg" alt="").img-circle
-									.card-block
-										h4.card-title.text-uppercase Jan Mertz
-										p.card-text
-											small.text-muted New York, NY
-						.col-lg-3.text-lg-center
-							a(href="")
-								.card
-									img(src="/img/campaign/avatar1.jpg" alt="").img-circle
-									.card-block
-										h4.card-title.text-uppercase Lusy Mertz
-										p.card-text
-											small.text-muted New York, NY
-						.col-lg-3.text-lg-center
-							a(href="")
-								.card
-									img(src="/img/campaign/avatar5.jpg" alt="").img-circle
-									.card-block
-										h4.card-title.text-uppercase Jan Mertz
-										p.card-text
-											small.text-muted New York, NY
-						.col-lg-3.text-lg-center
-							a(href="")
-								.card
-									img(src="/img/campaign/avatar2.jpg" alt="").img-circle
-									.card-block
-										h4.card-title.text-uppercase Jan Mertz
-										p.card-text
-											small.text-muted New York, NY
-						.col-lg-3.text-lg-center
-							a(href="")
-								.card
-									img(src="/img/campaign/avatar3.jpg" alt="").img-circle
-									.card-block
-										h4.card-title.text-uppercase Jan Mertz
-										p.card-text
-											small.text-muted New York, NY
-						.col-lg-12.text-lg-center
-							a(href="").link-4 See All Investors
+		.col-lg-4
+			.jumbotron.jumbotron-fluid
+				.container
+					h3 $1,000 Investments
+					p.text-justify FULLY LOADED PACKAGE: The Peloton Bike plus Peloton headphones, Peloton biking shoes, a Peloton heart rate monitor, the Peloton hand weights, a Peloton shirt, and a Peloton sweat mat (you're going to need it!)
+		.col-lg-4
+			.jumbotron.jumbotron-fluid
+				.container
+					h3 $5,000 Investments
+					p.text-justify The Peloton Bike (and all of the accessories) AND a trip for two to NYC to meet the team and teach (or take) your very own class in the Peloton Studio, to be accessible to all Peloton riders via on-demand classes! (USA ONLY)
+				
+	section.investors-all.border-bottom
+		.container
+			h3.col-lg-12.text-lg-center Investors
+			.col-lg-10.offset-lg-1
+				.col-lg-3.text-lg-center
+					a(href="")
+						.card
+							img(src="/img/campaign/avatar1.jpg" alt="").img-circle
+							.card-block
+								h4.card-title.text-uppercase Jan Mertz
+								p.card-text
+									small.text-muted New York, NY
+				.col-lg-3.text-lg-center
+					a(href="")
+						.card
+							img(src="/img/campaign/avatar2.jpg" alt="").img-circle
+							.card-block
+								h4.card-title.text-uppercase Jan Mertz
+								p.card-text
+									small.text-muted New York, NY
+				.col-lg-3.text-lg-center
+					a(href="")
+						.card
+							img(src="/img/campaign/avatar3.jpg" alt="").img-circle
+							.card-block
+								h4.card-title.text-uppercase Lusy Johnson
+								p.card-text
+									small.text-muted New York, NY
+				.col-lg-3.text-lg-center
+					a(href="")
+						.card
+							img(src="/img/campaign/avatar4.jpg" alt="").img-circle
+							.card-block
+								h4.card-title.text-uppercase Jan Mertz
+								p.card-text
+									small.text-muted New York, NY
+				.col-lg-3.text-lg-center
+					a(href="")
+						.card
+							img(src="/img/campaign/avatar1.jpg" alt="").img-circle
+							.card-block
+								h4.card-title.text-uppercase Lusy Mertz
+								p.card-text
+									small.text-muted New York, NY
+				.col-lg-3.text-lg-center
+					a(href="")
+						.card
+							img(src="/img/campaign/avatar5.jpg" alt="").img-circle
+							.card-block
+								h4.card-title.text-uppercase Jan Mertz
+								p.card-text
+									small.text-muted New York, NY
+				.col-lg-3.text-lg-center
+					a(href="")
+						.card
+							img(src="/img/campaign/avatar2.jpg" alt="").img-circle
+							.card-block
+								h4.card-title.text-uppercase Jan Mertz
+								p.card-text
+									small.text-muted New York, NY
+				.col-lg-3.text-lg-center
+					a(href="")
+						.card
+							img(src="/img/campaign/avatar3.jpg" alt="").img-circle
+							.card-block
+								h4.card-title.text-uppercase Jan Mertz
+								p.card-text
+									small.text-muted New York, NY
+				.col-lg-12.text-lg-center
+					a(href="").link-4 See All Investorss
 	section.risks.border-bottom
 		.container
 			h2#risks.col-lg-12.dosis.text-uppercase.text-lg-center Risks
@@ -440,7 +475,7 @@ section
 						#collapseFour(role="tabpanel"
 						aria-labelledby="headingFour"
 						).panel-collapse.collapse  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius inventore iste numquam nemo, fugit nihil fugiat quasi, excepturi repellendus pariatur! Facilis odit cupiditate tenetur, inventore adipisci consequatur eius suscipit voluptas.
-				a(href="").col-lg-12.text-lg-center.link-4.m30 See All Risks
+				a(href="").col-lg-12.text-lg-center.link-4.see-all See All Risks
 	
 	section.faq.border-bottom
 		.container
@@ -492,26 +527,27 @@ section
 						#collapsefaqFour(role="tabpanel"
 						aria-labelledby="faqFour"
 						).panel-collapse.collapse  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius inventore iste numquam nemo, fugit nihil fugiat quasi, excepturi repellendus pariatur! Facilis odit cupiditate tenetur, inventore adipisci consequatur eius suscipit voluptas.
-				a(href="").col-lg-12.text-lg-center.link-4.m30 See All FAQ
+				a(href="").col-lg-12.text-lg-center.link-4.see-all See All FAQ
 		
 	section.ask.border-bottom
 		.container
-			h2#ask.col-lg-12.dosis.pt50.text-uppercase.text-lg-center ASK A QUESTION
+			h2#ask.col-lg-12.dosis.text-uppercase.text-lg-center ASK A QUESTION
 			.col-lg-8.offset-lg-2.pt30
-				.col-lg-8.form-section
-					form
+				form.form-section
+					.col-lg-8
 						input(type="text" placeholder="Type your question here...")
-				.col-lg-4
+				.col-lg-4.p-r-0
 					a(href="").btn.btn-primary.btn-lg.text-uppercase.pull-right ask question
 
 			.col-lg-8.offset-lg-2.pt50.comments
-				.col-lg-12
+				.col-lg-12.p-r-0
 					.hr
 					.col-lg-1
 						img(src="/img/avatar10.jpg" alt="").img-circle
 					.col-lg-11
 						.comments-wrap
 							span.name-comments.text-uppercase maria kravchuk
+
 							span.date-comments.pull-right 2 Days Ago
 							p Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua?
 							.responce
@@ -525,12 +561,13 @@ section
 								li
 									a(href="").link-1
 										i.fa.fa-thumbs-up
-				.col-lg-11.offset-lg-1.pt30
+				.col-lg-11.offset-lg-1.pt30.p-r-0
 					.col-lg-1
 						img(src="/img/avatar10.jpg" alt="").img-circle
 					.col-lg-11
 						.comments-wrap
 							span.name-comments.text-uppercase maria kravchuk
+							span.kvalificatio-comments.text-uppercase CEO
 							span.date-comments.pull-right 2 Days Ago
 							p Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua?
 							.responce
@@ -547,10 +584,10 @@ section
 	section.like
 		.container
 			.col-lg-12.text-lg-center
-				h2.p50
+				h2
 					i.fa.fa-thumbs-up
 					|  I’d Like to Invest in Smartbe!
-				a(data-toggle="modal" data-target="#sing_up").btn.btn-primary.btn-lg.text-uppercase iNVEST IN #{ campaign.company.name }
+				a(data-toggle="modal" data-target="#sing_up" href="#sing_up").btn.btn-primary.btn-lg.text-uppercase iNVEST IN #{ campaign.company.name }
 
 
 //MODAL
@@ -569,7 +606,9 @@ section
 				button(type="button" class="close" data-dismiss="modal" aria-label="Close")
 					span(aria-hidden="true")
 						i.fa.fa-times
-				h2#sing_up(class="modal-title").text-lg-center.text-uppercase sign up
+				h2#sing_up(class="modal-title").text-lg-center.text-uppercase.dosis sign up
+				p.text-lg-center Have an account?
+					a(href="")  Log In
 			.modal-body
 				.container.form-section
 					form.col-lg-10.offset-lg-1.border-bottom
@@ -581,12 +620,12 @@ section
 							input#email(type="email" placeholder="E-mail").form-control
 						.form-group.row.clearfix.required
 							input#password(type="password" placeholder="Password").form-control
-						.form-group.row.clearfix.required
+						.form-group.row.clearfix.required.m-b-0
 							input#re_password(type="password" placeholder="Re-enter password").form-control
 						.form-group.row.clearfix.required
 							.row
 								.col-lg-12
-									label
+									label.m-t-1
 										input(type="checkbox")
 										|  I consent to electronic signature and electronic delivery of documentation
 									label
@@ -608,9 +647,7 @@ section
 						button.btn.btn-block.btn-lg.btn-google.text-uppercase
 							i.fa.fa-google-plus
 							|  SIGN UP with Google
-			.modal-footer.text-lg-center
-				span Have an account?
-					a(href="")  Log In
+				.modal-footer
 
 .pswp(tabindex="-1" role="dialog" aria-hidden="true")
 	//Background of PhotoSwipe. 
