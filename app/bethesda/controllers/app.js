@@ -116,7 +116,14 @@ requirejs(['/templates/templates.js'], function() {
 _.extend(app, Backbone.Events);
 app.getUrls();
 
-app.on('urlsReady', function() {
+
+define([
+        'jquery',
+        'underscore',
+        'backbone',
+        '/templates/templates.js',
+        '/templates/jsreverse.js'
+], function() {
 
     let appRoutes = Backbone.Router.extend({
         routes: {
