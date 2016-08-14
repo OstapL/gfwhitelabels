@@ -5,6 +5,7 @@ machine:
 dependencies:
     override:
         - npm install
+        - ./node_modules/gulp/bin/gulp.js styles scripts views
         - sudo pip install awscli
     
     cache_directories:
