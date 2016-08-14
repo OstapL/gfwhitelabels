@@ -1,0 +1,18 @@
+machine:
+    node:
+        version:  6.2.1
+
+dependencies:
+    override:
+        - npm install
+        - ./node_modules/gulp/bin/gulp.js styles scripts views
+        - sudo pip install awscli
+    
+    cache_directories:
+        - "node_modules"
+
+deployment:
+    aws:
+        branch: master
+        commands:
+            - ./deploy.sh
