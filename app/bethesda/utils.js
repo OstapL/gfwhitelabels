@@ -23,7 +23,7 @@ _.extend(Backbone.Validation.callbacks, {
         }
 
         $group.removeClass('has-error');
-        $group.find('.help-block').html('').addClass('hide');
+        $group.find('.help-block').remove();
     },
     invalid: function (view, attr, error, selector) {
         var $el = view.$('[name=' + attr + ']');
@@ -52,11 +52,8 @@ _.extend(Backbone.Validation.callbacks, {
         }
         else {
             $group = $el.parent();
-            if($group.find('.help-block').length == 0) {
-                $group = $group.parent();
-            }
             $group.addClass('has-error');
-            $group.find('.help-block').html(error).removeClass('hide');
+            $group.append('<div class="help-block">' + error + '</div>');
         }
 
         console.log(view, attr, error, selector);
