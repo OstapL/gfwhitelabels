@@ -12,7 +12,7 @@ include mixins.jade
         aside.col-xl-3
             form(method="post" action="").form
                 .drop-photo-block
-                    h5.widget-title.font-alt #{user.first_name} #{user.last_name}
+                    h3.widget-title.font-alt #{user.first_name} #{user.last_name}
                     .dropzone__image.drop-photo.dz-clickable.dropzone
                         img(src=app.user.get_thumbnail('.dropzone__image img'))
                     input(
@@ -143,16 +143,16 @@ include mixins.jade
                                 .col-xs-12
 
                                     section.right-block 
-                                        +fieldBlock("where_grow_up", user.where_grow_up, {'class1': 'col-md-3 offset-md-1 offset-lg-0', 'class2': 'col-lg-7 col-md-6', 'type': 'text'})
-                                        +fieldBlock("where_go_college", user.where_ho_college, {'class1': 'col-md-3 offset-md-1 offset-lg-0', 'class2': 'col-lg-7 col-md-6', 'type': 'text'})
-                                        +fieldBlock("industries", user.industries, {'class1': 'col-md-3 offset-md-1 offset-lg-0', 'class2': 'col-lg-7 col-md-6', 'type': 'text'})
-                                        +fieldBlock("locations", user.locations, {'class1': 'col-md-3 offset-md-1 offset-lg-0', 'class2': 'col-lg-7 col-md-6', 'type': 'text'})
-                                        +fieldBlock("interested", user.interested, {'class1': 'col-md-3 offset-md-1 offset-lg-0', 'class2': 'col-lg-7 col-md-6', 'type': 'text'})
-                                        +fieldBlock("investment_goals", user.investment_goals, {'class1': 'col-md-3 offset-md-1 offset-lg-0', 'class2': 'col-lg-7 col-md-6', 'type': 'text'})
-                                        +fieldBlock("important_attributes", user.important_attributes, {'class1': 'col-md-3 offset-md-1 offset-lg-0', 'class2': 'col-lg-7 col-md-6', 'type': 'text'})
+                                        +fieldBlock("where_grow_up", user.where_grow_up, {'class1': 'col-md-10 col-xl-9 offset-md-1 thin-label', 'class2': 'col-xl-9 col-md-10 offset-md-1', 'type': 'text', 'text_align': 'left'})
+                                        +fieldBlock("where_go_college", user.where_ho_college, {'class1': 'col-md-10 col-xl-9 offset-md-1 thin-label', 'class2': 'col-xl-9 col-md-10 offset-md-1', 'type': 'text', 'text_align': 'left'})
+                                        +fieldBlock("industries", user.industries, {'class1': 'col-md-10 col-xl-9 offset-md-1 thin-label', 'class2': 'col-xl-9 col-md-10 offset-md-1', 'type': 'text', 'text_align': 'left'})
+                                        +fieldBlock("locations", user.locations, {'class1': 'col-md-10 col-xl-9 offset-md-1 thin-label', 'class2': 'col-xl-9 col-md-10 offset-md-1', 'type': 'text', 'text_align': 'left'})
+                                        +fieldBlock("interested", user.interested, {'class1': 'col-md-10 col-xl-9 offset-md-1 thin-label', 'class2': 'col-xl-9 col-md-10 offset-md-1', 'type': 'text', 'text_align': 'left'})
+                                        +fieldBlock("investment_goals", user.investment_goals, {'class1': 'col-md-10 col-xl-9 offset-md-1 thin-label', 'class2': 'col-xl-9 col-md-10 offset-md-1', 'type': 'text', 'text_align': 'left'})
+                                        +fieldBlock("important_attributes", user.important_attributes, {'class1': 'col-md-10 col-xl-9 offset-md-1 thin-label', 'class2': 'col-xl-9 col-md-10 offset-md-1', 'type': 'text', 'text_align': 'left'})
              
                                         .form-group.row.clearfix 
-                                            .col-md-10.mt30
+                                            .col-md-10.mt29
                                                 .controls  
                                                     button(
                                                         type="submit"

@@ -1,0 +1,150 @@
+.clear
+	clear: both
+
+.main_block
+	background: url(../img/bg_img.png)
+	background-repeat: no-repeat
+	min-height: 397px
+	background-size: cover
+	
+	.red_opacity
+		min-height: 397px
+		background: $red_opacity_color
+		position: relative
+
+		.vertical_align_container
+			width: 90%
+			position: absolute 
+			left: 50%
+			top: 50%
+			-ms-transform: translate(-50%,-50%)
+			-webkit-transform: translate(-50%,-50%)
+			transform: translate(-50%,-50%)
+			color: $white
+			-webkit-font-smoothing: antialiased
+			
+			p
+
+				a
+					color: $yellow
+			ul
+				li
+					list-style: none
+	
+	.logo_container
+		min-height: 397px
+		position: relative
+
+		.vertical_align_container
+			width: 100%
+			position: absolute 
+			left: 50%
+			top: 60%
+			-ms-transform: translate(-50%,-60%)
+			-webkit-transform: translate(-50%,-60%)
+			transform: translate(-50%,-60%)
+			color: $white
+			text-transform: uppercase
+
+
+			img
+				margin: 0 auto
+				display: block
+
+.text_block_white
+	position: relative
+	z-index: 5
+	min-height: 61px
+	background: $white
+	-webkit-box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.75)
+	-moz-box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.75)
+	box-shadow: 0px 0px 15px 0px rgba(0,0,0,0.75)
+	padding: 9px 0 0px 0
+	font-size: 12px
+
+	p
+		margin-left: 25px
+
+	a
+		width: 180px
+
+	.btn-info
+		color: $white
+		border-color: $light_green
+		background: $light_green
+		&:hover
+			background: $dark_green
+			border-color: $dark_green
+			color: $white
+			+mt(.2s)
+
+	.btn-info-dark
+		color: $white
+		border-color: $dark_green
+		background: $dark_green
+		+mt(.2s)
+		&:hover
+			background: $light_green
+			border-color: $light_green
+			color: $white
+			+mt(.2s)
+		
+	.circle_or
+		width: 46px
+		height: 42px
+		border-radius: 21px
+		background: $white
+		line-height: 42px
+		font-style: 14px
+		text-transform: uppercase
+		color: $dark_green
+		text-align: center
+		display: inline-block
+		vertical-align: middle
+		position: relative
+		z-index: 5
+		margin: 0 -20px 0 -20px
+
+.jeanne_footer
+	min-height: 221px
+	background: url(../img/footer_bg.png)
+	background-repeat: repeat
+
+	.container_block
+		margin: 50px 0
+		border-right: 1px solid $grey_bg
+		padding-right: 15px
+
+		img
+			max-width: 95%
+			display: block
+			margin: 0
+
+		h5
+			color: $blue_dark
+			font-weight: bold
+
+	.small_container_block
+		margin: 50px auto
+		color: $light_green
+
+		h6
+			font-weight: bold
+
+			b
+				color: $blue
+
+.light-blue
+	color: $white
+	background: $blue_dark
+	border-color: $blue_dark
+	+mt(.2s)
+
+	&:hover
+		background: $blue_light
+		border-color: $blue_light
+		color: $white
+		+mt(.2s)
+
+.js-height-full
+	height: 600px

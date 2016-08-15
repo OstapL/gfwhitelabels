@@ -1,0 +1,32 @@
+include mixins.pug
+
++breadcrumbs('Congratulations!', '', 
+    [
+        ['Home', '/'],
+        ['Explore', Urls['campaign-list']],
+        ['Smartbe', Urls['compaign-detail'](campaign.id)],
+        ['Invest in smartbe', '']
+    ]
+)
+
+.container
+    .row
+        .col-sm-8.offset-sm-2
+            h2.text-xs-center.thankyou-title #[i(aria-hidden="true").fa.fa-thumbs-o-up] You have invested $#{ investment.amount } in #{ campaign.company.name }
+
+    .row
+        .col-sm-8.offset-sm-2.pt30
+            hr
+    
+    .row
+        .col-sm-12
+            .result-info-block.m-x-auto
+                ul.info-text-block.list-unstyled.pt30
+                    li #[span Transaction ID:] #[strong #{ investment.transaction_id }]
+                    li #[span Amount of Shares:] #[strong #{ investment.amount_of_shares }]
+                    li #[span Perks:] #[strong #{ investment.perk }]
+                    li #[span Investment Terms:] #[strong #{ investment.security }]
+
+                .info-btn-block.pt50
+                    a(href="/user/issuer_dashboard/").btn.btn-lg.btn-secondary INVESTOR DASHBOARD &nbsp;
+                        i.fa.fa-angle-down
