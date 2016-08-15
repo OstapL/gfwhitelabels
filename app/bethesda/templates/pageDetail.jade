@@ -6,12 +6,14 @@ section
     .container
         .row
             .col-lg-3.pull-lg-left
-                .sidebar_title 
+                .sidebar_title
                     h4 See Also
                 ul.sidebar_link
                     each p, i in related_pages
-                        li
-                            a(href=p.page_url) #{ p.title }
+                        if p.level == page.level
+                            li
+                                a(href=p.url) #{ p.title }
+
             .col-lg-9.pull-lg-right
                 each content_items, i in page.page_content_items
                     p.content #{ content_items.content_item.content_html }

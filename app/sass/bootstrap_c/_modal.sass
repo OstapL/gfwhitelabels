@@ -1,6 +1,7 @@
 
+
 .modal-dialog
-	max-width: 540px
+	max-width: rem(540)
 	.modal-content
 		border: none
 		border-radius: 0px
@@ -8,27 +9,42 @@
 			color: $puerto_rico
 	.modal-header
 		border-bottom: none
+		h2
+			line-height: rem(18)
+			margin-top: rem(10)
+		p
+			color: $small-text
+			line-height: rem(14)
+			margin-top: rem(10)
+
 	.modal-body
-		padding: 10px 30px
+		padding: rem(15) rem(30) 0
 		form
-			padding-bottom: 30px
+			padding-bottom: rem(30)
 			label
-				+calc-rem(11)
+				font-size: rem(11)
+				font-weight: 400
+				margin-bottom: 0
+			.btn
+				margin-top: rem(20)
 			.or
-				margin-top: 20px
-				margin-bottom: 20px
+				margin-top: rem(30)
+				margin-bottom: rem(5)
 				position: relative
 				span
 					position: absolute
 					text-align: center
 					left: 50%
-					top: 9px
-					padding: 5px
+					top: 0px
+					padding: rem(5)
 					background-color: #fff
 					transform: translate(-50%,-50%)
 					color: $small-text
-					+calc-rem(14)
+					font-size: rem(14)
 
 	.modal-footer
 		border: none
+		margin: 0
+		padding: 0
+
 
