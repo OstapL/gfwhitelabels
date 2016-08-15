@@ -75,7 +75,7 @@ section.create-company.container
 
 	//START RIGHT BLOCK
 	.col-lg-8
-		h2.text-uppercase.text-lg-center.text-xs-center Company
+		h2.text-uppercase.text-lg-center.text-xs-center.m-t-0 Companys
 		form(metod="post" action="").form-section
 			input(type='hidden' name='state' value='NY' id='state')
 			input(type='hidden' name='city' value='New York' id='city')
@@ -116,14 +116,13 @@ section.create-company.container
 				type: 'text',
 				})
 			.row
-				.col-lg-6
+				.col-lg-7.p-l-2
 					+fieldBlock("zip_code", '', {
-						class1: 'col-lg-6 col-md-3', 
-						class2: 'col-lg-6 col-md-9', 
-						type: 'text',
+						class1: 'col-lg-5',
+						class2: 'col-lg-7',
 						})
-				.col-lg-6.city_state
-					label.col-lg-6.text-md-right City/State
+				.col-lg-5.city_state
+					label.col-lg-6 City/State
 					.col-lg-6
 						span.change_state_city
 							span.input-value New York, NY
@@ -137,13 +136,13 @@ section.create-company.container
 						})
 				.col-lg-6
 					+fieldBlock("website", '', {
-						class1: 'col-lg-6 col-md-3', 
-						class2: 'col-lg-6 col-md-9', 
+						class1: 'col-lg-5 col-md-3', 
+						class2: 'col-lg-7 col-md-9', 
 						type: 'text',
 						placeholder: 'http://www.',
 						})
 			.border-bottom.m-t-2
-			.row.m-b-0
+			.row.col-l-65.m-b-0
 				.col-lg-6
 					+fieldBlock("twitter", '', {
 						class1: 'col-lg-6 col-md-3', 
@@ -152,21 +151,21 @@ section.create-company.container
 						})
 				.col-lg-6
 					+fieldBlock("facebook", '', {
-						class1: 'col-lg-6 col-md-3', 
-						class2: 'col-lg-6 col-md-9', 
+						class1: 'col-lg-5 col-md-3', 
+						class2: 'col-lg-7 col-md-9', 
 						type: 'text',
 						})
-			.row.m-b-0
-				.col-lg-6
+			.row.m-b-0.col-l-65
+				.col-lg-6.pull-right
 					+fieldBlock("instagram", '', {
 						class1: 'col-lg-6 col-md-3', 
 						class2: 'col-lg-6 col-md-9', 
 						type: 'text',
 						})
-				.col-lg-6
+				.col-lg-6.pull-right
 					+fieldBlock("linkedin", '', {
-						class1: 'col-lg-6 col-md-3', 
-						class2: 'col-lg-6 col-md-9', 
+						class1: 'col-lg-5 col-md-3', 
+						class2: 'col-lg-7 col-md-9', 
 						type: 'text',
 						})
 			.row.m-t-2
