@@ -14,7 +14,7 @@ var config = {
     bourbonDir: './node_modules/bourbon/app/assets/stylesheets',
     tatherDir: './node_modules/tether',
     fontAwesomeDir: './node_modules/font-awesome/scss',
-    publicDir: './app/html',
+    publicDir: './app/dist',
 };
 
 gulp.task('browser-sync', ['styles', 'scripts'], function() {
