@@ -6,7 +6,9 @@ dependencies:
     override:
         - npm install
         - ./node_modules/gulp/bin/gulp.js styles scripts views
+        - ./node_modules/webpack/bin/webpack.js -b
         - sudo pip install awscli
+        - ls -la webpack/dist
     
     cache_directories:
         - "node_modules"
