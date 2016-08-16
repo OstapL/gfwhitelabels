@@ -5,8 +5,9 @@ define(function() {
                 this.related_pages = options.related_pages;
             },
             render: function() {
+                let template = require('templates/pageDetail.pug');
                 this.$el.html(
-                    window.pageDetail({
+                    template({
                         serverUrl: serverUrl,
                         page: this.model.toJSON(),
                         related_pages: this.related_pages,

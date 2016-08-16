@@ -382,6 +382,7 @@ let appRoutes = Backbone.Router.extend({
     pageDetail: function(id) {
         let model = require('models/page');
         let view = require('views/page');
+        console.log('hello page detail');
 
         let element = new model.model({
             id: id

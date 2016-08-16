@@ -1,13 +1,13 @@
 define(function() {
     let r = {
         model: Backbone.Model.extend({
-            urlRoot: serverUrl + '/api/pages/',
+            urlRoot: serverUrl + '/api/page',
         }),
     };
 
     r.collection = Backbone.Collection.extend({
         model: r.model,
-        url: serverUrl + '/api/pages/',
+        url: serverUrl + '/api/page',
     });
 
     return r;
