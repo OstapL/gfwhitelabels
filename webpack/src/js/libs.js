@@ -7,5 +7,4 @@ global.Tether = require('tether');
 global.Bootstrap = require('../../node_modules/bootstrap/dist/js/bootstrap.min.js');
 global.userModel = require('models/user.js');
 global.Urls = require('jsreverse.js');
-
 console.log(global.userModel);

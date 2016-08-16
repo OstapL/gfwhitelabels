@@ -1,4 +1,15 @@
-require('libs.js');
+global.config = require('config');
+global.jQuery = require('jquery');
+global._ = require('underscore');
+global.Backbone = require('backbone');
+global.Backbone.Validation = require('backbone-validation');
+global.Tether = require('tether');
+global.Bootstrap = require('../../node_modules/bootstrap/dist/js/bootstrap.min.js');
+global.userModel = require('models/user.js');
+global.Urls = require('jsreverse.js');
+console.log(global.userModel);
+console.log(_);
+//require('libs.js');
 
 // При выводе ошибок для форм у нас может быть две ситуации:
 // 1. Мы выводим ошибку для элементы который у нас есть в форме => 
