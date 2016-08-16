@@ -10,8 +10,9 @@ define(function() {
             },
 
             render: function() {
+                let template = require('templates/companyCreateOrUpdate.pug');
                 this.$el.html(
-                    window.companyCreateOrUpdate({
+                    template({
                         serverUrl: serverUrl,
                         Urls: Urls,
                         fields: this.fields,
@@ -43,7 +44,7 @@ define(function() {
 
                         }).
                         fail((xhr, status, text) => {
-                            defaultSaveActions.error(this, xhr, status, text, this.fields);
+                            app.defaultSaveActions.error(this, xhr, status, text, this.fields);
                         });
                 } else {
                     if(this.$('.alert').length) {

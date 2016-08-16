@@ -262,7 +262,7 @@ let appRoutes = Backbone.Router.extend({
 
     campaignTeamMembers: function(id) {
         if(!app.user.is_anonymous()) {
-            let model = rerquire('models/campaign');
+            let model = require('models/campaign');
             let view = require('views/campaign');
 
             let campaign = new model.model({
@@ -282,8 +282,6 @@ let appRoutes = Backbone.Router.extend({
                 //app.cache[window.location.pathname] = i.$el.html();
 
                 app.hideLoading();
-            });
-            requirejs(['models/campaign', 'views/campaign', ], (model, view) => {
             });
         } else {
             app.routers.navigate(
