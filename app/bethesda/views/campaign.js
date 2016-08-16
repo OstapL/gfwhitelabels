@@ -3,7 +3,7 @@ define(function() {
         list: Backbone.View.extend({
             initialize: function(options) {
                 this.collection = options.collection;
-            },
+            }, 
 
             render: function() {
                 loadCss('/css/bootstrap-select.css');

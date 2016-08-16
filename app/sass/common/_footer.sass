@@ -24,9 +24,31 @@
 
 		&:hover 
 			color: rgba($footer_text, 0.6)
-	
+
+	.fade-in-logo
+		position: relative
+
+		display: inline-block
+		height: 38px
+		width: 48px
+
+		img
+			transition: all 0.5s ease-in-out
+
+			position: absolute
+			top: 50px
+			left: 0
+
+			opacity: 0
+		// повешать на класс который будет добавляться при скроле
+		&:hover img
+			top: 0
+
+			opacity: 1
+
 	.company
 		text-align: center
+
 		padding-bottom: 8px
 
 		span
@@ -35,6 +57,7 @@
 			text-transform: uppercase
 			letter-spacing: 2.8px
 			line-height: 18px
+			font-family: $dosis
 
 		p
 			font-size: 11px

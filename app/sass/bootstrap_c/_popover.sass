@@ -8,11 +8,21 @@
 	[class*='popover-content']
 		display: inline-block
 
+	&.bs-tether-element-attached-left
+		margin-left: 25px
+
+	&.bs-tether-element-attached-bottom
+		margin-top: -25px
+
 	.popover-title
 		display: none
+
 	&.bs-tether-element-attached-bottom
 		.popover-arrow
 			border-top-color: $total_sum_progresbar
+	&.popover.bs-tether-element-attached-left 
+		.popover-arrow
+			border-right-color: $total_sum_progresbar
 	.popover-content
 		@include calc-rem(11)
 

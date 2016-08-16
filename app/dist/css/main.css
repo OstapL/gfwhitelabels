@@ -1847,7 +1847,9 @@ select.form-control:not([size]):not([multiple]) {
   color: #777777;
   padding-top: 6px; }
   .form-section label.thin-label {
-    font-weight: 500; }
+    padding-top: 0;
+    font-weight: 500;
+    line-height: 1; }
   .form-section label.radio-inline {
     font-weight: 500;
     position: relative;
@@ -1928,24 +1930,24 @@ select.form-control:not([size]):not([multiple]) {
 .form-section .street_address_2 {
   color: #55595c; }
 
-.form-section .city_state {
+.form-section .city_states {
   position: relative;
   z-index: 50; }
-  .form-section .city_state input {
+  .form-section .city_states input {
     display: none; }
-  .form-section .city_state span.change_state_city {
+  .form-section .city_states .change_state_city {
     position: absolute;
     top: 6px;
     right: 0;
     cursor: pointer; }
-    .form-section .city_state span.change_state_city .input-value {
+    .form-section .city_states .change_state_city .input-value {
       overflow: hidden;
       white-space: nowrap;
       text-overflow: ellipsis;
       display: inline-block;
       max-width: 150px;
       text-decoration: underline; }
-    .form-section .city_state span.change_state_city i {
+    .form-section .city_states .change_state_city i {
       margin-left: 10px; }
 
 .form-section textarea {
@@ -3746,7 +3748,7 @@ a.tag:focus, a.tag:hover {
   border-bottom: none; }
   .nav-tabs li.nav-item {
     margin-bottom: 20px;
-    margin-right: 3%;
+    margin-right: 2.5%;
     margin-left: 0;
     min-width: 100px;
     text-align: center; }
@@ -3754,7 +3756,7 @@ a.tag:focus, a.tag:hover {
       margin-right: 0; }
     .nav-tabs li.nav-item a.nav-link {
       font-size: 0.75rem;
-      padding: 5px 15px;
+      padding: 5px 20px;
       text-transform: uppercase;
       color: #000000;
       letter-spacing: 2px; }
@@ -4357,6 +4359,8 @@ button.close {
         font-size: 0.6875rem;
         font-weight: 400;
         margin-bottom: 0; }
+      .modal-dialog .modal-body form select {
+        height: 36px; }
       .modal-dialog .modal-body form .btn {
         margin-top: 1.25rem; }
       .modal-dialog .modal-body form .or {
@@ -4573,10 +4577,16 @@ button.close {
   border: 1px #3CBDB9 solid; }
   .popover [class*='popover-content'] {
     display: inline-block; }
+  .popover.bs-tether-element-attached-left {
+    margin-left: 25px; }
+  .popover.bs-tether-element-attached-bottom {
+    margin-top: -25px; }
   .popover .popover-title {
     display: none; }
   .popover.bs-tether-element-attached-bottom .popover-arrow {
     border-top-color: #3CBDB9; }
+  .popover.popover.bs-tether-element-attached-left .popover-arrow {
+    border-right-color: #3CBDB9; }
   .popover .popover-content {
     font-size: 0.6875rem;
     padding: 8px 25px;
@@ -5318,6 +5328,8 @@ a.text-danger:focus, a.text-danger:hover {
   background-color: #f8f8f8;
   font-family: "Dosis", sans-serif;
   margin-bottom: 85px; }
+  .header_title h1 {
+    margin-top: 15px; }
 
 .pt50 {
   padding-top: 50px; }
@@ -5343,6 +5355,19 @@ a.text-danger:focus, a.text-danger:hover {
 
 .mr30 {
   margin-right: 30px; }
+
+.mt85 {
+  margin-top: 85px; }
+
+.mb85 {
+  margin-bottom: 85px; }
+
+.mt25 {
+  margin-top: 25px; }
+
+.m0 {
+  margin-top: 0;
+  margin-bottom: 0; }
 
 .row.no-gutters {
   margin-right: 0;
@@ -5505,10 +5530,10 @@ header .navbar-nav {
           header .navbar-nav .nav-item.notification:hover .submenu li.title a {
             width: auto;
             padding-left: 0;
-            color: #3CBDB9;
-            text-decoration: underline; }
+            color: #3CBDB9; }
             header .navbar-nav .nav-item.notification:hover .submenu li.title a:hover {
               color: rgba(60, 189, 185, 0.7);
+              text-decoration: underline;
               cursor: pointer; }
           header .navbar-nav .nav-item.notification:hover .submenu li.title + li {
             margin-top: 48px; }
@@ -5701,6 +5726,20 @@ header .nav-link-sm {
     display: block; }
     .footer_new a:hover {
       color: rgba(119, 119, 119, 0.6); }
+  .footer_new .fade-in-logo {
+    position: relative;
+    display: inline-block;
+    height: 38px;
+    width: 48px; }
+    .footer_new .fade-in-logo img {
+      transition: all 0.5s ease-in-out;
+      position: absolute;
+      top: 50px;
+      left: 0;
+      opacity: 0; }
+    .footer_new .fade-in-logo:hover img {
+      top: 0;
+      opacity: 1; }
   .footer_new .company {
     text-align: center;
     padding-bottom: 8px; }
@@ -5709,7 +5748,8 @@ header .nav-link-sm {
       color: #777777;
       text-transform: uppercase;
       letter-spacing: 2.8px;
-      line-height: 18px; }
+      line-height: 18px;
+      font-family: "Dosis", sans-serif; }
     .footer_new .company p {
       font-size: 11px;
       color: #777777;
@@ -5870,6 +5910,12 @@ header .nav-link-sm {
     display: block;
     font-weight: bold; }
 
+.popover.ssn-popover {
+  max-width: 296px !important; }
+  .popover.ssn-popover .popover-content span {
+    display: inline-block;
+    margin-bottom: 15px; }
+
 .profile .profile-tabs.nav-tabs {
   margin-bottom: 15px; }
   .profile .profile-tabs.nav-tabs li.nav-item a.nav-link {
@@ -5930,12 +5976,15 @@ header .nav-link-sm {
 .profile .select-group select {
   max-width: 554px; }
 
-.profile span.change_state_city {
+.profile .change_state_city {
   position: absolute;
   top: 6px;
-  left: 121px;
+  left: 123px;
+  z-index: 60;
   cursor: pointer; }
-  .profile span.change_state_city .input-value {
+  .profile .change_state_city:focus {
+    outline: none; }
+  .profile .change_state_city .input-value {
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -5943,16 +5992,26 @@ header .nav-link-sm {
     max-width: 150px;
     margin-right: 20px;
     text-decoration: underline; }
-  .profile span.change_state_city i {
-    vertical-align: super; }
+  .profile .change_state_city i {
+    vertical-align: super;
+    color: #777777; }
+  @media only screen and (max-width: 1199px) {
+    .profile .change_state_city {
+      left: 173px; } }
+  @media only screen and (max-width: 991px) {
+    .profile .change_state_city {
+      left: 256px; } }
+  @media only screen and (max-width: 767px) {
+    .profile .change_state_city {
+      left: 123px; } }
 
 .profile .form-section .street_address_2 label {
   color: #777777; }
 
-.profile .form-section .city_state {
+.profile .form-section .city_states {
   position: relative;
   z-index: 50; }
-  .profile .form-section .city_state input {
+  .profile .form-section .city_states input {
     display: none; }
 
 .profile .form-section textarea {
@@ -7017,7 +7076,7 @@ header .nav-link-sm {
     transform: rotate(360deg); } }
 
 .popover.amount-popover {
-  transform: translateX(153px) translateY(171px) translateZ(0px) !important;
+  transform: translateX(153px) translateY(170px) translateZ(0px) !important;
   max-width: 520px !important; }
   .popover.amount-popover .popover-arrow {
     left: 95%; }
