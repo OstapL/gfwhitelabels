@@ -4,11 +4,11 @@ global._ = require('underscore');
 global.Backbone = require('backbone');
 global.Backbone.Validation = require('backbone-validation');
 global.Tether = require('tether');
-global.Bootstrap = require('../../node_modules/bootstrap/dist/js/bootstrap.min.js');
+global.Bootstrap = require('../node_modules/bootstrap/dist/js/bootstrap.min.js');
 global.userModel = require('models/user.js');
 global.Urls = require('jsreverse.js');
-console.log(global.userModel);
-console.log(_);
+//console.log(global.userModel);
+//console.log(_);
 //require('libs.js');
 
 // При выводе ошибок для форм у нас может быть две ситуации:
