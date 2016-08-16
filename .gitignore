@@ -1,7 +1,7 @@
 /node_modules
 npm-debug.log
 .sublime*
-app/html/css
+app/dist/css
 .sass-cache/
 *.css.map
 
@@ -90,8 +90,8 @@ Session.vim
 tags
 
 # do not push compiled js files
-app/html/compiled_t/*
-app/html/templates/*
+app/dist/compiled_t/*
+app/dist/templates/*
 
 # do not push libs.js compiled file
-app/html/js/libs.js
+app/dist/js/libs.js
