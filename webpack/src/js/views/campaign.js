@@ -16,6 +16,7 @@ define(function() {
                         campaigns: this.collection.toJSON()
                     })
                 );
+                this.$el.find('.selectpicker').selectpicker();
                 //selectPicker('.selectpicker');
                 return this;
             },

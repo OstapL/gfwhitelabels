@@ -13,7 +13,7 @@ module.exports = {
 
     output: {
         path: __dirname + '/dist',
-        filename: 'bundle.js'
+        filename: '/bundle.js'
     },
 
     uglifyJsPlugin: new webpack.optimize.UglifyJsPlugin({
@@ -96,5 +96,9 @@ module.exports = {
             {test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: 'file'},
             {test: /\.md$/, loaders: ['html', 'markdown']}
         ]
-    }
+    },
+
+    devServer: {
+        historyApiFallback: true
+    },
 };
