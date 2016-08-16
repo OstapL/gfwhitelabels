@@ -57,7 +57,7 @@ header
         position: absolute
         top: 100%
         left: -10px
-        z-index: 9999
+        z-index: 9991
         
         display: block
 
@@ -79,7 +79,7 @@ header
               float: right
 
         &.user-info-drop
-          right: -10px
+          right: -16px!important
           left: auto
 
 
@@ -107,6 +107,14 @@ header
               margin-bottom: 0
 
               font-weight: 600
+
+        &.notification-container 
+          left: -70px
+
+          .nav-link
+            margin-left: 0 
+            padding-left: 14px
+
 
       &.notification
 
@@ -219,10 +227,12 @@ header
                 margin-top: 48px
 
       &.user-info
+        min-width: 105px
+
         a.user-info-name
           span
             display: inline-block
-            margin-top: -13px
+            margin-top: -16px
             margin-right: 10px
             height: 48px
             vertical-align: text-top
