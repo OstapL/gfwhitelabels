@@ -21,7 +21,7 @@ general:
             - es7
             - ostap
             - romang
-            - romanr
+            - romank
 
 deployment:
     aws:
