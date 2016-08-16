@@ -8,7 +8,7 @@ section.create-company.container
 		.jumbotron.jumbotron-fluid.row
 			.raise-funds
 				h4.font-weight-bold.text-uppercase.m-b-0 Raise funds
-					.small-text (10% Done)
+					.small-text.font-weight-normal.p-t-0 (10% Done)
 			#accordion(role="tablist" aria-multiselectable="true")
 				.panel.panel-default
 					.panel-heading(role="tab")
@@ -75,7 +75,7 @@ section.create-company.container
 
 	//START RIGHT BLOCK
 	.col-lg-8
-		h2.text-uppercase.text-lg-center.text-xs-center.m-t-0 Companys
+		h2.text-uppercase.text-lg-center.text-xs-center.m-t-0.dosis Company
 		form(metod="post" action="").form-section
 			input(type='hidden' name='state' value='NY' id='state')
 			input(type='hidden' name='city' value='New York' id='city')
@@ -116,25 +116,25 @@ section.create-company.container
 				type: 'text',
 				})
 			.row
-				.col-lg-7.p-l-2
+				.col-lg-6.col-l-65
 					+fieldBlock("zip_code", '', {
-						class1: 'col-lg-5',
-						class2: 'col-lg-7',
+						class1: 'col-lg-6',
+						class2: 'col-lg-6',
 						})
 				.col-lg-5.city_state
-					label.col-lg-6 City/State
+					label.col-lg-6.text-lg-right City/State
 					.col-lg-6
 						span.change_state_city
 							span.input-value New York, NY
 								i.fa.fa-pencil-square-o
 			.row.m-b-0
-				.col-lg-6
+				.col-lg-6.col-l-65
 					+fieldBlock("phone", '', {
 						class1: 'col-lg-6 col-md-3', 
 						class2: 'col-lg-6 col-md-9', 
 						type: 'text',
 						})
-				.col-lg-6
+				.col-lg-6.col-l-65
 					+fieldBlock("website", '', {
 						class1: 'col-lg-5 col-md-3', 
 						class2: 'col-lg-7 col-md-9', 
@@ -156,13 +156,13 @@ section.create-company.container
 						type: 'text',
 						})
 			.row.m-b-0.col-l-65
-				.col-lg-6.pull-right
+				.col-lg-6
 					+fieldBlock("instagram", '', {
 						class1: 'col-lg-6 col-md-3', 
 						class2: 'col-lg-6 col-md-9', 
 						type: 'text',
 						})
-				.col-lg-6.pull-right
+				.col-lg-6
 					+fieldBlock("linkedin", '', {
 						class1: 'col-lg-5 col-md-3', 
 						class2: 'col-lg-7 col-md-9', 
