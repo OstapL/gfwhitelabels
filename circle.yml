@@ -19,6 +19,9 @@ general:
     branches:
         only:
             - es7
+            - ostap
+            - romang
+            - romanr
 
 deployment:
     aws:
