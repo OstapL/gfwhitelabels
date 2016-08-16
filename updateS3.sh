@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # copy all compiled js/css and img files
-cd app/html/
+cd app/dist/
 aws s3 cp . s3://growthfountain-frontend/ --recursive --exclude ".git"
 
 # copy server.html as index file

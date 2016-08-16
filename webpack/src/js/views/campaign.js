@@ -113,6 +113,7 @@ define(function() {
                 this.model.set('campaign', this.campaignModel.get('id'));
                 this.model.set('user', app.user.get('id'));
                 Backbone.Validation.bind(this, {model: this.model});
+                var campaignModel = this.campaignModel;
 
                 if(this.model.isValid(true)) {
                     this.model.save().
@@ -125,10 +126,11 @@ define(function() {
                             );
 
                             let template = require('templates/investmentThankYou.pug');
+                            console.log('Urls', Urls);
                             $('#content').html(template({
                                 Urls: Urls,
                                 investment: data,
-                                campaign: this.campaignModel.toJSON()
+                                campaign: campaignModel.toJSON()
                             }));
                             app.cache[window.location.pathname] = $('#content').html();
                             app.hideLoading();

@@ -154,63 +154,6 @@ function repeatToJSonString(obj) {
     return obj;
 };
 
-function createFileDropzone(name, folderName, renameTo, onSuccess) {
-
-  let params = {
-    folder: folderName,
-    file_name: name
-  };
-
-  if(typeof renameTo != 'undefined' && renameTo != '') {
-    params['rename'] = renameTo;
-  }
-  console.log('params', params);
-
-  let dropbox = new Dropzone(".dropzone__" + name, {
-      url: serverUrl + Urls['image2-list'](),
-      paramName: name,
-      params: params,
-      previewTemplate: `<div class="dz-details">
-          <img data-dz-thumbnail />
-        </div>
-        <div class="dz-progress"><span class="dz-upload" data-dz-uploadprogress></span></div>
-        <div class="dz-error-message"><span data-dz-errormessage></span></div>`,
-      headers: {
-          'Authorization':  'Token ' + localStorage.getItem('token'),
-          'Cache-Control': null,
-          'X-Requested-With': null
-      }
-  });
-
-  $('.dropzone__' + name).addClass('dropzone')//.html('Drop file here');
-
-  /*
-  dropbox.on('sending', function(data) {
-      data.xhr.setRequestHeader("X-CSRFToken", getCSRF());   
-  });
-  */
-
-  dropbox.on('addedfile', function(file) {
-      _(this.files).each((f, i) => {
-        if(f.lastModified != file.lastModified) {
-            this.removeFile(f);
-        }
-      });
-      //this.removeFile(true);
-  });
-
-  dropbox.on("success", (file, data) => {
-      //data = JSON.parse(data);
-      // FixME
-      // What a crap ?!
-      $('.dropzone__' + name + ' img').remove();
-      $('.dropzone__' + name).prepend('<img src="' + data.url + '" />');
-      if(typeof onSuccess != 'undefined') {
-        onSuccess(data);
-      }
-  });
-
-}
 
 
 global.app = {
@@ -290,8 +233,8 @@ global.app = {
     defaultSaveActions: {
         success: (view, response) => {
             view.$('.alert-warning').remove();
-            if(typeof this._success == 'function') {
-                this._success(response);
+            if(typeof view._success == 'function') {
+                view._success(response);
             }
         },
         error: (view, xhr, status, text, fields) => {
@@ -334,8 +277,65 @@ global.app = {
         link.rel = "stylesheet";
         link.href = url;
         document.getElementsByTagName("head")[0].appendChild(link);
-    }
+    },
 
+    createFileDropzone: function(Dropzone, name, folderName, renameTo, onSuccess) {
+
+      let params = {
+        folder: folderName,
+        file_name: name
+      };
+
+      if(typeof renameTo != 'undefined' && renameTo != '') {
+        params['rename'] = renameTo;
+      }
+      console.log('params', params);
+
+      let dropbox = new Dropzone(".dropzone__" + name, {
+          url: serverUrl + Urls['image2-list'](),
+          paramName: name,
+          params: params,
+          previewTemplate: `<div class="dz-details">
+              <img data-dz-thumbnail />
+            </div>
+            <div class="dz-progress"><span class="dz-upload" data-dz-uploadprogress></span></div>
+            <div class="dz-error-message"><span data-dz-errormessage></span></div>`,
+          headers: {
+              'Authorization':  'Token ' + localStorage.getItem('token'),
+              'Cache-Control': null,
+              'X-Requested-With': null
+          }
+      });
+
+      $('.dropzone__' + name).addClass('dropzone')//.html('Drop file here');
+
+      /*
+      dropbox.on('sending', function(data) {
+          data.xhr.setRequestHeader("X-CSRFToken", getCSRF());   
+      });
+      */
+
+      dropbox.on('addedfile', function(file) {
+          _(this.files).each((f, i) => {
+            if(f.lastModified != file.lastModified) {
+                this.removeFile(f);
+            }
+          });
+          //this.removeFile(true);
+      });
+
+      dropbox.on("success", (file, data) => {
+          //data = JSON.parse(data);
+          // FixME
+          // What a crap ?!
+          $('.dropzone__' + name + ' img').remove();
+          $('.dropzone__' + name).prepend('<img src="' + data.url + '" />');
+          if(typeof onSuccess != 'undefined') {
+            onSuccess(data);
+          }
+      });
+
+    }
 };
 
 _.extend(app, Backbone.Events);

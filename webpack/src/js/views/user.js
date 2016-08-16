@@ -11,8 +11,9 @@ define(function() {
             },
 
             render: function() {
+                let template = require('templates/userLogin.pug');
                 this.$el.html(
-                    window.userLogin({
+                    template({
                         login_fields: this.login_fields,
                         register_fields: this.register_fields,
                         login: window.location.pathname.indexOf('login') != -1
@@ -33,7 +34,7 @@ define(function() {
                     method: 'POST',
                     data: data,
                     success: (xhr) => {
-                        defaultSaveActions.success(this, xhr);
+                        app.defaultSaveActions.success(this, xhr);
                         if(xhr.hasOwnProperty('key')) {
                             localStorage.setItem('token', xhr.key);
                             setTimeout(function() {
@@ -46,7 +47,7 @@ define(function() {
                         }
                     },
                     error: (xhr, status, text) => {
-                        defaultSaveActions.error(this, xhr, status, text);
+                        app.defaultSaveActions.error(this, xhr, status, text);
                     }
                 });
             },
@@ -77,29 +78,30 @@ define(function() {
             },
 
             render: function() {
-                requirejs(['/js/dropzone.js',], (dropzone) => {
-                    this.$el.html(
-                        window.userProfile({
-                            serverUrl: serverUrl,
-                            user: app.user.toJSON(),
-                            fields: this.fields
-                        })
-                    );
-                    createFileDropzone(
-                        'image', 
-                        'avatars', '', 
-                        (data) => {
-                            this.model.save({
-                                image: data.file_id,
-                            }, {
-                                patch: true
-                            }).then((model) => {
-                                localStorage.setItem('user', JSON.stringify(this.model.toJSON()));
-                            });
-                        }
-                    );
-                    return this;
-                });
+                let dropzone = require('dropzone');
+                let template = require('templates/userProfile.pug');
+                this.$el.html(
+                    template({
+                        serverUrl: serverUrl,
+                        user: app.user.toJSON(),
+                        fields: this.fields
+                    })
+                );
+                app.createFileDropzone(
+                    dropzone,
+                    'image', 
+                    'avatars', '', 
+                    (data) => {
+                        this.model.save({
+                            image: data.file_id,
+                        }, {
+                            patch: true
+                        }).then((model) => {
+                            localStorage.setItem('user', JSON.stringify(this.model.toJSON()));
+                        });
+                    }
+                );
+                return this;
             },
 
             update: function(event) {

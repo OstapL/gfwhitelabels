@@ -121,7 +121,7 @@ let appRoutes = Backbone.Router.extend({
             app.getModel('campaign', model.model, id, function(campaignModel) {
                 $.ajax(_.extend({
                         url: serverUrl + Urls['investment-list'](),
-                }, defaultOptionsRequest)).done((response) => {
+                }, app.defaultOptionsRequest)).done((response) => {
                     var i = new view.investment({
                         el: '#content',
                         model: new investModel.model(),
@@ -149,7 +149,7 @@ let appRoutes = Backbone.Router.extend({
 
             $.ajax(_.extend({
                     url: serverUrl + Urls['rest_user_details'](),
-                }, defaultOptionsRequest)
+                }, app.defaultOptionsRequest)
             ).done((response) => {
                 var i = new view.profile({
                     el: '#content',
@@ -178,7 +178,7 @@ let appRoutes = Backbone.Router.extend({
             let company = new model.model();
             $.ajax(_.extend({
                     url: company.urlRoot,
-                }, defaultOptionsRequest)
+                }, app.defaultOptionsRequest)
             ).done((response) => {
                 var i = new view.createOrUpdate({
                     el: '#content',
@@ -209,7 +209,7 @@ let appRoutes = Backbone.Router.extend({
             });
             $.ajax(_.extend({
                     url: campaign.urlRoot + '/general_infomation',
-                }, defaultOptionsRequest)
+                }, app.defaultOptionsRequest)
             ).done((response) => {
                 var i = new view.generalInformation({
                     el: '#content',
@@ -239,7 +239,7 @@ let appRoutes = Backbone.Router.extend({
             });
             $.ajax(_.extend({
                     url: campaign.urlRoot + '/media',
-                }, defaultOptionsRequest)
+                }, app.defaultOptionsRequest)
             ).done((response) => {
                 var i = new view.media({
                     el: '#content',
@@ -270,7 +270,7 @@ let appRoutes = Backbone.Router.extend({
             });
             $.ajax(_.extend({
                     url: campaign.urlRoot + '/team_members',
-                }, defaultOptionsRequest)
+                }, app.defaultOptionsRequest)
             ).done((response) => {
                 var i = new view.teamMembers({
                     el: '#content',
@@ -303,7 +303,7 @@ let appRoutes = Backbone.Router.extend({
             });
             $.ajax(_.extend({
                     url: campaign.urlRoot + '/specifics',
-                }, defaultOptionsRequest)
+                }, app.defaultOptionsRequest)
             ).done((response) => {
                 var i = new view.specifics({
                     el: '#content',
@@ -334,7 +334,7 @@ let appRoutes = Backbone.Router.extend({
             });
             $.ajax(_.extend({
                     url: campaign.urlRoot + '/perks',
-                }, defaultOptionsRequest)
+                }, app.defaultOptionsRequest)
             ).done((response) => {
                 var i = new view.perks({
                     el: '#content',
@@ -431,7 +431,7 @@ let appRoutes = Backbone.Router.extend({
                 url: serverUrl + Urls['rest_register'](),
             }, app.defaultOptionsRequest));
         $.when(a1, a2).done((r1, r2) => {
-            let loginView = new userView.login({
+            let loginView = new view.login({
                 el: '#content',
                 login_fields: r1[0].actions.POST,
                 register_fields: r2[0].actions.POST
