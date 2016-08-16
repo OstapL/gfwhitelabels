@@ -2,22 +2,25 @@
 .tabs-scroll
 	position: relative
 	.navbar
-		padding: 0px 16px
+		padding: 0px rem(16)
 		.nav-pills
 			//padding: 10px 0
 			.nav-link
 				color: $small-text
-				+calc-rem(14)
+				font-size: rem(14)
 				+mt(.2s)
-				padding: 0 0 25px 0
-				margin-right: 30px
-				letter-spacing: 2.8px
+				padding: 0 0 rem(20) 0
+				margin-right: rem(30)
+				letter-spacing: rem(2.8)
 				&:hover
 					border-bottom: solid 2px $puerto_rico
 					color: $link-1-hover
 			.nav-link.active
 				background-color: transparent
 				border-bottom: solid 2px $puerto_rico
+	.btn
+		position: relative
+		top: rem(-5)
 .sticky
 .is-sticky
 	position: fixed
@@ -27,14 +30,14 @@
 	top: 0
 	z-index: 1000
 	width: 100%
-	background-color: rgba(248,248,248,0.8)
-	box-shadow: 0px 10px 1px -10px $small-text
+	background-color: $alabaster
+	box-shadow: 0px 0px 2px 0px $small-text
 	.nav-pills
-		width: 1140px
-		padding-left: 30px!important
-		padding-right: 30px!important
+		width: rem(1140)
+		padding-left: rem(30)!important
+		padding-right: rem(30)!important
 		margin: auto
-		padding-top: 20px!important
+		padding-top: rem(20)!important
 		padding-bottom: 0px!important
 		position: relative
 

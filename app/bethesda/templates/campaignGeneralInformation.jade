@@ -1,10 +1,10 @@
 include mixins.jade
 
-+breadcrumbs('Create Company', 'Help Button', [['home', '/',], [ 'current', page.get_absolute_url]])
++breadcrumbs('Create Company', '', [['home', '/',], [ 'current', page.get_absolute_url]])
 
-section.create-company-general.container
+section.create-company-general.container.m-b-85
 	//START LEFT BLOCK
-	.col-lg-3
+	.col-lg-3.create_compaign
 		.jumbotron.jumbotron-fluid.row
 			.raise-funds
 				h4.font-weight-bold.text-uppercase.m-b-0 Raise funds
@@ -75,24 +75,24 @@ section.create-company-general.container
 
 	//START RIGHT BLOCK
 	.col-lg-8
-		h2.text-uppercase.text-lg-center.text-xs-center GENERAL INFORMATION
+		h2.text-uppercase.text-lg-center.text-xs-center.dosis.m-t-0 GENERAL INFORMATION
 		form(metod="post" action="").form-section
-			.form-group.row.clearfix
+			.form-group.row.clearfix.required
 				label.col-lg-3.text-lg-right Pitch
 				.col-lg-9
 					textarea(placeholder="Pitch" rows="4").form-control
-			.form-group.row.clearfix
+			.form-group.row.clearfix.required
 				label.col-lg-3.text-lg-right Intended Use of Proceeds
 				.col-lg-9
 					textarea(placeholder="Intended Use of Proceeds" rows="4").form-control
-			.form-group.row.clearfix
+			.form-group.row.clearfix.required
 				label.col-lg-3.text-lg-right Business Model
 				.col-lg-9
 					textarea(placeholder="Business Model" rows="4").form-control
-			.border-bottom.border-bottom-m-t-30
+			.border-bottom
 			.row
-				.col-lg-9.offset-1.pull-right.m-b-1
-					h3.d-inline-block.m-b-0 FAQs
+				.col-lg-9.offset-1.pull-right
+					h3.d-inline-block.m-t-0.mb25 FAQs
 					a(href="").link-1.pull-right.d-inline-block Delete Section
 			+fieldBlock("Question", '', {
 				class1: 'col-lg-3 col-md-3',
@@ -103,15 +103,15 @@ section.create-company-general.container
 				label.col-lg-3.text-lg-right Answer
 				.col-lg-9
 					textarea(placeholder="Answer" rows="4").form-control.m-b-0
-			.row
+			.row.m-t-0
 				.col-lg-9.offset-1.pull-right
 					a(href="").link-2 Add Another FAQ
 			.border-bottom
 			.row
 				.col-lg-9.offset-1.pull-right.m-b-1
-					h3.d-inline-block.m-b-0 Additional Information 
+					h3.d-inline-block.m-b-0.m-t-0 Additional Information 
 					a(href="").link-1.pull-right.d-inline-block Delete Section
-			.form-group.row.clearfix
+			.form-group.row.clearfix.required
 				label.col-lg-3.text-lg-right.p-t-0 Optional Additional Sections
 				.col-lg-9
 					input(placeholder="Section Title").form-control
