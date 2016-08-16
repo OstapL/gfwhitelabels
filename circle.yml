@@ -8,14 +8,20 @@ dependencies:
         - ./node_modules/gulp/bin/gulp.js styles scripts views
         - ./node_modules/webpack/bin/webpack.js -b
         - sudo pip install awscli
-        - ls -la webpack/dist
+        - ls -la dist
         - ./deploy.sh
     
     cache_directories:
         - "node_modules"
+
+general:
+    branches:
+        only:
+            - es7
 
 deployment:
     aws:
         branch: master
         commands:
             - ./deploy.sh
+
