@@ -1,17 +1,9 @@
 var webpack = require('webpack'),
     ExtractTextPlugin = require('extract-text-webpack-plugin'),
     HtmlWebpackPlugin = require('html-webpack-plugin'),
-    bemLinter = require('postcss-bem-linter'),
-    atImport = require('postcss-import'),
-    customProperties = require('postcss-custom-properties'),
     autoprefixer = require('autoprefixer'),
     path = require('path');
 
-const sassLoaders = [
-    'css-loader',
-    'postcss-loader',
-    'sass-loader?indentedSyntax=sass&includePaths[]=node_modules&' + path.resolve(__dirname, './src')
-]
 
 module.exports = {
     entry: {
@@ -34,7 +26,7 @@ module.exports = {
     }),
 
     resolve: {
-        extensions: ['', '.js', '.pug', '.sass', 'scss', '.css'],
+        extensions: ['', '.js', '.pug', '.sass', 'scss', ],
         modulesDirectories: [
             './',
             'js',
@@ -62,23 +54,12 @@ module.exports = {
                 comments: false
             }
         }),
-        //new ExtractTextPlugin('styles.css'),
-        new ExtractTextPlugin('[name].css'),
         new HtmlWebpackPlugin({
             title: 'Backbone App',
             template: './src/index.html',
             filename: 'index.html',
             inject: 'body' // Inject all scripts into the body
         })
-    ],
-
-    postcss: [
-        atImport({
-            path: ['node_modules', './src']
-        }),
-        autoprefixer({ browsers: ['last 2 versions'] }),
-        customProperties(),
-        bemLinter()
     ],
 
     module: {
@@ -88,11 +69,9 @@ module.exports = {
             {test: /\.pug$/, loader: 'pug-loader'},
             {test: /\.js?$/, exclude: /node_modules/, loader: 'babel-loader'},
             {test: /\.handlebars$/, loader: "handlebars-loader"},
-            {test: /\.sass$/, loader: ExtractTextPlugin.extract( 'style-loader=', sassLoaders.join('!')) },
-            //{test: /\.scss/, exclude: /node_modules/, loader: 'style!css?modules&importLoaders=2&sourceMap&localIdentName=[local]___[hash:base64:5]!autoprefixer?browsers=last 2 version!sass?outputStyle=expanded&sourceMap&includePaths[]=node_modules/boostrap/scss'},
-            //{test: /\.scss$/, loader: ExtractTextPlugin.extract( 'style-loader=', sassLoaders.join('!')) },
-            //{test: /\.scss$/, loaders: ['style', 'css', 'autoprefixer', 'sass']},
-            {test: /\.css$/, loader: 'style!css'},
+            {test: /\.css$/, loaders: ['style-loader', 'css-loader'], },
+            {test: /\.scss$/, loaders: ['style-loader', 'css-loader', 'sass-loader'], },
+            {test: /\.sass$/, loaders: ['style-loader', 'css-loader', 'sass-loader'], },
             {test: /\.png$/, loader: 'url?limit=8192&mimetype=image/png'},
             {test: /\.jpe?g$/, loader: 'url?limit=8192&mimetype=image/jpg'},
             {test: /\.gif$/, loader: 'url?limit=8192&mimetype=image/gif'},
