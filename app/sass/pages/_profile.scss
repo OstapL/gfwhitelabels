@@ -1,9 +1,24 @@
+.popover.ssn-popover {
+	// transform: translateX(153px) translateY(156px) translateZ(0px)!important;
+
+	max-width: 296px!important;
+
+	// .popover-arrow {
+	// 	left: 95%;
+	// }
+
+	.popover-content {
+		span {
+			display: inline-block;
+			margin-bottom: 15px;
+		}
+	}
+
+}
+
+
 .profile {
 
-	// hide all popovers content source block
-	// [class*='popover-content'] {
-	// 	display: none;
-	// }
 
 	.profile-tabs.nav-tabs {
 		margin-bottom: 15px;
@@ -100,12 +115,18 @@
 		}
 	}
 
-	span.change_state_city {
+	.change_state_city {
 		position: absolute;
 		top: 6px;
-		left: 121px;
+		left: 123px;
+		z-index: 60;
+
 
 		cursor: pointer;
+
+		&:focus {
+			outline: none;
+		}
 
 		.input-value {
 			@include ellipsis();
@@ -118,7 +139,20 @@
 		}
 
 		i {
-			vertical-align: super;
+			vertical-align: super; 
+			color: $small-text;
+		}
+
+		@media only screen and (max-width:1199px) {
+			left: 173px;
+		}
+
+		@media only screen and (max-width:991px) {
+			left: 256px;
+		}
+
+		@media only screen and (max-width:767px) {
+			left: 123px;
 		}
 	}
 
@@ -130,7 +164,7 @@
 			color: $footer_text;
 		}
 
-		.city_state {
+		.city_states {
 			position: relative;
 			z-index: 50;
 
@@ -138,7 +172,6 @@
 				display: none;
 			}
 
-			
 		}
 
 		textarea {
