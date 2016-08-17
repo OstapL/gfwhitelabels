@@ -3215,206 +3215,208 @@ pug_html = pug_html + "\u003Cdiv class=\"list-group\"\u003E";
 ;pug_debug_line = 40;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
 pug_html = pug_html + "\u003Ca class=\"list-group-item list-group-item-action\" href=\"#\"\u003E";
 ;pug_debug_line = 40;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
-pug_html = pug_html + "General Information\u003C\u002Fa\u003E";
+pug_html = pug_html + "General Information";
 ;pug_debug_line = 41;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
+pug_html = pug_html + "\u003Ci class=\"fa fa-check\"\u003E\u003C\u002Fi\u003E\u003C\u002Fa\u003E";
+;pug_debug_line = 42;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
 pug_html = pug_html + "\u003Ca class=\"list-group-item list-group-item-action active\" href=\"#\"\u003E";
-;pug_debug_line = 41;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
+;pug_debug_line = 42;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
 pug_html = pug_html + "Media\u003C\u002Fa\u003E";
-;pug_debug_line = 42;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
+;pug_debug_line = 43;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
 pug_html = pug_html + "\u003Ca class=\"list-group-item list-group-item-action\" href=\"#\"\u003E";
-;pug_debug_line = 42;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
+;pug_debug_line = 43;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
 pug_html = pug_html + "Team Members\u003C\u002Fa\u003E";
-;pug_debug_line = 43;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
+;pug_debug_line = 44;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
 pug_html = pug_html + "\u003Ca class=\"list-group-item list-group-item-action\" href=\"#\"\u003E";
-;pug_debug_line = 43;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
+;pug_debug_line = 44;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
 pug_html = pug_html + "Specifics\u003C\u002Fa\u003E";
-;pug_debug_line = 44;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
-pug_html = pug_html + "\u003Ca class=\"list-group-item list-group-item-action\" href=\"#\"\u003E";
-;pug_debug_line = 44;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
-pug_html = pug_html + "Perks\u003C\u002Fa\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E";
 ;pug_debug_line = 45;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
-pug_html = pug_html + "\u003Cdiv class=\"panel panel-default\"\u003E";
-;pug_debug_line = 46;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
-pug_html = pug_html + "\u003Cdiv class=\"panel-heading\" role=\"tab\"\u003E";
-;pug_debug_line = 47;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
-pug_html = pug_html + "\u003Ca class=\"list-group-item\" data-toggle=\"collapse\" data-parent=\"#accordion\" href=\"#form_c\" aria-expanded=\"true\"\u003E";
-;pug_debug_line = 52;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
-pug_html = pug_html + "\u003Ci class=\"fa fa-university\"\u003E\u003C\u002Fi\u003E";
-;pug_debug_line = 53;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
-pug_html = pug_html + " form c";
-;pug_debug_line = 54;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
-pug_html = pug_html + "\u003Cspan class=\"pull-right\"\u003E";
-;pug_debug_line = 55;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
-pug_html = pug_html + "\u003Ci class=\"fa fa-angle-left\"\u003E\u003C\u002Fi\u003E\u003C\u002Fspan\u003E\u003C\u002Fa\u003E\u003C\u002Fdiv\u003E";
-;pug_debug_line = 56;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
-pug_html = pug_html + "\u003Cdiv class=\"panel-collapse collapse\" id=\"form_c\" role=\"tabpanel\"\u003E";
-;pug_debug_line = 57;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
-pug_html = pug_html + "\u003Cdiv class=\"list-group\"\u003E";
-;pug_debug_line = 58;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
 pug_html = pug_html + "\u003Ca class=\"list-group-item list-group-item-action\" href=\"#\"\u003E";
+;pug_debug_line = 45;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
+pug_html = pug_html + "Perks\u003C\u002Fa\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E";
+;pug_debug_line = 46;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
+pug_html = pug_html + "\u003Cdiv class=\"panel panel-default\"\u003E";
+;pug_debug_line = 47;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
+pug_html = pug_html + "\u003Cdiv class=\"panel-heading\" role=\"tab\"\u003E";
+;pug_debug_line = 48;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
+pug_html = pug_html + "\u003Ca class=\"list-group-item\" data-toggle=\"collapse\" data-parent=\"#accordion\" href=\"#form_c\" aria-expanded=\"true\"\u003E";
+;pug_debug_line = 53;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
+pug_html = pug_html + "\u003Ci class=\"fa fa-university\"\u003E\u003C\u002Fi\u003E";
+;pug_debug_line = 54;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
+pug_html = pug_html + " form c";
+;pug_debug_line = 55;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
+pug_html = pug_html + "\u003Cspan class=\"pull-right\"\u003E";
+;pug_debug_line = 56;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
+pug_html = pug_html + "\u003Ci class=\"fa fa-angle-left\"\u003E\u003C\u002Fi\u003E\u003C\u002Fspan\u003E\u003C\u002Fa\u003E\u003C\u002Fdiv\u003E";
+;pug_debug_line = 57;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
+pug_html = pug_html + "\u003Cdiv class=\"panel-collapse collapse\" id=\"form_c\" role=\"tabpanel\"\u003E";
 ;pug_debug_line = 58;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
-pug_html = pug_html + "form c\u003C\u002Fa\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E";
+pug_html = pug_html + "\u003Cdiv class=\"list-group\"\u003E";
 ;pug_debug_line = 59;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
-pug_html = pug_html + "\u003Cdiv class=\"row\"\u003E";
+pug_html = pug_html + "\u003Ca class=\"list-group-item list-group-item-action\" href=\"#\"\u003E";
+;pug_debug_line = 59;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
+pug_html = pug_html + "form c\u003C\u002Fa\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E";
 ;pug_debug_line = 60;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
-pug_html = pug_html + "\u003Cdiv class=\"education-link-wrap\"\u003E";
+pug_html = pug_html + "\u003Cdiv class=\"row\"\u003E";
 ;pug_debug_line = 61;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
-pug_html = pug_html + "\u003Cdiv class=\"jumbotron jumbotron-fluid\"\u003E";
+pug_html = pug_html + "\u003Cdiv class=\"education-link-wrap\"\u003E";
 ;pug_debug_line = 62;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
-pug_html = pug_html + "\u003Ch4 class=\"font-weight-bold text-uppercase\"\u003E";
+pug_html = pug_html + "\u003Cdiv class=\"jumbotron jumbotron-fluid\"\u003E";
 ;pug_debug_line = 63;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
-pug_html = pug_html + "\u003Ci class=\"fa fa-book\"\u003E\u003C\u002Fi\u003E";
+pug_html = pug_html + "\u003Ch4 class=\"font-weight-bold text-uppercase\"\u003E";
 ;pug_debug_line = 64;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
-pug_html = pug_html + " education Links\u003C\u002Fh4\u003E";
+pug_html = pug_html + "\u003Ci class=\"fa fa-book\"\u003E\u003C\u002Fi\u003E";
 ;pug_debug_line = 65;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
-pug_html = pug_html + "\u003Cdiv class=\"nav\"\u003E";
+pug_html = pug_html + " education Links\u003C\u002Fh4\u003E";
 ;pug_debug_line = 66;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
+pug_html = pug_html + "\u003Cdiv class=\"nav\"\u003E";
+;pug_debug_line = 67;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
 pug_html = pug_html + "\u003Cli class=\"nav-item\"\u003E";
-;pug_debug_line = 67;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
-pug_html = pug_html + "\u003Ca class=\"nav-link link-3\" href=\"#\"\u003E";
-;pug_debug_line = 67;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
-pug_html = pug_html + "Issuer Tutorial\u003C\u002Fa\u003E\u003C\u002Fli\u003E";
 ;pug_debug_line = 68;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
-pug_html = pug_html + "\u003Cli class=\"nav-item\"\u003E";
-;pug_debug_line = 69;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
 pug_html = pug_html + "\u003Ca class=\"nav-link link-3\" href=\"#\"\u003E";
+;pug_debug_line = 68;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
+pug_html = pug_html + "Issuer Tutorial\u003C\u002Fa\u003E\u003C\u002Fli\u003E";
 ;pug_debug_line = 69;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
-pug_html = pug_html + "Success Guide\u003C\u002Fa\u003E\u003C\u002Fli\u003E";
+pug_html = pug_html + "\u003Cli class=\"nav-item\"\u003E";
 ;pug_debug_line = 70;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
-pug_html = pug_html + "\u003Cli class=\"nav-item\"\u003E";
-;pug_debug_line = 71;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
 pug_html = pug_html + "\u003Ca class=\"nav-link link-3\" href=\"#\"\u003E";
+;pug_debug_line = 70;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
+pug_html = pug_html + "Success Guide\u003C\u002Fa\u003E\u003C\u002Fli\u003E";
 ;pug_debug_line = 71;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
-pug_html = pug_html + "What's My Business Worth?\u003C\u002Fa\u003E\u003C\u002Fli\u003E";
+pug_html = pug_html + "\u003Cli class=\"nav-item\"\u003E";
 ;pug_debug_line = 72;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
-pug_html = pug_html + "\u003Cli class=\"nav-item\"\u003E";
-;pug_debug_line = 73;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
 pug_html = pug_html + "\u003Ca class=\"nav-link link-3\" href=\"#\"\u003E";
+;pug_debug_line = 72;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
+pug_html = pug_html + "What's My Business Worth?\u003C\u002Fa\u003E\u003C\u002Fli\u003E";
 ;pug_debug_line = 73;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
+pug_html = pug_html + "\u003Cli class=\"nav-item\"\u003E";
+;pug_debug_line = 74;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
+pug_html = pug_html + "\u003Ca class=\"nav-link link-3\" href=\"#\"\u003E";
+;pug_debug_line = 74;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
 pug_html = pug_html + "How Much Should I Raise?\u003C\u002Fa\u003E\u003C\u002Fli\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E";
-;pug_debug_line = 76;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
-pug_html = pug_html + "\u003C!--START RIGHT BLOCK--\u003E";
 ;pug_debug_line = 77;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
+pug_html = pug_html + "\u003C!--START RIGHT BLOCK--\u003E";
+;pug_debug_line = 78;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
 pug_html = pug_html + "\u003Cdiv class=\"col-lg-9\"\u003E";
-;pug_debug_line = 78;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
-pug_html = pug_html + "\u003Ch2 class=\"text-uppercase dosis text-lg-center text-xs-center dosis m-t-0\"\u003E";
-;pug_debug_line = 78;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
-pug_html = pug_html + "Media\u003C\u002Fh2\u003E";
 ;pug_debug_line = 79;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
-pug_html = pug_html + "\u003Cform class=\"form-section\" metod=\"post\" action=\"\"\u003E";
+pug_html = pug_html + "\u003Ch2 class=\"text-uppercase dosis text-lg-center text-xs-center dosis m-t-0\"\u003E";
+;pug_debug_line = 79;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
+pug_html = pug_html + "Media\u003C\u002Fh2\u003E";
 ;pug_debug_line = 80;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
-pug_html = pug_html + "\u003Cdiv class=\"row media-item\"\u003E";
+pug_html = pug_html + "\u003Cform class=\"form-section\" metod=\"post\" action=\"\"\u003E";
 ;pug_debug_line = 81;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
-pug_html = pug_html + "\u003Cdiv class=\"col-lg-7\"\u003E";
-;pug_debug_line = 82;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
-pug_html = pug_html + "\u003Cdiv class=\"col-lg-5\"\u003E";
-;pug_debug_line = 83;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
-pug_html = pug_html + "\u003Cspan class=\"pull-right font-weight-bold\"\u003E";
-;pug_debug_line = 83;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
-pug_html = pug_html + "Header Image\u003C\u002Fspan\u003E\u003C\u002Fdiv\u003E";
-;pug_debug_line = 84;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
-pug_html = pug_html + "\u003Cdiv class=\"col-lg-7 text-lg-center\"\u003E";
-;pug_debug_line = 85;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
-pug_html = pug_html + "\u003Cp class=\"drop-photo\"\u003E";
-;pug_debug_line = 85;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
-pug_html = pug_html + "Drop your photo here or click to upload\u003C\u002Fp\u003E";
-;pug_debug_line = 86;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
-pug_html = pug_html + "\u003Ci class=\"fa fa-camera\"\u003E\u003C\u002Fi\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E";
-;pug_debug_line = 87;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
-pug_html = pug_html + "\u003Cdiv class=\"col-lg-5 p-l-1 p-r-3\"\u003E";
-;pug_debug_line = 88;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
-pug_html = pug_html + "\u003Cimg class=\"img-fluid\" src=\"\u002Fimg\u002Ftest.png\" alt=\"Responsive image\"\u002F\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E";
-;pug_debug_line = 90;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
 pug_html = pug_html + "\u003Cdiv class=\"row media-item\"\u003E";
-;pug_debug_line = 91;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
+;pug_debug_line = 82;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
 pug_html = pug_html + "\u003Cdiv class=\"col-lg-7\"\u003E";
-;pug_debug_line = 92;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
+;pug_debug_line = 83;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
 pug_html = pug_html + "\u003Cdiv class=\"col-lg-5\"\u003E";
-;pug_debug_line = 93;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
+;pug_debug_line = 84;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
 pug_html = pug_html + "\u003Cspan class=\"pull-right font-weight-bold\"\u003E";
-;pug_debug_line = 93;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
-pug_html = pug_html + "Thumbnail Picture\u003C\u002Fspan\u003E\u003C\u002Fdiv\u003E";
-;pug_debug_line = 94;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
+;pug_debug_line = 84;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
+pug_html = pug_html + "Header Image\u003C\u002Fspan\u003E\u003C\u002Fdiv\u003E";
+;pug_debug_line = 85;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
 pug_html = pug_html + "\u003Cdiv class=\"col-lg-7 text-lg-center\"\u003E";
-;pug_debug_line = 95;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
-pug_html = pug_html + "\u003Cp\u003E";
-;pug_debug_line = 95;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
+;pug_debug_line = 86;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
+pug_html = pug_html + "\u003Cp class=\"drop-photo\"\u003E";
+;pug_debug_line = 86;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
 pug_html = pug_html + "Drop your photo here or click to upload\u003C\u002Fp\u003E";
-;pug_debug_line = 96;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
+;pug_debug_line = 87;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
 pug_html = pug_html + "\u003Ci class=\"fa fa-camera\"\u003E\u003C\u002Fi\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E";
-;pug_debug_line = 97;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
+;pug_debug_line = 88;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
 pug_html = pug_html + "\u003Cdiv class=\"col-lg-5 p-l-1 p-r-3\"\u003E";
-;pug_debug_line = 98;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
+;pug_debug_line = 89;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
 pug_html = pug_html + "\u003Cimg class=\"img-fluid\" src=\"\u002Fimg\u002Ftest.png\" alt=\"Responsive image\"\u002F\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E";
-;pug_debug_line = 99;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
-pug_html = pug_html + "\u003Cdiv class=\"col-lg-12 border-top\"\u003E";
-;pug_debug_line = 100;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
-pug_html = pug_html + "\u003Ch3 class=\"text-lg-center\"\u003E";
-;pug_debug_line = 100;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
-pug_html = pug_html + "Recommended Additional Media\u003C\u002Fh3\u003E\u003C\u002Fdiv\u003E";
-;pug_debug_line = 101;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
-pug_html = pug_html + "\u003Cdiv class=\"row m-b-2\"\u003E";
-;pug_debug_line = 102;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
+;pug_debug_line = 91;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
+pug_html = pug_html + "\u003Cdiv class=\"row media-item\"\u003E";
+;pug_debug_line = 92;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
 pug_html = pug_html + "\u003Cdiv class=\"col-lg-7\"\u003E";
-;pug_debug_line = 103;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
+;pug_debug_line = 93;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
 pug_html = pug_html + "\u003Cdiv class=\"col-lg-5\"\u003E";
-;pug_debug_line = 104;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
+;pug_debug_line = 94;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
 pug_html = pug_html + "\u003Cspan class=\"pull-right font-weight-bold\"\u003E";
-;pug_debug_line = 104;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
+;pug_debug_line = 94;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
 pug_html = pug_html + "Thumbnail Picture\u003C\u002Fspan\u003E\u003C\u002Fdiv\u003E";
-;pug_debug_line = 105;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
+;pug_debug_line = 95;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
 pug_html = pug_html + "\u003Cdiv class=\"col-lg-7 text-lg-center\"\u003E";
-;pug_debug_line = 106;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
+;pug_debug_line = 96;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
 pug_html = pug_html + "\u003Cp\u003E";
-;pug_debug_line = 106;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
+;pug_debug_line = 96;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
 pug_html = pug_html + "Drop your photo here or click to upload\u003C\u002Fp\u003E";
-;pug_debug_line = 107;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
+;pug_debug_line = 97;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
 pug_html = pug_html + "\u003Ci class=\"fa fa-camera\"\u003E\u003C\u002Fi\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E";
-;pug_debug_line = 108;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
+;pug_debug_line = 98;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
 pug_html = pug_html + "\u003Cdiv class=\"col-lg-5 p-l-1 p-r-3\"\u003E";
-;pug_debug_line = 109;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
-pug_html = pug_html + "\u003Cdiv class=\"photo-scroll\"\u003E";
-;pug_debug_line = 110;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
-pug_html = pug_html + "\u003Cdiv class=\"photo-scroll-wrap\"\u003E";
-;pug_debug_line = 111;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
-pug_html = pug_html + "\u003Cimg class=\"img-fluid\" src=\"\u002Fimg\u002Ftest.png\" alt=\"Responsive image\"\u002F\u003E";
-;pug_debug_line = 112;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
-pug_html = pug_html + "\u003Cimg class=\"img-fluid\" src=\"\u002Fimg\u002Ftest.png\" alt=\"Responsive image\"\u002F\u003E\u003C\u002Fdiv\u003E";
-;pug_debug_line = 113;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
-pug_html = pug_html + "\u003Cdiv class=\"photo-scroll-wrap\"\u003E";
-;pug_debug_line = 114;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
-pug_html = pug_html + "\u003Cimg class=\"img-fluid\" src=\"\u002Fimg\u002Ftest.png\" alt=\"Responsive image\"\u002F\u003E";
-;pug_debug_line = 115;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
-pug_html = pug_html + "\u003Cimg class=\"img-fluid\" src=\"\u002Fimg\u002Ftest.png\" alt=\"Responsive image\"\u002F\u003E\u003C\u002Fdiv\u003E";
-;pug_debug_line = 116;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
-pug_html = pug_html + "\u003Cdiv class=\"photo-scroll-wrap\"\u003E";
-;pug_debug_line = 117;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
-pug_html = pug_html + "\u003Cimg class=\"img-fluid\" src=\"\u002Fimg\u002Ftest.png\" alt=\"Responsive image\"\u002F\u003E";
-;pug_debug_line = 118;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
-pug_html = pug_html + "\u003Cimg class=\"img-fluid\" src=\"\u002Fimg\u002Ftest.png\" alt=\"Responsive image\"\u002F\u003E\u003C\u002Fdiv\u003E";
-;pug_debug_line = 119;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
-pug_html = pug_html + "\u003Cdiv class=\"photo-scroll-wrap\"\u003E";
-;pug_debug_line = 120;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
-pug_html = pug_html + "\u003Cimg class=\"img-fluid\" src=\"\u002Fimg\u002Ftest.png\" alt=\"Responsive image\"\u002F\u003E";
-;pug_debug_line = 121;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
-pug_html = pug_html + "\u003Cimg class=\"img-fluid\" src=\"\u002Fimg\u002Ftest.png\" alt=\"Responsive image\"\u002F\u003E\u003C\u002Fdiv\u003E";
-;pug_debug_line = 122;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
-pug_html = pug_html + "\u003Cdiv class=\"photo-scroll-wrap\"\u003E";
-;pug_debug_line = 123;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
-pug_html = pug_html + "\u003Cimg class=\"img-fluid\" src=\"\u002Fimg\u002Ftest.png\" alt=\"Responsive image\"\u002F\u003E";
-;pug_debug_line = 124;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
-pug_html = pug_html + "\u003Cimg class=\"img-fluid\" src=\"\u002Fimg\u002Ftest.png\" alt=\"Responsive image\"\u002F\u003E\u003C\u002Fdiv\u003E";
-;pug_debug_line = 125;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
-pug_html = pug_html + "\u003Cdiv class=\"photo-scroll-wrap\"\u003E";
-;pug_debug_line = 126;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
-pug_html = pug_html + "\u003Cimg class=\"img-fluid\" src=\"\u002Fimg\u002Ftest.png\" alt=\"Responsive image\"\u002F\u003E";
-;pug_debug_line = 127;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
-pug_html = pug_html + "\u003Cimg class=\"img-fluid\" src=\"\u002Fimg\u002Ftest.png\" alt=\"Responsive image\"\u002F\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E";
-;pug_debug_line = 131;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
-pug_html = pug_html + "\u003Cdiv class=\"row m-b-2 recommended\"\u003E";
-;pug_debug_line = 132;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
+;pug_debug_line = 99;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
+pug_html = pug_html + "\u003Cimg class=\"img-fluid\" src=\"\u002Fimg\u002Ftest.png\" alt=\"Responsive image\"\u002F\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E";
+;pug_debug_line = 100;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
+pug_html = pug_html + "\u003Cdiv class=\"col-lg-12 border-top\"\u003E";
+;pug_debug_line = 101;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
+pug_html = pug_html + "\u003Ch3 class=\"text-lg-center\"\u003E";
+;pug_debug_line = 101;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
+pug_html = pug_html + "Recommended Additional Media\u003C\u002Fh3\u003E\u003C\u002Fdiv\u003E";
+;pug_debug_line = 102;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
+pug_html = pug_html + "\u003Cdiv class=\"row m-b-2\"\u003E";
+;pug_debug_line = 103;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
 pug_html = pug_html + "\u003Cdiv class=\"col-lg-7\"\u003E";
+;pug_debug_line = 104;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
+pug_html = pug_html + "\u003Cdiv class=\"col-lg-5\"\u003E";
+;pug_debug_line = 105;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
+pug_html = pug_html + "\u003Cspan class=\"pull-right font-weight-bold\"\u003E";
+;pug_debug_line = 105;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
+pug_html = pug_html + "Thumbnail Picture\u003C\u002Fspan\u003E\u003C\u002Fdiv\u003E";
+;pug_debug_line = 106;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
+pug_html = pug_html + "\u003Cdiv class=\"col-lg-7 text-lg-center\"\u003E";
+;pug_debug_line = 107;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
+pug_html = pug_html + "\u003Cp\u003E";
+;pug_debug_line = 107;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
+pug_html = pug_html + "Drop your photo here or click to upload\u003C\u002Fp\u003E";
+;pug_debug_line = 108;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
+pug_html = pug_html + "\u003Ci class=\"fa fa-camera\"\u003E\u003C\u002Fi\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E";
+;pug_debug_line = 109;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
+pug_html = pug_html + "\u003Cdiv class=\"col-lg-5 p-l-1 p-r-3\"\u003E";
+;pug_debug_line = 110;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
+pug_html = pug_html + "\u003Cdiv class=\"photo-scroll\"\u003E";
+;pug_debug_line = 111;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
+pug_html = pug_html + "\u003Cdiv class=\"photo-scroll-wrap\"\u003E";
+;pug_debug_line = 112;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
+pug_html = pug_html + "\u003Cimg class=\"img-fluid\" src=\"\u002Fimg\u002Ftest.png\" alt=\"Responsive image\"\u002F\u003E";
+;pug_debug_line = 113;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
+pug_html = pug_html + "\u003Cimg class=\"img-fluid\" src=\"\u002Fimg\u002Ftest.png\" alt=\"Responsive image\"\u002F\u003E\u003C\u002Fdiv\u003E";
+;pug_debug_line = 114;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
+pug_html = pug_html + "\u003Cdiv class=\"photo-scroll-wrap\"\u003E";
+;pug_debug_line = 115;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
+pug_html = pug_html + "\u003Cimg class=\"img-fluid\" src=\"\u002Fimg\u002Ftest.png\" alt=\"Responsive image\"\u002F\u003E";
+;pug_debug_line = 116;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
+pug_html = pug_html + "\u003Cimg class=\"img-fluid\" src=\"\u002Fimg\u002Ftest.png\" alt=\"Responsive image\"\u002F\u003E\u003C\u002Fdiv\u003E";
+;pug_debug_line = 117;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
+pug_html = pug_html + "\u003Cdiv class=\"photo-scroll-wrap\"\u003E";
+;pug_debug_line = 118;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
+pug_html = pug_html + "\u003Cimg class=\"img-fluid\" src=\"\u002Fimg\u002Ftest.png\" alt=\"Responsive image\"\u002F\u003E";
+;pug_debug_line = 119;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
+pug_html = pug_html + "\u003Cimg class=\"img-fluid\" src=\"\u002Fimg\u002Ftest.png\" alt=\"Responsive image\"\u002F\u003E\u003C\u002Fdiv\u003E";
+;pug_debug_line = 120;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
+pug_html = pug_html + "\u003Cdiv class=\"photo-scroll-wrap\"\u003E";
+;pug_debug_line = 121;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
+pug_html = pug_html + "\u003Cimg class=\"img-fluid\" src=\"\u002Fimg\u002Ftest.png\" alt=\"Responsive image\"\u002F\u003E";
+;pug_debug_line = 122;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
+pug_html = pug_html + "\u003Cimg class=\"img-fluid\" src=\"\u002Fimg\u002Ftest.png\" alt=\"Responsive image\"\u002F\u003E\u003C\u002Fdiv\u003E";
+;pug_debug_line = 123;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
+pug_html = pug_html + "\u003Cdiv class=\"photo-scroll-wrap\"\u003E";
+;pug_debug_line = 124;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
+pug_html = pug_html + "\u003Cimg class=\"img-fluid\" src=\"\u002Fimg\u002Ftest.png\" alt=\"Responsive image\"\u002F\u003E";
+;pug_debug_line = 125;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
+pug_html = pug_html + "\u003Cimg class=\"img-fluid\" src=\"\u002Fimg\u002Ftest.png\" alt=\"Responsive image\"\u002F\u003E\u003C\u002Fdiv\u003E";
+;pug_debug_line = 126;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
+pug_html = pug_html + "\u003Cdiv class=\"photo-scroll-wrap\"\u003E";
+;pug_debug_line = 127;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
+pug_html = pug_html + "\u003Cimg class=\"img-fluid\" src=\"\u002Fimg\u002Ftest.png\" alt=\"Responsive image\"\u002F\u003E";
+;pug_debug_line = 128;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
+pug_html = pug_html + "\u003Cimg class=\"img-fluid\" src=\"\u002Fimg\u002Ftest.png\" alt=\"Responsive image\"\u002F\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E";
+;pug_debug_line = 132;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
+pug_html = pug_html + "\u003Cdiv class=\"row m-b-2 recommended\"\u003E";
 ;pug_debug_line = 133;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
+pug_html = pug_html + "\u003Cdiv class=\"col-lg-7\"\u003E";
+;pug_debug_line = 134;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
 pug_mixins["fieldBlock"]("Main Video for Campaign", '', {
             class1: 'col-lg-5 col-md-5',
             class2: 'col-lg-7 col-md-7',
@@ -3422,81 +3424,81 @@ pug_mixins["fieldBlock"]("Main Video for Campaign", '', {
             placeholder: 'http://www.'
             });
 pug_html = pug_html + "\u003C\u002Fdiv\u003E";
-;pug_debug_line = 140;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
-pug_html = pug_html + "\u003Cdiv class=\"col-lg-5 p-l-1 p-r-3\"\u003E";
 ;pug_debug_line = 141;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
-pug_html = pug_html + "\u003Cdiv class=\"embed-responsive embed-responsive-16by9\"\u003E";
-;pug_debug_line = 142;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
-pug_html = pug_html + "\u003Ciframe class=\"embed-responsive-item\" src=\"\u002F\u002Fwww.youtube.com\u002Fembed\u002FzpOULjyy-n8?rel=0\" allowfullscreen=\"true\"\u003E\u003C\u002Fiframe\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E";
-;pug_debug_line = 144;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
-pug_html = pug_html + "\u003Cdiv class=\"row m-b-2\"\u003E";
-;pug_debug_line = 145;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
-pug_html = pug_html + "\u003Cdiv class=\"col-lg-7\"\u003E";
-;pug_debug_line = 146;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
-pug_html = pug_html + "\u003Cdiv class=\"form-group row required\"\u003E";
-;pug_debug_line = 147;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
-pug_html = pug_html + "\u003Cdiv class=\"col-lg-5 recommended\"\u003E";
-;pug_debug_line = 148;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
-pug_html = pug_html + "\u003Clabel class=\"text-lg-right font-weight-bold\"\u003E";
-;pug_debug_line = 148;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
-pug_html = pug_html + "Optional Video for Campaign\u003C\u002Flabel\u003E\u003C\u002Fdiv\u003E";
-;pug_debug_line = 149;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
-pug_html = pug_html + "\u003Cdiv class=\"col-lg-7\"\u003E";
-;pug_debug_line = 150;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
-pug_html = pug_html + "\u003Cinput class=\"form-control m-b-2\" type=\"text\" placeholder=\"Title\"\u002F\u003E";
-;pug_debug_line = 151;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
-pug_html = pug_html + "\u003Cinput class=\"form-control m-b-1\" type=\"text\" placeholder=\"http:\u002F\u002Fwww.\"\u002F\u003E";
-;pug_debug_line = 153;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
-pug_html = pug_html + "\u003Ca class=\"link-2\" href=\"\"\u003E";
-;pug_debug_line = 153;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
-pug_html = pug_html + "Add Another Video\u003C\u002Fa\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E";
-;pug_debug_line = 154;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
 pug_html = pug_html + "\u003Cdiv class=\"col-lg-5 p-l-1 p-r-3\"\u003E";
-;pug_debug_line = 155;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
+;pug_debug_line = 142;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
 pug_html = pug_html + "\u003Cdiv class=\"embed-responsive embed-responsive-16by9\"\u003E";
-;pug_debug_line = 156;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
+;pug_debug_line = 143;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
 pug_html = pug_html + "\u003Ciframe class=\"embed-responsive-item\" src=\"\u002F\u002Fwww.youtube.com\u002Fembed\u002FzpOULjyy-n8?rel=0\" allowfullscreen=\"true\"\u003E\u003C\u002Fiframe\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E";
-;pug_debug_line = 158;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
+;pug_debug_line = 145;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
+pug_html = pug_html + "\u003Cdiv class=\"row m-b-2\"\u003E";
+;pug_debug_line = 146;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
+pug_html = pug_html + "\u003Cdiv class=\"col-lg-7\"\u003E";
+;pug_debug_line = 147;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
+pug_html = pug_html + "\u003Cdiv class=\"form-group row required\"\u003E";
+;pug_debug_line = 148;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
+pug_html = pug_html + "\u003Cdiv class=\"col-lg-5 recommended\"\u003E";
+;pug_debug_line = 149;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
+pug_html = pug_html + "\u003Clabel class=\"text-lg-right font-weight-bold\"\u003E";
+;pug_debug_line = 149;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
+pug_html = pug_html + "Optional Video for Campaign\u003C\u002Flabel\u003E\u003C\u002Fdiv\u003E";
+;pug_debug_line = 150;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
+pug_html = pug_html + "\u003Cdiv class=\"col-lg-7\"\u003E";
+;pug_debug_line = 151;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
+pug_html = pug_html + "\u003Cinput class=\"form-control m-b-2\" type=\"text\" placeholder=\"Title\"\u002F\u003E";
+;pug_debug_line = 152;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
+pug_html = pug_html + "\u003Cinput class=\"form-control m-b-1\" type=\"text\" placeholder=\"http:\u002F\u002Fwww.\"\u002F\u003E";
+;pug_debug_line = 154;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
+pug_html = pug_html + "\u003Ca class=\"link-2\" href=\"\"\u003E";
+;pug_debug_line = 154;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
+pug_html = pug_html + "Add Another Video\u003C\u002Fa\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E";
+;pug_debug_line = 155;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
+pug_html = pug_html + "\u003Cdiv class=\"col-lg-5 p-l-1 p-r-3\"\u003E";
+;pug_debug_line = 156;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
+pug_html = pug_html + "\u003Cdiv class=\"embed-responsive embed-responsive-16by9\"\u003E";
+;pug_debug_line = 157;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
+pug_html = pug_html + "\u003Ciframe class=\"embed-responsive-item\" src=\"\u002F\u002Fwww.youtube.com\u002Fembed\u002FzpOULjyy-n8?rel=0\" allowfullscreen=\"true\"\u003E\u003C\u002Fiframe\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E";
+;pug_debug_line = 159;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
 pug_html = pug_html + "\u003Cdiv class=\"col-lg-12 border-top\"\u003E";
-;pug_debug_line = 159;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
-pug_html = pug_html + "\u003Ch3 class=\"text-lg-center\"\u003E";
-;pug_debug_line = 159;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
-pug_html = pug_html + "Articles and Press\u003C\u002Fh3\u003E\u003C\u002Fdiv\u003E";
 ;pug_debug_line = 160;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
-pug_html = pug_html + "\u003Cdiv class=\"row articles\"\u003E";
+pug_html = pug_html + "\u003Ch3 class=\"text-lg-center\"\u003E";
+;pug_debug_line = 160;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
+pug_html = pug_html + "Articles and Press\u003C\u002Fh3\u003E\u003C\u002Fdiv\u003E";
 ;pug_debug_line = 161;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
+pug_html = pug_html + "\u003Cdiv class=\"row articles\"\u003E";
+;pug_debug_line = 162;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
 pug_mixins["fieldBlock"]("Headline", '', {
           class1: 'col-lg-3 col-md-4',
           class2: 'col-lg-9 col-md-8',
           type: 'text',
           placeholder: 'Title',
           });
-;pug_debug_line = 167;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
+;pug_debug_line = 168;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
 pug_mixins["fieldBlock"]("Article link", '', {
           class1: 'col-lg-3 col-md-4',
           class2: 'col-lg-9 col-md-8',
           type: 'text',
           placeholder: 'http://www.',
           });
-;pug_debug_line = 173;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
+;pug_debug_line = 174;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
 pug_html = pug_html + "\u003Cdiv class=\"col-lg-8 offset-lg-3 p-l-0\"\u003E";
-;pug_debug_line = 174;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
-pug_html = pug_html + "\u003Ca class=\"link-2 add-article\" href=\"\"\u003E";
-;pug_debug_line = 174;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
-pug_html = pug_html + "Add Another Article\u003C\u002Fa\u003E\u003C\u002Fdiv\u003E";
 ;pug_debug_line = 175;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
-pug_html = pug_html + "\u003Cdiv class=\"col-lg-6 pull-right p-l-0\"\u003E";
+pug_html = pug_html + "\u003Ca class=\"link-2 add-article\" href=\"\"\u003E";
+;pug_debug_line = 175;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
+pug_html = pug_html + "Add Another Article\u003C\u002Fa\u003E\u003C\u002Fdiv\u003E";
 ;pug_debug_line = 176;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
+pug_html = pug_html + "\u003Cdiv class=\"col-lg-6 pull-right p-l-0\"\u003E";
+;pug_debug_line = 177;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
 pug_html = pug_html + "\u003Cdiv class=\"col-lg-6\"\u003E";
-;pug_debug_line = 177;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
-pug_html = pug_html + "\u003Cbutton class=\"btn btn-lg btn-primary text-uppercase pull-right\" href=\"\"\u003E";
-;pug_debug_line = 177;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
-pug_html = pug_html + "save\u003C\u002Fbutton\u003E\u003C\u002Fdiv\u003E";
 ;pug_debug_line = 178;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
+pug_html = pug_html + "\u003Cbutton class=\"btn btn-lg btn-primary text-uppercase pull-right\" href=\"\"\u003E";
+;pug_debug_line = 178;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
+pug_html = pug_html + "save\u003C\u002Fbutton\u003E\u003C\u002Fdiv\u003E";
+;pug_debug_line = 179;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
 pug_html = pug_html + "\u003Cdiv class=\"col-lg-6\"\u003E";
-;pug_debug_line = 179;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
+;pug_debug_line = 180;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
 pug_html = pug_html + "\u003Cbutton class=\"btn btn-lg btn-secondary text-uppercase\" href=\"\"\u003E";
-;pug_debug_line = 179;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
+;pug_debug_line = 180;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignMedia.js";
 pug_html = pug_html + "preview\u003C\u002Fbutton\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E\u003C\u002Fform\u003E\u003C\u002Fdiv\u003E\u003C\u002Fsection\u003E";}.call(this,"console" in locals_for_with?locals_for_with.console:typeof console!=="undefined"?console:undefined,"fields" in locals_for_with?locals_for_with.fields:typeof fields!=="undefined"?fields:undefined,"page" in locals_for_with?locals_for_with.page:typeof page!=="undefined"?page:undefined));} catch (err) {pug_rethrow(err, pug_debug_filename, pug_debug_line);};return pug_html;}
 function pug_attr(t,e,n,f){return e!==!1&&null!=e&&(e||"class"!==t&&"style"!==t)?e===!0?" "+(f?t:t+'="'+t+'"'):("function"==typeof e.toJSON&&(e=e.toJSON()),"string"==typeof e||(e=JSON.stringify(e),n||e.indexOf('"')===-1)?(n&&(e=pug_escape(e))," "+t+'="'+e+'"'):" "+t+"='"+e.replace(/'/g,"&#39;")+"'"):""}
 function pug_classes(s,r){return Array.isArray(s)?pug_classes_array(s,r):s&&"object"==typeof s?pug_classes_object(s):s||""}
@@ -3787,7 +3789,7 @@ function pug_classes_object(r){var a="",n="";for(var o in r)o&&r[o]&&pug_has_own
 function pug_escape(e){var a=""+e,t=pug_match_html.exec(a);if(!t)return e;var r,c,n,s="";for(r=t.index,c=0;r<a.length;r++){switch(a.charCodeAt(r)){case 34:n="&quot;";break;case 38:n="&amp;";break;case 60:n="&lt;";break;case 62:n="&gt;";break;default:continue}c!==r&&(s+=a.substring(c,r)),c=r+1,s+=n}return c!==r?s+a.substring(c,r):s}
 var pug_has_own_property=Object.prototype.hasOwnProperty;
 var pug_match_html=/["&<>]/;
-function pug_rethrow(n,e,r,t){if(!(n instanceof Error))throw n;if(!("undefined"==typeof window&&e||t))throw n.message+=" on line "+r,n;try{t=t||require("fs").readFileSync(e,"utf8")}catch(e){pug_rethrow(n,null,r)}var i=3,a=t.split("\n"),o=Math.max(r-i,0),h=Math.min(a.length,r+i),i=a.slice(o,h).map(function(n,e){var t=e+o+1;return(t==r?"  > ":"    ")+t+"| "+n}).join("\n");throw n.path=e,n.message=(e||"Pug")+":"+r+"\n"+i+"\n\n"+n.message,n}function campaignSpecifics(locals) {var pug_html = "", pug_mixins = {}, pug_interp;var pug_debug_filename, pug_debug_line;try {;var locals_for_with = (locals || {});(function (page) {;pug_debug_line = 1;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002Fmixins.jade";
+function pug_rethrow(n,e,r,t){if(!(n instanceof Error))throw n;if(!("undefined"==typeof window&&e||t))throw n.message+=" on line "+r,n;try{t=t||require("fs").readFileSync(e,"utf8")}catch(e){pug_rethrow(n,null,r)}var i=3,a=t.split("\n"),o=Math.max(r-i,0),h=Math.min(a.length,r+i),i=a.slice(o,h).map(function(n,e){var t=e+o+1;return(t==r?"  > ":"    ")+t+"| "+n}).join("\n");throw n.path=e,n.message=(e||"Pug")+":"+r+"\n"+i+"\n\n"+n.message,n}function campaignSpecifics(locals) {var pug_html = "", pug_mixins = {}, pug_interp;var pug_debug_filename, pug_debug_line;try {;var locals_for_with = (locals || {});(function (console, fields, page) {;pug_debug_line = 1;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002Fmixins.jade";
 pug_mixins["breadcrumbs"] = pug_interp = function(title, subtitle, data){
 var block = (this && this.block), attributes = (this && this.attributes) || {};
 ;pug_debug_line = 2;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002Fmixins.jade";
@@ -3865,61 +3867,61 @@ pug_html = pug_html + "\u003C\u002Fli\u003E";
 pug_html = pug_html + "\u003C\u002Fol\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E\u003C\u002Fsection\u003E";
 };
 ;pug_debug_line = 18;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002Fmixins.jade";
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+pug_mixins["fieldBlock"] = pug_interp = function(name, data, attr){
+var block = (this && this.block), attributes = (this && this.attributes) || {};
+;pug_debug_line = 20;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002Fmixins.jade";
+pug_html = pug_html + "\u003C!-- If we did not created fields vocabulary--\u003E";
+;pug_debug_line = 21;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002Fmixins.jade";
+pug_html = pug_html + "\u003C!-- Assume it is empty field--\u003E";
+;pug_debug_line = 22;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002Fmixins.jade";
+if (fields[name] == null) {
+;pug_debug_line = 23;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002Fmixins.jade";
+console.log('bad field', name);
+;pug_debug_line = 24;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002Fmixins.jade";
+fields[name] = {}
+;pug_debug_line = 25;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002Fmixins.jade";
+fields[name]['label'] = name
+;pug_debug_line = 26;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002Fmixins.jade";
+fields[name]['required'] = false
+}
+;pug_debug_line = 28;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002Fmixins.jade";
+if (attr.type == 'checkbox') {
+;pug_debug_line = 29;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002Fmixins.jade";
+pug_html = pug_html + "\u003Cdiv" + (pug_attr("class", pug_classes(["form-group row " + name], [true]), false, false)) + "\u003E";
+;pug_debug_line = 30;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002Fmixins.jade";
+pug_html = pug_html + "\u003Cdiv" + (pug_attr("class", pug_classes([(attr.class1 ? attr.class1 : 'col-md-2') + ' text-md-right text-xs-right'], [true]), false, false)) + "\u003E";
+;pug_debug_line = 31;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002Fmixins.jade";
+pug_html = pug_html + "\u003Cinput" + (" class=\"form-check-input\""+pug_attr("id", name, true, false)+pug_attr("name", name, true, false)+pug_attr("value", data, true, false)+" type=\"checkbox\"") + "\u002F\u003E\u003C\u002Fdiv\u003E";
+;pug_debug_line = 37;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002Fmixins.jade";
+pug_html = pug_html + "\u003Cdiv" + (pug_attr("class", pug_classes([attr.class2  ? attr.class2 : 'col-md-10'], [true]), false, false)) + "\u003E";
+;pug_debug_line = 38;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002Fmixins.jade";
+pug_html = pug_html + "\u003Clabel" + (" class=\"text-justify\""+pug_attr("for", name, true, false)) + "\u003E";
+;pug_debug_line = 38;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002Fmixins.jade";
+pug_html = pug_html + (pug_escape(null == (pug_interp = attr.text) ? "" : pug_interp)) + "\u003C\u002Flabel\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E";
+}
+else {
+;pug_debug_line = 40;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002Fmixins.jade";
+pug_html = pug_html + "\u003Cdiv" + (pug_attr("class", pug_classes(["form-group row " + name + (fields[name].required == true ? ' required ' : ' ')], [true]), false, false)) + "\u003E";
+;pug_debug_line = 41;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002Fmixins.jade";
+pug_html = pug_html + "\u003Clabel" + (pug_attr("class", pug_classes([attr.text_align ? 'text-md-' + attr.text_align + ' ' + attr.class1 : ' text-md-right ' + attr.class1], [true]), false, false)+pug_attr("for", name, true, false)) + "\u003E";
+;pug_debug_line = 41;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002Fmixins.jade";
+pug_html = pug_html + (pug_escape(null == (pug_interp = fields[name].label) ? "" : pug_interp)) + "\u003C\u002Flabel\u003E";
+;pug_debug_line = 42;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002Fmixins.jade";
+pug_html = pug_html + "\u003Cdiv" + (pug_attr("class", pug_classes([attr.class2], [true]), false, false)) + "\u003E";
+;pug_debug_line = 43;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002Fmixins.jade";
+pug_html = pug_html + "\u003Cinput" + (" class=\"form-control\""+pug_attr("id", name, true, false)+pug_attr("name", name, true, false)+pug_attr("placeholder", attr.placeholder ? attr.placeholder : fields[name].label, true, false)+pug_attr("type", attr.type ? attr.type : 'text', true, false)+pug_attr("value", data, true, false)) + "\u002F\u003E";
+;pug_debug_line = 50;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002Fmixins.jade";
+pug_html = pug_html + "\u003C!-- div.help-block= attr.text--\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E";
+}
+};
 ;pug_debug_line = 3;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
-pug_mixins["breadcrumbs"]('Create Company', 'Help Button', [['home', '/',], [ 'current', page.get_absolute_url]]);
+pug_mixins["breadcrumbs"]('Create campaign', 'Help Button', [['home', '/',], [ 'current', page.get_absolute_url]]);
 ;pug_debug_line = 5;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
-pug_html = pug_html + "\u003Csection class=\"create-company-general container\"\u003E";
+pug_html = pug_html + "\u003Csection class=\"campaign-specifics container m-b-85\"\u003E";
 ;pug_debug_line = 6;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
 pug_html = pug_html + "\u003C!--START LEFT BLOCK--\u003E";
 ;pug_debug_line = 7;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
-pug_html = pug_html + "\u003Cdiv class=\"col-lg-3\"\u003E";
+pug_html = pug_html + "\u003Cdiv class=\"col-lg-3 create_compaign\"\u003E";
 ;pug_debug_line = 8;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
 pug_html = pug_html + "\u003Cdiv class=\"jumbotron jumbotron-fluid row\"\u003E";
 ;pug_debug_line = 9;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
@@ -3975,93 +3977,318 @@ pug_html = pug_html + "\u003Cdiv class=\"panel-collapse collapse in\" id=\"campa
 ;pug_debug_line = 39;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
 pug_html = pug_html + "\u003Cdiv class=\"list-group\"\u003E";
 ;pug_debug_line = 40;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
-pug_html = pug_html + "\u003Ca class=\"list-group-item list-group-item-action active\" href=\"#\"\u003E";
+pug_html = pug_html + "\u003Ca class=\"list-group-item list-group-item-action\" href=\"#\"\u003E";
 ;pug_debug_line = 40;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
-pug_html = pug_html + "General Information\u003C\u002Fa\u003E";
+pug_html = pug_html + "General Information";
 ;pug_debug_line = 41;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
-pug_html = pug_html + "\u003Ca class=\"list-group-item list-group-item-action\" href=\"#\"\u003E";
-;pug_debug_line = 41;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
-pug_html = pug_html + "Media\u003C\u002Fa\u003E";
+pug_html = pug_html + "\u003Ci class=\"fa fa-check\"\u003E\u003C\u002Fi\u003E\u003C\u002Fa\u003E";
 ;pug_debug_line = 42;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
 pug_html = pug_html + "\u003Ca class=\"list-group-item list-group-item-action\" href=\"#\"\u003E";
 ;pug_debug_line = 42;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
-pug_html = pug_html + "Team Members\u003C\u002Fa\u003E";
+pug_html = pug_html + "Media";
 ;pug_debug_line = 43;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
-pug_html = pug_html + "\u003Ca class=\"list-group-item list-group-item-action\" href=\"#\"\u003E";
-;pug_debug_line = 43;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
-pug_html = pug_html + "Specifics\u003C\u002Fa\u003E";
+pug_html = pug_html + "\u003Ci class=\"fa fa-check\"\u003E\u003C\u002Fi\u003E\u003C\u002Fa\u003E";
 ;pug_debug_line = 44;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
 pug_html = pug_html + "\u003Ca class=\"list-group-item list-group-item-action\" href=\"#\"\u003E";
 ;pug_debug_line = 44;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
-pug_html = pug_html + "Perks\u003C\u002Fa\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E";
+pug_html = pug_html + "Team Members";
 ;pug_debug_line = 45;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
-pug_html = pug_html + "\u003Cdiv class=\"panel panel-default\"\u003E";
+pug_html = pug_html + "\u003Ci class=\"fa fa-check\"\u003E\u003C\u002Fi\u003E\u003C\u002Fa\u003E";
 ;pug_debug_line = 46;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
-pug_html = pug_html + "\u003Cdiv class=\"panel-heading\" role=\"tab\"\u003E";
+pug_html = pug_html + "\u003Ca class=\"list-group-item list-group-item-action active\" href=\"#\"\u003E";
+;pug_debug_line = 46;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
+pug_html = pug_html + "Specifics\u003C\u002Fa\u003E";
 ;pug_debug_line = 47;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
-pug_html = pug_html + "\u003Ca class=\"list-group-item\" data-toggle=\"collapse\" data-parent=\"#accordion\" href=\"#form_c\" aria-expanded=\"true\"\u003E";
-;pug_debug_line = 52;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
-pug_html = pug_html + "\u003Ci class=\"fa fa-university\"\u003E\u003C\u002Fi\u003E";
-;pug_debug_line = 53;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
-pug_html = pug_html + " form c";
-;pug_debug_line = 54;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
-pug_html = pug_html + "\u003Cspan class=\"pull-right\"\u003E";
-;pug_debug_line = 55;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
-pug_html = pug_html + "\u003Ci class=\"fa fa-angle-left\"\u003E\u003C\u002Fi\u003E\u003C\u002Fspan\u003E\u003C\u002Fa\u003E\u003C\u002Fdiv\u003E";
-;pug_debug_line = 56;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
-pug_html = pug_html + "\u003Cdiv class=\"panel-collapse collapse\" id=\"form_c\" role=\"tabpanel\"\u003E";
-;pug_debug_line = 57;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
-pug_html = pug_html + "\u003Cdiv class=\"list-group\"\u003E";
-;pug_debug_line = 58;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
 pug_html = pug_html + "\u003Ca class=\"list-group-item list-group-item-action\" href=\"#\"\u003E";
+;pug_debug_line = 47;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
+pug_html = pug_html + "Perks\u003C\u002Fa\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E";
+;pug_debug_line = 48;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
+pug_html = pug_html + "\u003Cdiv class=\"panel panel-default\"\u003E";
+;pug_debug_line = 49;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
+pug_html = pug_html + "\u003Cdiv class=\"panel-heading\" role=\"tab\"\u003E";
+;pug_debug_line = 50;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
+pug_html = pug_html + "\u003Ca class=\"list-group-item\" data-toggle=\"collapse\" data-parent=\"#accordion\" href=\"#form_c\" aria-expanded=\"true\"\u003E";
+;pug_debug_line = 55;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
+pug_html = pug_html + "\u003Ci class=\"fa fa-university\"\u003E\u003C\u002Fi\u003E";
+;pug_debug_line = 56;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
+pug_html = pug_html + " form c";
+;pug_debug_line = 57;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
+pug_html = pug_html + "\u003Cspan class=\"pull-right\"\u003E";
 ;pug_debug_line = 58;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
-pug_html = pug_html + "form c\u003C\u002Fa\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E";
+pug_html = pug_html + "\u003Ci class=\"fa fa-angle-left\"\u003E\u003C\u002Fi\u003E\u003C\u002Fspan\u003E\u003C\u002Fa\u003E\u003C\u002Fdiv\u003E";
 ;pug_debug_line = 59;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
-pug_html = pug_html + "\u003Cdiv class=\"row\"\u003E";
+pug_html = pug_html + "\u003Cdiv class=\"panel-collapse collapse\" id=\"form_c\" role=\"tabpanel\"\u003E";
 ;pug_debug_line = 60;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
-pug_html = pug_html + "\u003Cdiv class=\"education-link-wrap\"\u003E";
+pug_html = pug_html + "\u003Cdiv class=\"list-group\"\u003E";
 ;pug_debug_line = 61;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
-pug_html = pug_html + "\u003Cdiv class=\"jumbotron jumbotron-fluid\"\u003E";
+pug_html = pug_html + "\u003Ca class=\"list-group-item list-group-item-action\" href=\"#\"\u003E";
+;pug_debug_line = 61;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
+pug_html = pug_html + "form c\u003C\u002Fa\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E";
 ;pug_debug_line = 62;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
-pug_html = pug_html + "\u003Ch4 class=\"font-weight-bold text-uppercase\"\u003E";
+pug_html = pug_html + "\u003Cdiv class=\"row\"\u003E";
 ;pug_debug_line = 63;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
-pug_html = pug_html + "\u003Ci class=\"fa fa-book\"\u003E\u003C\u002Fi\u003E";
+pug_html = pug_html + "\u003Cdiv class=\"education-link-wrap\"\u003E";
 ;pug_debug_line = 64;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
-pug_html = pug_html + " education Links\u003C\u002Fh4\u003E";
+pug_html = pug_html + "\u003Cdiv class=\"jumbotron jumbotron-fluid\"\u003E";
 ;pug_debug_line = 65;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
-pug_html = pug_html + "\u003Cdiv class=\"nav\"\u003E";
+pug_html = pug_html + "\u003Ch4 class=\"font-weight-bold text-uppercase\"\u003E";
 ;pug_debug_line = 66;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
-pug_html = pug_html + "\u003Cli class=\"nav-item\"\u003E";
+pug_html = pug_html + "\u003Ci class=\"fa fa-book\"\u003E\u003C\u002Fi\u003E";
 ;pug_debug_line = 67;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
-pug_html = pug_html + "\u003Ca class=\"nav-link link-3\" href=\"#\"\u003E";
-;pug_debug_line = 67;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
-pug_html = pug_html + "Issuer Tutorial\u003C\u002Fa\u003E\u003C\u002Fli\u003E";
+pug_html = pug_html + " education Links\u003C\u002Fh4\u003E";
 ;pug_debug_line = 68;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
+pug_html = pug_html + "\u003Cdiv class=\"nav\"\u003E";
+;pug_debug_line = 69;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
 pug_html = pug_html + "\u003Cli class=\"nav-item\"\u003E";
-;pug_debug_line = 69;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
-pug_html = pug_html + "\u003Ca class=\"nav-link link-3\" href=\"#\"\u003E";
-;pug_debug_line = 69;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
-pug_html = pug_html + "Success Guide\u003C\u002Fa\u003E\u003C\u002Fli\u003E";
 ;pug_debug_line = 70;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
-pug_html = pug_html + "\u003Cli class=\"nav-item\"\u003E";
-;pug_debug_line = 71;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
 pug_html = pug_html + "\u003Ca class=\"nav-link link-3\" href=\"#\"\u003E";
+;pug_debug_line = 70;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
+pug_html = pug_html + "Issuer Tutorial\u003C\u002Fa\u003E\u003C\u002Fli\u003E";
 ;pug_debug_line = 71;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
-pug_html = pug_html + "What's My Business Worth?\u003C\u002Fa\u003E\u003C\u002Fli\u003E";
+pug_html = pug_html + "\u003Cli class=\"nav-item\"\u003E";
 ;pug_debug_line = 72;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
-pug_html = pug_html + "\u003Cli class=\"nav-item\"\u003E";
-;pug_debug_line = 73;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
 pug_html = pug_html + "\u003Ca class=\"nav-link link-3\" href=\"#\"\u003E";
+;pug_debug_line = 72;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
+pug_html = pug_html + "Success Guide\u003C\u002Fa\u003E\u003C\u002Fli\u003E";
 ;pug_debug_line = 73;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
-pug_html = pug_html + "How Much Should I Raise?\u003C\u002Fa\u003E\u003C\u002Fli\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E";
+pug_html = pug_html + "\u003Cli class=\"nav-item\"\u003E";
+;pug_debug_line = 74;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
+pug_html = pug_html + "\u003Ca class=\"nav-link link-3\" href=\"#\"\u003E";
+;pug_debug_line = 74;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
+pug_html = pug_html + "What's My Business Worth?\u003C\u002Fa\u003E\u003C\u002Fli\u003E";
+;pug_debug_line = 75;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
+pug_html = pug_html + "\u003Cli class=\"nav-item\"\u003E";
 ;pug_debug_line = 76;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
+pug_html = pug_html + "\u003Ca class=\"nav-link link-3\" href=\"#\"\u003E";
+;pug_debug_line = 76;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
+pug_html = pug_html + "How Much Should I Raise?\u003C\u002Fa\u003E\u003C\u002Fli\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E";
+;pug_debug_line = 79;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
 pug_html = pug_html + "\u003C!--START RIGHT BLOCK--\u003E";
-;pug_debug_line = 77;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
+;pug_debug_line = 80;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
 pug_html = pug_html + "\u003Cdiv class=\"col-lg-8\"\u003E";
-;pug_debug_line = 78;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
-pug_html = pug_html + "\u003Ch2 class=\"text-uppercase text-lg-center text-xs-center\"\u003E";
-;pug_debug_line = 78;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
-pug_html = pug_html + "GENERAL INFORMATION\u003C\u002Fh2\u003E\u003C\u002Fdiv\u003E\u003C\u002Fsection\u003E";}.call(this,"page" in locals_for_with?locals_for_with.page:typeof page!=="undefined"?page:undefined));} catch (err) {pug_rethrow(err, pug_debug_filename, pug_debug_line);};return pug_html;}
+;pug_debug_line = 81;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
+pug_html = pug_html + "\u003Ch2 class=\"text-uppercase text-lg-center text-xs-center dosis m-t-0\"\u003E";
+;pug_debug_line = 81;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
+pug_html = pug_html + "specifics\u003C\u002Fh2\u003E";
+;pug_debug_line = 82;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
+pug_html = pug_html + "\u003Cform class=\"form-section\" metod=\"post\" action=\"\"\u003E";
+;pug_debug_line = 83;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
+pug_html = pug_html + "\u003Cdiv class=\"form-group\"\u003E";
+;pug_debug_line = 84;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
+pug_html = pug_html + "\u003Cdiv class=\"col-sm-12 p-r-0\"\u003E";
+;pug_debug_line = 85;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
+pug_html = pug_html + "\u003Cdiv class=\"campaign-warning\"\u003E";
+;pug_debug_line = 85;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
+pug_html = pug_html + " ";
+;pug_debug_line = 86;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
+pug_html = pug_html + "\u003Ci class=\"fa fa-exclamation-triangle\"\u003E";
+;pug_debug_line = 86;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
+pug_html = pug_html + " \u003C\u002Fi\u003E";
+;pug_debug_line = 87;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
+pug_html = pug_html + "\u003Cspan class=\"warning-text\"\u003E";
+;pug_debug_line = 87;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
+pug_html = pug_html + " \u003C\u002Fspan\u003E";
+;pug_debug_line = 88;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
+pug_html = pug_html + "You get to set two fundraising goals: the minimum you're willing to accept and the  maximum you're willing to accept.  If you don't reach your minimum fundraising goal, all money will be returned to the investors.\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E";
+;pug_debug_line = 90;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
+pug_html = pug_html + "\u003Cdiv class=\"row\"\u003E";
+;pug_debug_line = 91;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
+pug_html = pug_html + "\u003Cdiv class=\"col-lg-6 col-l-65\"\u003E";
+;pug_debug_line = 92;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
+pug_mixins["fieldBlock"]("Our Minimum Total Raise is", '', {
+            class1: 'col-lg-6 col-md-3', 
+            class2: 'col-lg-6 col-md-9', 
+            type: 'text',
+            placeholder: '$',
+            });
+pug_html = pug_html + "\u003C\u002Fdiv\u003E";
+;pug_debug_line = 98;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
+pug_html = pug_html + "\u003Cdiv class=\"col-lg-6 col-l-65\"\u003E";
+;pug_debug_line = 99;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
+pug_mixins["fieldBlock"]("Our Maximum Total Raise is", '', {
+            class1: 'col-lg-5 col-md-3', 
+            class2: 'col-lg-7 col-md-9', 
+            type: 'text',
+            placeholder: '$',
+            });
+pug_html = pug_html + "\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E";
+;pug_debug_line = 106;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
+pug_mixins["fieldBlock"]("The Minimum Investment is", '', {
+         class1: 'col-lg-3 col-md-4',
+         class2: 'col-lg-9 col-md-8',
+         type: 'text',
+         placeholder: '$  People can invest this amount or more  ',
+         });
+;pug_debug_line = 113;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
+pug_html = pug_html + "\u003Cdiv class=\"form-group row clearfix\"\u003E";
+;pug_debug_line = 114;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
+pug_html = pug_html + "\u003Clabel class=\"col-lg-3 text-lg-right\"\u003E";
+;pug_debug_line = 114;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
+pug_html = pug_html + "Length of the Campaign\u003C\u002Flabel\u003E";
+;pug_debug_line = 115;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
+pug_html = pug_html + "\u003Cdiv class=\"col-lg-9\"\u003E";
+;pug_debug_line = 116;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
+pug_html = pug_html + "\u003Cselect class=\"custom-select form-control\" placeholder=\"Description\" rows=\"4\"\u003E";
+;pug_debug_line = 117;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
+pug_html = pug_html + "\u003Coption selected=\"selected\"\u003E";
+;pug_debug_line = 117;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
+pug_html = pug_html + "Please Choose One\u003C\u002Foption\u003E";
+;pug_debug_line = 118;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
+pug_html = pug_html + "\u003Coption value=\"1\"\u003E";
+;pug_debug_line = 118;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
+pug_html = pug_html + "Please Choose One 1\u003C\u002Foption\u003E";
+;pug_debug_line = 119;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
+pug_html = pug_html + "\u003Coption value=\"1\"\u003E";
+;pug_debug_line = 119;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
+pug_html = pug_html + "Please Choose One 2\u003C\u002Foption\u003E";
+;pug_debug_line = 120;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
+pug_html = pug_html + "\u003Coption value=\"1\"\u003E";
+;pug_debug_line = 120;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
+pug_html = pug_html + "Please Choose One 3\u003C\u002Foption\u003E\u003C\u002Fselect\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E";
+;pug_debug_line = 122;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
+pug_html = pug_html + "\u003Cdiv class=\"row media-item\"\u003E";
+;pug_debug_line = 123;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
+pug_html = pug_html + "\u003Cdiv class=\"col-lg-7\"\u003E";
+;pug_debug_line = 124;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
+pug_html = pug_html + "\u003Cdiv class=\"col-lg-5 p-r-12\"\u003E";
+;pug_debug_line = 125;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
+pug_html = pug_html + "\u003Cspan class=\"pull-right font-weight-bold text-lg-right\"\u003E";
+;pug_debug_line = 125;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
+pug_html = pug_html + " Upload an Investor Presentation\u003C\u002Fspan\u003E\u003C\u002Fdiv\u003E";
+;pug_debug_line = 126;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
+pug_html = pug_html + "\u003Cdiv class=\"col-lg-7 text-lg-center\"\u003E";
+;pug_debug_line = 127;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
+pug_html = pug_html + "\u003Cp class=\"drop-photo\"\u003E";
+;pug_debug_line = 127;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
+pug_html = pug_html + "Drop your PPT or PDF here or click to upload\u003C\u002Fp\u003E";
+;pug_debug_line = 128;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
+pug_html = pug_html + "\u003Ci class=\"fa fa-file\"\u003E\u003C\u002Fi\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E";
+;pug_debug_line = 129;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
+pug_html = pug_html + "\u003Cdiv class=\"col-lg-5 p-l-0 p-r-3 text-lg-center text-sm-center\"\u003E";
+;pug_debug_line = 130;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
+pug_html = pug_html + "\u003Cimg class=\"img-file\" src=\"\u002Fimg\u002FMS-PowerPoint.png\" alt=\"Responsive image\"\u002F\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E";
+;pug_debug_line = 132;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
+pug_html = pug_html + "\u003Cdiv class=\"row border-top\"\u003E\u003C\u002Fdiv\u003E";
+;pug_debug_line = 134;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
+pug_html = pug_html + "\u003Ch3 class=\"text-lg-center col-lg-12\"\u003E";
+;pug_debug_line = 134;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
+pug_html = pug_html + "Pre-Money Valuation and Equity Terms\u003C\u002Fh3\u003E";
+;pug_debug_line = 135;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
+pug_html = pug_html + "\u003Cdiv class=\"form-group row clearfix\"\u003E";
+;pug_debug_line = 136;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
+pug_html = pug_html + "\u003Clabel class=\"col-lg-3 text-lg-right\"\u003E";
+;pug_debug_line = 136;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
+pug_html = pug_html + "Security Type\u003C\u002Flabel\u003E";
+;pug_debug_line = 137;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
+pug_html = pug_html + "\u003Cdiv class=\"col-lg-9 form-checks\"\u003E";
+;pug_debug_line = 138;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
+pug_html = pug_html + "\u003Clabel class=\"col-lg-2\"\u003E";
+;pug_debug_line = 139;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
+pug_html = pug_html + "\u003Cinput class=\"form-check-input\" type=\"radio\"\u002F\u003E";
+;pug_debug_line = 140;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
+pug_html = pug_html + " Equity\u003C\u002Flabel\u003E";
+;pug_debug_line = 141;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
+pug_html = pug_html + "\u003Clabel class=\"col-lg-4\"\u003E";
+;pug_debug_line = 142;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
+pug_html = pug_html + "\u003Cinput class=\"form-check-input\" type=\"radio\"\u002F\u003E";
+;pug_debug_line = 143;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
+pug_html = pug_html + " Payback Equity\u003C\u002Flabel\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E";
+;pug_debug_line = 145;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
+pug_html = pug_html + "\u003Cdiv class=\"row\"\u003E";
+;pug_debug_line = 146;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
+pug_html = pug_html + "\u003Cdiv class=\"col-lg-6 col-l-65\"\u003E";
+;pug_debug_line = 147;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
+pug_mixins["fieldBlock"]("Link to Calculators", '', {
+            class1: 'col-lg-6 col-md-3', 
+            class2: 'col-lg-6 col-md-9', 
+            type: 'text',
+            placeholder: '$',
+            });
+pug_html = pug_html + "\u003C\u002Fdiv\u003E";
+;pug_debug_line = 154;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
+pug_html = pug_html + "\u003Cdiv class=\"col-lg-6 col-l-65\"\u003E";
+;pug_debug_line = 155;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
+pug_mixins["fieldBlock"]("Pre-Money Valuation", '', {
+            class1: 'col-lg-5 col-md-3', 
+            class2: 'col-lg-7 col-md-9', 
+            type: 'text',
+            placeholder: '$',
+            });
+pug_html = pug_html + "\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E";
+;pug_debug_line = 161;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
+pug_html = pug_html + "\u003Cdiv class=\"label-top-6\"\u003E";
+;pug_debug_line = 162;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
+pug_mixins["fieldBlock"]("Price Per Share", '', {
+           class1: 'col-lg-3 col-md-4',
+           class2: 'col-lg-9 col-md-8',
+           type: 'text',
+           placeholder: '$',
+           });
+pug_html = pug_html + "\u003C\u002Fdiv\u003E";
+;pug_debug_line = 169;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
+pug_html = pug_html + "\u003Cdiv class=\"row m-t-2\"\u003E";
+;pug_debug_line = 170;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
+pug_html = pug_html + "\u003Cdiv class=\"col-lg-6 col-l-65\"\u003E";
+;pug_debug_line = 171;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
+pug_mixins["fieldBlock"]("Minimum № of Shares", '', {
+            class1: 'col-lg-6 p-l-2', 
+            class2: 'col-lg-6 col-md-9', 
+            type: 'text',
+            placeholder: '$',
+            });
+pug_html = pug_html + "\u003C\u002Fdiv\u003E";
+;pug_debug_line = 178;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
+pug_html = pug_html + "\u003Cdiv class=\"col-lg-6 col-l-65\"\u003E";
+;pug_debug_line = 179;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
+pug_mixins["fieldBlock"]("Maximum № of Shares", '', {
+            class1: 'col-lg-5 col-md-3', 
+            class2: 'col-lg-7 col-md-9', 
+            type: 'text',
+            placeholder: '$',
+            });
+pug_html = pug_html + "\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E";
+;pug_debug_line = 185;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
+pug_html = pug_html + "\u003Cdiv class=\"col-lg-6 pull-right p-r-0 m-t-2\"\u003E";
+;pug_debug_line = 186;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
+pug_html = pug_html + "\u003Cdiv class=\"col-lg-6\"\u003E";
+;pug_debug_line = 187;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
+pug_html = pug_html + "\u003Cbutton class=\"btn btn-lg btn-primary text-uppercase pull-right\" href=\"\"\u003E";
+;pug_debug_line = 187;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
+pug_html = pug_html + "save\u003C\u002Fbutton\u003E\u003C\u002Fdiv\u003E";
+;pug_debug_line = 188;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
+pug_html = pug_html + "\u003Cdiv class=\"col-lg-6\"\u003E";
+;pug_debug_line = 189;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
+pug_html = pug_html + "\u003Cbutton class=\"btn btn-lg btn-secondary text-uppercase\" href=\"\"\u003E";
+;pug_debug_line = 189;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
+pug_html = pug_html + "preview\u003C\u002Fbutton\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E";
+;pug_debug_line = 191;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
+pug_html = pug_html + "\u003Cdiv class=\"col-lg-6\"\u003E";
+;pug_debug_line = 192;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
+pug_html = pug_html + "\u003Cdiv class=\"btn-group\"\u003E";
+;pug_debug_line = 193;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
+pug_html = pug_html + "\u003Cbutton class=\"btn\" type=\"button\"\u003E";
+;pug_debug_line = 193;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
+pug_html = pug_html + "Link to Calculators\u003C\u002Fbutton\u003E";
+;pug_debug_line = 194;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
+pug_html = pug_html + "\u003Cbutton class=\"btn btn-danger dropdown-toggle dropdown-toggle-split\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\"\u003E";
+;pug_debug_line = 195;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
+pug_html = pug_html + "\u003Cspan class=\"sr-only\"\u003E";
+;pug_debug_line = 195;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
+pug_html = pug_html + "Toggle Dropdown\u003C\u002Fspan\u003E\u003C\u002Fbutton\u003E";
+;pug_debug_line = 196;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
+pug_html = pug_html + "\u003Cdiv class=\"dropdown-menu\"\u003E";
+;pug_debug_line = 197;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
+pug_html = pug_html + "\u003Ca class=\"dropdown-item\" href=\"#\"\u003E";
+;pug_debug_line = 197;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
+pug_html = pug_html + "Dropdown 1\u003C\u002Fa\u003E";
+;pug_debug_line = 198;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
+pug_html = pug_html + "\u003Ca class=\"dropdown-item\" href=\"#\"\u003E";
+;pug_debug_line = 198;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
+pug_html = pug_html + "Dropdown 2\u003C\u002Fa\u003E";
+;pug_debug_line = 199;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
+pug_html = pug_html + "\u003Ca class=\"dropdown-item\" href=\"#\"\u003E";
+;pug_debug_line = 199;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignSpecifics.js";
+pug_html = pug_html + "Dropdown 3\u003C\u002Fa\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E\u003C\u002Fform\u003E\u003C\u002Fdiv\u003E\u003C\u002Fsection\u003E";}.call(this,"console" in locals_for_with?locals_for_with.console:typeof console!=="undefined"?console:undefined,"fields" in locals_for_with?locals_for_with.fields:typeof fields!=="undefined"?fields:undefined,"page" in locals_for_with?locals_for_with.page:typeof page!=="undefined"?page:undefined));} catch (err) {pug_rethrow(err, pug_debug_filename, pug_debug_line);};return pug_html;}
 function pug_attr(t,e,n,f){return e!==!1&&null!=e&&(e||"class"!==t&&"style"!==t)?e===!0?" "+(f?t:t+'="'+t+'"'):("function"==typeof e.toJSON&&(e=e.toJSON()),"string"==typeof e||(e=JSON.stringify(e),n||e.indexOf('"')===-1)?(n&&(e=pug_escape(e))," "+t+'="'+e+'"'):" "+t+"='"+e.replace(/'/g,"&#39;")+"'"):""}
 function pug_classes(s,r){return Array.isArray(s)?pug_classes_array(s,r):s&&"object"==typeof s?pug_classes_object(s):s||""}
 function pug_classes_array(r,a){for(var s,e="",u="",c=Array.isArray(a),g=0;g<r.length;g++)s=pug_classes(r[g]),s&&(c&&a[g]&&(s=pug_escape(s)),e=e+u+s,u=" ");return e}
@@ -4347,90 +4574,94 @@ pug_html = pug_html + "\u003Cdiv class=\"col-lg-8\"\u003E";
 ;pug_debug_line = 80;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignTeamMembers.js";
 pug_html = pug_html + "\u003Ch2 class=\"text-uppercase text-lg-center text-xs-center dosis m-t-0\"\u003E";
 ;pug_debug_line = 80;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignTeamMembers.js";
-pug_html = pug_html + "team members (Advisor)\u003C\u002Fh2\u003E";
+pug_html = pug_html + "team members ";
 ;pug_debug_line = 81;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignTeamMembers.js";
-pug_html = pug_html + "\u003Cform class=\"form-section\" metod=\"post\" action=\"\"\u003E";
+pug_html = pug_html + "\u003Cspan class=\"text-capitalize\"\u003E";
+;pug_debug_line = 81;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignTeamMembers.js";
+pug_html = pug_html + "(Advisor)\u003C\u002Fspan\u003E\u003C\u002Fh2\u003E";
 ;pug_debug_line = 82;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignTeamMembers.js";
+pug_html = pug_html + "\u003Cform class=\"form-section\" metod=\"post\" action=\"\"\u003E";
+;pug_debug_line = 83;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignTeamMembers.js";
 pug_mixins["fieldBlock"]("First Name", '', {
         class1: 'col-lg-3 col-md-3',
         class2: 'col-lg-9 col-md-9',
         type: 'text',
         });
-;pug_debug_line = 87;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignTeamMembers.js";
+;pug_debug_line = 88;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignTeamMembers.js";
 pug_mixins["fieldBlock"]("Last Name", '', {
         class1: 'col-lg-3 col-md-3',
         class2: 'col-lg-9 col-md-9',
         type: 'text',
         });
-;pug_debug_line = 92;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignTeamMembers.js";
+;pug_debug_line = 93;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignTeamMembers.js";
 pug_mixins["fieldBlock"]("E-mail", '', {
         class1: 'col-lg-3 col-md-3',
         class2: 'col-lg-9 col-md-9',
         type: 'email',
         });
-;pug_debug_line = 97;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignTeamMembers.js";
+;pug_debug_line = 98;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignTeamMembers.js";
 pug_mixins["fieldBlock"]("Title", '', {
         class1: 'col-lg-3 col-md-3',
         class2: 'col-lg-9 col-md-9',
         type: 'text',
         });
-;pug_debug_line = 102;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignTeamMembers.js";
+;pug_debug_line = 103;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignTeamMembers.js";
 pug_html = pug_html + "\u003Cdiv class=\"form-group row clearfix required\"\u003E";
-;pug_debug_line = 103;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignTeamMembers.js";
-pug_html = pug_html + "\u003Clabel class=\"col-lg-3 text-lg-right\"\u003E";
-;pug_debug_line = 103;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignTeamMembers.js";
-pug_html = pug_html + "Bio\u003C\u002Flabel\u003E";
 ;pug_debug_line = 104;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignTeamMembers.js";
-pug_html = pug_html + "\u003Cdiv class=\"col-lg-9\"\u003E";
+pug_html = pug_html + "\u003Clabel class=\"col-lg-3 text-lg-right\"\u003E";
+;pug_debug_line = 104;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignTeamMembers.js";
+pug_html = pug_html + "Bio\u003C\u002Flabel\u003E";
 ;pug_debug_line = 105;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignTeamMembers.js";
-pug_html = pug_html + "\u003Ctextarea class=\"form-control\" placeholder=\"Bio\" rows=\"4\"\u003E\u003C\u002Ftextarea\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E";
+pug_html = pug_html + "\u003Cdiv class=\"col-lg-9\"\u003E";
 ;pug_debug_line = 106;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignTeamMembers.js";
-pug_html = pug_html + "\u003Cdiv class=\"row media-item\"\u003E";
+pug_html = pug_html + "\u003Ctextarea class=\"form-control\" placeholder=\"Bio\" rows=\"4\"\u003E\u003C\u002Ftextarea\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E";
 ;pug_debug_line = 107;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignTeamMembers.js";
-pug_html = pug_html + "\u003Cdiv class=\"col-lg-7\"\u003E";
+pug_html = pug_html + "\u003Cdiv class=\"row media-item\"\u003E";
 ;pug_debug_line = 108;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignTeamMembers.js";
+pug_html = pug_html + "\u003Cdiv class=\"col-lg-7\"\u003E";
+;pug_debug_line = 109;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignTeamMembers.js";
 pug_html = pug_html + "\u003Cdiv class=\"col-lg-5 p-r-12\"\u003E";
-;pug_debug_line = 109;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignTeamMembers.js";
-pug_html = pug_html + "\u003Cspan class=\"pull-right font-weight-bold\"\u003E";
-;pug_debug_line = 109;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignTeamMembers.js";
-pug_html = pug_html + " Header Image\u003C\u002Fspan\u003E\u003C\u002Fdiv\u003E";
 ;pug_debug_line = 110;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignTeamMembers.js";
+pug_html = pug_html + "\u003Cspan class=\"pull-right font-weight-bold\"\u003E";
+;pug_debug_line = 110;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignTeamMembers.js";
+pug_html = pug_html + " Header Image\u003C\u002Fspan\u003E\u003C\u002Fdiv\u003E";
+;pug_debug_line = 111;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignTeamMembers.js";
 pug_html = pug_html + "\u003Cdiv class=\"col-lg-7 text-lg-center\"\u003E";
-;pug_debug_line = 111;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignTeamMembers.js";
-pug_html = pug_html + "\u003Cp class=\"drop-photo\"\u003E";
-;pug_debug_line = 111;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignTeamMembers.js";
-pug_html = pug_html + "Drop your photo here or click to upload\u003C\u002Fp\u003E";
 ;pug_debug_line = 112;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignTeamMembers.js";
-pug_html = pug_html + "\u003Ci class=\"fa fa-camera\"\u003E\u003C\u002Fi\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E";
+pug_html = pug_html + "\u003Cp class=\"drop-photo\"\u003E";
+;pug_debug_line = 112;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignTeamMembers.js";
+pug_html = pug_html + "Drop your photo here or click to upload\u003C\u002Fp\u003E";
 ;pug_debug_line = 113;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignTeamMembers.js";
-pug_html = pug_html + "\u003Cdiv class=\"col-lg-5 p-l-1 p-r-3 text-lg-center text-sm-center\"\u003E";
+pug_html = pug_html + "\u003Ci class=\"fa fa-camera\"\u003E\u003C\u002Fi\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E";
 ;pug_debug_line = 114;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignTeamMembers.js";
-pug_html = pug_html + "\u003Cimg class=\"img-team-members\" src=\"\u002Fimg\u002Fheader_img_avatar.jpg\" alt=\"Responsive image\"\u002F\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E";
+pug_html = pug_html + "\u003Cdiv class=\"col-lg-5 p-l-1 p-r-3 text-lg-center text-sm-center\"\u003E";
 ;pug_debug_line = 115;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignTeamMembers.js";
-pug_html = pug_html + "\u003Cdiv class=\"col-lg-10 pull-right p-r-0\"\u003E";
+pug_html = pug_html + "\u003Cimg class=\"img-team-members\" src=\"\u002Fimg\u002Fheader_img_avatar.jpg\" alt=\"Responsive image\"\u002F\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E";
 ;pug_debug_line = 116;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignTeamMembers.js";
+pug_html = pug_html + "\u003Cdiv class=\"col-lg-11 pull-right p-r-0\"\u003E";
+;pug_debug_line = 117;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignTeamMembers.js";
 pug_html = pug_html + "\u003Cdiv class=\"col-lg-6\"\u003E";
-;pug_debug_line = 117;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignTeamMembers.js";
-pug_html = pug_html + "\u003Cbutton class=\"btn btn-lg btn-primary text-uppercase pull-right\" href=\"\"\u003E";
-;pug_debug_line = 117;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignTeamMembers.js";
-pug_html = pug_html + "Save and return\u003C\u002Fbutton\u003E\u003C\u002Fdiv\u003E";
 ;pug_debug_line = 118;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignTeamMembers.js";
-pug_html = pug_html + "\u003Cdiv class=\"col-lg-6\"\u003E";
+pug_html = pug_html + "\u003Cbutton class=\"btn btn-lg btn-primary text-uppercase pull-right\" href=\"\"\u003E";
+;pug_debug_line = 118;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignTeamMembers.js";
+pug_html = pug_html + "Save and return\u003C\u002Fbutton\u003E\u003C\u002Fdiv\u003E";
 ;pug_debug_line = 119;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignTeamMembers.js";
-pug_html = pug_html + "\u003Cdiv class=\"dropdown\"\u003E";
+pug_html = pug_html + "\u003Cdiv class=\"col-lg-6 p-r-0\"\u003E";
 ;pug_debug_line = 120;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignTeamMembers.js";
+pug_html = pug_html + "\u003Cdiv class=\"dropdown pull-right\"\u003E";
+;pug_debug_line = 121;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignTeamMembers.js";
 pug_html = pug_html + "\u003Cbutton class=\"btn btn-lg btn-primary text-uppercase dropdown-toggle\" href=\"\" id=\"dropdownMenuButton\" data-toggle=\"dropdown\" aria-haspopup=\"true\" aria-expanded=\"false\"\u003E";
-;pug_debug_line = 125;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignTeamMembers.js";
-pug_html = pug_html + "Save and add other\u003C\u002Fbutton\u003E";
 ;pug_debug_line = 126;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignTeamMembers.js";
+pug_html = pug_html + "Save and add other\u003C\u002Fbutton\u003E";
+;pug_debug_line = 127;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignTeamMembers.js";
 pug_html = pug_html + "\u003Cdiv class=\"dropdown-menu\" aria-labelledby=\"dropdownMenuButton\"\u003E";
-;pug_debug_line = 127;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignTeamMembers.js";
+;pug_debug_line = 128;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignTeamMembers.js";
 pug_html = pug_html + "\u003Ca class=\"dropdown-item\" href=\"\"\u003E";
-;pug_debug_line = 127;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignTeamMembers.js";
+;pug_debug_line = 128;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignTeamMembers.js";
 pug_html = pug_html + "Add Advisor\u003C\u002Fa\u003E";
-;pug_debug_line = 128;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignTeamMembers.js";
+;pug_debug_line = 129;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignTeamMembers.js";
 pug_html = pug_html + "\u003Ca class=\"dropdown-item\" href=\"\"\u003E";
-;pug_debug_line = 128;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignTeamMembers.js";
+;pug_debug_line = 129;pug_debug_filename = "\u002Fhome\u002Fgrm\u002Fprojects\u002Fgfwhitelabels\u002Fapp\u002Fbethesda\u002Ftemplates\u002FcampaignTeamMembers.js";
 pug_html = pug_html + "Add Team Member\u003C\u002Fa\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E\u003C\u002Fdiv\u003E\u003C\u002Fform\u003E\u003C\u002Fdiv\u003E\u003C\u002Fsection\u003E";}.call(this,"console" in locals_for_with?locals_for_with.console:typeof console!=="undefined"?console:undefined,"fields" in locals_for_with?locals_for_with.fields:typeof fields!=="undefined"?fields:undefined,"page" in locals_for_with?locals_for_with.page:typeof page!=="undefined"?page:undefined));} catch (err) {pug_rethrow(err, pug_debug_filename, pug_debug_line);};return pug_html;}
 function pug_attr(t,e,n,f){return e!==!1&&null!=e&&(e||"class"!==t&&"style"!==t)?e===!0?" "+(f?t:t+'="'+t+'"'):("function"==typeof e.toJSON&&(e=e.toJSON()),"string"==typeof e||(e=JSON.stringify(e),n||e.indexOf('"')===-1)?(n&&(e=pug_escape(e))," "+t+'="'+e+'"'):" "+t+"='"+e.replace(/'/g,"&#39;")+"'"):""}
 function pug_classes(s,r){return Array.isArray(s)?pug_classes_array(s,r):s&&"object"==typeof s?pug_classes_object(s):s||""}
