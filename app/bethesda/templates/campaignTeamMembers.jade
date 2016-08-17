@@ -77,7 +77,8 @@ section.team-members.container.m-b-85
 
   //START RIGHT BLOCK
   .col-lg-8
-    h2.text-uppercase.text-lg-center.text-xs-center.dosis.m-t-0 team members (Advisor)
+    h2.text-uppercase.text-lg-center.text-xs-center.dosis.m-t-0 team members 
+      span.text-capitalize (Advisor)
     form(metod="post" action="").form-section
       +fieldBlock("First Name", '', {
         class1: 'col-lg-3 col-md-3',
@@ -112,11 +113,11 @@ section.team-members.container.m-b-85
             i.fa.fa-camera
         .col-lg-5.p-l-1.p-r-3.text-lg-center.text-sm-center
           img(src="/img/header_img_avatar.jpg" alt="Responsive image").img-team-members
-      .col-lg-10.pull-right.p-r-0
+      .col-lg-11.pull-right.p-r-0
           .col-lg-6
             button(href="").btn.btn-lg.btn-primary.text-uppercase.pull-right Save and return
-          .col-lg-6
-            .dropdown
+          .col-lg-6.p-r-0
+            .dropdown.pull-right
               button(href=""
               id="dropdownMenuButton"
               data-toggle="dropdown"
