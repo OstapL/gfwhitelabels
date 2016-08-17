@@ -1,10 +1,10 @@
 include mixins.pug
 
-+breadcrumbs('Create Company', 'Help Button', [['home', '/',], [ 'current', page.get_absolute_url]])
++breadcrumbs('Create campaign', 'LOREM IPSUM DOLOR SIT AMET CONSECTETUR', [['home', '/',], [ 'current', page.get_absolute_url]])
 
-section.create-company-general.container
+section.create-company-media.container.m-b-85
   //START LEFT BLOCK
-  .col-lg-3
+  .col-lg-3.create_compaign
     .jumbotron.jumbotron-fluid.row
       .raise-funds
         h4.font-weight-bold.text-uppercase.m-b-0 Raise funds
@@ -38,6 +38,7 @@ section.create-company-general.container
           #campaign(role="tabpanel").panel-collapse.collapse.in
             .list-group
               a(href="#").list-group-item.list-group-item-action General Information
+                i.fa.fa-check
               a(href="#").list-group-item.list-group-item-action.active Media
               a(href="#").list-group-item.list-group-item-action Team Members
               a(href="#").list-group-item.list-group-item-action Specifics
@@ -75,19 +76,19 @@ section.create-company-general.container
 
   //START RIGHT BLOCK
   .col-lg-9
-    h2.text-uppercase.dosis.text-lg-center.text-xs-center Media
+    h2.text-uppercase.dosis.text-lg-center.text-xs-center.dosis.m-t-0 Media
     form(metod="post" action="").form-section
-      .row.m-b-2
+      .row.media-item
         .col-lg-7
           .col-lg-5
             span.pull-right.font-weight-bold Header Image
           .col-lg-7.text-lg-center
-            p Drop your photo here or click to upload
+            p.drop-photo Drop your photo here or click to upload
             i.fa.fa-camera
         .col-lg-5.p-l-1.p-r-3
           img(src="/img/test.png" alt="Responsive image").img-fluid
 
-      .row.m-b-2
+      .row.media-item
         .col-lg-7
           .col-lg-5
             span.pull-right.font-weight-bold Thumbnail Picture
@@ -96,10 +97,8 @@ section.create-company-general.container
             i.fa.fa-camera
         .col-lg-5.p-l-1.p-r-3
           img(src="/img/test.png" alt="Responsive image").img-fluid
-
-        .col-lg-12.border-bottom.m-l-1.m-t-1
-      .col-lg-12
-        h3.text-lg-center.m-b-1 Recommended Additional Media
+      .col-lg-12.border-top
+        h3.text-lg-center Recommended Additional Media
       .row.m-b-2
         .col-lg-7
           .col-lg-5
@@ -108,9 +107,29 @@ section.create-company-general.container
             p Drop your photo here or click to upload
             i.fa.fa-camera
         .col-lg-5.p-l-1.p-r-3
-          img(src="/img/test.png" alt="Responsive image").img-fluid
+          .photo-scroll
+            .photo-scroll-wrap
+              img(src="/img/test.png" alt="Responsive image").img-fluid
+              img(src="/img/test.png" alt="Responsive image").img-fluid
+            .photo-scroll-wrap
+              img(src="/img/test.png" alt="Responsive image").img-fluid
+              img(src="/img/test.png" alt="Responsive image").img-fluid
+            .photo-scroll-wrap
+              img(src="/img/test.png" alt="Responsive image").img-fluid
+              img(src="/img/test.png" alt="Responsive image").img-fluid
+            .photo-scroll-wrap
+              img(src="/img/test.png" alt="Responsive image").img-fluid
+              img(src="/img/test.png" alt="Responsive image").img-fluid
+            .photo-scroll-wrap
+              img(src="/img/test.png" alt="Responsive image").img-fluid
+              img(src="/img/test.png" alt="Responsive image").img-fluid
+            .photo-scroll-wrap
+              img(src="/img/test.png" alt="Responsive image").img-fluid
+              img(src="/img/test.png" alt="Responsive image").img-fluid
 
-      .row.m-b-2
+
+
+      .row.m-b-2.recommended
         .col-lg-7
           +fieldBlock("Main Video for Campaign", '', {
             class1: 'col-lg-5 col-md-5',
@@ -125,27 +144,40 @@ section.create-company-general.container
       
       .row.m-b-2
         .col-lg-7
-          .form-group.row
-            .col-lg-5
+          .form-group.row.required
+            .col-lg-5.recommended
               label.text-lg-right.font-weight-bold Optional Video for Campaign
             .col-lg-7
               input(type="text" placeholder="Title").form-control.m-b-2
-              input(type="text" placeholder="http://www.").form-control.m-b-2
+              input(type="text" placeholder="http://www.").form-control.m-b-1
 
               a(href="").link-2 Add Another Video
         .col-lg-5.p-l-1.p-r-3
           .embed-responsive.embed-responsive-16by9
             iframe.embed-responsive-item(src="//www.youtube.com/embed/zpOULjyy-n8?rel=0" allowfullscreen="true")
       
-      .col-lg-12.border-bottom.m-l-1.m-t-1
-      .col-lg-12
-        h3.text-lg-center.m-b-1 Articles and Press
-      .row.m-b-2
-        +fieldBlock("Question", '', {
-          class1: 'col-lg-4 col-md-4',
-          class2: 'col-lg-8 col-md-8',
+      .col-lg-12.border-top
+        h3.text-lg-center Articles and Press
+      .row.articles
+        +fieldBlock("Headline", '', {
+          class1: 'col-lg-3 col-md-4',
+          class2: 'col-lg-9 col-md-8',
           type: 'text',
+          placeholder: 'Title',
           })
+        +fieldBlock("Article link", '', {
+          class1: 'col-lg-3 col-md-4',
+          class2: 'col-lg-9 col-md-8',
+          type: 'text',
+          placeholder: 'http://www.',
+          })
+        .col-lg-8.offset-lg-3.p-l-0
+          a(href="").link-2.add-article Add Another Article
+        .col-lg-6.pull-right.p-l-0
+          .col-lg-6
+            button(href="").btn.btn-lg.btn-primary.text-uppercase.pull-right save
+          .col-lg-6
+            button(href="").btn.btn-lg.btn-secondary.text-uppercase preview
 
 
     

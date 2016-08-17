@@ -9,7 +9,7 @@
 .js-height-parent
 	height: rem(545)
 .border-bottom-scroll
-	box-shadow: 0px 10px 1px -10px $small-text
+	box-shadow: 0px .9px .9px 0px $small-text
 	margin-top: rem(25)
 .home-section
 	position: relative
@@ -137,6 +137,9 @@
 				a.link-1
 					position: relative
 					top: rem(10)
+		.progress_bar_container
+			span
+				margin-bottom: rem(5)
 	.share
 		padding-top: rem(15)
 		a
@@ -171,7 +174,12 @@
 		h3
 			color: $white
 			margin-top: 0
-			
+	h2
+		margin-bottom: 25px
+	h3.our
+		margin-top: 45px
+		margin-bottom: 20px
+
 	.articles_press
 		.card
 			margin-top: 0
@@ -282,6 +290,9 @@
 		margin-bottom: 0
 		.card-title
 			margin-bottom: 0
+	a
+		&:hover
+			color: $black_text
 .risks
 	padding-bottom: rem(45)
 	h2
@@ -297,24 +308,24 @@
 //Accordion
 #accordion
 	.panel-collapse
-		padding: 10px 20px
+		padding: rem(10) rem(20)
 	.list-group-item-action
 		display: block
-		padding: 10px 20px
+		padding: rem(10) rem(20)
 		position: relative
 		border: solid 1px $gallery
-		margin-top: 10px
-		+calc-rem(14)
+		margin-top: rem(10)
+		font-size: rem(14)
 		font-weight: 700
 		&.active
 			background-color: $alabaster
 			color: $black
-			+calc-rem(14)
+			font-size: rem(14)
 			font-weight: 700
 			border: solid 1px $gallery
 		i
 			top: 50%
-			right: 15px
+			right: rem(15)
 			-ms-transform: translate(-50%,-50%)
 			-webkit-transform: translate(-50%,-50%)
 			transform: translate(-50%,-50%)

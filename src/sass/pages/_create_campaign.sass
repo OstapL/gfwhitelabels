@@ -5,60 +5,98 @@
 	.form-section
 		textarea
 			min-height: rem(172)
+			margin-bottom: 0
 		.custom-select
 			width: 100%
 			height: rem(36)!important
-	.raise-funds
-		padding-left: rem(15)
-		padding-bottom: rem(15)
+		.change_state_city
+			left: rem(15)
+		label
+			line-height: rem(18)
 	.date
 		max-width: rem(94)
 		text-align: right
 		margin-left: rem(-36)
-		margin-top: rem(-10)
+		margin-top: rem(-5)
 		margin-right: rem(30)
 		float: left
+		line-height: rem(18)
 	input[type='date']
 		max-width: rem(190)
 	.border-bottom
 		margin-top: rem(40)
 		margin-bottom: rem(50)
-	.col-l-65
-		input
-			min-width: rem(185)
+		margin-left: rem(15)
+.col-l-65
+	input
+		min-width: rem(185)
 
-		
+.create_compaign	
 	.jumbotron
+		padding-top: rem(15)
+		padding-bottom: 0
 		#accordion
-			.panel-collapse
-				padding: 0
-			.list-group-item-action
+			a:hover, a:focus, a:active
+				text-decoration: none
+			.panel-heading
 				margin-top: rem(5)
-				border: none
-				padding-left: rem(40)
-				font-weight: 400
-				font-size: rem(12)
-				&:hover
+				text-transform: uppercase
+				.list-group-item
+					padding: rem(12) rem(17)
+					color: $small-text
+				.active
 					background-color: $gallery
 					color: $black
-			.active
-				background-color: $gallery
-				color: $black
-			.panel-heading
-				color: $black
-				margin-top: rem(5)
-				a
+				&:hover
+					background-color: $gallery
+					.list-group-item
+						color: $black
+			.panel-collapse
+				padding: 0
+				.active
+					background-color: $gallery
+					color: $black
+				.panel-heading
+					a.list-group-item
+						color: $small-text
+				
+				.list-group-item-action
+					margin-top: rem(5)
+					border: none
+					padding-left: rem(30)
+					font-weight: 400
+					font-size: rem(12)
+					color: $small-text
 					&:hover
 						background-color: $gallery
 						color: $black
+					.fa-check
+						color: $puerto_rico
+						float: right
+						margin-right: rem(5)
+			.panel
+				.in
+					.list-group-item.active
+						color: $black
+	.raise-funds
+		padding-left: rem(15)
+		padding-bottom: rem(10)
+		h4
+			.small-text
+				padding-top: 0
 	.education-link-wrap
 		margin-top: rem(50)
 		.jumbotron
 			padding-left: rem(15)
+			padding-bottom: rem(11)
 			li
-				padding-left: rem(15)
+				padding-left: rem(13)
 				font-size: rem(14)
 				a
 					padding: rem(3)
 					&:hover
 						text-decoration: underline
+	.mb25
+		margin-bottom: rem(25)
+	.link-2
+		line-height: 1
