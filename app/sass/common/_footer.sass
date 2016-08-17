@@ -4,12 +4,12 @@
 
 	.footer_title
 		width: 100%
-		margin-bottom: 12px
+		margin-bottom: rem(12)
 
 		h4
 			line-height: 18px
 			letter-spacing: 2.8px
-			font-size: 14px
+			+calc-rem(14)
 			color: $footer_text
 			text-transform: uppercase
 
@@ -18,7 +18,7 @@
 
 	a
 		line-height: 26px
-		font-size: 14px
+		+calc-rem(14)
 		color: $footer_text
 		display: block
 
@@ -29,14 +29,14 @@
 		position: relative
 
 		display: inline-block
-		height: 38px
-		width: 48px
+		height: rem(38)
+		width: rem(48)
 
 		img
 			transition: all 0.5s ease-in-out
 
 			position: absolute
-			top: 50px
+			top: rem(50)
 			left: 0
 
 			opacity: 0
@@ -49,10 +49,10 @@
 	.company
 		text-align: center
 
-		padding-bottom: 8px
+		padding-bottom: rem(8)
 
 		span
-			font-size: 14px
+			+calc-rem(14)
 			color: $footer_text
 			text-transform: uppercase
 			letter-spacing: 2.8px
@@ -60,6 +60,6 @@
 			font-family: $dosis
 
 		p
-			font-size: 11px
+			+calc-rem(11)
 			color: $footer_text
 			line-height: 18px
