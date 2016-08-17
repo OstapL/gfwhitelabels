@@ -8,7 +8,7 @@ define(function() {
             render: function() {
                 //require('sass/pages/_campaing.sass');
 
-                //require('../../../node_modules/bootstrap-select/sass/bootstrap-select.scss');
+                require('../../../node_modules/bootstrap-select/sass/bootstrap-select.scss');
 
                 let selectPicker = require('bootstrap-select');
                 this.$el.html('');
