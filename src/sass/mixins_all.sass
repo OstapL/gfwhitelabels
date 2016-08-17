@@ -9,22 +9,22 @@
 
 // Загружаем уникальные стили для нашего сайта
 // Не уверен их нужно загружать до файлов bootstrap или после ?
-@import "unique/vars" // Переменные для всех сайтов
-@import "unique/colors" // Цвета для всех сайтов
+@import "config/vars" // Переменные для всех сайтов
+@import "config/colors" // Цвета для всех сайтов
 
 
 /** Bootstrap **/ 
 // Core variables and mixins
-@import "custom"
+@import "bootstrap/scss/_custom.scss"
 @import "bootstrap_c/custom"
-@import "variables"
+@import "bootstrap/scss/variables"
 @import "bootstrap_c/variables"
-@import "mixins"
+@import "bootstrap/scss/mixins"
 
 /** Bootstrap **/
 // Reset and dependencies
-@import "normalize"
-@import "print"
+@import "../../node_modules/bootstrap/scss/normalize"
+@import "../../node_modules/bootstrap/scss/print"
 
 /** Bootstrap **/
 // Core CSS
@@ -104,12 +104,11 @@
 @import "common/footer"
 
 
-// Загружаем стили для всех страниц
-@import "pages/mixins.sass"
+// Загружаем стили для котнкретной страницы через require
+// @import "pages/mixins.sass"
 
 // Загружаем стили от сторонних плагинов
 // используйте npm install плагин
 // и import "node_modules/plugin/dist/path.sass/css
 // или из папки plugins
-// @import "font-awesome"
 @import "font-awesome"

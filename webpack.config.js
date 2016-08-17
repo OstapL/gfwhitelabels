@@ -4,7 +4,14 @@ var webpack = require('webpack'),
     bemLinter = require('postcss-bem-linter'),
     atImport = require('postcss-import'),
     customProperties = require('postcss-custom-properties'),
-    autoprefixer = require('autoprefixer');
+    autoprefixer = require('autoprefixer'),
+    path = require('path');
+
+const sassLoaders = [
+    'css-loader',
+    'postcss-loader',
+    'sass-loader?indentedSyntax=sass&includePaths[]=node_modules&' + path.resolve(__dirname, './src')
+]
 
 module.exports = {
     entry: {
@@ -27,17 +34,13 @@ module.exports = {
     }),
 
     resolve: {
-        extensions: ['', '.js', '.pug'],
+        extensions: ['', '.js', '.pug', '.sass', 'scss', '.css'],
         modulesDirectories: [
             './',
             'js',
+            'src',
             'node_modules'
         ]
-    },
-
-    resolveLoader: {
-        modulesDirectories: ['node_modules'],
-        extensions: ['', '.js', '.jsx']
     },
 
     devtool: 'eval-source-map',
@@ -59,7 +62,8 @@ module.exports = {
                 comments: false
             }
         }),
-        new ExtractTextPlugin('styles.css'),
+        //new ExtractTextPlugin('styles.css'),
+        new ExtractTextPlugin('[name].css'),
         new HtmlWebpackPlugin({
             title: 'Backbone App',
             template: './src/index.html',
@@ -84,12 +88,15 @@ module.exports = {
             {test: /\.pug$/, loader: 'pug-loader'},
             {test: /\.js?$/, exclude: /node_modules/, loader: 'babel-loader'},
             {test: /\.handlebars$/, loader: "handlebars-loader"},
-            {test: /\.css$/, loader: ExtractTextPlugin.extract('style-loader', 'css-loader!postcss-loader')},
-            {test: /\.scss$/, loaders: ['style', 'css', 'autoprefixer', 'sass']},
+            {test: /\.sass$/, loader: ExtractTextPlugin.extract( 'style-loader=', sassLoaders.join('!')) },
+            //{test: /\.scss/, exclude: /node_modules/, loader: 'style!css?modules&importLoaders=2&sourceMap&localIdentName=[local]___[hash:base64:5]!autoprefixer?browsers=last 2 version!sass?outputStyle=expanded&sourceMap&includePaths[]=node_modules/boostrap/scss'},
+            //{test: /\.scss$/, loader: ExtractTextPlugin.extract( 'style-loader=', sassLoaders.join('!')) },
+            //{test: /\.scss$/, loaders: ['style', 'css', 'autoprefixer', 'sass']},
+            {test: /\.css$/, loader: 'style!css'},
             {test: /\.png$/, loader: 'url?limit=8192&mimetype=image/png'},
             {test: /\.jpe?g$/, loader: 'url?limit=8192&mimetype=image/jpg'},
             {test: /\.gif$/, loader: 'url?limit=8192&mimetype=image/gif'},
-            {test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=8192&mimetype=image/svg+xml'},
+            {test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=8192&mimetype=image/svg+xml'}, 
             {test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=8192&mimetype=application/font-woff2'},
             {test: /\.woff(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=8192&mimetype=application/font-woff'},
             {test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=8192&mimetype=application/octet-stream'},

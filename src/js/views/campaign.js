@@ -6,7 +6,10 @@ define(function() {
             },
 
             render: function() {
-                app.loadCss('/css/bootstrap-select.css');
+                //require('sass/pages/_campaing.sass');
+
+                //require('../../../node_modules/bootstrap-select/sass/bootstrap-select.scss');
+
                 let selectPicker = require('bootstrap-select');
                 this.$el.html('');
                 let template = require('templates/campaignList.pug');
