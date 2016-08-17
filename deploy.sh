@@ -1,7 +1,9 @@
 #!/usr/bin/env bash
 DEFAULT="default"
 PROFILE=${AWS_PROFILE:-$DEFAULT}
-BUCKET=growthfountain-frontend
-ls
-DIR=/app/dist
-aws  s3 cp $DIR s3://$BUCKET/ --profile "$PROFILE"  --recursive
+BUCKET="growthfountain-$CIRCLE_BRANCH"
+DIR=dist
+aws  s3 sync $DIR s3://$BUCKET/ --profile "$PROFILE"
+DIR=app/dist
+aws  s3 sync $DIR s3://$BUCKET/ --profile "$PROFILE"
+return 0
