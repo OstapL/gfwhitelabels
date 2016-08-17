@@ -4,7 +4,6 @@ var webpack = require('webpack'),
     autoprefixer = require('autoprefixer'),
     path = require('path');
 
-
 module.exports = {
     entry: {
         bundle: './src/app.js'
@@ -14,6 +13,10 @@ module.exports = {
         path: __dirname + '/dist',
         filename: '/bundle.js'
     },
+    devServer: {
+        contentBase: './dist/',
+    },
+
 
     uglifyJsPlugin: new webpack.optimize.UglifyJsPlugin({
         compressor: {
@@ -38,6 +41,7 @@ module.exports = {
     devtool: 'eval-source-map',
 
     plugins: [
+        new ExtractTextPlugin("style.css"),
         new webpack.ProvidePlugin({
             $: "jquery",
             jQuery: "jquery",
@@ -69,9 +73,9 @@ module.exports = {
             {test: /\.pug$/, loader: 'pug-loader'},
             {test: /\.js?$/, exclude: /node_modules/, loader: 'babel-loader'},
             {test: /\.handlebars$/, loader: "handlebars-loader"},
-            {test: /\.css$/, loaders: ['style-loader', 'css-loader'], },
-            {test: /\.scss$/, loaders: ['style-loader', 'css-loader', 'sass-loader'], },
-            {test: /\.sass$/, loaders: ['style-loader', 'css-loader', 'sass-loader'], },
+            {test: /\.css$/, loaders: ['style-loader', 'css-loader']},
+            {test: /\.sass$/, loaders: ['style-loader', 'css-loader', 'sass-loader']},
+            {test: /\.scss$/, loaders: ['style-loader', 'css-loader', 'sass-loader']},
             {test: /\.png$/, loader: 'url?limit=8192&mimetype=image/png'},
             {test: /\.jpe?g$/, loader: 'url?limit=8192&mimetype=image/jpg'},
             {test: /\.gif$/, loader: 'url?limit=8192&mimetype=image/gif'},

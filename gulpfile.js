@@ -27,7 +27,7 @@ gulp.task('browser-sync', ['styles', 'scripts'], function() {
 });
 
 gulp.task('styles', function () {
-    return gulp.src('app/sass/mixins_all.sass')
+    return gulp.src('src/sass/mixins_all.sass')
     .pipe(sass({
         includePaths: [
             config.bootstrapDir,
