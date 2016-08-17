@@ -95,7 +95,6 @@ app/dist/templates/*
 
 # do not push libs.js compiled file
 
-app/html/js/libs.js
 
 # in dist directory only temperory files
 dist 
