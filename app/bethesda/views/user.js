@@ -74,6 +74,8 @@ define(function() {
 
             events: {
                 'submit form': 'update',
+                // 'click .change_state_city' : 'showCityStateModal'
+                'focus #ssn' : 'showSSNPopover',
             },
 
             render: function() {
@@ -118,6 +120,29 @@ define(function() {
                     });
                 }
             },
+
+            showCityStateModal: function(event) {
+                // event.preventDefault(); 
+                // console.log('here'); 
+                // $('#city_state').modal('toggle');
+            },
+
+            showSSNPopover: function(event){
+                $('#ssn').popover({
+                    // trigger: 'focuse',
+                    placement: function(context, src) {
+                        $(context).addClass('ssn-popover');
+                        return 'right';
+                    },
+                    html: true,
+                    content: function(){
+                        var content = $('.profile').find('.popover-content-ssn ').html();
+                        return content;
+                    }
+                });
+
+                $('#ssn').popover('show');
+            }
         }),
     
     }

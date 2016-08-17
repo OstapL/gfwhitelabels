@@ -57,6 +57,7 @@
     "jquery.appear": "^1.0.1",
     "photoswipe": "^4.1.1",
     "pug": "^2.0.0-beta4",
+    "pug-walk": "0.0.4",
     "requirejs": "^2.2.0",
     "underscore": "^1.8.3"
   }

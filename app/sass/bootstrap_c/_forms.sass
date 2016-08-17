@@ -21,7 +21,9 @@ select.form-control
 		padding-top: 6px
 
 		&.thin-label 
+			padding-top: 0
 			font-weight: 500
+			line-height: 1
 			
 		// стили для инлайн радиобатонов
 		&.radio-inline
@@ -101,12 +103,12 @@ select.form-control
 
 	.street_address_2
 		color: $gray
-	.city_state 
+	.city_states
 		position: relative
 		z-index: 50
 		input 
 			display: none
-		span.change_state_city 
+		.change_state_city 
 			position: absolute
 			top: 6px
 			right: 0

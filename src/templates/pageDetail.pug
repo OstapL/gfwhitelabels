@@ -15,9 +15,9 @@ section
                                 a(href=p.url) #{ p.title }
 
             .col-lg-9.pull-lg-right
-                //.temp eac h content_items, i i n page.page_content_items
-                    //p.content  content_items.content_item.content_html 
-                    //.temp  eac h content, k i n content_items.content_item
-                        //p.content #{ content }, #{ k }
+                each content_items, i in page.page_content_items
+                    p.content #{ content_items.content_item.content_html }
+                    //each content, k in content_items.content_item
+                        p.content #{ content }, #{ k }
                 ul
                     li!= page.created

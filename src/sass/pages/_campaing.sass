@@ -5,14 +5,14 @@
 		vertical-align: top
 
 .filter
-	padding-top: 85px
-	padding-bottom: 50px
+	padding-top: rem(85)
+	padding-bottom: rem(50)
 	
 	.one_drop
-		height: 38px
+		height: rem(36)
 
 		.btn
-			padding: 6px 35px 5px 20px
+			padding: rem(3) rem(27) rem(3) rem(10)
 			background: #fff
 			border-color: #cccccc
 			color: $black_text
@@ -41,6 +41,9 @@
 
 			.check-mark:before
 				content: "\f00c"
+		.dropdown-toggle
+			&:after
+				margin-top: rem(7)
 
 
 	// block with create alert btn
@@ -135,6 +138,7 @@
 					font-weight: 500
 					letter-spacing: 3.4px
 					line-height: 18px
+					margin-top: 0
 
 			.small_text
 				margin: 0 10px
