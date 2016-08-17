@@ -5,14 +5,27 @@ machine:
 dependencies:
     override:
         - npm install
-        - ./node_modules/gulp/bin/gulp.js styles scripts views
+        - ./node_modules/gulp/bin/gulp.js styles
+        - ./node_modules/webpack/bin/webpack.js -b
         - sudo pip install awscli
+        - ls -la dist
+        - ls -la app/dist
+        - ./deploy.sh
     
     cache_directories:
         - "node_modules"
+
+general:
+    branches:
+        only:
+            - es7
+            - ostap
+            - romang
+            - romanr
 
 deployment:
     aws:
         branch: master
         commands:
             - ./deploy.sh
+

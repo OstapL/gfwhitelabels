@@ -1,0 +1,443 @@
+.second
+	margin-top: 84px
+
+	.img_under_text
+		position: relative
+		margin-bottom: 15px
+
+		img
+			width: 100%
+
+		h2
+			z-index: 2
+			width: 100%
+			text-align: center
+			color: $white
+			position: absolute
+			left: 50%
+			top: 50%
+			-ms-transform: translate(-50%,-50%)
+			-webkit-transform: translate(-50%,-50%)
+			transform: translate(-50%,-50%)
+			font-family: $dosis
+
+		.timer_day
+			position: absolute
+			z-index: 1
+			background: $red
+			padding: 0 13px
+			color: $white
+			border-radius: 3px
+			position: absolute
+			right: 13px
+			top: 15px
+			font-weight: bold
+			font-size: 14px
+			line-height: 27px
+
+		.share-block
+			width: 240px
+			position: absolute
+			left: 0
+			right: 0
+			bottom: 12px
+			margin: auto
+
+			.share-btn
+				width: 230px
+				font-size: 12px
+				border-radius: 15px
+				background: $light_grey
+				border-color: $light_grey
+
+			.social-dark
+				position: absolute
+				bottom: -48px
+				left: 0
+				right: 0
+				margin: auto
+				display: none
+
+				a
+					width: 48px
+					line-height: 46px
+					background: $social_bg
+					color: $social_color
+					border: 1px solid $social_bg
+					display: inline-block
+					font-size: 20px
+					margin: 0 -2px
+
+				:hover
+					border-color: $border_color
+
+		.share-block:hover
+			bottom: 0
+			padding-bottom: 12px
+
+			.social-dark
+				display: block
+
+
+.dashboard-stat.grey
+	background: $light_grey
+
+
+.dashboard-stat.grey .details .desc,
+.dashboard-stat.grey .details .number
+	padding-top: 0
+	color: $grey
+
+.dashboard-stat
+	display: block
+	margin-bottom: 25px
+	overflow: hidden
+
+	.visual
+		height: 80px
+		float: left
+		padding-top: 10px
+		padding-left: 15px
+		margin-bottom: 5px
+
+		i
+			font-size: 48px
+			margin-left: -10px
+			margin-top: 26px
+			color: $grey
+			opacity: .1
+
+.dashboard-stat.grey
+	.details
+		position: absolute
+		right: 25px
+		top: 3px
+		text-align: right
+
+		.number
+			font-size: 18px
+			color: $grey
+		.desc
+			font-size: 12px
+			color: $grey
+
+.tpl-progress
+	position: relative
+	padding-top: 56px
+
+	.big_prog
+		display: block
+		width: 100%
+		height: 4px
+		margin-bottom: 11px
+		color: $black_text
+
+	.big_prog[value]::-webkit-progress-value
+		background-color: $black
+
+	.circle_progress
+		height: 11px
+		z-index: 55
+		color: $black_text
+		display: inline-block
+		font: normal normal normal 14px/1 FontAwesome
+		font-size: inherit
+		text-rendering: auto
+		-webkit-font-smoothing: antialiased
+		-moz-osx-font-smoothing: grayscale
+		position: absolute
+		margin-top: -21px
+		text-align: right
+		margin-right: 12px
+
+		i
+			font-weight: bold
+			background: #fff
+			font-size: 13px
+
+	.text_position
+		margin-left: -39px
+		top: 24px
+		position: absolute
+		text-align: center
+		line-height: 23px
+		letter-spacing: 0
+		font-size: 12px
+		line-height: 1em
+
+.progress_description
+	margin-bottom: 8px
+	
+	p
+		margin: 0
+		line-height: 1em
+		color: $grey
+
+	span
+		font-size: 10px
+		color: $grey
+		line-height: 1em
+		display: block
+
+.right_fixed_text
+	position: absolute
+	right: 19px
+	top: 37px
+	bottom: 0
+	margin: auto
+	color: $grey
+
+	b
+		font-size: 18px
+		display: block
+		line-height: 1rem
+
+	span
+		line-height: 23px
+		font-size: 14px
+
+.view_campaing
+	border: none
+	padding: 0 40px
+	margin-top: 19px
+	line-height: 26px
+	font-size: 12px
+	line-height: 28px
+
+.grafic
+	border-top: 1px solid $border_color
+	margin-top: 51px
+	padding-top: 50px
+
+.third
+	margin-top: 94px
+
+.title-size
+	letter-spacing: 2.3px
+	font-family: $dosis
+	font-weight: 500
+	margin-bottom: 25px
+
+.bars,
+.chart,
+.pie
+	overflow: hidden
+	height: 300px
+	width: 100%
+	font-size: 14px
+
+.btn.btn-outline.dark.active,
+.btn.btn-outline.dark:active,
+.btn.btn-outline.dark:active:focus,
+.btn.btn-outline.dark:active:hover,
+.btn.btn-outline.dark:focus,
+.btn.btn-outline.dark:hover
+    border-color: #2f353b
+    color: #fff
+    background-color: #2f353b
+
+.portlet>.portlet-title>.actions
+    float: right
+    display: inline-block
+    padding: 6px 0
+
+.btn-circle
+    border-radius: 25px!important
+    overflow: hidden
+
+.portlet.light.bordered
+    border: 1px solid $border_color
+
+.portlet-body
+	padding: 10px 0 20px 0
+
+.portlet.light>.portlet-title
+	border-bottom: 1px solid $border_color
+	padding: 12px 20px 22px 0
+	min-height: 50px
+	margin: 0 7px 0 7px
+
+	&>.caption
+		display: inline-block
+		font-size: 18px
+		line-height: 18px
+		padding: 15px 0 0 0
+
+	&>.actions .dropdown-menu li>a
+		color: #555
+
+.portlet>.portlet-title>.actions>.btn,
+.portlet>.portlet-title>.actions>.btn-group>.btn,
+.portlet>.portlet-title>.actions>.btn-group>.btn.btn-sm,
+.portlet>.portlet-title>.actions>.btn.btn-sm
+	padding: 4px 10px
+	font-size: 13px
+	line-height: 1.5
+	border: 2px solid #53575b
+	margin-left: 4px
+
+.portlet>.portlet-title
+	text-align: left
+	color: $grey
+	padding: 15px 20px 10px
+	font-family: $dosis
+	letter-spacing: 0.5rem
+
+	&>.nav-tabs
+		background: 0 0
+		margin: 1px 0 0
+		float: left
+		display: inline-block
+		border: 0
+
+.portlet>.portlet-title>.nav-tabs>li
+	display: inline-block
+
+.portlet>.portlet-title>.nav-tabs>li.active
+	border: 1px solid $border_color
+	border-bottom: none
+	color: $grey
+
+	a
+		color: $black_text
+
+.portlet>.portlet-title>.nav-tabs>li a
+	line-height: 36px
+	padding: 0 20px
+	color: $grey
+
+.all_comments
+	height: 334px
+	overflow-y: scroll
+
+.leave_comments
+	min-height: 393px
+	border: 1px solid $border_color
+
+	.write_com
+		margin: 0 auto
+		padding: 11px 0
+		border-bottom: 1px solid $border_color
+
+	.form
+		text-align: right
+		padding-right: 2.5%
+
+		textarea
+			width: 92.5%
+			border-radius: 3px
+			height: 136px
+			float: right
+			resize: none
+			margin-top: 22px
+			margin-bottom: 15px
+
+.mt-comments
+	.mt-comment
+		padding: 20px 10px 6px 22px
+		margin: 0 0 10px
+
+		.mt-comment-img 
+			width: 55px;
+			float: left
+
+			&>img
+				width: 100%
+				border-radius: 50%!important
+
+		.mt-comment-body
+			padding-left: 10px
+			position: relative
+			overflow: hidden
+
+			.mt-comment-text
+				color: $black
+				line-height: 1.3em
+
+			.mt-comment-info
+				.mt-comment-date
+					display: inline-block
+					float: right
+					font-size: 11px
+					margin: 0
+					color: $grey
+
+			.mt-comment-info:after,
+			.mt-comment-info:before
+				content: " "
+				display: table
+				clear: both
+
+			.mt-comment-info:after
+				clear: both
+			
+			.mt-comment-author
+				display: inline-block
+				float: left
+				text-transform: uppercase
+				margin: 0 0 10px
+				color: #060606
+				letter-spacing: 5px
+
+			.mt-comment-details
+				margin: 10px 0 0
+
+				.mt-comment-status
+					float: left
+					color: $blue_light
+
+				.mt-comment-actions
+					display: none
+					float: right
+					padding: 0
+					margin: 0
+
+					&>li
+						float: left;
+						padding: 0 5px;
+						list-style: none;
+						margin: 0
+
+						&>a
+							color: $light_grey
+
+						a:hover
+							color: $grey
+							text-decoration: none
+	
+	.mt-comment:hover
+		background: $light_grey
+		.mt-comment-body
+			.mt-comment-details
+				.mt-comment-actions
+					display: inline-block
+
+.social_footer
+	width: 100%
+	border-top: 1px solid $border_color
+	margin-top: 85px
+	padding-top: 75px
+	padding-bottom: 75px
+
+	.descc_title
+		margin-bottom: 18px
+		text-align: left
+		font-size: 24px
+		font-weight: bold
+		letter-spacing: 8px
+
+
+
+	.text_and_button
+		p
+			color: $grey
+
+		.btn_link
+			width: 100%
+			border: 2px solid $grey
+			color: $grey
+			border-radius: 0
+
+		.btn_link:hover
+			color: #ef3239
+			border: 2px solid #ef3239

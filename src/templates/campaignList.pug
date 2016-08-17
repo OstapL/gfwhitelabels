@@ -1,0 +1,117 @@
+section.small-section.filter
+    form(
+        action="/campaigns/" 
+        method="get" 
+        role="form"
+    )
+        .container
+            .row
+                .col-lg-3
+                    .one_drop
+                        select.form-control(multiple="true").selectpicker
+                            option Advertising & Marketing
+                            option Arts, Fashion, & Media
+                            option Business to Business
+                            option Cleantech
+                            option Construction & Manufacturing
+                            option Consumer Products
+                            option Energy/Transport
+
+                .col-lg-3
+                    .one_drop
+                        select.form-control.selectpicker
+                            option Pre-seed
+                            option Seed
+                            option Bridge to Series A
+                            option Series A
+                            option Bridge to Series B
+                            option Series B
+
+                .col-lg-3
+                    .one_drop
+                        select.form-control.selectpicker
+                            option Locations
+                            option Los Angeles, CA
+                            option San Francisco, CA
+                            option New York, NY
+                            option Las Vegas, NV
+
+                .col-lg-3
+                    .one_drop
+                        select.form-control.selectpicker
+                            option Deal type
+                            option Equity
+                            option Convertible Note
+                            option Debt
+                            option Revenue Share
+
+            .create-alert-block
+                .row
+                    .col-sm-9.col-lg-10
+                        a(href="#").pull-right.btn.mr30.text-uppercase.auth-pop create alert
+
+                    .col-sm-3.col-lg-2
+                        select.orderby.custom-select
+                            option(checked="checked" value="0") Order by
+section.campaing-list
+    .container#campaignList
+        .row
+            for campaign in campaigns
+
+                .col-lg-4
+                    a(href=Urls['campaign-detail'](campaign.id)).block_link
+                    .one_block
+                        .for_img
+                            img(
+                                src='/img/test.png'
+                                alt=campaign.company.name
+                            )
+
+                            .more_inform
+                                .title.text-center
+                                    h3 Pre money valuation: $#{campaign.premoney_valuation}
+
+                                .small_text
+                                    p #{campaign.company.tagline.substr(0, 120)}
+
+                                .ico_cont
+                                    a(href=Urls['campaign-detail'](campaign.id) + '#members')
+                                        i.fa.fa-users
+                                    a(href=Urls['campaign-detail'](campaign.id) + '#perks')
+                                        i.fa.fa-gift
+
+                                .bottom_pr
+                                    if campaign.security_type == false
+                                        p Price per share: $#{campaign.security_type_data.price_per_share}
+                                        p Number of shares: $#{campaign.security_type_data.amount_of_shares}
+                                    else
+                                        p % Revenue: #{campaign.security_type_data.percentage_revenue}
+                                        p Cap: #{campaign.security_type_data.cap}
+                                        p Expiration Date: #{campaign.security_type_data.expiration_date}
+
+
+                        .title
+                            h3= campaign.company.name
+                            span.place
+                                i.fa.fa-map-marker
+                                = campaign.company.city + ' ' + campaign.company.state
+                            .clear
+                        .description
+                            p= campaign.pitch.substr(0,250)
+
+                        .progress_bar_container
+                            span.left_text #{campaign.progress} % Funded
+                            span.right_text 
+                                b $#{campaign.amount_raised} 
+                                | of #{campaign.minimum_raise}
+                            .clear
+                                progress.progress(value=campaign.progress max="100") #{campaign.progress} %
+
+                        .bottom_text
+                            span.left_desc
+                                b Security:
+                                | #{campaign.get_security_type_display}
+                            span.right_desc
+                                b Industry: 
+                                | Lorem ipsum
+                            .clear

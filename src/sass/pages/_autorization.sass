@@ -1,0 +1,108 @@
+.authorization
+	// margin-top: 45px
+
+.login-tabs
+	margin-bottom: 20px
+	border-bottom: none
+
+	li
+		margin-right: 8%
+
+		&:last-child
+			margin-right: 0	
+
+		a.nav-link
+			padding: 5px 20px
+			text-transform: uppercase
+			color: $tab_authorization_text
+			letter-spacing: 2px
+
+			&.active,
+			&.active:focus
+				border-color: $active_tab_authorization $active_tab_authorization $active_tab_authorization
+
+.authorization-tabs-content
+	font-weight: 300
+	label
+		margin-bottom: 0px
+		color: $grey
+		font-weight: 400
+	
+	.signature,
+	.terms_conditions
+		margin-top: 20px
+		margin-bottom: 10px
+
+		label
+			margin-top: 0
+			font-size: 0.875rem
+
+		input[type='checkbox']
+			vertical-align: bottom	
+
+	.terms_conditions
+		margin-bottom: 30px
+
+	.socialaccount_ballot
+		margin-top: 30px
+		margin-bottom: 20px
+
+		p
+			color: $black	
+
+		.social-icons
+
+		li
+			display: inline-block
+			vertical-align: middle
+			text-align: center
+			width: 28px
+			height: 28px
+			line-height: 28px
+			margin-right: 4px
+
+		a
+			display: block
+			line-height: 28px
+			cursor: pointer
+			font-size: 18px
+			color: #ffffff
+			opacity: 0.7
+			+mt(.2s)
+
+			&.facebook
+				background: #4A6D9D
+
+			&.googleplus
+				background: #DB4A37
+
+			&.linkedin
+				background: #0B7BB5
+		a:hover
+			opacity: 1
+			+mt(.2s)
+
+			
+		
+	
+
+
+// временнно переопределю класы для чекбоксов
+.forms-block
+	.form-section
+		.pseudo-checkbox
+			input[type='checkbox']
+				top: 12px
+				left: 4px
+				bottom: auto
+				right: auto
+				opacity: 1
+
+@media screen and (max-width:991px)
+	.forms-block
+		margin-top: 30px
+
+@media screen and (max-width:480px)
+	.authorization-tabs-content
+		.forget-password
+			@include calc-rem(14)
