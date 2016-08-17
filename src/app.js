@@ -9,7 +9,7 @@ global.userModel = require('models/user.js');
 global.Urls = require('jsreverse.js');
 
 
-require('sass/mixins_all.sass');
+// require('sass/mixins_all.sass');
 
 //console.log(global.userModel);
 //console.log(_);
