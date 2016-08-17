@@ -1,0 +1,198 @@
+include mixins.pug
+
++breadcrumbs('Account', '', 
+    [
+        ['Home', '/'],
+        ['Account', '']
+    ]
+)
+
+.container.profile.pt-50.m-b-85
+    .row 
+        aside.col-xl-3
+            form(method="post" action="").form
+                .drop-photo-block
+                    h3.widget-title.font-alt #{user.first_name} #{user.last_name}
+                    .dropzone__image.drop-photo.dz-clickable.dropzone
+                        img(src=app.user.get_thumbnail('.dropzone__image img'))
+                    input(
+                        type="hidden" 
+                        name="image" 
+                        value=user.image
+                    )#image
+                    .drop-image-title.text-xs-center 
+                        span Drop your profile picture here
+                        div
+                            i.fa.fa-camera 
+
+
+        .col-xl-9.col-lg-12
+            ul.nav.nav-tabs.profile-tabs
+                li.nav-item(aria-expanded="false")
+                    a(
+                        href="#account_info"
+                        data-toggle="tab" 
+                        aria-expanded="true"
+                        role="tab"
+                    ).active.nav-link.uppercase Account information
+                li.nav-item  
+                    a(
+                        href="#financial_info" 
+                        data-toggle="tab" 
+                        role="tab" 
+                        aria-expanded="true"
+                    ).nav-link.uppercase Financial information
+                li.nav-item 
+                    a(
+                        href="#investment_preferences" 
+                        data-toggle="tab" 
+                        role="tab" 
+                        aria-expanded="true"
+                    ).nav-link.uppercase Investment preferences
+
+            .tab-content.profile-tabs-content.mt30
+
+                #account_info.tab-pane.fade.active.in(aria-expanded="true")
+                    .row 
+                        section.form-section.clearfix 
+                            form(method="post" action="").form
+                                .form-body.clearfix 
+                                    .col-xs-12
+                                        section.right-block 
+                                            +fieldBlock("first_name", user.first_name, {'class1': 'col-md-3 offset-md-1 offset-lg-0', 'class2': 'col-lg-8 col-xl-7 col-md-7', 'type': 'text'})
+                                            +fieldBlock("last_name", user.last_name, {'class1': 'col-md-3 offset-md-1 offset-lg-0', 'class2': 'col-lg-8 col-xl-7 col-md-7', 'type': 'text'})
+                                            +fieldBlock("street_address_1", user.street_address_1, {'class1': 'col-md-3 offset-md-1 offset-lg-0', 'class2': 'col-lg-8 col-xl-7 col-md-7', 'type': 'text'})
+                                            +fieldBlock("street_address_2", user.street_address_2, {'class1': 'col-md-3 offset-md-1 offset-lg-0', 'class2': 'col-lg-8 col-xl-7 col-md-7', 'type': 'text'})
+                                            .row 
+                                                .col-md-12.col-lg-6
+                                                    +fieldBlock("zip_code", user.zip_code, {'class1': 'col-lg-6 col-md-4', 'class2': 'col-lg-6 col-md-7', 'type': 'text'})
+                                                    
+                                                .col-md-12.col-lg-6
+                                                    +fieldBlock("city_states", user.city_state, {'class1': 'col-xl-3 col-md-4', 'class2': ' col-xl-5 col-md-7', 'type': 'text'})
+
+                                                    a(data-toggle="modal" data-target="#city_state_modal" href="#city_state_modal").change_state_city
+                                                        span.input-value City/State
+                                                        i.fa.fa-pencil-square-o
+
+                                            .row 
+                                                .col-md-12.col-lg-6
+                                                    +fieldBlock("phone", user.phone, {'class1': 'col-lg-6 col-md-4', 'class2': 'col-lg-6 col-md-7', 'type': 'text'})
+                                                
+                                                .col-md-12.col-lg-6
+                                                    +fieldBlock("dob", user.dob, {'class1': 'col-xl-3 col-md-4', 'class2': '  col-xl-5 col-lg-6 col-md-7', 'type': 'date'})
+                                            
+                 
+                                            .form-group.row.clearfix.m0 
+                                                .col-xl-10.col-md-11.mt30
+                                                    .controls  
+                                                        button(
+                                                            type="submit"
+                                                        ).btn.btn-primary.btn-lg.pull-right SAVE 
+
+                #financial_info.tab-pane.fade(aria-expanded="true")
+                    .row 
+                        section.form-section.clearfix 
+                            form(method="post" action="")
+                                .form-body.clearfix 
+
+                                    .col-xs-12
+                                        section.right-block 
+                                            +fieldBlock("first_name", user.first_name, {'class1': 'col-md-3 offset-md-1 offset-lg-0', 'class2': 'col-lg-8 col-xl-7 col-md-7', 'type': 'text'})
+                                            +fieldBlock("last_name", user.last_name, {'class1': 'col-md-3 offset-md-1 offset-lg-0', 'class2': 'col-lg-8 col-xl-7 col-md-7', 'type': 'text'})
+                                            +fieldBlock("street_address_1", user.stret_address_1, {'class1': 'col-md-3 offset-md-1 offset-lg-0', 'class2': 'col-lg-8 col-xl-7 col-md-7', 'type': 'text'})
+                                            +fieldBlock("street_address_2", user.stret_address_1, {'class1': 'col-md-3 offset-md-1 offset-lg-0', 'class2': 'col-lg-8 col-xl-7 col-md-7', 'type': 'text'})
+                                            +fieldBlock("account_number", user.account_number, {'class1': 'col-md-3 offset-md-1 offset-lg-0', 'class2': 'col-lg-8 col-xl-7 col-md-7', 'type': 'text'})
+                                            +fieldBlock("account_number_re", user.account_number_rc, {'class1': 'col-md-3 offset-md-1 offset-lg-0', 'class2': 'col-lg-8 col-xl-7 col-md-7', 'type': 'text'})
+                                            +fieldBlock("routing_number", user.routing_number, {'class1': 'col-md-3 offset-md-1 offset-lg-0', 'class2': 'col-lg-8 col-xl-7 col-md-7', 'type': 'text'})
+                                            +fieldBlock("account_type", user.account_type, {'class1': 'col-md-3 offset-md-1 offset-lg-0', 'class2': 'col-lg-8 col-xl-7 col-md-7', 'type': 'text'})
+                                            +fieldBlock("check_type", user.check_type, {'class1': 'col-md-3 offset-md-1 offset-lg-0', 'class2': 'col-lg-8 col-xl-7 col-md-7', 'type': 'text'})
+                                            +fieldBlock("name_on_bank_account", user.name_on_bank_account, {'class1': 'col-md-3 offset-md-1 offset-lg-0', 'class2': 'col-lg-8 col-xl-7 col-md-7', 'type': 'text'})
+                                            +fieldBlock("ssn", user.ssn, {'class1': 'col-md-3 offset-md-1 offset-lg-0', 'class2': 'col-lg-8 col-xl-7 col-md-7', 'type': 'text'})
+
+                                            .row
+                                                .col-sm-7.col-xl-7.col-lg-8.offset-lg-3.col-md-11
+                                                    hr.mt30.mb50
+
+                                            .form-group.row 
+                                                .col-sm-10.col-xl-10.col-md-11
+                                                    .investors-warning 
+                                                        i.fa.fa-exclamation-triangle 
+                                                        span.warning-text 
+                                                            | Investors are limited to 12 month investment totals ranging from $2,000 - $100,000 based on income and net worth. Please update your financial information to see your limit.
+
+                                            +fieldBlock("annual_income", user[annual_income], {'class1': 'col-md-3 offset-md-1 offset-lg-0', 'class2': 'col-lg-8 col-xl-7 col-md-7', 'type': 'text'})
+                                            +fieldBlock("net_worth", user[net_worth], {'class1': 'col-md-3 offset-md-1 offset-lg-0', 'class2': 'col-lg-8 col-xl-7 col-md-7', 'type': 'text'})
+                                              
+
+                                            .form-group.row.clearfix.m0
+                                                .col-xl-10.col-md-11.mt30
+                                                    .controls  
+                                                        button(
+                                                            type="submit"
+                                                        ).btn.btn-primary.btn-lg.pull-right SAVE 
+                                                    
+                #investment_preferences.tab-pane.fade(aria-expanded="true")
+                    .row 
+                        section.form-section.clearfix 
+                            form(
+                                method="post" 
+                                action=""
+                                role="form"
+                            ).form-body.clearfix 
+                                    
+                                .col-xs-12
+
+                                    section.right-block 
+                                        +fieldBlock("where_grow_up", user.where_grow_up, {'class1': 'col-md-10 col-xl-9 offset-md-1 thin-label', 'class2': 'col-xl-9 col-md-10 offset-md-1', 'type': 'text', 'text_align': 'left'})
+                                        +fieldBlock("where_go_college", user.where_ho_college, {'class1': 'col-md-10 col-xl-9 offset-md-1 thin-label', 'class2': 'col-xl-9 col-md-10 offset-md-1', 'type': 'text', 'text_align': 'left'})
+                                        +fieldBlock("industries", user.industries, {'class1': 'col-md-10 col-xl-9 offset-md-1 thin-label', 'class2': 'col-xl-9 col-md-10 offset-md-1', 'type': 'text', 'text_align': 'left'})
+                                        +fieldBlock("locations", user.locations, {'class1': 'col-md-10 col-xl-9 offset-md-1 thin-label', 'class2': 'col-xl-9 col-md-10 offset-md-1', 'type': 'text', 'text_align': 'left'})
+                                        +fieldBlock("interested", user.interested, {'class1': 'col-md-10 col-xl-9 offset-md-1 thin-label', 'class2': 'col-xl-9 col-md-10 offset-md-1', 'type': 'text', 'text_align': 'left'})
+                                        +fieldBlock("investment_goals", user.investment_goals, {'class1': 'col-md-10 col-xl-9 offset-md-1 thin-label', 'class2': 'col-xl-9 col-md-10 offset-md-1', 'type': 'text', 'text_align': 'left'})
+                                        +fieldBlock("important_attributes", user.important_attributes, {'class1': 'col-md-10 col-xl-9 offset-md-1 thin-label', 'class2': 'col-xl-9 col-md-10 offset-md-1', 'type': 'text', 'text_align': 'left'})
+             
+                                        .form-group.row.clearfix.m0 
+                                            .col-xl-10.col-md-11.mt25
+                                                .controls  
+                                                    button(
+                                                        type="submit"
+                                                    ).btn.btn-primary.btn-lg.pull-right SAVE 
+                                        
+    .popover-content-ssn 
+        i.fa.fa-info-circle 
+        span Why do we need this? I know it seems terribly invasive but we are required to obtain your socialsecurity number for two reasons, 
+        br
+        | 1) regulators require we comply with know your customer and anti-money laundering rules and; 
+        br 
+        | 2) companies will need to provide you with tax information based on your investment.  
+        br
+        | Don’t worry, we’re obsessive about your privacy.
+
+
+//MODAL
+#city_state_modal.modal.fade(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")
+    .modal-dialog(role="document")
+        .modal-content
+            .modal-header
+                button(type="button" class="close" data-dismiss="modal" aria-label="Close")
+                    span(aria-hidden="true")
+                        i.fa.fa-times
+                h2(class="modal-title").text-lg-center.dosis City/State
+
+            .modal-body
+                .container.form-section
+                    form.col-lg-10.offset-lg-1.border-bottom
+                        .form-group.row.clearfix.required
+                            input#city(type="text" placeholder="City").form-control
+                        .form-group.row.clearfix.required
+                            select#state(name='state').form-control
+                                option(checked='checked') State
+                                option Arizona
+                                option Uta
+                                option California
+                        .form-group.row.clearfix.required
+                            .row
+                                .col-lg-12
+                                    .col-lg-12.text-lg-center
+                                            button.btn.btn-lg.btn-primary.text-uppercase save
+                .modal-footer

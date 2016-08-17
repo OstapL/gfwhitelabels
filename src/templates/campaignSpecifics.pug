@@ -1,0 +1,199 @@
+include mixins.pug
+
++breadcrumbs('Create campaign', 'Help Button', [['home', '/',], [ 'current', page.get_absolute_url]])
+
+section.campaign-specifics.container.m-b-85
+  //START LEFT BLOCK
+  .col-lg-3.create_compaign
+    .jumbotron.jumbotron-fluid.row
+      .raise-funds
+        h4.font-weight-bold.text-uppercase.m-b-0 Raise funds
+          .small-text (10% Done)
+      #accordion(role="tablist" aria-multiselectable="true")
+        .panel.panel-default
+          .panel-heading(role="tab")
+            a(data-toggle="collapse"
+            data-parent="#accordion"
+            href="#company"
+            aria-expanded="true"
+            ).list-group-item
+              i.fa.fa-briefcase
+              |  Company
+              span.pull-right
+                i.fa.fa-angle-left
+          #company(role="tabpanel").panel-collapse.collapse
+            .list-group
+              a(href="#").list-group-item.list-group-item-action Company
+        .panel.panel-default
+          .panel-heading(role="tab")
+            a(data-toggle="collapse"
+            data-parent="#accordion"
+            href="#campaign"
+            aria-expanded="true"
+            ).list-group-item.active
+              i.fa.fa-bar-chart
+              |  Campaign
+              span.pull-right
+                i.fa.fa-angle-down
+          #campaign(role="tabpanel").panel-collapse.collapse.in
+            .list-group
+              a(href="#").list-group-item.list-group-item-action General Information
+                i.fa.fa-check
+              a(href="#").list-group-item.list-group-item-action Media
+                i.fa.fa-check
+              a(href="#").list-group-item.list-group-item-action Team Members
+                i.fa.fa-check
+              a(href="#").list-group-item.list-group-item-action.active Specifics
+              a(href="#").list-group-item.list-group-item-action Perks
+        .panel.panel-default
+          .panel-heading(role="tab")
+            a(data-toggle="collapse"
+            data-parent="#accordion"
+            href="#form_c"
+            aria-expanded="true"
+            ).list-group-item
+              i.fa.fa-university
+              |  form c
+              span.pull-right
+                i.fa.fa-angle-left
+          #form_c(role="tabpanel").panel-collapse.collapse
+            .list-group
+              a(href="#").list-group-item.list-group-item-action form c
+    .row
+      .education-link-wrap
+        .jumbotron.jumbotron-fluid
+          h4.font-weight-bold.text-uppercase
+            i.fa.fa-book
+            |  education Links
+          .nav
+            li.nav-item
+              a(href="#").nav-link.link-3 Issuer Tutorial
+            li.nav-item
+              a(href="#").nav-link.link-3 Success Guide
+            li.nav-item
+              a(href="#").nav-link.link-3 What's My Business Worth?
+            li.nav-item
+              a(href="#").nav-link.link-3 How Much Should I Raise?
+
+
+  //START RIGHT BLOCK
+  .col-lg-8
+    h2.text-uppercase.text-lg-center.text-xs-center.dosis.m-t-0 specifics
+    form(metod="post" action="").form-section
+      .form-group
+        .col-sm-12.p-r-0
+          .campaign-warning 
+            i.fa.fa-exclamation-triangle 
+            span.warning-text 
+            | You get to set two fundraising goals: the minimum you're willing to accept and the  maximum you're willing to accept.  If you don't reach your minimum fundraising goal, all money will be returned to the investors.
+
+      .row
+        .col-lg-6.col-l-65
+          +fieldBlock("Our Minimum Total Raise is", '', {
+            class1: 'col-lg-6 col-md-3', 
+            class2: 'col-lg-6 col-md-9', 
+            type: 'text',
+            placeholder: '$',
+            })
+        .col-lg-6.col-l-65
+          +fieldBlock("Our Maximum Total Raise is", '', {
+            class1: 'col-lg-5 col-md-3', 
+            class2: 'col-lg-7 col-md-9', 
+            type: 'text',
+            placeholder: '$',
+            })
+
+      +fieldBlock("The Minimum Investment is", '', {
+         class1: 'col-lg-3 col-md-4',
+         class2: 'col-lg-9 col-md-8',
+         type: 'text',
+         placeholder: '$  People can invest this amount or more  ',
+         })
+
+      .form-group.row.clearfix
+        label.col-lg-3.text-lg-right Length of the Campaign
+        .col-lg-9
+          select(placeholder="Description" rows="4").custom-select.form-control
+            option(selected) Please Choose One
+            option(value="1") Please Choose One 1
+            option(value="1") Please Choose One 2
+            option(value="1") Please Choose One 3
+
+      .row.media-item
+        .col-lg-7
+          .col-lg-5.p-r-12
+            span.pull-right.font-weight-bold.text-lg-right  Upload an Investor Presentation
+          .col-lg-7.text-lg-center
+            p.drop-photo Drop your PPT or PDF here or click to upload
+            i.fa.fa-file
+        .col-lg-5.p-l-0.p-r-3.text-lg-center.text-sm-center
+          img(src="/img/MS-PowerPoint.png" alt="Responsive image").img-file
+
+      .row.border-top
+
+      h3.text-lg-center.col-lg-12 Pre-Money Valuation and Equity Terms
+      .form-group.row.clearfix
+        label.col-lg-3.text-lg-right Security Type
+        .col-lg-9.form-checks
+          label.col-lg-2
+            input(type="radio").form-check-input
+            |  Equity
+          label.col-lg-4
+            input(type="radio").form-check-input
+            |  Payback Equity
+
+      .row
+        .col-lg-6.col-l-65
+          +fieldBlock("Link to Calculators", '', {
+            class1: 'col-lg-6 col-md-3', 
+            class2: 'col-lg-6 col-md-9', 
+            type: 'text',
+            placeholder: '$',
+            })
+
+        .col-lg-6.col-l-65
+          +fieldBlock("Pre-Money Valuation", '', {
+            class1: 'col-lg-5 col-md-3', 
+            class2: 'col-lg-7 col-md-9', 
+            type: 'text',
+            placeholder: '$',
+            })
+      .label-top-6
+        +fieldBlock("Price Per Share", '', {
+           class1: 'col-lg-3 col-md-4',
+           class2: 'col-lg-9 col-md-8',
+           type: 'text',
+           placeholder: '$',
+           })
+      
+      .row.m-t-2
+        .col-lg-6.col-l-65
+          +fieldBlock("Minimum № of Shares", '', {
+            class1: 'col-lg-6 p-l-2', 
+            class2: 'col-lg-6 col-md-9', 
+            type: 'text',
+            placeholder: '$',
+            })
+
+        .col-lg-6.col-l-65
+          +fieldBlock("Maximum № of Shares", '', {
+            class1: 'col-lg-5 col-md-3', 
+            class2: 'col-lg-7 col-md-9', 
+            type: 'text',
+            placeholder: '$',
+            })
+      .col-lg-6.pull-right.p-r-0.m-t-2
+          .col-lg-6
+            button(href="").btn.btn-lg.btn-primary.text-uppercase.pull-right save
+          .col-lg-6
+            button(href="").btn.btn-lg.btn-secondary.text-uppercase preview
+
+      .col-lg-6
+        .btn-group
+          button(type="button").btn Link to Calculators
+          button(data-toggle="dropdown" aria-haspopup="true" aria-expanded="false").btn.btn-danger.dropdown-toggle.dropdown-toggle-split
+            span.sr-only Toggle Dropdown
+          .dropdown-menu
+            a(href="#").dropdown-item Dropdown 1
+            a(href="#").dropdown-item Dropdown 2
+            a(href="#").dropdown-item Dropdown 3

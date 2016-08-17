@@ -21,10 +21,11 @@ general:
             - es7
             - ostap
             - romang
-            - romank
+            - romanr
 
 deployment:
     aws:
         branch: master
         commands:
             - ./deploy.sh
+
