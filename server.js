@@ -3,18 +3,18 @@ var path    = require("path");
 var app     = express();
 
 
-app.use("/img", express.static('webpack/dist/img'));
+app.use("/img", express.static('dist/img'));
 app.use("/node_modules", express.static('node_modules'));
-app.use("/css", express.static('webpack/dist/css'));
-app.use("/js", express.static('webpack/dist/js'));
-app.use("/views", express.static('webpack/bethesda/views'));
-app.use("/models", express.static('webpack/bethesda/models'));
-app.use("/templates_js", express.static('webpack/bethesda/templates'));
-app.use("/templates", express.static('webpack/dist/templates'));
-app.use("/bundle.js", express.static('webpack/dist/bundle.js'));
+app.use("/css", express.static('dist/css'));
+app.use("/js", express.static('dist/js'));
+app.use("/views", express.static('bethesda/views'));
+app.use("/models", express.static('bethesda/models'));
+app.use("/templates_js", express.static('bethesda/templates'));
+app.use("/templates", express.static('dist/templates'));
+app.use("/bundle.js", express.static('dist/bundle.js'));
 
 app.get('/*',function(req,res){
-  res.sendFile(path.join(__dirname+'/webpack/dist/index.html'));
+  res.sendFile(path.join(__dirname+'/dist/index.html'));
 });
 
 app.listen(8001);
