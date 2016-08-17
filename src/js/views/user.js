@@ -75,6 +75,8 @@ define(function() {
 
             events: {
                 'submit form': 'update',
+                'focus #ssn' : 'showSSNPopover',
+                'focuseout #ssn' : 'hideSSNPopover',
             },
 
             render: function() {
@@ -120,6 +122,27 @@ define(function() {
                     });
                 }
             },
+
+            showSSNPopover: function(event){
+                $('#ssn').popover({
+                    trigger: 'focus',
+                    placement: function(context, src) {
+                         $(context).addClass('ssn-popover');
+                         return 'right';
+                    },
+                    html: true,
+                    content: function(){
+                        var content = $('.profile').find('.popover-content-ssn ').html();
+                        return content;
+                    }
+                });
+ 
+                $('#ssn').popover('show');
+             },
+
+             hideSSNPopover: function(event){
+                $('#ssn').popover('hide');
+             }
         }),
     
     }
