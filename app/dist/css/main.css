@@ -499,8 +499,8 @@ mark,
   text-transform: uppercase; }
 
 .blockquote {
-  padding: 0.5rem 1rem;
-  margin-bottom: 1rem;
+  padding: 0.625rem 1.25rem;
+  margin-bottom: 1.25rem;
   font-size: 1.25rem;
   border-left: 0.25rem solid #eceeef; }
 
@@ -512,7 +512,7 @@ mark,
     content: "\2014 \00A0"; }
 
 .blockquote-reverse {
-  padding-right: 1rem;
+  padding-right: 1.25rem;
   padding-left: 0;
   text-align: right;
   border-right: 0.25rem solid #eceeef;
@@ -686,7 +686,7 @@ p {
   height: auto; }
 
 .img-rounded {
-  border-radius: 0.3rem; }
+  border-radius: 2px; }
 
 .img-thumbnail {
   padding: 0.25rem;
@@ -733,7 +733,7 @@ kbd {
   font-size: 90%;
   color: #fff;
   background-color: #333;
-  border-radius: 0.2rem; }
+  border-radius: 2px; }
   kbd kbd {
     padding: 0;
     font-size: 100%;
@@ -1420,7 +1420,7 @@ pre {
 .table {
   width: 100%;
   max-width: 100%;
-  margin-bottom: 1rem; }
+  margin-bottom: 1.25rem; }
   .table th,
   .table td {
     padding: 0.75rem;
@@ -1510,7 +1510,7 @@ pre {
 
 .thead-inverse th {
   color: #fff;
-  background-color: #373a3c; }
+  background-color: #0a0a0a; }
 
 .thead-default th {
   color: #55595c;
@@ -1518,7 +1518,7 @@ pre {
 
 .table-inverse {
   color: #eceeef;
-  background-color: #373a3c; }
+  background-color: #0a0a0a; }
   .table-inverse th,
   .table-inverse td,
   .table-inverse thead th {
@@ -1592,7 +1592,7 @@ pre {
     cursor: not-allowed; }
 
 select.form-control:not([size]):not([multiple]) {
-  height: 2.5rem; }
+  height: 36px; }
 
 select.form-control:focus::-ms-value {
   color: #55595c;
@@ -1624,7 +1624,7 @@ select.form-control:focus::-ms-value {
   font-size: 0.875rem; }
 
 .form-control-static {
-  min-height: 2.5rem;
+  min-height: 36px;
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
   margin-bottom: 0; }
@@ -1641,7 +1641,7 @@ select.form-control:focus::-ms-value {
 .input-group-sm > .input-group-btn > .btn {
   padding: 0.25rem 0.5rem;
   font-size: 0.6875rem;
-  border-radius: 0.2rem; }
+  border-radius: 2px; }
 
 select.form-control-sm:not([size]):not([multiple]), .input-group-sm > select.form-control:not([size]):not([multiple]),
 .input-group-sm > select.input-group-addon:not([size]):not([multiple]),
@@ -1653,7 +1653,7 @@ select.form-control-sm:not([size]):not([multiple]), .input-group-sm > select.for
 .input-group-lg > .input-group-btn > .btn {
   padding: 0.75rem 1.5rem;
   font-size: 0.8125rem;
-  border-radius: 0.3rem; }
+  border-radius: 2px; }
 
 select.form-control-lg:not([size]):not([multiple]), .input-group-lg > select.form-control:not([size]):not([multiple]),
 .input-group-lg > select.input-group-addon:not([size]):not([multiple]),
@@ -1665,12 +1665,12 @@ select.form-control-lg:not([size]):not([multiple]), .input-group-lg > select.for
 
 .form-text {
   display: block;
-  margin-top: 0.25rem; }
+  margin-top: 0.3125rem; }
 
 .form-check {
   position: relative;
   display: block;
-  margin-bottom: 0.75rem; }
+  margin-bottom: 0.9375rem; }
   .form-check + .form-check {
     margin-top: -.25rem; }
   .form-check.disabled .form-check-label {
@@ -1702,15 +1702,15 @@ select.form-control-lg:not([size]):not([multiple]), .input-group-lg > select.for
     cursor: not-allowed; }
 
 .form-control-feedback {
-  margin-top: 0.25rem; }
+  margin-top: 0.3125rem; }
 
 .form-control-success,
 .form-control-warning,
 .form-control-danger {
   padding-right: 2.25rem;
   background-repeat: no-repeat;
-  background-position: center right 0.625rem;
-  background-size: 1.25rem 1.25rem; }
+  background-position: center right 9px;
+  background-size: 18px 18px; }
 
 .has-success .form-control-feedback,
 .has-success .form-control-label,
@@ -2387,12 +2387,12 @@ fieldset[disabled] a.btn {
 .btn-lg, .btn-group-lg > .btn {
   padding: 8px 44px;
   font-size: 0.8125rem;
-  border-radius: 0; }
+  border-radius: 1px; }
 
 .btn-sm, .btn-group-sm > .btn {
   padding: 3px 14px;
   font-size: 0.6875rem;
-  border-radius: 0; }
+  border-radius: 1px; }
 
 .btn-block {
   display: block;
@@ -2824,13 +2824,13 @@ input[type="button"].btn-block {
   .input-group-sm > .input-group-btn > .input-group-addon.btn {
     padding: 0.25rem 0.5rem;
     font-size: 0.6875rem;
-    border-radius: 0.2rem; }
+    border-radius: 2px; }
   .input-group-addon.form-control-lg,
   .input-group-lg > .input-group-addon,
   .input-group-lg > .input-group-btn > .input-group-addon.btn {
     padding: 0.75rem 1.5rem;
     font-size: 0.8125rem;
-    border-radius: 0.3rem; }
+    border-radius: 2px; }
   .input-group-addon input[type="radio"],
   .input-group-addon input[type="checkbox"] {
     margin-top: 0; }
@@ -3625,24 +3625,24 @@ input[type="button"].btn-block {
   font-size: 0.8125rem; }
 
 .pagination-lg .page-item:first-child .page-link {
-  border-bottom-left-radius: 0.3rem;
-  border-top-left-radius: 0.3rem; }
+  border-bottom-left-radius: 2px;
+  border-top-left-radius: 2px; }
 
 .pagination-lg .page-item:last-child .page-link {
-  border-bottom-right-radius: 0.3rem;
-  border-top-right-radius: 0.3rem; }
+  border-bottom-right-radius: 2px;
+  border-top-right-radius: 2px; }
 
 .pagination-sm .page-link {
   padding: 0.275rem 0.75rem;
   font-size: 0.6875rem; }
 
 .pagination-sm .page-item:first-child .page-link {
-  border-bottom-left-radius: 0.2rem;
-  border-top-left-radius: 0.2rem; }
+  border-bottom-left-radius: 2px;
+  border-top-left-radius: 2px; }
 
 .pagination-sm .page-item:last-child .page-link {
-  border-bottom-right-radius: 0.2rem;
-  border-top-right-radius: 0.2rem; }
+  border-bottom-right-radius: 2px;
+  border-top-right-radius: 2px; }
 
 .tag {
   display: inline-block;
@@ -3770,7 +3770,7 @@ a.tag:focus, a.tag:hover {
   padding: 5px 2.5px;
   margin-bottom: 5px;
   background-color: #f8f8f8;
-  border-radius: 0.3rem; }
+  border-radius: 2px; }
   @media (min-width: 544px) {
     .jumbotron {
       padding: 10px 5px; } }
@@ -4276,7 +4276,7 @@ button.close {
   background-color: #fff;
   background-clip: padding-box;
   border: 1px solid rgba(0, 0, 0, 0.2);
-  border-radius: 0.3rem;
+  border-radius: 2px;
   outline: 0; }
 
 .modal-backdrop {
@@ -4487,7 +4487,7 @@ button.close {
   background-color: #fff;
   background-clip: padding-box;
   border: 1px solid rgba(0, 0, 0, 0.2);
-  border-radius: 0.3rem; }
+  border-radius: 2px; }
   .popover.popover-top, .popover.bs-tether-element-attached-bottom {
     margin-top: -10px; }
     .popover.popover-top .popover-arrow, .popover.bs-tether-element-attached-bottom .popover-arrow {
@@ -4551,7 +4551,7 @@ button.close {
   font-size: 0.875rem;
   background-color: #f7f7f7;
   border-bottom: 1px solid #ebebeb;
-  border-radius: 0.2375rem 0.2375rem 0 0; }
+  border-radius: 1.9375px 1.9375px 0 0; }
   .popover-title:empty {
     display: none; }
 
