@@ -47,7 +47,7 @@
 				display: inline-block;
 
 				color: $total_sum_progresbar;
-				+calc-rem(11);
+				@include calc-rem(11)
 			}
 
 			i {
