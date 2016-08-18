@@ -1,6 +1,6 @@
 .popover.ssn-popover {
 
-	max-width: 296px!important;
+	max-width: rem(296)!important;
 
 	.popover-content {
 		span {
@@ -13,15 +13,13 @@
 
 }
 
-
 .profile {
 
-
 	.profile-tabs.nav-tabs {
-		margin-bottom: 15px;
+		margin-bottom: rem(15);
 		
 		li.nav-item a.nav-link {
-			border-radius: 20px;
+			border-radius: rem(20);
 		}
 	} 
 
@@ -31,8 +29,8 @@
 		}
 
 		.drop-photo {
-			min-height: 135px;
-			margin-top: 5px;
+			min-height: rem(135);
+			margin-top: rem(5);
 
 			background: $border_color;
 			border: 1px $grey solid;
@@ -41,27 +39,27 @@
 		.selected-area-info {
 			position: relative;
 
-			padding: 5px 0 0 20px;
-			margin-bottom: -5px;
+			padding: rem(5) 0 0 rem(20);
+			margin-bottom: rem(-5);
 
 			i,
 			span {
 				display: inline-block;
 
 				color: $total_sum_progresbar;
-				font-size: 11px;
+				+calc-rem(11);
 			}
 
 			i {
 				position: absolute;
-				top: 7px;
-				left: 5px;
+				top: rem(7);
+				left: rem(5);
 			}
 		}
 		
 		.drop-image-title {
-			margin-top: 17px;
-			margin-bottom: 30px;
+			margin-top: rem(17);
+			margin-bottom: rem(30);
 
 			span {
 				@include calc-rem(14);
@@ -72,7 +70,7 @@
 			i {
 				@include calc-rem(28);
 
-				margin-top: 17px;
+				margin-top: rem(17);
 
 				color: $footer_text;
 			}
@@ -81,7 +79,7 @@
 		@media screen and (max-width: 1200px) {
 			margin: 0 auto;
 
-			width: 255px;
+			width: rem(255);
 		}
 
 	}
@@ -91,9 +89,9 @@
 
 		position: relative;
 
-		padding: 10px 20px;
-		padding-left: 35px;
-		margin-bottom: 20px;
+		padding: rem(10) rem(20);
+		padding-left: rem(35);
+		margin-bottom: rem(20);
 
 		border: 1px $text_warning_block_color solid;
 
@@ -101,21 +99,21 @@
 
 		i {
 			position: absolute;
-			top: 14px;
-			left: 10px;
+			top: rem(14);
+			left: rem(10);
 		}
 	}
 
 	.select-group {
 		select {
-			max-width: 554px;
+			max-width: rem(554);
 		}
 	}
 
 	.change_state_city {
 		position: absolute;
-		top: 6px;
-		left: 123px;
+		top: rem(6);
+		left: rem(123);
 		z-index: 60;
 
 
@@ -129,8 +127,8 @@
 			@include ellipsis();
 
 			display: inline-block;
-			max-width: 150px;
-			margin-right: 20px;
+			max-width: rem(150);
+			margin-right: rem(20);
 
 			text-decoration: underline;
 		}
@@ -141,15 +139,15 @@
 		}
 
 		@media only screen and (max-width:1199px) {
-			left: 173px;
+			left: rem(173);
 		}
 
 		@media only screen and (max-width:991px) {
-			left: 256px;
+			left: rem(256);
 		}
 
 		@media only screen and (max-width:767px) {
-			left: 123px;
+			left: rem(123);
 		}
 	}
 
@@ -172,11 +170,11 @@
 		}
 
 		textarea {
-			max-width: 554px;
+			max-width: rem(554);
 		}
 
 		input[type='date'] {
-			height: 35px;// непонятно по какой причине высота этого элемента больше чем 38пкс
+			height: rem(36);// непонятно по какой причине высота этого элемента больше чем 38пкс
 		}
 	}
 
@@ -207,7 +205,7 @@
 				margin-left: 0;
 				margin-top: 1.5rem;
 
-				min-width: 150px;
+				min-width: rem(150);
 			    width: 100%;
 			    max-width: 100%;
 			}
