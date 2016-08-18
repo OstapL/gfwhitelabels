@@ -152,6 +152,7 @@ define(function() {
                 if(amount >= 5000) {
 
                     $('#amount').popover({
+                        // trigger: 'focus',
                         placement: function(context, src) {
                             $(context).addClass('amount-popover');
                             return 'top';
