@@ -512,3 +512,16 @@ app.on('userLoaded', function(data){
     );
     console.log('user ready');
 });
+
+$(document).ready(function(){
+    // show bottom logo while scrolling page
+
+    $(window).scroll(function(){
+        var $bottomLogo = $('#fade_in_logo'),
+            offsetTopBottomLogo = $bottomLogo.offset().top;
+
+        if (($(window).scrollTop() + $(window).height() >= offsetTopBottomLogo) && !$bottomLogo.hasClass('fade-in') ) {
+            $bottomLogo.addClass('fade-in');
+        }
+    });
+});
