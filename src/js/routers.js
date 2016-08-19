@@ -6,6 +6,7 @@ let appRoutes = Backbone.Router.extend({
       'api/campaign/:id': 'campaignDetail',
       'api/campaign/:id/invest': 'campaignInvestment',
       'sketches/:name': 'sketches',
+      'pg/:name': 'pagePG',
       'page/:id/': 'pageDetail',
       'page/:id': 'pageDetail',
       'account/profile': 'accountProfile',
@@ -382,6 +383,18 @@ let appRoutes = Backbone.Router.extend({
 
         app.hideLoading();
     },
+
+    pagePG: function(name) {
+        console.log(name);
+        let view = require('templates/' + name + '.pug');
+        $('#content').html(view({
+                Urls: Urls,
+                serverUrl: serverUrl
+            }
+        ));
+        app.hideLoading();
+    },
+
 
     pageDetail: function(id) {
         let model = require('models/page');
