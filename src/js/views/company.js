@@ -16,6 +16,7 @@ define(function() {
                         serverUrl: serverUrl,
                         Urls: Urls,
                         fields: this.fields,
+                        values: this.model.toJSON(),
                         user: app.user.toJSON()
                     })
                 );
@@ -38,8 +39,8 @@ define(function() {
                             app.showLoading();
 
                             app.routers.navigate(
-                                Urls['campaign-list'](campaign.id),
-                                {trigger: true, replace: true}
+                                '/campaign/general_information/' + data.id,
+                                {trigger: true, replace: false}
                             );
 
                         }).

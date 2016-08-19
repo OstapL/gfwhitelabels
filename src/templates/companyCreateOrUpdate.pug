@@ -79,6 +79,7 @@ section.create-company.container.m-b-85
 		form(metod="post" action="").form-section
 			input(type='hidden' name='state' value='NY' id='state')
 			input(type='hidden' name='city' value='New York' id='city')
+			input(type='hidden' name='id' value=values.id id='id')
 			+fieldBlock("name", '', {
 				class1: 'col-lg-3 col-md-3',
 				class2: 'col-lg-9 col-md-9',
@@ -91,19 +92,21 @@ section.create-company.container.m-b-85
 				type: 'text',
 				placeholder: 'Your Company Slogan',
 				})
-			.form-group.row.clearfix
-				label.col-lg-3.text-lg-right Description
-				.col-lg-9
-					textarea(placeholder="Description" rows="4").form-control
+			+fieldBlock("description", '', {
+				class1: 'col-lg-3 col-md-3',
+				class2: 'col-lg-9 col-md-9',
+				type: 'description',
+				placeholder: 'Your Company Description',
+				})
 			.form-group.row.m-t-2.clearfix
-				.col-lg-3.text-lg-right
-					label Corporate Structure
-				.col-lg-4
-					select.custom-select
-						option(checked="checked" value="0") C Corporate
+				+fieldBlock("corporate_structure", '', {
+					class1: 'col-lg-3',
+					class2: 'col-lg-4',
+					type: 'choice',
+				})
 				.col-lg-5
 					label.date Date of Organization
-					input(type="date").form-control
+					input(type="date" value=values.founding_date).form-control
 			.border-bottom
 			+fieldBlock("address_1", '', {
 				class1: 'col-lg-3 col-md-3',
