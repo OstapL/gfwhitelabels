@@ -124,8 +124,9 @@ section.campaign-specifics.container.m-b-85
           .col-lg-5.p-r-12
             span.pull-right.font-weight-bold.text-lg-right  Upload an Investor Presentation
           .col-lg-7.text-lg-center
-            p.drop-photo Drop your PPT or PDF here or click to upload
-            i.fa.fa-file
+            a(href="#").link-1
+              p.drop-photo Drop your PPT or PDF here or click to upload
+              i.fa.fa-file
         .col-lg-5.p-l-0.p-r-3.text-lg-center.text-sm-center
           img(src="/img/MS-PowerPoint.png" alt="Responsive image").img-file
 
@@ -143,18 +144,21 @@ section.campaign-specifics.container.m-b-85
             |  Payback Equity
 
       .row
-        .col-lg-6.col-l-65
-          +fieldBlock("Link to Calculators", '', {
-            class1: 'col-lg-6 col-md-3', 
-            class2: 'col-lg-6 col-md-9', 
-            type: 'text',
-            placeholder: '$',
-            })
-
-        .col-lg-6.col-l-65
+        .col-lg-6.col-l-65.m-l-30.form-group.row.clearfix
+          label.col-lg-5.text-lg-right Link to Calculators
+          .col-lg-7
+            .btn-group
+              button(data-toggle="dropdown" aria-haspopup="true" aria-expanded="false").btn.btn-dropdown Link to Calculators
+              button(data-toggle="dropdown" aria-haspopup="true" aria-expanded="false").btn.dropdown-toggle.dropdown-toggle-split.btn-dropdown-click
+                span.sr-only 
+              .dropdown-menu
+                a().dropdown-item Action1
+                a().dropdown-item Action2
+                a().dropdown-item Action3
+        .col-lg-5.col-l-65.p-l-0.p-r-1.pre-money-p-r-0.pull-right
           +fieldBlock("Pre-Money Valuation", '', {
-            class1: 'col-lg-5 col-md-3', 
-            class2: 'col-lg-7 col-md-9', 
+            class1: 'col-lg-4 col-md-3', 
+            class2: 'col-lg-6 col-md-9', 
             type: 'text',
             placeholder: '$',
             })
@@ -187,13 +191,3 @@ section.campaign-specifics.container.m-b-85
             button(href="").btn.btn-lg.btn-primary.text-uppercase.pull-right save
           .col-lg-6
             button(href="").btn.btn-lg.btn-secondary.text-uppercase preview
-
-      .col-lg-6
-        .btn-group
-          button(type="button").btn Link to Calculators
-          button(data-toggle="dropdown" aria-haspopup="true" aria-expanded="false").btn.btn-danger.dropdown-toggle.dropdown-toggle-split
-            span.sr-only Toggle Dropdown
-          .dropdown-menu
-            a(href="#").dropdown-item Dropdown 1
-            a(href="#").dropdown-item Dropdown 2
-            a(href="#").dropdown-item Dropdown 3
