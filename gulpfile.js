@@ -27,7 +27,7 @@ gulp.task('browser-sync', ['styles', 'scripts'], function() {
 });
 
 gulp.task('styles', function () {
-    return gulp.src('app/sass/mixins_all.sass')
+    return gulp.src('src/sass/mixins_all.sass')
     .pipe(sass({
         includePaths: [
             config.bootstrapDir,
@@ -44,7 +44,7 @@ gulp.task('styles', function () {
 });
 
 gulp.task('watch', function () {
-    gulp.watch(['app/sass/*.sass', 'app/sass/**/*.sass',], ['styles']);
+    gulp.watch(['src/sass/*.sass', 'app/sass/**/*.sass',], ['styles']);
 });
 
 gulp.task('default', ['watch']);

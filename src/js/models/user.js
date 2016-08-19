@@ -29,7 +29,7 @@ let userModel = Backbone.Model.extend({
                     },
                     error: (model, xhr, status) => {
                         localStorage.removeItem('token');
-                        defaultSaveActions.error(app, xhr, status, '');
+                        app.defaultSaveActions.error(app, xhr, status, '');
                     },
                 });
             } else {
@@ -52,6 +52,21 @@ let userModel = Backbone.Model.extend({
             $(selector).attr('src', json.url);
             //return json.url;
         });
+    },
+
+    getCompany: function(callback) {
+        console.log('hello callback');
+        $.ajax(_.extend(_.clone(app.defaultOptionsRequest), {
+                url: serverUrl + Urls['company-list']() + '?owner_id='  + this.get('id'),
+                type: 'GET',
+            })
+        ).done((response) => {
+            console.log('response is', response);
+            let companyModel = require('models/company.js');
+            console.log(companyModel);
+            var r = new companyModel.model(response[0]);
+            callback(new companyModel.model(response[0]));
+        }).fail(app.defaultSaveActions.error);
     },
 
     // ToDo

@@ -17,15 +17,11 @@ dependencies:
 
 general:
     branches:
-        only:
-            - es7
-            - ostap
-            - romang
-            - romanr
+        ignore:
+            - test
 
 deployment:
     aws:
         branch: master
         commands:
             - ./deploy.sh
-
