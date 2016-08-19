@@ -10,8 +10,20 @@
 			margin: 0;
 		}
 	}
-
 }
+
+.modal-dialog {
+
+	.modal-header {
+		padding-bottom: 10px;
+		h2 {
+			margin-top: rem(20);
+			margin-bottom: rem(5)
+		}
+	}
+}
+
+
 
 .profile {
 
@@ -121,6 +133,7 @@
 
 		&:focus {
 			outline: none;
+			color: $black_text
 		}
 
 		.input-value {

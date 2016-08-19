@@ -1,12 +1,12 @@
 mixin breadcrumbs(title, subtitle, data)
-    section.header_title.p50
+    section.header_title.pt50
         .container
             .row
                 .pull-left
                     h1.text-uppercase= title
                         span.small-text= subtitle
                 .pull-right
-                    ol.breadcrumb.pull-right
+                    ol.breadcrumb.pull-right.m0
                         each elem in data
                             - let active = (elem[1] == '') ? 'active' : ''
                             li.breadcrumb-item(class=" " + active)
