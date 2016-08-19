@@ -437,7 +437,8 @@ let appRoutes = Backbone.Router.extend({
             let loginView = new view.login({
                 el: '#content',
                 login_fields: r1[0].actions.POST,
-                register_fields: r2[0].actions.POST
+                register_fields: r2[0].actions.POST,
+                model: new userModel(),
             })
             loginView.render();
             app.cache[window.location.pathname] = loginView.$el.html();
