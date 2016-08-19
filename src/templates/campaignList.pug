@@ -8,7 +8,7 @@ section.small-section.filter
             .row
                 .col-lg-3
                     .one_drop
-                        select.form-control(multiple="true").selectpicker
+                        select.form-control(multiple="true" title="INDUSTRIES").selectpicker
                             option Advertising & Marketing
                             option Arts, Fashion, & Media
                             option Business to Business
@@ -19,7 +19,7 @@ section.small-section.filter
 
                 .col-lg-3
                     .one_drop
-                        select.form-control.selectpicker
+                        select(title="STAGE").form-control.selectpicker
                             option Pre-seed
                             option Seed
                             option Bridge to Series A
@@ -29,7 +29,7 @@ section.small-section.filter
 
                 .col-lg-3
                     .one_drop
-                        select.form-control.selectpicker
+                        select(title="LOCATIONS").form-control.selectpicker
                             option Locations
                             option Los Angeles, CA
                             option San Francisco, CA
@@ -38,7 +38,7 @@ section.small-section.filter
 
                 .col-lg-3
                     .one_drop
-                        select.form-control.selectpicker
+                        select(title="DEAL TYPE").form-control.selectpicker
                             option Deal type
                             option Equity
                             option Convertible Note
@@ -75,9 +75,9 @@ section.campaing-list
                                     p #{campaign.company.tagline.substr(0, 120)}
 
                                 .ico_cont
-                                    a(href=Urls['campaign-detail'](campaign.id) + '#members')
+                                    a(href=Urls['campaign-detail'](campaign.id) + '#members').link-1
                                         i.fa.fa-users
-                                    a(href=Urls['campaign-detail'](campaign.id) + '#perks')
+                                    a(href=Urls['campaign-detail'](campaign.id) + '#perks').link-1
                                         i.fa.fa-gift
 
                                 .bottom_pr
@@ -91,7 +91,7 @@ section.campaing-list
 
 
                         .title
-                            h3= campaign.company.name
+                            h3.m-t-0= campaign.company.name
                             span.place
                                 i.fa.fa-map-marker
                                 = campaign.company.city + ' ' + campaign.company.state
@@ -115,3 +115,20 @@ section.campaing-list
                                 b Industry: 
                                 | Lorem ipsum
                             .clear
+section.pagination
+    .container
+        .row
+            .col-lg-12
+                nav
+                    ul.pagination.pagination-sm
+                        li.page-item.active
+                            a(href="#").page-link 1
+                        li.page-item
+                            a(href="#").page-link 2
+                        li.page-item
+                            a(href="#").page-link 3
+                        li.page-item
+                            a(href="#" aria-label="Next").page-link
+                                span(aria-hidden="true")
+                                    i.fa.fa-angle-right
+                                span.sr-only Next

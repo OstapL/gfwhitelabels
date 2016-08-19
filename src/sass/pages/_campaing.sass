@@ -10,12 +10,19 @@
 	
 	.one_drop
 		height: rem(36)
-
+		.bootstrap-select
+			.dropdown-menu 
+				li
+					a
+						.text
+							margin-right: 0!important
 		.btn
 			padding: rem(3) rem(27) rem(3) rem(10)
 			background: #fff
 			border-color: #cccccc
 			color: $black_text
+			font-size: rem(12)
+			border: solid 1px #cccccc
 
 			&:hover
 				background: #cccccc
@@ -23,51 +30,55 @@
 
 			.filter-option
 				line-height: 2.1
-
+				font-size: rem(12)
+			span.text
+				margin-right: 0
 		.dropdown-menu>li>a
 			display: block
-			padding: 3px 20px
+			padding: rem(3) rem(20)
 			clear: both
 			font-weight: 400
 			line-height: 1.42857143
 			color: #333
 			white-space: nowrap
-
 			.check-mark
-				font: normal normal normal 14px/1 FontAwesome
+				font: normal normal normal 18px/1 FontAwesome
 				font-size: inherit
 				text-rendering: auto
 				-webkit-font-smoothing: antialiased
-
+		
 			.check-mark:before
 				content: "\f00c"
+		.dropdown-menu.inner
+			span.text
+				margin-right: 0
 		.dropdown-toggle
 			&:after
 				margin-top: rem(7)
-
+		
 
 	// block with create alert btn
 	.create-alert-block
-		padding-top: 25px;
+		padding-top: rem(25)
 
 		.bootstrap-select
 			width: 100% !important
 
 			.dropdown-toggle.filter .one_drop
 				background: none
-				padding-top: 2px
-				padding-bottom: 2px
+				padding-top: rem(2)
+				padding-bottom: rem(2)
 		.orderby
-			width: 190px
-			margin-left: -15px
+			width: rem(190)
+			margin-left: rem(-15)
 			float: right
 
-
+	
 .block_link
 	position: absolute
-	left: 15px
-	right: 15px
-	bottom: 49px
+	left: rem(15)
+	right: rem(15)
+	bottom: rem(49)
 	top: 0
 	z-index: 2
 	
@@ -85,13 +96,13 @@
 	width: 100%
 	border: 1px solid $border-color
 	border-top: none
-	margin-bottom: 50px
+	margin-bottom: rem(50)
 	display: block
 	text-decoration: none !important
 
 	.for_img
 		margin: 0 -1px
-		height: 209px
+		height: rem(209)
 		overflow: hidden
 		position: relative
 
@@ -102,15 +113,15 @@
 			position: absolute
 			z-index: 1
 			background: $red
-			padding: 0 10px
+			padding: 0 rem(10)
 			color: $white
-			border-radius: 3px
+			border-radius: rem(3)
 			position: absolute
-			right: 11px
-			top: 11px
+			right: rem(11)
+			top: rem(11)
 			font-weight: bold
-			font-size: 14px
-			line-height: 27px
+			font-size: rem(14)
+			line-height: rem(27)
 
 		.more_inform
 			opacity: 0
@@ -124,34 +135,35 @@
 			+mt(0.2s)
 
 			.title
-				margin: 0 10px
-				padding-top: 30px
+				margin: 0 rem(10)
+				padding-top: rem(30)
 
 				h3
 					font-family: $dosis
-					font-size: 18px
+					font-size: rem(18)
 					color: $black_text
-					letter-spacing: 3.5px
 					text-transform: uppercase
 					width: 100%
 					float: none
 					font-weight: 500
-					letter-spacing: 3.4px
-					line-height: 18px
+					letter-spacing: rem(3.6)
+					line-height: rem(18)
 					margin-top: 0
+					margin-bottom: rem(20)
 
 			.small_text
-				margin: 0 10px
-				padding-top: 12px
+				margin-left: rem(30)
+				margin-right: rem(30)
+				padding-top: 0
 
 				p
-					font-size: 14px
-					line-height: 18px
-					color: $grey
+					font-size: rem(14)
+					line-height: rem(17)
+					color: $small-text
 					margin-bottom: 0
 
 			.ico_cont
-				padding-top: 6px
+				padding-top: rem(12)
 				position: relative
 				z-index: 3
 				display: inline-block
@@ -161,28 +173,25 @@
 					z-index: 6
 
 					i
-						color: $grey
-						font-size: 14px
+						font-size: rem(14)
 						display: inline-block
 						vertical-align: middle
-						margin: 0 7px
-						&:hover
-							color: $black_text
+						margin: 0 rem(7)
 
 					i.fa-gift
-						font-size: 20px
+						font-size: rem(20)
 
 			.ico_cont:hover
 				display: inline-block
 
 			.bottom_pr
 				width: 100%
-				padding-top: 12px
+				padding-top: rem(12)
 
 				p
-					font-size: 12px
-					color: #747474
-					line-height: 18px
+					font-size: rem(12)
+					color: $small-text
+					line-height: rem(18)
 					margin: 0
 	&:hover
 		.more_inform
@@ -190,59 +199,60 @@
 			+mt(0.2s)
 	
 	.title
-		margin: 0 8px
-		padding-top: 15px
+		margin: 0 rem(10)
+		padding-top: rem(15)
 
 		h3
 			font-family: $dosis
-			font-size: 18px
+			font-size: rem(18)
 			color: $black_text
 			text-transform: uppercase
 			float: left
-			line-height: 24px
+			line-height: rem(24)
 			font-weight: 500
-			letter-spacing: 3.4px
+			letter-spacing: rem(3.4)
+			margin-bottom: rem(9)
 
 		span.place
 			float: right
 			color: $grey
-			font-size: 11px
-			line-height: 29px
+			font-size: rem(11)
+			line-height: rem(29)
 			text-align: right
 
 			i
-				margin-right: 5px
+				margin-right: rem(5)
 	
 	.description
-		margin: 0 8px
+		margin: 0 rem(10)
 		height: 54px
 		overflow: hidden
 		
 		p
-			font-size: 11px
-			line-height: 18px
+			font-size: rem(11)
+			line-height: rem(18)
 			letter-spacing: 0px
 			color: $black_text
 
 	.progress_bar_container
-		margin: 0 8px
-		padding-top: 7px
+		margin: 0 rem(10)
+		padding-top: rem(6)
 
 		.left_text
 			float: left
 			color: $black_text
-			font-size: 14px
-			line-height: 27px
+			font-size: rem(14)
+			line-height: rem(30)
 
 		.right_text
 			float: right
 			text-align: right
 			color: $grey
-			font-size: 14px
+			font-size: rem(14)
 
 			b
 				color: $total_sum_progresbar
-				font-size: 18px
+				font-size: rem(18)
 		
 		.progress
 			margin: 0
@@ -253,31 +263,34 @@
 			border-bottom-left-radius: none
 	
 	.bottom_text
-		margin: 0 7px
+		margin: 0 rem(10)
 
 		.left_desc
 			float: left
 			color: $grey
-			font-size: 11px
-			line-height: 45px
-			letter-spacing: 0.95px
-
+			font-size: rem(11)
+			line-height: rem(10)
+			letter-spacing: rem(0.275)
+			margin-top: rem(19)
+			margin-bottom: rem(19)
 			b
 				font-weight: normal
 				color: $black_text
 				text-transform: uppercase
-				letter-spacing: 2.2px
+				letter-spacing: rem(2.2)
 
 		.right_desc
 			float: right
 			text-align: right
 			color: $grey
-			font-size: 11px
-			line-height: 45px
-			letter-spacing: 0.95px
+			font-size: rem(11)
+			line-height: rem(10)
+			letter-spacing: rem(0.275)
+			margin-top: rem(19)
+			margin-bottom: rem(19)
 
 			b
 				font-weight: normal
 				color: $black_text
 				text-transform: uppercase
-				letter-spacing: 2.2px
+				letter-spacing: rem(2.2)
