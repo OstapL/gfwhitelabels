@@ -103,17 +103,30 @@ section.team-members.container.m-b-85
       .form-group.row.clearfix.required
         label.col-lg-3.text-lg-right Bio
         .col-lg-9
-          textarea(placeholder="Bio" rows="4").form-control
+          textarea(placeholder="At least 150 characters and no more than 250 characters" rows="4").form-control
+      .row
+        .col-lg-9.recommended
+          +fieldBlock("Where did you grow up?", '', {
+            class1: 'col-lg-4 col-md-3',
+            class2: 'col-lg-8 col-md-9',
+            type: 'text',
+            placeholder: 'City'
+            })
+        .col-lg-3
+          select.orderby.custom-select
+            option(checked="checked" value="0") ST
+            option(value="1") STL
       .row.media-item
         .col-lg-7
           .col-lg-5.p-r-12
             span.pull-right.font-weight-bold  Header Image
           .col-lg-7.text-lg-center
-            p.drop-photo Drop your photo here or click to upload
-            i.fa.fa-camera
+            a(href="").link-1
+              p.drop-photo Drop your photo here or click to upload
+              i.fa.fa-camera
         .col-lg-5.p-l-1.p-r-3.text-lg-center.text-sm-center
           img(src="/img/header_img_avatar.jpg" alt="Responsive image").img-team-members
-      .col-lg-11.pull-right.p-r-0
+      .col-lg-11.pull-right.p-r-0.p-t-2
           .col-lg-6
             button(href="").btn.btn-lg.btn-primary.text-uppercase.pull-right Save and return
           .col-lg-6.p-r-0
