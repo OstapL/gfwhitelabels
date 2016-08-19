@@ -73,14 +73,25 @@
 
 /* costum pagination end */
 
-/* costum alert begin */
+/* common styles for pages(faq, overview.. etc..) */
+.text_block
+	.page_title
+		width: 80%
+
+		border-color: $light_grey
+	ul
+		li
+			a
+				padding-bottom: 10px
 
 
-
+/* end common styles for pages(faq, overview.. etc..) */
 
 /*дополнительный клас для Заголовков*/
 .border-bottom
 	border-bottom: solid $mercury 1px
+.opacity-border
+	opacity: 0.1
 
 /*Breadcrumb*/
 .header_title
@@ -96,11 +107,14 @@
 
 
 .pt50
-	padding-top: 50px
+	padding-top: rem(50)
 .p50
 	+calc-rem-padding (50) 
 .pt30
-	padding-top: 30px
+	padding-top: rem(30)
+.pb10
+	padding-bottom: rem(10)
+
 .mb50
 	margin-bottom: 50px
 .mt50

@@ -1,0 +1,28 @@
+//Accordion
+// TODO надо будет вместо id = accordion использовать клас так как на странице FAQ возможны несколько акордионов
+#accordion
+	.panel-collapse
+		padding: rem(10) rem(20)
+
+	.list-group-item-action
+		display: block
+		padding: rem(10) rem(20)
+		position: relative
+		border: solid 1px $gallery
+		margin-top: rem(10)
+		font-size: rem(14)
+		font-weight: 700
+
+		&.active
+			background-color: $alabaster
+			color: $black
+			font-size: rem(14)
+			font-weight: 700
+			border: solid 1px $gallery
+		i
+			top: 50%
+			right: rem(15)
+			-ms-transform: translate(-50%,-50%)
+			-webkit-transform: translate(-50%,-50%)
+			transform: translate(-50%,-50%)
+			position: absolute
