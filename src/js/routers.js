@@ -172,24 +172,28 @@ let appRoutes = Backbone.Router.extend({
 
     companyCreate: function() {
         if(!app.user.is_anonymous()) {
-            let model = require('models/company');
+            //let model = require('models/company');
             let view = require('views/company');
 
-            let company = new model.model();
-            $.ajax(_.extend({
-                    url: company.urlRoot,
-                }, app.defaultOptionsRequest)
-            ).done((response) => {
-                var i = new view.createOrUpdate({
-                    el: '#content',
-                    fields: response.actions.POST,
-                    model: company
-                });
-                i.render();
-                //app.views.campaign[id].render();
-                //app.cache[window.location.pathname] = i.$el.html();
+            app.user.getCompany((company) => {
+                console.log('hello done');
+                console.log(app.defaultOptionsRequest);
+                $.ajax(_.extend({
+                        url: company.urlRoot,
+                    }, app.defaultOptionsRequest)
+                ).done((response) => {
+                    console.log('hello done 2');
+                    var i = new view.createOrUpdate({
+                        el: '#content',
+                        fields: response.actions.POST,
+                        model: company
+                    });
+                    i.render();
+                    //app.views.campaign[id].render();
+                    //app.cache[window.location.pathname] = i.$el.html();
 
-                app.hideLoading();
+                    app.hideLoading();
+                }).fail(app.DefaultSaveActions.error);
             });
         } else {
             app.routers.navigate(

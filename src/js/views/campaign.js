@@ -212,6 +212,7 @@ define(function() {
                         serverUrl: serverUrl,
                         Urls: Urls,
                         fields: this.fields,
+                        values: this.model.toJSON(),
                         campaign: this.model.toJSON(),
                     })
                 );
