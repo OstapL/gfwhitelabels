@@ -1,0 +1,47 @@
+<div class="container calculator-container">
+    <div class="page">
+        <div class="js-jq-plot-area">
+            <div id="chart1" style="width: 100%"></div>
+
+            <p class="lead">Your results</p>
+            <div class="table-responsive">
+                <table class="table table-sm table-bordered table-striped">
+                    <thead>
+                    <tr>
+                        <th>Time</th>
+                        <th>Fundraise</th>
+                        <th>Revenue</th>
+                        <th>Annual Distributions</th>
+                        <th>Multiple Returned</th>
+                        <th>Total Distributions</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {{#each outputData}}
+                        <tr>
+                            <th scope="row">Year {{@index}}</th>
+                            <td>
+                                {{#formatPrice fundraise}}
+                                {{/formatPrice}}
+                            </td>
+                            <td>
+                                {{#formatPrice revenue}}
+                                {{/formatPrice}}
+                            </td>
+                            <td>
+                                {{#formatPrice annual}}
+                                {{/formatPrice}}
+                            </td>
+                            <td>{{multiple}}</td>
+                            <td>
+                                {{#formatPrice total}}
+                                {{/formatPrice}}
+                            </td>
+                        </tr>
+                    {{/each}}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

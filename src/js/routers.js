@@ -20,6 +20,9 @@ let appRoutes = Backbone.Router.extend({
       'account/logout': 'logout',
       'account/dashboard/issuer': 'dashboardIssuer',
       'account/dashboard/investor': 'dashboardInvestor',
+      'calculator/step-1': 'calculatorStep1',
+      'calculator/step-2': 'calculatorStep2',
+      'calculator/step-3': 'calculatorStep3'
     },
     back: function(event) {
         var url = event.target.pathname;
@@ -33,6 +36,39 @@ let appRoutes = Backbone.Router.extend({
             );
         }
         app.hideLoading();
+    },
+
+    calculatorStep1() {
+        // require.ensure([], () => {
+        let View = require('views/calculator/step1.js');
+        new View({
+            model: app.models.calculator
+        }).render();
+
+        app.hideLoading();
+        // });
+    },
+
+    calculatorStep2: function() {
+        let View = require('views/calculator/step2.js');
+        
+        new View({
+            model: app.models.calculator
+        }).render();
+        
+        app.hideLoading();
+    },
+
+    calculatorStep3: function() {
+        // require.ensure([], (require) => {
+            let View = require('views/calculator/step3.js');
+
+            new View({
+                model: app.models.calculator
+            }).render();
+
+            app.hideLoading();
+        // });
     },
 
     sketches: function(name) {

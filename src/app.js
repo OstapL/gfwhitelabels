@@ -7,6 +7,7 @@ global.Tether = require('tether');
 global.Bootstrap = require('../node_modules/bootstrap/dist/js/bootstrap.min.js');
 global.userModel = require('models/user.js');
 global.Urls = require('jsreverse.js');
+global.calculatorModel = require('models/calculator.js');
 
 
 // require('sass/mixins_all.sass');
@@ -16,7 +17,7 @@ global.Urls = require('jsreverse.js');
 //require('libs.js');
 
 // При выводе ошибок для форм у нас может быть две ситуации:
-// 1. Мы выводим ошибку для элементы который у нас есть в форме => 
+// 1. Мы выводим ошибку для элементы который у нас есть в форме =>
 // нам нужно вывести это ошибку в help-block рядом с тем элементом где была ошибка
 //
 // 2. Мы выводим ошибку для элемента которого у нас в форме нет или это глобальная ошибка
@@ -46,14 +47,14 @@ _.extend(Backbone.Validation.callbacks, {
         var $el = view.$('[name=' + attr + ']');
         var $group = null;
 
-        // if element not found - we will show error just in alert-warning div 
+        // if element not found - we will show error just in alert-warning div
         if($el.length == 0) {
             $el = view.$('form > .alert-warning');
 
             if(Array.isArray(error) !== true)
                 error = [error]
 
-            // If we don't have alert-warning - we should create it as 
+            // If we don't have alert-warning - we should create it as
             // first element in form
             if($el.length == 0) {
 
@@ -180,6 +181,7 @@ global.app = {
     models: {
         campaign: [],
         page: [],
+        calculator: null
     },
 
     views: {
@@ -355,6 +357,9 @@ global.app = {
 
 _.extend(app, Backbone.Events);
 app.user = new userModel();
+
+// initialize calculator model
+app.models.calculator = new calculatorModel();
 
 require('routers');
 
