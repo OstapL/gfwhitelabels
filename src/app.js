@@ -310,8 +310,11 @@ global.app = {
           url: serverUrl + Urls['image2-list'](),
           paramName: name,
           params: params,
+          createImageThumbnails: false,
+          thumbnail: function(file, dataUrl) {
+              console.log('preview', file, file.xhr, file.xhr.response, file.xhr.responseText);
+          },
           previewTemplate: `<div class="dz-details">
-              <img data-dz-thumbnail />
             </div>
             <div class="dz-progress"><span class="dz-upload" data-dz-uploadprogress></span></div>
             <div class="dz-error-message"><span data-dz-errormessage></span></div>`,
@@ -340,11 +343,7 @@ global.app = {
       });
 
       dropbox.on("success", (file, data) => {
-          //data = JSON.parse(data);
-          // FixME
-          // What a crap ?!
-          $('.dropzone__' + name + ' img').remove();
-          $('.dropzone__' + name).prepend('<img src="' + data.url + '" />');
+          $('.img-' + name).attr('src', data.url);
           if(typeof onSuccess != 'undefined') {
             onSuccess(data);
           }

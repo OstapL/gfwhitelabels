@@ -201,6 +201,10 @@ define(function() {
         }),
 
         generalInformation: Backbone.View.extend({
+            events: {
+                'submit form': 'submit',
+            },
+
             initialize: function(options) {
                 this.fields = options.fields;
             },
@@ -218,28 +222,168 @@ define(function() {
                 );
                 return this;
             },
+
+            submit: function(e) {
+                this.$el.find('.alert').remove();
+                event.preventDefault();
+
+                var data = $(e.target).serializeObject();
+                //var investment = new InvestmentModel(data);
+
+                this.model.set(data);
+                Backbone.Validation.bind(this, {model: this.model});
+
+                if(this.model.isValid(true)) {
+                    this.model.save().
+                        then((data) => { 
+                            app.showLoading();
+                            console.log('data got', data, this.model);
+
+                            app.routers.navigate(
+                                '/campaign/media/' + this.model.get('id'),
+                                {trigger: true, replace: false}
+                            );
+
+                        }).
+                        fail((xhr, status, text) => {
+                            app.defaultSaveActions.error(this, xhr, status, text, this.fields);
+                        });
+                } else {
+                    if(this.$('.alert').length) {
+                        this.$('.alert').scrollTo();
+                    } else  {
+                        this.$el.find('.has-error').scrollTo();
+                    }
+                }
+            }
         }),
 
         media: Backbone.View.extend({
+            events: {
+                'submit form': 'submit',
+                'change #video': 'updateVideo',
+            },
+
             initialize: function(options) {
                 this.fields = options.fields;
             },
 
             render: function() {
                 let template = require('templates/campaignMedia.pug');
+                let dropzone = require('dropzone');
                 this.$el.html(
                     template({
                         serverUrl: serverUrl,
                         Urls: Urls,
                         fields: this.fields,
-                        campaign: this.model.toJSON(),
+                        values: this.model.toJSON(),
                     })
+                );
+                app.createFileDropzone(
+                    dropzone,
+                    'header_image', 
+                    'campaign_headers', '', 
+                    (data) => {
+                        this.model.save({
+                            header_image: data.file_id,
+                        }, {
+                            patch: true
+                        }).then((model) => {
+                            console.log('image upload done', model);
+                        });
+                    }
+                );
+                app.createFileDropzone(
+                    dropzone,
+                    'list_image', 
+                    'campaign_lists', '', 
+                    (data) => {
+                        this.model.save({
+                            list_image: data.file_id,
+                        }, {
+                            patch: true
+                        }).then((model) => {
+                            console.log('image upload done', model);
+                        });
+                    }
                 );
                 return this;
             },
+
+            submit: function(e) {
+                this.$el.find('.alert').remove();
+                event.preventDefault();
+
+                var data = $(e.target).serializeObject();
+
+                this.model.set(data);
+                Backbone.Validation.bind(this, {model: this.model});
+
+                if(this.model.isValid(true)) {
+                    this.model.save().
+                        then((data) => { 
+                            app.showLoading();
+                            console.log('data got', data, this.model);
+
+                            app.routers.navigate(
+                                '/campaign/team_members/' + this.model.get('id'),
+                                {trigger: true, replace: false}
+                            );
+
+                        }).
+                        fail((xhr, status, text) => {
+                            app.defaultSaveActions.error(this, xhr, status, text, this.fields);
+                        });
+                } else {
+                    if(this.$('.alert').length) {
+                        this.$('.alert').scrollTo();
+                    } else  {
+                        this.$el.find('.has-error').scrollTo();
+                    }
+                }
+            },
+
+            getVideoId: function(url) {
+                try {
+                    var provider = url.match(/https:\/\/(:?www.)?(\w*)/)[2],
+                    id;
+
+                    if(provider == "youtube") {
+                        id = url.match(/https:\/\/(?:www.)?(\w*).com\/.*v=(\w*)/)[2];
+                    } else if (provider == "vimeo") {
+                        id = url.match(/https:\/\/(?:www.)?(\w*).com\/(\d*)/)[2];
+                    } else {
+                        return ""
+                    }
+                } catch(err) {
+                        return ""
+                }
+                return id;
+            },
+
+            updateVideo: function(e) {
+                var video = e.target.value;
+                var id = this.getVideoId(video);
+                console.log(id);
+
+                // ToDo
+                // FixME
+                // Bad CHECK
+                //
+                if(id != '') {
+                    this.$el.find('#video_source iframe').attr(
+                        'src', '//youtube.com/embed/' +  id + '?rel=0'
+                    );
+                    //e.target.value = id;
+                }
+            }
         }),
 
         teamMembers: Backbone.View.extend({
+            events: {
+                'submit form': 'submit',
+            },
+
             initialize: function(options) {
                 this.fields = options.fields;
             },
@@ -256,25 +400,113 @@ define(function() {
                 );
                 return this;
             },
+
+            submit: function(e) {
+                this.$el.find('.alert').remove();
+                event.preventDefault();
+
+                var data = $(e.target).serializeObject();
+                //var investment = new InvestmentModel(data);
+
+                this.model.set(data);
+                Backbone.Validation.bind(this, {model: this.model});
+
+                if(this.model.isValid(true)) {
+                    this.model.save().
+                        then((data) => { 
+                            app.showLoading();
+                            console.log('data got', data, this.model);
+
+                            app.routers.navigate(
+                                '/campaign/media/' + this.model.get('id'),
+                                {trigger: true, replace: false}
+                            );
+
+                        }).
+                        fail((xhr, status, text) => {
+                            app.defaultSaveActions.error(this, xhr, status, text, this.fields);
+                        });
+                } else {
+                    if(this.$('.alert').length) {
+                        this.$('.alert').scrollTo();
+                    } else  {
+                        this.$el.find('.has-error').scrollTo();
+                    }
+                }
+            }
         }),
 
         specifics: Backbone.View.extend({
+            events: {
+                'submit form': 'submit',
+            },
+
             initialize: function(options) {
                 this.fields = options.fields;
             },
 
             render: function() {
-                let template = require('templates/campaignSpecifics.pug');
+                const template = require('templates/campaignSpecifics.pug');
+                const dropzone = require('dropzone');
                 this.$el.html(
                     template({
                         serverUrl: serverUrl,
                         Urls: Urls,
                         fields: this.fields,
-                        campaign: this.model.toJSON(),
+                        values: this.model.toJSON(),
                     })
                 );
+                app.createFileDropzone(
+                    dropzone,
+                    'investor_presentation', 
+                    'investor_presentation', '', 
+                    (data) => {
+                        this.model.save({
+                            investor_presentation: data.file_id,
+                        }, {
+                            patch: true
+                        }).then((model) => {
+                            console.log('file upload done', model);
+                        });
+                    }
+                );
+
                 return this;
             },
+
+            submit: function(e) {
+                this.$el.find('.alert').remove();
+                event.preventDefault();
+
+                var data = $(e.target).serializeObject();
+                //var investment = new InvestmentModel(data);
+
+                this.model.set(data);
+                Backbone.Validation.bind(this, {model: this.model});
+
+                if(this.model.isValid(true)) {
+                    this.model.save().
+                        then((data) => { 
+                            app.showLoading();
+                            console.log('data got', data, this.model);
+
+                            app.routers.navigate(
+                                '/campaign/perks/' + this.model.get('id'),
+                                {trigger: true, replace: false}
+                            );
+
+                        }).
+                        fail((xhr, status, text) => {
+                            app.defaultSaveActions.error(this, xhr, status, text, this.fields);
+                        });
+                } else {
+                    if(this.$('.alert').length) {
+                        this.$('.alert').scrollTo();
+                    } else  {
+                        this.$el.find('.has-error').scrollTo();
+                    }
+                }
+            }
         }),
 
         perks: Backbone.View.extend({

@@ -70,3 +70,29 @@ mixin fieldBlock(name, data, attr)
                         type=attr.type ? attr.type : 'text'
                         value=values[name]
                       ).form-control
+
+
+mixin fieldDropzone(name, attr)
+    // If we did not created fields vocabulary
+    // Assume it is empty field
+    if fields[name] == null
+        - console.log('bad field', name);
+        - fields[name] = {}
+        - fields[name]['label'] = name
+        - fields[name]['required'] = false
+
+    if values == null
+        - values = {}
+    if values[name] == null
+        - console.log(values)
+        - values[name] = data
+
+    div(class='row media-item ' + name)
+        div(class=attr.class1 + ' ' + (fields[name].required == true ? ' required ' : ' ') )
+          .col-lg-5
+              span.pull-right.font-weight-bold #{fields[name].label}
+          div(class='dropzone__' + name + ' col-lg-7 text-lg-center')
+            p.drop-photo #{attr.text}
+            i(class="fa fa-" + attr.icon)
+        div(class=attr.class2)
+            img(src=(values[name] ? values[name].url : attr.default) alt=fields[name].label class="img-fluid img-" + name)
