@@ -13,6 +13,7 @@ let appRoutes = Backbone.Router.extend({
       'company/create': 'companyCreate',
       'campaign/general_information/:id': 'campaignGeneralInformation',
       'campaign/media/:id': 'campaignMedia',
+      'campaign/team_members/add': 'campaignTeamMembersAdd',
       'campaign/team_members/:id': 'campaignTeamMembers',
       'campaign/specifics/:id': 'campaignSpecifics',
       'campaign/perks/:id': 'campaignPerks',
@@ -294,6 +295,25 @@ let appRoutes = Backbone.Router.extend({
 
                 app.hideLoading();
             });
+        } else {
+            app.routers.navigate(
+                '/account/login',
+                {trigger: true, replace: true}
+            );
+        }
+    },
+
+    campaignTeamMembersAdd: function(id) {
+        if(!app.user.is_anonymous()) {
+            let model = require('models/campaign');
+            let view = require('views/campaign');
+
+            const addForm = new view.teamMemberAdd({
+                el: '#content',
+            });
+            addForm.render();
+            app.hideLoading();
+            
         } else {
             app.routers.navigate(
                 '/account/login',

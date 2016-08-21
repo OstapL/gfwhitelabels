@@ -526,6 +526,24 @@ define(function() {
                 );
                 return this;
             },
+        }),
+
+        teamMemberAdd: Backbone.View.extend({
+            initialize: function(options) {
+                this.fields = options.fields;
+            },
+
+            render: function() {
+                let template = require('templates/campaignTeamMemberAdd.pug');
+                this.$el.html(
+                    template({
+                        serverUrl: serverUrl,
+                        Urls: Urls,
+                        fields: this.fields,
+                    })
+                );
+                return this;
+            },
         })
 
     }
