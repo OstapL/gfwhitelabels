@@ -1,15 +1,15 @@
 require('sass/pages/_calculator.sass');
-require("../../../../node_modules/jquery.inputmask/dist/jquery.inputmask.bundle.js");
-var getCaretPosition = require("../../../js/helpers/getCaretPosition");
-var setCaretPosition = require("../../../js/helpers/setCaretPosition");
-var formatPrice = require("../../../js/helpers/formatPrice");
-var settings = require("../../../js/helpers/settings")();
-var isTextSelected = require("../../../js/helpers/isTextSelected");
+require("../../../../../node_modules/jquery.inputmask/dist/jquery.inputmask.bundle.js");
+var getCaretPosition = require("../../../helpers/getCaretPosition");
+var setCaretPosition = require("../../../helpers/setCaretPosition");
+var formatPrice = require("../../../helpers/formatPrice");
+var settings = require("../../../helpers/settings")();
+var isTextSelected = require("../../../helpers/isTextSelected");
 
 module.exports = Backbone.View.extend({
     el: '#content',
 
-    template: require('templates/calculator/step2.handlebars'),
+    template: require('templates/calculator/paybackshare/step2.pug'),
 
     initialize() {
         // timeout for saving calculator data into the model
@@ -89,7 +89,7 @@ module.exports = Backbone.View.extend({
         this.model.saveOutputData({ outputData: this.outputData, maxOfMultipleReturned });
 
         // navigate to the finish step
-        app.routers.navigate('/calculator/step-3', {trigger: true})
+        app.routers.navigate('/calculator/paybackshare/step-3', {trigger: true});
     },
 
     saveValues(e) {
@@ -100,7 +100,7 @@ module.exports = Backbone.View.extend({
             keyCode = null,
 
         // get not formatted value
-            currentValue = elem.dataset.currentValue;
+        currentValue = elem.dataset.currentValue;
 
         // get caret position into the input field
         this.cursorPosition = getCaretPosition(e.target);

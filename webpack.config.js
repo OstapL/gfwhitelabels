@@ -72,7 +72,6 @@ module.exports = {
             {test: /\.html?$/, loader: 'file?name=[name].[ext]'},
             {test: /\.pug$/, loader: 'pug-loader'},
             {test: /\.js?$/, exclude: /node_modules/, loader: 'babel-loader'},
-            {test: /\.handlebars$/, loader: "handlebars-loader?helperDirs[]=" + __dirname + "/src/js/helpers"},
             {test: /\.css$/, loaders: ['style-loader', 'css-loader']},
             {test: /\.sass$/, loaders: ['style-loader', 'css-loader', 'sass-loader']},
             {test: /\.scss$/, loaders: ['style-loader', 'css-loader', 'sass-loader']},

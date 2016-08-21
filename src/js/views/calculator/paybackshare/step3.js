@@ -1,14 +1,15 @@
-require("../../../../node_modules/as-jqplot/dist/jquery.jqplot.css");
-require("../../../../node_modules/as-jqplot/dist/jquery.jqplot.js");
-require("../../../../node_modules/as-jqplot/dist/plugins/jqplot.highlighter.js");
-require("../../../../node_modules/as-jqplot/dist/plugins/jqplot.canvasTextRenderer.min.js");
-require("../../../../node_modules/as-jqplot/dist/plugins/jqplot.canvasAxisLabelRenderer.min.js");
-require("../../../../node_modules/as-jqplot/dist/plugins/jqplot.pointLabels.min.js");
+require("../../../../../node_modules/as-jqplot/dist/jquery.jqplot.css");
+require("../../../../../node_modules/as-jqplot/dist/jquery.jqplot.js");
+require("../../../../../node_modules/as-jqplot/dist/plugins/jqplot.highlighter.js");
+require("../../../../../node_modules/as-jqplot/dist/plugins/jqplot.canvasTextRenderer.min.js");
+require("../../../../../node_modules/as-jqplot/dist/plugins/jqplot.canvasAxisLabelRenderer.min.js");
+require("../../../../../node_modules/as-jqplot/dist/plugins/jqplot.pointLabels.min.js");
+
 
 module.exports = Backbone.View.extend({
     el: '#content',
 
-    template: require("templates/calculator/step3.handlebars"),
+    template: require("templates/calculator/paybackshare/step3.pug"),
 
     initialize() {
         this.jQPlot = null;
@@ -72,46 +73,46 @@ module.exports = Backbone.View.extend({
 
 
         // drawing jQPlot
-        // this.jQPlot = $.jqplot('chart1', {
-        //     title: 'Payback Graph',
-        //     animate: true,
-        //     dataRenderer: dataRendered,
-        //     seriesDefaults: {
-        //         markerOptions: {
-        //             show: true
-        //         },
-        //         rendererOptions: {
-        //             smooth: false
-        //         },
-        //         pointLabels: {
-        //             show: true,
-        //             location: 'ne',
-        //             ypadding: 3
-        //         }
-        //     },
-        //     axes: {
-        //         xaxis: {
-        //             min: 0,
-        //             max: 10,
-        //             tickInterval: 1,
-        //             label: 'Years'
-        //         },
-        //         yaxis: {
-        //             min: 0,
-        //             max: 2.5,
-        //             tickInterval: 0.5,
-        //             label: 'Multiple Returned',
-        //             labelRenderer: $.jqplot.CanvasAxisLabelRenderer
-        //         }
-        //     },
-        //     highlighter: {
-        //         show: true,
-        //         sizeAdjust: 7.5
-        //     },
-        //     cursor: {
-        //         show: false
-        //     }
-        // });
+        this.jQPlot = $.jqplot('chart1', {
+            title: 'Payback Graph',
+            animate: true,
+            dataRenderer: dataRendered,
+            seriesDefaults: {
+                markerOptions: {
+                    show: true
+                },
+                rendererOptions: {
+                    smooth: false
+                },
+                pointLabels: {
+                    show: true,
+                    location: 'ne',
+                    ypadding: 3
+                }
+            },
+            axes: {
+                xaxis: {
+                    min: 0,
+                    max: 10,
+                    tickInterval: 1,
+                    label: 'Years'
+                },
+                yaxis: {
+                    min: 0,
+                    max: 2.5,
+                    tickInterval: 0.5,
+                    label: 'Multiple Returned',
+                    labelRenderer: $.jqplot.CanvasAxisLabelRenderer
+                }
+            },
+            highlighter: {
+                show: true,
+                sizeAdjust: 7.5
+            },
+            cursor: {
+                show: false
+            }
+        });
 
         return this;
     }

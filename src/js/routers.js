@@ -20,9 +20,9 @@ let appRoutes = Backbone.Router.extend({
       'account/logout': 'logout',
       'account/dashboard/issuer': 'dashboardIssuer',
       'account/dashboard/investor': 'dashboardInvestor',
-      'calculator/step-1': 'calculatorStep1',
-      'calculator/step-2': 'calculatorStep2',
-      'calculator/step-3': 'calculatorStep3'
+      'calculator/paybackshare/step-1': 'calculatorPaybackshareStep1',
+      'calculator/paybackshare/step-2': 'calculatorPaybackshareStep2',
+      'calculator/paybackshare/step-3': 'calculatorPaybackshareStep3'
     },
     back: function(event) {
         var url = event.target.pathname;
@@ -38,19 +38,17 @@ let appRoutes = Backbone.Router.extend({
         app.hideLoading();
     },
 
-    calculatorStep1() {
-        // require.ensure([], () => {
-        let View = require('views/calculator/step1.js');
+    calculatorPaybackshareStep1() {
+        let View = require('views/calculator/paybackshare/step1');
         new View({
             model: app.models.calculator
         }).render();
 
         app.hideLoading();
-        // });
     },
 
-    calculatorStep2: function() {
-        let View = require('views/calculator/step2.js');
+    calculatorPaybackshareStep2: function() {
+        let View = require('views/calculator/paybackshare/step2');
         
         new View({
             model: app.models.calculator
@@ -59,16 +57,14 @@ let appRoutes = Backbone.Router.extend({
         app.hideLoading();
     },
 
-    calculatorStep3: function() {
-        // require.ensure([], (require) => {
-            let View = require('views/calculator/step3.js');
+    calculatorPaybackshareStep3: function() {
+        let View = require('views/calculator/paybackshare/step3');
 
-            new View({
-                model: app.models.calculator
-            }).render();
+        new View({
+            model: app.models.calculator
+        }).render();
 
-            app.hideLoading();
-        // });
+        app.hideLoading();
     },
 
     sketches: function(name) {
@@ -495,6 +491,17 @@ let appRoutes = Backbone.Router.extend({
             window.location = '/';
         });
     },
+
+    execute(callback, args, name) {
+
+        // disable enter to the final step without data
+        if (name == 'calculatorPaybackshareStep3' && !app.models.calculator.get('outputData')) {
+            app.routers.navigate('/calculator/paybackshare/step-2', {trigger: true});
+            return false;
+        }
+
+        if (callback) callback.apply(this, args);
+    }
 });
 
 app.on('userLoaded', function(data){
