@@ -18,11 +18,13 @@ let userModel = Backbone.Model.extend({
         if(localStorage.getItem('token') !== null) {
             let userData = localStorage.getItem('user');
             this.set('token', localStorage.getItem('token'));
+            console.log('current userDAta', userData);
 
             if(userData == null) {
                 this.fetch({
                     url: serverUrl + Urls['rest_user_details'](),
                     success: (data) => {
+                        console.log('we tried request', data);
                         localStorage.setItem('user', JSON.stringify(this.toJSON()));
                         app.trigger('userLoaded', this.toJSON());
                         app.routers.mainPage(); // TODO: FIX THAT !!!
@@ -43,15 +45,19 @@ let userModel = Backbone.Model.extend({
     },
 
     get_thumbnail: function(selector) {
-        $.ajax({
-            url: serverUrl + Urls['thumb2_list'](this.get('image')),
-            dataType: 'json'
-        }).then((json) => {
-            // FixME
-            // as a temp fix
-            $(selector).attr('src', json.url);
-            //return json.url;
-        });
+        if(this.get('image')) {
+            $.ajax({
+                url: serverUrl + Urls['thumb2_list'](this.get('image')),
+                dataType: 'json'
+            }).then((json) => {
+                // FixME
+                // as a temp fix
+                $(selector).attr('src', json.url);
+                //return json.url;
+            });
+        } else {
+                $(selector).attr('src', 'default.png');
+        }
     },
 
     getCompany: function(callback) {

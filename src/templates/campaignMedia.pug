@@ -78,17 +78,18 @@ section.create-company-media.container
   .col-lg-9
     h2.text-uppercase.dosis.text-lg-center.text-xs-center.dosis.m-t-0.m-b-3 Media
     form(metod="post" action="").form-section
-      .row.media-item
-        .col-lg-7
-          .col-lg-5
-            span.pull-right.font-weight-bold Header Image
-          .col-lg-7.text-lg-center
-            a(href="").link-1
-              p.drop-photo Drop your photo here or click to upload
-              i.fa.fa-file-image-o
-        .col-lg-5.p-l-1.p-r-3
-          img(src="/img/test.png" alt="Responsive image").img-fluid
-
+      +fieldDropzone("header_image", {
+        class1: 'col-lg-7',
+        class2: 'col-lg-5 p-l-1 p-r-3',
+        text: 'Drop your photo here or click to upload',
+        icon: 'file-image-o'
+        })
+      +fieldDropzone("list_image", {
+        class1: 'col-lg-7',
+        class2: 'col-lg-5 p-l-1 p-r-3',
+        text: 'Drop your photo here or click to upload',
+        icon: 'file-image-o'
+        })
       .row
         .col-lg-7.media-item
           .col-lg-5
@@ -99,6 +100,7 @@ section.create-company-media.container
               i.fa.fa-file-image-o
         .col-lg-5.p-l-1.p-r-3
           img(src="/img/test.png" alt="Responsive image").img-fluid
+
       .col-lg-12.border-top
         h3.text-lg-center Recommended Additional Media
       .row.m-b-2
@@ -130,18 +132,16 @@ section.create-company-media.container
               img(src="/img/test.png" alt="Responsive image").img-fluid
               img(src="/img/test.png" alt="Responsive image").img-fluid
 
-
-
       .row.m-b-2.recommended
         .col-lg-7
-          +fieldBlock("Main Video for Campaign", '', {
+          +fieldBlock("video", '', {
             class1: 'col-lg-5 col-md-5',
             class2: 'col-lg-7 col-md-7',
             type: 'text',
-            placeholder: 'http://www.'
+            placeholder: 'https://www.youtube.com/'
             })
         
-        .col-lg-5.p-l-1.p-r-3
+        #video_source.col-lg-5.p-l-1.p-r-3
           .embed-responsive.embed-responsive-16by9
             iframe.embed-responsive-item(src="//www.youtube.com/embed/zpOULjyy-n8?rel=0" allowfullscreen="true")
       

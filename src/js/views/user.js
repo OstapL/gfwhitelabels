@@ -3,6 +3,7 @@ define(function() {
         login: Backbone.View.extend({
             events: {
                 'submit .login-form': 'login',
+                'submit .signup-form': 'signup',
             },
 
             initialize: function(options) {
@@ -51,20 +52,46 @@ define(function() {
                     }
                 });
             },
-        }),
 
-        signup: Backbone.View.extend({
-            initialize: function(options) {
-                this.template = options.template;
-            },
 
-            render: function() {
-                this.$el.append(
-                    _.template(this.template)({
-                        serverUrl: serverUrl,
-                    })
-                );
-                return this;
+            signup: function(event) {
+                event.preventDefault();
+                let data = $(event.target).serializeObject();
+
+                this.model.set(data);
+                this.model.url = serverUrl + Urls.rest_register();
+                Backbone.Validation.bind(this, {model: this.model});
+
+                if(this.model.isValid(true)) {
+                    this.model.save(data, {
+                        success: (model, response, status) => {
+                            $.ajax({
+                                url: serverUrl + Urls['rest_login'](),
+                                method: 'POST',
+                                data: {email: data.email, password: data.password1},
+                                success: (xhr) => {
+                                    app.defaultSaveActions.success(this, xhr);
+                                    if(xhr.hasOwnProperty('key')) {
+                                        localStorage.setItem('token', xhr.key);
+                                        setTimeout(function() {
+                                            window.location = '/' //data.next ? data.next : '/account/profile'
+                                        }, 200);
+                                    } else {
+                                        Backbone.Validation.callbacks.invalid(                                 
+                                          this, '', 'Server return no authentication data'
+                                        );
+                                    }
+                                },
+                                error: (xhr, status, text) => {
+                                    app.defaultSaveActions.error(this, xhr, status, text);
+                                }
+                            });
+                        },
+                        error: (model, response, status) => {
+                            app.defaultSaveActions.error(this, response);
+                        }
+                    });
+                }
             },
         }),
 
@@ -75,6 +102,8 @@ define(function() {
 
             events: {
                 'submit form': 'update',
+                'focus #ssn' : 'showSSNPopover',
+                'focuseout #ssn' : 'hideSSNPopover',
             },
 
             render: function() {
@@ -120,6 +149,27 @@ define(function() {
                     });
                 }
             },
+
+            showSSNPopover: function(event){
+                $('#ssn').popover({
+                    trigger: 'focus',
+                    placement: function(context, src) {
+                         $(context).addClass('ssn-popover');
+                         return 'right';
+                    },
+                    html: true,
+                    content: function(){
+                        var content = $('.profile').find('.popover-content-ssn ').html();
+                        return content;
+                    }
+                });
+ 
+                $('#ssn').popover('show');
+             },
+
+             hideSSNPopover: function(event){
+                $('#ssn').popover('hide');
+             }
         }),
     
     }

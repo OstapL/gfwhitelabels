@@ -1,7 +1,9 @@
 .footer_new
 	width: 100%
-	background: $footer_background
+	margin-top: 85px
 
+	background: $footer_background
+  
 	.footer_title
 		width: 100%
 		margin-bottom: 12px
@@ -30,10 +32,11 @@
 
 		display: inline-block
 		height: 38px
+		margin-bottom: 20px
 		width: 48px
 
 		img
-			transition: all 0.5s ease-in-out
+			transition: all 1s ease-in-out
 
 			position: absolute
 			top: 50px
@@ -41,7 +44,7 @@
 
 			opacity: 0
 		// повешать на класс который будет добавляться при скроле
-		&:hover img
+		&.fade-in img
 			top: 0
 
 			opacity: 1
