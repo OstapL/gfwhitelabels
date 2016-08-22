@@ -7,8 +7,6 @@ global.Tether = require('tether');
 global.Bootstrap = require('../node_modules/bootstrap/dist/js/bootstrap.min.js');
 global.userModel = require('models/user.js');
 global.Urls = require('jsreverse.js');
-global.calculatorModel = require('models/calculator.js');
-
 
 // require('sass/mixins_all.sass');
 
@@ -180,13 +178,12 @@ global.app = {
 
     models: {
         campaign: [],
-        page: [],
-        calculator: null
+        page: []
     },
 
     views: {
         campaign: [],
-        page: [],
+        page: []
     },
 
     routers: {},
@@ -208,6 +205,13 @@ global.app = {
             callback(this.models[name][id]);
         }
     },
+
+    getModelInstance: function(model, name) {
+        if (app.models['name']) return app.models['name'];
+        return app.models['name'] = new model()
+    }
+
+    ,
 
     /* 
      * Misc Display Functions 
@@ -357,9 +361,6 @@ global.app = {
 
 _.extend(app, Backbone.Events);
 app.user = new userModel();
-
-// initialize calculator model
-app.models.calculator = new calculatorModel();
 
 require('routers');
 

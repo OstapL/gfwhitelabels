@@ -39,29 +39,33 @@ let appRoutes = Backbone.Router.extend({
     },
 
     calculatorPaybackshareStep1() {
+        let Model = require('models/calculator');
         let View = require('views/calculator/paybackshare/step1');
+
         new View({
-            model: app.models.calculator
+            model: app.getModelInstance(Model, 'calculator').setFormattedPrice()
         }).render();
 
         app.hideLoading();
     },
 
     calculatorPaybackshareStep2: function() {
+        let Model = require('models/calculator');
         let View = require('views/calculator/paybackshare/step2');
-        
+
         new View({
-            model: app.models.calculator
+            model: app.getModelInstance(Model, 'calculator').setFormattedPrice()
         }).render();
         
         app.hideLoading();
     },
 
     calculatorPaybackshareStep3: function() {
+        let Model = require('models/calculator');
         let View = require('views/calculator/paybackshare/step3');
 
         new View({
-            model: app.models.calculator
+            model: app.getModelInstance(Model, 'calculator').setFormattedPrice()
         }).render();
 
         app.hideLoading();

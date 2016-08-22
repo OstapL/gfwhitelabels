@@ -8,10 +8,6 @@ module.exports = Backbone.Model.extend({
         'outputData': null
     },
 
-    initialize() {
-        this.setFormattedPrice();
-    },
-    
     saveField(modelValue, value) {
         this.set(modelValue, value);
     },
@@ -25,5 +21,6 @@ module.exports = Backbone.Model.extend({
             'raiseMoneyFormatted': formatPrice(this.get('raiseMoney')),
             'nextYearRevenueFormatted': formatPrice(this.get('nextYearRevenue'))
         });
+        return this;
     }
 });
