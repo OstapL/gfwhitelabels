@@ -81,13 +81,13 @@ section.campaing-list
                                         i.fa.fa-gift
 
                                 .bottom_pr
-                                    if campaign.security_type == false
-                                        p Price per share: $#{campaign.security_type_data.price_per_share}
-                                        p Number of shares: $#{campaign.security_type_data.amount_of_shares}
+                                    if campaign.security_type == 0
+                                        p Price per share: $#{campaign.price_per_share}
+                                        p Number of shares: $#{campaign.amount_of_shares}
                                     else
-                                        p % Revenue: #{campaign.security_type_data.percentage_revenue}
-                                        p Cap: #{campaign.security_type_data.cap}
-                                        p Expiration Date: #{campaign.security_type_data.expiration_date}
+                                        p % Revenue: #{campaign.percentage_revenue}
+                                        p Cap: #{campaign.cap}
+                                        p Expiration Date: #{campaign.expiration_date}
 
 
                         .title
