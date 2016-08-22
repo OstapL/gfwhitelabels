@@ -317,12 +317,14 @@ define(function() {
                     this.model.save().
                         then((data) => { 
                             app.showLoading();
-                            console.log('data got', data, this.model);
 
+                            window.location = '/campaign/media/' + this.model.get('id');
+                            /*
                             app.routers.navigate(
                                 '/campaign/media/' + this.model.get('id'),
                                 {trigger: true, replace: false}
                             );
+                            */
 
                         }).
                         fail((xhr, status, text) => {
@@ -441,12 +443,14 @@ define(function() {
                     this.model.save().
                         then((data) => { 
                             app.showLoading();
-                            console.log('data got', data, this.model);
 
+                            window.location = '/campaign/specifics/' + this.model.get('id');
+                            /*
                             app.routers.navigate(
                                 '/campaign/specifics/' + this.model.get('id'),
                                 {trigger: true, replace: false}
                             );
+                            */
 
                         }).
                         fail((xhr, status, text) => {
@@ -535,10 +539,13 @@ define(function() {
                             app.showLoading();
                             console.log('data got', data, this.model);
 
+                            window.location = '/campaign/media/' + this.model.get('id');
+                            /*
                             app.routers.navigate(
                                 '/campaign/media/' + this.model.get('id'),
                                 {trigger: true, replace: false}
                             );
+                            */
 
                         }).
                         fail((xhr, status, text) => {
@@ -606,12 +613,14 @@ define(function() {
                     this.model.save().
                         then((data) => { 
                             app.showLoading();
-                            console.log('data got', data, this.model);
 
+                            window.location = '/campaign/perks/' + this.model.get('id');
+                            /*
                             app.routers.navigate(
                                 '/campaign/perks/' + this.model.get('id'),
                                 {trigger: true, replace: false}
                             );
+                            */
 
                         }).
                         fail((xhr, status, text) => {
@@ -682,7 +691,7 @@ define(function() {
                         serverUrl: serverUrl,
                         Urls: Urls,
                         fields: this.fields,
-                        campaign: this.model.toJSON(),
+                        values: this.model.toJSON(),
                     })
                 );
                 return this;
@@ -704,10 +713,13 @@ define(function() {
                             app.showLoading();
                             console.log('data got', data, this.model);
 
+                            window.location = '/api/campaign/' + this.model.get('id');
+                            /*
                             app.routers.navigate(
                                 '/api/campaign/' + this.model.get('id'),
                                 {trigger: true, replace: false}
                             );
+                            */
 
                         }).
                         fail((xhr, status, text) => {

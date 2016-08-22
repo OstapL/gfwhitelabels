@@ -411,15 +411,16 @@ let appRoutes = Backbone.Router.extend({
                 id: id
             });
             campaign.urlRoot += '/perks';
-            campaign.fetch();
-
-            $.ajax(_.extend({
+            var a1 = campaign.fetch();
+            var a2 = $.ajax(_.extend({
                     url: campaign.urlRoot,
                 }, app.defaultOptionsRequest)
-            ).done((response) => {
+            );
+            
+            $.when(a1, a2).done((r1, r2) => {
                 var i = new view.perks({
                     el: '#content',
-                    fields: response.actions.POST,
+                    fields: r2[0].actions.POST,
                     model: campaign
                 });
                 i.render();
