@@ -11,6 +11,7 @@ let appRoutes = Backbone.Router.extend({
       'page/:id': 'pageDetail',
       'account/profile': 'accountProfile',
       'company/create': 'companyCreate',
+      'campaign/general_information/': 'campaignGeneralInformation',
       'campaign/general_information/:id': 'campaignGeneralInformation',
       'campaign/media/:id': 'campaignMedia',
       'campaign/team_members/add': 'campaignTeamMembersAdd',
@@ -27,6 +28,11 @@ let appRoutes = Backbone.Router.extend({
         var url = event.target.pathname;
         if(app.cache.hasOwnProperty(event.target.pathname) == false) {
             window.history.back();
+            console.log('clicked back button');
+            app.routers.navigate(
+                event.target.pathname,
+                {trigger: true, replace: false}
+            );
         } else {
             $('#content').html(app.cache[event.target.pathname]);
             app.routers.navigate(
@@ -178,13 +184,10 @@ let appRoutes = Backbone.Router.extend({
             let view = require('views/company');
 
             app.user.getCompany((company) => {
-                console.log('hello done');
-                console.log(app.defaultOptionsRequest);
                 $.ajax(_.extend({
                         url: company.urlRoot,
                     }, app.defaultOptionsRequest)
                 ).done((response) => {
-                    console.log('hello done 2');
                     var i = new view.createOrUpdate({
                         el: '#content',
                         fields: response.actions.POST,
@@ -205,28 +208,50 @@ let appRoutes = Backbone.Router.extend({
         }
     },
 
-    campaignGeneralInformation: function(company_id) {
+    campaignGeneralInformation: function(id) {
         if(!app.user.is_anonymous()) {
             let model = require('models/campaign');
             let view = require('views/campaign');
 
-            let campaign = new model.model({
-                company: company_id
-            });
-            campaign.urlRoot += '/general_information'
-            $.ajax(_.extend({
+            let company_id = app.getParams().company_id;
+
+            if(id === null && typeof company_id === 'undefined') {
+                alert('please set up id or company_id');
+                console.log('not goinng anywhere');
+                return;
+            }
+            let campaign = '';
+            if(company_id) { 
+                campaign = new model.model({
+                    company: company_id
+                });
+                campaign.urlRoot += '/general_information'
+            } else {
+                campaign = new model.model({
+                    id: id
+                });
+                campaign.urlRoot += '/general_information'
+                // ToDo
+                // Make it sync
+            }
+            var a1 = campaign.fetch();
+            var a2 = $.ajax(_.extend({
                 url: campaign.urlRoot,
-            }, app.defaultOptionsRequest)).
-                done((response) => {
+            }, app.defaultOptionsRequest));
+
+            $.when(a1, a2).done((r1, r2) => {
                 var i = new view.generalInformation({
                     el: '#content',
-                    fields: response.actions.POST,
+                    fields: r2[0].actions.POST,
                     model: campaign
                 });
                 i.render();
                 //app.views.campaign[id].render();
                 //app.cache[window.location.pathname] = i.$el.html();
 
+                app.hideLoading();
+            }).fail((xhr, error) =>  {
+                app.DefaultSaveActions.error($('#content'), error);
                 app.hideLoading();
             });
         } else {
@@ -258,6 +283,7 @@ let appRoutes = Backbone.Router.extend({
                 i.render();
                 //app.views.campaign[id].render();
                 //app.cache[window.location.pathname] = i.$el.html();
+                console.log('loaded');
 
                 app.hideLoading();
             });
@@ -567,6 +593,7 @@ app.on('userLoaded', function(data){
     );
     console.log('user ready');
 });
+
 
 $(document).ready(function(){
     // show bottom logo while scrolling page

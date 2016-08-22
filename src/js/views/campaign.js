@@ -32,12 +32,14 @@ define(function() {
             },
 
             render: function() {
-                app.loadCss('/css/photoswipe.css');
-                app.loadCss('/css/default-skin.css');
+                require('../../../node_modules/photoswipe/src/css/main.scss');
+                require('../../../node_modules/photoswipe/src/css/default-skin/default-skin.scss');
+
                 let PhotoSwipe = require('photoswipe');
                 let PhotoSwipeUI_Default = require('photoswipe-ui-default');
 
                 let template = require('templates/campaignDetail.pug');
+
                 this.$el.html(
                     template({
                         serverUrl: serverUrl,
@@ -52,11 +54,38 @@ define(function() {
                 });
 
                 setTimeout(() => {
+                    var stickyToggle = function(sticky, stickyWrapper, scrollElement) {
+                        var stickyHeight = sticky.outerHeight();
+                        var stickyTop = stickyWrapper.offset().top;
+                        if (scrollElement.scrollTop() >= stickyTop){
+                            stickyWrapper.height(stickyHeight);
+                            sticky.addClass("is-sticky");
+                        }
+                        else{
+                            sticky.removeClass("is-sticky");
+                            stickyWrapper.height('auto');
+                        }
+                    };
+
+                    this.$el.find('[data-toggle="sticky-onscroll"]').each(function() {
+                        var sticky = $(this);
+                        var stickyWrapper = $('<div>').addClass('sticky-wrapper'); // insert hidden element to maintain actual top offset on page
+                        sticky.before(stickyWrapper);
+                        sticky.addClass('sticky');
+
+                        // Scroll & resize events
+                        $(window).on('scroll.sticky-onscroll resize.sticky-onscroll', function() {
+                            stickyToggle(sticky, stickyWrapper, $(this));
+                        });
+
+                        // On page load
+                        stickyToggle(sticky, stickyWrapper, $(window));
+                    });
+
                     let photoswipeRun = require('photoswipe_run.js');
                     window.PhotoSwipe = PhotoSwipe;
                     window.PhotoSwipeUI_Default = PhotoSwipeUI_Default;
-                    initPhotoSwipeFromDOM('#gallery1');
-
+                    photoswipeRun('#gallery1');
                 }, 100);
 
                 return this;
@@ -203,21 +232,72 @@ define(function() {
         generalInformation: Backbone.View.extend({
             events: {
                 'submit form': 'submit',
+                'click .add-section': 'addSection',
             },
 
             initialize: function(options) {
                 this.fields = options.fields;
+                this.faqIndex = 1;
+            },
+
+            addSection: function(e) {
+                e.preventDefault();
+                let sectionName = e.target.dataset.section;
+                let template = require('templates/section.pug');
+                $('.' + sectionName + ' .m-b-0').addClass('form-group').removeClass('m-b-0');
+                $('.' + sectionName).append(
+                    template({
+                        fields: this.fields,
+                        name: sectionName,
+                        attr: {
+                            class1: '',
+                            class2: '',
+                            type: 'json',
+                            index: this.faqIndex,
+                        },
+                        values: this.model.toJSON() 
+                    })
+                );
+                this.faqIndex ++;
             },
 
             render: function() {
                 let template = require('templates/campaignGeneralInformation.pug');
+                this.fields['faq'].type = 'json'
+                this.fields['faq'].schema = {
+                    question: {
+                        type: 'string', 
+                        label: 'Question',
+                        values: [],
+                    },
+                    answer: {
+                        type: 'text',
+                        label: 'Answer',
+                        values: [],
+                    }
+                }
+                this.fields['additional_info'].type = 'json'
+                this.fields['additional_info'].schema = {
+                    title: {
+                        type: 'string', 
+                        label: 'Optional Additioal Sections',
+                        placeholder: 'Section Title',
+                        values: [],
+                    },
+                    body: {
+                        type: 'text',
+                        label: '',
+                        placeholder: 'Description',
+                        values: [],
+                    }
+                }
+
                 this.$el.html(
                     template({
                         serverUrl: serverUrl,
                         Urls: Urls,
                         fields: this.fields,
                         values: this.model.toJSON(),
-                        campaign: this.model.toJSON(),
                     })
                 );
                 return this;
@@ -262,15 +342,53 @@ define(function() {
             events: {
                 'submit form': 'submit',
                 'change #video': 'updateVideo',
+                'click .add-section': 'addSection',
             },
 
             initialize: function(options) {
                 this.fields = options.fields;
+                this.pressIndex = 1;
+            },
+
+            addSection: function(e) {
+                e.preventDefault();
+                let sectionName = e.target.dataset.section;
+                let template = require('templates/section.pug');
+                $('.' + sectionName + ' .m-b-0').addClass('form-group').removeClass('m-b-0');
+                $('.' + sectionName).append(
+                    template({
+                        fields: this.fields,
+                        name: sectionName,
+                        attr: {
+                            class1: '',
+                            class2: '',
+                            type: 'json',
+                            index: this[sectionName + 'Index']
+                        },
+                        values: this.model.toJSON() 
+                    })
+                );
+                this.faqIndex ++;
             },
 
             render: function() {
                 let template = require('templates/campaignMedia.pug');
                 let dropzone = require('dropzone');
+                this.fields['press'].type = 'json'
+                this.fields['press'].schema = {
+                    headline: {
+                        type: 'string', 
+                        label: 'Headline',
+                        placeholder: 'Title',
+                        values: [],
+                    },
+                    link: {
+                        type: 'url',
+                        label: 'Article link',
+                        placeholder: 'http://www.',
+                        values: [],
+                    }
+                };
                 this.$el.html(
                     template({
                         serverUrl: serverUrl,

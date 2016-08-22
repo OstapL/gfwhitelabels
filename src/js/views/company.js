@@ -28,9 +28,12 @@ define(function() {
                 event.preventDefault();
 
                 var data = $(e.target).serializeObject();
+                delete data['id'];
                 //var investment = new InvestmentModel(data);
+                console.log(data);
 
                 this.model.set(data);
+                console.log(this.model);
                 Backbone.Validation.bind(this, {model: this.model});
 
                 if(this.model.isValid(true)) {
@@ -39,7 +42,7 @@ define(function() {
                             app.showLoading();
 
                             app.routers.navigate(
-                                '/campaign/general_information/' + data.id,
+                                '/campaign/general_information/?company_id=' + data.id,
                                 {trigger: true, replace: false}
                             );
 

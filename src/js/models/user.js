@@ -69,7 +69,6 @@ let userModel = Backbone.Model.extend({
         ).done((response) => {
             console.log('response is', response);
             let companyModel = require('models/company.js');
-            console.log(companyModel);
             var r = new companyModel.model(response[0]);
             callback(new companyModel.model(response[0]));
         }).fail(app.defaultSaveActions.error);
