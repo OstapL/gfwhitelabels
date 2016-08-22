@@ -7,6 +7,7 @@ define(function() {
             },
             initialize: function(options) {
                 this.fields = options.fields;
+                this.campaign = options.campaign;
             },
 
             render: function() {
@@ -17,7 +18,8 @@ define(function() {
                         Urls: Urls,
                         fields: this.fields,
                         values: this.model.toJSON(),
-                        user: app.user.toJSON()
+                        user: app.user.toJSON(),
+                        campaign: this.campaign
                     })
                 );
                 return this;

@@ -11,13 +11,13 @@ section#home(style="background-image: url(" + (campaign.header_image_data ? camp
 						i.fa.fa-play-circle-o
 					a(href=campaign.company.website).link-6.link-campaing-detail #{ campaign.company.website }
 					.row.social-link
-						a(href="").link-6.link-campaing-detail
+						a(href=campaign.company.facebook target="_blank").link-6.link-campaing-detail
 							i.fa.fa-facebook
-						a(href="").link-6.link-campaing-detail
+						a(href=campaign.company.twitter target="_blank").link-6.link-campaing-detail
 							i.fa.fa-twitter
-						a(href="").link-6.link-campaing-detail
+						a(href=campaign.company.instagram target="_blank").link-6.link-campaing-detail
 							i.fa.fa-instagram
-						a(href="").link-6.link-campaing-detail
+						a(href=campaign.company.linkedin target="_blank").link-6.link-campaing-detail
 							i.fa.fa-linkedin
 
 				// End Hero Content
@@ -53,13 +53,13 @@ section.campaigndetail
 				.col-lg-12.share
 					span.font-weight-bold.d-inline-block Share:
 					.d-inline-block
-						a(href="").link-1
+						a(href=campaign.company.facebook).link-1
 							i.fa.fa-facebook
-						a(href="").link-1
+						a(href=campaign.company.twitter).link-1
 							i.fa.fa-twitter
-						a(href="").link-1
+						a(href=campaign.company.linkedin).link-1
 							i.fa.fa-linkedin
-						a(href="").link-1
+						a(href=campaign.company.instagram).link-1
 							i.fa.fa-google-plus
 
 
@@ -73,10 +73,10 @@ section.campaigndetail
 			.mt25
 				.row.col-lg-8
 					p Target
-					h2.font-weight-bold $500,000 - $1,000,000 #{ campaign.company.minimum_raise }  #{ campaign.company.maximum_raise }
+					h2.font-weight-bold #{ campaign.minimum_raise } - #{ campaign.maximum_raise }
 				.row.col-lg-4.pull-right
 					p Minimum Investment
-					h2.font-weight-bold $200 #{ campaign.company.minimum_increment }
+					h2.font-weight-bold #{ campaign.minimum_increment }
 				.row.col-lg-12.investors-block
 					.col-lg-2.p-l-0
 						p Investors
@@ -126,11 +126,10 @@ section
 	section.about-detail.border-bottom
 		.container
 			.col-lg-12
-				h2#about.dosis.text-uppercase.text-lg-center About smartbe
-				p Smartbe is the first intelligent baby stroller of the new generation. Smartbe is a revolutionary concept as regards design and functionality that solves real parents and baby needs. Smartbe applies state of the art technology through innovative, minimalist and safe design. We have built a new baby stroller with all the needed intelligence to provide new levels of child safety and comfort never before imagined together in a stroller. Smartbe fulfills all US  European Safety Regulations also going beyond, providing safety features not possible without the addition of electricity and leading edge mobile technology.
+				.h2#about.dosis.text-uppercase.text-lg-center About #{ campaign.company.name }
+				p #{ campaign.pitch }
 				h3.our.text-lg-center Our Edge
-				p Smartbe is the all-in-one solution that provides more than 10 safety, security, comfort and convenience-enhancing functions managed by Android and IOS smartphones and smartwatches. 
-				p All the technologies being used in Smartbe have already been used and extensively tested in other industries so we are very optimistic we can meet our launch goals. The breakthrough is that these technologies are being applied to create not only an industry disrupting, electrically powered stroller with killer functionality, but also a stylish, minimalist device designed to fit every parent’s needs and desires.
+				p #{ campaign.intended_use_of_proceeds }
 			#gallery1.col-lg-12.pt50.photo-gallegy
 				.col-lg-3.no-padding-img
 					a(href="/img/campaign/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
@@ -183,51 +182,21 @@ section
 			.col-lg-12
 				h3.text-lg-center Articles and Press
 			.articles_press
-				.col-lg-3
-					a(href="")
-						.card.card-inverse
-							img(src="/img/smartbe-intelligent-stroller.jpg" alt="").card-img
-							.card-img-overlay
-								.card-title
-									p.card-text.font-weight-bold Smartbe is the first intelligent baby stroller of the new generation
-									p.card-text.intro Smartbe is a revolutionary concept as regards design and ...
-									img(src="/img/icon-campaign.jpg", alt="").icon-campaign.d-inline-block
-									a(href="").card-text.links.d-inline-block bizwest.com
-				.col-lg-3
-					a(href="")
-						.card.card-inverse
-							img(src="/img/smartbe-intelligent-stroller.jpg" alt="").card-img
-							.card-img-overlay
-								.card-title
-									p.card-text.font-weight-bold Smartbe is the first intelligent baby stroller of the new generation
-									p.card-text.intro Smartbe is a revolutionary concept as regards design and ...
-									img(src="/img/icon-campaign.jpg", alt="").icon-campaign.d-inline-block
-									a(href="").card-text.links.d-inline-block bizwest.com
-				.col-lg-3
-					a(href="")
-						.card.card-inverse
-							img(src="/img/smartbe-intelligent-stroller.jpg" alt="").card-img
-							.card-img-overlay
-								.card-title
-									p.card-text.font-weight-bold Smartbe is the first intelligent baby stroller of the new generation
-									p.card-text.intro Smartbe is a revolutionary concept as regards design and ...
-									img(src="/img/icon-campaign.jpg", alt="").icon-campaign.d-inline-block
-									a(href="").card-text.links.d-inline-block bizwest.com
-				.col-lg-3
-					a(href="")
-						.card.card-inverse
-							img(src="/img/smartbe-intelligent-stroller.jpg" alt="").card-img
-							.card-img-overlay
-								.card-title
-									p.card-text.font-weight-bold Smartbe is the first intelligent baby stroller of the new generation
-									p.card-text.intro Smartbe is a revolutionary concept as regards design and ...
-									img(src="/img/icon-campaign.jpg", alt="").icon-campaign.d-inline-block
-									a(href="").card-text.links.d-inline-block bizwest.com
+			if campaign.press
+				each v,k in campaign.press
+					.col-lg-3
+						a(href=v.link target="_blank")
+							.card.card-inverse
+								img(src="/img/smartbe-intelligent-stroller.jpg" alt="").card-img
+								.card-img-overlay
+									.card-title
+										p.card-text.font-weight-bold v.title
+										p.card-text.intro Smartbe is a revolutionary concept as regards design and ...
+										img(src="/img/icon-campaign.jpg", alt="").icon-campaign.d-inline-block
+										a(href=v.link target="_blank").card-text.links.d-inline-block v.link
 				.col-lg-12
 					h3.text-lg-center Why We are Raising Capital, and What We’ll Do with It
-					p Smartbe is a revolutionary new concept and the contributors will be part of that change. We’ve chosen Indiegogo to spread this new concept to the community. Crowdfunding is one of the tools of the modern world change where everyone cooperates and joins in to support an idea and benefit from it. With your support we will get this product to market much faster, and we can start changing the way we take our babies for a ride, providing new levels of comfort and safety never possible before. We want to drastically improve the out-of-home experience of babies and those that care for them. Together, we will make Smartbe come true.
-
-
+					p #{ campaign.business_model }
 
 	section.team.border-bottom
 		.container
@@ -323,42 +292,33 @@ section
 						.container
 							.col-lg-4
 								p Pre-Money Valuation
-								h2.font-weight-bold $2,000,000
+								h2.font-weight-bold $#{ campaign.premoney_valuation }
 							.col-lg-4
 								p Price per Share
-								h2.font-weight-bold $200
+								h2.font-weight-bold $#{ campaign.price_per_share }
 							.col-lg-4
 								p Target Minimum Raise Amonunt
-								h2.font-weight-bold $500,000
+								h2.font-weight-bold $#{ campaign.minimum_raise }
 							.col-lg-4
 								p Type of Security
-								h2.font-weight-bold Equity
+								h2.font-weight-bold #{ campaign.get_security_type_display }
 							.col-lg-4
 								p Minimum Investment
-								h2.font-weight-bold $100
+								h2.font-weight-bold $#{ campaign.minimum_investment }
 							.col-lg-4
 								p Target Maximum Raise Amount
-								h2.font-weight-bold $1,000,000
+								h2.font-weight-bold $#{ campaign.maximum_raise }
 				
 	section.perks.container
+	if campaign.perks
 		h3.col-lg-12.text-lg-center Perks
-		.col-lg-4
-			.jumbotron.jumbotron-fluid
-				.container
-					h3 $500 Investments
-					p.text-justify A one year subscription plus a gorgeous Peloton Long-Sleeve T-SHIRT. One subscription covers an unlimited amount of users so that every member of your family would be able to use the bike and access Peloton content from their own personal 
+		each v,k in campaign.perks
+				.col-lg-4
+					.jumbotron.jumbotron-fluid
+						.container
+							h3 ${v.amount} Investments
+							p.text-justify #{ v.perk }
 
-		.col-lg-4
-			.jumbotron.jumbotron-fluid
-				.container
-					h3 $1,000 Investments
-					p.text-justify FULLY LOADED PACKAGE: The Peloton Bike plus Peloton headphones, Peloton biking shoes, a Peloton heart rate monitor, the Peloton hand weights, a Peloton shirt, and a Peloton sweat mat (you're going to need it!)
-		.col-lg-4
-			.jumbotron.jumbotron-fluid
-				.container
-					h3 $5,000 Investments
-					p.text-justify The Peloton Bike (and all of the accessories) AND a trip for two to NYC to meet the team and teach (or take) your very own class in the Peloton Studio, to be accessible to all Peloton riders via on-demand classes! (USA ONLY)
-				
 	section.investors-all.border-bottom
 		.container
 			h3.col-lg-12.text-lg-center Investors
@@ -483,21 +443,23 @@ section
 	
 	section.faq.border-bottom
 		.container
+		if campaign.faq
 			h2#faq.col-lg-12.dosis.text-uppercase.text-lg-center FAQ
 			.col-lg-8.offset-lg-2
 				#accordion(role="tablist" aria-multiselectable="true")
+				each v,k in campaign.faq
 					.panel.panel-default
-						#faqOne(role="tab").panel-heading
+						div(id="faq" + k role="tab").panel-heading
 							a(data-toggle="collapse"
 							data-parent="#accordion" 
-							href="#collapsefaqOne"
+							href="#collapsefaq"+ k
 							aria-expanded="true"
-							aria-controls="collapsefaqOne"
-							).list-group-item-action.active What is Smartbe?   
+							aria-controls="collapsefaq"+ k
+							).list-group-item-action.active #{v.question}
 								i.fa.fa-angle-up
-						#collapsefaqOne(role="tabpanel"
-						aria-labelledby="faqOne"
-						).panel-collapse.collapse.in  Smartbe is a revolutionary new concept and the contributors will be part of that change. We’ve chosen Indiegogo to spread this new concept to the community. Crowdfunding is one of the tools of the modern world change where everyone cooperates and joins in to support an idea and benefit from it.
+						div(id="collapsefaq" + k role="tabpanel"
+						aria-labelledby="faq" + k
+						).panel-collapse.collapse.in  #{ v.answer }
 					.panel.panel-default
 						#faqTwo(role="tab").panel-heading
 							a(data-toggle="collapse"
@@ -599,7 +561,7 @@ section
 	.modal-dialog(role="document")
 		.modal-content
 			.embed-responsive.embed-responsive-16by9
-				iframe.embed-responsive-item(src="//www.youtube.com/embed/zpOULjyy-n8?rel=0" allowfullscreen="true")
+				iframe.embed-responsive-item(src=campaign.video allowfullscreen="true")
 
 
 //modal sing_up
