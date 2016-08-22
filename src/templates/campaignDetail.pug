@@ -1,6 +1,6 @@
 include mixins.pug
 
-section#home(style="background-image: url(" + campaign.header_image.url + ")").home-section.bg-dark-alfa-70.parallax-2.fixed-height-small
+section#home(style="background-image: url(" + (campaign.header_image_data ? campaign.header_image_data.url : '/img/default.png') + ")").home-section.bg-dark-alfa-70.parallax-2.fixed-height-small
 	.js-height-parent.container
 		// Hero Content
 		.home-content
@@ -29,10 +29,10 @@ section#home(style="background-image: url(" + campaign.header_image.url + ")").h
 					h2.font-weight-bold #{ campaign.premoney_valuation }
 				.col-lg-2
 					p Type of Security
-					h2.font-weight-bold Equity
+					h2.font-weight-bold #{ campaign.get_security_type_display }
 				.col-lg-2
 					p Days Left
-					h2.font-weight-bold 120
+					h2.font-weight-bold #{ campaign.days_to_go }
 				.col-lg-4.pull-right
 					a(href=Urls['campaign-invest'](campaign.id)).btn.btn-primary.btn-lg.text-uppercase.pull-right invest in #{ campaign.company.name }
 
@@ -688,5 +688,3 @@ section
 				.pswp__caption
 					.pswp__caption__center
 
-
-script(src='/js/nav_sticky.js')

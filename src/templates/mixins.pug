@@ -31,7 +31,6 @@ mixin fieldBlock(name, data, attr)
         - console.log(values)
         - values[name] = data
 
-    - console.log('type', attr.type)
     if attr.type == 'checkbox' 
         div(class="form-group " + (attr.row == 0 ? '' : ' row ') + name + (fields[name].required == true ? ' required ' : ' '))
             div(class=(attr.class1 ? attr.class1 : 'col-md-2') + ' text-md-right text-xs-right')
@@ -43,6 +42,18 @@ mixin fieldBlock(name, data, attr)
                 ).form-check-input
             div(class=attr.class2  ? attr.class2 : 'col-md-10')
                 label(for=name).text-justify #{attr.text}
+    else if attr.type == 'radio' 
+        div(class="form-group " + (attr.row == 0 ? '' : ' row ') + name + (fields[name].required == true ? ' required ' : ' '))
+            label(class= attr.text_align ? 'text-md-' + attr.text_align + ' ' + attr.class1 : ' text-md-right ' + attr.class1 for=name)= fields[name].label
+            div(class=attr.class2)
+                each v in fields[name].choices
+                    label.col-lg-3
+                        input(
+                            type="radio" 
+                            class="form-check-input" 
+                            name=name
+                            value=v.value)
+                        | #{v.display_name}
     else if attr.type == 'choice' 
         div(class="form-group " + (attr.row == 0 ? '' : ' row ') + name + (fields[name].required == true ? ' required ' : ' '))
             label(class= attr.text_align ? 'text-md-' + attr.text_align + ' ' + attr.class1 : ' text-md-right ' + attr.class1 for=name)= fields[name].label
@@ -80,7 +91,8 @@ mixin fieldBlock(name, data, attr)
         div(class="form-group " + (attr.row == 0 ? '' : ' row ') + name + (fields[name].required == true ? ' required ' : ' '))
             label(class= attr.text_align ? 'text-md-' + attr.text_align + ' ' + attr.class1 : ' text-md-right ' + attr.class1 for=name)= fields[name].label
             div(class=attr.class2)
-                if attr.type == 'description' 
+                - console.log(values, values[name])
+                if attr.type == 'textarea' 
                     textarea(
                         id=name
                         name=name
@@ -116,7 +128,8 @@ mixin fieldDropzone(name, attr)
           .col-lg-5
               span.pull-right.font-weight-bold #{fields[name].label}
           div(class='dropzone__' + name + ' col-lg-7 text-lg-center')
-            p.drop-photo #{attr.text}
-            i(class="fa fa-" + attr.icon)
+            span(class='link-1' href="#")
+                p.drop-photo #{attr.text}
+                i(class="fa fa-" + attr.icon)
         div(class=attr.class2)
             img(src=(values[name + '_data'] ? values[name + '_data'].url : attr.default) alt=fields[name].label class="img-fluid img-" + name)

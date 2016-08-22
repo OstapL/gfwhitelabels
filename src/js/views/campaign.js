@@ -32,12 +32,14 @@ define(function() {
             },
 
             render: function() {
-                app.loadCss('/css/photoswipe.css');
-                app.loadCss('/css/default-skin.css');
+                require('../../../node_modules/photoswipe/src/css/main.scss');
+                require('../../../node_modules/photoswipe/src/css/default-skin/default-skin.scss');
+
                 let PhotoSwipe = require('photoswipe');
                 let PhotoSwipeUI_Default = require('photoswipe-ui-default');
 
                 let template = require('templates/campaignDetail.pug');
+
                 this.$el.html(
                     template({
                         serverUrl: serverUrl,
@@ -52,11 +54,38 @@ define(function() {
                 });
 
                 setTimeout(() => {
+                    var stickyToggle = function(sticky, stickyWrapper, scrollElement) {
+                        var stickyHeight = sticky.outerHeight();
+                        var stickyTop = stickyWrapper.offset().top;
+                        if (scrollElement.scrollTop() >= stickyTop){
+                            stickyWrapper.height(stickyHeight);
+                            sticky.addClass("is-sticky");
+                        }
+                        else{
+                            sticky.removeClass("is-sticky");
+                            stickyWrapper.height('auto');
+                        }
+                    };
+
+                    this.$el.find('[data-toggle="sticky-onscroll"]').each(function() {
+                        var sticky = $(this);
+                        var stickyWrapper = $('<div>').addClass('sticky-wrapper'); // insert hidden element to maintain actual top offset on page
+                        sticky.before(stickyWrapper);
+                        sticky.addClass('sticky');
+
+                        // Scroll & resize events
+                        $(window).on('scroll.sticky-onscroll resize.sticky-onscroll', function() {
+                            stickyToggle(sticky, stickyWrapper, $(this));
+                        });
+
+                        // On page load
+                        stickyToggle(sticky, stickyWrapper, $(window));
+                    });
+
                     let photoswipeRun = require('photoswipe_run.js');
                     window.PhotoSwipe = PhotoSwipe;
                     window.PhotoSwipeUI_Default = PhotoSwipeUI_Default;
-                    initPhotoSwipeFromDOM('#gallery1');
-
+                    photoswipeRun('#gallery1');
                 }, 100);
 
                 return this;

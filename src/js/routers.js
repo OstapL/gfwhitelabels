@@ -28,6 +28,11 @@ let appRoutes = Backbone.Router.extend({
         var url = event.target.pathname;
         if(app.cache.hasOwnProperty(event.target.pathname) == false) {
             window.history.back();
+            console.log('clicked back button');
+            app.routers.navigate(
+                event.target.pathname,
+                {trigger: true, replace: false}
+            );
         } else {
             $('#content').html(app.cache[event.target.pathname]);
             app.routers.navigate(
@@ -179,13 +184,10 @@ let appRoutes = Backbone.Router.extend({
             let view = require('views/company');
 
             app.user.getCompany((company) => {
-                console.log('hello done');
-                console.log(app.defaultOptionsRequest);
                 $.ajax(_.extend({
                         url: company.urlRoot,
                     }, app.defaultOptionsRequest)
                 ).done((response) => {
-                    console.log('hello done 2');
                     var i = new view.createOrUpdate({
                         el: '#content',
                         fields: response.actions.POST,
@@ -212,7 +214,6 @@ let appRoutes = Backbone.Router.extend({
             let view = require('views/campaign');
 
             let company_id = app.getParams().company_id;
-            console.log(id, company_id);
 
             if(id === null && typeof company_id === 'undefined') {
                 alert('please set up id or company_id');
@@ -232,22 +233,25 @@ let appRoutes = Backbone.Router.extend({
                 campaign.urlRoot += '/general_information'
                 // ToDo
                 // Make it sync
-                campaign.fetch();
             }
-            
-            $.ajax(_.extend({
+            var a1 = campaign.fetch();
+            var a2 = $.ajax(_.extend({
                 url: campaign.urlRoot,
-            }, app.defaultOptionsRequest)).
-                done((response) => {
+            }, app.defaultOptionsRequest));
+
+            $.when(a1, a2).done((r1, r2) => {
                 var i = new view.generalInformation({
                     el: '#content',
-                    fields: response.actions.POST,
+                    fields: r2[0].actions.POST,
                     model: campaign
                 });
                 i.render();
                 //app.views.campaign[id].render();
                 //app.cache[window.location.pathname] = i.$el.html();
 
+                app.hideLoading();
+            }).fail((xhr, error) =>  {
+                app.DefaultSaveActions.error($('#content'), error);
                 app.hideLoading();
             });
         } else {
@@ -589,6 +593,7 @@ app.on('userLoaded', function(data){
     );
     console.log('user ready');
 });
+
 
 $(document).ready(function(){
     // show bottom logo while scrolling page

@@ -76,30 +76,30 @@ section.create-company-media.container
 
   //START RIGHT BLOCK
   .col-lg-9
-    h2.text-uppercase.dosis.text-lg-center.text-xs-center.dosis.m-t-0 Media
+    h2.text-uppercase.dosis.text-lg-center.text-xs-center.dosis.m-t-0.m-b-3 Media
     form(metod="post" action="").form-section
       +fieldDropzone("header_image", {
-          class1: 'col-lg-7',
-          class2: 'col-lg-5 p-l-1 p-r-3',
-          text: 'Drop your photo here or click to upload',
-          icon: 'camera'
-      })
+        class1: 'col-lg-7',
+        class2: 'col-lg-5 p-l-1 p-r-3',
+        text: 'Drop your photo here or click to upload',
+        icon: 'file-image-o'
+        })
       +fieldDropzone("list_image", {
-          class1: 'col-lg-7',
-          class2: 'col-lg-5 p-l-1 p-r-3',
-          text: 'Drop your photo here or click to upload',
-          icon: 'camera'
-      })
-
+        class1: 'col-lg-7',
+        class2: 'col-lg-5 p-l-1 p-r-3',
+        text: 'Drop your photo here or click to upload',
+        icon: 'file-image-o'
+        })
       .col-lg-12.border-top
         h3.text-lg-center Recommended Additional Media
       .row.m-b-2
-        .col-lg-7
+        .col-lg-7.media-item
           .col-lg-5
             span.pull-right.font-weight-bold Thumbnail Picture
           .col-lg-7.text-lg-center
-            p Drop your photo here or click to upload
-            i.fa.fa-camera
+            a(href="").link-1
+              p.drop-photo Drop your photo here or click to upload
+              i.fa.fa-file-image-o
         .col-lg-5.p-l-1.p-r-3
           .photo-scroll
             .photo-scroll-wrap
@@ -162,7 +162,7 @@ section.create-company-media.container
           .col-lg-6
             button(href="").btn.btn-lg.btn-primary.text-uppercase.pull-right save
           .col-lg-6
-            button(href="").btn.btn-lg.btn-secondary.text-uppercase preview
+            a(href="/api/campaign/" + values.id target="_blank").btn.btn-lg.btn-secondary.text-uppercase preview
 
 
     
