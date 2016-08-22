@@ -211,13 +211,12 @@ define(function() {
                 this.faqIndex = 1;
             },
 
-
             addSection: function(e) {
                 e.preventDefault();
                 let sectionName = e.target.dataset.section;
                 let template = require('templates/section.pug');
-                $('.faq .m-b-0').addClass('form-group').removeClass('m-b-0');
-                $('.faq').append(
+                $('.' + sectionName + ' .m-b-0').addClass('form-group').removeClass('m-b-0');
+                $('.' + sectionName).append(
                     template({
                         fields: this.fields,
                         name: sectionName,
@@ -250,14 +249,16 @@ define(function() {
                 }
                 this.fields['additional_info'].type = 'json'
                 this.fields['additional_info'].schema = {
-                    question: {
+                    title: {
                         type: 'string', 
-                        label: 'Question',
+                        label: 'Optional Additioal Sections',
+                        placeholder: 'Section Title',
                         values: [],
                     },
-                    answer: {
+                    body: {
                         type: 'text',
-                        label: 'Answer',
+                        label: '',
+                        placeholder: 'Description',
                         values: [],
                     }
                 }
@@ -268,7 +269,6 @@ define(function() {
                         Urls: Urls,
                         fields: this.fields,
                         values: this.model.toJSON(),
-                        campaign: this.model.toJSON(),
                     })
                 );
                 return this;
@@ -313,15 +313,53 @@ define(function() {
             events: {
                 'submit form': 'submit',
                 'change #video': 'updateVideo',
+                'click .add-section': 'addSection',
             },
 
             initialize: function(options) {
                 this.fields = options.fields;
+                this.pressIndex = 1;
+            },
+
+            addSection: function(e) {
+                e.preventDefault();
+                let sectionName = e.target.dataset.section;
+                let template = require('templates/section.pug');
+                $('.' + sectionName + ' .m-b-0').addClass('form-group').removeClass('m-b-0');
+                $('.' + sectionName).append(
+                    template({
+                        fields: this.fields,
+                        name: sectionName,
+                        attr: {
+                            class1: '',
+                            class2: '',
+                            type: 'json',
+                            index: this[sectionName + 'Index']
+                        },
+                        values: this.model.toJSON() 
+                    })
+                );
+                this.faqIndex ++;
             },
 
             render: function() {
                 let template = require('templates/campaignMedia.pug');
                 let dropzone = require('dropzone');
+                this.fields['press'].type = 'json'
+                this.fields['press'].schema = {
+                    headline: {
+                        type: 'string', 
+                        label: 'Headline',
+                        placeholder: 'Title',
+                        values: [],
+                    },
+                    link: {
+                        type: 'url',
+                        label: 'Article link',
+                        placeholder: 'http://www.',
+                        values: [],
+                    }
+                };
                 this.$el.html(
                     template({
                         serverUrl: serverUrl,

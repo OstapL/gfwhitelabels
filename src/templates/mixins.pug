@@ -119,4 +119,4 @@ mixin fieldDropzone(name, attr)
             p.drop-photo #{attr.text}
             i(class="fa fa-" + attr.icon)
         div(class=attr.class2)
-            img(src=(values[name] ? values[name].url : attr.default) alt=fields[name].label class="img-fluid img-" + name)
+            img(src=(values[name + '_data'] ? values[name + '_data'].url : attr.default) alt=fields[name].label class="img-fluid img-" + name)

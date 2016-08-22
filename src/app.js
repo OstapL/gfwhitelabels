@@ -349,6 +349,15 @@ global.app = {
           }
       });
 
+    },
+
+    getParams: function() {
+          // gets url parameters and builds an object
+          return _.chain(location.search.slice(1).split('&'))
+          .map(function (item) { if (item) { return item.split('='); } })
+          .compact()
+          .object()
+          .value();
     }
 };
 
