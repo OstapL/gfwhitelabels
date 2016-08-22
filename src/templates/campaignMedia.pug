@@ -90,17 +90,6 @@ section.create-company-media.container
         text: 'Drop your photo here or click to upload',
         icon: 'file-image-o'
         })
-      .row
-        .col-lg-7.media-item
-          .col-lg-5
-            span.pull-right.font-weight-bold Thumbnail Picture
-          .col-lg-7.text-lg-center
-            a(href="").link-1
-              p.drop-photo Drop your photo here or click to upload
-              i.fa.fa-file-image-o
-        .col-lg-5.p-l-1.p-r-3
-          img(src="/img/test.png" alt="Responsive image").img-fluid
-
       .col-lg-12.border-top
         h3.text-lg-center Recommended Additional Media
       .row.m-b-2
@@ -162,25 +151,18 @@ section.create-company-media.container
       .col-lg-12.border-top
         h3.text-lg-center Articles and Press
       .row.articles
-        +fieldBlock("Headline", '', {
+        +fieldBlock("press", '', {
           class1: 'col-lg-3 col-md-4',
           class2: 'col-lg-9 col-md-8',
-          type: 'text',
-          placeholder: 'Title',
-          })
-        +fieldBlock("Article link", '', {
-          class1: 'col-lg-3 col-md-4',
-          class2: 'col-lg-9 col-md-8',
-          type: 'text',
-          placeholder: 'http://www.',
+          type: 'json',
           })
         .col-lg-8.offset-lg-3.p-l-0
-          a(href="").link-2.add-article Add Another Article
+          a(href="#" data-section='press').link-2.add-section Add Another Article
         .col-lg-6.pull-right.p-l-0
           .col-lg-6
             button(href="").btn.btn-lg.btn-primary.text-uppercase.pull-right save
           .col-lg-6
-            button(href="").btn.btn-lg.btn-secondary.text-uppercase preview
+            a(href="/api/campaign/" + values.id target="_blank").btn.btn-lg.btn-secondary.text-uppercase preview
 
 
     

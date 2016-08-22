@@ -42,6 +42,18 @@ mixin fieldBlock(name, data, attr)
                 ).form-check-input
             div(class=attr.class2  ? attr.class2 : 'col-md-10')
                 label(for=name).text-justify #{attr.text}
+    else if attr.type == 'radio' 
+        div(class="form-group " + (attr.row == 0 ? '' : ' row ') + name + (fields[name].required == true ? ' required ' : ' '))
+            label(class= attr.text_align ? 'text-md-' + attr.text_align + ' ' + attr.class1 : ' text-md-right ' + attr.class1 for=name)= fields[name].label
+            div(class=attr.class2)
+                each v in fields[name].choices
+                    label.col-lg-3
+                        input(
+                            type="radio" 
+                            class="form-check-input" 
+                            name=name
+                            value=v.value)
+                        | #{v.display_name}
     else if attr.type == 'choice' 
         div(class="form-group " + (attr.row == 0 ? '' : ' row ') + name + (fields[name].required == true ? ' required ' : ' '))
             label(class= attr.text_align ? 'text-md-' + attr.text_align + ' ' + attr.class1 : ' text-md-right ' + attr.class1 for=name)= fields[name].label
@@ -52,11 +64,35 @@ mixin fieldBlock(name, data, attr)
                 ).custom-select
                     each v in fields[name].choices
                         option(value=v.value) #{v.display_name}
+    else if attr.type == 'json' 
+        div(class="form-group " + (attr.row == 0 ? '' : ' row ') + name + (fields[name].required == true ? ' required ' : ' '))
+            - counter = 0
+            - indexCounter = attr.index || 0
+            each k,v in fields[name].schema
+                div(class=(counter == (Object.keys(fields[name].schema).length-1) ? 'm-b-0' : 'form-group') + ' clearfix')
+                    label.col-lg-3.text-lg-right #{k.label}
+                    .col-lg-9
+                        if k.type == 'text' 
+                            textarea(
+                                id=name + '_' + v
+                                name=name + '[' + indexCounter + '][' + v + ']'
+                                placeholder=k.placeholder ? k.placeholder : k.label
+                              ).form-control #{k[counter]}
+                        else
+                            input(
+                                id=name + '_' + v
+                                name=name + '[' + indexCounter + '][' + v + ']'
+                                placeholder=k.placeholder ? k.placeholder : k.label
+                                type=k.type
+                                value=k[counter]
+                            ).form-control
+                - counter ++
     else
         div(class="form-group " + (attr.row == 0 ? '' : ' row ') + name + (fields[name].required == true ? ' required ' : ' '))
             label(class= attr.text_align ? 'text-md-' + attr.text_align + ' ' + attr.class1 : ' text-md-right ' + attr.class1 for=name)= fields[name].label
             div(class=attr.class2)
-                if attr.type == 'description' 
+                - console.log(values, values[name])
+                if attr.type == 'textarea' 
                     textarea(
                         id=name
                         name=name
@@ -92,8 +128,8 @@ mixin fieldDropzone(name, attr)
           .col-lg-5
               span.pull-right.font-weight-bold #{fields[name].label}
           div(class='dropzone__' + name + ' col-lg-7 text-lg-center')
-            div(class='link-1')
+            span(class='link-1' href="#")
                 p.drop-photo #{attr.text}
                 i(class="fa fa-" + attr.icon)
         div(class=attr.class2)
-            img(src=(values[name] ? values[name].url : attr.default) alt=fields[name].label class="img-fluid img-" + name)
+            img(src=(values[name + '_data'] ? values[name + '_data'].url : attr.default) alt=fields[name].label class="img-fluid img-" + name)
