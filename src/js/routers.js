@@ -11,6 +11,7 @@ let appRoutes = Backbone.Router.extend({
       'page/:id': 'pageDetail',
       'account/profile': 'accountProfile',
       'company/create': 'companyCreate',
+      'campaign/general_information/': 'campaignGeneralInformation',
       'campaign/general_information/:id': 'campaignGeneralInformation',
       'campaign/media/:id': 'campaignMedia',
       'campaign/team_members/add': 'campaignTeamMembersAdd',
@@ -205,15 +206,35 @@ let appRoutes = Backbone.Router.extend({
         }
     },
 
-    campaignGeneralInformation: function(company_id) {
+    campaignGeneralInformation: function(id) {
         if(!app.user.is_anonymous()) {
             let model = require('models/campaign');
             let view = require('views/campaign');
 
-            let campaign = new model.model({
-                company: company_id
-            });
-            campaign.urlRoot += '/general_information'
+            let company_id = app.getParams().company_id;
+            console.log(id, company_id);
+
+            if(id === null && typeof company_id === 'undefined') {
+                alert('please set up id or company_id');
+                console.log('not goinng anywhere');
+                return;
+            }
+            let campaign = '';
+            if(company_id) { 
+                campaign = new model.model({
+                    company: company_id
+                });
+                campaign.urlRoot += '/general_information'
+            } else {
+                campaign = new model.model({
+                    id: id
+                });
+                campaign.urlRoot += '/general_information'
+                // ToDo
+                // Make it sync
+                campaign.fetch();
+            }
+            
             $.ajax(_.extend({
                 url: campaign.urlRoot,
             }, app.defaultOptionsRequest)).
@@ -258,6 +279,7 @@ let appRoutes = Backbone.Router.extend({
                 i.render();
                 //app.views.campaign[id].render();
                 //app.cache[window.location.pathname] = i.$el.html();
+                console.log('loaded');
 
                 app.hideLoading();
             });
