@@ -1,12 +1,12 @@
 mixin breadcrumbs(title, subtitle, data)
-    section.header_title.p50
+    section.header_title.pt50
         .container
             .row
                 .pull-left
                     h1.text-uppercase= title
                         span.small-text= subtitle
                 .pull-right
-                    ol.breadcrumb.pull-right
+                    ol.breadcrumb.pull-right.m0
                         each elem in data
                             - let active = (elem[1] == '') ? 'active' : ''
                             li.breadcrumb-item(class=" " + active)
@@ -32,7 +32,7 @@ mixin fieldBlock(name, data, attr)
         - values[name] = data
 
     if attr.type == 'checkbox' 
-        div(class="form-group row " + name )
+        div(class="form-group " + (attr.row == 0 ? '' : ' row ') + name + (fields[name].required == true ? ' required ' : ' '))
             div(class=(attr.class1 ? attr.class1 : 'col-md-2') + ' text-md-right text-xs-right')
                 input(
                     id=name
@@ -43,7 +43,7 @@ mixin fieldBlock(name, data, attr)
             div(class=attr.class2  ? attr.class2 : 'col-md-10')
                 label(for=name).text-justify #{attr.text}
     else if attr.type == 'choice' 
-        div(class="form-group row " + name )
+        div(class="form-group " + (attr.row == 0 ? '' : ' row ') + name + (fields[name].required == true ? ' required ' : ' '))
             label(class= attr.text_align ? 'text-md-' + attr.text_align + ' ' + attr.class1 : ' text-md-right ' + attr.class1 for=name)= fields[name].label
             div(class=attr.class2)
                 select(
@@ -53,7 +53,7 @@ mixin fieldBlock(name, data, attr)
                     each v in fields[name].choices
                         option(value=v.value) #{v.display_name}
     else
-        div(class="form-group row " + name + (fields[name].required == true ? ' required ' : ' '))
+        div(class="form-group " + (attr.row == 0 ? '' : ' row ') + name + (fields[name].required == true ? ' required ' : ' '))
             label(class= attr.text_align ? 'text-md-' + attr.text_align + ' ' + attr.class1 : ' text-md-right ' + attr.class1 for=name)= fields[name].label
             div(class=attr.class2)
                 if attr.type == 'description' 
@@ -70,4 +70,30 @@ mixin fieldBlock(name, data, attr)
                         type=attr.type ? attr.type : 'text'
                         value=values[name]
                       ).form-control
-                    // div.help-block= attr.text
+
+
+mixin fieldDropzone(name, attr)
+    // If we did not created fields vocabulary
+    // Assume it is empty field
+    if fields[name] == null
+        - console.log('bad field', name);
+        - fields[name] = {}
+        - fields[name]['label'] = name
+        - fields[name]['required'] = false
+
+    if values == null
+        - values = {}
+    if values[name] == null
+        - console.log(values)
+        - values[name] = data
+
+    div(class='row media-item ' + name)
+        div(class=attr.class1 + ' ' + (fields[name].required == true ? ' required ' : ' ') )
+          .col-lg-5
+              span.pull-right.font-weight-bold #{fields[name].label}
+          div(class='dropzone__' + name + ' col-lg-7 text-lg-center')
+            div(class='link-1')
+                p.drop-photo #{attr.text}
+                i(class="fa fa-" + attr.icon)
+        div(class=attr.class2)
+            img(src=(values[name] ? values[name].url : attr.default) alt=fields[name].label class="img-fluid img-" + name)

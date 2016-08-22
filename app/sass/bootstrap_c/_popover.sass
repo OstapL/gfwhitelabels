@@ -9,10 +9,10 @@
 		display: inline-block
 
 	&.bs-tether-element-attached-left
-		margin-left: 25px
+		margin-left: rem(25)
 
 	&.bs-tether-element-attached-bottom
-		margin-top: -25px
+		margin-top: rem(-25)
 
 	.popover-title
 		display: none
@@ -26,18 +26,18 @@
 	.popover-content
 		@include calc-rem(11)
 
-		padding: 8px 25px
+		padding: rem(8) rem(25)
 
 		color: $total_sum_progresbar
 
 		label
 			@include calc-rem(13)
 
-			padding-top: 6px
+			padding-top: rem(6)
 
 			font-weight: 700
 			color: $black_text
 		i
 			position: absolute
-			top: 13px
-			left: 10px 
+			top: rem(13)
+			left: rem(10) 

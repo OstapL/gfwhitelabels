@@ -89,46 +89,40 @@ section.campaign-specifics.container.m-b-85
 
       .row
         .col-lg-6.col-l-65
-          +fieldBlock("Our Minimum Total Raise is", '', {
+          +fieldBlock("minimum_raise", '', {
             class1: 'col-lg-6 col-md-3', 
             class2: 'col-lg-6 col-md-9', 
             type: 'text',
             placeholder: '$',
             })
         .col-lg-6.col-l-65
-          +fieldBlock("Our Maximum Total Raise is", '', {
+          +fieldBlock("maximum_raise", '', {
             class1: 'col-lg-5 col-md-3', 
             class2: 'col-lg-7 col-md-9', 
             type: 'text',
             placeholder: '$',
             })
 
-      +fieldBlock("The Minimum Investment is", '', {
+      +fieldBlock("minimum_increment", '', {
          class1: 'col-lg-3 col-md-4',
          class2: 'col-lg-9 col-md-8',
          type: 'text',
          placeholder: '$  People can invest this amount or more  ',
          })
 
-      .form-group.row.clearfix
-        label.col-lg-3.text-lg-right Length of the Campaign
-        .col-lg-9
-          select(placeholder="Description" rows="4").custom-select.form-control
-            option(selected) Please Choose One
-            option(value="1") Please Choose One 1
-            option(value="1") Please Choose One 2
-            option(value="1") Please Choose One 3
-
-      .row.media-item
-        .col-lg-7
-          .col-lg-5.p-r-12
-            span.pull-right.font-weight-bold.text-lg-right  Upload an Investor Presentation
-          .col-lg-7.text-lg-center
-            a(href="#").link-1
-              p.drop-photo Drop your PPT or PDF here or click to upload
-              i.fa.fa-file
-        .col-lg-5.p-l-0.p-r-3.text-lg-center.text-sm-center
-          img(src="/img/MS-PowerPoint.png" alt="Responsive image").img-file
+      +fieldBlock("length_days", '', {
+         class1: 'col-lg-3 col-md-4',
+         class2: 'col-lg-9 col-md-8',
+         type: 'choice',
+         text: 'Length of the Campaign',
+         })
+      +fieldDropzone("investor_presentation", {
+          class1: 'col-lg-7',
+          class2: 'col-lg-5 p-l-1 p-r-3',
+          text: 'Drop your PPT or PDF here or click to upload',
+          icon: 'file',
+          default: '/img/MS-PowerPoint.png',
+      })
 
       .row.border-top
 
