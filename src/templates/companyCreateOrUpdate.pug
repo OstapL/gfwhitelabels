@@ -79,7 +79,8 @@ section.create-company.container.m-b-85
 		form(metod="post" action="").form-section
 			input(type='hidden' name='state' value='NY' id='state')
 			input(type='hidden' name='city' value='New York' id='city')
-			input(type='hidden' name='id' value=values.id id='id')
+			if values.id && values.id != ''
+					input(type='hidden' name='id' value=values.id id='id')
 			+fieldBlock("name", '', {
 				class1: 'col-lg-3 col-md-3',
 				class2: 'col-lg-9 col-md-9',
@@ -103,11 +104,11 @@ section.create-company.container.m-b-85
 					class1: 'col-lg-3',
 					class2: 'col-lg-4',
 					type: 'choice',
-                    row: 0
+					row: 0
 				})
 				.col-lg-5
 					label.date Date of Organization
-					input(type="date" value=values.founding_date).form-control
+					input(type="date" name="founding_date" value=values.founding_date).form-control
 			.border-bottom
 			+fieldBlock("address_1", '', {
 				class1: 'col-lg-3 col-md-3',

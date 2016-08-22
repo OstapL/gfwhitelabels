@@ -13,6 +13,7 @@ let appRoutes = Backbone.Router.extend({
       'company/create': 'companyCreate',
       'campaign/general_information/:id': 'campaignGeneralInformation',
       'campaign/media/:id': 'campaignMedia',
+      'campaign/team_members/add': 'campaignTeamMembersAdd',
       'campaign/team_members/:id': 'campaignTeamMembers',
       'campaign/specifics/:id': 'campaignSpecifics',
       'campaign/perks/:id': 'campaignPerks',
@@ -212,13 +213,14 @@ let appRoutes = Backbone.Router.extend({
             let campaign = new model.model({
                 company: company_id
             });
+            campaign.urlRoot += '/general_information'
             $.ajax(_.extend({
-                    url: campaign.urlRoot + '/general_infomation',
-                }, app.defaultOptionsRequest)
-            ).done((response) => {
+                url: campaign.urlRoot,
+            }, app.defaultOptionsRequest)).
+                done((response) => {
                 var i = new view.generalInformation({
                     el: '#content',
-                    fields: {},
+                    fields: response.actions.POST,
                     model: campaign
                 });
                 i.render();
@@ -242,13 +244,15 @@ let appRoutes = Backbone.Router.extend({
             let campaign = new model.model({
                 id: id
             });
+            campaign.urlRoot += '/media'
+            campaign.fetch();
             $.ajax(_.extend({
-                    url: campaign.urlRoot + '/media',
+                    url: campaign.urlRoot,
                 }, app.defaultOptionsRequest)
             ).done((response) => {
                 var i = new view.media({
                     el: '#content',
-                    fields: {},
+                    fields: response.actions.POST,
                     model: campaign
                 });
                 i.render();
@@ -273,13 +277,16 @@ let appRoutes = Backbone.Router.extend({
             let campaign = new model.model({
                 id: id
             });
+            campaign.urlRoot += '/team_members'
+            campaign.fetch();
+
             $.ajax(_.extend({
-                    url: campaign.urlRoot + '/team_members',
+                    url: campaign.urlRoot,
                 }, app.defaultOptionsRequest)
             ).done((response) => {
                 var i = new view.teamMembers({
                     el: '#content',
-                    fields: {},
+                    fields: response.actions.POST,
                     model: campaign
                 });
                 i.render();
@@ -296,6 +303,25 @@ let appRoutes = Backbone.Router.extend({
         }
     },
 
+    campaignTeamMembersAdd: function(id) {
+        if(!app.user.is_anonymous()) {
+            let model = require('models/campaign');
+            let view = require('views/campaign');
+
+            const addForm = new view.teamMemberAdd({
+                el: '#content',
+            });
+            addForm.render();
+            app.hideLoading();
+            
+        } else {
+            app.routers.navigate(
+                '/account/login',
+                {trigger: true, replace: true}
+            );
+        }
+    },
+
     campaignSpecifics: function(id) {
         if(!app.user.is_anonymous()) {
             let model = require('models/campaign');
@@ -304,19 +330,27 @@ let appRoutes = Backbone.Router.extend({
             let campaign = new model.model({
                 id: id
             });
-            $.ajax(_.extend({
-                    url: campaign.urlRoot + '/specifics',
+            campaign.urlRoot += '/specifics'
+            var a1 = campaign.fetch();
+            var a2 = $.ajax(_.extend({
+                    url: campaign.urlRoot,
                 }, app.defaultOptionsRequest)
-            ).done((response) => {
+            );
+            
+            $.when(a1, a2).done((r1, r2) => {
+                console.log(r1, r2);
                 var i = new view.specifics({
                     el: '#content',
-                    fields: {},
+                    fields: r2[0].actions.POST,
                     model: campaign
                 });
                 i.render();
                 //app.views.campaign[id].render();
                 //app.cache[window.location.pathname] = i.$el.html();
 
+                app.hideLoading();
+            }).fail((xhr, error) =>  {
+                app.DefaultSaveActions.error($('#content'), error);
                 app.hideLoading();
             });
         } else {
@@ -335,13 +369,16 @@ let appRoutes = Backbone.Router.extend({
             let campaign = new model.model({
                 id: id
             });
+            campaign.urlRoot += '/perks';
+            campaign.fetch();
+
             $.ajax(_.extend({
-                    url: campaign.urlRoot + '/perks',
+                    url: campaign.urlRoot,
                 }, app.defaultOptionsRequest)
             ).done((response) => {
                 var i = new view.perks({
                     el: '#content',
-                    fields: {},
+                    fields: response.actions.POST,
                     model: campaign
                 });
                 i.render();
