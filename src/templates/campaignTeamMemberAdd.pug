@@ -2,77 +2,101 @@ include mixins.pug
 
 +breadcrumbs('Create Company', 'Help Button', [['home', '/',], [ 'current', page.get_absolute_url]])
 
-section.create-company-general.container
-	//START LEFT BLOCK
-	.col-lg-3
-		.jumbotron.jumbotron-fluid.row
-			.raise-funds
-				h4.font-weight-bold.text-uppercase.m-b-0 Raise funds
-					.small-text (10% Done)
-			#accordion(role="tablist" aria-multiselectable="true")
-				.panel.panel-default
-					.panel-heading(role="tab")
-						a(data-toggle="collapse"
-						data-parent="#accordion"
-						href="#company"
-						aria-expanded="true"
-						).list-group-item
-							i.fa.fa-briefcase
-							|  Company
-							span.pull-right
-								i.fa.fa-angle-left
-					#company(role="tabpanel").panel-collapse.collapse
-						.list-group
-							a(href="#").list-group-item.list-group-item-action Company
-				.panel.panel-default
-					.panel-heading(role="tab")
-						a(data-toggle="collapse"
-						data-parent="#accordion"
-						href="#campaign"
-						aria-expanded="true"
-						).list-group-item.active
-							i.fa.fa-bar-chart
-							|  Campaign
-							span.pull-right
-								i.fa.fa-angle-down
-					#campaign(role="tabpanel").panel-collapse.collapse.in
-						.list-group
-							a(href="#").list-group-item.list-group-item-action.active General Information
-							a(href="#").list-group-item.list-group-item-action Media
-							a(href="#").list-group-item.list-group-item-action Team Members
-							a(href="#").list-group-item.list-group-item-action Specifics
-							a(href="#").list-group-item.list-group-item-action Perks
-				.panel.panel-default
-					.panel-heading(role="tab")
-						a(data-toggle="collapse"
-						data-parent="#accordion"
-						href="#form_c"
-						aria-expanded="true"
-						).list-group-item
-							i.fa.fa-university
-							|  form c
-							span.pull-right
-								i.fa.fa-angle-left
-					#form_c(role="tabpanel").panel-collapse.collapse
-						.list-group
-							a(href="#").list-group-item.list-group-item-action form c
-		.row
-			.education-link-wrap
-				.jumbotron.jumbotron-fluid
-					h4.font-weight-bold.text-uppercase
-						i.fa.fa-book
-						|  education Links
-					.nav
-						li.nav-item
-							a(href="#").nav-link.link-3 Issuer Tutorial
-						li.nav-item
-							a(href="#").nav-link.link-3 Success Guide
-						li.nav-item
-							a(href="#").nav-link.link-3 What's My Business Worth?
-						li.nav-item
-							a(href="#").nav-link.link-3 How Much Should I Raise?
+section.create-company-team-add.container
+    //START LEFT BLOCK
+    .col-lg-3.create_compaign
+        .jumbotron.jumbotron-fluid.row
+            .raise-funds
+                h4.font-weight-bold.text-uppercase.m-b-0 Raise funds
+                    .small-text (10% Done)
+            #accordion(role="tablist" aria-multiselectable="true")
+                .panel.panel-default
+                    .panel-heading(role="tab")
+                        a(data-toggle="collapse"
+                        data-parent="#accordion"
+                        href="#company"
+                        aria-expanded="true"
+                        ).list-group-item
+                            i.fa.fa-briefcase
+                            |  Company
+                            span.pull-right
+                                i.fa.fa-angle-left
+                    #company(role="tabpanel").panel-collapse.collapse
+                        .list-group
+                            a(href="#").list-group-item.list-group-item-action Company
+                .panel.panel-default
+                    .panel-heading(role="tab")
+                        a(data-toggle="collapse"
+                        data-parent="#accordion"
+                        href="#campaign"
+                        aria-expanded="true"
+                        ).list-group-item.active
+                            i.fa.fa-bar-chart
+                            |  Campaign
+                            span.pull-right
+                                i.fa.fa-angle-down
+                    #campaign(role="tabpanel").panel-collapse.collapse.in
+                        .list-group
+                            a(href="#").list-group-item.list-group-item-action.active General Information
+                                i.fa.fa-check
+                            a(href="#").list-group-item.list-group-item-action Media
+                                i.fa.fa-check
+                            a(href="#").list-group-item.list-group-item-action.active Team Members
+                            a(href="#").list-group-item.list-group-item-action Specifics
+                            a(href="#").list-group-item.list-group-item-action Perks
+                .panel.panel-default
+                    .panel-heading(role="tab")
+                        a(data-toggle="collapse"
+                        data-parent="#accordion"
+                        href="#form_c"
+                        aria-expanded="true"
+                        ).list-group-item
+                            i.fa.fa-university
+                            |  form c
+                            span.pull-right
+                                i.fa.fa-angle-left
+                    #form_c(role="tabpanel").panel-collapse.collapse
+                        .list-group
+                            a(href="#").list-group-item.list-group-item-action form c
+        .row
+            .education-link-wrap
+                .jumbotron.jumbotron-fluid
+                    h4.font-weight-bold.text-uppercase
+                        i.fa.fa-book
+                        |  education Links
+                    .nav
+                        li.nav-item
+                            a(href="#").nav-link.link-3 Issuer Tutorial
+                        li.nav-item
+                            a(href="#").nav-link.link-3 Success Guide
+                        li.nav-item
+                            a(href="#").nav-link.link-3 What's My Business Worth?
+                        li.nav-item
+                            a(href="#").nav-link.link-3 How Much Should I Raise?
 
 
-	//START RIGHT BLOCK
-	.col-lg-8
-		h2.text-uppercase.text-lg-center.text-xs-center GENERAL INFORMATION
+    //START RIGHT BLOCK
+    .col-lg-8
+        h2.text-uppercase.text-lg-center.text-xs-center.dosis.m-t-0 team members
+        form(metod="post" action="").form-section
+            .form-group.text-lg-center
+                .col-lg-10.offset-lg-1
+                  .campaign-warning.warning-team-add.text-lg-left.text-uppercase
+                    i.fa.fa-exclamation-triangle 
+                    span.warning-text 
+                    | Warning! You have to add at least 2 persons for proceed.
+
+            .col-lg-10.offset-lg-1.text-lg-center.m-t-2.m-b-2
+                .col-lg-6
+                    button.btn.btn-lg.text-uppercase ADD TEAM MEMBER
+                .col-lg-5
+                    button.btn.btn-lg.text-uppercase ADD ADVISoR
+
+            .col-lg-3.m-t-2.p-r-0.p-l-0.m-l-1
+                .team-add-item
+                    img(src="/img/avatar10.jpg" alt="image item")
+                    .item-wrap
+                        span Maria Kravchuk
+                        a(href="#").pull-right.link-1
+                            i.fa.fa-pencil-square-o
+                    span.small Team Member
