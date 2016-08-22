@@ -203,14 +203,65 @@ define(function() {
         generalInformation: Backbone.View.extend({
             events: {
                 'submit form': 'submit',
+                'click .add-section': 'addSection',
             },
 
             initialize: function(options) {
                 this.fields = options.fields;
+                this.faqIndex = 1;
+            },
+
+
+            addSection: function(e) {
+                e.preventDefault();
+                let sectionName = e.target.dataset.section;
+                let template = require('templates/section.pug');
+                $('.faq .m-b-0').addClass('form-group').removeClass('m-b-0');
+                $('.faq').append(
+                    template({
+                        fields: this.fields,
+                        name: sectionName,
+                        attr: {
+                            class1: '',
+                            class2: '',
+                            type: 'json',
+                            index: this.faqIndex,
+                        },
+                        values: this.model.toJSON() 
+                    })
+                );
+                this.faqIndex ++;
             },
 
             render: function() {
                 let template = require('templates/campaignGeneralInformation.pug');
+                this.fields['faq'].type = 'json'
+                this.fields['faq'].schema = {
+                    question: {
+                        type: 'string', 
+                        label: 'Question',
+                        values: [],
+                    },
+                    answer: {
+                        type: 'text',
+                        label: 'Answer',
+                        values: [],
+                    }
+                }
+                this.fields['additional_info'].type = 'json'
+                this.fields['additional_info'].schema = {
+                    question: {
+                        type: 'string', 
+                        label: 'Question',
+                        values: [],
+                    },
+                    answer: {
+                        type: 'text',
+                        label: 'Answer',
+                        values: [],
+                    }
+                }
+
                 this.$el.html(
                     template({
                         serverUrl: serverUrl,
