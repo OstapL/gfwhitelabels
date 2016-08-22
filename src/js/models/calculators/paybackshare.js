@@ -1,4 +1,4 @@
-var formatPrice = require("../helpers/formatPrice");
+var formatPrice = require("../../helpers/formatPrice");
 
 module.exports = Backbone.Model.extend({
     defaults: {

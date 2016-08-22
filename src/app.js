@@ -207,8 +207,8 @@ global.app = {
     },
 
     getModelInstance: function(model, name) {
-        if (app.models['name']) return app.models['name'];
-        return app.models['name'] = new model()
+        if (app.models[name]) return app.models[name];
+        return app.models[name] = new model()
     }
 
     ,

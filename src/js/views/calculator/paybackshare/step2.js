@@ -6,6 +6,7 @@ var formatPrice = require("../../../helpers/formatPrice");
 var settings = require("../../../helpers/settings")();
 var isTextSelected = require("../../../helpers/isTextSelected");
 
+
 module.exports = Backbone.View.extend({
     el: '#content',
 
