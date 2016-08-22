@@ -447,52 +447,52 @@ section
 			h2#faq.col-lg-12.dosis.text-uppercase.text-lg-center FAQ
 			.col-lg-8.offset-lg-2
 				#accordion(role="tablist" aria-multiselectable="true")
-				each v,k in campaign.faq
-					.panel.panel-default
-						div(id="faq" + k role="tab").panel-heading
-							a(data-toggle="collapse"
-							data-parent="#accordion" 
-							href="#collapsefaq"+ k
-							aria-expanded="true"
-							aria-controls="collapsefaq"+ k
-							).list-group-item-action.active #{v.question}
-								i.fa.fa-angle-up
-						div(id="collapsefaq" + k role="tabpanel"
-						aria-labelledby="faq" + k
-						).panel-collapse.collapse.in  #{ v.answer }
-					.panel.panel-default
-						#faqTwo(role="tab").panel-heading
-							a(data-toggle="collapse"
-							data-parent="#accordion" 
-							href="#collapsefaqTwo"
-							aria-controls="collapsefaqTwo"
-							).list-group-item-action How did Smartbe start and then evolve? 
-								i.fa.fa-angle-down
-						#collapsefaqTwo(role="tabpanel"
-						aria-labelledby="faqTwo"
-						).panel-collapse.collapse  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi, hic, distinctio, enim nam consequuntur iste quos, accusamus blanditiis a id odio perferendis vel perspiciatis provident et! Consequuntur nemo reprehenderit inventore.
-					.panel.panel-default
-						#faqThree(role="tab").panel-heading
-							a(data-toggle="collapse"
-							data-parent="#accordion" 
-							href="#collapsefaqThree"
-							aria-controls="collapsefaqThree"
-							).list-group-item-action What is your impact?     
-								i.fa.fa-angle-down
-						#collapsefaqThree(role="tabpanel"
-						aria-labelledby="faqThree"
-						).panel-collapse.collapse  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius inventore iste numquam nemo, fugit nihil fugiat quasi, excepturi repellendus pariatur! Facilis odit cupiditate tenetur, inventore adipisci consequatur eius suscipit voluptas.
-					.panel.panel-default
-						#faqFour(role="tab").panel-heading
-							a(data-toggle="collapse"
-							data-parent="#accordion" 
-							href="#collapsefaqFour"
-							aria-controls="collapsefaqFour"
-							).list-group-item-action Do you have any intellectual property?   
-								i.fa.fa-angle-down
-						#collapsefaqFour(role="tabpanel"
-						aria-labelledby="faqFour"
-						).panel-collapse.collapse  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius inventore iste numquam nemo, fugit nihil fugiat quasi, excepturi repellendus pariatur! Facilis odit cupiditate tenetur, inventore adipisci consequatur eius suscipit voluptas.
+					each v,k in campaign.faq
+						.panel.panel-default
+							div(id="faq" + k role="tab").panel-heading
+								a(data-toggle="collapse"
+								data-parent="#accordion" 
+								href="#collapsefaq"+ k
+								aria-expanded="true"
+								aria-controls="collapsefaq"+ k
+								).list-group-item-action.active #{v.question}
+									i.fa.fa-angle-up
+							div(id="collapsefaq" + k role="tabpanel"
+							aria-labelledby="faq" + k
+							).panel-collapse.collapse.in  #{ v.answer }
+						.panel.panel-default
+							#faqTwo(role="tab").panel-heading
+								a(data-toggle="collapse"
+								data-parent="#accordion" 
+								href="#collapsefaqTwo"
+								aria-controls="collapsefaqTwo"
+								).list-group-item-action How did Smartbe start and then evolve? 
+									i.fa.fa-angle-down
+							#collapsefaqTwo(role="tabpanel"
+							aria-labelledby="faqTwo"
+							).panel-collapse.collapse  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi, hic, distinctio, enim nam consequuntur iste quos, accusamus blanditiis a id odio perferendis vel perspiciatis provident et! Consequuntur nemo reprehenderit inventore.
+						.panel.panel-default
+							#faqThree(role="tab").panel-heading
+								a(data-toggle="collapse"
+								data-parent="#accordion" 
+								href="#collapsefaqThree"
+								aria-controls="collapsefaqThree"
+								).list-group-item-action What is your impact?     
+									i.fa.fa-angle-down
+							#collapsefaqThree(role="tabpanel"
+							aria-labelledby="faqThree"
+							).panel-collapse.collapse  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius inventore iste numquam nemo, fugit nihil fugiat quasi, excepturi repellendus pariatur! Facilis odit cupiditate tenetur, inventore adipisci consequatur eius suscipit voluptas.
+						.panel.panel-default
+							#faqFour(role="tab").panel-heading
+								a(data-toggle="collapse"
+								data-parent="#accordion" 
+								href="#collapsefaqFour"
+								aria-controls="collapsefaqFour"
+								).list-group-item-action Do you have any intellectual property?   
+									i.fa.fa-angle-down
+							#collapsefaqFour(role="tabpanel"
+							aria-labelledby="faqFour"
+							).panel-collapse.collapse  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius inventore iste numquam nemo, fugit nihil fugiat quasi, excepturi repellendus pariatur! Facilis odit cupiditate tenetur, inventore adipisci consequatur eius suscipit voluptas.
 				a(href="").col-lg-12.text-lg-center.link-4.see-all See All FAQ
 		
 	section.ask.border-bottom
