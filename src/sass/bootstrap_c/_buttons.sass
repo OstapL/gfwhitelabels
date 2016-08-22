@@ -3,6 +3,8 @@
 	color: $btn-color
 	border-color: $btn-border
 	letter-spacing: 2px
+	border: 2px solid $btn-border
+	font-size: rem(12)
 	+mt(.2s)
 
 	&:hover
@@ -71,3 +73,33 @@
 	border-radius: 2px
 	&:hover
 		background: $btn-google-hover-bg
+
+//Dropdown button
+.btn-dropdown
+	color: $small-text
+	background: transparent
+	border-radius: rem(2) 0 0 rem(2)
+	border: 1px solid $light_grey
+	letter-spacing: rem(.35)
+	padding: rem(8) rem(15)
+	&:hover
+		background: none
+		border: 1px solid $light_grey
+		color: $small-text
+.btn-dropdown-click
+	border-radius: 0 rem(2) rem(2) 0
+	border-left: none
+	border: 1px solid $light_grey
+	background: transparent
+	padding: rem(8)
+	color: $black
+	.dropdown-toggle
+     padding-left: rem(8)
+     padding-right: rem(8)
+     &:after
+       margin-top: 0
+       margin-left: 0
+	&:hover
+		background: none
+		border: 1px solid $light_grey
+		color: $black

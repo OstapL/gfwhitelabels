@@ -311,6 +311,7 @@ global.app = {
           paramName: name,
           params: params,
           createImageThumbnails: false,
+          clickable: '.dropzone__' + name + ' span',
           thumbnail: function(file, dataUrl) {
               console.log('preview', file, file.xhr, file.xhr.response, file.xhr.responseText);
           },
@@ -375,7 +376,7 @@ $('body').on('click', '.auth-pop', function() {
 
 $('body').on('click', 'a', function(event) {
     var href = event.currentTarget.getAttribute('href');
-    if(href.substr(0,1) != '#' && href.substr(0, 4) != 'http' && href.substr(0,3) != 'ftp') {
+    if(href != '' && href.substr(0,1) != '#' && href.substr(0, 4) != 'http' && href.substr(0,3) != 'ftp') {
         event.preventDefault();
         app.showLoading();
 

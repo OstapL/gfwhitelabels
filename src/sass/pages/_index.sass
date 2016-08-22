@@ -139,7 +139,6 @@
 	background: $blue_dark
 	border-color: $blue_dark
 	+mt(.2s)
-
 	&:hover
 		background: $blue_light
 		border-color: $blue_light
@@ -148,3 +147,35 @@
 
 .js-height-full
 	height: 600px
+//main page
+.home-section
+	&:before
+		content: " "
+		width: 100%
+		height: 100%
+		position: absolute
+		top: 0
+		left: 0
+		background: rgba(17, 17, 17, .5)
+	.js-height-full
+		max-height: 90vh
+	.home-text
+		h1
+			font-size: rem(48)
+			color: $white
+			letter-spacing: rem(9.6)
+			margin-top: rem(120)
+			margin-bottom: rem(50)
+		.small-text
+			line-height: rem(26)
+			color: $white
+			letter-spacing: rem(.6)
+			font-size: rem(24)
+			font-weight: 300
+
+.home-wrap-text-block
+	h2
+		color: $white
+		margin-bottom: rem(50)
+
+
