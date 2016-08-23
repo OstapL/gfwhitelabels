@@ -115,21 +115,34 @@ section.create-company-media.container
             iframe.embed-responsive-item(src="//www.youtube.com/embed/zpOULjyy-n8?rel=0" allowfullscreen="true")
       
       .row.m-b-2
-        .col-lg-7
-          .form-group.row.required
-            .col-lg-5.recommended
-              label.text-lg-right.font-weight-bold Optional Video for Campaign
+        h3.d-inline-block.m-t-0.mb25 Additional videos
+        a(href="#" data-section='additional_video').link-1.pull-right.d-inline-block.delete-section Delete Video
+        +fieldBlock("additional_video", '', {
+          class1: 'col-lg-3 col-md-4',
+          class2: 'col-lg-9 col-md-8',
+          type: 'json',
+          })
+        .row.m-t-0
+            .col-lg-9.offset-1.pull-right
+                a(href="#" data-section="additional_video").link-2.add-section Add Another Video
+        // 
+            adsf
             .col-lg-7
-              input(type="text" placeholder="Title").form-control.m-b-2
-              input(type="text" placeholder="http://www.").form-control.m-b-1
-              .add-link
-                a(href="").link-2 Add Another Video
-        .col-lg-5.p-l-1.p-r-3
-          .embed-responsive.embed-responsive-16by9
-            iframe.embed-responsive-item(src="//www.youtube.com/embed/zpOULjyy-n8?rel=0" allowfullscreen="true")
+              .form-group.row.required
+                .col-lg-5.recommended
+                  label.text-lg-right.font-weight-bold Optional Video for Campaign
+                .col-lg-7
+                  input(type="text" placeholder="Title").form-control.m-b-2
+                  input(type="text" placeholder="http://www.").form-control.m-b-1
+                  .add-link
+                    a(href="").link-2 Add Another Video
+            .col-lg-5.p-l-1.p-r-3
+              .embed-responsive.embed-responsive-16by9
+                iframe.embed-responsive-item(src="//www.youtube.com/embed/zpOULjyy-n8?rel=0" allowfullscreen="true")
       
       .col-lg-12.border-top
         h3.text-lg-center Articles and Press
+        a(href="#" data-section='press').link-1.pull-right.d-inline-block.delete-section Delete Article or Press
       .row.articles
         +fieldBlock("press", '', {
           class1: 'col-lg-3 col-md-4',

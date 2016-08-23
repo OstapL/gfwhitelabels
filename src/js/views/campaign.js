@@ -358,11 +358,13 @@ define(function() {
                 'submit form': 'submit',
                 'change #video': 'updateVideo',
                 'click .add-section': 'addSection',
+                'click .delete-section': 'deleteSection',
             },
 
             initialize: function(options) {
                 this.fields = options.fields;
                 this.pressIndex = 1;
+                this.additional_videoIndex = 1;
             },
 
             addSection: function(e) {
@@ -383,7 +385,17 @@ define(function() {
                         values: this.model.toJSON() 
                     })
                 );
-                this.pressIndex ++;
+                this[sectionName + 'Index'] ++;
+            },
+
+            deleteSection: function(e) {
+                e.preventDefault();
+                let sectionName = e.target.dataset.section;
+                console.log(e, sectionName, this, this[sectionName + 'Index']);
+                if(this[sectionName + 'Index'] >= 1) {
+                    this[sectionName + 'Index'] --;
+                    $('.' + sectionName + ' .index_' + this[sectionName + 'Index']).remove();
+                }
             },
 
             render: function() {
@@ -395,15 +407,28 @@ define(function() {
                         type: 'string', 
                         label: 'Headline',
                         placeholder: 'Title',
-                        values: [],
                     },
                     link: {
                         type: 'url',
                         label: 'Article link',
                         placeholder: 'http://www.',
-                        values: [],
                     }
                 };
+                this.fields['additional_video'].type = 'json'
+                this.fields['additional_video'].schema = {
+                    headline: {
+                        type: 'string', 
+                        label: 'Title',
+                        placeholder: 'Title',
+                    },
+                    link: {
+                        type: 'url',
+                        label: 'Youtube or vimeo link',
+                        placeholder: 'https://',
+                    }
+                };
+                this.pressIndex = Object.keys(this.model.get('press')).length;
+                this.additional_videoIndex = Object.keys(this.model.get('additional_video')).length;
                 this.$el.html(
                     template({
                         serverUrl: serverUrl,
@@ -463,7 +488,7 @@ define(function() {
                 this.$el.find('.alert').remove();
                 event.preventDefault();
 
-                var data = $(e.target).serializeObject();
+                var data = $(e.target).serializeJSON();
 
                 this.model.set(data);
                 Backbone.Validation.bind(this, {model: this.model});

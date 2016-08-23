@@ -51,6 +51,7 @@ mixin fieldBlock(name, data, attr)
                             type="radio" 
                             class="form-check-input" 
                             name=name
+                            checked=(v.value == values[name] ? "checked" : undefined)
                             value=v.value)
                         | #{v.display_name}
     else if attr.type == 'choice' 
