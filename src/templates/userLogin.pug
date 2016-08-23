@@ -1,140 +1,107 @@
 include mixins.pug
+section.login
+    .container
+        .col-lg-12
+            h2.dosis.text-uppercase.text-sm-center.text-xs-center.m-t-85 Log in
+                p.small-text New to GrowthFountain?
+                    a(href="#").link-3  Sign up
+        
+        .col-lg-4.offset-lg-4
+            form(action="" metod="post").form-section
+                .col-lg-12
+                    .form-group.row.clearfix.required
+                        input(type="email"
+                        placeholder="E-mail"
+                        name="email").form-control
+                    .form-group.row.clearfix.required
+                        input(type="password"
+                        placeholder="Password"
+                        name="password").form-control
+                .col-lg-12
+                    .row.forgot
+                        a(href="/accounts/password/reset/").link-3 Forgot your password?
+                .col-lg-12
+                    .row.text-sm-center
+                        button#login-btnLogin.btn.btn-lg.btn-primary.text-uppercase Login
+                .col-lg-12.border-bottom.or
+                    span or
+                .social-btn.col-lg-12
+                    a(data-original-title="facebook"
+                    href="/accounts/facebook/login/?process=login"
+                    ).btn.btn-block.btn-lg.btn-facebook.text-uppercase
+                        i.fa.fa-facebook
+                        |  SIGN UP with Facebook
+                    a(data-original-title="Linkedin"
+                    href="/accounts/linkedin_oauth2/login/?process=login"
+                    ).btn.btn-block.btn-lg.btn-linkedin.text-uppercase
+                        i.fa.fa-linkedin
+                        |  SIGN UP with linkedin
+                    a(data-original-title="Google Plus"
+                    href="/accounts/google/login/?process=login"
+                    ).btn.btn-block.btn-lg.btn-google.text-uppercase
+                        i.fa.fa-google-plus
+                        |  SIGN UP with Google
 
-.container
-    .row.pt50
-        .col-sm-12
-            h1 Sign Up
-        section.authorization.container
-            .row
-                .col-lg-6
-                    .embed-responsive.embed-responsive-16by9.boxshadow
-                        iframe(
-                            embed-responsive-item="true" 
-                            src="https://player.vimeo.com/video/170651597?title=0&amp;byline=0&amp;portrait=0" 
-                            data-webkitallowfullscreen="" 
-                            data-mozallowfullscreen="" 
-                            data-allowfullscreen=""
-                        )
-                .col-lg-1
-                .forms-block
-                    .col-lg-5
+section.singup.m-t-85
+    .container
+        .col-lg-12
+            h2.dosis.text-uppercase.text-sm-center.text-xs-center.m-t-85 sign up
+                p.small-text Have an account?
+                    a(href="#").link-3  Log In
+        
+        .col-lg-4.offset-lg-4
+            form(action="" metod="post").form-section
+                .col-lg-12
+                    .form-group.row.clearfix.required
+                        input(type="text"
+                        placeholder="First name"
+                        name="first_name").form-control
+                    .form-group.row.clearfix.required
+                        input(type="text"
+                        placeholder="Last name"
+                        name="last_name").form-control
+                    .form-group.row.clearfix.required
+                        input(type="email"
+                        placeholder="E-mail"
+                        name="email").form-control
+                    .form-group.row.clearfix.required
+                        input(type="password"
+                        placeholder="Password"
+                        name="password1").form-control
+                    .form-group.row.clearfix.required
+                        input(type="password"
+                        placeholder="Re-enter password"
+                        name="password2").form-control
+                    .form-group.row.clearfix.required
                         .row
-                            .col-lg-10.text-lg-right
-                                ul.nav.nav-tabs.login-tabs
-                                    li.nav-item
-                                        a(
-                                            href="#login" 
-                                            data-toggle="tab" 
-                                            aria-expanded="trueLogin"
-                                            class="nav-link " + (login == 1 ? "active" : "")
-                                        ).nav-link  Log in
-                                    li.nav-item
-                                        a(
-                                            href="#signup" 
-                                            data-toggle="tab" 
-                                            aria-expanded="true"
-                                            class="nav-link " + (login == 0 ? "active" : "")
-                                        ).nav-link Sign Up
-                        .tab-content.authorization-tabs-content 
-                            #login(class="tab-pane fade " + (login == 1 ? "in active" : "") aria-expanded=(login == 1))
-                                .row
-                                    section.form-section
-                                        form(action="" method="post").login-form
-                                            .clearfix
-                                                - var fields = login_fields
-                                                +fieldBlock("email", '', {
-                                                    class1: 'col-lg-3 col-md-3', 
-                                                    class2: 'col-lg-7 col-md-7', 
-                                                    type: 'email',
-                                                })
-                                                +fieldBlock("password", '', {
-                                                    class1: 'col-lg-3 col-md-3', 
-                                                    class2: 'col-lg-7 col-md-7', 
-                                                    type: 'password'
-                                                })
-                                                .socialaccount_ballot.clearfix
-                                                    .col-lg-12.col-sm-12.col-xs-12.text-sm-left
-                                                        p Or login with
-                                                    .col-sm-12.col-xs-12.col-lg-12
-                                                        ul.social-icons.list-inline.clearfix.text-lg-left
-                                                            li
-                                                                a(
-                                                                    data-original-title="facebook" 
-                                                                    href="/accounts/facebook/login/?process=login"
-                                                                ).fa.fa-facebook.social-icon-color.facebook 
-                                                            li
-                                                                a(
-                                                                    data-original-title="Google Plus" 
-                                                                    href="/accounts/google/login/?process=login"
-                                                                ).fa.fa-google-plus.social-icon-color.googleplus
-                                                            li
-                                                                a(
-                                                                    data-original-title="Linkedin" 
-                                                                    href="/accounts/linkedin_oauth2/login/?process=login"
-                                                                ).fa.fa-linkedin.social-icon-color.linkedin
-                                            .form-group.clearfix
-                                                .col-lg-6.col-xs-6.text-md-right
-                                                    a(
-                                                        href="/accounts/password/reset/"
-                                                    )#forget-password Forgot Password?
-                                                .col-xs-5
-                                                    button#login-btnLogin.btn.text-uppercase Login
-                            #signup(class="tab-pane fade " + (login == 0 ? "in active" : "") aria-expanded=(login == 0))
-                                .row
-                                    section.form-section
-                                        form(
-                                            action=""
-                                            method="post"
-                                        ).form-horizontal.no-gutter-right.signup-form
-                                            - var fields = register_fields
-                                            +fieldBlock("first_name", '', {
-                                                class1: 'col-lg-3 col-md-3', 
-                                                class2: 'col-lg-7 col-md-7', 
-                                            })
-                                            +fieldBlock("last_name", '', {
-                                                class1: 'col-lg-3 col-md-3', 
-                                                class2: 'col-lg-7 col-md-7', 
-                                            })
-                                            +fieldBlock("email", '', {
-                                                class1: 'col-lg-3 col-md-3', 
-                                                class2: 'col-lg-7 col-md-7', 
-                                                type: 'email',
-                                            })
-                                            +fieldBlock("password1", '', {
-                                                class1: 'col-lg-3 col-md-3', 
-                                                class2: 'col-lg-7 col-md-7', 
-                                                type: 'password',
-                                            })
-                                            +fieldBlock("password2", '', {
-                                                class1: 'col-lg-3 col-md-3', 
-                                                class2: 'col-lg-7 col-md-7', 
-                                                type: 'password',
-                                            })
-                                            +fieldBlock("signature", '', {
-                                                class: 'col-lg-10 col-md-10', 
-                                                text: 'I consent to electronic signature and electronic delivery of documentation',
-                                                type: 'checkbox',
-                                            })
-                                            .form-group.terms_conditions.clearfix
-                                                .col-sm-10
-                                                    label(for="terms_conditions").pseudo-checkbox
-                                                        input(
-                                                          name="terms_conditions" 
-                                                          type="checkbox"
-                                                        )#terms_condition 
-                                                        span I consent to the 
-                                                        a(
-                                                            href="/pages/terms/" 
-                                                            target="_blank"
-                                                        ) Terms of Use 
-                                                        span and 
-                                                        a(
-                                                            href="/pages/privacy"
-                                                            target="_blank"
-                                                        ) Privacy Policy
-
-                                            .form-group.form-actions.text-sm-center
-                                                .col-lg-10.col-md-9.col-xs-12.clearfix
-                                                    button(
-                                                        type="submit" 
-                                                    )#register-submit-btn.pull-lg-right.btn.text-uppercase Submit
+                            .col-lg-12
+                                label
+                                    input(type="checkbox")
+                                    span.label-text I consent to electronic signature and electronic delivery of documentation
+                                label.p-t-6
+                                    input(type="checkbox")
+                                    span.label-text I agree to the
+                                        a(href="").link-3  Terms of Service
+                                        |  and 
+                                        a(href="").link-3  Privacy Policy.
+                .col-lg-12.m-t-1
+                    .row.text-sm-center
+                        button(type="submit")#register-submit-btn.btn.btn-lg.btn-primary.text-uppercase sign up
+                .col-lg-12.border-bottom.or
+                    span or
+                .social-btn.col-lg-12
+                    a(data-original-title="facebook"
+                    href="/accounts/facebook/login/?process=login"
+                    ).btn.btn-block.btn-lg.btn-facebook.text-uppercase
+                        i.fa.fa-facebook
+                        |  SIGN UP with Facebook
+                    a(data-original-title="Linkedin"
+                    href="/accounts/linkedin_oauth2/login/?process=login"
+                    ).btn.btn-block.btn-lg.btn-linkedin.text-uppercase
+                        i.fa.fa-linkedin
+                        |  SIGN UP with linkedin
+                    a(data-original-title="Google Plus"
+                    href="/accounts/google/login/?process=login"
+                    ).btn.btn-block.btn-lg.btn-google.text-uppercase
+                        i.fa.fa-google-plus
+                        |  SIGN UP with Google  
