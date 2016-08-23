@@ -268,12 +268,10 @@ define(function() {
                     question: {
                         type: 'string', 
                         label: 'Question',
-                        values: [],
                     },
                     answer: {
                         type: 'text',
                         label: 'Answer',
-                        values: [],
                     }
                 }
                 this.fields['additional_info'].type = 'json'
@@ -282,13 +280,11 @@ define(function() {
                         type: 'string', 
                         label: 'Optional Additioal Sections',
                         placeholder: 'Section Title',
-                        values: [],
                     },
                     body: {
                         type: 'text',
                         label: '',
                         placeholder: 'Description',
-                        values: [],
                     }
                 }
 
@@ -310,7 +306,11 @@ define(function() {
                 var data = $(e.target).serializeObject();
                 //var investment = new InvestmentModel(data);
 
-                this.model.set(data);
+                for(var k in data) {
+                    this.model.set(k, data[k]);
+                }
+                //this.model.set(data);
+                console.log(this.model);
                 Backbone.Validation.bind(this, {model: this.model});
 
                 if(this.model.isValid(true)) {

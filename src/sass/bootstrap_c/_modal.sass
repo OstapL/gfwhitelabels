@@ -4,8 +4,10 @@
 	.modal-content
 		border: none
 		border-radius: 0px
-		a,a:hover 
+		a
 			color: $puerto_rico
+			&:hover
+				text-decoration: underline
 	.modal-header
 		border-bottom: none
 		h2
@@ -22,23 +24,35 @@
 			padding-bottom: rem(30)
 			.form-group
 				margin-bottom: rem(10)
-			label
-				font-size: rem(11)
-				font-weight: 400
-				margin-bottom: 0
-			select 
-				height: 36px
+				label
+					font-size: rem(11)
+					font-weight: 400
+					margin-bottom: 0
+					padding-top: rem(10)
+				select 
+					height: 36px
+				input[type="checkbox"]
+					float: left
+				.label-text
+					display: block
+					padding-left: rem(20)
+					line-height: rem(14)
+				.p-t-6
+					padding-top: rem(6)
 			.btn
-				margin-top: rem(20)
+				margin-top: rem(15)
+			.social-btn
+				margin-top: rem(30)
+				.btn
+					margin-top: rem(10)
 			.or
 				margin-top: rem(30)
-				margin-bottom: rem(5)
 				position: relative
 				span
 					position: absolute
 					text-align: center
 					left: 50%
-					top: 0px
+					top: rem(-2)
 					padding: rem(5)
 					background-color: #fff
 					transform: translate(-50%,-50%)

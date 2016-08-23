@@ -1,7 +1,7 @@
 section.home-section.bg-dark-alfa-30(style="background: url(/img/bg.jpg) center center no-repeat; background-size: cover;")
     .js-height-full
         .home-content.container
-            .col-lg-12.home-text.text-lg-center
+            .col-lg-12.home-text-main.text-lg-center
                 h1.text-uppercase.dosis Investors and Entrepreneurs:
                 .col-lg-4.offset-lg-4.text-lg-center.text-sm-center.text-xs-center.m-b-3
                     span.small-text connecting, funding, and enriching one another, one idea at a time.
@@ -9,9 +9,59 @@ section.home-section.bg-dark-alfa-30(style="background: url(/img/bg.jpg) center 
                     a(href=Urls['campaign-list']()).btn.btn-lg.btn-primary.mr30 INVEST
                     span.hidden-xs  
                     a(href="/company/create").btn.btn-lg.btn-primary RAISE CAPITAL
-
+section.home-campaign-list
+    .container
+        .col-lg-12
+            h2.dosis.text-uppercase.text-sm-center What's Popular
 section.home-wrap-text-block(style="background: url(/img/section-bg-3.jpg) center center no-repeat; background-size: cover;")
-    .test-block
+    .opasity-block
         .container.text-lg-center
             .col-lg-6.offset-lg-3
                 h2.dosis.text-uppercase Invest in the great future
+                h3 Find your favorite company that you like and which you believe in. Even your smallest contribution can help realize a great idea
+            .col-lg-12
+                button.btn.btn-lg.btn-secondary.text-uppercase Sign up to start investing
+                .learn-link
+                    a(href="#").link-3 Learn and Understand the Risks
+
+section.home-what-is
+    .container
+        .col-lg-10.offset-lg-1
+            h2.dosis.text-uppercase.text-sm-center WHAT IS GROWTHFOUNTAIN
+            .row
+                .col-lg-6
+                    .embed-responsive.embed-responsive-16by9.boxshadow
+                        iframe(
+                            embed-responsive-item="true" 
+                            src="https://player.vimeo.com/video/170651597?title=0&amp;byline=0&amp;portrait=0" 
+                            data-webkitallowfullscreen="" 
+                            data-mozallowfullscreen="" 
+                            data-allowfullscreen=""
+                        )
+
+                .col-lg-5
+                    h3.m-t-0.text-justify We banded together with a simple mission – to connect small businesses to all the tools they need to succeed – including financial, human and social capital.
+                    h3.m-t-0.text-justify.m-b-0 Our goal is to level the playing field and make things easy for entrepreneurs to focus on what matters – their product or service!
+
+section.home-wrap-text-block(style="background: url(/img/raise-capital.png) center center no-repeat; background-size: cover;")
+    .opasity-block
+        .container.text-lg-center
+            .col-lg-6.offset-lg-3
+                h2.dosis.text-uppercase  Raise capital with us
+                h3 How does investing in Regulation Crowdfunding offerings actually work? Access our investor network to raise financial capital for your company
+            .col-lg-12.m-b-3
+                button.btn.btn-lg.btn-primary.text-uppercase raise capital
+                button.btn.btn-lg.btn-secondary.text-uppercase.m-l-30 lern more
+section.home-our-partners
+    .container
+        .col-lg-12
+            h2.dosis.text-uppercase.text-xs-center OUR PARTNERS
+        .col-lg-4
+            a(href="")
+                img(src="/img/callahan.png").img-fluid.pull-right
+        .col-lg-4.text-lg-center
+            a(href="")
+                img(src="/img/logo_jd.png").img-fluid.m-x-auto
+        .col-lg-4.text-lg-left
+            a(href="")
+                img(src="/img/callahan.png").img-fluid
