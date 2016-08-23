@@ -23,7 +23,7 @@ section.create-company-media.container
                 i.fa.fa-angle-left
           #company(role="tabpanel").panel-collapse.collapse
             .list-group
-              a(href="#").list-group-item.list-group-item-action Company
+              a(href="/company/create").list-group-item.list-group-item-action Company
         .panel.panel-default
           .panel-heading(role="tab")
             a(data-toggle="collapse"
@@ -37,12 +37,12 @@ section.create-company-media.container
                 i.fa.fa-angle-down
           #campaign(role="tabpanel").panel-collapse.collapse.in
             .list-group
-              a(href="#").list-group-item.list-group-item-action General Information
+              a(href="/campaign/general_information/" + values.id).list-group-item.list-group-item-action General Information
                 i.fa.fa-check
-              a(href="#").list-group-item.list-group-item-action.active Media
-              a(href="#").list-group-item.list-group-item-action Team Members
-              a(href="#").list-group-item.list-group-item-action Specifics
-              a(href="#").list-group-item.list-group-item-action Perks
+              a(href="/campaign/media/" + values.id).list-group-item.list-group-item-action.active Media
+              a(href="/campaign/team_members/" + values.id).list-group-item.list-group-item-action Team Members
+              a(href="/campaign/specifics/" + values.id).list-group-item.list-group-item-action Specifics
+              a(href="/campaign/perks/" + values.id).list-group-item.list-group-item-action Perks
         .panel.panel-default
           .panel-heading(role="tab")
             a(data-toggle="collapse"

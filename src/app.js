@@ -376,7 +376,10 @@ $('body').on('click', '.auth-pop', function() {
 
 $('body').on('click', 'a', function(event) {
     var href = event.currentTarget.getAttribute('href');
-    if(href != '' && href.substr(0,1) != '#' && href.substr(0, 4) != 'http' && href.substr(0,3) != 'ftp') {
+    if(href != '' && href.substr(0,1) != '#' && 
+        href.substr(0, 4) != 'http' && 
+        href.substr(0,3) != 'ftp' &&
+        event.currentTarget.getAttribute('target') == null) {
         event.preventDefault();
         app.showLoading();
 

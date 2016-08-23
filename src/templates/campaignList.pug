@@ -63,7 +63,7 @@ section.campaing-list
                     .one_block
                         .for_img
                             img(
-                                src='/img/test.png'
+                                src=(campaign.list_image_data ? campaign.list_image_data.url : '/img/test.png')
                                 alt=campaign.company.name
                             )
 

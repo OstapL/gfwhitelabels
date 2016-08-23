@@ -78,7 +78,7 @@ include mixins.pug
                                                         href="/accounts/password/reset/"
                                                     )#forget-password Forgot Password?
                                                 .col-xs-5
-                                                    button#login-btnLogin.btn.text-uppercase Login
+                                                    button(type="submit")#login-btn.login.btn.text-uppercase Login
                             #signup(class="tab-pane fade " + (login == 0 ? "in active" : "") aria-expanded=(login == 0))
                                 .row
                                     section.form-section
