@@ -1,11 +1,8 @@
 require('sass/pages/_calculator.sass');
 require("../../../../../node_modules/jquery.inputmask/dist/jquery.inputmask.bundle.js");
-var getCaretPosition = require("../../../helpers/getCaretPosition");
-var setCaretPosition = require("../../../helpers/setCaretPosition");
-var formatPrice = require("../../../helpers/formatPrice");
-var settings = require("../../../helpers/settings")();
-var isTextSelected = require("../../../helpers/isTextSelected");
 
+var flyPriceFormatter = require("../../../helpers/flyPriceFormatter");
+var formatPrice = require("../../../helpers/formatPrice");
 
 module.exports = Backbone.View.extend({
     el: '#content',
@@ -13,32 +10,13 @@ module.exports = Backbone.View.extend({
     template: require('templates/calculator/paybackshare/step2.pug'),
 
     initialize() {
-        // timeout for saving calculator data into the model
-        this.saveTimeout = null;
-
         // data which contains calculated income
         this.outputData = [];
-
-        // flag for skipping formatted price
-        this.skipActions = false;
-
-        // cursor position into input
-        this.cursorPosition = null;
-
-        // change action; can be "add" or "delete"
-        this.changeAction = null;
-
-        // state of the selected text
-        this.selectedText = null;
     },
 
     events: {
         // calculate your income
         'submit .js-calc-form': 'doCalculation',
-
-        // save values into the model
-        'keydown [data-input-mask="price"]': 'saveValues',
-        //'keyup [data-input-mask="price"]': 'setFormattedValue',
 
         // remove useless zeros: 0055 => 55
         'blur .js-field': 'cutZeros'
@@ -93,129 +71,6 @@ module.exports = Backbone.View.extend({
         app.routers.navigate('/calculator/paybackshare/step-3', {trigger: true});
     },
 
-    saveValues(e) {
-        clearTimeout(this.saveTimeout);
-
-        let elem = e.target,
-            value = elem.value,
-            keyCode = null,
-
-        // get not formatted value
-        currentValue = elem.dataset.currentValue;
-
-        // get caret position into the input field
-        this.cursorPosition = getCaretPosition(e.target);
-
-        // working with selection
-        this.selectedText = isTextSelected(elem);
-        if (this.selectedText.fullSelected) {
-            currentValue = "";
-            value = "";
-        } else if (this.selectedText.selected) {
-            // cut input visual value
-            value = this.cutStr(value, this.selectedText.start, this.selectedText.end - 1);
-
-            // set input real value
-            currentValue = value.replace('$', '').replace(/,/g, '');
-        }
-
-        // setup default action
-        this.changeAction = 'add';
-
-        // set the flag to false, means do price formatting on keypress
-        this.skipActions = false;
-
-        // allow only numbers
-        if ((e.keyCode >= 48 && e.keyCode <= 57) || (e.keyCode >= 96 && e.keyCode <= 105)) {
-            this.changeAction = 'add';
-        } else if (e.keyCode == settings.BACKSPACEKEYCODE) {
-            this.changeAction = 'delete';
-            if (!value && this.cursorPosition == 0) {
-                this.skipActions = true;
-            }
-        } else if (e.keyCode == settings.TABKEYCODE ||
-            e.keyCode == settings.LEFTARROWKEYCODE ||
-            e.keyCode == settings.RIGHTARROWKEYCODE ||
-            e.keyCode == settings.HOMEKEYCODE ||
-            e.keyCode == settings.ENDKEYCODE ||
-            e.keyCode == settings.F5KEYCODE ||
-            (e.ctrlKey && e.keyCode == settings.CKEYCODE)) {
-            this.skipActions = true;
-        } else {
-            this.skipActions = true;
-            return false;
-        }
-
-        if (this.skipActions) {
-            return true;
-        }
-
-        // save value into data set
-        if (this.changeAction == 'add') {
-            keyCode = (e.keyCode >= 96 && e.keyCode <= 105) ? e.keyCode - 48 : e.keyCode;
-
-            // insert character at the middle of the string
-            if (this.cursorPosition < value.length) {
-                let arrHelper = value.split("");
-                arrHelper.splice(this.cursorPosition, 0, String.fromCharCode(keyCode));
-                currentValue = arrHelper.join("").replace('$', '').replace(/,/g, '');
-            } else {
-                // add character to the end of the string
-                currentValue += String.fromCharCode(keyCode);
-            }
-        } else if (this.changeAction == 'delete' && this.cursorPosition != 0) {
-            // if we are deleting a selection then
-            // don't do anything because we have already cut our value
-            if (!this.selectedText.selected) {
-                // if we are deleting some character at the middle of the string
-                if (this.cursorPosition < value.length) {
-                    let strHelper = value.slice(0, this.cursorPosition - 1) + value.slice(this.cursorPosition);
-                    currentValue = strHelper.replace('$', '').replace(/,/g, '');
-                } else {
-                    // -//-//- at the end of the string
-                    currentValue = currentValue.slice(0, -1);
-                }
-            }
-        }
-
-        // save not-formatted value
-        elem.dataset.currentValue = currentValue.slice(0, 21);
-        setTimeout(() => {
-            this.setFormattedValue(e);
-        }, 10);
-    },
-
-    cutStr(str, cutStart, cutEnd) {
-        return str.substr(0, cutStart) + str.substr(cutEnd + 1);
-    },
-
-    setFormattedValue(e) {
-        if (this.skipActions) {
-            return true;
-        }
-
-        let elem = e.target,
-            currentValue = elem.dataset.currentValue,
-            modelValue = elem.dataset.modelValue;
-
-        // set formatted value to the input
-        let formattedPrice = formatPrice(currentValue),
-            diff = Math.abs(elem.value.length - formattedPrice.length);
-        elem.value = formattedPrice;
-
-
-        // set caret position to specific one
-        if (this.changeAction == "add") {
-            setCaretPosition(e.target, this.cursorPosition + diff + 1);
-        } else if (this.changeAction == "delete") {
-            let helperCount = this.selectedText.selected ? 0 : 1;
-            setCaretPosition(e.target, this.cursorPosition - diff - helperCount);
-        }
-
-        // save value into the model
-        this.model.saveField(modelValue, currentValue);
-    },
-
     cutZeros(e) {
         let elem = e.target;
         elem.dataset.currentValue = parseFloat(elem.value.replace('$', '').replace(/,/g, '') || 0);
@@ -234,8 +89,8 @@ module.exports = Backbone.View.extend({
 
     ui() {
         // get inputs by inputmask category
-        // this.inputPrice = this.$('[data-input-mask="price"]');
         this.inputPercent = this.$('[data-input-mask="percent"]');
+        this.inputPrice = this.$('[data-input-mask="price"]');
     },
 
     render() {
@@ -244,9 +99,10 @@ module.exports = Backbone.View.extend({
         // declare ui elements for the view
         this.ui();
 
-        // this.inputPrice.inputmask("$9{1,10}", {
-        //     placeholder: "0"
-        // });
+        flyPriceFormatter(this.inputPrice, ({ modelValue, currentValue }) => {
+            // save value into the model
+            this.model.saveField(modelValue, currentValue);
+        });
 
         this.inputPercent.inputmask("9{1,4}%", {
             placeholder: "0"

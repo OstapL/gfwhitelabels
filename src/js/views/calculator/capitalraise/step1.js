@@ -1,9 +1,7 @@
 require('sass/pages/_calculator.sass');
-var getCaretPosition = require("../../../helpers/getCaretPosition");
-var setCaretPosition = require("../../../helpers/setCaretPosition");
+
+var flyPriceFormatter = require("../../../helpers/flyPriceFormatter");
 var formatPrice = require("../../../helpers/formatPrice");
-var settings = require("../../../helpers/settings")();
-var isTextSelected = require("../../../helpers/isTextSelected");
 
 module.exports = Backbone.View.extend({
     el: '#content',
@@ -11,38 +9,27 @@ module.exports = Backbone.View.extend({
     template: require('templates/calculator/capitalraise/step1.pug'),
 
     initialize() {
-        // timeout for saving calculator data into the model
-        this.saveTimeout = null;
-
         // data which contains calculated income
         this.outputData = [];
-
-        // flag for skipping formatted price
-        this.skipActions = false;
-
-        // cursor position into input
-        this.cursorPosition = null;
-
-        // change action; can be "add" or "delete"
-        this.changeAction = null;
-
-        // state of the selected text
-        this.selectedText = null;
     },
 
     events: {
         // calculate your income
         'submit .js-calc-form': 'doCalculation',
 
-        // save values into the model
-        'keydown [data-input-mask="price"]': 'saveValues',
-        //'keyup [data-input-mask="price"]': 'setFormattedValue',
-
         // remove useless zeros: 0055 => 55
         'blur .js-field': 'cutZeros'
     },
 
+    cutZeros(e) {
+        let elem = e.target;
+        elem.dataset.currentValue = parseFloat(elem.value.replace('$', '').replace(/,/g, '') || 0);
+        elem.value = formatPrice(elem.dataset.currentValue);
+    },
+
     ui() {
+        // get inputs by inputmask category
+        this.inputPrice = this.$('[data-input-mask="price"]');
     },
 
     render: function () {
@@ -50,6 +37,11 @@ module.exports = Backbone.View.extend({
 
         // declare ui elements for the view
         this.ui();
+
+        flyPriceFormatter(this.inputPrice, ({ modelValue, currentValue }) => {
+            // save value into the model
+            this.model.saveField(modelValue, currentValue);
+        });
 
         return this;
     }
