@@ -303,13 +303,10 @@ define(function() {
                 this.$el.find('.alert').remove();
                 event.preventDefault();
 
-                var data = $(e.target).serializeObject();
+                var data = $(e.target).serializeJSON();
                 //var investment = new InvestmentModel(data);
 
-                for(var k in data) {
-                    this.model.set(k, data[k]);
-                }
-                //this.model.set(data);
+                this.model.set(data);
                 console.log(this.model);
                 Backbone.Validation.bind(this, {model: this.model});
 
