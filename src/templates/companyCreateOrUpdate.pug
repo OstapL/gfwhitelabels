@@ -37,11 +37,11 @@ section.create-company.container.m-b-85
                 i.fa.fa-angle-left
           #campaign(role="tabpanel").panel-collapse.collapse
             .list-group
-              a(href="#").list-group-item.list-group-item-action General Information
-              a(href="#").list-group-item.list-group-item-action Media
-              a(href="#").list-group-item.list-group-item-action Team Members
-              a(href="#").list-group-item.list-group-item-action Specifics
-              a(href="#").list-group-item.list-group-item-action Perks
+              a(href="/campaign/general_information/" + (campaign? campaign.id : '' ) + "?company_id=" + values.id ).list-group-item.list-group-item-action.active General Information
+              a(href="/campaign/media/" + (campaign? campaign.id : '' ) + "?company_id=" + values.id).list-group-item.list-group-item-action Media
+              a(href="/campaign/team_members/" + (campaign? campaign.id : '' ) + "?company_id=" + values.id).list-group-item.list-group-item-action Team Members
+              a(href="/campaign/specifics/" + (campaign? campaign.id : '' ) + "?company_id=" + values.id).list-group-item.list-group-item-action Specifics
+              a(href="/campaign/perks/" + (campaign? campaign.id : '' ) + "?company_id=" + values.id).list-group-item.list-group-item-action Perks
         .panel.panel-default
           .panel-heading(role="tab")
             a(data-toggle="collapse"

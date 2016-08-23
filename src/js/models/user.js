@@ -18,13 +18,11 @@ let userModel = Backbone.Model.extend({
         if(localStorage.getItem('token') !== null) {
             let userData = localStorage.getItem('user');
             this.set('token', localStorage.getItem('token'));
-            console.log('current userDAta', userData);
 
             if(userData == null) {
                 this.fetch({
                     url: serverUrl + Urls['rest_user_details'](),
                     success: (data) => {
-                        console.log('we tried request', data);
                         localStorage.setItem('user', JSON.stringify(this.toJSON()));
                         app.trigger('userLoaded', this.toJSON());
                         app.routers.mainPage(); // TODO: FIX THAT !!!
@@ -61,17 +59,46 @@ let userModel = Backbone.Model.extend({
     },
 
     getCompany: function(callback) {
-        console.log('hello callback');
         $.ajax(_.extend(_.clone(app.defaultOptionsRequest), {
                 url: serverUrl + Urls['company-list']() + '?owner_id='  + this.get('id'),
                 type: 'GET',
             })
         ).done((response) => {
-            console.log('response is', response);
             let companyModel = require('models/company.js');
             var r = new companyModel.model(response[0]);
             callback(new companyModel.model(response[0]));
         }).fail(app.defaultSaveActions.error);
+    },
+
+    getCampaign: function(id, callback) {
+
+        let company_id = app.getParams().company_id;
+        let campaignModel = require('models/campaign.js');
+
+        if(id === null && typeof company_id === 'undefined') {
+            alert('please set up id or company_id');
+            console.log('not goinng anywhere');
+            return;
+        }
+
+        if(id) {
+            var r = new campaignModel.model({id: id});
+            r.fetch({
+                success: (data) => {
+                    callback(r);
+                },
+                error: app.defaultSaveActions.error
+            });
+        } else {
+            $.ajax(_.extend(_.clone(app.defaultOptionsRequest), {
+                    url: serverUrl + Urls['campaign-list']() + '?company_id='  + this.getParams().company_id,
+                    type: 'GET',
+                })
+            ).done((response) => {
+                var r = new campaignModel.model(response[0]);
+                callback(new campaignModel.model(response[0]));
+            }).fail(app.defaultSaveActions.error);
+        }
     },
 
     // ToDo
