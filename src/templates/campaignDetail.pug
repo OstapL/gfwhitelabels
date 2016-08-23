@@ -126,7 +126,7 @@ section
   section.about-detail.border-bottom
     .container
       .col-lg-12
-        .h2#about.dosis.text-uppercase.text-lg-center About #{ campaign.company.name }
+        h2#about.dosis.text-uppercase.text-lg-center About #{ campaign.company.name }
         p #{ campaign.pitch }
         h3.our.text-lg-center Our Edge
         p #{ campaign.intended_use_of_proceeds }
@@ -184,7 +184,7 @@ section
       .articles_press
       if campaign.press
         each v,k in campaign.press
-          .col-lg-3
+          .col-lg-3.articles_press
             a(href=v.link target="_blank")
               .card.card-inverse
                 img(src="/img/smartbe-intelligent-stroller.jpg" alt="").card-img
@@ -192,8 +192,8 @@ section
                   .card-title
                     p.card-text.font-weight-bold v.title
                     p.card-text.intro Smartbe is a revolutionary concept as regards design and ...
-                    img(src="/img/icon-campaign.jpg", alt="").icon-campaign.d-inline-block
-                    a(href=v.link target="_blank").card-text.links.d-inline-block v.link
+                  img(src="/img/icon-campaign.jpg", alt="").icon-campaign.d-inline-block
+                  a(href=v.link target="_blank").card-text.links.d-inline-block v.link
         .col-lg-12
           h3.text-lg-center Why We are Raising Capital, and What We’ll Do with It
           p #{ campaign.business_model }
@@ -441,7 +441,7 @@ section
             ).panel-collapse.collapse  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius inventore iste numquam nemo, fugit nihil fugiat quasi, excepturi repellendus pariatur! Facilis odit cupiditate tenetur, inventore adipisci consequatur eius suscipit voluptas.
         a(href="").col-lg-12.text-lg-center.link-4.see-all See All Risks
   
-  section.faq.border-bottom
+  section.faq
     .container
     if campaign.faq
       h2#faq.col-lg-12.dosis.text-uppercase.text-lg-center FAQ
@@ -591,28 +591,29 @@ section
             .form-group.row.clearfix.required
               .row
                 .col-lg-12
-                  label.m-t-1
-                    input(type="checkbox")
-                    |  I consent to electronic signature and electronic delivery of documentation
                   label
                     input(type="checkbox")
-                    |  I agree to the
-                    a(href="")  Terms of Service
-                    |  and 
-                    a(href="")  Privacy Policy.
+                    span.label-text I consent to electronic signature and electronic delivery of documentation
+                  label.p-t-6
+                    input(type="checkbox")
+                    span.label-text I agree to the
+                      a(href="").link-3  Terms of Service
+                      |  and 
+                      a(href="").link-3  Privacy Policy.
                   .col-lg-12.text-lg-center
                       button.btn.btn-lg.btn-primary.text-uppercase sing up
                   .col-lg-12.border-bottom.or
                     span or
-            button.btn.btn-block.btn-lg.btn-facebook.text-uppercase
-              i.fa.fa-facebook
-              |  SIGN UP with Facebook
-            button.btn.btn-block.btn-lg.btn-linkedin.text-uppercase
-              i.fa.fa-linkedin
-              |  SIGN UP with linkedin
-            button.btn.btn-block.btn-lg.btn-google.text-uppercase
-              i.fa.fa-google-plus
-              |  SIGN UP with Google
+            .social-btn
+              button.btn.btn-block.btn-lg.btn-facebook.text-uppercase
+                i.fa.fa-facebook
+                |  SIGN UP with Facebook
+              button.btn.btn-block.btn-lg.btn-linkedin.text-uppercase
+                i.fa.fa-linkedin
+                |  SIGN UP with linkedin
+              button.btn.btn-block.btn-lg.btn-google.text-uppercase
+                i.fa.fa-google-plus
+                |  SIGN UP with Google
         .modal-footer
 
 .pswp(tabindex="-1" role="dialog" aria-hidden="true")

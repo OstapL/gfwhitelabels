@@ -180,35 +180,35 @@
 		margin-top: 45px
 		margin-bottom: 20px
 
-	.articles_press
-		.card
-			margin-top: 0
+.articles_press
+	.card
+		margin-top: 0
+		min-height: rem(148)
+		&::before
+			position: absolute
+			width: 100%
+			height: 100%
+			content: ''
+			background-color: rgba(17,17,17, 0.5)
+		.card-img
 			min-height: rem(148)
-			&::before
-				position: absolute
-				width: 100%
-				height: 100%
-				content: ''
-				background-color: rgba(17,17,17, 0.5)
-			.card-img
-				min-height: rem(148)
-			.card-img-overlay
-				padding-left: rem(11)
-				padding-top: rem(17)
-				padding-right: rem(5)
-				.card-text
-					line-height: rem(18)
-					letter-spacing: rem(.35)
-					color: $white
-				.intro
-					margin-top: rem(10)
-				.links
-					font-size: $font-size-sm
-					margin-bottom: rem(10)
-				.icon-campaign
-					width: rem(12)
-					height: rem(12)
-					margin-right: rem(5)
+		.card-img-overlay
+			padding-left: rem(11)
+			padding-top: rem(17)
+			padding-right: rem(5)
+			.card-text
+				line-height: rem(18)
+				letter-spacing: rem(.35)
+				color: $white
+			.intro
+				margin-top: rem(10)
+			.links
+				font-size: $font-size-sm
+				margin-bottom: rem(10)
+			.icon-campaign
+				width: rem(12)
+				height: rem(12)
+				margin-right: rem(5)
 .team
 	padding-bottom: rem(15)
 	a,a:hover
