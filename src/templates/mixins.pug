@@ -171,3 +171,6 @@ mixin fieldDropzone(name, attr, type)
                     i(class='fa fa-' + attr.icon)
         .col-lg-5.p-l-1.p-r-3
             .photo-scroll
+                if values[name + '_data']
+                    each v,k in values[name+'_data'].all_files
+                        img(style="width: 100%" src=v.url).img-fluid
