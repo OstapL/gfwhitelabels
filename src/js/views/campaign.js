@@ -266,10 +266,11 @@ define(function() {
 
             deleteSection: function(e) {
                 e.preventDefault();
-                if(this[sectionName + 'Index'] > 1) {
-                    let sectionName = e.target.dataset.section;
-                    $('.' + sectionName + ' .index_' + this[sectionName + 'Index']).remove();
+                let sectionName = e.target.dataset.section;
+                if(this[sectionName + 'Index'] >= 1) {
+                    console.log('in delete function');
                     this[sectionName + 'Index'] --;
+                    $('.' + sectionName + ' .index_' + this[sectionName + 'Index']).remove();
                 }
             },
 

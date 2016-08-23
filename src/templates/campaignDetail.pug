@@ -40,7 +40,7 @@ section.campaigndetail
   .container
     .col-lg-6
       h1 Smartbe is the first intelligent baby stroller of the new generation.
-      .row.mt25
+      .row.mt20
         .col-lg-4
           a(href="").link-1
             i.fa.fa-map-marker
@@ -126,23 +126,49 @@ section
   section.about-detail.border-bottom
     .container
       .col-lg-12
-        .h2#about.dosis.text-uppercase.text-lg-center About #{ campaign.company.name }
+        h2#about.dosis.text-uppercase.text-lg-center About #{ campaign.company.name }
         p #{ campaign.pitch }
         h3.our.text-lg-center Our Edge
         p #{ campaign.intended_use_of_proceeds }
-      #gallery1.col-lg-12.pt50.photo-gallegy
 
+      #gallery1.col-lg-12.pt50.photo-gallegy
         if campaign.gallery
             each v,k in campaign.gallery_data.all_files
                 .col-lg-3.no-padding-img
                   a(href=v.url data-size='1600x900')
                     img(src=v.url alt=campaign.company.name style="width:263px; height: 209px").img-fluid
+        else
+            .col-lg-3.no-padding-img
+              a(href="/img/campaign/smartbe-intelligent-stroller_1.jpg" data-toggle="modal" data-size='1600x900')
+                img(src="/img/campaign/smartbe-intelligent-stroller_1.jpg" alt="").img-fluid
+            .col-lg-3.no-padding-img
+              a(href="/img/campaign/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
+                img(src="/img/campaign/smartbe-intelligent-stroller_2.jpg" alt="").img-fluid
+            .col-lg-3.no-padding-img
+              a(href="/img/campaign/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
+                img(src="/img/campaign/smartbe-intelligent-stroller_3.jpg" alt="").img-fluid
+            .col-lg-3.no-padding-img
+              a(href="/img/campaign/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
+                img(src="/img/campaign/smartbe-intelligent-stroller_4.jpg" alt="").img-fluid
+            .col-lg-3.no-padding-img
+              a(href="/img/campaign/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
+                img(src="/img/campaign/smartbe-intelligent-stroller_5.jpg" alt="").img-fluid
+            .col-lg-3.no-padding-img
+              a(href="/img/campaign/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
+                img(src="/img/campaign/smartbe-intelligent-stroller_6.jpg" alt="").img-fluid
+            .col-lg-3.no-padding-img
+              a(href="/img/campaign/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
+                img(src="/img/campaign/smartbe-intelligent-stroller_7.jpg" alt="").img-fluid
+            .col-lg-3.no-padding-img
+              a(href="/img/campaign/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
+                img(src="/img/campaign/smartbe-intelligent-stroller_8.jpg" alt="").img-fluid
+
       .col-lg-4
         .card.card-inverse
           img(src="/img/Smartbe-Intelligent-Stroller-5.jpg" alt="").card-img
           .card-img-overlay
             .card-title
-              a(href="").small-icon.link-6
+              a(data-toggle="modal" href="#videoModal-1" data-target="#videoModal-1").small-icon.link-6
                   i.fa.fa-play-circle-o
             h3.card-text.text-lg-center Title for Optional Video 1
       .col-lg-4
@@ -150,7 +176,7 @@ section
           img(src="/img/Smartbe-Intelligent-Stroller-5.jpg" alt="").card-img
           .card-img-overlay
             .card-title
-              a(href="").small-icon.link-6
+              a(data-toggle="modal" href="#videoModal-2" data-target="#videoModal-2").small-icon.link-6
                   i.fa.fa-play-circle-o
             h3.card-text.text-lg-center Title for Optional Video 2
       .col-lg-4
@@ -158,7 +184,7 @@ section
           img(src="/img/Smartbe-Intelligent-Stroller-5.jpg" alt="").card-img
           .card-img-overlay
             .card-title
-              a(href="").small-icon.link-6
+              a(data-toggle="modal" href="#videoModal-3" data-target="#videoModal-3").small-icon.link-6
                   i.fa.fa-play-circle-o
             h3.card-text.text-lg-center Title for Optional Video 3
       .col-lg-12
@@ -166,7 +192,7 @@ section
       .articles_press
       if campaign.press
         each v,k in campaign.press
-          .col-lg-3
+          .col-lg-3.articles_press
             a(href=v.link target="_blank")
               .card.card-inverse
                 img(src="/img/smartbe-intelligent-stroller.jpg" alt="").card-img
@@ -174,8 +200,8 @@ section
                   .card-title
                     p.card-text.font-weight-bold v.title
                     p.card-text.intro Smartbe is a revolutionary concept as regards design and ...
-                    img(src="/img/icon-campaign.jpg", alt="").icon-campaign.d-inline-block
-                    a(href=v.link target="_blank").card-text.links.d-inline-block v.link
+                  img(src="/img/icon-campaign.jpg", alt="").icon-campaign.d-inline-block
+                  a(href=v.link target="_blank").card-text.links.d-inline-block v.link
         .col-lg-12
           h3.text-lg-center Why We are Raising Capital, and What We’ll Do with It
           p #{ campaign.business_model }
@@ -423,9 +449,9 @@ section
             ).panel-collapse.collapse  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius inventore iste numquam nemo, fugit nihil fugiat quasi, excepturi repellendus pariatur! Facilis odit cupiditate tenetur, inventore adipisci consequatur eius suscipit voluptas.
         a(href="").col-lg-12.text-lg-center.link-4.see-all See All Risks
   
-  section.faq.border-bottom
-    .container
+  section.faq
     if campaign.faq
+    .container
       h2#faq.col-lg-12.dosis.text-uppercase.text-lg-center FAQ
       .col-lg-8.offset-lg-2
         #accordion(role="tablist" aria-multiselectable="true")
@@ -442,39 +468,39 @@ section
               div(id="collapsefaq" + k role="tabpanel"
               aria-labelledby="faq" + k
               ).panel-collapse.collapse.in  #{ v.answer }
-            .panel.panel-default
-              #faqTwo(role="tab").panel-heading
-                a(data-toggle="collapse"
-                data-parent="#accordion" 
-                href="#collapsefaqTwo"
-                aria-controls="collapsefaqTwo"
-                ).list-group-item-action How did Smartbe start and then evolve? 
-                  i.fa.fa-angle-down
-              #collapsefaqTwo(role="tabpanel"
-              aria-labelledby="faqTwo"
-              ).panel-collapse.collapse  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi, hic, distinctio, enim nam consequuntur iste quos, accusamus blanditiis a id odio perferendis vel perspiciatis provident et! Consequuntur nemo reprehenderit inventore.
-            .panel.panel-default
-              #faqThree(role="tab").panel-heading
-                a(data-toggle="collapse"
-                data-parent="#accordion" 
-                href="#collapsefaqThree"
-                aria-controls="collapsefaqThree"
-                ).list-group-item-action What is your impact?     
-                  i.fa.fa-angle-down
-              #collapsefaqThree(role="tabpanel"
-              aria-labelledby="faqThree"
-              ).panel-collapse.collapse  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius inventore iste numquam nemo, fugit nihil fugiat quasi, excepturi repellendus pariatur! Facilis odit cupiditate tenetur, inventore adipisci consequatur eius suscipit voluptas.
-            .panel.panel-default
-              #faqFour(role="tab").panel-heading
-                a(data-toggle="collapse"
-                data-parent="#accordion" 
-                href="#collapsefaqFour"
-                aria-controls="collapsefaqFour"
-                ).list-group-item-action Do you have any intellectual property?   
-                  i.fa.fa-angle-down
-              #collapsefaqFour(role="tabpanel"
-              aria-labelledby="faqFour"
-              ).panel-collapse.collapse  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius inventore iste numquam nemo, fugit nihil fugiat quasi, excepturi repellendus pariatur! Facilis odit cupiditate tenetur, inventore adipisci consequatur eius suscipit voluptas.
+          .panel.panel-default
+            #faqTwo(role="tab").panel-heading
+              a(data-toggle="collapse"
+              data-parent="#accordion" 
+              href="#collapsefaqTwo"
+              aria-controls="collapsefaqTwo"
+              ).list-group-item-action How did Smartbe start and then evolve? 
+                i.fa.fa-angle-down
+            #collapsefaqTwo(role="tabpanel"
+            aria-labelledby="faqTwo"
+            ).panel-collapse.collapse  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi, hic, distinctio, enim nam consequuntur iste quos, accusamus blanditiis a id odio perferendis vel perspiciatis provident et! Consequuntur nemo reprehenderit inventore.
+          .panel.panel-default
+            #faqThree(role="tab").panel-heading
+              a(data-toggle="collapse"
+              data-parent="#accordion" 
+              href="#collapsefaqThree"
+              aria-controls="collapsefaqThree"
+              ).list-group-item-action What is your impact?     
+                i.fa.fa-angle-down
+            #collapsefaqThree(role="tabpanel"
+            aria-labelledby="faqThree"
+            ).panel-collapse.collapse  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius inventore iste numquam nemo, fugit nihil fugiat quasi, excepturi repellendus pariatur! Facilis odit cupiditate tenetur, inventore adipisci consequatur eius suscipit voluptas.
+          .panel.panel-default
+            #faqFour(role="tab").panel-heading
+              a(data-toggle="collapse"
+              data-parent="#accordion" 
+              href="#collapsefaqFour"
+              aria-controls="collapsefaqFour"
+              ).list-group-item-action Do you have any intellectual property?   
+                i.fa.fa-angle-down
+            #collapsefaqFour(role="tabpanel"
+            aria-labelledby="faqFour"
+            ).panel-collapse.collapse  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius inventore iste numquam nemo, fugit nihil fugiat quasi, excepturi repellendus pariatur! Facilis odit cupiditate tenetur, inventore adipisci consequatur eius suscipit voluptas.
         a(href="").col-lg-12.text-lg-center.link-4.see-all See All FAQ
     
   section.ask.border-bottom
@@ -540,11 +566,29 @@ section
 
 //MODAL
 #videoModal.modal.fade(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")
-  .modal-dialog(role="document")
+  .modal-dialog.modal-lg(role="document")
     .modal-content
       .embed-responsive.embed-responsive-16by9
         iframe.embed-responsive-item(src=campaign.video allowfullscreen="true")
-
+//MODAL-VIDEO1
+#videoModal-1.modal.fade(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")
+  .modal-dialog.modal-lg(role="document")
+    .modal-content
+      .embed-responsive.embed-responsive-16by9
+        iframe.embed-responsive-item(src="//www.youtube.com/embed/zpOULjyy-n8?rel=0" allowfullscreen="true")
+//MODAL-VIDEO1
+#videoModal-2.modal.fade(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")
+  .modal-dialog.modal-lg(role="document")
+    .modal-content
+      .embed-responsive.embed-responsive-16by9
+        iframe.embed-responsive-item(src="//www.youtube.com/embed/zpOULjyy-n8?rel=0" allowfullscreen="true")
+        
+//MODAL-VIDEO1
+#videoModal-3.modal.fade(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")
+  .modal-dialog.modal-lg(role="document")
+    .modal-content
+      .embed-responsive.embed-responsive-16by9
+        iframe.embed-responsive-item(src="//www.youtube.com/embed/zpOULjyy-n8?rel=0" allowfullscreen="true")
 
 //modal sing_up
 #sing_up.modal.fade(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")
@@ -573,28 +617,29 @@ section
             .form-group.row.clearfix.required
               .row
                 .col-lg-12
-                  label.m-t-1
-                    input(type="checkbox")
-                    |  I consent to electronic signature and electronic delivery of documentation
                   label
                     input(type="checkbox")
-                    |  I agree to the
-                    a(href="")  Terms of Service
-                    |  and 
-                    a(href="")  Privacy Policy.
+                    span.label-text I consent to electronic signature and electronic delivery of documentation
+                  label.p-t-6
+                    input(type="checkbox")
+                    span.label-text I agree to the
+                      a(href="").link-3  Terms of Service
+                      |  and 
+                      a(href="").link-3  Privacy Policy.
                   .col-lg-12.text-lg-center
                       button.btn.btn-lg.btn-primary.text-uppercase sing up
                   .col-lg-12.border-bottom.or
                     span or
-            button.btn.btn-block.btn-lg.btn-facebook.text-uppercase
-              i.fa.fa-facebook
-              |  SIGN UP with Facebook
-            button.btn.btn-block.btn-lg.btn-linkedin.text-uppercase
-              i.fa.fa-linkedin
-              |  SIGN UP with linkedin
-            button.btn.btn-block.btn-lg.btn-google.text-uppercase
-              i.fa.fa-google-plus
-              |  SIGN UP with Google
+            .social-btn
+              button.btn.btn-block.btn-lg.btn-facebook.text-uppercase
+                i.fa.fa-facebook
+                |  SIGN UP with Facebook
+              button.btn.btn-block.btn-lg.btn-linkedin.text-uppercase
+                i.fa.fa-linkedin
+                |  SIGN UP with linkedin
+              button.btn.btn-block.btn-lg.btn-google.text-uppercase
+                i.fa.fa-google-plus
+                |  SIGN UP with Google
         .modal-footer
 
 .pswp(tabindex="-1" role="dialog" aria-hidden="true")
