@@ -40,7 +40,7 @@ section.campaigndetail
   .container
     .col-lg-6
       h1 Smartbe is the first intelligent baby stroller of the new generation.
-      .row.mt25
+      .row.mt20
         .col-lg-4
           a(href="").link-1
             i.fa.fa-map-marker
@@ -132,7 +132,7 @@ section
         p #{ campaign.intended_use_of_proceeds }
       #gallery1.col-lg-12.pt50.photo-gallegy
         .col-lg-3.no-padding-img
-          a(href="/img/campaign/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
+          a(href="/img/campaign/smartbe-intelligent-stroller_1.jpg" data-toggle="modal" data-size='1600x900')
             img(src="/img/campaign/smartbe-intelligent-stroller_1.jpg" alt="").img-fluid
         .col-lg-3.no-padding-img
           a(href="/img/campaign/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
@@ -160,7 +160,7 @@ section
           img(src="/img/Smartbe-Intelligent-Stroller-5.jpg" alt="").card-img
           .card-img-overlay
             .card-title
-              a(href="").small-icon.link-6
+              a(data-toggle="modal" href="#videoModal-1" data-target="#videoModal-1").small-icon.link-6
                   i.fa.fa-play-circle-o
             h3.card-text.text-lg-center Title for Optional Video 1
       .col-lg-4
@@ -168,7 +168,7 @@ section
           img(src="/img/Smartbe-Intelligent-Stroller-5.jpg" alt="").card-img
           .card-img-overlay
             .card-title
-              a(href="").small-icon.link-6
+              a(data-toggle="modal" href="#videoModal-2" data-target="#videoModal-2").small-icon.link-6
                   i.fa.fa-play-circle-o
             h3.card-text.text-lg-center Title for Optional Video 2
       .col-lg-4
@@ -176,7 +176,7 @@ section
           img(src="/img/Smartbe-Intelligent-Stroller-5.jpg" alt="").card-img
           .card-img-overlay
             .card-title
-              a(href="").small-icon.link-6
+              a(data-toggle="modal" href="#videoModal-3" data-target="#videoModal-3").small-icon.link-6
                   i.fa.fa-play-circle-o
             h3.card-text.text-lg-center Title for Optional Video 3
       .col-lg-12
@@ -442,8 +442,8 @@ section
         a(href="").col-lg-12.text-lg-center.link-4.see-all See All Risks
   
   section.faq
-    .container
     if campaign.faq
+    .container
       h2#faq.col-lg-12.dosis.text-uppercase.text-lg-center FAQ
       .col-lg-8.offset-lg-2
         #accordion(role="tablist" aria-multiselectable="true")
@@ -558,11 +558,29 @@ section
 
 //MODAL
 #videoModal.modal.fade(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")
-  .modal-dialog(role="document")
+  .modal-dialog.modal-lg(role="document")
     .modal-content
       .embed-responsive.embed-responsive-16by9
         iframe.embed-responsive-item(src=campaign.video allowfullscreen="true")
-
+//MODAL-VIDEO1
+#videoModal-1.modal.fade(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")
+  .modal-dialog.modal-lg(role="document")
+    .modal-content
+      .embed-responsive.embed-responsive-16by9
+        iframe.embed-responsive-item(src="//www.youtube.com/embed/zpOULjyy-n8?rel=0" allowfullscreen="true")
+//MODAL-VIDEO1
+#videoModal-2.modal.fade(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")
+  .modal-dialog.modal-lg(role="document")
+    .modal-content
+      .embed-responsive.embed-responsive-16by9
+        iframe.embed-responsive-item(src="//www.youtube.com/embed/zpOULjyy-n8?rel=0" allowfullscreen="true")
+        
+//MODAL-VIDEO1
+#videoModal-3.modal.fade(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")
+  .modal-dialog.modal-lg(role="document")
+    .modal-content
+      .embed-responsive.embed-responsive-16by9
+        iframe.embed-responsive-item(src="//www.youtube.com/embed/zpOULjyy-n8?rel=0" allowfullscreen="true")
 
 //modal sing_up
 #sing_up.modal.fade(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")
