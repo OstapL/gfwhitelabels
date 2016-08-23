@@ -39,10 +39,15 @@ define(function() {
                 Backbone.Validation.bind(this, {model: this.model});
 
                 if(this.model.isValid(true)) {
+                    // ToDo
+                    // Move it to success method
+                    var self = this;
                     this.model.save().
                         then((data) => { 
                             app.showLoading();
 
+                            self.undelegateEvents();
+                            $('#content').scrollTo();
                             app.routers.navigate(
                                 '/campaign/general_information/?company_id=' + data.id,
                                 {trigger: true, replace: false}

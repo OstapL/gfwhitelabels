@@ -28,7 +28,6 @@ mixin fieldBlock(name, data, attr)
     if values == null
         - values = {}
     if values[name] == null
-        - console.log(values)
         - values[name] = data
 
     if attr.type == 'checkbox' 
@@ -63,15 +62,14 @@ mixin fieldBlock(name, data, attr)
                     name=name
                 ).custom-select
                     each v in fields[name].choices
-                        option(value=v.value) #{v.display_name}
+                        option(value=v.value selected=(v.value == values[name] ? "selected" : undefined)) #{v.display_name}
     else if attr.type == 'json' 
         div(class="form-group " + (attr.row == 0 ? '' : ' row ') + name + (fields[name].required == true ? ' required ' : ' '))
             - counter = attr.index || 0
             - indexCounter = attr.index || 0
-            - console.log('v', values[name])
             if values[name].length == 0
                 each k,v in fields[name].schema
-                    div(class=(counter == (Object.keys(fields[name].schema).length-1) ? 'm-b-0' : 'form-group') + ' clearfix')
+                    div(class=(counter == (Object.keys(fields[name].schema).length+100) ? 'm-b-0' : 'form-group') + ' clearfix index_' + counter)
                         label.col-lg-3.text-lg-right #{k.label}
                         .col-lg-9
                             if k.type == 'text' 
@@ -94,12 +92,10 @@ mixin fieldBlock(name, data, attr)
                 - counter = 0
                 - indexCounter = attr.index || 0
                 each el in values[name]
-                    - console.log(el, values[name])
                     each k1,v in fields[name].schema
                         - let k = values[name][counter][v]
                         - let t = fields[name].schema[v]
-                        - console.log(k, v)
-                        div(class=(counter == values[name].length*2 ? 'm-b-0' : 'form-group') + ' clearfix')
+                        div(class=(counter == Object.keys(values[name]).length+100 ? 'm-b-0' : 'form-group') + ' clearfix index_' + counter )
                             label.col-lg-3.text-lg-right #{t.label}
                             .col-lg-9
                                 if t.type == 'text' 
@@ -122,7 +118,6 @@ mixin fieldBlock(name, data, attr)
         div(class="form-group " + (attr.row == 0 ? '' : ' row ') + name + (fields[name].required == true ? ' required ' : ' '))
             label(class= attr.text_align ? 'text-md-' + attr.text_align + ' ' + attr.class1 : ' text-md-right ' + attr.class1 for=name)= fields[name].label
             div(class=attr.class2)
-                - console.log(values, values[name])
                 if attr.type == 'textarea' 
                     textarea(
                         id=name
@@ -151,7 +146,6 @@ mixin fieldDropzone(name, attr)
     if values == null
         - values = {}
     if values[name] == null
-        - console.log(values)
         - values[name] = data
 
     div(class='row media-item ' + name)

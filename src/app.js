@@ -390,6 +390,7 @@ $('body').on('click', 'a', function(event) {
         var url = href;
 
         if(app.cache.hasOwnProperty(url) == false) {
+            $('#content').undelegate();
             app.routers.navigate(
                 url,
                 {trigger: true, replace: false}

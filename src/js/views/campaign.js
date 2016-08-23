@@ -148,6 +148,7 @@ define(function() {
                 var campaignModel = this.campaignModel;
 
                 if(this.model.isValid(true)) {
+                    var self = this;
                     this.model.save().
                         then((data) => { 
                             app.showLoading();
@@ -233,11 +234,13 @@ define(function() {
             events: {
                 'submit form': 'submit',
                 'click .add-section': 'addSection',
+                'click .delete-section': 'deleteSection',
             },
 
             initialize: function(options) {
                 this.fields = options.fields;
                 this.faqIndex = 1;
+                this.additional_infoIndex = 1;
             },
 
             addSection: function(e) {
@@ -253,12 +256,21 @@ define(function() {
                             class1: '',
                             class2: '',
                             type: 'json',
-                            index: this.faqIndex,
+                            index: this[sectionName + 'Index'],
                         },
                         values: this.model.toJSON() 
                     })
                 );
-                this.faqIndex ++;
+                this[sectionName + 'Index'] ++;
+            },
+
+            deleteSection: function(e) {
+                e.preventDefault();
+                if(this[sectionName + 'Index'] > 1) {
+                    let sectionName = e.target.dataset.section;
+                    $('.' + sectionName + ' .index_' + this[sectionName + 'Index']).remove();
+                    this[sectionName + 'Index'] --;
+                }
             },
 
             render: function() {
@@ -287,6 +299,9 @@ define(function() {
                         placeholder: 'Description',
                     }
                 }
+                console.log('faq', this.model.get('faq'));
+                this.faqIndex = Object.keys(this.model.get('faq')).length;
+                this.additional_infoIndex = Object.keys(this.model.get('additional_info')).lenth;
 
                 this.$el.html(
                     template({
@@ -311,11 +326,14 @@ define(function() {
                 Backbone.Validation.bind(this, {model: this.model});
 
                 if(this.model.isValid(true)) {
+                    var self = this;
                     this.model.save().
                         then((data) => { 
                             app.showLoading();
 
                             //window.location = '/campaign/media/' + this.model.get('id');
+                            self.undelegateEvents();
+                            $('#content').scrollTo();
                             app.routers.navigate(
                                 '/campaign/media/' + this.model.get('id'),
                                 {trigger: true, replace: false}
@@ -435,17 +453,18 @@ define(function() {
                 Backbone.Validation.bind(this, {model: this.model});
 
                 if(this.model.isValid(true)) {
+                    var self = this;
                     this.model.save().
                         then((data) => { 
                             app.showLoading();
 
-                            window.location = '/campaign/specifics/' + this.model.get('id');
-                            /*
+                            //window.location = '/campaign/specifics/' + this.model.get('id');
+                            self.undelegateEvents();
+                            $('#content').scrollTo();
                             app.routers.navigate(
                                 '/campaign/specifics/' + this.model.get('id'),
                                 {trigger: true, replace: false}
                             );
-                            */
 
                         }).
                         fail((xhr, status, text) => {
@@ -529,18 +548,19 @@ define(function() {
                 Backbone.Validation.bind(this, {model: this.model});
 
                 if(this.model.isValid(true)) {
+                    var self = this;
                     this.model.save().
                         then((data) => { 
                             app.showLoading();
                             console.log('data got', data, this.model);
 
-                            window.location = '/campaign/media/' + this.model.get('id');
-                            /*
+                            //window.location = '/campaign/media/' + this.model.get('id');
+                            self.undelegateEvents();
+                            $('#content').scrollTo();
                             app.routers.navigate(
                                 '/campaign/media/' + this.model.get('id'),
                                 {trigger: true, replace: false}
                             );
-                            */
 
                         }).
                         fail((xhr, status, text) => {
@@ -605,17 +625,18 @@ define(function() {
                 Backbone.Validation.bind(this, {model: this.model});
 
                 if(this.model.isValid(true)) {
+                    var self = this;
                     this.model.save().
                         then((data) => { 
                             app.showLoading();
 
-                            window.location = '/campaign/perks/' + this.model.get('id');
-                            /*
+                            //window.location = '/campaign/perks/' + this.model.get('id');
+                            self.undelegateEvents();
+                            $('#content').scrollTo();
                             app.routers.navigate(
                                 '/campaign/perks/' + this.model.get('id'),
                                 {trigger: true, replace: false}
                             );
-                            */
 
                         }).
                         fail((xhr, status, text) => {
@@ -703,18 +724,19 @@ define(function() {
                 Backbone.Validation.bind(this, {model: this.model});
 
                 if(this.model.isValid(true)) {
+                    var self = this;
                     this.model.save().
                         then((data) => { 
                             app.showLoading();
                             console.log('data got', data, this.model);
 
-                            window.location = '/api/campaign/' + this.model.get('id');
-                            /*
+                            //window.location = '/api/campaign/' + this.model.get('id');
+                            self.undelegateEvents();
+                            $('#content').scrollTo();
                             app.routers.navigate(
                                 '/api/campaign/' + this.model.get('id'),
                                 {trigger: true, replace: false}
                             );
-                            */
 
                         }).
                         fail((xhr, status, text) => {
