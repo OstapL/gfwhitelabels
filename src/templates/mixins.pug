@@ -134,7 +134,7 @@ mixin fieldBlock(name, data, attr)
                       ).form-control
 
 
-mixin fieldDropzone(name, attr)
+mixin fieldDropzone(name, attr, type)
     // If we did not created fields vocabulary
     // Assume it is empty field
     if fields[name] == null
@@ -148,13 +148,26 @@ mixin fieldDropzone(name, attr)
     if values[name] == null
         - values[name] = data
 
-    div(class='row media-item ' + name)
-        div(class=attr.class1 + ' ' + (fields[name].required == true ? ' required ' : ' ') )
-          .col-lg-5
-              span.pull-right.font-weight-bold #{fields[name].label}
-          div(class='dropzone__' + name + ' col-lg-7 text-lg-center')
-            span(class='link-1' href="#")
-                p.drop-photo #{attr.text}
-                i(class="fa fa-" + attr.icon)
-        div(class=attr.class2)
-            img(src=(values[name + '_data'] ? values[name + '_data'].url : attr.default) alt=fields[name].label class="img-fluid img-" + name)
+    - type = attr.viewType ? attr.viewType : 1
+
+    if type == 1
+        div(class='row media-item ' + name)
+            div(class=attr.class1 + ' ' + (fields[name].required == true ? ' required ' : ' ') )
+              .col-lg-5
+                  span.pull-right.font-weight-bold #{fields[name].label}
+              div(class='dropzone__' + name + ' col-lg-7 text-lg-center')
+                span(class='link-1' href="#")
+                    p.drop-photo #{attr.text}
+                    i(class="fa fa-" + attr.icon)
+            div(class=attr.class2)
+                img(src=(values[name + '_data'] ? values[name + '_data'].url : attr.default) alt=fields[name].label class="img-fluid img-" + name)
+    else if type == 2
+        div(class='dropzone__' + name + ' col-lg-7 media-item')
+            div(class=attr.class1)
+                span.pull-right.font-weight-bold #{fields[name].label}
+            div(class=attr.class2 + ' text-lg-center')
+                span(href="#").link-1
+                    p.drop-photo #{attr.text}
+                    i(class='fa fa-' + attr.icon)
+        .col-lg-5.p-l-1.p-r-3
+            .photo-scroll

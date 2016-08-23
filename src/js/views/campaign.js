@@ -299,7 +299,6 @@ define(function() {
                         placeholder: 'Description',
                     }
                 }
-                console.log('faq', this.model.get('faq'));
                 this.faqIndex = Object.keys(this.model.get('faq')).length;
                 this.additional_infoIndex = Object.keys(this.model.get('additional_info')).lenth;
 
@@ -383,7 +382,7 @@ define(function() {
                         values: this.model.toJSON() 
                     })
                 );
-                this.faqIndex ++;
+                this.pressIndex ++;
             },
 
             render: function() {
@@ -439,6 +438,22 @@ define(function() {
                             console.log('image upload done', model);
                         });
                     }
+                );
+                app.createFileDropzone(
+                    dropzone,
+                    'gallery', 
+                    'galleries/' + this.model.get('id'), '', 
+                    (data) => {
+                        //console.log(data);
+                        $('.photo-scroll').append('<img class="img-fluid pull-left" src="' + data.url + '" style="width: 100px">');
+                        this.model.save({
+                            gallery: data.folder_id,
+                        }, {
+                            patch: true
+                        }).done((model) => {
+                            console.log('image upload done', model);
+                        });
+                    },
                 );
                 return this;
             },

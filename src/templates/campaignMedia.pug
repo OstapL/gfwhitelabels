@@ -93,33 +93,13 @@ section.create-company-media.container
       .col-lg-12.border-top
         h3.text-lg-center Recommended Additional Media
       .row.m-b-2
-        .col-lg-7.media-item
-          .col-lg-5
-            span.pull-right.font-weight-bold Thumbnail Picture
-          .col-lg-7.text-lg-center
-            a(href="").link-1
-              p.drop-photo Drop your photo here or click to upload
-              i.fa.fa-file-image-o
-        .col-lg-5.p-l-1.p-r-3
-          .photo-scroll
-            .photo-scroll-wrap
-              img(src="/img/test.png" alt="Responsive image").img-fluid
-              img(src="/img/test.png" alt="Responsive image").img-fluid
-            .photo-scroll-wrap
-              img(src="/img/test.png" alt="Responsive image").img-fluid
-              img(src="/img/test.png" alt="Responsive image").img-fluid
-            .photo-scroll-wrap
-              img(src="/img/test.png" alt="Responsive image").img-fluid
-              img(src="/img/test.png" alt="Responsive image").img-fluid
-            .photo-scroll-wrap
-              img(src="/img/test.png" alt="Responsive image").img-fluid
-              img(src="/img/test.png" alt="Responsive image").img-fluid
-            .photo-scroll-wrap
-              img(src="/img/test.png" alt="Responsive image").img-fluid
-              img(src="/img/test.png" alt="Responsive image").img-fluid
-            .photo-scroll-wrap
-              img(src="/img/test.png" alt="Responsive image").img-fluid
-              img(src="/img/test.png" alt="Responsive image").img-fluid
+        +fieldDropzone("gallery", {
+            class1: 'col-lg-5',
+            class2: 'col-lg-7',
+            text: 'Drop your photo here or click to upload',
+            icon: 'file-image-o',
+            viewType: 2
+        })
 
       .row.m-b-2.recommended
         .col-lg-7
