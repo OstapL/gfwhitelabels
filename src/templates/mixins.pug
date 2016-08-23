@@ -66,8 +66,9 @@ mixin fieldBlock(name, data, attr)
                         option(value=v.value) #{v.display_name}
     else if attr.type == 'json' 
         div(class="form-group " + (attr.row == 0 ? '' : ' row ') + name + (fields[name].required == true ? ' required ' : ' '))
-            - counter = 0
+            - counter = attr.index || 0
             - indexCounter = attr.index || 0
+            - console.log('v', values[name])
             if values[name].length == 0
                 each k,v in fields[name].schema
                     div(class=(counter == (Object.keys(fields[name].schema).length-1) ? 'm-b-0' : 'form-group') + ' clearfix')
@@ -88,8 +89,10 @@ mixin fieldBlock(name, data, attr)
                                     value=k[counter]
                                 ).form-control
                     - counter ++
+                    - indexCounter ++
             else
                 - counter = 0
+                - indexCounter = attr.index || 0
                 each el in values[name]
                     - console.log(el, values[name])
                     each k1,v in fields[name].schema
@@ -114,6 +117,7 @@ mixin fieldBlock(name, data, attr)
                                         value=k
                                     ).form-control
                     - counter ++
+                    - indexCounter ++
     else
         div(class="form-group " + (attr.row == 0 ? '' : ' row ') + name + (fields[name].required == true ? ' required ' : ' '))
             label(class= attr.text_align ? 'text-md-' + attr.text_align + ' ' + attr.class1 : ' text-md-right ' + attr.class1 for=name)= fields[name].label
