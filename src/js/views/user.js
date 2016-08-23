@@ -116,6 +116,7 @@ define(function() {
                         fields: this.fields
                     })
                 );
+                /*
                 app.createFileDropzone(
                     dropzone,
                     'image', 
@@ -130,6 +131,7 @@ define(function() {
                         });
                     }
                 );
+                */
                 return this;
             },
 

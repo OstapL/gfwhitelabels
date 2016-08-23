@@ -268,12 +268,10 @@ define(function() {
                     question: {
                         type: 'string', 
                         label: 'Question',
-                        values: [],
                     },
                     answer: {
                         type: 'text',
                         label: 'Answer',
-                        values: [],
                     }
                 }
                 this.fields['additional_info'].type = 'json'
@@ -282,13 +280,11 @@ define(function() {
                         type: 'string', 
                         label: 'Optional Additioal Sections',
                         placeholder: 'Section Title',
-                        values: [],
                     },
                     body: {
                         type: 'text',
                         label: '',
                         placeholder: 'Description',
-                        values: [],
                     }
                 }
 
@@ -310,15 +306,19 @@ define(function() {
                 var data = $(e.target).serializeObject();
                 //var investment = new InvestmentModel(data);
 
-                this.model.set(data);
+                for(var k in data) {
+                    this.model.set(k, data[k]);
+                }
+                //this.model.set(data);
+                console.log(this.model);
                 Backbone.Validation.bind(this, {model: this.model});
 
                 if(this.model.isValid(true)) {
                     this.model.save().
                         then((data) => { 
                             app.showLoading();
-                            console.log('data got', data, this.model);
 
+                            //window.location = '/campaign/media/' + this.model.get('id');
                             app.routers.navigate(
                                 '/campaign/media/' + this.model.get('id'),
                                 {trigger: true, replace: false}
@@ -441,12 +441,14 @@ define(function() {
                     this.model.save().
                         then((data) => { 
                             app.showLoading();
-                            console.log('data got', data, this.model);
 
+                            window.location = '/campaign/specifics/' + this.model.get('id');
+                            /*
                             app.routers.navigate(
-                                '/campaign/team_members/' + this.model.get('id'),
+                                '/campaign/specifics/' + this.model.get('id'),
                                 {trigger: true, replace: false}
                             );
+                            */
 
                         }).
                         fail((xhr, status, text) => {
@@ -535,10 +537,13 @@ define(function() {
                             app.showLoading();
                             console.log('data got', data, this.model);
 
+                            window.location = '/campaign/media/' + this.model.get('id');
+                            /*
                             app.routers.navigate(
                                 '/campaign/media/' + this.model.get('id'),
                                 {trigger: true, replace: false}
                             );
+                            */
 
                         }).
                         fail((xhr, status, text) => {
@@ -606,12 +611,14 @@ define(function() {
                     this.model.save().
                         then((data) => { 
                             app.showLoading();
-                            console.log('data got', data, this.model);
 
+                            window.location = '/campaign/perks/' + this.model.get('id');
+                            /*
                             app.routers.navigate(
                                 '/campaign/perks/' + this.model.get('id'),
                                 {trigger: true, replace: false}
                             );
+                            */
 
                         }).
                         fail((xhr, status, text) => {
@@ -628,22 +635,102 @@ define(function() {
         }),
 
         perks: Backbone.View.extend({
+            events: {
+                'submit form': 'submit',
+                'click .add-section': 'addSection',
+            },
+
             initialize: function(options) {
                 this.fields = options.fields;
+                this.perksIndex = 1;
+            },
+
+            addSection: function(e) {
+                e.preventDefault();
+                let sectionName = e.target.dataset.section;
+                let template = require('templates/section.pug');
+                console.log(this.fields, sectionName);
+                $('.' + sectionName + ' .m-b-0').addClass('form-group').removeClass('m-b-0');
+                $('.' + sectionName).append(
+                    template({
+                        fields: this.fields,
+                        name: sectionName,
+                        attr: {
+                            class1: '',
+                            class2: '',
+                            type: 'json',
+                            index: this.perksIndex,
+                        },
+                        values: this.model.toJSON() 
+                    })
+                );
+                this.perksIndex ++;
             },
 
             render: function() {
                 let template = require('templates/campaignPerks.pug');
+                this.fields['perks'].type = 'json'
+                this.fields['perks'].schema = {
+                    amount: {
+                        type: 'number', 
+                        label: 'If an Investor Invests Over',
+                        placeholder: '$',
+                        values: [],
+                    },
+                    perk: {
+                        type: 'string',
+                        label: 'We will',
+                        placholder: "Description",
+                        values: [],
+                    }
+                }
                 this.$el.html(
                     template({
                         serverUrl: serverUrl,
                         Urls: Urls,
                         fields: this.fields,
-                        campaign: this.model.toJSON(),
+                        values: this.model.toJSON(),
                     })
                 );
                 return this;
             },
+
+            submit: function(e) {
+                this.$el.find('.alert').remove();
+                event.preventDefault();
+
+                var data = $(e.target).serializeObject();
+                //var investment = new InvestmentModel(data);
+
+                this.model.set(data);
+                Backbone.Validation.bind(this, {model: this.model});
+
+                if(this.model.isValid(true)) {
+                    this.model.save().
+                        then((data) => { 
+                            app.showLoading();
+                            console.log('data got', data, this.model);
+
+                            window.location = '/api/campaign/' + this.model.get('id');
+                            /*
+                            app.routers.navigate(
+                                '/api/campaign/' + this.model.get('id'),
+                                {trigger: true, replace: false}
+                            );
+                            */
+
+                        }).
+                        fail((xhr, status, text) => {
+                            app.defaultSaveActions.error(this, xhr, status, text, this.fields);
+                        });
+                } else {
+                    if(this.$('.alert').length) {
+                        this.$('.alert').scrollTo();
+                    } else  {
+                        this.$el.find('.has-error').scrollTo();
+                    }
+                }
+            }
         }),
 
         teamMemberAdd: Backbone.View.extend({

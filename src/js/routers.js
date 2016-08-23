@@ -183,15 +183,24 @@ let appRoutes = Backbone.Router.extend({
             //let model = require('models/company');
             let view = require('views/company');
 
+            // ToDo
+            // Rebuild this
             app.user.getCompany((company) => {
-                $.ajax(_.extend({
+                var optionsAjax = $.ajax(_.extend({
                         url: company.urlRoot,
                     }, app.defaultOptionsRequest)
-                ).done((response) => {
+                );
+                var campaignAjax = $.ajax({
+                    url: serverUrl + '/api/campaign?company_id=' + company.id,
+                });
+
+                $.when(optionsAjax, campaignAjax).done((rOptions, rCampaignList) => {
+                    console.log(rCampaignList);
                     var i = new view.createOrUpdate({
                         el: '#content',
-                        fields: response.actions.POST,
-                        model: company
+                        fields: rOptions[0].actions.POST,
+                        model: company,
+                        campaign: rCampaignList[0][0]
                     });
                     i.render();
                     //app.views.campaign[id].render();
@@ -221,19 +230,19 @@ let appRoutes = Backbone.Router.extend({
                 return;
             }
             let campaign = '';
-            if(company_id) { 
-                campaign = new model.model({
-                    company: company_id
-                });
-                campaign.urlRoot += '/general_information'
-            } else {
+            console.log('company_id is ', company_id);
+            if(id.indexOf('=') == -1) {
                 campaign = new model.model({
                     id: id
                 });
                 campaign.urlRoot += '/general_information'
                 // ToDo
                 // Make it sync
+            } else {
+                campaign = new model.model();
+                campaign.urlRoot += '/general_information?company_id=' + company_id
             }
+            console.log(id, campaign);
             var a1 = campaign.fetch();
             var a2 = $.ajax(_.extend({
                 url: campaign.urlRoot,
@@ -243,8 +252,14 @@ let appRoutes = Backbone.Router.extend({
                 var i = new view.generalInformation({
                     el: '#content',
                     fields: r2[0].actions.POST,
-                    model: campaign
                 });
+                if(id.indexOf('=') == -1) {
+                    i.model = campaign;
+                } else {
+                    i.model = new model.model(r1[0][0]);
+                    i.model.set('company', company_id);
+                }
+
                 i.render();
                 //app.views.campaign[id].render();
                 //app.cache[window.location.pathname] = i.$el.html();
@@ -396,15 +411,16 @@ let appRoutes = Backbone.Router.extend({
                 id: id
             });
             campaign.urlRoot += '/perks';
-            campaign.fetch();
-
-            $.ajax(_.extend({
+            var a1 = campaign.fetch();
+            var a2 = $.ajax(_.extend({
                     url: campaign.urlRoot,
                 }, app.defaultOptionsRequest)
-            ).done((response) => {
+            );
+            
+            $.when(a1, a2).done((r1, r2) => {
                 var i = new view.perks({
                     el: '#content',
-                    fields: response.actions.POST,
+                    fields: r2[0].actions.POST,
                     model: campaign
                 });
                 i.render();
