@@ -135,8 +135,8 @@ section
         if campaign.gallery
             each v,k in campaign.gallery_data.all_files
                 .col-lg-3.no-padding-img
-                  a(href="/img/campaign/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
-                    img(src="/img/campaign/smartbe-intelligent-stroller_1.jpg" alt="").img-fluid
+                  a(href=v.url data-size='1600x900')
+                    img(src=v.url alt=campaign.company.name style="width:263px; height: 209px").img-fluid
       .col-lg-4
         .card.card-inverse
           img(src="/img/Smartbe-Intelligent-Stroller-5.jpg" alt="").card-img
