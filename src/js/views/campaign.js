@@ -300,8 +300,15 @@ define(function() {
                         placeholder: 'Description',
                     }
                 }
-                this.faqIndex = Object.keys(this.model.get('faq')).length;
-                this.additional_infoIndex = Object.keys(this.model.get('additional_info')).lenth;
+
+                if(this.model.get('faq'))
+                    this.faqIndex = Object.keys(this.model.get('faq')).length;
+                else
+                    this.faqIndex = 0
+                if(this.model.get('faq'))
+                    this.additional_infoIndex = Object.keys(this.model.get('additional_info')).lenth;
+                else
+                    this.additional_infoIndex = 0
 
                 this.$el.html(
                     template({
@@ -427,8 +434,16 @@ define(function() {
                         placeholder: 'https://',
                     }
                 };
-                this.pressIndex = Object.keys(this.model.get('press')).length;
-                this.additional_videoIndex = Object.keys(this.model.get('additional_video')).length;
+                if(this.model.get('press'))
+                    this.pressIndex = Object.keys(this.model.get('press')).length;
+                else
+                    this.pressIndex = 0
+
+                if(this.model.get('additional_video'))
+                    this.additional_videoIndex = Object.keys(this.model.get('additional_video')).length;
+                else
+                    this.additional_videoIndex = 0
+
                 this.$el.html(
                     template({
                         serverUrl: serverUrl,
