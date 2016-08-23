@@ -248,6 +248,7 @@ define(function() {
                 let sectionName = e.target.dataset.section;
                 let template = require('templates/section.pug');
                 $('.' + sectionName + ' .m-b-0').addClass('form-group').removeClass('m-b-0');
+                this[sectionName + 'Index'] ++;
                 $('.' + sectionName).append(
                     template({
                         fields: this.fields,
@@ -261,7 +262,6 @@ define(function() {
                         values: this.model.toJSON() 
                     })
                 );
-                this[sectionName + 'Index'] ++;
             },
 
             deleteSection: function(e) {
@@ -379,6 +379,7 @@ define(function() {
                 let sectionName = e.target.dataset.section;
                 let template = require('templates/section.pug');
                 $('.' + sectionName + ' .m-b-0').addClass('form-group').removeClass('m-b-0');
+                this[sectionName + 'Index'] ++;
                 $('.' + sectionName).append(
                     template({
                         fields: this.fields,
@@ -392,7 +393,6 @@ define(function() {
                         values: this.model.toJSON() 
                     })
                 );
-                this[sectionName + 'Index'] ++;
             },
 
             deleteSection: function(e) {
@@ -723,8 +723,8 @@ define(function() {
                 e.preventDefault();
                 let sectionName = e.target.dataset.section;
                 let template = require('templates/section.pug');
-                console.log(this.fields, sectionName);
                 $('.' + sectionName + ' .m-b-0').addClass('form-group').removeClass('m-b-0');
+                this[sectionName + 'Index'] ++;
                 $('.' + sectionName).append(
                     template({
                         fields: this.fields,
@@ -733,12 +733,11 @@ define(function() {
                             class1: '',
                             class2: '',
                             type: 'json',
-                            index: this.perksIndex,
+                            index: this[sectionName + Index],
                         },
                         values: this.model.toJSON() 
                     })
                 );
-                this.perksIndex ++;
             },
 
             render: function() {
