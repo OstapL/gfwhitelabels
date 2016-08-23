@@ -318,13 +318,11 @@ define(function() {
                         then((data) => { 
                             app.showLoading();
 
-                            window.location = '/campaign/media/' + this.model.get('id');
-                            /*
+                            //window.location = '/campaign/media/' + this.model.get('id');
                             app.routers.navigate(
                                 '/campaign/media/' + this.model.get('id'),
                                 {trigger: true, replace: false}
                             );
-                            */
 
                         }).
                         fail((xhr, status, text) => {
