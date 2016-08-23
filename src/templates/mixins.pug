@@ -173,4 +173,4 @@ mixin fieldDropzone(name, attr, type)
             .photo-scroll
                 if values[name + '_data']
                     each v,k in values[name+'_data'].all_files
-                        img(style="width: 100%" src=v.url).img-fluid
+                        img(style="width: 100px" src=v.url).img-fluid.pull-left

@@ -131,30 +131,12 @@ section
         h3.our.text-lg-center Our Edge
         p #{ campaign.intended_use_of_proceeds }
       #gallery1.col-lg-12.pt50.photo-gallegy
-        .col-lg-3.no-padding-img
-          a(href="/img/campaign/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
-            img(src="/img/campaign/smartbe-intelligent-stroller_1.jpg" alt="").img-fluid
-        .col-lg-3.no-padding-img
-          a(href="/img/campaign/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
-            img(src="/img/campaign/smartbe-intelligent-stroller_2.jpg" alt="").img-fluid
-        .col-lg-3.no-padding-img
-          a(href="/img/campaign/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
-            img(src="/img/campaign/smartbe-intelligent-stroller_3.jpg" alt="").img-fluid
-        .col-lg-3.no-padding-img
-          a(href="/img/campaign/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
-            img(src="/img/campaign/smartbe-intelligent-stroller_4.jpg" alt="").img-fluid
-        .col-lg-3.no-padding-img
-          a(href="/img/campaign/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
-            img(src="/img/campaign/smartbe-intelligent-stroller_5.jpg" alt="").img-fluid
-        .col-lg-3.no-padding-img
-          a(href="/img/campaign/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
-            img(src="/img/campaign/smartbe-intelligent-stroller_6.jpg" alt="").img-fluid
-        .col-lg-3.no-padding-img
-          a(href="/img/campaign/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
-            img(src="/img/campaign/smartbe-intelligent-stroller_7.jpg" alt="").img-fluid
-        .col-lg-3.no-padding-img
-          a(href="/img/campaign/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
-            img(src="/img/campaign/smartbe-intelligent-stroller_8.jpg" alt="").img-fluid
+
+        if campaign.gallery
+            each v,k in campaign.gallery_data.all_files
+                .col-lg-3.no-padding-img
+                  a(href="/img/campaign/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
+                    img(src="/img/campaign/smartbe-intelligent-stroller_1.jpg" alt="").img-fluid
       .col-lg-4
         .card.card-inverse
           img(src="/img/Smartbe-Intelligent-Stroller-5.jpg" alt="").card-img
