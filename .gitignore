@@ -4,6 +4,7 @@ npm-debug.log
 app/dist/css
 .sass-cache/
 *.css.map
+.idea/*
 
 
 # Logs

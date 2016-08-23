@@ -23,6 +23,14 @@ let appRoutes = Backbone.Router.extend({
       'account/logout': 'logout',
       'account/dashboard/issuer': 'dashboardIssuer',
       'account/dashboard/investor': 'dashboardInvestor',
+      'calculator/paybackshare/step-1': 'calculatorPaybackshareStep1',
+      'calculator/paybackshare/step-2': 'calculatorPaybackshareStep2',
+      'calculator/paybackshare/step-3': 'calculatorPaybackshareStep3',
+        
+      'calculator/capitalraise/intro': 'calculatorCapitalraiseIntro',
+      'calculator/capitalraise/step-1': 'calculatorCapitalraiseStep1',
+      'calculator/capitalraise/step-2': 'calculatorCapitalraiseStep2',
+      'calculator/capitalraise/finish': 'calculatorCapitalraiseFinish'
     },
     back: function(event) {
         var url = event.target.pathname;
@@ -40,6 +48,83 @@ let appRoutes = Backbone.Router.extend({
                 {trigger: false, replace: false}
             );
         }
+        app.hideLoading();
+    },
+
+    calculatorPaybackshareStep1() {
+        let Model = require('models/calculators/paybackshare');
+        let View = require('views/calculator/paybackshare/step1');
+
+        new View({
+            model: app.getModelInstance(Model, 'calculatorPaybackshare').setFormattedPrice()
+        }).render();
+
+        app.hideLoading();
+    },
+
+    calculatorPaybackshareStep2: function() {
+        let Model = require('models/calculators/paybackshare');
+        let View = require('views/calculator/paybackshare/step2');
+
+        new View({
+            model: app.getModelInstance(Model, 'calculatorPaybackshare').setFormattedPrice()
+        }).render();
+        
+        app.hideLoading();
+    },
+
+    calculatorPaybackshareStep3: function() {
+        let Model = require('models/calculators/paybackshare');
+        let View = require('views/calculator/paybackshare/step3');
+
+        new View({
+            model: app.getModelInstance(Model, 'calculatorPaybackshare').setFormattedPrice()
+        }).render();
+
+        app.hideLoading();
+    },
+
+    calculatorCapitalraiseIntro() {
+        let Model = require('models/calculators/capitalraise');
+        let View = require('views/calculator/capitalraise/intro');
+
+        new View({
+            model: app.getModelInstance(Model, 'calculatorCapitalraise').setFormattedPrice()
+        }).render();
+
+        app.hideLoading();
+    },
+
+    calculatorCapitalraiseStep1() {
+        let Model = require('models/calculators/capitalraise');
+        let View = require('views/calculator/capitalraise/step1');
+
+        new View({
+            model: app.getModelInstance(Model, 'calculatorCapitalraise').setFormattedPrice()
+        }).render();
+
+        app.hideLoading();
+    },
+
+    calculatorCapitalraiseStep2() {
+        let Model = require('models/calculators/capitalraise');
+        let View = require('views/calculator/capitalraise/step2');
+
+        new View({
+            model: app.getModelInstance(Model, 'calculatorCapitalraise').setFormattedPrice()
+        }).render();
+
+        app.hideLoading();
+    },
+
+    calculatorCapitalraiseFinish() {
+        let Model = require('models/calculators/capitalraise');
+        let View = require('views/calculator/capitalraise/finish');
+
+        new View({
+            model: app.getModelInstance(Model, 'calculatorCapitalraise').setFormattedPrice()
+        }).render();
+
         app.hideLoading();
     },
 
@@ -552,6 +637,18 @@ let appRoutes = Backbone.Router.extend({
             window.location = '/';
         });
     },
+
+    execute(callback, args, name) {
+
+        // disable enter to the final step without data
+        if (name == 'calculatorPaybackshareStep3') {
+            if (!app.models['calculatorPaybackshare'] || !app.models['calculatorPaybackshare'].get('outputData')) {
+                app.routers.navigate('/calculator/paybackshare/step-2', {trigger: true});
+                return false;
+            }
+        }
+        if (callback) callback.apply(this, args);
+    }
 });
 
 app.on('userLoaded', function(data){
