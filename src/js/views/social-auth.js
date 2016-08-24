@@ -1,8 +1,8 @@
 let hello = require('hellojs');
 hello.init({
-    facebook: '547857385398592',
-    google: '329026937492-pkmge3at186jvjn14mep9vpa4fk3gqpg.apps.googleusercontent.com',
-    linkedin: '77hgtbs9rkjk20', 
+    facebook: facebookClientId,
+    google: googleClientId,
+    linkedin: linkedinClientId, 
 }, {
     redirect_uri: '/',
     oauth_proxy: '/proxy/'
