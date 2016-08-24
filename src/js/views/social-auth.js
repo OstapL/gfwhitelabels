@@ -15,9 +15,11 @@ var helloApp = {
             method: 'POST',
             url: serverUrl+'/rest-auth/'+network+'/',
             data: {access_token: token},
-            headers: {'X-CSRFToken': getCookie('csrftoken')},
             success: function(result,status,xhr) {
               alert("success facebook-auth =), here must be redirect");
+            },
+            fail: function(result,status,xhr) {
+              console.log(result,status,xhr);  
             }
         });
     },
