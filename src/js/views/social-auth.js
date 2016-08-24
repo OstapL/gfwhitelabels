@@ -4,7 +4,7 @@ hello.init({
     google: googleClientId,
     linkedin: linkedinClientId, 
 }, {
-    redirect_uri: '/',
+    redirect_uri: '/account/finish/login/',
     oauth_proxy: '/proxy/'
 });
 
@@ -13,7 +13,7 @@ var helloApp = {
         console.log('sendToken');
         $.ajax({
             method: 'POST',
-            url: '/rest-auth/'+network+'/',
+            url: serverUrl+'/rest-auth/'+network+'/',
             data: {access_token: token},
             headers: {'X-CSRFToken': getCookie('csrftoken')},
             success: function(result,status,xhr) {
