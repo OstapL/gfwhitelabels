@@ -550,12 +550,12 @@ let appRoutes = Backbone.Router.extend({
 
     loginFacebook: function() {
 
-        let socialAuth = require('js/views/social-auth.js');
+        let socialAuth = require('views/social-auth');
         let hello = require('hellojs');
 
         hello('facebook').login({
             scope: 'public_profile,email'}).then(
-            function (e) {socialAuth.onFacebookLogin(e);}, 
+            function (e) {socialAuth.onFacebookLogin(e)}, 
             function (e) {socialAuth.onFacebookFail(e)});
 
     },

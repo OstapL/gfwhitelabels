@@ -46,4 +46,4 @@ var helloApp = {
     }
 }
 
-module.export = helloApp
+module.exports = helloApp
