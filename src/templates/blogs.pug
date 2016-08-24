@@ -7,13 +7,13 @@ include mixins.pug
     ]
 )
 
-section.text_block  
+section.text_block
     .container
         .row
             .col-lg-4 
-                .page_title.border-bottom.mb30
+                .page_title.border-bottom.mb25
                     h4.text-uppercase.dosis CATEGORIES
-                ul.list-unstyled.mb50
+                ul.list-unstyled.mb50.custom
                     li
                         a.d-inline-block.w-100.pb10(href='') Branding
                     li
@@ -23,9 +23,10 @@ section.text_block
                     li
                         a.d-inline-block.w-100.pb10(href='') Development
                     li
-                        a.d-inline-block.w-100.pb10(href='') Other
+                        // у последнего елемента <a> клас pb10 отстутствует
+                        a.d-inline-block.w-100(href='') Other
 
-                .page_title.border-bottom.mb30
+                .page_title.border-bottom.mb25
                     h4.text-uppercase.dosis LATEST POSTS
                 ul.list-unstyled.mb50.list-blog-aside.list-blog
                     li
@@ -45,7 +46,8 @@ section.text_block
                                 span.date-blog 10 December
 
                     li
-                        a.d-inline-block.w-100.pb10(href='' alt="")
+                        // у последнего елемента <a> клас pb10 отстутствует
+                        a.d-inline-block.w-100(href='' alt="")
                             img(src="/img/pages/bas1.png").pull-md-left
                             p.title Crowdfunding Regulation
                             .blog-info
@@ -53,7 +55,7 @@ section.text_block
                                 span.date-blog 10 December
 
 
-                .page_title.border-bottom.mb30
+                .page_title.border-bottom.mb25
                     h4.text-uppercase.dosis ARCHIVES
                 ul.list-unstyled.mb50.list-blog-aside
                     li
@@ -63,24 +65,25 @@ section.text_block
                         a.d-inline-block.w-100.pb10(href='' alt="") June 2016
 
                     li
-                        a.d-inline-block.w-100.pb10(href='' alt="") May 2016
+                        // у последнего елемента <a> клас pb10 отстутствует
+                        a.d-inline-block.w-100(href='' alt="") May 2016 
 
             .col-lg-8
-                ul.list-unstyled.list-blog.list-blog-main
+                ul.list-unstyled.list-blog.list-blog-main.m0
                     li.pul-md-left.mb50
                         article 
                             figure
                                 p
                                     img(src="/img/pages/bse1.png").img-fluid
                                 figcaption
-                                    h3.dosis New Web Design Trends
+                                    h3.dosis.text-uppercase New Web Design Trends
                                     .blog-info
                                         span.author.text-muted John Doe 
                                         span.date-blog.text-muted 10 December
                                     p 
                                         | Maecenas  volutpat, diam enim sagittis quam, id porta quam. Sed id dolor consectetur fermentum nibh volutpat, accumsan purus.
                                     .btn-blog-block
-                                        a(href="#").btn.btn-lg.btn-secondary.text-uppercase read more &nbsp;
+                                        a(href="#").btn.btn-md.btn-secondary.text-uppercase read more &nbsp;
                                             i.fa.fa-angle-right
 
                     li.pul-md-left.mb50
@@ -89,14 +92,14 @@ section.text_block
                                 p
                                     img(src="/img/pages/bse2.png").img-fluid
                                 figcaption
-                                    h3.dosis New Web Design Trends
+                                    h3.dosis.text-uppercase New Web Design Trends
                                     .blog-info
                                         span.author.text-muted John Doe 
                                         span.date-blog.text-muted 10 December
                                     p 
                                         | Maecenas  volutpat, diam enim sagittis quam, id porta quam. Sed id dolor consectetur fermentum nibh volutpat, accumsan purus.
                                     .btn-blog-block
-                                        a(href="").btn.btn-lg.btn-secondary.text-uppercase read more &nbsp;
+                                        a(href="").btn.btn-md.btn-secondary.text-uppercase read more &nbsp;
                                             i.fa.fa-angle-right
 
                     li.pul-md-left.mb50
@@ -105,14 +108,14 @@ section.text_block
                                 p
                                     img(src="/img/pages/bse4.png").img-fluid
                                 figcaption
-                                    h3.dosis New Web Design Trends
+                                    h3.dosis.text-uppercase New Web Design Trends
                                     .blog-info
                                         span.author.text-muted John Doe 
                                         span.date-blog.text-muted 10 December
                                     p 
                                         | Maecenas  volutpat, diam enim sagittis quam, id porta quam. Sed id dolor consectetur fermentum nibh volutpat, accumsan purus.
                                     .btn-blog-block
-                                        a(href="").btn.btn-lg.btn-secondary.text-uppercase read more &nbsp;
+                                        a(href="").btn.btn-md.btn-secondary.text-uppercase read more &nbsp;
                                             i.fa.fa-angle-right
 
                     li.pul-md-left.mb50
@@ -121,14 +124,14 @@ section.text_block
                                 p
                                     img(src="/img/pages/bse4.png").img-fluid
                                 figcaption
-                                    h3.dosis New Web Design Trends
+                                    h3.dosis.text-uppercase New Web Design Trends
                                     .blog-info
                                         span.author.text-muted John Doe 
                                         span.date-blog.text-muted 10 December
                                     p 
                                         | Maecenas  volutpat, diam enim sagittis quam, id porta quam. Sed id dolor consectetur fermentum nibh volutpat, accumsan purus.
                                     .btn-blog-block
-                                        a(href="").btn.btn-lg.btn-secondary.text-uppercase read more &nbsp;
+                                        a(href="").btn.btn-md.btn-secondary.text-uppercase read more &nbsp;
                                             i.fa.fa-angle-right
                     li.pul-md-left.mb50
                         article 
@@ -136,14 +139,14 @@ section.text_block
                                 p
                                     img(src="/img/pages/bse5.png").img-fluid
                                 figcaption
-                                    h3.dosis New Web Design Trends
+                                    h3.dosis.text-uppercase New Web Design Trends
                                     .blog-info
                                         span.author.text-muted John Doe 
                                         span.date-blog.text-muted 10 December
                                     p 
                                         | Maecenas  volutpat, diam enim sagittis quam, id porta quam. Sed id dolor consectetur feus.
                                     .btn-blog-block
-                                        a(href="").btn.btn-lg.btn-secondary.text-uppercase read more &nbsp;
+                                        a(href="").btn.btn-md.btn-secondary.text-uppercase read more &nbsp;
                                             i.fa.fa-angle-right
 
                     li.pul-md-left.mb50
@@ -152,7 +155,7 @@ section.text_block
                                 p
                                     img(src="/img/pages/bse6.png").img-fluid
                                 figcaption
-                                    h3.dosis New Web Design Trends
+                                    h3.dosis.text-uppercase New Web Design Trends
                                     .blog-info
                                         span.author.text-muted John Doe 
                                         span.date-blog.text-muted 10 December
@@ -160,30 +163,26 @@ section.text_block
                                         | Maecenas  volutpat, diam enim sagittis quam, id porta quam. Sed id dolor consectetur fermentum nibh volutpat, accumsan purus.
 
                                     .btn-blog-block
-                                        a(href="").btn.btn-lg.btn-secondary.text-uppercase read more &nbsp;
+                                        a(href="").btn.btn-md.btn-secondary.text-uppercase read more &nbsp;
                                             i.fa.fa-angle-right
 
-                <nav aria-label="Page navigation">
-                    <ul class="pagination">
-                        <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Previous">
-                                <span aria-hidden="true">&laquo;</span>
-                                <span class="sr-only">Previous</span>
-                            </a>
-                        </li>
-                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item"><a class="page-link" href="#">4</a></li>
-                        <li class="page-item"><a class="page-link" href="#">5</a></li>
-                        <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Next">
-                                <span aria-hidden="true">&raquo;</span>
-                                <span class="sr-only">Next</span>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
+                section.pagination
+                    .container
+                        .row
+                            .col-lg-12
+                                nav
+                                    ul.pagination.pagination-sm
+                                        li.page-item.active
+                                            a(href="#").page-link 1
+                                        li.page-item
+                                            a(href="#").page-link 2
+                                        li.page-item
+                                            a(href="#").page-link 3
+                                        li.page-item
+                                            a(href="#" aria-label="Next").page-link
+                                                span(aria-hidden="true")
+                                                    i.fa.fa-angle-right
+                                                span.sr-only Next
 
 
 
