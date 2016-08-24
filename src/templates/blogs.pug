@@ -66,7 +66,7 @@ section.text_block
                         a.d-inline-block.w-100.pb10(href='' alt="") May 2016
 
             .col-lg-8
-                ul.list-unstyled.list-blog.list-blog-main
+                ul.list-unstyled.list-blog.list-blog-main.m0
                     li.pul-md-left.mb50
                         article 
                             figure
@@ -163,27 +163,23 @@ section.text_block
                                         a(href="").btn.btn-md.btn-secondary.text-uppercase read more &nbsp;
                                             i.fa.fa-angle-right
 
-                <nav aria-label="Page navigation">
-                    <ul class="pagination">
-                        <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Previous">
-                                <span aria-hidden="true">&laquo;</span>
-                                <span class="sr-only">Previous</span>
-                            </a>
-                        </li>
-                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                            <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item"><a class="page-link" href="#">4</a></li>
-                        <li class="page-item"><a class="page-link" href="#">5</a></li>
-                        <li class="page-item">
-                            <a class="page-link" href="#" aria-label="Next">
-                                <span aria-hidden="true">&raquo;</span>
-                                <span class="sr-only">Next</span>
-                            </a>
-                        </li>
-                    </ul>
-                </nav>
+                section.pagination
+                    .container
+                        .row
+                            .col-lg-12
+                                nav
+                                    ul.pagination.pagination-sm
+                                        li.page-item.active
+                                            a(href="#").page-link 1
+                                        li.page-item
+                                            a(href="#").page-link 2
+                                        li.page-item
+                                            a(href="#").page-link 3
+                                        li.page-item
+                                            a(href="#" aria-label="Next").page-link
+                                                span(aria-hidden="true")
+                                                    i.fa.fa-angle-right
+                                                span.sr-only Next
 
 
 
