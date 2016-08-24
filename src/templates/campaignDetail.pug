@@ -23,17 +23,18 @@ section#home(style="background-image: url(" + (campaign.header_image_data ? camp
   .top-info
     .container
       .top-info-wrap
-        .col-lg-2
-          p Pre-Money Valuation
-          h2.font-weight-bold #{ campaign.premoney_valuation }
-        .col-lg-2
-          p Type of Security
-          h2.font-weight-bold #{ campaign.get_security_type_display }
-        .col-lg-2
-          p Days Left
-          h2.font-weight-bold #{ campaign.days_to_go }
-        .col-lg-4.pull-right
-          a(href=Urls['campaign-invest'](campaign.id)).btn.btn-primary.btn-lg.text-uppercase.pull-right invest in #{ campaign.company.name }
+        .top-info-wrap-item
+          .col-lg-2
+            p Pre-Money Valuation
+            h2.font-weight-bold #{ campaign.premoney_valuation }
+          .col-lg-2
+            p Type of Security
+            h2.font-weight-bold #{ campaign.get_security_type_display }
+          .col-lg-2
+            p Days Left
+            h2.font-weight-bold #{ campaign.days_to_go }
+          .col-lg-4.pull-right
+            a(href=Urls['campaign-invest'](campaign.id)).btn.btn-primary.btn-lg.text-uppercase.pull-right invest in #{ campaign.company.name }
 
 section.campaigndetail
   .container
