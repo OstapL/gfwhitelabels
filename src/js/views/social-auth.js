@@ -23,14 +23,14 @@ var helloApp = {
     },
     onFacebookLogin: function (e) {
         console.log('onFacebookLogin');
-        sendToken('facebook', e.authResponse.access_token);
+        this.send('facebook', e.authResponse.access_token);
     },
     onFacebookFail: function (e) {
         console.log('onFacebookLogin');
     },
     onGoogleLogin: function (e) {
         console.log('onGoogleLogin');
-        sendToken('google', e.authResponse.access_token);
+        this.send('google', e.authResponse.access_token);
     },
     onGoogleFail: function (e) {
         console.log('onGoogleFail');
@@ -38,7 +38,7 @@ var helloApp = {
     },
     onLinkedInLogin: function (e) {
         console.log('onLinkedInLogin');
-        sendToken('linkedin', e.authResponse.access_token);
+        this.send('linkedin', e.authResponse.access_token);
     },
     onLinkedInFail: function (e) {
         console.log('onLinkedInFail');
