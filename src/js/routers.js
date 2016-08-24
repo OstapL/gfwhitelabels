@@ -551,7 +551,9 @@ let appRoutes = Backbone.Router.extend({
         let socialAuth = require('js/views/social-auth.js');
         let hello = require('hellojs');
 
-        hello('facebook').login({scope: 'public_profile,email'}).then(
+        hello('facebook').login({
+            scope: 'public_profile,email',
+            redirect_uri: '/account/facebook/login/',}).then(
             function (e) {socialAuth.onFacebookLogin(e);}, 
             function (e) {socialAuth.onFacebookFail(e)});
     },
@@ -561,7 +563,9 @@ let appRoutes = Backbone.Router.extend({
         let socialAuth = require('js/views/social-auth.js');
         let hello = require('hellojs');
 
-        hello('linkedin').login({scope: 'r_basicprofile,r_emailaddress'}).then(
+        hello('linkedin').login({
+            scope: 'r_basicprofile,r_emailaddress',
+            redirect_uri: '/account/linkedin/login/',}).then(
             function (e) {socialAuth.onLinkedInLogin(e);}, 
             function (e) {socialAuth.onLinkedInFail(e)});
 
@@ -572,7 +576,9 @@ let appRoutes = Backbone.Router.extend({
         let socialAuth = require('js/views/social-auth.js');
         let hello = require('hellojs');
 
-        hello('google').login({scope: 'profile,email'}).then(
+        hello('google').login({
+            scope: 'profile,email',
+            redirect_uri: '/account/google/login/',}).then(
             function (e) {socialAuth.onGoogleLogin(e);}, 
             function (e) {socialAuth.onGoogleFail(e)});
         
