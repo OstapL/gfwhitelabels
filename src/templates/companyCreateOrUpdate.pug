@@ -102,14 +102,14 @@ section.create-company.container.m-b-85
         placeholder: 'Your Company Description',
         })
       .row
-        .col-lg-6.castom-select-5
+        .col-lg-6.castom-select-5.form-group-m-b-0
           +fieldBlock("corporate_structure", '', {
             class1: 'col-lg-6',
             class2: 'col-lg-6',
             type: 'choice',
           })
         .col-lg-6
-          .col-date
+          .col-date.form-group-m-b-0
             .form-group.row.required.clearfix
               label.col-lg-5.date Date of Organization
               .col-lg-6
@@ -131,7 +131,7 @@ section.create-company.container.m-b-85
             class1: 'col-lg-6',
             class2: 'col-lg-6',
             })
-        .col-lg-5.city_state
+        .col-lg-5.city_states
           label.col-lg-6.text-lg-right City/State
           .col-lg-6
             span.change_state_city
