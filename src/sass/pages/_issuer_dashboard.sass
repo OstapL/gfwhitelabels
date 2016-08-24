@@ -1,13 +1,21 @@
-.second
+.issuer-dashbord-top
 	margin-top: 84px
-
 	.img_under_text
 		position: relative
-		margin-bottom: 15px
-
+		margin-bottom: rem(20)
+		&:before
+			&:before
+			width: 100%
+			background-color: $black
+			opacity: .2
+			position: absolute
+			z-index: 1
+			content: ''
+			height: 100%
+			left: 0
+			bottom: 0
 		img
 			width: 100%
-
 		h2
 			z-index: 2
 			width: 100%
@@ -19,7 +27,7 @@
 			-ms-transform: translate(-50%,-50%)
 			-webkit-transform: translate(-50%,-50%)
 			transform: translate(-50%,-50%)
-			font-family: $dosis
+			font-weight: 400
 
 		.timer_day
 			position: absolute
@@ -34,92 +42,49 @@
 			font-weight: bold
 			font-size: 14px
 			line-height: 27px
+	.share-block
+		span
+			margin-right: rem(12)
+	.social-dark
+		a
+			font-size: rem(24)
+			padding-right: rem(20)
 
-		.share-block
-			width: 240px
-			position: absolute
-			left: 0
-			right: 0
-			bottom: 12px
-			margin: auto
-
-			.share-btn
-				width: 230px
-				font-size: 12px
-				border-radius: 15px
-				background: $light_grey
-				border-color: $light_grey
-
-			.social-dark
+	.dashboard-stat
+		display: block
+		overflow: hidden
+		min-height: rem(85)
+		padding: rem(5) rem(10) rem(5) rem(5)
+		background: $light_grey
+		margin-bottom: rem(25)
+		.visual
+			float: left
+			i
+				font-size: rem(48)
+				color: $small-text
+				opacity: .15
+			.fa-bar-chart
 				position: absolute
-				bottom: -48px
-				left: 0
-				right: 0
-				margin: auto
-				display: none
-
-				a
-					width: 48px
-					line-height: 46px
-					background: $social_bg
-					color: $social_color
-					border: 1px solid $social_bg
-					display: inline-block
-					font-size: 20px
-					margin: 0 -2px
-
-				:hover
-					border-color: $border_color
-
-		.share-block:hover
-			bottom: 0
-			padding-bottom: 12px
-
-			.social-dark
-				display: block
-
-
-.dashboard-stat.grey
-	background: $light_grey
-
-
-.dashboard-stat.grey .details .desc,
-.dashboard-stat.grey .details .number
-	padding-top: 0
-	color: $grey
-
-.dashboard-stat
-	display: block
-	margin-bottom: 25px
-	overflow: hidden
-
-	.visual
-		height: 80px
-		float: left
-		padding-top: 10px
-		padding-left: 15px
-		margin-bottom: 5px
-
-		i
-			font-size: 48px
-			margin-left: -10px
-			margin-top: 26px
-			color: $grey
-			opacity: .1
-
-.dashboard-stat.grey
-	.details
-		position: absolute
-		right: 25px
-		top: 3px
-		text-align: right
-
-		.number
-			font-size: 18px
-			color: $grey
-		.desc
-			font-size: 12px
-			color: $grey
+				bottom: rem(27)
+			.fa-briefcase
+				position: absolute
+				bottom: rem(24)
+			.fa-users
+				position: absolute
+				bottom: rem(30)
+			.fa-comments
+				position: absolute
+				bottom: rem(28)
+		.details
+			position: absolute
+			right: rem(25)
+			text-align: right
+			.number
+				font-size: rem(18)
+				color: $small-text
+			.desc
+				font-size: rem(12)
+				color: $small-text
 
 .tpl-progress
 	position: relative
