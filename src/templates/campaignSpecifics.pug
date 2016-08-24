@@ -86,7 +86,7 @@ section.campaign-specifics.container.m-b-85
             span.warning-text 
             | You get to set two fundraising goals: the minimum you're willing to accept and the  maximum you're willing to accept.  If you don't reach your minimum fundraising goal, all money will be returned to the investors.
 
-      .row
+      .row.label-top-6
         .col-lg-6.col-l-65
           +fieldBlock("minimum_raise", '', {
             class1: 'col-lg-6 col-md-3', 
@@ -101,27 +101,28 @@ section.campaign-specifics.container.m-b-85
             type: 'text',
             placeholder: '$',
             })
-
-      +fieldBlock("minimum_increment", '', {
-         class1: 'col-lg-3 col-md-4',
-         class2: 'col-lg-9 col-md-8',
-         type: 'text',
-         placeholder: '$  People can invest this amount or more  ',
-         })
-
-      +fieldBlock("length_days", '', {
-         class1: 'col-lg-3 col-md-4',
-         class2: 'col-lg-9 col-md-8',
-         type: 'choice',
-         text: 'Length of the Campaign',
-         })
-      +fieldDropzone("investor_presentation", {
-          class1: 'col-lg-7',
-          class2: 'col-lg-5 p-l-1 p-r-3',
-          text: 'Drop your PPT or PDF here or click to upload',
-          icon: 'file',
-          default: '/img/MS-PowerPoint.png',
-      })
+      .label-top-6
+        +fieldBlock("minimum_increment", '', {
+           class1: 'col-lg-3 col-md-4',
+           class2: 'col-lg-9 col-md-8',
+           type: 'text',
+           placeholder: '$  People can invest this amount or more  ',
+           })
+      .label-top-6
+        +fieldBlock("length_days", '', {
+           class1: 'col-lg-3 col-md-4',
+           class2: 'col-lg-9 col-md-8',
+           type: 'choice',
+           text: 'Length of the Campaign',
+           })
+      .text-lg-right.img-ppt
+        +fieldDropzone("investor_presentation", {
+            class1: 'col-lg-7',
+            class2: 'col-lg-5 p-l-1 p-r-3',
+            text: 'Drop your PPT or PDF here or click to upload',
+            icon: 'file',
+            default: '/img/MS-PowerPoint.png',
+        })
 
       .row.border-top
 
@@ -159,7 +160,7 @@ section.campaign-specifics.container.m-b-85
            placeholder: '$',
            })
       
-      .row.m-t-2
+      .row.m-t-2.form-group-m-b-15
         .col-lg-6.col-l-65
           +fieldBlock("min_number_of_shares", '', {
             class1: 'col-lg-6 p-l-2', 
