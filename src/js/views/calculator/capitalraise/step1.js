@@ -2,23 +2,36 @@ require('sass/pages/_calculator.sass');
 
 var flyPriceFormatter = require("../../../helpers/flyPriceFormatter");
 var formatPrice = require("../../../helpers/formatPrice");
+var lookupData = require("../../../helpers/capitalraiseCalculatorData");
+
+let industryData = lookupData();
 
 module.exports = Backbone.View.extend({
     el: '#content',
 
     template: require('templates/calculator/capitalraise/step1.pug'),
 
-    initialize() {
-        // data which contains calculated income
-        this.outputData = [];
-    },
-
     events: {
         // calculate your income
         'submit .js-calc-form': 'doCalculation',
 
         // remove useless zeros: 0055 => 55
-        'blur .js-field': 'cutZeros'
+        'blur .js-field': 'cutZeros',
+        
+        'change .js-select': 'saveValueIntoTheModel'
+    },
+
+    saveValueIntoTheModel(e) {
+        let selectBox = e.target;
+        this.model.saveField(selectBox.dataset.modelValue, selectBox.value);
+    },
+
+    doCalculation(e) {
+        e.preventDefault();
+
+        this.model.calculate();
+
+        app.routers.navigate('/calculator/capitalraise/step-2', {trigger: true});
     },
 
     cutZeros(e) {
@@ -33,7 +46,10 @@ module.exports = Backbone.View.extend({
     },
 
     render: function () {
-        this.$el.html(this.template(this.model.toJSON()));
+        this.$el.html(this.template({
+            model: this.model.toJSON(),
+            industryData: industryData.map(el => el[0])
+        }));
 
         // declare ui elements for the view
         this.ui();

@@ -3,69 +3,120 @@
         h1.calculator-title Capital Raise Calculator - Step 1
         form.js-calc-form
             .form-group.row
-                label.col-sm-7.col-form-label(for='excessCash')
-                    How much excess cash  does your business need to maintain as a buffer against the unexpected?
+                label.col-sm-7.col-form-label(for='industry') Select industry from dropdown menu:
                 .col-sm-5
-                    input#excessCash.form-control.js-field(
-                        value= excessCashFormatted,
-                        type='text',
-                        placeholder='$0',
-                        data-input-mask='price',
-                        data-model-value='excessCash',
-                        data-current-value= excessCash)
+                    select#industry.form-control.js-select(
+                        data-model-value='industry')
+                        each val, index in industryData
+                            if val == model.industry
+                                option(selected)= val
+                            else
+                                option= val
+
             .form-group.row
-                label.col-sm-7.col-form-label(for='CashOnHand')
-                    How much cash does your business currently have?
+                label.col-sm-7.col-form-label(for='industryEstablishment') Is your industry fairly well established?  Or is it new, with the potential to quickly grow?
                 .col-sm-5
-                    input#CashOnHand.form-control.js-field(
-                        value= CashOnHandFormatted,
-                        type='text',
-                        placeholder='$0',
-                        data-input-mask='price',
-                        data-model-value='CashOnHand',
-                        data-current-value= CashOnHand)
+                    select#industryEstablishment.form-control.js-select(
+                        data-model-value='industryEstablishment')
+                            if model.industryEstablishment == "New and potentially growing quickly"
+                                option(selected) New and potentially growing quickly
+                                option Fairly well established
+                            else
+                                option(selected) Fairly well established
+                                option New and potentially growing quickly
+
             .form-group.row
-                label.col-sm-7.col-form-label(for='projectedRevenue')
-                    What is your business’s projected revenue for the next 12 months?
+                label.col-sm-7.col-form-label(for='typeOfEstablishment') Would you describe your product or service as a solid improvement over what the market currently offers?  Or is it revolutionary, with the potential to be disruptive to the market?
+                .col-sm-5
+                    select#typeOfEstablishment.form-control.js-select(
+                        data-model-value='typeOfEstablishment')
+                        if model.typeOfEstablishment == "Be an improvement to what is currently on the market"
+                            option(selected) Be an improvement to what is currently on the market
+                            option Be revolutionary and disruptive to the market
+                        else
+                            option(selected) Be revolutionary and disruptive to the market
+                            option Be an improvement to what is currently on the market
+
+            .form-group.row
+                label.col-sm-7.col-form-label(for='projectedRevenue') How much revenue do you expect your business will produce in Year 1?
                 .col-sm-5
                     input#projectedRevenue.form-control.js-field(
-                        value= projectedRevenueFormatted,
+                        value= model.projectedRevenueFormatted,
                         type='text',
                         placeholder='$0',
                         data-input-mask='price',
                         data-model-value='projectedRevenue'
-                        data-current-value= projectedRevenue)
+                        data-current-value= model.projectedRevenue)
+
             .form-group.row
-                label.col-sm-7.col-form-label(for='projectedRevenueTwo')
-                    What is your business’s projected revenue for the subsequent 12 months? (i.e. months 13 - 24)
+                label.col-sm-7.col-form-label(for='operatingProfit') How much operating profit do you expect to earn in Year 1?
+                .col-sm-5
+                    input#operatingProfit.form-control.js-field(
+                        value= model.operatingProfitFormatted,
+                        type='text',
+                        placeholder='$0',
+                        data-input-mask='price',
+                        data-model-value='operatingProfit'
+                        data-current-value= model.operatingProfit)
+
+            .form-group.row
+                label.col-sm-7.col-form-label(for='projectedRevenueTwo') How much revenue do you expect your business will produce in Year 5?
                 .col-sm-5
                     input#projectedRevenueTwo.form-control.js-field(
-                        value= projectedRevenueTwoFormatted,
+                        value= model.projectedRevenueTwoFormatted,
                         type='text',
                         placeholder='$0',
                         data-input-mask='price',
                         data-model-value='projectedRevenueTwo',
-                        data-current-value= projectedRevenueTwo)
+                        data-current-value= model.projectedRevenueTwo)
             .form-group.row
-                label.col-sm-7.col-form-label
-                    What gross margin  do you expect to earn on your business’s sales over the next 2 years?
+                label.col-sm-7.col-form-label(for='operatingProfitTwo') How much operating profit do you expect to earn in Year 5?
                 .col-sm-5
-                    p Slider
-            .form-group.row
-                label.col-sm-7.col-form-label(for='firstYearExpenses')
-                    What is your business’s projected operating expense  for the next twelve months?
-                .col-sm-5
-                    input#firstYearExpenses.form-control.js-field(
-                        value= firstYearExpensesFormatted,
+                    input#operatingProfitTwo.form-control.js-field(
+                        value= model.operatingProfitTwoFormatted,
                         type='text',
                         placeholder='$0',
                         data-input-mask='price',
-                        data-model-value='firstYearExpenses',
-                        data-current-value= firstYearExpenses)
+                        data-model-value='operatingProfitTwo'
+                        data-current-value= model.operatingProfitTwo)
+
+            .form-group.row
+                label.col-sm-7.col-form-label(for='CashOnHand') How much cash, beyond what's needed for immediate operating needs, does your business currently have?
+                .col-sm-5
+                    input#CashOnHand.form-control.js-field(
+                        value= model.CashOnHandFormatted,
+                        type='text',
+                        placeholder='$0',
+                        data-input-mask='price',
+                        data-model-value='CashOnHand',
+                        data-current-value= model.CashOnHand)
+
+            .form-group.row
+                label.col-sm-7.col-form-label(for='yourDebt') How much debt is your business currently carrying?
+                .col-sm-5
+                    input#yourDebt.form-control.js-field(
+                        value= model.yourDebtFormatted,
+                        type='text',
+                        placeholder='$0',
+                        data-input-mask='price',
+                        data-model-value='yourDebt'
+                        data-current-value= model.yourDebt)
+
+            .form-group.row
+                label.col-sm-7.col-form-label(for='cashRaise') How much cash do you plan to raise?
+                .col-sm-5
+                    input#cashRaise.form-control.js-field(
+                        value= model.cashRaiseFormatted,
+                        type='text',
+                        placeholder='$0',
+                        data-input-mask='price',
+                        data-model-value='cashRaise',
+                        data-current-value= model.cashRaise)
+
             .submit-area
                 .form-group.row
                     .col-sm-6.text-xs-center.text-sm-left
                         a.btn.btn-link(href='/calculator/capitalraise/intro', role='button') Go back
                         p Don&apos;t worry we saved this info
                     .col-sm-6.text-xs-center.text-sm-right
-                        a.btn.btn-primary.btn-lg(href="/calculator/capitalraise/step-2") Next
+                        button.btn.btn-primary.btn-lg(type='submit') Next
