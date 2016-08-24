@@ -11,9 +11,9 @@ section.text_block
     .container
         .row
             .col-lg-4 
-                .page_title.border-bottom.mb30
+                .page_title.border-bottom.mb25
                     h4.text-uppercase.dosis CATEGORIES
-                ul.list-unstyled.mb50
+                ul.list-unstyled.mb50.custom
                     li
                         a.d-inline-block.w-100.pb10(href='') Branding
                     li
@@ -23,9 +23,10 @@ section.text_block
                     li
                         a.d-inline-block.w-100.pb10(href='') Development
                     li
-                        a.d-inline-block.w-100.pb10(href='') Other
+                        // у последнего елемента <a> клас pb10 отстутствует
+                        a.d-inline-block.w-100(href='') Other
 
-                .page_title.border-bottom.mb30
+                .page_title.border-bottom.mb25
                     h4.text-uppercase.dosis LATEST POSTS
                 ul.list-unstyled.mb50.list-blog-aside.list-blog
                     li
@@ -45,7 +46,8 @@ section.text_block
                                 span.date-blog 10 December
 
                     li
-                        a.d-inline-block.w-100.pb10(href='' alt="")
+                        // у последнего елемента <a> клас pb10 отстутствует
+                        a.d-inline-block.w-100(href='' alt="")
                             img(src="/img/pages/bas1.png").pull-md-left
                             p.title Crowdfunding Regulation
                             .blog-info
@@ -53,7 +55,7 @@ section.text_block
                                 span.date-blog 10 December
 
 
-                .page_title.border-bottom.mb30
+                .page_title.border-bottom.mb25
                     h4.text-uppercase.dosis ARCHIVES
                 ul.list-unstyled.mb50.list-blog-aside
                     li
@@ -63,8 +65,8 @@ section.text_block
                         a.d-inline-block.w-100.pb10(href='' alt="") June 2016
 
                     li
-                        a.d-inline-block.w-100.pb10(href='' alt="") May 2016
-
+                        // у последнего елемента <a> клас pb10 отстутствует
+                        a.d-inline-block.w-100(href='' alt="") May 2016 
             .col-lg-8.single-blog
                 article
                     .row
@@ -109,7 +111,7 @@ section.text_block
                                         span POSTED: IN BRENDING
 
                 // comments
-                .comments
+                .comments.blog-comments.row
 
                     .col-lg-12.p-l-0
                         h3.m0 Comments (2)
@@ -117,7 +119,7 @@ section.text_block
                     .col-lg-12.p-r-0.p-l-0
                         .hr
                         .col-lg-1
-                            img(src="/img/avatar10.jpg" alt="").img-circle
+                            img(src="/img/pages/com1.png" alt="").img-circle
                         .col-lg-11
                             .comments-wrap
                                 span.name-comments.text-uppercase maria kravchuk
@@ -137,7 +139,7 @@ section.text_block
                                         i.fa.fa-thumbs-up
                     .col-lg-11.offset-lg-1.pt30.p-r-0.p-l-0
                         .col-lg-1
-                            img(src="/img/avatar10.jpg" alt="").img-circle
+                            img(src="/img/pages/com2.png" alt="").img-circle
                         .col-lg-11
                             .comments-wrap
                                 span.name-comments.text-uppercase maria kravchuk
@@ -157,7 +159,43 @@ section.text_block
                                         i.fa.fa-thumbs-up
 
 
-                        
+                    .col-lg-12.p-r-0.p-l-0.mt50
+                        h3.m0 Leave a Comment
+                        .hr
+
+                        form(method="post" action="").form
+                            .form-body
+                                .form-group.row.comment_text.required
+                                    .col-lg-8
+                                        textarea(name="first_name" placeholder="Type your comment here..." value="")#comment_text.form-control
+
+                                    
+                                    .col-lg-4
+                                        .controls  
+                                            button(
+                                                type="submit"
+                                            ).btn.btn-primary.btn-lg.pull-right.text-uppercase Submit comment 
+                                    
+                    .row.control-blog-block
+                        .col-lg-6.mt25
+                            .controls  
+                                button(
+                                    type="submit"
+                                ).btn.btn-secondary.inverse.btn-xl.pull-left.text-uppercase
+                                    i.fa.fa-angle-left &nbsp;
+                                    | prev post
+
+                        .col-lg-6.mt25
+                            .controls  
+                                button(
+                                    type="submit"
+                                ).btn.btn-secondary.inverse.btn-xl.pull-right.text-uppercase
+                                    | next post
+                                    i.fa.fa-angle-right &nbsp;
+
+
+
+
 
 
 
