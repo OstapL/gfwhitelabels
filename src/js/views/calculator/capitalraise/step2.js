@@ -1,6 +1,5 @@
 require('sass/pages/_calculator.sass');
 
-var flyPriceFormatter = require("../../../helpers/flyPriceFormatter");
 var formatPrice = require("../../../helpers/formatPrice");
 
 module.exports = Backbone.View.extend({
@@ -8,40 +7,22 @@ module.exports = Backbone.View.extend({
 
     template: require('templates/calculator/capitalraise/step2.pug'),
 
-    initialize() {
-        // data which contains calculated income
-        this.outputData = [];
-    },
+    initialize() {},
 
     events: {
         // calculate your income
-        'submit .js-calc-form': 'doCalculation',
-
-        // remove useless zeros: 0055 => 55
-        'blur .js-field': 'cutZeros'
+        'submit .js-calc-form': 'doCalculation'
     },
 
-    cutZeros(e) {
-        let elem = e.target;
-        elem.dataset.currentValue = parseFloat(elem.value.replace('$', '').replace(/,/g, '') || 0);
-        elem.value = formatPrice(elem.dataset.currentValue);
-    },
-
-    ui() {
-        // get inputs by inputmask category
-        this.inputPrice = this.$('[data-input-mask="price"]');
-    },
-
+    ui() {},
+    
     render: function () {
         this.$el.html(this.template(this.model.toJSON()));
 
         // declare ui elements for the view
         this.ui();
-
-        flyPriceFormatter(this.inputPrice, ({ modelValue, currentValue }) => {
-            // save value into the model
-            this.model.saveField(modelValue, currentValue);
-        });
+        
+        
 
         return this;
     }

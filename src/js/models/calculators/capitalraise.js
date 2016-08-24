@@ -1,19 +1,39 @@
 var formatPrice = require("../../helpers/formatPrice");
+var lookupData = require("../../helpers/capitalraiseCalculatorData");
+
+let industryData = lookupData();
 
 module.exports = Backbone.Model.extend({
     defaults: {
         'excessCash': 100000,
-        'CashOnHand': 1000000,
-        'projectedRevenue': 25000,
-        'projectedRevenueTwo': 21000,
-        'slider': null,
+        'CashOnHand': 7000,
+        'projectedRevenue': 500000,
+        'projectedRevenueTwo': 5000000,
         'firstYearExpenses': 350000,
-        'secondYearExpenses': 285000,
-        'annualExpenses': 350000,
-        'capitalExpenditures': 80000,
-        'annualInterestExpense': 7000000,
-        
-        'outputData': null
+        'operatingProfit': 10000,
+        'operatingProfitTwo': 1500000,
+        'yourDebt': 50000,
+        'cashRaise': 1000000,
+
+        // select boxes
+        'industry': 'Food Products',
+        'industryEstablishment': 'New and potentially growing quickly',
+        'typeOfEstablishment': 'Be an improvement to what is currently on the market',
+
+        // data that will be calculated
+        'ntmPs': null,
+        'ntmEv': null,
+        'year1Ps': null,
+        'year1Ev': null,
+        'year1Average': null,
+        'year1Npv': null,
+        'year2Ps': null,
+        'year2Ev': null,
+        'year2Average': null,
+        'year2Npv': null,
+
+        // flag that data is calculated
+        'dataIsFilled': false
     },
 
     saveField(modelValue, value) {
@@ -31,11 +51,25 @@ module.exports = Backbone.Model.extend({
             'projectedRevenueFormatted': formatPrice(this.get('projectedRevenue')),
             'projectedRevenueTwoFormatted': formatPrice(this.get('projectedRevenueTwo')),
             'firstYearExpensesFormatted': formatPrice(this.get('firstYearExpenses')),
-            'annualExpensesFormatted': formatPrice(this.get('annualExpenses')),
-            'secondYearExpensesFormatted': formatPrice(this.get('secondYearExpenses')),
-            'capitalExpendituresFormatted': formatPrice(this.get('capitalExpenditures')),
-            'annualInterestExpenseFormatted': formatPrice(this.get('annualInterestExpense'))
+            'operatingProfitFormatted': formatPrice(this.get('operatingProfit')),
+            'operatingProfitTwoFormatted': formatPrice(this.get('operatingProfitTwo')),
+            'yourDebtFormatted': formatPrice(this.get('yourDebt')),
+            'cashRaiseFormatted': formatPrice(this.get('cashRaise'))
         });
         return this;
+    },
+
+    calculate() {
+        let industry = this.get('industry'),
+            row = industryData.find(el => el[0] == industry),
+            ntmPs = row[5],
+            ntmEv = row[6];
+
+        // save NTM
+        this.set({ntmPs, ntmEv});
+
+        this.set({
+            year1Ps: ntmPs * this.get('projectedRevenue')
+        });
     }
 });

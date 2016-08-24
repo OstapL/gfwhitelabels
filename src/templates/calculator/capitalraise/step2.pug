@@ -1,65 +1,55 @@
 .container.calculator-container
     .page
         h1.calculator-title Capital Raise Calculator - Step 2
+        p.lead.lead__center TABLE LOOKUP
+        table.table.table-bordered.table-custom-data
+            tr
+                td
+                td
+                    strong NTM
+            tr
+                td
+                    strong P/S
+                td= ntmPs
+            tr
+                td
+                    strong EV/EBIT
+                td= ntmEv
+
+        p.lead.lead__center GF Valuation
+        table.table.table-bordered.table-custom-data
+            tr
+                td
+                td
+                    strong Year 1
+                td
+                    strong Year 2
+            tr
+                td
+                    strong P/S
+                td= year1Ps
+                td= year2Ps
+            tr
+                td
+                    strong EV/EBIT
+                td= year1Ev
+                td= year2Ev
+            tr
+                td
+                    strong Average
+                td= year1Average
+                td= year2Average
+            tr
+                td
+                    strong NPV
+                    td= year1Npv
+                    td= year2Npv
+
         form.js-calc-form
-            .form-group.row
-                label.col-sm-7.col-form-label(for='secondYearExpenses')
-                    What is your business’s projected operating expense  for the subsequent 12 months? (ie. Months 13-24)
-                .col-sm-5
-                    input#secondYearExpenses.form-control.js-field(
-                        value= secondYearExpensesFormatted,
-                        type='text',
-                        placeholder='$0',
-                        data-input-mask='price',
-                        data-model-value='secondYearExpenses',
-                        data-current-value= secondYearExpenses)
-            .form-group.row
-                label.col-sm-7.col-form-label
-                    As a percent of projected revenue, how much working capital  does your business need to generate its projected revenue over the next 24 months?
-                .col-sm-5
-                    p Slider
-            .form-group.row
-                label.col-sm-7.col-form-label(for='annualExpenses')
-                    If your revenue comes in 50% higher than you are currently projecting, what additional annual operating expenses  would you incur?
-                .col-sm-5
-                    input#annualExpenses.form-control.js-field(
-                        value= annualExpensesFormatted,
-                        type='text',
-                        placeholder='$0',
-                        data-input-mask='price',
-                        data-model-value='annualExpenses',
-                        data-current-value= annualExpenses)
-            .form-group.row
-                label.col-sm-7.col-form-label(for='capitalExpenditures')
-                    How much in capital expenditures  are you expecting for your business over the next 24 months?
-                .col-sm-5
-                    input#capitalExpenditures.form-control.js-field(
-                        value= capitalExpendituresFormatted,
-                        type='text',
-                        placeholder='$0',
-                        data-input-mask='price',
-                        data-model-value='capitalExpenditures'
-                        data-current-value= capitalExpenditures)
-            .form-group.row
-                label.col-sm-7.col-form-label
-                    What tax rate do you expect to pay on your business’s operating profit? (including federal, state, local, and any other taxes applicable to the operation of your business)
-                .col-sm-5
-                    p Slider
-            .form-group.row
-                label.col-sm-7.col-form-label(for='annualInterestExpense')
-                    What do you expect your business’s annual interest expense to be over the next 2 years?
-                .col-sm-5
-                    input#annualInterestExpense.form-control.js-field(
-                        value= annualInterestExpenseFormatted,
-                        type='text',
-                        placeholder='$0',
-                        data-input-mask='price',
-                        data-model-value='annualInterestExpense'
-                        data-current-value= annualInterestExpense)
             .submit-area
                 .form-group.row
                     .col-sm-6.text-xs-center.text-sm-left
                         a.btn.btn-link(href='/calculator/capitalraise/step-1', role='button') Go back
                         p Don&apos;t worry we saved this info
                     .col-sm-6.text-xs-center.text-sm-right
-                        a.btn.btn-primary.btn-lg(href="/calculator/capitalraise/finish") Next
+                        a.btn.btn-primary.btn-lg(href="/calculator/capitalraise/finish") Finish
