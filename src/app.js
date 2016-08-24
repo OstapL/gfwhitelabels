@@ -407,8 +407,9 @@ $('body').on('click', 'a', function(event) {
         // overise we will trigger app router function
         var url = href;
 
+        $('#content').undelegate();
+        $('form').undelegate();
         if(app.cache.hasOwnProperty(url) == false) {
-            $('#content').undelegate();
             app.routers.navigate(
                 url,
                 {trigger: true, replace: false}

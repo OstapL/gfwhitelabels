@@ -14,7 +14,7 @@ let appRoutes = Backbone.Router.extend({
       'campaign/general_information/': 'campaignGeneralInformation',
       'campaign/general_information/:id': 'campaignGeneralInformation',
       'campaign/media/:id': 'campaignMedia',
-      'campaign/team_members/add': 'campaignTeamMembersAdd',
+      'campaign/team_members/:id/add/:type/:index': 'campaignTeamMembersAdd',
       'campaign/team_members/:id': 'campaignTeamMembers',
       'campaign/specifics/:id': 'campaignSpecifics',
       'campaign/perks/:id': 'campaignPerks',
@@ -29,9 +29,10 @@ let appRoutes = Backbone.Router.extend({
     },
     back: function(event) {
         var url = event.target.pathname;
+        $('#content').undelegate();
+        $('form').undelegate();
         if(app.cache.hasOwnProperty(event.target.pathname) == false) {
             window.history.back();
-            console.log('clicked back button');
             app.routers.navigate(
                 event.target.pathname,
                 {trigger: true, replace: false}
@@ -318,20 +319,16 @@ let appRoutes = Backbone.Router.extend({
             let model = require('models/campaign');
             let view = require('views/campaign');
 
-            let campaign = new model.model({
+            let members = new model.model({
                 id: id
             });
-            campaign.urlRoot += '/team_members'
-            campaign.fetch();
+            members.urlRoot += '/team_members';
+            var a1 = members.fetch();
 
-            $.ajax(_.extend({
-                    url: campaign.urlRoot,
-                }, app.defaultOptionsRequest)
-            ).done((response) => {
+            $.when(a1).done((r1) => {
                 var i = new view.teamMembers({
                     el: '#content',
-                    fields: response.actions.POST,
-                    model: campaign
+                    model: members,
                 });
                 i.render();
                 //app.views.campaign[id].render();
@@ -347,16 +344,27 @@ let appRoutes = Backbone.Router.extend({
         }
     },
 
-    campaignTeamMembersAdd: function(id) {
+    campaignTeamMembersAdd: function(id, type, index) {
         if(!app.user.is_anonymous()) {
             let model = require('models/campaign');
             let view = require('views/campaign');
 
-            const addForm = new view.teamMemberAdd({
-                el: '#content',
+            let members = new model.model({
+                id: id
             });
-            addForm.render();
-            app.hideLoading();
+            members.urlRoot += '/team_members';
+            var a1 = members.fetch();
+
+            $.when(a1).done((r1) => {
+                const addForm = new view.teamMemberAdd({
+                    el: '#content',
+                    model: members,
+                    type: type,
+                    index: index
+                });
+                addForm.render();
+                app.hideLoading();
+            });
             
         } else {
             app.routers.navigate(
