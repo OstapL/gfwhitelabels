@@ -101,13 +101,13 @@ section.campaign-specifics.container.m-b-85
             type: 'text',
             placeholder: '$',
             })
-
-      +fieldBlock("minimum_increment", '', {
-         class1: 'col-lg-3 col-md-4',
-         class2: 'col-lg-9 col-md-8',
-         type: 'text',
-         placeholder: '$  People can invest this amount or more  ',
-         })
+      .label-top-6
+        +fieldBlock("minimum_increment", '', {
+           class1: 'col-lg-3 col-md-4',
+           class2: 'col-lg-9 col-md-8',
+           type: 'text',
+           placeholder: '$  People can invest this amount or more  ',
+           })
       .label-top-6
         +fieldBlock("length_days", '', {
            class1: 'col-lg-3 col-md-4',
@@ -160,7 +160,7 @@ section.campaign-specifics.container.m-b-85
            placeholder: '$',
            })
       
-      .row.m-t-2
+      .row.m-t-2.form-group-m-b-15
         .col-lg-6.col-l-65
           +fieldBlock("min_number_of_shares", '', {
             class1: 'col-lg-6 p-l-2', 
