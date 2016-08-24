@@ -11,9 +11,9 @@ section.text_block
     .container
         .row
             .col-lg-4 
-                .page_title.border-bottom.mb30
+                .page_title.border-bottom.mb25
                     h4.text-uppercase.dosis CATEGORIES
-                ul.list-unstyled.mb50
+                ul.list-unstyled.mb50.custom
                     li
                         a.d-inline-block.w-100.pb10(href='') Branding
                     li
@@ -23,9 +23,10 @@ section.text_block
                     li
                         a.d-inline-block.w-100.pb10(href='') Development
                     li
-                        a.d-inline-block.w-100.pb10(href='') Other
+                        // у последнего елемента <a> клас pb10 отстутствует
+                        a.d-inline-block.w-100(href='') Other
 
-                .page_title.border-bottom.mb30
+                .page_title.border-bottom.mb25
                     h4.text-uppercase.dosis LATEST POSTS
                 ul.list-unstyled.mb50.list-blog-aside.list-blog
                     li
@@ -45,7 +46,8 @@ section.text_block
                                 span.date-blog 10 December
 
                     li
-                        a.d-inline-block.w-100.pb10(href='' alt="")
+                        // у последнего елемента <a> клас pb10 отстутствует
+                        a.d-inline-block.w-100(href='' alt="")
                             img(src="/img/pages/bas1.png").pull-md-left
                             p.title Crowdfunding Regulation
                             .blog-info
@@ -53,7 +55,7 @@ section.text_block
                                 span.date-blog 10 December
 
 
-                .page_title.border-bottom.mb30
+                .page_title.border-bottom.mb25
                     h4.text-uppercase.dosis ARCHIVES
                 ul.list-unstyled.mb50.list-blog-aside
                     li
@@ -63,7 +65,8 @@ section.text_block
                         a.d-inline-block.w-100.pb10(href='' alt="") June 2016
 
                     li
-                        a.d-inline-block.w-100.pb10(href='' alt="") May 2016
+                        // у последнего елемента <a> клас pb10 отстутствует
+                        a.d-inline-block.w-100(href='' alt="") May 2016 
 
             .col-lg-8
                 ul.list-unstyled.list-blog.list-blog-main.m0
