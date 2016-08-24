@@ -72,7 +72,8 @@ section.campaing-list
                                     h3 Pre money valuation: $#{campaign.premoney_valuation}
 
                                 .small_text
-                                    p #{campaign.company.tagline.substr(0, 120)}
+                                    if campaign.company.tagline
+                                        p #{campaign.company.tagline.substr(0, 120)}
 
                                 .ico_cont
                                     a(href=Urls['campaign-detail'](campaign.id) + '#members').link-1
@@ -97,7 +98,8 @@ section.campaing-list
                                 = campaign.company.city + ' ' + campaign.company.state
                             .clear
                         .description
-                            p= campaign.pitch.substr(0,250)
+                            if campaign.pitch
+                                p= campaign.pitch.substr(0,250)
 
                         .progress_bar_container
                             span.left_text #{campaign.progress} % Funded
@@ -132,3 +134,4 @@ section.pagination
                                 span(aria-hidden="true")
                                     i.fa.fa-angle-right
                                 span.sr-only Next
+

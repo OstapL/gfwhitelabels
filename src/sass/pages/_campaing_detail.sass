@@ -32,7 +32,6 @@
 	display: table-cell
 	vertical-align: middle
 	color: $white
-	padding-top: rem(60)
 	img
 	  max-width: 50%
 
@@ -49,11 +48,12 @@
 	
 .big-icon
 	display: block
-	margin: rem(45) auto rem(30)
+	margin: rem(20) auto rem(15)
 	text-align: center
 	line-height: rem(88)
-	+calc-rem(72)
-	color: rgba(255,255,255, .97)
+	font-size: rem(72)
+	outline: none
+
 
 .small-icon
 	display: block
@@ -79,7 +79,7 @@
 		position: absolute
 		z-index: 1
 		content: ''
-		height: rem(80)
+		height: rem(85)
 		left: 0
 		bottom: 0
 
@@ -93,10 +93,10 @@
 			margin-top: 0
 		p
 			color: $small-text
-			margin-bottom: rem(2)
+			margin-bottom: rem(7)
 
 		.btn
-			margin-top: rem(7)
+			margin-top: rem(10)
 
 .campaigndetail
 	margin-top: rem(85)
@@ -113,6 +113,8 @@
 		line-height: rem(14)
 	.mt25
 		margin-top: rem(25)
+	.mt20
+		margin-top: rem(20)
 	.right-block-investors
 		h2
 			margin-top: 0
@@ -180,35 +182,35 @@
 		margin-top: 45px
 		margin-bottom: 20px
 
-	.articles_press
-		.card
-			margin-top: 0
+.articles_press
+	.card
+		margin-top: 0
+		min-height: rem(148)
+		&::before
+			position: absolute
+			width: 100%
+			height: 100%
+			content: ''
+			background-color: rgba(17,17,17, 0.5)
+		.card-img
 			min-height: rem(148)
-			&::before
-				position: absolute
-				width: 100%
-				height: 100%
-				content: ''
-				background-color: rgba(17,17,17, 0.5)
-			.card-img
-				min-height: rem(148)
-			.card-img-overlay
-				padding-left: rem(11)
-				padding-top: rem(17)
-				padding-right: rem(5)
-				.card-text
-					line-height: rem(18)
-					letter-spacing: rem(.35)
-					color: $white
-				.intro
-					margin-top: rem(10)
-				.links
-					font-size: $font-size-sm
-					margin-bottom: rem(10)
-				.icon-campaign
-					width: rem(12)
-					height: rem(12)
-					margin-right: rem(5)
+		.card-img-overlay
+			padding-left: rem(11)
+			padding-top: rem(17)
+			padding-right: rem(5)
+			.card-text
+				line-height: rem(18)
+				letter-spacing: rem(.35)
+				color: $white
+			.intro
+				margin-top: rem(10)
+			.links
+				font-size: $font-size-sm
+				margin-bottom: rem(10)
+			.icon-campaign
+				width: rem(12)
+				height: rem(12)
+				margin-right: rem(5)
 .team
 	padding-bottom: rem(15)
 	a,a:hover

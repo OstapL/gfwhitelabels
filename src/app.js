@@ -360,6 +360,24 @@ global.app = {
           .compact()
           .object()
           .value();
+    },
+
+    getVideoId: function(url) {
+        try {
+            var provider = url.match(/https:\/\/(:?www.)?(\w*)/)[2],
+            id;
+
+            if(provider == "youtube") {
+                id = url.match(/https:\/\/(?:www.)?(\w*).com\/.*v=(.*)/)[2];
+            } else if (provider == "vimeo") {
+                id = url.match(/https:\/\/(?:www.)?(\w*).com\/(\d*)/)[2];
+            } else {
+                console.log(url, "Takes a YouTube or Vimeo URL");
+            }
+            return id;
+        } catch(err) {
+                console.log(url, "Takes a YouTube or Vimeo URL");
+        }
     }
 };
 
@@ -377,7 +395,7 @@ $('body').on('click', '.auth-pop', function() {
 
 $('body').on('click', 'a', function(event) {
     var href = event.currentTarget.getAttribute('href');
-    if(href != '' && href.substr(0,1) != '#' && 
+    if(href && href != '' && href.substr(0,1) != '#' && 
         href.substr(0, 4) != 'http' && 
         href.substr(0,3) != 'ftp' &&
         event.currentTarget.getAttribute('target') == null) {
@@ -390,6 +408,7 @@ $('body').on('click', 'a', function(event) {
         var url = href;
 
         if(app.cache.hasOwnProperty(url) == false) {
+            $('#content').undelegate();
             app.routers.navigate(
                 url,
                 {trigger: true, replace: false}
