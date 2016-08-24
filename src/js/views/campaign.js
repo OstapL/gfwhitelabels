@@ -518,7 +518,7 @@ define(function() {
                             self.undelegateEvents();
                             $('#content').scrollTo();
                             app.routers.navigate(
-                                '/campaign/specifics/' + this.model.get('id'),
+                                '/campaign/team_members/' + this.model.get('id'),
                                 {trigger: true, replace: false}
                             );
 
