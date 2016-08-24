@@ -1,8 +1,8 @@
 let hello = require('hellojs');
 hello.init({
-    facebook: '1405768896335643',
-    google: '329026937492-pkmge3at186jvjn14mep9vpa4fk3gqpg.apps.googleusercontent.com',
-    linkedin: '77hgtbs9rkjk20', 
+    facebook: facebookClientId,
+    google: googleClientId,
+    linkedin: linkedinClientId, 
 }, {
     redirect_uri: '/',
     oauth_proxy: '/proxy/'
@@ -23,14 +23,14 @@ var helloApp = {
     },
     onFacebookLogin: function (e) {
         console.log('onFacebookLogin');
-        sendToken('facebook', e.authResponse.access_token);
+        this.send('facebook', e.authResponse.access_token);
     },
     onFacebookFail: function (e) {
         console.log('onFacebookLogin');
     },
     onGoogleLogin: function (e) {
         console.log('onGoogleLogin');
-        sendToken('google', e.authResponse.access_token);
+        this.send('google', e.authResponse.access_token);
     },
     onGoogleFail: function (e) {
         console.log('onGoogleFail');
@@ -38,7 +38,7 @@ var helloApp = {
     },
     onLinkedInLogin: function (e) {
         console.log('onLinkedInLogin');
-        sendToken('linkedin', e.authResponse.access_token);
+        this.send('linkedin', e.authResponse.access_token);
     },
     onLinkedInFail: function (e) {
         console.log('onLinkedInFail');
