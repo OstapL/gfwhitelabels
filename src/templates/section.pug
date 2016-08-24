@@ -5,7 +5,7 @@ include mixins.pug
 - indexCounter = attr.index || 0
 
 each k,v in fields[name].schema
-    div(class=(counter == (Object.keys(fields[name].schema).length-1) ? 'm-b-0' : 'form-group') + ' clearfix')
+    div(class=(counter == (Object.keys(fields[name].schema).length+100) ? 'm-b-0' : 'form-group') + ' clearfix index_' + indexCounter)
         label.col-lg-3.text-lg-right #{k.label}
         .col-lg-9
             if k.type == 'text' 

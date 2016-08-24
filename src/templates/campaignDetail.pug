@@ -39,8 +39,8 @@ section#home(style="background-image: url(" + (campaign.header_image_data ? camp
 section.campaigndetail
   .container
     .col-lg-6
-      h1 Smartbe is the first intelligent baby stroller of the new generation.
-      .row.mt25
+      h1 #{ campaign.company.tagline }
+      .row.mt20
         .col-lg-4
           a(href="").link-1
             i.fa.fa-map-marker
@@ -126,74 +126,95 @@ section
   section.about-detail.border-bottom
     .container
       .col-lg-12
-        .h2#about.dosis.text-uppercase.text-lg-center About #{ campaign.company.name }
+        h2#about.dosis.text-uppercase.text-lg-center About #{ campaign.company.name }
         p #{ campaign.pitch }
         h3.our.text-lg-center Our Edge
         p #{ campaign.intended_use_of_proceeds }
+
       #gallery1.col-lg-12.pt50.photo-gallegy
-        .col-lg-3.no-padding-img
-          a(href="/img/campaign/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
-            img(src="/img/campaign/smartbe-intelligent-stroller_1.jpg" alt="").img-fluid
-        .col-lg-3.no-padding-img
-          a(href="/img/campaign/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
-            img(src="/img/campaign/smartbe-intelligent-stroller_2.jpg" alt="").img-fluid
-        .col-lg-3.no-padding-img
-          a(href="/img/campaign/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
-            img(src="/img/campaign/smartbe-intelligent-stroller_3.jpg" alt="").img-fluid
-        .col-lg-3.no-padding-img
-          a(href="/img/campaign/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
-            img(src="/img/campaign/smartbe-intelligent-stroller_4.jpg" alt="").img-fluid
-        .col-lg-3.no-padding-img
-          a(href="/img/campaign/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
-            img(src="/img/campaign/smartbe-intelligent-stroller_5.jpg" alt="").img-fluid
-        .col-lg-3.no-padding-img
-          a(href="/img/campaign/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
-            img(src="/img/campaign/smartbe-intelligent-stroller_6.jpg" alt="").img-fluid
-        .col-lg-3.no-padding-img
-          a(href="/img/campaign/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
-            img(src="/img/campaign/smartbe-intelligent-stroller_7.jpg" alt="").img-fluid
-        .col-lg-3.no-padding-img
-          a(href="/img/campaign/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
-            img(src="/img/campaign/smartbe-intelligent-stroller_8.jpg" alt="").img-fluid
-      .col-lg-4
-        .card.card-inverse
-          img(src="/img/Smartbe-Intelligent-Stroller-5.jpg" alt="").card-img
-          .card-img-overlay
-            .card-title
-              a(href="").small-icon.link-6
-                  i.fa.fa-play-circle-o
-            h3.card-text.text-lg-center Title for Optional Video 1
-      .col-lg-4
-        .card.card-inverse
-          img(src="/img/Smartbe-Intelligent-Stroller-5.jpg" alt="").card-img
-          .card-img-overlay
-            .card-title
-              a(href="").small-icon.link-6
-                  i.fa.fa-play-circle-o
-            h3.card-text.text-lg-center Title for Optional Video 2
-      .col-lg-4
-        .card.card-inverse
-          img(src="/img/Smartbe-Intelligent-Stroller-5.jpg" alt="").card-img
-          .card-img-overlay
-            .card-title
-              a(href="").small-icon.link-6
-                  i.fa.fa-play-circle-o
-            h3.card-text.text-lg-center Title for Optional Video 3
+        if campaign.gallery
+            each v,k in campaign.gallery_data.all_files
+                .col-lg-3.no-padding-img
+                  a(href=v.url data-size='1600x900')
+                    img(src=v.url alt=campaign.company.name style="width:263px; height: 209px").img-fluid
+        else
+            .col-lg-3.no-padding-img
+              a(href="/img/campaign/smartbe-intelligent-stroller_1.jpg" data-toggle="modal" data-size='1600x900')
+                img(src="/img/campaign/smartbe-intelligent-stroller_1.jpg" alt="").img-fluid
+            .col-lg-3.no-padding-img
+              a(href="/img/campaign/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
+                img(src="/img/campaign/smartbe-intelligent-stroller_2.jpg" alt="").img-fluid
+            .col-lg-3.no-padding-img
+              a(href="/img/campaign/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
+                img(src="/img/campaign/smartbe-intelligent-stroller_3.jpg" alt="").img-fluid
+            .col-lg-3.no-padding-img
+              a(href="/img/campaign/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
+                img(src="/img/campaign/smartbe-intelligent-stroller_4.jpg" alt="").img-fluid
+            .col-lg-3.no-padding-img
+              a(href="/img/campaign/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
+                img(src="/img/campaign/smartbe-intelligent-stroller_5.jpg" alt="").img-fluid
+            .col-lg-3.no-padding-img
+              a(href="/img/campaign/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
+                img(src="/img/campaign/smartbe-intelligent-stroller_6.jpg" alt="").img-fluid
+            .col-lg-3.no-padding-img
+              a(href="/img/campaign/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
+                img(src="/img/campaign/smartbe-intelligent-stroller_7.jpg" alt="").img-fluid
+            .col-lg-3.no-padding-img
+              a(href="/img/campaign/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
+                img(src="/img/campaign/smartbe-intelligent-stroller_8.jpg" alt="").img-fluid
+
+    
+      if campaign.additional_video
+          each v,k in campaign.additional_video
+              .col-lg-4
+                .card.card-inverse
+                  - let link =  app.getVideoId(v.link)
+                  img(src="http://img.youtube.com/vi/" + link + "/0.jpg" alt="" style="width: 338px").card-img
+                  .card-img-overlay
+                    .card-title
+                      a(data-toggle="modal" href="#videoModal-" + k data-target="#videoModal-" + k).small-icon.link-6
+                          i.fa.fa-play-circle-o
+                    h3.card-text.text-lg-center #{ v.headline }
+      else
+          .col-lg-4
+            .card.card-inverse
+              img(src="/img/Smartbe-Intelligent-Stroller-5.jpg" alt="").card-img
+              .card-img-overlay
+                .card-title
+                  a(data-toggle="modal" href="#videoModal-2" data-target="#videoModal-2").small-icon.link-6
+                      i.fa.fa-play-circle-o
+                h3.card-text.text-lg-center Title for Optional Video 2
+          .col-lg-4
+            .card.card-inverse
+              img(src="/img/Smartbe-Intelligent-Stroller-5.jpg" alt="").card-img
+              .card-img-overlay
+                .card-title
+                  a(data-toggle="modal" href="#videoModal-3" data-target="#videoModal-3").small-icon.link-6
+                      i.fa.fa-play-circle-o
+                h3.card-text.text-lg-center Title for Optional Video 3
+          .col-lg-4
+            .card.card-inverse
+              img(src="/img/Smartbe-Intelligent-Stroller-5.jpg" alt="").card-img
+              .card-img-overlay
+                .card-title
+                  a(data-toggle="modal" href="#videoModal-3" data-target="#videoModal-3").small-icon.link-6
+                      i.fa.fa-play-circle-o
+                h3.card-text.text-lg-center Title for Optional Video 3
       .col-lg-12
         h3.text-lg-center Articles and Press
       .articles_press
       if campaign.press
         each v,k in campaign.press
-          .col-lg-3
+          .col-lg-3.articles_press
             a(href=v.link target="_blank")
               .card.card-inverse
                 img(src="/img/smartbe-intelligent-stroller.jpg" alt="").card-img
                 .card-img-overlay
                   .card-title
-                    p.card-text.font-weight-bold v.title
-                    p.card-text.intro Smartbe is a revolutionary concept as regards design and ...
-                    img(src="/img/icon-campaign.jpg", alt="").icon-campaign.d-inline-block
-                    a(href=v.link target="_blank").card-text.links.d-inline-block v.link
+                    p.card-text.font-weight-bold #{ v.headline }
+                    // p.card-text.intro Smartbe is a revolutionary concept as regards design and ...
+                  img(src="/img/icon-campaign.jpg", alt="").icon-campaign.d-inline-block
+                  a(href=v.link target="_blank").card-text.links.d-inline-block #{ v.link }
         .col-lg-12
           h3.text-lg-center Why We are Raising Capital, and What We’ll Do with It
           p #{ campaign.business_model }
@@ -441,9 +462,9 @@ section
             ).panel-collapse.collapse  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius inventore iste numquam nemo, fugit nihil fugiat quasi, excepturi repellendus pariatur! Facilis odit cupiditate tenetur, inventore adipisci consequatur eius suscipit voluptas.
         a(href="").col-lg-12.text-lg-center.link-4.see-all See All Risks
   
-  section.faq.border-bottom
-    .container
+  section.faq
     if campaign.faq
+    .container
       h2#faq.col-lg-12.dosis.text-uppercase.text-lg-center FAQ
       .col-lg-8.offset-lg-2
         #accordion(role="tablist" aria-multiselectable="true")
@@ -460,6 +481,7 @@ section
               div(id="collapsefaq" + k role="tabpanel"
               aria-labelledby="faq" + k
               ).panel-collapse.collapse.in  #{ v.answer }
+          //
             .panel.panel-default
               #faqTwo(role="tab").panel-heading
                 a(data-toggle="collapse"
@@ -552,17 +574,23 @@ section
       .col-lg-12.text-lg-center
         h2
           i.fa.fa-thumbs-up
-          |  I’d Like to Invest in Smartbe!
+              |  I’d Like to Invest in #{ campaign.company.name }!
         a(data-toggle="modal" data-target="#sing_up" href="#sing_up").btn.btn-primary.btn-lg.text-uppercase iNVEST IN #{ campaign.company.name }
 
 
-//MODAL
 #videoModal.modal.fade(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")
-  .modal-dialog(role="document")
-    .modal-content
-      .embed-responsive.embed-responsive-16by9
-        iframe.embed-responsive-item(src=campaign.video allowfullscreen="true")
+    .modal-dialog.modal-lg(role="document")
+        .modal-content
+            .embed-responsive.embed-responsive-16by9
+                iframe.embed-responsive-item(src="//www.youtube.com/embed/" + app.getVideoId(campaign.video) + "?rel=0" allowfullscreen="true")
 
+each v,k in campaign.additional_video
+    div(id="videoModal-" + k).modal.fade(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")
+        .modal-dialog.modal-lg(role="document")
+            .modal-content
+                .embed-responsive.embed-responsive-16by9
+                    - let link =  app.getVideoId(v.link)
+                    iframe.embed-responsive-item(src="//www.youtube.com/embed/" + link + "?rel=0" allowfullscreen="true")
 
 //modal sing_up
 #sing_up.modal.fade(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")
@@ -591,28 +619,29 @@ section
             .form-group.row.clearfix.required
               .row
                 .col-lg-12
-                  label.m-t-1
-                    input(type="checkbox")
-                    |  I consent to electronic signature and electronic delivery of documentation
                   label
                     input(type="checkbox")
-                    |  I agree to the
-                    a(href="")  Terms of Service
-                    |  and 
-                    a(href="")  Privacy Policy.
+                    span.label-text I consent to electronic signature and electronic delivery of documentation
+                  label.p-t-6
+                    input(type="checkbox")
+                    span.label-text I agree to the
+                      a(href="").link-3  Terms of Service
+                      |  and 
+                      a(href="").link-3  Privacy Policy.
                   .col-lg-12.text-lg-center
                       button.btn.btn-lg.btn-primary.text-uppercase sing up
                   .col-lg-12.border-bottom.or
                     span or
-            button.btn.btn-block.btn-lg.btn-facebook.text-uppercase
-              i.fa.fa-facebook
-              |  SIGN UP with Facebook
-            button.btn.btn-block.btn-lg.btn-linkedin.text-uppercase
-              i.fa.fa-linkedin
-              |  SIGN UP with linkedin
-            button.btn.btn-block.btn-lg.btn-google.text-uppercase
-              i.fa.fa-google-plus
-              |  SIGN UP with Google
+            .social-btn
+              button.btn.btn-block.btn-lg.btn-facebook.text-uppercase
+                i.fa.fa-facebook
+                |  SIGN UP with Facebook
+              button.btn.btn-block.btn-lg.btn-linkedin.text-uppercase
+                i.fa.fa-linkedin
+                |  SIGN UP with linkedin
+              button.btn.btn-block.btn-lg.btn-google.text-uppercase
+                i.fa.fa-google-plus
+                |  SIGN UP with Google
         .modal-footer
 
 .pswp(tabindex="-1" role="dialog" aria-hidden="true")
