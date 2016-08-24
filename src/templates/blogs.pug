@@ -7,7 +7,7 @@ include mixins.pug
     ]
 )
 
-section.text_block
+section.text_block  
     .container
         .row
             .col-lg-4 
@@ -67,122 +67,135 @@ section.text_block
                     li
                         // у последнего елемента <a> клас pb10 отстутствует
                         a.d-inline-block.w-100(href='' alt="") May 2016 
+            .col-lg-8.single-blog
+                article
+                    .row
+                        .col-lg-12.text-xs-center.mb30
+                            h2.text-uppercase.dosis.m0.title-blog HERE IS THE HEADLINE FOR YOUR BLOG POST
 
-            .col-lg-8
-                ul.list-unstyled.list-blog.list-blog-main.m0
-                    li.pul-md-left.mb50
-                        article 
-                            figure
+                    .row
+                        .col-lg-12
+                            .blog-img
+                                img(src="/img/pages/bt1.png").img-fluid
+
+                            .blog-text
                                 p
-                                    img(src="/img/pages/bse1.png").img-fluid
-                                figcaption
-                                    h3.dosis.text-uppercase New Web Design Trends
-                                    .blog-info
-                                        span.author.text-muted John Doe 
-                                        span.date-blog.text-muted 10 December
-                                    p 
-                                        | Maecenas  volutpat, diam enim sagittis quam, id porta quam. Sed id dolor consectetur fermentum nibh volutpat, accumsan purus.
-                                    .btn-blog-block
-                                        a(href="#").btn.btn-md.btn-secondary.text-uppercase read more &nbsp;
-                                            i.fa.fa-angle-right
+                                    | Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris non laoreet dui. Morbi lacus massa, euismod ut turpis molestie, tristique sodales est. Integer sit amet mi id sapien tempor molestie in nec massa.
 
-                    li.pul-md-left.mb50
-                        article 
-                            figure
                                 p
-                                    img(src="/img/pages/bse2.png").img-fluid
-                                figcaption
-                                    h3.dosis.text-uppercase New Web Design Trends
-                                    .blog-info
-                                        span.author.text-muted John Doe 
-                                        span.date-blog.text-muted 10 December
-                                    p 
-                                        | Maecenas  volutpat, diam enim sagittis quam, id porta quam. Sed id dolor consectetur fermentum nibh volutpat, accumsan purus.
-                                    .btn-blog-block
-                                        a(href="").btn.btn-md.btn-secondary.text-uppercase read more &nbsp;
-                                            i.fa.fa-angle-right
+                                    | Fusce non ante sed lorem rutrum feugiat. Vestibulum pellentesque, purus ut dignissim consectetur, nulla erat ultrices purus, ut consequat sem elit non sem. Morbi lacus massa, euismod ut turpis molestie, tristique sodales est. Integer sit amet mi id sapien tempor molestie in nec massa. Fusce non ante sed lorem rutrum feugiat.
 
-                    li.pul-md-left.mb50
-                        article 
-                            figure
                                 p
-                                    img(src="/img/pages/bse4.png").img-fluid
-                                figcaption
-                                    h3.dosis.text-uppercase New Web Design Trends
-                                    .blog-info
-                                        span.author.text-muted John Doe 
-                                        span.date-blog.text-muted 10 December
-                                    p 
-                                        | Maecenas  volutpat, diam enim sagittis quam, id porta quam. Sed id dolor consectetur fermentum nibh volutpat, accumsan purus.
-                                    .btn-blog-block
-                                        a(href="").btn.btn-md.btn-secondary.text-uppercase read more &nbsp;
-                                            i.fa.fa-angle-right
+                                    | Praesent ultricies ut ipsum non laoreet. Nunc ac ultricies leo. Nulla ac ultrices arcu. Nullam adipiscing lacus in consectetur posuere. Nunc malesuada tellus turpis, ac pretium orci molestie vel. Morbi lacus massa, euismod ut turpis molestie, tristique sodales est. Integer sit amet mi id sapien tempor molestie in nec massa. Fusce non ante sed lorem rutrum feugiat.
 
-                    li.pul-md-left.mb50
-                        article 
-                            figure
+                                ol
+                                    li First item of the list
+                                    li Second item of the list
+                                    li Third item of the list
+
                                 p
-                                    img(src="/img/pages/bse4.png").img-fluid
-                                figcaption
-                                    h3.dosis.text-uppercase New Web Design Trends
-                                    .blog-info
-                                        span.author.text-muted John Doe 
-                                        span.date-blog.text-muted 10 December
-                                    p 
-                                        | Maecenas  volutpat, diam enim sagittis quam, id porta quam. Sed id dolor consectetur fermentum nibh volutpat, accumsan purus.
-                                    .btn-blog-block
-                                        a(href="").btn.btn-md.btn-secondary.text-uppercase read more &nbsp;
-                                            i.fa.fa-angle-right
-                    li.pul-md-left.mb50
-                        article 
-                            figure
-                                p
-                                    img(src="/img/pages/bse5.png").img-fluid
-                                figcaption
-                                    h3.dosis.text-uppercase New Web Design Trends
-                                    .blog-info
-                                        span.author.text-muted John Doe 
-                                        span.date-blog.text-muted 10 December
-                                    p 
-                                        | Maecenas  volutpat, diam enim sagittis quam, id porta quam. Sed id dolor consectetur feus.
-                                    .btn-blog-block
-                                        a(href="").btn.btn-md.btn-secondary.text-uppercase read more &nbsp;
-                                            i.fa.fa-angle-right
+                                    | Lorem ipsum dolor sit amet, consectetur adipiscing elit. Mauris non laoreet dui. <a href="#">Morbi lacus massa</a>, euismod ut turpis molestie, tristique sodales est. Integer sit amet mi id sapien tempor molestie in nec massa. Fusce non ante sed lorem rutrum feugiat. Vestibulum pellentesque, purus ut dignissim consectetur, nulla erat ultrices purus, ut consequat sem elit non sem.
 
-                    li.pul-md-left.mb50
-                        article 
-                            figure
-                                p
-                                    img(src="/img/pages/bse6.png").img-fluid
-                                figcaption
-                                    h3.dosis.text-uppercase New Web Design Trends
-                                    .blog-info
-                                        span.author.text-muted John Doe 
-                                        span.date-blog.text-muted 10 December
-                                    p 
-                                        | Maecenas  volutpat, diam enim sagittis quam, id porta quam. Sed id dolor consectetur fermentum nibh volutpat, accumsan purus.
+                            .blog-info.mt25
+                                ul.list-inline.list-unstyled.m0
+                                    li.text-muted
+                                        i.fa.fa-calendar
+                                        span DECEMBER10, 2016
 
-                                    .btn-blog-block
-                                        a(href="").btn.btn-md.btn-secondary.text-uppercase read more &nbsp;
-                                            i.fa.fa-angle-right
+                                    li.text-muted
+                                        i.fa.fa-user
+                                        span MARIA KR. 
 
-                section.pagination
-                    .container
-                        .row
-                            .col-lg-12
-                                nav
-                                    ul.pagination.pagination-sm
-                                        li.page-item.active
-                                            a(href="#").page-link 1
-                                        li.page-item
-                                            a(href="#").page-link 2
-                                        li.page-item
-                                            a(href="#").page-link 3
-                                        li.page-item
-                                            a(href="#" aria-label="Next").page-link
-                                                span(aria-hidden="true")
-                                                    i.fa.fa-angle-right
-                                                span.sr-only Next
+                                    li.text-muted
+                                        i.fa.fa-folder-open
+                                        span POSTED: IN BRENDING
+
+                // comments
+                .comments.blog-comments.row
+
+                    .col-lg-12.p-l-0
+                        h3.m0 Comments (2)
+
+                    .col-lg-12.p-r-0.p-l-0
+                        .hr
+                        .col-lg-1
+                            img(src="/img/pages/com1.png" alt="").img-circle
+                        .col-lg-11
+                            .comments-wrap
+                                span.name-comments.text-uppercase maria kravchuk
+
+                                span.date-comments.pull-right 2 Days Ago
+                                p Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua?
+                                .responce
+                                    li.text-muted
+                                        a(href="").link-1 1 
+                                        i.fa.fa-angle-up  
+                                        span |
+                                    li.text-muted
+                                        a(href="").link-1 Responce 
+                                        span |
+                                    li.text-muted
+                                        a(href="").link-1
+                                        i.fa.fa-thumbs-up
+                    .col-lg-11.offset-lg-1.pt30.p-r-0.p-l-0
+                        .col-lg-1
+                            img(src="/img/pages/com2.png" alt="").img-circle
+                        .col-lg-11
+                            .comments-wrap
+                                span.name-comments.text-uppercase maria kravchuk
+                                span.kvalificatio-comments.text-uppercase CEO
+                                span.date-comments.pull-right 2 Days Ago
+                                p Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua?
+                                .responce
+                                    li.text-muted
+                                        a(href="").link-1 0 
+                                        i.fa.fa-angle-down  
+                                        span |
+                                    li.text-muted
+                                        a(href="").link-1 Responce 
+                                        span |
+                                    li.text-muted
+                                        a(href="").link-1
+                                        i.fa.fa-thumbs-up
+
+
+                    .col-lg-12.p-r-0.p-l-0.mt50
+                        h3.m0 Leave a Comment
+                        .hr
+
+                        form(method="post" action="").form
+                            .form-body
+                                .form-group.row.comment_text.required
+                                    .col-lg-8
+                                        textarea(name="first_name" placeholder="Type your comment here..." value="")#comment_text.form-control
+
+                                    
+                                    .col-lg-4
+                                        .controls  
+                                            button(
+                                                type="submit"
+                                            ).btn.btn-primary.btn-lg.pull-right.text-uppercase Submit comment 
+                                    
+                    .row.control-blog-block
+                        .col-lg-6.mt25
+                            .controls  
+                                button(
+                                    type="submit"
+                                ).btn.btn-secondary.inverse.btn-xl.pull-left.text-uppercase
+                                    i.fa.fa-angle-left &nbsp;
+                                    | prev post
+
+                        .col-lg-6.mt25
+                            .controls  
+                                button(
+                                    type="submit"
+                                ).btn.btn-secondary.inverse.btn-xl.pull-right.text-uppercase
+                                    | next post
+                                    i.fa.fa-angle-right &nbsp;
+
+
+
+
 
 
 
