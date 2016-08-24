@@ -163,30 +163,42 @@ section
               a(href="/img/campaign/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
                 img(src="/img/campaign/smartbe-intelligent-stroller_8.jpg" alt="").img-fluid
 
-      .col-lg-4
-        .card.card-inverse
-          img(src="/img/Smartbe-Intelligent-Stroller-5.jpg" alt="").card-img
-          .card-img-overlay
-            .card-title
-              a(data-toggle="modal" href="#videoModal-1" data-target="#videoModal-1").small-icon.link-6
-                  i.fa.fa-play-circle-o
-            h3.card-text.text-lg-center Title for Optional Video 1
-      .col-lg-4
-        .card.card-inverse
-          img(src="/img/Smartbe-Intelligent-Stroller-5.jpg" alt="").card-img
-          .card-img-overlay
-            .card-title
-              a(data-toggle="modal" href="#videoModal-2" data-target="#videoModal-2").small-icon.link-6
-                  i.fa.fa-play-circle-o
-            h3.card-text.text-lg-center Title for Optional Video 2
-      .col-lg-4
-        .card.card-inverse
-          img(src="/img/Smartbe-Intelligent-Stroller-5.jpg" alt="").card-img
-          .card-img-overlay
-            .card-title
-              a(data-toggle="modal" href="#videoModal-3" data-target="#videoModal-3").small-icon.link-6
-                  i.fa.fa-play-circle-o
-            h3.card-text.text-lg-center Title for Optional Video 3
+    
+      if campaign.additional_video
+          each v,k in campaign.additional_video
+              .col-lg-4
+                .card.card-inverse
+                  img(src="http://img.youtube.com/vi/" + app.getVideoId(k.link) + "/default.jpg" alt="").card-img
+                  .card-img-overlay
+                    .card-title
+                      a(data-toggle="modal" href="#videoModal-" + k data-target="#videoModal-" + k).small-icon.link-6
+                          i.fa.fa-play-circle-o
+                    h3.card-text.text-lg-center #{ v.headline }
+      else
+          .col-lg-4
+            .card.card-inverse
+              img(src="/img/Smartbe-Intelligent-Stroller-5.jpg" alt="").card-img
+              .card-img-overlay
+                .card-title
+                  a(data-toggle="modal" href="#videoModal-2" data-target="#videoModal-2").small-icon.link-6
+                      i.fa.fa-play-circle-o
+                h3.card-text.text-lg-center Title for Optional Video 2
+          .col-lg-4
+            .card.card-inverse
+              img(src="/img/Smartbe-Intelligent-Stroller-5.jpg" alt="").card-img
+              .card-img-overlay
+                .card-title
+                  a(data-toggle="modal" href="#videoModal-3" data-target="#videoModal-3").small-icon.link-6
+                      i.fa.fa-play-circle-o
+                h3.card-text.text-lg-center Title for Optional Video 3
+          .col-lg-4
+            .card.card-inverse
+              img(src="/img/Smartbe-Intelligent-Stroller-5.jpg" alt="").card-img
+              .card-img-overlay
+                .card-title
+                  a(data-toggle="modal" href="#videoModal-3" data-target="#videoModal-3").small-icon.link-6
+                      i.fa.fa-play-circle-o
+                h3.card-text.text-lg-center Title for Optional Video 3
       .col-lg-12
         h3.text-lg-center Articles and Press
       .articles_press
@@ -201,7 +213,7 @@ section
                     p.card-text.font-weight-bold #{v.title}
                     // p.card-text.intro Smartbe is a revolutionary concept as regards design and ...
                   img(src="/img/icon-campaign.jpg", alt="").icon-campaign.d-inline-block
-                  a(href=v.link target="_blank").card-text.links.d-inline-block v.link
+                  a(href=v.link target="_blank").card-text.links.d-inline-block #{ v.link }
         .col-lg-12
           h3.text-lg-center Why We are Raising Capital, and What We’ll Do with It
           p #{ campaign.business_model }
@@ -565,31 +577,20 @@ section
         a(data-toggle="modal" data-target="#sing_up" href="#sing_up").btn.btn-primary.btn-lg.text-uppercase iNVEST IN #{ campaign.company.name }
 
 
-//MODAL
 #videoModal.modal.fade(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")
-  .modal-dialog.modal-lg(role="document")
-    .modal-content
-      .embed-responsive.embed-responsive-16by9
-        iframe.embed-responsive-item(src=campaign.video allowfullscreen="true")
-//MODAL-VIDEO1
-#videoModal-1.modal.fade(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")
-  .modal-dialog.modal-lg(role="document")
-    .modal-content
-      .embed-responsive.embed-responsive-16by9
-        iframe.embed-responsive-item(src="//www.youtube.com/embed/zpOULjyy-n8?rel=0" allowfullscreen="true")
-//MODAL-VIDEO1
-#videoModal-2.modal.fade(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")
-  .modal-dialog.modal-lg(role="document")
-    .modal-content
-      .embed-responsive.embed-responsive-16by9
-        iframe.embed-responsive-item(src="//www.youtube.com/embed/zpOULjyy-n8?rel=0" allowfullscreen="true")
-        
-//MODAL-VIDEO1
-#videoModal-3.modal.fade(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")
-  .modal-dialog.modal-lg(role="document")
-    .modal-content
-      .embed-responsive.embed-responsive-16by9
-        iframe.embed-responsive-item(src="//www.youtube.com/embed/zpOULjyy-n8?rel=0" allowfullscreen="true")
+    .modal-dialog.modal-lg(role="document")
+        .modal-content
+            .embed-responsive.embed-responsive-16by9
+                iframe.embed-responsive-item(src="//www.youtube.com/embed/" + app.getVideoId(campaign.video) + "?rel=0" allowfullscreen="true")
+
+each v,k in campaign.additional_video
+    div(id="videoModal-" + k).modal.fade(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")
+        .modal-dialog.modal-lg(role="document")
+            .modal-content
+                .embed-responsive.embed-responsive-16by9
+                    - let link =  app.getVideoId(v.link)
+                    p #{ v.link }, #{ link }
+                    iframe.embed-responsive-item(src="//www.youtube.com/embed/" + link + "?rel=0" allowfullscreen="true")
 
 //modal sing_up
 #sing_up.modal.fade(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")
