@@ -136,7 +136,7 @@ ul.list-blog {
  
 
 
-	// todo вынести в отдельный файл стилей так как коментарии встречаються в многих файлах
+	// todo вынести в отдельный файл стилей так как коментарии встречаються в нескольких файлах
 	.comments {
 		.hr {
 			width: 100%;
@@ -203,7 +203,28 @@ ul.list-blog {
 			}
 		}
 		
+		// форма для коментария
+		&.blog-comments {
+			textarea {
+				height: rem(35);
+				padding: rem(2);
+
+
+				border: none;
+				border-bottom: 1px $light_grey solid;
+				resize: none;
+			}
+
+			.control-blog-block {
+				button {
+					&:hover {
+						color: $small-text;
+					}
+				}
+			}
+		}
 	}
+
 
 }
 
