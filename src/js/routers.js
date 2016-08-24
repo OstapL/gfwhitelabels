@@ -21,6 +21,9 @@ let appRoutes = Backbone.Router.extend({
       'account/login': 'login',
       'account/signup': 'login',
       'account/logout': 'logout',
+      'account/facebook/login/': 'loginFacebook',
+      'account/google/login/': 'loginGoogle',
+      'account/linkedin/login/': 'loginLinkedin',
       'account/dashboard/issuer': 'dashboardIssuer',
       'account/dashboard/investor': 'dashboardInvestor',
     },
@@ -535,13 +538,44 @@ let appRoutes = Backbone.Router.extend({
             loginView.render();
             app.cache[window.location.pathname] = loginView.$el.html();
             app.hideLoading();
-        }).fail((xhr, error) =>  {
+        }).fail((xhr, error) => {
             // ToDo
             // Show global error message
             console.log('cant get fields ');
             console.log(xhr, error);
             app.hideLoading();
         });
+    },
+
+    loginFacebook: function() {
+        let socialAuth = require('js/views/social-auth.js');
+        let hello = require('hellojs');
+
+        hello('facebook').login({scope: 'public_profile,email'}).then(
+            function (e) {onFacebookLogin(e);}, 
+            function (e) {onFacebookFail(e)});
+    },
+
+    loginLinkedin: function() {
+
+        let socialAuth = require('js/views/social-auth.js');
+        let hello = require('hellojs');
+
+        hello('facebook').login({scope: 'public_profile,email'}).then(
+            function (e) {onFacebookLogin(e);}, 
+            function (e) {onFacebookFail(e)});
+
+    },
+
+    loginGoogle: function() {
+
+        let socialAuth = require('js/views/social-auth.js');
+        let hello = require('hellojs');
+
+        hello('facebook').login({scope: 'r_basicprofile,r_emailaddress'}).then(
+            function (e) {onFacebookLogin(e);}, 
+            function (e) {onFacebookFail(e)});
+        
     },
 
     logout: function(id) {
