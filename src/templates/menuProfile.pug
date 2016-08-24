@@ -3,7 +3,8 @@ if user.token != ""
         a.nav-link.notification.user-info-name
             span
                 i.fa.fa-user
-            v.hidden-md-down #{user.last_name}
+            v.hidden-md-down #{user.last_name}&nbsp;&nbsp;
+            i.fa.fa-angle-down
         .list-container.user-info-drop.notification-container
             ul.submenu.list-unstyled 
                 li
@@ -17,7 +18,7 @@ if user.token != ""
         
 else
     li.login-sinup
-        a.btn.btn-lg.btn-primary(href="/account/login") Login
+        a.btn.btn-lg.btn-primary(href="/account/login") Log in
     
     li.login-sinup
-        a.btn.btn-lg.btn-primary(href="/account/signup") Signup
+        a.btn.btn-lg.btn-primary(href="/account/signup") Sign up
