@@ -168,7 +168,8 @@ section
           each v,k in campaign.additional_video
               .col-lg-4
                 .card.card-inverse
-                  img(src="http://img.youtube.com/vi/" + app.getVideoId(k.link) + "/default.jpg" alt="").card-img
+                  - let link =  app.getVideoId(v.link)
+                  img(src="http://img.youtube.com/vi/" + link + "/0.jpg" alt="" style="width: 338px").card-img
                   .card-img-overlay
                     .card-title
                       a(data-toggle="modal" href="#videoModal-" + k data-target="#videoModal-" + k).small-icon.link-6
@@ -210,7 +211,7 @@ section
                 img(src="/img/smartbe-intelligent-stroller.jpg" alt="").card-img
                 .card-img-overlay
                   .card-title
-                    p.card-text.font-weight-bold #{v.title}
+                    p.card-text.font-weight-bold #{ v.headline }
                     // p.card-text.intro Smartbe is a revolutionary concept as regards design and ...
                   img(src="/img/icon-campaign.jpg", alt="").icon-campaign.d-inline-block
                   a(href=v.link target="_blank").card-text.links.d-inline-block #{ v.link }
@@ -589,7 +590,6 @@ each v,k in campaign.additional_video
             .modal-content
                 .embed-responsive.embed-responsive-16by9
                     - let link =  app.getVideoId(v.link)
-                    p #{ v.link }, #{ link }
                     iframe.embed-responsive-item(src="//www.youtube.com/embed/" + link + "?rel=0" allowfullscreen="true")
 
 //modal sing_up
