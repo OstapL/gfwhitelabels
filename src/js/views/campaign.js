@@ -518,7 +518,7 @@ define(function() {
                             self.undelegateEvents();
                             $('#content').scrollTo();
                             app.routers.navigate(
-                                '/campaign/specifics/' + this.model.get('id'),
+                                '/campaign/team_members/' + this.model.get('id'),
                                 {trigger: true, replace: false}
                             );
 
@@ -571,24 +571,103 @@ define(function() {
             }
         }),
 
-        teamMembers: Backbone.View.extend({
+        teamMemberAdd: Backbone.View.extend({
             events: {
                 'submit form': 'submit',
             },
 
             initialize: function(options) {
                 this.fields = options.fields;
+                this.type = options.type;
+                this.index = options.index;
             },
 
             render: function() {
-                let template = require('templates/campaignTeamMembers.pug');
+                let dropzone = require('dropzone');
+                let template = require('templates/campaignTeamMemberAdd.pug');
+                this.fields = {
+                    first_name: {
+                        type: 'string', 
+                        label: 'First Name',
+                        placeholder: 'John',
+                        required: true,
+                    },
+                    last_name: {
+                        type: 'string',
+                        label: 'Last Name',
+                        placholder: "Jordon",
+                        required: true,
+                    },
+                    title: {
+                        type: 'string',
+                        label: 'Title',
+                        placholder: "CEO",
+                        required: true,
+                    },
+                    email: {
+                        type: 'email',
+                        label: 'Email',
+                        placholder: "imboss@comanpy.com",
+                        required: true,
+                    },
+                    bio: {
+                        type: 'text',
+                        label: 'Bio',
+                        placholder: 'At least 150 characters and no more that 250 charactes',
+                        required: true,
+                    },
+                    growup: {
+                        type: 'string',
+                        label: 'Where did you grow up',
+                        placeholder: 'City',
+                        required: true,
+                    },
+                    state: {
+                        type: 'choice',
+                        required: true,
+                        label: '',
+                    },
+                    college: {
+                        type: 'string',
+                        label: 'Where did you attend college',
+                        placeholder: 'Collage/University',
+                    },
+                    linkedin: {
+                        type: 'url',
+                        label: 'Your personal Linkedin link',
+                        placeholder: 'https://linkedin.com/',
+                    },
+                    photo: {
+                        type: 'dropbox',
+                        label: 'Profile Picture',
+                    },
+                }
+
+                if(this.index != 'new') {
+                    this.values = this.model.toJSON().members[this.index]
+                } else {
+                    this.values = {};
+                }
+
                 this.$el.html(
                     template({
                         serverUrl: serverUrl,
                         Urls: Urls,
                         fields: this.fields,
-                        campaign: this.model.toJSON(),
+                        values: this.values,
+                        type: this.type,
+                        index: this.index,
                     })
+                );
+
+                app.createFileDropzone(
+                    dropzone,
+                    'photo', 
+                    'members', '', 
+                    (data) => {
+                        this.$el.find('#photo').val(data.url);
+                        this.$el.find('.img-photo').data('src', data.url);
+                    }
                 );
                 return this;
             },
@@ -597,7 +676,13 @@ define(function() {
                 this.$el.find('.alert').remove();
                 event.preventDefault();
 
-                var data = $(e.target).serializeObject();
+                var json = $(e.target).serializeJSON();
+                var data = {
+                    'member': json,
+                    'index': this.index
+                };
+                console.log(data);
+
                 //var investment = new InvestmentModel(data);
 
                 this.model.set(data);
@@ -605,16 +690,15 @@ define(function() {
 
                 if(this.model.isValid(true)) {
                     var self = this;
-                    this.model.save().
+                    this.model.save(data, {patch: true}).
                         then((data) => { 
                             app.showLoading();
-                            console.log('data got', data, this.model);
 
                             //window.location = '/campaign/media/' + this.model.get('id');
                             self.undelegateEvents();
                             $('#content').scrollTo();
                             app.routers.navigate(
-                                '/campaign/media/' + this.model.get('id'),
+                                '/campaign/team_members/' + this.model.get('id'),
                                 {trigger: true, replace: false}
                             );
 
@@ -630,6 +714,33 @@ define(function() {
                     }
                 }
             }
+        }),
+
+        teamMembers: Backbone.View.extend({
+            initialize: function(options) {
+                this.campaign = options.campaign;
+            },
+
+            render: function() {
+                let template = require('templates/campaignTeamMembers.pug');
+                let values = this.model.toJSON();
+
+                if(!Array.isArray(values.members)) {
+                    values.members = [];
+                }
+
+                this.$el.html(
+                    template({
+                        serverUrl: serverUrl,
+                        campaign: this.campaign,
+                        Urls: Urls,
+                        values: values,
+                    })
+                );
+
+                return this;
+            },
+
         }),
 
         specifics: Backbone.View.extend({
@@ -772,7 +883,7 @@ define(function() {
                 this.$el.find('.alert').remove();
                 event.preventDefault();
 
-                var data = $(e.target).serializeObject();
+                var data = $(e.target).serializeJSON();
                 //var investment = new InvestmentModel(data);
 
                 this.model.set(data);
@@ -807,23 +918,6 @@ define(function() {
             }
         }),
 
-        teamMemberAdd: Backbone.View.extend({
-            initialize: function(options) {
-                this.fields = options.fields;
-            },
-
-            render: function() {
-                let template = require('templates/campaignTeamMemberAdd.pug');
-                this.$el.html(
-                    template({
-                        serverUrl: serverUrl,
-                        Urls: Urls,
-                        fields: this.fields,
-                    })
-                );
-                return this;
-            },
-        })
 
     }
 });

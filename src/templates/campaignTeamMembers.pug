@@ -37,13 +37,12 @@ section.create-company-team-add.container
                                 i.fa.fa-angle-down
                     #campaign(role="tabpanel").panel-collapse.collapse.in
                         .list-group
-                            a(href="#").list-group-item.list-group-item-action.active General Information
+                            a(href="/campaign/general_information/" + values.id).list-group-item.list-group-item-action General Information
+                            a(href="/campaign/media/" + values.id).list-group-item.list-group-item-action.active Media
+                            a(href="/campaign/team_members/" + values.id).list-group-item.list-group-item-action Team Members
                                 i.fa.fa-check
-                            a(href="#").list-group-item.list-group-item-action Media
-                                i.fa.fa-check
-                            a(href="#").list-group-item.list-group-item-action.active Team Members
-                            a(href="#").list-group-item.list-group-item-action Specifics
-                            a(href="#").list-group-item.list-group-item-action Perks
+                            a(href="/campaign/specifics/" + values.id).list-group-item.list-group-item-action Specifics
+                            a(href="/campaign/perks/" + values.id).list-group-item.list-group-item-action Perks
                 .panel.panel-default
                     .panel-heading(role="tab")
                         a(data-toggle="collapse"
@@ -79,23 +78,29 @@ section.create-company-team-add.container
     .col-lg-8
         h2.text-uppercase.text-lg-center.text-xs-center.dosis.m-t-0 team members
         form(metod="post" action="").form-section
-            .form-group.text-lg-center
-                .col-lg-12
-                  .campaign-warning.warning-team-add.text-lg-left
-                    i.fa.fa-exclamation-triangle 
-                    span.warning-text 
-                    | Warning! You have to add at least 2 persons for proceed.
+            if values.members && values.members.length < 2
+                 .form-group.text-lg-center
+                    .col-lg-12
+                      .campaign-warning.warning-team-add.text-lg-left
+                        i.fa.fa-exclamation-triangle 
+                        span.warning-text 
+                        | Warning! You have to add at least 2 persons for proceed.
 
             .col-lg-10.offset-lg-1.text-lg-center.m-t-2.m-b-2
                 .col-lg-6
-                    button.btn.btn-lg.text-uppercase ADD TEAM MEMBER
+                    a(href='/campaign/team_members/' + values.id + '/add/member/new').btn.btn-lg.text-uppercase ADD TEAM MEMBER
                 .col-lg-5
-                    button.btn.btn-lg.text-uppercase ADD ADVISoR
+                    a(href='/campaign/team_members/' + values.id + '/add/advisor/new').btn.btn-lg.text-uppercase ADD ADVISOR
 
-            .col-lg-3.m-t-2.p-r-0.p-l-0.m-l-1
-                .team-add-item.text-lg-center.text-xs-center
-                    img(src="/img/avatar10.jpg" alt="image item").img-circle
-                    p.name.text-uppercase Maria Kravchuk  
-                    p.small Team Member
-                    a(href="#").link-1
-                        i.fa.fa-pencil-square-o
+            if values.members
+                - counter = 0
+                each v,k in values.members
+                    - console.log(v, k);
+                    .col-lg-3.m-t-2.p-r-0.p-l-0.m-l-1
+                        .team-add-item.text-lg-center.text-xs-center
+                            img(src=v.photo alt=v.first_name).img-circle
+                            p.name.text-uppercase #{v.first_name} #{v.last_name}
+                            p.small #{ v.type }
+                            a(href="/campaign/team_members/" + values.id + "/add/" + v.type + '/' + counter).link-1
+                                i.fa.fa-pencil-square-o
+                    - counter ++
