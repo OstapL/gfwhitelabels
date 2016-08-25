@@ -21,6 +21,9 @@ let appRoutes = Backbone.Router.extend({
       'account/login': 'login',
       'account/signup': 'login',
       'account/logout': 'logout',
+      'account/facebook/login/': 'loginFacebook',
+      'account/google/login/': 'loginGoogle',
+      'account/linkedin/login/': 'loginLinkedin',
       'account/dashboard/issuer': 'dashboardIssuer',
       'account/dashboard/investor': 'dashboardInvestor',
     },
@@ -535,13 +538,50 @@ let appRoutes = Backbone.Router.extend({
             loginView.render();
             app.cache[window.location.pathname] = loginView.$el.html();
             app.hideLoading();
-        }).fail((xhr, error) =>  {
+        }).fail((xhr, error) => {
             // ToDo
             // Show global error message
             console.log('cant get fields ');
             console.log(xhr, error);
             app.hideLoading();
         });
+    },
+
+    loginFacebook: function() {
+        let socialAuth = require('js/views/social-auth.js');
+        let hello = require('hellojs');
+
+        hello('facebook').login({
+            scope: 'public_profile,email',
+            redirect_uri: '/account/facebook/login/',}).then(
+            function (e) {socialAuth.onFacebookLogin(e);}, 
+            function (e) {socialAuth.onFacebookFail(e)});
+    },
+
+    loginLinkedin: function() {
+
+        let socialAuth = require('js/views/social-auth.js');
+        let hello = require('hellojs');
+
+        hello('linkedin').login({
+            scope: 'r_basicprofile,r_emailaddress',
+            redirect_uri: '/account/linkedin/login/',}).then(
+            function (e) {socialAuth.onLinkedInLogin(e);}, 
+            function (e) {socialAuth.onLinkedInFail(e)});
+
+    },
+
+    loginGoogle: function() {
+
+        let socialAuth = require('js/views/social-auth.js');
+        let hello = require('hellojs');
+
+        hello('google').login({
+            scope: 'profile,email',
+            redirect_uri: '/account/google/login/',}).then(
+            function (e) {socialAuth.onGoogleLogin(e);}, 
+            function (e) {socialAuth.onGoogleFail(e)});
+        
     },
 
     logout: function(id) {

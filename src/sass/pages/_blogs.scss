@@ -8,11 +8,12 @@ ul.list-blog {
 			img {
 				height: rem(65);
 				margin-right: rem(10);
+				margin-top: rem(5);
 				width: rem(65);
 			} 
 		}
 	}
-
+  
 	&-main {
 		li {
 			position: relative;
@@ -79,3 +80,153 @@ ul.list-blog {
 		}
 	}
 }
+  
+.single-blog {
+	.title-blog {
+		font-weight: 400;
+	}
+	
+	.blog-img {
+		margin-bottom: 20px;
+	}
+	// typography of text blog
+	.blog-text {
+		p {
+			margin-bottom: 15px;
+		}
+		ol {
+			li {
+				margin-bottom: 15px;
+
+				&:last-child {
+					margin-bottom: 0;
+				}
+			}
+		}
+
+		a {
+			color: $wild_willow;
+			text-decoration: underline;
+		}
+	}
+
+	.blog-info {
+		margin-bottom: 40px;
+
+		li {
+			display: inline-block;
+			margin-right: rem(20);
+
+			span:last-of-type {
+				margin-left: rem(10);
+				
+				&:before {
+					content: none!important;
+	 
+				}
+			}
+
+			i {
+				margin-top: -1px;
+
+				vertical-align: text-top;
+			}
+		}
+	}
+ 
+
+
+	// todo вынести в отдельный файл стилей так как коментарии встречаються в нескольких файлах
+	.comments {
+		.hr {
+			width: 100%;
+			margin: rem(25) 0;
+			height: rem(1);
+
+			background-color: $light_grey;
+		}
+		.col-lg-1 {
+			padding: 0;
+		}
+		.col-lg-11 {
+			padding-right: 0;
+			padding-left: rem(10);
+		}
+
+		img {
+
+			width: rem(55);
+			height: rem(55);
+			display: inline-block
+			//float: left
+			//margin-right: 15px
+		}
+		.comments-wrap {
+
+			display: inline-block;
+
+			.name-comments {
+
+				font-size: rem(14);
+				letter-spacing: rem(2.8);
+				color: $black;
+			}
+			.kvalificatio-comments {
+
+				padding: rem(3) rem(18);
+				background-color: $red;
+				color: $white;
+				border-radius: rem(2);
+				margin-left: rem(10);
+			}
+			.date-comments {
+
+				font-size: rem(11);
+				color: $small-text;
+			}
+			.responce {
+
+				li {
+
+					padding-left: rem(5);
+					display: inline-block;
+					i {
+						margin-right: rem(5);
+					}
+				}
+			}
+
+			p {
+
+				margin-bottom: rem(5);
+				margin-top: rem(10);
+			}
+		}
+		
+		// форма для коментария
+		&.blog-comments {
+			textarea {
+				height: rem(35);
+				padding: rem(2);
+
+
+				border: none;
+				border-bottom: 1px $light_grey solid;
+				resize: none;
+			}
+
+			.control-blog-block {
+				button {
+					&:hover {
+						color: $small-text;
+					}
+				}
+			}
+		}
+	}
+
+
+}
+
+
+

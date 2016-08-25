@@ -82,6 +82,16 @@
 
 		h4
 			font-weight: 400
+
+	.simple-list 
+		li 
+			margin-bottom: 15px
+			i 
+				+calc-rem(18)
+
+				display: inline-block
+				vertical-align: middle
+				margin: rem(-2) rem(8) 0 0
 	ul
 		li
 			a//TODO перенести в общие стили для ссылок всего сайта
@@ -89,6 +99,9 @@
 
 				&:hover 
 					color: rgba($footer_text, 0.6)
+
+.position-relative
+	position: relative
 
 
 /* end common styles for pages(faq, overview.. etc..) */
@@ -101,14 +114,15 @@
 
 /*Breadcrumb*/
 .header_title
-	height: 142px
-	margin-bottom: 85px
+	height: rem(142)
+	margin-bottom: rem(85)
 	
 	background-color: $alabaster
 	font-family: $dosis
 
 	h1
-		margin-top: 11px
+		margin-top: rem(11)
+		margin-left: rem(15)
 
 
 
@@ -120,13 +134,17 @@
 	padding-top: rem(30)
 .pb10
 	padding-bottom: rem(10)
+.pt10
+	padding-top: rem(10)
+.p-l-0
+	padding-left: 0
 
 .mb50
-	margin-bottom: 50px
+	margin-bottom: rem(50)
 .mt50
-	margin-top: 50px
+	margin-top: rem(50)
 .mt30
-	margin-top: 30px
+	margin-top: rem(30)
 .mb30
 	margin-bottom: 30px
 .m30
@@ -137,6 +155,8 @@
 
 .mt25
 	margin-top: 25px
+.mb25
+	margin-bottom: 25px
 
 .m0
 	margin-top: 0!important
