@@ -36,14 +36,13 @@ section.team-members.container.m-b-85
               span.pull-right
                 i.fa.fa-angle-down
           #campaign(role="tabpanel").panel-collapse.collapse.in
-            .list-group
-              a(href="#").list-group-item.list-group-item-action General Information
-                i.fa.fa-check
-              a(href="#").list-group-item.list-group-item-action Media
-                i.fa.fa-check
-              a(href="#").list-group-item.list-group-item-action.active Team Members
-              a(href="#").list-group-item.list-group-item-action Specifics
-              a(href="#").list-group-item.list-group-item-action Perks
+              .list-group
+                  a(href="/campaign/general_information/" + values.id).list-group-item.list-group-item-action General Information
+                  a(href="/campaign/media/" + values.id).list-group-item.list-group-item-action.active Media
+                  a(href="/campaign/team_members/" + values.id).list-group-item.list-group-item-action Team Members
+                      i.fa.fa-check
+                  a(href="/campaign/specifics/" + values.id).list-group-item.list-group-item-action Specifics
+                  a(href="/campaign/perks/" + values.id).list-group-item.list-group-item-action Perks
         .panel.panel-default
           .panel-heading(role="tab")
             a(data-toggle="collapse"
