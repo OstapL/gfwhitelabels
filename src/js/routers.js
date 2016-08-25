@@ -523,7 +523,6 @@ let appRoutes = Backbone.Router.extend({
 
     login: function(id) {
         let view = require('views/user');
-        let menu = require('views/menu');
         var a1 = $.ajax(_.extend({
                 url: serverUrl + Urls['rest_login'](),
             }, app.defaultOptionsRequest));
@@ -538,10 +537,6 @@ let appRoutes = Backbone.Router.extend({
                 model: new userModel(),
             });
             loginView.render();
-
-            let menuView = new menu.profile();
-            menuView.render();
-
             app.cache[window.location.pathname] = loginView.$el.html();
             app.hideLoading();
         }).fail((xhr, error) => {
@@ -564,13 +559,9 @@ let appRoutes = Backbone.Router.extend({
                 var sendToken = socialAuth.sendToken('facebook', e.authResponse.access_token);
 
                 $.when(sendToken).done(function (data) {
-                    app.user.set('token', data.key);
-                    localStorage.setItem('token', data.key);
 
-                    app.routers.navigate(
-                        'account/profile',
-                        {trigger: true, replace: true}
-                    );
+                    localStorage.setItem('token', data.key);
+                    window.location = '/account/profile';
                 });
             },
             function (e) {
@@ -595,13 +586,9 @@ let appRoutes = Backbone.Router.extend({
                 var sendToken = socialAuth.sendToken('linkedin', e.authResponse.access_token);
 
                 $.when(sendToken).done(function (data) {
-                    app.user.set('token', data.key);
-                    localStorage.setItem('token', data.key)
 
-                    app.routers.navigate(
-                        'account/profile',
-                        {trigger: true, replace: true}
-                    );
+                    localStorage.setItem('token', data.key)
+                    window.location = '/account/profile';
                 });
             },
             function (e) {
@@ -626,13 +613,8 @@ let appRoutes = Backbone.Router.extend({
                 var sendToken = socialAuth.sendToken('google', e.authResponse.access_token);
 
                 $.when(sendToken).done(function (data) {
-                    app.user.set('token', data.key);
                     localStorage.setItem('token', data.key)
-
-                    app.routers.navigate(
-                        'account/profile',
-                        {trigger: true, replace: true}
-                    );
+                    window.location = '/account/profile';
                 });
             },
             function (e) {
