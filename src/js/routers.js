@@ -14,7 +14,7 @@ let appRoutes = Backbone.Router.extend({
       'campaign/general_information/': 'campaignGeneralInformation',
       'campaign/general_information/:id': 'campaignGeneralInformation',
       'campaign/media/:id': 'campaignMedia',
-      'campaign/team_members/add': 'campaignTeamMembersAdd',
+      'campaign/team_members/:id/add/:type/:index': 'campaignTeamMembersAdd',
       'campaign/team_members/:id': 'campaignTeamMembers',
       'campaign/specifics/:id': 'campaignSpecifics',
       'campaign/perks/:id': 'campaignPerks',
@@ -24,14 +24,16 @@ let appRoutes = Backbone.Router.extend({
       'account/facebook/login/': 'loginFacebook',
       'account/google/login/': 'loginGoogle',
       'account/linkedin/login/': 'loginLinkedin',
+      'account/finish/login/': 'finishSocialLogin',
       'account/dashboard/issuer': 'dashboardIssuer',
       'account/dashboard/investor': 'dashboardInvestor',
     },
     back: function(event) {
         var url = event.target.pathname;
+        $('#content').undelegate();
+        $('form').undelegate();
         if(app.cache.hasOwnProperty(event.target.pathname) == false) {
             window.history.back();
-            console.log('clicked back button');
             app.routers.navigate(
                 event.target.pathname,
                 {trigger: true, replace: false}
@@ -245,7 +247,7 @@ let appRoutes = Backbone.Router.extend({
                 campaign = new model.model();
                 campaign.urlRoot += '/general_information?company_id=' + company_id
             }
-            console.log(id, campaign);
+
             var a1 = campaign.fetch();
             var a2 = $.ajax(_.extend({
                 url: campaign.urlRoot,
@@ -289,13 +291,16 @@ let appRoutes = Backbone.Router.extend({
             });
             campaign.urlRoot += '/media'
             campaign.fetch();
-            $.ajax(_.extend({
-                    url: campaign.urlRoot,
-                }, app.defaultOptionsRequest)
-            ).done((response) => {
+
+            var a1 = campaign.fetch();
+            var a2 = $.ajax(_.extend({
+                url: campaign.urlRoot,
+            }, app.defaultOptionsRequest));
+
+            $.when(a1, a2).done((r1, r2) => {
                 var i = new view.media({
                     el: '#content',
-                    fields: response.actions.POST,
+                    fields: r2[0].actions.POST,
                     model: campaign
                 });
                 i.render();
@@ -318,20 +323,16 @@ let appRoutes = Backbone.Router.extend({
             let model = require('models/campaign');
             let view = require('views/campaign');
 
-            let campaign = new model.model({
+            let members = new model.model({
                 id: id
             });
-            campaign.urlRoot += '/team_members'
-            campaign.fetch();
+            members.urlRoot += '/team_members';
+            var a1 = members.fetch();
 
-            $.ajax(_.extend({
-                    url: campaign.urlRoot,
-                }, app.defaultOptionsRequest)
-            ).done((response) => {
+            $.when(a1).done((r1) => {
                 var i = new view.teamMembers({
                     el: '#content',
-                    fields: response.actions.POST,
-                    model: campaign
+                    model: members,
                 });
                 i.render();
                 //app.views.campaign[id].render();
@@ -347,16 +348,27 @@ let appRoutes = Backbone.Router.extend({
         }
     },
 
-    campaignTeamMembersAdd: function(id) {
+    campaignTeamMembersAdd: function(id, type, index) {
         if(!app.user.is_anonymous()) {
             let model = require('models/campaign');
             let view = require('views/campaign');
 
-            const addForm = new view.teamMemberAdd({
-                el: '#content',
+            let members = new model.model({
+                id: id
             });
-            addForm.render();
-            app.hideLoading();
+            members.urlRoot += '/team_members';
+            var a1 = members.fetch();
+
+            $.when(a1).done((r1) => {
+                const addForm = new view.teamMemberAdd({
+                    el: '#content',
+                    model: members,
+                    type: type,
+                    index: index
+                });
+                addForm.render();
+                app.hideLoading();
+            });
             
         } else {
             app.routers.navigate(
@@ -534,7 +546,7 @@ let appRoutes = Backbone.Router.extend({
                 login_fields: r1[0].actions.POST,
                 register_fields: r2[0].actions.POST,
                 model: new userModel(),
-            })
+            });
             loginView.render();
             app.cache[window.location.pathname] = loginView.$el.html();
             app.hideLoading();
@@ -548,14 +560,29 @@ let appRoutes = Backbone.Router.extend({
     },
 
     loginFacebook: function() {
-        let socialAuth = require('js/views/social-auth.js');
+
+        let socialAuth = require('views/social-auth');
         let hello = require('hellojs');
 
         hello('facebook').login({
-            scope: 'public_profile,email',
-            redirect_uri: '/account/facebook/login/',}).then(
-            function (e) {socialAuth.onFacebookLogin(e);}, 
-            function (e) {socialAuth.onFacebookFail(e)});
+            scope: 'public_profile,email'}).then(
+            function (e) {
+                var sendToken = socialAuth.sendToken('facebook', e.authResponse.access_token);
+
+                $.when(sendToken).done(function (data) {
+                    localStorage.setItem('token', data.key);
+                    window.location = '/account/profile';
+                });
+            },
+            function (e) {
+
+                // TODO: notificate user about reason of error;
+                app.routers.navigate(
+                    '/account/login',
+                    {trigger: true, replace: true}
+                );
+            });
+
     },
 
     loginLinkedin: function() {
@@ -564,10 +591,23 @@ let appRoutes = Backbone.Router.extend({
         let hello = require('hellojs');
 
         hello('linkedin').login({
-            scope: 'r_basicprofile,r_emailaddress',
-            redirect_uri: '/account/linkedin/login/',}).then(
-            function (e) {socialAuth.onLinkedInLogin(e);}, 
-            function (e) {socialAuth.onLinkedInFail(e)});
+            scope: 'r_basicprofile,r_emailaddress',}).then(
+            function (e) {
+                var sendToken = socialAuth.sendToken('linkedin', e.authResponse.access_token);
+
+                $.when(sendToken).done(function (data) {
+                    localStorage.setItem('token', data.key);
+                    window.location = '/account/profile';
+                });
+            },
+            function (e) {
+
+                // TODO: notificate user about reason of error;
+                app.routers.navigate(
+                    '/account/login',
+                    {trigger: true, replace: true}
+                );
+            });
 
     },
 
@@ -577,11 +617,31 @@ let appRoutes = Backbone.Router.extend({
         let hello = require('hellojs');
 
         hello('google').login({
-            scope: 'profile,email',
-            redirect_uri: '/account/google/login/',}).then(
-            function (e) {socialAuth.onGoogleLogin(e);}, 
-            function (e) {socialAuth.onGoogleFail(e)});
+            scope: 'profile,email'}).then(
+            function (e) {
+                var sendToken = socialAuth.sendToken('google', e.authResponse.access_token);
+
+                $.when(sendToken).done(function (data) {
+                    localStorage.setItem('token', data.key);
+                    window.location = '/account/profile';
+                });
+            },
+            function (e) {
+
+                // TODO: notificate user about reason of error;
+                app.routers.navigate(
+                    '/account/login',
+                    {trigger: true, replace: true}
+                );
+            });
         
+    },
+
+    finishSocialLogin: function() {
+
+        let socialAuth = require('js/views/social-auth.js');
+        let hello = require('hellojs');
+
     },
 
     logout: function(id) {
@@ -663,3 +723,4 @@ $(document).ready(function(){
         }
     });
 });
+

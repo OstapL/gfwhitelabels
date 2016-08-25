@@ -7,20 +7,41 @@ include mixins.pug
     ]
 )
 
-section.text_block
+section.text_block 
     .container
         .row
+            .col-lg-3 
+                .page_title.border-bottom.mb25
+                    h4.text-uppercase.dosis ABOUT US
+                ul.list-unstyled.mb50.custom
+                    li
+                        a.d-inline-block.w-100.pb10(href='') Overview
+                    li
+                        a.d-inline-block.w-100.pb10(href='') Team
+                    li
+                        a.d-inline-block.w-100.pb10(href='') Partners
+                    li
+                        a.d-inline-block.w-100.pb10(href='') Contact Us
+                    li
+                        a.d-inline-block.w-100.pb10(href='') Careers
+                    li
+                        a.d-inline-block.w-100.pb10(href='') FAQ
+                    li
+                        a.d-inline-block.w-100.pb10(href='') In the News
+                    li
+                        // у последнего елемента <a> клас pb10 отстутствует
+                        a.d-inline-block.w-100(href='') Blog
 
-            .col-lg-12
+            .col-lg-9
                 .row
                     .col-lg-12.text-xs-center
                         h2.text-uppercase.dosis.m0 Overview
                         
                 .row
-                    .col-lg-12.mt30
+                    .col-lg-12.mt25
                         p We banded together with a simple mission – to connect small businesses to all the tools they need to succeed – including financial, human and social capital. Our goal is to level the playing field and make things easy for entrepreneurs to focus on what matters – their product or service! Please feel free to take advantage of all of the tools, tutorials and calculators we have available on our platform, including:
 
-                        ul.mt25.list-unstyled.simple-list
+                        ul.mt20.list-unstyled.simple-list
                             li 
                                 i &middot; 
                                 | Raise Capital: Access our investor network to raise financial capital for your company
