@@ -523,6 +523,7 @@ let appRoutes = Backbone.Router.extend({
 
     login: function(id) {
         let view = require('views/user');
+        let menu = require('views/menu');
         var a1 = $.ajax(_.extend({
                 url: serverUrl + Urls['rest_login'](),
             }, app.defaultOptionsRequest));
@@ -535,8 +536,12 @@ let appRoutes = Backbone.Router.extend({
                 login_fields: r1[0].actions.POST,
                 register_fields: r2[0].actions.POST,
                 model: new userModel(),
-            })
+            });
             loginView.render();
+
+            let menuView = new menu.profile();
+            menuView.render();
+
             app.cache[window.location.pathname] = loginView.$el.html();
             app.hideLoading();
         }).fail((xhr, error) => {
