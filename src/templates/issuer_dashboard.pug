@@ -128,14 +128,14 @@ section.grafic-dashboard
                   | Settings
 
 
-section.third
+section.investors-dashbord-comment
   .container
     .row
       .col-md-12
         h2.title-size.text-uppercase Investor question & answer
       .col-md-5
         .comments-list
-          ul.nav.nav-tabs#myTab(role="tablist")
+          ul.nav.standart-nav-tabs(role="tablist")
             li.nav-item
               a.nav-link.text-uppercase.active#new-tab(
                 data-toggle="tab"
@@ -152,7 +152,8 @@ section.third
                 aria-controls="answered"
                 aria-expanded="false"
               ) Answered
-          .tab-content#myTabContent
+            .clearfix
+          .tab-content
             .tab-pane.fade.active.in#new(
               role="tabpanel"
               aria-labelledby="new-tab"
@@ -161,7 +162,7 @@ section.third
               .all-comments
                 .one-comment
                   .user-photo
-                    img(src="/img/avatar2.png" alt="")
+                    img(src="/img/avatar1.jpg" alt="").img-circle
 
                   .text-and-name
                     .name-date
@@ -172,16 +173,10 @@ section.third
                       p Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua...
 
                     .clearfix
-
-                    .actions
-                      span.pending Pending
-                      a(href="").link-1 Quick edit
-                      a(href="").link-1 View
-                      a(href="").link-1 Delete
 
                 .one-comment
                   .user-photo
-                    img(src="/img/avatar1.jpg" alt="")
+                    img(src="/img/avatar1.jpg" alt="").img-circle
 
                   .text-and-name
                     .name-date
@@ -192,16 +187,24 @@ section.third
                       p Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua...
 
                     .clearfix
+ 
+                .one-comment
+                  .user-photo
+                    img(src="/img/avatar1.jpg" alt="").img-circle
 
-                    .actions
-                      span.pending Pending
-                      a(href="") Quick edit
-                      a(href="") View
-                      a(href="") Delete
+                  .text-and-name
+                    .name-date
+                      h6.text-uppercase.pull-left Maria Kravchuk
+                      span.pull-right 13 Jun, 10.30 AM
+
+                    .comment-text
+                      p Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua...
+
+                    .clearfix
                       
                 .one-comment
                   .user-photo
-                    img(src="/img/avatar1.jpg" alt="")
+                    img(src="/img/avatar1.jpg" alt="").img-circle
 
                   .text-and-name
                     .name-date
@@ -212,16 +215,10 @@ section.third
                       p Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua...
 
                     .clearfix
-
-                    .actions
-                      span.pending Pending
-                      a(href="") Quick edit
-                      a(href="") View
-                      a(href="") Delete
                       
                 .one-comment
                   .user-photo
-                    img(src="/img/avatar1.jpg" alt="")
+                    img(src="/img/avatar1.jpg" alt="").img-circle
 
                   .text-and-name
                     .name-date
@@ -232,16 +229,10 @@ section.third
                       p Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua...
 
                     .clearfix
-
-                    .actions
-                      span.pending Pending
-                      a(href="") Quick edit
-                      a(href="") View
-                      a(href="") Delete
                       
                 .one-comment
                   .user-photo
-                    img(src="/img/avatar1.jpg" alt="")
+                    img(src="/img/avatar1.jpg" alt="").img-circle
 
                   .text-and-name
                     .name-date
@@ -252,59 +243,97 @@ section.third
                       p Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua...
 
                     .clearfix
-
-                    .actions
-                      span.pending Pending
-                      a(href="") Quick edit
-                      a(href="") View
-                      a(href="") Delete
-                      
-                .one-comment
-                  .user-photo
-                    img(src="/img/avatar1.jpg" alt="")
-
-                  .text-and-name
-                    .name-date
-                      h6.text-uppercase.pull-left Maria Kravchuk
-                      span.pull-right 13 Jun, 10.30 AM
-
-                    .comment-text
-                      p Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua...
-
-                    .clearfix
-
-                    .actions
-                      span.pending Pending
-                      a(href="") Quick edit
-                      a(href="") View
-                      a(href="") Delete
-                      
-                .one-comment
-                  .user-photo
-                    img(src="/img/avatar1.jpg" alt="")
-
-                  .text-and-name
-                    .name-date
-                      h6.text-uppercase.pull-left Maria Kravchuk
-                      span.pull-right 13 Jun, 10.30 AM
-
-                    .comment-text
-                      p Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua...
-
-                    .clearfix
-
-                    .actions
-                      span.pending Pending
-                      a(href="") Quick edit
-                      a(href="") View
-                      a(href="") Delete
+               
 
             .tab-pane.fade#answered(
               role="tabpanel"
               aria-labelledby="answered-tab"
               aria-expanded="false"
             )
-              p 222
+              .all-comments
+                .one-comment
+                  .user-photo
+                    img(src="/img/avatar1.jpg" alt="").img-circle
+
+                  .text-and-name
+                    .name-date
+                      h6.text-uppercase.pull-left Maria Kravchuk
+                      span.pull-right 13 Jun, 10.30 AM
+
+                    .comment-text
+                      p Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua...
+
+                    .clearfix
+
+                .one-comment
+                  .user-photo
+                    img(src="/img/avatar1.jpg" alt="").img-circle
+
+                  .text-and-name
+                    .name-date
+                      h6.text-uppercase.pull-left Maria Kravchuk
+                      span.pull-right 13 Jun, 10.30 AM
+
+                    .comment-text
+                      p Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua...
+
+                    .clearfix
+ 
+                .one-comment
+                  .user-photo
+                    img(src="/img/avatar1.jpg" alt="").img-circle
+
+                  .text-and-name
+                    .name-date
+                      h6.text-uppercase.pull-left Maria Kravchuk
+                      span.pull-right 13 Jun, 10.30 AM
+
+                    .comment-text
+                      p Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua...
+
+                    .clearfix
+                      
+                .one-comment
+                  .user-photo
+                    img(src="/img/avatar1.jpg" alt="").img-circle
+
+                  .text-and-name
+                    .name-date
+                      h6.text-uppercase.pull-left Maria Kravchuk
+                      span.pull-right 13 Jun, 10.30 AM
+
+                    .comment-text
+                      p Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua...
+
+                    .clearfix
+                      
+                .one-comment
+                  .user-photo
+                    img(src="/img/avatar1.jpg" alt="").img-circle
+
+                  .text-and-name
+                    .name-date
+                      h6.text-uppercase.pull-left Maria Kravchuk
+                      span.pull-right 13 Jun, 10.30 AM
+
+                    .comment-text
+                      p Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua...
+
+                    .clearfix
+                      
+                .one-comment
+                  .user-photo
+                    img(src="/img/avatar1.jpg" alt="").img-circle
+
+                  .text-and-name
+                    .name-date
+                      h6.text-uppercase.pull-left Maria Kravchuk
+                      span.pull-right 13 Jun, 10.30 AM
+
+                    .comment-text
+                      p Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua...
+
+                    .clearfix
       .col-md-7
         .leave-comment
           .user-photo
