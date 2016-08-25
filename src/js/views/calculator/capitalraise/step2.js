@@ -1,6 +1,7 @@
 require('sass/pages/_calculator.sass');
 
-var formatPrice = require("../../../helpers/formatPrice");
+var calculatorHelper = require("../../../helpers/calculatorHelpers");
+var formatPrice = calculatorHelper.formatPrice;
 
 module.exports = Backbone.View.extend({
     el: '#content',

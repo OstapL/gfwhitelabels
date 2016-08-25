@@ -85,8 +85,7 @@
     // make sure undefined is undefined
     var undefined;
 
-    $ = app.$;
-    jQuery = app.jQuery;
+    $, jQuery = app.$;
     
     $.fn.emptyForce = function() {
       for ( var i = 0, elem; (elem = $(this)[i]) != null; i++ ) {

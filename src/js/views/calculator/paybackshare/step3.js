@@ -1,4 +1,8 @@
-
+require("../../../jqplot/jquery.jqplot.js");
+require("../../../jqplot/plugins/jqplot.highlighter.js");
+require("../../../jqplot/plugins/jqplot.canvasTextRenderer.js");
+require("../../../jqplot/plugins/jqplot.canvasAxisLabelRenderer.js");
+require("../../../jqplot/plugins/jqplot.pointLabels.js");
 
 module.exports = Backbone.View.extend({
     el: '#content',
@@ -33,14 +37,6 @@ module.exports = Backbone.View.extend({
     },
 
     render() {
-        require("../../../jqplot/jquery.jqplot.js");
-        /*
-        require("../../../../../node_modules/as-jqplot/dist/plugins/jqplot.highlighter.js");
-        require("../../../../../node_modules/as-jqplot/dist/plugins/jqplot.canvasTextRenderer.min.js");
-        require("../../../../../node_modules/as-jqplot/dist/plugins/jqplot.canvasAxisLabelRenderer.min.js");
-        require("../../../../../node_modules/as-jqplot/dist/plugins/jqplot.pointLabels.min.js");
-        */
-
         this.$el.html(this.template(this.model.toJSON()));
 
         // get data for drawing jQPlot

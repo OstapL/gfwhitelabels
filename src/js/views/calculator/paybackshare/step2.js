@@ -1,8 +1,9 @@
 require('sass/pages/_calculator.sass');
 require("../../../../../node_modules/jquery.inputmask/dist/jquery.inputmask.bundle.js");
 
+var calculatorHelper = require("../../../helpers/calculatorHelpers");
 var flyPriceFormatter = require("../../../helpers/flyPriceFormatter");
-var formatPrice = require("../../../helpers/formatPrice");
+var formatPrice = calculatorHelper.formatPrice;
 
 module.exports = Backbone.View.extend({
     el: '#content',

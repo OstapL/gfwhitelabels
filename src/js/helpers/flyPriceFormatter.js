@@ -1,8 +1,9 @@
-var getCaretPosition = require("./getCaretPosition");
-var isTextSelected = require("./isTextSelected");
-var settings = require("./settings")();
-var formatPrice = require("./formatPrice");
-var setCaretPosition = require("./setCaretPosition");
+var calculatorHelper = require("./calculatorHelpers");
+var getCaretPosition = calculatorHelper.getCaretPosition;
+var isTextSelected = calculatorHelper.isTextSelected;
+var settings = calculatorHelper.settings;
+var formatPrice = calculatorHelper.formatPrice;
+var setCaretPosition = calculatorHelper.setCaretPosition;
 
 module.exports = function(field, callback) {
     if (!field) return false;
@@ -111,7 +112,7 @@ module.exports = function(field, callback) {
                 setFormattedValue(e);
             }, 10);
         });
-        
+
         function setFormattedValue(e) {
             if (skipActions) {
                 return true;
