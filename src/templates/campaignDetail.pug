@@ -443,7 +443,7 @@ section
     .container
       h2#risks.col-lg-12.dosis.text-uppercase.text-lg-center Risks
       .col-lg-8.offset-lg-2
-        #accordion(role="tablist" aria-multiselectable="true")
+        .accordion(role="tablist" aria-multiselectable="true")
           .panel.panel-default
             #headingOne(role="tab").panel-heading
               a(data-toggle="collapse"
@@ -496,7 +496,7 @@ section
     .container
       h2#faq.col-lg-12.dosis.text-uppercase.text-lg-center FAQ
       .col-lg-8.offset-lg-2
-        #accordion(role="tablist" aria-multiselectable="true")
+        .accordion(role="tablist" aria-multiselectable="true")
           each v,k in campaign.faq
             .panel.panel-default
               div(id="faq" + k role="tab").panel-heading
