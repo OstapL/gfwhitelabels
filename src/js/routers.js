@@ -566,8 +566,26 @@ let appRoutes = Backbone.Router.extend({
 
         hello('facebook').login({
             scope: 'public_profile,email'}).then(
-            function (e) {socialAuth.onFacebookLogin(e)}, 
-            function (e) {socialAuth.onFacebookFail(e)});
+            function (e) {
+                var sendToken = socialAuth.sendToken('facebook', e.authResponse.access_token);
+
+                $.when(sendToken).done(function (data) {
+                    console.log(data);
+
+                    app.routers.navigate(
+                        'account/profile',
+                        {trigger: true, replace: true}
+                    );
+                });
+            },
+            function (e) {
+
+                // TODO: notificate user about reason of error;
+                app.routers.navigate(
+                    '/account/login',
+                    {trigger: true, replace: true}
+                );
+            });
 
     },
 
@@ -578,8 +596,26 @@ let appRoutes = Backbone.Router.extend({
 
         hello('linkedin').login({
             scope: 'r_basicprofile,r_emailaddress',}).then(
-            function (e) {socialAuth.onLinkedInLogin(e);}, 
-            function (e) {socialAuth.onLinkedInFail(e)});
+            function (e) {
+                var sendToken = socialAuth.sendToken('linkedin', e.authResponse.access_token);
+
+                $.when(sendToken).done(function (data) {
+                    console.log(data);
+
+                    app.routers.navigate(
+                        'account/profile',
+                        {trigger: true, replace: true}
+                    );
+                });
+            },
+            function (e) {
+
+                // TODO: notificate user about reason of error;
+                app.routers.navigate(
+                    '/account/login',
+                    {trigger: true, replace: true}
+                );
+            });
 
     },
 
@@ -589,10 +625,27 @@ let appRoutes = Backbone.Router.extend({
         let hello = require('hellojs');
 
         hello('google').login({
-            scope: 'profile,email',
-            redirect_uri: '/account/google/login/',}).then(
-            function (e) {socialAuth.onGoogleLogin(e);}, 
-            function (e) {socialAuth.onGoogleFail(e)});
+            scope: 'profile,email'}).then(
+            function (e) {
+                var sendToken = socialAuth.sendToken('google', e.authResponse.access_token);
+
+                $.when(sendToken).done(function (data) {
+                    console.log(data);
+
+                    app.routers.navigate(
+                        'account/profile',
+                        {trigger: true, replace: true}
+                    );
+                });
+            },
+            function (e) {
+
+                // TODO: notificate user about reason of error;
+                app.routers.navigate(
+                    '/account/login',
+                    {trigger: true, replace: true}
+                );
+            });
         
     },
 
