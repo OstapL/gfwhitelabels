@@ -247,7 +247,7 @@ let appRoutes = Backbone.Router.extend({
                 campaign = new model.model();
                 campaign.urlRoot += '/general_information?company_id=' + company_id
             }
-            console.log(id, campaign);
+
             var a1 = campaign.fetch();
             var a2 = $.ajax(_.extend({
                 url: campaign.urlRoot,
@@ -291,13 +291,16 @@ let appRoutes = Backbone.Router.extend({
             });
             campaign.urlRoot += '/media'
             campaign.fetch();
-            $.ajax(_.extend({
-                    url: campaign.urlRoot,
-                }, app.defaultOptionsRequest)
-            ).done((response) => {
+
+            var a1 = campaign.fetch();
+            var a2 = $.ajax(_.extend({
+                url: campaign.urlRoot,
+            }, app.defaultOptionsRequest));
+
+            $.when(a1, a2).done((r1, r2) => {
                 var i = new view.media({
                     el: '#content',
-                    fields: response.actions.POST,
+                    fields: r2[0].actions.POST,
                     model: campaign
                 });
                 i.render();

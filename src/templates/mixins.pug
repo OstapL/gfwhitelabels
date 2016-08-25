@@ -70,7 +70,7 @@ mixin fieldBlock(name, data, attr)
             - indexCounter = attr.index || 0
             if values[name].length == 0
                 each k,v in fields[name].schema
-                    div(class=(counter == (Object.keys(fields[name].schema).length+100) ? 'm-b-0' : 'form-group') + ' clearfix index_' + indexCounter)
+                    div(class='form-group clearfix index_' + indexCounter)
                         label.col-lg-3.text-lg-right #{k.label}
                         .col-lg-9
                             if k.type == 'text' 
@@ -92,13 +92,12 @@ mixin fieldBlock(name, data, attr)
             else
                 - counter = 0
                 - indexCounter = attr.index || 0
-                - var kkeys = Object.keys(values[name])
+                - let kkeys = Object.keys(values[name])
                 each el in values[name]
                     each k1,v in fields[name].schema
-                        - console.log('keys', values[name], kkeys, el, k1, v, fields[name].schema, name, values);
                         - let k = values[name][kkeys[counter]][v]
                         - let t = fields[name].schema[v]
-                        div(class=(counter == Object.keys(values[name]).length+100 ? 'm-b-0' : 'form-group') + ' clearfix index_' + indexCounter )
+                        div(class='form-group clearfix index_' + indexCounter )
                             label.col-lg-3.text-lg-right #{t.label}
                             .col-lg-9
                                 if t.type == 'text' 
