@@ -247,12 +247,50 @@ global.app = {
     },
 
     defaultSaveActions: {
+        submit: function(e, data) {
+            this.$el.find('.alert').remove();
+            event.preventDefault();
+
+            var data = data || $(e.target).serializeJSON();
+            //var investment = new InvestmentModel(data);
+
+            this.model.set(data);
+            Backbone.Validation.bind(this, {model: this.model});
+
+            if(this.model.isValid(true)) {
+                var self = this;
+                this.model.save().
+                    then((data) => { 
+                        app.showLoading();
+
+                        //window.location = '/api/campaign/' + this.model.get('id');
+                        self.undelegateEvents();
+                        $('#content').scrollTo();
+                        app.routers.navigate(
+                            '/api/campaign/' + this.model.get('id'),
+                            {trigger: true, replace: false}
+                        );
+
+                    }).
+                    fail((xhr, status, text) => {
+                        app.defaultSaveActions.error(this, xhr, status, text, this.fields);
+                    });
+            } else {
+                if(this.$('.alert').length) {
+                    this.$('.alert').scrollTo();
+                } else  {
+                    this.$el.find('.has-error').scrollTo();
+                }
+            }
+        },
+
         success: (view, response) => {
             view.$('.alert-warning').remove();
             if(typeof view._success == 'function') {
                 view._success(response);
             }
         },
+
         error: (view, xhr, status, text, fields) => {
             if(xhr.hasOwnProperty('responseJSON')) {
                 let data = xhr.responseJSON;
@@ -286,6 +324,7 @@ global.app = {
           }
         },
     },
+
 
     loadCss: function(url) {
         var link = document.createElement("link");
