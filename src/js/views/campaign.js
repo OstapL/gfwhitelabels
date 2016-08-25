@@ -302,11 +302,11 @@ define(function() {
                 }
 
                 if(this.model.get('faq'))
-                    this.faqIndex = Object.keys(this.model.get('faq')).length;
+                    this.faqIndex = Object.keys(this.model.get('faq')).length - 1;
                 else
                     this.faqIndex = 0
-                if(this.model.get('faq'))
-                    this.additional_infoIndex = Object.keys(this.model.get('additional_info')).lenth;
+                if(this.model.get('additional_infoIndex'))
+                    this.additional_infoIndex = Object.keys(this.model.get('additional_info')).length - 1;
                 else
                     this.additional_infoIndex = 0
 
@@ -435,12 +435,12 @@ define(function() {
                     }
                 };
                 if(this.model.get('press'))
-                    this.pressIndex = Object.keys(this.model.get('press')).length;
+                    this.pressIndex = Object.keys(this.model.get('press')).length - 1;
                 else
                     this.pressIndex = 0
 
                 if(this.model.get('additional_video'))
-                    this.additional_videoIndex = Object.keys(this.model.get('additional_video')).length;
+                    this.additional_videoIndex = Object.keys(this.model.get('additional_video')).length - 1;
                 else
                     this.additional_videoIndex = 0
 

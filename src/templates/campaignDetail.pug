@@ -585,7 +585,7 @@ section
                 iframe.embed-responsive-item(src="//www.youtube.com/embed/" + app.getVideoId(campaign.video) + "?rel=0" allowfullscreen="true")
 
 each v,k in campaign.additional_video
-    div(id="videoModal-" + k).modal.fade(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")
+    div(id="videoModal-" + k tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true").modal.fade
         .modal-dialog.modal-lg(role="document")
             .modal-content
                 .embed-responsive.embed-responsive-16by9
