@@ -559,7 +559,7 @@ let appRoutes = Backbone.Router.extend({
                 var sendToken = socialAuth.sendToken('facebook', e.authResponse.access_token);
 
                 $.when(sendToken).done(function (data) {
-                    app.user.set('token', data.key);
+                    localStorage.setItem('token', data.key)
 
                     app.routers.navigate(
                         'account/profile',
@@ -589,7 +589,7 @@ let appRoutes = Backbone.Router.extend({
                 var sendToken = socialAuth.sendToken('linkedin', e.authResponse.access_token);
 
                 $.when(sendToken).done(function (data) {
-                    app.user.set('token', data.key);
+                    localStorage.setItem('token', data.key)
 
                     app.routers.navigate(
                         'account/profile',
@@ -619,7 +619,7 @@ let appRoutes = Backbone.Router.extend({
                 var sendToken = socialAuth.sendToken('google', e.authResponse.access_token);
 
                 $.when(sendToken).done(function (data) {
-                    app.user.set('token', data.key);
+                    localStorage.setItem('token', data.key)
 
                     app.routers.navigate(
                         'account/profile',
