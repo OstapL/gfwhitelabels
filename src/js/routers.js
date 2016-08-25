@@ -559,7 +559,6 @@ let appRoutes = Backbone.Router.extend({
                 var sendToken = socialAuth.sendToken('facebook', e.authResponse.access_token);
 
                 $.when(sendToken).done(function (data) {
-
                     localStorage.setItem('token', data.key);
                     window.location = '/account/profile';
                 });
@@ -586,8 +585,7 @@ let appRoutes = Backbone.Router.extend({
                 var sendToken = socialAuth.sendToken('linkedin', e.authResponse.access_token);
 
                 $.when(sendToken).done(function (data) {
-
-                    localStorage.setItem('token', data.key)
+                    localStorage.setItem('token', data.key);
                     window.location = '/account/profile';
                 });
             },
@@ -613,7 +611,7 @@ let appRoutes = Backbone.Router.extend({
                 var sendToken = socialAuth.sendToken('google', e.authResponse.access_token);
 
                 $.when(sendToken).done(function (data) {
-                    localStorage.setItem('token', data.key)
+                    localStorage.setItem('token', data.key);
                     window.location = '/account/profile';
                 });
             },
