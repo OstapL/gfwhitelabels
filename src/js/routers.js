@@ -546,7 +546,7 @@ let appRoutes = Backbone.Router.extend({
                 login_fields: r1[0].actions.POST,
                 register_fields: r2[0].actions.POST,
                 model: new userModel(),
-            })
+            });
             loginView.render();
             app.cache[window.location.pathname] = loginView.$el.html();
             app.hideLoading();
@@ -570,12 +570,8 @@ let appRoutes = Backbone.Router.extend({
                 var sendToken = socialAuth.sendToken('facebook', e.authResponse.access_token);
 
                 $.when(sendToken).done(function (data) {
-                    localStorage.setItem('token', data.key)
-
-                    app.routers.navigate(
-                        'account/profile',
-                        {trigger: true, replace: true}
-                    );
+                    localStorage.setItem('token', data.key);
+                    window.location = '/account/profile';
                 });
             },
             function (e) {
@@ -600,12 +596,8 @@ let appRoutes = Backbone.Router.extend({
                 var sendToken = socialAuth.sendToken('linkedin', e.authResponse.access_token);
 
                 $.when(sendToken).done(function (data) {
-                    localStorage.setItem('token', data.key)
-
-                    app.routers.navigate(
-                        'account/profile',
-                        {trigger: true, replace: true}
-                    );
+                    localStorage.setItem('token', data.key);
+                    window.location = '/account/profile';
                 });
             },
             function (e) {
@@ -630,12 +622,8 @@ let appRoutes = Backbone.Router.extend({
                 var sendToken = socialAuth.sendToken('google', e.authResponse.access_token);
 
                 $.when(sendToken).done(function (data) {
-                    localStorage.setItem('token', data.key)
-
-                    app.routers.navigate(
-                        'account/profile',
-                        {trigger: true, replace: true}
-                    );
+                    localStorage.setItem('token', data.key);
+                    window.location = '/account/profile';
                 });
             },
             function (e) {

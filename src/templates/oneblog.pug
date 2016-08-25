@@ -100,7 +100,7 @@ section.text_block
                                 ul.list-inline.list-unstyled.m0
                                     li.text-muted
                                         i.fa.fa-calendar
-                                        span DECEMBER10, 2016
+                                        span DECEMBER 10, 2016
 
                                     li.text-muted
                                         i.fa.fa-user
@@ -175,23 +175,20 @@ section.text_block
                                             button(
                                                 type="submit"
                                             ).btn.btn-primary.btn-lg.pull-right.text-uppercase Submit comment 
-                                    
-                    .row.control-blog-block
-                        .col-lg-6.mt25
-                            .controls  
-                                button(
-                                    type="submit"
-                                ).btn.btn-secondary.inverse.btn-xl.pull-left.text-uppercase
-                                    i.fa.fa-angle-left &nbsp;
-                                    | prev post
 
-                        .col-lg-6.mt25
-                            .controls  
-                                button(
-                                    type="submit"
-                                ).btn.btn-secondary.inverse.btn-xl.pull-right.text-uppercase
-                                    | next post
-                                    i.fa.fa-angle-right &nbsp;
+                    .row
+                        .col-lg-12.mt25
+                            nav
+                                ul.pagination.pagination-lg.short-pagination
+                                    li.page-item.active.pull-sm-left
+                                        a(href="#").page-link.text-uppercase
+                                            i.fa.fa-angle-left &nbsp;&nbsp;
+                                            | Prev post
+                                    li.page-item.pull-sm-right
+                                        a(href="#").page-link.text-uppercase
+                                            | Next post &nbsp;&nbsp;
+                                            i.fa.fa-angle-right
+
 
 
 
