@@ -95,7 +95,7 @@ mixin fieldBlock(name, data, attr)
                 - var kkeys = Object.keys(values[name])
                 each el in values[name]
                     each k1,v in fields[name].schema
-                        - console.log('keys', values[name], kkeys);
+                        - console.log('keys', values[name], kkeys, el, k1, v);
                         - let k = values[name][kkeys[counter]][v]
                         - let t = fields[name].schema[v]
                         div(class=(counter == Object.keys(values[name]).length+100 ? 'm-b-0' : 'form-group') + ' clearfix index_' + indexCounter )
