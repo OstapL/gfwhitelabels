@@ -1,101 +1,166 @@
 include mixins.pug
 
-+breadcrumbs('Create Company', 'Help Button', [['home', '/',], [ 'current', page.get_absolute_url]])
++breadcrumbs('Create campaign', 'LOREM IPSUM DOLOR SIT AMET CONSECTETUR ', [['home', '/',], [ 'current', page.get_absolute_url]])
 
-section.create-company-team-add.container
-    //START LEFT BLOCK
-    .col-lg-3.create_compaign
-        .jumbotron.jumbotron-fluid.row
-            .raise-funds
-                h4.font-weight-bold.text-uppercase.m-b-0 Raise funds
-                    .small-text (10% Done)
-            #accordion(role="tablist" aria-multiselectable="true")
-                .panel.panel-default
-                    .panel-heading(role="tab")
-                        a(data-toggle="collapse"
-                        data-parent="#accordion"
-                        href="#company"
-                        aria-expanded="true"
-                        ).list-group-item
-                            i.fa.fa-briefcase
-                            |  Company
-                            span.pull-right
-                                i.fa.fa-angle-left
-                    #company(role="tabpanel").panel-collapse.collapse
-                        .list-group
-                            a(href="#").list-group-item.list-group-item-action Company
-                .panel.panel-default
-                    .panel-heading(role="tab")
-                        a(data-toggle="collapse"
-                        data-parent="#accordion"
-                        href="#campaign"
-                        aria-expanded="true"
-                        ).list-group-item.active
-                            i.fa.fa-bar-chart
-                            |  Campaign
-                            span.pull-right
-                                i.fa.fa-angle-down
-                    #campaign(role="tabpanel").panel-collapse.collapse.in
-                        .list-group
-                            a(href="#").list-group-item.list-group-item-action.active General Information
-                                i.fa.fa-check
-                            a(href="#").list-group-item.list-group-item-action Media
-                                i.fa.fa-check
-                            a(href="#").list-group-item.list-group-item-action.active Team Members
-                            a(href="#").list-group-item.list-group-item-action Specifics
-                            a(href="#").list-group-item.list-group-item-action Perks
-                .panel.panel-default
-                    .panel-heading(role="tab")
-                        a(data-toggle="collapse"
-                        data-parent="#accordion"
-                        href="#form_c"
-                        aria-expanded="true"
-                        ).list-group-item
-                            i.fa.fa-university
-                            |  form c
-                            span.pull-right
-                                i.fa.fa-angle-left
-                    #form_c(role="tabpanel").panel-collapse.collapse
-                        .list-group
-                            a(href="#").list-group-item.list-group-item-action form c
-        .row
-            .education-link-wrap
-                .jumbotron.jumbotron-fluid
-                    h4.font-weight-bold.text-uppercase
-                        i.fa.fa-book
-                        |  education Links
-                    .nav
-                        li.nav-item
-                            a(href="#").nav-link.link-3 Issuer Tutorial
-                        li.nav-item
-                            a(href="#").nav-link.link-3 Success Guide
-                        li.nav-item
-                            a(href="#").nav-link.link-3 What's My Business Worth?
-                        li.nav-item
-                            a(href="#").nav-link.link-3 How Much Should I Raise?
+section.team-members.container.m-b-85
+  //START LEFT BLOCK
+  .col-lg-3.create_compaign
+    .jumbotron.jumbotron-fluid.row
+      .raise-funds
+        h4.font-weight-bold.text-uppercase.m-b-0 Raise funds
+          .small-text (10% Done)
+      #accordion(role="tablist" aria-multiselectable="true")
+        .panel.panel-default
+          .panel-heading(role="tab")
+            a(data-toggle="collapse"
+            data-parent="#accordion"
+            href="#company"
+            aria-expanded="true"
+            ).list-group-item
+              i.fa.fa-briefcase
+              |  Company
+              span.pull-right
+                i.fa.fa-angle-left
+          #company(role="tabpanel").panel-collapse.collapse
+            .list-group
+              a(href="#").list-group-item.list-group-item-action Company
+        .panel.panel-default
+          .panel-heading(role="tab")
+            a(data-toggle="collapse"
+            data-parent="#accordion"
+            href="#campaign"
+            aria-expanded="true"
+            ).list-group-item.active
+              i.fa.fa-bar-chart
+              |  Campaign
+              span.pull-right
+                i.fa.fa-angle-down
+          #campaign(role="tabpanel").panel-collapse.collapse.in
+              .list-group
+                  a(href="/campaign/general_information/" + values.id).list-group-item.list-group-item-action General Information
+                  a(href="/campaign/media/" + values.id).list-group-item.list-group-item-action.active Media
+                  a(href="/campaign/team_members/" + values.id).list-group-item.list-group-item-action Team Members
+                      i.fa.fa-check
+                  a(href="/campaign/specifics/" + values.id).list-group-item.list-group-item-action Specifics
+                  a(href="/campaign/perks/" + values.id).list-group-item.list-group-item-action Perks
+        .panel.panel-default
+          .panel-heading(role="tab")
+            a(data-toggle="collapse"
+            data-parent="#accordion"
+            href="#form_c"
+            aria-expanded="true"
+            ).list-group-item
+              i.fa.fa-university
+              |  form c
+              span.pull-right
+                i.fa.fa-angle-left
+          #form_c(role="tabpanel").panel-collapse.collapse
+            .list-group
+              a(href="#").list-group-item.list-group-item-action form c
+    .row
+      .education-link-wrap
+        .jumbotron.jumbotron-fluid
+          h4.font-weight-bold.text-uppercase
+            i.fa.fa-book
+            |  education Links
+          .nav
+            li.nav-item
+              a(href="#").nav-link.link-3 Issuer Tutorial
+            li.nav-item
+              a(href="#").nav-link.link-3 Success Guide
+            li.nav-item
+              a(href="#").nav-link.link-3 What's My Business Worth?
+            li.nav-item
+              a(href="#").nav-link.link-3 How Much Should I Raise?
 
 
-    //START RIGHT BLOCK
-    .col-lg-8
-        h2.text-uppercase.text-lg-center.text-xs-center.dosis.m-t-0 team members
-        form(metod="post" action="").form-section
-            .form-group.text-lg-center
-                .col-lg-12
-                  .campaign-warning.warning-team-add.text-lg-left
-                    i.fa.fa-exclamation-triangle 
-                    span.warning-text 
-                    | Warning! You have to add at least 2 persons for proceed.
+  //START RIGHT BLOCK
+  .col-lg-8
+    h2.text-uppercase.text-lg-center.text-xs-center.dosis.m-t-0 team members (Advisor)
 
-            .col-lg-10.offset-lg-1.text-lg-center.m-t-2.m-b-2
-                .col-lg-6
-                    button.btn.btn-lg.text-uppercase ADD TEAM MEMBER
-                .col-lg-5
-                    button.btn.btn-lg.text-uppercase ADD ADVISoR
+    form(method="post" action="").form-section
+      input(type="hidden" name="type" value=type)#type
+      input(type="hidden" name="photo" value=values.photo)#photo
+      +fieldBlock("first_name", '', {
+        class1: 'col-lg-3 col-md-3',
+        class2: 'col-lg-9 col-md-9',
+        type: 'text',
+        })
+      +fieldBlock("last_name", '', {
+        class1: 'col-lg-3 col-md-3',
+        class2: 'col-lg-9 col-md-9',
+        type: 'text',
+        })
+      +fieldBlock("email", '', {
+        class1: 'col-lg-3 col-md-3',
+        class2: 'col-lg-9 col-md-9',
+        type: 'email',
+        })
+      +fieldBlock("title", '', {
+        class1: 'col-lg-3 col-md-3',
+        class2: 'col-lg-9 col-md-9',
+        type: 'text',
+        })
+      .form-group.row.clearfix.required
+        label.col-lg-3.text-lg-right Bio
+        .col-lg-9
+            textarea(name="bio" placeholder="At least 150 characters and no more than 250 characters" rows="4").form-control #{ values.bio }
+      .row
+        .col-lg-9.recommended
+          +fieldBlock("growup", '', {
+            class1: 'col-lg-4 col-md-3',
+            class2: 'col-lg-8 col-md-9',
+            type: 'text',
+            placeholder: 'City'
+            })
+        .col-lg-3
+          select(name="state").orderby.custom-select
+            option(checked="checked" value="0") ST
+            option(value="1") STL
+      +fieldBlock("college", '', {
+        class1: 'col-lg-3 col-md-3',
+        class2: 'col-lg-9 col-md-9',
+        type: 'text',
+        })
+      .row
+          .col-lg-1
+          .col-lg-5
+              +fieldBlock("facebook", '', {
+                class1: 'col-lg-3 col-md-3',
+                class2: 'col-lg-9 col-md-9',
+                type: 'text',
+                })
+          .col-lg-6
+              +fieldBlock("linkedin", '', {
+                class1: 'col-lg-3 col-md-3',
+                class2: 'col-lg-9 col-md-9',
+                type: 'text',
+                })
 
-            .col-lg-3.m-t-2.p-r-0.p-l-0.m-l-1
-                .team-add-item.text-lg-center.text-xs-center
-                    img(src="/img/avatar10.jpg" alt="image item").img-circle
-                    p.name.text-uppercase Maria Kravchuk  
-                    p.small Team Member
-                    a(href="#").link-1
-                        i.fa.fa-pencil-square-o
+      .row.dropzone__photo.media-item
+        .col-lg-7
+          .col-lg-5.p-r-12
+            span.pull-right.font-weight-bold  Photo
+          .col-lg-7.text-lg-center
+            span(href="#").link-1
+              p.drop-photo Drop your photo here or click to upload
+              i.fa.fa-camera
+        .col-lg-5.p-l-1.p-r-3.text-lg-center.text-sm-center
+          img(src=values.photo).img-fluid.img-photo
+      .col-lg-11.pull-right.p-r-0.p-t-2
+          .col-lg-6
+              button(type="submit").btn.btn-lg.btn-primary.text-uppercase.pull-right Save
+              // and return
+          //
+            .col-lg-6.p-r-0
+              .dropdown.pull-right
+                button(type="submit"
+                id="dropdownMenuButton"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+                ).btn.btn-lg.btn-primary.text-uppercase.dropdown-toggle Save and add other
+                .dropdown-menu(aria-labelledby="dropdownMenuButton")
+                  a(href="").dropdown-item Add Advisor
+                  a(href="").dropdown-item Add Team Member
+
