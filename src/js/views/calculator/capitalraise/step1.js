@@ -1,8 +1,9 @@
 require('sass/pages/_calculator.sass');
 
+var calculatorHelper = require("../../../helpers/calculatorHelpers");
 var flyPriceFormatter = require("../../../helpers/flyPriceFormatter");
-var formatPrice = require("../../../helpers/formatPrice");
 var lookupData = require("../../../helpers/capitalraiseCalculatorData");
+var formatPrice = calculatorHelper.formatPrice;
 
 let industryData = lookupData();
 

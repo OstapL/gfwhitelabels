@@ -1,4 +1,5 @@
-var formatPrice = require("../../helpers/formatPrice");
+var calculatorHelper = require("../../helpers/calculatorHelpers");
+var formatPrice = calculatorHelper.formatPrice;
 var lookupData = require("../../helpers/capitalraiseCalculatorData");
 
 let industryData = lookupData();
