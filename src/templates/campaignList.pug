@@ -8,18 +8,18 @@ section.small-section.filter
             .row
                 .col-lg-3
                     .one_drop
-                        select.form-control(multiple="true" title="INDUSTRIES").selectpicker
-                            option Advertising & Marketing
-                            option Arts, Fashion, & Media
-                            option Business to Business
-                            option Cleantech
-                            option Construction & Manufacturing
-                            option Consumer Products
-                            option Energy/Transport
+                        select.form-control(multiple="true" title="INDUSTRIES").selectpicker.industry-picker
+                            option(value="a_m") Advertising & Marketing
+                            option(value="a_f_n_m") Arts, Fashion, & Media
+                            option(value="b_to_b") Business to Business
+                            option(value="ct") Cleantech
+                            option(value="c_n_m") Construction & Manufacturing
+                            option(value="c_p") Consumer Products
+                            option(value="e_t") Energy/Transport
 
                 .col-lg-3
                     .one_drop
-                        select(title="STAGE").form-control.selectpicker
+                        select(multiple="true" title="STAGE").form-control.selectpicker.stage-picker
                             option Pre-seed
                             option Seed
                             option Bridge to Series A
@@ -29,21 +29,21 @@ section.small-section.filter
 
                 .col-lg-3
                     .one_drop
-                        select(title="LOCATIONS").form-control.selectpicker
+                        select(multiple="true" title="LOCATIONS").form-control.selectpicker.location-picker
                             option Locations
-                            option Los Angeles, CA
-                            option San Francisco, CA
-                            option New York, NY
-                            option Las Vegas, NV
+                            option(value="Los Angeles") Los Angeles, CA
+                            option(value="San Francisco") San Francisco, CA
+                            option(value="New York") New York, NY
+                            option(value="Las Vegas") Las Vegas, NV
 
                 .col-lg-3
                     .one_drop
-                        select(title="DEAL TYPE").form-control.selectpicker
+                        select(multiple="true" title="DEAL TYPE").form-control.selectpicker.deal-type-picker
                             option Deal type
-                            option Equity
-                            option Convertible Note
-                            option Debt
-                            option Revenue Share
+                            option(value="Preferred Equity") Preferred Equity
+                            option(value="Convertible Note") Convertible Note
+                            option(value="Debt") Debt
+                            option(value="Revenue Share") Revenue Share
 
             .create-alert-block
                 .row
@@ -56,67 +56,67 @@ section.small-section.filter
 section.campaing-list
     .container#campaignList
         .row
-            for campaign in campaigns
+            //- for campaign in campaigns
 
-                .col-lg-4
-                    a(href=Urls['campaign-detail'](campaign.id)).block_link
-                    .one_block
-                        .for_img
-                            img(
-                                src=(campaign.list_image_data ? campaign.list_image_data.url : '/img/test.png')
-                                alt=campaign.company.name
-                            )
+            //-     .col-lg-4
+            //-         a(href=Urls['campaign-detail'](campaign.id)).block_link
+            //-         .one_block
+            //-             .for_img
+            //-                 img(
+            //-                     src=(campaign.list_image_data ? campaign.list_image_data.url : '/img/test.png')
+            //-                     alt=campaign.company.name
+            //-                 )
 
-                            .more_inform
-                                .title.text-center
-                                    h3 Pre money valuation: $#{campaign.premoney_valuation}
+            //-                 .more_inform
+            //-                     .title.text-center
+            //-                         h3 Pre money valuation: $#{campaign.premoney_valuation}
 
-                                .small_text
-                                    if campaign.company.tagline
-                                        p #{campaign.company.tagline.substr(0, 120)}
+            //-                     .small_text
+            //-                         if campaign.company.tagline
+            //-                             p #{campaign.company.tagline.substr(0, 120)}
 
-                                .ico_cont
-                                    a(href=Urls['campaign-detail'](campaign.id) + '#members').link-1
-                                        i.fa.fa-users
-                                    a(href=Urls['campaign-detail'](campaign.id) + '#perks').link-1
-                                        i.fa.fa-gift
+            //-                     .ico_cont
+            //-                         a(href=Urls['campaign-detail'](campaign.id) + '#members').link-1
+            //-                             i.fa.fa-users
+            //-                         a(href=Urls['campaign-detail'](campaign.id) + '#perks').link-1
+            //-                             i.fa.fa-gift
 
-                                .bottom_pr
-                                    if campaign.security_type == 0
-                                        p Price per share: $#{campaign.price_per_share}
-                                        p Number of shares: $#{campaign.amount_of_shares}
-                                    else
-                                        p % Revenue: #{campaign.percentage_revenue}
-                                        p Cap: #{campaign.cap}
-                                        p Expiration Date: #{campaign.expiration_date}
+            //-                     .bottom_pr
+            //-                         if campaign.security_type == 0
+            //-                             p Price per share: $#{campaign.price_per_share}
+            //-                             p Number of shares: $#{campaign.amount_of_shares}
+            //-                         else
+            //-                             p % Revenue: #{campaign.percentage_revenue}
+            //-                             p Cap: #{campaign.cap}
+            //-                             p Expiration Date: #{campaign.expiration_date}
 
 
-                        .title
-                            h3.m-t-0= campaign.company.name
-                            span.place
-                                i.fa.fa-map-marker
-                                = campaign.company.city + ' ' + campaign.company.state
-                            .clear
-                        .description
-                            if campaign.pitch
-                                p= campaign.pitch.substr(0,250)
+            //-             .title
+            //-                 h3.m-t-0= campaign.company.name
+            //-                 span.place
+            //-                     i.fa.fa-map-marker
+            //-                     = campaign.company.city + ' ' + campaign.company.state
+            //-                 .clear
+            //-             .description
+            //-                 if campaign.pitch
+            //-                     p= campaign.pitch.substr(0,250)
 
-                        .progress_bar_container
-                            span.left_text #{campaign.progress} % Funded
-                            span.right_text 
-                                b $#{campaign.amount_raised} 
-                                | of #{campaign.minimum_raise}
-                            .clear
-                                progress.progress(value=campaign.progress max="100") #{campaign.progress} %
+            //-             .progress_bar_container
+            //-                 span.left_text #{campaign.progress} % Funded
+            //-                 span.right_text 
+            //-                     b $#{campaign.amount_raised} 
+            //-                     | of #{campaign.minimum_raise}
+            //-                 .clear
+            //-                     progress.progress(value=campaign.progress max="100") #{campaign.progress} %
 
-                        .bottom_text
-                            span.left_desc
-                                b Security:
-                                | #{campaign.get_security_type_display}
-                            span.right_desc
-                                b Industry: 
-                                | Lorem ipsum
-                            .clear
+            //-             .bottom_text
+            //-                 span.left_desc
+            //-                     b Security:
+            //-                     | #{campaign.get_security_type_display}
+            //-                 span.right_desc
+            //-                     b Industry: 
+            //-                     | Lorem ipsum
+            //-                 .clear
 section.pagination
     .container
         .row

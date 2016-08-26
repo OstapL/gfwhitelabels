@@ -4,6 +4,46 @@ define(function() {
             initialize: function(options) {
                 this.collection = options.collection;
             },
+            events: {
+                'change .selectpicker': 'filter'
+            },
+
+            filter: function (event) {
+                var locations = [];
+                $('.location-picker option:selected').each(function(idx, e){
+                    locations.push(e.value);
+                });
+
+                var securityTypes = [];
+                $('.deal-type-picker option:selected').each(function(idx, e){
+                    securityTypes.push(e.value);
+                });
+                // console.log(securityTypes);
+
+               var filteredCollection = new Backbone.Collection(this.collection.filter(function (model) {
+                    // return locations.indexOf(model.get('company').city) != -1;
+                    if (locations.length > 0 && locations.indexOf(model.get('company').city) == -1) {
+                        return false;
+                    }
+
+                    console.log(model.get('get_security_type_display'));
+                    if (securityTypes.length > 0 && securityTypes.indexOf(model.get('get_security_type_display')) == -1) {
+                        return false;
+                    }
+
+                    return true;
+                }));
+                // console.log(filteredCollection.toJSON());
+
+                this.$el.find("#campaignList").html('');
+                let view = require('views/subviews');
+                var subView = new view.campaignListSub({
+                    collection: filteredCollection
+                });
+                this.$el.find("#campaignList").append(subView.render().$el);
+            },
+
+            // isIn: function () {},
 
             render: function() {
                 //require('sass/pages/_campaing.sass');
@@ -13,12 +53,29 @@ define(function() {
                 let selectPicker = require('bootstrap-select');
                 this.$el.html('');
                 let template = require('templates/campaignList.pug');
+                
+                var locations = []
+                $('.location-picker option:selected').each(function(idx, e){
+                    locations.push(e.value)
+                });
+                // console.log(locations);
+                // var filteredCollection = new Backbone.Collection(this.collection.filter(function (model) {
+                //     // return model.get('company').name == "LateNightTEst";
+                //     return locations.indexOf(model.get('company').city) != -1;
+                // }));
+                // console.log(filteredCollection.toJSON());
                 this.$el.append(
                     template({
                         serverUrl: serverUrl,
                         campaigns: this.collection.toJSON()
+                        // campaigns: filteredCollection.toJSON()
                     })
                 );
+                let view = require('views/subviews');
+                var subView = new view.campaignListSub({
+                    collection: this.collection
+                });
+                this.$el.find("#campaignList").append(subView.render().$el);
                 this.$el.find('.selectpicker').selectpicker();
                 //selectPicker('.selectpicker');
                 return this;
