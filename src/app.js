@@ -303,6 +303,7 @@ global.app = {
             view.$el.find('.help-block').remove();
             if(xhr.hasOwnProperty('responseJSON')) {
                 let data = xhr.responseJSON;
+                data = data ? data : {'Server': status};
                 for (let key in data)  {                                                 
                   Backbone.Validation.callbacks.invalid(                                 
                     view, key, data[key]
