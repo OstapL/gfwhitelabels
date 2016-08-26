@@ -132,7 +132,7 @@ section.investors-dashbord-comment
   .container
     .row
       .col-md-12
-        h2.title-size.text-uppercase Investor question & answer
+        h2.dosis.text-uppercase Investor question & answer
       .col-md-5
         .comments-list
           ul.nav.standart-nav-tabs(role="tablist")
@@ -335,36 +335,36 @@ section.investors-dashbord-comment
 
                     .clearfix
       .col-md-7
-        .leave-comment
-          .user-photo
-            img(src="/img/avatar2.png")
+        .comments-list
+          .add-comment
+            .user-photo
+              img(src="/img/avatar1.jpg").img-circle
 
-          .text-and-name
-            .name-date
-              h6.text-uppercase Maria Kravchuk
-              span 13 Jun, 10.30 AM
-            .comment-text
-              p Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+            .text-and-name
+              .name-date
+                h6.text-uppercase Maria Kravchuk
+                span 13 Jun, 10.30 AM
+              .comment-text
+                p Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
 
-            .clearfix
+              .clearfix
 
-            .actions
-              a(href="").link-1 Rejected
-              span |
-              a(href="").link-1 Response
+              .actions
+                a(href="").link-1 Rejected
+                span |
+                a(href="").link-1 Response
 
-            .clearfix
-
-          form.form
-            textarea.input-md.form-control#text(
-              name="text"
-              rows="8"
-              placeholder="Maria Kravchuk"
-              maxlength="400"
-            )
-            br
-            input.btn.btn-primary(
-              type="button"
-              name=""
-              value="SUBMIT"
-            )
+              .clearfix
+          .form-add-comment
+            form.form
+              textarea.input-md.form-control#text(
+                name="text"
+                rows="8"
+                placeholder="Maria Kravchuk"
+                maxlength="400"
+              )
+              input.btn.btn-primary(
+                type="button"
+                name=""
+                value="SUBMIT"
+              )
