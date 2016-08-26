@@ -9,16 +9,10 @@ define(function() {
             },
 
             filter: function (event) {
-                var locations = [];
-                $('.location-picker option:selected').each(function(idx, e){
-                    locations.push(e.value);
-                });
 
-                var securityTypes = [];
-                $('.deal-type-picker option:selected').each(function(idx, e){
-                    securityTypes.push(e.value);
-                });
-                // console.log(securityTypes);
+                var locations = this.$el.find('.location-picker option:selected').map(function(){return this.value;}).get();
+
+                var securityTypes = this.$el.find('.deal-type-picker option:selected').map(function(){return this.value}).get();
 
                var filteredCollection = new Backbone.Collection(this.collection.filter(function (model) {
                     // return locations.indexOf(model.get('company').city) != -1;
@@ -26,7 +20,6 @@ define(function() {
                         return false;
                     }
 
-                    console.log(model.get('get_security_type_display'));
                     if (securityTypes.length > 0 && securityTypes.indexOf(model.get('get_security_type_display')) == -1) {
                         return false;
                     }
