@@ -366,7 +366,7 @@ section
         .col-lg-4
           .jumbotron.jumbotron-fluid
             .container
-              h3 ${v.amount} Investments
+              h3 #{v.amount} Investments
               p.text-justify #{ v.perk }
 
   section.investors-all.border-bottom(style="display: none")
@@ -678,37 +678,31 @@ each v,k in campaign.additional_video
         .modal-footer
 
 .pswp(tabindex="-1" role="dialog" aria-hidden="true")
-  //Background of PhotoSwipe. 
-  //It's a separate element as animating opacity is faster than rgba().
   .pswp__bg
-    //Slides wrapper with overflow:hidden.
-    .pswp__scroll-wrap
-      //Container that holds slides.
-      // PhotoSwipe keeps only 3 of them in the DOM to save memory.
-      // Don't modify these 3 pswp__item elements, data is added later on.
-      .pswp__container
-        .pswp__item
-        .pswp__item
-        .pswp__item
-          //Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed.
-      .pswp__ui.pswp__ui--hidden
-        .pswp__top-bar
-          //Controls are self-explanatory. Order can be changed.
-          .pswp__counter
-            button(title="Close (Esc)").pswp__button.pswp__button--close
-            button(title="Share").pswp__button.pswp__button--share
-            button(title="Toggle fullscreen").pswp__button.pswp__button--fs
-            button(title="Zoom in/out").pswp__button.pswp__button--zoom
-            //Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR
-            //element will get class pswp__preloader--active when preloader is running
-            .pswp__preloader
-              .pswp__preloader__icn
+  .pswp__scroll-wrap
+    .pswp__container
+      .pswp__item
+      .pswp__item
+      .pswp__item
+        //Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed.
+    .pswp__ui.pswp__ui--hidden
+      .pswp__top-bar
+        //Controls are self-explanatory. Order can be changed.
+        .pswp__counter
+        button(title="Close (Esc)").pswp__button.pswp__button--close
+        button(title="Share").pswp__button.pswp__button--share
+        button(title="Toggle fullscreen").pswp__button.pswp__button--fs
+        button(title="Zoom in/out").pswp__button.pswp__button--zoom
+        //Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR
+        //element will get class pswp__preloader--active when preloader is running
+        .pswp__preloader
+            .pswp__preloader__icn
                 .pswp__preloader__cut
-                  .pswp__preloader__donut
-        .pswp__share-modal.pswp__share-modal--hidden.pswp__single-tap
-          .pswp__share-tooltip
-        button(title="Previous (arrow left)").pswp__button.pswp__button--arrow--left
-        button(title="Next (arrow right)").pswp__button.pswp__button--arrow--right
-        .pswp__caption
-          .pswp__caption__center
+                    .pswp__preloader__donut
+      .pswp__share-modal.pswp__share-modal--hidden.pswp__single-tap
+        .pswp__share-tooltip
+      button(title="Previous (arrow left)").pswp__button.pswp__button--arrow--left
+      button(title="Next (arrow right)").pswp__button.pswp__button--arrow--right
+      .pswp__caption
+        .pswp__caption__center
 

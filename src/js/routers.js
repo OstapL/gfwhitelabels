@@ -195,9 +195,12 @@ let appRoutes = Backbone.Router.extend({
                         url: company.urlRoot,
                     }, app.defaultOptionsRequest)
                 );
-                var campaignAjax = $.ajax({
-                    url: serverUrl + '/api/campaign?company_id=' + company.id,
-                });
+                var params = _.extend({
+                    url: serverUrl + '/api/campaign/general_information?company_id=' + company.id,
+                }, app.defaultOptionsRequest);
+                params.type = 'GET';
+
+                var campaignAjax = $.ajax(params);
 
                 $.when(optionsAjax, campaignAjax).done((rOptions, rCampaignList) => {
                     console.log(rCampaignList);
@@ -212,7 +215,14 @@ let appRoutes = Backbone.Router.extend({
                     //app.cache[window.location.pathname] = i.$el.html();
 
                     app.hideLoading();
-                }).fail(app.DefaultSaveActions.error);
+                }).fail(function(xhr, response, error) {
+                    console.log(arguments);
+                    var $view = {
+                        $el: $('#content'),
+                        $: app.$
+                    };
+                    app.DefaultSaveActions.error.call($view, xhr, response, error);
+                });
             });
         } else {
             app.routers.navigate(

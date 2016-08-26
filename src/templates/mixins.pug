@@ -29,108 +29,127 @@ mixin fieldBlock(name, data, attr)
         - values = {}
     if values[name] == null
         - values[name] = data
+    - attr.type = attr.type ? attr.type : fields[name].type
 
-    if attr.type == 'checkbox' 
-        div(class="form-group " + (attr.row == 0 ? '' : ' row ') + name + (fields[name].required == true ? ' required ' : ' '))
-            div(class=(attr.class1 ? attr.class1 : 'col-md-2') + ' text-md-right text-xs-right')
-                input(
-                    id=name
-                    name=name
-                    value=values[name]
-                    type="checkbox"
-                ).form-check-input
-            div(class=attr.class2  ? attr.class2 : 'col-md-10')
-                label(for=name).text-justify #{attr.text}
-    else if attr.type == 'radio' 
-        div(class="form-group " + (attr.row == 0 ? '' : ' row ') + name + (fields[name].required == true ? ' required ' : ' '))
-            label(class= attr.text_align ? 'text-md-' + attr.text_align + ' ' + attr.class1 : ' text-md-right ' + attr.class1 for=name)= fields[name].label
-            div(class=attr.class2)
-                each v in fields[name].choices
-                    label.col-lg-3
-                        input(
-                            type="radio" 
-                            class="form-check-input" 
-                            name=name
-                            checked=(v.value == values[name] ? "checked" : undefined)
-                            value=v.value)
-                        | #{v.display_name}
-    else if attr.type == 'choice' 
-        div(class="form-group " + (attr.row == 0 ? '' : ' row ') + name + (fields[name].required == true ? ' required ' : ' '))
-            label(class= attr.text_align ? 'text-md-' + attr.text_align + ' ' + attr.class1 : ' text-md-right ' + attr.class1 for=name)= fields[name].label
-            div(class=attr.class2)
-                select(
-                    id=name
-                    name=name
-                ).custom-select
+    div(class=(attr.type != 'json' ? "form-group " : '' ) + (attr.row == 0 ? '' : 'row ') + name + (fields[name].required == true ? ' required ' : ' '))
+        if attr.type == 'checkbox' 
+                div(class=(attr.class1 ? attr.class1 : 'col-md-2') + ' text-md-right text-xs-right')
+                    input(
+                        id=name
+                        name=name
+                        value=values[name]
+                        type="checkbox"
+                    ).form-check-input
+                div(class=attr.class2  ? attr.class2 : 'col-md-10')
+                    label(for=name).text-justify #{attr.text}
+        else if attr.type == 'radio' 
+                label(class= attr.text_align ? 'text-md-' + attr.text_align + ' ' + attr.class1 : ' text-md-right ' + attr.class1 for=name)= fields[name].label
+                div(class=attr.class2)
                     each v in fields[name].choices
-                        option(value=v.value selected=(v.value == values[name] ? "selected" : undefined)) #{v.display_name}
-    else if attr.type == 'json' 
-        div(class="form-group " + (attr.row == 0 ? '' : ' row ') + name + (fields[name].required == true ? ' required ' : ' '))
-            - counter = attr.index || 0
-            - indexCounter = attr.index || 0
-            if values[name].length == 0
-                a(href="#" data-section=name).delete-section
-                    i.fa.fa-times
-                each k,v in fields[name].schema
-                    div(class='form-group clearfix index_' + indexCounter)
-                        label.col-lg-3.text-lg-right #{k.label}
-                        .col-lg-9
-                            if k.type == 'text' 
-                                textarea(
-                                    id=name + '_' + v
-                                    name=name + '[' + indexCounter + '][' + v + ']'
-                                    placeholder=k.placeholder ? k.placeholder : k.label
-                                  ).form-control #{k[counter]}
-                            else
-                                input(
-                                    id=name + '_' + v
-                                    name=name + '[' + indexCounter + '][' + v + ']'
-                                    placeholder=k.placeholder ? k.placeholder : k.label
-                                    type=k.type
-                                    value=k[counter]
-                                ).form-control
-                    - counter ++
-                - indexCounter ++
-            else
-                - counter = 0
-                - indexCounter = attr.index || 0
-                - let kkeys = Object.keys(values[name])
-                each el in values[name]
-                    a(href="#" data-section=name data-index=indexCounter).delete-section
-                        i.fa.fa-times
-                    each k1,v in fields[name].schema
-                        - let k = values[name][kkeys[counter]][v]
-                        - let t = fields[name].schema[v]
-                        div(class='form-group clearfix index_' + indexCounter )
-                            label.col-lg-3.text-lg-right #{t.label}
-                            .col-lg-9
-                                if t.type == 'text' 
-                                    textarea(
-                                        id=name + '_' + v
-                                        name=name + '[' + indexCounter + '][' + v + ']'
-                                        placeholder=t.placeholder ? t.placeholder : t.label
-                                      ).form-control #{k}
-                                else
-                                    input(
-                                        id=name + '_' + v
-                                        name=name + '[' + indexCounter + '][' + v + ']'
-                                        placeholder=t.placeholder ? t.placeholder : t.label
-                                        type=t.type
-                                        value=k
-                                    ).form-control
-                    - counter ++
-                    - indexCounter ++
-    else
-        div(class="form-group " + (attr.row == 0 ? '' : ' row ') + name + (fields[name].required == true ? ' required ' : ' '))
-            label(class= attr.text_align ? 'text-md-' + attr.text_align + ' ' + attr.class1 : ' text-md-right ' + attr.class1 for=name)= fields[name].label
-            div(class=attr.class2)
-                if attr.type == 'textarea' 
+                        label.col-lg-3
+                            input(
+                                type="radio" 
+                                class="form-check-input" 
+                                name=name
+                                checked=(v.value == values[name] ? "checked" : undefined)
+                                value=v.value)
+                            | #{v.display_name}
+        else if attr.type == 'choice' 
+                label(class= attr.text_align ? 'text-md-' + attr.text_align + ' ' + attr.class1 : ' text-md-right ' + attr.class1 for=name)= fields[name].label
+                div(class=attr.class2)
+                    select(
+                        id=name
+                        name=name
+                    ).custom-select
+                        each v in fields[name].choices
+                            option(value=v.value selected=(v.value == values[name] ? "selected" : undefined)) #{v.display_name}
+        else if attr.type == 'date' 
+                label(class= attr.text_align ? 'text-md-' + attr.text_align + ' ' + attr.class1 : ' text-md-right ' + attr.class1 for=name)= fields[name].label
+                div(class=attr.class2 id=name).date-input
+                    .col-lg-6.no-gutter
+                        input(
+                            id=name + '__month'
+                            name=name + '__month'
+                            placeholder="09"
+                            type='numeber'
+                            maxlength=2
+                            value=values[name].split('-')[1]
+                          ).form-control
+                    .col-lg-6.no-gutter
+                        input(
+                            id=name + '__year'
+                            name=name + '__year'
+                            placeholder="2016"
+                            type='numeber'
+                            maxlength=4
+                            value=values[name].split('-')[0]
+                          ).form-control
+        else if attr.type == 'textarea' 
+                label(class= attr.text_align ? 'text-md-' + attr.text_align + ' ' + attr.class1 : ' text-md-right ' + attr.class1 for=name)= fields[name].label
+                div(class=attr.class2)
                     textarea(
                         id=name
                         name=name
                         placeholder=attr.placeholder ? attr.placeholder : fields[name].label
                       ).form-control #{values[name]}
+        else if attr.type == 'json' 
+                - counter = attr.index || 0
+                - indexCounter = attr.index || 0
+                if values[name].length == 0
+                    a(href="#" data-section=name).delete-section.pull-right
+                        i.fa.fa-times
+                    each k,v in fields[name].schema
+                        div(class='form-group clearfix index_' + indexCounter)
+                            label.col-lg-3.text-lg-right #{k.label}
+                            .col-lg-9
+                                if k.type == 'text' 
+                                    textarea(
+                                        id=name + '_' + v
+                                        name=name + '[' + indexCounter + '][' + v + ']'
+                                        placeholder=k.placeholder ? k.placeholder : k.label
+                                      ).form-control #{k[counter]}
+                                else
+                                    input(
+                                        id=name + '_' + v
+                                        name=name + '[' + indexCounter + '][' + v + ']'
+                                        placeholder=k.placeholder ? k.placeholder : k.label
+                                        type=k.type
+                                        value=k[counter]
+                                    ).form-control
+                        - counter ++
+                    - indexCounter ++
                 else
+                    - counter = 0
+                    - indexCounter = attr.index || 0
+                    - let kkeys = Object.keys(values[name])
+                    each el in values[name]
+                        a(href="#" data-section=name data-index=indexCounter).delete-section.pull-right
+                            i.fa.fa-times
+                        each k1,v in fields[name].schema
+                            - let k = values[name][kkeys[counter]][v]
+                            - let t = fields[name].schema[v]
+                            div(class='form-group clearfix index_' + indexCounter )
+                                label.col-lg-3.text-lg-right #{t.label}
+                                .col-lg-9
+                                    if t.type == 'text' 
+                                        textarea(
+                                            id=name + '_' + v
+                                            name=name + '[' + indexCounter + '][' + v + ']'
+                                            placeholder=t.placeholder ? t.placeholder : t.label
+                                          ).form-control #{k}
+                                    else
+                                        input(
+                                            id=name + '_' + v
+                                            name=name + '[' + indexCounter + '][' + v + ']'
+                                            placeholder=t.placeholder ? t.placeholder : t.label
+                                            type=t.type
+                                            value=k
+                                        ).form-control
+                        - counter ++
+                        - indexCounter ++
+        else
+                label(class= attr.text_align ? 'text-md-' + attr.text_align + ' ' + attr.class1 : ' text-md-right ' + attr.class1 for=name)= fields[name].label
+                div(class=attr.class2)
                     input(
                         id=name
                         name=name
@@ -138,7 +157,6 @@ mixin fieldBlock(name, data, attr)
                         type=attr.type ? attr.type : 'text'
                         value=values[name]
                       ).form-control
-
 
 mixin fieldDropzone(name, attr, type)
     // If we did not created fields vocabulary
