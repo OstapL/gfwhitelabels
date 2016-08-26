@@ -248,6 +248,7 @@ global.app = {
 
     defaultSaveActions: {
         submit: function(e, data) {
+                    console.log(arguments);
             this.$el.find('.alert').remove();
             event.preventDefault();
 
@@ -267,7 +268,7 @@ global.app = {
                         self.undelegateEvents();
                         $('#content').scrollTo();
                         app.routers.navigate(
-                            '/api/campaign/' + this.model.get('id'),
+                            self.getSuccessUrl(),
                             {trigger: true, replace: false}
                         );
 

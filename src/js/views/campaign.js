@@ -8,7 +8,6 @@ var jsonActions = {
                 e.preventDefault();
                 let sectionName = e.target.dataset.section;
                 let template = require('templates/section.pug');
-                $('.' + sectionName + ' .m-b-0').addClass('form-group').removeClass('m-b-0');
                 this[sectionName + 'Index'] ++;
                 $('.' + sectionName).append(
                     template({
@@ -270,26 +269,31 @@ define(function() {
         }),
 
         generalInformation: Backbone.View.extend({
-            events: {
+            events: _.extend({
                 'submit form': 'submit',
-                'click .add-section': 'addSection',
-                'click .delete-section': 'deleteSection',
-            }, 
+            }, jsonActions.events),
 
             preinitialize: function() {
-                console.log('pre int ..');
-                console.log('pre', this.events);
+                // ToDo
+                // Hack for undelegate previous events
+                for(let k in this.events) {
+                    console.log('#content ' + k.split(' ')[1]);
+                    $('#content ' + k.split(' ')[1]).undelegate(); 
+                }
             },
+
+            addSection: jsonActions.addSection,
+            deleteSection: jsonActions.deleteSection,
+            getSuccessUrl: function() {
+                return  '/campaign/media/' + this.model.get('id');
+            },
+            submit: app.defaultSaveActions.submit,
 
             initialize: function(options) {
                 this.fields = options.fields;
                 this.faqIndex = 1;
                 this.additional_infoIndex = 1;
             },
-
-            addSection: jsonActions.addSection,
-            deleteSection: jsonActions.deleteSection,
-            submit: app.defaultSaveActions.submit,
 
             render: function() {
                 let template = require('templates/campaignGeneralInformation.pug');
@@ -322,7 +326,7 @@ define(function() {
                     this.faqIndex = Object.keys(this.model.get('faq')).length - 1;
                 else
                     this.faqIndex = 0
-                if(this.model.get('additional_infoIndex'))
+                if(this.model.get('additional_info'))
                     this.additional_infoIndex = Object.keys(this.model.get('additional_info')).length - 1;
                 else
                     this.additional_infoIndex = 0
@@ -341,12 +345,26 @@ define(function() {
         }),
 
         media: Backbone.View.extend({
-            events: {
+            events: _.extend({
                 'submit form': 'submit',
                 'change #video': 'updateVideo',
-                'click .add-section': 'addSection',
-                'click .delete-section': 'deleteSection',
+            }, jsonActions.events),
+
+            preinitialize: function() {
+                // ToDo
+                // Hack for undelegate previous events
+                for(let k in this.events) {
+                    console.log('#content ' + k.split(' ')[1]);
+                    $('#content ' + k.split(' ')[1]).undelegate(); 
+                }
             },
+
+            addSection: jsonActions.addSection,
+            deleteSection: jsonActions.deleteSection,
+            getSuccessUrl: function() {
+                return  '/campaign/team_members/' + this.model.get('id');
+            },
+            submit: app.defaultSaveActions.submit,
 
             initialize: function(options) {
                 this.fields = options.fields;
@@ -448,10 +466,6 @@ define(function() {
                 return this;
             },
 
-            addSection: jsonActions.addSection.bind(this),
-            deleteSection: jsonActions.deleteSection.bind(this),
-            submit: app.defaultSaveActions.submit.bind(this),
-
             getVideoId: function(url) {
                 try {
                     var provider = url.match(/https:\/\/(:?www.)?(\w*)/)[2],
@@ -491,6 +505,15 @@ define(function() {
         teamMemberAdd: Backbone.View.extend({
             events: {
                 'submit form': 'submit',
+            },
+
+            preinitialize: function() {
+                // ToDo
+                // Hack for undelegate previous events
+                for(let k in this.events) {
+                    console.log('#content ' + k.split(' ')[1]);
+                    $('#content ' + k.split(' ')[1]).undelegate(); 
+                }
             },
 
             initialize: function(options) {
@@ -589,13 +612,17 @@ define(function() {
                 return this;
             },
 
+            getSuccessUrl: function() {
+                return  '/campaign/specifics/' + this.model.get('id');
+            },
+            
             submit: function(e) {
                 var json = $(e.target).serializeJSON();
                 var data = {
                     'member': json,
                     'index': this.index
                 };
-                app.defaultSaveActions(e, data);
+                app.defaultSaveActions.submit.call(this, e, data);
             }
         }),
 
@@ -629,10 +656,33 @@ define(function() {
         specifics: Backbone.View.extend({
             events: {
                 'submit form': 'submit',
+                'change input[name="security_type"]': 'updateSecurityType',
             },
+
+            preinitialize: function() {
+                // ToDo
+                // Hack for undelegate previous events
+                for(let k in this.events) {
+                    console.log('#content ' + k.split(' ')[1]);
+                    $('#content ' + k.split(' ')[1]).undelegate(); 
+                }
+            },
+
+            addSection: jsonActions.addSection,
+            deleteSection: jsonActions.deleteSection,
+            getSuccessUrl: function() {
+                return  '/campaign/perks/' + this.model.get('id');
+            },
+            submit: app.defaultSaveActions.submit,
 
             initialize: function(options) {
                 this.fields = options.fields;
+            },
+
+            updateSecurityType: function(e) {
+                $('.security_type_list').hide();
+                let val = e.currentTarget.value;
+                $('.security_type_'  +val).show();
             },
 
             render: function() {
@@ -656,7 +706,8 @@ define(function() {
                         }, {
                             patch: true
                         }).then((model) => {
-                            console.log('file upload done', model);
+                            $('.img-investor_presentation').attr('src', '/img/MS-PowerPoint.png');
+                            $('.img-investor_presentation').after('<a class="link-3" href="' + data.url + '">' + data.name + '</a>');
                         });
                     }
                 );
@@ -664,22 +715,32 @@ define(function() {
                 return this;
             },
 
-            submit: app.defaultSaveActions.submit.bind(this),
         }),
 
         perks: Backbone.View.extend({
-            events: {
+            events: _.extend({
                 'submit form': 'submit',
-                'click .add-section': 'addSection',
-                'click .delete-section': 'deleteSection',
-            }, 
+            }, jsonActions.events),
+
+            preinitialize: function() {
+                // ToDo
+                // Hack for undelegate previous events
+                for(let k in this.events) {
+                    console.log('#content ' + k.split(' ')[1]);
+                    $('#content ' + k.split(' ')[1]).undelegate(); 
+                }
+            },
+
+            addSection: jsonActions.addSection,
+            deleteSection: jsonActions.deleteSection,
+            getSuccessUrl: function() {
+                return  '/api/campaign/' + this.model.get('id');
+            },
+            submit: app.defaultSaveActions.submit,
 
             initialize: function(options) {
                 this.fields = options.fields;
                 this.perksIndex = 1;
-                this.addSection = jsonActions.addSection;
-                this.deleteSection = jsonActions.deleteSection;
-                this.submit = app.defaultSaveActions.submit;
             },
 
             render: function() {
