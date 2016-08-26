@@ -191,6 +191,8 @@ define(function() {
                         then((data) => { 
                             app.showLoading();
 
+                            self.undelegateEvents();
+                            $('#content').scrollTo();
                             app.routers.navigate(
                                 Urls['investment-detail'](data.id),
                                 {trigger: false, replace: false}
