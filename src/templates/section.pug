@@ -1,11 +1,12 @@
 include mixins.pug
 
 - counter = 0
-- console.log('asdf', attr);
 - indexCounter = attr.index || 0
 
+a(href="#" data-section=name data-index=indexCounter).delete-section
+    i.fa.fa-times
 each k,v in fields[name].schema
-    div(class=(counter == (Object.keys(fields[name].schema).length+100) ? 'm-b-0' : 'form-group') + ' clearfix index_' + indexCounter)
+    div(class='form-group clearfix index_' + indexCounter)
         label.col-lg-3.text-lg-right #{k.label}
         .col-lg-9
             if k.type == 'text' 
@@ -13,13 +14,11 @@ each k,v in fields[name].schema
                     id=name + '_' + v
                     name=name + '[' + indexCounter + '][' + v + ']'
                     placeholder=k.placeholder ? k.placeholder : k.label
-                  ).form-control #{k[counter]}
+                  ).form-control
             else
                 input(
                     id=name + '_' + v
                     name=name + '[' + indexCounter + '][' + v + ']'
                     placeholder=k.placeholder ? k.placeholder : k.label
-                    type=k.type
-                    value=k[counter]
                 ).form-control
-    - counter ++
+- counter ++
