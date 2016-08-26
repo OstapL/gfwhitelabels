@@ -275,7 +275,7 @@ global.app = {
                         self.undelegateEvents();
                         $('#content').scrollTo();
                         app.routers.navigate(
-                            self.getSuccessUrl(),
+                            self.getSuccessUrl(data),
                             {trigger: true, replace: false}
                         );
 

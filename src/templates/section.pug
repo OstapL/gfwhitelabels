@@ -3,7 +3,7 @@ include mixins.pug
 - counter = 0
 - indexCounter = attr.index || 0
 
-a(href="#" data-section=name data-index=indexCounter).delete-section
+a(href="#" data-section=name data-index=indexCounter).delete-section.pull-right
     i.fa.fa-times
 each k,v in fields[name].schema
     div(class='form-group clearfix index_' + indexCounter)

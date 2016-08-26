@@ -25,7 +25,7 @@ define(function() {
                 return this;
             },
 
-            getSuccessUrl: function() {
+            getSuccessUrl: function(data) {
                 return '/campaign/general_information/?company_id=' + data.id;
             },
 
