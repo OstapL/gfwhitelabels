@@ -69,7 +69,7 @@ mixin fieldBlock(name, data, attr)
             - counter = attr.index || 0
             - indexCounter = attr.index || 0
             if values[name].length == 0
-                a(href="#" data-section=name).delete-section
+                a(href="#" data-section=name).delete-section.pull-right
                     i.fa.fa-times
                 each k,v in fields[name].schema
                     div(class='form-group clearfix index_' + indexCounter)
@@ -96,7 +96,7 @@ mixin fieldBlock(name, data, attr)
                 - indexCounter = attr.index || 0
                 - let kkeys = Object.keys(values[name])
                 each el in values[name]
-                    a(href="#" data-section=name data-index=indexCounter).delete-section
+                    a(href="#" data-section=name data-index=indexCounter).delete-section.pull-right
                         i.fa.fa-times
                     each k1,v in fields[name].schema
                         - let k = values[name][kkeys[counter]][v]
