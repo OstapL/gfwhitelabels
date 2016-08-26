@@ -88,7 +88,7 @@ module.exports = Backbone.View.extend({
 
         flyPriceFormatter(this.inputPrice, ({ modelValue, currentValue }) => {
             // save value into the model
-            this.model.saveField(modelValue, currentValue);
+            this.model.saveField(modelValue, +currentValue);
         });
 
         return this;
