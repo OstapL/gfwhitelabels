@@ -116,7 +116,6 @@ section.create-company-media.container
       
       .row.m-b-2
         h3.d-inline-block.m-t-0.mb25 Additional videos
-        a(href="#" data-section='additional_video').link-1.pull-right.d-inline-block.delete-section Delete Video
         +fieldBlock("additional_video", '', {
           class1: 'col-lg-3 col-md-4',
           class2: 'col-lg-9 col-md-8',
@@ -142,7 +141,6 @@ section.create-company-media.container
       
       .col-lg-12.border-top
         h3.text-lg-center Articles and Press
-        a(href="#" data-section='press').link-1.pull-right.d-inline-block.delete-section Delete Article or Press
       .row.articles
         +fieldBlock("press", ' m-b-0', {
           class1: 'col-lg-3 col-md-4',
@@ -156,6 +154,3 @@ section.create-company-media.container
             button(href="").btn.btn-lg.btn-primary.text-uppercase.pull-right save
           .col-lg-6
             a(href="/api/campaign/" + values.id target="_blank").btn.btn-lg.btn-secondary.text-uppercase preview
-
-
-    
