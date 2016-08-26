@@ -26,7 +26,6 @@ define(function() {
 
                     return true;
                 }));
-                // console.log(filteredCollection.toJSON());
 
                 this.$el.find("#campaignList").html('');
                 let view = require('views/subviews');
@@ -35,8 +34,6 @@ define(function() {
                 });
                 this.$el.find("#campaignList").append(subView.render().$el);
             },
-
-            // isIn: function () {},
 
             render: function() {
                 //require('sass/pages/_campaing.sass');
@@ -51,17 +48,10 @@ define(function() {
                 $('.location-picker option:selected').each(function(idx, e){
                     locations.push(e.value)
                 });
-                // console.log(locations);
-                // var filteredCollection = new Backbone.Collection(this.collection.filter(function (model) {
-                //     // return model.get('company').name == "LateNightTEst";
-                //     return locations.indexOf(model.get('company').city) != -1;
-                // }));
-                // console.log(filteredCollection.toJSON());
                 this.$el.append(
                     template({
                         serverUrl: serverUrl,
                         campaigns: this.collection.toJSON()
-                        // campaigns: filteredCollection.toJSON()
                     })
                 );
                 let view = require('views/subviews');
