@@ -47,12 +47,12 @@ _.extend(Backbone.Validation.callbacks, {
         var $el = view.$('[name=' + attr + ']');
         var $group = null;
 
+        if(Array.isArray(error) !== true)
+            error = [error]
+
         // if element not found - we will show error just in alert-warning div 
         if($el.length == 0) {
             $el = view.$('form > .alert-warning');
-
-            if(Array.isArray(error) !== true)
-                error = [error]
 
             // If we don't have alert-warning - we should create it as 
             // first element in form
@@ -71,10 +71,17 @@ _.extend(Backbone.Validation.callbacks, {
         else {
             $group = $el.parent();
             $group.addClass('has-error');
-            $group.append('<div class="help-block">' + error + '</div>');
+            var $error_div = $group.find('.help-block');
+
+            if($error_div.length != 0) {
+                $error_div.html(error.join(','));
+            }
+            else {
+                $group.append('<div class="help-block">' + error.join(',') + '</div>');
+            }
         }
 
-        console.log(view, attr, error, selector);
+        //console.log(view, attr, error, selector);
     }
 });
 
@@ -308,6 +315,8 @@ global.app = {
             }
             if(view.$el.find('.alert').length) {
                 view.$el.find('.alert').scrollTo();
+            } else  {
+                view.$el.find('.has-error').scrollTo();
             }
             app.hideLoading();
           }
@@ -428,6 +437,8 @@ require('routers');
 
 app.user.load();
 app.trigger('userReady');
+
+global.app = app;
 
 $('body').on('click', '.auth-pop', function() {
     $('#loginModal').modal();
