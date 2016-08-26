@@ -9,28 +9,30 @@ section.small-section.filter
                 .col-lg-3
                     .one_drop
                         select.form-control(multiple="true" title="INDUSTRIES").selectpicker.industry-picker
-                            option(value="a_m") Advertising & Marketing
-                            option(value="a_f_n_m") Arts, Fashion, & Media
-                            option(value="b_to_b") Business to Business
-                            option(value="ct") Cleantech
-                            option(value="c_n_m") Construction & Manufacturing
-                            option(value="c_p") Consumer Products
-                            option(value="e_t") Energy/Transport
+                            //- option Industry
+                            option(value="Advertising & Marketing") Advertising & Marketing
+                            option(value="Arts, Fashion, & Media") Arts, Fashion, & Media
+                            option(value="Business to Business") Business to Business
+                            option(value="Cleantech") Cleantech
+                            option(value="Construction & Manufacturing") Construction & Manufacturing
+                            option(value="Consumer Products") Consumer Products
+                            option(value="Energy/Transport") Energy/Transport
 
                 .col-lg-3
                     .one_drop
                         select(multiple="true" title="STAGE").form-control.selectpicker.stage-picker
-                            option Pre-seed
-                            option Seed
-                            option Bridge to Series A
-                            option Series A
-                            option Bridge to Series B
-                            option Series B
+                            //- option Stage
+                            option(value="Pre-seed") Pre-seed
+                            option(value="Seed") Seed
+                            option(value="Bridge to Series A") Bridge to Series A
+                            option(value="Series A") Series A
+                            option(value="Bridge to Series B") Bridge to Series B
+                            option(value="Series B") Series B
 
                 .col-lg-3
                     .one_drop
                         select(multiple="true" title="LOCATIONS").form-control.selectpicker.location-picker
-                            option Locations
+                            //- option Locations
                             option(value="Los Angeles") Los Angeles, CA
                             option(value="San Francisco") San Francisco, CA
                             option(value="New York") New York, NY
@@ -39,11 +41,11 @@ section.small-section.filter
                 .col-lg-3
                     .one_drop
                         select(multiple="true" title="DEAL TYPE").form-control.selectpicker.deal-type-picker
-                            option Deal type
-                            option(value="Preferred Equity") Preferred Equity
-                            option(value="Convertible Note") Convertible Note
-                            option(value="Debt") Debt
-                            option(value="Revenue Share") Revenue Share
+                            //- option Deal type
+                            option(value="1") Equity
+                            option(value="2") Convertible Note
+                            option(value="3") Debt
+                            option(value="4") Revenue Share
 
             .create-alert-block
                 .row

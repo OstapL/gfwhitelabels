@@ -9,18 +9,30 @@ define(function() {
             },
 
             filter: function (event) {
+                var industries = this.$el.find('.industry-picker option:selected').map(function(){return this.value;}).get();
+
+                var stages = this.$el.find('.stage-picker option:selected').map(function(){return this.value;}).get();
 
                 var locations = this.$el.find('.location-picker option:selected').map(function(){return this.value;}).get();
 
                 var securityTypes = this.$el.find('.deal-type-picker option:selected').map(function(){return this.value}).get();
 
-               var filteredCollection = new Backbone.Collection(this.collection.filter(function (model) {
+                var filteredCollection = new Backbone.Collection(this.collection.filter(function (model) {            
                     // return locations.indexOf(model.get('company').city) != -1;
-                    if (locations.length > 0 && locations.indexOf(model.get('company').city) == -1) {
+                    if (industries.length && industries.indexOf(model.get('company').industry) == -1) {
                         return false;
                     }
 
-                    if (securityTypes.length > 0 && securityTypes.indexOf(model.get('get_security_type_display')) == -1) {
+                    if (stages.length && stages.indexOf(model.get('stage')) == -1) {
+                        return false;
+                    }
+
+                    // if (locations.length && locations.indexOf(model.get('company').city) == -1) {
+                    if (locations.length && locations.indexOf(model.get('city')) == -1) {
+                        return false;
+                    }
+
+                    if (securityTypes.length && securityTypes.indexOf('' + model.get('security_type')) == -1) {
                         return false;
                     }
 

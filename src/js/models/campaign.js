@@ -1,7 +1,8 @@
 define(function() {
     let r = {
         model: Backbone.Model.extend({
-            urlRoot: serverUrl + '/api/campaign',
+            // urlRoot: serverUrl + '/api/campaign',
+            urlRoot: '/data/campaigns.js',
 
             // Helpers for getting values in human readable format
             get_human_number: function(value) {
@@ -40,7 +41,8 @@ define(function() {
 
     r.collection = Backbone.Collection.extend({
         model: r.model,
-        url: serverUrl + '/api/campaign'
+        // url: serverUrl + '/api/campaign'
+        url: '/data/campaigns.js'
     });
 
     return r;
