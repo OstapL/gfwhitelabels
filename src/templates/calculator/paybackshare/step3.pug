@@ -14,11 +14,11 @@
                             th Multiple Returned
                             th Total Distributions
                     tbody
-                        each val, index in outputData
+                        each val, index in model.outputData
                             tr
                                 th(scope='row')= 'Year ' + index
-                                td= val.fundraise
-                                td= val.revenue
-                                td= val.annual
+                                td= formatPrice(val.fundraise)
+                                td= formatPrice(val.revenue)
+                                td= formatPrice(val.annual)
                                 td= val.multiple
-                                td= val.total
+                                td= formatPrice(val.total)

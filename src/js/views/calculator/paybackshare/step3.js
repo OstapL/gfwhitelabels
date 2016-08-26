@@ -3,6 +3,8 @@ require("../../../jqplot/plugins/jqplot.highlighter.js");
 require("../../../jqplot/plugins/jqplot.canvasTextRenderer.js");
 require("../../../jqplot/plugins/jqplot.canvasAxisLabelRenderer.js");
 require("../../../jqplot/plugins/jqplot.pointLabels.js");
+var calculatorHelper = require("../../../helpers/calculatorHelpers");
+var formatPrice = calculatorHelper.formatPrice;
 
 module.exports = Backbone.View.extend({
     el: '#content',
@@ -37,7 +39,10 @@ module.exports = Backbone.View.extend({
     },
 
     render() {
-        this.$el.html(this.template(this.model.toJSON()));
+        this.$el.html(this.template({
+            model: this.model.toJSON(),
+            formatPrice
+        }));
 
         // get data for drawing jQPlot
         let outputData = this.model.get('outputData'),
