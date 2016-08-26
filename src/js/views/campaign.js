@@ -3,6 +3,7 @@ define(function() {
         list: Backbone.View.extend({
             initialize: function(options) {
                 this.collection = options.collection;
+                this.listenTo(this.collection, 'sync', this.renderSubview)
             },
             events: {
                 'change .selectpicker': 'filter'
@@ -17,34 +18,61 @@ define(function() {
 
                 var securityTypes = this.$el.find('.deal-type-picker option:selected').map(function(){return this.value}).get();
 
-                var filteredCollection = new Backbone.Collection(this.collection.filter(function (model) {            
-                    // return locations.indexOf(model.get('company').city) != -1;
-                    if (industries.length && industries.indexOf(model.get('company').industry) == -1) {
-                        return false;
-                    }
+                var frontEndFilter = false;
 
-                    if (stages.length && stages.indexOf(model.get('stage')) == -1) {
-                        return false;
-                    }
+                if (frontEndFilter) {
+                    var filteredCollection = new Backbone.Collection(this.collection.filter(function (model) {            
+                        // return locations.indexOf(model.get('company').city) != -1;
+                        if (industries.length && industries.indexOf(model.get('company').industry) == -1) {
+                            return false;
+                        }
 
-                    // if (locations.length && locations.indexOf(model.get('company').city) == -1) {
-                    if (locations.length && locations.indexOf(model.get('city')) == -1) {
-                        return false;
-                    }
+                        if (stages.length && stages.indexOf(model.get('stage')) == -1) {
+                            return false;
+                        }
 
-                    if (securityTypes.length && securityTypes.indexOf(model.get('security_type').toString()) == -1) {
-                        return false;
-                    }
+                        // if (locations.length && locations.indexOf(model.get('company').city) == -1) {
+                        if (locations.length && locations.indexOf(model.get('city')) == -1) {
+                            return false;
+                        }
 
-                    return true;
-                }));
+                        if (securityTypes.length && securityTypes.indexOf(model.get('security_type').toString()) == -1) {
+                            return false;
+                        }
 
-                this.$el.find("#campaignList").html('');
-                let view = require('views/subviews');
-                var subView = new view.campaignListSub({
-                    collection: filteredCollection
-                });
-                this.$el.find("#campaignList").append(subView.render().$el);
+                        return true;
+                    }));
+
+                    this.$el.find("#campaignList").html('');
+                    let view = require('views/subviews');
+                    var subView = new view.campaignListSub({
+                        collection: filteredCollection
+                    });
+                    this.$el.find("#campaignList").append(subView.render().$el);
+
+                } else {
+                    this.collection.fetch({
+                        data: {
+                            query: {
+                                industries: industries,
+                                stages: stages,
+                                locations: locations,
+                                security_types: securityTypes
+                            }
+                        }
+                    });
+
+                }
+            },
+
+            renderSubview: function () {
+                    // console.log("rendering subview...");
+                    this.$el.find("#campaignList").html('');
+                    let view = require('views/subviews');
+                    var subView = new view.campaignListSub({
+                        collection: this.collection
+                    });
+                    this.$el.find("#campaignList").append(subView.render().$el);
             },
 
             render: function() {
@@ -66,11 +94,11 @@ define(function() {
                         campaigns: this.collection.toJSON()
                     })
                 );
-                let view = require('views/subviews');
-                var subView = new view.campaignListSub({
-                    collection: this.collection
-                });
-                this.$el.find("#campaignList").append(subView.render().$el);
+                // let view = require('views/subviews');
+                // var subView = new view.campaignListSub({
+                //     collection: this.collection
+                // });
+                // this.$el.find("#campaignList").append(subView.render().$el);
                 this.$el.find('.selectpicker').selectpicker();
                 //selectPicker('.selectpicker');
                 return this;
