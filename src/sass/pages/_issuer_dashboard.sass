@@ -176,13 +176,6 @@
 
 .third
 	margin-top: 94px
-
-.title-size
-	letter-spacing: 2.3px
-	font-family: $dosis
-	font-weight: 500
-	margin-bottom: 25px
-
 .bars,
 .chart,
 .pie
@@ -366,8 +359,12 @@
 		.form-add-comment
 			border-top: solid 1px $border_color
 			margin-top: rem(10)
-			.form
+			.form-group
 				text-align: right
+				margin-bottom: 0
+			.row
+				padding-left: rem(15)
+				padding-right: rem(15)
 				textarea
 					max-width: 538px
 					height: 137px
@@ -377,4 +374,17 @@
 					margin-bottom: 20px
 			.btn
 				margin-bottom: 20px
-
+	.line-dashboard
+		border-top: solid 1px $border_color
+		margin-top: 50px
+		margin-bottom: 50px
+.danger-zone-dashboard
+	.row
+		.col-lg-3
+			width: 20%
+			padding-left: 0
+			margin-right: rem(15)
+	.btn-block
+	.text-block
+		line-height: 18px
+		color: $small-text
