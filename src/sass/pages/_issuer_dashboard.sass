@@ -317,7 +317,7 @@
 						float: left
 						padding-top: 5px
 						p
-							line-height: 1.15rem
+							line-height: rem(18)
 							letter-spacing: 0.02rem
 					.actions
 						text-align: right
@@ -333,25 +333,48 @@
 						.actions
 							opacity: 1
 
-		.leave_comments
-			min-height: 393px
-			border: 1px solid $border_color
+		.add-comment
+			margin-left: rem(10)
+			margin-top: rem(8)
+			.user-photo
+				margin-top: rem(2)
+				float: left
+				img
+					width: rem(54)
+					height: rem(54)
+			.text-and-name
+				margin-left: rem(70)
+				.name-date
+					h6
+						letter-spacing: rem(2.8)
+						margin-bottom: 0
+						line-height: rem(11)
+					span
+						font-size: rem(11)
+						color: $small-text
+				.comment-text
+					float: left
+					padding-top: rem(10)
+					p
+						line-height: rem(18)
+						letter-spacing: 0.02rem
+				.actions
+					margin-top: 9px
+					span
+						padding: 0 5px
 
-			.write_com
-				margin: 0 auto
-				padding: 11px 0
-				border-bottom: 1px solid $border_color
-
+		.form-add-comment
+			border-top: solid 1px $border_color
+			margin-top: rem(10)
 			.form
 				text-align: right
-				padding-right: 2.5%
-
 				textarea
-					width: 92.5%
-					border-radius: 3px
-					height: 136px
+					max-width: 538px
+					height: 137px
 					float: right
 					resize: none
-					margin-top: 22px
-					margin-bottom: 15px
+					margin-top: rem(30)
+					margin-bottom: 20px
+			.btn
+				margin-bottom: 20px
 
