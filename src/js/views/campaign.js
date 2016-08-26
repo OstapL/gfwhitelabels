@@ -3,7 +3,7 @@ define(function() {
         list: Backbone.View.extend({
             initialize: function(options) {
                 this.collection = options.collection;
-                this.listenTo(this.collection, 'sync', this.renderSubview)
+                this.listenTo(this.collection, 'sync', this.renderSubview);
             },
             events: {
                 'change .selectpicker': 'filter'
