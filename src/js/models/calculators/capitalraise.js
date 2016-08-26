@@ -18,8 +18,14 @@ module.exports = Backbone.Model.extend({
 
         // select boxes
         'industry': 'Food Products',
-        'industryEstablishment': 'New and potentially growing quickly',
-        'typeOfEstablishment': 'Be an improvement to what is currently on the market',
+
+        // 'New and potentially growing quickly' - 1
+        // 'Fairly well established' - 2
+        'industryEstablishment': 1,
+
+        // 'Be an improvement to what is currently on the market' - 3
+        // 'Be revolutionary and disruptive to the market' - 4
+        'typeOfEstablishment': 4,
 
         // data that will be calculated
         'ntmPs': null,
@@ -28,10 +34,16 @@ module.exports = Backbone.Model.extend({
         'year1Ev': null,
         'year1Average': null,
         'year1Npv': null,
-        'year2Ps': null,
-        'year2Ev': null,
-        'year2Average': null,
-        'year2Npv': null,
+        'year5Ps': null,
+        'year5Ev': null,
+        'year5Average': null,
+        'year5Npv': null,
+        'postCapitalRaise': null,
+        'averageNPV': null,
+        'liquidityAdjustment': 0.1, // 10 %
+        'liquidityAdjustmentAverageNPV': null,
+        'probabilityOfFailure': null,
+        'PreMoneyValuation': null,
 
         // flag that data is calculated
         'dataIsFilled': false
@@ -66,11 +78,59 @@ module.exports = Backbone.Model.extend({
             ntmPs = row[5],
             ntmEv = row[6];
 
-        // save NTM
-        this.set({ntmPs, ntmEv});
-
+        // calculate NTM and post capital raise
         this.set({
-            year1Ps: ntmPs * this.get('projectedRevenue')
+            ntmPs,
+            ntmEv,
+            postCapitalRaise: this.get('CashOnHand') - this.get('yourDebt') + this.get('cashRaise'),
+            dataIsFilled: true
         });
+
+        // calculate P/S and EV/EBIT for year1 and year5
+        this.set({
+            year1Ps: ntmPs * this.get('projectedRevenue'),
+            year1Ev: ntmEv * this.get('operatingProfit') + this.get('postCapitalRaise'),
+            year5Ps: ntmPs * this.get('projectedRevenueTwo') + this.get('postCapitalRaise'),
+            year5Ev: ntmEv * this.get('operatingProfitTwo') +this.get('postCapitalRaise')
+        });
+
+        // calculate Average for year1 and year5
+        this.set({
+            year1Average: (this.get('year1Ps') + this.get('year1Ev')) / 2,
+            year5Average: (this.get('year5Ps') + this.get('year5Ev')) / 2
+        });
+
+        // calculate NPV for year1 and year5
+        this.set({
+            year1Npv: this.get('year1Average'),
+            year5Npv: this.get('year5Average') / Math.pow(1.1, 4)
+        });
+
+        // calculate average NPV
+        this.set('averageNPV', (this.get('year1Npv') + this.get('year5Npv')) / 2);
+        
+        // calculate Liquidity-Adjusted Average NPV
+        this.set({
+            'liquidityAdjustmentAverageNPV': this.get('averageNPV') / (1 - this.get('liquidityAdjustment'))
+        });
+
+        // calculate probability of failure (depends on Industry/Product Permutation)
+        this.probabilityOfFailure();
+        
+        // calculate GrowthFountain Recommended Pre Money Valuation
+        this.set({
+            'PreMoneyValuation': Math.ceil(this.get('liquidityAdjustmentAverageNPV') / (1 + this.get('probabilityOfFailure')))
+        });
+    },
+
+    probabilityOfFailure() {
+        const mathHelper = {
+            '2:3':  0.3,
+            '2:4': 0.5,
+            '1:3': 0.5,
+            '1:4': 0.7
+        };
+        let failure = mathHelper[this.get('industryEstablishment') + ':' + this.get('typeOfEstablishment')];
+        this.set('probabilityOfFailure', failure);
     }
 });

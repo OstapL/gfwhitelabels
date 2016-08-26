@@ -3,6 +3,8 @@ require("../../../jqplot/plugins/jqplot.highlighter.js");
 require("../../../jqplot/plugins/jqplot.canvasTextRenderer.js");
 require("../../../jqplot/plugins/jqplot.canvasAxisLabelRenderer.js");
 require("../../../jqplot/plugins/jqplot.pointLabels.js");
+var calculatorHelper = require("../../../helpers/calculatorHelpers");
+var formatPrice = calculatorHelper.formatPrice;
 
 module.exports = Backbone.View.extend({
     el: '#content',
@@ -37,7 +39,10 @@ module.exports = Backbone.View.extend({
     },
 
     render() {
-        this.$el.html(this.template(this.model.toJSON()));
+        this.$el.html(this.template({
+            model: this.model.toJSON(),
+            formatPrice
+        }));
 
         // get data for drawing jQPlot
         let outputData = this.model.get('outputData'),
@@ -72,10 +77,12 @@ module.exports = Backbone.View.extend({
 
         // drawing jQPlot
         this.jQPlot = $.jqplot('chart1', {
+            seriesColors: ["red"],
             title: 'Payback Graph',
             animate: true,
             dataRenderer: dataRendered,
             seriesDefaults: {
+                // fill: true,
                 markerOptions: {
                     show: true
                 },
@@ -88,6 +95,25 @@ module.exports = Backbone.View.extend({
                     ypadding: 3
                 }
             },
+            grid: {
+                background: 'rgba(57,57,57,0.0)',
+                drawBorder: false,
+                shadow: false,
+                gridLineColor: '#efefef',
+                gridLineWidth: 1
+            },
+            series: [
+                {
+                    lineWidth: 1,
+                    color: 'red',
+                    markerOptions:{style:'circle'},
+                    showLine: true,
+                    fillAndStroke: true,
+                    fill: true,
+                    fillColor: '#c9302c',
+                    fillAlpha: 0.2
+                }
+            ],
             axes: {
                 xaxis: {
                     min: 0,
@@ -105,7 +131,7 @@ module.exports = Backbone.View.extend({
             },
             highlighter: {
                 show: true,
-                sizeAdjust: 7.5
+                sizeAdjust: 6
             },
             cursor: {
                 show: false

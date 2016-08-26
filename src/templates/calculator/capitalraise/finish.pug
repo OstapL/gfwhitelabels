@@ -2,8 +2,53 @@
     .page
         h1.calculator-title Capital Raise Calculator - Finish
     .submit-area
+        //
+            h2 Intermediate values
+            p= model.ntmPs
+            p= model.ntmEv
+
+            p Net Cash, post capital raise
+            p= model.postCapitalRaise
+
+            table.table
+                tr
+                    td
+                    td Year 1
+                    td Year 5
+                tr
+                    td P/S
+                    td= model.year1Ps
+                    td= model.year5Ps
+                tr
+                    td EV/EBIT
+                    td= model.year1Ev
+                    td= model.year5Ev
+                tr
+                    td Average
+                    td= model.year1Average
+                    td= model.year5Average
+                tr
+                    td NPV
+                    td= model.year1Npv
+                    td= model.year5Npv
+            p average NPV
+            p= model.averageNPV
+
+            p calculate Liquidity-Adjusted Average NPV
+            p= model.liquidityAdjustmentAverageNPV
+
+            p probabilityOfFailure
+            p= model.probabilityOfFailure
+
+            p PreMoneyValuation
+            p= model.PreMoneyValuation
+
+        h3 GrowthFountain Recommended Total Amount Of Capital Raise #{formatPrice(model.PreMoneyValuation)}
+
+
+
         .form-group.row
             .col-sm-6.text-xs-center.text-sm-left
-                a.btn.btn-link(href='/calculator/capitalraise/step-2', role='button') Go back
+                a.btn.btn-link(href='/calculator/capitalraise/step-1', role='button') Go back
                 p Don&apos;t worry we saved this info
             .col-sm-6.text-xs-center.text-sm-right
