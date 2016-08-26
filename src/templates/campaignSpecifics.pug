@@ -133,50 +133,78 @@ section.campaign-specifics.container.m-b-85
         type: 'radio',
         })
 
-      .row
-        .col-lg-6.col-l-65.m-l-30.form-group.row.clearfix
-          label.col-lg-5.text-lg-right Link to Calculators
-          .col-lg-7
-            .btn-group
-              button(data-toggle="dropdown" aria-haspopup="true" aria-expanded="false").btn.btn-dropdown Link to Calculators
-              button(data-toggle="dropdown" aria-haspopup="true" aria-expanded="false").btn.dropdown-toggle.dropdown-toggle-split.btn-dropdown-click
-                span.sr-only 
-              .dropdown-menu
-                a().dropdown-item Action1
-                a().dropdown-item Action2
-                a().dropdown-item Action3
-        .col-lg-5.col-l-65.p-l-0.p-r-1.pre-money-p-r-0.pull-right
-          +fieldBlock("premoney_valuation", '', {
-            class1: 'col-lg-4 col-md-3', 
-            class2: 'col-lg-6 col-md-9', 
-            type: 'text',
-            placeholder: '$',
-            })
-      .label-top-6
-        +fieldBlock("price_per_share", '', {
-           class1: 'col-lg-3 col-md-4',
-           class2: 'col-lg-9 col-md-8',
-           type: 'text',
-           placeholder: '$',
-           })
-      
-      .row.m-t-2.form-group-m-b-15
-        .col-lg-6.col-l-65
-          +fieldBlock("min_number_of_shares", '', {
-            class1: 'col-lg-6 p-l-2', 
-            class2: 'col-lg-6 col-md-9', 
-            type: 'text',
-            placeholder: '$',
-            })
 
-        .col-lg-6.col-l-65
-          +fieldBlock("max_number_of_shares", '', {
-            class1: 'col-lg-5 col-md-3', 
-            class2: 'col-lg-7 col-md-9', 
-            type: 'text',
-            placeholder: '$',
-            })
-        .col-lg-6.pull-right.p-r-0.m-t-2
+
+      .security_type_list.security_type_0(style=(values.security_type == 0 ? '' :  "display: none"))
+          .row
+            .col-lg-6.col-l-65.m-l-30.form-group.row.clearfix
+              label.col-lg-5.text-lg-right Link to Calculators
+              .col-lg-7
+                .btn-group
+                  button(data-toggle="dropdown" aria-haspopup="true" aria-expanded="false").btn.btn-dropdown Link to Calculators
+                  button(data-toggle="dropdown" aria-haspopup="true" aria-expanded="false").btn.dropdown-toggle.dropdown-toggle-split.btn-dropdown-click
+                    span.sr-only 
+                  .dropdown-menu
+                    a().dropdown-item Action1
+                    a().dropdown-item Action2
+                    a().dropdown-item Action3
+            .col-lg-5.col-l-65.p-l-0.p-r-1.pre-money-p-r-0.pull-right
+              +fieldBlock("premoney_valuation", '', {
+                class1: 'col-lg-4 col-md-3', 
+                class2: 'col-lg-6 col-md-9', 
+                type: 'text',
+                placeholder: '$',
+                })
+          .label-top-6
+            +fieldBlock("price_per_share", '', {
+               class1: 'col-lg-3 col-md-4',
+               class2: 'col-lg-9 col-md-8',
+               type: 'text',
+               placeholder: '$',
+               })
+          
+          .row.m-t-2.form-group-m-b-15
+            .col-lg-6.col-l-65
+              +fieldBlock("min_number_of_shares", '', {
+                class1: 'col-lg-6 p-l-2', 
+                class2: 'col-lg-6 col-md-9', 
+                type: 'text',
+                placeholder: '$',
+                })
+
+            .col-lg-6.col-l-65
+              +fieldBlock("max_number_of_shares", '', {
+                class1: 'col-lg-5 col-md-3', 
+                class2: 'col-lg-7 col-md-9', 
+                type: 'text',
+                placeholder: '$',
+                })
+
+      .security_type_list.security_type_1(style=(values.security_type == 1 ? '' :  "display: none"))
+          .row
+          .label-top-6
+            +fieldBlock("percentage_revenue", '', {
+               class1: 'col-lg-3 col-md-4',
+               class2: 'col-lg-9 col-md-8',
+               type: 'text',
+               placeholder: '$',
+               })
+          
+          .row.m-t-2.form-group-m-b-15
+            .col-lg-6.col-l-65
+              +fieldBlock("cap", '', {
+                class1: 'col-lg-6 p-l-2', 
+                class2: 'col-lg-6 col-md-9', 
+                type: 'text',
+                placeholder: '$',
+                })
+            .col-lg-6.col-l-65
+              +fieldBlock("expiration_date", '', {
+                class1: 'col-lg-6 p-l-2', 
+                class2: 'col-lg-6 col-md-9', 
+                type: 'date',
+                })
+      .col-lg-6.pull-right.p-r-0.m-t-2
             .col-lg-6
                 button(type="submit").btn.btn-lg.btn-primary.text-uppercase.pull-right save
             .col-lg-6

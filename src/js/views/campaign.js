@@ -1,3 +1,41 @@
+var jsonActions = {
+    events: {
+        'click .add-section': 'addSection',
+        'click .delete-section': 'deleteSection',
+    },
+
+    addSection: function(e) {
+                e.preventDefault();
+                let sectionName = e.target.dataset.section;
+                let template = require('templates/section.pug');
+                this[sectionName + 'Index'] ++;
+                $('.' + sectionName).append(
+                    template({
+                        fields: this.fields,
+                        name: sectionName,
+                        attr: {
+                            class1: '',
+                            class2: '',
+                            type: 'json',
+                            index: this[sectionName + 'Index'],
+                        },
+                        values: this.model.toJSON() 
+                    })
+                );
+            },
+
+   deleteSection: function(e) {
+                e.preventDefault();
+                let sectionName = e.currentTarget.dataset.section;
+                $('.' + sectionName + ' .index_' + e.currentTarget.dataset.index).remove();
+                e.currentTarget.remove();
+                // ToDo
+                // Fix index counter
+                // this[sectionName + 'Index'] --;
+   },
+};
+
+
 define(function() {
     return {
         list: Backbone.View.extend({
@@ -231,47 +269,30 @@ define(function() {
         }),
 
         generalInformation: Backbone.View.extend({
-            events: {
+            events: _.extend({
                 'submit form': 'submit',
-                'click .add-section': 'addSection',
-                'click .delete-section': 'deleteSection',
+            }, jsonActions.events),
+
+            preinitialize: function() {
+                // ToDo
+                // Hack for undelegate previous events
+                for(let k in this.events) {
+                    console.log('#content ' + k.split(' ')[1]);
+                    $('#content ' + k.split(' ')[1]).undelegate(); 
+                }
             },
+
+            addSection: jsonActions.addSection,
+            deleteSection: jsonActions.deleteSection,
+            getSuccessUrl: function() {
+                return  '/campaign/media/' + this.model.get('id');
+            },
+            submit: app.defaultSaveActions.submit,
 
             initialize: function(options) {
                 this.fields = options.fields;
                 this.faqIndex = 1;
                 this.additional_infoIndex = 1;
-            },
-
-            addSection: function(e) {
-                e.preventDefault();
-                let sectionName = e.target.dataset.section;
-                let template = require('templates/section.pug');
-                $('.' + sectionName + ' .m-b-0').addClass('form-group').removeClass('m-b-0');
-                this[sectionName + 'Index'] ++;
-                $('.' + sectionName).append(
-                    template({
-                        fields: this.fields,
-                        name: sectionName,
-                        attr: {
-                            class1: '',
-                            class2: '',
-                            type: 'json',
-                            index: this[sectionName + 'Index'],
-                        },
-                        values: this.model.toJSON() 
-                    })
-                );
-            },
-
-            deleteSection: function(e) {
-                e.preventDefault();
-                let sectionName = e.target.dataset.section;
-                if(this[sectionName + 'Index'] >= 1) {
-                    console.log('in delete function');
-                    this[sectionName + 'Index'] --;
-                    $('.' + sectionName + ' .index_' + this[sectionName + 'Index']).remove();
-                }
             },
 
             render: function() {
@@ -305,7 +326,7 @@ define(function() {
                     this.faqIndex = Object.keys(this.model.get('faq')).length - 1;
                 else
                     this.faqIndex = 0
-                if(this.model.get('additional_infoIndex'))
+                if(this.model.get('additional_info'))
                     this.additional_infoIndex = Object.keys(this.model.get('additional_info')).length - 1;
                 else
                     this.additional_infoIndex = 0
@@ -321,88 +342,34 @@ define(function() {
                 return this;
             },
 
-            submit: function(e) {
-                this.$el.find('.alert').remove();
-                event.preventDefault();
-
-                var data = $(e.target).serializeJSON();
-                //var investment = new InvestmentModel(data);
-
-                this.model.set(data);
-                console.log(this.model);
-                Backbone.Validation.bind(this, {model: this.model});
-
-                if(this.model.isValid(true)) {
-                    var self = this;
-                    this.model.save().
-                        then((data) => { 
-                            app.showLoading();
-
-                            //window.location = '/campaign/media/' + this.model.get('id');
-                            self.undelegateEvents();
-                            $('#content').scrollTo();
-                            app.routers.navigate(
-                                '/campaign/media/' + this.model.get('id'),
-                                {trigger: true, replace: false}
-                            );
-
-                        }).
-                        fail((xhr, status, text) => {
-                            app.defaultSaveActions.error(this, xhr, status, text, this.fields);
-                        });
-                } else {
-                    if(this.$('.alert').length) {
-                        this.$('.alert').scrollTo();
-                    } else  {
-                        this.$el.find('.has-error').scrollTo();
-                    }
-                }
-            }
         }),
 
         media: Backbone.View.extend({
-            events: {
+            events: _.extend({
                 'submit form': 'submit',
                 'change #video': 'updateVideo',
-                'click .add-section': 'addSection',
-                'click .delete-section': 'deleteSection',
+            }, jsonActions.events),
+
+            preinitialize: function() {
+                // ToDo
+                // Hack for undelegate previous events
+                for(let k in this.events) {
+                    console.log('#content ' + k.split(' ')[1]);
+                    $('#content ' + k.split(' ')[1]).undelegate(); 
+                }
             },
+
+            addSection: jsonActions.addSection,
+            deleteSection: jsonActions.deleteSection,
+            getSuccessUrl: function() {
+                return  '/campaign/team_members/' + this.model.get('id');
+            },
+            submit: app.defaultSaveActions.submit,
 
             initialize: function(options) {
                 this.fields = options.fields;
                 this.pressIndex = 1;
                 this.additional_videoIndex = 1;
-            },
-
-            addSection: function(e) {
-                e.preventDefault();
-                let sectionName = e.target.dataset.section;
-                let template = require('templates/section.pug');
-                $('.' + sectionName + ' .m-b-0').addClass('form-group').removeClass('m-b-0');
-                this[sectionName + 'Index'] ++;
-                $('.' + sectionName).append(
-                    template({
-                        fields: this.fields,
-                        name: sectionName,
-                        attr: {
-                            class1: '',
-                            class2: '',
-                            type: 'json',
-                            index: this[sectionName + 'Index']
-                        },
-                        values: this.model.toJSON() 
-                    })
-                );
-            },
-
-            deleteSection: function(e) {
-                e.preventDefault();
-                let sectionName = e.target.dataset.section;
-                console.log(e, sectionName, this, this[sectionName + 'Index']);
-                if(this[sectionName + 'Index'] >= 1) {
-                    this[sectionName + 'Index'] --;
-                    $('.' + sectionName + ' .index_' + this[sectionName + 'Index']).remove();
-                }
             },
 
             render: function() {
@@ -499,42 +466,6 @@ define(function() {
                 return this;
             },
 
-            submit: function(e) {
-                this.$el.find('.alert').remove();
-                event.preventDefault();
-
-                var data = $(e.target).serializeJSON();
-
-                this.model.set(data);
-                Backbone.Validation.bind(this, {model: this.model});
-
-                if(this.model.isValid(true)) {
-                    var self = this;
-                    this.model.save().
-                        then((data) => { 
-                            app.showLoading();
-
-                            //window.location = '/campaign/specifics/' + this.model.get('id');
-                            self.undelegateEvents();
-                            $('#content').scrollTo();
-                            app.routers.navigate(
-                                '/campaign/team_members/' + this.model.get('id'),
-                                {trigger: true, replace: false}
-                            );
-
-                        }).
-                        fail((xhr, status, text) => {
-                            app.defaultSaveActions.error(this, xhr, status, text, this.fields);
-                        });
-                } else {
-                    if(this.$('.alert').length) {
-                        this.$('.alert').scrollTo();
-                    } else  {
-                        this.$el.find('.has-error').scrollTo();
-                    }
-                }
-            },
-
             getVideoId: function(url) {
                 try {
                     var provider = url.match(/https:\/\/(:?www.)?(\w*)/)[2],
@@ -574,6 +505,15 @@ define(function() {
         teamMemberAdd: Backbone.View.extend({
             events: {
                 'submit form': 'submit',
+            },
+
+            preinitialize: function() {
+                // ToDo
+                // Hack for undelegate previous events
+                for(let k in this.events) {
+                    console.log('#content ' + k.split(' ')[1]);
+                    $('#content ' + k.split(' ')[1]).undelegate(); 
+                }
             },
 
             initialize: function(options) {
@@ -672,47 +612,17 @@ define(function() {
                 return this;
             },
 
+            getSuccessUrl: function() {
+                return  '/campaign/specifics/' + this.model.get('id');
+            },
+            
             submit: function(e) {
-                this.$el.find('.alert').remove();
-                event.preventDefault();
-
                 var json = $(e.target).serializeJSON();
                 var data = {
                     'member': json,
                     'index': this.index
                 };
-                console.log(data);
-
-                //var investment = new InvestmentModel(data);
-
-                this.model.set(data);
-                Backbone.Validation.bind(this, {model: this.model});
-
-                if(this.model.isValid(true)) {
-                    var self = this;
-                    this.model.save(data, {patch: true}).
-                        then((data) => { 
-                            app.showLoading();
-
-                            //window.location = '/campaign/media/' + this.model.get('id');
-                            self.undelegateEvents();
-                            $('#content').scrollTo();
-                            app.routers.navigate(
-                                '/campaign/team_members/' + this.model.get('id'),
-                                {trigger: true, replace: false}
-                            );
-
-                        }).
-                        fail((xhr, status, text) => {
-                            app.defaultSaveActions.error(this, xhr, status, text, this.fields);
-                        });
-                } else {
-                    if(this.$('.alert').length) {
-                        this.$('.alert').scrollTo();
-                    } else  {
-                        this.$el.find('.has-error').scrollTo();
-                    }
-                }
+                app.defaultSaveActions.submit.call(this, e, data);
             }
         }),
 
@@ -746,10 +656,33 @@ define(function() {
         specifics: Backbone.View.extend({
             events: {
                 'submit form': 'submit',
+                'change input[name="security_type"]': 'updateSecurityType',
             },
+
+            preinitialize: function() {
+                // ToDo
+                // Hack for undelegate previous events
+                for(let k in this.events) {
+                    console.log('#content ' + k.split(' ')[1]);
+                    $('#content ' + k.split(' ')[1]).undelegate(); 
+                }
+            },
+
+            addSection: jsonActions.addSection,
+            deleteSection: jsonActions.deleteSection,
+            getSuccessUrl: function() {
+                return  '/campaign/perks/' + this.model.get('id');
+            },
+            submit: app.defaultSaveActions.submit,
 
             initialize: function(options) {
                 this.fields = options.fields;
+            },
+
+            updateSecurityType: function(e) {
+                $('.security_type_list').hide();
+                let val = e.currentTarget.value;
+                $('.security_type_'  +val).show();
             },
 
             render: function() {
@@ -773,7 +706,8 @@ define(function() {
                         }, {
                             patch: true
                         }).then((model) => {
-                            console.log('file upload done', model);
+                            $('.img-investor_presentation').attr('src', '/img/MS-PowerPoint.png');
+                            $('.img-investor_presentation').after('<a class="link-3" href="' + data.url + '">' + data.name + '</a>');
                         });
                     }
                 );
@@ -781,74 +715,32 @@ define(function() {
                 return this;
             },
 
-            submit: function(e) {
-                this.$el.find('.alert').remove();
-                event.preventDefault();
-
-                var data = $(e.target).serializeObject();
-                //var investment = new InvestmentModel(data);
-
-                this.model.set(data);
-                Backbone.Validation.bind(this, {model: this.model});
-
-                if(this.model.isValid(true)) {
-                    var self = this;
-                    this.model.save().
-                        then((data) => { 
-                            app.showLoading();
-
-                            //window.location = '/campaign/perks/' + this.model.get('id');
-                            self.undelegateEvents();
-                            $('#content').scrollTo();
-                            app.routers.navigate(
-                                '/campaign/perks/' + this.model.get('id'),
-                                {trigger: true, replace: false}
-                            );
-
-                        }).
-                        fail((xhr, status, text) => {
-                            app.defaultSaveActions.error(this, xhr, status, text, this.fields);
-                        });
-                } else {
-                    if(this.$('.alert').length) {
-                        this.$('.alert').scrollTo();
-                    } else  {
-                        this.$el.find('.has-error').scrollTo();
-                    }
-                }
-            }
         }),
 
         perks: Backbone.View.extend({
-            events: {
+            events: _.extend({
                 'submit form': 'submit',
-                'click .add-section': 'addSection',
+            }, jsonActions.events),
+
+            preinitialize: function() {
+                // ToDo
+                // Hack for undelegate previous events
+                for(let k in this.events) {
+                    console.log('#content ' + k.split(' ')[1]);
+                    $('#content ' + k.split(' ')[1]).undelegate(); 
+                }
             },
+
+            addSection: jsonActions.addSection,
+            deleteSection: jsonActions.deleteSection,
+            getSuccessUrl: function() {
+                return  '/api/campaign/' + this.model.get('id');
+            },
+            submit: app.defaultSaveActions.submit,
 
             initialize: function(options) {
                 this.fields = options.fields;
                 this.perksIndex = 1;
-            },
-
-            addSection: function(e) {
-                e.preventDefault();
-                let sectionName = e.target.dataset.section;
-                let template = require('templates/section.pug');
-                $('.' + sectionName + ' .m-b-0').addClass('form-group').removeClass('m-b-0');
-                this[sectionName + 'Index'] ++;
-                $('.' + sectionName).append(
-                    template({
-                        fields: this.fields,
-                        name: sectionName,
-                        attr: {
-                            class1: '',
-                            class2: '',
-                            type: 'json',
-                            index: this[sectionName + Index],
-                        },
-                        values: this.model.toJSON() 
-                    })
-                );
             },
 
             render: function() {
@@ -879,45 +771,6 @@ define(function() {
                 return this;
             },
 
-            submit: function(e) {
-                this.$el.find('.alert').remove();
-                event.preventDefault();
-
-                var data = $(e.target).serializeJSON();
-                //var investment = new InvestmentModel(data);
-
-                this.model.set(data);
-                Backbone.Validation.bind(this, {model: this.model});
-
-                if(this.model.isValid(true)) {
-                    var self = this;
-                    this.model.save().
-                        then((data) => { 
-                            app.showLoading();
-                            console.log('data got', data, this.model);
-
-                            //window.location = '/api/campaign/' + this.model.get('id');
-                            self.undelegateEvents();
-                            $('#content').scrollTo();
-                            app.routers.navigate(
-                                '/api/campaign/' + this.model.get('id'),
-                                {trigger: true, replace: false}
-                            );
-
-                        }).
-                        fail((xhr, status, text) => {
-                            app.defaultSaveActions.error(this, xhr, status, text, this.fields);
-                        });
-                } else {
-                    if(this.$('.alert').length) {
-                        this.$('.alert').scrollTo();
-                    } else  {
-                        this.$el.find('.has-error').scrollTo();
-                    }
-                }
-            }
         }),
-
-
     }
 });

@@ -17,13 +17,18 @@ ul.list-blog {
 	&-main {
 		li {
 			position: relative;
-
+ 
 			display: inline-block;
-			height: 360px;
-			padding: 0 rem(15);
+			height: 370px;
+			// padding: 0 rem(15);
 			vertical-align: top;
+			margin-right: 4%;
+			width: 42%;
 
-			width: 50%;
+			&:nth-of-type(even) {
+				margin-right: 0;
+			}
+
 
 			h3 {
 				font-weight: 400;
@@ -38,14 +43,15 @@ ul.list-blog {
 				line-height: rem(18);
 
 				img {
-					height: 190px;
+					height: 200px;
+					width: 100%;
 				}
 			}
 
 			.btn-blog-block {
 				position: absolute;
 				bottom: 0;
-				left: rem(15);
+				left: 0;
 			}
 		}
 	}
