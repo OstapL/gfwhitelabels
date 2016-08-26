@@ -32,7 +32,7 @@ define(function() {
                         return false;
                     }
 
-                    if (securityTypes.length && securityTypes.indexOf('' + model.get('security_type')) == -1) {
+                    if (securityTypes.length && securityTypes.indexOf(model.get('security_type').toString()) == -1) {
                         return false;
                     }
 
