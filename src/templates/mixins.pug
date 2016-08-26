@@ -147,6 +147,40 @@ mixin fieldBlock(name, data, attr)
                                         ).form-control
                         - counter ++
                         - indexCounter ++
+        else if attr.type == 'jsonVideo' 
+                - counter = attr.index || 0
+                - indexCounter = attr.index || 0
+                if values[name].length == 0
+                    a(href="#" data-section=name).delete-section.pull-right
+                        i.fa.fa-times
+                else
+                    - counter = 0
+                    - indexCounter = attr.index || 0
+                    - let kkeys = Object.keys(values[name])
+                    each el in values[name]
+                        - console.log(indexCounter, 'video')
+                        a(href="#" data-section=name data-index=indexCounter).delete-section.pull-right
+                            i.fa.fa-times
+                        div(class='form-group clearfix index_' + indexCounter)
+                            .col-lg-7.videoInteractive
+                                label.col-lg-5.col-md-5.text-lg-right Video
+                                .col-lg-7.col-md-7
+                                each k1,v in fields[name].schema
+                                    - let k = values[name][kkeys[counter]][v]
+                                    - let t = fields[name].schema[v]
+                                    - console.log(k, t)
+                                    input(
+                                        id=name + '_' + v
+                                        name=name + '[' + indexCounter + '][' + v + ']'
+                                        placeholder=t.placeholder ? t.placeholder : t.label
+                                        type=t.type
+                                        value=k
+                                    ).form-control
+                                .col-lg-5.p-l-1.p-r-3 
+                                    .embed-responsive.embed-responsive-16by9 
+                                        iframe.embed-responsive-item(src="//www.youtube.com/embed/" + app.getVideoId(k) + "?rel=0" allowfullscreen="true")
+                        - counter ++
+                        - indexCounter ++
         else
                 label(class= attr.text_align ? 'text-md-' + attr.text_align + ' ' + attr.class1 : ' text-md-right ' + attr.class1 for=name)= fields[name].label
                 div(class=attr.class2)
