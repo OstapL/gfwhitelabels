@@ -4,8 +4,8 @@ include mixins.pug
     [
         ['Home', '/'],
         ['Explore', Urls['campaign-list']],
-        ['Smartbe', Urls['compaign-detail'](campaign.id)],
-        ['Invest in smartbe', '']
+        ['Smartbe', Urls['campaign-detail'](campaign.id)],
+        ['Invest in ' + campaign.company.name, '']
     ]
 )
 

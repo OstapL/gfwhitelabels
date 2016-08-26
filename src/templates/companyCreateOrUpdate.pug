@@ -108,12 +108,12 @@ section.create-company.container.m-b-85
             class2: 'col-lg-6',
             type: 'choice',
           })
-        .col-lg-6
+        .col-lg-6.data-input
           .col-date.form-group-m-b-0
-            .form-group.row.required.clearfix
-              label.col-lg-5.date Date of Organization
-              .col-lg-6
-                input(name="founding_date" type="date" value=values.founding_date).form-control
+            +fieldBlock("founding_date", '', {
+              class1: 'col-lg-6',
+              class2: 'col-lg-6',
+            })
       .border-bottom
       +fieldBlock("address_1", '', {
         class1: 'col-lg-3 col-md-3',
