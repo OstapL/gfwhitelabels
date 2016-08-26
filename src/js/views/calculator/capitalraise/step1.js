@@ -12,6 +12,36 @@ module.exports = Backbone.View.extend({
 
     template: require('templates/calculator/capitalraise/step1.pug'),
 
+    initialize() {
+        // declare data for two selects
+        this.industryEstablishment = [
+            {
+                text: 'New and potentially growing quickly',
+                value: 1
+            },
+            {
+                text: 'Fairly well established',
+                value: 2
+            }
+        ];
+        this.typeOfEstablishment = [
+            {
+                text: 'Be an improvement to what is currently on the market',
+                value: 3
+            },
+            {
+                text: 'Be revolutionary and disruptive to the market',
+                value: 4
+            }
+        ];
+
+        // helper for template
+        this.selects = {
+            industryEstablishment: this.industryEstablishment,
+            typeOfEstablishment: this.typeOfEstablishment
+        }
+    },
+
     events: {
         // calculate your income
         'submit .js-calc-form': 'doCalculation',
@@ -32,7 +62,7 @@ module.exports = Backbone.View.extend({
 
         this.model.calculate();
 
-        app.routers.navigate('/calculator/capitalraise/step-2', {trigger: true});
+        app.routers.navigate('/calculator/capitalraise/finish', {trigger: true});
     },
 
     cutZeros(e) {
@@ -49,7 +79,8 @@ module.exports = Backbone.View.extend({
     render: function () {
         this.$el.html(this.template({
             model: this.model.toJSON(),
-            industryData: industryData.map(el => el[0])
+            industryData: industryData.map(el => el[0]),
+            selects: this.selects
         }));
 
         // declare ui elements for the view

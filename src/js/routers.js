@@ -29,7 +29,6 @@ let appRoutes = Backbone.Router.extend({
         
       'calculator/capitalraise/intro': 'calculatorCapitalraiseIntro',
       'calculator/capitalraise/step-1': 'calculatorCapitalraiseStep1',
-      'calculator/capitalraise/step-2': 'calculatorCapitalraiseStep2',
       'calculator/capitalraise/finish': 'calculatorCapitalraiseFinish'
     },
     back: function(event) {
@@ -98,17 +97,6 @@ let appRoutes = Backbone.Router.extend({
     calculatorCapitalraiseStep1() {
         let Model = require('models/calculators/capitalraise');
         let View = require('views/calculator/capitalraise/step1');
-
-        new View({
-            model: app.getModelInstance(Model, 'calculatorCapitalraise').setFormattedPrice()
-        }).render();
-
-        app.hideLoading();
-    },
-
-    calculatorCapitalraiseStep2() {
-        let Model = require('models/calculators/capitalraise');
-        let View = require('views/calculator/capitalraise/step2');
 
         new View({
             model: app.getModelInstance(Model, 'calculatorCapitalraise').setFormattedPrice()
@@ -640,13 +628,22 @@ let appRoutes = Backbone.Router.extend({
 
     execute(callback, args, name) {
 
-        // disable enter to the final step without data
+        // disable enter to the final step of paybackshare calculator without data
         if (name == 'calculatorPaybackshareStep3') {
             if (!app.models['calculatorPaybackshare'] || !app.models['calculatorPaybackshare'].get('outputData')) {
                 app.routers.navigate('/calculator/paybackshare/step-2', {trigger: true});
                 return false;
             }
         }
+
+        // disable enter to the final step of capitalraise calculator without data
+        if (name == 'calculatorCapitalraiseFinish') {
+            if (!app.models['calculatorCapitalraise'] || !app.models['calculatorCapitalraise'].get('dataIsFilled')) {
+                app.routers.navigate('/calculator/capitalraise/step-1', {trigger: true});
+                return false;
+            }
+        }
+
         if (callback) callback.apply(this, args);
     }
 });
