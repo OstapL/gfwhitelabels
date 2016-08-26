@@ -195,9 +195,12 @@ let appRoutes = Backbone.Router.extend({
                         url: company.urlRoot,
                     }, app.defaultOptionsRequest)
                 );
-                var campaignAjax = $.ajax({
-                    url: serverUrl + '/api/campaign?company_id=' + company.id,
-                });
+                var params = _.extend({
+                    url: serverUrl + '/api/campaign/general_information?company_id=' + company.id,
+                }, app.defaultOptionsRequest);
+                params.type = 'GET';
+
+                var campaignAjax = $.ajax(params);
 
                 $.when(optionsAjax, campaignAjax).done((rOptions, rCampaignList) => {
                     console.log(rCampaignList);
