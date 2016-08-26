@@ -64,9 +64,8 @@ mixin fieldBlock(name, data, attr)
                         each v in fields[name].choices
                             option(value=v.value selected=(v.value == values[name] ? "selected" : undefined)) #{v.display_name}
         else if attr.type == 'date' 
-                - console.log(values[name]);
                 label(class= attr.text_align ? 'text-md-' + attr.text_align + ' ' + attr.class1 : ' text-md-right ' + attr.class1 for=name)= fields[name].label
-                div(class=attr.class2)#name
+                div(class=attr.class2 id=name).date-input
                     .col-lg-6.no-gutter
                         input(
                             id=name + '__month'
