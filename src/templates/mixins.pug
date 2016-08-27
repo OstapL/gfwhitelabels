@@ -44,9 +44,9 @@ mixin fieldBlock(name, data, attr)
                     label(for=name).text-justify #{attr.text}
         else if attr.type == 'radio' 
                 label(class= attr.text_align ? 'text-md-' + attr.text_align + ' ' + attr.class1 : ' text-md-right ' + attr.class1 for=name)= fields[name].label
-                div(class=attr.class2)
+                div(class=attr.class2 + ' radio-input')
                     each v in fields[name].choices
-                        label.col-lg-3
+                        label
                             input(
                                 type="radio" 
                                 class="form-check-input" 
