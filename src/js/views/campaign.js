@@ -127,6 +127,11 @@ define(function() {
                     photoswipeRun('#gallery1');
                 }, 100);
 
+                this.$el.find('.modal').on('hidden.bs.modal', function(event) {
+                    console.log(this, event);
+                    $(event.currentTarget).find('iframe').attr('src', $(event.currentTarget).find('iframe').attr('src'));
+                });
+
                 return this;
             },
 
