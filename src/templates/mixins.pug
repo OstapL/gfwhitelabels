@@ -66,6 +66,7 @@ mixin fieldBlock(name, data, attr)
         else if attr.type == 'date' 
                 label(class= attr.text_align ? 'text-md-' + attr.text_align + ' ' + attr.class1 : ' text-md-right ' + attr.class1 for=name)= fields[name].label
                 div(class=attr.class2 id=name).date-input
+                    - let data = values[name] ? values[name].split('-') : []
                     .col-lg-6.no-gutter
                         input(
                             id=name + '__month'
@@ -73,7 +74,7 @@ mixin fieldBlock(name, data, attr)
                             placeholder="09"
                             type='numeber'
                             maxlength=2
-                            value=values[name].split('-')[1]
+                            value=data[1]
                           ).form-control
                     .col-lg-6.no-gutter
                         input(
@@ -82,7 +83,7 @@ mixin fieldBlock(name, data, attr)
                             placeholder="2016"
                             type='numeber'
                             maxlength=4
-                            value=values[name].split('-')[0]
+                            value=data[0]
                           ).form-control
         else if attr.type == 'textarea' 
                 label(class= attr.text_align ? 'text-md-' + attr.text_align + ' ' + attr.class1 : ' text-md-right ' + attr.class1 for=name)= fields[name].label
