@@ -44,9 +44,9 @@ mixin fieldBlock(name, data, attr)
                     label(for=name).text-justify #{attr.text}
         else if attr.type == 'radio' 
                 label(class= attr.text_align ? 'text-md-' + attr.text_align + ' ' + attr.class1 : ' text-md-right ' + attr.class1 for=name)= fields[name].label
-                div(class=attr.class2)
+                div(class=attr.class2 + ' radio-input')
                     each v in fields[name].choices
-                        label.col-lg-3
+                        label
                             input(
                                 type="radio" 
                                 class="form-check-input" 
@@ -66,6 +66,7 @@ mixin fieldBlock(name, data, attr)
         else if attr.type == 'date' 
                 label(class= attr.text_align ? 'text-md-' + attr.text_align + ' ' + attr.class1 : ' text-md-right ' + attr.class1 for=name)= fields[name].label
                 div(class=attr.class2 id=name).date-input
+                    - let data = values[name] ? values[name].split('-') : []
                     .col-lg-6.no-gutter
                         input(
                             id=name + '__month'
@@ -73,7 +74,7 @@ mixin fieldBlock(name, data, attr)
                             placeholder="09"
                             type='numeber'
                             maxlength=2
-                            value=values[name].split('-')[1]
+                            value=data[1]
                           ).form-control
                     .col-lg-6.no-gutter
                         input(
@@ -82,7 +83,7 @@ mixin fieldBlock(name, data, attr)
                             placeholder="2016"
                             type='numeber'
                             maxlength=4
-                            value=values[name].split('-')[0]
+                            value=data[0]
                           ).form-control
         else if attr.type == 'textarea' 
                 label(class= attr.text_align ? 'text-md-' + attr.text_align + ' ' + attr.class1 : ' text-md-right ' + attr.class1 for=name)= fields[name].label
@@ -145,6 +146,59 @@ mixin fieldBlock(name, data, attr)
                                             type=t.type
                                             value=k
                                         ).form-control
+                        - counter ++
+                        - indexCounter ++
+        else if attr.type == 'jsonVideo' 
+                - counter = attr.index || 0
+                - indexCounter = attr.index || 0
+                if values[name].length == 0
+                    div(class='form-group clearfix index_' + indexCounter)
+                        a(href="#" data-section=name).delete-section.pull-right
+                            i.fa.fa-times
+                        .col-lg-7.videoInteractive
+                            each k1,v in fields[name].schema
+                                - let k = values[name][kkeys[counter]][v]
+                                - let t = fields[name].schema[v]
+                                .form-group.clearfix
+                                    label.col-lg-5.col-md-5.text-lg-right.font-weight-bold #{t.label}
+                                    .col-lg-7.col-md-7
+                                        input(
+                                            id=name + '_' + v
+                                            name=name + '[' + indexCounter + '][' + v + ']'
+                                            placeholder=t.placeholder ? t.placeholder : t.label
+                                            type=t.type
+                                            value=k
+                                        ).form-control
+                        .col-lg-5.p-l-1.p-r-3 
+                            .embed-responsive.embed-responsive-16by9 
+                                iframe.embed-responsive-item(src="//www.youtube.com/embed/?rel=0" allowfullscreen="true")
+                else
+                    - counter = 0
+                    - indexCounter = attr.index || 0
+                    - let kkeys = Object.keys(values[name])
+                    each el in values[name]
+                        div(class='form-group clearfix index_' + indexCounter)
+                            a(href="#" data-section=name data-index=indexCounter).delete-section.pull-right
+                                i.fa.fa-times
+                            .col-lg-7.videoInteractive
+                                each k1,v in fields[name].schema
+                                    - let k = values[name][kkeys[counter]][v]
+                                    - let t = fields[name].schema[v]
+                                    .form-group.clearfix
+                                        label.col-lg-5.col-md-5.text-lg-right.font-weight-bold #{t.label}
+                                        .col-lg-7.col-md-7
+                                            input(
+                                                id=name + '_' + v
+                                                name=name + '[' + indexCounter + '][' + v + ']'
+                                                placeholder=t.placeholder ? t.placeholder : t.label
+                                                type=t.type
+                                                value=k
+                                            ).form-control
+                            .col-lg-5.p-l-1.p-r-3 
+                                .embed-responsive.embed-responsive-16by9 
+                                    - console.log('app', app, k);
+                                    - let link = app.getVideoId(values[name][kkeys[counter]].link)
+                                    iframe.embed-responsive-item(src="//www.youtube.com/embed/" + link + "?rel=0" allowfullscreen="true")
                         - counter ++
                         - indexCounter ++
         else
