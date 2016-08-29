@@ -215,7 +215,14 @@ let appRoutes = Backbone.Router.extend({
                     //app.cache[window.location.pathname] = i.$el.html();
 
                     app.hideLoading();
-                }).fail(app.DefaultSaveActions.error);
+                }).fail(function(xhr, response, error) {
+                    console.log(arguments);
+                    var $view = {
+                        $el: $('#content'),
+                        $: app.$
+                    };
+                    app.DefaultSaveActions.error.call($view, xhr, response, error);
+                });
             });
         } else {
             app.routers.navigate(

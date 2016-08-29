@@ -1,0 +1,36 @@
+include mixins.pug
+
+section.investor-tutorial
+  #carousel-investor(data-ride="carousel").carousel.slide
+    ol.carousel-indicators
+      li(data-target="#carousel-investor" data-slide-to="0").active
+      li(data-target="#carousel-investor" data-slide-to="1")
+      li(data-target="#carousel-investor" data-slide-to="2")
+    .carousel-inner(role="listbox")
+      .carousel-item.active
+        img(src="/img/other_img/1.png" alt="...").img-fluid
+        .carousel-caption
+          h2 Accessibility issue
+          p The carousel component is generally not compliant with accessibility standards. If you need to be compliant, please consider other options for presenting your content.
+          p The carousel component is generally not compliant with accessibility standards. If you need to be compliant, please consider other options for presenting your content.
+          p The carousel component is generally not compliant with accessibility standards. If you need to be compliant, please consider other options for presenting your content.
+      .carousel-item
+        img(src="/img/other_img/2.png" alt="...").img-fluid
+        .carousel-caption
+          h2 Accessibility issue
+          p The carousel component is generally not compliant with accessibility standards. If you need to be compliant, please consider other options for presenting your content.
+      .carousel-item
+        img(src="/img/other_img/3.png" alt="...").img-fluid
+        .carousel-caption
+          h2 Accessibility issue
+          p The carousel component is generally not compliant with accessibility standards. If you need to be compliant, please consider other options for presenting your content.
+      a(href="#carousel-investor"
+      role="button" 
+      data-slide="prev").left.carousel-control
+        span(aria-hidden="true").icon-prev
+        span.sr-only Previous
+      a(href="#carousel-investor"
+      role="button" 
+      data-slide="next").right.carousel-control
+        span(aria-hidden="true").icon-next
+        span.sr-only Next

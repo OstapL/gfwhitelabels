@@ -16,7 +16,8 @@ var jsonActions = {
                         attr: {
                             class1: '',
                             class2: '',
-                            type: 'json',
+                            app: app,
+                            type: this.fields[sectionName].type,
                             index: this[sectionName + 'Index'],
                         },
                         values: this.model.toJSON() 
@@ -125,6 +126,11 @@ define(function() {
                     window.PhotoSwipeUI_Default = PhotoSwipeUI_Default;
                     photoswipeRun('#gallery1');
                 }, 100);
+
+                this.$el.find('.modal').on('hidden.bs.modal', function(event) {
+                    console.log(this, event);
+                    $(event.currentTarget).find('iframe').attr('src', $(event.currentTarget).find('iframe').attr('src'));
+                });
 
                 return this;
             },
@@ -349,7 +355,7 @@ define(function() {
         media: Backbone.View.extend({
             events: _.extend({
                 'submit form': 'submit',
-                'change #video': 'updateVideo',
+                'change .videoInteractive input[type="url"]': 'updateVideo',
             }, jsonActions.events),
 
             preinitialize: function() {
@@ -390,7 +396,7 @@ define(function() {
                         placeholder: 'http://www.',
                     }
                 };
-                this.fields['additional_video'].type = 'json'
+                this.fields['additional_video'].type = 'jsonVideo'
                 this.fields['additional_video'].schema = {
                     headline: {
                         type: 'string', 
@@ -487,6 +493,7 @@ define(function() {
             },
 
             updateVideo: function(e) {
+                var $form = $(e.target).parents('.videoInteractive').parent();
                 var video = e.target.value;
                 var id = this.getVideoId(video);
                 console.log(id);
@@ -496,7 +503,7 @@ define(function() {
                 // Bad CHECK
                 //
                 if(id != '') {
-                    this.$el.find('#video_source iframe').attr(
+                    $form.find('iframe').attr(
                         'src', '//youtube.com/embed/' +  id + '?rel=0'
                     );
                     //e.target.value = id;
@@ -615,7 +622,7 @@ define(function() {
             },
 
             getSuccessUrl: function() {
-                return  '/campaign/specifics/' + this.model.get('id');
+                return  '/campaign/team_members/' + this.model.get('id');
             },
             
             submit: function(e) {

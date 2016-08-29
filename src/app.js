@@ -27,14 +27,13 @@ require('../node_modules/jquery-serializejson/jquery.serializejson.min.js');
 _.extend(Backbone.Validation.callbacks, {
     valid: function (view, attr, selector) {
         var $el = view.$('[name=' + attr + ']');
-        var $group = null;
+        $group = $el.parent();
 
         // if element not found - do nothing
         // we had clean alert-warning before submit
         if($el.length == 0) {
         }
         else {
-            $group = $el.parent();
             if($group.find('.help-block').length == 0) {
                 $group = $group.parent();
             }
@@ -300,8 +299,11 @@ global.app = {
         },
 
         error: (view, xhr, status, text, fields) => {
+            view.$el.find('.alert-warning').remove();
+            view.$el.find('.help-block').remove();
             if(xhr.hasOwnProperty('responseJSON')) {
                 let data = xhr.responseJSON;
+                data = data ? data : {'Server': status};
                 for (let key in data)  {                                                 
                   Backbone.Validation.callbacks.invalid(                                 
                     view, key, data[key]

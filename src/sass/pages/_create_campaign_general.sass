@@ -1,22 +1,33 @@
 .create-company-general
 	h2
-		margin-bottom: 50px
+		margin-bottom: rem(25)
 	.form-section
 		.form-group
 			label
 				margin-bottom: 0
+	.faq
+		padding-bottom: 0
 	.border-bottom
 		margin-top: 50px
-	a.delete-section
-		float: right
-		margin-right: rem(20)
-		color: $small-text
-		+mt(.2s)
-		&:hover
-			color: $link-1-hover
+	.border-bottom-faq
+		margin-top: rem(45)
+		margin-bottom: rem(50)
+	.add-section
+		position: relative
+		top: rem(-5)
+	.btn
+		margin-top: 45px
+	.additional_info
+		label
+			padding: 0
+a.delete-section
+	float: right
+	margin-right: rem(20)
+	color: $small-text
+	margin-top: -20px
+	+mt(.2s)
+	&:hover
+		color: $crimson
 .m-b-0-form-group
 	.form-group
 		margin-bottom: 0
-
-.add-link
-	margin-top: rem(20)
