@@ -1,0 +1,43 @@
+.container.calculator-container
+    .page
+        p.lead
+            This calculator will give you an idea of distributions associated with issuing Payback Share
+        form.js-calc-form
+            .form-group.row
+                label.col-sm-7.col-form-label.asdasdasdsa(for='input2')
+                    How much money do you plan to raise?
+                .col-sm-5
+                    input#input2.form-control.js-field(
+                        value= raiseMoneyFormatted,
+                        type='text',
+                        placeholder='$0',
+                        data-input-mask='price',
+                        data-model-value='raiseMoney',
+                        data-current-value= raiseMoney)
+            .form-group.row
+                label.col-sm-7.col-form-label(for='input3')
+                    What do you expect your revenue to be next year?
+                .col-sm-5
+                    input#input3.form-control.js-field(
+                        value= nextYearRevenueFormatted,
+                        type='text',
+                        placeholder='$0',
+                        data-input-mask='price',
+                        data-model-value='nextYearRevenue',
+                        data-current-value= nextYearRevenue)
+            .form-group.row
+                label.col-sm-7.col-form-label(for='input1')
+                    At what rate do you expect your revenue to grow each year?
+                .col-sm-5
+                    input#input1.form-control.js-field(
+                        value= growLevel,
+                        type='text',
+                        data-input-mask='percent',
+                        data-model-value='growLevel')
+            .submit-area
+                .form-group.row
+                    .col-sm-6.text-xs-center.text-sm-left
+                        a.btn.btn-link(href='/calculator/paybackshare/step-1', role='button') Go back
+                        p Don&apos;t worry we saved this info
+                    .col-sm-6.text-xs-center.text-sm-right
+                        button.btn.btn-primary.btn-lg(type='submit') Next
