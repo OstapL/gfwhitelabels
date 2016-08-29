@@ -264,16 +264,20 @@ let appRoutes = Backbone.Router.extend({
             // ToDo
             // Rebuild this
             app.user.getCompany((company) => {
-                var optionsAjax = $.ajax(_.extend({
+                let optionsAjax = $.ajax(_.extend({
                         url: company.urlRoot,
                     }, app.defaultOptionsRequest)
                 );
-                var params = _.extend({
-                    url: serverUrl + '/api/campaign/general_information?company_id=' + company.id,
-                }, app.defaultOptionsRequest);
-                params.type = 'GET';
 
-                var campaignAjax = $.ajax(params);
+                let campaignAjax = '';
+                if(typeof company.id != 'undefined') {
+                    asdf
+                    let params = _.extend({
+                        url: serverUrl + '/api/campaign/general_information?company_id=' + company.id,
+                    }, app.defaultOptionsRequest);
+                    params.type = 'GET';
+                    campaignAjax = $.ajax(params);
+                }
 
                 $.when(optionsAjax, campaignAjax).done((rOptions, rCampaignList) => {
                     console.log(rCampaignList);
@@ -281,8 +285,14 @@ let appRoutes = Backbone.Router.extend({
                         el: '#content',
                         fields: rOptions[0].actions.POST,
                         model: company,
-                        campaign: rCampaignList[0][0]
                     });
+
+                    if(rCampaignList[0]) {
+                        i.campaign = rCampaignList[0][0];
+                    }
+                    else {
+                        i.campaign = {};
+                    }
                     i.render();
                     //app.views.campaign[id].render();
                     //app.cache[window.location.pathname] = i.$el.html();
