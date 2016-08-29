@@ -1,56 +1,14 @@
 include mixins.pug
-section.login
-    .container
-        .col-lg-12
-            h2.dosis.text-uppercase.text-sm-center.text-xs-center.m-t-85 Log in
-                p.small-text New to GrowthFountain?
-                    a(href="/accont/signup").link-3  Sign up
-        
-        .col-lg-4.offset-lg-4
-            form(action="" metod="post").form-section.login-form
-                .col-lg-12
-                    .form-group.row.clearfix.required
-                        input(type="email"
-                        placeholder="E-mail"
-                        name="email").form-control
-                    .form-group.row.clearfix.required
-                        input(type="password"
-                        placeholder="Password"
-                        name="password").form-control
-                .col-lg-12
-                    .row.forgot
-                        a(href="/accounts/password/reset/").link-3 Forgot your password?
-                .col-lg-12
-                    .row.text-sm-center
-                        button(type="submit").btn.btn-lg.btn-primary.text-uppercase Login
-                .col-lg-12.border-bottom.or
-                    span or
-                .social-btn.col-lg-12
-                    a(data-original-title="facebook"
-                    href="/account/facebook/login/?process=login"
-                    ).btn.btn-block.btn-lg.btn-facebook.text-uppercase
-                        i.fa.fa-facebook
-                        |  SIGN UP with Facebook
-                    a(data-original-title="Linkedin"
-                    href="/account/linkedin/login/?process=login"
-                    ).btn.btn-block.btn-lg.btn-linkedin.text-uppercase
-                        i.fa.fa-linkedin
-                        |  SIGN UP with linkedin
-                    a(data-original-title="Google Plus"
-                    href="/account/google/login/?process=login"
-                    ).btn.btn-block.btn-lg.btn-google.text-uppercase
-                        i.fa.fa-google-plus
-                        |  SIGN UP with Google
 
 section.singup.m-t-85
     .container
         .col-lg-12
-            h2.dosis.text-uppercase.text-sm-center.text-xs-center.m-t-85 sign up
+            h2.dosis.text-uppercase.text-sm-center.text-xs-center sign up
                 p.small-text Have an account?
-                    a(href="#").link-3  Log In
+                    a(href="/account/login").link-3  Log In
         
         .col-lg-4.offset-lg-4
-            form(action="" metod="post").form-section
+            form(action="" metod="post").form-section.signup-form
                 .col-lg-12
                     .form-group.row.clearfix.required
                         input(type="text"

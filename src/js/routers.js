@@ -9,7 +9,6 @@ let appRoutes = Backbone.Router.extend({
       'pg/:name': 'pagePG',
       'page/:id/': 'pageDetail',
       'page/:id': 'pageDetail',
-      'account/profile': 'accountProfile',
       'company/create': 'companyCreate',
       'campaign/general_information/': 'campaignGeneralInformation',
       'campaign/general_information/:id': 'campaignGeneralInformation',
@@ -18,8 +17,9 @@ let appRoutes = Backbone.Router.extend({
       'campaign/team_members/:id': 'campaignTeamMembers',
       'campaign/specifics/:id': 'campaignSpecifics',
       'campaign/perks/:id': 'campaignPerks',
+      'account/profile': 'accountProfile',
       'account/login': 'login',
-      'account/signup': 'login',
+      'account/signup': 'signup',
       'account/logout': 'logout',
       'account/facebook/login/': 'loginFacebook',
       'account/google/login/': 'loginGoogle',
@@ -631,7 +631,29 @@ let appRoutes = Backbone.Router.extend({
                 model: new userModel(),
             });
             loginView.render();
-            app.cache[window.location.pathname] = loginView.$el.html();
+            app.hideLoading();
+        }).fail((xhr, error) => {
+            // ToDo
+            // Show global error message
+            console.log('cant get fields ');
+            console.log(xhr, error);
+            app.hideLoading();
+        });
+    },
+
+    signup: function(id) {
+        let view = require('views/user');
+        var a2 = $.ajax(_.extend({
+                url: serverUrl + Urls['rest_register'](),
+            }, app.defaultOptionsRequest));
+        $.when(a2).done((r2) => {
+            console.log(r2);
+            let signView = new view.signup({
+                el: '#content',
+                register_fields: r2.actions.POST,
+                model: new userModel(),
+            });
+            signView.render();
             app.hideLoading();
         }).fail((xhr, error) => {
             // ToDo

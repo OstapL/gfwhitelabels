@@ -260,7 +260,7 @@ global.app = {
 
     defaultSaveActions: {
         submit: function(e, data) {
-                    console.log(arguments);
+
             this.$el.find('.alert').remove();
             event.preventDefault();
 
@@ -274,15 +274,20 @@ global.app = {
                 var self = this;
                 this.model.save().
                     then((data) => { 
-                        app.showLoading();
+                        this.$el.find('.alert-warning').remove();
+                        if(typeof this._success == 'function') {
+                            this._success(data);
+                        } else {
+                            app.showLoading();
 
-                        //window.location = '/api/campaign/' + this.model.get('id');
-                        self.undelegateEvents();
-                        $('#content').scrollTo();
-                        app.routers.navigate(
-                            self.getSuccessUrl(data),
-                            {trigger: true, replace: false}
-                        );
+                            //window.location = '/api/campaign/' + this.model.get('id');
+                            self.undelegateEvents();
+                            $('#content').scrollTo();
+                            app.routers.navigate(
+                                self.getSuccessUrl(data),
+                                {trigger: true, replace: false}
+                            );
+                        }
 
                     }).
                     fail((xhr, status, text) => {
@@ -290,7 +295,7 @@ global.app = {
                     });
             } else {
                 if(this.$('.alert').length) {
-                    this.$('.alert').scrollTo();
+                    $('#content').scrollTo();
                 } else  {
                     this.$el.find('.has-error').scrollTo();
                 }
