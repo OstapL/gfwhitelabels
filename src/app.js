@@ -9,7 +9,6 @@ global.userModel = require('models/user.js');
 global.Urls = require('jsreverse.js');
 require('../node_modules/jquery-serializejson/jquery.serializejson.min.js');
 
-
 // require('sass/mixins_all.sass');
 
 //console.log(global.userModel);
@@ -17,7 +16,7 @@ require('../node_modules/jquery-serializejson/jquery.serializejson.min.js');
 //require('libs.js');
 
 // При выводе ошибок для форм у нас может быть две ситуации:
-// 1. Мы выводим ошибку для элементы который у нас есть в форме => 
+// 1. Мы выводим ошибку для элементы который у нас есть в форме =>
 // нам нужно вывести это ошибку в help-block рядом с тем элементом где была ошибка
 //
 // 2. Мы выводим ошибку для элемента которого у нас в форме нет или это глобальная ошибка
@@ -186,12 +185,12 @@ global.app = {
 
     models: {
         campaign: [],
-        page: [],
+        page: []
     },
 
     views: {
         campaign: [],
-        page: [],
+        page: []
     },
 
     routers: {},
@@ -213,6 +212,13 @@ global.app = {
             callback(this.models[name][id]);
         }
     },
+
+    getModelInstance: function(model, name) {
+        if (app.models[name]) return app.models[name];
+        return app.models[name] = new model()
+    }
+
+    ,
 
     /* 
      * Misc Display Functions 
