@@ -10,103 +10,142 @@ include mixins.pug
 section.text_block.information-page
     .container
         .row
-            .offset-lg-2.col-lg-8.text-sm-center
-                h2.text-uppercase.dosis.m0 Team
+            .col-lg-3 
+                .page_title.border-bottom.mb25
+                    h4.text-uppercase.dosis ABOUT US
+                ul.list-unstyled.mb50.custom
+                    li
+                        a.d-inline-block.w-100.pb10(href='/pg/overview') Overview
+                    li
+                        a.d-inline-block.w-100.pb10(href='/pg/team') Team
+                    li
+                        a.d-inline-block.w-100.pb10(href='') Partners
+                    li
+                        a.d-inline-block.w-100.pb10(href='/pg/contact') Contact Us
+                    li
+                        a.d-inline-block.w-100.pb10(href='') Careers
+                    li
+                        a.d-inline-block.w-100.pb10(href='/pg/faq') FAQ
+                    li
+                        a.d-inline-block.w-100.pb10(href='/pg/news') In the News
+                    li
+                        // у последнего елемента <a> клас pb10 отстутствует
+                        a.d-inline-block.w-100(href='/pg/blogs') Blog
 
-                p.mt20 Curabitur eu adipiscing lacus, a iaculis diam. Nullam placerat blandit auctor. Nulla accumsan ipsum et nibh rhoncus, eget tempus sapien ultricies. Donec mollis lorem vehicula.
+            .team-member-list
+                .col-lg-9
+                    .row
+                        .col-lg-10.text-sm-center
+                            h2.text-uppercase.dosis.m0 meet the team
 
-        .team-member-list
+                            p.mt30 Curabitur eu adipiscing lacus, a iaculis diam. Nullam placerat blandit auctor. Nulla accumsan ipsum et nibh rhoncus, eget tempus sapien ultricies. Donec mollis lorem vehicula.
+
+                    .row
+                        .col-lg-5.mt50
+                            article 
+                                figure.m0
+                                    p
+                                        img(src="/img/pages/ken.png").img-fluid
+                                    figcaption
+                                        h4.dosis.text-uppercase.text-xs-center.mt20
+                                            | Kenneth Staut
+                                            .small-text.opensans CFO
+
+                                        p.text-xs-center
+                                            | Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque mollis lacus augue, a hendrerit leo tristique vitae. Consectetur adipiscing elit. Integer posuere erat a ante. Mauris non ipsum molestie, sagittis elit ac, vulputate odio.
+
+                        .col-lg-5.mt50
+                            article 
+                                figure.m0
+                                    p
+                                        img(src="/img/pages/leon.png").img-fluid
+                                    figcaption
+                                        h4.dosis.text-uppercase.text-xs-center.mt20
+                                            | leon stiel
+                                            .small-text.opensans CEO
+
+                                        p.text-xs-center
+                                            | Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque mollis lacus augue, a hendrerit leo tristique vitae. Consectetur adipiscing elit. Integer posuere erat a ante. Mauris non ipsum molestie, sagittis elit ac, vulputate odio.
+
+                        .col-lg-5.mt50
+                            article 
+                                figure.m0
+                                    p
+                                        img(src="/img/pages/kevin.png").img-fluid
+                                    figcaption
+                                        h4.dosis.text-uppercase.text-xs-center.mt20
+                                            | KEVIN MATUSZEWSKI
+                                            .small-text.opensans Director
+
+                                        p.text-xs-center
+                                            | Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque mollis lacus augue, a hendrerit leo tristique vitae. Consectetur adipiscing elit. Integer posuere erat a ante. Mauris non ipsum molestie, sagittis elit ac, vulputate odio.
+
+                        .col-lg-5.mt50
+                            article 
+                                figure.m0
+                                    p
+                                        img(src="/img/pages/kim.png").img-fluid
+                                    figcaption
+                                        h4.dosis.text-uppercase.text-xs-center.mt20
+                                            | KIMBERLY RUSSO
+                                            .small-text.opensans eCommerce Leader
+
+                                        p.text-xs-center
+                                            | Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque mollis lacus augue, a hendrerit leo tristique vitae. Consectetur adipiscing elit. Integer posuere erat a ante. Mauris non ipsum molestie, sagittis elit ac, vulputate odio.
+
+                        .col-lg-5.mt50
+                            article 
+                                figure.m0
+                                    p
+                                        img(src="/img/pages/joe.png").img-fluid
+                                    figcaption
+                                        h4.dosis.text-uppercase.text-xs-center.mt20
+                                            | JOE ESPOSITO
+                                            .small-text.opensans CFA
+
+                                        p.text-xs-center
+                                            | Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque mollis lacus augue, a hendrerit leo tristique vitae. Consectetur adipiscing elit. Integer posuere erat a ante. Mauris non ipsum molestie, sagittis elit ac, vulputate odio.
+
+                        .col-lg-5.mt50
+                            article 
+                                figure.m0
+                                    p
+                                        img(src="/img/pages/dave.png").img-fluid
+                                    figcaption
+                                        h4.dosis.text-uppercase.text-xs-center.mt20
+                                            | DAVE LURVEY
+                                            .small-text.opensans CFA
+
+                                        p.text-xs-center
+                                            | Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque mollis lacus augue, a hendrerit leo tristique vitae. Consectetur adipiscing elit. Integer posuere erat a ante. Mauris non ipsum molestie, sagittis elit ac, vulputate odio.
+
+                        .col-lg-5.mt50
+                            article 
+                                figure.m0
+                                    p
+                                        img(src="/img/pages/andrew.png").img-fluid
+                                    figcaption
+                                        h4.dosis.text-uppercase.text-xs-center.mt20
+                                            | Andrew Kim
+                                            .small-text.opensans Advisor
+
+                                        p.text-xs-center
+                                            | Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque mollis lacus augue, a hendrerit leo tristique vitae. Consectetur adipiscing elit. Integer posuere erat a ante. Mauris non ipsum molestie, sagittis elit ac, vulputate odio.
+
+    .bg-team-wrap.clearfix.mt50
+        .container
             .row
-                .col-lg-4.mt50
-                    article 
-                        figure.m0
-                            p
-                                img(src="/img/pages/ken.png").img-fluid
-                            figcaption
-                                h4.dosis.text-uppercase.text-xs-center.mt20
-                                    | Kenneth Staut
-                                    .small-text.opensans CFO
+                .col-lg-12.text-xs-center
+                    h2.dosis.text-uppercase.mb25
+                        | Want to work with us
+            .row
+                .col-lg-6.offset-lg-3.text-xs-center
+                    p
+                        | We're always looking for additional team members who understand how revolutionary and transformative the crowdfunding initiative is.
+            .row
+                .col-lg-12.text-xs-center.mt25
+                    button.btn.btn-lg.btn-secondary.text-uppercase JOIN NOW
 
-                                p.text-xs-center
-                                    | Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque mollis lacus augue, a hendrerit leo tristique vitae. Consectetur adipiscing elit. Integer posuere erat a ante. Mauris non ipsum molestie, sagittis elit ac, vulputate odio.
-
-                .col-lg-4.mt50
-                    article 
-                        figure.m0
-                            p
-                                img(src="/img/pages/leon.png").img-fluid
-                            figcaption
-                                h4.dosis.text-uppercase.text-xs-center.mt20
-                                    | leon stiel
-                                    .small-text.opensans CEO
-
-                                p.text-xs-center
-                                    | Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque mollis lacus augue, a hendrerit leo tristique vitae. Consectetur adipiscing elit. Integer posuere erat a ante. Mauris non ipsum molestie, sagittis elit ac, vulputate odio.
-
-                .col-lg-4.mt50
-                    article 
-                        figure.m0
-                            p
-                                img(src="/img/pages/kevin.png").img-fluid
-                            figcaption
-                                h4.dosis.text-uppercase.text-xs-center.mt20
-                                    | KEVIN MATUSZEWSKI
-                                    .small-text.opensans Director
-
-                                p.text-xs-center
-                                    | Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque mollis lacus augue, a hendrerit leo tristique vitae. Consectetur adipiscing elit. Integer posuere erat a ante. Mauris non ipsum molestie, sagittis elit ac, vulputate odio.
-
-                .col-lg-4.mt50
-                    article 
-                        figure.m0
-                            p
-                                img(src="/img/pages/kim.png").img-fluid
-                            figcaption
-                                h4.dosis.text-uppercase.text-xs-center.mt20
-                                    | KIMBERLY RUSSO
-                                    .small-text.opensans eCommerce Leader
-
-                                p.text-xs-center
-                                    | Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque mollis lacus augue, a hendrerit leo tristique vitae. Consectetur adipiscing elit. Integer posuere erat a ante. Mauris non ipsum molestie, sagittis elit ac, vulputate odio.
-
-                .col-lg-4.mt50
-                    article 
-                        figure.m0
-                            p
-                                img(src="/img/pages/joe.png").img-fluid
-                            figcaption
-                                h4.dosis.text-uppercase.text-xs-center.mt20
-                                    | JOE ESPOSITO
-                                    .small-text.opensans CFA
-
-                                p.text-xs-center
-                                    | Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque mollis lacus augue, a hendrerit leo tristique vitae. Consectetur adipiscing elit. Integer posuere erat a ante. Mauris non ipsum molestie, sagittis elit ac, vulputate odio.
-
-                .col-lg-4.mt50
-                    article 
-                        figure.m0
-                            p
-                                img(src="/img/pages/dave.png").img-fluid
-                            figcaption
-                                h4.dosis.text-uppercase.text-xs-center.mt20
-                                    | DAVE LURVEY
-                                    .small-text.opensans CFA
-
-                                p.text-xs-center
-                                    | Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque mollis lacus augue, a hendrerit leo tristique vitae. Consectetur adipiscing elit. Integer posuere erat a ante. Mauris non ipsum molestie, sagittis elit ac, vulputate odio.
-
-                .col-lg-4.offset-lg-4.mt50
-                    article 
-                        figure.m0
-                            p
-                                img(src="/img/pages/andrew.png").img-fluid
-                            figcaption
-                                h4.dosis.text-uppercase.text-xs-center.mt20
-                                    | Andrew Kim
-                                    .small-text.opensans Advisor
-
-                                p.text-xs-center
-                                    | Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque mollis lacus augue, a hendrerit leo tristique vitae. Consectetur adipiscing elit. Integer posuere erat a ante. Mauris non ipsum molestie, sagittis elit ac, vulputate odio.
 
 
 
