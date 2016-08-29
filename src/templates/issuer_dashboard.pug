@@ -1,6 +1,14 @@
+include mixins.pug
+
++breadcrumbs('issuer dashboard', '', 
+    [
+        ['Home', '/'],
+        ['issuer dashboard', ''],
+    ]
+)
 section.issuer-dashbord-top
   .container
-    .row.border-bottom-50
+    .row
       .col-md-4
         .img_under_text
           img(src="/img/smartbe-intelligent-stroller.jpg" alt="")
@@ -100,7 +108,7 @@ section.issuer-dashbord-top
           i.fa.fa-angle-right(
             aria-hidden="true"
           )
-
+    .col-lg-12.border-bottom-50
 section.grafic-dashboard
   .container
     .row
@@ -125,7 +133,57 @@ section.grafic-dashboard
                     name="options"
                   ) 
                   | Settings
-
+          .portlet-body.grafic-padding
+            .chart#chart_2
+              canvas.flot-base(
+                width="1110"
+                height="300"
+                style="direction: ltr; position: absolute; left: 0px; top: 0px; width: 1110; height: 300px"
+              )
+              .flot-text
+                .flot-x-axis.flot-x1-axis.xAxis.x1Axis
+                  div 1 MAY
+                  .flot-tick-label.tickLabel 2 MAY
+                  .flot-tick-label.tickLabel 3 MAY
+                  .flot-tick-label.tickLabel 4 MAY
+                  .flot-tick-label.tickLabel 5 MAY
+                  .flot-tick-label.tickLabel 6 MAY
+                  .flot-tick-label.tickLabel 7 MAY
+                  .flot-tick-label.tickLabel 8 MAY
+                  .flot-tick-label.tickLabel 9 MAY
+                  .flot-tick-label.tickLabel 10 MAY
+                  .flot-tick-label.tickLabel 11 MAY
+                  .flot-tick-label.tickLabel 12 MAY
+                  .flot-tick-label.tickLabel 13 MAY
+                  .flot-tick-label.tickLabel 14 MAY
+                  .flot-tick-label.tickLabel 15 MAY
+                .flot-y-axis.flot-y1-axis.yAxis.y1Axis
+                  .flot-tick-label.tickLabel 0
+                  .flot-tick-label.tickLabel 10
+                  .flot-tick-label.tickLabel 20
+                  .flot-tick-label.tickLabel 30
+                  .flot-tick-label.tickLabel 40
+                  .flot-tick-label.tickLabel 50
+                  .flot-tick-label.tickLabel 60
+                  .flot-tick-label.tickLabel 70
+                  .flot-tick-label.tickLabel 80
+                  .flot-tick-label.tickLabel 90
+                  .flot-tick-label.tickLabel 100
+                  .flot-tick-label.tickLabel 110
+                  .flot-tick-label.tickLabel 120
+                  .flot-tick-label.tickLabel 130
+                  .flot-tick-label.tickLabel 140
+              canvas.flot-overlay(
+                width="1110"
+                height="300"
+                style="direction: ltr; position: absolute; left: 0px; top: 0px; width: 1110px; height: 300px;"
+              )
+              .legend
+                table
+                  tr
+                    td.legendLabel Unique Visits
+                  tr
+                    td.legendLabel Page Views
 
 section.investors-dashbord-comment
   .container
@@ -375,19 +433,21 @@ section.danger-zone-dashboard
     .col-lg-12
       .row
         h2.dosis.text-uppercase.m-t-0 Danger Zone
-      .row.m-b-1
+      .row.m-b-25
         .col-lg-3
           a(
-          hfer="#"
-          ).btn.btn-danger material Change
+          href="#"
+          ).btn.danger-black material Change
         .col-lg-9
           .text-block
             p Do you have new information that a reasonable investor would consider important in deciding whether or not to purchase your securities?  If so, click here to amend your offering.
       .row
         .col-lg-3
             a(
-            hfer="#"
-            ).btn.btn-danger cancel campaign
+            href="#"
+            ).btn.danger-cancel cancel campaign
         .col-lg-9
-          .text-block
+          .text-block.text-p-t-6
             p Click here to cancel your offering.
+script(src="/js/graf.js" type="text/javascript")
+script(src="/js/graf_one.js" type="text/javascript")
