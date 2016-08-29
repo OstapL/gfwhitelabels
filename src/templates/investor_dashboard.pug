@@ -1,0 +1,83 @@
+include mixins.pug
+
++breadcrumbs('investor dashboard', '', [['home', '/',], [ 'investor dashboard', page.get_absolute_url]])
+
+section.investor-dashboard
+  .container
+    .col-lg-12
+      ul(role="tablist").nav.standart-nav-tabs.row
+        li.nav-item
+          a.nav-link.text-uppercase.active#active-tab(
+            data-toggle="tab"
+            href="#active"
+            role="tab"
+            aria-controls="active"
+            aria-expanded="true"
+          ) active
+        li.nav-item
+          a.nav-link.text-uppercase#historical-tab(
+            data-toggle="tab"
+            href="#historical"
+            role="tab"
+            aria-controls="historical"
+            aria-expanded="false"
+          ) Historical
+            .clearfix
+      .row
+        .tab-content
+          .tab-pane.fade.active.in#active(
+            role="tabpanel"
+            aria-labelledby="active-tab"
+            aria-expanded="true"
+          )
+            .active-investor-dashboard.investor_table
+              .one_table
+                .img_column.text-lg-center.text-sm-center
+                  img(src="/img/test.png" alt="").img-fluid
+                  span.img_tab 02 Days Left
+                  p.text-uppercase Company name
+                .right-columns.small
+                  .one_line
+                    .col40
+                      span.light_grey Amount Invested
+                    .col60
+                      span.bold_grey.font-weight-bold $25K
+                  .one_line
+                    .col40
+                      span.light_grey Investment Day
+                    .col60
+                      span.dark_grey.font-weight-bold 15.06.2016
+                  .one_line
+                    .col40
+                      span.light_grey Security Type
+                    .col60
+                      span.dark_grey.font-weight-bold 09879*****
+                  .one_line
+                    .col40
+                      span.light_grey Investment Terms
+                    .col60
+                      span.dark_grey.font-weight-bold Revenue Share
+                  .one_line
+                    .col40
+                      span.light_grey Perks
+                    .col60
+                      span.dark_grey.font-weight-bold Rewards
+                .right_buttons
+                  h4 Downloadable Files
+                  ul
+                    li
+                      a(href="#").link-4 Investor Presentation
+                    li
+                      a(href="#").link-4 Form C
+                    li
+                      a(href="#").link-4 Financials
+                    li
+                      a(href="#").link-4 Agreement
+
+          .tab-pane.fade#historical(
+            role="tabpanel"
+            aria-labelledby="historical-tab"
+            aria-expanded="false"
+          )
+            .active-investor-dashboard
+              p  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nulla aliquam quos quis corporis, necessitatibus, expedita dolorum unde perferendis molestias maiores? Nulla temporibus illo a, in magni provident odio, vel earum!2
