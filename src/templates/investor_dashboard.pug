@@ -36,48 +36,124 @@ section.investor-dashboard
                   img(src="/img/test.png" alt="").img-fluid
                   span.img_tab 02 Days Left
                   p.text-uppercase Company name
-                .right-columns.small
+                .right-columns
                   .one_line
                     .col40
                       span.light_grey Amount Invested
                     .col60
-                      span.bold_grey.font-weight-bold $25K
+                      span.bold-grey.font-weight-bold $25K
                   .one_line
                     .col40
                       span.light_grey Investment Day
                     .col60
-                      span.dark_grey.font-weight-bold 15.06.2016
+                      span.dark_grey 15.06.2016
                   .one_line
                     .col40
                       span.light_grey Security Type
                     .col60
-                      span.dark_grey.font-weight-bold 09879*****
+                      span.dark_grey 09879*****
                   .one_line
                     .col40
                       span.light_grey Investment Terms
                     .col60
-                      span.dark_grey.font-weight-bold Revenue Share
+                      span.dark_grey Revenue Share
                   .one_line
                     .col40
                       span.light_grey Perks
                     .col60
-                      span.dark_grey.font-weight-bold Rewards
+                      span.dark_grey Rewards
                 .right_buttons
                   h4 Downloadable Files
                   ul
                     li
-                      a(href="#").link-4 Investor Presentation
+                      a(href="#").link-3 Investor Presentation
                     li
-                      a(href="#").link-4 Form C
+                      a(href="#").link-3 Form C
                     li
-                      a(href="#").link-4 Financials
+                      a(href="#").link-3 Financials
                     li
-                      a(href="#").link-4 Agreement
-
+                      a(href="#").link-3 Agreement
+                .bottom_column
+                  .top_descript
+                    .left_text
+                      b $1,5MM
+                      span Raised
+                    .right_text
+                      b $500K
+                      span Goal
+                    p.percents 150% Funded
+                    .clear
+                  .progress_line_container
+                    progress(value="10" max="100").progress
+                  .text-lg-center
+                    a(href="#").btn.btn-secondary.text-uppercase
+                      i.fa.fa-angle-right
+                      |  view campaign
+                  .cancel_invest
+                    a(href="#").font-weight-bold Cancel investment
           .tab-pane.fade#historical(
             role="tabpanel"
             aria-labelledby="historical-tab"
             aria-expanded="false"
           )
-            .active-investor-dashboard
-              p  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nulla aliquam quos quis corporis, necessitatibus, expedita dolorum unde perferendis molestias maiores? Nulla temporibus illo a, in magni provident odio, vel earum!2
+            .active-investor-dashboard.investor_table
+              .one_table
+                .img_column.text-lg-center.text-sm-center
+                  img(src="/img/test.png" alt="").img-fluid
+                  span.img_tab 02 Days Left
+                  p.text-uppercase Company name
+                .right-columns
+                  .one_line
+                    .col40
+                      span.light_grey Amount Invested
+                    .col60
+                      span.bold-grey.font-weight-bold $25K
+                  .one_line
+                    .col40
+                      span.light_grey Investment Day
+                    .col60
+                      span.dark_grey 15.06.2016
+                  .one_line
+                    .col40
+                      span.light_grey Security Type
+                    .col60
+                      span.dark_grey 09879*****
+                  .one_line
+                    .col40
+                      span.light_grey Investment Terms
+                    .col60
+                      span.dark_grey Revenue Share
+                  .one_line
+                    .col40
+                      span.light_grey Perks
+                    .col60
+                      span.dark_grey Rewards
+                .right_buttons
+                  h4 Downloadable Files
+                  ul
+                    li
+                      a(href="#").link-3 Investor Presentation
+                    li
+                      a(href="#").link-3 Form C
+                    li
+                      a(href="#").link-3 Financials
+                    li
+                      a(href="#").link-3 Agreement
+                .bottom_column
+                  .top_descript
+                    .left_text
+                      b $1,5MM
+                      span Raised
+                    .right_text
+                      b $500K
+                      span Goal
+                    p.percents 150% Funded
+                    .clear
+                  .progress_line_container
+                    progress(value="10" max="100").progress
+                  .text-lg-center
+                    a(href="#").btn.btn-secondary.text-uppercase
+                      i.fa.fa-angle-right
+                      |  view campaign
+                  .cancel_invest
+                    a(href="#").font-weight-bold Cancel investment
