@@ -1,0 +1,87 @@
+include mixins.pug
+
++breadcrumbs('Contacts', '', 
+    [
+        ['Home', '/'],
+        ['Contacts', ''],
+    ]
+)
+
+section#map_canvas.map-block
+    // сейчас тут стоит заглушка, так как необходимо подключить гугл мап
+    img(src="/img/pages/map.png").img-fluid
+
+
+section.all-contacts.m-t-85.mb50
+    .container
+        .row
+            .col-lg-3.offset-lg-2
+                h4.dosis.text-uppercase Call us
+                p 
+                    i.fa.fa-phone
+                    | &nbsp; +61 3 8376 6284
+            .col-lg-3
+                h4.dosis.text-uppercase ADDRESS
+                p 
+                    i.fa.fa-map-marker
+                    | &nbsp; 79 Madison Ave, 5th Floor 
+                    p New York, NY 10016
+            .col-mlg-3
+                h4.dosis.text-uppercase E-MAIL
+                p 
+                    i.fa.fa-envelope-o
+                    | &nbsp; info@growthfountain.com
+
+
+section.form-section.clearfix 
+    form(method="post" action="").form
+        .container
+            .row
+                .col-lg-9.offset-lg-2
+                    .form-body.clearfix 
+                        .row
+                            .col-lg-4
+                                .form-group.row
+                                    .col-lg-12
+                                        input(name="name" placeholder="Name" type="text" value="").form-control
+
+                                .form-group.row
+                                    .col-lg-12
+                                        input(name="email" placeholder="Email" type="text" value="").form-control
+
+                            .col-lg-7
+                                .form-group.row.contact-message
+                                    .col-lg-12
+                                        textarea(name="Message" placeholder="Message" value="").form-control
+
+                                .form-group.row.clearfix.m0 
+                                    .col-lg-12
+                                        .controls  
+                                            button(
+                                                type="submit"
+                                            ).btn.btn-primary.btn-lg.pull-right.text-uppercase submit 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
