@@ -271,7 +271,6 @@ let appRoutes = Backbone.Router.extend({
 
                 let campaignAjax = '';
                 if(typeof company.id != 'undefined') {
-                    asdf
                     let params = _.extend({
                         url: serverUrl + '/api/campaign/general_information?company_id=' + company.id,
                     }, app.defaultOptionsRequest);
