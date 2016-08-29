@@ -1,4 +1,5 @@
 include mixins.pug
+include campaignMenu.pug
 
 +breadcrumbs('Create Company', 'Help Button', [['home', '/',], [ 'current', page.get_absolute_url]])
 
@@ -37,11 +38,11 @@ section.create-company.container.m-b-85
                 i.fa.fa-angle-left
           #campaign(role="tabpanel").panel-collapse.collapse
             .list-group
-              a(href="/campaign/general_information/" + (campaign? campaign.id : '' ) + "?company_id=" + values.id ).list-group-item.list-group-item-action.active General Information
-              a(href="/campaign/media/" + (campaign? campaign.id : '' ) + "?company_id=" + values.id).list-group-item.list-group-item-action Media
-              a(href="/campaign/team_members/" + (campaign? campaign.id : '' ) + "?company_id=" + values.id).list-group-item.list-group-item-action Team Members
-              a(href="/campaign/specifics/" + (campaign? campaign.id : '' ) + "?company_id=" + values.id).list-group-item.list-group-item-action Specifics
-              a(href="/campaign/perks/" + (campaign? campaign.id : '' ) + "?company_id=" + values.id).list-group-item.list-group-item-action Perks
+                +getCompanyUrl(campaign, 'general_information', 'General Information')
+                +getCompanyUrl(campaign, 'media', 'Media')
+                +getCompanyUrl(campaign, 'team_members', 'Team Members')
+                +getCompanyUrl(campaign, 'specifics', 'Specifics')
+                +getCompanyUrl(campaign, 'perks', 'Perks')
         .panel.panel-default
           .panel-heading(role="tab")
             a(data-toggle="collapse"
