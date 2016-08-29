@@ -9,7 +9,6 @@ let appRoutes = Backbone.Router.extend({
       'pg/:name': 'pagePG',
       'page/:id/': 'pageDetail',
       'page/:id': 'pageDetail',
-      'account/profile': 'accountProfile',
       'company/create': 'companyCreate',
       'campaign/general_information/': 'campaignGeneralInformation',
       'campaign/general_information/:id': 'campaignGeneralInformation',
@@ -18,8 +17,9 @@ let appRoutes = Backbone.Router.extend({
       'campaign/team_members/:id': 'campaignTeamMembers',
       'campaign/specifics/:id': 'campaignSpecifics',
       'campaign/perks/:id': 'campaignPerks',
+      'account/profile': 'accountProfile',
       'account/login': 'login',
-      'account/signup': 'login',
+      'account/signup': 'signup',
       'account/logout': 'logout',
       'account/facebook/login/': 'loginFacebook',
       'account/google/login/': 'loginGoogle',
@@ -27,6 +27,13 @@ let appRoutes = Backbone.Router.extend({
       'account/finish/login/': 'finishSocialLogin',
       'account/dashboard/issuer': 'dashboardIssuer',
       'account/dashboard/investor': 'dashboardInvestor',
+      'calculator/paybackshare/step-1': 'calculatorPaybackshareStep1',
+      'calculator/paybackshare/step-2': 'calculatorPaybackshareStep2',
+      'calculator/paybackshare/step-3': 'calculatorPaybackshareStep3',
+        
+      'calculator/capitalraise/intro': 'calculatorCapitalraiseIntro',
+      'calculator/capitalraise/step-1': 'calculatorCapitalraiseStep1',
+      'calculator/capitalraise/finish': 'calculatorCapitalraiseFinish'
     },
     back: function(event) {
         var url = event.target.pathname;
@@ -45,6 +52,72 @@ let appRoutes = Backbone.Router.extend({
                 {trigger: false, replace: false}
             );
         }
+        app.hideLoading();
+    },
+
+    calculatorPaybackshareStep1() {
+        let Model = require('models/calculators/paybackshare');
+        let View = require('views/calculator/paybackshare/step1');
+
+        new View({
+            model: app.getModelInstance(Model, 'calculatorPaybackshare').setFormattedPrice()
+        }).render();
+
+        app.hideLoading();
+    },
+
+    calculatorPaybackshareStep2: function() {
+        let Model = require('models/calculators/paybackshare');
+        let View = require('views/calculator/paybackshare/step2');
+
+        new View({
+            model: app.getModelInstance(Model, 'calculatorPaybackshare').setFormattedPrice()
+        }).render();
+        
+        app.hideLoading();
+    },
+
+    calculatorPaybackshareStep3: function() {
+        let Model = require('models/calculators/paybackshare');
+        let View = require('views/calculator/paybackshare/step3');
+
+        new View({
+            model: app.getModelInstance(Model, 'calculatorPaybackshare').setFormattedPrice()
+        }).render();
+
+        app.hideLoading();
+    },
+
+    calculatorCapitalraiseIntro() {
+        let Model = require('models/calculators/capitalraise');
+        let View = require('views/calculator/capitalraise/intro');
+
+        new View({
+            model: app.getModelInstance(Model, 'calculatorCapitalraise').setFormattedPrice()
+        }).render();
+
+        app.hideLoading();
+    },
+
+    calculatorCapitalraiseStep1() {
+        let Model = require('models/calculators/capitalraise');
+        let View = require('views/calculator/capitalraise/step1');
+
+        new View({
+            model: app.getModelInstance(Model, 'calculatorCapitalraise').setFormattedPrice()
+        }).render();
+
+        app.hideLoading();
+    },
+
+    calculatorCapitalraiseFinish() {
+        let Model = require('models/calculators/capitalraise');
+        let View = require('views/calculator/capitalraise/finish');
+
+        new View({
+            model: app.getModelInstance(Model, 'calculatorCapitalraise').setFormattedPrice()
+        }).render();
+
         app.hideLoading();
     },
 
@@ -558,7 +631,29 @@ let appRoutes = Backbone.Router.extend({
                 model: new userModel(),
             });
             loginView.render();
-            app.cache[window.location.pathname] = loginView.$el.html();
+            app.hideLoading();
+        }).fail((xhr, error) => {
+            // ToDo
+            // Show global error message
+            console.log('cant get fields ');
+            console.log(xhr, error);
+            app.hideLoading();
+        });
+    },
+
+    signup: function(id) {
+        let view = require('views/user');
+        var a2 = $.ajax(_.extend({
+                url: serverUrl + Urls['rest_register'](),
+            }, app.defaultOptionsRequest));
+        $.when(a2).done((r2) => {
+            console.log(r2);
+            let signView = new view.signup({
+                el: '#content',
+                register_fields: r2.actions.POST,
+                model: new userModel(),
+            });
+            signView.render();
             app.hideLoading();
         }).fail((xhr, error) => {
             // ToDo
@@ -662,6 +757,27 @@ let appRoutes = Backbone.Router.extend({
             window.location = '/';
         });
     },
+
+    execute(callback, args, name) {
+
+        // disable enter to the final step of paybackshare calculator without data
+        if (name == 'calculatorPaybackshareStep3') {
+            if (!app.models['calculatorPaybackshare'] || !app.models['calculatorPaybackshare'].get('outputData')) {
+                app.routers.navigate('/calculator/paybackshare/step-2', {trigger: true});
+                return false;
+            }
+        }
+
+        // disable enter to the final step of capitalraise calculator without data
+        if (name == 'calculatorCapitalraiseFinish') {
+            if (!app.models['calculatorCapitalraise'] || !app.models['calculatorCapitalraise'].get('dataIsFilled')) {
+                app.routers.navigate('/calculator/capitalraise/step-1', {trigger: true});
+                return false;
+            }
+        }
+
+        if (callback) callback.apply(this, args);
+    }
 });
 
 app.on('userLoaded', function(data){

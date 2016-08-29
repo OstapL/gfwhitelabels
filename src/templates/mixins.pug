@@ -97,8 +97,9 @@ mixin fieldBlock(name, data, attr)
                 - counter = attr.index || 0
                 - indexCounter = attr.index || 0
                 if values[name].length == 0
-                    a(href="#" data-section=name).delete-section.pull-right
-                        i.fa.fa-times
+                    .delete-section-container
+                        a(href="#" data-section=name).delete-section.pull-right
+                            i.fa.fa-times
                     each k,v in fields[name].schema
                         div(class='form-group clearfix index_' + indexCounter)
                             label.col-lg-3.text-lg-right #{k.label}
