@@ -127,9 +127,35 @@ section
     .container
       .col-lg-12
         h2#about.dosis.text-uppercase.text-lg-center About #{ campaign.company.name }
+        p #{ campaign.company.description }
+        h3.our.text-lg-center Pitch
         p #{ campaign.pitch }
-        h3.our.text-lg-center Our Edge
+        h3.our.text-lg-center Business Model
         p #{ campaign.business_model }
+
+        if campaign.additional_info
+          section.additional_information
+          .container
+            h2#additional_information.col-lg-12.dosis.text-uppercase.text-lg-center Additional Information
+            .col-lg-8.offset-lg-2
+              .accordion(role="tablist" aria-multiselectable="true")
+                - let counter = 0
+                each v,k in campaign.additional_info
+                  .panel.panel-default
+                    div(id="additional_information" + k role="tab").panel-heading
+                      a(data-toggle="collapse"
+                      data-parent="#accordion" 
+                      href="#collapseadditonal_information"+ k
+                      aria-controls="collapsefaq"+ k
+                      class=(counter == 0 ? 'list-group-item-action active' : 'list-group-item-action'),
+                      ) #{v.title}
+                          if counter == 0
+                              i.fa.fa-angle-up
+                    div(id="collapseadditonal_information" + k role="tabpanel"
+                    aria-labelledby="additonal_information" + k
+                    class=(counter == 0 ? 'in' : '') + ' panel-collapse collapse'
+                    ) #{ v.body }
+                    - counter ++;
 
       #gallery1.col-lg-12.pt50.photo-gallegy
         if campaign.gallery
