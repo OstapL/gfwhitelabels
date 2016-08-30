@@ -393,11 +393,11 @@ section
 		.container
 			h2#risks.col-lg-12.dosis.text-uppercase.text-lg-center Risks
 			.col-lg-8.offset-lg-2
-				#accordion(role="tablist" aria-multiselectable="true")
+				#accordion-risks.custom-accordion(role="tablist" aria-multiselectable="true")
 					.panel.panel-default
 						#headingOne(role="tab").panel-heading
 							a(data-toggle="collapse"
-							data-parent="#accordion" 
+							data-parent="#accordion-risks"
 							href="#collapseOne"
 							aria-expanded="true"
 							aria-controls="collapseOne"
@@ -409,7 +409,7 @@ section
 					.panel.panel-default
 						#headingTwo(role="tab").panel-heading
 							a(data-toggle="collapse"
-							data-parent="#accordion" 
+							data-parent="#accordion-risks"
 							href="#collapseTwo"
 							aria-controls="collapseTwo"
 							).list-group-item-action In making an investment decision, investors must rely on their own examination of the issuer and the terms of the offering.
@@ -420,7 +420,7 @@ section
 					.panel.panel-default
 						#headingThree(role="tab").panel-heading
 							a(data-toggle="collapse"
-							data-parent="#accordion" 
+							data-parent="#accordion-risks"
 							href="#collapseThree"
 							aria-controls="collapseThree"
 							).list-group-item-action The U.S. Securities and Exchange Commission does not pass upon the merits of any secrities offered or the terms of the offering    
@@ -431,7 +431,7 @@ section
 					.panel.panel-default
 						#headingFour(role="tab").panel-heading
 							a(data-toggle="collapse"
-							data-parent="#accordion" 
+							data-parent="#accordion-risks"
 							href="#collapseFour"
 							aria-controls="collapseFour"
 							).list-group-item-action The U.S. Securities and Exchange Commission does not pass upon the merits of any secrities offered or the terms of the offering    
@@ -446,12 +446,12 @@ section
 		if campaign.faq
 			h2#faq.col-lg-12.dosis.text-uppercase.text-lg-center FAQ
 			.col-lg-8.offset-lg-2
-				#accordion(role="tablist" aria-multiselectable="true")
+				#accordion-faq.custom-accordion(role="tablist" aria-multiselectable="true")
 					each v,k in campaign.faq
 						.panel.panel-default
 							div(id="faq" + k role="tab").panel-heading
 								a(data-toggle="collapse"
-								data-parent="#accordion" 
+								data-parent="#accordion-faq"
 								href="#collapsefaq"+ k
 								aria-expanded="true"
 								aria-controls="collapsefaq"+ k
@@ -463,7 +463,7 @@ section
 						.panel.panel-default
 							#faqTwo(role="tab").panel-heading
 								a(data-toggle="collapse"
-								data-parent="#accordion" 
+								data-parent="#accordion-faq"
 								href="#collapsefaqTwo"
 								aria-controls="collapsefaqTwo"
 								).list-group-item-action How did Smartbe start and then evolve? 
@@ -474,7 +474,7 @@ section
 						.panel.panel-default
 							#faqThree(role="tab").panel-heading
 								a(data-toggle="collapse"
-								data-parent="#accordion" 
+								data-parent="#accordion-faq"
 								href="#collapsefaqThree"
 								aria-controls="collapsefaqThree"
 								).list-group-item-action What is your impact?     
@@ -485,7 +485,7 @@ section
 						.panel.panel-default
 							#faqFour(role="tab").panel-heading
 								a(data-toggle="collapse"
-								data-parent="#accordion" 
+								data-parent="#accordion-faq"
 								href="#collapsefaqFour"
 								aria-controls="collapsefaqFour"
 								).list-group-item-action Do you have any intellectual property?   
