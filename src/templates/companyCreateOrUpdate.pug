@@ -1,4 +1,5 @@
 include mixins.pug
+include campaignMenu.pug
 
 +breadcrumbs('Create Company', 'Help Button', [['home', '/',], [ 'current', page.get_absolute_url]])
 
@@ -37,11 +38,12 @@ section.create-company.container.m-b-85
                 i.fa.fa-angle-left
           #campaign(role="tabpanel").panel-collapse.collapse
             .list-group
-              a(href="/campaign/general_information/" + (campaign? campaign.id : '' ) + "?company_id=" + values.id ).list-group-item.list-group-item-action.active General Information
-              a(href="/campaign/media/" + (campaign? campaign.id : '' ) + "?company_id=" + values.id).list-group-item.list-group-item-action Media
-              a(href="/campaign/team_members/" + (campaign? campaign.id : '' ) + "?company_id=" + values.id).list-group-item.list-group-item-action Team Members
-              a(href="/campaign/specifics/" + (campaign? campaign.id : '' ) + "?company_id=" + values.id).list-group-item.list-group-item-action Specifics
-              a(href="/campaign/perks/" + (campaign? campaign.id : '' ) + "?company_id=" + values.id).list-group-item.list-group-item-action Perks
+                +getCompanyUrl(campaign, '', 'general_information', 'General Information')
+                +getCompanyUrl(campaign, '', 'media', 'Media')
+                +getCompanyUrl(campaign, '', 'team_members', 'Team Members')
+                +getCompanyUrl(campaign, '', 'specifics', 'Specifics')
+                +getCompanyUrl(campaign, '', 'perks', 'Perks')
+                +getCompanyUrl(campaign, 'general_information', 'General Information')
         .panel.panel-default
           .panel-heading(role="tab")
             a(data-toggle="collapse"
@@ -108,12 +110,12 @@ section.create-company.container.m-b-85
             class2: 'col-lg-6',
             type: 'choice',
           })
-        .col-lg-6
+        .col-lg-6.date-input
           .col-date.form-group-m-b-0
-            .form-group.row.required.clearfix
-              label.col-lg-5.date Date of Organization
-              .col-lg-6
-                input(name="founding_date" type="date" value=values.founding_date).form-control
+            +fieldBlock("founding_date", '', {
+              class1: 'col-lg-6',
+              class2: 'col-lg-6',
+            })
       .border-bottom
       +fieldBlock("address_1", '', {
         class1: 'col-lg-3 col-md-3',

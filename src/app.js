@@ -9,7 +9,6 @@ global.userModel = require('models/user.js');
 global.Urls = require('jsreverse.js');
 require('../node_modules/jquery-serializejson/jquery.serializejson.min.js');
 
-
 // require('sass/mixins_all.sass');
 
 //console.log(global.userModel);
@@ -17,7 +16,7 @@ require('../node_modules/jquery-serializejson/jquery.serializejson.min.js');
 //require('libs.js');
 
 // При выводе ошибок для форм у нас может быть две ситуации:
-// 1. Мы выводим ошибку для элементы который у нас есть в форме => 
+// 1. Мы выводим ошибку для элементы который у нас есть в форме =>
 // нам нужно вывести это ошибку в help-block рядом с тем элементом где была ошибка
 //
 // 2. Мы выводим ошибку для элемента которого у нас в форме нет или это глобальная ошибка
@@ -27,14 +26,13 @@ require('../node_modules/jquery-serializejson/jquery.serializejson.min.js');
 _.extend(Backbone.Validation.callbacks, {
     valid: function (view, attr, selector) {
         var $el = view.$('[name=' + attr + ']');
-        var $group = null;
+        $group = $el.parent();
 
         // if element not found - do nothing
         // we had clean alert-warning before submit
         if($el.length == 0) {
         }
         else {
-            $group = $el.parent();
             if($group.find('.help-block').length == 0) {
                 $group = $group.parent();
             }
@@ -47,12 +45,12 @@ _.extend(Backbone.Validation.callbacks, {
         var $el = view.$('[name=' + attr + ']');
         var $group = null;
 
+        if(Array.isArray(error) !== true)
+            error = [error]
+
         // if element not found - we will show error just in alert-warning div 
         if($el.length == 0) {
             $el = view.$('form > .alert-warning');
-
-            if(Array.isArray(error) !== true)
-                error = [error]
 
             // If we don't have alert-warning - we should create it as 
             // first element in form
@@ -71,10 +69,17 @@ _.extend(Backbone.Validation.callbacks, {
         else {
             $group = $el.parent();
             $group.addClass('has-error');
-            $group.append('<div class="help-block">' + error + '</div>');
+            var $error_div = $group.find('.help-block');
+
+            if($error_div.length != 0) {
+                $error_div.html(error.join(','));
+            }
+            else {
+                $group.append('<div class="help-block">' + error.join(',') + '</div>');
+            }
         }
 
-        console.log(view, attr, error, selector);
+        //console.log(view, attr, error, selector);
     }
 });
 
@@ -180,12 +185,12 @@ global.app = {
 
     models: {
         campaign: [],
-        page: [],
+        page: []
     },
 
     views: {
         campaign: [],
-        page: [],
+        page: []
     },
 
     routers: {},
@@ -207,6 +212,13 @@ global.app = {
             callback(this.models[name][id]);
         }
     },
+
+    getModelInstance: function(model, name) {
+        if (app.models[name]) return app.models[name];
+        return app.models[name] = new model()
+    }
+
+    ,
 
     /* 
      * Misc Display Functions 
@@ -247,15 +259,62 @@ global.app = {
     },
 
     defaultSaveActions: {
+        submit: function(e, data) {
+
+            this.$el.find('.alert').remove();
+            event.preventDefault();
+
+            var data = data || $(e.target).serializeJSON();
+            //var investment = new InvestmentModel(data);
+
+            this.model.set(data);
+            Backbone.Validation.bind(this, {model: this.model});
+
+            if(this.model.isValid(true)) {
+                var self = this;
+                this.model.save().
+                    then((data) => { 
+                        this.$el.find('.alert-warning').remove();
+                        if(typeof this._success == 'function') {
+                            this._success(data);
+                        } else {
+                            app.showLoading();
+
+                            //window.location = '/api/campaign/' + this.model.get('id');
+                            self.undelegateEvents();
+                            $('#content').scrollTo();
+                            app.routers.navigate(
+                                self.getSuccessUrl(data),
+                                {trigger: true, replace: false}
+                            );
+                        }
+
+                    }).
+                    fail((xhr, status, text) => {
+                        app.defaultSaveActions.error(this, xhr, status, text, this.fields);
+                    });
+            } else {
+                if(this.$('.alert').length) {
+                    $('#content').scrollTo();
+                } else  {
+                    this.$el.find('.has-error').scrollTo();
+                }
+            }
+        },
+
         success: (view, response) => {
             view.$('.alert-warning').remove();
             if(typeof view._success == 'function') {
                 view._success(response);
             }
         },
+
         error: (view, xhr, status, text, fields) => {
+            view.$el.find('.alert-warning').remove();
+            view.$el.find('.help-block').remove();
             if(xhr.hasOwnProperty('responseJSON')) {
                 let data = xhr.responseJSON;
+                data = data ? data : {'Server': status};
                 for (let key in data)  {                                                 
                   Backbone.Validation.callbacks.invalid(                                 
                     view, key, data[key]
@@ -269,6 +328,8 @@ global.app = {
             }
             if(view.$el.find('.alert').length) {
                 view.$el.find('.alert').scrollTo();
+            } else  {
+                view.$el.find('.has-error').scrollTo();
             }
             app.hideLoading();
           }
@@ -286,6 +347,7 @@ global.app = {
           }
         },
     },
+
 
     loadCss: function(url) {
         var link = document.createElement("link");
@@ -389,6 +451,8 @@ require('routers');
 app.user.load();
 app.trigger('userReady');
 
+global.app = app;
+
 $('body').on('click', '.auth-pop', function() {
     $('#loginModal').modal();
 });
@@ -398,6 +462,8 @@ $('body').on('click', 'a', function(event) {
     if(href && href != '' && href.substr(0,1) != '#' && 
         href.substr(0, 4) != 'http' && 
         href.substr(0,3) != 'ftp' &&
+        href != 'javascript:void(0);' &&
+        href != 'javascript:void(0)' &&
         event.currentTarget.getAttribute('target') == null) {
         event.preventDefault();
         app.showLoading();

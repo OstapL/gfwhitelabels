@@ -1,78 +1,10 @@
 include mixins.pug
+include campaignMenu.pug
 
 +breadcrumbs('Create campaign', 'LOREM IPSUM DOLOR SIT AMET CONSECTETUR ', [['home', '/',], [ 'current', page.get_absolute_url]])
 
 section.team-members.container.m-b-85
-  //START LEFT BLOCK
-  .col-lg-3.create_compaign
-    .jumbotron.jumbotron-fluid.row
-      .raise-funds
-        h4.font-weight-bold.text-uppercase.m-b-0 Raise funds
-          .small-text (10% Done)
-      #accordion(role="tablist" aria-multiselectable="true")
-        .panel.panel-default
-          .panel-heading(role="tab")
-            a(data-toggle="collapse"
-            data-parent="#accordion"
-            href="#company"
-            aria-expanded="true"
-            ).list-group-item
-              i.fa.fa-briefcase
-              |  Company
-              span.pull-right
-                i.fa.fa-angle-left
-          #company(role="tabpanel").panel-collapse.collapse
-            .list-group
-              a(href="#").list-group-item.list-group-item-action Company
-        .panel.panel-default
-          .panel-heading(role="tab")
-            a(data-toggle="collapse"
-            data-parent="#accordion"
-            href="#campaign"
-            aria-expanded="true"
-            ).list-group-item.active
-              i.fa.fa-bar-chart
-              |  Campaign
-              span.pull-right
-                i.fa.fa-angle-down
-          #campaign(role="tabpanel").panel-collapse.collapse.in
-              .list-group
-                  a(href="/campaign/general_information/" + values.id).list-group-item.list-group-item-action General Information
-                  a(href="/campaign/media/" + values.id).list-group-item.list-group-item-action.active Media
-                  a(href="/campaign/team_members/" + values.id).list-group-item.list-group-item-action Team Members
-                      i.fa.fa-check
-                  a(href="/campaign/specifics/" + values.id).list-group-item.list-group-item-action Specifics
-                  a(href="/campaign/perks/" + values.id).list-group-item.list-group-item-action Perks
-        .panel.panel-default
-          .panel-heading(role="tab")
-            a(data-toggle="collapse"
-            data-parent="#accordion"
-            href="#form_c"
-            aria-expanded="true"
-            ).list-group-item
-              i.fa.fa-university
-              |  form c
-              span.pull-right
-                i.fa.fa-angle-left
-          #form_c(role="tabpanel").panel-collapse.collapse
-            .list-group
-              a(href="#").list-group-item.list-group-item-action form c
-    .row
-      .education-link-wrap
-        .jumbotron.jumbotron-fluid
-          h4.font-weight-bold.text-uppercase
-            i.fa.fa-book
-            |  education Links
-          .nav
-            li.nav-item
-              a(href="#").nav-link.link-3 Issuer Tutorial
-            li.nav-item
-              a(href="#").nav-link.link-3 Success Guide
-            li.nav-item
-              a(href="#").nav-link.link-3 What's My Business Worth?
-            li.nav-item
-              a(href="#").nav-link.link-3 How Much Should I Raise?
-
+  +menu('team-members')
 
   //START RIGHT BLOCK
   .col-lg-8
@@ -106,7 +38,7 @@ section.team-members.container.m-b-85
         .col-lg-9
             textarea(name="bio" placeholder="At least 150 characters and no more than 250 characters" rows="4").form-control #{ values.bio }
       .row
-        .col-lg-9.recommended
+        .col-lg-9.recommended.label-p-t-0
           +fieldBlock("growup", '', {
             class1: 'col-lg-4 col-md-3',
             class2: 'col-lg-8 col-md-9',
@@ -117,25 +49,25 @@ section.team-members.container.m-b-85
           select(name="state").orderby.custom-select
             option(checked="checked" value="0") ST
             option(value="1") STL
-      +fieldBlock("college", '', {
-        class1: 'col-lg-3 col-md-3',
-        class2: 'col-lg-9 col-md-9',
-        type: 'text',
-        })
+      .label-p-t-0
+        +fieldBlock("college", '', {
+          class1: 'col-lg-3 col-md-3',
+          class2: 'col-lg-9 col-md-9',
+          type: 'text',
+          })
       .row
-          .col-lg-1
-          .col-lg-5
-              +fieldBlock("facebook", '', {
-                class1: 'col-lg-3 col-md-3',
-                class2: 'col-lg-9 col-md-9',
-                type: 'text',
-                })
-          .col-lg-6
-              +fieldBlock("linkedin", '', {
-                class1: 'col-lg-3 col-md-3',
-                class2: 'col-lg-9 col-md-9',
-                type: 'text',
-                })
+        .col-lg-6.input-min-width
+            +fieldBlock("facebook", '', {
+              class1: 'col-lg-6 col-md-3',
+              class2: 'col-lg-6 col-md-9',
+              type: 'text',
+              })
+        .col-lg-6.label-p-t-0.input-min-width
+            +fieldBlock("linkedin", '', {
+              class1: 'col-lg-5 col-md-3',
+              class2: 'col-lg-7 col-md-9',
+              type: 'text',
+              })
 
       .row.dropzone__photo.media-item
         .col-lg-7

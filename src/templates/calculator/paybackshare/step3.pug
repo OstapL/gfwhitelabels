@@ -1,0 +1,24 @@
+.container.calculator-container
+    .page
+        .js-jq-plot-area
+            #chart1(style='width: 100%')
+            p.lead Your results
+            .table-responsive
+                table.table.table-sm.table-bordered.table-striped
+                    thead
+                        tr
+                            th Time
+                            th Fundraise
+                            th Revenue
+                            th Annual Distributions
+                            th Multiple Returned
+                            th Total Distributions
+                    tbody
+                        each val, index in model.outputData
+                            tr
+                                th(scope='row')= 'Year ' + index
+                                td= formatPrice(val.fundraise)
+                                td= formatPrice(val.revenue)
+                                td= formatPrice(val.annual)
+                                td= val.multiple
+                                td= formatPrice(val.total)

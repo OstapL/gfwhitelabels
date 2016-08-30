@@ -1,8 +1,10 @@
+var calculatorHelper = require("../helpers/calculatorHelpers");
+var formatPrice = calculatorHelper.formatPrice;
+
 define(function() {
     let r = {
         model: Backbone.Model.extend({
-            // urlRoot: serverUrl + '/api/campaign',
-            urlRoot: '/data/campaigns.js',
+            urlRoot: serverUrl + '/api/campaign',
 
             // Helpers for getting values in human readable format
             get_human_number: function(value) {
@@ -34,6 +36,21 @@ define(function() {
                     return ''
                 }
             },
+
+            showBeautifulNumber: function (number) {
+                return formatPrice(number);
+            },
+
+            formatFoundingDate: function (dateStr) {
+                var strs = dateStr.split("-");
+                return strs[1] + "-" + strs[0];
+            },
+
+            calculateRaisedPercentage: function (minimum_raise, amount_raised) {
+                var percentage_raised = Math.round(amount_raised / minimum_raise * 100);
+                if (percentage_raised < 20) percentage_raised = 20;
+                return percentage_raised;
+            }
         
         }),
 
@@ -41,8 +58,7 @@ define(function() {
 
     r.collection = Backbone.Collection.extend({
         model: r.model,
-        // url: serverUrl + '/api/campaign'
-        url: '/data/campaigns.js'
+        url: serverUrl + '/api/campaign'
     });
 
     return r;
