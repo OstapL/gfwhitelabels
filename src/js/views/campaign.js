@@ -29,6 +29,46 @@ define(function() {
 
             initialize: function(options) {
                 this.template = options.template;
+                $(document).off("scroll", this.onScrollListener);
+                $(document).on("scroll", this.onScrollListener);
+            },
+
+            events: {
+                'click .tabs-scroll .nav .nav-link': 'smoothscroll'
+            },
+
+            smoothscroll(e) {
+                e.preventDefault();
+                $(document).off("scroll");
+                $('.tabs-scroll .nav').find('.nav-link').removeClass('active');
+                $(this).addClass('active');
+
+                let $target = $(e.target.hash),
+                    $navBar = $('.navbar.navbar-default');
+
+                $('html, body').stop().animate({
+                    'scrollTop': $target.offset().top - $navBar.height() - 5
+                }, 500, 'swing', () => {
+                    window.location.hash = e.target.hash;
+                    $(document).on("scroll", this.onScrollListener);
+                });
+            },
+
+            onScrollListener() {
+                var scrollPos = $(window).scrollTop(),
+                    $navBar = $('.navbar.navbar-default'),
+                    $link = $('.tabs-scroll .nav').find('.nav-link');
+                $link.each(function () {
+                    var currLink = $(this);
+                    var refElement = $(currLink.attr("href")).closest('section');
+                    if (refElement.position().top - $navBar.height() <= scrollPos && refElement.position().top + refElement.height() > scrollPos) {
+                        $link.removeClass("active");
+                        currLink.addClass("active");
+                    }
+                    else{
+                        currLink.removeClass("active");
+                    }
+                });
             },
 
             render: function() {
@@ -47,11 +87,6 @@ define(function() {
                         campaign: this.model.toJSON()
                     })
                 );
-
-                $('.nav-tabs li').click(function (e) {
-                    $('.nav-tabs li').removeClass('active');
-                    $(this).addClass('active');
-                });
 
                 setTimeout(() => {
                     var stickyToggle = function(sticky, stickyWrapper, scrollElement) {
