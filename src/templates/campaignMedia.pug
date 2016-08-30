@@ -1,7 +1,12 @@
 include mixins.pug
 include campaignMenu.pug
 
-+breadcrumbs('Create campaign', 'LOREM IPSUM DOLOR SIT AMET CONSECTETUR', [['home', '/',], [ 'current', page.get_absolute_url]])
++breadcrumbs('Create campaign', 'LOREM IPSUM DOLOR SIT AMET CONSECTETUR', 
+    [
+        ['Home', '/'],
+        ['current', 'page.get_absolute_ur'],
+    ]
+)
 
 section.create-company-media.container
   +menu('media')
