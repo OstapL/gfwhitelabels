@@ -3,8 +3,9 @@ include mixins.pug
 - counter = 0
 - indexCounter = attr.index || 0
 
-a(href="#" data-section=name data-index=indexCounter).delete-section.pull-right
-    i.fa.fa-times
+.delete-section-container
+    a(href="#" data-section=name data-index=indexCounter).delete-section.pull-right
+        i.fa.fa-times
 
 if attr.type == 'jsonVideo'
     div(class='form-group clearfix videoInteractive index_' + indexCounter)

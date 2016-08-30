@@ -2,6 +2,8 @@
 	height: rem(286);
 
 	background: url(/img/pages/team-bg.png);
+	background-attachment: fixed;
+	background-size: cover;
 
 	h2 {
 		color: $alabaster;

@@ -1,3 +1,19 @@
+mixin getCompanyUrl(campaign, step, name)
+    - console.log('current', current, step);
+    if campaign.id
+        a(
+          href="/campaign/" + step + "/" + campaign.id 
+          class="list-group-item list-group-item-action " + (current == step ? 'active' : '')
+        ) #{ name }
+            if current == step
+                i.fa.fa-check
+    else
+        a(
+          href="#"
+          class="list-group-item list-group-item-action disabled" 
+        ) #{ name }
+
+        
 mixin menu(current)
     .col-lg-3.create_compaign
       .jumbotron.jumbotron-fluid.row
@@ -34,36 +50,11 @@ mixin menu(current)
                   i.fa.fa-angle-down
             #campaign(role="tabpanel" class="panel-collapse collapse" + (current != 'company' ? ' in' : ''))
                 .list-group
-                      a(
-                        href="/campaign/general_information/" + values.id 
-                        class="list-group-item list-group-item-action " + (current == 'general_information' ? 'active' : '')
-                      ) General Information
-                          if current == 'general_information'
-                              i.fa.fa-check
-                      a(
-                        href="/campaign/media/" + values.id 
-                        class="list-group-item list-group-item-action " + (current == 'media' ? 'active' : '')
-                      ) Media
-                          if current == 'media'
-                              i.fa.fa-check
-                      a(
-                        href="/campaign/team_members/" + values.id 
-                        class="list-group-item list-group-item-action " + (current == 'team-members' ? 'active' : '')
-                      ) Team Members
-                          if current == 'team-members'
-                              i.fa.fa-check
-                      a(
-                        href="/campaign/specifics/" + values.id 
-                        class="list-group-item list-group-item-action " + (current == 'specifics' ? 'active' : '')
-                      ) Specifics
-                          if current == 'specifics'
-                              i.fa.fa-check
-                      a(
-                        href="/campaign/perks/" + values.id 
-                        class="list-group-item list-group-item-action " + (current == 'perks' ? 'active' : '')
-                      ) Perks
-                          if current == 'perks'
-                              i.fa.fa-check
+                    +getCompanyUrl(values, 'general_information', 'General Information')
+                    +getCompanyUrl(values, 'media', 'Media')
+                    +getCompanyUrl(values, 'team_members', 'Team Members')
+                    +getCompanyUrl(values, 'specifics', 'Specifics')
+                    +getCompanyUrl(values, 'perks', 'Perks')
           .panel.panel-default
             .panel-heading(role="tab")
               a(data-toggle="collapse"
