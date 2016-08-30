@@ -1,4 +1,4 @@
-mixin getCompanyUrl(campaign, step, name)
+mixin getCompanyUrl(campaign, current, step, name)
     - console.log('current', current, step);
     if campaign.id
         a(
@@ -50,11 +50,11 @@ mixin menu(current)
                   i.fa.fa-angle-down
             #campaign(role="tabpanel" class="panel-collapse collapse" + (current != 'company' ? ' in' : ''))
                 .list-group
-                    +getCompanyUrl(values, 'general_information', 'General Information')
-                    +getCompanyUrl(values, 'media', 'Media')
-                    +getCompanyUrl(values, 'team_members', 'Team Members')
-                    +getCompanyUrl(values, 'specifics', 'Specifics')
-                    +getCompanyUrl(values, 'perks', 'Perks')
+                    +getCompanyUrl(values, current, 'general_information', 'General Information')
+                    +getCompanyUrl(values, current, 'media', 'Media')
+                    +getCompanyUrl(values, current, 'team_members', 'Team Members')
+                    +getCompanyUrl(values, current, 'specifics', 'Specifics')
+                    +getCompanyUrl(values, current, 'perks', 'Perks')
           .panel.panel-default
             .panel-heading(role="tab")
               a(data-toggle="collapse"
