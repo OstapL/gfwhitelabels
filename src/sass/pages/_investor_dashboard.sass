@@ -65,18 +65,25 @@
 				top: 63px
 				right: 13px
 				border-radius: 3px
+				max-width: 96px
+				text-align: right
+				letter-spacing: rem(.36)
 
 			.successfull
-				padding: 6px 10px
-				background: #aed07c
-				line-height: 14px
+				padding: rem(6) rem(10)
+				background: rgba(174,208,124, 0.8)
+				line-height: rem(14)
 				font-weight: bold
 				color: $white
 				position: absolute
-				letter-spacing: 2.2px
-				top: 13px
-				right: 13px
-				border-radius: 3px
+				letter-spacing: rem(.36)
+				top: rem(13)
+				right: rem(13)
+				border-radius: rem(3)
+				text-align: right
+				max-width: rem(147)
+			.unsuccessfull
+				background: rgba(237,28,36, 0.8)
 
 			b
 				letter-spacing: 0.35px
@@ -267,7 +274,12 @@
 
 			:hover
 				text-decoration: underline
-
+.investor-dashboard
+	.custom-select
+		position: absolute
+		top: rem(-12)
+		right: 0
+		min-width: 190px
 
 @media only screen and (max-width : 992px)
 	.investor_table

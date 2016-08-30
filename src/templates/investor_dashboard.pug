@@ -5,6 +5,8 @@ include mixins.pug
 section.investor-dashboard
   .container
     .col-lg-12
+      select.orderby.custom-select.pull-right.text-uppercase 
+        option(checked="checked" value="0") default sorting
       ul(role="tablist").nav.standart-nav-tabs.row
         li.nav-item
           a.nav-link.text-uppercase.active#active-tab(
@@ -23,6 +25,7 @@ section.investor-dashboard
             aria-expanded="false"
           ) Historical
             .clearfix
+      
       .row
         .tab-content
           .tab-pane.fade.active.in#active(
@@ -86,9 +89,8 @@ section.investor-dashboard
                   .progress_line_container
                     progress(value="10" max="100").progress
                   .text-lg-center
-                    a(href="#").btn.btn-secondary.text-uppercase
+                    a(href="#").btn.btn-secondary.text-uppercase view campaign
                       i.fa.fa-angle-right
-                      |  view campaign
                   .cancel_invest
                     a(href="#").font-weight-bold Cancel investment
                 .clear
@@ -147,9 +149,8 @@ section.investor-dashboard
                   .progress_line_container
                     progress(value="10" max="100").progress
                   .text-lg-center
-                    a(href="#").btn.btn-secondary.text-uppercase
-                      i.fa.fa-angle-right
-                      |  view campaign
+                    a(href="#").btn.btn-secondary.text-uppercase view campaign
+                      i.fa.fa-angle-right 
                   .cancel_invest
                     a(href="#").font-weight-bold Cancel investment
           .tab-pane.fade#historical(
@@ -214,16 +215,16 @@ section.investor-dashboard
                   .progress_line_container
                     progress(value="10" max="100").progress
                   .text-lg-center
-                    a(href="#").btn.btn-secondary.text-uppercase
+                    a(href="#").btn.btn-secondary.text-uppercase view campaign
                       i.fa.fa-angle-right
-                      |  view campaign
                   .cancel_invest
                     a(href="#").font-weight-bold Cancel investment
                 .clear
               .one_table
                 .img_column.text-lg-center.text-sm-center
                   img(src="/img/test.png" alt="").img-fluid
-                  span.img_tab 02 Days Left
+                  span.successfull.unsuccessfull  Unsuccessfully funded campaign
+                  span.end-date  03.07.2016 End Date
                   p.text-uppercase Company name
                 .right-columns
                   .one_line
@@ -275,8 +276,7 @@ section.investor-dashboard
                   .progress_line_container
                     progress(value="10" max="100").progress
                   .text-lg-center
-                    a(href="#").btn.btn-secondary.text-uppercase
+                    a(href="#").btn.btn-secondary.text-uppercase view campaign
                       i.fa.fa-angle-right
-                      |  view campaign
                   .cancel_invest
                     a(href="#").font-weight-bold Cancel investment
