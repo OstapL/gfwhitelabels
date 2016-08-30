@@ -1,0 +1,57 @@
+include mixins.pug
+
++breadcrumbs('PARTNERS', '', 
+    [
+        ['Home', '/'],
+        ['Partners', ''],
+    ]
+)
+
+section.text_block 
+    .container
+        .row
+            .col-lg-3 
+                .page_title.border-bottom.mb25
+                    h4.text-uppercase.dosis ABOUT US
+                ul.list-unstyled.mb50.custom
+                    li
+                        a.d-inline-block.w-100.pb10(href='/pg/overview') Overview
+                    li
+                        a.d-inline-block.w-100.pb10(href='/pg/team') Team
+                    li
+                        a.d-inline-block.w-100.pb10(href='') Partners
+                    li
+                        a.d-inline-block.w-100.pb10(href='/pg/contact') Contact Us
+                    li
+                        a.d-inline-block.w-100.pb10(href='') Careers
+                    li
+                        a.d-inline-block.w-100.pb10(href='/pg/faq') FAQ
+                    li
+                        a.d-inline-block.w-100.pb10(href='/pg/news') In the News
+                    li
+                        // у последнего елемента <a> клас pb10 отстутствует
+                        a.d-inline-block.w-100(href='/pg/blogs') Blog
+
+            .col-lg-9
+                .row
+                    .col-lg-12.text-xs-center
+                        h2.text-uppercase.dosis.m0 OUR PARTNERS
+                        
+                .row
+                    .col-lg-12.mt25
+                        p.text-justify At GrowthFountain, we have formed strategic partners with the credit union industry. As we focus on providing entrepreneurs with all the tools they need to succeed…well, Credit Unions focus on the same thing! As well as the cumulative affect local business will have on the community. We make perfect partners.
+
+                .row
+                    .col-lg-4.p-r-0
+                        a(href="#")
+                            img(src="/img/pages/partners1.png").img-fluid
+
+                    .col-lg-4.p-r-0.pt55
+                        a(href="#")
+                            img(src="/img/pages/partners2.png").img-fluid
+
+                    .col-lg-4.pt55
+                        a(href="#")
+                            img(src="/img/pages/partners3.png").img-fluid
+
+                       
