@@ -1,7 +1,12 @@
 include mixins.pug
 
-+breadcrumbs('investor dashboard', '', [['home', '/',], [ 'investor dashboard', page.get_absolute_url]])
 
++breadcrumbs('investor dashboard', '', 
+    [
+        ['Home', '/'],
+        ['investor dashboard', ''],
+    ]
+)
 section.investor-dashboard
   .container
     .col-lg-12
