@@ -4,7 +4,7 @@ include mixins.pug
 - indexCounter = attr.index || 0
 
 .delete-section-container
-    a(href="#" data-section=name data-index=indexCounter).delete-section.pull-right
+    a(href="#" data-section=name data-index=indexCounter).delete-section
         i.fa.fa-times
 
 if attr.type == 'jsonVideo'
