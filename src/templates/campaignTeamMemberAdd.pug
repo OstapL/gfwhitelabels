@@ -38,7 +38,7 @@ section.team-members.container.m-b-85
         .col-lg-9
             textarea(name="bio" placeholder="At least 150 characters and no more than 250 characters" rows="4").form-control #{ values.bio }
       .row
-        .col-lg-9.recommended
+        .col-lg-9.recommended.label-p-t-0
           +fieldBlock("growup", '', {
             class1: 'col-lg-4 col-md-3',
             class2: 'col-lg-8 col-md-9',
@@ -49,25 +49,25 @@ section.team-members.container.m-b-85
           select(name="state").orderby.custom-select
             option(checked="checked" value="0") ST
             option(value="1") STL
-      +fieldBlock("college", '', {
-        class1: 'col-lg-3 col-md-3',
-        class2: 'col-lg-9 col-md-9',
-        type: 'text',
-        })
+      .label-p-t-0
+        +fieldBlock("college", '', {
+          class1: 'col-lg-3 col-md-3',
+          class2: 'col-lg-9 col-md-9',
+          type: 'text',
+          })
       .row
-          .col-lg-1
-          .col-lg-5
-              +fieldBlock("facebook", '', {
-                class1: 'col-lg-3 col-md-3',
-                class2: 'col-lg-9 col-md-9',
-                type: 'text',
-                })
-          .col-lg-6
-              +fieldBlock("linkedin", '', {
-                class1: 'col-lg-3 col-md-3',
-                class2: 'col-lg-9 col-md-9',
-                type: 'text',
-                })
+        .col-lg-6.input-min-width
+            +fieldBlock("facebook", '', {
+              class1: 'col-lg-6 col-md-3',
+              class2: 'col-lg-6 col-md-9',
+              type: 'text',
+              })
+        .col-lg-6.label-p-t-0.input-min-width
+            +fieldBlock("linkedin", '', {
+              class1: 'col-lg-5 col-md-3',
+              class2: 'col-lg-7 col-md-9',
+              type: 'text',
+              })
 
       .row.dropzone__photo.media-item
         .col-lg-7

@@ -128,16 +128,17 @@ section
       .col-lg-12
         h2#about.dosis.text-uppercase.text-lg-center About #{ campaign.company.name }
         p #{ campaign.company.description }
+
         h3.our.text-lg-center Why You Should Invest
         p #{ campaign.pitch }
         h3.our.text-lg-center How We Intend to Make Money
         p #{ campaign.business_model }
 
         if campaign.additional_info
-          - let counter = 0
           each v,k in campaign.additional_info
             h3.our.text-lg-center #{ v.title }
             p #{ v.body }
+
 
       #gallery1.col-lg-12.pt50.photo-gallegy
         if campaign.gallery
