@@ -91,7 +91,7 @@ mixin fieldBlock(name, data, attr)
                     textarea(
                         id=name
                         name=name
-                        onfocus=(fields[name].help_text ? '$(this).popover()' : '') 
+                        class=(fields[name].help_text ? 'showPopover' : '')
                         data-content=(fields[name].help_text ? fields[name].help_text : '')
                         placeholder=attr.placeholder ? attr.placeholder : fields[name].label
                       ).form-control #{values[name]}
@@ -101,7 +101,7 @@ mixin fieldBlock(name, data, attr)
                 - indexCounter = attr.index || 0
                 if values[name].length == 0
                     .delete-section-container
-                        a(href="#" data-section=name).delete-section.pull-right
+                        a(href="#" data-section=name).delete-section
                             i.fa.fa-times
                     each k,v in fields[name].schema
                         div(class='form-group clearfix index_' + indexCounter)
@@ -129,7 +129,7 @@ mixin fieldBlock(name, data, attr)
                     - let kkeys = Object.keys(values[name])
                     each el in values[name]
                         .delete-section-container
-                            a(href="#" data-section=name data-index=indexCounter).delete-section.pull-right
+                            a(href="#" data-section=name data-index=indexCounter).delete-section
                                 i.fa.fa-times
                         each k1,v in fields[name].schema
                             - let k = values[name][kkeys[counter]][v]
@@ -158,8 +158,9 @@ mixin fieldBlock(name, data, attr)
                 - indexCounter = attr.index || 0
                 if values[name].length == 0
                     div(class='form-group clearfix index_' + indexCounter)
-                        a(href="#" data-section=name).delete-section.pull-right
-                            i.fa.fa-times
+                        .delete-section-container
+                            a(href="#" data-section=name).delete-section
+                                i.fa.fa-times
                         .col-lg-7.videoInteractive
                             each k1,v in fields[name].schema
                                 - let t = fields[name].schema[v]
@@ -181,8 +182,9 @@ mixin fieldBlock(name, data, attr)
                     - let kkeys = Object.keys(values[name])
                     each el in values[name]
                         div(class='form-group clearfix index_' + indexCounter)
-                            a(href="#" data-section=name data-index=indexCounter).delete-section.pull-right
-                                i.fa.fa-times
+                            .delete-section-container
+                                a(href="#" data-section=name data-index=indexCounter).delete-section
+                                    i.fa.fa-times
                             .col-lg-7.videoInteractive
                                 each k1,v in fields[name].schema
                                     - let k = values[name][kkeys[counter]][v]
@@ -199,7 +201,6 @@ mixin fieldBlock(name, data, attr)
                                             ).form-control
                             .col-lg-5.p-l-1.p-r-3 
                                 .embed-responsive.embed-responsive-16by9 
-                                    - console.log('app', app, k);
                                     - let link = app.getVideoId(values[name][kkeys[counter]].link)
                                     iframe.embed-responsive-item(src="//www.youtube.com/embed/" + link + "?rel=0" allowfullscreen="true")
                         - counter ++
@@ -207,13 +208,12 @@ mixin fieldBlock(name, data, attr)
         else
                 label(class= attr.text_align ? 'text-md-' + attr.text_align + ' ' + attr.class1 : ' text-md-right ' + attr.class1 for=name)= fields[name].label
                 div(class=attr.class2)
-                    - console.log(fields[name])
                     input(
                         id=name
                         name=name
                         placeholder=attr.placeholder ? attr.placeholder : fields[name].label
                         type=attr.type ? attr.type : 'text'
-                        onfocus=(fields[name].help_text ? '$(this).popover()' : '') 
+                        class=(fields[name].help_text ? 'showPopover' : '') 
                         data-content=(fields[name].help_text ? fields[name].help_text : '')
                         value=values[name]
                       ).form-control
@@ -235,7 +235,10 @@ mixin fieldDropzone(name, attr, type)
     - type = attr.viewType ? attr.viewType : 1
 
     if type == 1
-        div(class='row media-item ' + name)
+        div(
+            class='row media-item ' + name + (fields[name].help_text ? ' showPopover' : '') 
+            data-content=(fields[name].help_text ? fields[name].help_text : '')
+        )
             div(class=attr.class1 + ' ' + (fields[name].required == true ? ' required ' : ' ') )
               .col-lg-5
                   span.pull-right.font-weight-bold #{fields[name].label}
@@ -248,7 +251,10 @@ mixin fieldDropzone(name, attr, type)
                 if values[name + '_data']
                     a(href=values[name + '_data'].url).link-3 #{values[name + '_data'].name}
     else if type == 2
-        div(class='dropzone__' + name + ' col-lg-7 media-item')
+        div(
+            class='dropzone__' + name + ' col-lg-7 media-item' + (fields[name].help_text ? ' showPopover' : '')
+            data-content=(fields[name].help_text ? fields[name].help_text : '')
+        )
             div(class=attr.class1)
                 span.pull-right.font-weight-bold #{fields[name].label}
             div(class=attr.class2 + ' text-lg-center')

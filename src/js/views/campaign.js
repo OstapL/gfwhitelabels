@@ -370,7 +370,7 @@ define(function() {
             addSection: jsonActions.addSection,
             deleteSection: jsonActions.deleteSection,
             getSuccessUrl: function() {
-                return  '/campaign/team_members/' + this.model.get('id');
+                return  '/campaign/team-members/' + this.model.get('id');
             },
             submit: app.defaultSaveActions.submit,
 
@@ -622,7 +622,7 @@ define(function() {
             },
 
             getSuccessUrl: function() {
-                return  '/campaign/team_members/' + this.model.get('id');
+                return  '/campaign/team-members/' + this.model.get('id');
             },
             
             submit: function(e) {

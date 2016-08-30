@@ -420,6 +420,25 @@ $('body').on('click', '.auth-pop', function() {
     $('#loginModal').modal();
 });
 
+$('body').on('mouseover', 'div.showPopover', function() {
+    var el = $(this);
+    if(el.attr('aria-describedby') == null) {
+        $(this).popover('show');
+    }
+});
+$('body').on('focus', 'input.showPopover', function() {
+    var el = $(this);
+    if(el.attr('aria-describedby') == null) {
+        $(this).popover('show');
+    }
+});
+$('body').on('focus', 'textarea.showPopover', function() {
+    var el = $(this);
+    if(el.attr('aria-describedby') == null) {
+        $(this).popover('show');
+    }
+});
+
 $('body').on('click', 'a', function(event) {
     var href = event.currentTarget.getAttribute('href');
     if(href && href != '' && href.substr(0,1) != '#' && 
@@ -436,6 +455,7 @@ $('body').on('click', 'a', function(event) {
 
         $('#content').undelegate();
         $('form').undelegate();
+        $('.popover').popover('hide')
         if(app.cache.hasOwnProperty(url) == false) {
             app.routers.navigate(
                 url,
