@@ -34,10 +34,11 @@ define(function() {
             },
 
             events: {
-                'click .tabs-scroll .nav .nav-link': 'smoothscroll'
+                'click .tabs-scroll .nav .nav-link': 'smoothScroll',
+                'click .list-group-item-action': 'toggleActiveAccordionTab'
             },
 
-            smoothscroll(e) {
+            smoothScroll(e) {
                 e.preventDefault();
                 $(document).off("scroll");
                 $('.tabs-scroll .nav').find('.nav-link').removeClass('active');
@@ -52,6 +53,22 @@ define(function() {
                     window.location.hash = e.target.hash;
                     $(document).on("scroll", this.onScrollListener);
                 });
+            },
+
+            toggleActiveAccordionTab(e) {
+                let $elem = $(e.target),
+                    $icon = $elem.find('.fa');
+
+                if ($elem.is('.active')) {
+                    $icon.removeClass('fa-angle-up').addClass('fa-angle-down');
+                } else {
+                    // remove active state of all other panels
+                    $elem.closest('.custom-accordion').find('.list-group-item-action').removeClass('active')
+                        .find('.fa').removeClass('fa-angle-up').addClass('fa-angle-down');
+
+                    $icon.removeClass('fa-angle-down').addClass('fa-angle-up');
+                }
+                $elem.toggleClass('active');
             },
 
             onScrollListener() {
