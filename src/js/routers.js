@@ -39,6 +39,7 @@ let appRoutes = Backbone.Router.extend({
         var url = event.target.pathname;
         $('#content').undelegate();
         $('form').undelegate();
+        $('.popover').popover('hide')
         if(app.cache.hasOwnProperty(event.target.pathname) == false) {
             window.history.back();
             app.routers.navigate(

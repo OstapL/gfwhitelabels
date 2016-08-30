@@ -91,8 +91,11 @@ mixin fieldBlock(name, data, attr)
                     textarea(
                         id=name
                         name=name
+                        onfocus=(fields[name].help_text ? '$(this).popover()' : '') 
+                        data-content=(fields[name].help_text ? fields[name].help_text : '')
                         placeholder=attr.placeholder ? attr.placeholder : fields[name].label
                       ).form-control #{values[name]}
+
         else if attr.type == 'json' 
                 - counter = attr.index || 0
                 - indexCounter = attr.index || 0
@@ -159,7 +162,6 @@ mixin fieldBlock(name, data, attr)
                             i.fa.fa-times
                         .col-lg-7.videoInteractive
                             each k1,v in fields[name].schema
-                                - let k = values[name][kkeys[counter]][v]
                                 - let t = fields[name].schema[v]
                                 .form-group.clearfix
                                     label.col-lg-5.col-md-5.text-lg-right.font-weight-bold #{t.label}
@@ -169,7 +171,6 @@ mixin fieldBlock(name, data, attr)
                                             name=name + '[' + indexCounter + '][' + v + ']'
                                             placeholder=t.placeholder ? t.placeholder : t.label
                                             type=t.type
-                                            value=k
                                         ).form-control
                         .col-lg-5.p-l-1.p-r-3 
                             .embed-responsive.embed-responsive-16by9 
@@ -206,11 +207,14 @@ mixin fieldBlock(name, data, attr)
         else
                 label(class= attr.text_align ? 'text-md-' + attr.text_align + ' ' + attr.class1 : ' text-md-right ' + attr.class1 for=name)= fields[name].label
                 div(class=attr.class2)
+                    - console.log(fields[name])
                     input(
                         id=name
                         name=name
                         placeholder=attr.placeholder ? attr.placeholder : fields[name].label
                         type=attr.type ? attr.type : 'text'
+                        onfocus=(fields[name].help_text ? '$(this).popover()' : '') 
+                        data-content=(fields[name].help_text ? fields[name].help_text : '')
                         value=values[name]
                       ).form-control
 

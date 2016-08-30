@@ -1,6 +1,5 @@
 mixin getCompanyUrl(campaign, current, step, name)
-    - console.log('current', current, step);
-    if campaign.id
+    if campaign.id || current == step
         a(
           href="/campaign/" + step + "/" + campaign.id 
           class="list-group-item list-group-item-action " + (current == step ? 'active' : '')
@@ -52,7 +51,7 @@ mixin menu(current)
                 .list-group
                     +getCompanyUrl(values, current, 'general_information', 'General Information')
                     +getCompanyUrl(values, current, 'media', 'Media')
-                    +getCompanyUrl(values, current, 'team_members', 'Team Members')
+                    +getCompanyUrl(values, current, 'team-members', 'Team Members')
                     +getCompanyUrl(values, current, 'specifics', 'Specifics')
                     +getCompanyUrl(values, current, 'perks', 'Perks')
           .panel.panel-default

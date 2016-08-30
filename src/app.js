@@ -11,10 +11,6 @@ require('../node_modules/jquery-serializejson/jquery.serializejson.min.js');
 
 // require('sass/mixins_all.sass');
 
-//console.log(global.userModel);
-//console.log(_);
-//require('libs.js');
-
 // При выводе ошибок для форм у нас может быть две ситуации:
 // 1. Мы выводим ошибку для элементы который у нас есть в форме =>
 // нам нужно вывести это ошибку в help-block рядом с тем элементом где была ошибка
@@ -42,8 +38,12 @@ _.extend(Backbone.Validation.callbacks, {
         $group.find('.help-block').remove();
     },
     invalid: function (view, attr, error, selector) {
-        var $el = view.$('[name=' + attr + ']');
+        let $el = view.$('#' + attr);
         var $group = null;
+
+        if($el.length == 0) {
+            $el = view.$('[name=' + attr + ']');
+        }
 
         if(Array.isArray(error) !== true)
             error = [error]
@@ -79,7 +79,6 @@ _.extend(Backbone.Validation.callbacks, {
             }
         }
 
-        //console.log(view, attr, error, selector);
     }
 });
 
@@ -138,43 +137,6 @@ $.fn.serializeRepeatableObject = function () {
     };
     return $.each(this.serializeArray(), b), a
 };
-
-
-
-function repeatToJSonString(obj) {
-    // Repeatable fields 
-    // Should comes by 2 fields
-    for(var k in obj) {
-        if(k.indexOf('repeat:') !== -1) {
-            var key = k.replace('repeat:', '');
-            var n = {};
-            var repeat_keys = Object.keys(obj[k]);
-
-            for(var kk in obj[k]) {
-                if(obj[k][kk][0]) {
-                        n[kk] = obj[k][kk];
-                }
-            }
-
-            /*
-            var key_k = Object.keys(obj[k])[0];
-            var key_v = Object.keys(obj[k])[1];
-            for(var j in obj[k][key_k]) {
-                if(obj[k][key_k][j] || obj[k][key_v][j]) {
-                    var o = {};
-                    o[obj[k][key_k][j]] = obj[k][key_v][j];
-                    n.push(o);
-                }
-            }
-            */
-            console.log(n);
-            obj[key] = n;
-            delete obj[k];
-        }
-    }
-    return obj;
-};
-
 
 
 global.app = {
@@ -262,7 +224,7 @@ global.app = {
         submit: function(e, data) {
 
             this.$el.find('.alert').remove();
-            event.preventDefault();
+            e.preventDefault();
 
             var data = data || $(e.target).serializeJSON();
             //var investment = new InvestmentModel(data);
@@ -274,15 +236,17 @@ global.app = {
                 var self = this;
                 this.model.save().
                     then((data) => { 
+                        app.showLoading();
                         this.$el.find('.alert-warning').remove();
+                        self.undelegateEvents();
+                        $('.popover').popover('hide')
+                        $('#content').scrollTo();
+
                         if(typeof this._success == 'function') {
                             this._success(data);
                         } else {
-                            app.showLoading();
 
                             //window.location = '/api/campaign/' + this.model.get('id');
-                            self.undelegateEvents();
-                            $('#content').scrollTo();
                             app.routers.navigate(
                                 self.getSuccessUrl(data),
                                 {trigger: true, replace: false}
@@ -367,7 +331,6 @@ global.app = {
       if(typeof renameTo != 'undefined' && renameTo != '') {
         params['rename'] = renameTo;
       }
-      console.log('params', params);
 
       let dropbox = new Dropzone(".dropzone__" + name, {
           url: serverUrl + Urls['image2-list'](),
