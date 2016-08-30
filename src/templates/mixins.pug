@@ -98,7 +98,7 @@ mixin fieldBlock(name, data, attr)
                 - indexCounter = attr.index || 0
                 if values[name].length == 0
                     .delete-section-container
-                        a(href="#" data-section=name).delete-section.pull-right
+                        a(href="#" data-section=name).delete-section
                             i.fa.fa-times
                     each k,v in fields[name].schema
                         div(class='form-group clearfix index_' + indexCounter)
@@ -125,8 +125,9 @@ mixin fieldBlock(name, data, attr)
                     - indexCounter = attr.index || 0
                     - let kkeys = Object.keys(values[name])
                     each el in values[name]
-                        a(href="#" data-section=name data-index=indexCounter).delete-section.pull-right
-                            i.fa.fa-times
+                        .delete-section-container
+                            a(href="#" data-section=name data-index=indexCounter).delete-section
+                                i.fa.fa-times
                         each k1,v in fields[name].schema
                             - let k = values[name][kkeys[counter]][v]
                             - let t = fields[name].schema[v]
@@ -154,8 +155,9 @@ mixin fieldBlock(name, data, attr)
                 - indexCounter = attr.index || 0
                 if values[name].length == 0
                     div(class='form-group clearfix index_' + indexCounter)
-                        a(href="#" data-section=name).delete-section.pull-right
-                            i.fa.fa-times
+                        .delete-section-container
+                            a(href="#" data-section=name).delete-section
+                                i.fa.fa-times
                         .col-lg-7.videoInteractive
                             each k1,v in fields[name].schema
                                 - let k = values[name][kkeys[counter]][v]
@@ -179,8 +181,9 @@ mixin fieldBlock(name, data, attr)
                     - let kkeys = Object.keys(values[name])
                     each el in values[name]
                         div(class='form-group clearfix index_' + indexCounter)
-                            a(href="#" data-section=name data-index=indexCounter).delete-section.pull-right
-                                i.fa.fa-times
+                            .delete-section-container
+                                a(href="#" data-section=name data-index=indexCounter).delete-section
+                                    i.fa.fa-times
                             .col-lg-7.videoInteractive
                                 each k1,v in fields[name].schema
                                     - let k = values[name][kkeys[counter]][v]
@@ -254,4 +257,7 @@ mixin fieldDropzone(name, attr, type)
             .photo-scroll
                 if values[name + '_data']
                     each v,k in values[name+'_data'].all_files
+                        .delete-image-container
+                            a(href="#" data-image=v.id).delete-image.pull-right
+                                i.fa.fa-times
                         img(style="width: 100px; height: 68px;" src=v.url).img-fluid.pull-left

@@ -38,11 +38,12 @@ section.create-company.container.m-b-85
                 i.fa.fa-angle-left
           #campaign(role="tabpanel").panel-collapse.collapse
             .list-group
+                +getCompanyUrl(campaign, '', 'general_information', 'General Information')
+                +getCompanyUrl(campaign, '', 'media', 'Media')
+                +getCompanyUrl(campaign, '', 'team_members', 'Team Members')
+                +getCompanyUrl(campaign, '', 'specifics', 'Specifics')
+                +getCompanyUrl(campaign, '', 'perks', 'Perks')
                 +getCompanyUrl(campaign, 'general_information', 'General Information')
-                +getCompanyUrl(campaign, 'media', 'Media')
-                +getCompanyUrl(campaign, 'team_members', 'Team Members')
-                +getCompanyUrl(campaign, 'specifics', 'Specifics')
-                +getCompanyUrl(campaign, 'perks', 'Perks')
         .panel.panel-default
           .panel-heading(role="tab")
             a(data-toggle="collapse"

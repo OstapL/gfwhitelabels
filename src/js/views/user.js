@@ -66,7 +66,7 @@ define(function() {
                     delete this.model.attributes['key'];
 
                     this.model.set('token', data.key);
-                    localStorage.setItem('user', JSON.stringify(this.model.toJSON()));
+                    localStorage.removeItem('user');
                     window.location = '/' //data.next ? data.next : '/account/profile'
                 } else {
                     Backbone.Validation.callbacks.invalid(                                 
