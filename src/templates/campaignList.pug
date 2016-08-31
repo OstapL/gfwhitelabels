@@ -40,11 +40,8 @@ section.small-section.filter
                 .col-lg-3
                     .one_drop
                         select(title="DEAL TYPE").form-control.selectpicker
-                            option Deal type
-                            option Equity
-                            option Convertible Note
-                            option Debt
-                            option Revenue Share
+                            option Common Equity
+                            option PayBack Share
 
             .create-alert-block
                 .row
@@ -105,8 +102,8 @@ section.campaing-list
                         .progress_bar_container
                             span.left_text #{campaign.progress} % Funded
                             span.right_text 
-                                b $#{campaign.amount_raised} 
-                                | of #{campaign.minimum_raise}
+                                b #{collection.showBeautifulNumber(campaign.amount_raised)} 
+                                | of #{collection.showBeautifulNumber(campaign.minimum_raise)}
                             .clear
                                 progress.progress(value=campaign.progress max="100") #{campaign.progress} %
 
