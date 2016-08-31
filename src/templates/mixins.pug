@@ -183,6 +183,7 @@ mixin fieldBlock(name, data, attr)
                     - indexCounter = attr.index || 0
                     - let kkeys = Object.keys(values[name])
                     each el in values[name]
+                        div(class='form-group clearfix index_' + indexCounter)
                             .delete-section-container
                                 a(href="#" data-section=name data-index=indexCounter).delete-section
                                     i.fa.fa-times
