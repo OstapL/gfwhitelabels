@@ -1,5 +1,5 @@
-var calculatorHelper = require("../helpers/calculatorHelpers");
-var formatPrice = calculatorHelper.formatPrice;
+// var calculatorHelper = require("../helpers/calculatorHelpers");
+// var formatPrice = calculatorHelper.formatPrice;
 
 var jsonActions = {
     events: {
