@@ -1,7 +1,12 @@
 include mixins.pug
 include campaignMenu.pug
 
-+breadcrumbs('Create Company', 'Help Button', [['home', '/',], [ 'current', page.get_absolute_url]])
++breadcrumbs('Create Company', 'Help Button', 
+    [
+        ['Home', '/'],
+        ['current', ''],
+    ]
+)
 
 section.create-perks.container
   +menu('perks')
@@ -18,17 +23,18 @@ section.create-perks.container
             | Investment decisions can depend as much on emotional attachment to your company as they do on potential return. Evidence suggests that investors particularly like to invest in companies that give them perks - or tangible rewards of ownership, as well as continued contact post-investment.We recommend offering at least one ietm, and perhaps more, depending on the level of investment. For example, all investors could receive coupons or discounts. If the company makes a widget,
             investors who invest a minimimum of $500 receive a free widget. Please consider the cost of shipping and production when you offer to send an investor a free item based on their investment - make sure it works for you monetarily and make sure to manage expectations appropriately. Offering perks is completely optional and up to you - you can even offer honorable mention on a website, a signed picture, etc.Investor perks are not intended to affect the value of the security and
             investors should evaluate the merits of each investment without regard to any Investor Perks.
-      
-        .articles
-          +fieldBlock("perks", '', {
-            class1: 'col-lg-3 col-md-4',
-            class2: 'col-lg-9 col-md-8',
-            type: 'json',
-            })
-          .col-lg-8.offset-lg-3.p-l-0
-            a(href="#" data-section='perks').link-2.add-section
-              i.fa.fa-plus
-              |  Add Another Perks Level
+        .col-lg-12
+          .row
+            .articles
+              +fieldBlock("perks", '', {
+                class1: 'col-lg-3 col-md-4',
+                class2: 'col-lg-9 col-md-8',
+                type: 'json',
+                })
+              .col-lg-8.offset-lg-3.p-l-0
+                a(href="#" data-section='perks').link-2.add-section
+                  i.fa.fa-plus
+                  |  Add Another Perks Level
         .col-lg-6.pull-right.p-r-0.m-t-3
           .col-lg-6
             button(type="submit").btn.btn-lg.btn-primary.text-uppercase.pull-right save
