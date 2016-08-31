@@ -46,7 +46,10 @@ define(function() {
 
     r.collection = Backbone.Collection.extend({
         model: r.model,
-        url: serverUrl + '/api/campaign'
+        url: serverUrl + '/api/campaign',
+        showBeautifulNumber: function (number) {
+            return formatPrice(number);
+        },
     });
 
     return r;
