@@ -2,7 +2,8 @@ module.exports = {
   facebook: function() {
     window.fbAsyncInit = function() {
         FB.init({
-          appId      : '1048883325219451',
+          // appId      : '1048883325219451',
+          appId: facebookClientId,
           xfbml      : true,
           version    : 'v2.7'
         });

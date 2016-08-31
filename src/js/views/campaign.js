@@ -57,7 +57,8 @@ define(function() {
                 this.$el.append(
                     template({
                         serverUrl: serverUrl,
-                        campaigns: this.collection.toJSON()
+                        campaigns: this.collection.toJSON(),
+                        collection: this.collection,
                     })
                 );
                 this.$el.find('.selectpicker').selectpicker();
