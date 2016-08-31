@@ -15,18 +15,6 @@ define(function() {
                 }
             },
 
-            get_premoney_valuation: function() {
-                return this.get_human_number(this.get('premoney_valuation'))
-            },
-
-            get_minimum_raise: function() {
-                return this.get_human_number(this.get('minimum_raise'))
-            },
-
-            get_maximum_raise: function() {
-                return this.get_human_number(this.get('maximum_raise'))
-            },
-
             // will work for youtube only
             get_video_id: function() {
                 if(self.video.count('=') > 0) {

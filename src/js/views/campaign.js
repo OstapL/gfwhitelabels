@@ -102,6 +102,7 @@ define(function() {
             render: function() {
                 require('../../../node_modules/photoswipe/src/css/main.scss');
                 require('../../../node_modules/photoswipe/src/css/default-skin/default-skin.scss');
+                const socialMediaScripts = require('../helpers/shareButtonHelper.js');
 
                 let PhotoSwipe = require('photoswipe');
                 let PhotoSwipeUI_Default = require('photoswipe-ui-default');
@@ -121,6 +122,10 @@ define(function() {
                     $('.nav-tabs li').removeClass('active');
                     $(this).addClass('active');
                 });
+
+                // Will run social media scripts after content render
+                socialMediaScripts.facebook();
+                socialMediaScripts.twitter();
 
                 setTimeout(() => {
                     var stickyToggle = function(sticky, stickyWrapper, scrollElement) {
