@@ -459,6 +459,8 @@ $('body').on('click', 'a', function(event) {
     } else if(href && href != '' && href.substr(0,1) != '#' && 
         href.substr(0, 4) != 'http' && 
         href.substr(0,3) != 'ftp' &&
+        href != 'javascript:void(0);' &&
+        href != 'javascript:void(0)' &&
         event.currentTarget.getAttribute('target') == null) {
         event.preventDefault();
         app.showLoading();
