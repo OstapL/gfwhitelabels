@@ -1,3 +1,4 @@
+"use strict";
 let hello = require('hellojs');
 hello.init({
     facebook: facebookClientId,

@@ -9,6 +9,8 @@ global.userModel = require('models/user.js');
 global.Urls = require('jsreverse.js');
 require('../node_modules/jquery-serializejson/jquery.serializejson.min.js');
 
+"use strict";
+
 // require('sass/mixins_all.sass');
 
 // При выводе ошибок для форм у нас может быть две ситуации:

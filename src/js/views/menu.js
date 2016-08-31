@@ -1,3 +1,4 @@
+"use strict";
 define('views/menu', function() {
     return {
         menu: Backbone.View.extend({
