@@ -1,3 +1,5 @@
+"use strict";
+
 var jsonActions = {
     events: {
         'click .add-section': 'addSection',
