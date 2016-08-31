@@ -1,3 +1,4 @@
+- 'use strict';
 include mixins.pug
 include campaignMenu.pug
 
@@ -40,10 +41,9 @@ section.create-company.container.m-b-85
             .list-group
                 +getCompanyUrl(campaign, '', 'general_information', 'General Information')
                 +getCompanyUrl(campaign, '', 'media', 'Media')
-                +getCompanyUrl(campaign, '', 'team_members', 'Team Members')
+                +getCompanyUrl(campaign, '', 'team-members', 'Team Members')
                 +getCompanyUrl(campaign, '', 'specifics', 'Specifics')
                 +getCompanyUrl(campaign, '', 'perks', 'Perks')
-                +getCompanyUrl(campaign, 'general_information', 'General Information')
         .panel.panel-default
           .panel-heading(role="tab")
             a(data-toggle="collapse"
@@ -82,9 +82,10 @@ section.create-company.container.m-b-85
     form(metod="post" action="").form-section
       input(type='hidden' name='state' value='NY' id='state')
       input(type='hidden' name='city' value='New York' id='city')
-      input(type='hidden' name='id' value=values.id id='id')
+
       if values.id && values.id != ''
           input(type='hidden' name='id' value=values.id id='id')
+
       +fieldBlock("name", '', {
         class1: 'col-lg-3 col-md-3',
         class2: 'col-lg-9 col-md-9',
@@ -110,11 +111,11 @@ section.create-company.container.m-b-85
             class2: 'col-lg-6',
             type: 'choice',
           })
-        .col-lg-6.date-input
+        .col-lg-5.date-input.pull-right
           .col-date.form-group-m-b-0
             +fieldBlock("founding_date", '', {
-              class1: 'col-lg-6',
-              class2: 'col-lg-6',
+              class1: 'col-lg-5 p-l-0 p-r-0',
+              class2: 'col-lg-7',
             })
       .border-bottom
       +fieldBlock("address_1", '', {

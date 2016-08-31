@@ -1,14 +1,20 @@
+- 'use strict';
 include mixins.pug
 include campaignMenu.pug
 
-+breadcrumbs('Create campaign', 'LOREM IPSUM DOLOR SIT AMET CONSECTETUR ', [['home', '/',], [ 'current', page.get_absolute_url]])
++breadcrumbs('Create Company', 'Help Button', 
+    [
+        ['Home', '/'],
+        ['current', ''],
+    ]
+)
 
 section.team-members.container.m-b-85
   +menu('team-members')
 
   //START RIGHT BLOCK
   .col-lg-8
-    h2.text-uppercase.text-lg-center.text-xs-center.dosis.m-t-0 team members (Advisor)
+    h2.text-uppercase.text-lg-center.text-xs-center.dosis.m-t-0 team member (Advisor)
 
     form(method="post" action="").form-section
       input(type="hidden" name="type" value=type)#type
@@ -79,10 +85,8 @@ section.team-members.container.m-b-85
               i.fa.fa-camera
         .col-lg-5.p-l-1.p-r-3.text-lg-center.text-sm-center
           img(src=values.photo).img-fluid.img-photo
-      .col-lg-11.pull-right.p-r-0.p-t-2
-          .col-lg-6
-              button(type="submit").btn.btn-lg.btn-primary.text-uppercase.pull-right Save
-              // and return
+      .col-lg-12.text-lg-right.p-r-0.p-t-2
+        button(type="submit").btn.btn-lg.btn-primary.text-uppercase.pull-right Save
           //
             .col-lg-6.p-r-0
               .dropdown.pull-right

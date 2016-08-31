@@ -1,3 +1,4 @@
+- 'use strict';
 include mixins.pug
 include campaignMenu.pug
 
@@ -32,7 +33,7 @@ section.create-company-general.container.m-b-85
         })
       .border-bottom
       .row
-        .col-lg-9.offset-1.pull-right
+        .col-lg-12.text-lg-center
           h3.d-inline-block.m-t-0.mb25 FAQs
       .faq-form-group-m-b-0
         +fieldBlock("faq", '', {
@@ -47,7 +48,7 @@ section.create-company-general.container.m-b-85
             |  Add Another FAQ
       .border-bottom.border-bottom-faq
       .row
-        .col-lg-9.offset-1.pull-right.m-b-1
+        .col-lg-12.m-b-1.text-lg-center
           h3.d-inline-block.m-b-0.m-t-0 Additional Information 
       +fieldBlock("additional_info", '', {
         class1: 'col-lg-3 col-md-3',

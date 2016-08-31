@@ -1,5 +1,4 @@
-// var calculatorHelper = require("../helpers/calculatorHelpers");
-// var formatPrice = calculatorHelper.formatPrice;
+"use strict";
 
 var jsonActions = {
     events: {
@@ -405,7 +404,7 @@ define(function() {
             addSection: jsonActions.addSection,
             deleteSection: jsonActions.deleteSection,
             getSuccessUrl: function() {
-                return  '/campaign/team_members/' + this.model.get('id');
+                return  '/campaign/team-members/' + this.model.get('id');
             },
             submit: app.defaultSaveActions.submit,
 
@@ -657,7 +656,7 @@ define(function() {
             },
 
             getSuccessUrl: function() {
-                return  '/campaign/team_members/' + this.model.get('id');
+                return  '/campaign/team-members/' + this.model.get('id');
             },
             
             submit: function(e) {
@@ -702,6 +701,7 @@ define(function() {
                 'submit form': 'submit',
                 'change input[name="security_type"]': 'updateSecurityType',
             },
+            submit: app.defaultSaveActions.submit,
 
             preinitialize: function() {
                 // ToDo
@@ -774,6 +774,7 @@ define(function() {
                     $('#content ' + k.split(' ')[1]).undelegate(); 
                 }
             },
+            submit: app.defaultSaveActions.submit,
 
             addSection: jsonActions.addSection,
             deleteSection: jsonActions.deleteSection,
