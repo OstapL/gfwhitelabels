@@ -13,8 +13,8 @@ let appRoutes = Backbone.Router.extend({
       'campaign/general_information/': 'campaignGeneralInformation',
       'campaign/general_information/:id': 'campaignGeneralInformation',
       'campaign/media/:id': 'campaignMedia',
-      'campaign/team_members/:id/add/:type/:index': 'campaignTeamMembersAdd',
-      'campaign/team_members/:id': 'campaignTeamMembers',
+      'campaign/team-members/:id/add/:type/:index': 'campaignTeamMembersAdd',
+      'campaign/team-members/:id': 'campaignTeamMembers',
       'campaign/specifics/:id': 'campaignSpecifics',
       'campaign/perks/:id': 'campaignPerks',
       'account/profile': 'accountProfile',
@@ -39,6 +39,7 @@ let appRoutes = Backbone.Router.extend({
         var url = event.target.pathname;
         $('#content').undelegate();
         $('form').undelegate();
+        $('.popover').popover('hide')
         if(app.cache.hasOwnProperty(event.target.pathname) == false) {
             window.history.back();
             app.routers.navigate(
