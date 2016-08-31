@@ -1,0 +1,61 @@
+section.main_block
+    .container
+        .row
+            .col-lg-6.col-md-12
+                .red_opacity
+                    .vert
+                        .vertical_align_container 
+                            h3.form-group A new way to invest or raise capital.
+                            p Through our partnership with 
+                                a(href=) Growth Fountain
+                                |we're pleased to introduce Equity Crowdfunding. With this innovative program:
+                            ul.row 
+                                li - Investors and entrepreneurs can connect to enrich each other.
+                                li - Investors receive equity for their contributions to small businesses.
+                                li - Entrepreneurs can raise capital for their businesses through these contributions.
+                                li - Opportunities are available on local and national levels.
+                                li - Economic growth is spurred by greater exposure and interest.
+
+            .col-lg-6.col-md-12 
+                .logo_container 
+                    .vertical_align_container 
+                        img(src="/img/logo.png" alt="")
+                        .text-lg-center 
+                            p Powered by
+                            img(src="/img/gf_logo_nosub.png" alt="")
+
+section.text_block_white 
+    .container 
+        .row 
+            .col-lg-6.col-md-12.text-uppercase 
+                p 
+                    b To get started
+                    | , CLICK ON “INVEST” TO BROWSE CURRENT OPPORTUNITIES OR “RAISE CAPITAL” TO CREATE A NEW FUND-SOURCING CAMPAIGN.
+
+            .col-lg-6.col-md-12 
+                .text-center 
+                    a(href=Urls['campaign-list']()).btn.btn-info.text-uppercase Invest
+                    .circle_or or
+                    a(href="").btn.btn-info-dark.text-uppercase Raise capital
+
+section.jeanne_footer 
+    .container 
+        .row.text-lg-center 
+            .col-lg-4.col-md-6.col-sm-12.text-md-right 
+                .container_block 
+                    img(src="/img/footer_com_logo.png" alt="")
+
+
+            .col-lg-6.col-md-6.col-sm-12 
+                .container_block.text-left 
+                    h5 Need help getting your idea started?
+                    p "Build" Business Solutions offer everything from business loans and credit cards to business checking and savings products. Let us help you take your concept or business to the next level.
+
+
+            .col-lg-2.col-md-12 
+                .small_container_block 
+                    h6.form-group.text-uppercase Ready to 
+                        b build
+                        | your business
+                    a(href="#").btn.light-blue.text-uppercase Start today
+.hidden

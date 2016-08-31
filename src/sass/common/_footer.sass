@@ -1,0 +1,68 @@
+.footer_new
+	width: 100%
+	margin-top: 85px
+
+	background: $footer_background
+  
+	.footer_title
+		width: 100%
+		margin-bottom: 12px
+
+		h4
+			line-height: 18px
+			letter-spacing: 2.8px
+			font-size: 14px
+			color: $footer_text
+			text-transform: uppercase
+
+	.border_bottom
+		border-bottom: 1px solid $light_grey
+
+	a
+		line-height: 26px
+		font-size: 14px
+		color: $footer_text
+		display: block
+
+		&:hover 
+			color: rgba($footer_text, 0.6)
+
+	.fade-in-logo
+		position: relative
+
+		display: inline-block
+		height: 38px
+		margin-bottom: 20px
+		width: 48px
+
+		img
+			transition: all 1s ease-in-out
+
+			position: absolute
+			top: 50px
+			left: 0
+
+			opacity: 0
+		// повешать на класс который будет добавляться при скроле
+		&.fade-in img
+			top: 0
+
+			opacity: 1
+
+	.company
+		text-align: center
+
+		padding-bottom: 8px
+
+		span
+			font-size: 14px
+			color: $footer_text
+			text-transform: uppercase
+			letter-spacing: 2.8px
+			line-height: 18px
+			font-family: $dosis
+
+		p
+			font-size: 11px
+			color: $footer_text
+			line-height: 18px

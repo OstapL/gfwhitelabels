@@ -1,0 +1,382 @@
+.investor_table
+	margin: 47px auto;
+
+	.tpl_tabs
+		border-color: $border_color
+
+	.big-tabs
+		margin-bottom: 46px
+
+		&>li
+			float: left
+			height: 55px
+
+			a
+				color: $black_text
+				padding: 16px 40px 10px 40px
+				text-transform: uppercase
+				letter-spacing: 3.9px
+				font-size: 18px
+
+			.for_select
+				float: right
+				width: 180px
+				margin-top: -11px
+
+		.active
+			a
+				border: 1px solid $border_color
+				border-bottom: none
+
+	.tpl-tabs-cont
+		padding: 25px 0
+	
+	.one_table
+		margin: 25px 0 49px 0
+
+		.img_column
+			width: 33%
+			height: 284px
+			overflow: hidden;
+			position: relative
+			float: left
+			img
+				width: 100%
+				height: 100%
+
+			.img_tab
+				padding: 0 10px
+				background: $red
+				line-height: 26px
+				font-weight: bold
+				color: $white
+				position: absolute
+				top: 13px
+				right: 13px
+				border-radius: 3px
+
+			.end-date
+				padding: 6px 10px
+				background: $red
+				line-height: 14px
+				font-weight: bold
+				color: $white
+				position: absolute
+				top: 63px
+				right: 13px
+				border-radius: 3px
+				max-width: 96px
+				text-align: right
+				letter-spacing: rem(.36)
+
+			.successfull
+				padding: rem(6) rem(10)
+				background: rgba(174,208,124, 0.8)
+				line-height: rem(14)
+				font-weight: bold
+				color: $white
+				position: absolute
+				letter-spacing: rem(.36)
+				top: rem(13)
+				right: rem(13)
+				border-radius: rem(3)
+				text-align: right
+				max-width: rem(147)
+			.unsuccessfull
+				background: rgba(237,28,36, 0.8)
+
+			b
+				letter-spacing: 0.35px
+				font-size: 14px
+				position: absolute
+				line-height: 18px
+				z-index: 2
+				top: 59px
+				right: 13px
+				text-align: right
+				color: #fff
+	
+			p
+				font-size: 23px
+				letter-spacing: 5.1px
+				font-family: $dosis
+				color: $white
+				position: absolute
+				text-align: center
+				left: 50%
+				top: 50%
+				width: 100%
+				-ms-transform: translate(-50%,-50%)
+				-webkit-transform: translate(-50%,-50%)
+				transform: translate(-50%,-50%)
+
+		.right-columns
+			width: 42%
+			float: left
+
+			.one_line
+				.col40
+					width: 40%
+					border: 1px solid $border_color
+					border-left: none
+					float: left
+					margin-bottom: -1px
+
+				.col60
+					width: 60%
+					border: 1px solid $border_color
+					border-left: none
+					float: left
+					margin-bottom: -1px
+
+				.col33
+					width: 33.333333%
+
+				.col66
+					width: 66.666666%
+
+				span
+					margin: 0 0 0 rem(30)
+					line-height: rem(32)
+
+				span.light_grey
+					color: $small-text
+
+				span.dark_grey
+					color: $black
+
+				span.bold-grey
+					font-size: rem(18)
+		
+		.big_columns
+			width: 69.27%
+
+		.right-columns.small-column
+			width: 43.27%
+
+		.right_buttons
+			min-height: 166px
+			width: 25%
+			border: 1px solid $border_color
+			border-left: none
+			float: left
+
+			h4
+				font-size: 18px
+				text-align: center
+				margin-top: 14px
+				letter-spacing: 0.5px
+			ul
+				margin-left: 0
+				padding: 0
+
+				li
+					list-style-type: none
+					text-align: center
+					padding: rem(3)
+
+	.bottom_column
+		width: 67%
+		float: right
+		border: 1px solid $border_color
+		border-top: none
+		border-left: none
+		padding: 0 29px
+		padding-top: 10px
+		.btn
+			margin-top: 12px
+			margin-left: rem(30)
+			i
+				padding-left: 5px
+		.top_descript
+			width: 100%
+			padding-top: 2px
+			padding-bottom: 7px
+
+			.left_text
+				float: left
+				text-align: center
+
+				b
+					color: $black_text
+					font-size: 18px
+					margin: 0
+					line-height: 1em
+					display: block
+					float: none
+					font-weight: 400
+
+				span
+					color: $small-text
+					font-size: 11px
+					margin: 0
+					line-height: rem(16)
+					display: block
+					float: none
+			
+			.percents
+				height: 6px
+				margin-top: 13px
+				text-align: center
+
+			.right_text
+				float: right
+				text-align: center
+
+				b
+					color: $black_text
+					font-size: 18px
+					margin: 0
+					line-height: 1em
+					display: block
+					float: none
+					font-weight: 400
+
+				span
+					color: $small-text
+					font-size: 11px
+					margin: 0
+					line-height: rem(16)
+					display: block
+					float: none
+
+		.progress[value]::-webkit-progress-value
+			background-color: $progress_bar_background
+			height: 11px
+
+		.progress
+			margin: 0
+
+		.view_campaign
+			background-color: $light_grey
+			padding: 0 45px
+			text-decoration: none
+			font-size: 12px
+			border-radius: 3px
+			line-height: 25px
+			border: 2px solid $light_grey
+			color: $black_text
+			margin: 13px auto 0 auto
+			+mt(.2s)
+			
+		:hover
+			background: none
+			+mt(.2s)
+
+
+		.cancel_invest
+			font-size: 11px
+			height: 15px
+			margin-top: -12px
+			text-align: right
+			padding-bottom: 25px
+
+			a
+				color: $black_text
+				display: inline-block
+
+			:hover
+				text-decoration: underline
+.investor-dashboard
+	.custom-select
+		position: absolute
+		top: rem(-12)
+		right: 0
+		min-width: 190px
+		font-size: rem(11)
+		letter-spacing: rem(2.2)
+
+@media only screen and (max-width : 992px)
+	.investor_table
+		.one_table
+			.img_column
+				width: 70%
+				height: auto
+				float: none
+				margin: 15px auto
+				border: none
+
+				img
+					width: 100%
+
+			.right-columns
+				border-left: 1px solid $border-color
+
+			.big_columns
+
+			.right-columns.small-column
+				width: 70%
+
+			.right_buttons
+				width: 30%
+
+		.bottom_column
+			width: 100%
+			border-left: 1px solid $border-color
+
+			.cancel_invest
+				margin-top: -22px
+
+@media only screen and (max-width : 580px)
+	.investor_table
+
+		.big-tabs
+			margin-bottom: 46px
+
+			&>li
+				float: left
+				height: 55px
+
+				a
+					color: $black_text
+					padding: 16px 10px 10px 10px
+					text-transform: uppercase
+					letter-spacing: 3.9px
+					font-size: 18px
+
+				.for_select
+					float: right
+					width: 180px
+					margin-top: -11px
+
+			.active
+				a
+					border: 1px solid $border_color
+					border-bottom: none
+
+		.tpl-tabs-cont
+			padding: 25px 0
+		.one_table
+			.img_column
+				width: 100%
+				height: auto
+				float: none
+				margin: 15px auto
+				border: none
+
+				img
+					width: 100%
+
+			.right-columns
+				border-left: 1px solid $border-color
+
+				.one_line
+					.col40
+						width: 54%
+
+					.col60
+						width: 46%
+
+			.right-columns.small-column
+				width: 100%
+
+			.right_buttons
+				width: 100%
+				border-left: 1px solid $border-color
+
+		.bottom_column
+			width: 100%
+			border-left: 1px solid $border-color
+
+			.cancel_invest
+				margin-top: 10px

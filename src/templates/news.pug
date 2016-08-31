@@ -1,0 +1,95 @@
+include mixins.pug
+
++breadcrumbs('IN THE NEWS', '', 
+    [
+        ['Home', '/'],
+        ['In The News', ''],
+    ]
+)
+
+section.text_block 
+    .container
+        .row
+            .col-lg-3 
+                .page_title.border-bottom.mb25
+                    h4.text-uppercase.dosis ARCHIVES
+                ul.list-unstyled.mb50.list-blog-aside
+                    li
+                        a.d-inline-block.w-100.pb10(href='') July 2016
+
+                    li
+                        a.d-inline-block.w-100.pb10(href='' alt="") June 2016
+
+                    li
+                        // у последнего елемента <a> клас pb10 отстутствует
+                        a.d-inline-block.w-100(href='' alt="") May 2016 
+
+            .col-lg-9
+                ul.list-unstyled.m0
+                    li.border-bottom.pb50.mb50
+                        .row
+                            .col-lg-4
+                                .news-img.text-xs-center
+                                    a(href="#")
+                                        img(src="/img/pages/news1.png")
+                                
+                            .col-lg-8
+                                h4.open-sans.letter-spacing-0.text-muted.m0
+                                    a(href="#")
+                                        b
+                                            | Mastering A New Type of Crowdfunding With. Equity Investments
+                                        .small-text
+                                            | 10 March, 2015
+                                
+                                p.pt10 Crowdfunding is the process of funding a project or venture by raising small amounts of money from a large number of people. Many have encountered some types of crowdfunding already ─ perhaps having been invited to join a Kickstarter campaign or contributing to a cause on Indiegogo...
+
+                    li.border-bottom.pb50.mb50
+                        .row
+                            .col-lg-4
+                                .news-img.text-xs-center
+                                    a(href="#")
+                                        img(src="/img/pages/news2.png")
+                                
+                            .col-lg-8
+                                h4.open-sans.letter-spacing-0.text-muted.m0
+                                    a(href="#")
+                                        b
+                                            | Callahan &amp; Associates Announces Strategic Partnership with GrowthFountain Opening Crowdfunding Opportunities for Millions of Credit Union Members
+                                        .small-text
+                                            | 3 November, 2014
+                                
+                                p.pt10 Washington, DC — Callahan &amp; Associates, an innovative thought leader to credit union industry decision-makers, and GrowthFountain, a crowdfunding... marketplace
+
+                    li.border-bottom.pb50.mb50
+                        .row
+                            .col-lg-4
+                                .news-img.text-xs-center
+                                    a(href="#")
+                                        img(src="/img/pages/news3.png")
+                                
+                            .col-lg-8
+                                h4.open-sans.letter-spacing-0.text-muted.m0
+                                    a(href="#")
+                                        b
+                                            | Callahan Pact Creates Crowdfunding Platform
+                                        .small-text
+                                            | 3 November, 2014
+                                
+                                p.pt10 Callahan & Associates has launched a strategic alliance with GrowthFountain that may allow credit unions to help pioneer the crowdfunding trail. GrowthFountain will provide support, tutorials and tools to help startups and small businesses to raise capital...
+                    // there are no .border-bottom .pb50 classes in last element of list
+                    li
+                        .row
+                            .col-lg-4
+                                .news-img.text-xs-center
+                                    a(href="#")
+                                        img(src="/img/pages/news4.png")
+                                
+                            .col-lg-8
+                                h4.open-sans.letter-spacing-0.text-muted.m0
+                                    a(href="#")
+                                        b
+                                            | GrowthFountain SEC Letter
+                                        .small-text
+                                            | 3 November, 2014
+                                
+                                p.pt10 Dear Chairperson White and Commissioners Aguilar, Gallagher, Stein and Piwowar: We were pleased to see the Securities and Exchange Commission’s long-awaited proposed rules with respect to Article III of the Jumpstart Our Business Startups Act. We...

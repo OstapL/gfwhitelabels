@@ -1,0 +1,392 @@
+.issuer-dashbord-top
+	.border-bottom-50
+		border-bottom: solid 1px $light_grey
+		padding-bottom: rem(50)
+	.img_under_text
+		position: relative
+		margin-bottom: rem(20)
+		&:before
+			&:before
+			width: 100%
+			background-color: $black
+			opacity: .2
+			position: absolute
+			z-index: 1
+			content: ''
+			height: 100%
+			left: 0
+			bottom: 0
+		img
+			width: 100%
+		h2
+			z-index: 2
+			width: 100%
+			text-align: center
+			color: $white
+			position: absolute
+			left: 50%
+			top: 50%
+			-ms-transform: translate(-50%,-50%)
+			-webkit-transform: translate(-50%,-50%)
+			transform: translate(-50%,-50%)
+			font-weight: 400
+
+		.timer_day
+			position: absolute
+			z-index: 1
+			background: $red
+			padding: 0 13px
+			color: $white
+			border-radius: 3px
+			position: absolute
+			right: 13px
+			top: 15px
+			font-weight: bold
+			font-size: 14px
+			line-height: 27px
+	.share-block
+		span
+			margin-right: rem(12)
+	.social-dark
+		a
+			font-size: rem(24)
+			padding-right: rem(20)
+
+	.dashboard-stat
+		display: block
+		overflow: hidden
+		min-height: rem(85)
+		padding: rem(5) rem(10) rem(5) rem(5)
+		background: $light_grey
+		margin-bottom: rem(25)
+		.visual
+			float: left
+			i
+				font-size: rem(48)
+				color: $small-text
+				opacity: .15
+			.fa-bar-chart
+				position: absolute
+				bottom: rem(27)
+			.fa-briefcase
+				position: absolute
+				bottom: rem(24)
+			.fa-users
+				position: absolute
+				bottom: rem(30)
+			.fa-comments
+				position: absolute
+				bottom: rem(28)
+		.details
+			position: absolute
+			right: rem(25)
+			text-align: right
+			.number
+				font-size: rem(18)
+				color: $small-text
+			.desc
+				font-size: rem(12)
+				color: $small-text
+
+	.tpl-progress
+		position: relative
+		padding-top: 56px
+
+		.big_prog
+			display: block
+			width: 100%
+			height: rem(4)
+			margin-bottom: rem(6)
+			color: $black_text
+
+		.big_prog[value]::-webkit-progress-value
+			background-color: $black
+
+		.circle_progress
+			height: rem(11)
+			z-index: 55
+			color: $black_text
+			display: inline-block
+			font: normal normal normal 14px/1 FontAwesome
+			font-size: inherit
+			text-rendering: auto
+			-webkit-font-smoothing: antialiased
+			-moz-osx-font-smoothing: grayscale
+			position: absolute
+			margin-top: rem(-15)
+			text-align: right
+			margin-right: rem(12)
+
+			i
+				font-weight: bold
+				background: #fff
+				font-size: rem(13)
+
+		.text_position
+			margin-left: rem(-39)
+			top: rem(14)
+			position: absolute
+			text-align: center
+			line-height: rem(23)
+			letter-spacing: 0
+			font-size: rem(12)
+			line-height: rem(16)
+
+	.progress_description
+		margin-bottom: rem(5)
+		
+		p
+			margin: 0
+			line-height: rem(16)
+			color: $small-text
+			font-size: rem(12)
+
+		span
+			font-size: rem(11)
+			color: $small-text
+			line-height: rem(10)
+			display: block
+
+	.right_fixed_text
+		position: absolute
+		right: rem(19)
+		top: rem(37)
+		bottom: 0
+		margin: auto
+		color: $black
+
+		b
+			font-size: rem(18)
+			display: block
+			line-height: rem(16)
+
+		span
+			line-height: rem(23)
+			font-size: rem(14)
+	.btn
+		margin-top: 30px
+		.fa-angle-right
+			margin-left: rem(5)
+//end section top-line
+//start section Graphic
+.grafic-dashboard
+	margin-top: rem(50)
+
+.third
+	margin-top: 94px
+.bars,
+.chart,
+.pie
+	overflow: hidden
+	height: 300px
+	width: 100%
+	font-size: 14px
+
+.btn.btn-outline.dark.active,
+.btn.btn-outline.dark:active,
+.btn.btn-outline.dark:active:focus,
+.btn.btn-outline.dark:active:hover,
+.btn.btn-outline.dark:focus,
+.btn.btn-outline.dark:hover
+    border-color: #2f353b
+    color: #fff
+    background-color: #2f353b
+
+.portlet>.portlet-title>.actions
+    float: right
+    display: inline-block
+    padding: 6px 0
+
+.btn-circle
+    border-radius: 25px!important
+    overflow: hidden
+
+.portlet.light.bordered
+    border: 1px solid $border_color
+
+.portlet-body
+	padding: 10px 0 20px 0
+
+.portlet.light>.portlet-title
+	border-bottom: 1px solid $border_color
+	padding: 20px 24px 0 0
+	min-height: 50px
+	margin: 0 0px 0 0px
+
+	&>.caption
+		display: inline-block
+		font-size: 18px
+		line-height: 18px
+		padding: 15px 0 0 28px
+
+	&>.actions .dropdown-menu li>a
+		color: #555
+
+.portlet>.portlet-title>.actions>.btn,
+.portlet>.portlet-title>.actions>.btn-group>.btn,
+.portlet>.portlet-title>.actions>.btn-group>.btn.btn-sm,
+.portlet>.portlet-title>.actions>.btn.btn-sm
+	padding: 4px 10px
+	font-size: 13px
+	line-height: 1.5
+	border: 2px solid #53575b
+	margin-left: 4px
+
+.portlet>.portlet-title
+	text-align: left
+	color: $black
+	padding: 15px 20px 10px
+	font-family: $dosis
+	letter-spacing: 0.5rem
+
+	&>.nav-tabs
+		background: 0 0
+		margin: 1px 0 0
+		float: left
+		display: inline-block
+		border: 0
+
+.portlet>.portlet-title>.nav-tabs>li
+	display: inline-block
+
+.portlet>.portlet-title>.nav-tabs>li.active
+	border: 1px solid $border_color
+	border-bottom: none
+	color: $grey
+
+	a
+		color: $black_text
+
+.portlet>.portlet-title>.nav-tabs>li a
+	line-height: 36px
+	padding: 0 20px
+	color: $grey
+// all investors questions
+.investors-dashbord-comment
+	.comments-list
+		border: rem(1) solid $border_color
+		padding: rem(15) rem(9) 0 rem(9)
+		::-webkit-scrollbar
+			width: rem(5)
+			background: transparent
+		::-webkit-scrollbar-thumb
+			border-width: rem(1) rem(1) rem(1) rem(2)
+			border-color: #1a1c1d
+			background-color: #929292
+		::-webkit-scrollbar-thumb:hover
+			border-width: rem(1) rem(1) rem(1) rem(2)
+			border-color: #1c1f22
+			background-color: rgba(146,146,146, 0.6)
+		::-webkit-scrollbar-track
+			border-width: 0
+		::-webkit-scrollbar-track:hover
+			border-left: none
+		.all-comments
+			height: rem(367)
+			overflow-y: auto
+			margin-top: rem(15)
+			.one-comment
+				padding: 23px 6px 18px 15px
+				margin-right: 6px
+				.user-photo
+					margin-top: 2px
+					float: left
+					img
+						width: 54px
+						height: 54px
+				.text-and-name
+					margin-left: 70px
+					.name-date
+						h6
+							letter-spacing: rem(2.8)
+							margin-bottom: rem(5)
+						span
+							font-size: rem(11)
+							color: $small-text
+
+					.comment-text
+						float: left
+						padding-top: 5px
+						p
+							line-height: rem(18)
+							letter-spacing: 0.02rem
+					.actions
+						text-align: right
+						opacity: 0
+						.pending
+							float: left
+							color: $blue
+						a
+							margin: 0 4px
+				&:hover
+					background: $light_grey
+					.text-and-name
+						.actions
+							opacity: 1
+
+		.add-comment
+			margin-left: rem(10)
+			margin-top: rem(8)
+			.user-photo
+				margin-top: rem(2)
+				float: left
+				img
+					width: rem(54)
+					height: rem(54)
+			.text-and-name
+				margin-left: rem(70)
+				.name-date
+					h6
+						letter-spacing: rem(2.8)
+						margin-bottom: 0
+						line-height: rem(11)
+					span
+						font-size: rem(11)
+						color: $small-text
+				.comment-text
+					float: left
+					padding-top: rem(10)
+					p
+						line-height: rem(18)
+						letter-spacing: 0.02rem
+				.actions
+					margin-top: 9px
+					span
+						padding: 0 5px
+
+		.form-add-comment
+			border-top: solid 1px $border_color
+			margin-top: rem(10)
+			.form-group
+				text-align: right
+				margin-bottom: 0
+			.row
+				padding-left: rem(15)
+				padding-right: rem(15)
+				textarea
+					max-width: 538px
+					height: 137px
+					float: right
+					resize: none
+					margin-top: rem(30)
+					margin-bottom: 20px
+			.btn
+				margin-bottom: 20px
+	.line-dashboard
+		border-top: solid 1px $border_color
+		margin-top: 50px
+		margin-bottom: 50px
+.danger-zone-dashboard
+	.row
+		.col-lg-3
+			width: 20%
+			padding-left: 0
+			margin-right: rem(15)
+	.btn-block
+	.text-block
+		line-height: 18px
+		color: $small-text
+	.text-p-t-6
+		padding-top: 6px
+	.m-b-25
+		margin-bottom: rem(18)

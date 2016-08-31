@@ -1,0 +1,227 @@
+.popover.ssn-popover {
+
+	max-width: rem(296)!important;
+
+	.popover-content {
+		span {
+			display: inline-block;
+		}
+		p {
+			margin: 0;
+		}
+	}
+}
+
+.modal-dialog {
+
+	.modal-header {
+		padding-bottom: 10px;
+		h2 {
+			margin-top: rem(20);
+			margin-bottom: rem(5)
+		}
+	}
+}
+
+
+
+.profile {
+
+	.profile-tabs.nav-tabs {
+		margin-bottom: rem(15);
+		
+		li.nav-item a.nav-link {
+			border-radius: rem(20);
+		}
+	} 
+
+	.drop-photo-block {
+		h3 {
+			margin-top: 0
+		}
+
+		.drop-photo {
+			min-height: rem(135);
+			margin-top: rem(5);
+
+			background: $border_color;
+			border: 1px $grey solid;
+		}
+		
+		.selected-area-info {
+			position: relative;
+
+			padding: rem(5) 0 0 rem(20);
+			margin-bottom: rem(-5);
+
+			i,
+			span {
+				display: inline-block;
+
+				color: $total_sum_progresbar;
+				@include calc-rem(11)
+			}
+
+			i {
+				position: absolute;
+				top: rem(7);
+				left: rem(5);
+			}
+		}
+		
+		.drop-image-title {
+			margin-top: rem(17);
+			margin-bottom: rem(30);
+
+			span {
+				@include calc-rem(14);
+
+				color: $footer_text;
+			}
+
+			i {
+				@include calc-rem(28);
+
+				margin-top: rem(17);
+
+				color: $footer_text;
+			}
+		}
+
+		@media screen and (max-width: 1200px) {
+			margin: 0 auto;
+
+			width: rem(255);
+		}
+
+	}
+
+	.investors-warning {
+		@include calc-rem(14);
+
+		position: relative;
+
+		padding: rem(10) rem(20);
+		padding-left: rem(35);
+		margin-bottom: rem(20);
+
+		border: 1px $text_warning_block_color solid;
+
+		color:$text_warning_block_color;
+
+		i {
+			position: absolute;
+			top: rem(14);
+			left: rem(10);
+		}
+	}
+
+	.select-group {
+		select {
+			max-width: rem(554);
+		}
+	}
+
+	.change_state_city {
+		position: absolute;
+		top: rem(6);
+		left: rem(123);
+		z-index: 60;
+
+		cursor: pointer;
+
+		&:hover,
+		&:focus {
+			outline: none;
+			color: $black_text
+		}
+
+		.input-value {
+			@include ellipsis();
+
+			display: inline-block;
+			max-width: rem(150);
+			margin-right: rem(20);
+
+			text-decoration: underline;
+		}
+
+		i {
+			vertical-align: super; 
+			color: $small-text;
+		}
+
+		@media only screen and (max-width:1199px) {
+			left: rem(173);
+		}
+
+		@media only screen and (max-width:991px) {
+			left: rem(256);
+		}
+
+		@media only screen and (max-width:767px) {
+			left: rem(123);
+		}
+	}
+
+
+
+	// тут переопределяем стили для елементов формы которые заданы в pages.scss
+	.form-section {
+		.street_address_2 label {
+			color: $footer_text;
+		}
+
+		.city_states {
+			position: relative;
+			z-index: 50;
+
+			input {
+				display: none;
+			}
+
+		}
+
+		textarea {
+			max-width: rem(554);
+		}
+
+		input[type='date'] {
+			height: rem(36);// непонятно по какой причине высота этого элемента больше чем 38пкс
+		}
+	}
+
+	@media screen and (min-width:992px) and (max-width: 1199px) {
+		.profile-tabs.nav-tabs {
+			text-align: center;
+			li.nav-item {
+				display: inline-block;
+				float: none;
+			}
+		}
+	}
+
+	@media screen and (max-width: 991px) {
+		.profile-tabs.nav-tabs {
+			text-align: center;
+			li.nav-item {
+				display: inline;
+				float: none;
+			}
+		}
+	}
+
+	@media screen and (max-width: 543px) {
+		.profile-tabs { 
+			li.nav-item {
+				margin-right:3%;
+				margin-left: 0;
+				margin-top: 1.5rem;
+
+				min-width: rem(150);
+			    width: 100%;
+			    max-width: 100%;
+			}
+		}
+	}
+}

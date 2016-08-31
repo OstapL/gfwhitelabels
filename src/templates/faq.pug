@@ -1,0 +1,156 @@
+include mixins.pug
+
++breadcrumbs('FAQ', '', 
+    [
+        ['Home', '/'],
+        ['FAQ', ''],
+    ]
+)
+
+section.text_block
+    .container
+        .row
+            .col-lg-3 
+                .page_title.border-bottom
+                    h4.text-uppercase.dosis faq
+                ul.list-unstyled.pt30
+                    li.class
+                        a.d-inline-block.w-100.pb10(href='/pg/faq') General Questions
+                    li.class
+                        a.d-inline-block.w-100.pb10(href='/pg/entrepreneurquestions') Entrepreneur Questions
+                    li.class
+                        a.d-inline-block.w-100.pb10(href='/pg/investorquestions') Investor Questions
+            .col-lg-9
+                .row
+                    .col-lg-12.text-xs-center
+                        h2.text-uppercase.dosis.m0 General Questions
+                        
+                .row
+                    .col-lg-12.mt30
+                        #generalQuestions.accordion(role="tablist" aria-multiselectable="true")
+                            .panel.panel-default
+                                #headingOneGeneralQuestions(role="tab").panel-heading
+                                    a(data-toggle="collapse"
+                                    data-parent="#generalQuestions" 
+                                    href="#collapseOneGeneralQuestions"
+                                    aria-expanded="true"
+                                    aria-controls="collapseOneGeneralQuestions"
+                                    ).list-group-item-action.m0.active What is GrowthFountain?
+                                        i.fa.fa-angle-up
+                                #collapseOneGeneralQuestions(role="tabpanel"
+                                aria-labelledby="headingOneGeneralQuestions"
+                                ).panel-collapse.collapse.in 
+                                    p.pb10 From the local businesses you see every day, to start-ups across America, businesses need resources to help them grow.
+
+                                    p.pb10 GrowthFountain is a funding portal empowering businesses to raise capital online. For entrepreneurs, we have simplified the process of running a fundraising campaign. For investors, we have designed a platform that makes it easy to discover, support and invest in a neighbor, local business, or the next big idea.   
+
+                                    p.pb10 We offer equity and revenue share crowdfunding solutions and provide a variety of calculators, tools and tutorials to streamline the transaction process. GrowthFountain is registered with the SEC and a member of FINRA.
+                            .panel.panel-default
+                                #headingTwoGeneralQuestions(role="tab").panel-heading
+                                    a(data-toggle="collapse"
+                                    data-parent="#generalQuestions" 
+                                    href="#collapseTwoGeneralQuestions"
+                                    aria-controls="collapseTwoGeneralQuestions"
+                                    ).list-group-item-action How do I get started?
+                                        i.fa.fa-angle-down
+                                #collapseTwoGeneralQuestions(role="tabpanel"
+                                aria-labelledby="headingTwoGeneralQuestions"
+                                ).panel-collapse.collapse 
+                                    p.pb10 If you are new to crowdfunding, start with our 
+                                        a(href="").link-1 
+                                            u educational material 
+                                        |  to learn more about our process.  You can also feel free to 
+                                        a(href="").link-1 
+                                            u set-up an account
+                                        |  to get access to all the areas of our site – it’s easy and free! 
+                            .panel.panel-default
+                                #headingThreeGeneralQuestions(role="tab").panel-heading
+                                    a(data-toggle="collapse"
+                                    data-parent="#generalQuestions" 
+                                    href="#collapseThreeGeneralQuestions"
+                                    aria-controls="collapseThreeGeneralQuestions"
+                                    ).list-group-item-action What is the JOBS Act?
+                                        i.fa.fa-angle-down
+                                #collapseThreeGeneralQuestions(role="tabpanel"
+                                aria-labelledby="headingThreeGeneralQuestions"
+                                ).panel-collapse.collapse 
+                                    p.pb10 The Jump Start Our Business Start-ups Act (JOBS Act) received bipartisan support and was signed into law on April 5, 2012. Its goal is to help small businesses raise capital for growth and development. Title III of the Jobs Act (referred to as Regulation Crowdfunding) relaxes certain investor requirements so that almost anybody in the world can now invest in America’s small businesses and entrepreneurs!
+
+                            .panel.panel-default
+                                #headingFourGeneralQuestions(role="tab").panel-heading
+                                    a(data-toggle="collapse"
+                                    data-parent="#generalQuestions" 
+                                    href="#collapseFourGeneralQuestions"
+                                    aria-controls="collapseFourGeneralQuestions"
+                                    ).list-group-item-action What is Crowdfunding?
+                                        i.fa.fa-angle-down
+                                #collapseFourGeneralQuestions(role="tabpanel"
+                                aria-labelledby="headingFourGeneralQuestions"
+                                ).panel-collapse.collapse
+                                    p.pb10 Crowdfunding is the process of raising money by aggregating a large number of individual contributions.  Regulation Crowdfunding enables companies to fundraise for equity or debt investments online  – which is a groundbreaking concept to assist America’s small businesses in their fundraising efforts.
+
+                                    p.pb10 Crowdfunding isn’t new. When the Statue of Liberty was gifted by France to the U.S., New York was unable to raise the $250,000 required to build the granite base for the statue. Publisher Joseph Pulitzer launched a fundraising campaign in the newspaper to keep the statue in NY. Ultimately, 160,000 individual donors contributed enough money to keep the statue in New York.
+
+                                    p.pb10 Crowdfunding is a powerful concept: individual amounts don’t need to be large to become significant in the aggregate. And there are benefits to crowdfunding beyond the access to money since entrepreneurs can gauge demand, refine a product, implement winning strategies and connect with the right people that can provide knowledge and experience. Most importantly, entrepreneur’s can turn customers into owners who can become brand ambassadors and evangelists, spreading recommendations and helping grow market share.
+
+                            .panel.panel-default
+                                #headingFiveGeneralQuestions(role="tab").panel-heading
+                                    a(data-toggle="collapse"
+                                    data-parent="#generalQuestions" 
+                                    href="#collapseFiveGeneralQuestions"
+                                    aria-controls="collapseFiveGeneralQuestions"
+                                    ).list-group-item-action What are the different types of crowdfunding?
+                                        i.fa.fa-angle-down
+                                #collapseFiveGeneralQuestions(role="tabpanel"
+                                aria-labelledby="headingFiveGeneralQuestions"
+                                ).panel-collapse.collapse  
+                                    p.pb10 One can distinguish crowdfunding sites as donation, peer-to-peer lending and equity.  
+
+                                    p.pb10 Donation crowdfunding involves giving money to support a cause with no expectation of any financial return. Companies that are listed on donation sites have few legal obligations to provide any level of transparency and are limited in terms of the rewards that they can offer.
+
+                                    p.pb10 Peer-to-peer lending sites enable users to earn a financial return with limited upside. Many of these sites are limited to accredited investors and have limited scope.
+
+                                    p.pb10 Equity crowdfunding is where individuals provide funding to a company and in exchange, they receive securities; they become investors and owners. The public transactions are regulated and can be structured to take advantage of an exemption from registration. Smaller companies have been severely restricted in their ability to sell equity or access capital for the past 80 years. That is, until now. 
+
+                                    p.pb10 Congress passed the JOBS Act and President Obama signed it into law in 2012. Its primary intention is to help small businesses – which provide 2/3 of our nation’s jobs – raise capital via equity crowdfunding for growth and development. 
+
+                            .panel.panel-default
+                                #headingSixGeneralQuestions(role="tab").panel-heading
+                                    a(data-toggle="collapse"
+                                    data-parent="#generalQuestions" 
+                                    href="#collapseSixGeneralQuestions"
+                                    aria-controls="collapseSixGeneralQuestions"
+                                    ).list-group-item-action What if I have a question that I don't see here?  
+                                        i.fa.fa-angle-down
+                                #collapseSixGeneralQuestions(role="tabpanel"
+                                aria-labelledby="headingSixGeneralQuestions"
+                                ).panel-collapse.collapse 
+                                    p.pb10 If you have a question that you don't see an answer to on this page please feel free to email us at 
+                                    a(href="mailto:info@growthfountain.com").link-1 info@growthfountain.com 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

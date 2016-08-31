@@ -1,0 +1,183 @@
+
+
+/* сostum progressbar begin */
+
+.progress-container
+	position: relative
+
+	span
+		position: absolute
+		top: 0
+		line-height: 11px
+		text-align: right
+
+		i
+			font-weight: bold
+			background: $white
+			margin-top: -11px
+
+	.circle
+		top: -5px
+
+/*  .progress-container используеться для добавления елементов или текст на progressbar 8   */
+
+.progress
+	margin: 0
+
+.progress[value]::-webkit-progress-value
+	background-color: $progress_bar_background
+	border-top-left-radius: none
+	border-bottom-left-radius: none
+
+/* .think-progress  тонкий progressbar */
+.progress.think-progress
+	height: 2px
+	color: $progress_bar_background
+
+/* .black темний progressbar */
+.progress.black[value]::-webkit-progress-value
+	background-color: $black
+
+/* сostum progressbar end */
+
+/* costum pagination begin */
+
+.pagination
+	width: 100%
+	margin: 0
+
+	.page-item
+		+mt(0.2s)
+
+		a
+			margin-right: 4px
+
+		&:hover a
+			border: 1px solid #a3a3a3
+			color: $grey
+			background: none
+			+mt(0.2s)
+
+	.page-item a:visited,
+	.page-item a:focus
+		text-decoration: none
+		background: none
+	
+	.page-item.active a,
+	.page-item.active a:focus,
+	.page-item.active a:visited
+		background: none
+
+		&:hover
+			background: none
+
+/* costum pagination end */
+
+/* common styles for pages(faq, overview.. etc..) */
+.text_block
+	.page_title
+		width: 100%
+		border-color: $light_grey
+
+		h4
+			font-weight: 400
+
+	.simple-list 
+		padding-left: (25)
+		li 
+			margin-bottom: 15px
+	ul 
+		li
+			a//TODO перенести в общие стили для ссылок всего сайта
+				color: $small-text
+
+				&:hover 
+					color: rgba($footer_text, 0.6)
+
+.position-relative
+	position: relative
+
+
+
+
+/* end common styles for pages(faq, overview.. etc..) */
+
+/*дополнительный клас для Заголовков*/
+.border-bottom
+	border-bottom: solid $mercury 1px
+.opacity-border
+	opacity: 0.1
+
+/*Breadcrumb*/
+.header_title
+	height: rem(142)
+	margin-bottom: rem(85)
+	
+	background-color: $alabaster
+	font-family: $dosis
+
+	h1
+		margin-top: rem(11)
+		margin-left: rem(15)
+
+
+
+.pt50
+	padding-top: rem(50)
+.pb50
+	padding-bottom: rem(50)
+.p50
+	+calc-rem-padding (50) 
+.pt30
+	padding-top: rem(30)
+.pb10
+	padding-bottom: rem(10)
+.pt10
+	padding-top: rem(10)
+.p-l-0
+	padding-left: 0
+.p-r-0
+	padding-right: 0
+
+.mb50
+	margin-bottom: rem(50)
+.mt50
+	margin-top: rem(50)
+.mt30
+	margin-top: rem(30)
+.mb30
+	margin-bottom: 30px
+.m30
+	margin: 30px 0
+.mr30
+	margin-right: 30px
+.mt20
+	margin-top: rem(20)
+
+
+.mt25
+	margin-top: 25px
+.mb25
+	margin-bottom: 25px
+
+.m0
+	margin-top: 0!important
+	margin-bottom: 0!important
+	
+.m-t-85
+	margin-top: 85px
+
+.m-b-85
+	margin-bottom: rem(85)
+
+.row.no-gutters
+	margin-right: 0;
+	margin-left: 0;
+
+
+.row.no-gutters > [class^="col-"],
+.row.no-gutters > [class*=" col-"]
+	padding-right: 0;
+	padding-left: 0;
+
+

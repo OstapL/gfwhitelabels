@@ -1,0 +1,152 @@
+.authorization
+	// margin-top: 45px
+
+.login-tabs
+	margin-bottom: 20px
+	border-bottom: none
+
+	li
+		margin-right: 8%
+
+		&:last-child
+			margin-right: 0	
+
+		a.nav-link
+			padding: 5px 20px
+			text-transform: uppercase
+			color: $tab_authorization_text
+			letter-spacing: 2px
+
+			&.active,
+			&.active:focus
+				border-color: $active_tab_authorization $active_tab_authorization $active_tab_authorization
+
+.authorization-tabs-content
+	font-weight: 300
+	label
+		margin-bottom: 0px
+		color: $grey
+		font-weight: 400
+	
+	.signature,
+	.terms_conditions
+		margin-top: 20px
+		margin-bottom: 10px
+
+		label
+			margin-top: 0
+			font-size: 0.875rem
+
+		input[type='checkbox']
+			vertical-align: bottom	
+
+	.terms_conditions
+		margin-bottom: 30px
+
+	.socialaccount_ballot
+		margin-top: 30px
+		margin-bottom: 20px
+
+		p
+			color: $black	
+
+		.social-icons
+
+		li
+			display: inline-block
+			vertical-align: middle
+			text-align: center
+			width: 28px
+			height: 28px
+			line-height: 28px
+			margin-right: 4px
+
+		a
+			display: block
+			line-height: 28px
+			cursor: pointer
+			font-size: 18px
+			color: #ffffff
+			opacity: 0.7
+			+mt(.2s)
+
+			&.facebook
+				background: #4A6D9D
+
+			&.googleplus
+				background: #DB4A37
+
+			&.linkedin
+				background: #0B7BB5
+		a:hover
+			opacity: 1
+			+mt(.2s)
+
+			
+		
+	
+
+
+// временнно переопределю класы для чекбоксов
+.forms-block
+	.form-section
+		.pseudo-checkbox
+			input[type='checkbox']
+				top: 12px
+				left: 4px
+				bottom: auto
+				right: auto
+				opacity: 1
+
+@media screen and (max-width:991px)
+	.forms-block
+		margin-top: 30px
+
+@media screen and (max-width:480px)
+	.authorization-tabs-content
+		.forget-password
+			@include calc-rem(14)
+
+.login, .singup
+	.or
+		margin-top: rem(30)
+		position: relative
+		margin-bottom: rem(30)
+		span
+			position: absolute
+			text-align: center
+			left: 50%
+			top: rem(-2)
+			padding: rem(5)
+			background-color: #fff
+			transform: translate(-50%,-50%)
+			color: $small-text
+			font-size: rem(14)
+	.form-group
+		margin-bottom: 0
+		margin-top: rem(10)
+	h2
+		margin-bottom: rem(18)
+		.small-text
+			font-size: rem(14)
+			color: $small-text
+			font-family: $font-family-sans-serif
+			padding-top: rem(9)
+	.forgot
+		margin-top: rem(5)
+		margin-bottom: rem(16)
+	label
+		font-size: rem(11)
+		font-weight: 400
+		margin-bottom: 0
+		padding-top: 0
+		select 
+			height: rem(36)
+		input[type="checkbox"]
+			float: left
+		.label-text
+			display: block
+			padding-left: rem(20)
+			line-height: rem(14)
+		.p-t-6
+			padding-top: rem(6)
