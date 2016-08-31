@@ -312,7 +312,7 @@ let appRoutes = Backbone.Router.extend({
                         $el: $('#content'),
                         $: app.$
                     };
-                    app.DefaultSaveActions.error.call($view, xhr, response, error);
+                    app.defaultSaveActions.error.error.call($view, xhr, response, error);
                 });
             });
         } else {
@@ -372,7 +372,7 @@ let appRoutes = Backbone.Router.extend({
 
                 app.hideLoading();
             }).fail((xhr, error) =>  {
-                app.DefaultSaveActions.error($('#content'), error);
+                app.defaultSaveActions.error.error($('#content'), error);
                 app.hideLoading();
             });
         } else {
@@ -507,7 +507,7 @@ let appRoutes = Backbone.Router.extend({
 
                 app.hideLoading();
             }).fail((xhr, error) =>  {
-                app.DefaultSaveActions.error($('#content'), error);
+                app.defaultSaveActions.error.error($('#content'), error);
                 app.hideLoading();
             });
         } else {
@@ -599,7 +599,7 @@ let appRoutes = Backbone.Router.extend({
                 i.render();
 
             }).fail((xhr, error) =>  {
-                app.DefaultSaveActions.error($('#content'), error);
+                app.defaultSaveActions.error($('#content'), error);
                 app.hideLoading();
             });
         } else {
@@ -833,26 +833,6 @@ let appRoutes = Backbone.Router.extend({
         });
     },
 
-    execute(callback, args, name) {
-
-        // disable enter to the final step of paybackshare calculator without data
-        if (name == 'calculatorPaybackshareStep3') {
-            if (!app.models['calculatorPaybackshare'] || !app.models['calculatorPaybackshare'].get('outputData')) {
-                app.routers.navigate('/calculator/paybackshare/step-2', {trigger: true});
-                return false;
-            }
-        }
-
-        // disable enter to the final step of capitalraise calculator without data
-        if (name == 'calculatorCapitalraiseFinish') {
-            if (!app.models['calculatorCapitalraise'] || !app.models['calculatorCapitalraise'].get('dataIsFilled')) {
-                app.routers.navigate('/calculator/capitalraise/step-1', {trigger: true});
-                return false;
-            }
-        }
-
-        if (callback) callback.apply(this, args);
-    }
 });
 
 app.on('userLoaded', function(data){

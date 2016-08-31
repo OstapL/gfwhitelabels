@@ -276,10 +276,17 @@ global.app = {
         },
 
         error: (view, xhr, status, text, fields) => {
+            if(view.hasOwnProperty('$el') == false) {
+                view = {
+                    '$el' : view
+                };
+            }
             view.$el.find('.alert-warning').remove();
             view.$el.find('.help-block').remove();
+            
             if(xhr.hasOwnProperty('responseJSON')) {
                 let data = xhr.responseJSON;
+
                 data = data ? data : {'Server': status};
                 for (let key in data)  {                                                 
                   Backbone.Validation.callbacks.invalid(                                 
@@ -290,7 +297,11 @@ global.app = {
             else if(xhr.hasOwnProperty('statusText')) {
                 let s = '<strong>Errors:</strong> ';
                 s += xhr.statusText;
-                view.$el.find('form').prepend("<div class='alert alert-warning' role='alert'>" + s + "<div>");
+                if(view.$el.find('form').length >= 1) {
+                    view.$el.find('form').prepend("<div class='alert alert-warning' role='alert'>" + s + "<div>");
+                } else {
+                    view.$el.prepend("<div class='alert alert-warning' role='alert'>" + s + "<div>");
+                }
             }
             if(view.$el.find('.alert').length) {
                 view.$el.find('.alert').scrollTo();
@@ -443,7 +454,9 @@ $('body').on('focus', 'textarea.showPopover', function() {
 
 $('body').on('click', 'a', function(event) {
     var href = event.currentTarget.getAttribute('href');
-    if(href && href != '' && href.substr(0,1) != '#' && 
+    if(href == window.location.pathname) {
+        window.location.reload();
+    } else if(href && href != '' && href.substr(0,1) != '#' && 
         href.substr(0, 4) != 'http' && 
         href.substr(0,3) != 'ftp' &&
         event.currentTarget.getAttribute('target') == null) {
