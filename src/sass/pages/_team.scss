@@ -1,5 +1,5 @@
 .bg-team-wrap {
-	height: rem(286);
+	height: rem(286); 
 
 	background: url(/img/pages/team-bg.png);
 	background-attachment: fixed;
@@ -13,5 +13,12 @@
 		font-size: rem(18);
 		font-weight: 300;
 		color: $alabaster;	
+	}
+}
+
+.biography-text {
+	display: none;
+	p {
+		margin-top: rem(15);
 	}
 }
