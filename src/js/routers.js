@@ -926,7 +926,7 @@ app.on('userLoaded', function(data){
     );
     console.log('user ready');
 });
-
+ 
 
 $(document).ready(function(){
     // show bottom logo while scrolling page
@@ -939,6 +939,20 @@ $(document).ready(function(){
             $bottomLogo.addClass('fade-in');
         }
     });
+
+    $('.team-member-list article').click(function(){
+        var targetTextId = $(this).data('id-text');
+
+        if ($(targetTextId).hasClass('open')) {
+            $(targetTextId).removeClass('open').slideUp();
+        } else {
+            $(this).closest('.team-member-list').find('.biography-text.open').removeClass('open').hide();
+            $(targetTextId).addClass('open').slideDown();
+        }
+
+    });
+
+
 });
 
 
