@@ -315,11 +315,7 @@ let appRoutes = Backbone.Router.extend({
                         $el: $('#content'),
                         $: app.$
                     };
-<<<<<<< HEAD
                     app.defaultSaveActions.error.call($view, xhr, response, error);
-=======
-                    app.defaultSaveActions.error.error.call($view, xhr, response, error);
->>>>>>> ostap
                 });
             });
         } else {
@@ -598,11 +594,7 @@ let appRoutes = Backbone.Router.extend({
                 if(id.indexOf('=') == -1) {
                     i.model = formc;
                 } else {
-<<<<<<< HEAD
                     i.model = formc;
-=======
-                    i.model = new model.model(r1[0][0]);
->>>>>>> ostap
                     i.model.set('company', company_id);
                 }
 
@@ -629,11 +621,7 @@ let appRoutes = Backbone.Router.extend({
             let campaign = new model.model({
                 id: id
             });
-<<<<<<< HEAD
             campaign.urlRoot += '/team-members';
-=======
-            campaign.urlRoot += '/introduction';
->>>>>>> ostap
             var a1 = campaign.fetch();
             var a2 = $.ajax(_.extend({
                     url: campaign.urlRoot,
@@ -766,8 +754,6 @@ let appRoutes = Backbone.Router.extend({
         }
     },
 
-=======
->>>>>>> ostap
     issuerDashboard: function() {
         var i = new view.profile({
             el: '#content',
