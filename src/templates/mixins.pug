@@ -69,7 +69,7 @@ mixin fieldBlock(name, data, attr)
                 label(class= attr.text_align ? 'text-md-' + attr.text_align + ' ' + attr.class1 : ' text-md-right ' + attr.class1 for=name)= fields[name].label
                 div(class=attr.class2 id=name).date-input
                     - let data = values[name] ? values[name].split('-') : []
-                    .col-lg-6.no-gutter
+                    .col-lg-6.no-gutter.p-l-0
                         input(
                             id=name + '__month'
                             name=name + '__month'
@@ -78,7 +78,7 @@ mixin fieldBlock(name, data, attr)
                             maxlength=2
                             value=data[1]
                           ).form-control
-                    .col-lg-6.no-gutter
+                    .col-lg-6.no-gutter.p-r-0
                         input(
                             id=name + '__year'
                             name=name + '__year'
