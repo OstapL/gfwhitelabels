@@ -80,6 +80,7 @@ define(function() {
             },
 
         }),
+<<<<<<< HEAD
 
         teamMembers: Backbone.View.extend({
             events: _.extend({
