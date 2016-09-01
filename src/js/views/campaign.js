@@ -75,28 +75,36 @@ define(function() {
 
             events: {
                 'click .linkedin-share': 'shareOnLinkedin',
-                'click .facebook-share': 'shareOnFacebook'
+                'click .facebook-share': 'shareOnFacebook',
+                'click .twitter-share': 'shareOnTwitter'
             },
 
             shareOnFacebook: function(event) {
                 event.preventDefault();
                 FB.ui({
                   method: 'share',
-                  href: 'http://growthfountain-es7.s3-website-us-east-1.amazonaws.com/api/campaign/' + this.model.get("id"),
+                  href: window.location.href,
                   caption: this.model.get('company').tagline,
                   description: this.model.get('pitch'),
                   title: this.model.get('company').name,
-                  picture: this.model.get("header_image_data").url
+                  picture: (this.model.get("header_image_data") ? this.model.get("header_image_data").url : null),
                 }, function(response){});
             },
 
             shareOnLinkedin: function(event) {
                 event.preventDefault();
-                window.open(encodeURI('https://www.linkedin.com/shareArticle?mini=true&url=http://growthfountain-es7.s3-website-us-east-1.amazonaws.com/api/campaign/' +
-                    this.model.get('id') +
+                window.open(encodeURI('https://www.linkedin.com/shareArticle?mini=true&url=' + window.location.href +
                     '&title=' + this.model.get('company').name +
                     '&summary=' + this.model.get('pitch') +
-                    '&source=Growth Fountain'),'Growth Fountain Campaingn','width=500,height=150')
+                    '&source=Growth Fountain'),'Growth Fountain Campaingn','width=605,height=545');
+            },
+
+            shareOnTwitter: function(event) {
+                event.preventDefault();
+                window.open(encodeURI('https://twitter.com/share?url=' + window.location.href +
+                    '&via=' + 'growthfountain' +
+                    '&hashtags=investment,fundraising' +
+                    '&text=Check out '),'Growth Fountain Campaingn','width=550,height=420');
             },
 
             render: function() {
@@ -125,7 +133,6 @@ define(function() {
 
                 // Will run social media scripts after content render
                 socialMediaScripts.facebook();
-                socialMediaScripts.twitter();
 
                 setTimeout(() => {
                     var stickyToggle = function(sticky, stickyWrapper, scrollElement) {
