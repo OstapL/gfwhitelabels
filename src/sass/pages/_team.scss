@@ -1,0 +1,53 @@
+.bg-team-wrap {
+	height: rem(286); 
+
+	background: url(/img/pages/team-bg.png);
+	background-attachment: fixed;
+	background-size: cover;
+
+	h2 {
+		color: $alabaster;
+	}
+
+	p {
+		font-size: rem(18);
+		font-weight: 300;
+		color: $alabaster;	
+	}
+}
+
+.biography-text {
+	display: none;
+	p {
+		margin-top: rem(12);
+	}
+}
+
+.team-member-list {
+	article {
+		&:hover {
+			cursor: pointer;
+
+		}
+
+		.img {
+			overflow:hidden;
+		}
+		
+		img {
+			-moz-transition: all .3s ease-out;
+			-o-transition: all .3s ease-out;
+			-webkit-transition: all .3s ease-out;
+			transition: all .3s ease-out;
+
+
+			&:hover {
+				-webkit-transform: scale(1.1);
+				-moz-transform: scale(1.1);
+				-o-transform: scale(1.1);
+				transform: scale(1.1);
+			}
+		}
+	}
+}
+

@@ -80,5 +80,126 @@ define(function() {
             },
 
         }),
+<<<<<<< HEAD
+
+        teamMembers: Backbone.View.extend({
+            events: _.extend({
+                'submit form': 'submit',
+            }, jsonActions.events),
+
+            preinitialize: function() {
+                // ToDo
+                // Hack for undelegate previous events
+                for(let k in this.events) {
+                    $('#content ' + k.split(' ')[1]).undelegate(); 
+                }
+            },
+
+            addSection: jsonActions.addSection,
+            deleteSection: jsonActions.deleteSection,
+            getSuccessUrl: function() {
+                return  '/formc/related-parties/' + this.model.get('id');
+            },
+            submit: app.defaultSaveActions.submit,
+
+            initialize: function(options) {
+                this.fields = options.fields;
+            },
+
+            render: function() {
+                let template = require('templates/formc/team-members.pug');
+
+                this.$el.html(
+                    template({
+                        serverUrl: serverUrl,
+                        Urls: Urls,
+                        fields: this.fields,
+                        values: this.model.toJSON(),
+                    })
+                );
+                return this;
+            },
+
+        }),
+
+        offering: Backbone.View.extend({
+            events: _.extend({
+                'submit form': 'submit',
+            }, jsonActions.events),
+
+            preinitialize: function() {
+                // ToDo
+                // Hack for undelegate previous events
+                for(let k in this.events) {
+                    $('#content ' + k.split(' ')[1]).undelegate(); 
+                }
+            },
+
+            addSection: jsonActions.addSection,
+            deleteSection: jsonActions.deleteSection,
+            getSuccessUrl: function() {
+                return  '/formc/offering/' + this.model.get('id');
+            },
+            submit: app.defaultSaveActions.submit,
+
+            initialize: function(options) {
+                this.fields = options.fields;
+            },
+
+            render: function() {
+                let template = require('templates/formc/offering.pug');
+
+                this.$el.html(
+                    template({
+                        serverUrl: serverUrl,
+                        Urls: Urls,
+                        fields: this.fields,
+                        values: this.model.toJSON(),
+                    })
+                );
+                return this;
+            },
+
+        }),
+
+        useOfProceeds: Backbone.View.extend({
+            events: _.extend({
+                'submit form': 'submit',
+            }, jsonActions.events),
+
+            preinitialize: function() {
+                // ToDo
+                // Hack for undelegate previous events
+                for(let k in this.events) {
+                    $('#content ' + k.split(' ')[1]).undelegate(); 
+                }
+            },
+
+            addSection: jsonActions.addSection,
+            deleteSection: jsonActions.deleteSection,
+            getSuccessUrl: function() {
+                return  '/formc/team-members/' + this.model.get('id');
+            },
+            submit: app.defaultSaveActions.submit,
+
+            initialize: function(options) {
+                this.fields = options.fields;
+            },
+
+            render: function() {
+                let template = require('templates/formc/useofproceeds.pug');
+
+                this.$el.html(
+                    template({
+                        serverUrl: serverUrl,
+                        Urls: Urls,
+                        fields: this.fields,
+                        values: this.model.toJSON(),
+                    })
+                );
+                return this;
+            },
+
+        }),
     }
 });
