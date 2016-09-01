@@ -648,7 +648,6 @@ let appRoutes = Backbone.Router.extend({
         }
     },
 
-<<<<<<< HEAD
     formcRelatedParties: function(id) {
         if(!app.user.is_anonymous()) {
             let model = require('models/formc');
