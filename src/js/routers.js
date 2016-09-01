@@ -24,6 +24,9 @@ let appRoutes = Backbone.Router.extend({
       'formc/introduction': 'formcIntroduction',
       'formc/introduction/:id': 'formcIntroduction',
       'formc/team-members/:id': 'formcTeamMembers',
+      'formc/related-parties/:id': 'formcRelatedParties',
+      'formc/offering/:id': 'formcOffering',
+      'formc/useofproceeds/:id': 'formcUseOfProceeds',
 
       // Account URLS
       'account/profile': 'accountProfile',
@@ -308,12 +311,11 @@ let appRoutes = Backbone.Router.extend({
                     //app.cache[window.location.pathname] = i.$el.html();
 
                 }).fail(function(xhr, response, error) {
-                    console.log(arguments);
                     var $view = {
                         $el: $('#content'),
                         $: app.$
                     };
-                    app.defaultSaveActions.error.error.call($view, xhr, response, error);
+                    app.defaultSaveActions.error.call($view, xhr, response, error);
                 });
             });
         } else {
@@ -592,7 +594,7 @@ let appRoutes = Backbone.Router.extend({
                 if(id.indexOf('=') == -1) {
                     i.model = formc;
                 } else {
-                    i.model = new model.model(r1[0][0]);
+                    i.model = formc;
                     i.model.set('company', company_id);
                 }
 
@@ -619,7 +621,7 @@ let appRoutes = Backbone.Router.extend({
             let campaign = new model.model({
                 id: id
             });
-            campaign.urlRoot += '/introduction';
+            campaign.urlRoot += '/team-members';
             var a1 = campaign.fetch();
             var a2 = $.ajax(_.extend({
                     url: campaign.urlRoot,
@@ -628,6 +630,111 @@ let appRoutes = Backbone.Router.extend({
             
             $.when(a1, a2).done((r1, r2) => {
                 var i = new view.teamMembers({
+                    el: '#content',
+                    fields: r2[0].actions.POST,
+                    model: campaign
+                });
+                i.render();
+                //app.views.campaign[id].render();
+                //app.cache[window.location.pathname] = i.$el.html();
+
+                app.hideLoading();
+            });
+        } else {
+            app.routers.navigate(
+                '/account/login',
+                {trigger: true, replace: true}
+            );
+        }
+    },
+
+    formcRelatedParties: function(id) {
+        if(!app.user.is_anonymous()) {
+            let model = require('models/formc');
+            let view = require('views/formc');
+
+            let campaign = new model.model({
+                id: id
+            });
+            campaign.urlRoot += '/related-parties';
+            var a1 = campaign.fetch();
+            var a2 = $.ajax(_.extend({
+                    url: campaign.urlRoot,
+                }, app.defaultOptionsRequest)
+            );
+            
+            $.when(a1, a2).done((r1, r2) => {
+                var i = new view.relatedParties({
+                    el: '#content',
+                    fields: r2[0].actions.POST,
+                    model: campaign
+                });
+                i.render();
+                //app.views.campaign[id].render();
+                //app.cache[window.location.pathname] = i.$el.html();
+
+                app.hideLoading();
+            });
+        } else {
+            app.routers.navigate(
+                '/account/login',
+                {trigger: true, replace: true}
+            );
+        }
+    },
+
+    formcOffering: function(id) {
+        if(!app.user.is_anonymous()) {
+            let model = require('models/formc');
+            let view = require('views/formc');
+
+            let campaign = new model.model({
+                id: id
+            });
+            campaign.urlRoot += '/offering';
+            var a1 = campaign.fetch();
+            var a2 = $.ajax(_.extend({
+                    url: campaign.urlRoot,
+                }, app.defaultOptionsRequest)
+            );
+            
+            $.when(a1, a2).done((r1, r2) => {
+                var i = new view.offering({
+                    el: '#content',
+                    fields: r2[0].actions.POST,
+                    model: campaign
+                });
+                i.render();
+                //app.views.campaign[id].render();
+                //app.cache[window.location.pathname] = i.$el.html();
+
+                app.hideLoading();
+            });
+        } else {
+            app.routers.navigate(
+                '/account/login',
+                {trigger: true, replace: true}
+            );
+        }
+    },
+
+    formcUseOfProceeds: function(id) {
+        if(!app.user.is_anonymous()) {
+            let model = require('models/formc');
+            let view = require('views/formc');
+
+            let campaign = new model.model({
+                id: id
+            });
+            campaign.urlRoot += '/useofproceeds';
+            var a1 = campaign.fetch();
+            var a2 = $.ajax(_.extend({
+                    url: campaign.urlRoot,
+                }, app.defaultOptionsRequest)
+            );
+            
+            $.when(a1, a2).done((r1, r2) => {
+                var i = new view.useOfProceeds({
                     el: '#content',
                     fields: r2[0].actions.POST,
                     model: campaign
