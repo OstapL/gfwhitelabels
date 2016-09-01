@@ -23,6 +23,7 @@ let appRoutes = Backbone.Router.extend({
       // Form c URLS
       'formc/introduction': 'formcIntroduction',
       'formc/introduction/:id': 'formcIntroduction',
+      'formc/team-members/:id': 'formcTeamMembers',
 
       // Account URLS
       'account/profile': 'accountProfile',
@@ -312,7 +313,7 @@ let appRoutes = Backbone.Router.extend({
                         $el: $('#content'),
                         $: app.$
                     };
-                    app.DefaultSaveActions.error.call($view, xhr, response, error);
+                    app.defaultSaveActions.error.error.call($view, xhr, response, error);
                 });
             });
         } else {
@@ -372,7 +373,7 @@ let appRoutes = Backbone.Router.extend({
 
                 app.hideLoading();
             }).fail((xhr, error) =>  {
-                app.DefaultSaveActions.error($('#content'), error);
+                app.defaultSaveActions.error.error($('#content'), error);
                 app.hideLoading();
             });
         } else {
@@ -507,7 +508,7 @@ let appRoutes = Backbone.Router.extend({
 
                 app.hideLoading();
             }).fail((xhr, error) =>  {
-                app.DefaultSaveActions.error($('#content'), error);
+                app.defaultSaveActions.error.error($('#content'), error);
                 app.hideLoading();
             });
         } else {
@@ -599,7 +600,42 @@ let appRoutes = Backbone.Router.extend({
                 i.render();
 
             }).fail((xhr, error) =>  {
-                app.DefaultSaveActions.error($('#content'), error);
+                app.defaultSaveActions.error($('#content'), error);
+                app.hideLoading();
+            });
+        } else {
+            app.routers.navigate(
+                '/account/login',
+                {trigger: true, replace: true}
+            );
+        }
+    },
+
+    formcTeamMembers: function(id) {
+        if(!app.user.is_anonymous()) {
+            let model = require('models/formc');
+            let view = require('views/formc');
+
+            let campaign = new model.model({
+                id: id
+            });
+            campaign.urlRoot += '/introduction';
+            var a1 = campaign.fetch();
+            var a2 = $.ajax(_.extend({
+                    url: campaign.urlRoot,
+                }, app.defaultOptionsRequest)
+            );
+            
+            $.when(a1, a2).done((r1, r2) => {
+                var i = new view.teamMembers({
+                    el: '#content',
+                    fields: r2[0].actions.POST,
+                    model: campaign
+                });
+                i.render();
+                //app.views.campaign[id].render();
+                //app.cache[window.location.pathname] = i.$el.html();
+
                 app.hideLoading();
             });
         } else {
@@ -833,26 +869,6 @@ let appRoutes = Backbone.Router.extend({
         });
     },
 
-    execute(callback, args, name) {
-
-        // disable enter to the final step of paybackshare calculator without data
-        if (name == 'calculatorPaybackshareStep3') {
-            if (!app.models['calculatorPaybackshare'] || !app.models['calculatorPaybackshare'].get('outputData')) {
-                app.routers.navigate('/calculator/paybackshare/step-2', {trigger: true});
-                return false;
-            }
-        }
-
-        // disable enter to the final step of capitalraise calculator without data
-        if (name == 'calculatorCapitalraiseFinish') {
-            if (!app.models['calculatorCapitalraise'] || !app.models['calculatorCapitalraise'].get('dataIsFilled')) {
-                app.routers.navigate('/calculator/capitalraise/step-1', {trigger: true});
-                return false;
-            }
-        }
-
-        if (callback) callback.apply(this, args);
-    }
 });
 
 app.on('userLoaded', function(data){
