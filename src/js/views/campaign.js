@@ -397,7 +397,6 @@ define(function() {
                 // ToDo
                 // Hack for undelegate previous events
                 for(let k in this.events) {
-                    console.log('#content ' + k.split(' ')[1]);
                     $('#content ' + k.split(' ')[1]).undelegate(); 
                 }
             },
@@ -460,6 +459,7 @@ define(function() {
                         Urls: Urls,
                         fields: this.fields,
                         values: this.model.toJSON(),
+                        app: app
                     })
                 );
                 app.createFileDropzone(
