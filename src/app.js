@@ -9,11 +9,9 @@ global.userModel = require('models/user.js');
 global.Urls = require('jsreverse.js');
 require('../node_modules/jquery-serializejson/jquery.serializejson.min.js');
 
-// require('sass/mixins_all.sass');
+"use strict";
 
-//console.log(global.userModel);
-//console.log(_);
-//require('libs.js');
+// require('sass/mixins_all.sass');
 
 // При выводе ошибок для форм у нас может быть две ситуации:
 // 1. Мы выводим ошибку для элементы который у нас есть в форме =>
@@ -42,8 +40,12 @@ _.extend(Backbone.Validation.callbacks, {
         $group.find('.help-block').remove();
     },
     invalid: function (view, attr, error, selector) {
-        var $el = view.$('[name=' + attr + ']');
+        let $el = view.$('#' + attr);
         var $group = null;
+
+        if($el.length == 0) {
+            $el = view.$('[name=' + attr + ']');
+        }
 
         if(Array.isArray(error) !== true)
             error = [error]
@@ -79,7 +81,6 @@ _.extend(Backbone.Validation.callbacks, {
             }
         }
 
-        //console.log(view, attr, error, selector);
     }
 });
 
@@ -138,43 +139,6 @@ $.fn.serializeRepeatableObject = function () {
     };
     return $.each(this.serializeArray(), b), a
 };
-
-
-
-function repeatToJSonString(obj) {
-    // Repeatable fields 
-    // Should comes by 2 fields
-    for(var k in obj) {
-        if(k.indexOf('repeat:') !== -1) {
-            var key = k.replace('repeat:', '');
-            var n = {};
-            var repeat_keys = Object.keys(obj[k]);
-
-            for(var kk in obj[k]) {
-                if(obj[k][kk][0]) {
-                        n[kk] = obj[k][kk];
-                }
-            }
-
-            /*
-            var key_k = Object.keys(obj[k])[0];
-            var key_v = Object.keys(obj[k])[1];
-            for(var j in obj[k][key_k]) {
-                if(obj[k][key_k][j] || obj[k][key_v][j]) {
-                    var o = {};
-                    o[obj[k][key_k][j]] = obj[k][key_v][j];
-                    n.push(o);
-                }
-            }
-            */
-            console.log(n);
-            obj[key] = n;
-            delete obj[k];
-        }
-    }
-    return obj;
-};
-
 
 
 global.app = {
@@ -262,7 +226,7 @@ global.app = {
         submit: function(e, data) {
 
             this.$el.find('.alert').remove();
-            event.preventDefault();
+            e.preventDefault();
 
             var data = data || $(e.target).serializeJSON();
             //var investment = new InvestmentModel(data);
@@ -274,15 +238,17 @@ global.app = {
                 var self = this;
                 this.model.save().
                     then((data) => { 
+                        app.showLoading();
                         this.$el.find('.alert-warning').remove();
+                        self.undelegateEvents();
+                        $('.popover').popover('hide')
+                        $('#content').scrollTo();
+
                         if(typeof this._success == 'function') {
                             this._success(data);
                         } else {
-                            app.showLoading();
 
                             //window.location = '/api/campaign/' + this.model.get('id');
-                            self.undelegateEvents();
-                            $('#content').scrollTo();
                             app.routers.navigate(
                                 self.getSuccessUrl(data),
                                 {trigger: true, replace: false}
@@ -310,10 +276,17 @@ global.app = {
         },
 
         error: (view, xhr, status, text, fields) => {
+            if(view.hasOwnProperty('$el') == false) {
+                view = {
+                    '$el' : view
+                };
+            }
             view.$el.find('.alert-warning').remove();
             view.$el.find('.help-block').remove();
+            
             if(xhr.hasOwnProperty('responseJSON')) {
                 let data = xhr.responseJSON;
+
                 data = data ? data : {'Server': status};
                 for (let key in data)  {                                                 
                   Backbone.Validation.callbacks.invalid(                                 
@@ -324,7 +297,11 @@ global.app = {
             else if(xhr.hasOwnProperty('statusText')) {
                 let s = '<strong>Errors:</strong> ';
                 s += xhr.statusText;
-                view.$el.find('form').prepend("<div class='alert alert-warning' role='alert'>" + s + "<div>");
+                if(view.$el.find('form').length >= 1) {
+                    view.$el.find('form').prepend("<div class='alert alert-warning' role='alert'>" + s + "<div>");
+                } else {
+                    view.$el.prepend("<div class='alert alert-warning' role='alert'>" + s + "<div>");
+                }
             }
             if(view.$el.find('.alert').length) {
                 view.$el.find('.alert').scrollTo();
@@ -367,7 +344,6 @@ global.app = {
       if(typeof renameTo != 'undefined' && renameTo != '') {
         params['rename'] = renameTo;
       }
-      console.log('params', params);
 
       let dropbox = new Dropzone(".dropzone__" + name, {
           url: serverUrl + Urls['image2-list'](),
@@ -457,11 +433,34 @@ $('body').on('click', '.auth-pop', function() {
     $('#loginModal').modal();
 });
 
+$('body').on('mouseover', 'div.showPopover', function() {
+    var el = $(this);
+    if(el.attr('aria-describedby') == null) {
+        $(this).popover('show');
+    }
+});
+$('body').on('focus', 'input.showPopover', function() {
+    var el = $(this);
+    if(el.attr('aria-describedby') == null) {
+        $(this).popover('show');
+    }
+});
+$('body').on('focus', 'textarea.showPopover', function() {
+    var el = $(this);
+    if(el.attr('aria-describedby') == null) {
+        $(this).popover('show');
+    }
+});
+
 $('body').on('click', 'a', function(event) {
     var href = event.currentTarget.getAttribute('href');
-    if(href && href != '' && href.substr(0,1) != '#' && 
+    if(href == window.location.pathname) {
+        window.location.reload();
+    } else if(href && href != '' && href.substr(0,1) != '#' && 
         href.substr(0, 4) != 'http' && 
         href.substr(0,3) != 'ftp' &&
+        href != 'javascript:void(0);' &&
+        href != 'javascript:void(0)' &&
         event.currentTarget.getAttribute('target') == null) {
         event.preventDefault();
         app.showLoading();
@@ -473,6 +472,7 @@ $('body').on('click', 'a', function(event) {
 
         $('#content').undelegate();
         $('form').undelegate();
+        $('.popover').popover('hide')
         if(app.cache.hasOwnProperty(url) == false) {
             app.routers.navigate(
                 url,

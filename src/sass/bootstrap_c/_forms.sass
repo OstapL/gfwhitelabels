@@ -6,16 +6,20 @@ select.form-control
 		height: $select-height
 
 // стили общие, но есть дополнения которие используются в файле profile, invest
+
 .form-section// каждая форма будет в таком контейнере
-	.required   
+	.required
+
 		label
 			color: $black_bg
 
 	img
-		max-width: 100%// будет перенесен в файл общих стилей
+		max-width: 100%// будет перенесен в файл общих стилей - использовать клас бутстрапа .img-fluid
+
 	//общие стили для лейблов
 	label
 		@include calc-rem(14)
+
 		font-weight: 700
 		color: $small-text
 		padding-top: 6px 
@@ -35,32 +39,32 @@ select.form-control
 			font-weight: normal;
 			vertical-align: middle;
 			cursor: pointer;
+
 			& + .radio-inline
 				margin-top: 7px
+
 			input[type='radio']
 				margin-right: 15px
+
 	@media screen and (min-width:992px)
+		// date of birth field
 		.dob label
 			padding-left: 0
 
 	input[type="text"]
 		@include placeholder
-			color: #a3a3a3
-	button[type='submit']
-		// @include mt(.2s)
-		// border: none
-		// background: $profile_btn_submit
-		// text-transform: uppercase
-		// letter-spacing: 2px
-		&:hover
-			// background: rgba($profile_btn_submit, 0.8)
-			// color: $white
+		
+		color: #a3a3a3
+
 	textarea
 		min-height: 38px
+		max-width: 554px
+
 	.pseudo-checkbox,.form-check-input// для задаванния своего вида чекбокса
 		position: relative
 		z-index: 10
 		padding-left: 30px
+
 		i
 			position: absolute
 			top: 2px
@@ -68,6 +72,7 @@ select.form-control
 			height: 20px
 			width: 20px
 			background: red
+
 		input[type='checkbox']
 			position: absolute
 			top: 0
@@ -76,6 +81,7 @@ select.form-control
 			right: 0
 			z-index: 9
 			opacity: 0
+
 			&:checked
 				background: green
 			
@@ -83,6 +89,7 @@ select.form-control
 		position: relative
 		z-index: 10
 		padding-left: 30px
+
 		i
 			position: absolute
 			top: 2px
@@ -90,6 +97,7 @@ select.form-control
 			height: 20px
 			width: 20px
 			background: red
+
 		input[type='radio']
 			position: absolute
 			top: 0
@@ -98,35 +106,44 @@ select.form-control
 			right: 0
 			z-index: 9
 			opacity: 0
+
 			&:checked + i
 				background: green
+
 	.date-input
 		input
 			min-width: rem(65)
+
 	.street_address_2
 		color: $gray
+
 	.city_states
 		position: relative
 		z-index: 50
+
 		input 
 			display: none
+
 		.change_state_city 
 			position: absolute
 			top: 6px
 			right: 0
 			cursor: pointer
+
 			.input-value
 				@include ellipsis()
 				display: inline-block
 				max-width: 150px
 				text-decoration: underline
+
 			i
 				margin-left: 10px
 				color: $small-text
-	textarea 
-		max-width: 554px
+
+	// вместо этого поля используеться сейчас поля типа text
 	input[type='date'] 
 		height: 36px// непонятно по какой причине высота этого элемента больше чем 38пкс
+
 	.help-block
 		+calc-rem(11)
 		letter-spacing: .25px

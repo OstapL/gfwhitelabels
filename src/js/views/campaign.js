@@ -1,3 +1,5 @@
+"use strict";
+
 var jsonActions = {
     events: {
         'click .add-section': 'addSection',
@@ -55,7 +57,8 @@ define(function() {
                 this.$el.append(
                     template({
                         serverUrl: serverUrl,
-                        campaigns: this.collection.toJSON()
+                        campaigns: this.collection.toJSON(),
+                        collection: this.collection,
                     })
                 );
                 this.$el.find('.selectpicker').selectpicker();
@@ -70,9 +73,36 @@ define(function() {
                 this.template = options.template;
             },
 
+            events: {
+                'click .linkedin-share': 'shareOnLinkedin',
+                'click .facebook-share': 'shareOnFacebook'
+            },
+
+            shareOnFacebook: function(event) {
+                event.preventDefault();
+                FB.ui({
+                  method: 'share',
+                  href: 'http://growthfountain-es7.s3-website-us-east-1.amazonaws.com/api/campaign/' + this.model.get("id"),
+                  caption: this.model.get('company').tagline,
+                  description: this.model.get('pitch'),
+                  title: this.model.get('company').name,
+                  picture: this.model.get("header_image_data").url
+                }, function(response){});
+            },
+
+            shareOnLinkedin: function(event) {
+                event.preventDefault();
+                window.open(encodeURI('https://www.linkedin.com/shareArticle?mini=true&url=http://growthfountain-es7.s3-website-us-east-1.amazonaws.com/api/campaign/' +
+                    this.model.get('id') +
+                    '&title=' + this.model.get('company').name +
+                    '&summary=' + this.model.get('pitch') +
+                    '&source=Growth Fountain'),'Growth Fountain Campaingn','width=500,height=150')
+            },
+
             render: function() {
                 require('../../../node_modules/photoswipe/src/css/main.scss');
                 require('../../../node_modules/photoswipe/src/css/default-skin/default-skin.scss');
+                const socialMediaScripts = require('../helpers/shareButtonHelper.js');
 
                 let PhotoSwipe = require('photoswipe');
                 let PhotoSwipeUI_Default = require('photoswipe-ui-default');
@@ -83,7 +113,8 @@ define(function() {
                     template({
                         serverUrl: serverUrl,
                         Urls: Urls,
-                        campaign: this.model.toJSON()
+                        campaign: this.model.toJSON(),
+                        model: this.model
                     })
                 );
 
@@ -91,6 +122,10 @@ define(function() {
                     $('.nav-tabs li').removeClass('active');
                     $(this).addClass('active');
                 });
+
+                // Will run social media scripts after content render
+                socialMediaScripts.facebook();
+                socialMediaScripts.twitter();
 
                 setTimeout(() => {
                     var stickyToggle = function(sticky, stickyWrapper, scrollElement) {
@@ -370,7 +405,7 @@ define(function() {
             addSection: jsonActions.addSection,
             deleteSection: jsonActions.deleteSection,
             getSuccessUrl: function() {
-                return  '/campaign/team_members/' + this.model.get('id');
+                return  '/campaign/team-members/' + this.model.get('id');
             },
             submit: app.defaultSaveActions.submit,
 
@@ -622,7 +657,7 @@ define(function() {
             },
 
             getSuccessUrl: function() {
-                return  '/campaign/team_members/' + this.model.get('id');
+                return  '/campaign/team-members/' + this.model.get('id');
             },
             
             submit: function(e) {
@@ -667,6 +702,7 @@ define(function() {
                 'submit form': 'submit',
                 'change input[name="security_type"]': 'updateSecurityType',
             },
+            submit: app.defaultSaveActions.submit,
 
             preinitialize: function() {
                 // ToDo
@@ -739,6 +775,7 @@ define(function() {
                     $('#content ' + k.split(' ')[1]).undelegate(); 
                 }
             },
+            submit: app.defaultSaveActions.submit,
 
             addSection: jsonActions.addSection,
             deleteSection: jsonActions.deleteSection,
