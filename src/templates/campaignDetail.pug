@@ -60,12 +60,8 @@ section.campaigndetail
           .d-inline-block
             a(href=campaign.company.facebook).link-1.facebook-share
               i.fa.fa-facebook
-            a.link-1.twitter-share-button(data-count="none" href=encodeURI("https://twitter.com/intent/tweet?text=Check out&url=" + "http://growthfountain-es7.s3-website-us-east-1.amazonaws.com/api/campaign/" + campaign.id + "&via=growthfountain&hashtags=investment,fundraising&related=twitterapi,twitter"))
+            a(href=campaign.company.twitter).link-1.twitter-share
               i.fa.fa-twitter
-            //- a.link-1.twitter-share-button(href="https://twitter.com/share" data-size="large"   data-url="https://dev.twitter.com/web/tweet-button" data-via="twitterdev" data-related="twitterapi,twitter" data-hashtags="example,demo" data-text="custom share text")
-              //- i.fa.fa-twitter
-            //- a(href=campaign.company.twitter).link-1
-            //-   i.fa.fa-twitter
             a(href=campaign.company.linkedin).link-1.linkedin-share
               i.fa.fa-linkedin
             //- a(href=campaign.company.instagram).link-1
