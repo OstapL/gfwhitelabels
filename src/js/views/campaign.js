@@ -397,6 +397,7 @@ define(function() {
         media: Backbone.View.extend({
             events: _.extend({
                 'submit form': 'submit',
+                'click .delete-image': 'deleteImage',
                 'change .videoInteractive input[type="url"]': 'updateVideo',
             }, jsonActions.events),
 
@@ -532,6 +533,19 @@ define(function() {
                         return ""
                 }
                 return id;
+            },
+
+            deleteImage: function(e) {
+                e.preventDefault();
+                const image_id = e.currentTarget.dataset.id;
+
+                $(e.currentTarget).parent().parent().remove();
+                var params = _.extend({
+                        url: serverUrl + Urls['image2-list']() + '/' + image_id,
+                }, app.defaultOptionsRequest);
+                params.type = 'DELETE';
+
+                $.ajax(params);
             },
 
             updateVideo: function(e) {
