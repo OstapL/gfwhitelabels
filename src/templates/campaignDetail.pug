@@ -1,4 +1,7 @@
+- 'use strict';
 include mixins.pug
+
+- let percentage_raised = model.calculateRaisedPercentage(campaign.minimum_raise, campaign.amount_raised)
 
 section#home(style="background-image: url(" + (campaign.header_image_data ? campaign.header_image_data.url : '/img/default.png') + ")").home-section.bg-dark-alfa-70.parallax-2.fixed-height-small
   .js-height-parent.container
@@ -26,7 +29,7 @@ section#home(style="background-image: url(" + (campaign.header_image_data ? camp
         .top-info-wrap-item
           .col-lg-2
             p Pre-Money Valuation
-            h2.font-weight-bold #{ campaign.premoney_valuation }
+            h2.font-weight-bold #{ model.showBeautifulNumber(campaign.premoney_valuation) }
           .col-lg-2
             p Type of Security
             h2.font-weight-bold #{ campaign.get_security_type_display }
@@ -34,7 +37,7 @@ section#home(style="background-image: url(" + (campaign.header_image_data ? camp
             p Days Left
             h2.font-weight-bold #{ campaign.days_to_go }
           .col-lg-4.pull-right
-            a(href=Urls['campaign-invest'](campaign.id)).btn.btn-primary.btn-lg.text-uppercase.pull-right invest in #{ campaign.company.name }
+            a(href=Urls['campaign-invest'](campaign.id)).btn.btn-primary.btn-lg.text-uppercase.pull-right Invest
 
 section.campaigndetail
   .container
@@ -42,41 +45,49 @@ section.campaigndetail
       h1 #{ campaign.company.tagline }
       .row.mt20
         .col-lg-4
-          a(href="").link-1
+          //- a(href="").link-1
+          div.link-1
             i.fa.fa-map-marker
             |  #{ campaign.company.city }, #{ campaign.company.state }
         .col-lg-6
           a(href="").link-1
             i.fa.fa-calendar-check-o
-            |  Founded in #{ campaign.company.founding_date }
+            //- |  Founded in #{ campaign.company.founding_date }
+            |  Founded in #{ model.formatFoundingDate(campaign.company.founding_date) }
       .row
         .col-lg-12.share
           span.font-weight-bold.d-inline-block Share:
           .d-inline-block
-            a(href=campaign.company.facebook).link-1
+            a(href=campaign.company.facebook).link-1.facebook-share
               i.fa.fa-facebook
-            a(href=campaign.company.twitter).link-1
+            a.link-1.twitter-share-button(data-count="none" href=encodeURI("https://twitter.com/intent/tweet?text=Check out&url=" + "http://growthfountain-es7.s3-website-us-east-1.amazonaws.com/api/campaign/" + campaign.id + "&via=growthfountain&hashtags=investment,fundraising&related=twitterapi,twitter"))
               i.fa.fa-twitter
-            a(href=campaign.company.linkedin).link-1
+            //- a.link-1.twitter-share-button(href="https://twitter.com/share" data-size="large"   data-url="https://dev.twitter.com/web/tweet-button" data-via="twitterdev" data-related="twitterapi,twitter" data-hashtags="example,demo" data-text="custom share text")
+              //- i.fa.fa-twitter
+            //- a(href=campaign.company.twitter).link-1
+            //-   i.fa.fa-twitter
+            a(href=campaign.company.linkedin).link-1.linkedin-share
               i.fa.fa-linkedin
-            a(href=campaign.company.instagram).link-1
-              i.fa.fa-google-plus
-
-
+            //- a(href=campaign.company.instagram).link-1
+            //-   i.fa.fa-google-plus
     .col-lg-6.right-block-investors.p-l-0
       .progress_bar_container
-        span Less than 20% Funded
+        //- span Less than 20% Funded
+        span Less than #{ percentage_raised }% Funded
         span.pull-right Committed 
-          span.committed $15,000
+          //- span.committed $15,000
+          span.committed #{ model.showBeautifulNumber(campaign.amount_raised)}
         .clear
-        progress(value="20" max="100").progress
+        progress(value=percentage_raised max="100").progress
       .mt25
         .row.col-lg-8
           p Target
-          h2.font-weight-bold #{ campaign.minimum_raise } - #{ campaign.maximum_raise }
+          //- h2.font-weight-bold #{ campaign.minimum_raise } - #{ campaign.maximum_raise }
+          h2.font-weight-bold #{ model.showBeautifulNumber(campaign.minimum_raise) } - #{ model.showBeautifulNumber(campaign.maximum_raise) }
         .row.col-lg-4.pull-right
           p Minimum Investment
-          h2.font-weight-bold #{ campaign.minimum_increment }
+          //- h2.font-weight-bold #{ campaign.minimum_increment }
+          h2.font-weight-bold #{ model.showBeautifulNumber(campaign._minimum_increment) }
         .row.col-lg-12.investors-block(style="display: none")
           .col-lg-2.p-l-0
             p Investors
@@ -126,18 +137,21 @@ section
   section.about-detail.border-bottom
     .container
       .col-lg-12
-        h2#about.dosis.text-uppercase.text-lg-center About #{ campaign.company.name }
+        h2#about.dosis.text-uppercase.text-lg-center.green-heading About #{ campaign.company.name }
         p #{ campaign.company.description }
 
-        h3.our.text-lg-center Why You Should Invest
+        //- h3.our.text-lg-center Why You Should Invest
+        h2.dosis.our.text-uppercase.text-lg-center.green-heading Why You Should Invest
         p #{ campaign.pitch }
-        h3.our.text-lg-center How We Intend to Make Money
+        //- h3.our.text-lg-center Our Edge
+        h2.dosis.our.text-uppercase.text-lg-center.green-heading How We Intend to Make Money
         p #{ campaign.business_model }
 
-        if campaign.additional_info
-          each v,k in campaign.additional_info
-            h3.our.text-lg-center #{ v.title }
-            p #{ v.body }
+        //- if campaign.additional_info
+        //-   each v,k in campaign.additional_info
+        //-     //- h3.our.text-lg-center #{ v.title }
+        //-     h2.dosis.our.text-uppercase.text-lg-center.green-heading #{ v.title }
+        //-     p #{ v.body }
 
 
       #gallery1.col-lg-12.pt50.photo-gallegy
@@ -210,7 +224,8 @@ section
                       i.fa.fa-play-circle-o
                 h3.card-text.text-lg-center Title for Optional Video 3
       .col-lg-12
-        h3.text-lg-center Articles and Press
+        //- h3.text-lg-center Articles and Press
+        h2.dosis.text-uppercase.text-lg-center.green-heading Articles and Press
       .articles_press
       if campaign.press
         each v,k in campaign.press
@@ -225,14 +240,21 @@ section
                   img(src="/img/icon-campaign.jpg", alt="").icon-campaign.d-inline-block
                   a(href=v.link target="_blank").card-text.links.d-inline-block #{ v.link }
         .col-lg-12
-          h3.text-lg-center Why We are Raising Capital, and What We’ll Do with It
+          //- h3.text-lg-center Why We are Raising Capital, and What We’ll Do with It
+          h2.dosis.text-uppercase.text-lg-center.green-heading Why We are Raising Capital, and What We’ll Do with It
           p #{ campaign.intended_use_of_proceeds }
 
+      if campaign.additional_info
+        .col-lg-12
+          each v,k in campaign.additional_info
+            //- h3.our.text-lg-center #{ v.title }
+            h2.dosis.our.text-uppercase.text-lg-center.green-heading #{ v.title }
+            p #{ v.body }
  
   if campaign.members
       section.team.border-bottom
         .container
-            h2#team.dosis.text-uppercase.text-lg-center.col-lg-12 Team
+            h2#team.dosis.text-uppercase.text-lg-center.col-lg-12.green-heading Team
             each v,k in campaign.members
                 .col-lg-4
                   a(href="#")
@@ -245,7 +267,7 @@ section
                         a(href=v.facebook target="_blank").link-1
                           i.fa.fa-facebook
                         a(href=v.linkedin target="_blank").link-1
-                          i.fa.fa-linkedin
+                          i.fa.fa-linkedin.more
                           p.card-text.text-justify #{v.bio}
                         .d-block.text-lg-left.cite_education
                           a(href="#").link-1.text-lg-left
@@ -324,7 +346,7 @@ section
   section.document.border-bottom
     .container
       .row
-        h2#documents.col-lg-12.dosis.text-uppercase.text-lg-center Documents
+        h2#documents.col-lg-12.dosis.text-uppercase.text-lg-center.green-heading Documents
         .col-lg-8.offset-lg-2
           .col-lg-4
             p Official filing on SEC.gov
@@ -344,38 +366,40 @@ section
   section.overview
     .container
       .row
-        h2#overview.col-lg-12.dosis.text-uppercase.text-lg-center overview and terms
-        h3.col-lg-12.text-lg-center Fundraising Description
+        h2#overview.col-lg-12.dosis.text-uppercase.text-lg-center.green-heading overview and terms
+        //- h3.col-lg-12.text-lg-center Fundraising Description
+        h2.dosis.text-uppercase.text-lg-center.green-heading Fundraising Description
         .col-lg-8.offset-lg-2.fundraising
           .jumbotron.jumbotron-fluid
             .container
               .col-lg-4
                 p Pre-Money Valuation
-                h2.font-weight-bold $#{ campaign.premoney_valuation }
+                h2.font-weight-bold #{ model.showBeautifulNumber(campaign.premoney_valuation) }
               .col-lg-4
                 p Price per Share
-                h2.font-weight-bold $#{ campaign.price_per_share }
+                h2.font-weight-bold #{ model.showBeautifulNumber(campaign.price_per_share) }
               .col-lg-4
                 p Target Minimum Raise Amonunt
-                h2.font-weight-bold $#{ campaign.minimum_raise }
+                h2.font-weight-bold #{ model.showBeautifulNumber(campaign.minimum_raise) }
               .col-lg-4
                 p Type of Security
                 h2.font-weight-bold #{ campaign.get_security_type_display }
               .col-lg-4
                 p Minimum Investment
-                h2.font-weight-bold $#{ campaign.minimum_investment }
+                h2.font-weight-bold #{ model.showBeautifulNumber(campaign.minimum_investment) }
               .col-lg-4
                 p Target Maximum Raise Amount
-                h2.font-weight-bold $#{ campaign.maximum_raise }
+                h2.font-weight-bold #{ model.showBeautifulNumber(campaign.maximum_raise) }
         
   section.perks.container
   if campaign.perks
-    h3.col-lg-12.text-lg-center Perks
+    //- h3.col-lg-12.text-lg-center Perks
+    h2.dosis.text-uppercase.text-lg-center.green-heading Perks
     each v,k in campaign.perks
         .col-lg-4
           .jumbotron.jumbotron-fluid
             .container
-              h3 #{v.amount} Investments
+              h3 Invest $#{v.amount} or more
               p.text-justify #{ v.perk }
 
   section.investors-all.border-bottom(style="display: none")
@@ -450,7 +474,7 @@ section
           a(href="").link-4 See All Investors
   section.risks.border-bottom
     .container
-      h2#risks.col-lg-12.dosis.text-uppercase.text-lg-center Risks
+      h2#risks.col-lg-12.dosis.text-uppercase.text-lg-center.green-heading Risks
       .col-lg-8.offset-lg-2
         .accordion(role="tablist" aria-multiselectable="true")
           .panel.panel-default
@@ -503,7 +527,7 @@ section
   section.faq
     if campaign.faq
     .container
-      h2#faq.col-lg-12.dosis.text-uppercase.text-lg-center FAQ
+      h2#faq.col-lg-12.dosis.text-uppercase.text-lg-center.green-heading FAQ
       .col-lg-8.offset-lg-2
         .accordion(role="tablist" aria-multiselectable="true")
           - let counter = 0
@@ -561,7 +585,7 @@ section
     
   section.ask.border-bottom
     .container
-      h2#ask.col-lg-12.dosis.text-uppercase.text-lg-center ASK A QUESTION
+      h2#ask.col-lg-12.dosis.text-uppercase.text-lg-center.green-heading ASK A QUESTION
       .col-lg-8.offset-lg-2.pt30
         form.form-section
           .col-lg-8
@@ -617,7 +641,7 @@ section
         h2
           i.fa.fa-thumbs-up
           |  I’d Like to Invest in #{ campaign.company.name }!
-        a(href="/api/campaign/" + campaign.id + "/invest").btn.btn-primary.btn-lg.text-uppercase iNVEST IN #{ campaign.company.name }
+        a(href="/api/campaign/" + campaign.id + "/invest").btn.btn-primary.btn-lg.text-uppercase Invest
 
 
 #videoModal.modal.fade(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")

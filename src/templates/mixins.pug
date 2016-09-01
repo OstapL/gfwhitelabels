@@ -1,3 +1,5 @@
+- 'use strict';
+
 mixin breadcrumbs(title, subtitle, data)
     section.header_title.pt50
         .container
@@ -91,8 +93,11 @@ mixin fieldBlock(name, data, attr)
                     textarea(
                         id=name
                         name=name
+                        class=(fields[name].help_text ? 'showPopover' : '')
+                        data-content=(fields[name].help_text ? fields[name].help_text : '')
                         placeholder=attr.placeholder ? attr.placeholder : fields[name].label
                       ).form-control #{values[name]}
+
         else if attr.type == 'json' 
                 - counter = attr.index || 0
                 - indexCounter = attr.index || 0
@@ -160,7 +165,6 @@ mixin fieldBlock(name, data, attr)
                                 i.fa.fa-times
                         .col-lg-7.videoInteractive
                             each k1,v in fields[name].schema
-                                - let k = values[name][kkeys[counter]][v]
                                 - let t = fields[name].schema[v]
                                 .form-group.clearfix
                                     label.col-lg-5.col-md-5.text-lg-right.font-weight-bold #{t.label}
@@ -170,7 +174,6 @@ mixin fieldBlock(name, data, attr)
                                             name=name + '[' + indexCounter + '][' + v + ']'
                                             placeholder=t.placeholder ? t.placeholder : t.label
                                             type=t.type
-                                            value=k
                                         ).form-control
                         .col-lg-5.p-l-1.p-r-3 
                             .embed-responsive.embed-responsive-16by9 
@@ -200,7 +203,6 @@ mixin fieldBlock(name, data, attr)
                                             ).form-control
                             .col-lg-5.p-l-1.p-r-3 
                                 .embed-responsive.embed-responsive-16by9 
-                                    - console.log('app', app, k);
                                     - let link = app.getVideoId(values[name][kkeys[counter]].link)
                                     iframe.embed-responsive-item(src="//www.youtube.com/embed/" + link + "?rel=0" allowfullscreen="true")
                         - counter ++
@@ -213,6 +215,8 @@ mixin fieldBlock(name, data, attr)
                         name=name
                         placeholder=attr.placeholder ? attr.placeholder : fields[name].label
                         type=attr.type ? attr.type : 'text'
+                        class=(fields[name].help_text ? 'showPopover' : '') 
+                        data-content=(fields[name].help_text ? fields[name].help_text : '')
                         value=values[name]
                       ).form-control
 
@@ -233,7 +237,10 @@ mixin fieldDropzone(name, attr, type)
     - type = attr.viewType ? attr.viewType : 1
 
     if type == 1
-        div(class='row media-item ' + name)
+        div(
+            class='row media-item ' + name + (fields[name].help_text ? ' showPopover' : '') 
+            data-content=(fields[name].help_text ? fields[name].help_text : '')
+        )
             div(class=attr.class1 + ' ' + (fields[name].required == true ? ' required ' : ' ') )
               .col-lg-5
                   span.pull-right.font-weight-bold #{fields[name].label}
@@ -246,7 +253,10 @@ mixin fieldDropzone(name, attr, type)
                 if values[name + '_data']
                     a(href=values[name + '_data'].url).link-3 #{values[name + '_data'].name}
     else if type == 2
-        div(class='dropzone__' + name + ' col-lg-7 media-item')
+        div(
+            class='dropzone__' + name + ' col-lg-7 media-item' + (fields[name].help_text ? ' showPopover' : '')
+            data-content=(fields[name].help_text ? fields[name].help_text : '')
+        )
             div(class=attr.class1)
                 span.pull-right.font-weight-bold #{fields[name].label}
             div(class=attr.class2 + ' text-lg-center')

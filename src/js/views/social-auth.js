@@ -1,3 +1,4 @@
+"use strict";
 let hello = require('hellojs');
 hello.init({
     facebook: facebookClientId,
@@ -5,7 +6,7 @@ hello.init({
     linkedin: linkedinClientId, 
 }, {
     redirect_uri: '/account/finish/login/',
-    oauth_proxy: '/proxy/'
+    oauth_proxy: serverUrl+'/proxy/'
 });
 
 var helloApp = {
