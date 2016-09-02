@@ -384,7 +384,7 @@ global.app = {
 
       dropbox.on("success", (file, data) => {
           $('.img-' + name).attr('src', data.url);
-          $('.a-' + name).attr('href', data.url).html(data.name);
+          $('.a-' + name).attr('href', data.origin_url).html(data.name);
           console.log(data);
           if(typeof onSuccess != 'undefined') {
             onSuccess(data);
