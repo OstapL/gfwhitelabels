@@ -268,11 +268,12 @@ mixin fieldDropzone(name, attr, type)
                     p.drop-photo #{attr.text}
                     i(class='fa fa-' + attr.icon)
         .col-lg-5.p-l-1.p-r-3
-            .photo-scroll
-                if values[name + '_data']
-                    each v,k in values[name+'_data'].all_files
-                        .thumb-image-container(style="float: left; overflow: hidden; width: 98px; height: 70px;position: relative;")
-                            .delete-image-container(style="position: absolute;")
-                                a(href="#" data-id=v.id).delete-image
-                                    i.fa.fa-times
-                            img(style="width: 100px; height: 68px;" src=v.url).img-fluid.pull-left
+            .all-gallery
+                .photo-scroll
+                    if values[name + '_data']
+                        each v,k in values[name+'_data'].all_files
+                            .thumb-image-container(style="float: left; overflow: hidden; position: relative;")
+                                .delete-image-container(style="position: absolute;")
+                                    a(href="#" data-id=v.id).delete-image
+                                        i.fa.fa-times
+                                img( src=v.url).img-fluid.pull-left
