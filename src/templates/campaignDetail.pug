@@ -391,7 +391,7 @@ section
                 h2.font-weight-bold #{ campaign.get_security_type_display }
               .col-lg-4
                 p Minimum Investment
-                h2.font-weight-bold #{ model.showBeautifulNumber(campaign.minimum_investment) }
+                h2.font-weight-bold #{ model.showBeautifulNumber(campaign.minimum_increment) }
               .col-lg-4
                 p Target Maximum Raise Amount
                 h2.font-weight-bold #{ model.showBeautifulNumber(campaign.maximum_raise) }
@@ -407,7 +407,7 @@ section
                 .col-lg-4
                   .jumbotron.jumbotron-fluid
                     .container
-                      h3.m-t-0.m-b-1 Invest $#{v.amount} or more
+                      h3.m-t-0.m-b-1 Invest #{ model.showBeautifulNumber(v.amount) } or more
                       p.text-justify #{ v.perk }
 
   section.investors-all.border-bottom(style="display: none")
