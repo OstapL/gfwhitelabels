@@ -91,6 +91,19 @@ $.fn.scrollTo = function() {
     return this; // for chaining...
 }
 
+$.fn.equalHeights = function() {
+    var maxHeight = 0,
+        $this = $(this);
+
+    $this.each( function() {
+        var height = $(this).innerHeight();
+
+        if ( height > maxHeight ) { maxHeight = height; }
+    });
+
+    return $this.css('height', maxHeight);
+};
+
 var oldSync = Backbone.sync;
 Backbone.sync = function(method, model, options){
   options.beforeSend = function(xhr){
