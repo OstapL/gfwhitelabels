@@ -384,6 +384,8 @@ global.app = {
 
       dropbox.on("success", (file, data) => {
           $('.img-' + name).attr('src', data.url);
+          $('.a-' + name).attr('href', data.url).html(data.name);
+          console.log(data);
           if(typeof onSuccess != 'undefined') {
             onSuccess(data);
           }
@@ -415,6 +417,26 @@ global.app = {
             return id;
         } catch(err) {
                 console.log(url, "Takes a YouTube or Vimeo URL");
+        }
+    }, 
+    getDropzoneUrl: function(name, attr, values) {
+        // If we have data attribute for a file  - we will 
+        // try to find url that match our size
+        if(values[name + '_data'] && attr.thumbSize) {
+            let thumbnails = values[name + '_data'].thumbnails;
+            console.log('v', thumbnails, );
+            let thumb = thumbnails.find(function(el) { 
+                console.log('v', el, attr.thumbSize, el.size == attr.thumbSize);
+                return el.size == attr.thumbSize
+            });
+            console.log('found thumb', thumb);
+            if(thumb)  {
+                return thumb.url
+            } else {
+                return attr.default
+            }
+        } else {
+            return attr.default
         }
     }
 };
