@@ -478,12 +478,15 @@ $('body').on('click', '.auth-pop', function() {
     $('#loginModal').modal();
 });
 
+const popoverTemplate = '<div class="popover divPopover" role="tooltip"> <h3 class="popover-title"></h3> <span class="icon-popover"><i class="fa fa-info-circle" aria-hidden="true"></i></span> <span class="popover-content"> XXX </span></div>';
+
+
 $('body').on('mouseover', 'div.showPopover', function() {
     var el = $(this);
     if(el.attr('aria-describedby') == null) {
         $(this).popover({
             html: true,
-            template: '<div class="popover divPopover" role="tooltip"><div class="popover-arrow"></div><h3 class="popover-title"></h3><i class="fa fa-info-circle"><div class="popover-content"></div></div>'
+            template: popoverTemplate,
         });
         $(this).popover('show');
     }
@@ -493,7 +496,7 @@ $('body').on('focus', 'input.showPopover', function() {
     if(el.attr('aria-describedby') == null) {
         $(this).popover({
             html: true,
-            template: '<div class="popover inputPopover" role="tooltip"><div class="popover-arrow"></div><h3 class="popover-title"></h3><i class="fa fa-info-circle"><div class="popover-content"></div></div>'
+            template: popoverTemplate.replace('divPopover', 'inputPopover'),
         });
         $(this).popover('show');
     }
@@ -503,7 +506,7 @@ $('body').on('focus', 'textarea.showPopover', function() {
     if(el.attr('aria-describedby') == null) {
         $(this).popover({
             html: true,
-            template: '<div class="popover textareaPopover" role="tooltip"><div class="popover-arrow fa fa-info-circle"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>'
+            template: popoverTemplate.replace('divPopover', 'textareaPopover'),
         });
         $(this).popover('show');
     }
