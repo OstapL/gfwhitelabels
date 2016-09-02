@@ -154,8 +154,8 @@ section
         if campaign.gallery
             each v,k in campaign.gallery_data.all_files
                 .col-lg-3.no-padding-img
-                  a(href=v.url data-size='1600x900')
-                    img(src=v.url alt=campaign.company.name style="width:263px; height: 209px").img-fluid
+                  a(href=app.getThumbnail('1440x900', v.thumbnails) data-size='1440x900')
+                    img(src=app.getThumbnail('270x76', v.thumbnails) alt=campaign.company.name).img-fluid
         else
 
             .col-lg-3.no-padding-img

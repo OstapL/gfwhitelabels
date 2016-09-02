@@ -442,22 +442,22 @@ global.app = {
                 console.log(url, "Takes a YouTube or Vimeo URL");
         }
     }, 
+
+    getThumbnail: function(size, thumbnails, _default) {
+        let thumb = thumbnails.find(function(el) {
+            console.log('v', el, size, el.size == size);
+            return el.size == size
+        });
+        console.log('th', thumb);
+        return (thumb ? thumb.url : _default || '/img/default/default.png')
+    },
     getDropzoneUrl: function(name, attr, values) {
         // If we have data attribute for a file  - we will 
         // try to find url that match our size
         if(values[name + '_data'] && attr.thumbSize) {
             let thumbnails = values[name + '_data'].thumbnails;
             console.log('v', thumbnails, );
-            let thumb = thumbnails.find(function(el) { 
-                console.log('v', el, attr.thumbSize, el.size == attr.thumbSize);
-                return el.size == attr.thumbSize
-            });
-            console.log('found thumb', thumb);
-            if(thumb)  {
-                return thumb.url
-            } else {
-                return attr.default || '/img/default/default.png'
-            }
+            return app.getThumbnail(attr.thumbSize, thumbnails, attr.default || '/img/default/default.png');
         } else {
             return attr.default || '/img/default/default.png'
         }
