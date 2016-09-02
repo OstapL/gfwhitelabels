@@ -13,6 +13,9 @@ module.exports = Backbone.View.extend({
             model: this.model.toJSON(),
             formatPrice
         }));
+
+        $('body').scrollTop(0);
+        
         return this;
     }
 });

@@ -4,10 +4,10 @@ section.login
         .col-lg-12
             h2.dosis.text-uppercase.text-sm-center.text-xs-center.m-t-85 Log in
                 p.small-text New to GrowthFountain?
-                    a(href="#").link-3  Sign up
+                    a(href="/accont/signup").link-3  Sign up
         
         .col-lg-4.offset-lg-4
-            form(action="" metod="post").form-section
+            form(action="" metod="post").form-section.login-form
                 .col-lg-12
                     .form-group.row.clearfix.required
                         input(type="email"
@@ -22,86 +22,22 @@ section.login
                         a(href="/accounts/password/reset/").link-3 Forgot your password?
                 .col-lg-12
                     .row.text-sm-center
-                        button#login-btnLogin.btn.btn-lg.btn-primary.text-uppercase Login
+                        button(type="submit").btn.btn-lg.btn-primary.text-uppercase Login
                 .col-lg-12.border-bottom.or
                     span or
                 .social-btn.col-lg-12
                     a(data-original-title="facebook"
-                    href="/accounts/facebook/login/?process=login"
+                    href="/account/facebook/login/?process=login"
                     ).btn.btn-block.btn-lg.btn-facebook.text-uppercase
                         i.fa.fa-facebook
-                        |  SIGN UP with Facebook
+                        |  Log In with Facebook
                     a(data-original-title="Linkedin"
-                    href="/accounts/linkedin_oauth2/login/?process=login"
+                    href="/account/linkedin/login/?process=login"
                     ).btn.btn-block.btn-lg.btn-linkedin.text-uppercase
                         i.fa.fa-linkedin
-                        |  SIGN UP with linkedin
+                        |  Log In with linkedin
                     a(data-original-title="Google Plus"
-                    href="/accounts/google/login/?process=login"
+                    href="/account/google/login/?process=login"
                     ).btn.btn-block.btn-lg.btn-google.text-uppercase
                         i.fa.fa-google-plus
-                        |  SIGN UP with Google
-
-section.singup.m-t-85
-    .container
-        .col-lg-12
-            h2.dosis.text-uppercase.text-sm-center.text-xs-center.m-t-85 sign up
-                p.small-text Have an account?
-                    a(href="#").link-3  Log In
-        
-        .col-lg-4.offset-lg-4
-            form(action="" metod="post").form-section
-                .col-lg-12
-                    .form-group.row.clearfix.required
-                        input(type="text"
-                        placeholder="First name"
-                        name="first_name").form-control
-                    .form-group.row.clearfix.required
-                        input(type="text"
-                        placeholder="Last name"
-                        name="last_name").form-control
-                    .form-group.row.clearfix.required
-                        input(type="email"
-                        placeholder="E-mail"
-                        name="email").form-control
-                    .form-group.row.clearfix.required
-                        input(type="password"
-                        placeholder="Password"
-                        name="password1").form-control
-                    .form-group.row.clearfix.required
-                        input(type="password"
-                        placeholder="Re-enter password"
-                        name="password2").form-control
-                    .form-group.row.clearfix.required
-                        .row
-                            .col-lg-12
-                                label
-                                    input(type="checkbox")
-                                    span.label-text I consent to electronic signature and electronic delivery of documentation
-                                label.p-t-6
-                                    input(type="checkbox")
-                                    span.label-text I agree to the
-                                        a(href="").link-3  Terms of Service
-                                        |  and 
-                                        a(href="").link-3  Privacy Policy.
-                .col-lg-12.m-t-1
-                    .row.text-sm-center
-                        button(type="submit")#register-submit-btn.btn.btn-lg.btn-primary.text-uppercase sign up
-                .col-lg-12.border-bottom.or
-                    span or
-                .social-btn.col-lg-12
-                    a(data-original-title="facebook"
-                    href="/accounts/facebook/login/?process=login"
-                    ).btn.btn-block.btn-lg.btn-facebook.text-uppercase
-                        i.fa.fa-facebook
-                        |  SIGN UP with Facebook
-                    a(data-original-title="Linkedin"
-                    href="/accounts/linkedin_oauth2/login/?process=login"
-                    ).btn.btn-block.btn-lg.btn-linkedin.text-uppercase
-                        i.fa.fa-linkedin
-                        |  SIGN UP with linkedin
-                    a(data-original-title="Google Plus"
-                    href="/accounts/google/login/?process=login"
-                    ).btn.btn-block.btn-lg.btn-google.text-uppercase
-                        i.fa.fa-google-plus
-                        |  SIGN UP with Google  
+                        |  Log In with Google

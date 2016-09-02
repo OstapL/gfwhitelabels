@@ -35,13 +35,14 @@
 		margin: 25px 0 49px 0
 
 		.img_column
-			width: 31.81%
+			width: 33%
 			height: 284px
 			overflow: hidden;
 			position: relative
 			float: left
-			border: 1px solid $border_color
-			border-right: none
+			img
+				width: 100%
+				height: 100%
 
 			.img_tab
 				padding: 0 10px
@@ -64,18 +65,25 @@
 				top: 63px
 				right: 13px
 				border-radius: 3px
+				max-width: 96px
+				text-align: right
+				letter-spacing: rem(.36)
 
 			.successfull
-				padding: 6px 10px
-				background: #aed07c
-				line-height: 14px
+				padding: rem(6) rem(10)
+				background: rgba(174,208,124, 0.8)
+				line-height: rem(14)
 				font-weight: bold
 				color: $white
 				position: absolute
-				letter-spacing: 2.2px
-				top: 13px
-				right: 13px
-				border-radius: 3px
+				letter-spacing: rem(.36)
+				top: rem(13)
+				right: rem(13)
+				border-radius: rem(3)
+				text-align: right
+				max-width: rem(147)
+			.unsuccessfull
+				background: rgba(237,28,36, 0.8)
 
 			b
 				letter-spacing: 0.35px
@@ -103,7 +111,7 @@
 				transform: translate(-50%,-50%)
 
 		.right-columns
-			width: 51.72%
+			width: 42%
 			float: left
 
 			.one_line
@@ -128,17 +136,17 @@
 					width: 66.666666%
 
 				span
-					margin: 0 0 0 30px
-					line-height: 32px
+					margin: 0 0 0 rem(30)
+					line-height: rem(32)
 
 				span.light_grey
-					color: $footer_text
+					color: $small-text
 
 				span.dark_grey
-					color: $grey
+					color: $black
 
 				span.bold-grey
-					font-size: 18px
+					font-size: rem(18)
 		
 		.big_columns
 			width: 69.27%
@@ -147,9 +155,8 @@
 			width: 43.27%
 
 		.right_buttons
-			padding: 5px 0
 			min-height: 166px
-			width: 24.81%
+			width: 25%
 			border: 1px solid $border_color
 			border-left: none
 			float: left
@@ -159,28 +166,32 @@
 				text-align: center
 				margin-top: 14px
 				letter-spacing: 0.5px
+			ul
+				margin-left: 0
+				padding: 0
 
-			.one_btn
-				color: $blue
-				display: block
-				text-align: center
-				text-decoration: underline
-
-				&:hover
-					text-decoration: none
+				li
+					list-style-type: none
+					text-align: center
+					padding: rem(3)
 
 	.bottom_column
-		width: 68.09%
+		width: 67%
 		float: right
 		border: 1px solid $border_color
 		border-top: none
 		border-left: none
 		padding: 0 29px
-
+		padding-top: 10px
+		.btn
+			margin-top: 12px
+			margin-left: rem(30)
+			i
+				padding-left: 5px
 		.top_descript
 			width: 100%
-			padding-top: 10px
-			padding-bottom: 4px
+			padding-top: 2px
+			padding-bottom: 7px
 
 			.left_text
 				float: left
@@ -196,10 +207,10 @@
 					font-weight: 400
 
 				span
-					color: $black_text
+					color: $small-text
 					font-size: 11px
 					margin: 0
-					line-height: 1em
+					line-height: rem(16)
 					display: block
 					float: none
 			
@@ -222,10 +233,10 @@
 					font-weight: 400
 
 				span
-					color: $black_text
+					color: $small-text
 					font-size: 11px
 					margin: 0
-					line-height: 1em
+					line-height: rem(16)
 					display: block
 					float: none
 
@@ -254,12 +265,11 @@
 
 
 		.cancel_invest
-			padding-right: 5px
 			font-size: 11px
 			height: 15px
 			margin-top: -12px
 			text-align: right
-			padding-bottom: 27px
+			padding-bottom: 25px
 
 			a
 				color: $black_text
@@ -267,7 +277,14 @@
 
 			:hover
 				text-decoration: underline
-
+.investor-dashboard
+	.custom-select
+		position: absolute
+		top: rem(-12)
+		right: 0
+		min-width: 190px
+		font-size: rem(11)
+		letter-spacing: rem(2.2)
 
 @media only screen and (max-width : 992px)
 	.investor_table

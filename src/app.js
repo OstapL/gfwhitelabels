@@ -7,12 +7,11 @@ global.Tether = require('tether');
 global.Bootstrap = require('../node_modules/bootstrap/dist/js/bootstrap.min.js');
 global.userModel = require('models/user.js');
 global.Urls = require('jsreverse.js');
+require('../node_modules/jquery-serializejson/jquery.serializejson.min.js');
+
+"use strict";
 
 // require('sass/mixins_all.sass');
-
-//console.log(global.userModel);
-//console.log(_);
-//require('libs.js');
 
 // При выводе ошибок для форм у нас может быть две ситуации:
 // 1. Мы выводим ошибку для элементы который у нас есть в форме =>
@@ -25,14 +24,13 @@ global.Urls = require('jsreverse.js');
 _.extend(Backbone.Validation.callbacks, {
     valid: function (view, attr, selector) {
         var $el = view.$('[name=' + attr + ']');
-        var $group = null;
+        $group = $el.parent();
 
         // if element not found - do nothing
         // we had clean alert-warning before submit
         if($el.length == 0) {
         }
         else {
-            $group = $el.parent();
             if($group.find('.help-block').length == 0) {
                 $group = $group.parent();
             }
@@ -42,17 +40,21 @@ _.extend(Backbone.Validation.callbacks, {
         $group.find('.help-block').remove();
     },
     invalid: function (view, attr, error, selector) {
-        var $el = view.$('[name=' + attr + ']');
+        let $el = view.$('#' + attr);
         var $group = null;
 
-        // if element not found - we will show error just in alert-warning div
+        if($el.length == 0) {
+            $el = view.$('[name=' + attr + ']');
+        }
+
+        if(Array.isArray(error) !== true)
+            error = [error]
+
+        // if element not found - we will show error just in alert-warning div 
         if($el.length == 0) {
             $el = view.$('form > .alert-warning');
 
-            if(Array.isArray(error) !== true)
-                error = [error]
-
-            // If we don't have alert-warning - we should create it as
+            // If we don't have alert-warning - we should create it as 
             // first element in form
             if($el.length == 0) {
 
@@ -69,10 +71,16 @@ _.extend(Backbone.Validation.callbacks, {
         else {
             $group = $el.parent();
             $group.addClass('has-error');
-            $group.append('<div class="help-block">' + error + '</div>');
+            var $error_div = $group.find('.help-block');
+
+            if($error_div.length != 0) {
+                $error_div.html(error.join(','));
+            }
+            else {
+                $group.append('<div class="help-block">' + error.join(',') + '</div>');
+            }
         }
 
-        console.log(view, attr, error, selector);
     }
 });
 
@@ -131,43 +139,6 @@ $.fn.serializeRepeatableObject = function () {
     };
     return $.each(this.serializeArray(), b), a
 };
-
-
-
-function repeatToJSonString(obj) {
-    // Repeatable fields 
-    // Should comes by 2 fields
-    for(var k in obj) {
-        if(k.indexOf('repeat:') !== -1) {
-            var key = k.replace('repeat:', '');
-            var n = {};
-            var repeat_keys = Object.keys(obj[k]);
-
-            for(var kk in obj[k]) {
-                if(obj[k][kk][0]) {
-                        n[kk] = obj[k][kk];
-                }
-            }
-
-            /*
-            var key_k = Object.keys(obj[k])[0];
-            var key_v = Object.keys(obj[k])[1];
-            for(var j in obj[k][key_k]) {
-                if(obj[k][key_k][j] || obj[k][key_v][j]) {
-                    var o = {};
-                    o[obj[k][key_k][j]] = obj[k][key_v][j];
-                    n.push(o);
-                }
-            }
-            */
-            console.log(n);
-            obj[key] = n;
-            delete obj[k];
-        }
-    }
-    return obj;
-};
-
 
 
 global.app = {
@@ -252,15 +223,79 @@ global.app = {
     },
 
     defaultSaveActions: {
+        submit: function(e, data) {
+
+            this.$el.find('.alert').remove();
+            e.preventDefault();
+
+            var data = data || $(e.target).serializeJSON();
+            //var investment = new InvestmentModel(data);
+
+
+            var newValidators = {};
+            for(var k in this.fields) {
+                if(k.required == true) {
+                    newValidators[k] = baseModel.validation[k];
+                }
+            };
+            this.model.validation = newValidators;
+
+            this.model.set(data);
+            Backbone.Validation.bind(this, {model: this.model});
+
+            if(this.model.isValid(true)) {
+                var self = this;
+                this.model.save().
+                    then((data) => {
+                        app.showLoading();
+                        this.$el.find('.alert-warning').remove();
+                        self.undelegateEvents();
+                        $('.popover').popover('hide')
+                        $('#content').scrollTo();
+
+                        if(typeof this._success == 'function') {
+                            this._success(data);
+                        } else {
+                            //window.location = '/api/campaign/' + this.model.get('id');
+                            app.routers.navigate(
+                                self.getSuccessUrl(data),
+                                {trigger: true, replace: false}
+                            );
+                        }
+
+                    }).
+                    fail((xhr, status, text) => {
+                        app.defaultSaveActions.error(this, xhr, status, text, this.fields);
+                    });
+            } else {
+                if(this.$('.alert').length) {
+                    $('#content').scrollTo();
+                } else  {
+                    this.$el.find('.has-error').scrollTo();
+                }
+            }
+        },
+
         success: (view, response) => {
             view.$('.alert-warning').remove();
             if(typeof view._success == 'function') {
                 view._success(response);
             }
         },
+
         error: (view, xhr, status, text, fields) => {
+            if(view.hasOwnProperty('$el') == false) {
+                view = {
+                    '$el' : view
+                };
+            }
+            view.$el.find('.alert-warning').remove();
+            view.$el.find('.help-block').remove();
+            
             if(xhr.hasOwnProperty('responseJSON')) {
                 let data = xhr.responseJSON;
+
+                data = data ? data : {'Server': status};
                 for (let key in data)  {                                                 
                   Backbone.Validation.callbacks.invalid(                                 
                     view, key, data[key]
@@ -270,10 +305,16 @@ global.app = {
             else if(xhr.hasOwnProperty('statusText')) {
                 let s = '<strong>Errors:</strong> ';
                 s += xhr.statusText;
-                view.$el.find('form').prepend("<div class='alert alert-warning' role='alert'>" + s + "<div>");
+                if(view.$el.find('form').length >= 1) {
+                    view.$el.find('form').prepend("<div class='alert alert-warning' role='alert'>" + s + "<div>");
+                } else {
+                    view.$el.prepend("<div class='alert alert-warning' role='alert'>" + s + "<div>");
+                }
             }
             if(view.$el.find('.alert').length) {
                 view.$el.find('.alert').scrollTo();
+            } else  {
+                view.$el.find('.has-error').scrollTo();
             }
             app.hideLoading();
           }
@@ -291,6 +332,7 @@ global.app = {
           }
         },
     },
+
 
     loadCss: function(url) {
         var link = document.createElement("link");
@@ -310,7 +352,6 @@ global.app = {
       if(typeof renameTo != 'undefined' && renameTo != '') {
         params['rename'] = renameTo;
       }
-      console.log('params', params);
 
       let dropbox = new Dropzone(".dropzone__" + name, {
           url: serverUrl + Urls['image2-list'](),
@@ -351,6 +392,8 @@ global.app = {
 
       dropbox.on("success", (file, data) => {
           $('.img-' + name).attr('src', data.url);
+          $('.a-' + name).attr('href', data.origin_url).html(data.name);
+          console.log(data);
           if(typeof onSuccess != 'undefined') {
             onSuccess(data);
           }
@@ -365,6 +408,44 @@ global.app = {
           .compact()
           .object()
           .value();
+    },
+
+    getVideoId: function(url) {
+        try {
+            var provider = url.match(/https:\/\/(:?www.)?(\w*)/)[2],
+            id;
+
+            if(provider == "youtube") {
+                id = url.match(/https:\/\/(?:www.)?(\w*).com\/.*v=(.*)/)[2];
+            } else if (provider == "vimeo") {
+                id = url.match(/https:\/\/(?:www.)?(\w*).com\/(\d*)/)[2];
+            } else {
+                console.log(url, "Takes a YouTube or Vimeo URL");
+            }
+            return id;
+        } catch(err) {
+                console.log(url, "Takes a YouTube or Vimeo URL");
+        }
+    }, 
+    getDropzoneUrl: function(name, attr, values) {
+        // If we have data attribute for a file  - we will 
+        // try to find url that match our size
+        if(values[name + '_data'] && attr.thumbSize) {
+            let thumbnails = values[name + '_data'].thumbnails;
+            console.log('v', thumbnails, );
+            let thumb = thumbnails.find(function(el) { 
+                console.log('v', el, attr.thumbSize, el.size == attr.thumbSize);
+                return el.size == attr.thumbSize
+            });
+            console.log('found thumb', thumb);
+            if(thumb)  {
+                return thumb.url
+            } else {
+                return attr.default
+            }
+        } else {
+            return attr.default
+        }
     }
 };
 
@@ -376,15 +457,40 @@ require('routers');
 app.user.load();
 app.trigger('userReady');
 
+global.app = app;
+
 $('body').on('click', '.auth-pop', function() {
     $('#loginModal').modal();
 });
 
+$('body').on('mouseover', 'div.showPopover', function() {
+    var el = $(this);
+    if(el.attr('aria-describedby') == null) {
+        $(this).popover('show');
+    }
+});
+$('body').on('focus', 'input.showPopover', function() {
+    var el = $(this);
+    if(el.attr('aria-describedby') == null) {
+        $(this).popover('show');
+    }
+});
+$('body').on('focus', 'textarea.showPopover', function() {
+    var el = $(this);
+    if(el.attr('aria-describedby') == null) {
+        $(this).popover('show');
+    }
+});
+
 $('body').on('click', 'a', function(event) {
     var href = event.currentTarget.getAttribute('href');
-    if(href != '' && href.substr(0,1) != '#' && 
+    if(href == window.location.pathname) {
+        window.location.reload();
+    } else if(href && href != '' && href.substr(0,1) != '#' && 
         href.substr(0, 4) != 'http' && 
         href.substr(0,3) != 'ftp' &&
+        href != 'javascript:void(0);' &&
+        href != 'javascript:void(0)' &&
         event.currentTarget.getAttribute('target') == null) {
         event.preventDefault();
         app.showLoading();
@@ -394,6 +500,9 @@ $('body').on('click', 'a', function(event) {
         // overise we will trigger app router function
         var url = href;
 
+        $('#content').undelegate();
+        $('form').undelegate();
+        $('.popover').popover('hide')
         if(app.cache.hasOwnProperty(url) == false) {
             app.routers.navigate(
                 url,

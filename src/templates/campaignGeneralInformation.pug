@@ -1,131 +1,65 @@
+- 'use strict';
 include mixins.pug
+include campaignMenu.pug
 
 +breadcrumbs('Create Company', '', [['home', '/',], [ 'current', page.get_absolute_url]])
 
+
 section.create-company-general.container.m-b-85
-	//START LEFT BLOCK
-	.col-lg-3.create_compaign
-		.jumbotron.jumbotron-fluid.row
-			.raise-funds
-				h4.font-weight-bold.text-uppercase.m-b-0 Raise funds
-					.small-text (10% Done)
-			#accordion(role="tablist" aria-multiselectable="true")
-				.panel.panel-default
-					.panel-heading(role="tab")
-						a(data-toggle="collapse"
-						data-parent="#accordion"
-						href="#company"
-						aria-expanded="true"
-						).list-group-item
-							i.fa.fa-briefcase
-							|  Company
-							span.pull-right
-								i.fa.fa-angle-left
-					#company(role="tabpanel").panel-collapse.collapse
-						.list-group
-							a(href="/company/create").list-group-item.list-group-item-action Company
-				.panel.panel-default
-					.panel-heading(role="tab")
-						a(data-toggle="collapse"
-						data-parent="#accordion"
-						href="#campaign"
-						aria-expanded="true"
-						).list-group-item.active
-							i.fa.fa-bar-chart
-							|  Campaign
-							span.pull-right
-								i.fa.fa-angle-down
-					#campaign(role="tabpanel").panel-collapse.collapse.in
-						.list-group
-							a(href="/campaign/general_information/" + values.id + "?campaign_id=#{values.campaign_id}").list-group-item.list-group-item-action.active General Information
-							a(href="/campaign/media/" + values.id + "?campaign_id=#{values.campaign_id}").list-group-item.list-group-item-action Media
-							a(href="/campaign/team_members/" + values.id + "?campaign_id=#{values.campaign_id}").list-group-item.list-group-item-action Team Members
-							a(href="/campaign/specifics/" + values.id + "?campaign_id=#{values.campaign_id}").list-group-item.list-group-item-action Specifics
-							a(href="/campaign/perks/" + values.id + "?campaign_id=#{values.campaign_id}").list-group-item.list-group-item-action Perks
-				.panel.panel-default
-					.panel-heading(role="tab")
-						a(data-toggle="collapse"
-						data-parent="#accordion"
-						href="#form_c"
-						aria-expanded="true"
-						).list-group-item
-							i.fa.fa-university
-							|  form c
-							span.pull-right
-								i.fa.fa-angle-left
-					#form_c(role="tabpanel").panel-collapse.collapse
-						.list-group
-							a(href="#").list-group-item.list-group-item-action form c
-		.row
-			.education-link-wrap
-				.jumbotron.jumbotron-fluid
-					h4.font-weight-bold.text-uppercase
-						i.fa.fa-book
-						|  education Links
-					.nav
-						li.nav-item
-							a(href="#").nav-link.link-3 Issuer Tutorial
-						li.nav-item
-							a(href="#").nav-link.link-3 Success Guide
-						li.nav-item
-							a(href="#").nav-link.link-3 What's My Business Worth?
-						li.nav-item
-							a(href="#").nav-link.link-3 How Much Should I Raise?
+  +menu('general_information')
 
-
-	//START RIGHT BLOCK
-	.col-lg-8
-		h2.text-uppercase.text-lg-center.text-xs-center.dosis.m-t-0 GENERAL INFORMATION
-		form(metod="post" action="").form-section
-			if values.id && values.id != ''
-					input(type='hidden' name='id' value=values.id id='id')
-			.form-group.row.clearfix.required
-			+fieldBlock("pitch", '', {
-				class1: 'col-lg-3 col-md-3',
-				class2: 'col-lg-9 col-md-9',
-				type: 'textarea',
-				})
-			+fieldBlock("intended_use_of_proceeds", '', {
-				class1: 'col-lg-3 col-md-3',
-				class2: 'col-lg-9 col-md-9',
-				type: 'textarea',
-				placeholder: 'Intended Use of Proceeds',
-				})
-			+fieldBlock("business_model", '', {
-				class1: 'col-lg-3 col-md-3',
-				class2: 'col-lg-9 col-md-9',
-				type: 'textarea',
-				placeholder: 'Business Model',
-				})
-			.border-bottom
-			.row
-				.col-lg-9.offset-1.pull-right
-					h3.d-inline-block.m-t-0.mb25 FAQs
-					a(href="").link-1.pull-right.d-inline-block Delete Section
-			+fieldBlock("faq", '', {
-				class1: 'col-lg-3 col-md-3',
-				class2: 'col-lg-9 col-md-9',
-				type: 'json',
-				})
-			.row.m-t-0
-				.col-lg-9.offset-1.pull-right
-					a(href="#" data-section="faq").link-2.add-section Add Another FAQ
-			.border-bottom
-			.row
-				.col-lg-9.offset-1.pull-right.m-b-1
-					h3.d-inline-block.m-b-0.m-t-0 Additional Information 
-					a(href="").link-1.pull-right.d-inline-block Delete Section
-			+fieldBlock("additional_info", '', {
-				class1: 'col-lg-3 col-md-3',
-				class2: 'col-lg-9 col-md-9',
-				type: 'json',
-				})
-			.row.add-link
-				.col-lg-9.offset-1.pull-right
-					a(href="#" data-section="additional_info").link-2.add-section Add Another Section
-			.row.m-t-3
-				.col-lg-6.pull-right
-					.col-lg-6
-						button(type="submit").btn.btn-lg.btn-primary.text-uppercase.pull-right save
-					.col-lg-6
-						a(href="/api/campaign/" + values.id target="_blank").btn.btn-lg.btn-secondary.text-uppercase preview
+  .col-lg-8
+    h2.text-uppercase.text-lg-center.text-xs-center.dosis.m-t-0 GENERAL INFORMATION
+    form(metod="post" action="").form-section
+      if values.id && values.id != ''
+          input(type='hidden' name='id' value=values.id id='id')
+      .form-group.row.clearfix.required
+      +fieldBlock("pitch", '', {
+        class1: 'col-lg-3 col-md-3',
+        class2: 'col-lg-9 col-md-9',
+        type: 'textarea',
+        })
+      +fieldBlock("intended_use_of_proceeds", '', {
+        class1: 'col-lg-3 col-md-3',
+        class2: 'col-lg-9 col-md-9',
+        type: 'textarea',
+        placeholder: 'Intended Use of Proceeds',
+        })
+      +fieldBlock("business_model", '', {
+        class1: 'col-lg-3 col-md-3',
+        class2: 'col-lg-9 col-md-9',
+        type: 'textarea',
+        placeholder: 'Business Model',
+        })
+      .border-bottom
+      .row
+        .col-lg-12.text-lg-center
+          h3.d-inline-block.m-t-0.mb25 FAQs
+      .faq-form-group-m-b-0
+        +fieldBlock("faq", '', {
+          class1: 'col-lg-3 col-md-3',
+          class2: 'col-lg-9 col-md-9',
+          type: 'json',
+          })
+      .row.m-t-0
+        .col-lg-9.offset-1.pull-right
+          a(href="#" data-section="faq").link-2.add-section 
+            i.fa.fa-plus
+            |  Add Another FAQ
+      .border-bottom.border-bottom-faq
+      .row
+        .col-lg-12.m-b-1.text-lg-center
+          h3.d-inline-block.m-b-0.m-t-0 Additional Information 
+      +fieldBlock("additional_info", '', {
+        class1: 'col-lg-3 col-md-3',
+        class2: 'col-lg-9 col-md-9',
+        type: 'json',
+        })
+      .row.add-link
+        .col-lg-9.offset-1.pull-right
+          a(href="#" data-section="additional_info").link-2.add-section
+            i.fa.fa-plus
+            |  Add Another Section
+      .col-lg-6.pull-right.p-r-0.text-lg-right
+        a(href="/api/campaign/" + values.id target="blank").btn.btn-lg.btn-secondary.text-uppercase.m-r-3 preview
+        button(type="submit").btn.btn-lg.btn-primary.text-uppercase save

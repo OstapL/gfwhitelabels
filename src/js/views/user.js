@@ -1,9 +1,9 @@
+"use strict";
 define(function() {
     return {
         login: Backbone.View.extend({
             events: {
-                'submit .login-form': 'login',
-                'submit .signup-form': 'signup',
+                'submit .login-form': 'submit',
             },
 
             initialize: function(options) {
@@ -12,87 +12,71 @@ define(function() {
             },
 
             render: function() {
+                this.model.urlRoot = serverUrl + Urls['rest_login']();
                 let template = require('templates/userLogin.pug');
                 this.$el.html(
                     template({
-                        login_fields: this.login_fields,
                         register_fields: this.register_fields,
-                        login: window.location.pathname.indexOf('login') != -1
                     })
                 );
                 return this;
             },
 
-            login: function(event) {
-                event.preventDefault();
-                var form = $(event.target);
-                app.showLoading();
-                this.$('form > .alert-warning').html('');
-                var data = form.serializeObject();
-
-                $.ajax({
-                    url: serverUrl + Urls['rest_login'](),
-                    method: 'POST',
-                    data: data,
-                    success: (xhr) => {
-                        app.defaultSaveActions.success(this, xhr);
-                        if(xhr.hasOwnProperty('key')) {
-                            localStorage.setItem('token', xhr.key);
-                            setTimeout(function() {
-                                window.location = '/' //data.next ? data.next : '/account/profile'
-                            }, 200);
-                        } else {
-                            Backbone.Validation.callbacks.invalid(                                 
-                              form, '', 'Server return no authentication data'
-                            );
-                        }
-                    },
-                    error: (xhr, status, text) => {
-                        app.defaultSaveActions.error(this, xhr, status, text);
-                    }
-                });
-            },
-
-
-            signup: function(event) {
-                event.preventDefault();
-                let data = $(event.target).serializeObject();
-
-                this.model.set(data);
-                this.model.url = serverUrl + Urls.rest_register();
-                Backbone.Validation.bind(this, {model: this.model});
-
-                if(this.model.isValid(true)) {
-                    this.model.save(data, {
-                        success: (model, response, status) => {
-                            $.ajax({
-                                url: serverUrl + Urls['rest_login'](),
-                                method: 'POST',
-                                data: {email: data.email, password: data.password1},
-                                success: (xhr) => {
-                                    app.defaultSaveActions.success(this, xhr);
-                                    if(xhr.hasOwnProperty('key')) {
-                                        localStorage.setItem('token', xhr.key);
-                                        setTimeout(function() {
-                                            window.location = '/' //data.next ? data.next : '/account/profile'
-                                        }, 200);
-                                    } else {
-                                        Backbone.Validation.callbacks.invalid(                                 
-                                          this, '', 'Server return no authentication data'
-                                        );
-                                    }
-                                },
-                                error: (xhr, status, text) => {
-                                    app.defaultSaveActions.error(this, xhr, status, text);
-                                }
-                            });
-                        },
-                        error: (model, response, status) => {
-                            app.defaultSaveActions.error(this, response);
-                        }
-                    });
+            _success: function(data) {
+                if(data.hasOwnProperty('key')) {
+                    localStorage.setItem('token', data.key);
+                    setTimeout(function() {
+                        window.location = '/' //data.next ? data.next : '/account/profile'
+                    }, 200);
+                } else {
+                    Backbone.Validation.callbacks.invalid(                                 
+                      form, '', 'Server return no authentication data'
+                    );
                 }
             },
+
+            submit: app.defaultSaveActions.submit,
+        }),
+
+        signup: Backbone.View.extend({
+            events: {
+                'submit .signup-form': 'submit',
+            },
+
+            initialize: function(options) {
+                this.register_fields = options.register_fields;
+            },
+
+            render: function() {
+                this.model.urlRoot = serverUrl + Urls['rest_register']();
+                let template = require('templates/userSignup.pug');
+                this.$el.html(
+                    template({
+                        register_fields: this.register_fields,
+                    })
+                );
+                return this;
+            },
+
+            _success: function(data) {
+                if(data.hasOwnProperty('key')) {
+                    localStorage.setItem('token', data.key);
+
+                    delete this.model.attributes['password1'];
+                    delete this.model.attributes['password2'];
+                    delete this.model.attributes['key'];
+
+                    this.model.set('token', data.key);
+                    localStorage.removeItem('user');
+                    window.location = '/' //data.next ? data.next : '/account/profile'
+                } else {
+                    Backbone.Validation.callbacks.invalid(                                 
+                      this, '', 'Server return no authentication data'
+                    );
+                }
+            },
+
+            submit: app.defaultSaveActions.submit,
         }),
 
         profile: Backbone.View.extend({

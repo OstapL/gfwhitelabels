@@ -1,9 +1,9 @@
 include mixins.pug
 
-+breadcrumbs('Account', '', 
++breadcrumbs('Profile', '', 
     [
         ['Home', '/'],
-        ['Account', '']
+        ['Profile', '']
     ]
 ) 
     
@@ -21,7 +21,7 @@ include mixins.pug
                         value=user.image
                     )#image
                     .drop-image-title.text-xs-center 
-                        span Drop your profile picture here
+                        span Drop your profile photo here or click to upload
                         div
                             i.fa.fa-camera 
 
@@ -34,7 +34,7 @@ include mixins.pug
                         data-toggle="tab" 
                         aria-expanded="true"
                         role="tab"
-                    ).active.nav-link.uppercase Account information
+                    ).active.nav-link.uppercase Profile information
                 li.nav-item  
                     a(
                         href="#financial_info" 

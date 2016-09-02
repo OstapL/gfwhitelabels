@@ -1,3 +1,4 @@
+"use strict";
 define(function() {
     return {
 
@@ -25,41 +26,11 @@ define(function() {
                 return this;
             },
 
-            submit: function(e) {
-                this.$el.find('.alert').remove();
-                event.preventDefault();
-
-                var data = $(e.target).serializeObject();
-                delete data['id'];
-                //var investment = new InvestmentModel(data);
-                console.log(data);
-
-                this.model.set(data);
-                console.log(this.model);
-                Backbone.Validation.bind(this, {model: this.model});
-
-                if(this.model.isValid(true)) {
-                    this.model.save().
-                        then((data) => { 
-                            app.showLoading();
-
-                            app.routers.navigate(
-                                '/campaign/general_information/?company_id=' + data.id,
-                                {trigger: true, replace: false}
-                            );
-
-                        }).
-                        fail((xhr, status, text) => {
-                            app.defaultSaveActions.error(this, xhr, status, text, this.fields);
-                        });
-                } else {
-                    if(this.$('.alert').length) {
-                        this.$('.alert').scrollTo();
-                    } else  {
-                        this.$el.find('.has-error').scrollTo();
-                    }
-                }
+            getSuccessUrl: function(data) {
+                return '/campaign/general_information/?company_id=' + data.id;
             },
+
+            submit: app.defaultSaveActions.submit,
 
         }),
     }

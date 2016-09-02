@@ -1,26 +1,24 @@
-
 // функция для перевода в rem - пример перевода padding-top: rem(50px)
-@import "functions/px-to-rem"
-         
+@import "functions/px-to-rem" 
+          
 // Загружаем общие стали и переменные для всех сайтов
 @import "common/colors"   // Общие цвета для всех сайтов используя сайт http://chir.ag/projects/name-that-color/#6195ED
 @import "common/vars"   // Общие переменные для всех сайтов
-   
-                      
+                
 // Загружаем уникальные стили для нашего сайта
 // Не уверен их нужно загружать до файлов bootstrap или после ?
 @import "config/vars" // Переменные для всех сайтов
 @import "config/colors" // Цвета для всех сайтов  
-   
-                   
+       
+                               
 /** Bootstrap **/ 
 // Core variables and mixins
-@import "custom"
+@import "custom"  
 @import "bootstrap_c/custom"
 @import "variables"
-@import "bootstrap_c/variables"
+@import "bootstrap_c/variables" 
 @import "mixins"
-   
+         
 /** Bootstrap **/
 // Reset and dependencies
 @import "normalize"
@@ -82,32 +80,32 @@
 @import "responsive-embed"
 @import "close"
 @import "bootstrap_c/close"
-
+        
 /** Bootstrap **/
 // Components w/ JavaScript
 @import "modal"
 @import "bootstrap_c/modal"
 @import "tooltip"
 @import "bootstrap_c/tooltip"
-//@import "popover"
-//@import "bootstrap_c/popover"
+@import "popover"   
+@import "bootstrap_c/popover"
 @import "carousel"
 @import "bootstrap_c/carousel"
-
+ 
 /** Bootstrap **/
 // Utility classes
 @import "utilities"
 @import "bootstrap_c/utilities"
-
+        
 // Загружаем общие стили всех сайтов
 @import "common/common" // Общие стили для всех страниц
 @import "common/header"
 @import "common/footer"
-
-
+         
+  
 // Загружаем стили для всех страниц
 @import "pages/mixins.sass"
-
+ 
 // Загружаем стили от сторонних плагинов
 // используйте npm install плагин
 // и import "node_modules/plugin/dist/path.sass/css

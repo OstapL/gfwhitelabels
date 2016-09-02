@@ -1,13 +1,23 @@
-.second
-	margin-top: 84px
-
+.issuer-dashbord-top
+	.border-bottom-50
+		border-bottom: solid 1px $light_grey
+		padding-bottom: rem(50)
 	.img_under_text
 		position: relative
-		margin-bottom: 15px
-
+		margin-bottom: rem(20)
+		&:before
+			&:before
+			width: 100%
+			background-color: $black
+			opacity: .2
+			position: absolute
+			z-index: 1
+			content: ''
+			height: 100%
+			left: 0
+			bottom: 0
 		img
 			width: 100%
-
 		h2
 			z-index: 2
 			width: 100%
@@ -19,7 +29,7 @@
 			-ms-transform: translate(-50%,-50%)
 			-webkit-transform: translate(-50%,-50%)
 			transform: translate(-50%,-50%)
-			font-family: $dosis
+			font-weight: 400
 
 		.timer_day
 			position: absolute
@@ -34,190 +44,136 @@
 			font-weight: bold
 			font-size: 14px
 			line-height: 27px
+	.share-block
+		span
+			margin-right: rem(12)
+	.social-dark
+		a
+			font-size: rem(24)
+			padding-right: rem(20)
 
-		.share-block
-			width: 240px
-			position: absolute
-			left: 0
-			right: 0
-			bottom: 12px
-			margin: auto
-
-			.share-btn
-				width: 230px
-				font-size: 12px
-				border-radius: 15px
-				background: $light_grey
-				border-color: $light_grey
-
-			.social-dark
+	.dashboard-stat
+		display: block
+		overflow: hidden
+		min-height: rem(85)
+		padding: rem(5) rem(10) rem(5) rem(5)
+		background: $light_grey
+		margin-bottom: rem(25)
+		.visual
+			float: left
+			i
+				font-size: rem(48)
+				color: $small-text
+				opacity: .15
+			.fa-bar-chart
 				position: absolute
-				bottom: -48px
-				left: 0
-				right: 0
-				margin: auto
-				display: none
+				bottom: rem(27)
+			.fa-briefcase
+				position: absolute
+				bottom: rem(24)
+			.fa-users
+				position: absolute
+				bottom: rem(30)
+			.fa-comments
+				position: absolute
+				bottom: rem(28)
+		.details
+			position: absolute
+			right: rem(25)
+			text-align: right
+			.number
+				font-size: rem(18)
+				color: $small-text
+			.desc
+				font-size: rem(12)
+				color: $small-text
 
-				a
-					width: 48px
-					line-height: 46px
-					background: $social_bg
-					color: $social_color
-					border: 1px solid $social_bg
-					display: inline-block
-					font-size: 20px
-					margin: 0 -2px
+	.tpl-progress
+		position: relative
+		padding-top: 56px
 
-				:hover
-					border-color: $border_color
+		.big_prog
+			display: block
+			width: 100%
+			height: rem(4)
+			margin-bottom: rem(6)
+			color: $black_text
 
-		.share-block:hover
-			bottom: 0
-			padding-bottom: 12px
+		.big_prog[value]::-webkit-progress-value
+			background-color: $black
 
-			.social-dark
-				display: block
+		.circle_progress
+			height: rem(11)
+			z-index: 55
+			color: $black_text
+			display: inline-block
+			font: normal normal normal 14px/1 FontAwesome
+			font-size: inherit
+			text-rendering: auto
+			-webkit-font-smoothing: antialiased
+			-moz-osx-font-smoothing: grayscale
+			position: absolute
+			margin-top: rem(-15)
+			text-align: right
+			margin-right: rem(12)
 
+			i
+				font-weight: bold
+				background: #fff
+				font-size: rem(13)
 
-.dashboard-stat.grey
-	background: $light_grey
+		.text_position
+			margin-left: rem(-39)
+			top: rem(14)
+			position: absolute
+			text-align: center
+			line-height: rem(23)
+			letter-spacing: 0
+			font-size: rem(12)
+			line-height: rem(16)
 
+	.progress_description
+		margin-bottom: rem(5)
+		
+		p
+			margin: 0
+			line-height: rem(16)
+			color: $small-text
+			font-size: rem(12)
 
-.dashboard-stat.grey .details .desc,
-.dashboard-stat.grey .details .number
-	padding-top: 0
-	color: $grey
+		span
+			font-size: rem(11)
+			color: $small-text
+			line-height: rem(10)
+			display: block
 
-.dashboard-stat
-	display: block
-	margin-bottom: 25px
-	overflow: hidden
-
-	.visual
-		height: 80px
-		float: left
-		padding-top: 10px
-		padding-left: 15px
-		margin-bottom: 5px
-
-		i
-			font-size: 48px
-			margin-left: -10px
-			margin-top: 26px
-			color: $grey
-			opacity: .1
-
-.dashboard-stat.grey
-	.details
+	.right_fixed_text
 		position: absolute
-		right: 25px
-		top: 3px
-		text-align: right
+		right: rem(19)
+		top: rem(37)
+		bottom: 0
+		margin: auto
+		color: $black
 
-		.number
-			font-size: 18px
-			color: $grey
-		.desc
-			font-size: 12px
-			color: $grey
+		b
+			font-size: rem(18)
+			display: block
+			line-height: rem(16)
 
-.tpl-progress
-	position: relative
-	padding-top: 56px
-
-	.big_prog
-		display: block
-		width: 100%
-		height: 4px
-		margin-bottom: 11px
-		color: $black_text
-
-	.big_prog[value]::-webkit-progress-value
-		background-color: $black
-
-	.circle_progress
-		height: 11px
-		z-index: 55
-		color: $black_text
-		display: inline-block
-		font: normal normal normal 14px/1 FontAwesome
-		font-size: inherit
-		text-rendering: auto
-		-webkit-font-smoothing: antialiased
-		-moz-osx-font-smoothing: grayscale
-		position: absolute
-		margin-top: -21px
-		text-align: right
-		margin-right: 12px
-
-		i
-			font-weight: bold
-			background: #fff
-			font-size: 13px
-
-	.text_position
-		margin-left: -39px
-		top: 24px
-		position: absolute
-		text-align: center
-		line-height: 23px
-		letter-spacing: 0
-		font-size: 12px
-		line-height: 1em
-
-.progress_description
-	margin-bottom: 8px
-	
-	p
-		margin: 0
-		line-height: 1em
-		color: $grey
-
-	span
-		font-size: 10px
-		color: $grey
-		line-height: 1em
-		display: block
-
-.right_fixed_text
-	position: absolute
-	right: 19px
-	top: 37px
-	bottom: 0
-	margin: auto
-	color: $grey
-
-	b
-		font-size: 18px
-		display: block
-		line-height: 1rem
-
-	span
-		line-height: 23px
-		font-size: 14px
-
-.view_campaing
-	border: none
-	padding: 0 40px
-	margin-top: 19px
-	line-height: 26px
-	font-size: 12px
-	line-height: 28px
-
-.grafic
-	border-top: 1px solid $border_color
-	margin-top: 51px
-	padding-top: 50px
+		span
+			line-height: rem(23)
+			font-size: rem(14)
+	.btn
+		margin-top: 30px
+		.fa-angle-right
+			margin-left: rem(5)
+//end section top-line
+//start section Graphic
+.grafic-dashboard
+	margin-top: rem(50)
 
 .third
 	margin-top: 94px
-
-.title-size
-	letter-spacing: 2.3px
-	font-family: $dosis
-	font-weight: 500
-	margin-bottom: 25px
-
 .bars,
 .chart,
 .pie
@@ -253,15 +209,15 @@
 
 .portlet.light>.portlet-title
 	border-bottom: 1px solid $border_color
-	padding: 12px 20px 22px 0
+	padding: 20px 24px 0 0
 	min-height: 50px
-	margin: 0 7px 0 7px
+	margin: 0 0px 0 0px
 
 	&>.caption
 		display: inline-block
 		font-size: 18px
 		line-height: 18px
-		padding: 15px 0 0 0
+		padding: 15px 0 0 28px
 
 	&>.actions .dropdown-menu li>a
 		color: #555
@@ -278,7 +234,7 @@
 
 .portlet>.portlet-title
 	text-align: left
-	color: $grey
+	color: $black
 	padding: 15px 20px 10px
 	font-family: $dosis
 	letter-spacing: 0.5rem
@@ -305,139 +261,132 @@
 	line-height: 36px
 	padding: 0 20px
 	color: $grey
-
-.all_comments
-	height: 334px
-	overflow-y: scroll
-
-.leave_comments
-	min-height: 393px
-	border: 1px solid $border_color
-
-	.write_com
-		margin: 0 auto
-		padding: 11px 0
-		border-bottom: 1px solid $border_color
-
-	.form
-		text-align: right
-		padding-right: 2.5%
-
-		textarea
-			width: 92.5%
-			border-radius: 3px
-			height: 136px
-			float: right
-			resize: none
-			margin-top: 22px
-			margin-bottom: 15px
-
-.mt-comments
-	.mt-comment
-		padding: 20px 10px 6px 22px
-		margin: 0 0 10px
-
-		.mt-comment-img 
-			width: 55px;
-			float: left
-
-			&>img
-				width: 100%
-				border-radius: 50%!important
-
-		.mt-comment-body
-			padding-left: 10px
-			position: relative
-			overflow: hidden
-
-			.mt-comment-text
-				color: $black
-				line-height: 1.3em
-
-			.mt-comment-info
-				.mt-comment-date
-					display: inline-block
-					float: right
-					font-size: 11px
-					margin: 0
-					color: $grey
-
-			.mt-comment-info:after,
-			.mt-comment-info:before
-				content: " "
-				display: table
-				clear: both
-
-			.mt-comment-info:after
-				clear: both
-			
-			.mt-comment-author
-				display: inline-block
-				float: left
-				text-transform: uppercase
-				margin: 0 0 10px
-				color: #060606
-				letter-spacing: 5px
-
-			.mt-comment-details
-				margin: 10px 0 0
-
-				.mt-comment-status
+// all investors questions
+.investors-dashbord-comment
+	.comments-list
+		border: rem(1) solid $border_color
+		padding: rem(15) rem(9) 0 rem(9)
+		::-webkit-scrollbar
+			width: rem(5)
+			background: transparent
+		::-webkit-scrollbar-thumb
+			border-width: rem(1) rem(1) rem(1) rem(2)
+			border-color: #1a1c1d
+			background-color: #929292
+		::-webkit-scrollbar-thumb:hover
+			border-width: rem(1) rem(1) rem(1) rem(2)
+			border-color: #1c1f22
+			background-color: rgba(146,146,146, 0.6)
+		::-webkit-scrollbar-track
+			border-width: 0
+		::-webkit-scrollbar-track:hover
+			border-left: none
+		.all-comments
+			height: rem(367)
+			overflow-y: auto
+			margin-top: rem(15)
+			.one-comment
+				padding: 23px 6px 18px 15px
+				margin-right: 6px
+				.user-photo
+					margin-top: 2px
 					float: left
-					color: $blue_light
+					img
+						width: 54px
+						height: 54px
+				.text-and-name
+					margin-left: 70px
+					.name-date
+						h6
+							letter-spacing: rem(2.8)
+							margin-bottom: rem(5)
+						span
+							font-size: rem(11)
+							color: $small-text
 
-				.mt-comment-actions
-					display: none
+					.comment-text
+						float: left
+						padding-top: 5px
+						p
+							line-height: rem(18)
+							letter-spacing: 0.02rem
+					.actions
+						text-align: right
+						opacity: 0
+						.pending
+							float: left
+							color: $blue
+						a
+							margin: 0 4px
+				&:hover
+					background: $light_grey
+					.text-and-name
+						.actions
+							opacity: 1
+
+		.add-comment
+			margin-left: rem(10)
+			margin-top: rem(8)
+			.user-photo
+				margin-top: rem(2)
+				float: left
+				img
+					width: rem(54)
+					height: rem(54)
+			.text-and-name
+				margin-left: rem(70)
+				.name-date
+					h6
+						letter-spacing: rem(2.8)
+						margin-bottom: 0
+						line-height: rem(11)
+					span
+						font-size: rem(11)
+						color: $small-text
+				.comment-text
+					float: left
+					padding-top: rem(10)
+					p
+						line-height: rem(18)
+						letter-spacing: 0.02rem
+				.actions
+					margin-top: 9px
+					span
+						padding: 0 5px
+
+		.form-add-comment
+			border-top: solid 1px $border_color
+			margin-top: rem(10)
+			.form-group
+				text-align: right
+				margin-bottom: 0
+			.row
+				padding-left: rem(15)
+				padding-right: rem(15)
+				textarea
+					max-width: 538px
+					height: 137px
 					float: right
-					padding: 0
-					margin: 0
-
-					&>li
-						float: left;
-						padding: 0 5px;
-						list-style: none;
-						margin: 0
-
-						&>a
-							color: $light_grey
-
-						a:hover
-							color: $grey
-							text-decoration: none
-	
-	.mt-comment:hover
-		background: $light_grey
-		.mt-comment-body
-			.mt-comment-details
-				.mt-comment-actions
-					display: inline-block
-
-.social_footer
-	width: 100%
-	border-top: 1px solid $border_color
-	margin-top: 85px
-	padding-top: 75px
-	padding-bottom: 75px
-
-	.descc_title
-		margin-bottom: 18px
-		text-align: left
-		font-size: 24px
-		font-weight: bold
-		letter-spacing: 8px
-
-
-
-	.text_and_button
-		p
-			color: $grey
-
-		.btn_link
-			width: 100%
-			border: 2px solid $grey
-			color: $grey
-			border-radius: 0
-
-		.btn_link:hover
-			color: #ef3239
-			border: 2px solid #ef3239
+					resize: none
+					margin-top: rem(30)
+					margin-bottom: 20px
+			.btn
+				margin-bottom: 20px
+	.line-dashboard
+		border-top: solid 1px $border_color
+		margin-top: 50px
+		margin-bottom: 50px
+.danger-zone-dashboard
+	.row
+		.col-lg-3
+			width: 20%
+			padding-left: 0
+			margin-right: rem(15)
+	.btn-block
+	.text-block
+		line-height: 18px
+		color: $small-text
+	.text-p-t-6
+		padding-top: 6px
+	.m-b-25
+		margin-bottom: rem(18)

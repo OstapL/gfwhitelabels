@@ -1,0 +1,287 @@
+include mixins.pug
+
++breadcrumbs('FAQ', '', 
+    [
+        ['Home', '/'],
+        ['FAQ', ''],
+    ]
+)
+
+section.text_block
+    .container
+        .row
+            .col-lg-3 
+                .page_title.border-bottom
+                    h4.text-uppercase.dosis faq
+                ul.list-unstyled.pt30
+                    li.class
+                        a.d-inline-block.w-100.pb10(href='/pg/faq') General Questions
+                    li.class
+                        a.d-inline-block.w-100.pb10(href='/pg/entrepreneurquestions') Entrepreneur Questions
+                    li.class
+                        a.d-inline-block.w-100.pb10(href='/pg/investorquestions') Investor Questions
+            .col-lg-9
+
+                .row
+                    .col-lg-12.text-xs-center
+                        h2.text-uppercase.dosis.m-t-0.m-b-0 Investor Questions
+
+                .row
+                    .col-lg-12.mt30
+                        #entrerpreneurQuestions.accordion(role="tablist" aria-multiselectable="true")
+                            .panel.panel-default
+                                #headingOneEntrerpreneurQuestions(role="tab").panel-heading
+                                    a(data-toggle="collapse"
+                                    data-parent="#entrerpreneurQuestions" 
+                                    href="#collapseOneEntrerpreneurQuestions"
+                                    aria-expanded="true"
+                                    aria-controls="collapseOneEntrerpreneurQuestions"
+                                    ).list-group-item-action.m0.active How do I become an investor?
+                                        i.fa.fa-angle-up
+                                #collapseOneEntrerpreneurQuestions(role="tabpanel"
+                                aria-labelledby="headingOneEntrerpreneurQuestions"
+                                ).panel-collapse.collapse.in 
+                                    p.pb10 Anyone can view the offerings on GrowthFountain. To invest, you will need to register and open an account. Prior to making any investment, you’ll want to make sure you’ve reviewed the 
+                                        a(href="").link-1
+                                            u education section 
+                                        |  to ensure you understand the risks involved with investing in small businesses. Once you understand the process, the next step is to search the entrepreneurs and local businesses listed on our platform to find those that you want to support.
+
+                            .panel.panel-default
+                                #headingTwoEntrerpreneurQuestions(role="tab").panel-heading
+                                    a(data-toggle="collapse"
+                                    data-parent="#entrerpreneurQuestions" 
+                                    href="#collapseTwoEntrerpreneurQuestions"
+                                    aria-controls="collapseTwoEntrerpreneurQuestions"
+                                    ).list-group-item-action How can I see the available investment opportunities?
+                                        i.fa.fa-angle-down
+                                #collapseTwoEntrerpreneurQuestions(role="tabpanel"
+                                aria-labelledby="headingTwoEntrerpreneurQuestions"
+                                ).panel-collapse.collapse 
+                                    p.pb10 When you log into the GrowthFountain site you will be able to browse the available projects. In order to ask questions to specific company management teams or to make an investment commitment, you’ll have to create a log in and register on our site. Also, as a registered user, you may receive periodic communications from us about new investment opportunities and updates on your prior investments. 
+
+                            .panel.panel-default
+                                #headingThreeEntrerpreneurQuestions(role="tab").panel-heading
+                                    a(data-toggle="collapse"
+                                    data-parent="#entrerpreneurQuestions" 
+                                    href="#collapseThreeEntrerpreneurQuestions"
+                                    aria-controls="collapseThreeEntrerpreneurQuestions"
+                                    ).list-group-item-action What does the term “accredited investor” mean?
+                                        i.fa.fa-angle-down
+                                #collapseThreeEntrerpreneurQuestions(role="tabpanel"
+                                aria-labelledby="headingThreeEntrerpreneurQuestions"
+                                ).panel-collapse.collapse 
+                                    p.pb10 The term “accredited investor” has a technical meaning in connection with purchasing securities offered by private companies (the term is 
+                                        b defined 
+                                        |  in Rule 501 of Regulation D). In general, accredited investor means that you a) have $1 million in net worth not including your primary residence or b) earned $200k in each of the last two years and expect to earn the same this year (or $300k if including your spouse). About 2% of the American population meets this threshold. Regulation Crowdfunding allows non-accredited investors to purchase certain amounts of private securities. In President Obama’s words, “For the first time, ordinary Americans will be able to go online and invest in entrepreneurs that they believe in.” 
+
+                            .panel.panel-default
+                                #headingFourEntrerpreneurQuestions(role="tab").panel-heading
+                                    a(data-toggle="collapse"
+                                    data-parent="#entrerpreneurQuestions" 
+                                    href="#collapseFourEntrerpreneurQuestions"
+                                    aria-controls="collapseFourEntrerpreneurQuestions"
+                                    ).list-group-item-action How much am I allowed to invest?
+                                        i.fa.fa-angle-down
+                                #collapseFourEntrerpreneurQuestions(role="tabpanel"
+                                aria-labelledby="headingFourEntrerpreneurQuestions"
+                                ).panel-collapse.collapse
+                                    p.pb10 Regulation Crowdfunding includes rules dictate that the limits on how much any individual can invest in a 12-month period. Based on your income and net worth, you are allowed to invest between $2,000 and $100,000 per year. We will help you determine your annual caps during the registration process and you can reference the specific rules at 17 CFR 227.100. 
+
+                            .panel.panel-default
+                                #headingFiveEntrerpreneurQuestions(role="tab").panel-heading
+                                    a(data-toggle="collapse"
+                                    data-parent="#entrerpreneurQuestions" 
+                                    href="#collapseFiveEntrerpreneurQuestions"
+                                    aria-controls="collapseFiveEntrerpreneurQuestions"
+                                    ).list-group-item-action What will I actually own?
+                                        i.fa.fa-angle-down
+                                #collapseFiveEntrerpreneurQuestions(role="tabpanel"
+                                aria-labelledby="headingFiveEntrerpreneurQuestions"
+                                ).panel-collapse.collapse  
+                                    p.pb10 Each offering contains a description of the securities being sold within the Form C related to the issuer.  You should reference the Form C to get specific information about the rights and attributes associated with the securities being offered. In general, with equity, you would own a portion of the company and with the Payback Equity, you would own a right to share in a portion of the issuer’s revenue.  The terms of the securities will govern your rights so please carefully review the relevant Form C to get such information. Make sure you understand the investment and the risks involved. 
+
+                            .panel.panel-default
+                                #headingSixEntrerpreneurQuestions(role="tab").panel-heading
+                                    a(data-toggle="collapse"
+                                    data-parent="#entrerpreneurQuestions" 
+                                    href="#collapseSixEntrerpreneurQuestions"
+                                    aria-controls="collapseSixEntrerpreneurQuestions"
+                                    ).list-group-item-action How does the investment process work?
+                                        i.fa.fa-angle-down
+                                #collapseSixEntrerpreneurQuestions(role="tabpanel"
+                                aria-labelledby="headingSixEntrerpreneurQuestions"
+                                ).panel-collapse.collapse 
+                                    p.pb10 Once you have created an account on the GrowthFountain platform, we allow you to search through the issuer listings to pose questions to their representatives in order to assist you with your diligence effort.  Once you find an investment that interests you, simply click the “INVEST” button to communicate your investment commitment and complete a Subscription Agreement. We take you through the investment process step by step and will ask you the questions needed to ensure your eligibility to participate in the offering. Once you make an investment commitment, your funds will be processed and securely held with a third-party FDIC insured escrow agent. When the company reaches their minimum investment target, the funds will be transferred and you will become a security holder in the company. If the company does not reach its fundraising goal, your committed funds will be returned to you. GrowthFountain does not take possession of any investor funds during the process. 
+
+                            .panel.panel-default
+                                #headingSevenEntrerpreneurQuestions(role="tab").panel-heading
+                                    a(data-toggle="collapse"
+                                    data-parent="#entrerpreneurQuestions" 
+                                    href="#collapseSevenEntrerpreneurQuestions"
+                                    aria-controls="collapseSevenEntrerpreneurQuestions"
+                                    ).list-group-item-action What are the risks of crowdfund investing?
+                                        i.fa.fa-angle-down
+                                #collapseSevenEntrerpreneurQuestions(role="tabpanel"
+                                aria-labelledby="headingSevenEntrerpreneurQuestions"
+                                ).panel-collapse.collapse  
+                                    p.pb10 IMany small businesses in the U.S. go out of business every year. It is difficult to know how companies will grow, what changes might occur in the market or the many ways a company can stumble. In general, crowdfunding investors have the risks associated with being a minority shareholder in so far as they have limited control and information rights. You should review the Form C to read more about the specific risk factors involved in an offering. Investing in early stage businesses requires high risk-tolerance, low liquidity concerns, and long-term commitments. Investors must be able to afford to lose their entire investment. 
+
+                            .panel.panel-default
+                                #headingEightEntrerpreneurQuestions(role="tab").panel-heading
+                                    a(data-toggle="collapse"
+                                    data-parent="#entrerpreneurQuestions" 
+                                    href="#collapseEightEntrerpreneurQuestions"
+                                    aria-controls="collapseEightEntrerpreneurQuestions"
+                                    ).list-group-item-action What happens if the company doesn’t reach its fundraising goal?
+                                        i.fa.fa-angle-down
+                                #collapseEightEntrerpreneurQuestions(role="tabpanel"
+                                aria-labelledby="headingEightEntrerpreneurQuestions"
+                                ).panel-collapse.collapse  
+                                    p.pb10 If a company doesn’t reach its minimum target raise, the funds you committed in that offering will be returned to you. No additional action would be required on your part, we would contact the escrow agent to ensure that the money is returned to your account.
+
+
+                            .panel.panel-default
+                                #headingNineEntrerpreneurQuestions(role="tab").panel-heading
+                                    a(data-toggle="collapse"
+                                    data-parent="#entrerpreneurQuestions" 
+                                    href="#collapseNineEntrerpreneurQuestions"
+                                    aria-controls="collapseNineEntrerpreneurQuestions"
+                                    ).list-group-item-action What is a third-party escrow agent?
+                                        i.fa.fa-angle-down
+                                #collapseNineEntrerpreneurQuestions(role="tabpanel"
+                                aria-labelledby="headingNineEntrerpreneurQuestions"
+                                ).panel-collapse.collapse  
+                                    p.pb10 As an extra layer of protection for investors on GrowthFountain, we do not hold any investor money. Rather, we transfer it to a third-party FDIC insured bank who has set up accounts that are supervised by an escrow agent. If a company reaches its minimum target fundraising goal, the escrow agent transfers the money to the company and the company issues securities to the investors. If a company fails to reach its minimum target fundraising goal, the escrow agent will return all investor commitment amounts.  
+                                    
+
+                            .panel.panel-default
+                                #headingTenEntrerpreneurQuestions(role="tab").panel-heading
+                                    a(data-toggle="collapse"
+                                    data-parent="#entrerpreneurQuestions" 
+                                    href="#collapseTenEntrerpreneurQuestions"
+                                    aria-controls="collapseTenEntrerpreneurQuestions"
+                                    ).list-group-item-action What happens if a company is oversubscribed?
+                                        i.fa.fa-angle-down
+                                #collapseTenEntrerpreneurQuestions(role="tabpanel"
+                                aria-labelledby="headingTenEntrerpreneurQuestions"
+                                ).panel-collapse.collapse  
+                                    p.pb10 A company has the ability to identify a minimum target amount as well as a maximum target amount to establish a range of anticipated dollar raises for its offering. It’s our policy at GrowthFountain to handle investor subscriptions on a first-come first-serve basis and we handle oversubscriptions in the same manner unless the issuer determines otherwise.
+
+                            .panel.panel-default
+                                #headingElevenEntrerpreneurQuestions(role="tab").panel-heading
+                                    a(data-toggle="collapse"
+                                    data-parent="#entrerpreneurQuestions" 
+                                    href="#collapseElevenEntrerpreneurQuestions"
+                                    aria-controls="collapseElevenEntrerpreneurQuestions"
+                                    ).list-group-item-action Does GrowthFountain make investment recommendations?
+                                        i.fa.fa-angle-down
+                                #collapseElevenEntrerpreneurQuestions(role="tabpanel"
+                                aria-labelledby="headingElevenEntrerpreneurQuestions"
+                                ).panel-collapse.collapse  
+                                    p.pb10 No, we do not make any investment recommendations or provide any investment advice consistent with the regulations placed upon us as a funding portal registered with the SEC. The companies listed on our platform are presented in a manner using objective criteria and do not reflect any preference or any effort to highlight one offering over another. Please consult your advisors regarding any investment advice that you are seeking. GrowthFountain does curate or promote any offerings on our platform.
+
+                            .panel.panel-default
+                                #headingTwelveEntrerpreneurQuestions(role="tab").panel-heading
+                                    a(data-toggle="collapse"
+                                    data-parent="#entrerpreneurQuestions" 
+                                    href="#collapseTwelveEntrerpreneurQuestions"
+                                    aria-controls="collapseTwelveEntrerpreneurQuestions"
+                                    ).list-group-item-action How do I receive securities?
+                                        i.fa.fa-angle-down
+                                #collapseTwelveEntrerpreneurQuestions(role="tabpanel"
+                                aria-labelledby="headingTwelveEntrerpreneurQuestions"
+                                ).panel-collapse.collapse  
+                                    p.pb10 If the company successfully reaches its minimum target fundraising goal by the closing date, the offering will close and your investment commitment will be released from the escrow agent to the company. At that point, GrowthFountain will provide details on the transfer agent that will keep track of your securities.  
+
+
+                            .panel.panel-default
+                                #headingTwelvesEntrerpreneurQuestions(role="tab").panel-heading
+                                    a(data-toggle="collapse"
+                                    data-parent="#entrerpreneurQuestions" 
+                                    href="#collapseTwelvesEntrerpreneurQuestions"
+                                    aria-controls="collapseTwelvesEntrerpreneurQuestions"
+                                    ).list-group-item-action What updates should I expect?
+                                        i.fa.fa-angle-down
+                                #collapseTwelvesEntrerpreneurQuestions(role="tabpanel"
+                                aria-labelledby="headingTwelvesEntrerpreneurQuestions"
+                                ).panel-collapse.collapse  
+                                    p.pb10 Companies that raise money via Regulation Crowdfunding will have certain ongoing reporting obligations, including filing an annual Form C accessible on Edgar.com and on the company’s website.   The company will have ongoing reporting requirements until:
+
+                                    ul.simple-list
+                                        li The company is required to file reports under Section 13(a) or Section 15(d) of the Exchange Act;
+
+                                        li The company has filed at least one annual report and has fewer than 300 holders of record;
+
+                                        li The company has filed at least three annual reports and has total assets less than $10 million;
+
+                                        li The company or another party has repurchased all the securities issued pursuant to Regulation Crowdfunding;
+                                        li The company liquidates or dissolves in accordance with state law.
+
+                            .panel.panel-default
+                                #headingFourteenEntrerpreneurQuestions(role="tab").panel-heading
+                                    a(data-toggle="collapse"
+                                    data-parent="#entrerpreneurQuestions" 
+                                    href="#collapseFourteenEntrerpreneurQuestions"
+                                    aria-controls="collapseFourteenEntrerpreneurQuestions"
+                                    ).list-group-item-action Can I sell my shares?
+                                        i.fa.fa-angle-down
+                                #collapseFourteenEntrerpreneurQuestions(role="tabpanel"
+                                aria-labelledby="headingFourteenEntrerpreneurQuestions"
+                                ).panel-collapse.collapse  
+                                    p.pb10 Securities issued in reliance on Regulation Crowdfunding are subject to a 12 month holding period with only limited exceptions on transfer. In limited circumstances, you may be able to transfer your purchased securities back to the issuer, to an accredited investor or to family members. But in general, it is more likely that you will be unable to freely resell your securities for at least a year and perhaps longer. Please note that it may be difficult or impossible to find liquidity for your shares because they are not listed on any exchange and a public trading market may never develop. You should not invest in any offering if you have an immediate need for the return of your funds.
+
+                            .panel.panel-default
+                                #headingFifteenEntrerpreneurQuestions(role="tab").panel-heading
+                                    a(data-toggle="collapse"
+                                    data-parent="#entrerpreneurQuestions" 
+                                    href="#collapseFifteenEntrerpreneurQuestions"
+                                    aria-controls="collapseFifteenEntrerpreneurQuestions"
+                                    ).list-group-item-action How do I earn a return?
+                                        i.fa.fa-angle-down
+                                #collapseFifteenEntrerpreneurQuestions(role="tabpanel"
+                                aria-labelledby="headingFifteenEntrerpreneurQuestions"
+                                ).panel-collapse.collapse  
+                                    p.pb10 Please be sure to understand the risks involved in Regulation Crowdfunding since it is possible that you see no return or lose the value of your entire investment. Your ability to earn a return will be linked to the success of the issuer and the terms of the security that you purchased. PayBack Equity provides the possibility of earning a return through receipt of distributions. For Equity, you may earn a return if and when 1) the company pays a dividend; 2) the company is bought; or 3) the company has an initial public offering and lists on a public exchange. 
+
+                            .panel.panel-default
+                                #headingSixteenEntrerpreneurQuestions(role="tab").panel-heading
+                                    a(data-toggle="collapse"
+                                    data-parent="#entrerpreneurQuestions" 
+                                    href="#collapseSixteenEntrerpreneurQuestions"
+                                    aria-controls="collapseSixteenEntrerpreneurQuestions"
+                                    ).list-group-item-action Can I change my mind?
+                                        i.fa.fa-angle-down
+                                #collapseSixteenEntrerpreneurQuestions(role="tabpanel"
+                                aria-labelledby="headingSixteenEntrerpreneurQuestions"
+                                ).panel-collapse.collapse  
+                                    p.pb10 Yes. After you make an investment commitment, you will have the opportunity to change your mind and cancel your subscription up until 48 hours prior to the date of the funding closing. If you have not cancelled your investment commitment prior to the final 48 hours of an offering, then your commitment will become irrevocable.
+
+                            .panel.panel-default
+                                #headingSeventeenEntrerpreneurQuestions(role="tab").panel-heading
+                                    a(data-toggle="collapse"
+                                    data-parent="#entrerpreneurQuestions" 
+                                    href="#collapseSeventeenEntrerpreneurQuestions"
+                                    aria-controls="collapseSeventeenEntrerpreneurQuestions"
+                                    ).list-group-item-action Is there a minimum investment amount?
+                                        i.fa.fa-angle-down
+                                #collapseSeventeenEntrerpreneurQuestions(role="tabpanel"
+                                aria-labelledby="headingSeventeenEntrerpreneurQuestions"
+                                ).panel-collapse.collapse  
+                                    p.pb10 Yes. The minimum investment may vary based on the specific offering. You can determine the minimum investment by reviewing the Form C relevant to any offering. In general, we expect the minimum investment amount will be $100. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

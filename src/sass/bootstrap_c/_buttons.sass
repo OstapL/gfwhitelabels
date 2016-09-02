@@ -32,6 +32,16 @@
 		color: $btn-secondary-hover-color
 		border-color: $btn-secondary-border
 
+	&.inverse
+		background: $btn-secondary-hover-bg
+		color: $btn-secondary-hover-color
+		border-color: $btn-secondary-border
+
+		&:hover
+			background: $btn-secondary-bg
+			color: $btn-secondary-color
+			border-color: $btn-secondary-border
+
 .btn-success
 	background: $btn-success-bg
 	color: $btn-success-color
@@ -103,3 +113,20 @@
 		background: none
 		border: 1px solid $light_grey
 		color: $black
+
+//issuer dashboard
+.danger-black
+	border-color: $cod_gray
+	color: $black
+	&:hover
+		background-color: $cod_gray
+		color: $white
+		border-color: $cod_gray
+
+.danger-cancel
+	border-color: $crimson
+	color: $crimson
+	&:hover
+		background-color: $crimson
+		color: $white
+		border-color: $crimson
