@@ -244,13 +244,24 @@ global.app = {
             var data = data || $(e.target).serializeJSON();
             //var investment = new InvestmentModel(data);
 
+
+            /*
+            var newValidators = {};
+            for(var k in this.fields) {
+                if(k.required == true) {
+                    newValidators[k] = baseModel.validation[k];
+                }
+            };
+            this.model.validation = newValidators;
+            */
+
             this.model.set(data);
             Backbone.Validation.bind(this, {model: this.model});
 
             if(this.model.isValid(true)) {
                 var self = this;
                 this.model.save().
-                    then((data) => { 
+                    then((data) => {
                         app.showLoading();
                         this.$el.find('.alert-warning').remove();
                         self.undelegateEvents();
@@ -260,7 +271,6 @@ global.app = {
                         if(typeof this._success == 'function') {
                             this._success(data);
                         } else {
-
                             //window.location = '/api/campaign/' + this.model.get('id');
                             app.routers.navigate(
                                 self.getSuccessUrl(data),
@@ -397,7 +407,7 @@ global.app = {
 
       dropbox.on("success", (file, data) => {
           $('.img-' + name).attr('src', data.url);
-          $('.a-' + name).attr('href', data.url).html(data.name);
+          $('.a-' + name).attr('href', data.origin_url).html(data.name);
           console.log(data);
           if(typeof onSuccess != 'undefined') {
             onSuccess(data);
@@ -446,10 +456,10 @@ global.app = {
             if(thumb)  {
                 return thumb.url
             } else {
-                return attr.default
+                return attr.default || '/img/default/default.png'
             }
         } else {
-            return attr.default
+            return attr.default || '/img/default/default.png'
         }
     }
 };
@@ -468,21 +478,36 @@ $('body').on('click', '.auth-pop', function() {
     $('#loginModal').modal();
 });
 
+const popoverTemplate = '<div class="popover divPopover" role="tooltip"><span class="popover-arrow"></span> <h3 class="popover-title"></h3> <span class="icon-popover"><i class="fa fa-info-circle" aria-hidden="true"></i></span> <span class="popover-content"> XXX </span></div>';
+
+
 $('body').on('mouseover', 'div.showPopover', function() {
     var el = $(this);
     if(el.attr('aria-describedby') == null) {
+        $(this).popover({
+            html: true,
+            template: popoverTemplate,
+        });
         $(this).popover('show');
     }
 });
 $('body').on('focus', 'input.showPopover', function() {
     var el = $(this);
     if(el.attr('aria-describedby') == null) {
+        $(this).popover({
+            html: true,
+            template: popoverTemplate.replace('divPopover', 'inputPopover'),
+        });
         $(this).popover('show');
     }
 });
 $('body').on('focus', 'textarea.showPopover', function() {
     var el = $(this);
     if(el.attr('aria-describedby') == null) {
+        $(this).popover({
+            html: true,
+            template: popoverTemplate.replace('divPopover', 'textareaPopover'),
+        });
         $(this).popover('show');
     }
 });
