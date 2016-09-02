@@ -73,19 +73,19 @@ mixin fieldBlock(name, data, attr)
                         input(
                             id=name + '__month'
                             name=name + '__month'
-                            placeholder="09"
+                            placeholder="MM"
                             type='numeber'
                             maxlength=2
-                            value=data[1]
+                            value=data[1] || new Date().getMonth()
                           ).form-control
                     .col-lg-6.no-gutter.p-r-0
                         input(
                             id=name + '__year'
                             name=name + '__year'
-                            placeholder="2016"
+                            placeholder="YYYY"
                             type='numeber'
                             maxlength=4
-                            value=data[0]
+                            value=data[0] || new Date().getFullYear()
                           ).form-control
         else if attr.type == 'textarea' 
                 label(class= attr.text_align ? 'text-md-' + attr.text_align + ' ' + attr.class1 : ' text-md-right ' + attr.class1 for=name)= fields[name].label
