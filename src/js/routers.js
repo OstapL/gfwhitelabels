@@ -1036,29 +1036,6 @@ app.on('userLoaded', function(data){
  
 
 $(document).ready(function(){
-    // show bottom logo while scrolling page
-
-    $(window).scroll(function(){
-        var $bottomLogo = $('#fade_in_logo'),
-            offsetTopBottomLogo = $bottomLogo.offset().top;
-
-        if (($(window).scrollTop() + $(window).height() >= offsetTopBottomLogo) && !$bottomLogo.hasClass('fade-in') ) {
-            $bottomLogo.addClass('fade-in');
-        }
-    });
-
-    $('.team-member-list article').click(function(){
-        var targetTextId = $(this).data('id-text');
-
-        if ($(targetTextId).hasClass('open')) {
-            $(targetTextId).removeClass('open').slideUp();
-        } else {
-            $(this).closest('.team-member-list').find('.biography-text.open').removeClass('open').hide();
-            $(targetTextId).addClass('open').slideDown();
-        }
-
-    });
-
 
 });
 
