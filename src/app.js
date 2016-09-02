@@ -231,13 +231,22 @@ global.app = {
             var data = data || $(e.target).serializeJSON();
             //var investment = new InvestmentModel(data);
 
+
+            var newValidators = {};
+            for(var k in this.fields) {
+                if(k.required == true) {
+                    newValidators[k] = baseModel.validation[k];
+                }
+            };
+            this.model.validation = newValidators;
+
             this.model.set(data);
             Backbone.Validation.bind(this, {model: this.model});
 
             if(this.model.isValid(true)) {
                 var self = this;
                 this.model.save().
-                    then((data) => { 
+                    then((data) => {
                         app.showLoading();
                         this.$el.find('.alert-warning').remove();
                         self.undelegateEvents();
@@ -247,7 +256,6 @@ global.app = {
                         if(typeof this._success == 'function') {
                             this._success(data);
                         } else {
-
                             //window.location = '/api/campaign/' + this.model.get('id');
                             app.routers.navigate(
                                 self.getSuccessUrl(data),
