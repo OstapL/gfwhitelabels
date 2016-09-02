@@ -191,9 +191,9 @@ define(function() {
                         this.geocodeIsNotInProgress = true;
                         // clear error
                         this.zipCodeField.closest('div').find('.help-block').remove();
-
                         if (success) {
-                            if (!this.usaStates.find((el) => el.name == state)) {
+                            // if (!this.usaStates.find((el) => el.name == state)) {
+                            if (!this.usaStates.find((el) => el.abbreviation == state)) {
                                 this.resetAddressValues();
                                 return false;
                             }
