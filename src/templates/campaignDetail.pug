@@ -154,8 +154,8 @@ section
         if campaign.gallery
             each v,k in campaign.gallery_data.all_files
                 .col-lg-3.no-padding-img
-                  a(href=v.url data-size='1600x900')
-                    img(src=v.url alt=campaign.company.name style="width:263px; height: 209px").img-fluid
+                  a(href=app.getThumbnail('1440x900', v.thumbnails) data-size='1440x900')
+                    img(src=app.getThumbnail('270x76', v.thumbnails) alt=campaign.company.name).img-fluid
         else
 
             .col-lg-3.no-padding-img
@@ -373,7 +373,7 @@ section
       .row
         h2#overview.col-lg-12.dosis.text-uppercase.text-lg-center.green-heading overview and terms
         //- h3.col-lg-12.text-lg-center Fundraising Description
-        h2.dosis.text-uppercase.text-lg-center.green-heading Fundraising Description
+        h3.text-uppercase.text-lg-center.green-heading Fundraising Description
         .col-lg-8.offset-lg-2.fundraising
           .jumbotron.jumbotron-fluid
             .container
@@ -391,7 +391,7 @@ section
                 h2.font-weight-bold #{ campaign.get_security_type_display }
               .col-lg-4
                 p Minimum Investment
-                h2.font-weight-bold #{ model.showBeautifulNumber(campaign.minimum_investment) }
+                h2.font-weight-bold #{ model.showBeautifulNumber(campaign.minimum_increment) }
               .col-lg-4
                 p Target Maximum Raise Amount
                 h2.font-weight-bold #{ model.showBeautifulNumber(campaign.maximum_raise) }
@@ -400,14 +400,14 @@ section
     if campaign.perks
       //- h3.col-lg-12.text-lg-center Perks
       .container
-        h2.dosis.text-uppercase.text-lg-center.green-heading Perks
+        h3.text-uppercase.text-lg-center.green-heading Perks
         .row
           .col-lg-12.text-center-flex
             each v,k in campaign.perks
                 .col-lg-4
                   .jumbotron.jumbotron-fluid
                     .container
-                      h3.m-t-0.m-b-1 Invest $#{v.amount} or more
+                      h3.m-t-0.m-b-1 Invest #{ model.showBeautifulNumber(v.amount) } or more
                       p.text-justify #{ v.perk }
 
   section.investors-all.border-bottom(style="display: none")
