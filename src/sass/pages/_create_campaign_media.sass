@@ -44,11 +44,9 @@
 			top: rem(-5)	
 	.photo-scroll
 		margin: 0 auto
-		overflow-x: scroll
-		overflow-y: hidden
-		max-height: rem(130)
-		white-space: nowrap
-		word-wrap: normal
+		overflow-y: scroll
+		max-height: rem(160)
+	.all-gallery
 		::-webkit-scrollbar
 			width: rem(5)
 			background: transparent
@@ -59,18 +57,32 @@
 		::-webkit-scrollbar-thumb:hover
 			border-width: rem(1) rem(1) rem(1) rem(2)
 			border-color: #1c1f22
-			background-color: $black
+			background-color: $small-text
 		::-webkit-scrollbar-track
 			border-width: 0
 		::-webkit-scrollbar-track:hover
 			border-left: none
 
-		.photo-scroll-wrap
-			max-width: rem(97)
-			display: inline-block
+		.thumb-image-container
+			width: rem(130)
+			margin-right: rem(10)
+			margin-bottom: rem(10)
+			height: rem(90)
+			overflow: hidden
+			&:nth-child(2n)
+				margin-right: 0
 			img
-				padding-right: rem(10)
-				padding-bottom: rem(10)
+				width: 100%
+				height: rem(90)
+			.delete-image-container
+				right: rem(2)
+				position: absolute
+				top: rem(-3)
+				a
+					color: $crimson
+
+
+				
 
 	.p-r-12
 		padding-right: rem(12)
