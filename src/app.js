@@ -456,10 +456,10 @@ global.app = {
             if(thumb)  {
                 return thumb.url
             } else {
-                return attr.default || '/img/default.png'
+                return attr.default || '/img/default/default.png'
             }
         } else {
-            return attr.default || '/img/default.png'
+            return attr.default || '/img/default/default.png'
         }
     }
 };
