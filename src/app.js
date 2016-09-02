@@ -232,6 +232,7 @@ global.app = {
             //var investment = new InvestmentModel(data);
 
 
+            /*
             var newValidators = {};
             for(var k in this.fields) {
                 if(k.required == true) {
@@ -239,6 +240,7 @@ global.app = {
                 }
             };
             this.model.validation = newValidators;
+            */
 
             this.model.set(data);
             Backbone.Validation.bind(this, {model: this.model});
