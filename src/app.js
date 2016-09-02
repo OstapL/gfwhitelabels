@@ -443,10 +443,10 @@ global.app = {
             if(thumb)  {
                 return thumb.url
             } else {
-                return attr.default
+                return attr.default || '/img/default.png'
             }
         } else {
-            return attr.default
+            return attr.default || '/img/default.png'
         }
     }
 };
@@ -468,18 +468,30 @@ $('body').on('click', '.auth-pop', function() {
 $('body').on('mouseover', 'div.showPopover', function() {
     var el = $(this);
     if(el.attr('aria-describedby') == null) {
+        $(this).popover({
+            html: true,
+            template: '<div class="popover divPopover" role="tooltip"><div class="popover-arrow"></div><h3 class="popover-title"></h3><i class="fa fa-info-circle"><div class="popover-content"></div></div>'
+        });
         $(this).popover('show');
     }
 });
 $('body').on('focus', 'input.showPopover', function() {
     var el = $(this);
     if(el.attr('aria-describedby') == null) {
+        $(this).popover({
+            html: true,
+            template: '<div class="popover inputPopover" role="tooltip"><div class="popover-arrow"></div><h3 class="popover-title"></h3><i class="fa fa-info-circle"><div class="popover-content"></div></div>'
+        });
         $(this).popover('show');
     }
 });
 $('body').on('focus', 'textarea.showPopover', function() {
     var el = $(this);
     if(el.attr('aria-describedby') == null) {
+        $(this).popover({
+            html: true,
+            template: '<div class="popover textareaPopover" role="tooltip"><div class="popover-arrow fa fa-info-circle"></div><h3 class="popover-title"></h3><div class="popover-content"></div></div>'
+        });
         $(this).popover('show');
     }
 });
