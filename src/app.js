@@ -91,6 +91,19 @@ $.fn.scrollTo = function() {
     return this; // for chaining...
 }
 
+$.fn.equalHeights = function() {
+    var maxHeight = 0,
+        $this = $(this);
+
+    $this.each( function() {
+        var height = $(this).innerHeight();
+
+        if ( height > maxHeight ) { maxHeight = height; }
+    });
+
+    return $this.css('height', maxHeight);
+};
+
 var oldSync = Backbone.sync;
 Backbone.sync = function(method, model, options){
   options.beforeSend = function(xhr){
@@ -232,6 +245,7 @@ global.app = {
             //var investment = new InvestmentModel(data);
 
 
+            /*
             var newValidators = {};
             for(var k in this.fields) {
                 if(k.required == true) {
@@ -239,6 +253,7 @@ global.app = {
                 }
             };
             this.model.validation = newValidators;
+            */
 
             this.model.set(data);
             Backbone.Validation.bind(this, {model: this.model});
@@ -427,24 +442,24 @@ global.app = {
                 console.log(url, "Takes a YouTube or Vimeo URL");
         }
     }, 
+
+    getThumbnail: function(size, thumbnails, _default) {
+        let thumb = thumbnails.find(function(el) {
+            console.log('v', el, size, el.size == size);
+            return el.size == size
+        });
+        console.log('th', thumb);
+        return (thumb ? thumb.url : _default || '/img/default/default.png')
+    },
     getDropzoneUrl: function(name, attr, values) {
         // If we have data attribute for a file  - we will 
         // try to find url that match our size
         if(values[name + '_data'] && attr.thumbSize) {
             let thumbnails = values[name + '_data'].thumbnails;
             console.log('v', thumbnails, );
-            let thumb = thumbnails.find(function(el) { 
-                console.log('v', el, attr.thumbSize, el.size == attr.thumbSize);
-                return el.size == attr.thumbSize
-            });
-            console.log('found thumb', thumb);
-            if(thumb)  {
-                return thumb.url
-            } else {
-                return attr.default
-            }
+            return app.getThumbnail(attr.thumbSize, thumbnails, attr.default || '/img/default/default.png');
         } else {
-            return attr.default
+            return attr.default || '/img/default/default.png'
         }
     }
 };
@@ -463,21 +478,36 @@ $('body').on('click', '.auth-pop', function() {
     $('#loginModal').modal();
 });
 
+const popoverTemplate = '<div class="popover divPopover" role="tooltip"><span class="popover-arrow"></span> <h3 class="popover-title"></h3> <span class="icon-popover"><i class="fa fa-info-circle" aria-hidden="true"></i></span> <span class="popover-content"> XXX </span></div>';
+
+
 $('body').on('mouseover', 'div.showPopover', function() {
     var el = $(this);
     if(el.attr('aria-describedby') == null) {
+        $(this).popover({
+            html: true,
+            template: popoverTemplate,
+        });
         $(this).popover('show');
     }
 });
 $('body').on('focus', 'input.showPopover', function() {
     var el = $(this);
     if(el.attr('aria-describedby') == null) {
+        $(this).popover({
+            html: true,
+            template: popoverTemplate.replace('divPopover', 'inputPopover'),
+        });
         $(this).popover('show');
     }
 });
 $('body').on('focus', 'textarea.showPopover', function() {
     var el = $(this);
     if(el.attr('aria-describedby') == null) {
+        $(this).popover({
+            html: true,
+            template: popoverTemplate.replace('divPopover', 'textareaPopover'),
+        });
         $(this).popover('show');
     }
 });
