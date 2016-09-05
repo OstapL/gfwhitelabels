@@ -1,7 +1,7 @@
 - 'use strict';
 include mixins.pug
 
-- let percentage_raised = model.calculateRaisedPercentage(campaign.minimum_raise, campaign.amount_raised)
+- var percentage_raised = model.calculateRaisedPercentage(campaign.minimum_raise, campaign.amount_raised)
 
 section#home(style="background-image: url(" + (campaign.header_image_data ? campaign.header_image_data.url : '/img/default.png') + ")").home-section.bg-dark-alfa-70.parallax-2.fixed-height-small
   .js-height-parent.container
@@ -189,7 +189,7 @@ section
               each v,k in campaign.additional_video
                   .col-lg-4
                     .card.card-inverse
-                      - let link =  app.getVideoId(v.link)
+                      - var link =  app.getVideoId(v.link)
                       img(src="http://img.youtube.com/vi/" + link + "/0.jpg" alt="" style="width: 338px").card-img
                       .card-img-overlay
                         .card-title
@@ -538,7 +538,7 @@ section
       h2#faq.col-lg-12.dosis.text-uppercase.text-lg-center.green-heading FAQ
       .col-lg-8.offset-lg-2
         .accordion(role="tablist" aria-multiselectable="true")
-          - let counter = 0
+          - var counter = 0
           each v,k in campaign.faq
             .panel.panel-default
               div(id="faq" + k role="tab").panel-heading
@@ -663,7 +663,7 @@ each v,k in campaign.additional_video
         .modal-dialog.modal-lg(role="document")
             .modal-content
                 .embed-responsive.embed-responsive-16by9
-                    - let link =  app.getVideoId(v.link)
+                    - var link =  app.getVideoId(v.link)
                     iframe.embed-responsive-item(src="//www.youtube.com/embed/" + link + "?rel=0" allowfullscreen="true")
 
 //modal sing_up
