@@ -168,9 +168,8 @@ define(function() {
                     window.PhotoSwipeUI_Default = PhotoSwipeUI_Default;
                     photoswipeRun('#gallery1');
                 }, 100);
-
+                this.$el.find('.perks .col-lg-4').equalHeights()
                 this.$el.find('.modal').on('hidden.bs.modal', function(event) {
-                    console.log(this, event);
                     $(event.currentTarget).find('iframe').attr('src', $(event.currentTarget).find('iframe').attr('src'));
                 });
 
