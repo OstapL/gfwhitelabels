@@ -29,9 +29,13 @@ define(function() {
                 return formatPrice(number);
             },
 
-            formatFoundingDate: function (dateStr) {
+            month: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
+
+            formatDate: function (dateStr) {
                 var strs = dateStr.split("-");
-                return strs[1] + "-" + strs[0];
+                var monthIndex = parseInt(strs[1]) - 1;
+                // return strs[1] + "-" + strs[0];
+                return this.month[monthIndex] + " " + strs[0];
             },
 
             calculateRaisedPercentage: function (minimum_raise, amount_raised) {
