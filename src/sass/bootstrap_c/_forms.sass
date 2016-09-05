@@ -60,6 +60,7 @@ select.form-control
 	textarea
 		min-height: 38px
 		max-width: 554px
+		color: $black
 
 	.pseudo-checkbox,.form-check-input// для задаванния своего вида чекбокса
 		position: relative
@@ -151,3 +152,15 @@ select.form-control
 		color: $boulder
 		padding-top: 10px
 		line-height: 14px
+	.has-error
+		.help-block
+			color: $crimson
+			position: relative
+			padding-left: rem(15)
+			&:before
+				content: "\f071"
+				position: absolute
+				left: 0
+				top: rem(12)
+				font: normal normal normal 11px/1 FontAwesome
+
