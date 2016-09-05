@@ -67,7 +67,10 @@ section.campaing-list
 
                             .more_inform
                                 .title.text-center
-                                    h3 Pre money valuation: $#{campaign.premoney_valuation}
+                                    if campaign.security_type == 0
+                                        h3 Pre money valuation: #{collection.showBeautifulNumber(campaign.premoney_valuation)}
+                                    else
+                                        h3 Percentage Revenue: #{campaign.percentage_revenue}%
 
                                 .small_text
                                     if campaign.company.tagline
