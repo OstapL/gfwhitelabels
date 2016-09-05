@@ -17,7 +17,7 @@ module.exports = Backbone.Model.extend({
         'cashRaise': 1000000,
 
         // select boxes
-        'industry': 'Food Products',
+        'industry': 'Machinery',
 
         // 'New and potentially growing quickly' - 1
         // 'Fairly well established' - 2
@@ -40,7 +40,7 @@ module.exports = Backbone.Model.extend({
         'year5Npv': null,
         'postCapitalRaise': null,
         'averageNPV': null,
-        'liquidityAdjustment': 0.1, // 10 %
+        'liquidityAdjustment': 0, // 0 %
         'liquidityAdjustmentAverageNPV': null,
         'probabilityOfFailure': null,
         'PreMoneyValuation': null,
@@ -74,9 +74,9 @@ module.exports = Backbone.Model.extend({
 
     calculate() {
         let industry = this.get('industry'),
-            row = industryData.find(el => el[0] == industry),
-            ntmPs = row[5],
-            ntmEv = row[6];
+            row = industryData[industry],
+            ntmPs = row[4],
+            ntmEv = row[5];
 
         // calculate NTM and post capital raise
         this.set({

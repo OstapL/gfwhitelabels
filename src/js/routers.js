@@ -205,7 +205,11 @@ let appRoutes = Backbone.Router.extend({
             });
             app.views.campaign[id].render();
             //app.cache[window.location.pathname] = app.views.campaign[id].$el.html();
-            $('#content').scrollTo();
+            if(location.hash) {
+                $("[name="+location.hash.substr(1)+"]").scrollTo();
+            } else {
+                $('#content').scrollTo();
+            }
 
             app.hideLoading();
         });
@@ -562,6 +566,7 @@ let appRoutes = Backbone.Router.extend({
             let view = require('views/formc');
 
             let company_id = app.getParams().company_id;
+            let campaign_id = app.getParams().campaign_id;
 
             if(id === null && typeof company_id === 'undefined') {
                 alert('please set up id or company_id');
@@ -596,6 +601,7 @@ let appRoutes = Backbone.Router.extend({
                 } else {
                     i.model = formc;
                     i.model.set('company', company_id);
+                    i.model.set('campaign', campaign_id);
                 }
 
                 app.hideLoading();
