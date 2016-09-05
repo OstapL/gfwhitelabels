@@ -205,7 +205,11 @@ let appRoutes = Backbone.Router.extend({
             });
             app.views.campaign[id].render();
             //app.cache[window.location.pathname] = app.views.campaign[id].$el.html();
-            $('#content').scrollTo();
+            if(location.hash) {
+                $("[name="+location.hash.substr(1)+"]").scrollTo();
+            } else {
+                $('#content').scrollTo();
+            }
 
             app.hideLoading();
         });
