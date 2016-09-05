@@ -81,25 +81,49 @@ define(function() {
 
         profile: Backbone.View.extend({
             initialize: function(options) {
-                this.fields = options.fields
+                this.fields = options.fields;
+
+                // define ui elements
+                this.cityStateArea = null;
+                this.cityField = null;
+                this.stateField = null;
+                this.zipCodeField = null;
+
+                // define timeout for zip code keyup event
+                this.zipCodeTimeOut = null;
+
+                // define flag for the geocode function respond
+                this.geocodeIsNotInProgress = true;
             },
 
             events: {
                 'submit form': 'update',
                 'focus #ssn' : 'showSSNPopover',
                 'focuseout #ssn' : 'hideSSNPopover',
+                'keyup #zip_code': 'changeZipCode',
+                'change .js-city': 'changeAddressManually',
+                'change .js-state': 'changeAddressManually'
             },
 
             render: function() {
+                this.getCityStateByZipCode = require("../helpers/getSityStateByZipCode");
+                this.usaStates = require("../helpers/usa-states");
                 let dropzone = require('dropzone');
                 let template = require('templates/userProfile.pug');
                 this.$el.html(
                     template({
                         serverUrl: serverUrl,
                         user: app.user.toJSON(),
-                        fields: this.fields
+                        fields: this.fields,
+                        states: this.usaStates
                     })
                 );
+
+                this.cityStateArea = this.$('.js-city-state');
+                this.cityField = this.$('.js-city');
+                this.stateField = this.$('.js-state');
+                this.zipCodeField = this.$('#zip_code');
+
                 /*
                 app.createFileDropzone(
                     dropzone,
@@ -151,12 +175,50 @@ define(function() {
                 });
  
                 $('#ssn').popover('show');
-             },
+            },
 
-             hideSSNPopover: function(event){
+            hideSSNPopover: function(event){
                 $('#ssn').popover('hide');
-             }
-        }),
+            },
+
+            changeZipCode(e) {
+                if (!this.geocodeIsNotInProgress) return false;
+
+                clearTimeout(this.zipCodeTimeOut);
+                this.zipCodeTimeOut = setTimeout(() => {
+                    this.geocodeIsNotInProgress = false;
+                    this.getCityStateByZipCode(e.target.value, ({ success=false, city="", state="" }) => {
+                        this.geocodeIsNotInProgress = true;
+                        // clear error
+                        this.zipCodeField.closest('div').find('.help-block').remove();
+                        if (success) {
+                            // if (!this.usaStates.find((el) => el.name == state)) {
+                            if (!this.usaStates.find((el) => el.abbreviation == state)) {
+                                this.resetAddressValues();
+                                return false;
+                            }
+
+                            this.cityStateArea.text(`${city}/${state}`);
+                            this.cityField.val(city);
+                            this.stateField.val(state);
+                        } else {
+                            this.resetAddressValues();
+                        }
+                    });
+                }, 200);
+            },
+
+            resetAddressValues() {
+                this.cityStateArea.text('City/State');
+                this.cityField.val('');
+                this.stateField.val('');
+                Backbone.Validation.callbacks.invalid(this, 'zip_code', 'Sorry your zip code is not found');
+            },
+
+            changeAddressManually() {
+                this.cityStateArea.text(`${this.cityField.val()}/${this.stateField.val()}`);
+            }
+        })
     
     }
 });
