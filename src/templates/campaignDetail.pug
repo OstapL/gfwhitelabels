@@ -255,7 +255,7 @@ section
             p #{ v.body }
    
   if campaign.members
-      section(name="members").team.border-bottom
+      section#members.team.border-bottom
         .container
             h2#team.dosis.text-uppercase.text-lg-center.col-lg-12.green-heading Team
             .row
@@ -396,7 +396,8 @@ section
                 p Target Maximum Raise Amount
                 h2.font-weight-bold #{ model.showBeautifulNumber(campaign.maximum_raise) }
         
-  section.perks
+
+  section#perks.perks
     if campaign.perks
       //- h3.col-lg-12.text-lg-center Perks
       .container
