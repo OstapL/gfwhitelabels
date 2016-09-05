@@ -71,6 +71,63 @@ define(function() {
 
             initialize: function(options) {
                 this.template = options.template;
+                $(document).off("scroll", this.onScrollListener);
+                $(document).on("scroll", this.onScrollListener);
+            },
+
+            events: {
+                'click .tabs-scroll .nav .nav-link': 'smoothScroll',
+                'click .list-group-item-action': 'toggleActiveAccordionTab'
+            },
+
+            smoothScroll(e) {
+                e.preventDefault();
+                $(document).off("scroll");
+                $('.tabs-scroll .nav').find('.nav-link').removeClass('active');
+                $(this).addClass('active');
+
+                let $target = $(e.target.hash),
+                    $navBar = $('.navbar.navbar-default');
+
+                $('html, body').stop().animate({
+                    'scrollTop': $target.offset().top - $navBar.height() - 5
+                }, 500, 'swing', () => {
+                    window.location.hash = e.target.hash;
+                    $(document).on("scroll", this.onScrollListener);
+                });
+            },
+
+            toggleActiveAccordionTab(e) {
+                let $elem = $(e.target),
+                    $icon = $elem.find('.fa');
+
+                if ($elem.is('.active')) {
+                    $icon.removeClass('fa-angle-up').addClass('fa-angle-down');
+                } else {
+                    // remove active state of all other panels
+                    $elem.closest('.custom-accordion').find('.list-group-item-action').removeClass('active')
+                        .find('.fa').removeClass('fa-angle-up').addClass('fa-angle-down');
+
+                    $icon.removeClass('fa-angle-down').addClass('fa-angle-up');
+                }
+                $elem.toggleClass('active');
+            },
+
+            onScrollListener() {
+                var scrollPos = $(window).scrollTop(),
+                    $navBar = $('.navbar.navbar-default'),
+                    $link = $('.tabs-scroll .nav').find('.nav-link');
+                $link.each(function () {
+                    var currLink = $(this);
+                    var refElement = $(currLink.attr("href")).closest('section');
+                    if (refElement.position().top - $navBar.height() <= scrollPos && refElement.position().top + refElement.height() > scrollPos) {
+                        $link.removeClass("active");
+                        currLink.addClass("active");
+                    }
+                    else{
+                        currLink.removeClass("active");
+                    }
+                });
             },
 
             events: {
@@ -168,9 +225,8 @@ define(function() {
                     window.PhotoSwipeUI_Default = PhotoSwipeUI_Default;
                     photoswipeRun('#gallery1');
                 }, 100);
-
+                this.$el.find('.perks .col-lg-4').equalHeights()
                 this.$el.find('.modal').on('hidden.bs.modal', function(event) {
-                    console.log(this, event);
                     $(event.currentTarget).find('iframe').attr('src', $(event.currentTarget).find('iframe').attr('src'));
                 });
 

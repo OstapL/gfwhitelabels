@@ -44,6 +44,7 @@ define(function() {
         introduction: Backbone.View.extend({
             events: _.extend({
                 'submit form': 'submit',
+                'click #pay-btn': 'payByCreditCard'
             }, jsonActions.events),
 
             preinitialize: function() {
@@ -64,6 +65,11 @@ define(function() {
             initialize: function(options) {
                 this.fields = options.fields;
             },
+
+            payByCreditCard:app.defaultSaveActions.submit/* function(event) {
+                event.preventDefault();
+
+            }*/,
 
             render: function() {
                 let template = require('templates/formc/introduction.pug');
