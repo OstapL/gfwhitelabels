@@ -205,7 +205,10 @@
 		margin-bottom: rem(45)
 	.m-l-30
 		margin-left: rem(30)
-
+.raise-wrap
+	.btn
+		&:first-child
+			margin-right: rem(30)
 .home-what-is
 	h2
 		margin-bottom: rem(50)
@@ -219,6 +222,12 @@
 	h2
 		margin-bottom: rem(50)
 
+@media only screen and (max-width : 992px)
+	.home-text-main
+		h1
+			line-height: rem(42)
+	.home-wrap-text-block
+		padding-top: rem(5)
 
 @media only screen and (max-width : 768px)
 	.home-text-main
@@ -240,6 +249,9 @@
 		.btn
 			font-size: rem(12)!important
 			padding: rem(8) rem(15)
+	.home-what-is
+		h2
+			line-height: rem(28)
  
 
 @media only screen and (max-width : 320px)
@@ -249,3 +261,10 @@
 			&:first-child
 				margin-right: 0!important
 				margin-bottom: rem(10)
+	.raise-wrap
+		.container
+			padding-left: 0
+			padding-right: 0
+		.btn
+			&:first-child
+				margin-right: 5px
