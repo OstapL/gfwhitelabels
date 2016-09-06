@@ -77,7 +77,10 @@ define(function() {
 
             events: {
                 'click .tabs-scroll .nav .nav-link': 'smoothScroll',
-                'click .list-group-item-action': 'toggleActiveAccordionTab'
+                'click .list-group-item-action': 'toggleActiveAccordionTab',
+                'click .linkedin-share': 'shareOnLinkedin',
+                'click .facebook-share': 'shareOnFacebook',
+                'click .twitter-share': 'shareOnTwitter',
             },
 
             smoothScroll(e) {
@@ -90,7 +93,7 @@ define(function() {
                     $navBar = $('.navbar.navbar-default');
 
                 $('html, body').stop().animate({
-                    'scrollTop': $target.offset().top - $navBar.height() - 5
+                    'scrollTop': $target.offset().top - $navBar.height() - 15
                 }, 500, 'swing', () => {
                     window.location.hash = e.target.hash;
                     $(document).on("scroll", this.onScrollListener);
@@ -128,12 +131,6 @@ define(function() {
                         currLink.removeClass("active");
                     }
                 });
-            },
-
-            events: {
-                'click .linkedin-share': 'shareOnLinkedin',
-                'click .facebook-share': 'shareOnFacebook',
-                'click .twitter-share': 'shareOnTwitter'
             },
 
             shareOnFacebook: function(event) {

@@ -206,7 +206,7 @@ let appRoutes = Backbone.Router.extend({
             app.views.campaign[id].render();
             //app.cache[window.location.pathname] = app.views.campaign[id].$el.html();
             if(location.hash && $(location.hash).length) {
-                $(location.hash).scrollTo();
+                $(location.hash).scrollTo(65);
             } else {
                 $('#content').scrollTo();
             }
