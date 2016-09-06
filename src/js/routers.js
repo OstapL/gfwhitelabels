@@ -33,9 +33,6 @@ let appRoutes = Backbone.Router.extend({
       'account/login': 'login',
       'account/signup': 'signup',
       'account/logout': 'logout',
-      'account/facebook/login/': 'loginFacebook',
-      'account/google/login/': 'loginGoogle',
-      'account/linkedin/login/': 'loginLinkedin',
       'account/finish/login/': 'finishSocialLogin',
       'account/dashboard/issuer': 'dashboardIssuer',
       'account/dashboard/investor': 'dashboardInvestor',
@@ -841,17 +838,14 @@ let appRoutes = Backbone.Router.extend({
 
     login: function(id) {
         let view = require('views/user');
+
         var a1 = $.ajax(_.extend({
                 url: serverUrl + Urls['rest_login'](),
             }, app.defaultOptionsRequest));
-        var a2 = $.ajax(_.extend({
-                url: serverUrl + Urls['rest_register'](),
-            }, app.defaultOptionsRequest));
-        $.when(a1, a2).done((r1, r2) => {
+        $.when(a1).done((r1) => {
             let loginView = new view.login({
                 el: '#content',
-                login_fields: r1[0].actions.POST,
-                register_fields: r2[0].actions.POST,
+                login_fields: r1.actions.POST,
                 model: new userModel(),
             });
             loginView.render();
@@ -886,84 +880,6 @@ let appRoutes = Backbone.Router.extend({
             console.log(xhr, error);
             app.hideLoading();
         });
-    },
-
-    loginFacebook: function() {
-
-        let socialAuth = require('views/social-auth');
-        let hello = require('hellojs');
-
-        hello('facebook').login({
-            scope: 'public_profile,email'}).then(
-            function (e) {
-                var sendToken = socialAuth.sendToken('facebook', e.authResponse.access_token);
-
-                $.when(sendToken).done(function (data) {
-                    localStorage.setItem('token', data.key);
-                    window.location = '/account/profile';
-                });
-            },
-            function (e) {
-
-                // TODO: notificate user about reason of error;
-                app.routers.navigate(
-                    '/account/login',
-                    {trigger: true, replace: true}
-                );
-            });
-
-    },
-
-    loginLinkedin: function() {
-
-        let socialAuth = require('js/views/social-auth.js');
-        let hello = require('hellojs');
-
-        hello('linkedin').login({
-            scope: 'r_basicprofile,r_emailaddress',}).then(
-            function (e) {
-                var sendToken = socialAuth.sendToken('linkedin', e.authResponse.access_token);
-
-                $.when(sendToken).done(function (data) {
-                    localStorage.setItem('token', data.key);
-                    window.location = '/account/profile';
-                });
-            },
-            function (e) {
-
-                // TODO: notificate user about reason of error;
-                app.routers.navigate(
-                    '/account/login',
-                    {trigger: true, replace: true}
-                );
-            });
-
-    },
-
-    loginGoogle: function() {
-
-        let socialAuth = require('js/views/social-auth.js');
-        let hello = require('hellojs');
-
-        hello('google').login({
-            scope: 'profile,email'}).then(
-            function (e) {
-                var sendToken = socialAuth.sendToken('google', e.authResponse.access_token);
-
-                $.when(sendToken).done(function (data) {
-                    localStorage.setItem('token', data.key);
-                    window.location = '/account/profile';
-                });
-            },
-            function (e) {
-
-                // TODO: notificate user about reason of error;
-                app.routers.navigate(
-                    '/account/login',
-                    {trigger: true, replace: true}
-                );
-            });
-        
     },
 
     finishSocialLogin: function() {
@@ -1042,29 +958,6 @@ app.on('userLoaded', function(data){
  
 
 $(document).ready(function(){
-    // show bottom logo while scrolling page
-
-    $(window).scroll(function(){
-        var $bottomLogo = $('#fade_in_logo'),
-            offsetTopBottomLogo = $bottomLogo.offset().top;
-
-        if (($(window).scrollTop() + $(window).height() >= offsetTopBottomLogo) && !$bottomLogo.hasClass('fade-in') ) {
-            $bottomLogo.addClass('fade-in');
-        }
-    });
-
-    $('.team-member-list article').click(function(){
-        var targetTextId = $(this).data('id-text');
-
-        if ($(targetTextId).hasClass('open')) {
-            $(targetTextId).removeClass('open').slideUp();
-        } else {
-            $(this).closest('.team-member-list').find('.biography-text.open').removeClass('open').hide();
-            $(targetTextId).addClass('open').slideDown();
-        }
-
-    });
-
 
 });
 

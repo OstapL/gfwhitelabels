@@ -81,11 +81,6 @@
 
 		h4
 			font-weight: 400
-
-	.simple-list 
-		padding-left: rem(20)
-		li 
-			margin-bottom: rem(15)
 	ul 
 		li
 			a//TODO перенести в общие стили для ссылок всего сайта
@@ -94,11 +89,38 @@
 				&:hover 
 					color: rgba($footer_text, 0.6)
 
+		&.simple-list 
+			padding-left: rem(20)
+			li 
+				margin-bottom: rem(15)
+
+				a
+					color: $wild_willow
+
+.warning-block
+	@include calc-rem(14)
+
+	position: relative
+
+	padding: rem(10) rem(20)
+	padding-left: rem(35)
+	margin-bottom: rem(20)
+
+	border: 1px $crimson solid
+
+	color: $crimson
+
+	i 
+		position: absolute
+		top: rem(14)
+		left: rem(10)
+
 .position-relative
 	position: relative
 
-
-
+//временный стиль для заглушки вместо гугл мапс на странице контактов
+.map-block img
+	max-width: none
 
 /* end common styles for pages(faq, overview.. etc..) */
 

@@ -1,0 +1,38 @@
+include mixins.pug
+
++breadcrumbs('Success Guide', '', 
+    [
+        ['Home', '/'],
+        ['Success Guide', ''],
+    ]
+)
+
+section.text_block
+    .container
+        .row
+            .offset-lg-2.col-lg-8
+                h2.text-uppercase.dosis.m0.text-xs-center BEFORE YOU BEGIN
+        .row
+            .offset-lg-2.col-lg-8
+                .mt30
+                    p.mb15 The law requires your company to disclose a variety of facts to potential investors. These facts are considered to be material to any investors final decision on whether to invest in your company. They include descriptions of the specific securities being offered, financial and general descriptions of the company’s business and descriptions of the key individuals involved in the company.
+
+                    p.mb15 We will walk you through each of the required pieces of information as you go through your preparation for listing on GrowthFountain. To ease the process, you will want to gather up the following pieces of information before you begin:
+
+                        ul.mt20.simple-list
+                            li Any financial statements of tax disclosures prepared for your company over the last several years
+                            li Any operating agreements or other description of the company’s capital structure
+                            li The names and contact information for your accountants and lawyers
+
+                    // last element has not pb15 class
+                    p In addition, please use the resources available to you on GrowthFountain, including our valuation calculators and our How Much Should I Raise? tool to get an understanding of how much equity you’ll need to offer and which security might be right for you. We also have robust educational material and a blog to help answer questions that can help you manage your campaign and spread the word.
+
+        .row
+            .offset-lg-2.col-lg-8.mt50
+                .controls
+                    a(
+                        href="/pg/success_guide"
+                    ).btn.btn-primary.btn-lg.pull-sm-left.text-uppercase previous 
+                    a(
+                        href="/pg/success_guide_2"
+                    ).btn.btn-primary.btn-lg.pull-sm-right.text-uppercase next 

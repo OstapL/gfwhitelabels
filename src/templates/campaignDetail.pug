@@ -11,7 +11,7 @@ section#home(style="background-image: url(" + (campaign.header_image_data ? camp
         .local-scroll
           a.big-icon.link-6.youtube_popup(data-toggle="modal" href="#videoModal" data-target="#videoModal")
             i.fa.fa-play-circle-o
-          a(href=campaign.company.website).link-6.link-campaing-detail #{ campaign.company.website }
+          a(href=campaign.company.website target="_blank").link-6.link-campaing-detail #{ campaign.company.website }
           .row.social-link
             a(href=campaign.company.facebook target="_blank").link-6.link-campaing-detail
               i.fa.fa-facebook
@@ -27,18 +27,18 @@ section#home(style="background-image: url(" + (campaign.header_image_data ? camp
     .container
       .top-info-wrap
         .top-info-wrap-item
-          .col-lg-2
+          .col-lg-2.p-r-0
             p Type of Security
             h2.font-weight-bold #{ campaign.get_security_type_display }
           if campaign.security_type == 0
-            .col-lg-2
+            .col-lg-2.p-r-0
               p Pre-Money Valuation
               h2.font-weight-bold #{ model.showBeautifulNumber(campaign.premoney_valuation) }
           else
-            .col-lg-2
+            .col-lg-2.p-r-0
               p Percentage Reveue
               h2.font-weight-bold #{ campaign.percentage_revenue }%
-          .col-lg-2
+          .col-lg-2.p-r-0
             p Days Left
             h2.font-weight-bold #{ campaign.days_to_go }
           .col-lg-4.pull-right
@@ -51,11 +51,11 @@ section.campaigndetail
       .row.mt20
         .col-lg-4
           //- a(href="").link-1
-          div.link-1
+          .sity-detail
             i.fa.fa-map-marker
             |  #{ campaign.company.city }, #{ campaign.company.state }
         .col-lg-6
-          a(href="").link-1
+          .date-detail
             i.fa.fa-calendar-check-o
             //- |  Founded in #{ campaign.company.founding_date }
             |  Founded in #{ model.formatDate(campaign.company.founding_date) }
@@ -274,11 +274,12 @@ section
                             h4.card-title.text-uppercase #{v.first_name} #{v.last_name }
                             p.card-text
                                 small.text-muted #{v.title }
-                            a(href=v.facebook target="_blank").link-1
-                              i.fa.fa-facebook
+                            
                             a(href=v.linkedin target="_blank").link-1
                               i.fa.fa-linkedin.more
-                              p.card-text.text-justify #{v.bio}
+                            a(href=v.facebook target="_blank").link-1
+                              i.fa.fa-facebook
+                            p.card-text.text-justify.auto-height #{v.bio}
                             .d-block.text-lg-left.cite_education
                               a(href="#").link-1.text-lg-left
                                 i.fa.fa-home.p-l-0
