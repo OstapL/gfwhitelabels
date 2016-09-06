@@ -13,9 +13,12 @@ include ../../mixins.pug
     .row
         .offset-lg-2.col-xs-8
             ul.list-inline.top-breadcrambs.mb45
-                li.btn.btn-primary.text-uppercase Intro
-                li.btn.btn-secondary.text-uppercase step 2
-                li.btn.btn-secondary.text-uppercase finish
+                li
+                    a(href="/calculator/paybackshare/step-1").current.btn.text-uppercase Intro
+                li
+                    a(href="/calculator/paybackshare/step-2").btn.btn-secondary.text-uppercase step 2
+                li
+                    a(href="/calculator/paybackshare/step-3").btn.btn-secondary.text-uppercase finish
 
     .row
         .offset-lg-3.col-lg-6
