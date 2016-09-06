@@ -3,6 +3,8 @@ import capitalRaiseCalculator from 'components/capitalRaiseCalculator/route';
 import campaignRoute from 'components/campaign/route';
 import pageRoute from 'components/pg/route';
 import raiseFunds from 'components/raisefunds/route';
+import accountAnonymous from 'components/accountAnonymous/route';
+import accountProfile from 'components/accountProfile/route';
 
 let appRoutes = Backbone.Router.extend({
     routes: {
@@ -31,6 +33,14 @@ let appRoutes = Backbone.Router.extend({
         let r5  = new raiseFunds;
         _.each(r5.routes, (funcName, path) => {
             this.routes[path] = r5[funcName];
+        });
+        let r6  = new accountAnonymous;
+        _.each(r6.routes, (funcName, path) => {
+            this.routes[path] = r6[funcName];
+        });
+        let r7  = new accountProfile;
+        _.each(r7.routes, (funcName, path) => {
+            this.routes[path] = r7[funcName];
         });
     },
     

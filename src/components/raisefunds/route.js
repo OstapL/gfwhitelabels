@@ -13,8 +13,8 @@ module.exports = Backbone.Router.extend({
 
     companyCreate() {
         if(!app.user.is_anonymous()) {
-            //let model = require('models/company');
-            let view = require('components/company/views.js');
+            //const model = require('models/company');
+            const view = require('components/company/views.js');
 
             // ToDo
             // Rebuild this
@@ -41,7 +41,7 @@ module.exports = Backbone.Router.extend({
                         model: company,
                     });
 
-                    if(rCampaignList[0]) {
+                    if(rCampaignList[0] && rCampaignList[0][0]) {
                         i.campaign = rCampaignList[0][0];
                     }
                     else {
@@ -70,8 +70,8 @@ module.exports = Backbone.Router.extend({
 
     campaignGeneralInformation(id) {
         if(!app.user.is_anonymous()) {
-            let model = require('components/campaign/models.js');
-            let view = require('components/campaign/views.js');
+            const model = require('components/campaign/models.js');
+            const view = require('components/raisefunds/views.js');
 
             let company_id = app.getParams().company_id;
 
@@ -130,8 +130,8 @@ module.exports = Backbone.Router.extend({
 
     campaignMedia(id) {
         if(!app.user.is_anonymous()) {
-            let model = require('components/campaign/models.js');
-            let view = require('components/campaign/views.js');
+            const model = require('components/campaign/models.js');
+            const view = require('components/raisefunds/views.js');
             let campaign = new model.model({
                 id: id
             });
@@ -166,8 +166,8 @@ module.exports = Backbone.Router.extend({
 
     campaignTeamMembers(id) {
         if(!app.user.is_anonymous()) {
-            let model = require('components/campaign/models.js');
-            let view = require('components/campaign/views.js');
+            const model = require('components/campaign/models.js');
+            const view = require('components/raisefunds/views.js');
 
             let members = new model.model({
                 id: id
@@ -196,8 +196,8 @@ module.exports = Backbone.Router.extend({
 
     campaignTeamMembersAdd(id, type, index) {
         if(!app.user.is_anonymous()) {
-            let model = require('components/campaign/models.js');
-            let view = require('components/campaign/views.js');
+            const model = require('components/campaign/models.js');
+            const view = require('components/raisefunds/views.js');
 
             let members = new model.model({
                 id: id
@@ -226,8 +226,8 @@ module.exports = Backbone.Router.extend({
 
     campaignSpecifics(id) {
         if(!app.user.is_anonymous()) {
-            let model = require('components/campaign/models.js');
-            let view = require('components/campaign/views.js');
+            const model = require('components/campaign/models.js');
+            const view = require('components/raisefunds/views.js');
 
             let campaign = new model.model({
                 id: id
@@ -265,8 +265,8 @@ module.exports = Backbone.Router.extend({
 
     campaignPerks(id) {
         if(!app.user.is_anonymous()) {
-            let model = require('components/campaign/models.js');
-            let view = require('components/campaign/views.js');
+            const model = require('components/campaign/models.js');
+            const view = require('components/raisefunds/views.js');
 
             let campaign = new model.model({
                 id: id

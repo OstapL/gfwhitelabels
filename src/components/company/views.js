@@ -10,6 +10,7 @@ module.exports = {
         },
 
         render: function() {
+            console.log('asdf', this, this.campaign);
             this.$el.html(
                 this.template({
                     serverUrl: serverUrl,
