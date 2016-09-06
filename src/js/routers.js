@@ -300,7 +300,7 @@ let appRoutes = Backbone.Router.extend({
                         model: company,
                     });
 
-                    if(rCampaignList[0]) {
+                    if(rCampaignList[0] && rCampaignList[0][0]) {
                         i.campaign = rCampaignList[0][0];
                     }
                     else {
