@@ -45,10 +45,10 @@ section.small-section.filter
 
             .create-alert-block
                 .row
-                    .col-sm-9.col-lg-10
+                    .col-sm-6.col-lg-10.col-xs-12.text-sm-left.text-xs-center
                         a(href="#").pull-right.btn.mr30.text-uppercase.auth-pop create alert
 
-                    .col-sm-3.col-lg-2
+                    .col-sm-6.col-lg-2.col-xs-12.text-xs-center
                         select.orderby.custom-select
                             option(checked="checked" value="0") Order by
 section.campaing-list
@@ -56,7 +56,7 @@ section.campaing-list
         .row
             for campaign in campaigns
 
-                .col-lg-4
+                .col-lg-4.col-xs-12.col-sm-12.col-md-12
                     a(href=Urls['campaign-detail'](campaign.id)).block_link
                     .one_block
                         .for_img
@@ -89,7 +89,7 @@ section.campaing-list
                                         p Expiration Date: #{campaign.expiration_date}
 
 
-                        .title
+                        .title.text-xs-center
                             h3.m-t-0= campaign.company.name
                             span.place
                                 i.fa.fa-map-marker
