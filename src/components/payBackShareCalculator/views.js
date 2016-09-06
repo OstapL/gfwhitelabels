@@ -1,15 +1,17 @@
 import './styles/style.sass'
-import '../../../../node_modules/jquery.inputmask/dist/jquery.inputmask.bundle.js';
+import 'jquery.inputmask/dist/jquery.inputmask.bundle.js';
 import calculatorHelper from '../../helpers/calculatorHelpers';
 import flyPriceFormatter from '../../helpers/flyPriceFormatter';
-import '../../jqplot/jquery.jqplot.js';
-import '../../jqplot/plugins/jqplot.highlighter.js';
-import '../../jqplot/plugins/jqplot.canvasTextRenderer.js';
-import '../../jqplot/plugins/jqplot.canvasAxisLabelRenderer.js';
-import '../../jqplot/plugins/jqplot.pointLabels.js';
+/*
+import 'js/jqplot/jquery.jqplot.js';
+import 'jqplot/plugins/jqplot.highlighter.js';
+import 'jqplot/plugins/jqplot.canvasTextRenderer.js';
+import 'jqplot/plugins/jqplot.canvasAxisLabelRenderer.js';
+import 'jqplot/plugins/jqplot.pointLabels.js';
+*/
 
 
-let formatPrice = calculatorHelper.formatPrice;
+const formatPrice = calculatorHelper.formatPrice;
 
 module.exports = {
     step1: Backbone.View.extend({

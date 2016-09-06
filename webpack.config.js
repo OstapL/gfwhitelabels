@@ -9,6 +9,7 @@ module.exports = {
     devtool: 'eval-source',
     output: {
         path: __dirname + '/dist',
+        publicPath: '/',
         filename: 'bundle.js'
     },
 
@@ -26,10 +27,8 @@ module.exports = {
     resolve: {
         extensions: ['', '.js', '.pug', '.sass', '.scss'],
         modulesDirectories: [
-            './',
-            'js',
-            'src',
-            'node_modules'
+            './src',
+            './node_modules'
         ]
     },
 

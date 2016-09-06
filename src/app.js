@@ -1,13 +1,13 @@
-global.config = require('config');
+global.config = require('js/config');
 global.jQuery = global.$ = require('jquery');
 global._ = require('underscore');
 global.Backbone = require('backbone');
 global.Backbone.Validation = require('backbone-validation');
 global.Tether = require('tether');
-global.Bootstrap = require('../node_modules/bootstrap/dist/js/bootstrap.min.js');
-global.userModel = require('models/user.js');
-global.Urls = require('jsreverse.js');
-require('../node_modules/jquery-serializejson/jquery.serializejson.min.js');
+global.Bootstrap = require('bootstrap/dist/js/bootstrap.min.js');
+global.userModel = require('./js/models/user.js');
+global.Urls = require('./js/jsreverse.js');
+require('jquery-serializejson/jquery.serializejson.min.js');
 
 "use strict";
 
@@ -553,5 +553,3 @@ $('body').on('click', 'a', function(event) {
         }
     }
 });
-
-Backbone.history.start({pushState: false});
