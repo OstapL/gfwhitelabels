@@ -784,6 +784,7 @@ let appRoutes = Backbone.Router.extend({
 
     pagePG: function(name) {
         console.log(name);
+        let graphs = require('js/graf.js');
         let view = require('templates/' + name + '.pug');
         $('#content').html(view({
                 Urls: Urls,
