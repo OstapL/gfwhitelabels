@@ -5,22 +5,26 @@
 
     .top-breadcrambs
         li 
+            display: inline-block
             margin-right: .5%
-            padding: rem(14)
             width: 32%
 
-            cursor: default
+            a 
+                padding: rem(14)
+                width: 100%
 
-            &.btn-primary:hover
-                background: $elm
-                border-color: $elm
-
-            &.btn-secondary
-                color: $small-text
                 border-color: $alabaster
                 background: $alabaster
-                &:hover
-                    background: $alabaster
+
+                text-align: center
+                color: $small-text
+
+                &.current
+                    pointer-events: none
+                    background: $btn-primary-hover-bg
+                    border-color: $btn-primary-hover-bg
+                    color: $white
+                    cursor: default
 
     .simple-list
         padding-left: rem(17)
