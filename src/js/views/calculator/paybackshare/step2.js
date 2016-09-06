@@ -1,4 +1,4 @@
-require('sass/pages/_calculator.sass');
+// require('sass/pages/_calculator.sass');
 require("../../../../../node_modules/jquery.inputmask/dist/jquery.inputmask.bundle.js");
 
 var calculatorHelper = require("../../../helpers/calculatorHelpers");
