@@ -50,11 +50,11 @@ _.extend(Backbone.Validation.callbacks, {
         if(Array.isArray(error) !== true)
             error = [error]
 
-        // if element not found - we will show error just in alert-warning div 
+        // if element not found - we will show error just in alert-warning div
         if($el.length == 0) {
             $el = view.$('form > .alert-warning');
 
-            // If we don't have alert-warning - we should create it as 
+            // If we don't have alert-warning - we should create it as
             // first element in form
             if($el.length == 0) {
 
@@ -197,8 +197,8 @@ global.app = {
 
     ,
 
-    /* 
-     * Misc Display Functions 
+    /*
+     * Misc Display Functions
      *
      */
     showLoading: function() {
@@ -306,13 +306,13 @@ global.app = {
             }
             view.$el.find('.alert-warning').remove();
             view.$el.find('.help-block').remove();
-            
+
             if(xhr.hasOwnProperty('responseJSON')) {
                 let data = xhr.responseJSON;
 
                 data = data ? data : {'Server': status};
-                for (let key in data)  {                                                 
-                  Backbone.Validation.callbacks.invalid(                                 
+                for (let key in data)  {
+                  Backbone.Validation.callbacks.invalid(
                     view, key, data[key]
                   );
                 }
@@ -392,7 +392,7 @@ global.app = {
 
       /*
       dropbox.on('sending', function(data) {
-          data.xhr.setRequestHeader("X-CSRFToken", getCSRF());   
+          data.xhr.setRequestHeader("X-CSRFToken", getCSRF());
       });
       */
 
@@ -441,7 +441,7 @@ global.app = {
         } catch(err) {
                 console.log(url, "Takes a YouTube or Vimeo URL");
         }
-    }, 
+    },
 
     getThumbnail: function(size, thumbnails, _default) {
         let thumb = thumbnails.find(function(el) {
@@ -452,7 +452,7 @@ global.app = {
         return (thumb ? thumb.url : _default || '/img/default/default.png')
     },
     getDropzoneUrl: function(name, attr, values) {
-        // If we have data attribute for a file  - we will 
+        // If we have data attribute for a file  - we will
         // try to find url that match our size
         if(values[name + '_data'] && attr.thumbSize) {
             let thumbnails = values[name + '_data'].thumbnails;
@@ -467,6 +467,7 @@ global.app = {
 _.extend(app, Backbone.Events);
 app.user = new userModel();
 
+// app routers
 require('routers');
 
 app.user.load();
@@ -516,8 +517,8 @@ $('body').on('click', 'a', function(event) {
     var href = event.currentTarget.getAttribute('href');
     if(href == window.location.pathname) {
         window.location.reload();
-    } else if(href && href != '' && href.substr(0,1) != '#' && 
-        href.substr(0, 4) != 'http' && 
+    } else if(href && href != '' && href.substr(0,1) != '#' &&
+        href.substr(0, 4) != 'http' &&
         href.substr(0,3) != 'ftp' &&
         href != 'javascript:void(0);' &&
         href != 'javascript:void(0)' &&
@@ -553,4 +554,4 @@ $('body').on('click', 'a', function(event) {
     }
 });
 
-Backbone.history.start({pushState: true});
+Backbone.history.start({pushState: false});

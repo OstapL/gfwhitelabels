@@ -1,4 +1,7 @@
 
+import payBackShareCalculator from './components/payBackShareCalculator/entry';
+import capitalRaiseCalculator from './components/capitalRaiseCalculator/entry';
+
 let appRoutes = Backbone.Router.extend({
     routes: {
       '': 'mainPage',
@@ -9,7 +12,7 @@ let appRoutes = Backbone.Router.extend({
       'pg/:name': 'pagePG',
       'page/:id/': 'pageDetail',
       'page/:id': 'pageDetail',
-    
+
       // Company Campaign URLS
       'company/create': 'companyCreate',
       'campaign/general_information/': 'campaignGeneralInformation',
@@ -38,15 +41,17 @@ let appRoutes = Backbone.Router.extend({
       'account/linkedin/login/': 'loginLinkedin',
       'account/finish/login/': 'finishSocialLogin',
       'account/dashboard/issuer': 'dashboardIssuer',
-      'account/dashboard/investor': 'dashboardInvestor',
-      'calculator/paybackshare/step-1': 'calculatorPaybackshareStep1',
-      'calculator/paybackshare/step-2': 'calculatorPaybackshareStep2',
-      'calculator/paybackshare/step-3': 'calculatorPaybackshareStep3',
-        
-      'calculator/capitalraise/intro': 'calculatorCapitalraiseIntro',
-      'calculator/capitalraise/step-1': 'calculatorCapitalraiseStep1',
-      'calculator/capitalraise/finish': 'calculatorCapitalraiseFinish'
+      'account/dashboard/investor': 'dashboardInvestor'
     },
+    
+    initialize() {
+        // add routes of components
+        this._subRouters = {
+            'payBackShareCalculator' : new payBackShareCalculator.router,
+            'capitalRaiseCalculator ' : new capitalRaiseCalculator.router
+        };
+    },
+    
     back: function(event) {
         var url = event.target.pathname;
         $('#content').undelegate();
@@ -65,72 +70,6 @@ let appRoutes = Backbone.Router.extend({
                 {trigger: false, replace: false}
             );
         }
-        app.hideLoading();
-    },
-
-    calculatorPaybackshareStep1() {
-        let Model = require('models/calculators/paybackshare');
-        let View = require('views/calculator/paybackshare/step1');
-
-        new View({
-            model: app.getModelInstance(Model, 'calculatorPaybackshare').setFormattedPrice()
-        }).render();
-
-        app.hideLoading();
-    },
-
-    calculatorPaybackshareStep2: function() {
-        let Model = require('models/calculators/paybackshare');
-        let View = require('views/calculator/paybackshare/step2');
-
-        new View({
-            model: app.getModelInstance(Model, 'calculatorPaybackshare').setFormattedPrice()
-        }).render();
-        
-        app.hideLoading();
-    },
-
-    calculatorPaybackshareStep3: function() {
-        let Model = require('models/calculators/paybackshare');
-        let View = require('views/calculator/paybackshare/step3');
-
-        new View({
-            model: app.getModelInstance(Model, 'calculatorPaybackshare').setFormattedPrice()
-        }).render();
-
-        app.hideLoading();
-    },
-
-    calculatorCapitalraiseIntro() {
-        let Model = require('models/calculators/capitalraise');
-        let View = require('views/calculator/capitalraise/intro');
-
-        new View({
-            model: app.getModelInstance(Model, 'calculatorCapitalraise').setFormattedPrice()
-        }).render();
-
-        app.hideLoading();
-    },
-
-    calculatorCapitalraiseStep1() {
-        let Model = require('models/calculators/capitalraise');
-        let View = require('views/calculator/capitalraise/step1');
-
-        new View({
-            model: app.getModelInstance(Model, 'calculatorCapitalraise').setFormattedPrice()
-        }).render();
-
-        app.hideLoading();
-    },
-
-    calculatorCapitalraiseFinish() {
-        let Model = require('models/calculators/capitalraise');
-        let View = require('views/calculator/capitalraise/finish');
-
-        new View({
-            model: app.getModelInstance(Model, 'calculatorCapitalraise').setFormattedPrice()
-        }).render();
-
         app.hideLoading();
     },
 
@@ -473,7 +412,7 @@ let appRoutes = Backbone.Router.extend({
                 addForm.render();
                 app.hideLoading();
             });
-            
+
         } else {
             app.routers.navigate(
                 '/account/login',
@@ -496,7 +435,7 @@ let appRoutes = Backbone.Router.extend({
                     url: campaign.urlRoot,
                 }, app.defaultOptionsRequest)
             );
-            
+
             $.when(a1, a2).done((r1, r2) => {
                 console.log(r1, r2);
                 var i = new view.specifics({
@@ -535,7 +474,7 @@ let appRoutes = Backbone.Router.extend({
                     url: campaign.urlRoot,
                 }, app.defaultOptionsRequest)
             );
-            
+
             $.when(a1, a2).done((r1, r2) => {
                 var i = new view.perks({
                     el: '#content',
@@ -627,7 +566,7 @@ let appRoutes = Backbone.Router.extend({
                     url: campaign.urlRoot,
                 }, app.defaultOptionsRequest)
             );
-            
+
             $.when(a1, a2).done((r1, r2) => {
                 var i = new view.teamMembers({
                     el: '#content',
@@ -662,7 +601,7 @@ let appRoutes = Backbone.Router.extend({
                     url: campaign.urlRoot,
                 }, app.defaultOptionsRequest)
             );
-            
+
             $.when(a1, a2).done((r1, r2) => {
                 var i = new view.relatedParties({
                     el: '#content',
@@ -697,7 +636,7 @@ let appRoutes = Backbone.Router.extend({
                     url: campaign.urlRoot,
                 }, app.defaultOptionsRequest)
             );
-            
+
             $.when(a1, a2).done((r1, r2) => {
                 var i = new view.offering({
                     el: '#content',
@@ -732,7 +671,7 @@ let appRoutes = Backbone.Router.extend({
                     url: campaign.urlRoot,
                 }, app.defaultOptionsRequest)
             );
-            
+
             $.when(a1, a2).done((r1, r2) => {
                 var i = new view.useOfProceeds({
                     el: '#content',
@@ -826,7 +765,7 @@ let appRoutes = Backbone.Router.extend({
         let pageModel = require('models/page');
         let pageView = require('views/page');
         let template = require('templates/mainPage.pug');
-        
+
         app.cache[window.location.pathname] = template();
         $('#content').html(template());
         app.hideLoading();
@@ -957,7 +896,7 @@ let appRoutes = Backbone.Router.extend({
                     {trigger: true, replace: true}
                 );
             });
-        
+
     },
 
     finishSocialLogin: function() {
@@ -1033,7 +972,7 @@ app.on('userLoaded', function(data){
     );
     console.log('user ready');
 });
- 
+
 
 $(document).ready(function(){
     // show bottom logo while scrolling page
