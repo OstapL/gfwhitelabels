@@ -35,7 +35,7 @@ section.create-company-team-add.container
                         .team-add-item.text-lg-center.text-xs-center
                             img(src=v.photo alt=v.first_name).img-circle
                             p.name.text-uppercase #{v.first_name} #{v.last_name}
-                            p.small #{ v.type }
+                            p.small #{ v.title }
                             a(href="/campaign/team-members/" + values.id + "/add/" + v.type + '/' + counter).link-1
                                 i.fa.fa-pencil-square-o
                     - counter ++
