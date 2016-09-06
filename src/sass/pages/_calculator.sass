@@ -1,8 +1,51 @@
-.calculator-container
-    padding: 35px 0 20px
 
-.calculator-title
-    margin-bottom: 25px
+.calculator-container
+    h3 
+        line-height: rem(24)
+
+    .top-breadcrambs
+        li 
+            margin-right: .5%
+            padding: rem(14)
+            width: 32%
+
+            cursor: default
+
+            &.btn-primary:hover
+                background: $elm
+                border-color: $elm
+
+            &.btn-secondary
+                color: $small-text
+                border-color: $alabaster
+                background: $alabaster
+                &:hover
+                    background: $alabaster
+
+    .simple-list
+        padding-left: rem(17)
+
+    .list-style-alphabet
+        list-style-type: upper-alpha
+
+    .form-group 
+        margin-bottom: rem(20)
+
+    .jqplot-title
+        display: none
+
+    table 
+        thead tr th 
+            padding: rem(15)
+
+            text-align: center
+
+        tbody tr td,
+        tbody tr th
+            text-align: center
+
+
+
 
 .table-custom-data
     table-layout: fixed

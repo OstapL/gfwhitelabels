@@ -1,4 +1,4 @@
-require('sass/pages/_calculator.sass');
+// require('sass/pages/_calculator.sass');
 
 var calculatorHelper = require("../../../helpers/calculatorHelpers");
 var formatPrice = calculatorHelper.formatPrice;
