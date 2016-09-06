@@ -88,7 +88,7 @@ mixin fieldBlock(name, data, attr)
                             value=data[0] || new Date().getFullYear()
                           ).form-control
         else if attr.type == 'textarea' 
-                label(class= attr.text_align ? 'text-md-' + attr.text_align + ' ' + attr.class1 : ' text-md-right ' + attr.class1 for=name)= fields[name].label
+                label(class= attr.text_align ? 'text-lg-' + attr.text_align + ' ' + attr.class1 : ' text-lg-right ' + attr.class1 for=name)= fields[name].label
                 div(class=attr.class2)
                     textarea(
                         id=name
@@ -208,7 +208,7 @@ mixin fieldBlock(name, data, attr)
                         - counter ++
                         - indexCounter ++
         else
-                label(class= attr.text_align ? 'text-md-' + attr.text_align + ' ' + attr.class1 : ' text-md-right ' + attr.class1 for=name)= fields[name].label
+                label(class= attr.text_align ? 'text-lg-' + attr.text_align + ' ' + attr.class1 : ' text-lg-right ' + attr.class1 for=name)= fields[name].label
                 div(class=attr.class2)
                     input(
                         id=name
