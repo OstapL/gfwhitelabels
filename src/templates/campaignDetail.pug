@@ -27,7 +27,7 @@ section#home(style="background-image: url(" + (campaign.header_image_data ? camp
     .container
       .top-info-wrap
         .top-info-wrap-item
-          .col-lg-2.p-r-0
+          .col-lg-3.p-r-0
             p Type of Security
             h2.font-weight-bold #{ campaign.get_security_type_display }
           if campaign.security_type == 0
@@ -361,17 +361,17 @@ section
         .col-lg-8.offset-lg-2
           .col-lg-4
             p Official filing on SEC.gov
-            a(href="")
+            a(href="" target="_blank")
               img(src="/img/lrg_US_Department_of_State35.gif").img-document.d-inline-block
               h3.d-inline-block  Form C
           .col-lg-4
             p Company documents
-            a(href="")
+            a(href="" target="_blank")
               i.fa.fa-file-pdf-o.d-inline-block
               h3.d-inline-block Financials
           .col-lg-4.row
             p Company documents
-            a(href="")
+            a(href="" target="_blank")
               i.fa.fa-file-powerpoint-o.d-inline-block
               h3.d-inline-block Investor Presentation
   section.overview
@@ -380,7 +380,7 @@ section
         h2#overview.col-lg-12.dosis.text-uppercase.text-lg-center.green-heading overview and terms
         //- h3.col-lg-12.text-lg-center Fundraising Description
         h3.text-uppercase.text-lg-center.green-heading Fundraising Description
-        .col-lg-8.offset-lg-2.fundraising
+        .col-lg-12.fundraising
           .jumbotron.jumbotron-fluid
             .container
               .row
