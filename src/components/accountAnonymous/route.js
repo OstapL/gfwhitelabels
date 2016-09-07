@@ -7,7 +7,6 @@ module.exports = Backbone.Router.extend({
         'account/linkedin/login/': 'loginLinkedin',
         'account/finish/login/': 'finishSocialLogin',
         'account/reset': 'resetPassword',
-        'account/change-password': 'changePassword',
     },
 
     login(id) {
