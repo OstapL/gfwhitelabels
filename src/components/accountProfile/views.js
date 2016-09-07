@@ -139,4 +139,14 @@ module.exports = {
             this.cityStateArea.text(`${this.cityField.val()}/${this.stateField.val()}`);
         }
     }),
+    changePassword: Backbone.View.extend({
+            initialize: function(options){
+
+            },
+            render: function(){
+                let template = require('templates/changePassword.pug');
+                this.$el.html(template({}));
+                return this;
+            }
+    }),
 };

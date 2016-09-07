@@ -6,6 +6,7 @@ module.exports = Backbone.Router.extend({
         'account/google/login/': 'loginGoogle',
         'account/linkedin/login/': 'loginLinkedin',
         'account/finish/login/': 'finishSocialLogin',
+        'account/reset': 'resetPassword',
     },
 
     login(id) {
@@ -149,6 +150,17 @@ module.exports = Backbone.Router.extend({
         require.ensure([], function() {
             const socialAuth = require('js/views/social-auth.js');
             const hello = require('hellojs');
+        });
+    },
+
+    resetPassword: function() {
+        require.ensure([], function() {
+            const view = require('components/accountAnonymous/views.js');
+            let i = new view.reset({
+                el: '#content',
+            });
+            i.render();
+            app.hideLoading();
         });
     },
 
