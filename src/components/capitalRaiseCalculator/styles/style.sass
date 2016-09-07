@@ -3,24 +3,24 @@
 	h3 
 		line-height: rem(24)
 
-	.top-breadcrambs
-		li 
-			margin-right: .5%
-			padding: rem(14)
-			width: 32%
-
-			cursor: default
-
-			&.btn-primary:hover
-				//background: $elm
-				//border-color: $elm
-
-			&.btn-secondary
-				//color: $small-text
-				//border-color: $alabaster
-				//background: $alabaster
-				&:hover
-				//	background: $alabaster
+  .top-breadcrambs
+      li 
+          display: inline-block
+          margin-right: .5%
+          width: 32%
+          a 
+              padding: rem(14)
+              width: 100%
+              border-color: $alabaster
+              background: $alabaster
+              text-align: center
+              color: $small-text
+              &.current
+                  pointer-events: none
+                  background: $btn-primary-hover-bg
+                  border-color: $btn-primary-hover-bg
+                  color: $white
+                  cursor: default
 
 	.simple-list
 		padding-left: rem(17)
