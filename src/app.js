@@ -538,27 +538,12 @@ $('body').on('click', '.team-member-list article', function(){
 $('body').on('click', '#toggle_mobile_menu', function(){
     $('html').toggleClass('show-menu');
     $('#ac-gn-menustate').click();
-    // var targetTextId = $(this).data('id-text');
 
-    // if ($(targetTextId).hasClass('open')) {
-    //     $(targetTextId).removeClass('open').slideUp();
-    // } else {
-    //     $(this).closest('.team-member-list').find('.biography-text.open').removeClass('open').hide();
-    //     $(targetTextId).addClass('open').slideDown();
-    // }
 });
 
 $('body').on('click', '#menuList .nav-item', function(){
     $(this).find('.list-container').slideToggle();
-    // $('.mobile-menu .form-inline').toggleClass('absolute-pos');
-    // var targetTextId = $(this).data('id-text');
 
-    // if ($(targetTextId).hasClass('open')) {
-    //     $(targetTextId).removeClass('open').slideUp();
-    // } else {
-    //     $(this).closest('.team-member-list').find('.biography-text.open').removeClass('open').hide();
-    //     $(targetTextId).addClass('open').slideDown();
-    // }
 });
 
 $('body').on('click', 'a', function(event) {
