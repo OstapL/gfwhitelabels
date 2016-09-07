@@ -9,7 +9,7 @@ let appRoutes = Backbone.Router.extend({
       'pg/:name': 'pagePG',
       'page/:id/': 'pageDetail',
       'page/:id': 'pageDetail',
-    
+
       // Company Campaign URLS
       'company/create': 'companyCreate',
       'campaign/general_information/': 'campaignGeneralInformation',
@@ -33,13 +33,15 @@ let appRoutes = Backbone.Router.extend({
       'account/login': 'login',
       'account/signup': 'signup',
       'account/logout': 'logout',
+      'account/reset': 'resetPassword',
+      'account/change-password': 'changePassword',
       'account/finish/login/': 'finishSocialLogin',
       'account/dashboard/issuer': 'dashboardIssuer',
       'account/dashboard/investor': 'dashboardInvestor',
       'calculator/paybackshare/step-1': 'calculatorPaybackshareStep1',
       'calculator/paybackshare/step-2': 'calculatorPaybackshareStep2',
       'calculator/paybackshare/step-3': 'calculatorPaybackshareStep3',
-        
+
       'calculator/capitalraise/intro': 'calculatorCapitalraiseIntro',
       'calculator/capitalraise/step-1': 'calculatorCapitalraiseStep1',
       'calculator/capitalraise/finish': 'calculatorCapitalraiseFinish'
@@ -83,7 +85,7 @@ let appRoutes = Backbone.Router.extend({
         new View({
             model: app.getModelInstance(Model, 'calculatorPaybackshare').setFormattedPrice()
         }).render();
-        
+
         app.hideLoading();
     },
 
@@ -203,7 +205,7 @@ let appRoutes = Backbone.Router.extend({
             app.views.campaign[id].render();
             //app.cache[window.location.pathname] = app.views.campaign[id].$el.html();
             if(location.hash && $(location.hash).length) {
-                $(location.hash).scrollTo(65);
+                setTimeout(function(){$(location.hash).scrollTo(65);}, 100);
             } else {
                 $('#content').scrollTo();
             }
@@ -474,7 +476,7 @@ let appRoutes = Backbone.Router.extend({
                 addForm.render();
                 app.hideLoading();
             });
-            
+
         } else {
             app.routers.navigate(
                 '/account/login',
@@ -497,7 +499,7 @@ let appRoutes = Backbone.Router.extend({
                     url: campaign.urlRoot,
                 }, app.defaultOptionsRequest)
             );
-            
+
             $.when(a1, a2).done((r1, r2) => {
                 console.log(r1, r2);
                 var i = new view.specifics({
@@ -536,7 +538,7 @@ let appRoutes = Backbone.Router.extend({
                     url: campaign.urlRoot,
                 }, app.defaultOptionsRequest)
             );
-            
+
             $.when(a1, a2).done((r1, r2) => {
                 var i = new view.perks({
                     el: '#content',
@@ -630,7 +632,7 @@ let appRoutes = Backbone.Router.extend({
                     url: campaign.urlRoot,
                 }, app.defaultOptionsRequest)
             );
-            
+
             $.when(a1, a2).done((r1, r2) => {
                 var i = new view.teamMembers({
                     el: '#content',
@@ -665,7 +667,7 @@ let appRoutes = Backbone.Router.extend({
                     url: campaign.urlRoot,
                 }, app.defaultOptionsRequest)
             );
-            
+
             $.when(a1, a2).done((r1, r2) => {
                 var i = new view.relatedParties({
                     el: '#content',
@@ -700,7 +702,7 @@ let appRoutes = Backbone.Router.extend({
                     url: campaign.urlRoot,
                 }, app.defaultOptionsRequest)
             );
-            
+
             $.when(a1, a2).done((r1, r2) => {
                 var i = new view.offering({
                     el: '#content',
@@ -735,7 +737,7 @@ let appRoutes = Backbone.Router.extend({
                     url: campaign.urlRoot,
                 }, app.defaultOptionsRequest)
             );
-            
+
             $.when(a1, a2).done((r1, r2) => {
                 var i = new view.useOfProceeds({
                     el: '#content',
@@ -784,6 +786,7 @@ let appRoutes = Backbone.Router.extend({
 
     pagePG: function(name) {
         console.log(name);
+        let graphs = require('js/graf.js');
         let view = require('templates/' + name + '.pug');
         $('#content').html(view({
                 Urls: Urls,
@@ -829,7 +832,7 @@ let appRoutes = Backbone.Router.extend({
         let pageModel = require('models/page');
         let pageView = require('views/page');
         let template = require('templates/mainPage.pug');
-        
+
         app.cache[window.location.pathname] = template();
         $('#content').html(template());
         app.hideLoading();
@@ -898,6 +901,24 @@ let appRoutes = Backbone.Router.extend({
         });
     },
 
+    resetPassword: function() {
+        let view = require('views/user');
+        var i = new view.reset({
+            el: '#content',
+        });
+        i.render();
+        app.hideLoading();
+    },
+
+    changePassword: function() {
+        let view = require('views/user');
+        var i = new view.changePassword({
+            el: '#content',
+        });
+        i.render();
+        app.hideLoading();
+    }
+
 });
 
 app.on('userLoaded', function(data){
@@ -955,10 +976,8 @@ app.on('userLoaded', function(data){
     );
     console.log('user ready');
 });
- 
+
 
 $(document).ready(function(){
 
 });
-
-
