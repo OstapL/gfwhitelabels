@@ -1,4 +1,4 @@
-var calculatorHelper = require("../../helpers/calculatorHelpers");
+import calculatorHelper from '../../helpers/calculatorHelpers';
 var formatPrice = calculatorHelper.formatPrice;
 
 module.exports = Backbone.Model.extend({

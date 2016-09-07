@@ -1,7 +1,7 @@
-var calculatorHelper = require("../../helpers/calculatorHelpers");
-var formatPrice = calculatorHelper.formatPrice;
-var lookupData = require("../../helpers/capitalraiseCalculatorData");
+import calculatorHelper from '../../helpers/calculatorHelpers';
+import lookupData from '../../helpers/capitalraiseCalculatorData';
 
+let formatPrice = calculatorHelper.formatPrice;
 let industryData = lookupData();
 
 module.exports = Backbone.Model.extend({
@@ -108,7 +108,7 @@ module.exports = Backbone.Model.extend({
 
         // calculate average NPV
         this.set('averageNPV', (this.get('year1Npv') + this.get('year5Npv')) / 2);
-        
+
         // calculate Liquidity-Adjusted Average NPV
         this.set({
             'liquidityAdjustmentAverageNPV': this.get('averageNPV') / (1 - this.get('liquidityAdjustment'))
@@ -116,7 +116,7 @@ module.exports = Backbone.Model.extend({
 
         // calculate probability of failure (depends on Industry/Product Permutation)
         this.probabilityOfFailure();
-        
+
         // calculate GrowthFountain Recommended Pre Money Valuation
         this.set({
             'PreMoneyValuation': Math.ceil(this.get('liquidityAdjustmentAverageNPV') / (1 + this.get('probabilityOfFailure')))

@@ -1,5 +1,5 @@
-var calculatorHelper = require("../helpers/calculatorHelpers");
-var formatPrice = calculatorHelper.formatPrice;
+import calcHelpers from '../../helpers/calculatorHelpers';
+const formatPrice = calcHelpers.formatPrice;
 
 define(function() {
     let r = {

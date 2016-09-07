@@ -10,7 +10,7 @@ mixin breadcrumbs(title, subtitle, data)
                 .pull-right
                     ol.breadcrumb.pull-right.m0
                         each elem in data
-                            - let active = (elem[1] == '') ? 'active' : ''
+                            - var active = (elem[1] == '') ? 'active' : ''
                             li.breadcrumb-item(class=" " + active)
                                 if elem[1] == ''
                                     = elem[0]
@@ -88,7 +88,7 @@ mixin fieldBlock(name, data, attr)
                             value=data[0] || new Date().getFullYear()
                           ).form-control
         else if attr.type == 'textarea' 
-                label(class= attr.text_align ? 'text-md-' + attr.text_align + ' ' + attr.class1 : ' text-md-right ' + attr.class1 for=name)= fields[name].label
+                label(class= attr.text_align ? 'text-lg-' + attr.text_align + ' ' + attr.class1 : ' text-lg-right ' + attr.class1 for=name)= fields[name].label
                 div(class=attr.class2)
                     textarea(
                         id=name
@@ -208,7 +208,7 @@ mixin fieldBlock(name, data, attr)
                         - counter ++
                         - indexCounter ++
         else
-                label(class= attr.text_align ? 'text-md-' + attr.text_align + ' ' + attr.class1 : ' text-md-right ' + attr.class1 for=name)= fields[name].label
+                label(class= attr.text_align ? 'text-lg-' + attr.text_align + ' ' + attr.class1 : ' text-lg-right ' + attr.class1 for=name)= fields[name].label
                 div(class=attr.class2)
                     input(
                         id=name
@@ -218,6 +218,7 @@ mixin fieldBlock(name, data, attr)
                         class=(fields[name].help_text ? 'showPopover' : '') 
                         data-content=(fields[name].help_text ? fields[name].help_text : '')
                         value=values[name]
+                        maxlength = attr.maxlength ? attr.maxlength : ''
                       ).form-control
 
 mixin fieldDropzone(name, attr, type)

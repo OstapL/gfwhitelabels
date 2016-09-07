@@ -382,7 +382,29 @@ define(function() {
             changeAddressManually() {
                 this.cityStateArea.text(`${this.cityField.val()}/${this.stateField.val()}`);
             }
-        })
+        }),
+        
+        reset: Backbone.View.extend({
+            initialize: function(options){
+
+            },
+            render: function(){
+                let template = require('templates/reset.pug');
+                this.$el.html(template({}));
+                return this;
+            }
+        }),
+
+        changePassword: Backbone.View.extend({
+            initialize: function(options){
+
+            },
+            render: function(){
+                let template = require('templates/changePassword.pug');
+                this.$el.html(template({}));
+                return this;
+            }
+        }),
     
     }
 });
