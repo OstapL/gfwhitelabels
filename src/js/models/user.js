@@ -64,7 +64,7 @@ let userModel = Backbone.Model.extend({
                 type: 'GET',
             })
         ).done((response) => {
-            let companyModel = require('models/company.js');
+            let companyModel = require('components/company/models.js');
             var r = new companyModel.model(response[0]);
             callback(new companyModel.model(response[0]));
         }).fail(app.defaultSaveActions.error);
@@ -73,7 +73,7 @@ let userModel = Backbone.Model.extend({
     getCampaign: function(id, callback) {
 
         let company_id = app.getParams().company_id;
-        let campaignModel = require('models/campaign.js');
+        let campaignModel = require('components/campaign/models.js');
 
         if(id === null && typeof company_id === 'undefined') {
             alert('please set up id or company_id');

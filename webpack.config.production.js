@@ -2,37 +2,28 @@ var webpack = require('webpack'),
     ExtractTextPlugin = require('extract-text-webpack-plugin'),
     HtmlWebpackPlugin = require('html-webpack-plugin'),
     autoprefixer = require('autoprefixer'),
-    path = require('path');
+    path = require('path'),
+    cleanWebpackPlugin = require('clean-webpack-plugin');
 
 module.exports = {
     entry: './src/app.js',
-    devtool: 'eval-source',
     output: {
         path: __dirname + '/dist',
         publicPath: '/',
         filename: 'bundle.js'
     },
 
-    devServer: {
-        contentBase: './dist/',
-        historyApiFallback: true,
-        inline: true,
-        hot: true,
-        port: 7070,
-        stats: {
-            colors: true
-        }
-    },
-
     resolve: {
         extensions: ['', '.js', '.pug', '.sass', '.scss'],
         modulesDirectories: [
-            './src',
-            './node_modules'
+            './',
+            'js',
+            'src',
+            'node_modules'
         ]
     },
 
-    debug: true,
+    debug: false,
 
     plugins: [
         new ExtractTextPlugin("style.css"),
@@ -49,7 +40,20 @@ module.exports = {
             "window.Tether": "tether",
             Backbone: "backbone"
         }),
-        new webpack.HotModuleReplacementPlugin()
+        new webpack.optimize.UglifyJsPlugin({
+            mangle: true,
+            compress: {
+                warnings: false
+            },
+            output: {comments: false}
+        }),
+        new cleanWebpackPlugin(['dist'], {
+            root: __dirname,
+            verbose: true,
+            dry: false
+        }),
+        new webpack.optimize.DedupePlugin(),
+        new webpack.optimize.OccurenceOrderPlugin()
     ],
 
     module: {
@@ -64,7 +68,7 @@ module.exports = {
             {test: /\.png$/, loader: 'url?limit=8192&mimetype=image/png'},
             {test: /\.jpe?g$/, loader: 'url?limit=8192&mimetype=image/jpg'},
             {test: /\.gif$/, loader: 'url?limit=8192&mimetype=image/gif'},
-            {test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=8192&mimetype=image/svg+xml'}, 
+            {test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=8192&mimetype=image/svg+xml'},
             {test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=8192&mimetype=application/font-woff2'},
             {test: /\.woff(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=8192&mimetype=application/font-woff'},
             {test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=8192&mimetype=application/octet-stream'},
