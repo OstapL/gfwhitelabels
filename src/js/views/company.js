@@ -6,7 +6,8 @@ define(function() {
             events: {
                 'submit form': 'submit',
                 'keyup #zip_code': 'changeZipCode',
-                'click .update-location': 'updateLocation'
+                'click .update-location': 'updateLocation',
+                'blur input[name=phone]': 'formatPhone',
             },
             initialize: function(options) {
                 this.fields = options.fields;
@@ -19,7 +20,7 @@ define(function() {
 
             changeZipCode: function(e) {
                 // if not 5 digit, return
-                if (e.target.value.length < 5) return;
+                if (e.target.value.length != 5) return;
                 if (!e.target.value.match(/\d{5}/)) return;
                 // else console.log('hello');
                 this.getCityStateByZipCode(e.target.value, ({ success=false, city="", state=""}) => {
@@ -35,6 +36,10 @@ define(function() {
                         console.log("error");
                     }
                 });
+            },
+
+            formatPhone: function(e){
+                this.$('input[name=phone]').val(this.$('input[name=phone]').val().replace(/^\(?(\d{3})\)?-?(\d{3})-?(\d{4})$/, '$1-$2-$3'));
             },
 
             render: function() {

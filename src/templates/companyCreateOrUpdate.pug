@@ -102,6 +102,7 @@ section.create-company.container.m-b-85
         class2: 'col-lg-9 col-md-12',
         type: 'text',
         placeholder: 'Your Company Slogan',
+        maxlength: '30',
         })
       +fieldBlock("description", '', {
         class1: 'col-lg-3 col-md-12 text-md-left',
@@ -217,4 +218,4 @@ section.create-company.container.m-b-85
                                             button(data-dismiss="modal").update-location.btn.btn-lg.btn-primary.text-uppercase save
                 .modal-footer
           
-script(src="http://maps.google.com/maps/api/js?key=AIzaSyBpCl9-7bkVISZ0o-AaFCsKzZwGAxalkZU&language=en")
+script(src="http://maps.google.com/maps/api/js?language=en&key=" + googleMapKey)
