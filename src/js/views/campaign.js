@@ -526,7 +526,7 @@ define(function() {
                         type: 'string', 
                         label: 'Headline',
                         placeholder: 'Title',
-                        maxLength: 80,
+                        maxLength: 30,
                     },
                     link: {
                         type: 'url',
