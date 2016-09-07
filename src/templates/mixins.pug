@@ -243,9 +243,9 @@ mixin fieldDropzone(name, attr, type)
             data-content=(fields[name].help_text ? fields[name].help_text : '')
         )
             div(class=attr.class1 + ' ' + (fields[name].required == true ? ' required ' : ' ') )
-              .col-lg-5
-                  span.pull-right.font-weight-bold #{fields[name].label}
-              div(class='dropzone__' + name + ' col-lg-7 text-lg-center')
+              .col-lg-5.col-md-3.col-xs-12
+                  span.pull-right.pull-xs-none.font-weight-bold #{fields[name].label}
+              div(class='dropzone__' + name + ' col-lg-7 col-md-6 col-xs-12 text-xs-center text-md-center text-lg-center')
                 span(class='link-1' href="#")
                     p.drop-photo #{attr.text}
                     i(class="fa fa-" + attr.icon)
