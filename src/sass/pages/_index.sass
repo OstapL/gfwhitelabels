@@ -160,11 +160,13 @@
 	.js-height-full
 		max-height: 90vh
 	.home-text-main
+		vertical-align: middle
+		display: table-cell
+		height: 100%
 		h1
 			font-size: rem(48)
 			color: $white
 			letter-spacing: rem(9.6)
-			margin-top: rem(200)
 			margin-bottom: rem(50)
 		.small-text
 			line-height: rem(26)
@@ -172,6 +174,9 @@
 			letter-spacing: rem(.6)
 			font-size: rem(24)
 			font-weight: 300
+		.btn
+			&:first-child
+				margin-right: 30px
 
 .home-wrap-text-block
 	position: relative
@@ -199,7 +204,10 @@
 		margin-bottom: rem(45)
 	.m-l-30
 		margin-left: rem(30)
-
+.raise-wrap
+	.btn
+		&:first-child
+			margin-right: rem(30)
 .home-what-is
 	h2
 		margin-bottom: rem(50)
@@ -212,3 +220,54 @@
 		max-width: 255px
 	h2
 		margin-bottom: rem(50)
+
+@media only screen and (max-width : 992px)
+	.home-text-main
+		h1
+			line-height: rem(42)
+	.home-wrap-text-block
+		padding-top: rem(5)
+
+@media only screen and (max-width : 768px)
+	.home-text-main
+		h1
+			line-height: rem(42)
+
+@media only screen and (max-width : 580px)
+	.home-text-main
+		.btn
+			font-size: rem(12)!important
+			padding: rem(8) rem(15)!important
+			&:first-child
+				margin-right: 5px!important
+		.small-text
+			font-size: rem(18)
+		h1
+			line-height: rem(28)
+			font-size: rem(24)!important
+	.home-wrap-text-block
+		padding-top: rem(5)
+		h2
+			line-height: rem(28)
+		.btn
+			font-size: rem(12)!important
+			padding: rem(8) rem(15)
+	.home-what-is
+		h2
+			line-height: rem(28)
+ 	.raise-wrap
+		.container
+			padding-left: 0
+			padding-right: 0
+		.btn
+			&:first-child
+				margin-right: 5px
+
+@media only screen and (max-width : 320px)
+	.raise-wrap
+		.container
+			padding-left: 0
+			padding-right: 0
+		.btn
+			&:first-child
+				margin-right: 5px

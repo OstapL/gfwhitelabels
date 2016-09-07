@@ -36,7 +36,7 @@ gulp.task('styles', function () {
             config.fontAwesomeDir
         ]
     }).on('error', sass.logError))
-    .pipe(rename({basename: 'main', prefix : ''}))
+    .pipe(rename({basename: 'main2', prefix : ''}))
 // .pipe(autoprefixer({browsers: ['last 15 versions'], cascade: false}))
 // .pipe(cleanCSS())
     .pipe(gulp.dest(config.publicDir + '/css'))

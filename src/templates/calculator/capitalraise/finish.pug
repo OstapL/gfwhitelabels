@@ -1,0 +1,41 @@
+
+include ../../mixins.pug
+
++breadcrumbs('Capital Raise Calculator ', 'intro', 
+    [
+        ['Home', '/'],
+        ["What's My Business Worth?", '/'],
+        ["Capital Raise Calculator", '']
+    ]
+)
+
+.container.calculator-container
+    .row
+        .col-xs-12
+            ul.list-inline.top-breadcrambs.mb45.capitalraise
+                li
+                    a(href="/calculator/capitalraise/intro").btn.text-uppercase Intro
+                li
+                    a(href="/calculator/capitalraise/step-1").btn.text-uppercase step 1
+                li
+                    a(href="/calculator/capitalraise/step-2").btn.text-uppercase step 2
+                li
+                    a(href="/calculator/capitalraise/finish").current.btn.text-uppercase finish
+
+    .row
+        .offset-lg-1.col-lg-10.text-sm-center
+            h2.opensans.m0.letter-spacing-2
+                i(aria-hidden="true").fa.fa-diamond.text-info 
+                | &nbsp;GrowthFountain Recommended Total Amount of Capital Raise 
+                p.pt10 
+                    b $ 500,000
+
+    .row
+        .offset-lg-4.col-lg-4.text-sm-center
+            hr.mt50.mb50
+
+    .row
+        .offset-lg-3.col-lg-6.text-sm-center
+            a(
+                href="/calculator/capitalraise/step-2"
+            ).btn.btn-primary.btn-lg.text-uppercase back 

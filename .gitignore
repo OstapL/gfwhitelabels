@@ -98,5 +98,8 @@ app/dist/templates/*
 
 
 # in dist directory only temperory files
-dist 
+dist
 
+.DS_Store
+com1.png
+com2.png

@@ -14,6 +14,7 @@ module.exports = Backbone.Router.extend({
             app.collections.campaigns.fetch({
                 success: (collection, response, options) => {
 
+                    $('body').scrollTo(); 
                     $('#content').html('');
                     app.views.campaigns = new view.list({
                         el: '#content',

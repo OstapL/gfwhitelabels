@@ -1,4 +1,4 @@
-import './styles/style.sass'
+// import './styles/style.sass'
 import calculatorHelper from '../../helpers/calculatorHelpers';
 import flyPriceFormatter from '../../helpers/flyPriceFormatter';
 import lookupData from '../../helpers/capitalraiseCalculatorData';
@@ -112,6 +112,12 @@ module.exports = {
         template: require('./templates/finish.pug'),
 
         render: function () {
+            // disable enter to the final step of capitalraise calculator without data
+            if (!this.model.get('dataIsFilled')) {
+                app.routers.navigate('/calculator/capitalraise/step-1', {trigger: true});
+                return false;
+            }
+
             this.$el.html(this.template({
                 model: this.model.toJSON(),
                 formatPrice

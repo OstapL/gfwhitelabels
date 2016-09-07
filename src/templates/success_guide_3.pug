@@ -1,0 +1,57 @@
+include mixins.pug
+
++breadcrumbs('Success Guide', '', 
+    [
+        ['Home', '/'],
+        ['Success Guide', ''],
+    ]
+)
+
+section.text_block
+    .container
+        .row
+            .offset-lg-2.col-lg-8
+                h2.text-uppercase.dosis.m0.text-xs-center Your Slide Deck
+        .row
+            .offset-lg-2.col-lg-8.mb25
+                .mt30
+                    p Your slide deck should be used to tell your story. You want to give investors enough information to understand your product/service and see your passion – but don’t overwhelm them with details! Try to keep it pegged to around 10 slides, bullet point info (no paragraphs!) – the cleaner and simpler the better.
+
+        .row
+            .offset-lg-2.col-lg-8
+                .bg-gray-block
+                    h3.opensans.mt20.mb15
+                        | Slide Deck Template:
+
+                    ul.simple-list.m0
+                            li 
+                                | Cover slide (include your company name, contact info, website and tagline)
+                            li
+                                | Include your Elevator Pitch here in bullet form
+                            li 
+                                | Problem. Describe the problem that your product/service addresses
+                            li
+                                | Solution. Introduce your product/service and explain how it fixes the problem. Show a demo or link to demo
+
+                            li 
+                                | Market Opportunity. Define the market size and who your customers will be
+                            li
+                                | Business Model. How will you make money? Demonstrate macro/micro (stress the microeconomic rather than “if we can get 1% of the industry…”)
+                            li 
+                                | Team. Highlight the teams accomplishments and why you have the best team to bring your product/service to fruition
+                            li
+                                | Milestones. Describe your current status and milestones for the next 3-6 quarters. Incorporate your proposed use of funding, including if you are willing to accept proceeds in excess of your fundraising goal. Please note, you are prohibited from projecting performance and making exaggerated or unwarranted claims, opinions or forecasts.
+                            li
+                                | Competition
+                            li.m0
+                                | Conclusion – including “asking” for funding (and your uses of proposed fundraise)
+
+        .row
+            .offset-lg-2.col-lg-8.mt50
+                .controls
+                    a(
+                        href="/pg/success_guide_2"
+                    ).btn.btn-primary.btn-lg.pull-sm-left.text-uppercase previous 
+                    a(
+                        href="/pg/success_guide_4"
+                    ).btn.btn-primary.btn-lg.pull-sm-right.text-uppercase next 
