@@ -15,7 +15,7 @@ module.exports = Backbone.Router.extend({
 
     pagePG: function(name) {
         require.ensure([], () => {
-            const view = require('templates/' + name + '.pug');
+            let view = require('templates/' + name + '.pug');
             $('#content').html(view({
                     Urls: Urls,
                     serverUrl: serverUrl
