@@ -110,7 +110,7 @@ section.campaigndetail
               li
                 a(href="")
                   <img src="/img/avatar1.jpg" alt="..." class="img-circle">
-              a(href="#").link-1 see all...
+              a(href="#" style="display: none").link-1 see all...
 section.border-bottom-scroll
   .container.tabs-scroll
     nav( data-toggle="sticky-onscroll").navbar.navbar-default.sticky
@@ -160,7 +160,7 @@ section
             each v,k in campaign.gallery_data.all_files
                 .col-lg-3.no-padding-img
                   a(href=app.getThumbnail('1440x900', v.thumbnails) data-size='1440x900')
-                    img(src=app.getThumbnail('270x76', v.thumbnails) alt=campaign.company.name).img-fluid
+                    img(src=app.getThumbnail('270x152', v.thumbnails) alt=campaign.company.name).img-fluid
         else
 
             .col-lg-3.no-padding-img
@@ -395,7 +395,7 @@ section
                   h2.font-weight-bold #{ model.showBeautifulNumber(campaign.minimum_increment) }
                 if campaign.security_type == 0
                   .col-lg-3.p-l-3
-                    p Minimum N&deg; of Shares
+                    p Minimum # of Shares
                     h2.font-weight-bold #{ campaign.min_number_of_shares }
                 else
                   .col-lg-3
@@ -424,7 +424,7 @@ section
                     h2.font-weight-bold #{ campaign.cap }
                 if campaign.security_type == 0
                   .col-lg-3.p-l-3
-                    p Maximum N&deg; of Shares
+                    p Maximum # of Shares
                     h2.font-weight-bold #{ campaign.max_number_of_shares }
                 else
                   .col-lg-3
@@ -515,7 +515,7 @@ section
                 p.card-text
                   small.text-muted New York, NY
         .col-lg-12.text-lg-center
-          a(href="").link-4 See All Investors
+          a(href="" style="display: none").link-4 See All Investors
   section.risks.border-bottom
     .container
       h2#risks.col-lg-12.dosis.text-uppercase.text-lg-center.green-heading Risks
@@ -566,7 +566,7 @@ section
             #collapseFour(role="tabpanel"
             aria-labelledby="headingFour"
             ).panel-collapse.collapse  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius inventore iste numquam nemo, fugit nihil fugiat quasi, excepturi repellendus pariatur! Facilis odit cupiditate tenetur, inventore adipisci consequatur eius suscipit voluptas.
-        a(href="").col-lg-12.text-lg-center.link-4.see-all See All Risks
+        a(href="").col-lg-12.text-lg-center.link-4.see-all.see-all-risks See All Risks
   
   section.faq
     if campaign.faq
@@ -625,7 +625,7 @@ section
               #collapsefaqFour(role="tabpanel"
               aria-labelledby="faqFour"
               ).panel-collapse.collapse  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius inventore iste numquam nemo, fugit nihil fugiat quasi, excepturi repellendus pariatur! Facilis odit cupiditate tenetur, inventore adipisci consequatur eius suscipit voluptas.
-        a(href="").col-lg-12.text-lg-center.link-4.see-all See All FAQ
+        a(href="").col-lg-12.text-lg-center.link-4.see-all.see-all-faq See All FAQ
     
   section.ask.border-bottom
     .container
