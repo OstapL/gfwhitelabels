@@ -5,10 +5,15 @@ module.exports = {
             'submit form': 'submit',
             'keyup #zip_code': 'changeZipCode',
             'click .update-location': 'updateLocation',
+            'change input[name=phone]': 'formatPhone',
         },
         initialize: function(options) {
             this.fields = options.fields;
             this.campaign = options.campaign;
+        },
+
+        formatPhone: function(e){
+            this.$('input[name=phone]').val(this.$('input[name=phone]').val().replace(/^\(?(\d{3})\)?-?(\d{3})-?(\d{4})$/, '$1-$2-$3'));
         },
 
         updateLocation(e) {

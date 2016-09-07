@@ -218,7 +218,8 @@ mixin fieldBlock(name, data, attr)
                         class=(fields[name].help_text ? 'showPopover' : '') 
                         data-content=(fields[name].help_text ? fields[name].help_text : '')
                         value=values[name]
-                        maxlength = attr.maxlength ? attr.maxlength : ''
+                        maxlength = attr.maxlength ? attr.maxlength : false
+                        disabled=(attr.disabled ? attr.disabled : false)
                       ).form-control
 
 mixin fieldDropzone(name, attr, type)
