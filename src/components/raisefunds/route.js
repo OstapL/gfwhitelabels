@@ -34,7 +34,7 @@ module.exports = Backbone.Router.extend({
                 }
 
                 $.when(optionsAjax, campaignAjax).done((rOptions, rCampaignList) => {
-                    console.log(rCampaignList);
+                    $('body').scrollTo(); 
                     var i = new view.createOrUpdate({
                         el: '#content',
                         fields: rOptions[0].actions.POST,
@@ -80,8 +80,8 @@ module.exports = Backbone.Router.extend({
                 console.log('not goinng anywhere');
                 return;
             }
+            $('body').scrollTo(); 
             let campaign = '';
-            console.log('company_id is ', company_id);
             if(id.indexOf('=') == -1) {
                 campaign = new model.model({
                     id: id
@@ -130,6 +130,7 @@ module.exports = Backbone.Router.extend({
 
     campaignMedia(id) {
         if(!app.user.is_anonymous()) {
+            $('body').scrollTo(); 
             const model = require('components/campaign/models.js');
             const view = require('components/raisefunds/views.js');
             let campaign = new model.model({
@@ -166,6 +167,7 @@ module.exports = Backbone.Router.extend({
 
     campaignTeamMembers(id) {
         if(!app.user.is_anonymous()) {
+            $('body').scrollTo(); 
             const model = require('components/campaign/models.js');
             const view = require('components/raisefunds/views.js');
 
@@ -196,6 +198,7 @@ module.exports = Backbone.Router.extend({
 
     campaignTeamMembersAdd(id, type, index) {
         if(!app.user.is_anonymous()) {
+            $('body').scrollTo(); 
             const model = require('components/campaign/models.js');
             const view = require('components/raisefunds/views.js');
 
@@ -226,6 +229,7 @@ module.exports = Backbone.Router.extend({
 
     campaignSpecifics(id) {
         if(!app.user.is_anonymous()) {
+            $('body').scrollTo(); 
             const model = require('components/campaign/models.js');
             const view = require('components/raisefunds/views.js');
 
@@ -265,6 +269,7 @@ module.exports = Backbone.Router.extend({
 
     campaignPerks(id) {
         if(!app.user.is_anonymous()) {
+            $('body').scrollTo(); 
             const model = require('components/campaign/models.js');
             const view = require('components/raisefunds/views.js');
 

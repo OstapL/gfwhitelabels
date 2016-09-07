@@ -84,9 +84,9 @@ _.extend(Backbone.Validation.callbacks, {
     }
 });
 
-$.fn.scrollTo = function() {
+$.fn.scrollTo = function(padding=0) {
     $('html, body').animate({
-        scrollTop: $(this).offset().top + 'px'
+        scrollTop: $(this).offset().top - padding + 'px'
     }, 'fast');
     return this; // for chaining...
 }
