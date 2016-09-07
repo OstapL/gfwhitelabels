@@ -11,7 +11,7 @@ if attr.type == 'jsonVideo'
     div(class='form-group clearfix videoInteractive index_' + indexCounter)
         .col-lg-7.videoInteractive
             each k1,v in fields[name].schema
-                - let t = fields[name].schema[v]
+                - var t = fields[name].schema[v]
                 .form-group.clearfix
                     label.col-lg-5.col-md-5.text-lg-right.font-weight-bold #{t.label}
                     .col-lg-7.col-md-7
@@ -21,15 +21,15 @@ if attr.type == 'jsonVideo'
                             placeholder=t.placeholder ? t.placeholder : t.label
                             type=t.type
                         ).form-control
-        .col-lg-5.p-l-1.p-r-3 
-            .embed-responsive.embed-responsive-16by9 
+        .col-lg-5.p-l-1.p-r-3
+            .embed-responsive.embed-responsive-16by9
                 iframe.embed-responsive-item(src="//www.youtube.com/embed/?rel=0" allowfullscreen="true")
 else
     each k,v in fields[name].schema
         div(class='form-group clearfix videoInteractive index_' + indexCounter)
             label.col-lg-3.text-lg-right #{k.label}
             .col-lg-9
-                if k.type == 'text' 
+                if k.type == 'text'
                     textarea(
                         id=name + '_' + v
                         name=name + '[' + indexCounter + '][' + v + ']'
