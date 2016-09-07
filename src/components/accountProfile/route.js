@@ -2,6 +2,7 @@ module.exports = Backbone.Router.extend({
     routes: {
         'account/profile': 'accountProfile',
         'account/logout': 'logout',
+        'account/change-password': 'changePassword'
     },
 
     accountProfile() {
@@ -39,6 +40,17 @@ module.exports = Backbone.Router.extend({
         app.user.logout();
         app.on('userLogout', function() {
             window.location = '/';
+        });
+    },
+
+    changePassword: function() {
+        require.ensure([], function() {
+            const view = require('components/accountProfile/views.js');
+            let i = new view.changePassword({
+                el: '#content',
+            });
+            i.render();
+            app.hideLoading();
         });
     },
 });    
