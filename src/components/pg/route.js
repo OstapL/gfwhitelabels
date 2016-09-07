@@ -9,18 +9,20 @@ module.exports = Backbone.Router.extend({
             const template = require('templates/mainPage.pug');
             app.cache[window.location.pathname] = template();
             $('#content').html(template());
+            $('body').scrollTo();
             app.hideLoading();
         });
     },
 
     pagePG: function(name) {
         require.ensure([], () => {
-            const view = require('templates/' + name + '.pug');
+            let view = require('templates/' + name + '.pug');
             $('#content').html(view({
                     Urls: Urls,
                     serverUrl: serverUrl
                 })
             );
+            $('body').scrollTo();
             app.hideLoading();
         });
     },

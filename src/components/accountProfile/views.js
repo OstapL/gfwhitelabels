@@ -138,5 +138,5 @@ module.exports = {
         changeAddressManually() {
             this.cityStateArea.text(`${this.cityField.val()}/${this.stateField.val()}`);
         }
-    })
+    }),
 };

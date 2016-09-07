@@ -1,4 +1,4 @@
-import './styles/style.sass'
+// import './styles/style.sass'
 import calculatorHelper from '../../helpers/calculatorHelpers';
 import flyPriceFormatter from '../../helpers/flyPriceFormatter';
 import lookupData from '../../helpers/capitalraiseCalculatorData';

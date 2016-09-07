@@ -10,7 +10,7 @@ module.exports = Backbone.Router.extend({
 
     login(id) {
         require.ensure([], function() {
-            const view = require('components/accountProfile/views.js');
+            const view = require('components/accountAnonymous/views.js');
             var a1 = $.ajax(_.extend({
                     url: serverUrl + Urls['rest_login'](),
                 }, app.defaultOptionsRequest));
@@ -38,7 +38,7 @@ module.exports = Backbone.Router.extend({
 
     signup(id) {
         require.ensure([], function() {
-            const view = require('components/accountProfile/views.js');
+            const view = require('components/accountAnonymous/views.js');
             var a2 = $.ajax(_.extend({
                     url: serverUrl + Urls['rest_register'](),
                 }, app.defaultOptionsRequest));

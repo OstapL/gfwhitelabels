@@ -115,7 +115,7 @@ include mixins.pug
 
                                             .form-group.row 
                                                 .col-sm-10.col-xl-10.col-md-11
-                                                    .investors-warning 
+                                                    .warning-block
                                                         i.fa.fa-exclamation-triangle 
                                                         span.warning-text 
                                                             | Investors are limited to 12 month investment totals ranging from $2,000 - $100,000 based on income and net worth. Please update your financial information to see your limit.
@@ -193,4 +193,4 @@ include mixins.pug
                                             button.btn.btn-lg.btn-primary.text-uppercase save
                 .modal-footer
 
-script(src="http://maps.google.com/maps/api/js?key=AIzaSyBpCl9-7bkVISZ0o-AaFCsKzZwGAxalkZU&language=en")
+script(src="http://maps.google.com/maps/api/js?language=en&key=" + googleMapKey)

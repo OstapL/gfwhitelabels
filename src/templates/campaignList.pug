@@ -45,10 +45,10 @@ section.small-section.filter
 
             .create-alert-block
                 .row
-                    .col-sm-9.col-lg-10
+                    .col-sm-6.col-lg-10.col-xs-12.text-sm-left.text-xs-center
                         a(href="#").pull-right.btn.mr30.text-uppercase.auth-pop create alert
 
-                    .col-sm-3.col-lg-2
+                    .col-sm-6.col-lg-2.col-xs-12.text-xs-center
                         select.orderby.custom-select
                             option(checked="checked" value="0") Order by
 section.campaing-list
@@ -56,7 +56,7 @@ section.campaing-list
         .row
             for campaign in campaigns
 
-                .col-lg-4
+                .col-lg-4.col-xs-12.col-sm-12.col-md-12
                     a(href=Urls['campaign-detail'](campaign.id)).block_link
                     .one_block
                         .for_img
@@ -67,29 +67,32 @@ section.campaing-list
 
                             .more_inform
                                 .title.text-center
-                                    h3 Pre money valuation: $#{campaign.premoney_valuation}
+                                    if campaign.security_type == 0
+                                        h3 Pre money valuation: #{collection.showBeautifulNumber(campaign.premoney_valuation)}
+                                    else
+                                        h3 Percentage Revenue: #{campaign.percentage_revenue}%
 
                                 .small_text
                                     if campaign.company.tagline
                                         p #{campaign.company.tagline.substr(0, 120)}
 
                                 .ico_cont
-                                    a(href=Urls['campaign-detail'](campaign.id) + '#members').link-1
+                                    a(href=Urls['campaign-detail'](campaign.id) + '#team').link-1
                                         i.fa.fa-users
-                                    a(href=Urls['campaign-detail'](campaign.id) + '#perks').link-1
-                                        i.fa.fa-gift
+                                    a(href=Urls['campaign-detail'](campaign.id) + '#overview').link-1
+                                        i.fa.fa-list
 
                                 .bottom_pr
                                     if campaign.security_type == 0
-                                        p Price per share: $#{campaign.price_per_share}
-                                        p Number of shares: $#{campaign.amount_of_shares}
+                                        p Price per share: #{collection.showBeautifulNumber(campaign.price_per_share)}
+                                        p Number of shares: #{campaign.min_number_of_shares}
                                     else
-                                        p % Revenue: #{campaign.percentage_revenue}
+                                        //- p % Revenue: #{campaign.percentage_revenue}%
                                         p Cap: #{campaign.cap}
                                         p Expiration Date: #{campaign.expiration_date}
 
 
-                        .title
+                        .title.text-xs-center
                             h3.m-t-0= campaign.company.name
                             span.place
                                 i.fa.fa-map-marker
