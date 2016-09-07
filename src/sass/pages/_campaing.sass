@@ -158,6 +158,9 @@
 					line-height: rem(18)
 					margin-top: 0
 					margin-bottom: rem(20)
+					max-width: 100%
+					text-align: center
+
 
 			.small_text
 				margin-left: rem(30)
@@ -220,6 +223,10 @@
 			font-weight: 500
 			letter-spacing: rem(3.4)
 			margin-bottom: rem(9)
+			max-width: rem(245)
+			height: rem(20)
+			text-align: left
+			overflow: hidden
 
 		span.place
 			float: right
@@ -302,3 +309,43 @@
 				color: $black_text
 				text-transform: uppercase
 				letter-spacing: rem(2.2)
+@media only screen and (max-width : 768px)
+	.create-alert-block
+		.pull-right
+			float: left
+
+@media only screen and (max-width : 320px)
+	.campaing-list
+		.one_block
+			.for_img
+				height: auto
+				.more_inform
+					.title
+						padding-top: 15px
+						h3
+							margin-bottom: 15px
+				.bottom_pr
+					padding-top: 10px
+				.ico_cont
+					padding-top: 10px
+		.title
+			h3
+				text-align: center
+				float: none
+			.place
+				text-align: center!important
+				float: none!important
+		.bottom_text
+			.left_desc, .right_desc
+				text-align: center
+				float: none
+				display: block
+	.create-alert-block
+		.mr30
+			margin-right: 0
+			margin-bottom: 10px
+			float: none
+		.custom-select
+			text-align: center
+			float: none!important
+			margin-left: 0!important

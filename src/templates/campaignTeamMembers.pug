@@ -23,26 +23,24 @@ section.create-company-team-add.container
                         span.warning-text 
                         | Warning! You have to add at least 2 persons for proceed.
 
-            .col-lg-10.offset-lg-1.text-lg-center.m-t-2.m-b-2
-                .col-lg-6
-                    a(href='/campaign/team-members/' + values.id + '/add/member/new').btn.btn-lg.text-uppercase ADD TEAM MEMBER
-                .col-lg-5
+            .col-lg-12.text-lg-center.m-t-2.m-b-2
+                    a(href='/campaign/team-members/' + values.id + '/add/member/new').btn.btn-lg.text-uppercase.m-r-3 ADD TEAM MEMBER
                     a(href='/campaign/team-members/' + values.id + '/add/advisor/new').btn.btn-lg.text-uppercase ADD ADVISOR
 
             if values.members
                 - counter = 0
                 each v,k in values.members
                     - console.log(v, k);
-                    .col-lg-3.m-t-2.p-r-0.p-l-0.m-l-1.m-r-2
+                    .col-lg-3.m-t-2.p-r-0.p-l-0.m-l-2.m-r-2
                         .team-add-item.text-lg-center.text-xs-center
                             img(src=v.photo alt=v.first_name).img-circle
                             p.name.text-uppercase #{v.first_name} #{v.last_name}
-                            p.small #{ v.type }
+                            p.small #{ v.title }
                             a(href="/campaign/team-members/" + values.id + "/add/" + v.type + '/' + counter).link-1
                                 i.fa.fa-pencil-square-o
                     - counter ++
             if values.members && values.members.length >= 2
 
-                .col-lg-12.pull-right.p-r-0.m-t-3
+                .col-lg-12.pull-right.p-r-0.m-t-3.text-lg-right
                     a(href="/api/campaign/" + values.id target="_blank").btn.btn-lg.btn-secondary.text-uppercase.m-r-3 preview
-                    a(href="/campaign/specifics/" + values.id).btn.btn-lg.text-uppercase Specifics
+                    a(href="/campaign/specifics/" + values.id).btn.btn-lg.text-uppercase Go to Specifics

@@ -1,7 +1,7 @@
 - 'use strict';
 include mixins.pug
 
-- var percentage_raised = model.calculateRaisedPercentage(campaign.minimum_raise, campaign.amount_raised)
+- let percentage_raised = model.calculateRaisedPercentage(campaign.minimum_raise, campaign.amount_raised)
 
 section#home(style="background-image: url(" + (campaign.header_image_data ? campaign.header_image_data.url : '/img/default.png') + ")").home-section.bg-dark-alfa-70.parallax-2.fixed-height-small
   .js-height-parent.container
@@ -11,7 +11,7 @@ section#home(style="background-image: url(" + (campaign.header_image_data ? camp
         .local-scroll
           a.big-icon.link-6.youtube_popup(data-toggle="modal" href="#videoModal" data-target="#videoModal")
             i.fa.fa-play-circle-o
-          a(href=campaign.company.website).link-6.link-campaing-detail #{ campaign.company.website }
+          a(href=campaign.company.website target="_blank").link-6.link-campaing-detail #{ campaign.company.website }
           .row.social-link
             a(href=campaign.company.facebook target="_blank").link-6.link-campaing-detail
               i.fa.fa-facebook
@@ -27,13 +27,18 @@ section#home(style="background-image: url(" + (campaign.header_image_data ? camp
     .container
       .top-info-wrap
         .top-info-wrap-item
-          .col-lg-2
-            p Pre-Money Valuation
-            h2.font-weight-bold #{ model.showBeautifulNumber(campaign.premoney_valuation) }
-          .col-lg-2
+          .col-lg-3.p-r-0
             p Type of Security
             h2.font-weight-bold #{ campaign.get_security_type_display }
-          .col-lg-2
+          if campaign.security_type == 0
+            .col-lg-2.p-r-0
+              p Pre-Money Valuation
+              h2.font-weight-bold #{ model.showBeautifulNumber(campaign.premoney_valuation) }
+          else
+            .col-lg-2.p-r-0
+              p Percentage Reveue
+              h2.font-weight-bold #{ campaign.percentage_revenue }%
+          .col-lg-2.p-r-0
             p Days Left
             h2.font-weight-bold #{ campaign.days_to_go }
           .col-lg-4.pull-right
@@ -46,14 +51,14 @@ section.campaigndetail
       .row.mt20
         .col-lg-4
           //- a(href="").link-1
-          div.link-1
+          .sity-detail
             i.fa.fa-map-marker
             |  #{ campaign.company.city }, #{ campaign.company.state }
         .col-lg-6
-          a(href="").link-1
+          .date-detail
             i.fa.fa-calendar-check-o
             //- |  Founded in #{ campaign.company.founding_date }
-            |  Founded in #{ model.formatFoundingDate(campaign.company.founding_date) }
+            |  Founded in #{ model.formatDate(campaign.company.founding_date) }
       .row
         .col-lg-12.share
           span.font-weight-bold.d-inline-block Share:
@@ -105,7 +110,7 @@ section.campaigndetail
               li
                 a(href="")
                   <img src="/img/avatar1.jpg" alt="..." class="img-circle">
-              a(href="#").link-1 see all...
+              a(href="#" style="display: none").link-1 see all...
 section.border-bottom-scroll
   .container.tabs-scroll
     nav( data-toggle="sticky-onscroll").navbar.navbar-default.sticky
@@ -155,7 +160,7 @@ section
             each v,k in campaign.gallery_data.all_files
                 .col-lg-3.no-padding-img
                   a(href=app.getThumbnail('1440x900', v.thumbnails) data-size='1440x900')
-                    img(src=app.getThumbnail('270x76', v.thumbnails) alt=campaign.company.name).img-fluid
+                    img(src=app.getThumbnail('270x152', v.thumbnails) alt=campaign.company.name).img-fluid
         else
 
             .col-lg-3.no-padding-img
@@ -189,7 +194,7 @@ section
               each v,k in campaign.additional_video
                   .col-lg-4
                     .card.card-inverse
-                      - var link =  app.getVideoId(v.link)
+                      - let link =  app.getVideoId(v.link)
                       img(src="http://img.youtube.com/vi/" + link + "/0.jpg" alt="" style="width: 338px").card-img
                       .card-img-overlay
                         .card-title
@@ -255,7 +260,7 @@ section
             p #{ v.body }
    
   if campaign.members
-      section.team.border-bottom
+      section#members.team.border-bottom
         .container
             h2#team.dosis.text-uppercase.text-lg-center.col-lg-12.green-heading Team
             .row
@@ -269,11 +274,12 @@ section
                             h4.card-title.text-uppercase #{v.first_name} #{v.last_name }
                             p.card-text
                                 small.text-muted #{v.title }
-                            a(href=v.facebook target="_blank").link-1
-                              i.fa.fa-facebook
+                            
                             a(href=v.linkedin target="_blank").link-1
                               i.fa.fa-linkedin.more
-                              p.card-text.text-justify #{v.bio}
+                            a(href=v.facebook target="_blank").link-1
+                              i.fa.fa-facebook
+                            p.card-text.text-justify.auto-height #{v.bio}
                             .d-block.text-lg-left.cite_education
                               a(href="#").link-1.text-lg-left
                                 i.fa.fa-home.p-l-0
@@ -355,17 +361,17 @@ section
         .col-lg-8.offset-lg-2
           .col-lg-4
             p Official filing on SEC.gov
-            a(href="")
+            a(href="" target="_blank")
               img(src="/img/lrg_US_Department_of_State35.gif").img-document.d-inline-block
               h3.d-inline-block  Form C
           .col-lg-4
             p Company documents
-            a(href="")
+            a(href="" target="_blank")
               i.fa.fa-file-pdf-o.d-inline-block
               h3.d-inline-block Financials
           .col-lg-4.row
             p Company documents
-            a(href="")
+            a(href="" target="_blank")
               i.fa.fa-file-powerpoint-o.d-inline-block
               h3.d-inline-block Investor Presentation
   section.overview
@@ -374,29 +380,59 @@ section
         h2#overview.col-lg-12.dosis.text-uppercase.text-lg-center.green-heading overview and terms
         //- h3.col-lg-12.text-lg-center Fundraising Description
         h3.text-uppercase.text-lg-center.green-heading Fundraising Description
-        .col-lg-8.offset-lg-2.fundraising
+        .col-lg-12.fundraising
           .jumbotron.jumbotron-fluid
             .container
-              .col-lg-4
-                p Pre-Money Valuation
-                h2.font-weight-bold #{ model.showBeautifulNumber(campaign.premoney_valuation) }
-              .col-lg-4
-                p Price per Share
-                h2.font-weight-bold #{ model.showBeautifulNumber(campaign.price_per_share) }
-              .col-lg-4
-                p Target Minimum Raise Amonunt
-                h2.font-weight-bold #{ model.showBeautifulNumber(campaign.minimum_raise) }
-              .col-lg-4
-                p Type of Security
-                h2.font-weight-bold #{ campaign.get_security_type_display }
-              .col-lg-4
-                p Minimum Investment
-                h2.font-weight-bold #{ model.showBeautifulNumber(campaign.minimum_increment) }
-              .col-lg-4
-                p Target Maximum Raise Amount
-                h2.font-weight-bold #{ model.showBeautifulNumber(campaign.maximum_raise) }
-        
-  section.perks
+              .row
+                .col-lg-3.p-l-3
+                  p Type of Security
+                  h2.font-weight-bold #{ campaign.get_security_type_display }
+                .col-lg-3.p-l-3
+                  p Target Minimum Raise Amonunt
+                  h2.font-weight-bold #{ model.showBeautifulNumber(campaign.minimum_raise) }
+                .col-lg-3.p-l-3
+                  p Minimum Investment
+                  h2.font-weight-bold #{ model.showBeautifulNumber(campaign.minimum_increment) }
+                if campaign.security_type == 0
+                  .col-lg-3.p-l-3
+                    p Minimum # of Shares
+                    h2.font-weight-bold #{ campaign.min_number_of_shares }
+                else
+                  .col-lg-3
+                    p Expiration Date
+                    h2.font-weight-bold #{ model.formatDate(campaign.expiration_date) }
+
+              .row
+                if campaign.security_type == 0
+                  .col-lg-3.p-l-3
+                    p Pre-Money Valuation
+                    h2.font-weight-bold #{ model.showBeautifulNumber(campaign.premoney_valuation) }
+                else
+                  .col-lg-3.p-l-3
+                    p Percentage Revenue
+                    h2.font-weight-bold #{ campaign.percentage_revenue }%
+                .col-lg-3.p-l-3
+                  p Target Maximum Raise Amount
+                  h2.font-weight-bold #{ model.showBeautifulNumber(campaign.maximum_raise) }
+                if campaign.security_type == 0
+                  .col-lg-3.p-l-3
+                    p Price per Share
+                    h2.font-weight-bold #{ model.showBeautifulNumber(campaign.price_per_share) }
+                else
+                  .col-lg-3.p-l-3
+                    p Cap
+                    h2.font-weight-bold #{ campaign.cap }
+                if campaign.security_type == 0
+                  .col-lg-3.p-l-3
+                    p Maximum # of Shares
+                    h2.font-weight-bold #{ campaign.max_number_of_shares }
+                else
+                  .col-lg-3
+                    p Length of the Campaign
+                    h2.font-weight-bold #{ campaign.days_to_go } days
+
+
+  section#perks.perks
     if campaign.perks
       //- h3.col-lg-12.text-lg-center Perks
       .container
@@ -479,7 +515,7 @@ section
                 p.card-text
                   small.text-muted New York, NY
         .col-lg-12.text-lg-center
-          a(href="").link-4 See All Investors
+          a(href="" style="display: none").link-4 See All Investors
   section.risks.border-bottom
     .container
       h2#risks.col-lg-12.dosis.text-uppercase.text-lg-center.green-heading Risks
@@ -538,7 +574,7 @@ section
       h2#faq.col-lg-12.dosis.text-uppercase.text-lg-center.green-heading FAQ
       .col-lg-8.offset-lg-2
         .accordion(role="tablist" aria-multiselectable="true")
-          - var counter = 0
+          - let counter = 0
           each v,k in campaign.faq
             .panel.panel-default
               div(id="faq" + k role="tab").panel-heading
@@ -663,7 +699,7 @@ each v,k in campaign.additional_video
         .modal-dialog.modal-lg(role="document")
             .modal-content
                 .embed-responsive.embed-responsive-16by9
-                    - var link =  app.getVideoId(v.link)
+                    - let link =  app.getVideoId(v.link)
                     iframe.embed-responsive-item(src="//www.youtube.com/embed/" + link + "?rel=0" allowfullscreen="true")
 
 //modal sing_up

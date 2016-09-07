@@ -1,33 +1,35 @@
 section.home-section.bg-dark-alfa-30(style="background: url(/img/bg.jpg) center center no-repeat; background-size: cover; background-attachment: fixed;")
-    .js-height-full
-        .home-content.container
-            .col-lg-12.home-text-main.text-lg-center
-                h1.text-uppercase.dosis Investors and Entrepreneurs:
-                .col-lg-4.offset-lg-4.text-lg-center.text-sm-center.text-xs-center.m-b-3
-                    span.small-text connecting, funding, and enriching one another, one idea at a time.
-                .col-lg-12
-                    a(href=Urls['campaign-list']()).btn.btn-lg.btn-primary.mr30 INVEST
-                    span.hidden-xs  
-                    a(href="/company/create").btn.btn-lg.btn-primary RAISE CAPITAL
+    .container
+        .row
+            .js-height-full
+                .home-content
+                    .home-text-main.text-lg-center
+                        h1.text-uppercase.dosis Investors and Entrepreneurs:
+                        .col-lg-4.offset-lg-4.text-lg-center.text-sm-center.text-xs-center.m-b-3
+                            span.small-text connecting, funding, and enriching one another, one idea at a time.
+                        .col-lg-12
+                            a(href=Urls['campaign-list']()).btn.btn-lg.btn-primary INVEST
+                            span.hidden-xs  
+                            a(href="/company/create").btn.btn-lg.btn-primary RAISE CAPITAL
 section.home-campaign-list
     .container
         .col-lg-12
             h2.dosis.text-uppercase.text-sm-center What's Popular
 section.home-wrap-text-block(style="background: url(/img/section-bg-3.jpg) center center no-repeat; background-size: cover; background-attachment: fixed;")
     .opasity-block
-        .container.text-lg-center
+        .container.text-lg-center.text-xs-center.text-sm-center
             .col-lg-6.offset-lg-3
                 h2.dosis.text-uppercase INVEST IN YOUR LOCAL COMMUNITY
                 h3 Find companies in your neighborhood, and help them grow through your investment.
             .col-lg-12
-                button.btn.btn-lg.btn-secondary.text-uppercase Sign up to start investing
+                a(href="/account/login").btn.btn-lg.btn-secondary.text-uppercase Sign up to start investing
                 .learn-link
-                    a(href="#").link-3 Learn and Understand the Risks
+                    a(href="/pg/education").link-3 Understand the Risks
 
 section.home-what-is
     .container
         .col-lg-10.offset-lg-1
-            h2.dosis.text-uppercase.text-sm-center WHAT IS GROWTHFOUNTAIN
+            h2.dosis.text-uppercase.text-sm-center.text-xs-center WHAT IS GROWTHFOUNTAIN
             .row
                 .col-lg-6
                     .embed-responsive.embed-responsive-16by9.boxshadow
@@ -43,31 +45,31 @@ section.home-what-is
                     h3.m-t-0.text-justify We banded together with a simple mission – to connect small businesses to all the tools they need to succeed – including financial, human and social capital.
                     h3.m-t-0.text-justify.m-b-0 Our goal is to level the playing field and make things easy for entrepreneurs to focus on what matters – their product or service!
 
-section.home-wrap-text-block(style="background: url(/img/raise-capital.png) center center no-repeat; background-size: cover; background-attachment: fixed;")
+section.home-wrap-text-block.raise-wrap(style="background: url(/img/raise-capital.png) center center no-repeat; background-size: cover; background-attachment: fixed;")
     .opasity-block
-        .container.text-lg-center
+        .container.text-lg-center.text-xs-center
             .col-lg-6.offset-lg-3
                 h2.dosis.text-uppercase  Raise capital with us
                 h3 How does conducting a Regulation Crowdfunding offering actually work? Access our investor network to raise capital for your company now.
             .col-lg-12.m-b-3
-                button.btn.btn-lg.btn-primary.text-uppercase raise capital
-                button.btn.btn-lg.btn-secondary.text-uppercase.m-l-30 learn more
+                a(href="/company/create").btn.btn-lg.btn-primary.text-uppercase raise capital
+                a(href="/pg/entrepreneurquestions").btn.btn-lg.btn-secondary.text-uppercase learn more
 section.home-our-partners
     .container
         .row
             .col-lg-12
                 h2.dosis.text-uppercase.text-xs-center OUR PARTNERS
         .row
-            .col-lg-4
+            .col-lg-4.text-xs-center
                 a(href="http://www.callahan.com/" target="blank")
-                    img(src="/img/callahan.png").img-fluid.pull-right
-            .col-lg-4.text-lg-center
+                    img(src="/img/callahan.png").img-fluid.text-lg-right.text-xs-center.m-x-auto
+            .col-lg-4.text-lg-center.text-xs-center.m-x-auto
                 a(href="https://www.jdcu.org/" target="blank")
-                    img(src="/img/logo_jd.png").img-fluid.m-x-auto
-            .col-lg-4.text-lg-left
+                    img(src="/img/logo_jd.png").img-fluid.text-xs-center.m-x-auto
+            .col-lg-4.text-lg-left.m-x-auto
                 a(href="https://www.rivermarkcu.org/" target="blank")
-                    img(src="/img/logo_rivermark.png" ).img-fluid
+                    img(src="/img/logo_rivermark.png" ).img-fluid.text-xs-center.m-x-auto
         .row.mt25
-            .col-lg-4.text-lg-right
+            .col-lg-4.text-lg-right.text-xs-center
                 a(href="https://www.dcu.org/" target="blank")
-                    img(src="/img/logo_dcu.jpg").img-fluid.pull-right
+                    img(src="/img/logo_dcu.jpg").img-fluid.text-xs-center.m-x-auto
