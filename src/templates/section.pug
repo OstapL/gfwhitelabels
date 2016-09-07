@@ -34,11 +34,13 @@ else
                         id=name + '_' + v
                         name=name + '[' + indexCounter + '][' + v + ']'
                         placeholder=k.placeholder ? k.placeholder : k.label
+                        maxLength=k.maxLength ? k.maxLength : ''
                       ).form-control
                 else
                     input(
                         id=name + '_' + v
                         name=name + '[' + indexCounter + '][' + v + ']'
                         placeholder=k.placeholder ? k.placeholder : k.label
+                        maxLength=k.maxLength ? k.maxLength : ''
                     ).form-control
 - counter ++
