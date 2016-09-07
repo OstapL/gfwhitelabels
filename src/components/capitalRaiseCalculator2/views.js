@@ -1,22 +1,21 @@
 import './styles/style.sass'
+import 'jquery.inputmask/dist/jquery.inputmask.bundle.js';
 import calculatorHelper from '../../helpers/calculatorHelpers';
 import flyPriceFormatter from '../../helpers/flyPriceFormatter';
-import lookupData from '../../helpers/capitalraiseCalculatorData';
 
 let formatPrice = calculatorHelper.formatPrice;
-let industryData = lookupData();
 
 module.exports = {
-    intro: Backbone.View.extend({
-        el: '#content',
-
-        template: require('./templates/intro.pug'),
-
-        render: function () {
-            this.$el.html(this.template(this.model.toJSON()));
-            return this;
-        }
-    }),
+    // intro: Backbone.View.extend({
+    //     el: '#content',
+    //
+    //     template: require('./templates/intro.pug'),
+    //
+    //     render: function () {
+    //         this.$el.html(this.template(this.model.toJSON()));
+    //         return this;
+    //     }
+    // }),
 
     step1: Backbone.View.extend({
         el: '#content',
@@ -24,33 +23,7 @@ module.exports = {
         template: require('./templates/step1.pug'),
 
         initialize() {
-            // declare data for two selects
-            this.industryEstablishment = [
-                {
-                    text: 'New and potentially growing quickly',
-                    value: 1
-                },
-                {
-                    text: 'Fairly well established',
-                    value: 2
-                }
-            ];
-            this.typeOfEstablishment = [
-                {
-                    text: 'Be an improvement to what is currently on the market',
-                    value: 3
-                },
-                {
-                    text: 'Be revolutionary and disruptive to the market',
-                    value: 4
-                }
-            ];
 
-            // helper for template
-            this.selects = {
-                industryEstablishment: this.industryEstablishment,
-                typeOfEstablishment: this.typeOfEstablishment
-            }
         },
 
         events: {
@@ -58,14 +31,7 @@ module.exports = {
             'submit .js-calc-form': 'doCalculation',
 
             // remove useless zeros: 0055 => 55
-            'blur .js-field': 'cutZeros',
-
-            'change .js-select': 'saveValueIntoTheModel'
-        },
-
-        saveValueIntoTheModel(e) {
-            let selectBox = e.target;
-            this.model.saveField(selectBox.dataset.modelValue, selectBox.value);
+            'blur .js-field': 'cutZeros'
         },
 
         doCalculation(e) {
@@ -73,7 +39,7 @@ module.exports = {
 
             this.model.calculate();
 
-            app.routers.navigate('/calculator/capitalraise/finish', {trigger: true});
+            app.routers.navigate('/calculator/capitalraise2/finish', {trigger: true});
         },
 
         cutZeros(e) {
@@ -85,14 +51,11 @@ module.exports = {
         ui() {
             // get inputs by inputmask category
             this.inputPrice = this.$('[data-input-mask="price"]');
+            this.inputPercent = this.$('[data-input-mask="percent"]');
         },
 
         render: function () {
-            this.$el.html(this.template({
-                model: this.model.toJSON(),
-                industryData: Object.keys(industryData),
-                selects: this.selects
-            }));
+            this.$el.html(this.template(this.model.toJSON()));
 
             // declare ui elements for the view
             this.ui();
@@ -102,6 +65,9 @@ module.exports = {
                 this.model.saveField(modelValue, +currentValue);
             });
 
+            this.inputPercent.inputmask("9{1,4}%", {
+                placeholder: "0"
+            });
             return this;
         }
     }),
@@ -114,7 +80,7 @@ module.exports = {
         render: function () {
             // disable enter to the final step of capitalraise calculator without data
             if (!this.model.get('dataIsFilled')) {
-                app.routers.navigate('/calculator/capitalraise/step-1', {trigger: true});
+                app.routers.navigate('/calculator/capitalraise2/step-1', {trigger: true});
                 return false;
             }
 
@@ -128,4 +94,4 @@ module.exports = {
             return this;
         }
     })
-}
+};
