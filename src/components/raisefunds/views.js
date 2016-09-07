@@ -153,6 +153,7 @@ module.exports = {
                     type: 'string', 
                     label: 'Headline',
                     placeholder: 'Title',
+                    maxLength: 30,
                 },
                 link: {
                     type: 'url',
