@@ -84,9 +84,9 @@ _.extend(Backbone.Validation.callbacks, {
     }
 });
 
-$.fn.scrollTo = function() {
+$.fn.scrollTo = function(padding=0) {
     $('html, body').animate({
-        scrollTop: $(this).offset().top + 'px'
+        scrollTop: $(this).offset().top - padding + 'px'
     }, 'fast');
     return this; // for chaining...
 }
@@ -510,6 +510,28 @@ $('body').on('focus', 'textarea.showPopover', function() {
             template: popoverTemplate.replace('divPopover', 'textareaPopover'),
         });
         $(this).popover('show');
+    }
+});
+
+ // show bottom logo while scrolling page
+$(window).scroll(function(){
+    var $bottomLogo = $('#fade_in_logo'),
+        offsetTopBottomLogo = $bottomLogo.offset().top;
+
+    if (($(window).scrollTop() + $(window).height() >= offsetTopBottomLogo) && !$bottomLogo.hasClass('fade-in') ) {
+        $bottomLogo.addClass('fade-in');
+    }
+});
+
+// для показа биографии на стр. pg/team
+$('body').on('click', '.team-member-list article', function(){
+    var targetTextId = $(this).data('id-text');
+
+    if ($(targetTextId).hasClass('open')) {
+        $(targetTextId).removeClass('open').slideUp();
+    } else {
+        $(this).closest('.team-member-list').find('.biography-text.open').removeClass('open').hide();
+        $(targetTextId).addClass('open').slideDown();
     }
 });
 
