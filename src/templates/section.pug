@@ -11,7 +11,7 @@ if attr.type == 'jsonVideo'
     div(class='form-group clearfix videoInteractive index_' + indexCounter)
         .col-lg-7.videoInteractive
             each k1,v in fields[name].schema
-                - let t = fields[name].schema[v]
+                - var t = fields[name].schema[v]
                 .form-group.clearfix
                     label.col-lg-5.col-md-5.text-lg-right.font-weight-bold #{t.label}
                     .col-lg-7.col-md-7
