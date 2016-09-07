@@ -1,17 +1,46 @@
-// TODO добавить анимацию ховерам, появлению блока с меню(ховер на пунктах главного меню)
+html.show-menu
+  overflow: hidden !important
+  height: 100% !important
+  overflow-y: scroll !important
+
+  body
+    overflow: hidden !important
+    height: 100% !important
+
+  header
+    height: 100%
+    -webkit-transition: height 0.35s ease-in 200ms
+    transition: height 0.35s ease-in 200ms
+
+    #menuList,
+      visibility: visible
+      -webkit-transition-delay: 0s
+      transition-delay: 0s
+
+      li
+        transition-delay: 300ms, 300ms
+
+        transform: none
+        opacity: 1
+        transition: opacity 0.5s ease-out, transform 0.5s ease-out, -webkit-transform 0.5s ease-out
+
+    form.form-inline
+      transition-delay: 300ms, 300ms
+
+      transform: none
+      opacity: 1
+      transition: opacity 0.5s ease-out, transform 0.5s ease-out, -webkit-transform 0.5s ease-out
+
+@media screen and (max-width: 991px) 
+  .page
+    margin-top: rem(44)
+
 header
   .navbar-toggleable-md::after
     clear: none
 
-  .bg-inverse
-    background-color: transparent
-    background: -webkit-linear-gradient(to right, $menu_backgound_from, $menu_backgound_to)
-    background: -o-linear-gradient(to right, $menu_backgound_from, $menu_backgound_to)
-    background: -moz-linear-gradient(to right, $menu_backgound_from, $menu_backgound_to)
-    background: linear-gradient(to right, $menu_backgound_from, $menu_backgound_to)
-    -webkit-box-shadow: $menu_shadows
-    -moz-box-shadow: $menu_shadows
-    box-shadow: $menu_shadows
+  background-color: transparent
+  background: $menu_backgound_from
 
   .navbar
     padding-bottom: 0
@@ -53,31 +82,7 @@ header
           padding: 10px
           width: 450px
 
-      &:hover .list-container
-        position: absolute
-        top: 100%
-        left: -10px
-        z-index: 9991
-        
-        display: block
-
-        background-color: rgba($menu_backgound_from, 0.96)
-
-        &.two-columns
-          left: -120px
-
-          .submenu
-            vertical-align: top
-            float: left
-            min-width: 200px
-
-            & > li:first-child:hover
-              background: transparent
-              cursor: default
-
-            &:last-of-type
-              float: right
-
+     
         &.user-info-drop
           right: -16px!important
           left: auto!important
@@ -247,7 +252,34 @@ header
               font-size: 24px
               line-height: 2
               letter-spacing: 0
-  
+
+  @media screen and (min-width: 992px)
+
+    .nav-item:hover .list-container
+      position: absolute
+      top: 100%
+      left: -10px
+      z-index: 9991
+      
+      display: block
+
+      background-color: rgba($menu_backgound_from, 0.96)
+
+      &.two-columns
+        left: -120px
+
+        .submenu
+          vertical-align: top
+          float: left
+          min-width: 200px
+
+          & > li:first-child:hover
+            background: transparent
+            cursor: default
+
+          &:last-of-type
+            float: right
+
   .nav-link-sm
     padding: 4px 12px
     font-size: 0.75rem
@@ -255,6 +287,7 @@ header
 
 
   @media screen and (max-width: 991px)
+
     .navbar-nav
       padding: 14px 0 0 0
 
@@ -292,80 +325,167 @@ header
       width: auto
       background-color: transparent
 
-  @media screen and (min-width:992px) and (max-width: 1120px)
-    .navbar .navbar-brand
-      margin-top: 6px
-      width: 15%
+  // @media screen and (min-width:992px) and (max-width: 1120px)
+  //   .navbar .navbar-brand
+  //     margin-top: 6px
+  //     width: 15%
 
-    .navbar-nav .nav-item.user-info a.user-info-name span
-      display: none
+  //   .navbar-nav .nav-item.user-info a.user-info-name span
+  //     display: none
 
-  @media screen and (max-width: 992px)
+  @media screen and (max-width: 991px)
 
-    .navbar-nav:first-of-type
-      height: auto
-      // margin-bottom: 27px
+    -webkit-transition: height 0.35s ease-in
+    transition: height 0.35s ease-in
+
+    position: absolute
+    top: 0
+    right: 0
+    left: 0
+    z-index: 9999
+
+    display: block
+    height: 65px;
+    margin: 0
+    max-height: none
+    width: 100%
+
+    background: rgba($menu_backgound_from, .96)
+
+    nav
+      position: absolute
+      top: 0
+      z-index: 2
+
+      height: 100%
+      padding: 0
+      overflow: hidden
       width: 100%
 
+      #menuList
+        -webkit-transition: visibility 0s linear 1s
+        transition: visibility 0s linear 1s
+
+        position: relative
+        z-index: 2
+        // top: 65px
+        // right: 0
+        // bottom: 0
+        // left: 0
+
+        height: auto
+        float: none!important
+        margin: 0
+        padding: rem(10) rem(30) 0
+        overflow: hidden
+        overflow-y: auto
+        visibility: hidden
+        width: 100%
+        
+        box-sizing: border-box
+        -webkit-overflow-scrolling: touch
+
+        li 
+          transition-delay: 400ms, 400ms
+          transform: scale(1.1) translateY(-20px)
+          transition: opacity 0.55s ease-out, transform 0.45s ease-out, -webkit-transform 0.45s ease-out
+          
+          opacity: 0
+
+          height: auto
+          margin-left: 0
+          float: none
+
+          border-bottom: 1px rgba($menu_text_color, .5) solid
+
+          a 
+            padding: rem(10) rem(3)
+
+      .navbar-nav
+        .nav-item
+          .list-container
+            ul
+              width: 100%
+
+              li:last-child
+                border-bottom: none!important
+
+            &.two-columns
+              // left: -120px
+
+              // .submenu
+              //   vertical-align: top
+              //   float: left
+              //   min-width: 200px
+
+              //   & > li:first-child:hover
+              //     background: transparent
+              //     cursor: default
+
+              //   &:last-of-type
+              //     float: right
+
+
+    .navbar
       text-align: center
 
-    .full-height
-      width: 100%
-      position: absolute
-      left: 0
-      height: 100vh
-      z-index: 9999
-      background-color: transparent
-      background: -webkit-linear-gradient(to right, $menu_backgound_from, $menu_backgound_to)
-      background: -o-linear-gradient(to right, $menu_backgound_from, $menu_backgound_to)
-      background: -moz-linear-gradient(to right, $menu_backgound_from, $menu_backgound_to)
-      background: linear-gradient(to right, $menu_backgound_from, $menu_backgound_to)
-      -webkit-box-shadow: $menu_shadows
-      -moz-box-shadow: $menu_shadows
-      box-shadow: $menu_shadows
+    .navbar-brand
+      float: none
+      margin-right: 0
 
+    button.navbar-toggler
+      float: left
+      padding: rem(8) 0
+ 
     .navbar-nav:first-of-type
-      float: none!important
-      width: 540px
-      margin-left: auto
-      margin-right: auto
+      li.nav-item.user-info
+        margin-left: 0!important
+        min-width: auto
 
-    .navbar-nav:last-of-type
-      display: inline-block
-      float: none!important
-      width: 100%
-      margin: 0 auto
+        a > i
+          display: none
+
+    form.form-inline
+      transition-delay: 400ms, 400ms
+      transform: scale(1.1) translateY(-20px)
+      transition: opacity 0.55s ease-out, transform 0.45s ease-out, -webkit-transform 0.45s ease-out
       
-    .form-inline
-      margin: 0 10px
-      display: block
-      height: 45px
-      border-bottom: 1px solid $menu_text_color
       position: relative
 
+      display: block
+      margin: 0 rem(30)
+      padding: 0
+      opacity: 0
+
       .form-control
+        height: rem(36)
+        padding-left: rem(30)
+        
         background-color: transparent
         border: none
+        border-bottom: 1px rgba($menu_text_color, .8) solid
         outline: none
-        padding-left: 40px
-        height: 45px
+        
         color: $menu_text_color
 
       .btn
-        border: none
-        outline: none
-        padding: 5px
-        color: $menu_text_color
-        font-size: 25px
         position: absolute
         left: 0
-        top: 0
-    
-    .navbar-nav
-      .nav-item
-        position: static !important
-        min-width: 100%
-        height: auto
+        top: rem(2)
+
+        padding: 5px
+
+        border: none
+        outline: none
+
+        color: $menu_text_color
+        font-size: rem(16)
+
+        &:hover
+          background: transparent
+
+      // &.absolute-pos
+      //   position: absolute
 
     .notification-bell
       margin-top: -3px
@@ -377,70 +497,70 @@ header
     .list-container
       position: static
 
-  @media screen and (max-width: 585px)
+  // @media screen and (max-width: 585px)
 
-    .navbar .navbar-brand
-      display: inline-block
+  //   .navbar .navbar-brand
+  //     display: inline-block
 
-      width: 155px
+  //     width: 155px
 
-    .navbar-nav:first-of-type
-      height: auto
-      // margin-bottom: 27px
-      width: 100% !important
+  //   .navbar-nav:first-of-type
+  //     height: auto
+  //     // margin-bottom: 27px
+  //     width: 100% !important
 
-      text-align: center
+  //     text-align: center
 
 
-      li.nav-item
-        margin-left: 0!important
-        width: 100%
+  //     li.nav-item
+  //       margin-left: 0!important
+  //       width: 100%
 
-        .list-container
+  //       .list-container
 
-          &.two-columns
-            width: 100%
+  //         &.two-columns
+  //           width: 100%
 
-        &:hover .list-container
-          position: static
+  //       &:hover .list-container
+  //         position: static
           
-          display: block
+  //         display: block
 
-          background-color: rgba($menu_backgound_from, .96)
+  //         background-color: rgba($menu_backgound_from, .96)
 
 
-          .submenu
-            display: block
-            min-width: 100%
+  //         .submenu
+  //           display: block
+  //           min-width: 100%
 
-          &.two-columns
-            padding: 0;
-            width: 100%
+  //         &.two-columns
+  //           padding: 0;
+  //           width: 100%
 
-            .submenu
-              float: none
-              min-width: 100%
+  //           .submenu
+  //             float: none
+  //             min-width: 100%
 
-              &>li:first-child:hover
-                background: none
+  //             &>li:first-child:hover
+  //               background: none
 
-              &:last-of-type
-                float: none
+  //             &:last-of-type
+  //               float: none
 
-    .navbar-nav:last-of-type
-      width: auto
+  //   .navbar-nav:last-of-type
+  //     width: auto
 
-      li.nav-item
-        margin-left: 0!important
-        padding-left: 10px
-        min-width: 100%
-        text-align: left
+  //     li.nav-item
+  //       margin-left: 0!important
+  //       padding-left: 10px
+  //       min-width: 100%
+  //       text-align: left
 
-    .notification-container
-      left: auto !important
-      right: 0 !important
-      position: absolute !important
-      min-width: 300px
+  //   .notification-container
+  //     left: auto !important
+  //     right: 0 !important
+  //     position: absolute !important
+  //     min-width: 300px
 
   @media screen and (max-width: 385px)
 
