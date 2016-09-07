@@ -77,7 +77,22 @@ define(function() {
 
             events: {
                 'click .tabs-scroll .nav .nav-link': 'smoothScroll',
-                'click .list-group-item-action': 'toggleActiveAccordionTab'
+                'click .list-group-item-action': 'toggleActiveAccordionTab',
+                'click .linkedin-share': 'shareOnLinkedin',
+                'click .facebook-share': 'shareOnFacebook',
+                'click .twitter-share': 'shareOnTwitter',
+                'click .see-all-risks': 'seeAllRisks',
+                'click .see-all-faq': 'seeAllFaq',
+            },
+
+            seeAllRisks: function(e){
+                e.preventDefault();
+                $('.risks .collapse').collapse('show');
+            },
+
+            seeAllFaq: function(e){
+                e.preventDefault();
+                $('.faq .collapse').collapse('show');
             },
 
             smoothScroll(e) {
@@ -90,7 +105,7 @@ define(function() {
                     $navBar = $('.navbar.navbar-default');
 
                 $('html, body').stop().animate({
-                    'scrollTop': $target.offset().top - $navBar.height() - 5
+                    'scrollTop': $target.offset().top - $navBar.height() - 15
                 }, 500, 'swing', () => {
                     window.location.hash = e.target.hash;
                     $(document).on("scroll", this.onScrollListener);
@@ -128,12 +143,6 @@ define(function() {
                         currLink.removeClass("active");
                     }
                 });
-            },
-
-            events: {
-                'click .linkedin-share': 'shareOnLinkedin',
-                'click .facebook-share': 'shareOnFacebook',
-                'click .twitter-share': 'shareOnTwitter'
             },
 
             shareOnFacebook: function(event) {
@@ -271,6 +280,7 @@ define(function() {
             changeZipCode: function(e) {
                 // if not 5 digit, return
                 if (e.target.value.length < 5) return;
+                if (e.target.value.length != 5) return;
                 if (!e.target.value.match(/\d{5}/)) return;
                 // else console.log('hello');
                 this.getCityStateByZipCode(e.target.value, ({ success=false, city="", state=""}) => {
@@ -517,6 +527,7 @@ define(function() {
                         type: 'string', 
                         label: 'Headline',
                         placeholder: 'Title',
+                        maxLength: '30',
                     },
                     link: {
                         type: 'url',
@@ -808,6 +819,7 @@ define(function() {
             events: {
                 'submit form': 'submit',
                 'change input[name="security_type"]': 'updateSecurityType',
+                'blur #minimum_raise,#maximum_raise,#minimum_increment': 'formatNumber',
             },
             submit: app.defaultSaveActions.submit,
 
@@ -817,6 +829,14 @@ define(function() {
                 for(let k in this.events) {
                     console.log('#content ' + k.split(' ')[1]);
                     $('#content ' + k.split(' ')[1]).undelegate(); 
+                }
+            },
+
+            formatNumber: function(e) {
+                var valStr = $(e.target).val().replace(/,/g,'');
+                var val = parseInt(valStr);
+                if (val) {
+                    $(e.target).val(val.toLocaleString('en-US'));
                 }
             },
 
