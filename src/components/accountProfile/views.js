@@ -27,9 +27,9 @@ module.exports = {
         },
 
         render: function() {
-            this.getCityStateByZipCode = require("helpers/getSityStateByZipCode");
-            this.usaStates = require("helpers/usa-states");
-            let dropzone = require('dropzone');
+            this.getCityStateByZipCode: require("../helpers/getSityStateByZipCode");
+            this.usaStates = require("../helpers/usa-states");
+            let dropzone: require('dropzone');
             this.$el.html(
                 this.template({
                     serverUrl: serverUrl,
