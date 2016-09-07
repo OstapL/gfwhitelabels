@@ -9,6 +9,7 @@ module.exports = Backbone.Router.extend({
             const template = require('templates/mainPage.pug');
             app.cache[window.location.pathname] = template();
             $('#content').html(template());
+            $('body').scrollTo();
             app.hideLoading();
         });
     },
@@ -21,6 +22,7 @@ module.exports = Backbone.Router.extend({
                     serverUrl: serverUrl
                 })
             );
+            $('body').scrollTo();
             app.hideLoading();
         });
     },
