@@ -11,6 +11,7 @@ module.exports = {
 
         render: function() {
             console.log('asdf', this, this.campaign);
+            this.usaStates = require("helpers/usa-states");
             this.$el.html(
                 this.template({
                     serverUrl: serverUrl,
@@ -18,7 +19,8 @@ module.exports = {
                     fields: this.fields,
                     values: this.model.toJSON(),
                     user: app.user.toJSON(),
-                    campaign: this.campaign
+                    campaign: this.campaign,
+                    states: this.usaStates,
                 })
             );
             return this;
