@@ -69,23 +69,32 @@ mixin fieldBlock(name, data, attr)
                 label(class= attr.text_align ? 'text-md-' + attr.text_align + ' ' + attr.class1 : ' text-md-right ' + attr.class1 for=name)= fields[name].label
                 div(class=attr.class2 id=name).date-input
                     - var data = values[name] ? values[name].split('-') : []
-                    .col-lg-6.no-gutter.p-l-0
+                    .col-lg-4.no-gutter.p-l-0
                         input(
                             id=name + '__month'
                             name=name + '__month'
                             placeholder="MM"
-                            type='numeber'
+                            type='number'
                             maxlength=2
-                            value=data[1] || new Date().getMonth()
+                            value=data[2]
                           ).form-control
-                    .col-lg-6.no-gutter.p-r-0
+                    .col-lg-4.no-gutter.p-l-0.p-r-0
+                        input(
+                            id=name + '__day'
+                            name=name + '__day'
+                            placeholder="DD"
+                            type='number'
+                            maxlength=2
+                            value=data[1]
+                          ).form-control
+                    .col-lg-4.no-gutter.p-r-0.p-l-0
                         input(
                             id=name + '__year'
                             name=name + '__year'
                             placeholder="YYYY"
-                            type='numeber'
+                            type='text'
                             maxlength=4
-                            value=data[0] || new Date().getFullYear()
+                            value=data[0]
                           ).form-control
         else if attr.type == 'textarea' 
                 label(class= attr.text_align ? 'text-lg-' + attr.text_align + ' ' + attr.class1 : ' text-lg-right ' + attr.class1 for=name)= fields[name].label

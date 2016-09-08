@@ -46,7 +46,6 @@ module.exports = {
         },
 
         render: function() {
-            console.log('asdf', this, this.campaign);
             this.getCityStateByZipCode = require("helpers/getSityStateByZipCode");
             this.usaStates = require("helpers/usa-states");
             this.$el.html(
@@ -63,7 +62,30 @@ module.exports = {
             return this;
         },
 
-        getSuccessUrl: function(data) {            return '/campaign/general_information/?company_id=' + data.id;
+        _success: function(data) {            
+            // IF we dont have campaign we need create it
+            app.makeRequest('/api/campaign/general_information').
+                then((campaigns) => {
+                    if(campaigns.length > 0) {
+                        app.routers.navigate(
+                            '/campaign/general_information/' + campaigns[0].id,
+                            {trigger: true, replace: false}
+                        );
+                    } else {
+                        app.makeRequest('/api/campaign/general_information', {
+                            company: data.id,
+                            business_model: '',
+                            intended_use_of_proceeds: '',
+                            pitch: ''
+                        }, 'POST').
+                            then((campaign) => {
+                                app.routers.navigate(
+                                    '/campaign/general_information/' + campaign.id,
+                                    {trigger: true, replace: false}
+                                );
+                            })
+                    }
+                })
         },
 
         submit: app.defaultSaveActions.submit,
