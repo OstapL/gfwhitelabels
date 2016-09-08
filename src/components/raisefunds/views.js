@@ -226,7 +226,7 @@ module.exports = {
                 'gallery', 
                 'galleries/' + this.model.get('id'), '', 
                 (data) => {
-                    console.log(data);
+                    // console.log(data);
                     $('.photo-scroll').append('<div class="thumb-image-container" style="float: left; overflow: hidden; position: relative;">' +
                             '<div class="delete-image-container" style="position: absolute;">' +
                                 '<a class="delete-image" href="#" data-id="' + data.image_id + '">' +
