@@ -257,15 +257,15 @@ mixin fieldDropzone(name, attr, type)
             div(class=attr.class2 + ' dropzone__' + name)
                 span
                     img(src=app.getDropzoneUrl(name, attr, values) alt=fields[name].label class="img-fluid img-" + name)
-                    if values[name + '_data']
-                        a(
-                            href=values[name + '_data'].url 
-                            target="_blank" 
-                            class="a-" + name + ' link-3'
-                        ) #{values[name + '_data'].name}
+                    a(
+                        href=values[name + '_data'] ? values[name + '_data'].url : "#"
+                        target="_blank" 
+                        class="a-" + name + ' link-3'
+                    ) #{values[name + '_data'] ? values[name + '_data'].name : ''}
+                    //- if values[name + '_data']
     else if type == 2
         div(
-            class='dropzone__' + name + ' col-lg-7 media-item' + (fields[name].help_text ? ' showPopover' : '')
+            class='col-lg-7 media-item' + (fields[name].help_text ? ' showPopover' : '')
             data-content=(fields[name].help_text ? fields[name].help_text : '')
         )
             div(class=attr.class1)
@@ -274,13 +274,16 @@ mixin fieldDropzone(name, attr, type)
                 span(href="#").link-1
                     p.drop-photo #{attr.text}
                     i(class='fa fa-' + attr.icon)
-        .col-lg-5.p-l-1.p-r-3.p-sm-0.col-md-12.col-xs-12
-            .all-gallery
-                .photo-scroll
-                    if values[name + '_data']
-                        each v,k in values[name+'_data'].all_files
-                            .thumb-image-container(style="float: left; overflow: hidden; position: relative;")
-                                .delete-image-container(style="position: absolute;")
-                                    a(href="#" data-id=v.id).delete-image
-                                        i.fa.fa-times
-                                img( src=v.url).img-fluid.pull-left
+        //- .col-lg-5.p-l-1.p-r-3.p-sm-0.col-md-12.col-xs-12
+        //- div(class='col-lg-5 p-l-1 p-r-3 p-sm-0 col-md-12 col-xs-12' style="border:solid 1px red;")
+        div(class='dropzone__' + name + ' col-lg-5 p-l-1 p-r-3 p-sm-0 col-md-12 col-xs-12' style="border:solid 1px gray;")
+            span
+                .all-gallery
+                    .photo-scroll(style="min-height:5rem;")
+                        if values[name + '_data']
+                            each v,k in values[name+'_data'].all_files
+                                .thumb-image-container(style="float: left; overflow: hidden; position: relative;")
+                                    .delete-image-container(style="position: absolute;")
+                                        a(href="#" data-id=v.id).delete-image
+                                            i.fa.fa-times
+                                    img( src=v.url).img-fluid.pull-left
