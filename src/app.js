@@ -549,14 +549,37 @@ $('body').on('click', '.team-member-list article', function(){
     }
 });
 
+// scripts for mobile menu
 $('body').on('click', '#toggle_mobile_menu', function(){
     $('html').toggleClass('show-menu');
-    $('#ac-gn-menustate').click();
 
 });
 
-$('body').on('click', '#menuList .nav-item', function(){
-    $(this).find('.list-container').slideToggle();
+$('html').on('click', function(){
+    if ($('header').hasClass('no-overflow')) {
+        $('header').removeClass('no-overflow');
+    }
+});
+
+$('body').on('click', '.user-info', function(){
+    if ($('.navbar-toggler:visible').length !== 0) {
+        $('html').removeClass('show-menu');
+        $('header').toggleClass('no-overflow');
+    }
+    return false;
+});
+
+
+$('body').on('click', '#menuList .nav-item', function(event){
+    var href = $(event.target).attr('href');
+
+    if ($('.navbar-toggler:visible').length !== 0) {
+        $(this).find('.list-container').slideToggle();
+
+        if (href.indexOf('/') != -1) {
+            $('html').toggleClass('show-menu');
+        }
+    }
 
 });
 
