@@ -165,6 +165,12 @@ module.exports = {
         },
 
         render() {
+            // disable enter to the final step of paybackshare calculator without data
+            if (!this.model.get('outputData')) {
+                app.routers.navigate('/calculator/paybackshare/step-2', {trigger: true});
+                return false;
+            }
+
             this.$el.html(this.template({
                 model: this.model.toJSON(),
                 formatPrice
@@ -267,4 +273,4 @@ module.exports = {
             return this;
         }
     })
-}
+};

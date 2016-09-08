@@ -1,5 +1,6 @@
 import payBackShareCalculator from 'components/payBackShareCalculator/route';
 import capitalRaiseCalculator from 'components/capitalRaiseCalculator/route';
+import capitalRaiseCalculator2 from 'components/capitalRaiseCalculator2/route';
 import campaignRoute from 'components/campaign/route';
 import pageRoute from 'components/pg/route';
 import raiseFunds from 'components/raisefunds/route';
@@ -41,6 +42,10 @@ let appRoutes = Backbone.Router.extend({
         let r7  = new accountProfile;
         _.each(r7.routes, (funcName, path) => {
             this.routes[path] = r7[funcName];
+        });
+        let r8  = new capitalRaiseCalculator2;
+        _.each(r8.routes, (funcName, path) => {
+            this.routes[path] = r8[funcName];
         });
     },
     

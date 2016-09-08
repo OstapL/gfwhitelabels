@@ -108,6 +108,7 @@ section.campaign-specifics.container.m-b-85
                 class2: 'col-lg-6 col-md-9', 
                 type: 'text',
                 placeholder: '$',
+                disabled: true,
                 })
 
             .col-lg-6.col-l-65
@@ -116,7 +117,44 @@ section.campaign-specifics.container.m-b-85
                 class2: 'col-lg-7 col-md-9', 
                 type: 'text',
                 placeholder: '$',
+                disabled: true,
                 })
+
+          .row.m-t-2.form-group-m-b-15
+            .col-lg-6.col-l-65
+              .form-group.row.min_equity_offered.required
+                label(for="min_equity_offered").text-lg-right.col-lg-6.p-l-2 Minimum Equity Offered
+                .col-lg-6.col-md-9
+                  input.form-control#min_equity_offered(name="min_equity_offered" placeholder="$" type="text" value="0" disabled)
+
+            .col-lg-6.col-l-65
+              .form-group.row.max_equity_offered.required
+                label(for="max_equity_offered").text-lg-right.col-lg-5.col-md-3 Maximum Equity Offered
+                .col-lg-6.col-md-9
+                  input.form-control#max_equity_offered(name="max_equity_offered" placeholder="$" type="text" value="0" disabled)
+
+
+
+          //- .row.m-t-2.form-group-m-b-15
+          //-   .col-lg-6.col-l-65
+          //-     +fieldBlock("min_equity_offered", '', {
+          //-       class1: 'col-lg-6 p-l-2', 
+          //-       class2: 'col-lg-6 col-md-9', 
+          //-       type: 'text',
+          //-       placeholder: '$',
+          //-       disabled: true,
+          //-       })
+
+          //-   .col-lg-6.col-l-65
+          //-     +fieldBlock("max_equity_offered", '', {
+          //-       class1: 'col-lg-5 col-md-3', 
+          //-       class2: 'col-lg-7 col-md-9', 
+          //-       type: 'text',
+          //-       placeholder: '$',
+          //-       disabled: true,
+          //-       })
+            //- .col-lg-6 Maximum # of Share: 
+            //-   span#min_number_of_share 1000
 
       .security_type_list.security_type_1(style=(values.security_type == 1 ? '' :  "display: none"))
           .row
