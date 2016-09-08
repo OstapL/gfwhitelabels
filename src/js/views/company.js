@@ -6,7 +6,8 @@ define(function() {
             events: {
                 'submit form': 'submit',
                 'keyup #zip_code': 'changeZipCode',
-                'click .update-location': 'updateLocation',
+                'click .update-location': 'updateLocation'
+
                 'blur input[name=phone]': 'formatPhone',
             },
             initialize: function(options) {
@@ -20,6 +21,7 @@ define(function() {
 
             changeZipCode: function(e) {
                 // if not 5 digit, return
+                if (e.target.value.length < 5) return;
                 if (e.target.value.length != 5) return;
                 if (!e.target.value.match(/\d{5}/)) return;
                 // else console.log('hello');

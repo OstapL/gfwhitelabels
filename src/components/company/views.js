@@ -52,8 +52,7 @@ module.exports = {
             return this;
         },
 
-        getSuccessUrl: function(data) {
-            return '/campaign/general_information/?company_id=' + data.id;
+        getSuccessUrl: function(data) {            return '/campaign/general_information/?company_id=' + data.id;
         },
 
         submit: app.defaultSaveActions.submit,
