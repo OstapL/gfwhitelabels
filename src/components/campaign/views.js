@@ -42,6 +42,18 @@ module.exports = {
             'click .linkedin-share': 'shareOnLinkedin',
             'click .facebook-share': 'shareOnFacebook',
             'click .twitter-share': 'shareOnTwitter',
+            'click .see-all-risks': 'seeAllRisks',
+            'click .see-all-faq': 'seeAllFaq',
+        },
+
+        seeAllRisks: function(e){
+            e.preventDefault();
+            this.$('.risks .collapse').collapse('show');
+        },
+
+        seeAllFaq: function(e){
+            e.preventDefault();
+            this.$('.faq .collapse').collapse('show');
         },
 
         smoothScroll(e) {
