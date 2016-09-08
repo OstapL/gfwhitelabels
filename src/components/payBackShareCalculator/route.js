@@ -43,5 +43,5 @@ module.exports = Backbone.Router.extend({
 
             app.hideLoading();
         });
-    },
+    }
 });
