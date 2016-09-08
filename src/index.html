@@ -34,20 +34,14 @@
     <!-- Page Wrap -->
     <!-- Navigation panel -->
 
+    <input type="checkbox" id="ac-gn-menustate" class="ac-gn-menustate">
+
     <header class="header">
-    <nav class="navbar bg-inverse navbar-dark">
+      <nav class="navbar bg-invere navbar-dark">
         <a class="navbar-brand" href="/">
             <img src="/img/logo.png" alt="">
         </a>
-        <div class="collapse navbar-toggleable-md full-height" id="exCollapsingNavbar2">
-            <ul class="nav navbar-nav pull-left" id="menuList">
-            </ul>
-
-          <form class="form-inline hidden-lg-up">
-            <input class="form-control" type="text" placeholder="search for companies">
-            <button class="btn" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
-          </form>
-        </div>
+        
         <div class="navbar-toggleable-md pull-right">
             <ul class="nav navbar-nav" id="menuProfile">
             </ul>
@@ -57,10 +51,20 @@
             </ul>
         </div>
 
-      <button class="navbar-toggler hidden-lg-up" type="button" data-toggle="collapse" data-target="#exCollapsingNavbar2">
-        <i class="fa fa-bars"></i>
-      </button>
-    </nav>
+        <button class="navbar-toggler hidden-lg-up" type="button" data-toggle="collapse" id="toggle_mobile_menu">
+          <i class="fa fa-bars"></i>
+        </button>
+
+        <div class="mobile-menu full-height" id="">
+          <ul class="nav navbar-nav pull-left" id="menuList">
+          </ul>
+
+          <form class="form-inline hidden-lg-up">
+            <input class="form-control" type="text" placeholder="search for companies">
+            <button class="btn" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
+          </form>
+        </div>
+      </nav>
     </header>
 
     <div class="page" id="page">

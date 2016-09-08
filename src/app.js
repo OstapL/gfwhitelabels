@@ -535,6 +535,17 @@ $('body').on('click', '.team-member-list article', function(){
     }
 });
 
+$('body').on('click', '#toggle_mobile_menu', function(){
+    $('html').toggleClass('show-menu');
+    $('#ac-gn-menustate').click();
+
+});
+
+$('body').on('click', '#menuList .nav-item', function(){
+    $(this).find('.list-container').slideToggle();
+
+});
+
 $('body').on('click', 'a', function(event) {
     var href = event.currentTarget.getAttribute('href');
     if(href == window.location.pathname) {
