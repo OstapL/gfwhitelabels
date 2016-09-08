@@ -6,7 +6,6 @@ module.exports = Backbone.Router.extend({
     },
 
     calculatorPaybackshareStep1: function() {
-        console.log('hello here');
         require.ensure([], () => {
             let Model = require('./model');
             let View = require('./views');
@@ -15,6 +14,7 @@ module.exports = Backbone.Router.extend({
                 model: app.getModelInstance(Model, 'calculatorPaybackshare').setFormattedPrice()
             }).render();
 
+            $('#content').scrollTo();
             app.hideLoading();
         });
     },
@@ -28,6 +28,7 @@ module.exports = Backbone.Router.extend({
                 model: app.getModelInstance(Model, 'calculatorPaybackshare').setFormattedPrice()
             }).render();
 
+            $('#content').scrollTo();
             app.hideLoading();
         });
     },
@@ -41,7 +42,8 @@ module.exports = Backbone.Router.extend({
                 model: app.getModelInstance(Model, 'calculatorPaybackshare').setFormattedPrice()
             }).render();
 
+            $('#content').scrollTo();
             app.hideLoading();
         });
-    },
+    }
 });

@@ -7,13 +7,14 @@ module.exports = Backbone.Router.extend({
 
     campaignList: function() {
         require.ensure([], () => {
-            let model = require('./models.js');
-            let view = require('./views.js');
+            const model = require('./models.js');
+            const view = require('./views.js');
 
             app.collections.campaigns = new model.collection();
             app.collections.campaigns.fetch({
                 success: (collection, response, options) => {
 
+                    $('body').scrollTo(); 
                     $('#content').html('');
                     app.views.campaigns = new view.list({
                         el: '#content',

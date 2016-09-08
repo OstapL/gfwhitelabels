@@ -5,8 +5,9 @@ machine:
 dependencies:
     override:
         - npm install
-        - ./node_modules/gulp/bin/gulp.js styles
+        - ls -la 
         - ./node_modules/webpack/bin/webpack.js -p --config ./webpack.config.production.js 
+        - ./node_modules/gulp/bin/gulp.js styles
         - sudo pip install awscli
         - ls -la dist
         - ./deploy.sh
