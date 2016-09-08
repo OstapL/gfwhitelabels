@@ -1,0 +1,50 @@
+
+include ../../../templates/mixins.pug
+
++breadcrumbs('PayBack Share Calculator ', 'intro', 
+    [
+        ['Home', '/'],
+        ["What's My Business Worth?", '/'],
+        ["PayBack Share Calculator", '']
+    ]
+)
+
+.container.calculator-container
+    .row
+        .offset-lg-2.col-xs-8
+            ul.list-inline.top-breadcrambs.mb45
+                li
+                    a(href="/calculator/paybackshare/step-1").current.btn.text-uppercase Intro
+                li
+                    a(href="/calculator/paybackshare/step-2").btn.btn-secondary.text-uppercase step 2
+                li
+                    a(href="/calculator/paybackshare/step-3").btn.btn-secondary.text-uppercase finish
+
+    .row
+        .offset-lg-3.col-lg-6
+            h3.m0 PayBack Share is a revenue share agreement that may be a good choice for:
+            ul.simple-list.list-style-alphabet.mb45
+                li.mt15 Companies that generate or expect to generate cash (your operating earnings will have to be &gt; 5% of your revenue for this to make sense);
+                li.mt15 LLC&rsquo;s that are looking for ways to raise funds without the need to issue K-1s; and
+                li.mt15 Companies that want to maintain a clean capital structure in anticipation of a future venture capital fundraising round.
+
+            h3.m0 Here&apos;s how it works:
+            ol.simple-list.mb45
+                li.mt15 You share at least 5% of your revenue annually;
+                li.mt15 No distribution is required until the second full calendar year and you are allowed one year of forbearance as needed;
+                li.mt15 Distributions are capped at 2x the invested amount, at which point your obligation is fulfilled.
+
+            h3.m0 Here are some of the advantages of choosing PayBack Share:
+            ol.simple-list.mb45
+                li.mt15 It does not dilute the ownership of current shareholders or the control of management
+                li.mt15 It avoids a prolonged negotiation over valuation and &ldquo;messy cap table&rdquo;
+                li.mt15 It may be easier to raise capital and attract investors by offering the potential to earn regular cash distributions
+                li.mt15 It gives you the chance to keep more of the upside since once investors&rsquo; have received 2x their money back, you will have no further obligation
+
+            a(href="#").link-2 Click here to see the PayBack Equity Subscription Agreement
+
+    .row
+        .offset-lg-3.col-lg-6.mt50
+                a(
+                    href="/calculator/paybackshare/step-2"
+                ).btn.btn-primary.btn-lg.pull-sm-right.text-uppercase Ok, let&apos;s get started 

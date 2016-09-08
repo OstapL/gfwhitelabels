@@ -5,43 +5,43 @@ var webpack = require('webpack'),
     path = require('path');
 
 module.exports = {
-    entry: {
-        bundle: './src/app.js'
-    },
-
+    entry: './src/app.js',
+    devtool: 'eval-source',
     output: {
         path: __dirname + '/dist',
-        filename: '/bundle.js'
+        publicPath: '/',
+        filename: 'bundle.js'
     },
+
     devServer: {
         contentBase: './dist/',
+        historyApiFallback: true,
+        inline: true,
+        hot: true,
+        port: 7070,
+        stats: {
+            colors: true
+        }
     },
 
-
-    uglifyJsPlugin: new webpack.optimize.UglifyJsPlugin({
-        compressor: {
-            screw_ie8: true,
-            warnings: false
-        },
-        output: {
-            comments: false
-        }
-    }),
-
     resolve: {
-        extensions: ['', '.js', '.pug', '.sass', 'scss', ],
+        extensions: ['', '.js', '.pug', '.sass', '.scss'],
         modulesDirectories: [
-            './',
-            'js',
-            'src',
-            'node_modules'
+            './src',
+            './node_modules'
         ]
     },
 
-    devtool: 'eval-source-map',
+    debug: true,
 
     plugins: [
         new ExtractTextPlugin("style.css"),
+        new HtmlWebpackPlugin({
+            title: 'Backbone App',
+            template: './src/index.html',
+            filename: 'index.html',
+            inject: 'body' // Inject all scripts into the body
+        }),
         new webpack.ProvidePlugin({
             $: "jquery",
             jQuery: "jquery",
@@ -49,21 +49,7 @@ module.exports = {
             "window.Tether": "tether",
             Backbone: "backbone"
         }),
-        new webpack.optimize.UglifyJsPlugin({
-            compressor: {
-                screw_ie8: true,
-                warnings: false
-            },
-            output: {
-                comments: false
-            }
-        }),
-        new HtmlWebpackPlugin({
-            title: 'Backbone App',
-            template: './src/index.html',
-            filename: 'index.html',
-            inject: 'body' // Inject all scripts into the body
-        })
+        new webpack.HotModuleReplacementPlugin()
     ],
 
     module: {
@@ -71,7 +57,7 @@ module.exports = {
             {test: /bootstrap\/js\//, loader: 'imports?jQuery=$' },
             {test: /\.html?$/, loader: 'file?name=[name].[ext]'},
             {test: /\.pug$/, loader: 'pug-loader'},
-            {test: /\.js?$/, exclude: /node_modules/, loader: 'babel-loader'},
+            {test: /\.js?$/, exclude: /node_modules/, loader: 'babel-loader', query: {presets: ['es2015']}},
             {test: /\.css$/, loaders: ['style-loader', 'css-loader']},
             {test: /\.sass$/, loaders: ['style-loader', 'css-loader', 'sass-loader']},
             {test: /\.scss$/, loaders: ['style-loader', 'css-loader', 'sass-loader']},
@@ -85,9 +71,5 @@ module.exports = {
             {test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: 'url?limit=8192&mimetype=application/octet-stream'},
             {test: /\.md$/, loaders: ['html', 'markdown']}
         ]
-    },
-
-    devServer: {
-        historyApiFallback: true
-    },
+    }
 };

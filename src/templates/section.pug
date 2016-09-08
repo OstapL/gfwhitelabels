@@ -9,36 +9,38 @@ include mixins.pug
 
 if attr.type == 'jsonVideo'
     div(class='form-group clearfix videoInteractive index_' + indexCounter)
-        .col-lg-7.videoInteractive
+        .col-lg-7.videoInteractive.p-sm-0
             each k1,v in fields[name].schema
                 - let t = fields[name].schema[v]
                 .form-group.clearfix
-                    label.col-lg-5.col-md-5.text-lg-right.font-weight-bold #{t.label}
-                    .col-lg-7.col-md-7
+                    label.col-lg-5.col-md-12.col-xs-12.text-lg-right.font-weight-bold.p-sm-0 #{t.label}
+                    .col-lg-7.col-md-12.col-xs-12.p-sm-0
                         input(
                             id=name + '_' + v
                             name=name + '[' + indexCounter + '][' + v + ']'
                             placeholder=t.placeholder ? t.placeholder : t.label
                             type=t.type
                         ).form-control
-        .col-lg-5.p-l-1.p-r-3 
+        .col-lg-5.p-l-1.p-r-3.col-md-12.col-xs-12.p-sm-0 
             .embed-responsive.embed-responsive-16by9 
                 iframe.embed-responsive-item(src="//www.youtube.com/embed/?rel=0" allowfullscreen="true")
 else
     each k,v in fields[name].schema
         div(class='form-group clearfix videoInteractive index_' + indexCounter)
-            label.col-lg-3.text-lg-right #{k.label}
-            .col-lg-9
+            label.col-lg-3.col-md-12.text-lg-right.p-sm-0 #{k.label}
+            .col-lg-9.col-md-12.p-sm-0
                 if k.type == 'text' 
                     textarea(
                         id=name + '_' + v
                         name=name + '[' + indexCounter + '][' + v + ']'
                         placeholder=k.placeholder ? k.placeholder : k.label
+                        maxLength=k.maxLength ? k.maxLength : ''
                       ).form-control
                 else
                     input(
                         id=name + '_' + v
                         name=name + '[' + indexCounter + '][' + v + ']'
                         placeholder=k.placeholder ? k.placeholder : k.label
+                        maxLength=k.maxLength ? k.maxLength : ''
                     ).form-control
 - counter ++
