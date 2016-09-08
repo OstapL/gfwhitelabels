@@ -14,6 +14,7 @@ module.exports = Backbone.Router.extend({
                 model: app.getModelInstance(Model, 'calculatorCapitalraise').setFormattedPrice()
             }).render();
 
+            $('#content').scrollTo();
             app.hideLoading();
         });
     },
@@ -27,6 +28,7 @@ module.exports = Backbone.Router.extend({
                 model: app.getModelInstance(Model, 'calculatorCapitalraise').setFormattedPrice()
             }).render();
 
+            $('#content').scrollTo();
             app.hideLoading();
         });
     },
@@ -40,6 +42,7 @@ module.exports = Backbone.Router.extend({
                 model: app.getModelInstance(Model, 'calculatorCapitalraise').setFormattedPrice()
             }).render();
 
+            $('#content').scrollTo();
             app.hideLoading();
         });
     }

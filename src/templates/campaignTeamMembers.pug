@@ -15,17 +15,21 @@ section.create-company-team-add.container
     .col-lg-8
         h2.text-uppercase.text-lg-center.text-xs-center.dosis.m-t-0 team members
         form(metod="post" action="").form-section
-            if values.members && values.members.length < 2
+            if values.members && values.members.length < 1
                  .form-group.text-lg-center
                     .col-lg-12
                       .campaign-warning.warning-team-add.text-lg-left
                         i.fa.fa-exclamation-triangle 
                         span.warning-text 
-                        | Warning! You have to add at least 2 persons for proceed.
+                        | Warning! You have to add at least 1 team member for proceed.
 
             .col-lg-12.text-lg-center.m-t-2.m-b-2
-                    a(href='/campaign/team-members/' + values.id + '/add/member/new').btn.btn-lg.text-uppercase.m-r-3 ADD TEAM MEMBER
-                    a(href='/campaign/team-members/' + values.id + '/add/advisor/new').btn.btn-lg.text-uppercase ADD ADVISOR
+                    a(href='/campaign/team-members/' + values.id + '/add/member/new').btn.btn-lg.text-uppercase.m-r-3 
+                        i.fa.fa-plus
+                        |  ADD TEAM MEMBER 
+                    a(href='/campaign/team-members/' + values.id + '/add/advisor/new').btn.btn-lg.text-uppercase 
+                        i.fa.fa-plus
+                        |  ADD ADVISOR
 
             if values.members
                 - counter = 0
@@ -39,8 +43,9 @@ section.create-company-team-add.container
                             a(href="/campaign/team-members/" + values.id + "/add/" + v.type + '/' + counter).link-1
                                 i.fa.fa-pencil-square-o
                     - counter ++
-            if values.members && values.members.length >= 2
+            if values.members && values.members.length >= 1
 
                 .col-lg-12.pull-right.p-r-0.m-t-3.text-lg-right
                     a(href="/api/campaign/" + values.id target="_blank").btn.btn-lg.btn-secondary.text-uppercase.m-r-3 preview
-                    a(href="/campaign/specifics/" + values.id).btn.btn-lg.text-uppercase Go to Specifics
+                    a(href="/campaign/specifics/" + values.id).btn.btn-lg.btn-primary.text-uppercase Go to Specifics
+                        i.fa.fa-angle-right
