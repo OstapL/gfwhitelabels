@@ -10,6 +10,12 @@ module.exports = {
         initialize: function(options) {
             this.fields = options.fields;
             this.campaign = options.campaign;
+              this.$el.on('keypress', ':input:not(textarea)', function(event){
+                if(event.keyCode == 13) {
+                  event.preventDefault();
+                  return false;
+                }
+              });
         },
 
         formatPhone: function(e){
