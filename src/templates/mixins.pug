@@ -246,18 +246,23 @@ mixin fieldDropzone(name, attr, type)
             div(class=attr.class1 + ' ' + (fields[name].required == true ? ' required ' : ' ') )
               .col-lg-5
                   span.pull-right.font-weight-bold #{fields[name].label}
-              div(class='dropzone__' + name + ' col-lg-7 text-lg-center')
+              div(class='col-lg-7 text-lg-center')
                 span(class='link-1' href="#")
                     p.drop-photo #{attr.text}
                     i(class="fa fa-" + attr.icon)
-            div(class=attr.class2)
-                img(src=app.getDropzoneUrl(name, attr, values) alt=fields[name].label class="img-fluid img-" + name)
-                if values[name + '_data']
-                    a(
-                        href=values[name + '_data'].url 
-                        target="_blank" 
-                        class="a-" + name + ' link-3'
-                    ) #{values[name + '_data'].name}
+              //- div(class='dropzone__' + name + ' col-lg-7 text-lg-center')
+              //-   span drop<br>drop<br>drop
+                    //- p.drop-photo #{attr.text}
+                    //- i(class="fa fa-" + attr.icon)
+            div(class=attr.class2 + ' dropzone__' + name)
+                span
+                    img(src=app.getDropzoneUrl(name, attr, values) alt=fields[name].label class="img-fluid img-" + name)
+                    if values[name + '_data']
+                        a(
+                            href=values[name + '_data'].url 
+                            target="_blank" 
+                            class="a-" + name + ' link-3'
+                        ) #{values[name + '_data'].name}
     else if type == 2
         div(
             class='dropzone__' + name + ' col-lg-7 media-item' + (fields[name].help_text ? ' showPopover' : '')
