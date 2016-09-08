@@ -137,8 +137,8 @@ mixin fieldBlock(name, data, attr)
                             - let k = values[name][kkeys[counter]][v]
                             - let t = fields[name].schema[v]
                             div(class='form-group clearfix index_' + indexCounter )
-                                label.col-lg-3.text-lg-right #{t.label}
-                                .col-lg-9
+                                label.col-lg-3.col-md-12.text-lg-right.p-sm-0 #{t.label}
+                                .col-lg-9.col-md-12.p-sm-0
                                     if t.type == 'text' 
                                         textarea(
                                             id=name + '_' + v
@@ -163,19 +163,19 @@ mixin fieldBlock(name, data, attr)
                         .delete-section-container
                             a(href="#" data-section=name).delete-section
                                 i.fa.fa-times
-                        .col-lg-7.videoInteractive
+                        .col-lg-7.videoInteractive.p-sm-0
                             each k1,v in fields[name].schema
                                 - let t = fields[name].schema[v]
                                 .form-group.clearfix
-                                    label.col-lg-5.col-md-5.text-lg-right.font-weight-bold #{t.label}
-                                    .col-lg-7.col-md-7
+                                    label.col-lg-5.col-md-12.col-xs-12.text-lg-right.font-weight-bold.p-sm-0 #{t.label}
+                                    .col-lg-7.col-md-12.col-xs-12.p-sm-0
                                         input(
                                             id=name + '_' + v
                                             name=name + '[' + indexCounter + '][' + v + ']'
                                             placeholder=t.placeholder ? t.placeholder : t.label
                                             type=t.type
                                         ).form-control
-                        .col-lg-5.p-l-1.p-r-3 
+                        .col-lg-5.p-l-1.p-r-3.col-md-12.col-xs-12.p-sm-0 
                             .embed-responsive.embed-responsive-16by9 
                                 iframe.embed-responsive-item(src="//www.youtube.com/embed/?rel=0" allowfullscreen="true")
                 else
@@ -187,13 +187,13 @@ mixin fieldBlock(name, data, attr)
                             .delete-section-container
                                 a(href="#" data-section=name data-index=indexCounter).delete-section
                                     i.fa.fa-times
-                            .col-lg-7.videoInteractive
+                            .col-lg-7.videoInteractive.p-sm-0
                                 each k1,v in fields[name].schema
                                     - let k = values[name][kkeys[counter]][v]
                                     - let t = fields[name].schema[v]
                                     .form-group.clearfix
-                                        label.col-lg-5.col-md-5.text-lg-right.font-weight-bold #{t.label}
-                                        .col-lg-7.col-md-7
+                                        label.col-lg-5.col-md-12.col-xs-12.text-lg-right.font-weight-bold.p-sm-0 #{t.label}
+                                        .col-lg-7.col-md-12.col-xs-12.p-sm-0
                                             input(
                                                 id=name + '_' + v
                                                 name=name + '[' + indexCounter + '][' + v + ']'
@@ -201,7 +201,7 @@ mixin fieldBlock(name, data, attr)
                                                 type=t.type
                                                 value=k
                                             ).form-control
-                            .col-lg-5.p-l-1.p-r-3 
+                            .col-lg-5.p-l-1.p-r-3.col-md-12.col-xs-12.p-sm-0  
                                 .embed-responsive.embed-responsive-16by9 
                                     - let link = app.getVideoId(values[name][kkeys[counter]].link)
                                     iframe.embed-responsive-item(src="//www.youtube.com/embed/" + link + "?rel=0" allowfullscreen="true")
@@ -263,12 +263,12 @@ mixin fieldDropzone(name, attr, type)
             data-content=(fields[name].help_text ? fields[name].help_text : '')
         )
             div(class=attr.class1)
-                span.pull-right.font-weight-bold #{fields[name].label}
-            div(class=attr.class2 + ' text-lg-center')
+                span.pull-right.pull-xs-none.font-weight-bold #{fields[name].label}
+            div(class=attr.class2 + ' text-lg-center text-xs-center text-md-center')
                 span(href="#").link-1
                     p.drop-photo #{attr.text}
                     i(class='fa fa-' + attr.icon)
-        .col-lg-5.p-l-1.p-r-3
+        .col-lg-5.p-l-1.p-r-3.p-sm-0.col-md-12.col-xs-12
             .all-gallery
                 .photo-scroll
                     if values[name + '_data']
