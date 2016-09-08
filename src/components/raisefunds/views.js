@@ -84,7 +84,7 @@ module.exports = {
             this.fields['additional_info'].schema = {
                 title: {
                     type: 'string', 
-                    label: 'Optional Additioal Sections',
+                    label: 'Optional Additional Section',
                     placeholder: 'Section Title',
                 },
                 body: {
@@ -348,7 +348,7 @@ module.exports = {
                     type: 'string',
                     label: 'Where did you grow up',
                     placeholder: 'City',
-                    required: true,
+                    required: false,
                 },
                 state: {
                     type: 'choice',

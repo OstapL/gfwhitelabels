@@ -144,9 +144,6 @@ section
         //- h3.our.text-lg-center Why You Should Invest
         h2.dosis.our.text-uppercase.text-lg-center.green-heading Why You Should Invest
         p #{ campaign.pitch }
-        //- h3.our.text-lg-center Our Edge
-        h2.dosis.our.text-uppercase.text-lg-center.green-heading How We Intend to Make Money
-        p #{ campaign.business_model }
 
         //- if campaign.additional_info
         //-   each v,k in campaign.additional_info
@@ -226,28 +223,12 @@ section
                       a(data-toggle="modal" href="#videoModal-3" data-target="#videoModal-3").small-icon.link-6
                           i.fa.fa-play-circle-o
                     h3.card-text.text-lg-center Title for Optional Video 3
-      .col-lg-12
-        //- h3.text-lg-center Articles and Press
-        h2.dosis.text-uppercase.text-lg-center.green-heading Articles and Press
-      .row
-        .col-lg-12.text-center-flex
-          .articles_press
-          if campaign.press
-            each v,k in campaign.press
-              .col-lg-3.articles_press
-                a(href=v.link target="_blank")
-                  .card.card-inverse
-                    img(src="/img/smartbe-intelligent-stroller.jpg" alt="").card-img
-                    .card-img-overlay
-                      .card-title
-                        p.card-text.font-weight-bold #{ v.headline }
-                        // p.card-text.intro Smartbe is a revolutionary concept as regards design and ...
-                        .pos-bottom
-                          a(href=v.link target="_blank").links.d-inline-block.card-text.pull-right #{ v.link }
-                          img(src="/img/icon-campaign.jpg", alt="").icon-campaign.d-inline-block
-                        
 
       .col-lg-12
+        //- h3.our.text-lg-center Our Edge
+        h2.dosis.our.text-uppercase.text-lg-center.green-heading How We Intend to Make Money
+        p #{ campaign.business_model }
+
         //- h3.text-lg-center Why We are Raising Capital, and What We’ll Do with It
         h2.dosis.text-uppercase.text-lg-center.green-heading Why We are Raising Capital, and What We’ll Do with It
         p #{ campaign.intended_use_of_proceeds }
@@ -287,6 +268,23 @@ section
                               a(href="#").link-1.pull-right
                                 i.fa.fa-graduation-cap
                                 |  #{v.college}
+            h2.dosis.text-uppercase.text-lg-center.green-heading Articles and Press
+            .row
+              .col-lg-12.text-center-flex
+                .articles_press
+                if campaign.press
+                  each v,k in campaign.press
+                    .col-lg-3.articles_press
+                      a(href=v.link target="_blank")
+                        .card.card-inverse
+                          img(src="/img/smartbe-intelligent-stroller.jpg" alt="").card-img
+                          .card-img-overlay
+                            .card-title
+                              p.card-text.font-weight-bold #{ v.headline }
+                              // p.card-text.intro Smartbe is a revolutionary concept as regards design and ...
+                              .pos-bottom
+                                a(href=v.link target="_blank").links.d-inline-block.card-text.pull-right #{ v.link }
+                                img(src="/img/icon-campaign.jpg", alt="").icon-campaign.d-inline-block
   
   else
       //
