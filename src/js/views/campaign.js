@@ -279,6 +279,7 @@ define(function() {
 
             changeZipCode: function(e) {
                 // if not 5 digit, return
+                if (e.target.value.length < 5) return;
                 if (e.target.value.length != 5) return;
                 if (!e.target.value.match(/\d{5}/)) return;
                 // else console.log('hello');
