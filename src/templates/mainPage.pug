@@ -1,20 +1,54 @@
-section.home-section.bg-dark-alfa-30(style="background: url(/img/bg.jpg) center center no-repeat; background-size: cover; background-attachment: fixed;")
-    .container
-        .row
-            .js-height-full
-                .home-content
-                    .home-text-main.text-lg-center
-                        h1.text-uppercase Investors and Entrepreneurs:
-                        .col-lg-4.offset-lg-4.text-lg-center.text-sm-center.text-xs-center.m-b-3
-                            span.small-text connecting, funding, and enriching one another, one idea at a time.
-                        .col-lg-12
-                            a(href=Urls['campaign-list']()).btn.btn-lg.btn-primary INVEST
-                            span.hidden-xs  
-                            a(href="/company/create").btn.btn-lg.btn-primary RAISE CAPITAL
+.js-height-full
+    section.main-page-slider
+      #carousel-investor(data-ride="carousel").carousel.slide
+        ol.carousel-indicators
+          li(data-target="#carousel-investor" data-slide-to="0").active
+          li(data-target="#carousel-investor" data-slide-to="1")
+
+
+        .carousel-inner(role="listbox")
+            .carousel-item.active.t40
+                img(src="/img/free-checking-plus-mustache-couple-hero-size-01.jpeg" alt="...").img-fluid
+                .carousel-caption
+                    .home-content
+                        .home-text-main.text-lg-center
+                            .col-lg-12
+                                h1.text-uppercase.text-lg-left.font-weight-bold.m-b-2 YOUR SUCCESS IS OUR SUCCESS
+                            .col-lg-12.text-lg-left.m-b-3.m-t-0
+                                h2.m-t-0 Start investing locally
+                            .col-lg-12.text-lg-left
+                                a(href=Urls['campaign-list']()).btn.btn-lg.btn-primary.m-r-2 INVEST
+                                a(href="/company/create").btn.btn-lg.btn-primary RAISE CAPITAL
+
+            .carousel-item.t40
+                img(src="/img/bg_img.png" alt="...").img-fluid
+                .carousel-caption
+                    .home-content
+                        .home-text-main.text-lg-center
+                            .col-lg-12
+                                h1.text-uppercase.text-lg-left.font-weight-bold.m-b-2 YOUR SUCCESS IS OUR SUCCESS
+                            .col-lg-12.text-lg-left.m-b-3.m-t-0
+                                h2.m-t-0 Start investing locally
+                            .col-lg-12.text-lg-left
+                                a(href=Urls['campaign-list']()).btn.btn-lg.btn-primary.m-r-2 INVEST
+                                a(href="/company/create").btn.btn-lg.btn-primary RAISE CAPITAL
+
+        a(href="#carousel-investor"
+        role="button" 
+        data-slide="prev").left.carousel-control
+          span(aria-hidden="true").icon-prev
+          span.sr-only Previous
+        a(href="#carousel-investor"
+        role="button" 
+        data-slide="next").right.carousel-control
+          span(aria-hidden="true").icon-next
+          span.sr-only Next
+            
+                
 section.campaing-list
     .container#campaignList
         .col-lg-12
-            h2.text-uppercase.text-sm-center What's Popular
+            h2.text-uppercase.text-sm-center.font-weight-bold.m-b-3.p-t-3 TRENDING
         .row
             - console.log('campaings', campaigns);
             for campaign in campaigns
