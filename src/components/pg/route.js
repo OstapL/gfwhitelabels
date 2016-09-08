@@ -6,11 +6,24 @@ module.exports = Backbone.Router.extend({
 
     mainPage(id) {
         require.ensure([], () => {
+            const model = require('components/campaign/models.js');
             const template = require('templates/mainPage.pug');
-            app.cache[window.location.pathname] = template();
-            $('#content').html(template());
-            $('body').scrollTo();
-            app.hideLoading();
+
+            app.collections.campaigns = new model.collection();
+            app.collections.campaigns.fetch({
+                success: (collection, response, options) => {
+                    var html = template({
+                        campaigns: collection.toJSON(),
+                        collection: collection,
+                        Urls: Urls,
+                    });
+                    app.cache[window.location.pathname] = html;
+                    $('#content').html(html);
+                    $('body').scrollTo();
+                    app.hideLoading();
+                }
+            });
+
         });
     },
 

@@ -1,0 +1,167 @@
+.container.calculator-container
+    .page
+        h1.calculator-title Helping Businesses determine how much capital to raise
+
+        form.js-calc-form
+            .form-group.row
+                label.col-sm-7.col-form-label(for='excessCash')
+                    All entrepreneurs know to "Expect the Unexpected": Timing issues, liquidity crunches, and other unexpected issues require a business maintain excess cash-on-hand.  How much excess cash does your business need to maintain as a buffer against the unexpected?
+                .col-sm-5
+                    input#excessCash.form-control.js-field(
+                        value= excessCashFormatted,
+                        type='text',
+                        placeholder='$0',
+                        data-input-mask='price',
+                        data-model-value='excessCash',
+                        data-current-value= excessCash)
+
+            .form-group.row
+                label.col-sm-7.col-form-label(for='ownCache')
+                    How much cash does your business currently have?
+                .col-sm-5
+                    input#ownCache.form-control.js-field(
+                        value= ownCacheFormatted,
+                        type='text',
+                        placeholder='$0',
+                        data-input-mask='price',
+                        data-model-value='ownCache',
+                        data-current-value= ownCache)
+
+            .form-group.row
+                label.col-sm-7.col-form-label(for='projectedRevenueYear')
+                    What is your projected revenue for the next 12 months?
+                .col-sm-5
+                    input#projectedRevenueYear.form-control.js-field(
+                        value= projectedRevenueYearFormatted,
+                        type='text',
+                        placeholder='$0',
+                        data-input-mask='price',
+                        data-model-value='projectedRevenueYear',
+                        data-current-value= projectedRevenueYear)
+
+            .form-group.row
+                label.col-sm-7.col-form-label(for='projectedRevenueTwoYears')
+                    What is your projected revenue for the subsequent 12 months? (i.e. months 13 - 24)
+                .col-sm-5
+                    input#projectedRevenueTwoYears.form-control.js-field(
+                        value= projectedRevenueTwoYearsFormatted,
+                        type='text',
+                        placeholder='$0',
+                        data-input-mask='price',
+                        data-model-value='projectedRevenueTwoYears',
+                        data-current-value= projectedRevenueTwoYears)
+
+            .form-group.row
+                .col-sm-7
+                    label.col-form-label(for='grossMargin')
+                        | Let's focus on Cost of Goods Sold, or COGS: What gross margin do you expect to earn on your sales over the coming 2 years?
+                    p.help-text
+                        | (have a small, italicized tab that says "What is Gross Margin?", which when clicked upon gives the following answer: Gross Margin is the amount of profit left after accounting for the direct costs incurred to produce the goods that were sold.  These are only costs of goods sold, which differ from standard operating expenses of a business such as sales, marketing, legal, etc).
+                .col-sm-5
+                    input#grossMargin.form-control.js-field(
+                        value= grossMargin,
+                        type='text',
+                        data-input-mask='percent',
+                        data-model-value='grossMargin')
+
+            .form-group.row
+                .col-sm-7
+                    label.col-form-label(for='monthlyOperatingYear')
+                        | What do you expect your monthly operating expenses to average over the next 12 months?
+                    p.help-text
+                        | (have a small, italicized tab that says "What are Operating Expenses?", which when clicked upon gives the following answer: Operating Expenses are all costs incurred that are not tied to the direct production of a good or service being sold.  Examples include sales, marketing, legal, etc.)
+                .col-sm-5
+                    input#monthlyOperatingYear.form-control.js-field(
+                        value= monthlyOperatingYearFormatted,
+                        type='text',
+                        placeholder='$0',
+                        data-input-mask='price',
+                        data-model-value='monthlyOperatingYear',
+                        data-current-value= monthlyOperatingYear)
+
+            .form-group.row
+                .col-sm-7
+                    label.col-form-label(for='monthlyOperatingTwoYears')
+                        | Hopefully your business is growing in Year 2 as compared to Year 1, which would likely necessitate some increase in your operating expenses.  What do you expect your monthly operating expenses to average over the subsequent 12 months? (i.e. months 13 - 24)
+                .col-sm-5
+                    input#monthlyOperatingTwoYears.form-control.js-field(
+                        value= monthlyOperatingTwoYearsFormatted,
+                        type='text',
+                        placeholder='$0',
+                        data-input-mask='price',
+                        data-model-value='monthlyOperatingTwoYears',
+                        data-current-value= monthlyOperatingTwoYears)
+
+            .form-group.row
+                .col-sm-7
+                    label.col-form-label(for='workingCapital')
+                        | Many start-ups fail to appreciate the need for working capital during the "take-off" phase.  How much working capital do you need to generate your projected revenue over the next 24 months?
+                    p.help-text
+                        | (have a small, italicized tab that says "What is Working Capital?", which when clicked upon gives the following answer: Working Capital is operating cash needed to fund revenue growth.  For e.g., many company's will need to build inventory or customer receivables prior to receiving cash for the good or service they provide.  The cash needed to support inventory or receivables is working capital, and it's often measured as a percentage of revenue growth).
+                .col-sm-5
+                    input#workingCapital.form-control.js-field(
+                        value= workingCapital,
+                        type='text',
+                        data-input-mask='percent',
+                        data-model-value='workingCapital')
+
+            .form-group.row
+                .col-sm-7
+                    label.col-form-label(for='additionalOperating')
+                        | If your revenue starts to come in at a much higher level than you are currently projecting, you may have the high-class problem of figuring out how to meet client expectations on delivery and quality, along with the very real need for additional short-term cash.  If your revenue comes in 50% higher than you are currently projecting, how much in additional monthly operating expenses would you need?
+                .col-sm-5
+                    input#monthlyOperatingTwoYears.form-control.js-field(
+                        value= additionalOperatingFormatted,
+                        type='text',
+                        placeholder='$0',
+                        data-input-mask='price',
+                        data-model-value='additionalOperating',
+                        data-current-value= additionalOperating)
+
+            .form-group.row
+                .col-sm-7
+                    label.col-form-label(for='capitalExpenditures')
+                        | Let's talk about Capital Expenditures, which are defined as purchases of property, plant, or equipment and usually receive different accounting treatment than operating expenses.  Are you expecting any Capital Expenditures over the next 24 months?
+                    p.help-text
+                        | (have a small, italicized tab that says "What are Capital Expenditures?", which when clicked upon gives the following answer: Capital Expenditures are cash outlays used to build and maintain the property, plant, and equipment used to run a businesses' operations.)
+                .col-sm-5
+                    input#monthlyOperatingTwoYears.form-control.js-field(
+                        value= capitalExpendituresFormatted,
+                        type='text',
+                        placeholder='$0',
+                        data-input-mask='price',
+                        data-model-value='capitalExpenditures',
+                        data-current-value= capitalExpenditures)
+
+            .form-group.row
+                .col-sm-7
+                    label.col-form-label(for='taxRate')
+                        | What Tax Rate do you expect to pay on your operating profit? (including federal, state, local, and any other taxes applicable to the operation of your business)
+                .col-sm-5
+                    input#taxRate.form-control.js-field(
+                        value= taxRate,
+                        type='text',
+                        data-input-mask='percent',
+                        data-model-value='taxRate')
+
+            .form-group.row
+                .col-sm-7
+                    label.col-form-label(for='annualInterest')
+                        | What do you expect your annual interest expense to be over the next 2 years?
+                .col-sm-5
+                    input#annualInterest.form-control.js-field(
+                        value= annualInterestFormatted,
+                        type='text',
+                        placeholder='$0',
+                        data-input-mask='price',
+                        data-model-value='annualInterest',
+                        data-current-value= annualInterest)
+
+            .submit-area
+                .form-group.row
+                    .col-sm-6.text-xs-center.text-sm-left
+                        //
+                            a.btn.btn-link(href='/calculator/paybackshare/step-1', role='button') Go back
+                            p Don&apos;t worry we saved this info
+                    .col-sm-6.text-xs-center.text-sm-right
+                        button.btn.btn-primary.btn-lg(type='submit') Calculate
