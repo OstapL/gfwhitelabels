@@ -27,7 +27,7 @@ html.show-menu
         transform: rotate(45deg) translate(-1px, 0px)
 
       span:after 
-        transform: rotate(-45deg) translate(6px, -7px)
+        transform: rotate(-45deg) translate(5px, -7px)
 
     #menuList,
       visibility: visible
@@ -461,7 +461,7 @@ header
 
       .navbar-nav
         .nav-item
-          .list-container
+          .list-container:not('.user-info-drop.notification-container')
             ul
               width: 100%
               min-width: 100%!important
@@ -479,14 +479,14 @@ header
     .navbar-brand
       float: none
       margin-right: 0
-      margin-left: rem(-20)
+      margin-left: rem(-25)
 
     button.navbar-toggler
       display: block
-      height: rem(30)
+      height: rem(28)
       float: left
       padding: rem(22) 0
-      width: rem(30)
+      width: rem(28)
       margin-top: -7px;
 
       span:after, span:before 
@@ -494,10 +494,10 @@ header
         
         position: absolute
         left: 0
-        top: 9px
+        top: 8px
 
       span:after
-        top: 18px
+        top: 16px
 
       span 
         position: relative
