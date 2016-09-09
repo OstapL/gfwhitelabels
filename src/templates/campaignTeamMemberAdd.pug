@@ -52,9 +52,13 @@ section.team-members.container.m-b-85
             placeholder: 'City'
             })
         .col-lg-3
-          select(name="state").orderby.custom-select
-            option(checked="checked" value="0") ST
-            option(value="1") STL
+          //- select(name="state").orderby.custom-select
+          //-   option(checked="checked" value="0") ST
+          //-   option(value="1") STL
+          select(name='state').custom-select
+            option(checked='checked', value="") State
+            each state in states
+                option(value=state.abbreviation)= state.name
       .label-p-t-0
         +fieldBlock("college", '', {
           class1: 'col-lg-3 col-md-3',
