@@ -137,9 +137,10 @@
 		// 	left: rem(173);
 		// }
 
-		// @media only screen and (max-width:991px) {
-		// 	left: rem(256);
-		// }
+		@media only screen and (max-width:991px) {
+			left: auto;
+			right: rem(13);
+		}
 
 		// @media only screen and (max-width:767px) {
 		// 	left: rem(123);
