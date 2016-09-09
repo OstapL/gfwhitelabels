@@ -29,8 +29,8 @@ module.exports = Backbone.Router.extend({
                     $('body').scrollTo(); 
                     var i = new view.createOrUpdate({
                         el: '#content',
-                        fields: r2[0].actions.POST,
-                        model: new model.model(r1[0][0] || {}),
+                        fields: r2.actions.POST,
+                        model: new model.model(r1[0] || {}),
                         camp: Object.assign({}, campaign_data[0])
                     });
 
