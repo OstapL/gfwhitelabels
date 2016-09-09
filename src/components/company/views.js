@@ -6,7 +6,9 @@ module.exports = {
             'keyup #zip_code': 'changeZipCode',
             'click .update-location': 'updateLocation',
             'change input[name=phone]': 'formatPhone',
+            'change #website': 'appendHttpIfNecessary',
         },
+
         initialize: function(options) {
             this.fields = options.fields;
             this.campaign = options.campaign;
@@ -16,6 +18,14 @@ module.exports = {
                   return false;
                 }
               });
+        },
+
+        appendHttpIfNecessary: function(e) {
+            var $el = $('#website');
+            var url = $el.val();
+            if (!(url.startsWith("http://") || url.startsWith("https://"))) {
+                $el.val("http://" + url);
+            }
         },
 
         formatPhone: function(e){
