@@ -66,17 +66,19 @@ section.team-members.container.m-b-85
           type: 'text',
           })
       .row
-        .col-lg-6.label-p-t-0.input-min-width
+        .col-lg-6.input-min-width
             +fieldBlock("linkedin", '', {
               class1: 'col-lg-6 col-md-3',
               class2: 'col-lg-6 col-md-9',
               type: 'text',
+              placeholder: 'Your LinkedIn profile',
               })
         .col-lg-6.input-min-width
             +fieldBlock("facebook", '', {
               class1: 'col-lg-5 col-md-3',
               class2: 'col-lg-7 col-md-9',
               type: 'text',
+              placeholder: 'Your Facebook profile',
               })
 
       .row.dropzone__photo.media-item

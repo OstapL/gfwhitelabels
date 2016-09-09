@@ -375,8 +375,13 @@ module.exports = {
                 },
                 linkedin: {
                     type: 'url',
-                    label: 'Your personal Linkedin link',
+                    label: 'LinkedIn',
                     placeholder: 'https://linkedin.com/',
+                },
+                facebook: {
+                    type: 'url',
+                    label: 'Facebook',
+                    placeholder: 'https://facebook.com/',
                 },
                 photo: {
                     type: 'dropbox',
