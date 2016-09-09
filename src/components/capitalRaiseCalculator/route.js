@@ -14,6 +14,7 @@ module.exports = Backbone.Router.extend({
                 model: app.getModelInstance(Model, 'calculatorCapitalraise').setFormattedPrice()
             }).render();
 
+            $('#content').scrollTo();
             app.hideLoading();
         });
     },
@@ -27,6 +28,7 @@ module.exports = Backbone.Router.extend({
                 model: app.getModelInstance(Model, 'calculatorCapitalraise').setFormattedPrice()
             }).render();
 
+            $('#content').scrollTo();
             app.hideLoading();
         });
     },
@@ -40,19 +42,8 @@ module.exports = Backbone.Router.extend({
                 model: app.getModelInstance(Model, 'calculatorCapitalraise').setFormattedPrice()
             }).render();
 
+            $('#content').scrollTo();
             app.hideLoading();
         });
-    },
-
-    execute(callback, args, name) {
-        // disable enter to the final step of capitalraise calculator without data
-        if (name == 'calculatorCapitalraiseFinish') {
-            if (!app.models['calculatorCapitalraise'] || !app.models['calculatorCapitalraise'].get('dataIsFilled')) {
-                app.routers.navigate('/calculator/capitalraise/step-1', {trigger: true});
-                return false;
-            }
-        }
-
-        if (callback) callback.apply(this, args);
     }
 });

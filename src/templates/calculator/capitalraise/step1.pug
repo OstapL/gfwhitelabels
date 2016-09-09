@@ -29,7 +29,7 @@ include ../../mixins.pug
 
                     .form-group.row
                         label(for="input1").col-lg-12 How much excess cash  does your business need to maintain as a buffer against the unexpected?&nbsp;&nbsp;
-                            i(aria-hidden="true").fa.fa-question-circle.text-muted
+                            i(aria-hidden="true")#excess_cash.fa.fa-question-circle.text-muted
 
                         .col-lg-12
                             input#input1.form-control.js-field(
@@ -77,7 +77,7 @@ include ../../mixins.pug
 
                     .form-group.row
                         label(for="input5").col-lg-12 Let's focus on Cost of Goods Sold, or COGS: What gross margin  do you expect to earn on your business’s sales over the next 2 years?&nbsp;&nbsp;
-                            i(aria-hidden="true").fa.fa-question-circle.text-muted
+                            i(aria-hidden="true")#gross_margin.fa.fa-question-circle.text-muted
 
                         .col-lg-12
                             // here must be bootstrap slider instead input
@@ -91,7 +91,7 @@ include ../../mixins.pug
 
                     .form-group.row
                         label(for="input5").col-lg-12 What do you expect your monthly operating expenses to average over the next 12 months?&nbsp;&nbsp;
-                            i(aria-hidden="true").fa.fa-question-circle.text-muted
+                            i(aria-hidden="true")#profit_year_five.fa.fa-question-circle.text-muted
 
                         .col-lg-12
                             input#input5.form-control.js-field(
@@ -101,6 +101,87 @@ include ../../mixins.pug
                                 data-input-mask='',
                                 data-model-value='',
                                 data-current-value= '')
+
+                    // this fields should be part of step-2 page of capitalraise calculator
+                    //START step-2 fields
+                    .form-group.row
+                        label(for="input6").col-lg-12 What do you expect your monthly operating expenses to average over the subsequent 12 months? (i.e. months 13 - 24) &nbsp;&nbsp;
+                            i(aria-hidden="true")#second_year_expenses.fa.fa-question-circle.text-muted
+
+                        .col-lg-12
+                            input#input6.form-control.js-field(
+                                value= '',
+                                type='text',
+                                placeholder='Second Year Expenses',
+                                data-input-mask='',
+                                data-model-value='',
+                                data-current-value= '')
+
+                    .form-group.row
+                        label(for="input7").col-lg-12  How much working capital do you need to generate your projected revenue over the next 24 months?) &nbsp;&nbsp;
+                            i(aria-hidden="true")#generate_projected_revenue.fa.fa-question-circle.text-muted
+
+                        // this should be range of bootstrap slider
+                        .col-lg-12
+                            input#input7.form-control.js-field(
+                                value= '',
+                                type='text',
+                                placeholder='',
+                                data-input-mask='',
+                                data-model-value='',
+                                data-current-value= '')
+
+                    .form-group.row
+                        label(for="input8").col-lg-12 If your revenue comes in 50% higher than you are currently projecting, how much in additional monthly operating expenses would you need? &nbsp;&nbsp;
+                            i(aria-hidden="true")#annual_expenses.fa.fa-question-circle.text-muted
+
+                        .col-lg-12
+                            input#input8.form-control.js-field(
+                                value= '',
+                                type='text',
+                                placeholder='Annual Expenses',
+                                data-input-mask='',
+                                data-model-value='',
+                                data-current-value= '')
+
+                    .form-group.row
+                        label(for="input9").col-lg-12 Are you expecting any Capital Expenditures over the next 24 months? &nbsp;&nbsp;
+                            i(aria-hidden="true")#capital_expenditures.fa.fa-question-circle.text-muted
+
+                        .col-lg-12
+                            input#input9.form-control.js-field(
+                                value= '',
+                                type='text',
+                                placeholder='Capital Expenditures',
+                                data-input-mask='',
+                                data-model-value='',
+                                data-current-value= '')
+
+                    .form-group.row
+                        label(for="input10").col-lg-12 What Tax Rate do you expect to pay on your operating profit? (including federal, state, local, and any other taxes applicable to the operation of your business)
+
+                        // this should be range of bootstrap slider
+                        .col-lg-12
+                            input#input10.form-control.js-field(
+                                value= '',
+                                type='text',
+                                placeholder='',
+                                data-input-mask='',
+                                data-model-value='',
+                                data-current-value= '')
+
+                    .form-group.row
+                        label(for="input11").col-lg-12 What do you expect your annual interest expense to be over the next 2 years?
+
+                        .col-lg-12
+                            input#input11.form-control.js-field(
+                                value= '',
+                                type='text',
+                                placeholder='Annual Interest Expense',
+                                data-input-mask='',
+                                data-model-value='',
+                                data-current-value= '')
+                    // END step-2 fields
 
                     .form-group.row.clearfix.m0
                         .col-lg-6.mt30
@@ -114,15 +195,54 @@ include ../../mixins.pug
                                 ).btn.btn-primary.btn-lg.pull-right.text-uppercase Next 
                                 // add class .pointer-events-none to disable all events for this button
 
+    // TODO set up script for popovers
+    
     // popovers content
+
+    // for #excess_cash
     .popover-content-excess-cash 
         i.fa.fa-info-circle 
         span All entrepreneurs know to «Expect  the Unexpected» timing issues, liquidity crunches and other unexpected issues require a business to maintain excess cash on hand. 
 
+    // for #gross_margin
     .popover-content-gros-margin 
         i.fa.fa-info-circle 
         span Gross Margin (:%) = Revenue - Cost of Goods Sold/Revenue
 
+    // for #profit_year_five
     .popover-content-profit-year-five 
         i.fa.fa-info-circle 
         span The expenses a company incurs as a result of its normal business operations
+
+    // this popovers content should be part of step-2 page of capitalraise calculator
+    //START step-2 popovers content
+
+    // for #second_year_expenses
+    .popover-content-second-year-expenses 
+        i.fa.fa-info-circle 
+        span 
+            b Operating Expense.
+            | The sum of a business's operating expenses for a period of time, such as a month or year. In throughput accounting, the cost accounting aspect of the theory of constraints (TOC), operating expense is the money spent turning  nventory into throughput.
+
+    // for #generate_projected_revenue
+    .popover-content-generate-projected-revenue
+        i.fa.fa-info-circle 
+        span 
+            b Working Capital.
+            | The amount of capital needed to carry on a business.  This represents the operating liquidity and is calculated as current assets minus current liabilities; accounts receivable plus inventory minus accounts payable.
+    
+    // for #annual_expenses
+    .popover-content-annual-expenses 
+        i.fa.fa-info-circle 
+        span 
+            b Operating Expenses.
+            | The sum of a business's operating expenses for a period of time, such as a month or year. In throughput accounting, the cost accounting aspect of the theory of constraints (TOC), operating expense is the money spent turning inventory into throughput.
+
+
+    // for #capital_expenditures
+    .popover-content-capital-expenditures
+        i.fa.fa-info-circle 
+        span 
+            b Capital Expenditures.
+            | Money spent by a business or organization on acquiring or maintaining fixed assets, such as land, buildings, and equipment.
+

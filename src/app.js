@@ -193,9 +193,23 @@ global.app = {
     getModelInstance: function(model, name) {
         if (app.models[name]) return app.models[name];
         return app.models[name] = new model()
-    }
+    },
 
-    ,
+    makeRequest: function(url, data, type) {
+
+        let params = _.extend({
+            url: serverUrl + url,
+            data: data,
+        }, app.defaultOptionsRequest);
+
+        if(type) {
+            params.type = type;
+        } else {
+            params.type = 'GET';
+        }
+
+        return $.ajax(params);
+    },
 
     /*
      * Misc Display Functions
@@ -533,6 +547,40 @@ $('body').on('click', '.team-member-list article', function(){
         $(this).closest('.team-member-list').find('.biography-text.open').removeClass('open').hide();
         $(targetTextId).addClass('open').slideDown();
     }
+});
+
+// scripts for mobile menu
+$('body').on('click', '#toggle_mobile_menu', function(){
+    $('html').toggleClass('show-menu');
+
+});
+
+$('html').on('click', function(){
+    if ($('header').hasClass('no-overflow')) {
+        $('header').removeClass('no-overflow');
+    }
+});
+
+$('body').on('click', '.user-info', function(){
+    if ($('.navbar-toggler:visible').length !== 0) {
+        $('html').removeClass('show-menu');
+        $('header').toggleClass('no-overflow');
+    }
+    return false;
+});
+
+
+$('body').on('click', '#menuList .nav-item', function(event){
+    var href = $(event.target).attr('href');
+
+    if ($('.navbar-toggler:visible').length !== 0) {
+        $(this).find('.list-container').slideToggle();
+
+        if (href.indexOf('/') != -1) {
+            $('html').toggleClass('show-menu');
+        }
+    }
+
 });
 
 $('body').on('click', 'a', function(event) {

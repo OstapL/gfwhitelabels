@@ -84,7 +84,7 @@ module.exports = {
             this.fields['additional_info'].schema = {
                 title: {
                     type: 'string', 
-                    label: 'Optional Additioal Sections',
+                    label: 'Optional Additional Section',
                     placeholder: 'Section Title',
                 },
                 body: {
@@ -153,6 +153,7 @@ module.exports = {
                     type: 'string', 
                     label: 'Headline',
                     placeholder: 'Title',
+                    maxLength: 30,
                 },
                 link: {
                     type: 'url',
@@ -347,7 +348,7 @@ module.exports = {
                     type: 'string',
                     label: 'Where did you grow up',
                     placeholder: 'City',
-                    required: true,
+                    required: false,
                 },
                 state: {
                     type: 'choice',
@@ -444,6 +445,8 @@ module.exports = {
         events: {
             'submit form': 'submit',
             'change input[name="security_type"]': 'updateSecurityType',
+            // 'change #minimum_raise,#maximum_raise,#minimum_increment,#premoney_valuation': 'formatNumber',
+            'change #minimum_raise,#maximum_raise,#price_per_share,#premoney_valuation': "calculateNumberOfShares",
         },
         submit: app.defaultSaveActions.submit,
 
@@ -455,6 +458,28 @@ module.exports = {
                 $('#content ' + k.split(' ')[1]).undelegate(); 
             }
         },
+
+        formatNumber: function(e) {
+            var valStr = $(e.target).val().replace(/,/g,'');
+            var val = parseInt(valStr);
+            if (val) {
+                $(e.target).val(val.toLocaleString('en-US'));
+            }
+        },
+
+        calculateNumberOfShares: function(e) {
+            var minRaise = parseInt($("#minimum_raise").val().replace(/,/g,''));
+            var maxRaise = parseInt($("#maximum_raise").val().replace(/,/g,''));
+            var pricePerShare = parseInt($("#price_per_share").val().replace(/,/g,''));
+            var premoneyVal = parseInt($("#premoney_valuation").val().replace(/,/g,''));
+            // this.$("#min_number_of_shares").val((Math.round(minRaise/pricePerShare)).toLocaleString('en-US'));
+            // this.$("#max_number_of_shares").val((Math.round(maxRaise/pricePerShare)).toLocaleString('en-US'));
+            this.$("#min_number_of_shares").val((Math.round(minRaise/pricePerShare)));
+            this.$("#max_number_of_shares").val((Math.round(maxRaise/pricePerShare)));
+            this.$("#min_equity_offered").val(Math.round(100*minRaise/(minRaise+premoneyVal)) + "%");
+            this.$("#max_equity_offered").val(Math.round(100*maxRaise/(maxRaise+premoneyVal)) + "%");
+        },
+
 
         addSection: jsonActions.addSection,
         deleteSection: jsonActions.deleteSection,

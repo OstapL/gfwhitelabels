@@ -102,7 +102,7 @@ section.create-company.container.m-b-85
         class2: 'col-lg-9 col-md-12',
         type: 'text',
         placeholder: 'Your Company Slogan',
-        maxlength: '30',
+        maxlength: 90,
         })
       +fieldBlock("description", '', {
         class1: 'col-lg-3 col-md-12 text-md-left',
@@ -117,7 +117,7 @@ section.create-company.container.m-b-85
             class2: 'col-lg-6',
             type: 'choice',
           })
-        .col-lg-5.col-xs-12.date-input.pull-right
+        .col-lg-6.col-xs-12.date-input.pull-right.required
           .col-date.form-group-m-b-0
             +fieldBlock("founding_date", '', {
               class1: 'col-lg-5 p-l-0 p-r-0',
@@ -140,11 +140,11 @@ section.create-company.container.m-b-85
             class1: 'col-lg-6',
             class2: 'col-lg-6',
             })
-        .col-lg-5.city_states
+        .col-lg-5.city_states.required
           label.col-lg-6.col-xs-6.text-lg-right.text-xs-left City/State
           .col-lg-6.col-xs-6
             a(data-toggle="modal" data-target="#city_state_modal" href="#city_state_modal").change_state_city
-              span.input-value.js-city-state New York, NY
+              span.input-value.js-city-state No data
               i.fa.fa-pencil-square-o.link-1
       .row.m-b-0
         .col-lg-6.col-l-65
