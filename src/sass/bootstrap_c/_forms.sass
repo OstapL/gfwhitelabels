@@ -12,7 +12,10 @@ select.form-control
 
 		label
 			color: $black_bg
-
+	.form-control
+		color: $black
+		&:focus
+			color: $black
 	img
 		max-width: 100%// будет перенесен в файл общих стилей - использовать клас бутстрапа .img-fluid
 
@@ -48,7 +51,8 @@ select.form-control
 				
 		// знак вопроса (есть на странице calculator/capitalraise/step-1)
 		i 
-
+	select,.custom-select
+		color: $black
 
 	@media screen and (min-width:992px)
 		// date of birth field
