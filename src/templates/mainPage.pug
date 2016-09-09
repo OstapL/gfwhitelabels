@@ -1,50 +1,16 @@
-.js-height-full.home-section
-    section.main-page-slider
-      #carousel-investor(data-ride="carousel").carousel.slide
-        ol.carousel-indicators
-          li(data-target="#carousel-investor" data-slide-to="0").active
-          li(data-target="#carousel-investor" data-slide-to="1")
-
-
-        .carousel-inner(role="listbox")
-            .carousel-item.active.t40
-                img(src="/img/free-checking-plus-mustache-couple-hero-size-01.jpeg" alt="...").img-fluid
-                .carousel-caption
-                    .home-content
-                        .home-text-main.text-lg-center
-                            .col-lg-12
-                                h1.text-uppercase.text-lg-left.font-weight-bold.m-b-2 YOUR SUCCESS IS OUR SUCCESS
-                            .col-lg-12.text-lg-left.m-b-3.m-t-0
-                                h2.small-text Start investing locally
-                            .col-lg-12.text-lg-left
-                                a(href=Urls['campaign-list']()).btn.btn-lg.btn-primary.m-r-2 INVEST
-                                a(href="/company/create").btn.btn-lg.btn-primary RAISE CAPITAL
-
-            .carousel-item.t40
-                img(src="/img/bg_img.png" alt="...").img-fluid
-                .carousel-caption
-                    .home-content
-                        .home-text-main.text-lg-center
-                            .col-lg-12
-                                h1.text-uppercase.text-lg-left.font-weight-bold.m-b-2 YOUR SUCCESS IS OUR SUCCESS
-                            .col-lg-12.text-lg-left.m-b-3.m-t-0
-                                h2.m-t-0 Start investing locally
-                            .col-lg-12.text-lg-left
-                                a(href=Urls['campaign-list']()).btn.btn-lg.btn-primary.m-r-2 INVEST
-                                a(href="/company/create").btn.btn-lg.btn-primary RAISE CAPITAL
-
-        a(href="#carousel-investor"
-        role="button" 
-        data-slide="prev").left.carousel-control
-          span(aria-hidden="true").icon-prev
-          span.sr-only Previous
-        a(href="#carousel-investor"
-        role="button" 
-        data-slide="next").right.carousel-control
-          span(aria-hidden="true").icon-next
-          span.sr-only Next
-            
-                
+section.home-section.bg-dark-alfa-30(style="background: url(/img/top-bg-image.png) right top no-repeat; background-size: cover; background-attachment: fixed;")
+    .container
+        .row
+            .js-height-full
+                .home-content
+                    .home-text-main.text-lg-center
+                        .col-lg-12
+                            h1.text-uppercase.text-lg-left.font-weight-bold.m-b-2 YOUR SUCCESS IS OUR SUCCESS
+                        .col-lg-12.text-lg-left.m-b-3.m-t-0
+                            h2.small-text Start investing locally
+                        .col-lg-12.text-lg-left
+                            a(href=Urls['campaign-list']()).btn.btn-lg.btn-primary.m-r-2 INVEST
+                            a(href="/company/create").btn.btn-lg.btn-primary RAISE CAPITAL
 section.campaing-list
     .container#campaignList
         .col-lg-12
@@ -115,7 +81,9 @@ section.campaing-list
                                 b Industry: 
                                 | Lorem ipsum
                             .clear
-section.home-wrap-text-block(style="background: url(/img/section-bg-3.jpg) center center no-repeat; background-size: cover; background-attachment: fixed;")
+        .col-lg-12.text-lg-center.texs-md-center
+            a(href="/api/campaign").link-4 See All
+section.home-wrap-text-block(style="background: url(/img/Rivermark-Landing-Page-photo.png) center center no-repeat; background-size: cover; background-attachment: fixed;")
     .opasity-block
         .container.text-lg-center.text-xs-center.text-sm-center
             .col-lg-8.offset-lg-2
@@ -124,7 +92,7 @@ section.home-wrap-text-block(style="background: url(/img/section-bg-3.jpg) cente
             .col-lg-12
                 a(href="/account/login").btn.btn-lg.btn-secondary.text-uppercase Sign up to start investing
                 .learn-link
-                    a(href="/pg/education").link-3 Understand the Risks
+                    a(href="/pg/education").link-2 Understand the Risks
 
 section.home-what-is
     .container
