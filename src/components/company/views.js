@@ -34,6 +34,8 @@ module.exports = {
 
         updateLocation(e) {
             this.$('.js-city-state').text(this.$('.js-city').val() + ', ' + this.$('.js-state').val());
+            $("form input[name=city]").val(this.$('.js-city').val())
+            $("form input[name=state]").val(this.$('.js-state').val())
         },
 
         changeZipCode(e) {
@@ -46,8 +48,10 @@ module.exports = {
                     this.$('.js-city-state').text(`${city}, ${state}`);
                     // this.$('#city').val(city);
                     this.$('.js-city').val(city);
+                    $("form input[name=city]").val(city);
                     // this.$('#state').val(city);
                     this.$('.js-state').val(state);
+                    $("form input[name=state]").val(state);
 
                 } else {
                     console.log("error");

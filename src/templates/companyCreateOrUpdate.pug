@@ -85,8 +85,8 @@ section.create-company.container.m-b-85
   .col-lg-8
     h2.text-uppercase.text-lg-center.text-xs-center.m-t-0.dosis Company
     form(metod="post" action="").form-section
-      input(type='hidden' name='state' value='NY' id='state')
-      input(type='hidden' name='city' value='New York' id='city')
+      input(type='hidden' name='state' value=values.city id='state')
+      input(type='hidden' name='city' value=values.state id='city')
 
       if values.id && values.id != ''
           input(type='hidden' name='id' value=values.id id='id')
@@ -144,7 +144,7 @@ section.create-company.container.m-b-85
           label.col-lg-6.col-xs-6.text-lg-right.text-xs-left City/State
           .col-lg-6.col-xs-6
             a(data-toggle="modal" data-target="#city_state_modal" href="#city_state_modal").change_state_city
-              span.input-value.js-city-state (City), (State)
+              span.input-value.js-city-state= (values.city ? values.city : "(city)") + ", " + (values.state ? values.state : "(state)") 
               i.fa.fa-pencil-square-o.link-1
       .row.m-b-0
         .col-lg-6.col-l-65
@@ -206,11 +206,14 @@ section.create-company.container.m-b-85
                 .container.form-section
                     form.col-lg-10.offset-lg-1.border-bottom
                         .form-group.row.clearfix.required
-                            input#city.js-city(type="text" placeholder="City").form-control
+                            input.js-city(type="text" placeholder="City" value=values.city).form-control
                         .form-group.row.clearfix.required
-                            select#state.js-state(name='state').form-control.custom-select
+                            select.js-state(name='state' value=values.state).form-control.custom-select
                                 option(checked='checked', value="") State
                                 each state in states
+                                  if state.abbreviation == values.state
+                                    option(value=state.abbreviation selected)= state.name
+                                  else
                                     option(value=state.abbreviation)= state.name
                         .form-group.row.clearfix.required.m0
                             .row
