@@ -2,7 +2,7 @@
 include mixins.pug
 include campaignMenu.pug
 
-+breadcrumbs('Create Company', 'Help Button', 
++breadcrumbs('Create Company', '', 
     [
         ['Home', '/'],
         ['current', ''],
@@ -83,10 +83,10 @@ section.campaign-specifics.container.m-b-85
                   button(data-toggle="dropdown" aria-haspopup="true" aria-expanded="false").btn.dropdown-toggle.dropdown-toggle-split.btn-dropdown-click
                     span.sr-only 
                   .dropdown-menu
-                    a(href="/calculator/paybackshare/step-1").dropdown-item Payback Share Calculator
-                    a(href="/calculator/capitalraise/intro").dropdown-item How Much Should I Raise?
-                    a(href="/calculator/capitalraise2/step-1").dropdown-item Capital Raise Calculator 2
-                    a(href="#").dropdown-item What's My Business Worth?
+                    a(href="/calculator/paybackshare/step-1" target="_blank").dropdown-item Payback Share Calculator
+                    a(href="/calculator/capitalraise/intro" target="_blank").dropdown-item How Much Should I Raise?
+                    a(href="/calculator/capitalraise2/step-1" target="_blank").dropdown-item Capital Raise Calculator 2
+                    a(href="#" target="_blank").dropdown-item What's My Business Worth?
             .col-lg-5.col-l-65.p-l-0.p-r-1.pre-money-p-r-0.pull-right
               +fieldBlock("premoney_valuation", '', {
                 class1: 'col-lg-4 col-md-3', 
@@ -158,29 +158,65 @@ section.campaign-specifics.container.m-b-85
             //-   span#min_number_of_share 1000
 
       .security_type_list.security_type_1(style=(values.security_type == 1 ? '' :  "display: none"))
-          .row
-          .label-top-6
-            +fieldBlock("percentage_revenue", '', {
-               class1: 'col-lg-3 col-md-4',
-               class2: 'col-lg-9 col-md-8',
-               type: 'text',
-               placeholder: '$',
-               })
+          //- .row
+          //- .label-top-6
+          //-   +fieldBlock("percentage_revenue", '', {
+          //-      class1: 'col-lg-3 col-md-4',
+          //-      class2: 'col-lg-9 col-md-8',
+          //-      type: 'text',
+          //-      placeholder: '$',
+          //-      })
           
-          .row.m-t-2.form-group-m-b-15
-            .col-lg-6.col-l-65.label-top-6
-              +fieldBlock("cap", '', {
-                class1: 'col-lg-6 p-l-2', 
-                class2: 'col-lg-6 col-md-9', 
-                type: 'text',
-                placeholder: '$',
-                })
-            .col-lg-6.col-l-65.label-top-6
-              +fieldBlock("expiration_date", '', {
-                class1: 'col-lg-6 p-r-2', 
-                class2: 'col-lg-6 col-md-9', 
-                type: 'date',
-                })
+          //- .row.m-t-2.form-group-m-b-15
+          //-   .col-lg-6.col-l-65.label-top-6
+          //-     +fieldBlock("cap", '', {
+          //-       class1: 'col-lg-6 p-l-2', 
+          //-       class2: 'col-lg-6 col-md-9', 
+          //-       type: 'text',
+          //-       placeholder: '$',
+          //-       })
+          //-   .col-lg-6.col-l-65.label-top-6
+          //-     +fieldBlock("expiration_date", '', {
+          //-       class1: 'col-lg-6 p-r-2', 
+          //-       class2: 'col-lg-6 col-md-9', 
+          //-       type: 'date',
+          //-       })
+
+          .row.m-t-2.form-group-m-b-15.label-top-6
+            .col-lg-6.col-l-65
+              .form-group.row.min_equity_offered.required
+                label(for="min_equity_offered").text-lg-right.col-lg-6.p-l-2 Percentage Revenue
+                .col-lg-6.col-md-9
+                  input.form-control(name="min_equity_offered" placeholder="$" type="text" value="5%" disabled)
+
+            .col-lg-6.col-l-65
+              .form-group.row.max_equity_offered.required
+                label(for="max_equity_offered").text-lg-right.col-lg-5.col-md-3 Cap
+                .col-lg-6.col-md-9
+                  input.form-control(name="max_equity_offered" placeholder="$" type="text" value="2X" disabled)
+
+          .row
+            .col-lg-6.col-l-65.m-l-30.form-group.row.clearfix
+              label.col-lg-5.text-lg-right Link to Calculators
+              .col-lg-7
+                .btn-group
+                  button(data-toggle="dropdown" aria-haspopup="true" aria-expanded="false").btn.btn-dropdown Link to Calculators
+                  button(data-toggle="dropdown" aria-haspopup="true" aria-expanded="false").btn.dropdown-toggle.dropdown-toggle-split.btn-dropdown-click
+                    span.sr-only 
+                  .dropdown-menu
+                    a(href="/calculator/paybackshare/step-1" target="_blank").dropdown-item Payback Share Calculator
+                    a(href="/calculator/capitalraise/intro" target="_blank").dropdown-item How Much Should I Raise?
+                    a(href="/calculator/capitalraise2/step-1" target="_blank").dropdown-item Capital Raise Calculator 2
+                    a(href="#" target="_blank").dropdown-item What's My Business Worth?
+
+          .row(style="padding:0 2rem;")
+            h3.m0 Here’s how PayBack Share works:
+            ol.simple-list.mb45
+              li Share 5% of your company's revenue with investors annually, until:
+              li You have paid investors back two times the invested amount (distributions are capped at (2x) the investment amount, at which point the contract is deemed fulfilled);
+              li No distributions are required until the second full calendar year and the company is allowed one year of forbearance as needed;
+              li In the event of default, investors become general unsecured creditors (senior to equity).
+
       .col-lg-12.pull-right.p-r-0.m-t-2.text-lg-right
               a(href="/api/campaign/" + values.id target="blank").btn.btn-lg.btn-secondary.text-uppercase.m-r-3 preview
               button(type="submit").btn.btn-lg.btn-primary.text-uppercase save

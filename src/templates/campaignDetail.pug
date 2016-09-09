@@ -13,14 +13,18 @@ section#home(style="background-image: url(" + (campaign.header_image_data ? camp
             i.fa.fa-play-circle-o
           a(href=campaign.company.website target="_blank").link-6.link-campaing-detail #{ campaign.company.website }
           .row.social-link
-            a(href=campaign.company.facebook target="_blank").link-6.link-campaing-detail
-              i.fa.fa-facebook
-            a(href=campaign.company.twitter target="_blank").link-6.link-campaing-detail
-              i.fa.fa-twitter
-            a(href=campaign.company.instagram target="_blank").link-6.link-campaing-detail
-              i.fa.fa-instagram
-            a(href=campaign.company.linkedin target="_blank").link-6.link-campaing-detail
-              i.fa.fa-linkedin
+            if campaign.company.facebook
+              a(href=campaign.company.facebook target="_blank").link-6.link-campaing-detail
+                i.fa.fa-facebook
+            if campaign.company.twitter
+              a(href=campaign.company.twitter target="_blank").link-6.link-campaing-detail
+                i.fa.fa-twitter
+            if campaign.company.instagram
+              a(href=campaign.company.instagram target="_blank").link-6.link-campaing-detail
+                i.fa.fa-instagram
+            if campaign.company.linkedin
+              a(href=campaign.company.linkedin target="_blank").link-6.link-campaing-detail
+                i.fa.fa-linkedin
 
         // End Hero Content
   .top-info
