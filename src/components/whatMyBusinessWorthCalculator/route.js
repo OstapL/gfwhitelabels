@@ -1,8 +1,8 @@
 module.exports = Backbone.Router.extend({
     routes: {
         // 'calculator/capitalraise2/intro': 'calculatorCapitalraise2Intro',
-        'calculator/capitalraise2/step-1': 'calculatorCapitalraise2Step1',
-        'calculator/capitalraise2/finish': 'calculatorCapitalraise2Finish'
+        'calculator/whatmybusinessworth/step-1': 'calculatorCapitalraise2Step1',
+        'calculator/whatmybusinessworth/finish': 'calculatorCapitalraise2Finish'
     },
 
     // calculatorCapitalraiseIntro() {

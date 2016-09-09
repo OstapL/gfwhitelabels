@@ -40,6 +40,96 @@ var jsonActions = {
 
 
 module.exports = {
+    createOrUpdate: Backbone.View.extend({
+        template: require('templates/companyCreateOrUpdate.pug'),
+        events: {
+            'submit form': 'submit',
+            'keyup #zip_code': 'changeZipCode',
+            'click .update-location': 'updateLocation',
+            'change input[name=phone]': 'formatPhone',
+        },
+        initialize: function(options) {
+            this.fields = options.fields;
+            this.campaignn = options.camp;
+            this.$el.on('keypress', ':input:not(textarea)', function(event){
+                if(event.keyCode == 13) {
+                  event.preventDefault();
+                  return false;
+                }
+            });
+        },
+
+        formatPhone: function(e){
+            this.$('input[name=phone]').val(this.$('input[name=phone]').val().replace(/^\(?(\d{3})\)?-?(\d{3})-?(\d{4})$/, '$1-$2-$3'));
+        },
+
+        updateLocation(e) {
+            this.$('.js-city-state').text(this.$('.js-city').val() + ', ' + this.$('.js-state').val());
+        },
+
+        changeZipCode(e) {
+            // if not 5 digit, return
+            if (e.target.value.length < 5) return;
+            if (!e.target.value.match(/\d{5}/)) return;
+            this.getCityStateByZipCode(e.target.value, ({ success=false, city="", state=""}) => {
+                // this.zipCodeField.closest('div').find('.help-block').remove();
+                if (success) {
+                    this.$('.js-city-state').text(`${city}, ${state}`);
+                    // this.$('#city').val(city);
+                    this.$('.js-city').val(city);
+                    // this.$('#state').val(city);
+                    this.$('.js-state').val(state);
+
+                } else {
+                    console.log("error");
+                }
+            });
+        },
+
+        render: function() {
+            this.getCityStateByZipCode = require("helpers/getSityStateByZipCode");
+            this.usaStates = require("helpers/usa-states");
+            this.$el.html(
+                this.template({
+                    serverUrl: serverUrl,
+                    Urls: Urls,
+                    fields: this.fields,
+                    values: this.model.toJSON(),
+                    user: app.user.toJSON(),
+                    campaign: this.campaignn,
+                    states: this.usaStates,
+                })
+            );
+            return this;
+        },
+
+        _success: function(data) {            
+            // IF we dont have campaign we need create it
+            if(this.campaign.id) {
+                app.routers.navigate(
+                    '/campaign/general_information/' + campaign.id,
+                    {trigger: true, replace: false}
+                );
+            }
+            else {
+                app.makeRequest('/api/campaign/general_information', {
+                    company: data.id,
+                    business_model: '',
+                    intended_use_of_proceeds: '',
+                    pitch: ''
+                }, 'POST').
+                    then((campaign) => {
+                        app.routers.navigate(
+                            '/campaign/general_information/' + campaign.id,
+                            {trigger: true, replace: false}
+                        );
+                    })
+            }
+        },
+
+        submit: app.defaultSaveActions.submit,
+
+    }),
     generalInformation: Backbone.View.extend({
         template: require('templates/campaignGeneralInformation.pug'),
         events: _.extend({
@@ -306,13 +396,13 @@ module.exports = {
     teamMemberAdd: Backbone.View.extend({
         events: {
             'submit form': 'submit',
+            'click .delete-member': 'deleteMember',
         },
 
         preinitialize() {
             // ToDo
             // Hack for undelegate previous events
             for(let k in this.events) {
-                console.log('#content ' + k.split(' ')[1]);
                 $('#content ' + k.split(' ')[1]).undelegate(); 
             }
         },
@@ -402,7 +492,8 @@ module.exports = {
                     serverUrl: serverUrl,
                     Urls: Urls,
                     fields: this.fields,
-                    values: this.values,
+                    member: this.values,
+                    values: {id: this.model.get('id')},
                     type: this.type,
                     index: this.index,
                     states: this.usaStates,
@@ -426,18 +517,26 @@ module.exports = {
         },
         
         submit(e) {
-            var json = $(e.target).serializeJSON();
-            var data = {
+            let json = $(e.target).serializeJSON();
+            let data = {
                 'member': json,
                 'index': this.index
             };
             app.defaultSaveActions.submit.call(this, e, data);
-        }
+        },
     }),
 
     teamMembers: Backbone.View.extend({
-        initialize(options) {
-            this.campaign = options.campaign;
+        events: {
+            'click .delete-member': 'deleteMember',
+        },
+
+        preinitialize() {
+            // ToDo
+            // Hack for undelegate previous events
+            for(let k in this.events) {
+                $('#content ' + k.split(' ')[1]).undelegate(); 
+            }
         },
 
         render() {
@@ -458,6 +557,22 @@ module.exports = {
             );
 
             return this;
+        },
+
+        deleteMember: function(e) {
+            let memberId = e.currentTarget.dataset.id;
+            app.makeRequest('/api/campaign/team_members/' + this.model.get('id') + '?index=' + memberId, {}, 'DELETE').
+                then((data) => {
+                    this.model.attributes.members.splice(memberId, 1);
+                    $(e.currentTarget).parent().remove()
+                    if(this.model.attributes.members.length < 1) {
+                        this.$el.find('.notification').show();
+                        this.$el.find('.buttons-row').hide();
+                    } else {
+                        this.$el.find('.notification').hide();
+                        this.$el.find('.buttons-row').show();
+                    }
+                });
         },
 
     }),
@@ -560,7 +675,6 @@ module.exports = {
             // ToDo
             // Hack for undelegate previous events
             for(let k in this.events) {
-                console.log('#content ' + k.split(' ')[1]);
                 $('#content ' + k.split(' ')[1]).undelegate(); 
             }
         },

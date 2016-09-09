@@ -39,9 +39,6 @@ module.exports = Backbone.Router.extend({
         // ToDo
         // Do we really want have to wait till user will be ready ?
         app.user.logout();
-        app.on('userLogout', function() {
-            window.location = '/';
-        });
     },
 
     changePassword: function() {
