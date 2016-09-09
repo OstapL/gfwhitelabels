@@ -63,43 +63,23 @@ module.exports = Backbone.Router.extend({
             const model = require('components/campaign/models.js');
             const view = require('components/raisefunds/views.js');
 
-            let company_id = app.getParams().company_id;
-
-            if(id === null && typeof company_id === 'undefined') {
+            if(id === null) {
                 alert('please set up id or company_id');
                 console.log('not goinng anywhere');
                 return;
             }
             $('body').scrollTo(); 
-            let campaign = '';
-            if(id.indexOf('=') == -1) {
-                campaign = new model.model({
-                    id: id
-                });
-                campaign.urlRoot += '/general_information'
-                // ToDo
-                // Make it sync
-            } else {
-                campaign = new model.model();
-                campaign.urlRoot += '/general_information?company_id=' + company_id
-            }
 
-            var a1 = campaign.fetch();
-            var a2 = $.ajax(_.extend({
-                url: campaign.urlRoot,
-            }, app.defaultOptionsRequest));
+            var a1 = app.makeRequest(Urls['campaign-list']() + '/general_information', {}, 'OPTIONS');
+            var a2 = app.makeRequest(Urls['campaign-detail'](id));
 
-            $.when(a1, a2).done((r1, r2) => {
+            $.when(a1, a2).done((meta_data, model_data) => {
+                debugger;
                 var i = new view.generalInformation({
                     el: '#content',
-                    fields: r2[0].actions.POST,
+                    fields: meta_data.actions.POST,
+                    model: new model.model(model_data)
                 });
-                if(id.indexOf('=') == -1) {
-                    i.model = campaign;
-                } else {
-                    i.model = new model.model(r1[0][0]);
-                    i.model.set('company', company_id);
-                }
 
                 i.render();
                 //app.views.campaign[id].render();

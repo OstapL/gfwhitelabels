@@ -132,6 +132,7 @@ module.exports = {
                     pitch: ''
                 }, 'POST').
                     then((campaign) => {
+                        app.cache['/api/campaign/general_information/' + campaign.id] = campaign;
                         app.routers.navigate(
                             '/campaign/general_information/' + campaign.id,
                             {trigger: true, replace: false}

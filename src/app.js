@@ -210,7 +210,9 @@ global.app = {
             }
             return $.ajax(params)
                 .then(function(response) {
-                    app.cache[url] = response;
+                    if(type !== 'POST') {
+                        //app.cache[url] = response;
+                    }
                     return response
                 })
         } else {
