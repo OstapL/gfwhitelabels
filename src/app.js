@@ -197,7 +197,7 @@ global.app = {
 
     makeRequest: function(url, data, type) {
 
-        if(app.cache.hasOwnProperty(url) == false) {
+        //if(app.cache.hasOwnProperty(url) == false) {
             let params = _.extend({
                 url: serverUrl + url,
                 data: data,
@@ -208,9 +208,9 @@ global.app = {
             } else {
                 params.type = 'GET';
             }
-
-            return $.ajax(params).
-                then(function(response) {
+            return $.ajax(params)
+        /*
+                .then(function(response) {
                     app.cache[url] = response;
                 })
         } else {
@@ -220,6 +220,7 @@ global.app = {
                 console.log('cache raise fail function its stange');
             })
         }
+        */
 
     },
 
