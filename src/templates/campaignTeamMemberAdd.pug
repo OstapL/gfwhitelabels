@@ -18,7 +18,7 @@ section.team-members.container.m-b-85
 
     form(method="post" action="").form-section
       input(type="hidden" name="type" value=type)#type
-      input(type="hidden" name="photo" value=values.photo)#photo
+      input(type="hidden" name="photo" value=member.photo)#photo
       +fieldBlock("first_name", '', {
         class1: 'col-lg-3 col-md-3',
         class2: 'col-lg-9 col-md-9',
@@ -42,7 +42,7 @@ section.team-members.container.m-b-85
       .form-group.row.clearfix.required
         label.col-lg-3.text-lg-right Bio
         .col-lg-9
-            textarea(name="bio" placeholder="At least 150 characters and no more than 250 characters" rows="4").form-control #{ values.bio }
+            textarea(name="bio" placeholder="At least 150 characters and no more than 250 characters" rows="4").form-control #{ member.bio }
       .row
         .col-lg-9.recommended.label-p-t-0
           +fieldBlock("growup", '', {
@@ -88,7 +88,7 @@ section.team-members.container.m-b-85
               p.drop-photo Drop your photo here or click to upload
               i.fa.fa-camera
         .col-lg-5.p-l-1.p-r-3.text-lg-center.text-sm-center
-          img(src=values.photo).img-fluid.img-photo
+          img(src=member.photo).img-fluid.img-photo
       .col-lg-12.text-lg-right.p-r-0.p-t-2
         button(type="submit").btn.btn-lg.btn-primary.text-uppercase.pull-right Save
           //

@@ -14,7 +14,8 @@ module.exports = Backbone.Router.extend({
     companyCreate() {
         if(!app.user.is_anonymous()) {
             const model = require('components/company/models.js');
-            const view = require('components/company/views.js');
+            const view = require('components/raisefunds/views.js');
+            const campaignModel = require('components/campaign/models.js');
 
             // ToDo
             // Rebuild this
@@ -23,14 +24,14 @@ module.exports = Backbone.Router.extend({
 
             $.when(a1, a2).done((r1, r2) => {
                 app.makeRequest(Urls['campaign-list']() + '/general_information')
-                .then((campaign) => {
-                    console.log(r1, r2);
+                .then((campaign_data) => {
+                    console.log('campaignis', campaign_data[0]);
                     $('body').scrollTo(); 
                     var i = new view.createOrUpdate({
                         el: '#content',
                         fields: r2[0].actions.POST,
                         model: new model.model(r1[0][0] || {}),
-                        campaign: campaign
+                        camp: Object.assign({}, campaign_data[0])
                     });
 
                     // ToDo
