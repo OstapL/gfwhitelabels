@@ -85,8 +85,8 @@ section.create-company.container.m-b-85
   .col-lg-8
     h2.text-uppercase.text-lg-center.text-xs-center.m-t-0.dosis Company
     form(metod="post" action="").form-section
-      input(type='hidden' name='state' value=values.city id='state')
-      input(type='hidden' name='city' value=values.state id='city')
+      input(type='hidden' name='state' value=values.state id='state')
+      input(type='hidden' name='city' value=values.city id='city')
 
       if values.id && values.id != ''
           input(type='hidden' name='id' value=values.id id='id')
