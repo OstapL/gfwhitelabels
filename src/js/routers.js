@@ -205,11 +205,7 @@ let appRoutes = Backbone.Router.extend({
             app.views.campaign[id].render();
             //app.cache[window.location.pathname] = app.views.campaign[id].$el.html();
             if(location.hash && $(location.hash).length) {
-<<<<<<< HEAD
-                $(location.hash).scrollTo();
-=======
                 setTimeout(function(){$(location.hash).scrollTo(65);}, 100);
->>>>>>> vladyslav2/dev
             } else {
                 $('#content').scrollTo();
             }
