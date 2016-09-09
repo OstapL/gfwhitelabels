@@ -197,18 +197,30 @@ global.app = {
 
     makeRequest: function(url, data, type) {
 
-        let params = _.extend({
-            url: serverUrl + url,
-            data: data,
-        }, app.defaultOptionsRequest);
+        if(app.cache.hasOwnProperty(url) == false) {
+            let params = _.extend({
+                url: serverUrl + url,
+                data: data,
+            }, app.defaultOptionsRequest);
 
-        if(type) {
-            params.type = type;
+            if(type) {
+                params.type = type;
+            } else {
+                params.type = 'GET';
+            }
+
+            return $.ajax(params).
+                then(function(response) {
+                    app.cache[url] = response;
+                })
         } else {
-            params.type = 'GET';
+            return new Promise(function() {
+                return app.cache[url];
+            }, function() {
+                console.log('cache raise fail function its stange');
+            })
         }
 
-        return $.ajax(params);
     },
 
     /*
