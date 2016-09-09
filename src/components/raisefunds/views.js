@@ -47,6 +47,7 @@ module.exports = {
             'keyup #zip_code': 'changeZipCode',
             'click .update-location': 'updateLocation',
             'change input[name=phone]': 'formatPhone',
+            'change #website': 'appendHttpIfNecessary',
         },
         initialize: function(options) {
             this.fields = options.fields;
@@ -59,12 +60,22 @@ module.exports = {
             });
         },
 
+        appendHttpIfNecessary: function(e) {
+            var $el = $('#website');
+            var url = $el.val();
+            if (!(url.startsWith("http://") || url.startsWith("https://"))) {
+                $el.val("http://" + url);
+            }
+        },
+
         formatPhone: function(e){
             this.$('input[name=phone]').val(this.$('input[name=phone]').val().replace(/^\(?(\d{3})\)?-?(\d{3})-?(\d{4})$/, '$1-$2-$3'));
         },
 
         updateLocation(e) {
             this.$('.js-city-state').text(this.$('.js-city').val() + ', ' + this.$('.js-state').val());
+            $("form input[name=city]").val(this.$('.js-city').val());
+            $("form input[name=state]").val(this.$('.js-state').val());
         },
 
         changeZipCode(e) {
@@ -77,8 +88,10 @@ module.exports = {
                     this.$('.js-city-state').text(`${city}, ${state}`);
                     // this.$('#city').val(city);
                     this.$('.js-city').val(city);
+                    $("form input[name=city]").val(city);
                     // this.$('#state').val(city);
                     this.$('.js-state').val(state);
+                    $("form input[name=state]").val(state);
 
                 } else {
                     console.log("error");
@@ -105,7 +118,6 @@ module.exports = {
 
         _success: function(data) {            
             // IF we dont have campaign we need create it
-            debugger;
             if(this.campaignn.id) {
                 app.routers.navigate(
                     '/campaign/general_information/' + this.campaignn.id,
