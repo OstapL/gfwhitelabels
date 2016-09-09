@@ -105,9 +105,10 @@ module.exports = {
 
         _success: function(data) {            
             // IF we dont have campaign we need create it
-            if(this.campaign.id) {
+            debugger;
+            if(this.campaignn.id) {
                 app.routers.navigate(
-                    '/campaign/general_information/' + campaign.id,
+                    '/campaign/general_information/' + this.campaignn.id,
                     {trigger: true, replace: false}
                 );
             }
