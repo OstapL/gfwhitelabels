@@ -193,9 +193,23 @@ global.app = {
     getModelInstance: function(model, name) {
         if (app.models[name]) return app.models[name];
         return app.models[name] = new model()
-    }
+    },
 
-    ,
+    makeRequest: function(url, data, type) {
+
+        let params = _.extend({
+            url: serverUrl + url,
+            data: data,
+        }, app.defaultOptionsRequest);
+
+        if(type) {
+            params.type = type;
+        } else {
+            params.type = 'GET';
+        }
+
+        return $.ajax(params);
+    },
 
     /*
      * Misc Display Functions

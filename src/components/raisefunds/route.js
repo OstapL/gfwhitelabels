@@ -13,40 +13,29 @@ module.exports = Backbone.Router.extend({
 
     companyCreate() {
         if(!app.user.is_anonymous()) {
-            //const model = require('models/company');
+            const model = require('components/company/models.js');
             const view = require('components/company/views.js');
 
             // ToDo
             // Rebuild this
-            app.user.getCompany((company) => {
-                let optionsAjax = $.ajax(_.extend({
-                        url: company.urlRoot,
-                    }, app.defaultOptionsRequest)
-                );
+            var a1 = app.makeRequest(Urls['company-list']());
+            var a2 = app.makeRequest(Urls['company-list'](), {}, 'OPTIONS');
 
-                let campaignAjax = '';
-                if(typeof company.id != 'undefined') {
-                    let params = _.extend({
-                        url: serverUrl + '/api/campaign/general_information?company_id=' + company.id,
-                    }, app.defaultOptionsRequest);
-                    params.type = 'GET';
-                    campaignAjax = $.ajax(params);
-                }
-
-                $.when(optionsAjax, campaignAjax).done((rOptions, rCampaignList) => {
+            $.when(a1, a2).done((r1, r2) => {
+                app.makeRequest(Urls['campaign-list']() + '/general_information')
+                .then((campaign) => {
+                    console.log(r1, r2);
                     $('body').scrollTo(); 
                     var i = new view.createOrUpdate({
                         el: '#content',
-                        fields: rOptions[0].actions.POST,
-                        model: company,
+                        fields: r2[0].actions.POST,
+                        model: new model.model(r1[0][0] || {}),
+                        campaign: campaign
                     });
 
-                    if(rCampaignList[0] && rCampaignList[0][0]) {
-                        i.campaign = rCampaignList[0][0];
-                    }
-                    else {
-                        i.campaign = {};
-                    }
+                    // ToDo
+                    // Check if campaign are exists already
+                    i.campaign = {};
                     app.hideLoading();
                     i.render();
                     //app.views.campaign[id].render();
@@ -59,7 +48,7 @@ module.exports = Backbone.Router.extend({
                     };
                     app.defaultSaveActions.error.call($view, xhr, response, error);
                 });
-            });
+            })
         } else {
             app.routers.navigate(
                 '/account/login',

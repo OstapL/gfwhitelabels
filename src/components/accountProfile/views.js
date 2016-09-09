@@ -149,4 +149,18 @@ module.exports = {
                 return this;
             }
     }),
+    setNewPassword: Backbone.View.extend({
+            events: {
+                'form submit': 'submit',
+            },
+            initialize: function(options){
+
+            },
+            render: function(){
+                let template = require('./templates/setNewPassword.pug');
+                this.$el.html(template({}));
+                return this;
+            },
+            submit: app.defaultSaveActions.submit,
+    }),
 };

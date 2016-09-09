@@ -1,3 +1,4 @@
+// show main menu list on mobile devaices
 html.show-menu
   overflow: hidden !important
   height: 100% !important
@@ -6,7 +7,7 @@ html.show-menu
   body
     overflow: hidden !important
     height: 100% !important
-
+ 
   header
     height: 100%
     -webkit-transition: height 0.35s ease-in 200ms
@@ -53,6 +54,7 @@ header.no-overflow
   nav
     overflow: visible
 
+    // show profile menu on mobile devaices
     .list-container.user-info-drop.notification-container
       transition-delay: 300ms, 300ms
       transition: height 0.45s ease-out, opacity 0.25s ease-out, transform 0.25s ease-out, -webkit-transform 0.25s ease-out
@@ -62,8 +64,13 @@ header.no-overflow
       opacity: 1
 
       background: rgba( $menu_backgound_from, .96)
+      
+      // show login signin button and set it diff height on mobile devaices
+      &.not-log-in-user
+        height: rem(66)
 
-@media screen and (max-width: 991px) 
+@media screen and (max-width: 991px)
+  // on mobile devaices main menu absolute positioned so we need set top padding for main content
   .page
     padding-top: rem(65)
 
@@ -81,6 +88,13 @@ header
       display: inline-block
       padding: 0 12px
       text-transform: uppercase
+
+      @media screen and (min-width: 992px) and (max-width: 1145px )
+        padding: 0 8px
+
+        a.btn
+          padding: rem(5) rem(15)
+
     .navbar-brand
       width: 20%
 
@@ -461,7 +475,7 @@ header
 
       .navbar-nav
         .nav-item
-          .list-container:not('.user-info-drop.notification-container')
+          .list-container:not(.drop-container)
             ul
               width: 100%
               min-width: 100%!important

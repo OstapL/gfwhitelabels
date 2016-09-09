@@ -226,8 +226,17 @@ module.exports = {
                 'gallery', 
                 'galleries/' + this.model.get('id'), '', 
                 (data) => {
-                    //console.log(data);
-                    $('.photo-scroll').append('<img class="img-fluid pull-left" src="' + data.url + '" style="width: 100px">');
+                    // console.log(data);
+                    $('.photo-scroll').append('<div class="thumb-image-container" style="float: left; overflow: hidden; position: relative;">' +
+                            '<div class="delete-image-container" style="position: absolute;">' +
+                                '<a class="delete-image" href="#" data-id="' + data.image_id + '">' +
+                                    '<i class="fa fa-times"></i>' +
+                                '</a>' +
+                            '</div>' +
+                            // '<img class="img-fluid pull-left" src="' + data.url + '" style="width: 100px">' +
+                            '<img class="img-fluid pull-left" src="' + data.origin_url + '">' +
+                        '</div>'
+                        );
                     this.model.save({
                         gallery: data.folder_id,
                     }, {
@@ -259,6 +268,8 @@ module.exports = {
         },
 
         deleteImage(e) {
+            e.stopImmediatePropagation();
+            e.stopPropagation();
             e.preventDefault();
             const image_id = e.currentTarget.dataset.id;
 
@@ -269,6 +280,8 @@ module.exports = {
             params.type = 'DELETE';
 
             $.ajax(params);
+
+            return false;
         },
 
         updateVideo(e) {
@@ -377,6 +390,8 @@ module.exports = {
                 this.values = {};
             }
 
+            this.usaStates = require("helpers/usa-states");
+
             this.$el.html(
                 template({
                     serverUrl: serverUrl,
@@ -385,6 +400,7 @@ module.exports = {
                     values: this.values,
                     type: this.type,
                     index: this.index,
+                    states: this.usaStates,
                 })
             );
 
@@ -445,7 +461,7 @@ module.exports = {
         events: {
             'submit form': 'submit',
             'change input[name="security_type"]': 'updateSecurityType',
-            // 'change #minimum_raise,#maximum_raise,#minimum_increment,#premoney_valuation': 'formatNumber',
+            'change #minimum_raise,#maximum_raise,#minimum_increment,#premoney_valuation': 'formatNumber',
             'change #minimum_raise,#maximum_raise,#price_per_share,#premoney_valuation': "calculateNumberOfShares",
         },
         submit: app.defaultSaveActions.submit,
@@ -472,10 +488,10 @@ module.exports = {
             var maxRaise = parseInt($("#maximum_raise").val().replace(/,/g,''));
             var pricePerShare = parseInt($("#price_per_share").val().replace(/,/g,''));
             var premoneyVal = parseInt($("#premoney_valuation").val().replace(/,/g,''));
-            // this.$("#min_number_of_shares").val((Math.round(minRaise/pricePerShare)).toLocaleString('en-US'));
-            // this.$("#max_number_of_shares").val((Math.round(maxRaise/pricePerShare)).toLocaleString('en-US'));
-            this.$("#min_number_of_shares").val((Math.round(minRaise/pricePerShare)));
-            this.$("#max_number_of_shares").val((Math.round(maxRaise/pricePerShare)));
+            this.$("#min_number_of_shares").val((Math.round(minRaise/pricePerShare)).toLocaleString('en-US'));
+            this.$("#max_number_of_shares").val((Math.round(maxRaise/pricePerShare)).toLocaleString('en-US'));
+            // this.$("#min_number_of_shares").val((Math.round(minRaise/pricePerShare)));
+            // this.$("#max_number_of_shares").val((Math.round(maxRaise/pricePerShare)));
             this.$("#min_equity_offered").val(Math.round(100*minRaise/(minRaise+premoneyVal)) + "%");
             this.$("#max_equity_offered").val(Math.round(100*maxRaise/(maxRaise+premoneyVal)) + "%");
         },
