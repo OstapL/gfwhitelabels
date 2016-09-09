@@ -106,8 +106,8 @@
 
 	.change_state_city {
 		position: absolute;
-		top: rem(6);
-		left: rem(123);
+		top: rem(5);
+		// left: rem(123);
 		z-index: 60;
 
 		cursor: pointer;
@@ -123,7 +123,7 @@
 
 			display: inline-block;
 			max-width: rem(150);
-			margin-right: rem(20);
+			// margin-right: rem(20);
 
 			text-decoration: underline;
 		}
@@ -133,17 +133,17 @@
 			color: $small-text;
 		}
 
-		@media only screen and (max-width:1199px) {
-			left: rem(173);
-		}
+		// @media only screen and (max-width:1199px) {
+		// 	left: rem(173);
+		// }
 
-		@media only screen and (max-width:991px) {
-			left: rem(256);
-		}
+		// @media only screen and (max-width:991px) {
+		// 	left: rem(256);
+		// }
 
-		@media only screen and (max-width:767px) {
-			left: rem(123);
-		}
+		// @media only screen and (max-width:767px) {
+		// 	left: rem(123);
+		// }
 	}
 
 

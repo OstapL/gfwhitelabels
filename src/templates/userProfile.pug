@@ -59,20 +59,24 @@ include mixins.pug
                                 .form-body.clearfix 
                                     .col-xs-12
                                         section.right-block 
-                                            +fieldBlock("first_name", user.first_name, {'class1': 'col-md-3 offset-md-1 offset-lg-0', 'class2': 'col-lg-8 col-xl-7 col-md-7', 'type': 'text'})
-                                            +fieldBlock("last_name", user.last_name, {'class1': 'col-md-3 offset-md-1 offset-lg-0', 'class2': 'col-lg-8 col-xl-7 col-md-7', 'type': 'text'})
-                                            +fieldBlock("street_address_1", user.street_address_1, {'class1': 'col-md-3 offset-md-1 offset-lg-0', 'class2': 'col-lg-8 col-xl-7 col-md-7', 'type': 'text'})
-                                            +fieldBlock("street_address_2", user.street_address_2, {'class1': 'col-md-3 offset-md-1 offset-lg-0', 'class2': 'col-lg-8 col-xl-7 col-md-7', 'type': 'text'})
+                                            +fieldBlock("first_name", user.first_name, {'class1': 'col-lg-3 ', 'class2': 'col-lg-8 ', 'type': 'text'})
+                                            +fieldBlock("last_name", user.last_name, {'class1': 'col-lg-3', 'class2': 'col-lg-8 ', 'type': 'text'})
+                                            +fieldBlock("street_address_1", user.street_address_1, {'class1': 'col-lg-3 ', 'class2': 'col-lg-8 ', 'type': 'text'})
+                                            +fieldBlock("street_address_2", user.street_address_2, {'class1': 'col-lg-3 ', 'class2': 'col-lg-8 ', 'type': 'text'})
                                             .row 
                                                 .col-md-12.col-lg-6
-                                                    +fieldBlock("zip_code", user.zip_code, {'class1': 'col-lg-6 col-md-4', 'class2': 'col-lg-6 col-md-7', 'type': 'text'})
-                                                    
-                                                .col-md-12.col-lg-6
-                                                    +fieldBlock("city_states", user.city_state, {'class1': 'col-xl-3 col-md-4', 'class2': ' col-xl-5 col-md-7', 'type': 'text'})
+                                                    +fieldBlock("zip_code", user.zip_code, {'class1': 'col-lg-6', 'class2': 'col-lg-6', 'type': 'text'})
 
-                                                    a(data-toggle="modal" data-target="#city_state_modal" href="#city_state_modal").change_state_city
-                                                        span.input-value.js-city-state City/State
-                                                        i.fa.fa-pencil-square-o
+                                                .row.col-lg-5.city_states.required
+                                                    label.col-lg-6.col-xs-6.text-lg-right.text-xs-left City/State
+                                                    .col-lg-6.col-xs-6
+                                                        a(data-toggle="modal" data-target="#city_state_modal" href="#city_state_modal").change_state_city
+                                                            span.input-value.js-city-state (City),(State)
+                                                            i.fa.fa-pencil-square-o.link-1
+
+                                                    // a(data-toggle="modal" data-target="#city_state_modal" href="#city_state_modal").change_state_city
+                                                    //     span.input-value.js-city-state No data
+                                                    //     i.fa.fa-pencil-square-o
 
                                             .row 
                                                 .col-md-12.col-lg-6
