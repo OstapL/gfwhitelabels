@@ -22,3 +22,40 @@
     padding-top: 0
     right: 0
     bottom: 0
+.carousel-indicators
+  li
+    border: none
+    background-color: $small-text
+    &.active
+      background-color: $gallery
+
+.carousel-control.left
+  background-image: none!important
+  color: $white
+  &:hover
+    background-image: none!important
+    color: $white
+.carousel-control.right
+  background-image: none!important
+  color: $white
+  &:hover
+    background-image: none!important
+    color: $white
+
+.carousel-control
+  .icon-prev,.icon-next
+    &:hover
+      background-color: #c1c0b1
+      border-radius: 100px
+  .icon-prev
+    color: $white
+    &:before
+      position: relative
+      top: rem(-2)
+      left: rem(-2)
+  .icon-next
+    color: $white
+    &:before
+      position: relative
+      top: rem(-2)
+      left: rem(1)
