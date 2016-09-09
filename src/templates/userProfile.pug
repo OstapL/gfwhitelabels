@@ -59,31 +59,32 @@ include mixins.pug
                                 .form-body.clearfix 
                                     .col-xs-12
                                         section.right-block 
-                                            +fieldBlock("first_name", user.first_name, {'class1': 'col-md-3 offset-md-1 offset-lg-0', 'class2': 'col-lg-8 col-xl-7 col-md-7', 'type': 'text'})
-                                            +fieldBlock("last_name", user.last_name, {'class1': 'col-md-3 offset-md-1 offset-lg-0', 'class2': 'col-lg-8 col-xl-7 col-md-7', 'type': 'text'})
-                                            +fieldBlock("street_address_1", user.street_address_1, {'class1': 'col-md-3 offset-md-1 offset-lg-0', 'class2': 'col-lg-8 col-xl-7 col-md-7', 'type': 'text'})
-                                            +fieldBlock("street_address_2", user.street_address_2, {'class1': 'col-md-3 offset-md-1 offset-lg-0', 'class2': 'col-lg-8 col-xl-7 col-md-7', 'type': 'text'})
+                                            +fieldBlock("first_name", user.first_name, {'class1': 'col-lg-3 ', 'class2': 'col-lg-8 ', 'type': 'text'})
+                                            +fieldBlock("last_name", user.last_name, {'class1': 'col-lg-3', 'class2': 'col-lg-8 ', 'type': 'text'})
+                                            +fieldBlock("street_address_1", user.street_address_1, {'class1': 'col-lg-3 ', 'class2': 'col-lg-8 ', 'type': 'text'})
+                                            +fieldBlock("street_address_2", user.street_address_2, {'class1': 'col-lg-3 ', 'class2': 'col-lg-8 ', 'type': 'text'})
                                             .row 
                                                 .col-md-12.col-lg-6
-                                                    +fieldBlock("zip_code", user.zip_code, {'class1': 'col-lg-6 col-md-4', 'class2': 'col-lg-6 col-md-7', 'type': 'text'})
-                                                    
-                                                .col-md-12.col-lg-6
-                                                    +fieldBlock("city_states", user.city_state, {'class1': 'col-xl-3 col-md-4', 'class2': ' col-xl-5 col-md-7', 'type': 'text'})
+                                                    +fieldBlock("zip_code", user.zip_code, {'class1': 'col-lg-6', 'class2': 'col-lg-6', 'type': 'text'})
 
-                                                    a(data-toggle="modal" data-target="#city_state_modal" href="#city_state_modal").change_state_city
-                                                        span.input-value.js-city-state City/State
-                                                        i.fa.fa-pencil-square-o
+                                                .col-lg-5.city_states.required
+                                                    .row
+                                                        label.col-lg-5.col-xs-6.text-lg-right.text-xs-left City/State
+                                                        .col-lg-6.col-xs-6
+                                                            a(data-toggle="modal" data-target="#city_state_modal" href="#city_state_modal").change_state_city
+                                                                span.input-value.js-city-state (City),(State)
+                                                                i.fa.fa-pencil-square-o.link-1
 
                                             .row 
-                                                .col-md-12.col-lg-6
-                                                    +fieldBlock("phone", user.phone, {'class1': 'col-lg-6 col-md-4', 'class2': 'col-lg-6 col-md-7', 'type': 'text'})
+                                                .col-lg-6
+                                                    +fieldBlock("phone", user.phone, {'class1': 'col-lg-6 ', 'class2': 'col-lg-6 ', 'type': 'text'})
                                                 
-                                                .col-md-12.col-lg-6
-                                                    +fieldBlock("dob", user.dob, {'class1': 'col-xl-3 col-md-4', 'class2': '  col-xl-5 col-lg-6 col-md-7', 'type': 'date'})
+                                                .col-lg-6
+                                                    +fieldBlock("dob", user.dob, {'class1': ' col-lg-4', 'class2': '   col-lg-6', 'type': 'date'})
                                             
                  
                                             .form-group.row.clearfix.m0 
-                                                .col-xl-10.col-md-11.mt30
+                                                .col-lg-11.mt30
                                                     .controls  
                                                         button(
                                                             type="submit"
@@ -97,35 +98,35 @@ include mixins.pug
 
                                     .col-xs-12
                                         section.right-block 
-                                            +fieldBlock("first_name", user.first_name, {'class1': 'col-md-3 offset-md-1 offset-lg-0', 'class2': 'col-lg-8 col-xl-7 col-md-7', 'type': 'text'})
-                                            +fieldBlock("last_name", user.last_name, {'class1': 'col-md-3 offset-md-1 offset-lg-0', 'class2': 'col-lg-8 col-xl-7 col-md-7', 'type': 'text'})
-                                            +fieldBlock("street_address_1", user.stret_address_1, {'class1': 'col-md-3 offset-md-1 offset-lg-0', 'class2': 'col-lg-8 col-xl-7 col-md-7', 'type': 'text'})
-                                            +fieldBlock("street_address_2", user.stret_address_1, {'class1': 'col-md-3 offset-md-1 offset-lg-0', 'class2': 'col-lg-8 col-xl-7 col-md-7', 'type': 'text'})
-                                            +fieldBlock("account_number", user.account_number, {'class1': 'col-md-3 offset-md-1 offset-lg-0', 'class2': 'col-lg-8 col-xl-7 col-md-7', 'type': 'text'})
-                                            +fieldBlock("account_number_re", user.account_number_rc, {'class1': 'col-md-3 offset-md-1 offset-lg-0', 'class2': 'col-lg-8 col-xl-7 col-md-7', 'type': 'text'})
-                                            +fieldBlock("routing_number", user.routing_number, {'class1': 'col-md-3 offset-md-1 offset-lg-0', 'class2': 'col-lg-8 col-xl-7 col-md-7', 'type': 'text'})
-                                            +fieldBlock("account_type", user.account_type, {'class1': 'col-md-3 offset-md-1 offset-lg-0', 'class2': 'col-lg-8 col-xl-7 col-md-7', 'type': 'text'})
-                                            +fieldBlock("check_type", user.check_type, {'class1': 'col-md-3 offset-md-1 offset-lg-0', 'class2': 'col-lg-8 col-xl-7 col-md-7', 'type': 'text'})
-                                            +fieldBlock("name_on_bank_account", user.name_on_bank_account, {'class1': 'col-md-3 offset-md-1 offset-lg-0', 'class2': 'col-lg-8 col-xl-7 col-md-7', 'type': 'text'})
-                                            +fieldBlock("ssn", user.ssn, {'class1': 'col-md-3 offset-md-1 offset-lg-0', 'class2': 'col-lg-8 col-xl-7 col-md-7', 'type': 'text'})
+                                            +fieldBlock("first_name", user.first_name, {'class1': 'col-lg-3 ', 'class2': 'col-lg-8 ', 'type': 'text'})
+                                            +fieldBlock("last_name", user.last_name, {'class1': 'col-lg-3 ', 'class2': 'col-lg-8 ', 'type': 'text'})
+                                            +fieldBlock("street_address_1", user.stret_address_1, {'class1': 'col-lg-3 ', 'class2': 'col-lg-8 ', 'type': 'text'})
+                                            +fieldBlock("street_address_2", user.stret_address_1, {'class1': 'col-lg-3 ', 'class2': 'col-lg-8 ', 'type': 'text'})
+                                            +fieldBlock("account_number", user.account_number, {'class1': 'col-lg-3 ', 'class2': 'col-lg-8 ', 'type': 'text'})
+                                            +fieldBlock("account_number_re", user.account_number_rc, {'class1': 'col-lg-3 ', 'class2': 'col-lg-8', 'type': 'text'})
+                                            +fieldBlock("routing_number", user.routing_number, {'class1': 'col-lg-3 ', 'class2': 'col-lg-8', 'type': 'text'})
+                                            +fieldBlock("account_type", user.account_type, {'class1': 'col-lg-3', 'class2': 'col-lg-8', 'type': 'text'})
+                                            +fieldBlock("check_type", user.check_type, {'class1': 'col-lg-3 ', 'class2': 'col-lg-8', 'type': 'text'})
+                                            +fieldBlock("name_on_bank_account", user.name_on_bank_account, {'class1': 'col-lg-3', 'class2': 'col-lg-8', 'type': 'text'})
+                                            +fieldBlock("ssn", user.ssn, {'class1': 'col-lg-3', 'class2': 'col-lg-8', 'type': 'text'})
 
                                             .row
-                                                .col-sm-7.col-xl-7.col-lg-8.offset-lg-3.col-md-11
+                                                .col-sm-7.col-lg-8.offset-lg-3
                                                     hr.mt30.mb50
 
                                             .form-group.row 
-                                                .col-sm-10.col-xl-10.col-md-11
+                                                .col-lg-11
                                                     .warning-block
                                                         i.fa.fa-exclamation-triangle 
                                                         span.warning-text 
                                                             | Investors are limited to 12 month investment totals ranging from $2,000 - $100,000 based on income and net worth. Please update your financial information to see your limit.
 
-                                            +fieldBlock("annual_income", user[annual_income], {'class1': 'col-md-3 offset-md-1 offset-lg-0', 'class2': 'col-lg-8 col-xl-7 col-md-7', 'type': 'text'})
-                                            +fieldBlock("net_worth", user[net_worth], {'class1': 'col-md-3 offset-md-1 offset-lg-0', 'class2': 'col-lg-8 col-xl-7 col-md-7', 'type': 'text'})
+                                            +fieldBlock("annual_income", user[annual_income], {'class1': 'col-lg-3 ', 'class2': 'col-lg-8 ', 'type': 'text'})
+                                            +fieldBlock("net_worth", user[net_worth], {'class1': 'col-lg-3', 'class2': 'col-lg-8 ', 'type': 'text'})
                                               
 
                                             .form-group.row.clearfix.m0
-                                                .col-xl-10.col-md-11.mt30
+                                                .col-lg-11.mt30
                                                     .controls  
                                                         button(
                                                             type="submit"
@@ -143,16 +144,16 @@ include mixins.pug
                                 .col-xs-12
 
                                     section.right-block 
-                                        +fieldBlock("where_grow_up", user.where_grow_up, {'class1': 'col-md-10 col-xl-9 offset-md-1 thin-label', 'class2': 'col-xl-9 col-md-10 offset-md-1', 'type': 'text', 'text_align': 'left'})
-                                        +fieldBlock("where_go_college", user.where_ho_college, {'class1': 'col-md-10 col-xl-9 offset-md-1 thin-label', 'class2': 'col-xl-9 col-md-10 offset-md-1', 'type': 'text', 'text_align': 'left'})
-                                        +fieldBlock("industries", user.industries, {'class1': 'col-md-10 col-xl-9 offset-md-1 thin-label', 'class2': 'col-xl-9 col-md-10 offset-md-1', 'type': 'text', 'text_align': 'left'})
-                                        +fieldBlock("locations", user.locations, {'class1': 'col-md-10 col-xl-9 offset-md-1 thin-label', 'class2': 'col-xl-9 col-md-10 offset-md-1', 'type': 'text', 'text_align': 'left'})
-                                        +fieldBlock("interested", user.interested, {'class1': 'col-md-10 col-xl-9 offset-md-1 thin-label', 'class2': 'col-xl-9 col-md-10 offset-md-1', 'type': 'text', 'text_align': 'left'})
-                                        +fieldBlock("investment_goals", user.investment_goals, {'class1': 'col-md-10 col-xl-9 offset-md-1 thin-label', 'class2': 'col-xl-9 col-md-10 offset-md-1', 'type': 'text', 'text_align': 'left'})
-                                        +fieldBlock("important_attributes", user.important_attributes, {'class1': 'col-md-10 col-xl-9 offset-md-1 thin-label', 'class2': 'col-xl-9 col-md-10 offset-md-1', 'type': 'text', 'text_align': 'left'})
+                                        +fieldBlock("where_grow_up", user.where_grow_up, {'class1': 'col-lg-10  thin-label', 'class2': ' col-lg-10 ', 'type': 'text', 'text_align': 'left'})
+                                        +fieldBlock("where_go_college", user.where_ho_college, {'class1': 'col-lg-10  thin-label', 'class2': ' col-lg-10 ', 'type': 'text', 'text_align': 'left'})
+                                        +fieldBlock("industries", user.industries, {'class1': 'col-lg-10  thin-label', 'class2': ' col-lg-10', 'type': 'text', 'text_align': 'left'})
+                                        +fieldBlock("locations", user.locations, {'class1': 'col-lg-10 thin-label', 'class2': 'col-lg-10 ', 'type': 'text', 'text_align': 'left'})
+                                        +fieldBlock("interested", user.interested, {'class1': 'col-lg-10  thin-label', 'class2': ' col-lg-10', 'type': 'text', 'text_align': 'left'})
+                                        +fieldBlock("investment_goals", user.investment_goals, {'class1': 'col-lg-10  thin-label', 'class2': ' col-lg-10', 'type': 'text', 'text_align': 'left'})
+                                        +fieldBlock("important_attributes", user.important_attributes, {'class1': 'col-lg-10  thin-label', 'class2': ' col-lg-10 ', 'type': 'text', 'text_align': 'left'})
              
                                         .form-group.row.clearfix.m0 
-                                            .col-xl-10.col-md-11.mt25
+                                            .col-lg-11.mt25
                                                 .controls  
                                                     button(
                                                         type="submit"

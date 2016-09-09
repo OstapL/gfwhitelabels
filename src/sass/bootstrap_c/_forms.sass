@@ -12,7 +12,10 @@ select.form-control
 
 		label
 			color: $black_bg
-
+	.form-control
+		color: $black
+		&:focus
+			color: $black
 	img
 		max-width: 100%// будет перенесен в файл общих стилей - использовать клас бутстрапа .img-fluid
 
@@ -48,7 +51,8 @@ select.form-control
 				
 		// знак вопроса (есть на странице calculator/capitalraise/step-1)
 		i 
-
+	select,.custom-select
+		color: $black
 
 	@media screen and (min-width:992px)
 		// date of birth field
@@ -132,8 +136,8 @@ select.form-control
 
 		.change_state_city 
 			position: absolute
-			top: 6px
-			right: 0
+			top: 5px
+			// right: 0
 			cursor: pointer
 
 			.input-value
@@ -143,7 +147,7 @@ select.form-control
 				text-decoration: underline
 
 			i
-				margin-left: 10px
+				margin-left: 8px
 				color: $small-text
 
 	// вместо этого поля используеться сейчас поля типа text
