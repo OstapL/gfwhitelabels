@@ -107,7 +107,7 @@ module.exports = Backbone.Router.extend({
 
                 app.hideLoading();
             }).fail((xhr, error) =>  {
-                app.defaultSaveActions.error.error($('#content'), error);
+                app.defaultSaveActions.error($('#content'), error);
                 app.hideLoading();
             });
         } else {
