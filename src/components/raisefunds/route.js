@@ -1,275 +1,226 @@
 module.exports = Backbone.Router.extend({
-    routes: {
-        // Company Campaign URLS
-        'company/create': 'companyCreate',
-        'campaign/general_information/': 'campaignGeneralInformation',
-        'campaign/general_information/:id': 'campaignGeneralInformation',
-        'campaign/media/:id': 'campaignMedia',
-        'campaign/team-members/:id/add/:type/:index': 'campaignTeamMembersAdd',
-        'campaign/team-members/:id': 'campaignTeamMembers',
-        'campaign/specifics/:id': 'campaignSpecifics',
-        'campaign/perks/:id': 'campaignPerks',
-    },
+  routes: {
+    'company/create': 'company',
+    'campaign/general_information/:id': 'generalInformation',
+    'campaign/media/:id': 'media',
+    'campaign/team-members/:id/add/:type/:index': 'teamMembersAdd',
+    'campaign/team-members/:id': 'teamMembers',
+    'campaign/specifics/:id': 'specifics',
+    'campaign/perks/:id': 'perks',
+  },
 
-    companyCreate() {
-        if(!app.user.is_anonymous()) {
-            const model = require('components/company/models.js');
-            const view = require('components/raisefunds/views.js');
-            const campaignModel = require('components/campaign/models.js');
+  company() {
+    if (!app.user.is_anonymous()) {
+      const Model = require('components/company/models.js');
+      const View = require('components/raiseFunds/views.js');
 
-            // ToDo
-            // Rebuild this
-            var a1 = app.makeRequest(Urls['company-list']());
-            var a2 = app.makeRequest(Urls['company-list'](), {}, 'OPTIONS');
+      // ToDo
+      // Rebuild this
+      var a1 = app.makeCacheRequest(Urls['company-list'](), 'OPTIONS');
+      var a2 = app.makeCacheRequest(Urls['company-list']());
 
-            $.when(a1, a2).done((r1, r2) => {
-                app.makeRequest(Urls['campaign-list']() + '/general_information')
-                .then((campaign_data) => {
-                    console.log('campaignis', campaign_data[0]);
-                    $('body').scrollTo(); 
-                    var i = new view.createOrUpdate({
-                        el: '#content',
-                        fields: r2.actions.POST,
-                        model: new model.model(r1[0] || {}),
-                        camp: Object.assign({}, campaign_data[0])
-                    });
+      $.when(a1, a2).done((meta, model) => {
+        app.makeRequest(Urls['campaign-list']() + '/general_information')
+        .then((campaignData) => {
+          //console.log('campaignis', metaData, modelData, campaignData[0]);
+          $('body').scrollTo(); 
+          var i = new View.company({
+            el: '#content',
+            fields: meta[0].actions.POST,
+            model: new Model.model(model[0][0] || {}),
+            campaign: campaignData[0],
+          });
 
-                    // ToDo
-                    // Check if campaign are exists already
-                    i.campaign = {};
-                    app.hideLoading();
-                    i.render();
-                    //app.views.campaign[id].render();
-                    //app.cache[window.location.pathname] = i.$el.html();
+          // ToDo
+          // Check if campaign are exists already
+          app.hideLoading();
+          i.render();
+          //app.views.campaign[id].render();
+          //app.cache[window.location.pathname] = i.$el.html();
 
-                }).fail(function(xhr, response, error) {
-                    var $view = {
-                        $el: $('#content'),
-                        $: app.$
-                    };
-                    app.defaultSaveActions.error.call($view, xhr, response, error);
-                });
-            })
-        } else {
-            app.routers.navigate(
-                '/account/login',
-                {trigger: true, replace: true}
-            );
-        }
-    },
+        }).fail(function(xhr, response, error) {
+          api.errorAction.call(this, $('#content'), xhr, response, error);
+        });
+      })
+    } else {
+      app.routers.navigate(
+          '/account/login', {trigger: true, replace: true}
+      );
+    }
+  },
 
-    campaignGeneralInformation(id) {
-        if(!app.user.is_anonymous()) {
-            const model = require('components/campaign/models.js');
-            const view = require('components/raisefunds/views.js');
+  generalInformation (id) {
+    if (!app.user.is_anonymous()) {
+      const Model = require('components/campaign/models.js');
+      const View = require('components/raiseFunds/views.js');
 
-            if(id === null) {
-                alert('please set up id or company_id');
-                console.log('not goinng anywhere');
-                return;
-            }
-            $('body').scrollTo(); 
+      if (id === null) {
+        alert('please set up id or company_id');
+        console.log('not goinng anywhere');
+        return;
+      }
+      $('body').scrollTo(); 
 
-            var a1 = app.makeRequest(Urls['campaign-list']() + '/general_information', {}, 'OPTIONS');
-            var a2 = app.makeRequest(Urls['campaign-detail'](id));
+      var a1 = app.makeRequest(Urls['campaign-list']() + '/general_information', 'OPTIONS');
+      var a2 = app.makeRequest(Urls['campaign-list']() + '/general_information/' + id);
 
-            $.when(a1, a2).done((meta_data, model_data) => {
-                debugger;
-                var i = new view.generalInformation({
-                    el: '#content',
-                    fields: meta_data.actions.POST,
-                    model: new model.model(model_data)
-                });
+      $.when(a1, a2).done((meta, model) => {
+        var i = new View.generalInformation({
+          el: '#content',
+            fields: meta[0].actions.POST,
+            model: new Model.model(model[0])
+        });
 
-                i.render();
-                //app.views.campaign[id].render();
-                //app.cache[window.location.pathname] = i.$el.html();
+        i.render();
+        //app.views.campaign[id].render();
+        //app.cache[window.location.pathname] = i.$el.html();
 
-                app.hideLoading();
-            }).fail((xhr, error) =>  {
-                app.defaultSaveActions.error($('#content'), error);
-                app.hideLoading();
-            });
-        } else {
-            app.routers.navigate(
-                '/account/login',
-                {trigger: true, replace: true}
-            );
-        }
-    },
+        app.hideLoading();
+      }).fail((xhr, error) =>  {
+        api.errorAction($('#content'), xhr, error);
+      });
+    } else {
+      app.routers.navigate(
+        '/account/login', {trigger: true, replace: true}
+      );
+    }
+  },
 
-    campaignMedia(id) {
-        if(!app.user.is_anonymous()) {
-            $('body').scrollTo(); 
-            const model = require('components/campaign/models.js');
-            const view = require('components/raisefunds/views.js');
-            let campaign = new model.model({
-                id: id
-            });
-            campaign.urlRoot += '/media'
-            campaign.fetch();
+  media(id) {
+    if (!app.user.is_anonymous()) {
+      $('body').scrollTo(); 
+      const Model = require('components/campaign/models.js');
+      const View = require('components/raiseFunds/views.js');
 
-            var a1 = campaign.fetch();
-            var a2 = $.ajax(_.extend({
-                url: campaign.urlRoot,
-            }, app.defaultOptionsRequest));
+      var a1 = app.makeRequest(Urls['campaign-list']() + '/media', 'OPTIONS');
+      var a2 = app.makeRequest(Urls['campaign-list']() + '/media/' + id);
 
-            $.when(a1, a2).done((r1, r2) => {
-                var i = new view.media({
-                    el: '#content',
-                    fields: r2[0].actions.POST,
-                    model: campaign
-                });
-                i.render();
-                //app.views.campaign[id].render();
-                //app.cache[window.location.pathname] = i.$el.html();
-                console.log('loaded');
+      $.when(a1, a2).done((meta, model) => {
+        var i = new View.media({
+          el: '#content',
+            fields: meta[0].actions.POST,
+            model: new Model.model(model[0])
+        });
+        i.render();
+        //app.views.campaign[id].render();
+        //app.cache[window.location.pathname] = i.$el.html();
 
-                app.hideLoading();
-            });
-        } else {
-            app.routers.navigate(
-                '/account/login',
-                {trigger: true, replace: true}
-            );
-        }
-    },
+        app.hideLoading();
+      });
+    } else {
+      app.routers.navigate(
+        '/account/login', {trigger: true, replace: true}
+      );
+    }
+  },
 
-    campaignTeamMembers(id) {
-        if(!app.user.is_anonymous()) {
-            $('body').scrollTo(); 
-            const model = require('components/campaign/models.js');
-            const view = require('components/raisefunds/views.js');
+  teamMembers(id) {
+    if (!app.user.is_anonymous()) {
+      $('body').scrollTo(); 
+      const Model = require('components/campaign/models.js');
+      const View = require('components/raiseFunds/views.js');
 
-            let members = new model.model({
-                id: id
-            });
-            members.urlRoot += '/team_members';
-            var a1 = members.fetch();
+      var a2 = app.makeCacheRequest(Urls['campaign-list']() + '/team_members/' + id);
 
-            $.when(a1).done((r1) => {
-                var i = new view.teamMembers({
-                    el: '#content',
-                    model: members,
-                });
-                i.render();
-                //app.views.campaign[id].render();
-                //app.cache[window.location.pathname] = i.$el.html();
+      $.when(a2).done((model) => {
+        var i = new View.teamMembers({
+          el: '#content',
+          model: new Model.model(model),
+        });
+        i.render();
+        //app.views.campaign[id].render();
+        //app.cache[window.location.pathname] = i.$el.html();
 
-                app.hideLoading();
-            });
-        } else {
-            app.routers.navigate(
-                '/account/login',
-                {trigger: true, replace: true}
-            );
-        }
-    },
+        app.hideLoading();
+      });
+    } else {
+      app.routers.navigate(
+        '/account/login', {trigger: true, replace: true}
+      );
+    }
+  },
 
-    campaignTeamMembersAdd(id, type, index) {
-        if(!app.user.is_anonymous()) {
-            $('body').scrollTo(); 
-            const model = require('components/campaign/models.js');
-            const view = require('components/raisefunds/views.js');
+  teamMembersAdd(id, type, index) {
+    if (!app.user.is_anonymous()) {
+      $('body').scrollTo(); 
+      const Model = require('components/campaign/models.js');
+      const View = require('components/raiseFunds/views.js');
 
-            let members = new model.model({
-                id: id
-            });
-            members.urlRoot += '/team_members';
-            var a1 = members.fetch();
+      var a2 = app.makeRequest(Urls['campaign-list']() + '/team_members/' + id);
+      $.when(a2).done((model) => {
+        const addForm = new View.teamMemberAdd({
+          el: '#content',
+          model: new Model.model(model),
+          type: type,
+          index: index,
+        });
+        addForm.render();
+        app.hideLoading();
+      });
 
-            $.when(a1).done((r1) => {
-                const addForm = new view.teamMemberAdd({
-                    el: '#content',
-                    model: members,
-                    type: type,
-                    index: index
-                });
-                addForm.render();
-                app.hideLoading();
-            });
+    } else {
+      app.routers.navigate(
+        '/account/login', {trigger: true, replace: true}
+      );
+    }
+  },
 
-        } else {
-            app.routers.navigate(
-                '/account/login',
-                {trigger: true, replace: true}
-            );
-        }
-    },
+  specifics(id) {
+    if (!app.user.is_anonymous()) {
+      $('body').scrollTo(); 
+      const Model = require('components/campaign/models.js');
+      const View = require('components/raiseFunds/views.js');
 
-    campaignSpecifics(id) {
-        if(!app.user.is_anonymous()) {
-            $('body').scrollTo(); 
-            const model = require('components/campaign/models.js');
-            const view = require('components/raisefunds/views.js');
+      var a1 = app.makeRequest(Urls['campaign-list']() + '/specifics', 'OPTIONS');
+      var a2 = app.makeRequest(Urls['campaign-list']() + '/specifics/' + id);
 
-            let campaign = new model.model({
-                id: id
-            });
-            campaign.urlRoot += '/specifics'
-            var a1 = campaign.fetch();
-            var a2 = $.ajax(_.extend({
-                    url: campaign.urlRoot,
-                }, app.defaultOptionsRequest)
-            );
+      $.when(a1, a2).done((meta, model) => {
+        var i = new View.specifics({
+          el: '#content',
+          fields: meta[0].actions.POST,
+          model: new Model.model(model[0]),
+        });
+        i.render();
+        //app.views.campaign[id].render();
+        //app.cache[window.location.pathname] = i.$el.html();
 
-            $.when(a1, a2).done((r1, r2) => {
-                console.log(r1, r2);
-                var i = new view.specifics({
-                    el: '#content',
-                    fields: r2[0].actions.POST,
-                    model: campaign
-                });
-                i.render();
-                //app.views.campaign[id].render();
-                //app.cache[window.location.pathname] = i.$el.html();
+        app.hideLoading();
+      }).fail((xhr, error) =>  {
+        app.defaultSaveActions.error.error($('#content'), error);
+        app.hideLoading();
+      });
+    } else {
+      app.routers.navigate(
+        '/account/login', {trigger: true, replace: true}
+      );
+    }
+  },
 
-                app.hideLoading();
-            }).fail((xhr, error) =>  {
-                app.defaultSaveActions.error.error($('#content'), error);
-                app.hideLoading();
-            });
-        } else {
-            app.routers.navigate(
-                '/account/login',
-                {trigger: true, replace: true}
-            );
-        }
-    },
+  perks(id) {
+    if (!app.user.is_anonymous()) {
+      $('body').scrollTo(); 
+      const Model = require('components/campaign/models.js');
+      const View = require('components/raiseFunds/views.js');
 
-    campaignPerks(id) {
-        if(!app.user.is_anonymous()) {
-            $('body').scrollTo(); 
-            const model = require('components/campaign/models.js');
-            const view = require('components/raisefunds/views.js');
+      var a1 = app.makeRequest(Urls['campaign-list']() + '/perks', 'OPTIONS');
+      var a2 = app.makeRequest(Urls['campaign-list']() + '/perks/' + id);
 
-            let campaign = new model.model({
-                id: id
-            });
-            campaign.urlRoot += '/perks';
-            var a1 = campaign.fetch();
-            var a2 = $.ajax(_.extend({
-                    url: campaign.urlRoot,
-                }, app.defaultOptionsRequest)
-            );
+      $.when(a1, a2).done((meta, model) => {
+        var i = new View.perks({
+          el: '#content',
+          fields: meta[0].actions.POST,
+          model: new Model.model(model[0]),
+        });
+        i.render();
+        //app.views.campaign[id].render();
+        //app.cache[window.location.pathname] = i.$el.html();
 
-            $.when(a1, a2).done((r1, r2) => {
-                var i = new view.perks({
-                    el: '#content',
-                    fields: r2[0].actions.POST,
-                    model: campaign
-                });
-                i.render();
-                //app.views.campaign[id].render();
-                //app.cache[window.location.pathname] = i.$el.html();
-
-                app.hideLoading();
-            });
-        } else {
-            app.routers.navigate(
-                '/account/login',
-                {trigger: true, replace: true}
-            );
-        }
-    },    
-})
+        app.hideLoading();
+      });
+    } else {
+      app.routers.navigate(
+        '/account/login', {trigger: true, replace: true}
+      );
+    }
+  },    
+});

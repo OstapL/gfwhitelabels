@@ -39,7 +39,7 @@ module.exports = {
 
             this.model.calculate();
 
-            app.routers.navigate('/calculator/capitalraise2/finish', {trigger: true});
+            app.routers.navigate('/calculator/whatmybusinessworth/finish', {trigger: true});
         },
 
         cutZeros(e) {
@@ -79,13 +79,13 @@ module.exports = {
 
         render: function () {
             // disable enter to the final step of capitalraise calculator without data
-            if (!this.model.get('dataIsFilled')) {
-                app.routers.navigate('/calculator/capitalraise2/step-1', {trigger: true});
+            if (!app.cache.hasOwnProperty('whatmybusiness')) {
+                app.routers.navigate('/calculator/whatmybusinessworth/step-1', {trigger: true});
                 return false;
             }
 
             this.$el.html(this.template({
-                model: this.model.toJSON(),
+                model: app.cache.whatmybusiness,
                 formatPrice
             }));
 

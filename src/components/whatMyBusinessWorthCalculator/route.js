@@ -1,9 +1,9 @@
 module.exports = Backbone.Router.extend({
-    routes: {
-        // 'calculator/capitalraise2/intro': 'calculatorCapitalraise2Intro',
-        'calculator/whatmybusinessworth/step-1': 'calculatorCapitalraise2Step1',
-        'calculator/whatmybusinessworth/finish': 'calculatorCapitalraise2Finish'
-    },
+  routes: {
+    // 'calculator/capitalraise2/intro': 'calculatorCapitalraise2Intro',
+    'calculator/whatmybusinessworth/step-1': 'calculatorCapitalraise2Step1',
+    'calculator/whatmybusinessworth/finish': 'calculatorCapitalraise2Finish'
+  },
 
     // calculatorCapitalraiseIntro() {
     //     require.ensure([], () => {
@@ -18,31 +18,31 @@ module.exports = Backbone.Router.extend({
     //     });
     // },
 
-    calculatorCapitalraise2Step1() {
-        require.ensure([], () => {
-            let Model = require('./model');
-            let View = require('./views');
+  calculatorCapitalraise2Step1() {
+    require.ensure([], () => {
+      const Model = require('./model');
+      const View = require('./views');
 
-            new View.step1({
-                model: app.getModelInstance(Model, 'calculatorCapitalraise2').setFormattedPrice()
-            }).render();
+      new View.step1({
+        model: new Model(),
+      }).render();
 
-            $('#content').scrollTo();
-            app.hideLoading();
-        });
-    },
+      $('#content').scrollTo();
+      app.hideLoading();
+    });
+  },
 
-    calculatorCapitalraise2Finish() {
-        require.ensure([], () => {
-            let Model = require('./model');
-            let View = require('./views');
+  calculatorCapitalraise2Finish() {
+    require.ensure([], () => {
+      const Model = require('./model');
+      const View = require('./views');
 
-            new View.finish({
-                model: app.getModelInstance(Model, 'calculatorCapitalraise2').setFormattedPrice()
-            }).render();
+      new View.finish({
+        model: new Model(),
+      }).render();
 
-            $('#content').scrollTo();
-            app.hideLoading();
-        });
-    }
+      $('#content').scrollTo();
+      app.hideLoading();
+    });
+  }
 });

@@ -9,8 +9,8 @@ module.exports = Backbone.Router.extend({
             const model = require('components/campaign/models.js');
             const template = require('templates/mainPage.pug');
 
-            app.collections.campaigns = new model.collection();
-            app.collections.campaigns.fetch({
+            const campaigns = new model.collection();
+            campaigns.fetch({
                 data: {limit: 6},
                 success: (collection, response, options) => {
                     var html = template({
