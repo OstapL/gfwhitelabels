@@ -9,23 +9,23 @@ include menu.pug
     ]
 )
 
-section.create-company-media.container
+section.create-company-media.container.media-container
   +menu('media')
   //START RIGHT BLOCK
   .col-lg-9
     h2.text-uppercase.dosis.text-lg-center.text-xs-center.dosis.m-t-0.m-b-3 Media
     form(metod="post" action="").form-section
       +fieldDropzone("header_image", {
-        class1: 'col-lg-7 col-xs-12 col-md-12 text-xs-center',
-        class2: 'col-lg-5 col-xs-12 col-md-12 text-sm-center p-sm-0 p-l-1 p-r-3',
+        class1: 'col-lg-3 col-xs-12 col-md-12 text-xs-center',
+        class2: 'col-lg-9 col-xs-12 col-md-12 text-sm-center p-sm-0 p-l-1 p-r-3',
         thumbSize: '255x153',
         default: '/img/default/255x153.png',
         text: 'Drop your photo here or click to upload',
         icon: 'file-image-o'
         })
       +fieldDropzone("list_image", {
-        class1: 'col-lg-7 col-xs-12 col-md-12 text-xs-center',
-        class2: 'col-lg-5 col-xs-12 col-md-12 text-sm-center p-sm-0 p-l-1 p-r-3',
+        class1: 'col-lg-3 col-xs-12 col-md-12 text-xs-center',
+        class2: 'col-lg-9 col-xs-12 col-md-12 text-sm-center p-sm-0 p-l-1 p-r-3',
         thumbSize: '255x153',
         default: '/img/default/255x153.png',
         text: 'Drop your photo here or click to upload',
