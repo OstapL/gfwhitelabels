@@ -225,7 +225,19 @@ module.exports = {
             'submit form': 'submit',
             'click .delete-image': 'deleteImage',
             'change .videoInteractive input[type="url"]': 'updateVideo',
+            // 'click .media-container': 'global',
+            'dragover .media-container,.dropzone': 'globalDragover',
+            'dragleave .media-container,.dropzone': 'globalDragleave',
         }, jsonActions.events),
+
+        globalDragover () {
+            // console.log('hello');
+            this.$('.dropzone').css({ border: 'dashed 1px lightgray' });
+        },
+
+        globalDragleave () {
+            this.$('.dropzone').css({ border: 'none' });
+        },
 
         preinitialize() {
             // ToDo
