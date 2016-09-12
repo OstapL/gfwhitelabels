@@ -74,6 +74,7 @@ module.exports = Backbone.Model.extend({
         // calculate final amount of raise
         this.set('finalRaiseAmount', this.get('raiseAmount') > this.get('raiseAmount2') ? this.get('raiseAmount') : this.get('raiseAmount2'));
         this.set('dataIsFilled', true);
+        app.cache.whatmybusiness = this.toJSON();
     },
 
     // calculate "Baseline Capital Needs" regarding on type
