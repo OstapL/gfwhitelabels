@@ -632,10 +632,10 @@ module.exports = {
         },
 
         calculateNumberOfShares: function(e) {
-          var minRaise = parseInt($("#minimum_raise").val().replace(/,/g,''));
-          var maxRaise = parseInt($("#maximum_raise").val().replace(/,/g,''));
-          var pricePerShare = parseInt($("#price_per_share").val().replace(/,/g,''));
-          var premoneyVal = parseInt($("#premoney_valuation").val().replace(/,/g,''));
+          var minRaise = parseInt(this.$("#minimum_raise").val().replace(/,/g,''));
+          var maxRaise = parseInt(this.$("#maximum_raise").val().replace(/,/g,''));
+          var pricePerShare = parseInt(this.$("#price_per_share").val().replace(/,/g,''));
+          var premoneyVal = parseInt(this.$("#premoney_valuation").val().replace(/,/g,''));
           this.$("#min_number_of_shares").val((Math.round(minRaise/pricePerShare)).toLocaleString('en-US'));
           this.$("#max_number_of_shares").val((Math.round(maxRaise/pricePerShare)).toLocaleString('en-US'));
           // this.$("#min_number_of_shares").val((Math.round(minRaise/pricePerShare)));
@@ -688,6 +688,8 @@ module.exports = {
                     });
                 }
             );
+
+            this.calculateNumberOfShares(null);
 
             return this;
         },
