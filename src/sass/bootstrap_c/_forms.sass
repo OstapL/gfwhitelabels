@@ -52,7 +52,7 @@ select.form-control
 		// знак вопроса (есть на странице calculator/capitalraise/step-1)
 		i 
 	select,.custom-select
-		color: $black
+		color: $black!important
 
 	@media screen and (min-width:992px)
 		// date of birth field
@@ -139,6 +139,8 @@ select.form-control
 			top: 5px
 			// right: 0
 			cursor: pointer
+			color: $black
+			min-width: rem(150)
 
 			.input-value
 				@include ellipsis()
