@@ -29,7 +29,7 @@ module.exports = {
         'X-Requested-With': null,
       },
       uploadprogress: function(file, progress, bytesSend) {
-        console.log('uploading...');
+        // console.log('uploading...');
       },
       complete: function(file) {
         // hid the layer of the progress bar
