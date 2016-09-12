@@ -129,7 +129,6 @@ module.exports = {
             );
       }
       else {
-        debugger;
         app.makeRequest('/api/campaign/general_information', 'POST', {
           company: data.id,
           business_model: '',
