@@ -140,7 +140,7 @@ module.exports = {
             this.ui();
 
             flyPriceFormatter(this.inputPrice, ({ modelValue, currentValue }) => {
-                app.cache.payBackShareCalculator[modelValue] = currentValue;
+                app.cache.payBackShareCalculator[modelValue] = +currentValue;
             });
 
             this.inputPercent.inputmask("9{1,4}%", {

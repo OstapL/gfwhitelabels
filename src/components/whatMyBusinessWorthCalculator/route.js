@@ -20,12 +20,9 @@ module.exports = Backbone.Router.extend({
 
   calculatorCapitalraise2Step1() {
     require.ensure([], () => {
-      const Model = require('./model');
       const View = require('./views');
 
-      new View.step1({
-        model: new Model(),
-      }).render();
+      new View.step1().render();
 
       $('#content').scrollTo();
       app.hideLoading();
@@ -34,12 +31,9 @@ module.exports = Backbone.Router.extend({
 
   calculatorCapitalraise2Finish() {
     require.ensure([], () => {
-      const Model = require('./model');
       const View = require('./views');
 
-      new View.finish({
-        model: new Model(),
-      }).render();
+      new View.finish().render();
 
       $('#content').scrollTo();
       app.hideLoading();

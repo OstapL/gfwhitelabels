@@ -178,7 +178,7 @@ module.exports = {
 
             flyPriceFormatter(this.inputPrice, ({ modelValue, currentValue }) => {
                 // save value
-                app.cache.capitalRaiseCalculator[modelValue] = currentValue;
+                app.cache.capitalRaiseCalculator[modelValue] = +currentValue;
             });
 
             return this;
