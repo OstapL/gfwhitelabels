@@ -97,10 +97,10 @@ module.exports = {
           this.$('.js-state').val(state);
           $("form input[name=state]").val(state);
 
-            } else {
-                console.log("error");
-            }
-        });
+        } else {
+          console.log("error");
+        }
+      });
     },
 
     render() {
@@ -736,6 +736,4 @@ module.exports = {
         },
 
     }),
-
-
 };
