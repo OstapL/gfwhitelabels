@@ -977,7 +977,6 @@ app.on('userLoaded', function(data){
     console.log('user ready');
 });
 
-
 $(document).ready(function(){
 
 });

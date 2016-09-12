@@ -1,46 +1,40 @@
 module.exports = Backbone.Router.extend({
-    routes: {
-        'calculator/capitalraise/intro': 'calculatorCapitalraiseIntro',
-        'calculator/capitalraise/step-1': 'calculatorCapitalraiseStep1',
-        'calculator/capitalraise/finish': 'calculatorCapitalraiseFinish'
-    },
+  routes: {
+    'calculator/capitalraise/intro': 'calculatorCapitalraiseIntro',
+    'calculator/capitalraise/step-1': 'calculatorCapitalraiseStep1',
+    'calculator/capitalraise/finish': 'calculatorCapitalraiseFinish'
+  },
 
-    calculatorCapitalraiseIntro() {
-        require.ensure([], () => {
-            let Model = require('./model');
-            let View = require('./views');
+  calculatorCapitalraiseIntro() {
+    require.ensure([], () => {
+      const View = require('./views');
 
-            new View.intro({
-                model: app.getModelInstance(Model, 'calculatorCapitalraise').setFormattedPrice()
-            }).render();
+      new View.intro().render();
 
-            app.hideLoading();
-        });
-    },
+      $('#content').scrollTo();
+      app.hideLoading();
+    });
+  },
 
-    calculatorCapitalraiseStep1() {
-        require.ensure([], () => {
-            let Model = require('./model');
-            let View = require('./views');
+  calculatorCapitalraiseStep1() {
+    require.ensure([], () => {
+      const View = require('./views');
 
-            new View.step1({
-                model: app.getModelInstance(Model, 'calculatorCapitalraise').setFormattedPrice()
-            }).render();
+      new View.step1().render();
 
-            app.hideLoading();
-        });
-    },
+      $('#content').scrollTo();
+      app.hideLoading();
+    });
+  },
 
-    calculatorCapitalraiseFinish() {
-        require.ensure([], () => {
-            let Model = require('./model');
-            let View = require('./views');
+  calculatorCapitalraiseFinish() {
+    require.ensure([], () => {
+      const View = require('./views');
 
-            new View.finish({
-                model: app.getModelInstance(Model, 'calculatorCapitalraise').setFormattedPrice()
-            }).render();
+      new View.finish().render();
 
-            app.hideLoading();
-        });
-    }
+      $('#content').scrollTo();
+      app.hideLoading();
+    });
+  }
 });

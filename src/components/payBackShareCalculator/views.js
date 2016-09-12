@@ -20,7 +20,7 @@ module.exports = {
         template: require('./templates/step1.pug'),
 
         render: function () {
-            this.$el.html(this.template(this.model.toJSON()));
+            this.$el.html(this.template());
             return this;
         }
     }),
@@ -33,6 +33,14 @@ module.exports = {
         initialize() {
             // data which contains calculated income
             this.outputData = [];
+
+            if (!app.cache.payBackShareCalculator) {
+                app.cache.payBackShareCalculator = {
+                    'raiseMoney': 100000,
+                    'nextYearRevenue': 1000000,
+                    'growLevel': 25
+                };
+            }
         },
 
         events: {
@@ -46,26 +54,28 @@ module.exports = {
         doCalculation(e) {
             e.preventDefault();
             let maxOfMultipleReturned = 0,
-                countOfMultipleReturned = 0;
+                countOfMultipleReturned = 0,
+                { raiseMoney, nextYearRevenue, growLevel } = app.cache.payBackShareCalculator;
+
             // calculate income for 10 years
             // set the first year
             this.outputData[0] = {};
-            this.outputData[0].fundraise = this.model.get('raiseMoney');
+            this.outputData[0].fundraise = raiseMoney;
 
             // set the second year
             this.outputData[1] = {};
-            this.outputData[1].revenue = this.model.get('nextYearRevenue');
+            this.outputData[1].revenue = nextYearRevenue;
 
             // set all other year
             for (var i = 2; i < 11; i++) {
                 this.outputData[i] = {};
 
-                this.outputData[i].revenue = Math.ceil(this.outputData[i - 1].revenue * (1 + this.model.get('growLevel') / 100));
+                this.outputData[i].revenue = Math.ceil(this.outputData[i - 1].revenue * (1 + growLevel / 100));
                 this.outputData[i].annual = Math.ceil(0.05 * this.outputData[i].revenue);
 
                 let helper = {
                     sum: this.getPreviousSum(i),
-                    divided: this.getPreviousSum(i) / this.model.get('raiseMoney')
+                    divided: this.getPreviousSum(i) / raiseMoney
                 };
                 this.outputData[i].multiple = Math.min(parseFloat(helper.divided.toFixed(1)), 2);
 
@@ -82,11 +92,12 @@ module.exports = {
                     }
                 }
 
-                this.outputData[i].total = Math.min(parseFloat(helper.sum.toFixed(1)), 2 * this.model.get('raiseMoney'));
+                this.outputData[i].total = Math.min(parseFloat(helper.sum.toFixed(1)), 2 * raiseMoney);
             }
 
-            // save data into the model
-            this.model.saveOutputData({ outputData: this.outputData, maxOfMultipleReturned });
+            // save data
+            app.cache.payBackShareCalculator.outputData = this.outputData;
+            app.cache.payBackShareCalculator.maxOfMultipleReturned = maxOfMultipleReturned;
 
             // navigate to the finish step
             app.routers.navigate('/calculator/paybackshare/step-3', {trigger: true});
@@ -96,6 +107,11 @@ module.exports = {
             let elem = e.target;
             elem.dataset.currentValue = parseFloat(elem.value.replace('$', '').replace(/,/g, '') || 0);
             elem.value = formatPrice(elem.dataset.currentValue);
+
+            // save percent values
+            if (elem.dataset.inputMask == "percent") {
+                app.cache.payBackShareCalculator[elem.dataset.modelValue] = elem.dataset.currentValue;
+            }
         },
 
         // get sum of last Annual Distributions
@@ -115,14 +131,16 @@ module.exports = {
         },
 
         render() {
-            this.$el.html(this.template(this.model.toJSON()));
+            this.$el.html(this.template({
+                data: app.cache.payBackShareCalculator,
+                formatPrice
+            }));
 
             // declare ui elements for the view
             this.ui();
 
             flyPriceFormatter(this.inputPrice, ({ modelValue, currentValue }) => {
-                // save value into the model
-                this.model.saveField(modelValue, +currentValue);
+                app.cache.payBackShareCalculator[modelValue] = +currentValue;
             });
 
             this.inputPercent.inputmask("9{1,4}%", {
@@ -166,20 +184,20 @@ module.exports = {
 
         render() {
             // disable enter to the final step of paybackshare calculator without data
-            if (!this.model.get('outputData')) {
+            if (!app.cache.payBackShareCalculator) {
                 app.routers.navigate('/calculator/paybackshare/step-2', {trigger: true});
                 return false;
             }
 
             this.$el.html(this.template({
-                model: this.model.toJSON(),
+                model: app.cache.payBackShareCalculator,
                 formatPrice
             }));
 
             // get data for drawing jQPlot
-            let outputData = this.model.get('outputData'),
-                maxOfMultipleReturned = this.model.get('maxOfMultipleReturned'),
+            let { outputData, maxOfMultipleReturned } = app.cache.payBackShareCalculator,
                 lastStep = false;
+
 
             // prepare data for drawing jQPlot
             let dataRendered = function() {

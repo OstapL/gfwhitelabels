@@ -39,10 +39,10 @@ module.exports = [
         "name": "District Of Columbia",
         "abbreviation": "DC"
     },
-    {
+    /*{
         "name": "Federated States Of Micronesia",
         "abbreviation": "FM"
-    },
+    },*/
     {
         "name": "Florida",
         "abbreviation": "FL"
@@ -91,10 +91,10 @@ module.exports = [
         "name": "Maine",
         "abbreviation": "ME"
     },
-    {
+    /*{
         "name": "Marshall Islands",
         "abbreviation": "MH"
-    },
+    },*/
     {
         "name": "Maryland",
         "abbreviation": "MD"
@@ -171,10 +171,10 @@ module.exports = [
         "name": "Oregon",
         "abbreviation": "OR"
     },
-    {
+    /*{
         "name": "Palau",
         "abbreviation": "PW"
-    },
+    },*/
     {
         "name": "Pennsylvania",
         "abbreviation": "PA"

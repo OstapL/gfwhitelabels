@@ -1,65 +1,55 @@
 module.exports = Backbone.Router.extend({
-    routes: {
-        'account/login': 'login',
-        'account/signup': 'signup',
-        'account/facebook/login/': 'loginFacebook',
-        'account/google/login/': 'loginGoogle',
-        'account/linkedin/login/': 'loginLinkedin',
-        'account/finish/login/': 'finishSocialLogin',
-    },
+  routes: {
+    'account/login': 'login',
+    'account/signup': 'signup',
+    'account/facebook/login/': 'loginFacebook',
+    'account/google/login/': 'loginGoogle',
+    'account/linkedin/login/': 'loginLinkedin',
+    'account/finish/login/': 'finishSocialLogin',
+    'account/reset': 'resetPassword',
+  },
 
-    login(id) {
-        require.ensure([], function() {
-            const view = require('components/accountAnonymous/views.js');
-            var a1 = $.ajax(_.extend({
-                    url: serverUrl + Urls['rest_login'](),
-                }, app.defaultOptionsRequest));
-            var a2 = $.ajax(_.extend({
-                    url: serverUrl + Urls['rest_register'](),
-                }, app.defaultOptionsRequest));
-            $.when(a1, a2).done((r1, r2) => {
-                let loginView = new view.login({
-                    el: '#content',
-                    login_fields: r1[0].actions.POST,
-                    register_fields: r2[0].actions.POST,
-                    model: new userModel(),
-                });
-                loginView.render();
-                app.hideLoading();
-            }).fail((xhr, error) => {
-                // ToDo
-                // Show global error message
-                console.log('cant get fields ');
-                console.log(xhr, error);
-                app.hideLoading();
-            });
+  login(id) {
+    require.ensure([], function() {
+      const View = require('components/anonymousAccount/views.js');
+      let a1 = api.makeRequest(Urls['rest_login'](), 'OPTIONS');
+      $.when(a1).done((metaData) => {
+        let loginView = new View.login({
+          el: '#content',
+          login_fields: metaData.actions.POST,
+          model: new userModel(),
         });
-    },
+        loginView.render();
+        app.hideLoading();
+      }).fail((xhr, error) => {
+        // ToDo
+        // Show global error message
+        console.log(xhr, error);
+        app.hideLoading();
+      });
+    });
+  },
 
-    signup(id) {
-        require.ensure([], function() {
-            const view = require('components/accountAnonymous/views.js');
-            var a2 = $.ajax(_.extend({
-                    url: serverUrl + Urls['rest_register'](),
-                }, app.defaultOptionsRequest));
-            $.when(a2).done((r2) => {
-                console.log(r2);
-                let signView = new view.signup({
-                    el: '#content',
-                    register_fields: r2.actions.POST,
-                    model: new userModel(),
-                });
-                signView.render();
-                app.hideLoading();
-            }).fail((xhr, error) => {
-                // ToDo
-                // Show global error message
-                console.log('cant get fields ');
-                console.log(xhr, error);
-                app.hideLoading();
-            });
+  signup(id) {
+    require.ensure([], function() {
+      const View = require('components/anonymousAccount/views.js');
+      let a1 = api.makeRequest(Urls['rest_register'](), 'OPTIONS');
+      $.when(a1).done((metaData) => {
+        let signView = new View.signup({
+          el: '#content',
+          register_fields: metaData.actions.POST,
+          model: new userModel(),
         });
-    },
+        signView.render();
+        app.hideLoading();
+      }).fail((xhr, error) => {
+        // ToDo
+        // Show global error message
+        console.log(xhr, error);
+        app.hideLoading();
+      });
+    });
+  },
 
     loginFacebook() {
         require.ensure([], function() {
@@ -152,4 +142,14 @@ module.exports = Backbone.Router.extend({
         });
     },
 
+    resetPassword: function() {
+        require.ensure([], function() {
+            const view = require('components/anonymousAccount/views.js');
+            let i = new view.reset({
+                el: '#content',
+            });
+            i.render();
+            app.hideLoading();
+        });
+    },
 });    

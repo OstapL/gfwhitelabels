@@ -1,142 +1,149 @@
 module.exports = {
-    profile: Backbone.View.extend({
-        template: require('templates/userProfile.pug'),
-        initialize: function(options) {
-            this.fields = options.fields;
+  profile: Backbone.View.extend({
+    template: require('templates/userProfile.pug'),
+    events: {
+      'submit form': api.submitAction,
+      'focus #ssn' : 'showSSNPopover',
+      'focuseout #ssn' : 'hideSSNPopover',
+      'keyup #zip_code': 'changeZipCode',
+      'change .js-city': 'changeAddressManually',
+      'change .js-state': 'changeAddressManually'
+    },
 
-            // define ui elements
-            this.cityStateArea = null;
-            this.cityField = null;
-            this.stateField = null;
-            this.zipCodeField = null;
+    initialize(options) {
+      this.fields = options.fields;
 
-            // define timeout for zip code keyup event
-            this.zipCodeTimeOut = null;
+      // define ui elements
+      this.cityStateArea = null;
+      this.cityField = null;
+      this.stateField = null;
+      this.zipCodeField = null;
 
-            // define flag for the geocode function respond
-            this.geocodeIsNotInProgress = true;
+      // define timeout for zip code keyup event
+      this.zipCodeTimeOut = null;
+
+      // define flag for the geocode function respond
+      this.geocodeIsNotInProgress = true;
+    },
+
+    render() {
+      this.getCityStateByZipCode = require("helpers/getSityStateByZipCode");
+      this.usaStates = require("helpers/usa-states");
+      let dropzone = require('dropzone');
+      this.$el.html(
+        this.template({
+          serverUrl: serverUrl,
+          user: app.user.toJSON(),
+          fields: this.fields,
+          states: this.usaStates
+        })
+      );
+
+      this.cityStateArea = this.$('.js-city-state');
+      this.cityField = this.$('.js-city');
+      this.stateField = this.$('.js-state');
+      this.zipCodeField = this.$('#zip_code');
+
+      /*
+         app.createFileDropzone(
+         dropzone,
+         'image', 
+         'avatars', '', 
+         (data) => {
+         this.model.save({
+         image: data.file_id,
+         }, {
+         patch: true
+         }).then((model) => {
+         localStorage.setItem('user', JSON.stringify(this.model.toJSON()));
+         });
+         }
+         );
+         */
+      return this;
+    },
+
+    getSuccessUrl(data) {
+      return '/account/profile';
+    },
+
+    showSSNPopover(event){
+      $('#ssn').popover({
+        trigger: 'focus',
+        placement(context, src) {
+          $(context).addClass('ssn-popover');
+          return 'right';
         },
+        html: true,
+        content(){
+          var content = $('.profile').find('.popover-content-ssn ').html();
+          return content;
+        }
+      });
 
-        events: {
-            'submit form': 'update',
-            'focus #ssn' : 'showSSNPopover',
-            'focuseout #ssn' : 'hideSSNPopover',
-            'keyup #zip_code': 'changeZipCode',
-            'change .js-city': 'changeAddressManually',
-            'change .js-state': 'changeAddressManually'
-        },
+      $('#ssn').popover('show');
+    },
 
-        render: function() {
-            this.getCityStateByZipCode = require("helpers/getSityStateByZipCode");
-            this.usaStates = require("helpers/usa-states");
-            let dropzone = require('dropzone');
-            this.$el.html(
-                this.template({
-                    serverUrl: serverUrl,
-                    user: app.user.toJSON(),
-                    fields: this.fields,
-                    states: this.usaStates
-                })
-            );
+    hideSSNPopover(event){
+      $('#ssn').popover('hide');
+    },
 
-            this.cityStateArea = this.$('.js-city-state');
-            this.cityField = this.$('.js-city');
-            this.stateField = this.$('.js-state');
-            this.zipCodeField = this.$('#zip_code');
+    changeZipCode(e) {
+      if (!this.geocodeIsNotInProgress) return false;
 
-            /*
-            app.createFileDropzone(
-                dropzone,
-                'image', 
-                'avatars', '', 
-                (data) => {
-                    this.model.save({
-                        image: data.file_id,
-                    }, {
-                        patch: true
-                    }).then((model) => {
-                        localStorage.setItem('user', JSON.stringify(this.model.toJSON()));
-                    });
-                }
-            );
-            */
-            return this;
-        },
+      clearTimeout(this.zipCodeTimeOut);
+      this.zipCodeTimeOut = setTimeout(() => {
+        this.geocodeIsNotInProgress = false;
+        this.getCityStateByZipCode(e.target.value, ({ success=false, city="", state="" }) => {
+          this.geocodeIsNotInProgress = true;
+          // clear error
+          this.zipCodeField.closest('div').find('.help-block').remove();
 
-        update: function(event) {
-            event.preventDefault();
-            let data = $(event.target).serializeObject();
-
-            this.model.set(data);
-            if(this.model.isValid(true)) {
-                this.model.save(data, {
-                    success: (model, response, status) => {
-                        defaultSaveActions.success(this, response);
-                    },
-                    error: (model, response, status) => {
-                        defaultSaveActions.error(this, response);
+                if (success) {
+                    if (!this.usaStates.find((el) => el.name == state)) {
+                        this.resetAddressValues();
+                        return false;
                     }
-                });
-            }
-        },
 
-        showSSNPopover: function(event){
-            $('#ssn').popover({
-                trigger: 'focus',
-                placement: function(context, src) {
-                     $(context).addClass('ssn-popover');
-                     return 'right';
-                },
-                html: true,
-                content: function(){
-                    var content = $('.profile').find('.popover-content-ssn ').html();
-                    return content;
+                    this.cityStateArea.text(`${city}/${state}`);
+                    this.cityField.val(city);
+                    this.stateField.val(state);
+                } else {
+                    this.resetAddressValues();
                 }
             });
+        }, 200);
+    },
 
-            $('#ssn').popover('show');
-        },
+    resetAddressValues() {
+      this.cityStateArea.text('City/State');
+      this.cityField.val('');
+      this.stateField.val('');
+      Backbone.Validation.callbacks.invalid(this, 'zip_code', 'Sorry your zip code is not found');
+    },
 
-        hideSSNPopover: function(event){
-            $('#ssn').popover('hide');
-        },
+    changeAddressManually() {
+      this.cityStateArea.text(`${this.cityField.val()}/${this.stateField.val()}`);
+    }
+  }),
 
-        changeZipCode(e) {
-            if (!this.geocodeIsNotInProgress) return false;
+  changePassword: Backbone.View.extend({
+    render(){
+      let template = require('templates/changePassword.pug');
+      this.$el.html(template({}));
+      return this;
+    }
+  }),
 
-            clearTimeout(this.zipCodeTimeOut);
-            this.zipCodeTimeOut = setTimeout(() => {
-                this.geocodeIsNotInProgress = false;
-                this.getCityStateByZipCode(e.target.value, ({ success=false, city="", state="" }) => {
-                    this.geocodeIsNotInProgress = true;
-                    // clear error
-                    this.zipCodeField.closest('div').find('.help-block').remove();
+  setNewPassword: Backbone.View.extend({
+    events: {
+        'form submit': api.submitAction,
+    },
 
-                    if (success) {
-                        if (!this.usaStates.find((el) => el.name == state)) {
-                            this.resetAddressValues();
-                            return false;
-                        }
-
-                        this.cityStateArea.text(`${city}/${state}`);
-                        this.cityField.val(city);
-                        this.stateField.val(state);
-                    } else {
-                        this.resetAddressValues();
-                    }
-                });
-            }, 200);
-        },
-
-        resetAddressValues() {
-            this.cityStateArea.text('City/State');
-            this.cityField.val('');
-            this.stateField.val('');
-            Backbone.Validation.callbacks.invalid(this, 'zip_code', 'Sorry your zip code is not found');
-        },
-
-        changeAddressManually() {
-            this.cityStateArea.text(`${this.cityField.val()}/${this.stateField.val()}`);
-        }
-    }),
+    render(){
+      let template = require('./templates/setNewPassword.pug');
+      this.$el.html(template({}));
+      return this;
+    },
+  }),
 };

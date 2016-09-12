@@ -1,7 +1,7 @@
 - 'use strict';
-include mixins.pug
+include ../../../templates/mixins.pug
 
-- let percentage_raised = model.calculateRaisedPercentage(campaign.minimum_raise, campaign.amount_raised)
+- var percentage_raised = model.calculateRaisedPercentage(campaign.minimum_raise, campaign.amount_raised)
 
 section#home(style="background-image: url(" + (campaign.header_image_data ? campaign.header_image_data.url : '/img/default.png') + ")").home-section.bg-dark-alfa-70.parallax-2.fixed-height-small
   .js-height-parent.container
@@ -13,14 +13,18 @@ section#home(style="background-image: url(" + (campaign.header_image_data ? camp
             i.fa.fa-play-circle-o
           a(href=campaign.company.website target="_blank").link-6.link-campaing-detail #{ campaign.company.website }
           .row.social-link
-            a(href=campaign.company.facebook target="_blank").link-6.link-campaing-detail
-              i.fa.fa-facebook
-            a(href=campaign.company.twitter target="_blank").link-6.link-campaing-detail
-              i.fa.fa-twitter
-            a(href=campaign.company.instagram target="_blank").link-6.link-campaing-detail
-              i.fa.fa-instagram
-            a(href=campaign.company.linkedin target="_blank").link-6.link-campaing-detail
-              i.fa.fa-linkedin
+            if campaign.company.facebook
+              a(href=campaign.company.facebook target="_blank").link-6.link-campaing-detail
+                i.fa.fa-facebook
+            if campaign.company.twitter
+              a(href=campaign.company.twitter target="_blank").link-6.link-campaing-detail
+                i.fa.fa-twitter
+            if campaign.company.instagram
+              a(href=campaign.company.instagram target="_blank").link-6.link-campaing-detail
+                i.fa.fa-instagram
+            if campaign.company.linkedin
+              a(href=campaign.company.linkedin target="_blank").link-6.link-campaing-detail
+                i.fa.fa-linkedin
 
         // End Hero Content
   .top-info
@@ -144,9 +148,6 @@ section
         //- h3.our.text-lg-center Why You Should Invest
         h2.dosis.our.text-uppercase.text-lg-center.green-heading Why You Should Invest
         p #{ campaign.pitch }
-        //- h3.our.text-lg-center Our Edge
-        h2.dosis.our.text-uppercase.text-lg-center.green-heading How We Intend to Make Money
-        p #{ campaign.business_model }
 
         //- if campaign.additional_info
         //-   each v,k in campaign.additional_info
@@ -194,7 +195,7 @@ section
               each v,k in campaign.additional_video
                   .col-lg-4
                     .card.card-inverse
-                      - let link =  app.getVideoId(v.link)
+                      - var link =  app.getVideoId(v.link)
                       img(src="http://img.youtube.com/vi/" + link + "/0.jpg" alt="" style="width: 338px").card-img
                       .card-img-overlay
                         .card-title
@@ -226,28 +227,12 @@ section
                       a(data-toggle="modal" href="#videoModal-3" data-target="#videoModal-3").small-icon.link-6
                           i.fa.fa-play-circle-o
                     h3.card-text.text-lg-center Title for Optional Video 3
-      .col-lg-12
-        //- h3.text-lg-center Articles and Press
-        h2.dosis.text-uppercase.text-lg-center.green-heading Articles and Press
-      .row
-        .col-lg-12.text-center-flex
-          .articles_press
-          if campaign.press
-            each v,k in campaign.press
-              .col-lg-3.articles_press
-                a(href=v.link target="_blank")
-                  .card.card-inverse
-                    img(src="/img/smartbe-intelligent-stroller.jpg" alt="").card-img
-                    .card-img-overlay
-                      .card-title
-                        p.card-text.font-weight-bold #{ v.headline }
-                        // p.card-text.intro Smartbe is a revolutionary concept as regards design and ...
-                        .pos-bottom
-                          a(href=v.link target="_blank").links.d-inline-block.card-text.pull-right #{ v.link }
-                          img(src="/img/icon-campaign.jpg", alt="").icon-campaign.d-inline-block
-                        
 
       .col-lg-12
+        //- h3.our.text-lg-center Our Edge
+        h2.dosis.our.text-uppercase.text-lg-center.green-heading How We Intend to Make Money
+        p #{ campaign.business_model }
+
         //- h3.text-lg-center Why We are Raising Capital, and What We’ll Do with It
         h2.dosis.text-uppercase.text-lg-center.green-heading Why We are Raising Capital, and What We’ll Do with It
         p #{ campaign.intended_use_of_proceeds }
@@ -287,6 +272,23 @@ section
                               a(href="#").link-1.pull-right
                                 i.fa.fa-graduation-cap
                                 |  #{v.college}
+            h2.dosis.text-uppercase.text-lg-center.green-heading Articles and Press
+            .row
+              .col-lg-12.text-center-flex
+                .articles_press
+                if campaign.press
+                  each v,k in campaign.press
+                    .col-lg-3.articles_press
+                      a(href=v.link target="_blank")
+                        .card.card-inverse
+                          img(src="/img/smartbe-intelligent-stroller.jpg" alt="").card-img
+                          .card-img-overlay
+                            .card-title
+                              p.card-text.font-weight-bold #{ v.headline }
+                              // p.card-text.intro Smartbe is a revolutionary concept as regards design and ...
+                              .pos-bottom
+                                a(href=v.link target="_blank").links.d-inline-block.card-text.pull-right #{ v.link }
+                                img(src="/img/icon-campaign.jpg", alt="").icon-campaign.d-inline-block
   
   else
       //
@@ -566,7 +568,7 @@ section
             #collapseFour(role="tabpanel"
             aria-labelledby="headingFour"
             ).panel-collapse.collapse  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius inventore iste numquam nemo, fugit nihil fugiat quasi, excepturi repellendus pariatur! Facilis odit cupiditate tenetur, inventore adipisci consequatur eius suscipit voluptas.
-        a(href="").col-lg-12.text-lg-center.link-4.see-all.see-all-risks See All Risks
+        a(href="#").col-lg-12.text-lg-center.link-4.see-all.see-all-risks See All Risks
   
   section.faq
     if campaign.faq
@@ -574,7 +576,7 @@ section
       h2#faq.col-lg-12.dosis.text-uppercase.text-lg-center.green-heading FAQ
       .col-lg-8.offset-lg-2
         .accordion(role="tablist" aria-multiselectable="true")
-          - let counter = 0
+          - var counter = 0
           each v,k in campaign.faq
             .panel.panel-default
               div(id="faq" + k role="tab").panel-heading
@@ -625,7 +627,7 @@ section
               #collapsefaqFour(role="tabpanel"
               aria-labelledby="faqFour"
               ).panel-collapse.collapse  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius inventore iste numquam nemo, fugit nihil fugiat quasi, excepturi repellendus pariatur! Facilis odit cupiditate tenetur, inventore adipisci consequatur eius suscipit voluptas.
-        a(href="").col-lg-12.text-lg-center.link-4.see-all.see-all-faq See All FAQ
+        a(href="#").col-lg-12.text-lg-center.link-4.see-all.see-all-faq See All FAQ
     
   section.ask.border-bottom
     .container
@@ -699,7 +701,7 @@ each v,k in campaign.additional_video
         .modal-dialog.modal-lg(role="document")
             .modal-content
                 .embed-responsive.embed-responsive-16by9
-                    - let link =  app.getVideoId(v.link)
+                    - var link =  app.getVideoId(v.link)
                     iframe.embed-responsive-item(src="//www.youtube.com/embed/" + link + "?rel=0" allowfullscreen="true")
 
 //modal sing_up
