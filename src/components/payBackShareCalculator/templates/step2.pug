@@ -33,35 +33,35 @@ include ../../../templates/mixins.pug
                 .form-body.clearfix 
 
                     .form-group.row
-                        label(for="input2").col-lg-12 How much money do you plan to raise?
+                        label(for="raiseMoney").col-lg-12 How much money do you plan to raise?
 
                         .col-lg-12
-                            input#input2.form-control.js-field(
-                                value= raiseMoneyFormatted,
+                            input#raiseMoney.form-control.js-field(
+                                value= formatPrice(data.raiseMoney),
                                 type='text',
                                 placeholder='$0',
                                 data-input-mask='price',
                                 data-model-value='raiseMoney',
-                                data-current-value= raiseMoney)
+                                data-current-value= data.raiseMoney)
 
                     .form-group.row
-                        label(for="input3").col-lg-12 What do you expect your revenue to be next year?
+                        label(for="nextYearRevenue").col-lg-12 What do you expect your revenue to be next year?
 
                         .col-lg-12
-                            input#input3.form-control.js-field(
-                                value= nextYearRevenueFormatted,
+                            input#nextYearRevenue.form-control.js-field(
+                                value= formatPrice(data.nextYearRevenue),
                                 type='text',
                                 placeholder='$0',
                                 data-input-mask='price',
                                 data-model-value='nextYearRevenue',
-                                data-current-value= nextYearRevenue)
+                                data-current-value= data.nextYearRevenue)
 
                     .form-group.row
-                        label(for="input1").col-lg-12 At what rate do you expect your revenue to grow each year?
+                        label(for="growLevel").col-lg-12 At what rate do you expect your revenue to grow each year?
 
                         .col-lg-12
-                            input#input1.form-control.js-field(
-                                value= growLevel,
+                            input#growLevel.form-control.js-field(
+                                value= data.growLevel,
                                 type='text',
                                 data-input-mask='percent',
                                 data-model-value='growLevel')
