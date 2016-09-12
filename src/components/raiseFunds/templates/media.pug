@@ -1,0 +1,102 @@
+- 'use strict';
+include ../../../templates/mixins.pug
+include menu.pug
+
++breadcrumbs('Create campaign', 'LOREM IPSUM DOLOR SIT AMET CONSECTETUR', 
+    [
+        ['Home', '/'],
+        ['current', 'page.get_absolute_ur'],
+    ]
+)
+
+section.create-company-media.container.media-container
+  +menu('media')
+  //START RIGHT BLOCK
+  .col-lg-9
+    h2.text-uppercase.dosis.text-lg-center.text-xs-center.dosis.m-t-0.m-b-3 Media
+    form(metod="post" action="").form-section
+      +fieldDropzone("header_image", {
+        class1: 'col-lg-3 col-xs-12 col-md-12 text-xs-center',
+        class2: 'col-lg-9 col-xs-12 col-md-12 text-sm-center p-sm-0 p-l-1 p-r-3',
+        thumbSize: '255x153',
+        default: '/img/default/255x153.png',
+        text: 'Drop your photo here or click to upload',
+        icon: 'file-image-o'
+        })
+      +fieldDropzone("list_image", {
+        class1: 'col-lg-3 col-xs-12 col-md-12 text-xs-center',
+        class2: 'col-lg-9 col-xs-12 col-md-12 text-sm-center p-sm-0 p-l-1 p-r-3',
+        thumbSize: '255x153',
+        default: '/img/default/255x153.png',
+        text: 'Drop your photo here or click to upload',
+        icon: 'file-image-o'
+        })
+      .col-lg-12.border-top
+        h3.text-lg-center.col-md-center.col-xs-center Recommended Additional Media
+      .row.m-b-2
+        +fieldDropzone("gallery", {
+            class1: 'col-lg-5 text-sm-center col-md-12 text-xs-center',
+            class2: 'col-lg-7 col-xs-12 col-md-12 text-sm-center',
+            default: '/img/default/77x45.png',
+            text: 'Drop your photo here or click to upload',
+            icon: 'file-image-o',
+            viewType: 2
+        })
+
+      .row.m-b-2.recommended.p-sm-0
+        .col-lg-7
+          +fieldBlock("video", '', {
+            class1: 'col-lg-5 col-md-5 col-md-12 p-sm-0',
+            class2: 'col-lg-7 col-md-7 col-md-12 p-sm-0',
+            type: 'text',
+            placeholder: 'https://www.youtube.com/'
+            })
+        
+        #video_source.col-lg-5.p-l-1.p-r-3.p-sm-0
+          .embed-responsive.embed-responsive-16by9
+            iframe.embed-responsive-item(src="//www.youtube.com/embed/" + app.getVideoId(values.video) + "?rel=0" allowfullscreen="true")
+      
+      .m-b-0.additional-video-block
+        .row
+          .col-lg-12
+            +fieldBlock("additional_video", '', {
+              class1: 'col-lg-3 col-md-4 col-md-12 p-sm-0',
+              class2: 'col-lg-9 col-md-8 col-md-12 p-sm-0',
+              type: 'jsonVideo',
+              })
+          .row.m-t-0.addition-position
+              .col-lg-9.offset-1.pull-right
+                  a(href="#" data-section="additional_video").link-2.add-section
+                    i.fa.fa-plus
+                    |  Add Another Video
+        // 
+            adsf
+            .col-lg-7
+              .form-group.row.required
+                .col-lg-5.recommended
+                  label.text-lg-right.font-weight-bold Optional Video for Campaign
+                .col-lg-7
+                  input(type="text" placeholder="Title").form-control.m-b-2
+                  input(type="text" placeholder="http://www.").form-control.m-b-1
+                  .add-link
+                    a(href="").link-2 Add Another Video
+            .col-lg-5.p-l-1.p-r-3
+              .embed-responsive.embed-responsive-16by9
+                iframe.embed-responsive-item(src="//www.youtube.com/embed/zpOULjyy-n8?rel=0" allowfullscreen="true")
+      
+      .col-lg-12.border-top.m-t-0
+        h3.text-lg-center.col-md-center.col-xs-center Articles and Press
+        .row.articles
+          +fieldBlock("press", ' m-b-0', {
+            class1: 'col-lg-3 col-md-12',
+            class2: 'col-lg-9 col-md-12',
+            type: 'json',
+            })
+          .col-lg-8.offset-lg-3.col-md-12.p-l-1.m-b-1.p-sm-0
+            a(href="#" data-section='press').link-2.add-section
+              i.fa.fa-plus
+              |  Add Another Article
+          .col-lg-12.pull-right.p-r-0.text-lg-right.p-sm-0
+              a(href="/api/campaign/" + values.id target="blank").btn.btn-lg.btn-secondary.text-uppercase.m-r-3 preview
+              button(type="submit").btn.btn-lg.btn-primary.text-uppercase save
+                i.fa.fa-angle-right
