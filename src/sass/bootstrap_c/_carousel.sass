@@ -61,10 +61,29 @@
       left: rem(1)
 
 .carousel-fade
+  position: relative
+  height: 90vh
   .carousel-inner
-    .item
+    position: relative
+    overflow: visible
+    z-index: 1
+    .carousel-item
+      display: inline-block!important
       opacity: 0
-    .item.active
-      opacity: 1 !important
-  .carousel-control
+      position: absolute
+      transition: .7s ease-out
+      z-index: -999
+      .btn
+        display: none
+    .carousel-item.active
+      opacity: 1!important
+      transition: .7s ease-out
+      .btn
+        display: inline-block
+        z-index: 999
+        position: relative
+  .carousel-caption
     z-index: 2
+  .carousel-control
+    z-index: 1
+    height: 100% 
