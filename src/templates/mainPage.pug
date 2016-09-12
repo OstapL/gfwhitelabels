@@ -1,16 +1,59 @@
-section.home-section.bg-dark-alfa-30(style="background: url(/img/top-bg-image.png) right top no-repeat; background-size: cover; background-attachment: fixed;")
-    .container
-        .row
-            .js-height-full
-                .home-content
-                    .home-text-main.text-lg-center
-                        .col-lg-12
-                            h1.text-uppercase.text-lg-left.font-weight-bold.m-b-2 YOUR SUCCESS IS OUR SUCCESS
-                        .col-lg-12.text-lg-left.m-b-3.m-t-0
-                            h2.small-text Start investing locally
-                        .col-lg-12.text-lg-left
-                            a(href=Urls['campaign-list']()).btn.btn-lg.btn-primary.m-r-2 INVEST
-                            a(href="/company/create").btn.btn-lg.btn-primary RAISE CAPITAL
+.js-height-full.home-section
+    section.main-page-slider
+      #carousel-investor(data-ride="carousel" data-interval="3000").carousel.carousel-fade
+        ol.carousel-indicators
+            li(data-target="#carousel-investor" data-slide-to="0").active
+            li(data-target="#carousel-investor" data-slide-to="1")
+            li(data-target="#carousel-investor" data-slide-to="2")
+
+
+        .carousel-inner(role="listbox")
+            .carousel-item.active.t40
+                img(src="/img/Rivermark-Landing-Page-photo.png" alt="...").img-fluid
+                .carousel-caption
+                    .home-content
+                        .home-text-main.text-lg-center
+                            .col-lg-12
+                                h1.text-uppercase.font-weight-bold.m-b-2 RAISE CAPITAL WITH US
+                            .col-lg-12.m-b-1.m-t-0
+                                h2.m-t-0.small-text Access our investor network to raise capital for your company now
+                            .col-lg-12
+                                a(href="/company/create").btn.btn-lg.btn-primary RAISE CAPITAL
+
+            .carousel-item.t40
+                img(src="/img/cd-depsoite-campaign-hero-size-2.png" alt="...").img-fluid
+                .carousel-caption
+                    .home-content
+                        .home-text-main.text-lg-right
+                            .col-lg-12
+                                h1.text-uppercase.text-lg-right.font-weight-bold.m-b-2 We know what you need
+                            .col-lg-12.text-lg-right.m-b-3.m-t-0
+                                h2.m-t-0.small-text How does conducting a Regulation Crowdfunding offering actually work?
+                            .col-lg-12.text-lg-right
+                                a(href="#").btn.btn-lg.btn-primary learn more
+            .carousel-item.t40
+                img(src="/img/top-bg-image.png" alt="...").img-fluid
+                .carousel-caption
+                    .home-content
+                        .home-text-main.text-lg-left
+                            .col-lg-12
+                                h1.text-uppercase.text-lg-left.font-weight-bold.m-b-2.color-black_pearl YOUR SUCCESS IS OUR SUCCESS
+                            .col-lg-12.text-lg-left.m-b-3.m-t-0
+                                h2.m-t-0.small-text.color-black_pearl Start investing locally
+                            .col-lg-12.text-lg-left
+                                a(href=Urls['campaign-list']()).btn.btn-lg.btn-primary.m-r-3 invest
+                                a(href="/company/create").btn.btn-lg.btn-primary raise capital
+
+        a(href="#carousel-investor"
+        role="button" 
+        data-slide="prev").left.carousel-control
+          span(aria-hidden="true").icon-prev
+          span.sr-only Previous
+        a(href="#carousel-investor"
+        role="button" 
+        data-slide="next").right.carousel-control
+          span(aria-hidden="true").icon-next
+          span.sr-only Next
 section.campaing-list
     .container#campaignList
         .col-lg-12
@@ -118,7 +161,7 @@ section.home-what-is
                             a(href="")
                                 img(src="/img/logo/logo-color-png-r.png").img-fluid
                         .col-lg-4
-                            p.small.text-lg-center.text-xs-center.font-weight-bold Powered by
+                            p.small.text-lg-center.text-xs-center.font-weight-bold.text-uppercase Powered by
                         .col-lg-4.p-x-0
                             a(href="#")
                                 img(src="/img/logo/GF.png").img-fluid
