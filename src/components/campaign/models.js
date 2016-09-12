@@ -40,7 +40,7 @@ define(function() {
 
             calculateRaisedPercentage: function (minimum_raise, amount_raised) {
                 var percentage_raised = Math.round(amount_raised / minimum_raise * 100);
-                if (percentage_raised < 20) percentage_raised = 20;
+                if (!percentage_raised || percentage_raised < 20) percentage_raised = 20;
                 return percentage_raised;
             }
         
