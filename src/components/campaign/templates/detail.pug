@@ -1,5 +1,5 @@
 - 'use strict';
-include mixins.pug
+include ../../../templates/mixins.pug
 
 - var percentage_raised = model.calculateRaisedPercentage(campaign.minimum_raise, campaign.amount_raised)
 
@@ -231,11 +231,11 @@ section
       .col-lg-12
         //- h3.our.text-lg-center Our Edge
         h2.dosis.our.text-uppercase.text-lg-center.green-heading How We Intend to Make Money
-        p #{ campaign.business_model }
+        p #{ campaign.intended_use_of_proceeds }
 
         //- h3.text-lg-center Why We are Raising Capital, and What We’ll Do with It
         h2.dosis.text-uppercase.text-lg-center.green-heading Why We are Raising Capital, and What We’ll Do with It
-        p #{ campaign.intended_use_of_proceeds }
+        p #{ campaign.business_model }
 
       if campaign.additional_info
         .col-lg-12

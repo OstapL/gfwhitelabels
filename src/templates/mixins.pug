@@ -276,7 +276,7 @@ mixin fieldDropzone(name, attr, type)
                             i(class="fa fa-" + attr.icon)
                     div.col-lg-7.col-md-6.col-xs-12
                         //- span
-                        img(src=app.getDropzoneUrl(name, attr, values) alt=fields[name].label class="img-fluid img-" + name)
+                        img(src=dropzoneHelpers.getDropzoneUrl(name, attr, values) alt=fields[name].label class="img-fluid img-" + name)
                         a(
                             href=values[name + '_data'] ? values[name + '_data'].url : "#"
                             target="_blank" 

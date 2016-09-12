@@ -1,6 +1,6 @@
 - 'use strict';
-include mixins.pug
-include campaignMenu.pug
+include ../../../templates/mixins.pug
+include menu.pug
 
 +breadcrumbs('Create Company', '', 
     [
@@ -50,5 +50,3 @@ section.create-company-team-add.container
                 a(href="/api/campaign/" + values.id target="_blank").btn.btn-lg.btn-secondary.text-uppercase.m-r-3 preview
                 a(href="/campaign/specifics/" + values.id).btn.btn-lg.btn-primary.text-uppercase Go to Specifics
                     i.fa.fa-angle-right
-            
-
