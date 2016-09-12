@@ -29,9 +29,11 @@ module.exports = {
         'X-Requested-With': null,
       },
       uploadprogress: function(file, progress, bytesSend) {
+        $(this.element).find('.uploading').show();
         // console.log('uploading...');
       },
       complete: function(file) {
+        $(this.element).find('.uploading').hide();
         // hid the layer of the progress bar
       },
       dragover: function(e) {
