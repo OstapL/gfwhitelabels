@@ -2,9 +2,13 @@ module.exports = {
     formatPrice(price = '') {
         if (!+price) return '';
         price = price + '';
-        return "$" + price.split('').reverse().map(function(item, index) {
+        let deci;
+        [price, deci] = price.split('.');
+        var result =  "$" + price.split('').reverse().map(function(item, index) {
                 return (index + 1) % 3 == 0 && (index + 1) != price.length ? ',' + item : item
             }).reverse().join('');
+        if (deci) result += '.' + deci;
+        return result;
     },
 
     getCaretPosition(oField) {

@@ -81,13 +81,16 @@ module.exports = Backbone.Router.extend({
         //const investModel = require('../investment/models.js');
         const View = require('./views.js');
 
-        api.makeCacheRequest(Urls['investment-list'](), 'OPTIONS').
-          then((metaData) => {
+        var a1 = api.makeCacheRequest(Urls['investment-list'](), 'OPTIONS');
+        var a2 = api.makeCacheRequest(Urls['campaign-detail'](id));
+
+        $.when(a1, a2).
+          then((metaData, campaignModel) => {
+            console.log(metaData, campaignModel);
             var i = new View.investment({
               el: '#content',
-                model: new Backbone.Model(),
-                campaignModel: campaignModel,
-                fields: metaData.actions.POST
+                campaignModel: new Model.model(campaignModel[0]),
+                fields: metaData[0].actions.POST
             });
             i.render();
             //app.cache[window.location.pathname] = app.views.campaign[id].$el.html();
