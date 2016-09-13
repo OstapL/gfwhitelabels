@@ -8,7 +8,7 @@
                     select#industry.form-control.js-select(
                         data-model-value='industry')
                         each val, index in industryData
-                            if val == model.industry
+                            if val == data.industry
                                 option(selected)= val
                             else
                                 option= val
@@ -19,7 +19,7 @@
                     select#industryEstablishment.form-control.js-select(
                         data-model-value='industryEstablishment')
                             each item in selects.industryEstablishment
-                                if item.value == model.industryEstablishment
+                                if item.value == data.industryEstablishment
                                     option(selected, value= item.value)= item.text
                                 else
                                     option(value= item.value)= item.text
@@ -30,7 +30,7 @@
                     select#typeOfEstablishment.form-control.js-select(
                         data-model-value='typeOfEstablishment')
                             each item in selects.typeOfEstablishment
-                                if item.value == model.typeOfEstablishment
+                                if item.value == data.typeOfEstablishment
                                     option(selected, value= item.value)= item.text
                                 else
                                     option(value= item.value)= item.text
@@ -39,77 +39,77 @@
                 label.col-sm-7.col-form-label(for='projectedRevenue') How much revenue do you expect your business will produce in Year 1?
                 .col-sm-5
                     input#projectedRevenue.form-control.js-field(
-                        value= model.projectedRevenueFormatted,
+                        value= formatPrice(data.projectedRevenue),
                         type='text',
                         placeholder='$0',
                         data-input-mask='price',
                         data-model-value='projectedRevenue'
-                        data-current-value= model.projectedRevenue)
+                        data-current-value= data.projectedRevenue)
 
             .form-group.row
                 label.col-sm-7.col-form-label(for='operatingProfit') How much operating profit do you expect to earn in Year 1?
                 .col-sm-5
                     input#operatingProfit.form-control.js-field(
-                        value= model.operatingProfitFormatted,
+                        value= formatPrice(data.operatingProfit),
                         type='text',
                         placeholder='$0',
                         data-input-mask='price',
                         data-model-value='operatingProfit'
-                        data-current-value= model.operatingProfit)
+                        data-current-value= data.operatingProfit)
 
             .form-group.row
                 label.col-sm-7.col-form-label(for='projectedRevenueTwo') How much revenue do you expect your business will produce in Year 5?
                 .col-sm-5
                     input#projectedRevenueTwo.form-control.js-field(
-                        value= model.projectedRevenueTwoFormatted,
+                        value= formatPrice(data.projectedRevenueTwo),
                         type='text',
                         placeholder='$0',
                         data-input-mask='price',
                         data-model-value='projectedRevenueTwo',
-                        data-current-value= model.projectedRevenueTwo)
+                        data-current-value= data.projectedRevenueTwo)
             .form-group.row
                 label.col-sm-7.col-form-label(for='operatingProfitTwo') How much operating profit do you expect to earn in Year 5?
                 .col-sm-5
                     input#operatingProfitTwo.form-control.js-field(
-                        value= model.operatingProfitTwoFormatted,
+                        value= formatPrice(data.operatingProfitTwo),
                         type='text',
                         placeholder='$0',
                         data-input-mask='price',
                         data-model-value='operatingProfitTwo'
-                        data-current-value= model.operatingProfitTwo)
+                        data-current-value= data.operatingProfitTwo)
 
             .form-group.row
                 label.col-sm-7.col-form-label(for='CashOnHand') How much cash, beyond what's needed for immediate operating needs, does your business currently have?
                 .col-sm-5
                     input#CashOnHand.form-control.js-field(
-                        value= model.CashOnHandFormatted,
+                        value= formatPrice(data.CashOnHand),
                         type='text',
                         placeholder='$0',
                         data-input-mask='price',
                         data-model-value='CashOnHand',
-                        data-current-value= model.CashOnHand)
+                        data-current-value= data.CashOnHand)
 
             .form-group.row
                 label.col-sm-7.col-form-label(for='yourDebt') How much debt is your business currently carrying?
                 .col-sm-5
                     input#yourDebt.form-control.js-field(
-                        value= model.yourDebtFormatted,
+                        value= formatPrice(data.yourDebt),
                         type='text',
                         placeholder='$0',
                         data-input-mask='price',
                         data-model-value='yourDebt'
-                        data-current-value= model.yourDebt)
+                        data-current-value= data.yourDebt)
 
             .form-group.row
                 label.col-sm-7.col-form-label(for='cashRaise') How much cash do you plan to raise?
                 .col-sm-5
                     input#cashRaise.form-control.js-field(
-                        value= model.cashRaiseFormatted,
+                        value= formatPrice(data.cashRaise),
                         type='text',
                         placeholder='$0',
                         data-input-mask='price',
                         data-model-value='cashRaise',
-                        data-current-value= model.cashRaise)
+                        data-current-value= data.cashRaise)
 
             .submit-area
                 .form-group.row

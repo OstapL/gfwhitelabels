@@ -1,6 +1,6 @@
 module.exports = {
     formatPrice(price = '') {
-        if (!price && !(price === 0)) return '';
+        if (!+price) return '';
         price = price + '';
         let deci;
         [price, deci] = price.split('.');
