@@ -581,18 +581,21 @@ module.exports = {
 
         deleteMember: function(e) {
             let memberId = e.currentTarget.dataset.id;
-            app.makeRequest('/api/campaign/team_members/' + this.model.get('id') + '?index=' + memberId, 'DELETE').
-                then((data) => {
-                    this.model.attributes.members.splice(memberId, 1);
-                    $(e.currentTarget).parent().remove()
-                    if(this.model.attributes.members.length < 1) {
-                        this.$el.find('.notification').show();
-                        this.$el.find('.buttons-row').hide();
-                    } else {
-                        this.$el.find('.notification').hide();
-                        this.$el.find('.buttons-row').show();
-                    }
-                });
+
+            if(confirm('Are you sure?')) {
+              app.makeRequest('/api/campaign/team_members/' + this.model.get('id') + '?index=' + memberId, 'DELETE').
+                  then((data) => {
+                      this.model.attributes.members.splice(memberId, 1);
+                      $(e.currentTarget).parent().remove()
+                      if(this.model.attributes.members.length < 1) {
+                          this.$el.find('.notification').show();
+                          this.$el.find('.buttons-row').hide();
+                      } else {
+                          this.$el.find('.notification').hide();
+                          this.$el.find('.buttons-row').show();
+                      }
+                  });
+            }
         },
 
     }),
