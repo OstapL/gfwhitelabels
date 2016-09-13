@@ -1,5 +1,8 @@
 "use strict";
 
+import formatHelper from '../../helpers/formatHelper';
+let appendHttpIfNecessary = formatHelper.appendHttpIfNecessary;
+
 const dropzone = require('dropzone');
 const dropzoneHelpers = require('helpers/dropzone.js');
 const jsonActions = {
@@ -64,13 +67,14 @@ module.exports = {
       });
     },
 
-    appendHttpIfNecessary(e) {
+    /*appendHttpIfNecessary(e) {
       var $el = $('#website');
       var url = $el.val();
       if (!(url.startsWith("http://") || url.startsWith("https://"))) {
         $el.val("http://" + url);
       }
-    },
+    },*/
+    appendHttpIfNecessary: appendHttpIfNecessary,
 
     formatPhone(e){
       this.$('input[name=phone]').val(this.$('input[name=phone]').val().replace(/^\(?(\d{3})\)?-?(\d{3})-?(\d{4})$/, '$1-$2-$3'));
@@ -230,7 +234,10 @@ module.exports = {
         'change .videoInteractive input[type="url"]': 'updateVideo',
         'dragover .media-container,.dropzone': 'globalDragover',
         'dragleave .media-container,.dropzone': 'globalDragleave',
+        'change #video,.additional_video_link': 'appendHttpIfNecessary',
       }, jsonActions.events),
+
+      appendHttpIfNecessary: appendHttpIfNecessary,
 
       globalDragover () {
           // console.log('hello');
