@@ -1,5 +1,8 @@
 "use strict";
 
+import formatHelper from '../../helpers/formatHelper';
+let appendHttpIfNecessary = formatHelper.appendHttpIfNecessary;
+
 const dropzone = require('dropzone');
 const dropzoneHelpers = require('helpers/dropzone.js');
 const jsonActions = {
@@ -64,13 +67,14 @@ module.exports = {
       });
     },
 
-    appendHttpIfNecessary(e) {
+    /*appendHttpIfNecessary(e) {
       var $el = $('#website');
       var url = $el.val();
       if (!(url.startsWith("http://") || url.startsWith("https://"))) {
         $el.val("http://" + url);
       }
-    },
+    },*/
+    appendHttpIfNecessary: appendHttpIfNecessary,
 
     formatPhone(e){
       this.$('input[name=phone]').val(this.$('input[name=phone]').val().replace(/^\(?(\d{3})\)?-?(\d{3})-?(\d{4})$/, '$1-$2-$3'));
@@ -236,7 +240,10 @@ module.exports = {
         'change .videoInteractive input[type="url"]': 'updateVideo',
         'dragover .media-container,.dropzone': 'globalDragover',
         'dragleave .media-container,.dropzone': 'globalDragleave',
+        'change #video,.additional_video_link': 'appendHttpIfNecessary',
       }, jsonActions.events),
+
+      appendHttpIfNecessary: appendHttpIfNecessary,
 
       globalDragover () {
           // console.log('hello');
@@ -655,10 +662,10 @@ module.exports = {
         },
 
         calculateNumberOfShares: function(e) {
-          var minRaise = parseInt($("#minimum_raise").val().replace(/,/g,''));
-          var maxRaise = parseInt($("#maximum_raise").val().replace(/,/g,''));
-          var pricePerShare = parseInt($("#price_per_share").val().replace(/,/g,''));
-          var premoneyVal = parseInt($("#premoney_valuation").val().replace(/,/g,''));
+          var minRaise = parseInt(this.$("#minimum_raise").val().replace(/,/g,''));
+          var maxRaise = parseInt(this.$("#maximum_raise").val().replace(/,/g,''));
+          var pricePerShare = parseInt(this.$("#price_per_share").val().replace(/,/g,''));
+          var premoneyVal = parseInt(this.$("#premoney_valuation").val().replace(/,/g,''));
           this.$("#min_number_of_shares").val((Math.round(minRaise/pricePerShare)).toLocaleString('en-US'));
           this.$("#max_number_of_shares").val((Math.round(maxRaise/pricePerShare)).toLocaleString('en-US'));
           // this.$("#min_number_of_shares").val((Math.round(minRaise/pricePerShare)));
@@ -717,6 +724,8 @@ module.exports = {
                     });
                 }
             );
+
+            this.calculateNumberOfShares(null);
 
             return this;
         },
