@@ -572,7 +572,7 @@ section
         a(href="#").col-lg-12.text-lg-center.link-4.see-all.see-all-risks See All Risks
   
   section.faq
-    if campaign.faq
+    if campaign.faq && Object.keys(campaign.faq).length > 0
     .container
       h2#faq.col-lg-12.dosis.text-uppercase.text-lg-center.green-heading FAQ
       .col-lg-8.offset-lg-2
