@@ -9,7 +9,7 @@ let appRoutes = Backbone.Router.extend({
       'pg/:name': 'pagePG',
       'page/:id/': 'pageDetail',
       'page/:id': 'pageDetail',
-    
+
       // Company Campaign URLS
       'company/create': 'companyCreate',
       'campaign/general_information/': 'campaignGeneralInformation',
@@ -33,16 +33,15 @@ let appRoutes = Backbone.Router.extend({
       'account/login': 'login',
       'account/signup': 'signup',
       'account/logout': 'logout',
-      'account/facebook/login/': 'loginFacebook',
-      'account/google/login/': 'loginGoogle',
-      'account/linkedin/login/': 'loginLinkedin',
+      'account/reset': 'resetPassword',
+      'account/change-password': 'changePassword',
       'account/finish/login/': 'finishSocialLogin',
       'account/dashboard/issuer': 'dashboardIssuer',
       'account/dashboard/investor': 'dashboardInvestor',
       'calculator/paybackshare/step-1': 'calculatorPaybackshareStep1',
       'calculator/paybackshare/step-2': 'calculatorPaybackshareStep2',
       'calculator/paybackshare/step-3': 'calculatorPaybackshareStep3',
-        
+
       'calculator/capitalraise/intro': 'calculatorCapitalraiseIntro',
       'calculator/capitalraise/step-1': 'calculatorCapitalraiseStep1',
       'calculator/capitalraise/finish': 'calculatorCapitalraiseFinish'
@@ -86,7 +85,7 @@ let appRoutes = Backbone.Router.extend({
         new View({
             model: app.getModelInstance(Model, 'calculatorPaybackshare').setFormattedPrice()
         }).render();
-        
+
         app.hideLoading();
     },
 
@@ -205,7 +204,11 @@ let appRoutes = Backbone.Router.extend({
             });
             app.views.campaign[id].render();
             //app.cache[window.location.pathname] = app.views.campaign[id].$el.html();
-            $('#content').scrollTo();
+            if(location.hash && $(location.hash).length) {
+                setTimeout(function(){$(location.hash).scrollTo(65);}, 100);
+            } else {
+                $('#content').scrollTo();
+            }
 
             app.hideLoading();
         });
@@ -299,7 +302,7 @@ let appRoutes = Backbone.Router.extend({
                         model: company,
                     });
 
-                    if(rCampaignList[0]) {
+                    if(rCampaignList[0] && rCampaignList[0][0]) {
                         i.campaign = rCampaignList[0][0];
                     }
                     else {
@@ -473,7 +476,7 @@ let appRoutes = Backbone.Router.extend({
                 addForm.render();
                 app.hideLoading();
             });
-            
+
         } else {
             app.routers.navigate(
                 '/account/login',
@@ -496,7 +499,7 @@ let appRoutes = Backbone.Router.extend({
                     url: campaign.urlRoot,
                 }, app.defaultOptionsRequest)
             );
-            
+
             $.when(a1, a2).done((r1, r2) => {
                 console.log(r1, r2);
                 var i = new view.specifics({
@@ -535,7 +538,7 @@ let appRoutes = Backbone.Router.extend({
                     url: campaign.urlRoot,
                 }, app.defaultOptionsRequest)
             );
-            
+
             $.when(a1, a2).done((r1, r2) => {
                 var i = new view.perks({
                     el: '#content',
@@ -562,6 +565,7 @@ let appRoutes = Backbone.Router.extend({
             let view = require('views/formc');
 
             let company_id = app.getParams().company_id;
+            let campaign_id = app.getParams().campaign_id;
 
             if(id === null && typeof company_id === 'undefined') {
                 alert('please set up id or company_id');
@@ -596,6 +600,7 @@ let appRoutes = Backbone.Router.extend({
                 } else {
                     i.model = formc;
                     i.model.set('company', company_id);
+                    i.model.set('campaign', campaign_id);
                 }
 
                 app.hideLoading();
@@ -627,7 +632,7 @@ let appRoutes = Backbone.Router.extend({
                     url: campaign.urlRoot,
                 }, app.defaultOptionsRequest)
             );
-            
+
             $.when(a1, a2).done((r1, r2) => {
                 var i = new view.teamMembers({
                     el: '#content',
@@ -662,7 +667,7 @@ let appRoutes = Backbone.Router.extend({
                     url: campaign.urlRoot,
                 }, app.defaultOptionsRequest)
             );
-            
+
             $.when(a1, a2).done((r1, r2) => {
                 var i = new view.relatedParties({
                     el: '#content',
@@ -697,7 +702,7 @@ let appRoutes = Backbone.Router.extend({
                     url: campaign.urlRoot,
                 }, app.defaultOptionsRequest)
             );
-            
+
             $.when(a1, a2).done((r1, r2) => {
                 var i = new view.offering({
                     el: '#content',
@@ -732,7 +737,7 @@ let appRoutes = Backbone.Router.extend({
                     url: campaign.urlRoot,
                 }, app.defaultOptionsRequest)
             );
-            
+
             $.when(a1, a2).done((r1, r2) => {
                 var i = new view.useOfProceeds({
                     el: '#content',
@@ -781,6 +786,7 @@ let appRoutes = Backbone.Router.extend({
 
     pagePG: function(name) {
         console.log(name);
+        let graphs = require('js/graf.js');
         let view = require('templates/' + name + '.pug');
         $('#content').html(view({
                 Urls: Urls,
@@ -826,7 +832,7 @@ let appRoutes = Backbone.Router.extend({
         let pageModel = require('models/page');
         let pageView = require('views/page');
         let template = require('templates/mainPage.pug');
-        
+
         app.cache[window.location.pathname] = template();
         $('#content').html(template());
         app.hideLoading();
@@ -835,17 +841,14 @@ let appRoutes = Backbone.Router.extend({
 
     login: function(id) {
         let view = require('views/user');
+
         var a1 = $.ajax(_.extend({
                 url: serverUrl + Urls['rest_login'](),
             }, app.defaultOptionsRequest));
-        var a2 = $.ajax(_.extend({
-                url: serverUrl + Urls['rest_register'](),
-            }, app.defaultOptionsRequest));
-        $.when(a1, a2).done((r1, r2) => {
+        $.when(a1).done((r1) => {
             let loginView = new view.login({
                 el: '#content',
-                login_fields: r1[0].actions.POST,
-                register_fields: r2[0].actions.POST,
+                login_fields: r1.actions.POST,
                 model: new userModel(),
             });
             loginView.render();
@@ -882,84 +885,6 @@ let appRoutes = Backbone.Router.extend({
         });
     },
 
-    loginFacebook: function() {
-
-        let socialAuth = require('views/social-auth');
-        let hello = require('hellojs');
-
-        hello('facebook').login({
-            scope: 'public_profile,email'}).then(
-            function (e) {
-                var sendToken = socialAuth.sendToken('facebook', e.authResponse.access_token);
-
-                $.when(sendToken).done(function (data) {
-                    localStorage.setItem('token', data.key);
-                    window.location = '/account/profile';
-                });
-            },
-            function (e) {
-
-                // TODO: notificate user about reason of error;
-                app.routers.navigate(
-                    '/account/login',
-                    {trigger: true, replace: true}
-                );
-            });
-
-    },
-
-    loginLinkedin: function() {
-
-        let socialAuth = require('js/views/social-auth.js');
-        let hello = require('hellojs');
-
-        hello('linkedin').login({
-            scope: 'r_basicprofile,r_emailaddress',}).then(
-            function (e) {
-                var sendToken = socialAuth.sendToken('linkedin', e.authResponse.access_token);
-
-                $.when(sendToken).done(function (data) {
-                    localStorage.setItem('token', data.key);
-                    window.location = '/account/profile';
-                });
-            },
-            function (e) {
-
-                // TODO: notificate user about reason of error;
-                app.routers.navigate(
-                    '/account/login',
-                    {trigger: true, replace: true}
-                );
-            });
-
-    },
-
-    loginGoogle: function() {
-
-        let socialAuth = require('js/views/social-auth.js');
-        let hello = require('hellojs');
-
-        hello('google').login({
-            scope: 'profile,email'}).then(
-            function (e) {
-                var sendToken = socialAuth.sendToken('google', e.authResponse.access_token);
-
-                $.when(sendToken).done(function (data) {
-                    localStorage.setItem('token', data.key);
-                    window.location = '/account/profile';
-                });
-            },
-            function (e) {
-
-                // TODO: notificate user about reason of error;
-                app.routers.navigate(
-                    '/account/login',
-                    {trigger: true, replace: true}
-                );
-            });
-        
-    },
-
     finishSocialLogin: function() {
 
         let socialAuth = require('js/views/social-auth.js');
@@ -975,6 +900,24 @@ let appRoutes = Backbone.Router.extend({
             window.location = '/';
         });
     },
+
+    resetPassword: function() {
+        let view = require('views/user');
+        var i = new view.reset({
+            el: '#content',
+        });
+        i.render();
+        app.hideLoading();
+    },
+
+    changePassword: function() {
+        let view = require('views/user');
+        var i = new view.changePassword({
+            el: '#content',
+        });
+        i.render();
+        app.hideLoading();
+    }
 
 });
 
@@ -1033,33 +976,7 @@ app.on('userLoaded', function(data){
     );
     console.log('user ready');
 });
- 
 
 $(document).ready(function(){
-    // show bottom logo while scrolling page
-
-    $(window).scroll(function(){
-        var $bottomLogo = $('#fade_in_logo'),
-            offsetTopBottomLogo = $bottomLogo.offset().top;
-
-        if (($(window).scrollTop() + $(window).height() >= offsetTopBottomLogo) && !$bottomLogo.hasClass('fade-in') ) {
-            $bottomLogo.addClass('fade-in');
-        }
-    });
-
-    $('.team-member-list article').click(function(){
-        var targetTextId = $(this).data('id-text');
-
-        if ($(targetTextId).hasClass('open')) {
-            $(targetTextId).removeClass('open').slideUp();
-        } else {
-            $(this).closest('.team-member-list').find('.biography-text.open').removeClass('open').hide();
-            $(targetTextId).addClass('open').slideDown();
-        }
-
-    });
-
 
 });
-
-

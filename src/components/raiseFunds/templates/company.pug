@@ -1,0 +1,225 @@
+include ../../../templates/mixins.pug
+include menu.pug
+
++breadcrumbs('Create Company', '', 
+    [
+        ['Home', '/'],
+        ['Company', ''],
+    ]
+)
+
+section.create-company.container.m-b-85
+  //START LEFT BLOCK
+  .col-lg-3.create_compaign
+    .jumbotron.jumbotron-fluid.row
+      .raise-funds
+        h4.font-weight-bold.text-uppercase.m-b-0 Raise funds
+          .small-text.font-weight-normal.p-t-0 (10% Done)
+      #accordion(role="tablist" aria-multiselectable="true")
+        .panel.panel-default
+          .panel-heading(role="tab")
+            a(data-toggle="collapse"
+            data-parent="#accordion"
+            href="#company"
+            aria-expanded="true"
+            ).list-group-item.active
+              i.fa.fa-briefcase
+              |  Company
+              span.pull-right
+                i.fa.fa-angle-down
+          #company(role="tabpanel").panel-collapse.collapse.in
+            .list-group
+              a(href="#").list-group-item.list-group-item-action.active Company
+        .panel.panel-default
+          .panel-heading(role="tab")
+            a(data-toggle="collapse"
+            data-parent="#accordion"
+            href="#campaign"
+            aria-expanded="true"
+            ).list-group-item
+              i.fa.fa-bar-chart
+              |  Campaign
+              span.pull-right
+                i.fa.fa-angle-left
+          #campaign(role="tabpanel").panel-collapse.collapse
+            .list-group
+                +getCompanyUrl(campaign, '', 'general_information', 'General Information')
+                +getCompanyUrl(campaign, '', 'media', 'Media')
+                +getCompanyUrl(campaign, '', 'team-members', 'Team Members')
+                +getCompanyUrl(campaign, '', 'specifics', 'Specifics')
+                +getCompanyUrl(campaign, '', 'perks', 'Perks')
+        .panel.panel-default
+          .panel-heading(role="tab")
+            a(data-toggle="collapse"
+            data-parent="#accordion"
+            href="#form_c"
+            aria-expanded="true"
+            ).list-group-item
+              i.fa.fa-university
+              |  form c
+              span.pull-right
+                i.fa.fa-angle-left
+          #form_c(role="tabpanel").panel-collapse.collapse
+            .list-group
+              a(href="#").list-group-item.list-group-item-action form c
+    .row
+      .education-link-wrap
+        .jumbotron.jumbotron-fluid
+          h4.font-weight-bold.text-uppercase
+            i.fa.fa-book
+            |  education Links
+          .nav
+            li.nav-item
+              a(href="/pg/investor_tutorial").nav-link.link-3 Issuer Tutorial
+            li.nav-item
+              a(href="/pg/success_guide").nav-link.link-3 Success Guide
+            li.nav-item
+              a(href="/calculator/capitalraise/intro").nav-link.link-3 What's My Business Worth?
+            li.nav-item
+              a(href="#").nav-link.link-3 How Much Should I Raise?
+
+
+
+  //START RIGHT BLOCK
+  .col-lg-8
+    h2.text-uppercase.text-lg-center.text-xs-center.m-t-0.dosis Company
+    form(metod="post" action="").form-section
+      input(type='hidden' name='state' value=values.state id='state')
+      input(type='hidden' name='city' value=values.city id='city')
+
+      if values.id && values.id != ''
+          input(type='hidden' name='id' value=values.id id='id')
+
+      +fieldBlock("name", '', {
+        class1: 'col-lg-3 col-md-12 text-md-left',
+        class2: 'col-lg-9 col-md-12',
+        type: 'text',
+        placeholder: 'Company Name',
+        })
+      +fieldBlock("tagline", '', {
+        class1: 'col-lg-3 col-md-12 text-md-left',
+        class2: 'col-lg-9 col-md-12',
+        type: 'text',
+        placeholder: 'Your Company Slogan',
+        maxlength: 90,
+        })
+      +fieldBlock("description", '', {
+        class1: 'col-lg-3 col-md-12 text-md-left',
+        class2: 'col-lg-9 col-md-12',
+        type: 'textarea',
+        placeholder: 'Your Company Description',
+        })
+      .row
+        .col-lg-6.col-xs-12.castom-select-5.form-group-m-b-0
+          +fieldBlock("corporate_structure", '', {
+            class1: 'col-lg-6',
+            class2: 'col-lg-6',
+            type: 'choice',
+          })
+        .col-lg-6.col-xs-12.date-input.pull-right.required
+          .col-date.form-group-m-b-0
+            +fieldBlock("founding_date", '', {
+              class1: 'col-lg-5 p-l-0 p-r-0',
+              class2: 'col-lg-7',
+            })
+      .border-bottom
+      +fieldBlock("address_1", '', {
+        class1: 'col-lg-3 col-md-12 text-md-left',
+        class2: 'col-lg-9 col-md-12',
+        type: 'text',
+        })
+      +fieldBlock("address_2", '', {
+        class1: 'col-lg-3 col-md-12 text-md-left',
+        class2: 'col-lg-9 col-md-12',
+        type: 'text',
+        })
+      .row
+        .col-lg-6.col-l-65
+          +fieldBlock("zip_code", '', {
+            class1: 'col-lg-6',
+            class2: 'col-lg-6',
+            })
+        .col-lg-5.city_states.required
+          label.col-lg-6.col-xs-6.text-lg-right.text-xs-left City/State
+          .col-lg-6.col-xs-6
+            a(data-toggle="modal" data-target="#city_state_modal" href="#city_state_modal").change_state_city
+              span.input-value.js-city-state= (values.city ? values.city : "(city)") + ", " + (values.state ? values.state : "(state)") 
+              i.fa.fa-pencil-square-o.link-1
+      .row.m-b-0
+        .col-lg-6.col-l-65
+          +fieldBlock("phone", '', {
+            class1: 'col-lg-6 col-md-12 text-md-left', 
+            class2: 'col-lg-6 col-md-12', 
+            type: 'text',
+            })
+        .col-lg-6.col-l-65
+          +fieldBlock("website", '', {
+            class1: 'col-lg-5 col-md-12 text-md-left', 
+            class2: 'col-lg-7 col-md-12', 
+            type: 'text',
+            placeholder: 'http://www.',
+            })
+      .border-bottom.m-t-2
+      .row.col-l-65.m-b-0
+        .col-lg-6
+          +fieldBlock("twitter", '', {
+            class1: 'col-lg-6 col-md-12 text-md-left', 
+            class2: 'col-lg-6 col-md-12', 
+            type: 'text',
+            })
+        .col-lg-6
+          +fieldBlock("facebook", '', {
+            class1: 'col-lg-5 col-md-12 text-md-left', 
+            class2: 'col-lg-7 col-md-12', 
+            type: 'text',
+            })
+      .row.m-b-0.col-l-65
+        .col-lg-6
+          +fieldBlock("instagram", '', {
+            class1: 'col-lg-6 col-md-12 text-md-left', 
+            class2: 'col-lg-6 col-md-12', 
+            type: 'text',
+            })
+        .col-lg-6
+          +fieldBlock("linkedin", '', {
+            class1: 'col-lg-5 col-md-12 text-md-left', 
+            class2: 'col-lg-7 col-md-12', 
+            type: 'text',
+            })
+      .row.m-t-2
+          .col-lg-12
+            button(type="submit").btn.btn-lg.btn-primary.text-uppercase.pull-right save
+              i.fa.fa-angle-right
+
+//MODAL
+#city_state_modal.modal.fade(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")
+    .modal-dialog(role="document")
+        .modal-content
+            .modal-header
+                button(type="button" class="close" data-dismiss="modal" aria-label="Close")
+                    span(aria-hidden="true")
+                        i.fa.fa-times
+                h2(class="modal-title").text-lg-center.text-uppercase.dosis.text-md-center.text-xs-center City/State
+
+            .modal-body
+                .container.form-section
+                    form.col-lg-10.offset-lg-1.border-bottom
+                        .form-group.row.clearfix.required
+                            input.js-city(type="text" placeholder="City" value=values.city).form-control
+                        .form-group.row.clearfix.required
+                            select.js-state(name='state' value=values.state).form-control.custom-select
+                                option(checked='checked', value="") State
+                                each state in states
+                                  if state.abbreviation == values.state
+                                    option(value=state.abbreviation selected)= state.name
+                                  else
+                                    option(value=state.abbreviation)= state.name
+                        .form-group.row.clearfix.required.m0
+                            .row
+                                .col-lg-12
+                                    .col-lg-12.text-lg-center.text-md-center.text-xs-center
+                                            button(data-dismiss="modal").update-location.btn.btn-lg.btn-primary.text-uppercase save
+
+                .modal-footer
+          
+script(src="http://maps.google.com/maps/api/js?language=en&key=" + googleMapKey)

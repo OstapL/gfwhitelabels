@@ -6,12 +6,14 @@
 	border: 2px solid $btn-border
 	font-size: rem(12)
 	+mt(.2s)
-
+	
 	&:hover
 		background: $btn-hover-bg
 		color: $btn-hover-color
 		border-color: $btn-border
 		+mt(.2s)
+	.fa-angle-right
+		padding-left: 5px
 
 .btn-primary
 	background: $btn-primary-bg
@@ -86,7 +88,7 @@
 
 //Dropdown button
 .btn-dropdown
-	color: $small-text
+	color: $black
 	background: transparent
 	border-radius: rem(2) 0 0 rem(2)
 	border: 1px solid $light_grey
@@ -130,3 +132,9 @@
 		background-color: $crimson
 		color: $white
 		border-color: $crimson
+
+
+.pointer-events-none
+	pointer-events: none
+	background: $btn-secondary-bg
+	border-color: $btn-secondary-bg

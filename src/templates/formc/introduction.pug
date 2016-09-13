@@ -1,42 +1,110 @@
-- 'use strict';
-include ../mixins.pug
-include ../campaignMenu.pug
 
+- 'use strict'
+include ../mixins.pug
 +breadcrumbs('Create Formc', '', [['home', '/',], [ 'current', page.get_absolute_url]])
 
-
-section.create-company-general.container.m-b-85
-  +menu('fomc')
-
+section.formc.introduction.create-company-media.container
+  +menu('formc')
   .col-lg-8
-    h2.text-uppercase.text-lg-center.text-xs-center.dosis.m-t-0 FORM C
-    form(metod="post" action="").form-section
-      if values.id && values.id != ''
-          input(type='hidden' name='id' value=values.id id='id')
-      .form-group.row.clearfix.required
-      +fieldBlock("failed_to_comply", '', {
-        class1: 'col-lg-3 col-md-3',
-        class2: 'col-lg-9 col-md-9',
-        })
-      +fieldBlock("cc_number", '', {
-        class1: 'col-lg-3 col-md-3',
-        class2: 'col-lg-9 col-md-9',
-        })
-      +fieldBlock("cc_experation", '', {
-        class1: 'col-lg-3 col-md-3',
-        class2: 'col-lg-9 col-md-9',
-        })
-      +fieldBlock("cc_month", '', {
-        class1: 'col-lg-3 col-md-3',
-        class2: 'col-lg-9 col-md-9',
-        })
-      +fieldBlock("cc_year", '', {
-        class1: 'col-lg-3 col-md-3',
-        class2: 'col-lg-9 col-md-9',
-        })
-      .row
-        .col-lg-6.pull-right
-          .col-lg-6
-            button(type="submit").btn.btn-lg.btn-primary.text-uppercase.pull-right save
-          .col-lg-6
-            a(href="/api/campaign/" + values.id target="_blank").btn.btn-lg.btn-secondary.text-uppercase preview
+    h2.text-uppercase.text-lg-center.text-xs-center.dosis.m-t-0.mb-50 introduction
+    .col-lg-12
+      .welcome-text
+        h3.m-t-0 Welcome!
+        p.m-b-1 Our goal is to get you all the resources you need to succeed, and to do so in a way that brings you closer to the most important people of all: your potential customers.
+        p.m-b-1 This is a lengthy process and we will need a robust amount of information about your business, as required by law. Don’t worry, we’re here to help in any way we can! The process includes creating a company profile, submitting to a background check and ultimately launching your fundraising campaign.
+        p.m-b-1 Much of the information you provide will be filed with the SEC. So, be very careful and precise in answering all questions. Give full and complete answers so that they are not misleading under the circumstances involved. Do not discuss any future performance or other anticipated event unless you have a reasonable basis to believe that it will actually occur within the foreseeable future. If any answer requiring significant information is materially inaccurate, incomplete or misleading, the Company, its management and principal shareholders may be liable to investors based on that information.
+        p At the end, you’ll have the opportunity to review all material before submission, including the ability to have your attorney approve.
+        form(metod="post" action="").form-section
+          .certify-checkbox
+            .form-group.required
+              label
+                input(type="checkbox")
+                | Check this box to certify that all the following statements are true:
+          .list
+            ul
+              li Organized under, and subject to, the laws of a State or territory of the United States or the District of  Columbia.
+              li Not subject to the requirement to file reports pursuant to Section 13 or Section 15(d) of the Securities Exchange Act of 1934.
+              li Not an investment company registered or required to be registered under the Investment Company Act of 1940.
+              li Not ineligible to rely on this exemption under Section 4(a)(6) of the Securities Act as a result of a disqualification specified in Rule 503(a) of Regulation Crowdfunding. (This question refers to questions around any securities related violations you might have, which you'll come to later in this Form).
+              li Has filed with the Commission and provided to investors, to the extent required, the ongoing annual reports required by Regulation Crowdfunding during the two years immediately preceding the filing of this offering statement (or for such shorter period that the issuer was required to file such reports).
+              li Not a development stage company that (a) has no specific business plan or (b) has indicated that its business plan is to engage in a merger or acquisition with an unidentified company or companies.
+          .yes-no
+            p.font-weight-bold Has the issuer or any of its predecessors previously failed to comply with the ongoing reporting requirements of Rule 202 Regulation Crowdfunding?
+            .form-group
+              label
+                input(type="radio")
+                | Yes
+              label
+                input(type="radio")
+                | No
+          .explain
+            .form-group.row
+              .col-lg-3.text-lg-right
+                label If Yes, Explain
+              .col-lg-9
+                textarea(rows="3").form-control
+          .expiration-block-hide
+            .growthfountain-charges
+              p GrowthFountain charges $500 for Form C generation, background checks and escrow.
+              .form-group.row
+                .col-lg-3.text-lg-right
+                  label Credit Card Number
+                .col-lg-9
+                  .input-icon
+                    i.fa.fa-question-circle
+                  input(type="text").form-control
+                  img(src="/img/visa_logo_6.gif", alt="")
+                  img(src="/img/mastercard_logo_5.gif", alt="")
+                  img(src="/img/amex_512.png", alt="")
+                  img(src="/img/Discover-Logo.png", alt="")
+            
+            .expiration
+              .form-group.row.m-b-0
+                .col-lg-3.text-lg-right
+                  label Expiration
+                .col-lg-4.date-input
+                  .col-lg-6.p-l-0
+                    input(type="text" placeholder="MM").form-control
+                  .col-lg-6.p-r-0
+                    input(type="text" placeholder="YYY").form-control
+                .col-lg-2
+                  label CVV Code
+                .col-lg-3.p-l-0
+                    .input-icon
+                      i.fa.fa-question-circle
+                    input(type="text").form-control
+            .row
+              .col-lg-12.offset-lg-3
+                a(href="#").link-2 Contract for listing your campaign on GrowthFountain
+            .row.btn-pay
+              .col-lg-12
+                button#pay-btn.btn.btn-lg.btn-primary.text-uppercase pay
+          .electronically-sign
+            .col-lg-12
+              h3.m-t-0.text-lg-center.m-b-2 Electronically Sign
+            .form-group.row
+              .col-lg-3.text-lg-right
+                label Company name
+              .col-lg-9
+                input(type="text" placeholder="Company name (prepopulated)").form-control
+            .col-lg-7
+              .form-group.row
+                .col-lg-5.text-lg-right
+                  label By:
+                .col-lg-7.border-top-none
+                  input(type="text" placeholder="Signature").form-control
+            .col-lg-5
+              .form-group.row
+                .col-lg-4.text-lg-right.p-l-0
+                  label Type name
+                .col-lg-8.p-r-0
+                  input(type="text" placeholder="Signature").form-control
+            .col-lg-9.offset-lg-3.p-r-0
+              .certify-checkbox
+                .form-group.required
+                  label
+                    input(type="checkbox")
+                    | I'm authorized to sign on behalf of the company
+              .btn-save.text-lg-right
+                  button.submit.btn.btn-lg.btn-primary.text-uppercase save
+

@@ -1,43 +1,79 @@
+
+include ../../mixins.pug
+
++breadcrumbs('PayBack Share Calculator ', 'step 2', 
+    [
+        ['Home', '/'],
+        ["What's My Business Worth?", '/'],
+        ["PayBack Share Calculator", '']
+    ]
+)
+
 .container.calculator-container
-    .page
-        p.lead
-            This calculator will give you an idea of distributions associated with issuing Payback Share
-        form.js-calc-form
-            .form-group.row
-                label.col-sm-7.col-form-label.asdasdasdsa(for='input2')
-                    | How much money do you plan to raise?
-                .col-sm-5
-                    input#input2.form-control.js-field(
-                        value= raiseMoneyFormatted,
-                        type='text',
-                        placeholder='$0',
-                        data-input-mask='price',
-                        data-model-value='raiseMoney',
-                        data-current-value= raiseMoney)
-            .form-group.row
-                label.col-sm-7.col-form-label(for='input3')
-                    | What do you expect your revenue to be next year?
-                .col-sm-5
-                    input#input3.form-control.js-field(
-                        value= nextYearRevenueFormatted,
-                        type='text',
-                        placeholder='$0',
-                        data-input-mask='price',
-                        data-model-value='nextYearRevenue',
-                        data-current-value= nextYearRevenue)
-            .form-group.row
-                label.col-sm-7.col-form-label(for='input1')
-                    | At what rate do you expect your revenue to grow each year?
-                .col-sm-5
-                    input#input1.form-control.js-field(
-                        value= growLevel,
-                        type='text',
-                        data-input-mask='percent',
-                        data-model-value='growLevel')
-            .submit-area
-                .form-group.row
-                    .col-sm-6.text-xs-center.text-sm-left
-                        a.btn.btn-link(href='/calculator/paybackshare/step-1', role='button') Go back
-                        p Don&apos;t worry we saved this info
-                    .col-sm-6.text-xs-center.text-sm-right
-                        button.btn.btn-primary.btn-lg(type='submit') Next
+    .row
+        .offset-lg-2.col-xs-8
+            ul.list-inline.top-breadcrambs.mb45
+                li
+                    a(href="/calculator/paybackshare/step-1").btn.text-uppercase Intro
+                li
+                    a(href="/calculator/paybackshare/step-2").current.btn.text-uppercase step 1
+                li
+                    a(href="/calculator/paybackshare/step-3").btn.text-uppercase finish
+
+    .row
+        .offset-lg-3.col-lg-6
+            .warning-block
+                i.fa.fa-exclamation-triangle 
+                span.warning-text 
+                    | This calculator will give you an idea of distributions associated with issuing PayBack Share
+
+    .row
+        .offset-lg-3.col-lg-6
+            form(method="post" action="").js-calc-form
+                .form-body.clearfix 
+
+                    .form-group.row
+                        label(for="input2").col-lg-12 How much money do you plan to raise?
+
+                        .col-lg-12
+                            input#input2.form-control.js-field(
+                                value= raiseMoneyFormatted,
+                                type='text',
+                                placeholder='$0',
+                                data-input-mask='price',
+                                data-model-value='raiseMoney',
+                                data-current-value= raiseMoney)
+
+                    .form-group.row
+                        label(for="input3").col-lg-12 What do you expect your revenue to be next year?
+
+                        .col-lg-12
+                            input#input3.form-control.js-field(
+                                value= nextYearRevenueFormatted,
+                                type='text',
+                                placeholder='$0',
+                                data-input-mask='price',
+                                data-model-value='nextYearRevenue',
+                                data-current-value= nextYearRevenue)
+
+                    .form-group.row
+                        label(for="input1").col-lg-12 At what rate do you expect your revenue to grow each year?
+
+                        .col-lg-12
+                            input#input1.form-control.js-field(
+                                value= growLevel,
+                                type='text',
+                                data-input-mask='percent',
+                                data-model-value='growLevel')
+
+                    .form-group.row.clearfix.m0
+                        .col-lg-6.mt30
+                            a(href='/calculator/paybackshare/step-1').link-3 Go back
+                            p.text-muted Don&apos;t worry we saved this info
+
+                        .col-lg-6.mt30
+                            .controls  
+                                button( 
+                                    type="submit"
+                                ).btn.btn-primary.btn-lg.pull-right.text-uppercase Next 
+                                // add class .pointer-events-none to disable all events for this button

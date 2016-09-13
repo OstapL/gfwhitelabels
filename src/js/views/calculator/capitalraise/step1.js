@@ -1,4 +1,4 @@
-require('sass/pages/_calculator.sass');
+// require('sass/pages/_calculator.sass');
 
 var calculatorHelper = require("../../../helpers/calculatorHelpers");
 var flyPriceFormatter = require("../../../helpers/flyPriceFormatter");
@@ -79,7 +79,7 @@ module.exports = Backbone.View.extend({
     render: function () {
         this.$el.html(this.template({
             model: this.model.toJSON(),
-            industryData: industryData.map(el => el[0]),
+            industryData: Object.keys(industryData),
             selects: this.selects
         }));
 

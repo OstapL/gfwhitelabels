@@ -9,10 +9,8 @@ select.form-control
 
 .form-section// каждая форма будет в таком контейнере
 	.required
-
 		label
 			color: $black_bg
-
 	img
 		max-width: 100%// будет перенесен в файл общих стилей - использовать клас бутстрапа .img-fluid
 
@@ -45,6 +43,10 @@ select.form-control
 
 			input[type='radio']
 				margin-right: 15px
+				
+		// знак вопроса (есть на странице calculator/capitalraise/step-1)
+		i 
+
 
 	@media screen and (min-width:992px)
 		// date of birth field
@@ -53,8 +55,7 @@ select.form-control
 
 	input[type="text"]
 		@include placeholder
-		
-		color: #a3a3a3
+			color: #a3a3a3
 
 	textarea
 		min-height: 38px
@@ -112,7 +113,7 @@ select.form-control
 
 	.date-input
 		input
-			min-width: rem(65)
+			min-width: rem(62)
 
 	.street_address_2
 		color: $gray
@@ -126,9 +127,11 @@ select.form-control
 
 		.change_state_city 
 			position: absolute
-			top: 6px
-			right: 0
+			top: 5px
+			// right: 0
 			cursor: pointer
+			color: $black
+			min-width: rem(150)
 
 			.input-value
 				@include ellipsis()
@@ -137,7 +140,7 @@ select.form-control
 				text-decoration: underline
 
 			i
-				margin-left: 10px
+				margin-left: 8px
 				color: $small-text
 
 	// вместо этого поля используеться сейчас поля типа text
@@ -150,3 +153,15 @@ select.form-control
 		color: $boulder
 		padding-top: 10px
 		line-height: 14px
+	.has-error
+		.help-block
+			color: $crimson
+			position: relative
+			padding-left: rem(15)
+			&:before
+				content: "\f071"
+				position: absolute
+				left: 0
+				top: rem(12)
+				font: normal normal normal 11px/1 FontAwesome
+

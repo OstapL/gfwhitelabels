@@ -1,8 +1,62 @@
-.calculator-container
-    padding: 35px 0 20px
 
-.calculator-title
-    margin-bottom: 25px
+.calculator-container
+    h3 
+        line-height: rem(24)
+
+    .top-breadcrambs
+        li 
+            display: inline-block
+            margin-right: .5%
+            width: 32%
+
+            a 
+                padding: rem(14)
+                width: 100%
+
+                border-color: $alabaster
+                background: $alabaster
+
+                text-align: center
+                color: $small-text
+
+                &.current
+                    pointer-events: none
+                    background: $btn-primary-hover-bg
+                    border-color: $btn-primary-hover-bg
+                    color: $white
+                    cursor: default
+
+        &.capitalraise
+            padding: 0 2%
+
+            li
+                width: 24%
+
+    .simple-list
+        padding-left: rem(17)
+
+    .list-style-alphabet
+        list-style-type: upper-alpha
+
+    .form-group 
+        margin-bottom: rem(20)
+
+    .jqplot-title
+        display: none
+
+    table 
+        thead tr th 
+            padding: rem(15)
+
+            text-align: center
+
+        tbody tr td,
+        tbody tr th
+            text-align: center
+
+
+
+
 
 .table-custom-data
     table-layout: fixed

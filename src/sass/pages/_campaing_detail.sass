@@ -46,6 +46,7 @@
 	font-family: $dosis
 	color: $white
 	max-width: 1110px
+	max-height: rem(55)
 	overflow: hidden
 	
 .big-icon
@@ -100,7 +101,7 @@
 				margin-bottom: rem(7)
 
 		.btn
-			margin-top: rem(20)
+			margin-top: rem(8)
 
 .campaigndetail
 	margin-top: rem(85)
@@ -115,6 +116,10 @@
 		margin-bottom: rem(10)
 		color: $small-text
 		line-height: rem(14)
+	.sity-detail
+		color: $small-text
+	.date-detail
+		color: $small-text
 	.mt25
 		margin-top: rem(25)
 	.mt20
@@ -180,9 +185,12 @@
 		.card-img
 			border-radius: 0
 			max-height: 210px
+		.card-img-overlay
+			text-align: center!important
 		h3
 			color: $white
 			margin-top: 0
+
 	h2
 		margin-bottom: 25px
 	h3.our
@@ -205,6 +213,9 @@
 			padding-left: rem(11)
 			padding-top: rem(17)
 			padding-right: rem(5)
+			text-align: left!important
+			float: left!important
+			display: block!important
 			.card-text
 				line-height: rem(18)
 				letter-spacing: rem(.35)
@@ -213,11 +224,15 @@
 				margin-top: rem(10)
 			.links
 				font-size: $font-size-sm
-				margin-bottom: rem(10)
+				margin-bottom: rem(6)
 			.icon-campaign
 				width: rem(12)
 				height: rem(12)
 				margin-right: rem(5)
+				margin-bottom: rem(8)
+			.pos-bottom
+				position: absolute
+				bottom: 0
 .team
 	padding-bottom: rem(15)
 	a,a:hover
@@ -282,7 +297,6 @@
 .perks
 	.jumbotron
 		margin-bottom: 0
-		min-height: rem(200)
 		h3
 			margin-top: 0
 			margin-bottom: rem(20)

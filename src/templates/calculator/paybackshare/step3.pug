@@ -1,24 +1,65 @@
+
+include ../../mixins.pug
+
++breadcrumbs('PayBack Share Calculator ', 'finish', 
+    [
+        ['Home', '/'],
+        ["What's My Business Worth?", '/'],
+        ["PayBack Share Calculator", '']
+    ]
+)
+
 .container.calculator-container
+    .row
+        .offset-lg-2.col-xs-8
+            ul.list-inline.top-breadcrambs.mb45
+                li
+                    a(href="/calculator/paybackshare/step-1").btn.text-uppercase Intro
+                li
+                    a(href="/calculator/paybackshare/step-2").btn.text-uppercase step 1
+                li
+                    a(href="/calculator/paybackshare/step-3").current.btn.text-uppercase finish
+
     .page
-        .js-jq-plot-area
-            #chart1(style='width: 100%')
-            p.lead Your results
-            .table-responsive
-                table.table.table-sm.table-bordered.table-striped
-                    thead
-                        tr
-                            th Time
-                            th Fundraise
-                            th Revenue
-                            th Annual Distributions
-                            th Multiple Returned
-                            th Total Distributions
-                    tbody
-                        each val, index in model.outputData
+        .row
+            .offset-lg-1.col-xs-10.text-sm-center.mb15
+                h2.dosis.m0.text-uppercase PAYBACK GRAPH
+
+        .row
+            .offset-lg-1.col-xs-10
+                .js-jq-plot-area
+                    #chart1(style='width: 100%')
+
+        .row
+            .col-xs-12.text-sm-center.mt45
+                h2.dosis.m0.text-uppercase Your results
+
+                .table-responsive.mt30
+                    table.table.table-sm.table-bordered.table-striped
+                        thead
                             tr
-                                th(scope='row')= 'Year ' + index
-                                td= formatPrice(val.fundraise)
-                                td= formatPrice(val.revenue)
-                                td= formatPrice(val.annual)
-                                td= val.multiple
-                                td= formatPrice(val.total)
+                                th Time
+                                th Fundraise
+                                th Revenue
+                                th Annual Distributions
+                                th Multiple Returned
+                                th Total Distributions
+                        tbody
+                            each val, index in model.outputData
+                                tr
+                                    th(scope='row')= 'Year ' + index
+                                    td= formatPrice(val.fundraise)
+                                    td= formatPrice(val.revenue)
+                                    td= formatPrice(val.annual)
+                                    td= val.multiple
+                                    td= formatPrice(val.total)
+
+        .row
+            .offset-lg-4.col-lg-4.text-sm-center
+                hr.mt30.mb50
+
+        .row
+            .offset-lg-3.col-lg-6.text-sm-center
+                a(
+                    href="/calculator/paybackshare/step-2"
+                ).btn.btn-primary.btn-lg.text-uppercase back 

@@ -1,0 +1,787 @@
+- 'use strict';
+include ../../../templates/mixins.pug
+
+- var percentage_raised = model.calculateRaisedPercentage(campaign.minimum_raise, campaign.amount_raised)
+
+section#home(style="background-image: url(" + (campaign.header_image_data ? campaign.header_image_data.url : '/img/default.png') + ")").home-section.bg-dark-alfa-70.parallax-2.fixed-height-small
+  .js-height-parent.container
+    .home-content
+      .home-text.text-lg-center
+        h1.hs-line-14.font-alt.margin-bottom-50.mb-xs-30 #{ campaign.company.name }
+        .local-scroll
+          a.big-icon.link-6.youtube_popup(data-toggle="modal" href="#videoModal" data-target="#videoModal")
+            i.fa.fa-play-circle-o
+          a(href=campaign.company.website target="_blank").link-6.link-campaing-detail #{ campaign.company.website }
+          .row.social-link
+            if campaign.company.facebook
+              a(href=campaign.company.facebook target="_blank").link-6.link-campaing-detail
+                i.fa.fa-facebook
+            if campaign.company.twitter
+              a(href=campaign.company.twitter target="_blank").link-6.link-campaing-detail
+                i.fa.fa-twitter
+            if campaign.company.instagram
+              a(href=campaign.company.instagram target="_blank").link-6.link-campaing-detail
+                i.fa.fa-instagram
+            if campaign.company.linkedin
+              a(href=campaign.company.linkedin target="_blank").link-6.link-campaing-detail
+                i.fa.fa-linkedin
+
+        // End Hero Content
+  .top-info
+    .container
+      .top-info-wrap
+        .top-info-wrap-item
+          .col-lg-3.p-r-0
+            p Type of Security
+            h2.font-weight-bold #{ campaign.get_security_type_display }
+          if campaign.security_type == 0
+            .col-lg-2.p-r-0
+              p Pre-Money Valuation
+              h2.font-weight-bold #{ model.showBeautifulNumber(campaign.premoney_valuation) }
+          else
+            .col-lg-2.p-r-0
+              p Percentage Reveue
+              h2.font-weight-bold #{ campaign.percentage_revenue }%
+          .col-lg-2.p-r-0
+            p Days Left
+            h2.font-weight-bold #{ campaign.days_to_go }
+          .col-lg-4.pull-right
+            a(href=Urls['campaign-invest'](campaign.id)).btn.btn-primary.btn-lg.text-uppercase.pull-right Invest
+
+section.campaigndetail
+  .container
+    .col-lg-6
+      h1 #{ campaign.company.tagline }
+      .row.mt20
+        .col-lg-4
+          //- a(href="").link-1
+          .sity-detail
+            i.fa.fa-map-marker
+            |  #{ campaign.company.city }, #{ campaign.company.state }
+        .col-lg-6
+          .date-detail
+            i.fa.fa-calendar-check-o
+            //- |  Founded in #{ campaign.company.founding_date }
+            |  Founded in #{ model.formatDate(campaign.company.founding_date) }
+      .row
+        .col-lg-12.share
+          span.font-weight-bold.d-inline-block Share:
+          .d-inline-block
+            a(href=campaign.company.facebook).link-1.facebook-share
+              i.fa.fa-facebook
+            a(href=campaign.company.twitter).link-1.twitter-share
+              i.fa.fa-twitter
+            a(href=campaign.company.linkedin).link-1.linkedin-share
+              i.fa.fa-linkedin
+            //- a(href=campaign.company.instagram).link-1
+            //-   i.fa.fa-google-plus
+    .col-lg-6.right-block-investors.p-l-0
+      .progress_bar_container
+        //- span Less than 20% Funded
+        span Less than #{ percentage_raised }% Funded
+        span.pull-right Committed 
+          //- span.committed $15,000
+          span.committed #{ model.showBeautifulNumber(campaign.amount_raised)}
+        .clear
+        progress(value=percentage_raised max="100").progress
+      .mt25
+        .row.col-lg-8
+          p Target
+          //- h2.font-weight-bold #{ campaign.minimum_raise } - #{ campaign.maximum_raise }
+          h2.font-weight-bold #{ model.showBeautifulNumber(campaign.minimum_raise) } - #{ model.showBeautifulNumber(campaign.maximum_raise) }
+        .row.col-lg-4.pull-right
+          p Minimum Investment
+          //- h2.font-weight-bold #{ campaign.minimum_increment }
+          h2.font-weight-bold #{ model.showBeautifulNumber(campaign.minimum_increment) }
+        .row.col-lg-12.investors-block(style="display: none")
+          .col-lg-2.p-l-0
+            p Investors
+            h2.font-weight-bold 17
+          .col-lg-10.p-l-0
+            ul
+              li
+                a(href="")
+                  <img src="/img/avatar1.jpg" alt="..." class="img-circle">
+              li
+                a(href="")
+                  <img src="/img/avatar6.jpg" alt="..." class="img-circle">
+              li
+                a(href="")
+                  <img src="/img/avatar1.jpg" alt="..." class="img-circle">
+              li
+                a(href="")
+                  <img src="/img/avatar6.jpg" alt="..." class="img-circle">
+              li
+                a(href="")
+                  <img src="/img/avatar1.jpg" alt="..." class="img-circle">
+              a(href="#" style="display: none").link-1 see all...
+section.border-bottom-scroll
+  .container.tabs-scroll
+    nav( data-toggle="sticky-onscroll").navbar.navbar-default.sticky
+      ul.nav.nav-pills.nav-pills-campaign
+        li.nav-item.text-uppercase
+          a(href="#about").nav-link.active About
+        li.nav-item.text-uppercase
+          a(href="#team").nav-link Team
+        li.nav-item.text-uppercase
+          a(href="#documents").nav-link Documents
+        li.nav-item.text-uppercase
+          a(href="#overview").nav-link Overview and terms
+        li.nav-item.text-uppercase
+          a(href="#risks").nav-link risks
+        li.nav-item.text-uppercase
+          a(href="#faq").nav-link faq
+        li.nav-item.text-uppercase
+          a(href="#ask").nav-link Ask a Question
+        a(href=Urls['campaign-invest'](campaign.id)).btn.btn-primary.btn-lg.text-uppercase.pull-right invest
+section
+  .scrollspy-example(data-spy="scroll"
+  data-target="#navbar-example2"
+  data-offset="0"
+  )
+  section.about-detail.border-bottom
+    .container
+      .col-lg-12
+        h2#about.dosis.text-uppercase.text-lg-center.green-heading About #{ campaign.company.name }
+        p #{ campaign.company.description }
+
+        //- h3.our.text-lg-center Why You Should Invest
+        h2.dosis.our.text-uppercase.text-lg-center.green-heading Why You Should Invest
+        p #{ campaign.pitch }
+
+        //- if campaign.additional_info
+        //-   each v,k in campaign.additional_info
+        //-     //- h3.our.text-lg-center #{ v.title }
+        //-     h2.dosis.our.text-uppercase.text-lg-center.green-heading #{ v.title }
+        //-     p #{ v.body }
+
+      
+      #gallery1.col-lg-12.pt50.photo-gallegy.text-center-flex
+        if campaign.gallery
+            each v,k in campaign.gallery_data.all_files
+                .col-lg-3.no-padding-img
+                  a(href=app.getThumbnail('1440x900', v.thumbnails) data-size='1440x900')
+                    img(src=app.getThumbnail('270x152', v.thumbnails) alt=campaign.company.name).img-fluid
+        else
+
+            .col-lg-3.no-padding-img
+              a(href="/img/campaign/smartbe-intelligent-stroller_1.jpg" data-toggle="modal" data-size='1600x900')
+                img(src="/img/campaign/smartbe-intelligent-stroller_1.jpg" alt="").img-fluid
+            .col-lg-3.no-padding-img
+              a(href="/img/campaign/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
+                img(src="/img/campaign/smartbe-intelligent-stroller_2.jpg" alt="").img-fluid
+            .col-lg-3.no-padding-img
+              a(href="/img/campaign/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
+                img(src="/img/campaign/smartbe-intelligent-stroller_3.jpg" alt="").img-fluid
+            .col-lg-3.no-padding-img
+              a(href="/img/campaign/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
+                img(src="/img/campaign/smartbe-intelligent-stroller_4.jpg" alt="").img-fluid
+            .col-lg-3.no-padding-img
+              a(href="/img/campaign/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
+                img(src="/img/campaign/smartbe-intelligent-stroller_5.jpg" alt="").img-fluid
+            .col-lg-3.no-padding-img
+              a(href="/img/campaign/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
+                img(src="/img/campaign/smartbe-intelligent-stroller_6.jpg" alt="").img-fluid
+            .col-lg-3.no-padding-img
+              a(href="/img/campaign/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
+                img(src="/img/campaign/smartbe-intelligent-stroller_7.jpg" alt="").img-fluid
+            .col-lg-3.no-padding-img
+              a(href="/img/campaign/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
+                img(src="/img/campaign/smartbe-intelligent-stroller_8.jpg" alt="").img-fluid
+
+      .row
+        .col-lg-12.text-center-flex
+          if campaign.additional_video
+              each v,k in campaign.additional_video
+                  .col-lg-4
+                    .card.card-inverse
+                      - var link =  app.getVideoId(v.link)
+                      img(src="http://img.youtube.com/vi/" + link + "/0.jpg" alt="" style="width: 338px").card-img
+                      .card-img-overlay
+                        .card-title
+                          a(data-toggle="modal" href="#videoModal-" + k data-target="#videoModal-" + k).small-icon.link-6
+                              i.fa.fa-play-circle-o
+                        h3.card-text.text-lg-center #{ v.headline }
+          else
+              .col-lg-4
+                .card.card-inverse
+                  img(src="/img/Smartbe-Intelligent-Stroller-5.jpg" alt="").card-img
+                  .card-img-overlay
+                    .card-title
+                      a(data-toggle="modal" href="#videoModal-2" data-target="#videoModal-2").small-icon.link-6
+                          i.fa.fa-play-circle-o
+                    h3.card-text.text-lg-center Title for Optional Video 2
+              .col-lg-4
+                .card.card-inverse
+                  img(src="/img/Smartbe-Intelligent-Stroller-5.jpg" alt="").card-img
+                  .card-img-overlay
+                    .card-title
+                      a(data-toggle="modal" href="#videoModal-3" data-target="#videoModal-3").small-icon.link-6
+                          i.fa.fa-play-circle-o
+                    h3.card-text.text-lg-center Title for Optional Video 3
+              .col-lg-4
+                .card.card-inverse
+                  img(src="/img/Smartbe-Intelligent-Stroller-5.jpg" alt="").card-img
+                  .card-img-overlay
+                    .card-title
+                      a(data-toggle="modal" href="#videoModal-3" data-target="#videoModal-3").small-icon.link-6
+                          i.fa.fa-play-circle-o
+                    h3.card-text.text-lg-center Title for Optional Video 3
+
+      .col-lg-12
+        //- h3.our.text-lg-center Our Edge
+        h2.dosis.our.text-uppercase.text-lg-center.green-heading How We Intend to Make Money
+        p #{ campaign.intended_use_of_proceeds }
+
+        //- h3.text-lg-center Why We are Raising Capital, and What We’ll Do with It
+        h2.dosis.text-uppercase.text-lg-center.green-heading Why We are Raising Capital, and What We’ll Do with It
+        p #{ campaign.business_model }
+
+      if campaign.additional_info
+        .col-lg-12
+          each v,k in campaign.additional_info
+            //- h3.our.text-lg-center #{ v.title }
+            h2.dosis.our.text-uppercase.text-lg-center.green-heading #{ v.title }
+            p #{ v.body }
+   
+  if campaign.members
+      section#members.team.border-bottom
+        .container
+            h2#team.dosis.text-uppercase.text-lg-center.col-lg-12.green-heading Team
+            .row
+              .col-lg-12.text-center-flex
+                each v,k in campaign.members
+                    .col-lg-4
+                      a(href="#")
+                        .card.text-lg-center
+                          img(src=v.photo alt="").img-circle
+                          .card-block
+                            h4.card-title.text-uppercase #{v.first_name} #{v.last_name }
+                            p.card-text
+                                small.text-muted #{v.title }
+                            
+                            a(href=v.linkedin target="_blank").link-1
+                              i.fa.fa-linkedin.more
+                            a(href=v.facebook target="_blank").link-1
+                              i.fa.fa-facebook
+                            p.card-text.text-justify.auto-height #{v.bio}
+                            .d-block.text-lg-left.cite_education
+                              a(href="#").link-1.text-lg-left
+                                i.fa.fa-home.p-l-0
+                                |  #{v.growup}, #{v.state}
+                              //- a(href="#").link-1.pull-right
+                              span.pull-right
+                                i.fa.fa-graduation-cap
+                                |  #{v.college}
+            h2.dosis.text-uppercase.text-lg-center.green-heading Articles and Press
+            .row
+              .col-lg-12.text-center-flex
+                .articles_press
+                if campaign.press
+                  each v,k in campaign.press
+                    .col-lg-3.articles_press
+                      a(href=v.link target="_blank")
+                        .card.card-inverse
+                          img(src="/img/smartbe-intelligent-stroller.jpg" alt="").card-img
+                          .card-img-overlay
+                            .card-title
+                              p.card-text.font-weight-bold #{ v.headline }
+                              // p.card-text.intro Smartbe is a revolutionary concept as regards design and ...
+                              .pos-bottom
+                                a(href=v.link target="_blank").links.d-inline-block.card-text.pull-right #{ v.link }
+                                img(src="/img/icon-campaign.jpg", alt="").icon-campaign.d-inline-block
+  
+  else
+      //
+        section.team.border-bottom
+          .container
+            h2#team.dosis.text-uppercase.text-lg-center.col-lg-12 Team
+            a(href="").link-1
+              .col-lg-4.text-lg-center
+                .card
+                  img(src="/img/campaign/avatar1.jpg" alt="").img-circle
+                  .card-block
+                    h4.card-title.text-uppercase Jan Mertz
+                    p.card-text
+                      small.text-muted CEO
+                    a(href="#").link-1
+                      i.fa.fa-facebook
+                    a(href="#").link-1
+                      i.fa.fa-linkedin
+                    p.card-text.text-justify Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque mollis lacus augue, a hendrerit leo tristique vitae. Consectetur adipiscing elit. Integer posuere erat a ante. Mauris non ipsum molestie, sagittis elit ac, vulputate odio.
+                    .d-block.text-lg-left.cite_education
+                      a(href="#").link-1.text-lg-left
+                        i.fa.fa-home.p-l-0
+                        |  Pittsburgh, PA
+                      a(href="#").link-1.pull-right
+                        i.fa.fa-graduation-cap
+                        |  Dickinson College
+
+            .col-lg-4
+              a(href="")
+                .card.text-lg-center
+                  img(src="/img/campaign/avatar2.jpg" alt="").img-circle
+                  .card-block
+                    h4.card-title.text-uppercase Maria Mertz
+                    p.card-text
+                      small.text-muted CEO
+                    a(href="#").link-1
+                      i.fa.fa-facebook
+                    a(href="#").link-1
+                      i.fa.fa-linkedin
+                    p.card-text.text-justify Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque mollis lacus augue, a hendrerit leo tristique vitae. Consectetur adipiscing elit. Integer posuere erat a ante. Mauris non ipsum molestie, sagittis elit ac, vulputate odio.
+                    .d-block.text-lg-left.cite_education
+                      a(href="#").link-1.text-lg-left
+                        i.fa.fa-home.p-l-0
+                        |  Pittsburgh, PA
+                      a(href="#").link-1.pull-right
+                        i.fa.fa-graduation-cap
+                        |  Dickinson College
+            .col-lg-4.text-lg-center
+              a(href="").link-1
+                .card
+                  img(src="/img/campaign/avatar3.jpg" alt="").img-circle
+                  .card-block
+                    h4.card-title.text-uppercase Alex Klarck
+                    p.card-text
+                      small.text-muted General Councel
+                    a(href="#").link-1
+                      i.fa.fa-facebook
+                    a(href="#").link-1
+                      i.fa.fa-linkedin
+                    p.card-text.text-justify Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque mollis lacus augue, a hendrerit leo tristique vitae. Consectetur adipiscing elit. Integer posuere erat a ante. Mauris non ipsum molestie, sagittis elit ac, vulputate odio.
+                    .d-block.text-lg-left.cite_education
+                      a(href="#").link-1.text-lg-left
+                        i.fa.fa-home.p-l-0
+                        |  Pittsburgh, PA
+                      a(href="#").link-1.pull-right
+                        i.fa.fa-graduation-cap
+                        |  Dickinson College
+  section.document.border-bottom
+    .container
+      .row
+        h2#documents.col-lg-12.dosis.text-uppercase.text-lg-center.green-heading Documents
+        .col-lg-8.offset-lg-2
+          .col-lg-4
+            p Official filing on SEC.gov
+            a(href="" target="_blank")
+              img(src="/img/lrg_US_Department_of_State35.gif").img-document.d-inline-block
+              h3.d-inline-block  Form C
+          .col-lg-4
+            p Company documents
+            a(href="" target="_blank")
+              i.fa.fa-file-pdf-o.d-inline-block
+              h3.d-inline-block Financials
+          .col-lg-4.row
+            p Company documents
+            a(href="" target="_blank")
+              i.fa.fa-file-powerpoint-o.d-inline-block
+              h3.d-inline-block Investor Presentation
+  section.overview
+    .container
+      .row
+        h2#overview.col-lg-12.dosis.text-uppercase.text-lg-center.green-heading overview and terms
+        //- h3.col-lg-12.text-lg-center Fundraising Description
+        h3.text-uppercase.text-lg-center.green-heading Fundraising Description
+        .col-lg-12.fundraising
+          .jumbotron.jumbotron-fluid
+            .container
+              .row
+                .col-lg-3.p-l-3
+                  p Type of Security
+                  h2.font-weight-bold #{ campaign.get_security_type_display }
+                .col-lg-3.p-l-3
+                  p Target Minimum Raise Amonunt
+                  h2.font-weight-bold #{ model.showBeautifulNumber(campaign.minimum_raise) }
+                .col-lg-3.p-l-3
+                  p Minimum Investment
+                  h2.font-weight-bold #{ model.showBeautifulNumber(campaign.minimum_increment) }
+                if campaign.security_type == 0
+                  .col-lg-3.p-l-3
+                    p Minimum # of Shares
+                    h2.font-weight-bold #{ campaign.min_number_of_shares }
+                else
+                  .col-lg-3
+                    p Expiration Date
+                    h2.font-weight-bold #{ model.formatDate(campaign.expiration_date) }
+
+              .row
+                if campaign.security_type == 0
+                  .col-lg-3.p-l-3
+                    p Pre-Money Valuation
+                    h2.font-weight-bold #{ model.showBeautifulNumber(campaign.premoney_valuation) }
+                else
+                  .col-lg-3.p-l-3
+                    p Percentage Revenue
+                    h2.font-weight-bold #{ campaign.percentage_revenue }%
+                .col-lg-3.p-l-3
+                  p Target Maximum Raise Amount
+                  h2.font-weight-bold #{ model.showBeautifulNumber(campaign.maximum_raise) }
+                if campaign.security_type == 0
+                  .col-lg-3.p-l-3
+                    p Price per Share
+                    h2.font-weight-bold #{ model.showBeautifulNumber(campaign.price_per_share) }
+                else
+                  .col-lg-3.p-l-3
+                    p Cap
+                    h2.font-weight-bold #{ campaign.cap }
+                if campaign.security_type == 0
+                  .col-lg-3.p-l-3
+                    p Maximum # of Shares
+                    h2.font-weight-bold #{ campaign.max_number_of_shares }
+                else
+                  .col-lg-3
+                    p Length of the Campaign
+                    h2.font-weight-bold #{ campaign.days_to_go } days
+
+
+  section#perks.perks
+    if campaign.perks && campaign.perks instanceof Array && campaign.perks.length > 0
+      //- h3.col-lg-12.text-lg-center Perks
+      .container
+        h3.text-uppercase.text-lg-center.green-heading Perks
+        .row
+          .col-lg-12.text-center-flex
+            each v,k in campaign.perks
+                .col-lg-4
+                  .jumbotron.jumbotron-fluid
+                    .container
+                      h3.m-t-0.m-b-1 Invest #{ model.showBeautifulNumber(v.amount) } or more
+                      p.text-justify #{ v.perk }
+
+  section.investors-all.border-bottom(style="display: none")
+    .container
+      h3.col-lg-12.text-lg-center Investors
+      .col-lg-12.text-center-flex
+        .col-lg-3.text-lg-center
+          a(href="")
+            .card
+              img(src="/img/campaign/avatar1.jpg" alt="").img-circle
+              .card-block
+                h4.card-title.text-uppercase Jan Mertz
+                p.card-text
+                  small.text-muted New York, NY
+        .col-lg-3.text-lg-center
+          a(href="")
+            .card
+              img(src="/img/campaign/avatar2.jpg" alt="").img-circle
+              .card-block
+                h4.card-title.text-uppercase Jan Mertz
+                p.card-text
+                  small.text-muted New York, NY
+        .col-lg-3.text-lg-center
+          a(href="")
+            .card
+              img(src="/img/campaign/avatar3.jpg" alt="").img-circle
+              .card-block
+                h4.card-title.text-uppercase Lusy Johnson
+                p.card-text
+                  small.text-muted New York, NY
+        .col-lg-3.text-lg-center
+          a(href="")
+            .card
+              img(src="/img/campaign/avatar4.jpg" alt="").img-circle
+              .card-block
+                h4.card-title.text-uppercase Jan Mertz
+                p.card-text
+                  small.text-muted New York, NY
+        .col-lg-3.text-lg-center
+          a(href="")
+            .card
+              img(src="/img/campaign/avatar1.jpg" alt="").img-circle
+              .card-block
+                h4.card-title.text-uppercase Lusy Mertz
+                p.card-text
+                  small.text-muted New York, NY
+        .col-lg-3.text-lg-center
+          a(href="")
+            .card
+              img(src="/img/campaign/avatar5.jpg" alt="").img-circle
+              .card-block
+                h4.card-title.text-uppercase Jan Mertz
+                p.card-text
+                  small.text-muted New York, NY
+        .col-lg-3.text-lg-center
+          a(href="")
+            .card
+              img(src="/img/campaign/avatar2.jpg" alt="").img-circle
+              .card-block
+                h4.card-title.text-uppercase Jan Mertz
+                p.card-text
+                  small.text-muted New York, NY
+        .col-lg-3.text-lg-center
+          a(href="")
+            .card
+              img(src="/img/campaign/avatar3.jpg" alt="").img-circle
+              .card-block
+                h4.card-title.text-uppercase Jan Mertz
+                p.card-text
+                  small.text-muted New York, NY
+        .col-lg-12.text-lg-center
+          a(href="" style="display: none").link-4 See All Investors
+  section.risks.border-bottom
+    .container
+      h2#risks.col-lg-12.dosis.text-uppercase.text-lg-center.green-heading Risks
+      .col-lg-8.offset-lg-2
+        .accordion(role="tablist" aria-multiselectable="true")
+          .panel.panel-default
+            #headingOne(role="tab").panel-heading
+              a(data-toggle="collapse"
+              data-parent="#accordion" 
+              href="#collapseOne"
+              aria-expanded="true"
+              aria-controls="collapseOne"
+              ).list-group-item-action.active A crowdfunding investment involves risk.
+                i.fa.fa-angle-up
+            #collapseOne(role="tabpanel"
+            aria-labelledby="headingOne"
+            ).panel-collapse.collapse.in  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Suscipit nobis qui aut. Assumenda nulla possimus quidem officia aperiam quas sed non corporis reprehenderit! Voluptatum placeat eum, expedita sunt velit voluptas?
+          .panel.panel-default
+            #headingTwo(role="tab").panel-heading
+              a(data-toggle="collapse"
+              data-parent="#accordion" 
+              href="#collapseTwo"
+              aria-controls="collapseTwo"
+              ).list-group-item-action In making an investment decision, investors must rely on their own examination of the issuer and the terms of the offering.
+                i.fa.fa-angle-down
+            #collapseTwo(role="tabpanel"
+            aria-labelledby="headingTwo"
+            ).panel-collapse.collapse  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi, hic, distinctio, enim nam consequuntur iste quos, accusamus blanditiis a id odio perferendis vel perspiciatis provident et! Consequuntur nemo reprehenderit inventore.
+          .panel.panel-default
+            #headingThree(role="tab").panel-heading
+              a(data-toggle="collapse"
+              data-parent="#accordion" 
+              href="#collapseThree"
+              aria-controls="collapseThree"
+              ).list-group-item-action The U.S. Securities and Exchange Commission does not pass upon the merits of any secrities offered or the terms of the offering    
+                i.fa.fa-angle-down
+            #collapseThree(role="tabpanel"
+            aria-labelledby="headingThree"
+            ).panel-collapse.collapse  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius inventore iste numquam nemo, fugit nihil fugiat quasi, excepturi repellendus pariatur! Facilis odit cupiditate tenetur, inventore adipisci consequatur eius suscipit voluptas.
+          .panel.panel-default
+            #headingFour(role="tab").panel-heading
+              a(data-toggle="collapse"
+              data-parent="#accordion" 
+              href="#collapseFour"
+              aria-controls="collapseFour"
+              ).list-group-item-action The U.S. Securities and Exchange Commission does not pass upon the merits of any secrities offered or the terms of the offering    
+                i.fa.fa-angle-down
+            #collapseFour(role="tabpanel"
+            aria-labelledby="headingFour"
+            ).panel-collapse.collapse  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius inventore iste numquam nemo, fugit nihil fugiat quasi, excepturi repellendus pariatur! Facilis odit cupiditate tenetur, inventore adipisci consequatur eius suscipit voluptas.
+        
+  
+  section.faq
+    if campaign.faq
+    .container
+      h2#faq.col-lg-12.dosis.text-uppercase.text-lg-center.green-heading FAQ
+      .col-lg-8.offset-lg-2
+        .accordion(role="tablist" aria-multiselectable="true")
+          - var counter = 0
+          each v,k in campaign.faq
+            .panel.panel-default
+              div(id="faq" + k role="tab").panel-heading
+                a(data-toggle="collapse"
+                data-parent="#accordion" 
+                href="#collapsefaq"+ k
+                aria-controls="collapsefaq"+ k
+                class=(counter == 0 ? 'list-group-item-action active' : 'list-group-item-action'),
+                ) #{v.question}
+                    if counter == 0
+                        i.fa.fa-angle-up
+              div(id="collapsefaq" + k role="tabpanel"
+              aria-labelledby="faq" + k
+              class=(counter == 0 ? 'in' : '') + ' panel-collapse collapse'
+              ) #{ v.answer }
+              - counter ++;
+          //
+            .panel.panel-default
+              #faqTwo(role="tab").panel-heading
+                a(data-toggle="collapse"
+                data-parent="#accordion" 
+                href="#collapsefaqTwo"
+                aria-controls="collapsefaqTwo"
+                ).list-group-item-action How did Smartbe start and then evolve? 
+                  i.fa.fa-angle-down
+              #collapsefaqTwo(role="tabpanel"
+              aria-labelledby="faqTwo"
+              ).panel-collapse.collapse  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi, hic, distinctio, enim nam consequuntur iste quos, accusamus blanditiis a id odio perferendis vel perspiciatis provident et! Consequuntur nemo reprehenderit inventore.
+            .panel.panel-default
+              #faqThree(role="tab").panel-heading
+                a(data-toggle="collapse"
+                data-parent="#accordion" 
+                href="#collapsefaqThree"
+                aria-controls="collapsefaqThree"
+                ).list-group-item-action What is your impact?     
+                  i.fa.fa-angle-down
+              #collapsefaqThree(role="tabpanel"
+              aria-labelledby="faqThree"
+              ).panel-collapse.collapse  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius inventore iste numquam nemo, fugit nihil fugiat quasi, excepturi repellendus pariatur! Facilis odit cupiditate tenetur, inventore adipisci consequatur eius suscipit voluptas.
+            .panel.panel-default
+              #faqFour(role="tab").panel-heading
+                a(data-toggle="collapse"
+                data-parent="#accordion" 
+                href="#collapsefaqFour"
+                aria-controls="collapsefaqFour"
+                ).list-group-item-action Do you have any intellectual property?   
+                  i.fa.fa-angle-down
+              #collapsefaqFour(role="tabpanel"
+              aria-labelledby="faqFour"
+              ).panel-collapse.collapse  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius inventore iste numquam nemo, fugit nihil fugiat quasi, excepturi repellendus pariatur! Facilis odit cupiditate tenetur, inventore adipisci consequatur eius suscipit voluptas.
+        
+    
+  section.ask.border-bottom
+    .container
+      h2#ask.col-lg-12.dosis.text-uppercase.text-lg-center.green-heading ASK A QUESTION
+      .col-lg-8.offset-lg-2.pt30
+        form.form-section
+          .col-lg-8
+            input(type="text" placeholder="Type your question here...")
+        .col-lg-4.p-r-0
+          a(href="").btn.btn-primary.btn-lg.text-uppercase.pull-right ask question
+
+      .col-lg-8.offset-lg-2.pt50.comments
+        .col-lg-12.p-r-0
+          .hr
+          .col-lg-1
+            img(src="/img/avatar10.jpg" alt="").img-circle
+          .col-lg-11
+            .comments-wrap
+              span.name-comments.text-uppercase maria kravchuk
+
+              span.date-comments.pull-right 2 Days Ago
+              p Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua?
+              .responce
+                li
+                  a(href="").link-1 1 
+                    i.fa.fa-angle-up  
+                  span |
+                li
+                  a(href="").link-1 Responce 
+                  span |
+                li
+                  a(href="").link-1
+                    i.fa.fa-thumbs-up
+        .col-lg-11.offset-lg-1.pt30.p-r-0
+          .col-lg-1
+            img(src="/img/avatar10.jpg" alt="").img-circle
+          .col-lg-11
+            .comments-wrap
+              span.name-comments.text-uppercase maria kravchuk
+              span.kvalificatio-comments.text-uppercase CEO
+              span.date-comments.pull-right 2 Days Ago
+              p Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua?
+              .responce
+                li
+                  a(href="").link-1 0 
+                    i.fa.fa-angle-down  
+                  span |
+                li
+                  a(href="").link-1 Responce 
+                  span |
+                li
+                  a(href="").link-1
+                    i.fa.fa-thumbs-up
+  section.like
+    .container
+      .col-lg-12.text-lg-center
+        h2
+          i.fa.fa-thumbs-up
+          |  I’d Like to Invest in #{ campaign.company.name }!
+        a(href="/api/campaign/" + campaign.id + "/invest").btn.btn-primary.btn-lg.text-uppercase Invest
+
+
+#videoModal.modal.fade(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")
+    .modal-dialog.modal-lg(role="document")
+        .modal-content
+            .embed-responsive.embed-responsive-16by9
+                iframe.embed-responsive-item(src="//www.youtube.com/embed/" + app.getVideoId(campaign.video) + "?rel=0" allowfullscreen="true")
+
+each v,k in campaign.additional_video
+    div(id="videoModal-" + k tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true").modal.fade
+        .modal-dialog.modal-lg(role="document")
+            .modal-content
+                .embed-responsive.embed-responsive-16by9
+                    - var link =  app.getVideoId(v.link)
+                    iframe.embed-responsive-item(src="//www.youtube.com/embed/" + link + "?rel=0" allowfullscreen="true")
+
+//modal sing_up
+#sing_up.modal.fade(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")
+  .modal-dialog(role="document")
+    .modal-content
+      .modal-header
+        button(type="button" class="close" data-dismiss="modal" aria-label="Close")
+          span(aria-hidden="true")
+            i.fa.fa-times
+        h2#sing_up(class="modal-title").text-lg-center.text-uppercase.dosis sign up
+        p.text-lg-center Have an account?
+          a(href="")  Log In
+      .modal-body
+        .container.form-section
+          form.col-lg-10.offset-lg-1.border-bottom
+            .form-group.row.clearfix.required
+              input#first_name(type="text" placeholder="First name").form-control
+            .form-group.row.clearfix.required
+              input#last_name(type="text" placeholder="Last name").form-control
+            .form-group.row.clearfix.required
+              input#email(type="email" placeholder="E-mail").form-control
+            .form-group.row.clearfix.required
+              input#password(type="password" placeholder="Password").form-control
+            .form-group.row.clearfix.required.m-b-0
+              input#re_password(type="password" placeholder="Re-enter password").form-control
+            .form-group.row.clearfix.required
+              .row
+                .col-lg-12
+                  label
+                    input(type="checkbox")
+                    span.label-text I consent to electronic signature and electronic delivery of documentation
+                  label.p-t-6
+                    input(type="checkbox")
+                    span.label-text I agree to the
+                      a(href="").link-3  Terms of Service
+                      |  and 
+                      a(href="").link-3  Privacy Policy.
+                  .col-lg-12.text-lg-center
+                      button.btn.btn-lg.btn-primary.text-uppercase sing up
+                  .col-lg-12.border-bottom.or
+                    span or
+            .social-btn
+              button.btn.btn-block.btn-lg.btn-facebook.text-uppercase
+                i.fa.fa-facebook
+                |  SIGN UP with Facebook
+              button.btn.btn-block.btn-lg.btn-linkedin.text-uppercase
+                i.fa.fa-linkedin
+                |  SIGN UP with linkedin
+              button.btn.btn-block.btn-lg.btn-google.text-uppercase
+                i.fa.fa-google-plus
+                |  SIGN UP with Google
+        .modal-footer
+
+.pswp(tabindex="-1" role="dialog" aria-hidden="true")
+  .pswp__bg
+  .pswp__scroll-wrap
+    .pswp__container
+      .pswp__item
+      .pswp__item
+      .pswp__item
+        //Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed.
+    .pswp__ui.pswp__ui--hidden
+      .pswp__top-bar
+        //Controls are self-explanatory. Order can be changed.
+        .pswp__counter
+        button(title="Close (Esc)").pswp__button.pswp__button--close
+        button(title="Share").pswp__button.pswp__button--share
+        button(title="Toggle fullscreen").pswp__button.pswp__button--fs
+        button(title="Zoom in/out").pswp__button.pswp__button--zoom
+        //Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR
+        //element will get class pswp__preloader--active when preloader is running
+        .pswp__preloader
+            .pswp__preloader__icn
+                .pswp__preloader__cut
+                    .pswp__preloader__donut
+      .pswp__share-modal.pswp__share-modal--hidden.pswp__single-tap
+        .pswp__share-tooltip
+      button(title="Previous (arrow left)").pswp__button.pswp__button--arrow--left
+      button(title="Next (arrow right)").pswp__button.pswp__button--arrow--right
+      .pswp__caption
+        .pswp__caption__center

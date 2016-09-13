@@ -81,24 +81,36 @@
 
 		h4
 			font-weight: 400
+  
+		ul.simple-list 
+			padding-left: rem(20)
+			li 
+				margin-bottom: rem(15)
 
-	.simple-list 
-		padding-left: rem(20)
-		li 
-			margin-bottom: rem(15)
-	ul 
-		li
-			a//TODO перенести в общие стили для ссылок всего сайта
-				color: $small-text
+.warning-block
+	@include calc-rem(14)
 
-				&:hover 
-					color: rgba($footer_text, 0.6)
+	position: relative
+
+	padding: rem(10) rem(20)
+	padding-left: rem(35)
+	margin-bottom: rem(20)
+
+	border: 1px $crimson solid
+
+	color: $crimson
+
+	i 
+		position: absolute
+		top: rem(14)
+		left: rem(10)
 
 .position-relative
 	position: relative
 
-
-
+//временный стиль для заглушки вместо гугл мапс на странице контактов
+.map-block img
+	max-width: none
 
 /* end common styles for pages(faq, overview.. etc..) */
 
@@ -136,6 +148,9 @@
 	padding-bottom: rem(10)
 .pt10
 	padding-top: rem(10)
+.pt3 
+	padding-top: rem(3)
+
 .p-l-0
 	padding-left: 0
 .p-r-0
@@ -157,12 +172,19 @@
 	margin-top: rem(20)
 .mb20
 	margin-bottom: rem(20)
-
+.mb45
+	margin-bottom: rem(45)
+.mt45
+	margin-top: rem(45)
 
 .mt25
 	margin-top: rem(25)
 .mb25
 	margin-bottom: rem(25)
+.mt15
+	margin-top: rem(15)
+.mb15
+	margin-bottom: rem(15)
 
 .m0
 	margin-top: 0!important
@@ -185,3 +207,13 @@
 	padding-left: 0;
 
 
+.text-center-flex
+	width: 100%
+	margin: 0 auto
+	text-align: center
+	display: block
+	.col-lg-4, .col-lg-3
+		float: none
+		display: inline-block
+		vertical-align: top
+		text-align: left

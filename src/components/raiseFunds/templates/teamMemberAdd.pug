@@ -1,0 +1,108 @@
+- 'use strict';
+include ../../../templates/mixins.pug
+include menu.pug
+
++breadcrumbs('CREATE CAMPAIGN', '', 
+    [
+        ['Home', '/'],
+        ['current', ''],
+    ]
+)
+
+section.team-members.container.m-b-85
+  +menu('team-members')
+
+  //START RIGHT BLOCK
+  .col-lg-8
+    h2.text-uppercase.text-lg-center.text-xs-center.dosis.m-t-0 team member (Advisor)
+
+    form(method="post" action="").form-section
+      input(type="hidden" name="type" value=type)#type
+      input(type="hidden" name="photo" value=member.photo)#photo
+      +fieldBlock("first_name", '', {
+        class1: 'col-lg-3 col-md-3',
+        class2: 'col-lg-9 col-md-9',
+        type: 'text',
+        })
+      +fieldBlock("last_name", '', {
+        class1: 'col-lg-3 col-md-3',
+        class2: 'col-lg-9 col-md-9',
+        type: 'text',
+        })
+      +fieldBlock("email", '', {
+        class1: 'col-lg-3 col-md-3',
+        class2: 'col-lg-9 col-md-9',
+        type: 'email',
+        })
+      +fieldBlock("title", '', {
+        class1: 'col-lg-3 col-md-3',
+        class2: 'col-lg-9 col-md-9',
+        type: 'text',
+        })
+      .form-group.row.clearfix.required
+        label.col-lg-3.text-lg-right Bio
+        .col-lg-9
+            textarea(name="bio" placeholder="At least 150 characters and no more than 250 characters" rows="4" maxLength="250").form-control #{ member.bio }
+      .row
+        .col-lg-9.recommended.label-p-t-0
+          +fieldBlock("growup", '', {
+            class1: 'col-lg-4 col-md-3',
+            class2: 'col-lg-8 col-md-9',
+            type: 'text',
+            placeholder: 'City'
+            })
+        .col-lg-3
+          //- select(name="state").orderby.custom-select
+          //-   option(checked="checked" value="0") ST
+          //-   option(value="1") STL
+          select(name='state').custom-select
+            option(checked='checked', value="") State
+            each state in states
+                option(value=state.abbreviation)= state.name
+      .label-p-t-0
+        +fieldBlock("college", '', {
+          class1: 'col-lg-3 col-md-3',
+          class2: 'col-lg-9 col-md-9',
+          type: 'text',
+          placeholder: 'Name of college or university',
+          })
+      .row
+        .col-lg-6.input-min-width
+            +fieldBlock("linkedin", '', {
+              class1: 'col-lg-6 col-md-3',
+              class2: 'col-lg-6 col-md-9',
+              type: 'text',
+              placeholder: 'Your LinkedIn profile',
+              })
+        .col-lg-6.input-min-width
+            +fieldBlock("facebook", '', {
+              class1: 'col-lg-5 col-md-3',
+              class2: 'col-lg-7 col-md-9',
+              type: 'text',
+              placeholder: 'Your Facebook profile',
+              })
+
+      .row.dropzone__photo.media-item
+        .col-lg-7
+          .col-lg-5.p-r-12
+            span.pull-right.font-weight-bold  Photo
+          .col-lg-7.text-lg-center
+            span(href="#").link-1
+              p.drop-photo Drop your photo here or click to upload
+              i.fa.fa-camera
+        .col-lg-5.p-l-1.p-r-3.text-lg-center.text-sm-center
+          img(src=member.photo).img-fluid.img-photo
+      .col-lg-12.text-lg-right.p-r-0.p-t-2
+        button(type="submit").btn.btn-lg.btn-primary.text-uppercase.pull-right Save
+          //
+            .col-lg-6.p-r-0
+              .dropdown.pull-right
+                button(type="submit"
+                id="dropdownMenuButton"
+                data-toggle="dropdown"
+                aria-haspopup="true"
+                aria-expanded="false"
+                ).btn.btn-lg.btn-primary.text-uppercase.dropdown-toggle Save and add other
+                .dropdown-menu(aria-labelledby="dropdownMenuButton")
+                  a(href="").dropdown-item Add Advisor
+                  a(href="").dropdown-item Add Team Member
