@@ -28,7 +28,7 @@ module.exports = Backbone.Router.extend({
             el: '#content',
             fields: meta[0].actions.POST,
             model: new Model.model(model[0][0] || {}),
-            campaign: campaignData[0],
+            campaign: campaignData[0] || {},
           });
 
           // ToDo

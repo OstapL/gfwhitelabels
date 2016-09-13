@@ -6,16 +6,16 @@ import flyPriceFormatter from '../../helpers/flyPriceFormatter';
 let formatPrice = calculatorHelper.formatPrice;
 
 module.exports = {
-    // intro: Backbone.View.extend({
-    //     el: '#content', 
-    //
-    //     template: require('./templates/intro.pug'),
-    //
-    //     render: function () {
-    //         this.$el.html(this.template(this.model.toJSON()));
-    //         return this;
-    //     }
-    // }),
+    intro: Backbone.View.extend({
+        el: '#content',
+
+        template: require('./templates/intro.pug'),
+
+        render: function () {
+            this.$el.html(this.template());
+            return this;
+        }
+    }),
 
     step1: Backbone.View.extend({
         el: '#content',
@@ -42,13 +42,62 @@ module.exports = {
         },
 
         events: {
+            // remove useless zeros: 0055 => 55
+            'blur .js-field': 'cutZeros'
+        },
+
+        cutZeros(e) {
+            let elem = e.target;
+            elem.dataset.currentValue = parseFloat(elem.value.replace('$', '').replace(/,/g, '') || 0);
+            elem.value = formatPrice(elem.dataset.currentValue);
+
+            // save percent values
+            if (elem.dataset.inputMask == "percent") {
+                app.cache.whatMyBusinessWorthCalculator[elem.dataset.modelValue] = +elem.dataset.currentValue;
+            }
+        },
+
+        ui() {
+            // get inputs by inputmask category
+            this.inputPrice = this.$('[data-input-mask="price"]');
+            this.inputPercent = this.$('[data-input-mask="percent"]');
+        },
+
+        render: function () {
+            this.$el.html(this.template({
+                data: app.cache.whatMyBusinessWorthCalculator,
+                formatPrice
+            }));
+            
+
+            // declare ui elements for the view
+            this.ui();
+
+            flyPriceFormatter(this.inputPrice, ({ modelValue, currentValue }) => {
+                // save value
+                console.log('currentValue', currentValue);
+                app.cache.whatMyBusinessWorthCalculator[modelValue] = +currentValue;
+            });
+
+            this.inputPercent.inputmask("9{1,4}%", {
+                placeholder: "0"
+            });
+            return this;
+        }
+    }),
+
+    step2: Backbone.View.extend({
+        el: '#content',
+
+        template: require('./templates/step2.pug'),
+
+        events: {
             // calculate your income
             'submit .js-calc-form': 'doCalculation',
 
             // remove useless zeros: 0055 => 55
             'blur .js-field': 'cutZeros'
         },
-
         doCalculation(e) {
             e.preventDefault();
 
@@ -69,7 +118,7 @@ module.exports = {
         calculateWithDelta(type = 'default') {
             let data = app.cache.whatMyBusinessWorthCalculator,
                 calculatedData = {},
-                // convert values into percents
+            // convert values into percents
                 grossMargin = data.grossMargin / 100,
                 workingCapital = data.workingCapital / 100,
                 taxRate = data.taxRate / 100;
@@ -136,6 +185,21 @@ module.exports = {
             _.extend(app.cache.whatMyBusinessWorthCalculator, calculatedData);
         },
 
+        isFirstStepFilled() {
+            if (app.cache.whatMyBusinessWorthCalculator) {
+                let { excessCash, ownCache, projectedRevenueYear, projectedRevenueTwoYears, grossMargin, monthlyOperatingYear } = app.cache.whatMyBusinessWorthCalculator,
+                    valid = false;
+
+                if (excessCash && ownCache && projectedRevenueYear &&
+                    projectedRevenueTwoYears && grossMargin && monthlyOperatingYear) {
+                    valid = true;
+                }
+                return valid;
+            } else {
+                return false;
+            }
+        },
+
         cutZeros(e) {
             let elem = e.target;
             elem.dataset.currentValue = parseFloat(elem.value.replace('$', '').replace(/,/g, '') || 0);
@@ -143,7 +207,7 @@ module.exports = {
 
             // save percent values
             if (elem.dataset.inputMask == "percent") {
-                app.cache.whatMyBusinessWorthCalculator[elem.dataset.modelValue] = elem.dataset.currentValue;
+                app.cache.whatMyBusinessWorthCalculator[elem.dataset.modelValue] = +elem.dataset.currentValue;
             }
         },
 
@@ -154,11 +218,16 @@ module.exports = {
         },
 
         render: function () {
+            // disable enter to the step 2 of capitalraise calculator without data entered on the first step
+            if (!this.isFirstStepFilled()) {
+                app.routers.navigate('/calculator/whatmybusinessworth/step-1', {trigger: true});
+                return false;
+            }
+
             this.$el.html(this.template({
                 data: app.cache.whatMyBusinessWorthCalculator,
                 formatPrice
             }));
-            
 
             // declare ui elements for the view
             this.ui();
@@ -171,6 +240,9 @@ module.exports = {
             this.inputPercent.inputmask("9{1,4}%", {
                 placeholder: "0"
             });
+
+            $('body').scrollTop(0);
+
             return this;
         }
     }),
