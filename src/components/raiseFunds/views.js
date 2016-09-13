@@ -121,6 +121,7 @@ module.exports = {
             states: this.usaStates,
           })
           );
+      debugger
       return this;
     },
 
@@ -691,7 +692,8 @@ module.exports = {
                         patch: true
                     }).then((model) => {
                         $('.img-investor_presentation').attr('src', '/img/MS-PowerPoint.png');
-                        $('.img-investor_presentation').after('<a class="link-3" href="' + data.url + '">' + data.name + '</a>');
+                        // $('.img-investor_presentation').after('<a class="link-3" href="' + data.url + '">' + data.name + '</a>');
+                        $('.a-investor_presentation').attr('href', data.url).text(data.name);
                     });
                 }
             );
