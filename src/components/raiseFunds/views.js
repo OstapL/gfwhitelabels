@@ -172,6 +172,12 @@ module.exports = {
         this.fields = options.fields;
         this.faqIndex = 1;
         this.additional_infoIndex = 1;
+        this.$el.on('keypress', ':input:not(textarea)', function(event){
+          if (event.keyCode == 13) {
+            event.preventDefault();
+            return false;
+          }
+        });
       },
 
       render() {
@@ -259,6 +265,12 @@ module.exports = {
         this.fields = options.fields;
         this.pressIndex = 1;
         this.additional_videoIndex = 1;
+        this.$el.on('keypress', ':input:not(textarea)', function(event){
+          if (event.keyCode == 13) {
+            event.preventDefault();
+            return false;
+          }
+        });
       },
 
       render() {
@@ -441,6 +453,12 @@ module.exports = {
         this.fields = options.fields;
         this.type = options.type;
         this.index = options.index;
+        this.$el.on('keypress', ':input:not(textarea)', function(event){
+          if (event.keyCode == 13) {
+            event.preventDefault();
+            return false;
+          }
+        });
       },
 
       render() {
@@ -658,6 +676,12 @@ module.exports = {
 
         initialize(options) {
             this.fields = options.fields;
+            this.$el.on('keypress', ':input:not(textarea)', function(event){
+              if (event.keyCode == 13) {
+                event.preventDefault();
+                return false;
+              }
+            });
         },
 
         updateSecurityType(e) {
@@ -713,13 +737,20 @@ module.exports = {
 
         addSection: jsonActions.addSection,
         deleteSection: jsonActions.deleteSection,
-        getSuccessUrl(data) {
-            return  '/api/campaign/' + data.id;
+        _success(data) {
+          const thankView = this.thankYou()
+          return  '/raisefunds/thankyou/' + data.id;
         },
 
         initialize(options) {
             this.fields = options.fields;
             this.perksIndex = 1;
+            this.$el.on('keypress', ':input:not(textarea)', function(event){
+              if (event.keyCode == 13) {
+                event.preventDefault();
+                return false;
+              }
+            });
         },
 
         render() {
