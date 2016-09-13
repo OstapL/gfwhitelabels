@@ -53,6 +53,7 @@ module.exports = {
         $(this.element).find('.uploading').show();
         $('.dropzone').css({ border: 'none' });
       },
+      acceptedFiles: 'image/*',
     });
 
     $('.dropzone__' + name).addClass('dropzone')//.html('Drop file here');
