@@ -1,24 +1,23 @@
 module.exports = Backbone.Router.extend({
   routes: {
-    // 'calculator/capitalraise2/intro': 'calculatorCapitalraise2Intro',
-    'calculator/whatmybusinessworth/step-1': 'calculatorCapitalraise2Step1',
-    'calculator/whatmybusinessworth/finish': 'calculatorCapitalraise2Finish'
+    'calculator/whatmybusinessworth/intro': 'calculatorWhatMyBusinessWorthIntro',
+    'calculator/whatmybusinessworth/step-1': 'calculatorWhatMyBusinessWorthStep1',
+    'calculator/whatmybusinessworth/step-2': 'calculatorWhatMyBusinessWorthStep2',
+    'calculator/whatmybusinessworth/finish': 'calculatorWhatMyBusinessWorthFinish'
   },
 
-    // calculatorCapitalraiseIntro() {
-    //     require.ensure([], () => {
-    //         let Model = require('./model');
-    //         let View = require('./views');
-    //
-    //         new View.intro({
-    //             model: app.getModelInstance(Model, 'calculatorCapitalraise2').setFormattedPrice()
-    //         }).render();
-    //
-    //         app.hideLoading();
-    //     });
-    // },
+  calculatorWhatMyBusinessWorthIntro() {
+    require.ensure([], () => {
+      let View = require('./views');
 
-  calculatorCapitalraise2Step1() {
+      new View.intro().render();
+
+      $('#content').scrollTo();
+      app.hideLoading();
+    });
+  },
+
+  calculatorWhatMyBusinessWorthStep1() {
     require.ensure([], () => {
       const View = require('./views');
 
@@ -29,7 +28,18 @@ module.exports = Backbone.Router.extend({
     });
   },
 
-  calculatorCapitalraise2Finish() {
+  calculatorWhatMyBusinessWorthStep2() {
+    require.ensure([], () => {
+      const View = require('./views');
+
+      new View.step2().render();
+
+      $('#content').scrollTo();
+      app.hideLoading();
+    });
+  },
+
+  calculatorWhatMyBusinessWorthFinish() {
     require.ensure([], () => {
       const View = require('./views');
 

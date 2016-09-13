@@ -97,10 +97,10 @@ module.exports = {
           this.$('.js-state').val(state);
           $("form input[name=state]").val(state);
 
-            } else {
-                console.log("error");
-            }
-        });
+        } else {
+          console.log("error");
+        }
+      });
     },
 
     render() {
@@ -129,17 +129,17 @@ module.exports = {
             );
       }
       else {
-        app.makeRequest('/api/campaign/general_information', {
+        app.makeRequest('/api/campaign/general_information', 'POST', {
           company: data.id,
           business_model: '',
           intended_use_of_proceeds: '',
           pitch: ''
-        }, 'POST').
+        }).
         then((campaign) => {
           app.cache['/api/campaign/general_information/' + campaign.id] = campaign;
           app.routers.navigate(
             '/campaign/general_information/' + campaign.id,
-            {trigger: true, replace: false}
+            {trigger: true, replace: true}
             );
         })
       }
@@ -736,6 +736,4 @@ module.exports = {
         },
 
     }),
-
-
 };
