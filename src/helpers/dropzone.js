@@ -50,6 +50,7 @@ module.exports = {
       },
       drop: function(e) {
         // this.trigger('dragleave');
+        $(this.element).find('.uploading').show();
         $('.dropzone').css({ border: 'none' });
       },
     });
