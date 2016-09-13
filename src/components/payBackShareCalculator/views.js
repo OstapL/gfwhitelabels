@@ -89,6 +89,17 @@ module.exports = {
                     countOfMultipleReturned++;
                     if (countOfMultipleReturned > 1) {
                         this.outputData[i].multiple = "";
+                        this.outputData[i].annual = "";
+                    } else if (countOfMultipleReturned == 1) {
+                        this.outputData[i].annual = (function(data) {
+                            let sum = 0,
+                                length = data.length;
+
+                            for (let k = 2; k < length - 1; k++) {
+                                sum += data[k].annual;
+                            }
+                            return raiseMoney * 2 - sum;
+                        })(this.outputData);
                     }
                 }
 
@@ -119,7 +130,7 @@ module.exports = {
             let selectedRange = this.outputData.slice(2, index + 1),
                 sum = 0;
             for (let row of selectedRange) {
-                sum += row.annual;
+                sum += +row.annual;
             }
             return sum;
         },
