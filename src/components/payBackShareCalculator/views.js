@@ -36,9 +36,9 @@ module.exports = {
 
             if (!app.cache.payBackShareCalculator) {
                 app.cache.payBackShareCalculator = {
-                    'raiseMoney': 100000,
-                    'nextYearRevenue': 1000000,
-                    'growLevel': 25
+                    'raiseMoney': '',
+                    'nextYearRevenue': '',
+                    'growLevel': ''
                 };
             }
         },
