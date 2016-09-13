@@ -593,7 +593,7 @@ module.exports = {
         deleteMember: function(e) {
             let memberId = e.currentTarget.dataset.id;
 
-            if(confirm('Are you sure?')) {
+            if(confirm('Are you sure you would like to delete this team member?')) {
               app.makeRequest('/api/campaign/team_members/' + this.model.get('id') + '?index=' + memberId, 'DELETE').
                   then((data) => {
                       this.model.attributes.members.splice(memberId, 1);
