@@ -746,9 +746,8 @@ module.exports = {
 
         addSection: jsonActions.addSection,
         deleteSection: jsonActions.deleteSection,
-        _success(data) {
-          const thankView = this.thankYou()
-          return  '/raisefunds/thankyou/' + data.id;
+        getSuccessUrl(data) {
+          return  '/campaign/thankyou/' + data.id;
         },
 
         initialize(options) {
@@ -791,5 +790,20 @@ module.exports = {
             return this;
         },
 
+    }),
+
+    thankYou: Backbone.View.extend({
+      el: '#content',
+      template: require('./templates/thankyou.pug'),
+
+      render() {
+        console.log(this.model);
+        this.$el.html(
+          this.template({
+            values: this.model,
+          })
+        );
+        return this;
+      },
     }),
 };
