@@ -183,7 +183,8 @@ mixin fieldBlock(name, data, attr)
                                             name=name + '[' + indexCounter + '][' + v + ']'
                                             placeholder=t.placeholder ? t.placeholder : t.label
                                             type=t.type
-                                        ).form-control
+                                            class=name + '_' + v + ' form-control'
+                                        )
                         .col-lg-5.p-l-1.p-r-3.col-md-12.col-xs-12.p-sm-0 
                             .embed-responsive.embed-responsive-16by9 
                                 iframe.embed-responsive-item(src="//www.youtube.com/embed/?rel=0" allowfullscreen="true")
@@ -209,7 +210,8 @@ mixin fieldBlock(name, data, attr)
                                                 placeholder=t.placeholder ? t.placeholder : t.label
                                                 type=t.type
                                                 value=k
-                                            ).form-control
+                                                class=name + '_' + v + ' form-control'
+                                            )
                             .col-lg-5.p-l-1.p-r-3.col-md-12.col-xs-12.p-sm-0  
                                 .embed-responsive.embed-responsive-16by9 
                                     - var link = app.getVideoId(values[name][kkeys[counter]].link)
