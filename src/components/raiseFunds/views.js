@@ -228,7 +228,18 @@ module.exports = {
         'submit form': api.submitAction,
         'click .delete-image': 'deleteImage',
         'change .videoInteractive input[type="url"]': 'updateVideo',
+        'dragover .media-container,.dropzone': 'globalDragover',
+        'dragleave .media-container,.dropzone': 'globalDragleave',
       }, jsonActions.events),
+
+      globalDragover () {
+          // console.log('hello');
+          this.$('.dropzone').css({ border: 'dashed 1px lightgray' });
+      },
+
+      globalDragleave () {
+          this.$('.dropzone').css({ border: 'none' });
+      },
 
       preinitialize() {
         // ToDo
@@ -501,7 +512,9 @@ module.exports = {
         if(this.index != 'new') {
           this.values = this.model.toJSON().members[this.index]
         } else {
-          this.values = {};
+          this.values = {
+            id: this.model.get('id'),
+          };
         }
 
         this.usaStates = require("helpers/usa-states");
@@ -511,7 +524,7 @@ module.exports = {
             Urls: Urls,
             fields: this.fields,
             member: this.values,
-            values: {id: this.model.get('id')},
+            values: this.values,
             type: this.type,
             index: this.index,
             states: this.usaStates,
@@ -579,18 +592,21 @@ module.exports = {
 
         deleteMember: function(e) {
             let memberId = e.currentTarget.dataset.id;
-            app.makeRequest('/api/campaign/team_members/' + this.model.get('id') + '?index=' + memberId, {}, 'DELETE').
-                then((data) => {
-                    this.model.attributes.members.splice(memberId, 1);
-                    $(e.currentTarget).parent().remove()
-                    if(this.model.attributes.members.length < 1) {
-                        this.$el.find('.notification').show();
-                        this.$el.find('.buttons-row').hide();
-                    } else {
-                        this.$el.find('.notification').hide();
-                        this.$el.find('.buttons-row').show();
-                    }
-                });
+
+            if(confirm('Are you sure?')) {
+              app.makeRequest('/api/campaign/team_members/' + this.model.get('id') + '?index=' + memberId, 'DELETE').
+                  then((data) => {
+                      this.model.attributes.members.splice(memberId, 1);
+                      $(e.currentTarget).parent().remove()
+                      if(this.model.attributes.members.length < 1) {
+                          this.$el.find('.notification').show();
+                          this.$el.find('.buttons-row').hide();
+                      } else {
+                          this.$el.find('.notification').hide();
+                          this.$el.find('.buttons-row').show();
+                      }
+                  });
+            }
         },
 
     }),
