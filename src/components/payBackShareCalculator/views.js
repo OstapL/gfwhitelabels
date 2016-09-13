@@ -2,6 +2,7 @@ import './styles/style.sass'
 import 'jquery.inputmask/dist/jquery.inputmask.bundle.js';
 import calculatorHelper from '../../helpers/calculatorHelpers';
 import flyPriceFormatter from '../../helpers/flyPriceFormatter';
+import '../../js/graf/graf.js';
 /*
 import 'js/jqplot/jquery.jqplot.js';
 import 'jqplot/plugins/jqplot.highlighter.js';
@@ -168,7 +169,7 @@ module.exports = {
 
         initialize() {
             this.jQPlot = null;
-            $(window).on("resize", $.proxy(this.resizeJqPlot, this));
+            // $(window).on("resize", $.proxy(this.resizeJqPlot, this));
         },
 
         resizeJqPlot: function() {
@@ -200,11 +201,6 @@ module.exports = {
                 return false;
             }
 
-            this.$el.html(this.template({
-                model: app.cache.payBackShareCalculator,
-                formatPrice
-            }));
-
             // get data for drawing jQPlot
             let { outputData, maxOfMultipleReturned } = app.cache.payBackShareCalculator,
                 lastStep = false;
@@ -212,23 +208,23 @@ module.exports = {
 
             // prepare data for drawing jQPlot
             let dataRendered = function() {
-                let data = [[]];
+                let data = [];
                 for (let i = 0, size = outputData.length; i < size; i++) {
                     if (outputData[i].multiple) {
-                        data[0].push([i, outputData[i].multiple, '']);
+                        data.push([i, outputData[i].multiple]);
 
                         // give the ability to draw one more step
-                        if (outputData[i].multiple >= maxOfMultipleReturned) {
-                            lastStep = true;
-                        }
+                        // if (outputData[i].multiple >= maxOfMultipleReturned) {
+                        //     lastStep = true;
+                        // }
 
                         // if we reach max needed steps, stop the filling
-                        if (lastStep) {
-                            let lastElement = data[0].pop();
-                            lastElement[2] = 'Congratulations, Payback Share Contract is complete';
-                            data[0].push(lastElement);
-                            break;
-                        }
+                        // if (lastStep) {
+                        //     let lastElement = data[0].pop();
+                        //     lastElement[2] = 'Congratulations, Payback Share Contract is complete';
+                        //     data[0].push(lastElement);
+                        //     break;
+                        // }
 
                     }
                 }
@@ -236,68 +232,128 @@ module.exports = {
             };
 
 
-            // drawing jQPlot
-            this.jQPlot = $.jqplot('chart1', {
-                seriesColors: ["red"],
-                title: 'Payback Graph',
-                animate: true,
-                dataRenderer: dataRendered,
-                seriesDefaults: {
-                    // fill: true,
-                    markerOptions: {
-                        show: true
+            this.$el.html(this.template({
+                data: app.cache.payBackShareCalculator,
+                dataRendered: dataRendered(),
+                formatPrice
+            }));
+
+            $.plot($("#chart1"), [{
+                data: dataRendered(),
+                label: "Invested amount",
+                lines: {
+                    lineWidth: 1
+                },
+                shadowSize: 0
+            }], {
+                series: {
+                    lines: {
+                        show: !0,
+                        lineWidth: 2,
+                        fill: !0,
+                        fillColor: {
+                            colors: [{
+                                opacity: .05
+                            }, {
+                                opacity: .01
+                            }]
+                        }
                     },
-                    rendererOptions: {
-                        smooth: false
+                    points: {
+                        show: !0,
+                        radius: 3,
+                        lineWidth: 1
                     },
-                    pointLabels: {
-                        show: true,
-                        location: 'ne',
-                        ypadding: 3
-                    }
+                    shadowSize: 2
                 },
                 grid: {
-                    background: 'rgba(57,57,57,0.0)',
-                    drawBorder: false,
-                    shadow: false,
-                    gridLineColor: '#efefef',
-                    gridLineWidth: 1
+                    hoverable: !0,
+                    clickable: !0,
+                    tickColor: "#eee",
+                    borderColor: "#eee",
+                    borderWidth: 1
                 },
-                series: [
-                    {
-                        lineWidth: 1,
-                        color: 'red',
-                        markerOptions:{style:'circle'},
-                        showLine: true,
-                        fillAndStroke: true,
-                        fill: true,
-                        fillColor: '#c9302c',
-                        fillAlpha: 0.2
-                    }
-                ],
-                axes: {
-                    xaxis: {
-                        min: 0,
-                        max: 10,
-                        tickInterval: 1,
-                        label: 'Years'
-                    },
-                    yaxis: {
-                        min: 0,
-                        max: 2.5,
-                        tickInterval: 0.5,
-                        label: 'Multiple Returned',
-                        labelRenderer: $.jqplot.CanvasAxisLabelRenderer
-                    }
+                colors: ["#d12610", "#37b7f3", "#52e136"],
+                xaxis: {
+                    ticks: 11,
+                    tickDecimals: 0,
+                    tickColor: "#eee"
                 },
-                highlighter: {
-                    show: true,
-                    sizeAdjust: 6
-                },
-                cursor: {
-                    show: false
+                yaxis: {
+                    ticks: 11,
+                    tickDecimals: 0,
+                    tickColor: "#eee"
                 }
             });
+
+
+
+
+
+
+
+            // drawing jQPlot
+            // this.jQPlot = $.jqplot('chart1', {
+            //     seriesColors: ["red"],
+            //     title: 'Payback Graph',
+            //     animate: true,
+            //     dataRenderer: dataRendered,
+            //     seriesDefaults: {
+            //         // fill: true,
+            //         markerOptions: {
+            //             show: true
+            //         },
+            //         rendererOptions: {
+            //             smooth: false
+            //         },
+            //         pointLabels: {
+            //             show: true,
+            //             location: 'ne',
+            //             ypadding: 3
+            //         }
+            //     },
+            //     grid: {
+            //         background: 'rgba(57,57,57,0.0)',
+            //         drawBorder: false,
+            //         shadow: false,
+            //         gridLineColor: '#efefef',
+            //         gridLineWidth: 1
+            //     },
+            //     series: [
+            //         {
+            //             lineWidth: 1,
+            //             color: 'red',
+            //             markerOptions:{style:'circle'},
+            //             showLine: true,
+            //             fillAndStroke: true,
+            //             fill: true,
+            //             fillColor: '#c9302c',
+            //             fillAlpha: 0.2
+            //         }
+            //     ],
+            //     axes: {
+            //         xaxis: {
+            //             min: 0,
+            //             max: 10,
+            //             tickInterval: 1,
+            //             label: 'Years'
+            //         },
+            //         yaxis: {
+            //             min: 0,
+            //             max: 2.5,
+            //             tickInterval: 0.5,
+            //             label: 'Multiple Returned',
+            //             labelRenderer: $.jqplot.CanvasAxisLabelRenderer
+            //         }
+            //     },
+            //     highlighter: {
+            //         show: true,
+            //         sizeAdjust: 6
+            //     },
+            //     cursor: {
+            //         show: false
+            //     }
+            // });
 
             return this;
         }
