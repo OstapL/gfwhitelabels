@@ -195,75 +195,76 @@ module.exports = {
   }),
 
   investment: Backbone.View.extend({
-      template: require('./templates/investment.pug'),
-      events: {
-          'submit form': api.submitAction,
-          'keyup #amount': 'amountUpdate',
-          'keyup #zip_code': 'changeZipCode',
-          'click .update-location': 'updateLocation'
-      },
-      initialize(options) {
-          this.campaignModel = options.campaignModel;
-          this.fields = options.fields;
-      },
+    template: require('./templates/investment.pug'),
+    urlRoot: serverUrl + Urls['investment_list'](),
+    events: {
+      'submit form': api.submitAction,
+      'keyup #amount': 'amountUpdate',
+      'keyup #zip_code': 'changeZipCode',
+      'click .update-location': 'updateLocation'
+    },
+    initialize(options) {
+      this.campaignModel = options.campaignModel;
+      this.fields = options.fields;
+    },
 
-      updateLocation(e) {
-          this.$('.js-city-state').text(this.$('.js-city').val() + ', ' + this.$('.js-state').val());
-      },
+    updateLocation(e) {
+      this.$('.js-city-state').text(this.$('.js-city').val() + ', ' + this.$('.js-state').val());
+    },
 
-      changeZipCode(e) {
-          // if not 5 digit, return
-          if (e.target.value.length < 5) return;
-          if (!e.target.value.match(/\d{5}/)) return;
-          // else console.log('hello');
-          this.getCityStateByZipCode(e.target.value, ({ success=false, city="", state=""}) => {
-              // this.zipCodeField.closest('div').find('.help-block').remove();
-              if (success) {
-                  this.$('.js-city-state').text(`${city}, ${state}`);
-                  // this.$('#city').val(city);
-                  this.$('.js-city').val(city);
-                  // this.$('#state').val(city);
-                  this.$('.js-state').val(state);
+    changeZipCode(e) {
+      // if not 5 digit, return
+      if (e.target.value.length < 5) return;
+      if (!e.target.value.match(/\d{5}/)) return;
+      // else console.log('hello');
+      this.getCityStateByZipCode(e.target.value, ({ success=false, city="", state=""}) => {
+        // this.zipCodeField.closest('div').find('.help-block').remove();
+        if (success) {
+          this.$('.js-city-state').text(`${city}, ${state}`);
+          // this.$('#city').val(city);
+          this.$('.js-city').val(city);
+          // this.$('#state').val(city);
+          this.$('.js-state').val(state);
 
-              } else {
-                  console.log("error");
-              }
-          });
-      },
+        } else {
+          console.log("error");
+        }
+      });
+    },
 
-      render() {
-          this.getCityStateByZipCode = require("helpers/getSityStateByZipCode");
-          this.usaStates = require("helpers/usa-states");
-          this.$el.html(
-              this.template({
-                  serverUrl: serverUrl,
-                  Urls: Urls,
-                  fields: this.fields,
-                  campaignModel: this.campaignModel,
-                  campaign: this.campaignModel.toJSON(),
-                  user: app.user.toJSON(),
-                  states: this.usaStates
-              })
+    render() {
+      this.getCityStateByZipCode = require("helpers/getSityStateByZipCode");
+      this.usaStates = require("helpers/usa-states");
+      this.$el.html(
+          this.template({
+            serverUrl: serverUrl,
+            Urls: Urls,
+            fields: this.fields,
+            campaignModel: this.campaignModel,
+            campaign: this.campaignModel.toJSON(),
+            user: app.user.toJSON(),
+            states: this.usaStates
+          })
           );
-          return this;
-      },
+      return this;
+    },
 
-      amountUpdate(e) {
-        var amount = parseInt(e.currentTarget.value);
-        if(amount >= 5000) {
+    amountUpdate(e) {
+      var amount = parseInt(e.currentTarget.value);
+      if(amount >= 5000) {
 
-          $('#amount').popover({
-            // trigger: 'focus',
-            placement(context, src) {
-              $(context).addClass('amount-popover');
-              return 'top';
-            },
-            html: true,
-            content(){
-              var content = $('.invest_form').find('.popover-content-amount-campaign').html();
-              return content;
-            }
-          });
+        $('#amount').popover({
+          // trigger: 'focus',
+          placement(context, src) {
+            $(context).addClass('amount-popover');
+            return 'top';
+          },
+          html: true,
+          content(){
+            var content = $('.invest_form').find('.popover-content-amount-campaign').html();
+            return content;
+          }
+        });
 
           $('#amount').popover('show');
         } else {

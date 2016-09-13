@@ -9,13 +9,8 @@ select.form-control
 
 .form-section// каждая форма будет в таком контейнере
 	.required
-
 		label
 			color: $black_bg
-	.form-control
-		color: $black
-		&:focus
-			color: $black
 	img
 		max-width: 100%// будет перенесен в файл общих стилей - использовать клас бутстрапа .img-fluid
 
@@ -51,8 +46,7 @@ select.form-control
 				
 		// знак вопроса (есть на странице calculator/capitalraise/step-1)
 		i 
-	select,.custom-select
-		color: $black!important
+
 
 	@media screen and (min-width:992px)
 		// date of birth field
@@ -60,15 +54,12 @@ select.form-control
 			padding-left: 0
 
 	input[type="text"]
-		color: $black
 		@include placeholder
-		
 			color: #a3a3a3
 
 	textarea
 		min-height: 38px
 		max-width: 554px
-		color: $black
 
 	.pseudo-checkbox,.form-check-input// для задаванния своего вида чекбокса
 		position: relative
