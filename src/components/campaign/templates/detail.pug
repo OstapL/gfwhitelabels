@@ -1,5 +1,5 @@
 - 'use strict';
-include mixins.pug
+include ../../../templates/mixins.pug
 
 - var percentage_raised = model.calculateRaisedPercentage(campaign.minimum_raise, campaign.amount_raised)
 
@@ -13,14 +13,18 @@ section#home(style="background-image: url(" + (campaign.header_image_data ? camp
             i.fa.fa-play-circle-o
           a(href=campaign.company.website target="_blank").link-6.link-campaing-detail #{ campaign.company.website }
           .row.social-link
-            a(href=campaign.company.facebook target="_blank").link-6.link-campaing-detail
-              i.fa.fa-facebook
-            a(href=campaign.company.twitter target="_blank").link-6.link-campaing-detail
-              i.fa.fa-twitter
-            a(href=campaign.company.instagram target="_blank").link-6.link-campaing-detail
-              i.fa.fa-instagram
-            a(href=campaign.company.linkedin target="_blank").link-6.link-campaing-detail
-              i.fa.fa-linkedin
+            if campaign.company.facebook
+              a(href=campaign.company.facebook target="_blank").link-6.link-campaing-detail
+                i.fa.fa-facebook
+            if campaign.company.twitter
+              a(href=campaign.company.twitter target="_blank").link-6.link-campaing-detail
+                i.fa.fa-twitter
+            if campaign.company.instagram
+              a(href=campaign.company.instagram target="_blank").link-6.link-campaing-detail
+                i.fa.fa-instagram
+            if campaign.company.linkedin
+              a(href=campaign.company.linkedin target="_blank").link-6.link-campaing-detail
+                i.fa.fa-linkedin
 
         // End Hero Content
   .top-info
@@ -227,11 +231,11 @@ section
       .col-lg-12
         //- h3.our.text-lg-center Our Edge
         h2.dosis.our.text-uppercase.text-lg-center.green-heading How We Intend to Make Money
-        p #{ campaign.business_model }
+        p #{ campaign.intended_use_of_proceeds }
 
         //- h3.text-lg-center Why We are Raising Capital, and What We’ll Do with It
         h2.dosis.text-uppercase.text-lg-center.green-heading Why We are Raising Capital, and What We’ll Do with It
-        p #{ campaign.intended_use_of_proceeds }
+        p #{ campaign.business_model }
 
       if campaign.additional_info
         .col-lg-12
@@ -265,7 +269,8 @@ section
                               a(href="#").link-1.text-lg-left
                                 i.fa.fa-home.p-l-0
                                 |  #{v.growup}, #{v.state}
-                              a(href="#").link-1.pull-right
+                              //- a(href="#").link-1.pull-right
+                              span.pull-right
                                 i.fa.fa-graduation-cap
                                 |  #{v.college}
             h2.dosis.text-uppercase.text-lg-center.green-heading Articles and Press
