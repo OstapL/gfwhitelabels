@@ -248,15 +248,14 @@ module.exports = {
         'submit form': api.submitAction,
         'click .delete-image': 'deleteImage',
         'change .videoInteractive input[type="url"]': 'updateVideo',
-        'dragover .media-container,.dropzone': 'globalDragover',
-        'dragleave .media-container,.dropzone': 'globalDragleave',
+        'dragover': 'globalDragover',
+        'dragleave': 'globalDragleave',
         'change #video,.additional_video_link': 'appendHttpIfNecessary',
       }, jsonActions.events),
 
       appendHttpIfNecessary: appendHttpIfNecessary,
 
       globalDragover () {
-          // console.log('hello');
           this.$('.dropzone').css({ border: 'dashed 1px lightgray' });
       },
 
@@ -652,6 +651,16 @@ module.exports = {
           'change input[name="security_type"]': 'updateSecurityType',
           'change #minimum_raise,#maximum_raise,#minimum_increment,#premoney_valuation': 'formatNumber',
           'change #minimum_raise,#maximum_raise,#price_per_share,#premoney_valuation': "calculateNumberOfShares",
+          'dragover': 'globalDragover',
+          'dragleave': 'globalDragleave',
+        },
+
+        globalDragover () {
+            this.$('.dropzone').css({ border: 'dashed 1px lightgray' });
+        },
+
+        globalDragleave () {
+            this.$('.dropzone').css({ border: 'none' });
         },
 
         preinitialize() {
