@@ -35,6 +35,8 @@ module.exports = {
       'click .twitter-share': 'shareOnTwitter',
       'click .see-all-risks': 'seeAllRisks',
       'click .see-all-faq': 'seeAllFaq',
+      'click .response': 'checkResponse',
+      'submit #comment': 'submitComment',
     },
     initialize(options) {
       $(document).off("scroll", this.onScrollListener);
@@ -178,6 +180,15 @@ module.exports = {
         });
 
         let photoswipeRun = require('components/campaign/photoswipe_run.js');
+        this.commentView = require('components/comment/views.js');
+
+        var a1 = api.makeCacheRequest(Urls['comment-list']() + '?company=' + this.model.get('company').id).
+          then((comments) => {
+            let commentList = new this.commentView.list({
+              el: '.comments',
+              collection: comments,
+            }).render();
+          });
         /*
            window.PhotoSwipe = PhotoSwipe;
            window.PhotoSwipeUI_Default = PhotoSwipeUI_Default;
@@ -190,80 +201,125 @@ module.exports = {
         $(event.currentTarget).find('iframe').attr('src', $(event.currentTarget).find('iframe').attr('src'));
       });
 
+
       return this;
     },
+
+    _commentSuccess(data) {
+      console.log('comment was succesfull added', data);
+      this._success = null;
+      this.urlRoot = null;
+      this.model = this.oldModel;
+      this.$el.find('#comment_' + data.parent);
+      if (data.parent) { 
+        $('#comment_' + data.parent).after(
+          new this.commentView.detail({
+            model: data,
+          }).getHtml()
+        );
+      } else {
+        new this.commentView.detail({
+          el: '#comment_' + data.parent,
+          model: data,
+        }).render();
+      }
+      $('#parent').val('');
+      $('#is_related').val('0');
+      $('#body').val('');
+      app.hideLoading();
+      app.showLoading = this._showLoading;
+    },
+
+    checkResponse(e) {
+      e.preventDefault();
+      this.$el.find('#parent').val(e.currentTarget.dataset.id);
+      this.$el.find('#body').val('@' + e.currentTarget.dataset.name + ' ');
+    },
+
+    submitComment(e) {
+      e.preventDefault();
+      console.log('we are here');
+      this._success = this._commentSuccess;
+      this.urlRoot = serverUrl + Urls['comment-list']();
+      this.oldModel = this.model;
+      delete this.model;
+      this._showLoading = app.showLoading;
+      app.showLoading = function(){ };
+      api.submitAction.call(this, e);
+    }
   }),
 
   investment: Backbone.View.extend({
-      template: require('./templates/investment.pug'),
-      events: {
-          'submit form': api.submitAction,
-          'keyup #amount': 'amountUpdate',
-          'keyup #zip_code': 'changeZipCode',
-          'click .update-location': 'updateLocation'
-      },
-      initialize(options) {
-          this.campaignModel = options.campaignModel;
-          this.fields = options.fields;
-      },
+    template: require('./templates/investment.pug'),
+    urlRoot: serverUrl + Urls['investment_list'](),
+    events: {
+      'submit form': api.submitAction,
+      'keyup #amount': 'amountUpdate',
+      'keyup #zip_code': 'changeZipCode',
+      'click .update-location': 'updateLocation'
+    },
+    initialize(options) {
+      this.campaignModel = options.campaignModel;
+      this.fields = options.fields;
+    },
 
-      updateLocation(e) {
-          this.$('.js-city-state').text(this.$('.js-city').val() + ', ' + this.$('.js-state').val());
-      },
+    updateLocation(e) {
+      this.$('.js-city-state').text(this.$('.js-city').val() + ', ' + this.$('.js-state').val());
+    },
 
-      changeZipCode(e) {
-          // if not 5 digit, return
-          if (e.target.value.length < 5) return;
-          if (!e.target.value.match(/\d{5}/)) return;
-          // else console.log('hello');
-          this.getCityStateByZipCode(e.target.value, ({ success=false, city="", state=""}) => {
-              // this.zipCodeField.closest('div').find('.help-block').remove();
-              if (success) {
-                  this.$('.js-city-state').text(`${city}, ${state}`);
-                  // this.$('#city').val(city);
-                  this.$('.js-city').val(city);
-                  // this.$('#state').val(city);
-                  this.$('.js-state').val(state);
+    changeZipCode(e) {
+      // if not 5 digit, return
+      if (e.target.value.length < 5) return;
+      if (!e.target.value.match(/\d{5}/)) return;
+      // else console.log('hello');
+      this.getCityStateByZipCode(e.target.value, ({ success=false, city="", state=""}) => {
+        // this.zipCodeField.closest('div').find('.help-block').remove();
+        if (success) {
+          this.$('.js-city-state').text(`${city}, ${state}`);
+          // this.$('#city').val(city);
+          this.$('.js-city').val(city);
+          // this.$('#state').val(city);
+          this.$('.js-state').val(state);
 
-              } else {
-                  console.log("error");
-              }
-          });
-      },
+        } else {
+          console.log("error");
+        }
+      });
+    },
 
-      render() {
-          this.getCityStateByZipCode = require("helpers/getSityStateByZipCode");
-          this.usaStates = require("helpers/usa-states");
-          this.$el.html(
-              this.template({
-                  serverUrl: serverUrl,
-                  Urls: Urls,
-                  fields: this.fields,
-                  campaignModel: this.campaignModel,
-                  campaign: this.campaignModel.toJSON(),
-                  user: app.user.toJSON(),
-                  states: this.usaStates
-              })
+    render() {
+      this.getCityStateByZipCode = require("helpers/getSityStateByZipCode");
+      this.usaStates = require("helpers/usa-states");
+      this.$el.html(
+          this.template({
+            serverUrl: serverUrl,
+            Urls: Urls,
+            fields: this.fields,
+            campaignModel: this.campaignModel,
+            campaign: this.campaignModel.toJSON(),
+            user: app.user.toJSON(),
+            states: this.usaStates
+          })
           );
-          return this;
-      },
+      return this;
+    },
 
-      amountUpdate(e) {
-        var amount = parseInt(e.currentTarget.value);
-        if(amount >= 5000) {
+    amountUpdate(e) {
+      var amount = parseInt(e.currentTarget.value);
+      if(amount >= 5000) {
 
-          $('#amount').popover({
-            // trigger: 'focus',
-            placement(context, src) {
-              $(context).addClass('amount-popover');
-              return 'top';
-            },
-            html: true,
-            content(){
-              var content = $('.invest_form').find('.popover-content-amount-campaign').html();
-              return content;
-            }
-          });
+        $('#amount').popover({
+          // trigger: 'focus',
+          placement(context, src) {
+            $(context).addClass('amount-popover');
+            return 'top';
+          },
+          html: true,
+          content(){
+            var content = $('.invest_form').find('.popover-content-amount-campaign').html();
+            return content;
+          }
+        });
 
           $('#amount').popover('show');
         } else {

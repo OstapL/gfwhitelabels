@@ -1,10 +1,42 @@
+include ../../../templates/mixins.pug
+
++breadcrumbs('Capital Raise Calculator ', 'intro',
+    [
+        ['Home', '/'],
+        ["What's My Business Worth?", '/'],
+        ["Capital Raise Calculator", '']
+    ]
+)
+
 .container.calculator-container
-    .page
-        h1.calculator-title Capital Raise Calculator - Finish
-    .submit-area
-        h3 Total Amount of Capital Raise We Recommend: #{formatPrice(model.finalRaiseAmount)}
-        .form-group.row
-            .col-sm-6.text-xs-center.text-sm-left
-                a.btn.btn-link(href='/calculator/capitalraise2/step-1', role='button') Go back
-                p Don&apos;t worry we saved this info
-            .col-sm-6.text-xs-center.text-sm-right
+
+    .row
+        .col-xs-12
+            ul.list-inline.top-breadcrambs.mb45.capitalraise
+                li
+                    a(href="/calculator/whatmybusinessworth/intro").btn.text-uppercase Intro
+                li
+                    a(href="/calculator/whatmybusinessworth/step-1").btn.text-uppercase step 1
+                li
+                    a(href="/calculator/whatmybusinessworth/step-2").btn.text-uppercase step 2
+                li
+                    a(href="/calculator/whatmybusinessworth/finish").current.btn.text-uppercase finish
+
+        .row
+            .offset-lg-1.col-lg-10.text-sm-center
+                h2.opensans.m0.letter-spacing-2
+                    i(aria-hidden="true").fa.fa-diamond.text-info
+                    | &nbsp;GrowthFountain Recommended Total Amount of Capital Raise
+                    p
+                        b #{formatPrice(data.finalRaiseAmount)}
+
+        .row
+            .offset-lg-3.col-lg-6.text-sm-center
+                hr.mt50.mb50
+
+        .row
+            .offset-lg-3.col-lg-6.text-sm-center
+                a(
+                    href="/calculator/whatmybusinessworth/step-2"
+                ).btn.btn-primary.text-uppercase back
+

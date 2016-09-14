@@ -1,0 +1,30 @@
+include ../../../templates/mixins.pug
+
++breadcrumbs('Congratulations!', '', 
+    [
+        ['Home', '/'],
+        ['Thank you', '']
+    ]
+)
+
+.container
+    .row
+        .col-sm-8.offset-sm-2
+            h2.text-xs-center.thankyou-title.m0 #[i(aria-hidden="true").fa.fa-thumbs-o-up] We need to review you campaign
+
+    .row
+        .col-sm-8.offset-sm-2.mb50.mt50
+            hr
+    
+    .row
+        .col-sm-12
+            .result-info-block.m-x-auto
+                ul.info-text-block.list-unstyled
+                    li some text
+                    li some text
+                    li some text
+                    li some text
+
+                .info-btn-block.pt50
+                    a(href="/api/campaign/" + values.id).btn.btn-lg.btn-secondary PREVIEW
+                        i.fa.fa-angle-down

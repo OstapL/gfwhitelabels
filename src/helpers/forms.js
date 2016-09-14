@@ -77,11 +77,11 @@ module.exports = {
           this.$el.find('.alert-warning').remove();
           self.undelegateEvents();
           $('.popover').popover('hide');
-          $('#content').scrollTo();
 
           if (typeof this._success == 'function') {
             this._success(data);
           } else {
+            $('#content').scrollTo();
             app.routers.navigate(
               self.getSuccessUrl(data),
               { trigger: true, replace: false }

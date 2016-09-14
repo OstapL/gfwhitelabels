@@ -1,3 +1,4 @@
+// show main menu list on mobile devaices
 html.show-menu
   overflow: hidden !important
   height: 100% !important
@@ -10,10 +11,16 @@ html.show-menu
   header
     height: 100%
     -webkit-transition: height 0.35s ease-in 200ms
+    -moz-transition: height 0.35s ease-in 200ms
+    -ms-transition: height 0.35s ease-in 200ms
+    -o-transition: height 0.35s ease-in 200ms
     transition: height 0.35s ease-in 200ms
 
     #menuProfile
       -webkit-transition: right 0.45s ease-in 200ms
+      -moz-transition: right 0.45s ease-in 200ms
+      -ms-transition: right 0.45s ease-in 200ms
+      -o-transition: right 0.45s ease-in 200ms
       transition: right 0.45s ease-in 200ms
 
       position: absolute
@@ -24,28 +31,64 @@ html.show-menu
         background-color: transparent
 
       span:before 
+        -webkit-transition: rotate(45deg) translate(-1px, 0px)
+        -moz-transition: rotate(45deg) translate(-1px, 0px)
+        -ms-transition: rotate(45deg) translate(-1px, 0px)
+        -o-transition: rotate(45deg) translate(-1px, 0px)
         transform: rotate(45deg) translate(-1px, 0px)
 
       span:after 
+        -webkit-transition: rotate(-45deg) translate(5px, -7px)
+        -moz-transition: rotate(-45deg) translate(5px, -7px)
+        -ms-transition: rotate(-45deg) translate(5px, -7px)
+        -o-transition: rotate(-45deg) translate(5px, -7px)
         transform: rotate(-45deg) translate(5px, -7px)
 
     #menuList,
       visibility: visible
       -webkit-transition-delay: 0s
+      -moz-transition-delay: 0s
+      -ms-transition-delay: 0s
+      -o-transition-delay: 0s
       transition-delay: 0s
 
       li
+        -webkit-transition-delay: 300ms, 300ms
+        -moz-transition-delay: 300ms, 300ms
+        -ms-transition-delay: 300ms, 300ms
+        -o-transition-delay: 300ms, 300ms
         transition-delay: 300ms, 300ms
 
+        -webkit-transition: none
+        -moz-transition: none
+        -ms-transition: none
+        -o-transition: none
         transform: none
+
         opacity: 1
+        -webkit-transition: opacity 0.5s ease-out, transform 0.5s ease-out, -webkit-transform 0.5s ease-out
+        -moz-transition: opacity 0.5s ease-out, transform 0.5s ease-out, -webkit-transform 0.5s ease-out
+        -ms-transition: opacity 0.5s ease-out, transform 0.5s ease-out, -webkit-transform 0.5s ease-out
+        -o-transition: opacity 0.5s ease-out, transform 0.5s ease-out, -webkit-transform 0.5s ease-out
         transition: opacity 0.5s ease-out, transform 0.5s ease-out, -webkit-transform 0.5s ease-out
 
     form.form-inline
+      -webkit-transition-delay: 200ms, 200ms
+      -moz-transition-delay: 200ms, 200ms
+      -ms-transition-delay: 200ms, 200ms
+      -o-transition-delay: 200ms, 200ms
       transition-delay: 200ms, 200ms
 
+      -webkit-transition: none
+      -moz-transition: none
+      -ms-transition: none
+      -o-transition: none
       transform: none
       opacity: 1
+      -webkit-transition: opacity 0.5s ease-out, transform 0.5s ease-out, -webkit-transform 0.5s ease-out
+      -moz-transition: opacity 0.5s ease-out, transform 0.5s ease-out, -webkit-transform 0.5s ease-out
+      -ms-transition: opacity 0.5s ease-out, transform 0.5s ease-out, -webkit-transform 0.5s ease-out
+      -o-transition: opacity 0.5s ease-out, transform 0.5s ease-out, -webkit-transform 0.5s ease-out
       transition: opacity 0.5s ease-out, transform 0.5s ease-out, -webkit-transform 0.5s ease-out
 
 header.no-overflow
@@ -53,17 +96,36 @@ header.no-overflow
   nav
     overflow: visible
 
+    // show profile menu on mobile devaices
     .list-container.user-info-drop.notification-container
+      -webkit-transition-delay: 300ms, 300ms
+      -moz-transition-delay: 300ms, 300ms
+      -ms-transition-delay: 300ms, 300ms
+      -o-transition-delay: 300ms, 300ms
       transition-delay: 300ms, 300ms
+
+      -webkit-transition: height 0.45s ease-out, opacity 0.25s ease-out, transform 0.25s ease-out, -webkit-transform 0.25s ease-out
+      -moz-transition: height 0.45s ease-out, opacity 0.25s ease-out, transform 0.25s ease-out, -webkit-transform 0.25s ease-out
+      -ms-transition: height 0.45s ease-out, opacity 0.25s ease-out, transform 0.25s ease-out, -webkit-transform 0.25s ease-out
+      -o-transition: height 0.45s ease-out, opacity 0.25s ease-out, transform 0.25s ease-out, -webkit-transform 0.25s ease-out
       transition: height 0.45s ease-out, opacity 0.25s ease-out, transform 0.25s ease-out, -webkit-transform 0.25s ease-out
+      -webkit-transition: none
+      -moz-transition: none
+      -ms-transition: none
+      -o-transition: none
       transform: none
   
       height: rem(144)
       opacity: 1
 
       background: rgba( $menu_backgound_from, .96)
+      
+      // show login signin button and set it diff height on mobile devaices
+      &.not-log-in-user
+        height: rem(66)
 
-@media screen and (max-width: 991px) 
+@media screen and (max-width: 991px)
+  // on mobile devaices main menu absolute positioned so we need set top padding for main content
   .page
     padding-top: rem(65)
 
@@ -81,6 +143,13 @@ header
       display: inline-block
       padding: 0 12px
       text-transform: uppercase
+
+      @media screen and (min-width: 992px) and (max-width: 1145px )
+        padding: 0 8px
+
+        a.btn
+          padding: rem(5) rem(15)
+
     .navbar-brand
       width: 20%
 
@@ -358,8 +427,10 @@ header
       background-color: transparent
 
   @media screen and (max-width: 991px)
-
     -webkit-transition: height 0.35s ease-in
+    -moz-transition: height 0.35s ease-in
+    -ms-transition: height 0.35s ease-in
+    -o-transition: height 0.35s ease-in
     transition: height 0.35s ease-in
 
     position: absolute
@@ -388,8 +459,18 @@ header
       width: 100%
 
       .list-container.user-info-drop.notification-container
-        transition-delay: 200ms, 200ms
         transform: scale(1.1) translateY(-10px)
+
+        transition-delay: 200ms, 200ms
+        -webkit-transition-delay: 200ms, 200ms 
+        -moz-transition-delay: 200ms, 200ms
+        -ms-transition-delay: 200ms, 200ms
+        -o-transition-delay: 200ms, 200ms
+
+        -webkit-transition: height 0.45s ease-out, opacity 0.25s ease-out, transform 0.25s ease-out, -webkit-transform 0.25s ease-out
+        -moz-transition: height 0.45s ease-out, opacity 0.25s ease-out, transform 0.25s ease-out, -webkit-transform 0.25s ease-out
+        -ms-transition: height 0.45s ease-out, opacity 0.25s ease-out, transform 0.25s ease-out, -webkit-transform 0.25s ease-out
+        -o-transition: height 0.45s ease-out, opacity 0.25s ease-out, transform 0.25s ease-out, -webkit-transform 0.25s ease-out
         transition: height 0.45s ease-out, opacity 0.25s ease-out, transform 0.25s ease-out, -webkit-transform 0.25s ease-out
         
         position: absolute
@@ -402,6 +483,9 @@ header
 
       #menuProfile
         -webkit-transition: right 0.35s ease-in 100ms
+        -moz-transition: right 0.35s ease-in 100ms
+        -ms-transition: right 0.35s ease-in 100ms
+        -o-transition: right 0.35s ease-in 100ms
         transition: right 0.35s ease-in 100ms
 
         position: absolute
@@ -409,6 +493,9 @@ header
 
       #menuList
         -webkit-transition: visibility 0s linear 1s
+        -moz-transition: visibility 0s linear 1s
+        -ms-transition: visibility 0s linear 1s
+        -o-transition: visibility 0s linear 1s
         transition: visibility 0s linear 1s
 
         position: relative
@@ -427,8 +514,22 @@ header
         -webkit-overflow-scrolling: touch
 
         li 
-          transition-delay: 400ms, 400ms
+          -webkit-transition: scale(1.1) translateY(-20px)
+          -moz-transition: scale(1.1) translateY(-20px)
+          -ms-transition: scale(1.1) translateY(-20px)
+          -o-transition: scale(1.1) translateY(-20px)
           transform: scale(1.1) translateY(-20px)
+
+          transition-delay: 400ms, 400ms
+          -webkit-transition-delay: 400ms, 400ms
+          -moz-transition-delay: 400ms, 400ms
+          -ms-transition-delay: 400ms, 400ms
+          -o-transition-delay: 400ms, 400ms
+
+          -webkit-transition: opacity 0.55s ease-out, transform 0.45s ease-out, -webkit-transform 0.45s ease-out
+          -moz-transition: opacity 0.55s ease-out, transform 0.45s ease-out, -webkit-transform 0.45s ease-out
+          -ms-transition: opacity 0.55s ease-out, transform 0.45s ease-out, -webkit-transform 0.45s ease-out
+          -o-transition: opacity 0.55s ease-out, transform 0.45s ease-out, -webkit-transform 0.45s ease-out
           transition: opacity 0.55s ease-out, transform 0.45s ease-out, -webkit-transform 0.45s ease-out
           
           opacity: 0
@@ -461,7 +562,7 @@ header
 
       .navbar-nav
         .nav-item
-          .list-container:not('.user-info-drop.notification-container')
+          .list-container:not(.drop-container)
             ul
               width: 100%
               min-width: 100%!important
@@ -505,6 +606,11 @@ header
         display: block
 
       span, span:after, span:before
+      
+        -webkit-transition: all 0.3s
+        -moz-transition: all 0.3s
+        -ms-transition: all 0.3s
+        -o-transition: all 0.3s
         transition: all 0.3s
 
         width: 100%
@@ -523,8 +629,27 @@ header
           display: none
 
     form.form-inline
-      transition-delay: 400ms, 400ms
+      -webkit-transition: scale(1.1) translateY(-20px)
+      -moz-transition: scale(1.1) translateY(-20px)
+      -ms-transition: scale(1.1) translateY(-20px)
+      -o-transition: scale(1.1) translateY(-20px)
+
+      -webkit-transition: scale(1.1) translateY(-20px)
+      -moz-transition: scale(1.1) translateY(-20px)
+      -ms-transition: scale(1.1) translateY(-20px)
+      -o-transition: scale(1.1) translateY(-20px)
       transform: scale(1.1) translateY(-20px)
+
+      transition-delay: 400ms, 400ms
+      -webkit-transition-delay: 400ms, 400ms
+      -moz-transition-delay: 400ms, 400ms
+      -ms-transition-delay: 400ms, 400ms
+      -o-transition-delay: 400ms, 400ms
+
+      -webkit-transition: opacity 0.55s ease-out, transform 0.45s ease-out, -webkit-transform 0.45s ease-out
+      -moz-transition: opacity 0.55s ease-out, transform 0.45s ease-out, -webkit-transform 0.45s ease-out
+      -ms-transition: opacity 0.55s ease-out, transform 0.45s ease-out, -webkit-transform 0.45s ease-out
+      -o-transition: opacity 0.55s ease-out, transform 0.45s ease-out, -webkit-transform 0.45s ease-out
       transition: opacity 0.55s ease-out, transform 0.45s ease-out, -webkit-transform 0.45s ease-out
       
       position: relative
