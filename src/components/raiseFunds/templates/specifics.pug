@@ -2,7 +2,7 @@
 include ../../../templates/mixins.pug
 include menu.pug
 
-+breadcrumbs('Create Company', '', 
++breadcrumbs('CREATE CAMPAIGN', '', 
     [
         ['Home', '/'],
         ['current', ''],
@@ -54,8 +54,8 @@ section.campaign-specifics.container.m-b-85
            })
       .text-lg-right.img-ppt
         +fieldDropzone("investor_presentation", {
-            class1: 'col-lg-7',
-            class2: 'col-lg-5 p-l-1 p-r-3',
+            class1: 'col-lg-3',
+            class2: 'col-lg-9 p-l-1 p-r-3',
             text: 'Drop your PPT or PDF here or click to upload',
             icon: 'file',
             default: '/img/MS-PowerPoint.png',
@@ -64,6 +64,9 @@ section.campaign-specifics.container.m-b-85
       .row.border-top
 
       h3.text-lg-center.col-lg-12.pre-money-terms Pre-Money Valuation and Equity Terms
+      .col-lg-12.text-lg-center.text-md-center.text-xs-center.m-b-1.p-b-1
+        a(href="https://github.com/vladyslav2/gfwhitelabels/files/470205/growthfountain_security_description.pdf" target="_blank").link-2 Click here to see descriptions of Common Equity and PayBack Share
+
       .pre-money-terms
         +fieldBlock("security_type", '', {
           class1: 'col-lg-3', 
@@ -209,15 +212,15 @@ section.campaign-specifics.container.m-b-85
                     a(href="/calculator/capitalraise2/step-1" target="_blank").dropdown-item Capital Raise Calculator 2
                     a(href="#" target="_blank").dropdown-item What's My Business Worth?
 
-          .row(style="padding:0 2rem;")
-            h3.m0 Here’s how PayBack Share works:
+          .col-lg-9.offset-lg-3.p-r-0
+            h3.m-t-1.font-weight-bold Here’s how PayBack Share works:
             ol.simple-list.mb45
-              li Share 5% of your company's revenue with investors annually, until:
-              li You have paid investors back two times the invested amount (distributions are capped at (2x) the investment amount, at which point the contract is deemed fulfilled);
-              li No distributions are required until the second full calendar year and the company is allowed one year of forbearance as needed;
+              li.p-b-1 Share 5% of your company's revenue with investors annually, until;
+              li.p-b-1 You have paid investors back two times the invested amount (distributions are capped at (2x) the investment amount, at which point the contract is deemed fulfilled);
+              li.p-b-1 No distributions are required until the second full calendar year and the company is allowed one year of forbearance as needed;
               li In the event of default, investors become general unsecured creditors (senior to equity).
 
       .col-lg-12.pull-right.p-r-0.m-t-2.text-lg-right
-              a(href="/api/campaign/" + values.id target="blank").btn.btn-lg.btn-secondary.text-uppercase.m-r-3 preview
-              button(type="submit").btn.btn-lg.btn-primary.text-uppercase save
+              a(href="/api/campaign/" + values.id target="blank").btn.btn-secondary.text-uppercase.m-r-3 preview
+              button(type="submit").btn.btn-primary.text-uppercase save
                 i.fa.fa-angle-right

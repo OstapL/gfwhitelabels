@@ -31,7 +31,7 @@ section.campaing-list
                             .more_inform
                                 .title.text-center
                                     if campaign.security_type == 0
-                                        h3 Pre money valuation: #{collection.showBeautifulNumber(campaign.premoney_valuation)}
+                                        h3 Valuation: #{collection.showBeautifulNumber(campaign.premoney_valuation)}
                                     else
                                         h3 Percentage Revenue: #{campaign.percentage_revenue}%
 
@@ -81,6 +81,8 @@ section.campaing-list
                                 b Industry: 
                                 | Lorem ipsum
                             .clear
+        .col-lg-12.text-lg-center.text-md-center.text-xs-center
+            a(href="/api/campaign").link-4 See All
 section.home-wrap-text-block(style="background: url(/img/section-bg-3.jpg) center center no-repeat; background-size: cover; background-attachment: fixed;")
     .opasity-block
         .container.text-lg-center.text-xs-center.text-sm-center

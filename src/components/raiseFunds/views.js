@@ -1,5 +1,8 @@
 "use strict";
 
+import formatHelper from '../../helpers/formatHelper';
+let appendHttpIfNecessary = formatHelper.appendHttpIfNecessary;
+
 const dropzone = require('dropzone');
 const dropzoneHelpers = require('helpers/dropzone.js');
 const jsonActions = {
@@ -46,7 +49,7 @@ module.exports = {
     urlRoot: Urls['company-list'](),
     template: require('./templates/company.pug'),
     events: {
-      'submit form': api.submitAction,
+      'submit form': 'submit',
       'keyup #zip_code': 'changeZipCode',
       'click .update-location': 'updateLocation',
       'change input[name=phone]': 'formatPhone',
@@ -64,12 +67,23 @@ module.exports = {
       });
     },
 
-    appendHttpIfNecessary(e) {
+    /*appendHttpIfNecessary(e) {
       var $el = $('#website');
       var url = $el.val();
       if (!(url.startsWith("http://") || url.startsWith("https://"))) {
         $el.val("http://" + url);
       }
+    },*/
+    appendHttpIfNecessary: appendHttpIfNecessary,
+    submit(e) {
+      debugger;
+      var data = $(e.target).serializeJSON();
+      data['founding_date'] = data['founding_date__year'] + '-' + 
+        data['founding_date__month'] + '-' + data['founding_date__day'];
+      delete data['founding_date__day'];
+      delete data['founding_date__month'];
+      delete data['founding_date__year'];
+      api.submitAction.call(this, e, data);
     },
 
     formatPhone(e){
@@ -172,6 +186,12 @@ module.exports = {
         this.fields = options.fields;
         this.faqIndex = 1;
         this.additional_infoIndex = 1;
+        this.$el.on('keypress', ':input:not(textarea)', function(event){
+          if (event.keyCode == 13) {
+            event.preventDefault();
+            return false;
+          }
+        });
       },
 
       render() {
@@ -228,7 +248,21 @@ module.exports = {
         'submit form': api.submitAction,
         'click .delete-image': 'deleteImage',
         'change .videoInteractive input[type="url"]': 'updateVideo',
+        'dragover .media-container,.dropzone': 'globalDragover',
+        'dragleave .media-container,.dropzone': 'globalDragleave',
+        'change #video,.additional_video_link': 'appendHttpIfNecessary',
       }, jsonActions.events),
+
+      appendHttpIfNecessary: appendHttpIfNecessary,
+
+      globalDragover () {
+          // console.log('hello');
+          this.$('.dropzone').css({ border: 'dashed 1px lightgray' });
+      },
+
+      globalDragleave () {
+          this.$('.dropzone').css({ border: 'none' });
+      },
 
       preinitialize() {
         // ToDo
@@ -248,6 +282,12 @@ module.exports = {
         this.fields = options.fields;
         this.pressIndex = 1;
         this.additional_videoIndex = 1;
+        this.$el.on('keypress', ':input:not(textarea)', function(event){
+          if (event.keyCode == 13) {
+            event.preventDefault();
+            return false;
+          }
+        });
       },
 
       render() {
@@ -430,6 +470,12 @@ module.exports = {
         this.fields = options.fields;
         this.type = options.type;
         this.index = options.index;
+        this.$el.on('keypress', ':input:not(textarea)', function(event){
+          if (event.keyCode == 13) {
+            event.preventDefault();
+            return false;
+          }
+        });
       },
 
       render() {
@@ -501,7 +547,9 @@ module.exports = {
         if(this.index != 'new') {
           this.values = this.model.toJSON().members[this.index]
         } else {
-          this.values = {};
+          this.values = {
+            id: this.model.get('id'),
+          };
         }
 
         this.usaStates = require("helpers/usa-states");
@@ -511,7 +559,7 @@ module.exports = {
             Urls: Urls,
             fields: this.fields,
             member: this.values,
-            values: {id: this.model.get('id')},
+            values: this.values,
             type: this.type,
             index: this.index,
             states: this.usaStates,
@@ -579,18 +627,21 @@ module.exports = {
 
         deleteMember: function(e) {
             let memberId = e.currentTarget.dataset.id;
-            app.makeRequest('/api/campaign/team_members/' + this.model.get('id') + '?index=' + memberId, {}, 'DELETE').
-                then((data) => {
-                    this.model.attributes.members.splice(memberId, 1);
-                    $(e.currentTarget).parent().remove()
-                    if(this.model.attributes.members.length < 1) {
-                        this.$el.find('.notification').show();
-                        this.$el.find('.buttons-row').hide();
-                    } else {
-                        this.$el.find('.notification').hide();
-                        this.$el.find('.buttons-row').show();
-                    }
-                });
+
+            if(confirm('Are you sure you would like to delete this team member?')) {
+              app.makeRequest('/api/campaign/team_members/' + this.model.get('id') + '?index=' + memberId, 'DELETE').
+                  then((data) => {
+                      this.model.attributes.members.splice(memberId, 1);
+                      $(e.currentTarget).parent().remove()
+                      if(this.model.attributes.members.length < 1) {
+                          this.$el.find('.notification').show();
+                          this.$el.find('.buttons-row').hide();
+                      } else {
+                          this.$el.find('.notification').hide();
+                          this.$el.find('.buttons-row').show();
+                      }
+                  });
+            }
         },
 
     }),
@@ -621,10 +672,10 @@ module.exports = {
         },
 
         calculateNumberOfShares: function(e) {
-          var minRaise = parseInt($("#minimum_raise").val().replace(/,/g,''));
-          var maxRaise = parseInt($("#maximum_raise").val().replace(/,/g,''));
-          var pricePerShare = parseInt($("#price_per_share").val().replace(/,/g,''));
-          var premoneyVal = parseInt($("#premoney_valuation").val().replace(/,/g,''));
+          var minRaise = parseInt(this.$("#minimum_raise").val().replace(/,/g,''));
+          var maxRaise = parseInt(this.$("#maximum_raise").val().replace(/,/g,''));
+          var pricePerShare = parseInt(this.$("#price_per_share").val().replace(/,/g,''));
+          var premoneyVal = parseInt(this.$("#premoney_valuation").val().replace(/,/g,''));
           this.$("#min_number_of_shares").val((Math.round(minRaise/pricePerShare)).toLocaleString('en-US'));
           this.$("#max_number_of_shares").val((Math.round(maxRaise/pricePerShare)).toLocaleString('en-US'));
           // this.$("#min_number_of_shares").val((Math.round(minRaise/pricePerShare)));
@@ -642,6 +693,12 @@ module.exports = {
 
         initialize(options) {
             this.fields = options.fields;
+            this.$el.on('keypress', ':input:not(textarea)', function(event){
+              if (event.keyCode == 13) {
+                event.preventDefault();
+                return false;
+              }
+            });
         },
 
         updateSecurityType(e) {
@@ -673,10 +730,13 @@ module.exports = {
                         patch: true
                     }).then((model) => {
                         $('.img-investor_presentation').attr('src', '/img/MS-PowerPoint.png');
-                        $('.img-investor_presentation').after('<a class="link-3" href="' + data.url + '">' + data.name + '</a>');
+                        // $('.img-investor_presentation').after('<a class="link-3" href="' + data.url + '">' + data.name + '</a>');
+                        $('.a-investor_presentation').attr('href', data.url).text(data.name);
                     });
                 }
             );
+
+            this.calculateNumberOfShares(null);
 
             return this;
         },
@@ -698,12 +758,18 @@ module.exports = {
         addSection: jsonActions.addSection,
         deleteSection: jsonActions.deleteSection,
         getSuccessUrl(data) {
-            return  '/api/campaign/' + data.id;
+          return  '/campaign/thankyou/' + data.id;
         },
 
         initialize(options) {
             this.fields = options.fields;
             this.perksIndex = 1;
+            this.$el.on('keypress', ':input:not(textarea)', function(event){
+              if (event.keyCode == 13) {
+                event.preventDefault();
+                return false;
+              }
+            });
         },
 
         render() {
@@ -735,5 +801,20 @@ module.exports = {
             return this;
         },
 
+    }),
+
+    thankYou: Backbone.View.extend({
+      el: '#content',
+      template: require('./templates/thankyou.pug'),
+
+      render() {
+        console.log(this.model);
+        this.$el.html(
+          this.template({
+            values: this.model,
+          })
+        );
+        return this;
+      },
     }),
 };

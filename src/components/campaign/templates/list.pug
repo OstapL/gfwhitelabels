@@ -46,7 +46,7 @@ section.small-section.filter
             .create-alert-block
                 .row
                     .col-sm-6.col-lg-10.col-xs-12.text-sm-left.text-xs-center
-                        a(href="#").pull-right.btn.mr30.text-uppercase.auth-pop create alert
+                        a(href="#").pull-right.btn.btn-sm.mr30.text-uppercase.auth-pop create alert
 
                     .col-sm-6.col-lg-2.col-xs-12.text-xs-center
                         select.orderby.custom-select
@@ -68,7 +68,7 @@ section.campaing-list
                             .more_inform
                                 .title.text-center
                                     if campaign.security_type == 0
-                                        h3 Pre money valuation: #{collection.showBeautifulNumber(campaign.premoney_valuation)}
+                                        h3 Valuation: #{collection.showBeautifulNumber(campaign.premoney_valuation)}
                                     else
                                         h3 Percentage Revenue: #{campaign.percentage_revenue}%
 
@@ -88,8 +88,9 @@ section.campaing-list
                                         p Number of shares: #{campaign.min_number_of_shares}
                                     else
                                         //- p % Revenue: #{campaign.percentage_revenue}%
-                                        p Cap: #{campaign.cap}
-                                        p Expiration Date: #{campaign.expiration_date}
+                                        p Cap: #{campaign.cap}X
+                                        //- p Expiration Date: #{campaign.expiration_date}
+                                        p Minimum Investment: #{collection.showBeautifulNumber(campaign.minimum_increment)}
 
 
                         .title.text-xs-center
@@ -101,6 +102,8 @@ section.campaing-list
                         .description
                             if campaign.pitch
                                 p= campaign.pitch.substr(0,250)
+                            //- if campaign.description
+                            //-     p= campaign.description.substr(0, 250)
 
                         .progress_bar_container
                             span.left_text #{campaign.progress} % Funded

@@ -2,7 +2,7 @@
 include ../../../templates/mixins.pug
 include menu.pug
 
-+breadcrumbs('Create Company', '', [['home', '/',], [ 'current', page.get_absolute_url]])
++breadcrumbs('CREATE CAMPAIGN', '', [['home', '/',], [ 'current', page.get_absolute_url]])
 
 
 section.create-company-general.container.m-b-85
@@ -62,6 +62,6 @@ section.create-company-general.container.m-b-85
             |  Add Another FAQ
       .border-bottom.border-bottom-faq
       .col-lg-12.pull-right.p-r-0.text-lg-right
-        a(href="/api/campaign/" + values.id target="blank").btn.btn-lg.btn-secondary.text-uppercase.m-r-3 preview
-        button(type="submit").btn.btn-lg.btn-primary.text-uppercase save
+        a(href="/api/campaign/" + values.id target="blank").btn.btn-secondary.text-uppercase.m-r-3.m-t-0 preview
+        button(type="submit").btn.btn-primary.text-uppercase.m-t-0 save
           i.fa.fa-angle-right

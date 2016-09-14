@@ -1,0 +1,21 @@
+include ../../../templates/mixins.pug
+
++breadcrumbs("What's My Business Worth?", '',
+    [
+        ['Home', '/'],
+        ["What's My Business Worth?", '/'],
+        ["", '']
+    ]
+)
+
+.container.calculator-container
+    .row
+        .col-lg-6.text-sm-right
+            a(
+                href="#"
+            ).btn.btn-primary.text-uppercase i have an established business
+
+        .col-lg-6.text-sm-left
+            a(
+                href="/calculator/selectCalculator"
+            ).btn.btn-primary.text-uppercase i have a brand new startup
