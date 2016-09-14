@@ -46,7 +46,7 @@ section#home(style="background-image: url(" + (campaign.header_image_data ? camp
             p Days Left
             h2.font-weight-bold #{ campaign.days_to_go }
           .col-lg-4.pull-right
-            a(href=Urls['campaign-invest'](campaign.id)).btn.btn-primary.btn-lg.text-uppercase.pull-right Invest
+            a(href=Urls['campaign-invest'](campaign.id)).btn.btn-primary.text-uppercase.pull-right Invest
 
 section.campaigndetail
   .container
@@ -133,7 +133,7 @@ section.border-bottom-scroll
           a(href="#faq").nav-link faq
         li.nav-item.text-uppercase
           a(href="#ask").nav-link Ask a Question
-        a(href=Urls['campaign-invest'](campaign.id)).btn.btn-primary.btn-lg.text-uppercase.pull-right invest
+        a(href=Urls['campaign-invest'](campaign.id)).btn.btn-primary.text-uppercase.pull-right invest
 section
   .scrollspy-example(data-spy="scroll"
   data-target="#navbar-example2"
@@ -692,7 +692,7 @@ section
         h2
           i.fa.fa-thumbs-up
           |  I’d Like to Invest in #{ campaign.company.name }!
-        a(href="/api/campaign/" + campaign.id + "/invest").btn.btn-primary.btn-lg.text-uppercase Invest
+        a(href="/api/campaign/" + campaign.id + "/invest").btn.btn-primary.text-uppercase Invest
 
 
 #videoModal.modal.fade(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")
@@ -746,17 +746,17 @@ each v,k in campaign.additional_video
                       |  and 
                       a(href="").link-3  Privacy Policy.
                   .col-lg-12.text-lg-center
-                      button.btn.btn-lg.btn-primary.text-uppercase sing up
+                      button.btn.btn-primary.text-uppercase sing up
                   .col-lg-12.border-bottom.or
                     span or
             .social-btn
-              button.btn.btn-block.btn-lg.btn-facebook.text-uppercase
+              button.btn.btn-block.btn-facebook.text-uppercase
                 i.fa.fa-facebook
                 |  SIGN UP with Facebook
-              button.btn.btn-block.btn-lg.btn-linkedin.text-uppercase
+              button.btn.btn-block.btn-linkedin.text-uppercase
                 i.fa.fa-linkedin
                 |  SIGN UP with linkedin
-              button.btn.btn-block.btn-lg.btn-google.text-uppercase
+              button.btn.btn-block.btn-google.text-uppercase
                 i.fa.fa-google-plus
                 |  SIGN UP with Google
         .modal-footer
