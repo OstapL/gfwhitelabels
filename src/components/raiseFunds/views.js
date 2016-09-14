@@ -252,6 +252,7 @@ module.exports = {
         'dragleave': 'globalDragleave',
         'change #video,.additional_video_link': 'appendHttpIfNecessary',
       }, jsonActions.events),
+      urlRoot: serverUrl + Urls['campaign-list']() + '/media',
 
       appendHttpIfNecessary: appendHttpIfNecessary,
 
@@ -290,7 +291,6 @@ module.exports = {
       },
 
       render() {
-        this.model.urlRoot = serverUrl + Urls['campaign-list']() + '/media';
         let template = require('./templates/media.pug');
         this.fields['press'].type = 'json';
         this.fields['press'].schema = {
@@ -458,6 +458,7 @@ module.exports = {
         'dragover': 'globalDragover',
         'dragleave': 'globalDragleave',
       },
+      urlRoot: serverUrl + Urls['campaign-list']() + '/team_members',
 
       globalDragover () {
           this.$('.dropzone').css({ border: 'dashed 1px lightgray' });
@@ -488,7 +489,6 @@ module.exports = {
       },
 
       render() {
-        this.model.urlRoot = serverUrl + Urls['campaign-list']() + '/team_members';
         let template = require('./templates/teamMemberAdd.pug');
         this.fields = {
           first_name: {
@@ -665,6 +665,7 @@ module.exports = {
           'dragover': 'globalDragover',
           'dragleave': 'globalDragleave',
         },
+        urlRoot: serverUrl + Urls['campaign-list']() + '/specifics',
 
         globalDragover () {
             this.$('.dropzone').css({ border: 'dashed 1px lightgray' });
@@ -728,7 +729,6 @@ module.exports = {
         },
 
         render() {
-            this.model.urlRoot = serverUrl + Urls['campaign-list']() + '/specifics';
             const template = require('./templates/specifics.pug');
             this.$el.html(
                 template({
@@ -769,6 +769,7 @@ module.exports = {
         events: _.extend({
             'submit form': api.submitAction,
         }, jsonActions.events),
+        urlRoot: serverUrl + Urls['campaign-list']() + '/perks',
 
         preinitialize() {
             // ToDo
@@ -796,7 +797,6 @@ module.exports = {
         },
 
         render() {
-            this.model.urlRoot = serverUrl + Urls['campaign-list']() + '/perks';
             let template = require('./templates/perks.pug');
             this.fields['perks'].type = 'json'
             this.fields['perks'].schema = {

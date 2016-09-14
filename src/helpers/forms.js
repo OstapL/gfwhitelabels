@@ -58,11 +58,17 @@ module.exports = {
        this.model.validation = newValidators;
     */
     let model = {};
-    if(this.hasOwnProperty('model') === false || this.model.hasOwnProperty('set') === false) {
-      model = new Backbone.Model();
-      model.urlRoot = this.urlRoot;
+    model = new Backbone.Model();
+    if(this.model.hasOwnProperty('id')) {
+      model.set('id', this.model.id);
+    }
+    if(this.model.hasOwnProperty('attributes')) {
+      model.set(this.model.attributes);
+    }
+    if(this.model.hasOwnProperty('urlRoot')) {
+      model.urlRoot = this.model.urlRoot;
     } else {
-      model = this.model;
+      model.urlRoot = this.urlRoot;
     }
 
     model.set(data);
