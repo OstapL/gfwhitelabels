@@ -386,53 +386,101 @@ section
         .col-lg-12.fundraising
           .jumbotron.jumbotron-fluid
             .container
-              .row
-                .col-lg-3.p-l-3
-                  p Type of Security
-                  h2.font-weight-bold #{ campaign.get_security_type_display }
-                .col-lg-3.p-l-3
-                  p Target Minimum Raise Amonunt
-                  h2.font-weight-bold #{ model.showBeautifulNumber(campaign.minimum_raise) }
-                .col-lg-3.p-l-3
-                  p Minimum Investment
-                  h2.font-weight-bold #{ model.showBeautifulNumber(campaign.minimum_increment) }
-                if campaign.security_type == 0
+              if campaign.security_type == 0
+                .row
+                  .col-lg-3.p-l-3
+                    p Type of Security
+                    h2.font-weight-bold #{ campaign.get_security_type_display }
+                  .col-lg-3.p-l-3
+                    p Target Minimum Raise Amonunt
+                    h2.font-weight-bold #{ model.showBeautifulNumber(campaign.minimum_raise) }
+                  .col-lg-3.p-l-3
+                    p Minimum Investment
+                    h2.font-weight-bold #{ model.showBeautifulNumber(campaign.minimum_increment) }
                   .col-lg-3.p-l-3
                     p Minimum # of Shares
                     h2.font-weight-bold #{ campaign.min_number_of_shares }
-                else
-                  .col-lg-3
-                    p Expiration Date
-                    h2.font-weight-bold #{ model.formatDate(campaign.expiration_date) }
-
-              .row
-                if campaign.security_type == 0
+                .row
                   .col-lg-3.p-l-3
                     p Pre-Money Valuation
                     h2.font-weight-bold #{ model.showBeautifulNumber(campaign.premoney_valuation) }
-                else
                   .col-lg-3.p-l-3
-                    p Percentage Revenue
-                    h2.font-weight-bold #{ campaign.percentage_revenue }%
-                .col-lg-3.p-l-3
-                  p Target Maximum Raise Amount
-                  h2.font-weight-bold #{ model.showBeautifulNumber(campaign.maximum_raise) }
-                if campaign.security_type == 0
+                    p Target Maximum Raise Amount
+                    h2.font-weight-bold #{ model.showBeautifulNumber(campaign.maximum_raise) }
                   .col-lg-3.p-l-3
                     p Price per Share
                     h2.font-weight-bold #{ model.showBeautifulNumber(campaign.price_per_share) }
-                else
-                  .col-lg-3.p-l-3
-                    p Cap
-                    h2.font-weight-bold #{ campaign.cap }
-                if campaign.security_type == 0
                   .col-lg-3.p-l-3
                     p Maximum # of Shares
                     h2.font-weight-bold #{ campaign.max_number_of_shares }
-                else
-                  .col-lg-3
-                    p Length of the Campaign
-                    h2.font-weight-bold #{ campaign.days_to_go } days
+              else
+                .row
+                  .col-lg-4.p-l-3
+                    p Type of Security
+                    h2.font-weight-bold #{ campaign.get_security_type_display }
+                  .col-lg-4.p-l-3
+                    p Target Minimum Raise Amonunt
+                    h2.font-weight-bold #{ model.showBeautifulNumber(campaign.minimum_raise) }
+                  .col-lg-4.p-l-3
+                    p Minimum Investment
+                    h2.font-weight-bold #{ model.showBeautifulNumber(campaign.minimum_increment) }
+                .row
+                  .col-lg-4.p-l-3
+                    p Percentage Revenue
+                    h2.font-weight-bold #{ campaign.percentage_revenue }%
+                  .col-lg-4.p-l-3
+                    p Target Maximum Raise Amount
+                    h2.font-weight-bold #{ model.showBeautifulNumber(campaign.maximum_raise) }
+                  .col-lg-4.p-l-3
+                    p Cap
+                    h2.font-weight-bold #{ campaign.cap }X
+              //- .row
+              //-   .col-lg-3.p-l-3
+              //-     p Type of Security
+              //-     h2.font-weight-bold #{ campaign.get_security_type_display }
+              //-   .col-lg-3.p-l-3
+              //-     p Target Minimum Raise Amonunt
+              //-     h2.font-weight-bold #{ model.showBeautifulNumber(campaign.minimum_raise) }
+              //-   .col-lg-3.p-l-3
+              //-     p Minimum Investment
+              //-     h2.font-weight-bold #{ model.showBeautifulNumber(campaign.minimum_increment) }
+              //-   if campaign.security_type == 0
+              //-     .col-lg-3.p-l-3
+              //-       p Minimum # of Shares
+              //-       h2.font-weight-bold #{ campaign.min_number_of_shares }
+              //-   else
+              //-     .col-lg-3.p-l-3
+              //-       p Expiration Date
+              //-       h2.font-weight-bold #{ model.formatDate(campaign.expiration_date) }
+
+              //- .row
+              //-   if campaign.security_type == 0
+              //-     .col-lg-3.p-l-3
+              //-       p Pre-Money Valuation
+              //-       h2.font-weight-bold #{ model.showBeautifulNumber(campaign.premoney_valuation) }
+              //-   else
+              //-     .col-lg-3.p-l-3
+              //-       p Percentage Revenue
+              //-       h2.font-weight-bold #{ campaign.percentage_revenue }%
+              //-   .col-lg-3.p-l-3
+              //-     p Target Maximum Raise Amount
+              //-     h2.font-weight-bold #{ model.showBeautifulNumber(campaign.maximum_raise) }
+              //-   if campaign.security_type == 0
+              //-     .col-lg-3.p-l-3
+              //-       p Price per Share
+              //-       h2.font-weight-bold #{ model.showBeautifulNumber(campaign.price_per_share) }
+              //-   else
+              //-     .col-lg-3.p-l-3
+              //-       p Cap
+              //-       h2.font-weight-bold #{ campaign.cap }X
+              //-   if campaign.security_type == 0
+              //-     .col-lg-3.p-l-3
+              //-       p Maximum # of Shares
+              //-       h2.font-weight-bold #{ campaign.max_number_of_shares }
+              //-   else
+              //-     .col-lg-3.p-l-3
+              //-       p Length of the Campaign
+              //-       h2.font-weight-bold #{ campaign.days_to_go } days
 
 
   section#perks.perks
@@ -572,7 +620,7 @@ section
         
   
   section.faq
-    if campaign.faq
+    if campaign.faq && Object.keys(campaign.faq).length > 0
     .container
       h2#faq.col-lg-12.dosis.text-uppercase.text-lg-center.green-heading FAQ
       .col-lg-8.offset-lg-2
