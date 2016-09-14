@@ -8,6 +8,6 @@ global.facebookClientId = "1405768896335643";
 
 // Denis' dev config
 // global.facebookClientId = "547857385398592";
-global.googleClientId = "329026937492-pkmge3at186jvjn14mep9vpa4fk3gqpg.apps.googleusercontent.com";
+global.googleClientId = "488593151885-87nqfd8gl444a1me0n149otrf37dbahq.apps.googleusercontent.com";
 global.linkedinClientId = "77hgtbs9rkjk20"
 global.googleMapKey = "AIzaSyBpCl9-7bkVISZ0o-AaFCsKzZwGAxalkZU"
