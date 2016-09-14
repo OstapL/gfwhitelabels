@@ -1,5 +1,8 @@
 "use strict";
 
+import formatHelper from '../../helpers/formatHelper';
+let appendHttpIfNecessary = formatHelper.appendHttpIfNecessary;
+
 const dropzone = require('dropzone');
 const dropzoneHelpers = require('helpers/dropzone.js');
 const jsonActions = {
@@ -64,13 +67,14 @@ module.exports = {
       });
     },
 
-    appendHttpIfNecessary(e) {
+    /*appendHttpIfNecessary(e) {
       var $el = $('#website');
       var url = $el.val();
       if (!(url.startsWith("http://") || url.startsWith("https://"))) {
         $el.val("http://" + url);
       }
-    },
+    },*/
+    appendHttpIfNecessary: appendHttpIfNecessary,
 
     formatPhone(e){
       this.$('input[name=phone]').val(this.$('input[name=phone]').val().replace(/^\(?(\d{3})\)?-?(\d{3})-?(\d{4})$/, '$1-$2-$3'));
@@ -172,6 +176,12 @@ module.exports = {
         this.fields = options.fields;
         this.faqIndex = 1;
         this.additional_infoIndex = 1;
+        this.$el.on('keypress', ':input:not(textarea)', function(event){
+          if (event.keyCode == 13) {
+            event.preventDefault();
+            return false;
+          }
+        });
       },
 
       render() {
@@ -230,7 +240,10 @@ module.exports = {
         'change .videoInteractive input[type="url"]': 'updateVideo',
         'dragover .media-container,.dropzone': 'globalDragover',
         'dragleave .media-container,.dropzone': 'globalDragleave',
+        'change #video,.additional_video_link': 'appendHttpIfNecessary',
       }, jsonActions.events),
+
+      appendHttpIfNecessary: appendHttpIfNecessary,
 
       globalDragover () {
           // console.log('hello');
@@ -259,6 +272,12 @@ module.exports = {
         this.fields = options.fields;
         this.pressIndex = 1;
         this.additional_videoIndex = 1;
+        this.$el.on('keypress', ':input:not(textarea)', function(event){
+          if (event.keyCode == 13) {
+            event.preventDefault();
+            return false;
+          }
+        });
       },
 
       render() {
@@ -441,6 +460,12 @@ module.exports = {
         this.fields = options.fields;
         this.type = options.type;
         this.index = options.index;
+        this.$el.on('keypress', ':input:not(textarea)', function(event){
+          if (event.keyCode == 13) {
+            event.preventDefault();
+            return false;
+          }
+        });
       },
 
       render() {
@@ -592,18 +617,21 @@ module.exports = {
 
         deleteMember: function(e) {
             let memberId = e.currentTarget.dataset.id;
-            app.makeRequest('/api/campaign/team_members/' + this.model.get('id') + '?index=' + memberId, 'DELETE').
-                then((data) => {
-                    this.model.attributes.members.splice(memberId, 1);
-                    $(e.currentTarget).parent().remove()
-                    if(this.model.attributes.members.length < 1) {
-                        this.$el.find('.notification').show();
-                        this.$el.find('.buttons-row').hide();
-                    } else {
-                        this.$el.find('.notification').hide();
-                        this.$el.find('.buttons-row').show();
-                    }
-                });
+
+            if(confirm('Are you sure you would like to delete this team member?')) {
+              app.makeRequest('/api/campaign/team_members/' + this.model.get('id') + '?index=' + memberId, 'DELETE').
+                  then((data) => {
+                      this.model.attributes.members.splice(memberId, 1);
+                      $(e.currentTarget).parent().remove()
+                      if(this.model.attributes.members.length < 1) {
+                          this.$el.find('.notification').show();
+                          this.$el.find('.buttons-row').hide();
+                      } else {
+                          this.$el.find('.notification').hide();
+                          this.$el.find('.buttons-row').show();
+                      }
+                  });
+            }
         },
 
     }),
@@ -634,10 +662,10 @@ module.exports = {
         },
 
         calculateNumberOfShares: function(e) {
-          var minRaise = parseInt($("#minimum_raise").val().replace(/,/g,''));
-          var maxRaise = parseInt($("#maximum_raise").val().replace(/,/g,''));
-          var pricePerShare = parseInt($("#price_per_share").val().replace(/,/g,''));
-          var premoneyVal = parseInt($("#premoney_valuation").val().replace(/,/g,''));
+          var minRaise = parseInt(this.$("#minimum_raise").val().replace(/,/g,''));
+          var maxRaise = parseInt(this.$("#maximum_raise").val().replace(/,/g,''));
+          var pricePerShare = parseInt(this.$("#price_per_share").val().replace(/,/g,''));
+          var premoneyVal = parseInt(this.$("#premoney_valuation").val().replace(/,/g,''));
           this.$("#min_number_of_shares").val((Math.round(minRaise/pricePerShare)).toLocaleString('en-US'));
           this.$("#max_number_of_shares").val((Math.round(maxRaise/pricePerShare)).toLocaleString('en-US'));
           // this.$("#min_number_of_shares").val((Math.round(minRaise/pricePerShare)));
@@ -655,6 +683,12 @@ module.exports = {
 
         initialize(options) {
             this.fields = options.fields;
+            this.$el.on('keypress', ':input:not(textarea)', function(event){
+              if (event.keyCode == 13) {
+                event.preventDefault();
+                return false;
+              }
+            });
         },
 
         updateSecurityType(e) {
@@ -691,6 +725,8 @@ module.exports = {
                 }
             );
 
+            this.calculateNumberOfShares(null);
+
             return this;
         },
     }),
@@ -710,13 +746,20 @@ module.exports = {
 
         addSection: jsonActions.addSection,
         deleteSection: jsonActions.deleteSection,
-        getSuccessUrl(data) {
-            return  '/api/campaign/' + data.id;
+        _success(data) {
+          const thankView = this.thankYou()
+          return  '/raisefunds/thankyou/' + data.id;
         },
 
         initialize(options) {
             this.fields = options.fields;
             this.perksIndex = 1;
+            this.$el.on('keypress', ':input:not(textarea)', function(event){
+              if (event.keyCode == 13) {
+                event.preventDefault();
+                return false;
+              }
+            });
         },
 
         render() {

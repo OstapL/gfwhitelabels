@@ -127,8 +127,8 @@ select.form-control
 
 		.change_state_city 
 			position: absolute
-			top: 6px
-			right: 0
+			top: 5px
+			// right: 0
 			cursor: pointer
 			color: $black
 			min-width: rem(150)
@@ -141,8 +141,11 @@ select.form-control
 				text-decoration: underline
 
 			i
-				margin-left: 10px
+				margin-left: 8px
 				color: $small-text
+				+mt(.2s)
+				&:hover
+					color: $link-1-hover
 
 	// вместо этого поля используеться сейчас поля типа text
 	input[type='date'] 
