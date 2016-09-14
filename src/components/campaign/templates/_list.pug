@@ -13,7 +13,7 @@
                     .more_inform
                         .title.text-center
                             if campaign.security_type == 0
-                                h3 Valuation: #{collection.showBeautifulNumber(campaign.premoney_valuation)}
+                                h3 Valuation: #{collection.showBeautifulPrice(campaign.premoney_valuation)}
                             else
                                 h3 Percentage Revenue: #{campaign.percentage_revenue}%
 
@@ -29,7 +29,7 @@
 
                         .bottom_pr
                             if campaign.security_type == 0
-                                p Price per share: #{collection.showBeautifulNumber(campaign.price_per_share)}
+                                p Price per share: #{collection.showBeautifulPrice(campaign.price_per_share)}
                                 p Number of shares: #{campaign.min_number_of_shares}
                             else
                                 //- p % Revenue: #{campaign.percentage_revenue}%
@@ -50,8 +50,8 @@
                 .progress_bar_container
                     span.left_text #{campaign.progress} % Funded
                     span.right_text 
-                        b #{collection.showBeautifulNumber(campaign.amount_raised)} 
-                        | of #{collection.showBeautifulNumber(campaign.minimum_raise)}
+                        b #{collection.showBeautifulPrice(campaign.amount_raised)} 
+                        | of #{collection.showBeautifulPrice(campaign.minimum_raise)}
                     .clear
                         progress.progress(value=campaign.progress max="100") #{campaign.progress} %
 
