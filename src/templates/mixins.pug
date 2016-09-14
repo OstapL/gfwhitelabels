@@ -308,7 +308,7 @@ mixin fieldDropzone(name, attr, type)
                     span(href="#").link-1
                         p.drop-photo #{attr.text}
                         i(class='fa fa-' + attr.icon)
-                .all-gallery(class=attr.class2 style="border:solid 1px lightgray;")
+                .all-gallery(class=attr.class2 )
                     .photo-scroll(style="min-height:5rem;")
                         if values[name + '_data']
                             each v,k in values[name+'_data'].all_files
