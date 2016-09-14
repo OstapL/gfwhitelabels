@@ -1,4 +1,4 @@
-include mixins.pug
+include ../../../templates/mixins.pug
 
 +breadcrumbs('Profile', '', 
     [
@@ -11,19 +11,14 @@ include mixins.pug
     .row 
         aside.col-xl-3
             form(method="post" action="").form
+                +fieldDropzone("image", {
+                  thumbSize: '255x153',
+                  default: '/img/default/255x153.png',
+                  text: user.first_name + ' ' + user.last_name,
+                  icon: 'file-image-o'
+                  })
                 .drop-photo-block
                     h3.widget-title.font-alt #{user.first_name} #{user.last_name}
-                    .dropzone__image.drop-photo.dz-clickable.dropzone
-                        img(src=app.user.get_thumbnail('.dropzone__image img'))
-                    input(
-                        type="hidden" 
-                        name="image" 
-                        value=user.image
-                    )#image
-                    .drop-image-title.text-xs-center 
-                        span Drop your profile photo here or click to upload
-                        div
-                            i.fa.fa-camera 
 
 
         .col-xl-9.col-lg-12

@@ -57,18 +57,20 @@ module.exports = {
        };
        this.model.validation = newValidators;
     */
-    if(this.hasOwnProperty('model') === false) {
-      let model = new Backbone.Model();
+    let model = {};
+    if(this.hasOwnProperty('model') === false || this.model.hasOwnProperty('set') === false) {
+      model = new Backbone.Model();
       model.urlRoot = this.urlRoot;
-      this.model = model;
+    } else {
+      model = this.model;
     }
 
-    this.model.set(data);
-    Backbone.Validation.bind(this, { model: this.model });
+    model.set(data);
+    //Backbone.Validation.bind(this, { model: model });
 
-    if (this.model.isValid(true)) {
+    if (model.isValid(true)) {
       var self = this;
-      this.model.save().
+      model.save().
         then((data) => {
           app.showLoading();
 
