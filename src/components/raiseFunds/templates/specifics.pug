@@ -53,13 +53,18 @@ section.campaign-specifics.container.m-b-85
            text: 'Length of the Campaign',
            })
       .text-lg-right.img-ppt
+        - const fileName = values.investor_presentation_data ? values.investor_presentation_data.name : '';
+        - const extension = fileName ? fileName.split('.').pop() : '';
+        - const suffix = extension == 'pdf' ? '_pdf' : (['ppt', 'pptx'].indexOf(extension) != -1 ? '_pptx' : '_file');
         +fieldDropzone("investor_presentation", {
             class1: 'col-lg-3',
             class2: 'col-lg-9 p-l-1 p-r-3',
             text: 'Drop your PPT or PDF here or click to upload',
             icon: 'file',
-            default: '/img/MS-PowerPoint.png',
+            default: '/img/default' + suffix + '.png',
         })
+            //- default: fileName && (fileName.endsWith('.pdf') || fileName.endsWith('.pptx')) ? '/img/default' + suffix + '.png' : '/img/MS-PowerPoint.png',
+            //- default: '/img/MS-PowerPoint.png',
 
       .row.border-top
 
