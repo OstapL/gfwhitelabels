@@ -7,12 +7,9 @@ module.exports = Backbone.Router.extend({
 
   calculatorPaybackshareStep1: function() {
     require.ensure([], () => {
-      const Model = require('./model');
       const View = require('./views');
 
-      new View.step1({
-        model: new Model()
-      }).render();
+      new View.step1().render();
 
       $('#content').scrollTo();
       app.hideLoading();
@@ -21,12 +18,9 @@ module.exports = Backbone.Router.extend({
 
   calculatorPaybackshareStep2: function() {
     require.ensure([], () => {
-      const Model = require('./model');
       const View = require('./views');
 
-      new View.step2({
-        model: new Model()
-      }).render();
+      new View.step2().render();
 
       $('#content').scrollTo();
       app.hideLoading();
@@ -35,12 +29,9 @@ module.exports = Backbone.Router.extend({
 
   calculatorPaybackshareStep3: function() {
     require.ensure([], () => {
-      const Model = require('./model');
       const View = require('./views');
 
-      new View.step3({
-        model: new Model()
-      }).render();
+      new View.step3().render();
 
       $('#content').scrollTo();
       app.hideLoading();

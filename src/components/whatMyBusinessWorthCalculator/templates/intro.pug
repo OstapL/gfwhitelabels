@@ -1,0 +1,32 @@
+include ../../../templates/mixins.pug
+
++breadcrumbs('Capital Raise Calculator ', 'intro',
+    [
+        ['Home', '/'],
+        ["What's My Business Worth?", '/'],
+        ["Capital Raise Calculator", '']
+    ]
+)
+
+.container.calculator-container
+    .row
+        .col-xs-12
+            ul.list-inline.top-breadcrambs.mb45.capitalraise
+                li
+                    a(href="/calculator/whatmybusinessworth/intro").current.btn.text-uppercase Intro
+                li
+                    a(href="/calculator/whatmybusinessworth/step-1").btn.btn-secondary.text-uppercase step 1
+                li
+                    a(href="/calculator/whatmybusinessworth/step-2").btn.btn-secondary.text-uppercase step 2
+                li
+                    a(href="/calculator/whatmybusinessworth/finish").btn.btn-secondary.text-uppercase finish
+
+    .row
+        .offset-lg-3.col-lg-6
+            p One of the most common questions that we get at GrowthFountain is “How much money do I need to raise in order to continue to grow my business?” Just by answering a handful of questions, Capital Raise Estimator enables you to determine the appropriate amount of money you require.
+
+    .row
+        .offset-lg-3.col-lg-6.mt50
+                a(
+                    href="/calculator/whatmybusinessworth/step-1"
+                ).btn.btn-primary.btn-lg.pull-sm-right.text-uppercase Ok, let&apos;s get started
