@@ -249,7 +249,7 @@ module.exports = {
     submitComment(e) {
       e.preventDefault();
       var data = $(e.target).serializeJSON();
-      model = new Backbone.Model();
+      let model = new Backbone.Model();
       model.urlRoot = serverUrl + Urls['comment-list']();
       data['company'] = this.model.company.id;
       model.set(data)
