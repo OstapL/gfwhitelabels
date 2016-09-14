@@ -317,3 +317,11 @@ mixin fieldDropzone(name, attr, type)
                                         a(href="#" data-id=v.id).delete-image
                                             i.fa.fa-times
                                     img( src=v.url).img-fluid.pull-left
+    else if type == 3
+      .drop-photo-block
+        h3.widget-title.font-alt #{ attr.title }
+        img(src=attr.url)
+        .drop-image-title.text-xs-center 
+            span Drop your profile photo here or click to upload
+            div
+                i.fa.fa-camera 
