@@ -37,7 +37,7 @@ section#home(style="background-image: url(" + (campaign.header_image_data ? camp
           if campaign.security_type == 0
             .col-lg-2.p-r-0
               p Pre-Money Valuation
-              h2.font-weight-bold #{ model.showBeautifulNumber(campaign.premoney_valuation) }
+              h2.font-weight-bold $#{ campaign.premoney_valuation }
           else
             .col-lg-2.p-r-0
               p Percentage Reveue
@@ -88,7 +88,7 @@ section.campaigndetail
         .row.col-lg-8
           p Target
           //- h2.font-weight-bold #{ campaign.minimum_raise } - #{ campaign.maximum_raise }
-          h2.font-weight-bold #{ model.showBeautifulNumber(campaign.minimum_raise) } - #{ model.showBeautifulNumber(campaign.maximum_raise) }
+          h2.font-weight-bold $#{ campaign.minimum_raise } - $#{ campaign.maximum_raise }
         .row.col-lg-4.pull-right
           p Minimum Investment
           //- h2.font-weight-bold #{ campaign.minimum_increment }
