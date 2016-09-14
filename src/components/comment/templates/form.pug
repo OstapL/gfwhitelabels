@@ -1,0 +1,8 @@
+.col-lg-8.offset-lg-2.pt30
+  form.comment-form.form-section
+    .col-lg-8
+      input(type="hidden" name="parent" value=model.parent)
+      input(type="hidden" name="is_related" value=model.is_related || 0)
+      input(type="text" name="body" placeholder="Type your question here..." value=model.body)
+    .col-lg-4.p-r-0
+      button(type="submit").btn.btn-primary.text-uppercase.pull-right ask question

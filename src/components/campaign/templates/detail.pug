@@ -681,15 +681,6 @@ section
   section.ask.border-bottom
     .container
       h2#ask.col-lg-12.dosis.text-uppercase.text-lg-center.green-heading ASK A QUESTION
-      .col-lg-8.offset-lg-2.pt30
-        form#comment.form-section
-          .col-lg-8
-            input(type="hidden" id="parent" name="parent" value="")
-            input(type="hidden" id="is_related" name="is_related" value="0")
-            input(type="hidden" id="company" name="company" value=campaign.company.id)
-            input(type="text" id="body" name="body" placeholder="Type your question here...")
-          .col-lg-4.p-r-0
-            button(type="submit").btn.btn-primary.text-uppercase.pull-right ask question
 
       .col-lg-8.offset-lg-2.pt50.comments
         #comment_null
@@ -808,32 +799,3 @@ each v,k in campaign.additional_video
                 i.fa.fa-google-plus
                 |  SIGN UP with Google
         .modal-footer
-
-.pswp(tabindex="-1" role="dialog" aria-hidden="true")
-  .pswp__bg
-  .pswp__scroll-wrap
-    .pswp__container
-      .pswp__item
-      .pswp__item
-      .pswp__item
-        //Default (PhotoSwipeUI_Default) interface on top of sliding area. Can be changed.
-    .pswp__ui.pswp__ui--hidden
-      .pswp__top-bar
-        //Controls are self-explanatory. Order can be changed.
-        .pswp__counter
-        button(title="Close (Esc)").pswp__button.pswp__button--close
-        button(title="Share").pswp__button.pswp__button--share
-        button(title="Toggle fullscreen").pswp__button.pswp__button--fs
-        button(title="Zoom in/out").pswp__button.pswp__button--zoom
-        //Preloader demo http://codepen.io/dimsemenov/pen/yyBWoR
-        //element will get class pswp__preloader--active when preloader is running
-        .pswp__preloader
-            .pswp__preloader__icn
-                .pswp__preloader__cut
-                    .pswp__preloader__donut
-      .pswp__share-modal.pswp__share-modal--hidden.pswp__single-tap
-        .pswp__share-tooltip
-      button(title="Previous (arrow left)").pswp__button.pswp__button--arrow--left
-      button(title="Next (arrow right)").pswp__button.pswp__button--arrow--right
-      .pswp__caption
-        .pswp__caption__center

@@ -35,8 +35,8 @@ module.exports = {
       'click .twitter-share': 'shareOnTwitter',
       'click .see-all-risks': 'seeAllRisks',
       'click .see-all-faq': 'seeAllFaq',
-      'click .response': 'checkResponse',
-      'submit #comment': 'submitComment',
+      'click .linkresponse': 'checkResponse',
+      'submit .comment-form': 'submitComment',
     },
     initialize(options) {
       $(document).off("scroll", this.onScrollListener);
@@ -179,21 +179,20 @@ module.exports = {
           stickyToggle(sticky, stickyWrapper, $(window));
         });
 
-        let photoswipeRun = require('components/campaign/photoswipe_run.js');
         this.commentView = require('components/comment/views.js');
+
+        $('#ask').after(
+          new this.commentView.form().getHtml({model: {}})
+        );
 
         var a1 = api.makeCacheRequest(Urls['comment-list']() + '?company=' + this.model.get('company').id).
           then((comments) => {
             let commentList = new this.commentView.list({
               el: '.comments',
+              model: this.model.get('company'),
               collection: comments,
             }).render();
           });
-        /*
-           window.PhotoSwipe = PhotoSwipe;
-           window.PhotoSwipeUI_Default = PhotoSwipeUI_Default;
-           photoswipeRun('#gallery1');
-           */
       }, 100);
       this.$el.find('.perks .col-lg-4 p').equalHeights();
       this.$el.find('.team .auto-height').equalHeights();
@@ -206,21 +205,27 @@ module.exports = {
     },
 
     _commentSuccess(data) {
-      console.log('comment was succesfull added', data);
+      debugger;
       this._success = null;
       this.urlRoot = null;
       this.model = this.oldModel;
       if (data.parent) { 
         $('#comment_' + data.parent).after(
-          new this.commentView.detail({
+          new this.commentView.detail().getHtml({
+          }).getHtml({
             model: data,
-          }).getHtml()
+            company: this.model.get('company'),
+            app: app,
+          })
         );
       } else {
-        new this.commentView.detail({
-          el: '#comment_' + data.parent,
-          model: data,
-        }).render();
+        $('#comment_' + data.parent).html(
+          new this.commentView.detail().getHtml({
+            company: this.model.get('company'),
+            model: data,
+            app: app,
+          })
+        );
       }
       $('#parent').val('');
       $('#is_related').val('0');
@@ -230,21 +235,31 @@ module.exports = {
     },
 
     checkResponse(e) {
+      debugger;
       e.preventDefault();
-      this.$el.find('#parent').val(e.currentTarget.dataset.id);
-      this.$el.find('#body').val('@' + e.currentTarget.dataset.name + ' ');
+      var $el = $(e.currentTarget);
+      $el.parents('.comment').after(
+        new this.commentView.form({
+        }).getHtml({
+          model: {parent: e.currentTarget.dataset.id},
+          company: this.model.get('company'),
+          app: app,
+        })
+      );
     },
 
     submitComment(e) {
+      debugger;
       e.preventDefault();
-      console.log('we are here');
       this._success = this._commentSuccess;
       this.urlRoot = serverUrl + Urls['comment-list']();
       this.oldModel = this.model;
+      var data = $(e.target).serializeJSON();
+      data['company'] = this.model.get('company').id;
       delete this.model;
       this._showLoading = app.showLoading;
       app.showLoading = function(){ };
-      api.submitAction.call(this, e);
+      api.submitAction.call(this, e, data);
     }
   }),
 
