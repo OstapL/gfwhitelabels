@@ -17,10 +17,10 @@ section.create-company-team-add.container
         form(metod="post" action="").form-section
 
             .col-lg-12.text-lg-center.m-t-2.m-b-2
-                    a(href='/campaign/team-members/' + values.id + '/add/member/new').btn.btn-lg.text-uppercase.m-r-3 
+                    a(href='/campaign/team-members/' + values.id + '/add/member/new').btn.text-uppercase.m-r-3 
                         i.fa.fa-plus
                         |  ADD TEAM MEMBER 
-                    a(href='/campaign/team-members/' + values.id + '/add/advisor/new').btn.btn-lg.text-uppercase 
+                    a(href='/campaign/team-members/' + values.id + '/add/advisor/new').btn.text-uppercase 
                         i.fa.fa-plus
                         |  ADD ADVISOR
 
@@ -47,6 +47,6 @@ section.create-company-team-add.container
                     - counter ++
 
             div(style="display: " +  (values.members.length >= 1 ? 'block' : 'none')).col-lg-12.pull-right.p-r-0.m-t-3.text-lg-right.buttons-row
-                a(href="/api/campaign/" + values.id target="_blank").btn.btn-lg.btn-secondary.text-uppercase.m-r-3 preview
-                a(href="/campaign/specifics/" + values.id).btn.btn-lg.btn-primary.text-uppercase Go to Specifics
+                a(href="/api/campaign/" + values.id target="_blank").btn.btn-secondary.text-uppercase.m-r-3 preview
+                a(href="/campaign/specifics/" + values.id).btn.btn-primary.text-uppercase Go to Specifics
                     i.fa.fa-angle-right

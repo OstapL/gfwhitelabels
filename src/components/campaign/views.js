@@ -35,6 +35,8 @@ module.exports = {
       'click .twitter-share': 'shareOnTwitter',
       'click .see-all-risks': 'seeAllRisks',
       'click .see-all-faq': 'seeAllFaq',
+      'click .response': 'checkResponse',
+      'submit #comment': 'submitComment',
     },
     initialize(options) {
       $(document).off("scroll", this.onScrollListener);
@@ -178,6 +180,15 @@ module.exports = {
         });
 
         let photoswipeRun = require('components/campaign/photoswipe_run.js');
+        this.commentView = require('components/comment/views.js');
+
+        var a1 = api.makeCacheRequest(Urls['comment-list']() + '?company=' + this.model.get('company').id).
+          then((comments) => {
+            let commentList = new this.commentView.list({
+              el: '.comments',
+              collection: comments,
+            }).render();
+          });
         /*
            window.PhotoSwipe = PhotoSwipe;
            window.PhotoSwipeUI_Default = PhotoSwipeUI_Default;
@@ -190,8 +201,51 @@ module.exports = {
         $(event.currentTarget).find('iframe').attr('src', $(event.currentTarget).find('iframe').attr('src'));
       });
 
+
       return this;
     },
+
+    _commentSuccess(data) {
+      console.log('comment was succesfull added', data);
+      this._success = null;
+      this.urlRoot = null;
+      this.model = this.oldModel;
+      if (data.parent) { 
+        $('#comment_' + data.parent).after(
+          new this.commentView.detail({
+            model: data,
+          }).getHtml()
+        );
+      } else {
+        new this.commentView.detail({
+          el: '#comment_' + data.parent,
+          model: data,
+        }).render();
+      }
+      $('#parent').val('');
+      $('#is_related').val('0');
+      $('#body').val('');
+      app.hideLoading();
+      app.showLoading = this._showLoading;
+    },
+
+    checkResponse(e) {
+      e.preventDefault();
+      this.$el.find('#parent').val(e.currentTarget.dataset.id);
+      this.$el.find('#body').val('@' + e.currentTarget.dataset.name + ' ');
+    },
+
+    submitComment(e) {
+      e.preventDefault();
+      console.log('we are here');
+      this._success = this._commentSuccess;
+      this.urlRoot = serverUrl + Urls['comment-list']();
+      this.oldModel = this.model;
+      delete this.model;
+      this._showLoading = app.showLoading;
+      app.showLoading = function(){ };
+      api.submitAction.call(this, e);
+    }
   }),
 
   investment: Backbone.View.extend({
