@@ -391,27 +391,33 @@ section
                   .col-lg-3.p-l-3
                     p Type of Security
                     h2.font-weight-bold #{ campaign.get_security_type_display }
-                  .col-lg-3.p-l-3
-                    p Target Minimum Raise Amonunt
-                    h2.font-weight-bold #{ model.showBeautifulNumber(campaign.minimum_raise) }
+                  //- .col-lg-3.p-l-3
+                  //-   p Target Minimum Raise Amonunt
+                  //-   h2.font-weight-bold #{ model.showBeautifulNumber(campaign.minimum_raise) }
                   .col-lg-3.p-l-3
                     p Minimum Investment
                     h2.font-weight-bold #{ model.showBeautifulNumber(campaign.minimum_increment) }
                   .col-lg-3.p-l-3
                     p Minimum # of Shares
                     h2.font-weight-bold #{ campaign.min_number_of_shares }
+                  .col-lg-3.p-l-3
+                    p Minimum Equity Offered
+                    h2.font-weight-bold #{ campaign.min_number_of_shares }
                 .row
                   .col-lg-3.p-l-3
                     p Pre-Money Valuation
                     h2.font-weight-bold #{ model.showBeautifulNumber(campaign.premoney_valuation) }
-                  .col-lg-3.p-l-3
-                    p Target Maximum Raise Amount
-                    h2.font-weight-bold #{ model.showBeautifulNumber(campaign.maximum_raise) }
+                  //- .col-lg-3.p-l-3
+                  //-   p Target Maximum Raise Amount
+                  //-   h2.font-weight-bold #{ model.showBeautifulNumber(campaign.maximum_raise) }
                   .col-lg-3.p-l-3
                     p Price per Share
                     h2.font-weight-bold #{ model.showBeautifulNumber(campaign.price_per_share) }
                   .col-lg-3.p-l-3
                     p Maximum # of Shares
+                    h2.font-weight-bold #{ campaign.max_number_of_shares }
+                  .col-lg-3.p-l-3
+                    p Maximum Equity Offered
                     h2.font-weight-bold #{ campaign.max_number_of_shares }
               else
                 .row
