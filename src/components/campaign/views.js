@@ -124,7 +124,6 @@ module.exports = {
     },
 
     shareOnTwitter(event) {
-      debugger;
       event.preventDefault();
       window.open(encodeURI('https://twitter.com/share?url=' + window.location.href +
             '&via=' + 'growthfountain' +
