@@ -46,7 +46,7 @@ const jsonActions = {
 
 module.exports = {
   company: Backbone.View.extend({
-    urlRoot: Urls['company-list'](),
+    urlRoot: serverUrl + Urls['company-list'](),
     template: require('./templates/company.pug'),
     events: {
       'submit form': 'submit',
@@ -161,7 +161,7 @@ module.exports = {
   }),
 
   generalInformation: Backbone.View.extend({
-      urlRoot: Urls['campaign-list']() + '/general_information',
+      urlRoot: serverUrl + Urls['campaign-list']() + '/general_information',
       template: require('./templates/generalInformation.pug'),
       events: _.extend({
           'submit form': api.submitAction,
