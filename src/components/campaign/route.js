@@ -68,7 +68,11 @@ module.exports = Backbone.Router.extend({
             model: new Model.model(modelData),
           });
           i.render();
-          $('#content').scrollTo();
+          if(location.hash && $(location.hash).length) {
+              setTimeout(function(){$(location.hash).scrollTo(65);}, 100);
+          } else {
+              $('#content').scrollTo();
+          }
           app.hideLoading();
       });
     })

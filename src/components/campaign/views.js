@@ -54,6 +54,7 @@ module.exports = {
     },
 
     smoothScroll(e) {
+      console.log('smooth...');
       e.preventDefault();
       $(document).off("scroll");
       $('.tabs-scroll .nav').find('.nav-link').removeClass('active');
@@ -65,7 +66,7 @@ module.exports = {
       $('html, body').stop().animate({
         'scrollTop': $target.offset().top - $navBar.height() - 15
       }, 500, 'swing', () => {
-        window.location.hash = e.target.hash;
+        // window.location.hash = e.target.hash;
         $(document).on("scroll", this.onScrollListener);
       });
     },
@@ -123,6 +124,7 @@ module.exports = {
     },
 
     shareOnTwitter(event) {
+      debugger;
       event.preventDefault();
       window.open(encodeURI('https://twitter.com/share?url=' + window.location.href +
             '&via=' + 'growthfountain' +
