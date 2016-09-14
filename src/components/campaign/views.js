@@ -210,7 +210,6 @@ module.exports = {
       this._success = null;
       this.urlRoot = null;
       this.model = this.oldModel;
-      this.$el.find('#comment_' + data.parent);
       if (data.parent) { 
         $('#comment_' + data.parent).after(
           new this.commentView.detail({
