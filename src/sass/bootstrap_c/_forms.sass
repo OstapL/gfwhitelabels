@@ -9,8 +9,10 @@ select.form-control
 
 .form-section// каждая форма будет в таком контейнере
 	.required
+
 		label
 			color: $black_bg
+
 	img
 		max-width: 100%// будет перенесен в файл общих стилей - использовать клас бутстрапа .img-fluid
 
@@ -47,7 +49,7 @@ select.form-control
 		// знак вопроса (есть на странице calculator/capitalraise/step-1)
 		i 
 
-
+	
 	@media screen and (min-width:992px)
 		// date of birth field
 		.dob label
@@ -55,6 +57,7 @@ select.form-control
 
 	input[type="text"]
 		@include placeholder
+		
 			color: #a3a3a3
 
 	textarea
@@ -127,12 +130,11 @@ select.form-control
 
 		.change_state_city 
 			position: absolute
-			top: 5px
-			// right: 0
+			top: 6px
+			right: 0
 			cursor: pointer
-			color: $black
+			color: $small-text
 			min-width: rem(150)
-			outline: none
 
 			.input-value
 				@include ellipsis()
@@ -141,11 +143,8 @@ select.form-control
 				text-decoration: underline
 
 			i
-				margin-left: 8px
+				margin-left: 10px
 				color: $small-text
-				+mt(.2s)
-				&:hover
-					color: $link-1-hover
 
 	// вместо этого поля используеться сейчас поля типа text
 	input[type='date'] 

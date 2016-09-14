@@ -35,10 +35,11 @@ ul.list-blog {
 
 
 			h3 {
-				font-weight: 400;
+				font-weight: 600;
 				margin-top: rem(0);
 				margin-bottom: rem(5);
-				letter-spacing: 2.2px;
+				letter-spacing: 1px;
+				@include calc-rem(14);
 			}
 
 			p {
@@ -94,7 +95,7 @@ ul.list-blog {
   
 .single-blog {
 	.title-blog {
-		font-weight: 400;
+		letter-spacing: rem(2.4)
 	}
 	
 	.blog-img {

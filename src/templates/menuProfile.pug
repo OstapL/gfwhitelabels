@@ -5,7 +5,7 @@ if user.token != ""
                 i.fa.fa-user
             v.hidden-md-down #{ user.first_name } #{user.last_name}&nbsp;
             i.fa.fa-angle-down
-        .list-container.user-info-drop.notification-container.drop-container
+        .list-container.user-info-drop.notification-container
             ul.submenu.list-unstyled 
                 li
                     a(href="/account/profile").nav-link Profile
@@ -17,23 +17,8 @@ if user.token != ""
                     a(href="/account/logout").nav-link Logout
         
 else
-    // for desktop
-    li.login-sinup.hidden-md-down
-        a.btn.btn-primary(href="/account/login") Log in
+    li.login-sinup
+        a(href="/account/login").link-login-singup.link-6 Log in
     
-    li.login-sinup.hidden-md-down
-        a.btn.btn-primary(href="/account/signup") Sign up
-
-    // for mobile
-    li.nav-item.user-info.hidden-lg-up
-        a.nav-link.notification.user-info-name
-            span
-                i.fa.fa-sign-in
-        .list-container.user-info-drop.notification-container.drop-container.not-log-in-user
-            ul.submenu.list-unstyled 
-                li
-                    a.nav-link(href="/account/login") Log in
-                
-                li
-                    a.nav-link(href="/account/signup") Sign up
-                    
+    li.login-sinup
+        a(href="/account/signup").link-login-singup.link-6 Sign up

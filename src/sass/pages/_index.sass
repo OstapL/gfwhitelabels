@@ -149,14 +149,7 @@
 	height: 600px
 //main page
 .home-section
-	&:before
-		content: " "
-		width: 100%
-		height: 100%
-		position: absolute
-		top: 0
-		left: 0
-		background: rgba(17, 17, 17, .5)
+
 	.js-height-full
 		max-height: 90vh
 	.home-text-main
@@ -166,17 +159,18 @@
 		h1
 			font-size: rem(48)
 			color: $white
-			letter-spacing: rem(9.6)
+			letter-spacing: rem(4.8)
 			margin-bottom: rem(50)
+			text-shadow: none
 		.small-text
-			line-height: rem(26)
+			line-height: rem(28)
 			color: $white
-			letter-spacing: rem(.6)
+			letter-spacing: rem(.45)
 			font-size: rem(24)
-			font-weight: 300
-		.btn
-			&:first-child
-				margin-right: 30px
+			font-weight: 400
+			margin-top: rem(10)
+		.color-black_pearl
+			color: $black_pearl
 
 .home-wrap-text-block
 	position: relative
@@ -210,11 +204,19 @@
 			margin-right: rem(30)
 .home-what-is
 	h2
+		color: $black_pearl
 		margin-bottom: rem(50)
+		&.light
+			line-height: rem(28)
+			font-weight: 300
+			letter-spacing: rem(.65)
+			margin-bottom: rem(20)
+	.logo
+		line-height: rem(40)
 	h3
-		color: $cod_gray
 		letter-spacing: rem(.45)
 		line-height: rem(24)
+		margin-bottom: rem(20)
 .home-our-partners
 	img
 		max-width: 255px
