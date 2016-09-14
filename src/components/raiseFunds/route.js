@@ -27,7 +27,7 @@ module.exports = Backbone.Router.extend({
           $('body').scrollTo(); 
           var i = new View.company({
             el: '#content',
-            fields: meta[0].actions.POST,
+            fields: meta[0].actions.PUT,
             model: new Model.model(model[0][0] || {}),
             campaign: campaignData[0] || {},
           });
@@ -62,13 +62,13 @@ module.exports = Backbone.Router.extend({
       }
       $('body').scrollTo(); 
 
-      var a1 = app.makeCacheRequest(Urls['campaign-list']() + '/general_information', 'OPTIONS');
+      var a1 = app.makeCacheRequest(Urls['campaign-list']() + '/general_information/' + id, 'OPTIONS');
       var a2 = app.makeCacheRequest(Urls['campaign-list']() + '/general_information/' + id);
 
       $.when(a1, a2).done((meta, model) => {
         var i = new View.generalInformation({
           el: '#content',
-            fields: meta[0].actions.POST,
+            fields: meta[0].actions.PUT,
             model: new Model.model(model[0])
         });
 
@@ -93,13 +93,13 @@ module.exports = Backbone.Router.extend({
       const Model = require('components/campaign/models.js');
       const View = require('components/raiseFunds/views.js');
 
-      var a1 = app.makeCacheRequest(Urls['campaign-list']() + '/media', 'OPTIONS');
+      var a1 = app.makeCacheRequest(Urls['campaign-list']() + '/media/' + id, 'OPTIONS');
       var a2 = app.makeCacheRequest(Urls['campaign-list']() + '/media/' + id);
 
       $.when(a1, a2).done((meta, model) => {
         var i = new View.media({
           el: '#content',
-            fields: meta[0].actions.POST,
+            fields: meta[0].actions.PUT,
             model: new Model.model(model[0])
         });
         i.render();
@@ -172,13 +172,13 @@ module.exports = Backbone.Router.extend({
       const Model = require('components/campaign/models.js');
       const View = require('components/raiseFunds/views.js');
 
-      var a1 = app.makeCacheRequest(Urls['campaign-list']() + '/specifics', 'OPTIONS');
+      var a1 = app.makeCacheRequest(Urls['campaign-list']() + '/specifics/' + id, 'OPTIONS');
       var a2 = app.makeCacheRequest(Urls['campaign-list']() + '/specifics/' + id);
 
       $.when(a1, a2).done((meta, model) => {
         var i = new View.specifics({
           el: '#content',
-          fields: meta[0].actions.POST,
+          fields: meta[0].actions.PUT,
           model: new Model.model(model[0]),
         });
         i.render();
@@ -203,13 +203,13 @@ module.exports = Backbone.Router.extend({
       const Model = require('components/campaign/models.js');
       const View = require('components/raiseFunds/views.js');
 
-      var a1 = app.makeCacheRequest(Urls['campaign-list']() + '/perks', 'OPTIONS');
+      var a1 = app.makeCacheRequest(Urls['campaign-list']() + '/perks/' + id, 'OPTIONS');
       var a2 = app.makeCacheRequest(Urls['campaign-list']() + '/perks/' + id);
 
       $.when(a1, a2).done((meta, model) => {
         var i = new View.perks({
           el: '#content',
-          fields: meta[0].actions.POST,
+          fields: meta[0].actions.PUT,
           model: new Model.model(model[0]),
         });
         i.render();
