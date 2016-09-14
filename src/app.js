@@ -178,7 +178,6 @@ let app = {
 
   getThumbnail: function(size, thumbnails, _default) {
     let thumb = thumbnails.find(function(el) {
-      console.log('v', el, size, el.size == size);
       return el.size == size
     });
     return (thumb ? thumb.url : _default || '/img/default/default.png')

@@ -1,6 +1,6 @@
 module.exports = {
   profile: Backbone.View.extend({
-    template: require('templates/userProfile.pug'),
+    template: require('./templates/profile.pug'),
     events: {
       'submit form': api.submitAction,
       'focus #ssn' : 'showSSNPopover',
@@ -129,7 +129,7 @@ module.exports = {
 
   changePassword: Backbone.View.extend({
     render(){
-      let template = require('templates/changePassword.pug');
+      let template = require('./templates/changePassword.pug');
       this.$el.html(template({}));
       return this;
     }

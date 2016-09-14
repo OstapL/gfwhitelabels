@@ -1,14 +1,14 @@
 - 'use strict';
 
 mixin breadcrumbs(title, subtitle, data)
-    section.header_title.pt50
+    section.header_title
         .container
             .row
-                .pull-left
+                .col-lg-7.br-title
                     h1.text-uppercase= title
                         span.small-text= subtitle
-                .pull-right
-                    ol.breadcrumb.pull-right.m0
+                .col-lg-5.br-list
+                    ol.breadcrumb.text-lg-right.m0
                         each elem in data
                             - var active = (elem[1] == '') ? 'active' : ''
                             li.breadcrumb-item(class=" " + active)
