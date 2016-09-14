@@ -11,78 +11,13 @@ section.home-section.bg-dark-alfa-30(style="background: url(/img/bg.jpg) center 
                             a(href=Urls['campaign-list']()).btn.btn-lg.btn-primary INVEST
                             span.hidden-xs  
                             a(href="/company/create").btn.btn-lg.btn-primary RAISE CAPITAL
+
 section.campaing-list
     .container#campaignList
         .col-lg-12
             h2.dosis.text-uppercase.text-sm-center What's Popular
-        .row
-            - console.log('campaings', campaigns);
-            for campaign in campaigns
+        include ../components/campaign/templates/_list.pug
 
-                .col-lg-4.col-xs-12.col-sm-12.col-md-12
-                    a(href=Urls['campaign-detail'](campaign.id)).block_link
-                    .one_block
-                        .for_img
-                            img(
-                                src=(campaign.list_image_data ? campaign.list_image_data.url : '/img/test.png')
-                                alt=campaign.company.name
-                            )
-
-                            .more_inform
-                                .title.text-center
-                                    if campaign.security_type == 0
-                                        h3 Valuation: #{collection.showBeautifulNumber(campaign.premoney_valuation)}
-                                    else
-                                        h3 Percentage Revenue: #{campaign.percentage_revenue}%
-
-                                .small_text
-                                    if campaign.company.tagline
-                                        p #{campaign.company.tagline.substr(0, 120)}
-
-                                .ico_cont
-                                    a(href=Urls['campaign-detail'](campaign.id) + '#team').link-1
-                                        i.fa.fa-users
-                                    a(href=Urls['campaign-detail'](campaign.id) + '#overview').link-1
-                                        i.fa.fa-list
-
-                                .bottom_pr
-                                    if campaign.security_type == 0
-                                        p Price per share: #{collection.showBeautifulNumber(campaign.price_per_share)}
-                                        p Number of shares: #{campaign.min_number_of_shares}
-                                    else
-                                        //- p % Revenue: #{campaign.percentage_revenue}%
-                                        p Cap: #{campaign.cap}
-                                        p Expiration Date: #{campaign.expiration_date}
-
-
-                        .title.text-xs-center
-                            h3.m-t-0= campaign.company.name
-                            span.place
-                                i.fa.fa-map-marker
-                                = campaign.company.city + ' ' + campaign.company.state
-                            .clear
-                        .description
-                            if campaign.pitch
-                                p= campaign.pitch.substr(0,250)
-
-                        .progress_bar_container
-                            span.left_text #{campaign.progress} % Funded
-                            span.right_text 
-                                b #{collection.showBeautifulNumber(campaign.amount_raised)} 
-                                | of #{collection.showBeautifulNumber(campaign.minimum_raise)}
-                            .clear
-                                progress.progress(value=campaign.progress max="100") #{campaign.progress} %
-
-                        .bottom_text
-                            span.left_desc
-                                b Security:
-                                | #{campaign.get_security_type_display}
-                            span.right_desc
-                                b Industry: 
-                                | Lorem ipsum
-                            .clear
-        .col-lg-12.text-lg-center.text-md-center.text-xs-center
-            a(href="/api/campaign").link-4 See All
 section.home-wrap-text-block(style="background: url(/img/section-bg-3.jpg) center center no-repeat; background-size: cover; background-attachment: fixed;")
     .opasity-block
         .container.text-lg-center.text-xs-center.text-sm-center
