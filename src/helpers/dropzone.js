@@ -112,7 +112,8 @@ module.exports = {
         'Authorization':  'Token ' + localStorage.getItem('token'),
         'Cache-Control': null,
         'X-Requested-With': null,
-      }
+      },
+      acceptedFiles: 'application/pdf,.pptx,.ppt',
     });
 
     $('.dropzone__' + name).addClass('dropzone')//.html('Drop file here');
