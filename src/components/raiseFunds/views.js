@@ -455,6 +455,16 @@ module.exports = {
       events: {
         'submit form': 'submit',
         'click .delete-member': 'deleteMember',
+        'dragover': 'globalDragover',
+        'dragleave': 'globalDragleave',
+      },
+
+      globalDragover () {
+          this.$('.dropzone').css({ border: 'dashed 1px lightgray' });
+      },
+
+      globalDragleave () {
+          this.$('.dropzone').css({ border: 'none' });
       },
 
       preinitialize() {
@@ -565,7 +575,8 @@ module.exports = {
           })
         );
 
-        dropzoneHelpers.createFileDropzone(
+        // dropzoneHelpers.createFileDropzone(
+        dropzoneHelpers.createImageDropzone(
           dropzone,
           'photo', 
           'members', '', 

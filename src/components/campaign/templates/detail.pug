@@ -37,7 +37,7 @@ section#home(style="background-image: url(" + (values.header_image_data ? values
           if values.security_type == 0
             .col-lg-2.p-r-0
               p Pre-Money Valuation
-              h2.font-weight-bold #{ formatHelper.showBeautifulNumber(values.premoney_valuation) }
+              h2.font-weight-bold $#{ values.premoney_valuation }
           else
             .col-lg-2.p-r-0
               p Percentage Reveue
@@ -87,8 +87,8 @@ section.campaigndetail
       .mt25
         .row.col-lg-8
           p Target
-          //- h2.font-weight-bold #{ values.minimum_raise } - #{ values.maximum_raise }
-          h2.font-weight-bold #{ formatHelper.showBeautifulNumber(values.minimum_raise) } - #{ formatHelper.showBeautifulNumber(values.maximum_raise) }
+          //- h2.font-weight-bold #{ campaign.minimum_raise } - #{ campaign.maximum_raise }
+          h2.font-weight-bold $#{ values.minimum_raise } - $#{ values.maximum_raise }
         .row.col-lg-4.pull-right
           p Minimum Investment
           //- h2.font-weight-bold #{ values.minimum_increment }

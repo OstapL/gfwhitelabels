@@ -56,6 +56,7 @@ module.exports = {
     },
 
     smoothScroll(e) {
+      console.log('smooth...');
       e.preventDefault();
       $(document).off("scroll");
       $('.tabs-scroll .nav').find('.nav-link').removeClass('active');
@@ -67,7 +68,7 @@ module.exports = {
       $('html, body').stop().animate({
         'scrollTop': $target.offset().top - $navBar.height() - 15
       }, 500, 'swing', () => {
-        window.location.hash = e.target.hash;
+        // window.location.hash = e.target.hash;
         $(document).on("scroll", this.onScrollListener);
       });
     },
