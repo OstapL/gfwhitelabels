@@ -1,29 +1,29 @@
 - 'use strict';
 include ../../../templates/mixins.pug
 
-- var percentage_raised = model.calculateRaisedPercentage(campaign.minimum_raise, campaign.amount_raised)
+- var percentage_raised = formatHelper.calculateRaisedPercentage(values.minimum_raise, values.amount_raised)
 
-section#home(style="background-image: url(" + (campaign.header_image_data ? campaign.header_image_data.url : '/img/default.png') + ")").home-section.bg-dark-alfa-70.parallax-2.fixed-height-small
+section#home(style="background-image: url(" + (values.header_image_data ? values.header_image_data.url : '/img/default.png') + ")").home-section.bg-dark-alfa-70.parallax-2.fixed-height-small
   .js-height-parent.container
     .home-content
       .home-text.text-lg-center
-        h1.hs-line-14.font-alt.margin-bottom-50.mb-xs-30 #{ campaign.company.name }
+        h1.hs-line-14.font-alt.margin-bottom-50.mb-xs-30 #{ values.company.name }
         .local-scroll
           a.big-icon.link-6.youtube_popup(data-toggle="modal" href="#videoModal" data-target="#videoModal")
             i.fa.fa-play-circle-o
-          a(href=campaign.company.website target="_blank").link-6.link-campaing-detail #{ campaign.company.website }
+          a(href=values.company.website target="_blank").link-6.link-campaing-detail #{ values.company.website }
           .row.social-link
-            if campaign.company.facebook
-              a(href=campaign.company.facebook target="_blank").link-6.link-campaing-detail
+            if values.company.facebook
+              a(href=values.company.facebook target="_blank").link-6.link-campaing-detail
                 i.fa.fa-facebook
-            if campaign.company.twitter
-              a(href=campaign.company.twitter target="_blank").link-6.link-campaing-detail
+            if values.company.twitter
+              a(href=values.company.twitter target="_blank").link-6.link-campaing-detail
                 i.fa.fa-twitter
-            if campaign.company.instagram
-              a(href=campaign.company.instagram target="_blank").link-6.link-campaing-detail
+            if values.company.instagram
+              a(href=values.company.instagram target="_blank").link-6.link-campaing-detail
                 i.fa.fa-instagram
-            if campaign.company.linkedin
-              a(href=campaign.company.linkedin target="_blank").link-6.link-campaing-detail
+            if values.company.linkedin
+              a(href=values.company.linkedin target="_blank").link-6.link-campaing-detail
                 i.fa.fa-linkedin
 
         // End Hero Content
@@ -33,47 +33,47 @@ section#home(style="background-image: url(" + (campaign.header_image_data ? camp
         .top-info-wrap-item
           .col-lg-3.p-r-0
             p Type of Security
-            h2.font-weight-bold #{ campaign.get_security_type_display }
-          if campaign.security_type == 0
+            h2.font-weight-bold #{ values.get_security_type_display }
+          if values.security_type == 0
             .col-lg-2.p-r-0
               p Pre-Money Valuation
-              h2.font-weight-bold #{ model.showBeautifulNumber(campaign.premoney_valuation) }
+              h2.font-weight-bold #{ formatHelper.showBeautifulNumber(values.premoney_valuation) }
           else
             .col-lg-2.p-r-0
               p Percentage Reveue
-              h2.font-weight-bold #{ campaign.percentage_revenue }%
+              h2.font-weight-bold #{ values.percentage_revenue }%
           .col-lg-2.p-r-0
             p Days Left
-            h2.font-weight-bold #{ campaign.days_to_go }
+            h2.font-weight-bold #{ values.days_to_go }
           .col-lg-4.pull-right
-            a(href=Urls['campaign-invest'](campaign.id)).btn.btn-primary.text-uppercase.pull-right Invest
+            a(href=Urls['campaign-invest'](values.id)).btn.btn-primary.text-uppercase.pull-right Invest
 
 section.campaigndetail
   .container
     .col-lg-6
-      h1 #{ campaign.company.tagline }
+      h1 #{ values.company.tagline }
       .row.mt20
         .col-lg-4
           //- a(href="").link-1
           .sity-detail
             i.fa.fa-map-marker
-            |  #{ campaign.company.city }, #{ campaign.company.state }
+            |  #{ values.company.city }, #{ values.company.state }
         .col-lg-6
           .date-detail
             i.fa.fa-calendar-check-o
-            //- |  Founded in #{ campaign.company.founding_date }
-            |  Founded in #{ model.formatDate(campaign.company.founding_date) }
+            //- |  Founded in #{ values.company.founding_date }
+            |  Founded in #{ formatHelper.formatDate(values.company.founding_date) }
       .row
         .col-lg-12.share
           span.font-weight-bold.d-inline-block Share:
           .d-inline-block
-            a(href=campaign.company.facebook).link-1.facebook-share
+            a(href=values.company.facebook).link-1.facebook-share
               i.fa.fa-facebook
-            a(href=campaign.company.twitter).link-1.twitter-share
+            a(href=values.company.twitter).link-1.twitter-share
               i.fa.fa-twitter
-            a(href=campaign.company.linkedin).link-1.linkedin-share
+            a(href=values.company.linkedin).link-1.linkedin-share
               i.fa.fa-linkedin
-            //- a(href=campaign.company.instagram).link-1
+            //- a(href=values.company.instagram).link-1
             //-   i.fa.fa-google-plus
     .col-lg-6.right-block-investors.p-l-0
       .progress_bar_container
@@ -81,18 +81,18 @@ section.campaigndetail
         span Less than #{ percentage_raised }% Funded
         span.pull-right Committed 
           //- span.committed $15,000
-          span.committed #{ model.showBeautifulNumber(campaign.amount_raised)}
+          span.committed #{ formatHelper.showBeautifulNumber(values.amount_raised)}
         .clear
         progress(value=percentage_raised max="100").progress
       .mt25
         .row.col-lg-8
           p Target
-          //- h2.font-weight-bold #{ campaign.minimum_raise } - #{ campaign.maximum_raise }
-          h2.font-weight-bold #{ model.showBeautifulNumber(campaign.minimum_raise) } - #{ model.showBeautifulNumber(campaign.maximum_raise) }
+          //- h2.font-weight-bold #{ values.minimum_raise } - #{ values.maximum_raise }
+          h2.font-weight-bold #{ formatHelper.showBeautifulNumber(values.minimum_raise) } - #{ formatHelper.showBeautifulNumber(values.maximum_raise) }
         .row.col-lg-4.pull-right
           p Minimum Investment
-          //- h2.font-weight-bold #{ campaign.minimum_increment }
-          h2.font-weight-bold #{ model.showBeautifulNumber(campaign.minimum_increment) }
+          //- h2.font-weight-bold #{ values.minimum_increment }
+          h2.font-weight-bold #{ formatHelper.showBeautifulNumber(values.minimum_increment) }
         .row.col-lg-12.investors-block(style="display: none")
           .col-lg-2.p-l-0
             p Investors
@@ -118,7 +118,7 @@ section.campaigndetail
 section.border-bottom-scroll
   .container.tabs-scroll
     nav( data-toggle="sticky-onscroll").navbar.navbar-default.sticky
-      ul.nav.nav-pills.nav-pills-campaign
+      ul.nav.nav-pills.nav-pills-values
         li.nav-item.text-uppercase
           a(href="#about").nav-link.active About
         li.nav-item.text-uppercase
@@ -133,7 +133,7 @@ section.border-bottom-scroll
           a(href="#faq").nav-link faq
         li.nav-item.text-uppercase
           a(href="#ask").nav-link Ask a Question
-        a(href=Urls['campaign-invest'](campaign.id)).btn.btn-primary.text-uppercase.pull-right invest
+        a(href=Urls['campaign-invest'](values.id)).btn.btn-primary.text-uppercase.pull-right invest
 section
   .scrollspy-example(data-spy="scroll"
   data-target="#navbar-example2"
@@ -142,57 +142,57 @@ section
   section.about-detail.border-bottom
     .container
       .col-lg-12
-        h2#about.dosis.text-uppercase.text-lg-center.green-heading About #{ campaign.company.name }
-        p #{ campaign.company.description }
+        h2#about.dosis.text-uppercase.text-lg-center.green-heading About #{ values.company.name }
+        p #{ values.company.description }
 
         //- h3.our.text-lg-center Why You Should Invest
         h2.dosis.our.text-uppercase.text-lg-center.green-heading Why You Should Invest
-        p #{ campaign.pitch }
+        p #{ values.pitch }
 
-        //- if campaign.additional_info
-        //-   each v,k in campaign.additional_info
+        //- if values.additional_info
+        //-   each v,k in values.additional_info
         //-     //- h3.our.text-lg-center #{ v.title }
         //-     h2.dosis.our.text-uppercase.text-lg-center.green-heading #{ v.title }
         //-     p #{ v.body }
 
       
       #gallery1.col-lg-12.pt50.photo-gallegy.text-center-flex
-        if campaign.gallery
-            each v,k in campaign.gallery_data.all_files
+        if values.gallery
+            each v,k in values.gallery_data.all_files
                 .col-lg-3.no-padding-img
                   a(href=app.getThumbnail('1440x900', v.thumbnails) data-size='1440x900')
-                    img(src=app.getThumbnail('270x152', v.thumbnails) alt=campaign.company.name).img-fluid
+                    img(src=app.getThumbnail('270x152', v.thumbnails) alt=values.company.name).img-fluid
         else
 
             .col-lg-3.no-padding-img
-              a(href="/img/campaign/smartbe-intelligent-stroller_1.jpg" data-toggle="modal" data-size='1600x900')
-                img(src="/img/campaign/smartbe-intelligent-stroller_1.jpg" alt="").img-fluid
+              a(href="/img/values/smartbe-intelligent-stroller_1.jpg" data-toggle="modal" data-size='1600x900')
+                img(src="/img/values/smartbe-intelligent-stroller_1.jpg" alt="").img-fluid
             .col-lg-3.no-padding-img
-              a(href="/img/campaign/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
-                img(src="/img/campaign/smartbe-intelligent-stroller_2.jpg" alt="").img-fluid
+              a(href="/img/values/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
+                img(src="/img/values/smartbe-intelligent-stroller_2.jpg" alt="").img-fluid
             .col-lg-3.no-padding-img
-              a(href="/img/campaign/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
-                img(src="/img/campaign/smartbe-intelligent-stroller_3.jpg" alt="").img-fluid
+              a(href="/img/values/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
+                img(src="/img/values/smartbe-intelligent-stroller_3.jpg" alt="").img-fluid
             .col-lg-3.no-padding-img
-              a(href="/img/campaign/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
-                img(src="/img/campaign/smartbe-intelligent-stroller_4.jpg" alt="").img-fluid
+              a(href="/img/values/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
+                img(src="/img/values/smartbe-intelligent-stroller_4.jpg" alt="").img-fluid
             .col-lg-3.no-padding-img
-              a(href="/img/campaign/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
-                img(src="/img/campaign/smartbe-intelligent-stroller_5.jpg" alt="").img-fluid
+              a(href="/img/values/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
+                img(src="/img/values/smartbe-intelligent-stroller_5.jpg" alt="").img-fluid
             .col-lg-3.no-padding-img
-              a(href="/img/campaign/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
-                img(src="/img/campaign/smartbe-intelligent-stroller_6.jpg" alt="").img-fluid
+              a(href="/img/values/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
+                img(src="/img/values/smartbe-intelligent-stroller_6.jpg" alt="").img-fluid
             .col-lg-3.no-padding-img
-              a(href="/img/campaign/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
-                img(src="/img/campaign/smartbe-intelligent-stroller_7.jpg" alt="").img-fluid
+              a(href="/img/values/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
+                img(src="/img/values/smartbe-intelligent-stroller_7.jpg" alt="").img-fluid
             .col-lg-3.no-padding-img
-              a(href="/img/campaign/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
-                img(src="/img/campaign/smartbe-intelligent-stroller_8.jpg" alt="").img-fluid
+              a(href="/img/values/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
+                img(src="/img/values/smartbe-intelligent-stroller_8.jpg" alt="").img-fluid
 
       .row
         .col-lg-12.text-center-flex
-          if campaign.additional_video
-              each v,k in campaign.additional_video
+          if values.additional_video
+              each v,k in values.additional_video
                   .col-lg-4
                     .card.card-inverse
                       - var link =  app.getVideoId(v.link)
@@ -231,26 +231,26 @@ section
       .col-lg-12
         //- h3.our.text-lg-center Our Edge
         h2.dosis.our.text-uppercase.text-lg-center.green-heading How We Intend to Make Money
-        p #{ campaign.intended_use_of_proceeds }
+        p #{ values.intended_use_of_proceeds }
 
         //- h3.text-lg-center Why We are Raising Capital, and What We’ll Do with It
         h2.dosis.text-uppercase.text-lg-center.green-heading Why We are Raising Capital, and What We’ll Do with It
-        p #{ campaign.business_model }
+        p #{ values.business_values }
 
-      if campaign.additional_info
+      if values.additional_info
         .col-lg-12
-          each v,k in campaign.additional_info
+          each v,k in values.additional_info
             //- h3.our.text-lg-center #{ v.title }
             h2.dosis.our.text-uppercase.text-lg-center.green-heading #{ v.title }
             p #{ v.body }
    
-  if campaign.members
+  if values.members
       section#members.team.border-bottom
         .container
             h2#team.dosis.text-uppercase.text-lg-center.col-lg-12.green-heading Team
             .row
               .col-lg-12.text-center-flex
-                each v,k in campaign.members
+                each v,k in values.members
                     .col-lg-4
                       a(href="#")
                         .card.text-lg-center
@@ -277,8 +277,8 @@ section
             .row
               .col-lg-12.text-center-flex
                 .articles_press
-                if campaign.press
-                  each v,k in campaign.press
+                if values.press
+                  each v,k in values.press
                     .col-lg-3.articles_press
                       a(href=v.link target="_blank")
                         .card.card-inverse
@@ -289,7 +289,7 @@ section
                               // p.card-text.intro Smartbe is a revolutionary concept as regards design and ...
                               .pos-bottom
                                 a(href=v.link target="_blank").links.d-inline-block.card-text.pull-right #{ v.link }
-                                img(src="/img/icon-campaign.jpg", alt="").icon-campaign.d-inline-block
+                                img(src="/img/icon-values.jpg", alt="").icon-values.d-inline-block
   
   else
       //
@@ -299,7 +299,7 @@ section
             a(href="").link-1
               .col-lg-4.text-lg-center
                 .card
-                  img(src="/img/campaign/avatar1.jpg" alt="").img-circle
+                  img(src="/img/values/avatar1.jpg" alt="").img-circle
                   .card-block
                     h4.card-title.text-uppercase Jan Mertz
                     p.card-text
@@ -320,7 +320,7 @@ section
             .col-lg-4
               a(href="")
                 .card.text-lg-center
-                  img(src="/img/campaign/avatar2.jpg" alt="").img-circle
+                  img(src="/img/values/avatar2.jpg" alt="").img-circle
                   .card-block
                     h4.card-title.text-uppercase Maria Mertz
                     p.card-text
@@ -340,7 +340,7 @@ section
             .col-lg-4.text-lg-center
               a(href="").link-1
                 .card
-                  img(src="/img/campaign/avatar3.jpg" alt="").img-circle
+                  img(src="/img/values/avatar3.jpg" alt="").img-circle
                   .card-block
                     h4.card-title.text-uppercase Alex Klarck
                     p.card-text
@@ -386,121 +386,121 @@ section
         .col-lg-12.fundraising
           .jumbotron.jumbotron-fluid
             .container
-              if campaign.security_type == 0
+              if values.security_type == 0
                 .row
                   .col-lg-4.p-l-3
                     p Type of Security
-                    h2.font-weight-bold #{ campaign.get_security_type_display }
+                    h2.font-weight-bold #{ values.get_security_type_display }
                   //- .col-lg-3.p-l-3
                   //-   p Target Minimum Raise Amonunt
-                  //-   h2.font-weight-bold #{ model.showBeautifulNumber(campaign.minimum_raise) }
+                  //-   h2.font-weight-bold #{ formatHelper.showBeautifulNumber(values.minimum_raise) }
                   .col-lg-4.p-l-3
                     p Minimum Investment
-                    h2.font-weight-bold #{ model.showBeautifulNumber(campaign.minimum_increment) }
+                    h2.font-weight-bold #{ formatHelper.showBeautifulNumber(values.minimum_increment) }
                   .col-lg-4.p-l-3
                     p Minimum # of Shares
-                    h2.font-weight-bold #{ campaign.min_number_of_shares }
+                    h2.font-weight-bold #{ values.min_number_of_shares }
                   //- .col-lg-3.p-l-3
                   //-   p Minimum Equity Offered
-                  //-   h2.font-weight-bold #{ campaign.min_number_of_shares }
+                  //-   h2.font-weight-bold #{ values.min_number_of_shares }
                 .row
                   .col-lg-4.p-l-3
                     p Pre-Money Valuation
-                    h2.font-weight-bold #{ model.showBeautifulNumber(campaign.premoney_valuation) }
+                    h2.font-weight-bold #{ formatHelper.showBeautifulNumber(values.premoney_valuation) }
                   //- .col-lg-3.p-l-3
                   //-   p Target Maximum Raise Amount
-                  //-   h2.font-weight-bold #{ model.showBeautifulNumber(campaign.maximum_raise) }
+                  //-   h2.font-weight-bold #{ formatHelper.showBeautifulNumber(values.maximum_raise) }
                   .col-lg-4.p-l-3
                     p Price per Share
-                    h2.font-weight-bold #{ model.showBeautifulNumber(campaign.price_per_share) }
+                    h2.font-weight-bold #{ formatHelper.showBeautifulNumber(values.price_per_share) }
                   .col-lg-4.p-l-3
                     p Maximum # of Shares
-                    h2.font-weight-bold #{ campaign.max_number_of_shares }
+                    h2.font-weight-bold #{ formatHelper.max_number_of_shares }
                   //- .col-lg-3.p-l-3
                   //-   p Maximum Equity Offered
-                  //-   h2.font-weight-bold #{ campaign.max_number_of_shares }
+                  //-   h2.font-weight-bold #{ formatHelper.max_number_of_shares }
               else
                 .row
                   .col-lg-4.p-l-3
                     p Type of Security
-                    h2.font-weight-bold #{ campaign.get_security_type_display }
+                    h2.font-weight-bold #{ values.get_security_type_display }
                   .col-lg-4.p-l-3
                     p Target Minimum Raise Amonunt
-                    h2.font-weight-bold #{ model.showBeautifulNumber(campaign.minimum_raise) }
+                    h2.font-weight-bold #{ formatHelper.showBeautifulNumber(values.minimum_raise) }
                   .col-lg-4.p-l-3
                     p Minimum Investment
-                    h2.font-weight-bold #{ model.showBeautifulNumber(campaign.minimum_increment) }
+                    h2.font-weight-bold #{ formatHelper.showBeautifulNumber(values.minimum_increment) }
                 .row
                   .col-lg-4.p-l-3
                     p Percentage Revenue
-                    h2.font-weight-bold #{ campaign.percentage_revenue }%
+                    h2.font-weight-bold #{ values.percentage_revenue }%
                   .col-lg-4.p-l-3
                     p Target Maximum Raise Amount
-                    h2.font-weight-bold #{ model.showBeautifulNumber(campaign.maximum_raise) }
+                    h2.font-weight-bold #{ formatHelper.showBeautifulNumber(values.maximum_raise) }
                   .col-lg-4.p-l-3
                     p Cap
-                    h2.font-weight-bold #{ campaign.cap }X
+                    h2.font-weight-bold #{ values.cap }X
               //- .row
               //-   .col-lg-3.p-l-3
               //-     p Type of Security
-              //-     h2.font-weight-bold #{ campaign.get_security_type_display }
+              //-     h2.font-weight-bold #{ values.get_security_type_display }
               //-   .col-lg-3.p-l-3
               //-     p Target Minimum Raise Amonunt
-              //-     h2.font-weight-bold #{ model.showBeautifulNumber(campaign.minimum_raise) }
+              //-     h2.font-weight-bold #{ formatHelper.showBeautifulNumber(values.minimum_raise) }
               //-   .col-lg-3.p-l-3
               //-     p Minimum Investment
-              //-     h2.font-weight-bold #{ model.showBeautifulNumber(campaign.minimum_increment) }
-              //-   if campaign.security_type == 0
+              //-     h2.font-weight-bold #{ formatHelper.showBeautifulNumber(values.minimum_increment) }
+              //-   if values.security_type == 0
               //-     .col-lg-3.p-l-3
               //-       p Minimum # of Shares
-              //-       h2.font-weight-bold #{ campaign.min_number_of_shares }
+              //-       h2.font-weight-bold #{ values.min_number_of_shares }
               //-   else
               //-     .col-lg-3.p-l-3
               //-       p Expiration Date
-              //-       h2.font-weight-bold #{ model.formatDate(campaign.expiration_date) }
+              //-       h2.font-weight-bold #{ values.formatDate(values.expiration_date) }
 
               //- .row
-              //-   if campaign.security_type == 0
+              //-   if values.security_type == 0
               //-     .col-lg-3.p-l-3
               //-       p Pre-Money Valuation
-              //-       h2.font-weight-bold #{ model.showBeautifulNumber(campaign.premoney_valuation) }
+              //-       h2.font-weight-bold #{ formatHelper.showBeautifulNumber(values.premoney_valuation) }
               //-   else
               //-     .col-lg-3.p-l-3
               //-       p Percentage Revenue
-              //-       h2.font-weight-bold #{ campaign.percentage_revenue }%
+              //-       h2.font-weight-bold #{ values.percentage_revenue }%
               //-   .col-lg-3.p-l-3
               //-     p Target Maximum Raise Amount
-              //-     h2.font-weight-bold #{ model.showBeautifulNumber(campaign.maximum_raise) }
-              //-   if campaign.security_type == 0
+              //-     h2.font-weight-bold #{ formatHelper.showBeautifulNumber(values.maximum_raise) }
+              //-   if values.security_type == 0
               //-     .col-lg-3.p-l-3
               //-       p Price per Share
-              //-       h2.font-weight-bold #{ model.showBeautifulNumber(campaign.price_per_share) }
+              //-       h2.font-weight-bold #{ formatHelper.showBeautifulNumber(values.price_per_share) }
               //-   else
               //-     .col-lg-3.p-l-3
               //-       p Cap
-              //-       h2.font-weight-bold #{ campaign.cap }X
-              //-   if campaign.security_type == 0
+              //-       h2.font-weight-bold #{ values.cap }X
+              //-   if values.security_type == 0
               //-     .col-lg-3.p-l-3
               //-       p Maximum # of Shares
-              //-       h2.font-weight-bold #{ campaign.max_number_of_shares }
+              //-       h2.font-weight-bold #{ values.max_number_of_shares }
               //-   else
               //-     .col-lg-3.p-l-3
-              //-       p Length of the Campaign
-              //-       h2.font-weight-bold #{ campaign.days_to_go } days
+              //-       p Length of the values
+              //-       h2.font-weight-bold #{ values.days_to_go } days
 
 
   section#perks.perks
-    if campaign.perks && campaign.perks instanceof Array && campaign.perks.length > 0
+    if values.perks && values.perks instanceof Array && values.perks.length > 0
       //- h3.col-lg-12.text-lg-center Perks
       .container
         h3.text-uppercase.text-lg-center.green-heading Perks
         .row
           .col-lg-12.text-center-flex
-            each v,k in campaign.perks
+            each v,k in values.perks
                 .col-lg-4
                   .jumbotron.jumbotron-fluid
                     .container
-                      h3.m-t-0.m-b-1 Invest #{ model.showBeautifulNumber(v.amount) } or more
+                      h3.m-t-0.m-b-1 Invest #{ formatHelper.showBeautifulNumber(v.amount) } or more
                       p.text-justify #{ v.perk }
 
   section.investors-all.border-bottom(style="display: none")
@@ -510,7 +510,7 @@ section
         .col-lg-3.text-lg-center
           a(href="")
             .card
-              img(src="/img/campaign/avatar1.jpg" alt="").img-circle
+              img(src="/img/values/avatar1.jpg" alt="").img-circle
               .card-block
                 h4.card-title.text-uppercase Jan Mertz
                 p.card-text
@@ -518,7 +518,7 @@ section
         .col-lg-3.text-lg-center
           a(href="")
             .card
-              img(src="/img/campaign/avatar2.jpg" alt="").img-circle
+              img(src="/img/values/avatar2.jpg" alt="").img-circle
               .card-block
                 h4.card-title.text-uppercase Jan Mertz
                 p.card-text
@@ -526,7 +526,7 @@ section
         .col-lg-3.text-lg-center
           a(href="")
             .card
-              img(src="/img/campaign/avatar3.jpg" alt="").img-circle
+              img(src="/img/values/avatar3.jpg" alt="").img-circle
               .card-block
                 h4.card-title.text-uppercase Lusy Johnson
                 p.card-text
@@ -534,7 +534,7 @@ section
         .col-lg-3.text-lg-center
           a(href="")
             .card
-              img(src="/img/campaign/avatar4.jpg" alt="").img-circle
+              img(src="/img/values/avatar4.jpg" alt="").img-circle
               .card-block
                 h4.card-title.text-uppercase Jan Mertz
                 p.card-text
@@ -542,7 +542,7 @@ section
         .col-lg-3.text-lg-center
           a(href="")
             .card
-              img(src="/img/campaign/avatar1.jpg" alt="").img-circle
+              img(src="/img/values/avatar1.jpg" alt="").img-circle
               .card-block
                 h4.card-title.text-uppercase Lusy Mertz
                 p.card-text
@@ -550,7 +550,7 @@ section
         .col-lg-3.text-lg-center
           a(href="")
             .card
-              img(src="/img/campaign/avatar5.jpg" alt="").img-circle
+              img(src="/img/values/avatar5.jpg" alt="").img-circle
               .card-block
                 h4.card-title.text-uppercase Jan Mertz
                 p.card-text
@@ -558,7 +558,7 @@ section
         .col-lg-3.text-lg-center
           a(href="")
             .card
-              img(src="/img/campaign/avatar2.jpg" alt="").img-circle
+              img(src="/img/values/avatar2.jpg" alt="").img-circle
               .card-block
                 h4.card-title.text-uppercase Jan Mertz
                 p.card-text
@@ -566,7 +566,7 @@ section
         .col-lg-3.text-lg-center
           a(href="")
             .card
-              img(src="/img/campaign/avatar3.jpg" alt="").img-circle
+              img(src="/img/values/avatar3.jpg" alt="").img-circle
               .card-block
                 h4.card-title.text-uppercase Jan Mertz
                 p.card-text
@@ -626,13 +626,13 @@ section
         
   
   section.faq
-    if campaign.faq && Object.keys(campaign.faq).length > 0
+    if values.faq && Object.keys(values.faq).length > 0
     .container
       h2#faq.col-lg-12.dosis.text-uppercase.text-lg-center.green-heading FAQ
       .col-lg-8.offset-lg-2
         .accordion(role="tablist" aria-multiselectable="true")
           - var counter = 0
-          each v,k in campaign.faq
+          each v,k in values.faq
             .panel.panel-default
               div(id="faq" + k role="tab").panel-heading
                 a(data-toggle="collapse"
@@ -739,17 +739,17 @@ section
       .col-lg-12.text-lg-center
         h2
           i.fa.fa-thumbs-up
-          |  I’d Like to Invest in #{ campaign.company.name }!
-        a(href="/api/campaign/" + campaign.id + "/invest").btn.btn-primary.text-uppercase Invest
+          |  I’d Like to Invest in #{ values.company.name }!
+        a(href="/api/values/" + values.id + "/invest").btn.btn-primary.text-uppercase Invest
 
 
 #videoModal.modal.fade(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")
     .modal-dialog.modal-lg(role="document")
         .modal-content
             .embed-responsive.embed-responsive-16by9
-                iframe.embed-responsive-item(src="//www.youtube.com/embed/" + app.getVideoId(campaign.video) + "?rel=0" allowfullscreen="true")
+                iframe.embed-responsive-item(src="//www.youtube.com/embed/" + app.getVideoId(values.video) + "?rel=0" allowfullscreen="true")
 
-each v,k in campaign.additional_video
+each v,k in values.additional_video
     div(id="videoModal-" + k tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true").modal.fade
         .modal-dialog.modal-lg(role="document")
             .modal-content
