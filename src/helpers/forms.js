@@ -66,7 +66,7 @@ module.exports = {
     }
 
     model.set(data);
-    Backbone.Validation.bind(this, { model: model });
+    //Backbone.Validation.bind(this, { model: model });
 
     if (model.isValid(true)) {
       var self = this;

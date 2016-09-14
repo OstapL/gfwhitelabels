@@ -246,17 +246,28 @@ module.exports = {
     },
 
     submitComment(e) {
-      debugger;
       e.preventDefault();
-      this._success = this._commentSuccess;
-      this.urlRoot = serverUrl + Urls['comment-list']();
-      this.oldModel = this.model;
       var data = $(e.target).serializeJSON();
+      model = new Backbone.Model();
+      model.urlRoot = serverUrl + Urls['comment-list']();
       data['company'] = this.model.company.id;
-      this._showLoading = app.showLoading;
-      delete this.model;
-      app.showLoading = function(){ };
-      api.submitAction.call(this, e, data);
+      model.set(data)
+      if (model.isValid(true)) {
+        model.save().
+          then((data) => {
+            this.$el.find('.alert-warning').remove();
+            this._commentSuccess(data);
+          }).
+          fail((xhr, status, text) => {
+            api.errorAction(this, xhr, status, text, this.fields);
+          });
+      } else {
+        if (this.$('.alert').length) {
+          $('#content').scrollTo();
+        } else {
+          this.$el.find('.has-error').scrollTo();
+        }
+      }
     }
   }),
 
