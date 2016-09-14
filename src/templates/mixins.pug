@@ -286,9 +286,6 @@ mixin fieldDropzone(name, attr, type)
                             target="_blank" 
                             class="a-" + name + ' link-3'
                         ) #{values[name + '_data'] ? values[name + '_data'].name : ''}
-                    //- .dz-progress
-                    //-     span.dz-upload(data-dz-uploadprogress='')
-                    //- if values[name + '_data']
     else if type == 2
         div(
             class='col-lg-3 media-item' + (fields[name].help_text ? ' showPopover' : '')
