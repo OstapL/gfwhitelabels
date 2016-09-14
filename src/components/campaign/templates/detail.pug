@@ -639,10 +639,13 @@ section
                 data-parent="#accordion" 
                 href="#collapsefaq"+ k
                 aria-controls="collapsefaq"+ k
-                class=(counter == 0 ? 'list-group-item-action active' : 'list-group-item-action'),
+                class=(counter == 0 ? 'list-group-item-action active' : 'list-group-item-action')
+                style="padding-left:25px"
                 ) #{v.question}
                     if counter == 0
                         i.fa.fa-angle-up
+                    else
+                        i.fa.fa-angle-down
               div(id="collapsefaq" + k role="tabpanel"
               aria-labelledby="faq" + k
               class=(counter == 0 ? 'in' : '') + ' panel-collapse collapse'
