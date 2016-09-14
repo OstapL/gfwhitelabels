@@ -89,7 +89,8 @@ section.campaing-list
                                     else
                                         //- p % Revenue: #{campaign.percentage_revenue}%
                                         p Cap: #{campaign.cap}X
-                                        p Expiration Date: #{campaign.expiration_date}
+                                        //- p Expiration Date: #{campaign.expiration_date}
+                                        p Minimum Investment: #{collection.showBeautifulNumber(campaign.minimum_increment)}
 
 
                         .title.text-xs-center
