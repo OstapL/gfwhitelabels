@@ -1,6 +1,6 @@
 function formatPrice(price = '') {
     // here we need to take care of passing the number of 0
-    // if we got a 0 we should return 0 or $0, not empty string
+    // if we got a 0 we should return $0, not empty string
     // if (!+price) return ''; doesn't take care the situation above, thus I use the following one.
     // Arthur Yip 2016-9-14
     if (!price && !(price === 0)) return '';

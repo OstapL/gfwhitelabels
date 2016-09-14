@@ -1,7 +1,12 @@
 module.exports = {
     formatPrice(price = '') {
-        if (!+price) return '';
+        // here we need to take care of passing the number of 0
+        // if we got a 0 we should return $0, not empty string
+        // if (!+price) return ''; doesn't take care the situation above, thus I use the following one.
+        // Arthur Yip 2016-9-14
+        if (!price && !(price === 0)) return '';
         price = price + '';
+        price = price.replace(/,/g, '');
         let deci;
         [price, deci] = price.split('.');
         var result =  "$" + price.split('').reverse().map(function(item, index) {
