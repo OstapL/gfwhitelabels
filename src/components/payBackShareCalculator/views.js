@@ -193,11 +193,21 @@ module.exports = {
                 }
             });
         },
+        
+        goToStep1() {
+            app.routers.navigate('/calculator/paybackshare/step-2', {trigger: true});
+        },
 
         render() {
             // disable enter to the final step of paybackshare calculator without data
-            if (!app.cache.payBackShareCalculator) {
-                app.routers.navigate('/calculator/paybackshare/step-2', {trigger: true});
+            if (app.cache.payBackShareCalculator) {
+                let { growLevel, nextYearRevenue, raiseMoney } = app.cache.payBackShareCalculator;
+                if (!growLevel || !nextYearRevenue || !raiseMoney) {
+                    this.goToStep1();
+                    return false;
+                }
+            } else {
+                this.goToStep1();
                 return false;
             }
 
