@@ -1,3 +1,5 @@
+const formatHelper = require('helpers/formatHelper');
+
 module.exports = { 
   list: Backbone.View.extend({
     template: require('./templates/list.pug'),
@@ -54,6 +56,7 @@ module.exports = {
     },
 
     smoothScroll(e) {
+      console.log('smooth...');
       e.preventDefault();
       $(document).off("scroll");
       $('.tabs-scroll .nav').find('.nav-link').removeClass('active');
@@ -65,7 +68,7 @@ module.exports = {
       $('html, body').stop().animate({
         'scrollTop': $target.offset().top - $navBar.height() - 15
       }, 500, 'swing', () => {
-        window.location.hash = e.target.hash;
+        // window.location.hash = e.target.hash;
         $(document).on("scroll", this.onScrollListener);
       });
     },
@@ -107,18 +110,18 @@ module.exports = {
       FB.ui({
         method: 'share',
         href: window.location.href,
-        caption: this.model.get('company').tagline,
-        description: this.model.get('pitch'),
-        title: this.model.get('company').name,
-        picture: (this.model.get("header_image_data") ? this.model.get("header_image_data").url : null),
+        caption: this.model.company.tagline,
+        description: this.model.pitch,
+        title: this.model.company.name,
+        picture: (this.model.header_image_data ? this.model.header_image_data.url : null),
       }, function(response){});
     },
 
     shareOnLinkedin(event) {
       event.preventDefault();
       window.open(encodeURI('https://www.linkedin.com/shareArticle?mini=true&url=' + window.location.href +
-            '&title=' + this.model.get('company').name +
-            '&summary=' + this.model.get('pitch') +
+            '&title=' + this.model.company.name +
+            '&summary=' + this.model.pitch +
             '&source=Growth Fountain'),'Growth Fountain Campaingn','width=605,height=545');
     },
 
@@ -137,8 +140,8 @@ module.exports = {
         this.template({
           serverUrl: serverUrl,
           Urls: Urls,
-          campaign: this.model.toJSON(),
-          model: this.model
+          values: this.model,
+          formatHelper: formatHelper
         })
       );
 
@@ -185,11 +188,11 @@ module.exports = {
           new this.commentView.form().getHtml({model: {}})
         );
 
-        var a1 = api.makeCacheRequest(Urls['comment-list']() + '?company=' + this.model.get('company').id).
+        var a1 = api.makeCacheRequest(Urls['comment-list']() + '?company=' + this.model.company.id).
           then((comments) => {
             let commentList = new this.commentView.list({
               el: '.comments',
-              model: this.model.get('company'),
+              model: this.model.company,
               collection: comments,
             }).render();
           });
@@ -205,61 +208,67 @@ module.exports = {
     },
 
     _commentSuccess(data) {
-      debugger;
       this._success = null;
       this.urlRoot = null;
-      this.model = this.oldModel;
       if (data.parent) { 
         $('#comment_' + data.parent).after(
           new this.commentView.detail().getHtml({
-          }).getHtml({
             model: data,
-            company: this.model.get('company'),
+            company: this.model.company,
             app: app,
           })
         );
       } else {
         $('#comment_' + data.parent).html(
           new this.commentView.detail().getHtml({
-            company: this.model.get('company'),
+            company: this.model.company,
             model: data,
             app: app,
           })
         );
       }
-      $('#parent').val('');
-      $('#is_related').val('0');
-      $('#body').val('');
+      this.$el.find('.comment-form-div').remove();
       app.hideLoading();
       app.showLoading = this._showLoading;
     },
 
     checkResponse(e) {
-      debugger;
       e.preventDefault();
+      this.$el.find('.comment-form-div').remove();
       var $el = $(e.currentTarget);
       $el.parents('.comment').after(
         new this.commentView.form({
         }).getHtml({
           model: {parent: e.currentTarget.dataset.id},
-          company: this.model.get('company'),
+          company: this.model.company,
           app: app,
         })
       );
     },
 
     submitComment(e) {
-      debugger;
       e.preventDefault();
-      this._success = this._commentSuccess;
-      this.urlRoot = serverUrl + Urls['comment-list']();
-      this.oldModel = this.model;
       var data = $(e.target).serializeJSON();
-      data['company'] = this.model.get('company').id;
-      delete this.model;
-      this._showLoading = app.showLoading;
-      app.showLoading = function(){ };
-      api.submitAction.call(this, e, data);
+      let model = new Backbone.Model();
+      model.urlRoot = serverUrl + Urls['comment-list']();
+      data['company'] = this.model.company.id;
+      model.set(data)
+      if (model.isValid(true)) {
+        model.save().
+          then((data) => {
+            this.$el.find('.alert-warning').remove();
+            this._commentSuccess(data);
+          }).
+          fail((xhr, status, text) => {
+            api.errorAction(this, xhr, status, text, this.fields);
+          });
+      } else {
+        if (this.$('.alert').length) {
+          $('#content').scrollTo();
+        } else {
+          this.$el.find('.has-error').scrollTo();
+        }
+      }
     }
   }),
 
@@ -370,3 +379,4 @@ module.exports = {
     },
   }),
 };
+

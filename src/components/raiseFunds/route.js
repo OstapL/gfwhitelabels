@@ -27,7 +27,7 @@ module.exports = Backbone.Router.extend({
           $('body').scrollTo(); 
           var i = new View.company({
             el: '#content',
-            fields: meta[0].actions.PUT,
+            fields: meta[0].actions.POST,
             model: new Model.model(model[0][0] || {}),
             campaign: campaignData[0] || {},
           });
