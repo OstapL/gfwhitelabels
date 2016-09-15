@@ -43,15 +43,10 @@ include ../../../templates/mixins.pug
                         label(for="workingCapital").col-lg-12  How much working capital do you need to generate your projected revenue over the next 24 months?) &nbsp;&nbsp;
                             i(aria-hidden="true")#generate_projected_revenue.fa.fa-question-circle.text-muted
 
-                        // this should be range of bootstrap slider
-                        // Roman K.: For calculator work I've left it as input. Has to be changed to slider
-
                         .col-lg-12
-                            input#workingCapital.form-control.js-field(
-                                value= data.workingCapital,
+                            input#workingCapital.form-control.js-bootstrap-slider(
                                 type='text',
-                                placeholder='',
-                                data-input-mask='percent',
+                                data-slider-value= data.workingCapital,
                                 data-model-value='workingCapital')
 
                     .form-group.row
@@ -83,15 +78,10 @@ include ../../../templates/mixins.pug
                     .form-group.row
                         label(for="taxRate").col-lg-12 What Tax Rate do you expect to pay on your operating profit? (including federal, state, local, and any other taxes applicable to the operation of your business)
 
-                        // this should be range of bootstrap slider
-                        // Roman K.: For calculator work I've left it as input. Has to be changed to slider
-
                         .col-lg-12
-                            input#taxRate.form-control.js-field(
-                                value= data.taxRate,
+                            input#taxRate.form-control.js-bootstrap-slider(
                                 type='text',
-                                placeholder='',
-                                data-input-mask='percent',
+                                data-slider-value= data.taxRate,
                                 data-model-value='taxRate')
 
                     .form-group.row
