@@ -234,10 +234,19 @@ module.exports = {
   }),
 
   reset: Backbone.View.extend({
-        render(){
-            let template = require('./templates/reset.pug');
-            this.$el.html(template({}));
-            return this;
-        }
+    events: {
+      'submit form': 'submit',
+    },
+    render(){
+      let template = require('./templates/reset.pug');
+      this.$el.html(template({}));
+      return this;
+    },
+    submit(e) {
+      api.makeRequest(serverUrl + Urls.rest_password_reset(), {
+        email: ''
+      }, 'POST');
+    }
+
   }),
 };
