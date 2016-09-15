@@ -46,12 +46,12 @@ module.exports = {
       return percentage_raised;
   },
 
-	appendHttpIfNecessary(e) {
-	  // var $el = $('#website');
-	  var $el = $(e.target);
-	  var url = $el.val();
-	  if (!(url.startsWith("http://") || url.startsWith("https://"))) {
-	    $el.val("http://" + url);
-	  }
-	},
+  appendHttpIfNecessary(e) {
+    // var $el = $('#website');
+    var $el = $(e.target);
+    var url = $el.val();
+    if (!(url.startsWith("http://") || url.startsWith("https://"))) {
+      $el.val("http://" + url);
+    }
+  },
 };
