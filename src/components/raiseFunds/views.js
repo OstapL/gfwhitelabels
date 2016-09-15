@@ -1,7 +1,7 @@
 "use strict";
 
 import formatHelper from '../../helpers/formatHelper';
-let appendHttpIfNecessary = formatHelper.appendHttpIfNecessary;
+const appendHttpIfNecessary = formatHelper.appendHttpIfNecessary;
 
 const dropzone = require('dropzone');
 const dropzoneHelpers = require('helpers/dropzone.js');
@@ -53,7 +53,7 @@ module.exports = {
       'keyup #zip_code': 'changeZipCode',
       'click .update-location': 'updateLocation',
       'change input[name=phone]': 'formatPhone',
-      'change #website': 'appendHttpIfNecessary',
+      'change #website': appendHttpIfNecessary,
     },
 
     initialize(options) {
@@ -74,7 +74,7 @@ module.exports = {
         $el.val("http://" + url);
       }
     },*/
-    appendHttpIfNecessary: appendHttpIfNecessary,
+
     submit(e) {
       var data = $(e.target).serializeJSON();
       data['founding_date'] = data['founding_date__year'] + '-' + 
@@ -236,11 +236,13 @@ module.exports = {
         'change .videoInteractive input[type="url"]': 'updateVideo',
         'dragover': 'globalDragover',
         'dragleave': 'globalDragleave',
-        'change #video,.additional_video_link': 'appendHttpIfNecessary',
+        'change #video,.additional_video_link': 'appendHttpsIfNecessary',
       }, jsonActions.events),
       urlRoot: serverUrl + Urls['campaign-list']() + '/media',
 
-      appendHttpIfNecessary: appendHttpIfNecessary,
+      appendHttpsIfNecessary(e) {
+        appendHttpIfNecessary(e, true);
+      },
 
       globalDragover () {
           // this.$('.dropzone').css({ border: 'dashed 1px lightgray' });
@@ -426,7 +428,6 @@ module.exports = {
           var $form = $(e.target).parents('.videoInteractive').parent();
           var video = e.target.value;
           var id = this.getVideoId(video);
-          console.log(id);
 
           // ToDo
           // FixME
