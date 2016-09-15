@@ -76,7 +76,6 @@ module.exports = {
     },*/
     appendHttpIfNecessary: appendHttpIfNecessary,
     submit(e) {
-      debugger;
       var data = $(e.target).serializeJSON();
       data['founding_date'] = data['founding_date__year'] + '-' + 
         data['founding_date__month'] + '-' + data['founding_date__day'];
