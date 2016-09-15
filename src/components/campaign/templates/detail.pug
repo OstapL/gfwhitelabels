@@ -499,7 +499,9 @@ section
                 .col-lg-4
                   .jumbotron.jumbotron-fluid
                     .container
-                      h3.m-t-0.m-b-1 Invest #{ formatHelper.formatPrice(v.amount) } or more
+                      h3.m-t-0.m-b-1 Invest 
+                        span #{ formatHelper.formatPrice(v.amount) }
+                        |  or more
                       p.text-justify #{ v.perk }
 
   section.investors-all.border-bottom(style="display: none")
