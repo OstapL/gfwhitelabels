@@ -273,7 +273,7 @@ define(function() {
                 this.getCityStateByZipCode = require("../helpers/getSityStateByZipCode");
                 this.usaStates = require("../helpers/usa-states");
                 let dropzone = require('dropzone');
-                let template = require('templates/userProfile.pug');
+                let template = require('components/accountProfile/templates/profile.pug');
                 this.$el.html(
                     template({
                         serverUrl: serverUrl,

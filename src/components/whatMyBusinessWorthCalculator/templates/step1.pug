@@ -80,13 +80,9 @@ include ../../../templates/mixins.pug
                             i(aria-hidden="true")#gross_margin.fa.fa-question-circle.text-muted
 
                         .col-lg-12
-                            // here must be bootstrap slider instead input
-                            // Roman K.: For calculator work I've left it as input. Has to be changed to slider
-
-                            input#grossMargin.form-control.js-field(
-                                value= data.grossMargin,
+                            input#grossMargin.form-control.js-bootstrap-slider(
                                 type='text',
-                                data-input-mask='percent',
+                                data-slider-value= data.grossMargin
                                 data-model-value='grossMargin')
 
                     .form-group.row
