@@ -23,42 +23,44 @@ section.campaign-specifics.container.m-b-85
             span.warning-text 
             | You get to set two fundraising goals: the minimum you're willing to accept and the  maximum you're willing to accept.  If you don't reach your minimum fundraising goal, all money will be returned to the investors.
 
-      .row.label-top-6
+      .row
         .col-lg-6.col-l-65
           +fieldBlock("minimum_raise", '', {
-            class1: 'col-lg-6 col-md-3', 
-            class2: 'col-lg-6 col-md-9', 
+            class1: 'col-lg-6 col-md-12', 
+            class2: 'col-lg-6 col-md-12', 
             type: 'text',
             placeholder: '$',
             })
         .col-lg-6.col-l-65
           +fieldBlock("maximum_raise", '', {
-            class1: 'col-lg-5 col-md-3', 
-            class2: 'col-lg-7 col-md-9', 
+            class1: 'col-lg-5 col-md-12', 
+            class2: 'col-lg-7 col-md-12', 
             type: 'text',
             placeholder: '$',
             })
-      .label-top-6
-        +fieldBlock("minimum_increment", '', {
-           class1: 'col-lg-3 col-md-4',
-           class2: 'col-lg-9 col-md-8',
-           type: 'text',
-           placeholder: '$  People can invest this amount or more  ',
-           })
-      .label-top-6
-        +fieldBlock("length_days", '', {
-           class1: 'col-lg-3 col-md-4',
-           class2: 'col-lg-9 col-md-8',
-           type: 'choice',
-           text: 'Length of the Campaign',
-           })
+      .row
+        .col-lg-12
+          +fieldBlock("minimum_increment", '', {
+             class1: 'col-lg-3 col-md-12',
+             class2: 'col-lg-9 col-md-12',
+             type: 'text',
+             placeholder: '$  People can invest this amount or more  ',
+             })
+      .row
+        .col-lg-12
+          +fieldBlock("length_days", '', {
+             class1: 'col-lg-3 col-md-12 text-md-left',
+             class2: 'col-lg-9 col-md-12',
+             type: 'choice',
+             text: 'Length of the Campaign',
+             })
       .text-lg-right.img-ppt
         - const fileName = values.investor_presentation_data ? values.investor_presentation_data.name : '';
         - const extension = fileName ? fileName.split('.').pop() : '';
         - const suffix = extension == 'pdf' ? '_pdf' : (['ppt', 'pptx'].indexOf(extension) != -1 ? '_pptx' : '_file');
         +fieldDropzone("investor_presentation", {
             class1: 'col-lg-3',
-            class2: 'col-lg-9 p-l-1 p-r-3',
+            class2: 'col-lg-9 p-l-1 p-r-1',
             text: 'Drop your PPT or PDF here or click to upload',
             icon: 'file',
             default: '/img/default' + suffix + '.png',
@@ -68,7 +70,7 @@ section.campaign-specifics.container.m-b-85
 
       .row.border-top
 
-      h3.text-lg-center.col-lg-12.pre-money-terms Pre-Money Valuation and Equity Terms
+      h3.text-lg-center.col-md-center.text-xs-center.col-lg-12.pre-money-terms Pre-Money Valuation and Equity Terms
       .col-lg-12.text-lg-center.text-md-center.text-xs-center.m-b-1.p-b-1
         a(href="https://github.com/vladyslav2/gfwhitelabels/files/470205/growthfountain_security_description.pdf" target="_blank").link-2 Click here to see descriptions of Common Equity and PayBack Share
 
@@ -83,9 +85,9 @@ section.campaign-specifics.container.m-b-85
 
       .security_type_list.security_type_0(style=(values.security_type == 0 ? '' :  "display: none"))
           .row
-            .col-lg-6.col-l-65.m-l-30.form-group.row.clearfix
-              label.col-lg-5.text-lg-right Link to Calculators
-              .col-lg-7
+            .col-lg-6.col-md-12.col-l-65.m-l-30.form-group.row.clearfix
+              label.col-lg-5.col-md-12.text-lg-right Link to Calculators
+              .col-lg-7.col-md-12
                 .btn-group
                   button(data-toggle="dropdown" aria-haspopup="true" aria-expanded="false").btn.btn-dropdown Link to Calculators
                   button(data-toggle="dropdown" aria-haspopup="true" aria-expanded="false").btn.dropdown-toggle.dropdown-toggle-split.btn-dropdown-click
@@ -95,17 +97,17 @@ section.campaign-specifics.container.m-b-85
                     a(href="/calculator/capitalraise/intro" target="_blank").dropdown-item How Much Should I Raise?
                     a(href="/calculator/capitalraise2/step-1" target="_blank").dropdown-item Capital Raise Calculator 2
                     a(href="#" target="_blank").dropdown-item What's My Business Worth?
-            .col-lg-5.col-l-65.p-l-0.p-r-1.pre-money-p-r-0.pull-right
+            .col-lg-5.col-md-12.col-l-65.p-l-0.p-r-1.pre-money-p-r-0.pull-lg-right.pull-md-left
               +fieldBlock("premoney_valuation", '', {
-                class1: 'col-lg-4 col-md-3', 
-                class2: 'col-lg-6 col-md-9', 
+                class1: 'col-lg-4 col-md-12', 
+                class2: 'col-lg-6 col-md-12', 
                 type: 'text',
                 placeholder: '$',
                 })
           .label-top-6
             +fieldBlock("price_per_share", '', {
-               class1: 'col-lg-3 col-md-4',
-               class2: 'col-lg-9 col-md-8',
+               class1: 'col-lg-3 col-md-12',
+               class2: 'col-lg-9 col-md-12',
                type: 'text',
                placeholder: '$',
                })
@@ -113,8 +115,8 @@ section.campaign-specifics.container.m-b-85
           .row.m-t-2.form-group-m-b-15
             .col-lg-6.col-l-65
               +fieldBlock("min_number_of_shares", '', {
-                class1: 'col-lg-6 p-l-2', 
-                class2: 'col-lg-6 col-md-9', 
+                class1: 'col-lg-6 p-l-2 col-md-12 p-sm-0', 
+                class2: 'col-lg-6 col-md-12', 
                 type: 'text',
                 placeholder: '$',
                 disabled: true,
@@ -122,8 +124,8 @@ section.campaign-specifics.container.m-b-85
 
             .col-lg-6.col-l-65
               +fieldBlock("max_number_of_shares", '', {
-                class1: 'col-lg-5 col-md-3', 
-                class2: 'col-lg-7 col-md-9', 
+                class1: 'col-lg-5 col-md-12', 
+                class2: 'col-lg-7 col-md-12', 
                 type: 'text',
                 placeholder: '$',
                 disabled: true,
@@ -132,14 +134,14 @@ section.campaign-specifics.container.m-b-85
           .row.m-t-2.form-group-m-b-15
             .col-lg-6.col-l-65
               .form-group.row.min_equity_offered.required
-                label(for="min_equity_offered").text-lg-right.col-lg-6.p-l-2 Minimum Equity Offered
-                .col-lg-6.col-md-9
+                label(for="min_equity_offered").text-lg-right.col-lg-6.p-l-2.col-md-12 Minimum Equity Offered
+                .col-lg-6.col-md-12
                   input.form-control#min_equity_offered(name="min_equity_offered" placeholder="$" type="text" value="0" disabled)
 
             .col-lg-6.col-l-65
               .form-group.row.max_equity_offered.required
-                label(for="max_equity_offered").text-lg-right.col-lg-5.col-md-3 Maximum Equity Offered
-                .col-lg-6.col-md-9
+                label(for="max_equity_offered").text-lg-right.col-lg-5.col-md-12 Maximum Equity Offered
+                .col-lg-6.col-md-12
                   input.form-control#max_equity_offered(name="max_equity_offered" placeholder="$" type="text" value="0" disabled)
 
 
@@ -191,20 +193,20 @@ section.campaign-specifics.container.m-b-85
           //-       })
 
           .row.m-t-2.form-group-m-b-15.label-top-6
-            .col-lg-6.col-l-65
+            .col-lg-6.col-l-65.col-md-12
               .form-group.row.min_equity_offered.required
-                label(for="min_equity_offered").text-lg-right.col-lg-6.p-l-2 Percentage Revenue
-                .col-lg-6.col-md-9
+                label(for="min_equity_offered").text-lg-right.col-lg-6.p-l-2.col-md-12 Percentage Revenue
+                .col-lg-6.col-md-12
                   input.form-control(name="min_equity_offered" placeholder="$" type="text" value="5%" disabled)
 
             .col-lg-6.col-l-65
               .form-group.row.max_equity_offered.required
-                label(for="max_equity_offered").text-lg-right.col-lg-5.col-md-3 Cap
-                .col-lg-6.col-md-9
+                label(for="max_equity_offered").text-lg-right.col-lg-5.col-md-12 Cap
+                .col-lg-6.col-md-12
                   input.form-control(name="max_equity_offered" placeholder="$" type="text" value="2X" disabled)
 
           .row
-            .col-lg-6.col-l-65.m-l-30.form-group.row.clearfix
+            .col-lg-6.col-md-12.col-l-65.m-l-30.form-group.row.clearfix
               label.col-lg-5.text-lg-right Link to Calculators
               .col-lg-7
                 .btn-group
