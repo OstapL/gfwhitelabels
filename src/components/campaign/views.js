@@ -39,7 +39,12 @@ module.exports = {
       'click .see-all-faq': 'seeAllFaq',
       'click .linkresponse': 'checkResponse',
       'submit .comment-form': 'submitComment',
+      // 'click .fancybox-nav': 'preventDefault'
     },
+    /*preventDefault(e) {
+      debugger
+      e.preventDefault();
+    },*/
     initialize(options) {
       $(document).off("scroll", this.onScrollListener);
       $(document).on("scroll", this.onScrollListener);
@@ -135,7 +140,15 @@ module.exports = {
 
     render() {
       const socialMediaScripts = require('helpers/shareButtonHelper.js');
-      const ekkoLightbox = require('ekko-lightbox/dist/ekko-lightbox.min.js');
+      // const ekkoLightbox = require('ekko-lightbox/dist/ekko-lightbox.min.js');
+      // const fancybox = require('../../../../node_modules/fancybox/dist/js/jquery.fancybox.js');
+      // const fancybox = require('fancybox/dist/js/jquery.fancybox.js');
+      const fancybox = require('img/fancybox/js/jquery.fancybox.js');
+      // const fancybox = require('fancybox')($);
+      // require('fancybox/dist/helpers/js/jquery.fancybox-buttons.js');
+      // require('fancybox/dist/helpers/js/jquery.fancybox-thumbs.js');
+      // require('fancybox/dist/helpers/js/jquery.fancybox-media.js');
+      // const fancybox = require('fancybox');
 
       this.$el.html(
         this.template({
@@ -168,10 +181,25 @@ module.exports = {
           }
         };
 
-        this.$el.delegate('*[data-toggle="lightbox"]', 'click', function(event) {
-          event.preventDefault();
+        /*$('*[data-toggle="lightbox"]').click(function (e) {
+          e.preventDefault();
           $(this).ekkoLightbox();
-        }); 
+        });*/
+        /*this.$el.delegate('*[data-toggle="lightbox"]', 'click', function(event) {
+          event.preventDefault();
+          // $(this).ekkoLightbox();
+          $(this).fancybox();
+        }); */
+        /*this.$('*[data-toggle="lightbox"]').fancybox({
+          openEffect  : 'elastic',
+          closeEffect : 'elastic',
+
+          helpers : {
+            title : {
+              type : 'inside'
+            }
+          }
+        });*/
 
         this.$el.find('[data-toggle="sticky-onscroll"]').each(function() {
           var sticky = $(this);
@@ -209,6 +237,11 @@ module.exports = {
         $(event.currentTarget).find('iframe').attr('src', $(event.currentTarget).find('iframe').attr('src'));
       });
 
+      // $('*[data-toggle="lightbox"]').fancybox({
+      $('.fancybox').fancybox({
+        openEffect  : 'none',
+        closeEffect : 'none'
+      });
 
       return this;
     },
