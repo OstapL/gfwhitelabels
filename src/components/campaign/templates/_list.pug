@@ -1,3 +1,5 @@
+- const format = require('helpers/formatHelper.js');
+
 .row
     for campaign in campaigns
 
@@ -13,7 +15,7 @@
                     .more_inform
                         .title.text-center
                             if campaign.security_type == 0
-                                h3 Valuation: #{collection.showBeautifulNumber(campaign.premoney_valuation)}
+                                h3 Valuation: #{format.formatPrice(campaign.premoney_valuation)}
                             else
                                 h3 Percentage Revenue: #{campaign.percentage_revenue}%
 
@@ -29,11 +31,11 @@
 
                         .bottom_pr
                             if campaign.security_type == 0
-                                p Price per share: #{collection.showBeautifulNumber(campaign.price_per_share)}
-                                p Number of shares: #{campaign.min_number_of_shares}
+                                p Price per share: #{format.formatPrice(campaign.price_per_share)}
+                                p Number of shares: #{format.formatNumber(campaign.min_number_of_shares)}
                             else
                                 //- p % Revenue: #{campaign.percentage_revenue}%
-                                p Cap: #{campaign.cap}
+                                p Cap: #{campaign.cap}X
                                 p Expiration Date: #{campaign.expiration_date}
 
 
@@ -50,8 +52,8 @@
                 .progress_bar_container
                     span.left_text #{campaign.progress} % Funded
                     span.right_text 
-                        b #{collection.showBeautifulNumber(campaign.amount_raised)} 
-                        | of #{collection.showBeautifulNumber(campaign.minimum_raise)}
+                        b #{format.formatPrice(campaign.amount_raised)} 
+                        | of #{format.formatPrice(campaign.minimum_raise)}
                     .clear
                         progress.progress(value=campaign.progress max="100") #{campaign.progress} %
 
