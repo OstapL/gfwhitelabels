@@ -415,6 +415,7 @@ module.exports = {
       },
 
       deleteImage(e) {
+          debugger; 
           e.stopImmediatePropagation();
           e.stopPropagation();
           e.preventDefault();
