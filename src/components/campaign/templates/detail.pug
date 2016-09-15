@@ -280,17 +280,14 @@ section
                 .articles_press
                 if values.press
                   each v,k in values.press
-                    .col-lg-3.articles_press
+                    .col-lg-4.articles_press
                       a(href=v.link target="_blank")
                         .card.card-inverse
-                          img(src="/img/smartbe-intelligent-stroller.jpg" alt="").card-img
-                          .card-img-overlay
-                            .card-title
-                              p.card-text.font-weight-bold #{ v.headline }
-                              // p.card-text.intro Smartbe is a revolutionary concept as regards design and ...
-                              .pos-bottom
-                                a(href=v.link target="_blank").links.d-inline-block.card-text.pull-right #{ v.link }
-                                img(src="/img/icon-values.jpg", alt="").icon-values.d-inline-block
+                          .card-title
+                            i.fa.fa-link
+                            p.card-text #{ v.headline }
+                            .pos-bottom
+                              .links.d-inline-block.card-text #{ v.link }
   
   else
       //
