@@ -1,7 +1,8 @@
 import './styles/style.sass'
-import 'jquery.inputmask/dist/jquery.inputmask.bundle.js';
 import calculatorHelper from '../../helpers/calculatorHelpers';
 import flyPriceFormatter from '../../helpers/flyPriceFormatter';
+import 'bootstrap-slider/dist/bootstrap-slider'
+import 'bootstrap-slider/dist/css/bootstrap-slider.css'
 
 let formatPrice = calculatorHelper.formatPrice;
 
@@ -50,17 +51,12 @@ module.exports = {
             let elem = e.target;
             elem.dataset.currentValue = parseFloat(elem.value.replace('$', '').replace(/,/g, '') || 0);
             elem.value = formatPrice(elem.dataset.currentValue);
-
-            // save percent values
-            if (elem.dataset.inputMask == "percent") {
-                app.cache.whatMyBusinessWorthCalculator[elem.dataset.modelValue] = +elem.dataset.currentValue;
-            }
         },
 
         ui() {
             // get inputs by inputmask category
             this.inputPrice = this.$('[data-input-mask="price"]');
-            this.inputPercent = this.$('[data-input-mask="percent"]');
+            this.bootstrapSlider = this.$('.js-bootstrap-slider');
         },
 
         render: function () {
@@ -75,14 +71,21 @@ module.exports = {
 
             flyPriceFormatter(this.inputPrice, ({ modelValue, currentValue }) => {
                 // save value
-                console.log('currentValue', currentValue);
                 app.cache.whatMyBusinessWorthCalculator[modelValue] = +currentValue;
             });
 
-            this.inputPercent.inputmask("9{1,4}%", {
-                placeholder: "0"
+            // bootstrap slider
+            this.bootstrapSlider.each(function() {
+                $(this).bootstrapSlider ({
+                    min: 0,
+                    max: 100
+                }).on('slideStop', function(slider) {
+                    let key = slider.target.dataset.modelValue;
+                    app.cache.whatMyBusinessWorthCalculator[key] = +slider.value;
+                });
             });
-            return this;
+            
+            return this; 
         }
     }),
 
@@ -204,17 +207,12 @@ module.exports = {
             let elem = e.target;
             elem.dataset.currentValue = parseFloat(elem.value.replace('$', '').replace(/,/g, '') || 0);
             elem.value = formatPrice(elem.dataset.currentValue);
-
-            // save percent values
-            if (elem.dataset.inputMask == "percent") {
-                app.cache.whatMyBusinessWorthCalculator[elem.dataset.modelValue] = +elem.dataset.currentValue;
-            }
         },
 
         ui() {
             // get inputs by inputmask category
             this.inputPrice = this.$('[data-input-mask="price"]');
-            this.inputPercent = this.$('[data-input-mask="percent"]');
+            this.bootstrapSlider = this.$('.js-bootstrap-slider');
         },
 
         render: function () {
@@ -237,8 +235,15 @@ module.exports = {
                 app.cache.whatMyBusinessWorthCalculator[modelValue] = +currentValue;
             });
 
-            this.inputPercent.inputmask("9{1,4}%", {
-                placeholder: "0"
+            // bootstrap slider
+            this.bootstrapSlider.each(function() {
+                $(this).bootstrapSlider({
+                    min: 0,
+                    max: 100
+                }).on('slideStop', function(slider) {
+                    let key = slider.target.dataset.modelValue;
+                    app.cache.whatMyBusinessWorthCalculator[key] = +slider.value;
+                });
             });
 
             $('body').scrollTop(0);

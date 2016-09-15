@@ -66,7 +66,7 @@ mixin fieldBlock(name, data, attr)
                         each v in fields[name].choices
                             option(value=v.value selected=(v.value == values[name] ? "selected" : undefined)) #{v.display_name}
         else if attr.type == 'date' 
-                label(class= attr.text_align ? 'text-lg-' + attr.text_align + ' ' + attr.class1 : ' text-lg-right text-md-left' + attr.class1 for=name)= fields[name].label
+                label(class= attr.text_align ? 'text-lg-' + attr.text_align + ' ' + attr.class1 : ' text-lg-right ' + attr.class1 for=name)= fields[name].label
                 div(class=attr.class2 id=name).date-input
                     - var data = values[name] ? values[name].split('-') : []
                     .col-lg-4.no-gutter.p-l-0
@@ -302,7 +302,7 @@ mixin fieldDropzone(name, attr, type)
             div(class="border-dropzone")
                 span
                     div(class=attr.class1 + ' text-lg-center text-xs-center text-md-center media-item')
-                        span(href="#").link-1
+                        p(href="#").link-1
                             p.drop-photo #{attr.text}
                             i(class='fa fa-' + attr.icon)
                     .all-gallery(class=attr.class2 )
