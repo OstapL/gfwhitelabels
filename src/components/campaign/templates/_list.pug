@@ -32,11 +32,11 @@
                         .bottom_pr
                             if campaign.security_type == 0
                                 p Price per share: #{format.formatPrice(campaign.price_per_share)}
-                                p Number of shares: #{format.formatNumber(campaign.min_number_of_shares)}
+                                p Number of shares: #{(Math.round(campaign.min_number_of_shares/campaign.price_per_share)).toLocaleString('en-US')}
                             else
                                 //- p % Revenue: #{campaign.percentage_revenue}%
                                 p Cap: #{campaign.cap}X
-                                p Expiration Date: #{campaign.expiration_date}
+                                p Percentage Revenue: #{campaign.percentage_revenue}%
 
 
                 .title.text-xs-center

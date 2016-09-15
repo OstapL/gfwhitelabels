@@ -717,8 +717,8 @@ module.exports = {
         },
 
         updateSecurityType(e) {
-            $('.security_type_list').hide();
             let val = e.currentTarget.value;
+            $('.security_type_list').hide();
             $('.security_type_'  +val).show();
         },
 
@@ -738,13 +738,13 @@ module.exports = {
                 'investor_presentation', 
                 'investor_presentation', '', 
                 (data) => {
+                    this.model.urlRoot = this.urlRoot;
                     this.model.save({
                         investor_presentation: data.file_id,
                     }, {
                         patch: true
-                    }).then((model) => {
-                        // $('.img-investor_presentation').attr('src', '/img/MS-PowerPoint.png');
-                        const extension = model.investor_presentation_data.name.split('.').pop();
+                    }).then((data) => {
+                        const extension = data.investor_presentation_data.name.split('.').pop();
                         const suffix = extension == 'pdf' ? '_pdf' : (['ppt', 'pptx'].indexOf(extension) != -1 ? '_pptx' : '_file');
                         $('.img-investor_presentation').attr('src', '/img/default' + suffix + '.png');
                         // $('.img-investor_presentation').after('<a class="link-3" href="' + data.url + '">' + data.name + '</a>');
