@@ -256,11 +256,13 @@ module.exports = {
       appendHttpIfNecessary: appendHttpIfNecessary,
 
       globalDragover () {
-          this.$('.dropzone').css({ border: 'dashed 1px lightgray' });
+          // this.$('.dropzone').css({ border: 'dashed 1px lightgray' });
+          this.$('.dropzone').addClass('active-border');
       },
 
       globalDragleave () {
-          this.$('.dropzone').css({ border: 'none' });
+          // this.$('.dropzone').css({ border: 'none' });
+          this.$('.dropzone').removeClass('active-border');
       },
 
       preinitialize() {
@@ -415,6 +417,7 @@ module.exports = {
       },
 
       deleteImage(e) {
+          debugger; 
           e.stopImmediatePropagation();
           e.stopPropagation();
           e.preventDefault();
@@ -460,11 +463,13 @@ module.exports = {
       urlRoot: serverUrl + Urls['campaign-list']() + '/team_members',
 
       globalDragover () {
-          this.$('.dropzone').css({ border: 'dashed 1px lightgray' });
+          // this.$('.dropzone').css({ border: 'dashed 1px lightgray' });
+          this.$('.dropzone').addClass('active-border');
       },
 
       globalDragleave () {
-          this.$('.dropzone').css({ border: 'none' });
+          // this.$('.dropzone').css({ border: 'none' });
+          this.$('.dropzone').removeClass('active-border');
       },
 
       preinitialize() {
@@ -667,11 +672,13 @@ module.exports = {
         urlRoot: serverUrl + Urls['campaign-list']() + '/specifics',
 
         globalDragover () {
-            this.$('.dropzone').css({ border: 'dashed 1px lightgray' });
+            // this.$('.dropzone').css({ border: 'dashed 1px lightgray' });
+            this.$('.dropzone').addClass('active-border');
         },
 
         globalDragleave () {
-            this.$('.dropzone').css({ border: 'none' });
+            // this.$('.dropzone').css({ border: 'none' });
+            this.$('.dropzone').removeClass('active-border');
         },
 
         preinitialize() {
