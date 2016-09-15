@@ -58,17 +58,20 @@ module.exports = Backbone.Router.extend({
 
   detail(id) {
     require.ensure([], () => {
-      const Model = require('./models.js');
       const View = require('./views.js');
 
       api.makeCacheRequest(Urls['campaign-detail'](id)).
         then((modelData) => {
           let i = new View.detail({
             el: '#content',
-            model: new Model.model(modelData),
+            model: modelData,
           });
           i.render();
-          $('#content').scrollTo();
+          if(location.hash && $(location.hash).length) {
+              setTimeout(function(){$(location.hash).scrollTo(65);}, 100);
+          } else {
+              $('#content').scrollTo();
+          }
           app.hideLoading();
       });
     })

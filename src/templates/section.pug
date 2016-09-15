@@ -9,7 +9,7 @@ include mixins.pug
 
 if attr.type == 'jsonVideo'
     div(class='form-group clearfix videoInteractive index_' + indexCounter)
-        .col-lg-7.videoInteractive.p-sm-0
+        .col-lg-7.videoInteractive.p-sm-0.p-r-0
             each k1,v in fields[name].schema
                 - var t = fields[name].schema[v]
                 .form-group.clearfix
