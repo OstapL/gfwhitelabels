@@ -33,7 +33,7 @@ mixin fieldBlock(name, data, attr)
         - values[name] = data
     - attr.type = attr.type ? attr.type : fields[name].type
 
-    div(class=(attr.type != 'json' ? "form-group " : '' ) + (attr.row == 0 ? '' : 'row ') + name + (fields[name].required == true ? ' required ' : ' '))
+    div(class=(attr.type != 'json' ? "form-group " : '' ) + (attr.row == 0 ? '' : 'row ') + name + (fields[name].required == true ? ' required ' : ' ') + ' ' + attr.type)
         if attr.type == 'checkbox' 
                 div(class=(attr.class1 ? attr.class1 : 'col-md-2') + ' text-md-right text-xs-right')
                     input(
