@@ -257,12 +257,12 @@ module.exports = {
 
       globalDragover () {
           // this.$('.dropzone').css({ border: 'dashed 1px lightgray' });
-          this.$('.dropzone').addClass('active-border');
+          this.$('.border-dropzone').addClass('active-border');
       },
 
       globalDragleave () {
           // this.$('.dropzone').css({ border: 'none' });
-          this.$('.dropzone').removeClass('active-border');
+          this.$('.border-dropzone').removeClass('active-border');
       },
 
       preinitialize() {
@@ -465,12 +465,12 @@ module.exports = {
 
       globalDragover () {
           // this.$('.dropzone').css({ border: 'dashed 1px lightgray' });
-          this.$('.dropzone').addClass('active-border');
+          this.$('.border-dropzone').addClass('active-border');
       },
 
       globalDragleave () {
           // this.$('.dropzone').css({ border: 'none' });
-          this.$('.dropzone').removeClass('active-border');
+          this.$('.border-dropzone').removeClass('active-border');
       },
 
       preinitialize() {
@@ -674,12 +674,12 @@ module.exports = {
 
         globalDragover () {
             // this.$('.dropzone').css({ border: 'dashed 1px lightgray' });
-            this.$('.dropzone').addClass('active-border');
+            this.$('.border-dropzone').addClass('active-border');
         },
 
         globalDragleave () {
             // this.$('.dropzone').css({ border: 'none' });
-            this.$('.dropzone').removeClass('active-border');
+            this.$('.border-dropzone').removeClass('active-border');
         },
 
         preinitialize() {
