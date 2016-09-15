@@ -490,7 +490,7 @@ section
 
 
   section#perks.perks
-    if campaign.perks && campaign.perks instanceof Array && campaign.perks.length > 0
+    if campaign.perks && Object.keys(campaign.perks).length > 0
       //- h3.col-lg-12.text-lg-center Perks
       .container
         h3.text-uppercase.text-lg-center.green-heading Perks
