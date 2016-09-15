@@ -39,7 +39,10 @@ module.exports = {
 
     render() {
       this.$el.html(
-        this.template({model: this.model})
+        this.template({
+          model: this.model,
+          app: app,
+        })
       )
       return this;
     },

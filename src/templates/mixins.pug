@@ -269,7 +269,7 @@ mixin fieldDropzone(name, attr, type)
                     //- p.drop-photo #{attr.text}
                     //- i(class="fa fa-" + attr.icon)
             //- div(class=attr.class2)
-            div(class=(attr.class2 + ' dropzone__' + name))
+            div(class=(attr.class2 + ' dropzone__' + name + ' border-dropzone'))
                 div(class="border-dropzone dropzone")
                     div(class="uploading" style="line-height:115px;text-align:center;position:absolute;width:100%;height:100%;left:0;right:0;top:0;bottom:0;z-index:1;display:none;background-color: rgba(255,255,255,0.8);")
                         img(alt="activity indicator" src="/img/ajax-loader.gif")
@@ -302,7 +302,7 @@ mixin fieldDropzone(name, attr, type)
             div(class="border-dropzone")
                 span
                     div(class=attr.class1 + ' text-lg-center text-xs-center text-md-center media-item')
-                        span(href="#").link-1
+                        p(href="#").link-1
                             p.drop-photo #{attr.text}
                             i(class='fa fa-' + attr.icon)
                     .all-gallery(class=attr.class2 )
