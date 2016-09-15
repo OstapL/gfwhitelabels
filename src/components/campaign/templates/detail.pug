@@ -37,7 +37,7 @@ section#home(style="background-image: url(" + (values.header_image_data ? values
           if values.security_type == 0
             .col-lg-2.p-r-0
               p Pre-Money Valuation
-              h2.font-weight-bold $#{ values.premoney_valuation }
+              h2.font-weight-bold #{ formatHelper.formatPrice(values.premoney_valuation) }
           else
             .col-lg-2.p-r-0
               p Percentage Reveue
@@ -81,18 +81,18 @@ section.campaigndetail
         span Less than #{ percentage_raised }% Funded
         span.pull-right Committed 
           //- span.committed $15,000
-          span.committed #{ formatHelper.showBeautifulNumber(values.amount_raised)}
+          span.committed #{ formatHelper.formatPrice(values.amount_raised)}
         .clear
         progress(value=percentage_raised max="100").progress
       .mt25
         .row.col-lg-8
           p Target
           //- h2.font-weight-bold #{ campaign.minimum_raise } - #{ campaign.maximum_raise }
-          h2.font-weight-bold $#{ values.minimum_raise } - $#{ values.maximum_raise }
+          h2.font-weight-bold #{ formatHelper.formatPrice(values.minimum_raise) } - #{ formatHelper.formatPrice(values.maximum_raise) }
         .row.col-lg-4.pull-right
           p Minimum Investment
           //- h2.font-weight-bold #{ values.minimum_increment }
-          h2.font-weight-bold #{ formatHelper.showBeautifulNumber(values.minimum_increment) }
+          h2.font-weight-bold #{ formatHelper.formatPrice(values.minimum_increment) }
         .row.col-lg-12.investors-block(style="display: none")
           .col-lg-2.p-l-0
             p Investors
@@ -393,29 +393,29 @@ section
                     h2.font-weight-bold #{ values.get_security_type_display }
                   //- .col-lg-3.p-l-3
                   //-   p Target Minimum Raise Amonunt
-                  //-   h2.font-weight-bold #{ formatHelper.showBeautifulNumber(values.minimum_raise) }
+                  //-   h2.font-weight-bold #{ formatHelper.formatPrice(values.minimum_raise) }
                   .col-lg-4.p-l-3
                     p Minimum Investment
-                    h2.font-weight-bold #{ formatHelper.showBeautifulNumber(values.minimum_increment) }
+                    h2.font-weight-bold #{ formatHelper.formatPrice(values.minimum_increment) }
                   .col-lg-4.p-l-3
                     p Minimum # of Shares
-                    h2.font-weight-bold #{ values.min_number_of_shares }
+                    h2.font-weight-bold #{ formatHelper.formatNumber(values.min_number_of_shares) }
                   //- .col-lg-3.p-l-3
                   //-   p Minimum Equity Offered
                   //-   h2.font-weight-bold #{ values.min_number_of_shares }
                 .row
                   .col-lg-4.p-l-3
                     p Pre-Money Valuation
-                    h2.font-weight-bold #{ formatHelper.showBeautifulNumber(values.premoney_valuation) }
+                    h2.font-weight-bold #{ formatHelper.formatPrice(values.premoney_valuation) }
                   //- .col-lg-3.p-l-3
                   //-   p Target Maximum Raise Amount
-                  //-   h2.font-weight-bold #{ formatHelper.showBeautifulNumber(values.maximum_raise) }
+                  //-   h2.font-weight-bold #{ formatHelper.formatPrice(values.maximum_raise) }
                   .col-lg-4.p-l-3
                     p Price per Share
-                    h2.font-weight-bold #{ formatHelper.showBeautifulNumber(values.price_per_share) }
+                    h2.font-weight-bold #{ formatHelper.formatPrice(values.price_per_share) }
                   .col-lg-4.p-l-3
                     p Maximum # of Shares
-                    h2.font-weight-bold #{ formatHelper.max_number_of_shares }
+                    h2.font-weight-bold #{ formatHelper.formatNumber(values.max_number_of_shares) }
                   //- .col-lg-3.p-l-3
                   //-   p Maximum Equity Offered
                   //-   h2.font-weight-bold #{ formatHelper.max_number_of_shares }
@@ -426,17 +426,17 @@ section
                     h2.font-weight-bold #{ values.get_security_type_display }
                   .col-lg-4.p-l-3
                     p Target Minimum Raise Amonunt
-                    h2.font-weight-bold #{ formatHelper.showBeautifulNumber(values.minimum_raise) }
+                    h2.font-weight-bold #{ formatHelper.formatPrice(values.minimum_raise) }
                   .col-lg-4.p-l-3
                     p Minimum Investment
-                    h2.font-weight-bold #{ formatHelper.showBeautifulNumber(values.minimum_increment) }
+                    h2.font-weight-bold #{ formatHelper.formatPrice(values.minimum_increment) }
                 .row
                   .col-lg-4.p-l-3
                     p Percentage Revenue
                     h2.font-weight-bold #{ values.percentage_revenue }%
                   .col-lg-4.p-l-3
                     p Target Maximum Raise Amount
-                    h2.font-weight-bold #{ formatHelper.showBeautifulNumber(values.maximum_raise) }
+                    h2.font-weight-bold #{ formatHelper.formatPrice(values.maximum_raise) }
                   .col-lg-4.p-l-3
                     p Cap
                     h2.font-weight-bold #{ values.cap }X
@@ -446,10 +446,10 @@ section
               //-     h2.font-weight-bold #{ values.get_security_type_display }
               //-   .col-lg-3.p-l-3
               //-     p Target Minimum Raise Amonunt
-              //-     h2.font-weight-bold #{ formatHelper.showBeautifulNumber(values.minimum_raise) }
+              //-     h2.font-weight-bold #{ formatHelper.formatPrice(values.minimum_raise) }
               //-   .col-lg-3.p-l-3
               //-     p Minimum Investment
-              //-     h2.font-weight-bold #{ formatHelper.showBeautifulNumber(values.minimum_increment) }
+              //-     h2.font-weight-bold #{ formatHelper.formatPrice(values.minimum_increment) }
               //-   if values.security_type == 0
               //-     .col-lg-3.p-l-3
               //-       p Minimum # of Shares
@@ -463,18 +463,18 @@ section
               //-   if values.security_type == 0
               //-     .col-lg-3.p-l-3
               //-       p Pre-Money Valuation
-              //-       h2.font-weight-bold #{ formatHelper.showBeautifulNumber(values.premoney_valuation) }
+              //-       h2.font-weight-bold #{ formatHelper.formatPrice(values.premoney_valuation) }
               //-   else
               //-     .col-lg-3.p-l-3
               //-       p Percentage Revenue
               //-       h2.font-weight-bold #{ values.percentage_revenue }%
               //-   .col-lg-3.p-l-3
               //-     p Target Maximum Raise Amount
-              //-     h2.font-weight-bold #{ formatHelper.showBeautifulNumber(values.maximum_raise) }
+              //-     h2.font-weight-bold #{ formatHelper.formatPrice(values.maximum_raise) }
               //-   if values.security_type == 0
               //-     .col-lg-3.p-l-3
               //-       p Price per Share
-              //-       h2.font-weight-bold #{ formatHelper.showBeautifulNumber(values.price_per_share) }
+              //-       h2.font-weight-bold #{ formatHelper.formatPrice(values.price_per_share) }
               //-   else
               //-     .col-lg-3.p-l-3
               //-       p Cap
@@ -490,7 +490,7 @@ section
 
 
   section#perks.perks
-    if values.perks && values.perks instanceof Array && values.perks.length > 0
+    if values.perks && Object.keys(values.perks).length > 0
       //- h3.col-lg-12.text-lg-center Perks
       .container
         h3.text-uppercase.text-lg-center.green-heading Perks
@@ -500,7 +500,7 @@ section
                 .col-lg-4
                   .jumbotron.jumbotron-fluid
                     .container
-                      h3.m-t-0.m-b-1 Invest #{ formatHelper.showBeautifulNumber(v.amount) } or more
+                      h3.m-t-0.m-b-1 Invest #{ formatHelper.formatPrice(v.amount) } or more
                       p.text-justify #{ v.perk }
 
   section.investors-all.border-bottom(style="display: none")
