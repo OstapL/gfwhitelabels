@@ -1,0 +1,67 @@
+.slider.slider-horizontal {
+	width:99.7%!important;
+
+	.slider-track {
+		height: 15px!important;
+
+		border-radius: 0!important;
+	}
+
+	.tooltip.top {
+		margin-top: rem(20);
+		opacity: 1;
+
+		.tooltip-inner {
+			color: $black_text;
+			background: transparent;
+		}
+
+	}
+
+	.slider-selection.tick-slider-selection {
+		border-radius: 0;
+		background: $btstr_slider_track_tick_bg;
+	}
+
+	.slider-track {
+		&-high {
+			background: $btstr_slider_track_not_tick_bg;
+		}
+
+		.slider-selection {
+			box-shadow: none;
+		}	
+	}
+
+	.slider-handle {
+		top: 2px;
+
+		height: 20px;
+		width: 20px;
+
+		border-radius: 0;
+
+		background: $btstr_slider_nandle_block_bg;
+	}
+
+
+	.slider-tick-container {
+		.slider-tick {
+
+			width: 1px;
+			margin-left: 0;
+
+			background: $btstr_slider_other_nandle_block_bg;
+			border-radius: 0;
+		}
+	}
+
+
+	@media only screen and (max-width:767px) {
+		// .slider-tick-label {
+		// 	width: 20px;
+
+		// 	font-size: 10px;
+		// }
+	}
+}
