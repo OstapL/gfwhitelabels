@@ -272,7 +272,7 @@
 		.add-section
 			position: relative!important
 			top: rem(-30)!important
-			left: 0
+			left: 0!important
 		.border-top
 			margin-left: 0
 			width: 100%
@@ -282,3 +282,26 @@
 				left: rem(-15)!important
 		input
 			max-width: 100%!important
+		.border-dropzone
+			min-height: rem(215)
+@media only screen and (max-width : 768px)
+	.create-company-media
+		.border-dropzone
+			min-height: rem(164)
+		.all-gallery
+			.thumb-image-container
+				width: rem(120)
+
+@media only screen and (max-width : 540px)
+	.create-company-media
+		.border-dropzone
+			a
+				font-size: rem(10)
+
+		.p-dropzone
+			top: 5px!important
+			p
+				font-size: 10px
+			i
+				font-size: 10px
+				margin-top: 5px
