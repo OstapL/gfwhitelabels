@@ -79,7 +79,7 @@ include ../../../templates/mixins.pug
                         label(for="grossMargin").col-lg-12 Let's focus on Cost of Goods Sold, or COGS: What gross margin  do you expect to earn on your business’s sales over the next 2 years?&nbsp;&nbsp;
                             i(aria-hidden="true")#gross_margin.fa.fa-question-circle.text-muted
 
-                        .col-lg-12
+                        .col-lg-12.mb20
                             input#grossMargin.form-control.js-bootstrap-slider(
                                 type='text',
                                 data-slider-value= data.grossMargin
@@ -129,50 +129,7 @@ include ../../../templates/mixins.pug
         i.fa.fa-info-circle
         span The expenses a company incurs as a result of its normal business operations
 
-    // this popovers content should be part of step-2 page of capitalraise calculator
-    //START step-2 popovers content
 
-    // for #second_year_expenses
-    .popover-content-second-year-expenses
-        i.fa.fa-info-circle
-        span
-            b Operating Expense.
-            | The sum of a business's operating expenses for a period of time, such as a month or year. In throughput accounting, the cost accounting aspect of the theory of constraints (TOC), operating expense is the money spent turning  nventory into throughput.
-
-    // for #generate_projected_revenue
-    .popover-content-generate-projected-revenue
-        i.fa.fa-info-circle
-        span
-            b Working Capital.
-            | The amount of capital needed to carry on a business.  This represents the operating liquidity and is calculated as current assets minus current liabilities; accounts receivable plus inventory minus accounts payable.
-
-    // for #annual_expenses
-    .popover-content-annual-expenses
-        i.fa.fa-info-circle
-        span
-            b Operating Expenses.
-            | The sum of a business's operating expenses for a period of time, such as a month or year. In throughput accounting, the cost accounting aspect of the theory of constraints (TOC), operating expense is the money spent turning inventory into throughput.
+   
 
 
-    // for #capital_expenditures
-    .popover-content-capital-expenditures
-        i.fa.fa-info-circle
-        span
-            b Capital Expenditures.
-            | Money spent by a business or organization on acquiring or maintaining fixed assets, such as land, buildings, and equipment.
-
-
-//
-    .container.calculator-container
-        .page
-            h1.calculator-title Helping Businesses determine how much capital to raise
-
-            form.js-calc-form
-                .submit-area
-                    .form-group.row
-                        .col-sm-6.text-xs-center.text-sm-left
-                            //
-                                a.btn.btn-link(href='/calculator/paybackshare/step-1', role='button') Go back
-                                p Don&apos;t worry we saved this info
-                        .col-sm-6.text-xs-center.text-sm-right
-                            button.btn.btn-primary(type='submit') Calculate
