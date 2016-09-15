@@ -270,22 +270,24 @@ mixin fieldDropzone(name, attr, type)
                     //- i(class="fa fa-" + attr.icon)
             //- div(class=attr.class2)
             div(class=(attr.class2 + ' dropzone__' + name))
-                div(class="uploading" style="line-height:115px;text-align:center;position:absolute;width:100%;height:100%;left:0;right:0;top:0;bottom:0;z-index:1;display:none;background-color: rgba(255,255,255,0.8);")
-                    img(alt="activity indicator" src="/img/ajax-loader.gif")
-                span
-                    //- div(class='col-lg-7 col-md-6 col-xs-12 text-xs-center text-md-center text-lg-center ' + ' dropzone__' + name)
-                    div.col-lg-5.col-md-3.col-xs-12.text-xs-center.text-md-center.text-lg-center
-                        span(class='link-1' href="#")
-                            p.drop-photo #{attr.text}
-                            i(class="fa fa-" + attr.icon)
-                    div.col-lg-7.col-md-6.col-xs-12
-                        //- span
-                        img(src=dropzoneHelpers.getDropzoneUrl(name, attr, values) alt=fields[name].label class="img-fluid img-" + name)
-                        a(
-                            href=values[name + '_data'] ? values[name + '_data'].url : "#"
-                            target="_blank" 
-                            class="a-" + name + ' link-3'
-                        ) #{values[name + '_data'] ? values[name + '_data'].name : ''}
+                div(class="border-dropzone")
+                    div(class="uploading" style="line-height:115px;text-align:center;position:absolute;width:100%;height:100%;left:0;right:0;top:0;bottom:0;z-index:1;display:none;background-color: rgba(255,255,255,0.8);")
+                        img(alt="activity indicator" src="/img/ajax-loader.gif")
+                    span
+                        //- div(class='col-lg-7 col-md-6 col-xs-12 text-xs-center text-md-center text-lg-center ' + ' dropzone__' + name)
+                        div.col-lg-5.col-md-3.col-xs-12.text-xs-center.text-md-center.text-lg-center.p-dropzone
+                            span(class='link-1' href="#")
+                                p.drop-photo #{attr.text}
+                                i(class="fa fa-" + attr.icon)
+                        div.col-lg-7.col-md-6.col-xs-12.p-r-0.text-lg-right
+                            //- span
+                            img(src=dropzoneHelpers.getDropzoneUrl(name, attr, values) alt=fields[name].label class="img-fluid pull-lg-right img-" + name)
+                            a(
+                                href=values[name + '_data'] ? values[name + '_data'].url : "#"
+                                target="_blank" 
+                                class="a-" + name + ' link-3'
+                            ) #{values[name + '_data'] ? values[name + '_data'].name : ''}
+
     else if type == 2
         div(
             class='col-lg-3 media-item' + (fields[name].help_text ? ' showPopover' : '')
@@ -315,3 +317,12 @@ mixin fieldDropzone(name, attr, type)
                                         a(href="#" data-id=v.id).delete-image
                                             i.fa.fa-times
                                     img( src=v.url).img-fluid.pull-left
+    else if type == 3
+      .drop-photo-block
+        h3.widget-title.font-alt #{ attr.title }
+        div(class='dropzone__' + name)
+          img(src=attr.url)
+          .drop-image-title.text-xs-center 
+              span Drop your profile photo here or click to upload
+              div
+                  i.fa.fa-camera 
