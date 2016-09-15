@@ -1,11 +1,3 @@
-// import calcHelpers from '../../helpers/calculatorHelpers';
-// const formatPrice = calcHelpers.formatPrice;
-// const formatNumber = calcHelpers.formatNumber;
-
-const formatHelper = require('helpers/formatHelper');
-const formatPrice = formatHelper.showBeautifulPrice;
-const formatNumber = formatHelper.showBeautifulNumber;
-
 define(function() {
     let r = {
         model: Backbone.Model.extend({
@@ -35,12 +27,6 @@ define(function() {
     r.collection = Backbone.Collection.extend({
         model: r.model,
         url: serverUrl + '/api/campaign',
-        showBeautifulPrice: function (number) {
-            return formatPrice(number);
-        },
-        showBeautifulNumber: function (number) {
-            return formatNumber(number)
-        },
     });
 
     return r;

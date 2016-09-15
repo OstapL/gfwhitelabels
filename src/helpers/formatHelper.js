@@ -29,14 +29,7 @@ function formatNumber(price = '') {
 
 module.exports = {
   formatPrice: formatPrice,
-
-  showBeautifulPrice: function (number) {
-      return formatPrice(number);
-  },
-
-  showBeautifulNumber: function (number) {
-  	return formatNumber(number);
-  },
+  formatNumber: formatNumber,
 
   months: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
 
