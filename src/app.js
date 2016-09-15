@@ -205,6 +205,7 @@ $('body').on('mouseover', 'div.showPopover', function () {
       html: true,
       template: popoverTemplate,
       placement: 'top',
+      trigger: 'focus',
     });
     $(this).popover('show');
   }
@@ -217,6 +218,7 @@ $('body').on('focus', 'input.showPopover', function () {
       html: true,
       template: popoverTemplate.replace('divPopover', 'inputPopover'),
       placement: 'top',
+      trigger: 'focus',
     });
     $(this).popover('show');
   }
@@ -229,6 +231,7 @@ $('body').on('focus', 'textarea.showPopover', function () {
       html: true,
       template: popoverTemplate.replace('divPopover', 'textareaPopover'),
       placement: 'top',
+      trigger: 'focus',
     });
     $(this).popover('show');
   }

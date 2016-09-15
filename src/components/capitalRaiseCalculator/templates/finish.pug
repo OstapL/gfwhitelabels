@@ -25,7 +25,7 @@ include ../../../templates/mixins.pug
                 i(aria-hidden="true").fa.fa-diamond.text-info
                 | &nbsp;Our calculator estimates your Pre-Money
                 p Valuation to be approximately
-                    b $465,000
+                    b #{formatPrice(data.PreMoneyValuation)}
                 p
                     b.small-text (note: round to nearest $1,000)
 

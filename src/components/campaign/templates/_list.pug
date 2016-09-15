@@ -46,8 +46,8 @@
                         = campaign.company.city + ' ' + campaign.company.state
                     .clear
                 .description
-                    if campaign.pitch
-                        p= campaign.pitch.substr(0,250)
+                    if campaign.company.description
+                        p= campaign.company.description.substr(0,250)
 
                 .progress_bar_container
                     span.left_text #{campaign.progress} % Funded

@@ -54,4 +54,10 @@ module.exports = {
         $el.val("http://" + url);
       }
   },
+
+  getWebsiteUrl(href) {
+    var l = document.createElement("a");
+    l.href = href;
+    return l.protocol + '//' +l.host;
+  },
 };

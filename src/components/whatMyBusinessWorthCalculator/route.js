@@ -1,9 +1,45 @@
 module.exports = Backbone.Router.extend({
   routes: {
+    'calculator/selectYourBusiness': 'selectYourBusiness',
+    'calculator/selectCalculator': 'selectCalculator',
     'calculator/whatmybusinessworth/intro': 'calculatorWhatMyBusinessWorthIntro',
     'calculator/whatmybusinessworth/step-1': 'calculatorWhatMyBusinessWorthStep1',
     'calculator/whatmybusinessworth/step-2': 'calculatorWhatMyBusinessWorthStep2',
     'calculator/whatmybusinessworth/finish': 'calculatorWhatMyBusinessWorthFinish'
+  },
+
+  selectYourBusiness() {
+    let View = Backbone.View.extend({
+      el: '#content',
+      initialize: function() {
+        this.render();
+      },
+      template: require('./templates/selectYourBusiness.pug'),
+      render: function () {
+        this.$el.html(this.template());
+        return this;
+      }
+    });
+
+    new View();
+    app.hideLoading();
+  },
+
+  selectCalculator() {
+    let View = Backbone.View.extend({
+      el: '#content',
+      initialize: function() {
+        this.render();
+      },
+      template: require('./templates/selectCalculator.pug'),
+      render: function () {
+        this.$el.html(this.template());
+        return this;
+      }
+    });
+
+    new View();
+    app.hideLoading();
   },
 
   calculatorWhatMyBusinessWorthIntro() {
