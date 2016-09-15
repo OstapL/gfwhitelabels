@@ -134,28 +134,15 @@ module.exports = {
     },
 
     _success(data) {            
-      // IF we dont have campaign we need create it
-      if (this.campaign.id) {
-        app.routers.navigate(
-            '/campaign/general_information/' + this.campaign.id,
-            {trigger: true, replace: false}
-            );
+      if (this.campaign.hasOwnProperty('id') == false) {
+        // IF we dont have campaign data
+        // Server should create it
+        this.campaign = data.campaign;
       }
-      else {
-        app.makeRequest('/api/campaign/general_information', 'POST', {
-          company: data.id,
-          business_model: '',
-          intended_use_of_proceeds: '',
-          pitch: ''
-        }).
-        then((campaign) => {
-          app.cache['/api/campaign/general_information/' + campaign.id] = campaign;
-          app.routers.navigate(
-            '/campaign/general_information/' + campaign.id,
-            {trigger: true, replace: true}
-            );
-        })
-      }
+      app.routers.navigate(
+        '/campaign/general_information/' + this.campaign.id,
+        {trigger: true, replace: false}
+      );
     },
   }),
 
