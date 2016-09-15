@@ -53,13 +53,18 @@ section.campaign-specifics.container.m-b-85
            text: 'Length of the Campaign',
            })
       .text-lg-right.img-ppt
+        - const fileName = values.investor_presentation_data ? values.investor_presentation_data.name : '';
+        - const extension = fileName ? fileName.split('.').pop() : '';
+        - const suffix = extension == 'pdf' ? '_pdf' : (['ppt', 'pptx'].indexOf(extension) != -1 ? '_pptx' : '_file');
         +fieldDropzone("investor_presentation", {
             class1: 'col-lg-3',
             class2: 'col-lg-9 p-l-1 p-r-3',
             text: 'Drop your PPT or PDF here or click to upload',
             icon: 'file',
-            default: '/img/MS-PowerPoint.png',
+            default: '/img/default' + suffix + '.png',
         })
+            //- default: fileName && (fileName.endsWith('.pdf') || fileName.endsWith('.pptx')) ? '/img/default' + suffix + '.png' : '/img/MS-PowerPoint.png',
+            //- default: '/img/MS-PowerPoint.png',
 
       .row.border-top
 
@@ -213,7 +218,7 @@ section.campaign-specifics.container.m-b-85
                     a(href="#" target="_blank").dropdown-item What's My Business Worth?
 
           .col-lg-9.offset-lg-3.p-r-0
-            h3.m-t-1.font-weight-bold Here’s how PayBack Share works:
+            h4.m-t-1.font-weight-bold Here’s how PayBack Share works:
             ol.simple-list.mb45
               li.p-b-1 Share 5% of your company's revenue with investors annually, until;
               li.p-b-1 You have paid investors back two times the invested amount (distributions are capped at (2x) the investment amount, at which point the contract is deemed fulfilled);
