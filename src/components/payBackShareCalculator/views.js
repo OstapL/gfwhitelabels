@@ -3,6 +3,7 @@ import 'jquery.inputmask/dist/jquery.inputmask.bundle.js';
 import calculatorHelper from '../../helpers/calculatorHelpers';
 import flyPriceFormatter from '../../helpers/flyPriceFormatter';
 import '../../js/graf/graf.js';
+import '../../js/graf/jquery.flot.animator.js';
 /*
 import 'js/jqplot/jquery.jqplot.js';
 import 'jqplot/plugins/jqplot.highlighter.js';
@@ -248,59 +249,72 @@ module.exports = {
                 formatPrice
             }));
 
-            $.plot($("#chart1"), [{
-                data: dataRendered(),
-                label: "Invested amount",
-                lines: {
-                    lineWidth: 1
-                },
-                shadowSize: 0
-            }], {
-                series: {
+            let $chart = $("#chart1"),
+                dataArr = [{
+                    data: dataRendered(),
+                    animator: { start: 0, steps: 99, duration: 500, direction: "right", lines: true },
+                    label: "Invested amount",
                     lines: {
-                        show: !0,
-                        lineWidth: 2,
-                        fill: !0,
-                        fillColor: {
-                            colors: [{
-                                opacity: .05
-                            }, {
-                                opacity: .01
-                            }]
-                        }
-                    },
-                    points: {
-                        show: !0,
-                        radius: 3,
                         lineWidth: 1
                     },
-                    shadowSize: 2
-                },
-                grid: {
-                    hoverable: !0,
-                    clickable: !0,
-                    tickColor: "#eee",
-                    borderColor: "#eee",
-                    borderWidth: 1
-                },
-                colors: ["#d12610", "#37b7f3", "#52e136"],
-                xaxis: {
-                    ticks: 11,
-                    tickDecimals: 0,
-                    tickColor: "#eee"
-                },
-                yaxis: {
-                    ticks: 11,
-                    tickDecimals: 0,
-                    tickColor: "#eee"
-                }
+                    shadowSize: 0
+                }],
+                options = {
+                    series: {
+                        lines: {
+                            show: !0,
+                            lineWidth: 2,
+                            fill: !0,
+                            fillColor: {
+                                colors: [{
+                                    opacity: .05
+                                }, {
+                                    opacity: .01
+                                }]
+                            }
+                        },
+                        points: {
+                            show: false,
+                            radius: 3,
+                            lineWidth: 1
+                        },
+                        shadowSize: 2
+                    },
+                    grid: {
+                        hoverable: !0,
+                        clickable: !0,
+                        tickColor: "#eee",
+                        borderColor: "#eee",
+                        borderWidth: 1
+                    },
+                    colors: ["#d12610", "#37b7f3", "#52e136"],
+                    xaxis: {
+                        ticks: 11,
+                        tickDecimals: 0,
+                        tickColor: "#eee"
+                    },
+                    yaxis: {
+                        ticks: 11,
+                        tickDecimals: 0,
+                        tickColor: "#eee"
+                    }
+                };
+
+            var plotApi = $.plotAnimator($chart, dataArr, options);
+
+            $chart.on("animatorComplete", function() {
+                options.series.points.show = true;
+                $.plot($chart, dataArr, options);
+                
+                let last = plotApi.getData()[0].data.pop();
+                let o = plotApi.pointOffset({x: last[0], y: last[1]});
+                $('<div class="data-point-label">Congratulations, Payback Share Contract is complete</div>').css( {
+                    position: 'absolute',
+                    left: o.left - 200,
+                    top: o.top - 30,
+                    display: 'none'
+                }).appendTo(plotApi.getPlaceholder()).fadeIn('slow');
             });
-
-
-
-
-
-
 
             // drawing jQPlot
             // this.jQPlot = $.jqplot('chart1', {
