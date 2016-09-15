@@ -15,7 +15,7 @@ module.exports = {
 
     render() {
       this.model.urlRoot = serverUrl + Urls['rest_login']();
-      let template = require('templates/userLogin.pug');
+      let template = require('./templates/login.pug');
       this.$el.html(
         template({
           login_fields: this.login_fields,
@@ -130,7 +130,7 @@ module.exports = {
 
     render() {
         this.model.urlRoot = serverUrl + Urls['rest_register']();
-        let template = require('templates/userSignup.pug');
+        let template = require('./templates/signup.pug');
         this.$el.html(
             template({
                 register_fields: this.register_fields,
@@ -235,7 +235,7 @@ module.exports = {
 
   reset: Backbone.View.extend({
         render(){
-            let template = require('templates/reset.pug');
+            let template = require('./templates/reset.pug');
             this.$el.html(template({}));
             return this;
         }

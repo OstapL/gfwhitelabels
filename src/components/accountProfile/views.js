@@ -1,6 +1,9 @@
+const dropzone = require('dropzone');
+const dropzoneHelpers = require('helpers/dropzone.js');
+
 module.exports = {
   profile: Backbone.View.extend({
-    template: require('templates/userProfile.pug'),
+    template: require('./templates/profile.pug'),
     events: {
       'submit form': api.submitAction,
       'focus #ssn' : 'showSSNPopover',
@@ -35,7 +38,8 @@ module.exports = {
           serverUrl: serverUrl,
           user: app.user.toJSON(),
           fields: this.fields,
-          states: this.usaStates
+          states: this.usaStates,
+          dropzoneHelpers: dropzoneHelpers
         })
       );
 
@@ -44,6 +48,20 @@ module.exports = {
       this.stateField = this.$('.js-state');
       this.zipCodeField = this.$('#zip_code');
 
+      dropzoneHelpers.createImageDropzone(
+        dropzone,
+        'image', 
+        'avatars', '', 
+        (data) => {
+          this.model.save({
+            image: data.file_id,
+          }, {
+            patch: true
+          }).then((model) => {
+            console.log('image upload done', model);
+          });
+        }
+      );
       /*
          app.createFileDropzone(
          dropzone,
@@ -129,7 +147,7 @@ module.exports = {
 
   changePassword: Backbone.View.extend({
     render(){
-      let template = require('templates/changePassword.pug');
+      let template = require('./templates/changePassword.pug');
       this.$el.html(template({}));
       return this;
     }
