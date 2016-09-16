@@ -19,7 +19,6 @@
     "bootstrap-slider": "*",
     "clean-webpack-plugin": "^0.1.10",
     "css-loader": "^0.18.0",
-    "ekko-lightbox": "^4.0.1",
     "es6-loader": "^0.2.0",
     "extract-text-webpack-plugin": "^0.8.2",
     "file-loader": "^0.8.4",

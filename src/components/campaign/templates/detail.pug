@@ -3,7 +3,6 @@ include ../../../templates/mixins.pug
 
 - var percentage_raised = formatHelper.calculateRaisedPercentage(values.minimum_raise, values.amount_raised)
 
-link(rel="stylesheet" href="/img/ekko-lightbox.css")
 section#home(style="background-image: url(" + (values.header_image_data ? values.header_image_data.url : '/img/default.png') + ")").home-section.bg-dark-alfa-70.parallax-2.fixed-height-small
   .js-height-parent.container
     .home-content
@@ -163,7 +162,7 @@ section
         if values.gallery
             each v,k in values.gallery_data.all_files
                 .col-lg-3.no-padding-img
-                  a(href=app.getThumbnail('1440x900', v.thumbnails) data-size='1440x900' data-toggle="lightbox" data-gallery="multiimages" data-title="People walking down stairs")
+                  a(href=app.getThumbnail('1440x900', v.thumbnails) data-size='1440x900' class="fancybox" rel="gallery1")
                     img(src=app.getThumbnail('270x152', v.thumbnails) alt=values.company.name).img-fluid.img-responsive
         else
 
