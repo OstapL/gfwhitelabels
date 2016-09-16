@@ -135,7 +135,7 @@ module.exports = {
 
     render() {
       const socialMediaScripts = require('helpers/shareButtonHelper.js');
-      const ekkoLightbox = require('ekko-lightbox/dist/ekko-lightbox.min.js');
+      const ekkoLightbox = require('ekko-lightbox/dist/ekko-lightbox.js');
 
       this.$el.html(
         this.template({

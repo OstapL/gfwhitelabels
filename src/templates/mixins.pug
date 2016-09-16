@@ -269,19 +269,19 @@ mixin fieldDropzone(name, attr, type)
                     //- p.drop-photo #{attr.text}
                     //- i(class="fa fa-" + attr.icon)
             //- div(class=attr.class2)
-            div(class=(attr.class2 + ' dropzone__' + name + ' border-dropzone'))
-                //- div(class="border-dropzone")
-                div(class="uploading" style="line-height:115px;text-align:center;position:absolute;width:100%;height:100%;left:0;right:0;top:0;bottom:0;z-index:1;display:none;background-color: rgba(255,255,255,0.8);")
-                    img(alt="activity indicator" src="/img/ajax-loader.gif")
-                span
-                    //- div(class='col-lg-7 col-md-6 col-xs-12 text-xs-center text-md-center text-lg-center ' + ' dropzone__' + name)
-                    div.col-lg-5.col-md-5.col-sm-5.col-xs-5.text-xs-center.text-md-center.text-lg-center.p-dropzone
-                        p(class='link-1' href="#")
-                            p.drop-photo #{attr.text}
-                            i(class="fa fa-" + attr.icon)
-                    div.col-lg-7.col-md-7.col-sm-7.col-xs-7.p-r-0.p-l-3.img-dropzone
-                        //- span
-                        img(src=dropzoneHelpers.getDropzoneUrl(name, attr, values) alt=fields[name].label class="img-fluid  img-" + name)
+            div(class=(attr.class2 + ' dropzone__' + name))
+                div(class="border-dropzone")
+                    div(class="uploading" style="line-height:115px;text-align:center;position:absolute;width:100%;height:100%;left:0;right:0;top:0;bottom:0;z-index:1;display:none;background-color: rgba(255,255,255,0.8);")
+                        img(alt="activity indicator" src="/img/ajax-loader.gif")
+                    span
+                        //- div(class='col-lg-7 col-md-6 col-xs-12 text-xs-center text-md-center text-lg-center ' + ' dropzone__' + name)
+                        div.col-lg-5.col-md-5.col-sm-5.col-xs-5.text-xs-center.text-md-center.text-lg-center.p-dropzone
+                            p(class='link-1' href="#")
+                                p.drop-photo #{attr.text}
+                                i(class="fa fa-" + attr.icon)
+                        div.col-lg-7.col-md-7.col-sm-7.col-xs-7.p-r-0.p-l-3.img-dropzone
+                            //- span
+                            img(src=dropzoneHelpers.getDropzoneUrl(name, attr, values) alt=fields[name].label class="img-fluid  img-" + name)
 
 
     else if type == 2
@@ -323,3 +323,33 @@ mixin fieldDropzone(name, attr, type)
               span Drop your profile photo here or click to upload
               div
                   i.fa.fa-camera 
+
+
+mixin fieldFileDropzone(name, attr, type)
+
+    - var fileName = values[name + '_data'] ? values[name+'_data'].name : '';
+    - var extension = fileName ? fileName.split('.').pop() : '';
+    - var suffix = extension == 'pdf' ? '_pdf' : (['ppt', 'pptx'].indexOf(extension) != -1 ? '_pptx' : '_file');
+
+    div(
+        class='row media-item ' + name + (fields[name].help_text ? ' showPopover' : '')
+        data-content=(fields[name].help_text ? fields[name].help_text : '')
+    )
+        div(class=attr.class1 + ' ' + (fields[name].required == true ? ' required ' : ' ') )
+          span.pull-right.pull-xs-none.font-weight-bold #{fields[name].label}
+
+        div(class=(attr.class2 + ' dropzone__' + name))
+            div(class="border-dropzone")
+                div(class="uploading" style="line-height:115px;text-align:center;position:absolute;width:100%;height:100%;left:0;right:0;top:0;bottom:0;z-index:1;display:none;background-color: rgba(255,255,255,0.8);")
+                    img(alt="activity indicator" src="/img/ajax-loader.gif")
+                span
+                    div.col-lg-5.col-md-5.col-sm-5.col-xs-5.text-xs-center.text-md-center.text-lg-center.p-dropzone
+                        p(class='link-1' href="#")
+                            p.drop-photo #{attr.text}
+                            i(class="fa fa-" + attr.icon)
+                    div.col-lg-7.col-md-7.col-sm-7.col-xs-7.p-r-0.p-l-0.p-dropzone.img-dropzone.text-lg-center
+                        img(src='/img/default' + suffix + '.png' alt=fields[name].label class="img-fluid  img-" + name)
+                        if values[name+'_data']
+                          a(href=values[name+'_data'].url) #{ fileName }
+                        else
+                          a(href="")
