@@ -249,6 +249,7 @@ section
   if values.members
       section#members.border-bottom
         .container
+          if values.members && values.members instanceof Array && values.members.length > 0
             h2#team.dosis.text-uppercase.text-lg-center.col-lg-12.green-heading Team
             .row
               .col-lg-12.text-center-flex
@@ -275,11 +276,11 @@ section
                               span.pull-right.color-grey
                                 i.fa.fa-graduation-cap
                                 |  #{v.college}
+          if values.press && Object.keys(values.press).length > 0
             h2.dosis.text-uppercase.text-lg-center.green-heading Articles and Press
             .row
               .col-lg-12.text-center-flex
                 .articles_press
-                if values.press
                   each v,k in values.press
                     .col-lg-4.articles_press
                       a(href=v.link target="_blank")
@@ -625,67 +626,66 @@ section
             aria-labelledby="headingFour"
             ).panel-collapse.collapse  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius inventore iste numquam nemo, fugit nihil fugiat quasi, excepturi repellendus pariatur! Facilis odit cupiditate tenetur, inventore adipisci consequatur eius suscipit voluptas.
         
-  
   section.faq
-    if values.faq && Object.keys(values.faq).length > 0
-    .container
-      h2#faq.col-lg-12.dosis.text-uppercase.text-lg-center.green-heading FAQ
-      .col-lg-8.offset-lg-2
-        .accordion(role="tablist" aria-multiselectable="true")
-          - var counter = 0
-          each v,k in values.faq
-            .panel.panel-default
-              div(id="faq" + k role="tab").panel-heading
-                a(data-toggle="collapse"
-                data-parent="#accordion" 
-                href="#collapsefaq"+ k
-                aria-controls="collapsefaq"+ k
-                class=(counter == 0 ? 'list-group-item-action active' : 'list-group-item-action')
-                style="padding-left:25px"
-                ) #{v.question}
-                    if counter == 0
-                        i.fa.fa-angle-up
-                    else
-                        i.fa.fa-angle-down
-              div(id="collapsefaq" + k role="tabpanel"
-              aria-labelledby="faq" + k
-              class=(counter == 0 ? 'in' : '') + ' panel-collapse collapse'
-              ) #{ v.answer }
-              - counter ++;
-          //
-            .panel.panel-default
-              #faqTwo(role="tab").panel-heading
-                a(data-toggle="collapse"
-                data-parent="#accordion" 
-                href="#collapsefaqTwo"
-                aria-controls="collapsefaqTwo"
-                ).list-group-item-action How did Smartbe start and then evolve? 
-                  i.fa.fa-angle-down
-              #collapsefaqTwo(role="tabpanel"
-              aria-labelledby="faqTwo"
-              ).panel-collapse.collapse  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi, hic, distinctio, enim nam consequuntur iste quos, accusamus blanditiis a id odio perferendis vel perspiciatis provident et! Consequuntur nemo reprehenderit inventore.
-            .panel.panel-default
-              #faqThree(role="tab").panel-heading
-                a(data-toggle="collapse"
-                data-parent="#accordion" 
-                href="#collapsefaqThree"
-                aria-controls="collapsefaqThree"
-                ).list-group-item-action What is your impact?     
-                  i.fa.fa-angle-down
-              #collapsefaqThree(role="tabpanel"
-              aria-labelledby="faqThree"
-              ).panel-collapse.collapse  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius inventore iste numquam nemo, fugit nihil fugiat quasi, excepturi repellendus pariatur! Facilis odit cupiditate tenetur, inventore adipisci consequatur eius suscipit voluptas.
-            .panel.panel-default
-              #faqFour(role="tab").panel-heading
-                a(data-toggle="collapse"
-                data-parent="#accordion" 
-                href="#collapsefaqFour"
-                aria-controls="collapsefaqFour"
-                ).list-group-item-action Do you have any intellectual property?   
-                  i.fa.fa-angle-down
-              #collapsefaqFour(role="tabpanel"
-              aria-labelledby="faqFour"
-              ).panel-collapse.collapse  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius inventore iste numquam nemo, fugit nihil fugiat quasi, excepturi repellendus pariatur! Facilis odit cupiditate tenetur, inventore adipisci consequatur eius suscipit voluptas.
+    if values.faq && Object.keys(values.faq).length > 0 && values.faq[0].question
+      .container
+        h2#faq.col-lg-12.dosis.text-uppercase.text-lg-center.green-heading FAQ
+        .col-lg-8.offset-lg-2
+          .accordion(role="tablist" aria-multiselectable="true")
+            - var counter = 0
+            each v,k in values.faq
+              .panel.panel-default
+                div(id="faq" + k role="tab").panel-heading
+                  a(data-toggle="collapse"
+                  data-parent="#accordion" 
+                  href="#collapsefaq"+ k
+                  aria-controls="collapsefaq"+ k
+                  class=(counter == 0 ? 'list-group-item-action active' : 'list-group-item-action')
+                  style="padding-left:25px"
+                  ) #{v.question}
+                      if counter == 0
+                          i.fa.fa-angle-up
+                      else
+                          i.fa.fa-angle-down
+                div(id="collapsefaq" + k role="tabpanel"
+                aria-labelledby="faq" + k
+                class=(counter == 0 ? 'in' : '') + ' panel-collapse collapse'
+                ) #{ v.answer }
+                - counter ++;
+            //
+              .panel.panel-default
+                #faqTwo(role="tab").panel-heading
+                  a(data-toggle="collapse"
+                  data-parent="#accordion" 
+                  href="#collapsefaqTwo"
+                  aria-controls="collapsefaqTwo"
+                  ).list-group-item-action How did Smartbe start and then evolve? 
+                    i.fa.fa-angle-down
+                #collapsefaqTwo(role="tabpanel"
+                aria-labelledby="faqTwo"
+                ).panel-collapse.collapse  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi, hic, distinctio, enim nam consequuntur iste quos, accusamus blanditiis a id odio perferendis vel perspiciatis provident et! Consequuntur nemo reprehenderit inventore.
+              .panel.panel-default
+                #faqThree(role="tab").panel-heading
+                  a(data-toggle="collapse"
+                  data-parent="#accordion" 
+                  href="#collapsefaqThree"
+                  aria-controls="collapsefaqThree"
+                  ).list-group-item-action What is your impact?     
+                    i.fa.fa-angle-down
+                #collapsefaqThree(role="tabpanel"
+                aria-labelledby="faqThree"
+                ).panel-collapse.collapse  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius inventore iste numquam nemo, fugit nihil fugiat quasi, excepturi repellendus pariatur! Facilis odit cupiditate tenetur, inventore adipisci consequatur eius suscipit voluptas.
+              .panel.panel-default
+                #faqFour(role="tab").panel-heading
+                  a(data-toggle="collapse"
+                  data-parent="#accordion" 
+                  href="#collapsefaqFour"
+                  aria-controls="collapsefaqFour"
+                  ).list-group-item-action Do you have any intellectual property?   
+                    i.fa.fa-angle-down
+                #collapsefaqFour(role="tabpanel"
+                aria-labelledby="faqFour"
+                ).panel-collapse.collapse  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius inventore iste numquam nemo, fugit nihil fugiat quasi, excepturi repellendus pariatur! Facilis odit cupiditate tenetur, inventore adipisci consequatur eius suscipit voluptas.
         
     
   section.ask.border-bottom
