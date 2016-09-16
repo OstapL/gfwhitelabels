@@ -2,7 +2,6 @@
 - 'use strict'
 - var values = {}
 include mixins.pug
-include campaignMenu.pug
 +breadcrumbs('Create Formc', '', [['home', '/',], [ 'current', page.get_absolute_url]])
 
 section.formc.introduction.create-company-media.container
@@ -80,7 +79,7 @@ section.formc.introduction.create-company-media.container
                 a(href="#").link-2 Contract for listing your campaign on GrowthFountain
             .row.btn-pay
               .col-lg-12
-                a(href="#").btn.btn-lg.btn-primary.text-uppercase pay
+                a(href="#").btn.btn-primary.text-uppercase pay
           .electronically-sign
             .col-lg-12
               h3.m-t-0.text-lg-center.m-b-2 Electronically Sign
@@ -108,5 +107,5 @@ section.formc.introduction.create-company-media.container
                     input(type="checkbox")
                     | I'm authorized to sign on behalf of the company
               .btn-save.text-lg-right
-                  a(href="#").btn.btn-lg.btn-primary.text-uppercase save
+                  a(href="#").btn.btn-primary.text-uppercase save
 

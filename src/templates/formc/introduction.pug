@@ -1,7 +1,6 @@
 
 - 'use strict'
 include ../mixins.pug
-include ../campaignMenu.pug
 +breadcrumbs('Create Formc', '', [['home', '/',], [ 'current', page.get_absolute_url]])
 
 section.formc.introduction.create-company-media.container
@@ -107,5 +106,5 @@ section.formc.introduction.create-company-media.container
                     input(type="checkbox")
                     | I'm authorized to sign on behalf of the company
               .btn-save.text-lg-right
-                  button.submit.btn.btn-lg.btn-primary.text-uppercase save
+                  button.submit.btn.btn-primary.text-uppercase save
 

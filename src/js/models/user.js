@@ -124,6 +124,7 @@ let userModel = Backbone.Model.extend({
                 localStorage.removeItem('token');
                 localStorage.removeItem('user');
                 app.trigger('userLogout', data);
+                window.location = '/';
             }
         });
     },

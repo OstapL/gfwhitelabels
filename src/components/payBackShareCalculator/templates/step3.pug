@@ -1,4 +1,3 @@
-
 include ../../../templates/mixins.pug
 
 +breadcrumbs('PayBack Share Calculator ', 'finish', 
@@ -16,19 +15,26 @@ include ../../../templates/mixins.pug
                 li
                     a(href="/calculator/paybackshare/step-1").btn.text-uppercase Intro
                 li
-                    a(href="/calculator/paybackshare/step-2").btn.btn-secondary.text-uppercase step 2
+                    a(href="/calculator/paybackshare/step-2").btn.text-uppercase step 1
                 li
-                    a(href="/calculator/paybackshare/step-3").current.btn.btn-secondary.text-uppercase finish
+                    a(href="/calculator/paybackshare/step-3").btn.current.text-uppercase finish
 
     .page
         .row
             .offset-lg-1.col-xs-10.text-sm-center.mb15
+
+
+
+
+
+
+            
                 h2.dosis.m0.text-uppercase PAYBACK GRAPH
 
         .row
-            .offset-lg-1.col-xs-10
+            .col-xs-12
                 .js-jq-plot-area
-                    #chart1(style='width: 100%')
+                    #chart1
 
         .row
             .col-xs-12.text-sm-center.mt45
@@ -45,7 +51,7 @@ include ../../../templates/mixins.pug
                                 th Multiple Returned
                                 th Total Distributions
                         tbody
-                            each val, index in model.outputData
+                            each val, index in data.outputData
                                 tr
                                     th(scope='row')= 'Year ' + index
                                     td= formatPrice(val.fundraise)
@@ -62,4 +68,6 @@ include ../../../templates/mixins.pug
             .offset-lg-3.col-lg-6.text-sm-center
                 a(
                     href="/calculator/paybackshare/step-2"
-                ).btn.btn-primary.text-uppercase back 
+                ).btn.btn-primary.text-uppercase back
+
+
