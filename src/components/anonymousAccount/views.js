@@ -234,10 +234,29 @@ module.exports = {
   }),
 
   reset: Backbone.View.extend({
-        render(){
-            let template = require('./templates/reset.pug');
-            this.$el.html(template({}));
-            return this;
-        }
+    events: {
+      'submit form': 'submit',
+    },
+
+    render(){
+      let template = require('./templates/reset.pug');
+      this.$el.html(template({}));
+      return this;
+    },
+
+    submit(e) {
+      e.preventDefault();
+
+      let email = $(e.currentTarget).find('#email').val();
+      api.makeRequest(Urls.rest_password_reset(), {
+        email: email,
+        type: 'POST',
+      }).then((data) => {
+        $('#content').html(
+          '<section class="reset"><div class="container"><div class="col-lg-12"><h2 class="dosis text-uppercase text-sm-center text-xs-center m-t-85">' + data.success + '</h2></div></div></section>'
+        );
+      });
+    }
+
   }),
 };

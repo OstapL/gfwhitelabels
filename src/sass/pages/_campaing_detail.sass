@@ -201,38 +201,43 @@
 	.card
 		margin-top: 0
 		min-height: rem(148)
-		&::before
-			position: absolute
-			width: 100%
-			height: 100%
-			content: ''
-			background-color: rgba(17,17,17, 0.5)
-		.card-img
-			min-height: rem(148)
-		.card-img-overlay
-			padding-left: rem(11)
-			padding-top: rem(17)
-			padding-right: rem(5)
-			text-align: left!important
-			float: left!important
-			display: block!important
-			.card-text
-				line-height: rem(18)
-				letter-spacing: rem(.35)
-				color: $white
-			.intro
-				margin-top: rem(10)
+		background-color: $alabaster
+		text-align: center
+		padding: 30px
+		margin-bottom: rem(45)
+		border: none
+		&:hover
+			.fa-link
+				color: $link-2-hover
 			.links
-				font-size: $font-size-sm
-				margin-bottom: rem(6)
-			.icon-campaign
-				width: rem(12)
-				height: rem(12)
-				margin-right: rem(5)
-				margin-bottom: rem(8)
-			.pos-bottom
-				position: absolute
-				bottom: 0
+				color: $link-3-hover
+		.fa-link
+			font-size: rem(24)
+			color: $wild_willow
+			margin-bottom: 15px
+			+mt(.2s)
+			&:hover
+				color: $link-2-hover
+		.card-text
+			line-height: rem(18)
+			letter-spacing: rem(.45)
+			color: $black
+			font-size: rem(18)
+		.intro
+			margin-top: rem(10)
+		.links
+			font-size: rem(14)
+			color: $puerto_rico
+			+mt(.2s)
+			&:hover
+				color: $link-3-hover
+		.icon-campaign
+			width: rem(12)
+			height: rem(12)
+			margin-right: rem(5)
+			margin-bottom: rem(8)
+		.pos-bottom
+			margin-top: 10px
 .team
 	padding-bottom: rem(15)
 	a,a:hover
@@ -252,6 +257,8 @@
 		.img-circle
 			width: rem(180)
 			height: rem(180)
+		.color-grey
+			color: $small-text
 
 .document
 	padding-bottom: rem(45)
@@ -296,10 +303,12 @@
 				padding-right: rem(5)
 .perks
 	.jumbotron
-		margin-bottom: 0
+		margin-bottom: rem(5)
 		h3
 			margin-top: 0
 			margin-bottom: rem(20)
+			span
+				color: $wild_willow
 		p
 			color: $small-text
 			margin-bottom: 0

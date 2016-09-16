@@ -135,13 +135,14 @@ module.exports = {
 
     render() {
       const socialMediaScripts = require('helpers/shareButtonHelper.js');
+      const ekkoLightbox = require('ekko-lightbox/dist/ekko-lightbox.js');
 
       this.$el.html(
         this.template({
           serverUrl: serverUrl,
           Urls: Urls,
           values: this.model,
-          formatHelper: formatHelper
+          formatHelper: formatHelper,
         })
       );
 
@@ -166,6 +167,11 @@ module.exports = {
             stickyWrapper.height('auto');
           }
         };
+
+        this.$el.delegate('*[data-toggle="lightbox"]', 'click', function(event) {
+          event.preventDefault();
+          $(this).ekkoLightbox();
+        }); 
 
         this.$el.find('[data-toggle="sticky-onscroll"]').each(function() {
           var sticky = $(this);
