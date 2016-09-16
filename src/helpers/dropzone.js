@@ -30,28 +30,26 @@ module.exports = {
       },
       uploadprogress: function(file, progress, bytesSend) {
         $(this.element).find('.uploading').show();
-        // console.log('uploading...');
       },
       complete: function(file) {
         $(this.element).find('.uploading').hide();
-        // hid the layer of the progress bar
       },
       dragover: function(e) {
-        // this.trigger('dragover');
-        $('.dropzone').css({ border: 'dashed 1px lightgray' });
+        // $('.dropzone').css({ border: 'dashed 1px lightgray' });
+        $('.border-dropzone').addClass('active-border');        
       },
       dragleave: function(e) {
-        // this.trigger('dragleave');
-        $('.dropzone').css({ border: 'none' });
+        // $('.dropzone').css({ border: 'none' });
+        $('.border-dropzone').removeClass('active-border');        
       },
       dragend: function(e) {
-        // this.trigger('dragleave');
-        $('.dropzone').css({ border: 'none' });
+        // $('.dropzone').css({ border: 'none' });
+        $('.border-dropzone').removeClass('active-border');
       },
       drop: function(e) {
-        // this.trigger('dragleave');
         $(this.element).find('.uploading').show();
-        $('.dropzone').css({ border: 'none' });
+        // $('.dropzone').css({ border: 'none' });
+        $('.border-dropzone').removeClass('active-border');        
       },
       acceptedFiles: 'image/*',
     });
@@ -112,7 +110,31 @@ module.exports = {
         'Authorization':  'Token ' + localStorage.getItem('token'),
         'Cache-Control': null,
         'X-Requested-With': null,
-      }
+      },
+      uploadprogress: function(file, progress, bytesSend) {
+        $(this.element).find('.uploading').show();
+      },
+      complete: function(file) {
+        $(this.element).find('.uploading').hide();
+      },
+      dragover: function(e) {
+        // $('.dropzone').css({ border: 'dashed 1px lightgray' });
+        $('.border-dropzone').addClass('active-border');        
+      },
+      dragleave: function(e) {
+        // $('.dropzone').css({ border: 'none' });
+        $('.border-dropzone').removeClass('active-border');        
+      },
+      dragend: function(e) {
+        // $('.dropzone').css({ border: 'none' });
+        $('.border-dropzone').removeClass('active-border');        
+      },
+      drop: function(e) {
+        $(this.element).find('.uploading').show();
+        // $('.dropzone').css({ border: 'none' });
+        $('.border-dropzone').removeClass('active-border');        
+      },
+      acceptedFiles: 'application/pdf,.pptx,.ppt',
     });
 
     $('.dropzone__' + name).addClass('dropzone')//.html('Drop file here');

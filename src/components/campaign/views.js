@@ -1,3 +1,5 @@
+const formatHelper = require('helpers/formatHelper');
+
 module.exports = { 
   list: Backbone.View.extend({
     template: require('./templates/list.pug'),
@@ -35,9 +37,14 @@ module.exports = {
       'click .twitter-share': 'shareOnTwitter',
       'click .see-all-risks': 'seeAllRisks',
       'click .see-all-faq': 'seeAllFaq',
-      'click .response': 'checkResponse',
-      'submit #comment': 'submitComment',
+      'click .linkresponse': 'checkResponse',
+      'submit .comment-form': 'submitComment',
+      // 'click .fancybox-nav': 'preventDefault'
     },
+    /*preventDefault(e) {
+      debugger
+      e.preventDefault();
+    },*/
     initialize(options) {
       $(document).off("scroll", this.onScrollListener);
       $(document).on("scroll", this.onScrollListener);
@@ -54,6 +61,7 @@ module.exports = {
     },
 
     smoothScroll(e) {
+      console.log('smooth...');
       e.preventDefault();
       $(document).off("scroll");
       $('.tabs-scroll .nav').find('.nav-link').removeClass('active');
@@ -65,7 +73,7 @@ module.exports = {
       $('html, body').stop().animate({
         'scrollTop': $target.offset().top - $navBar.height() - 15
       }, 500, 'swing', () => {
-        window.location.hash = e.target.hash;
+        // window.location.hash = e.target.hash;
         $(document).on("scroll", this.onScrollListener);
       });
     },
@@ -107,18 +115,18 @@ module.exports = {
       FB.ui({
         method: 'share',
         href: window.location.href,
-        caption: this.model.get('company').tagline,
-        description: this.model.get('pitch'),
-        title: this.model.get('company').name,
-        picture: (this.model.get("header_image_data") ? this.model.get("header_image_data").url : null),
+        caption: this.model.company.tagline,
+        description: this.model.pitch,
+        title: this.model.company.name,
+        picture: (this.model.header_image_data ? this.model.header_image_data.url : null),
       }, function(response){});
     },
 
     shareOnLinkedin(event) {
       event.preventDefault();
       window.open(encodeURI('https://www.linkedin.com/shareArticle?mini=true&url=' + window.location.href +
-            '&title=' + this.model.get('company').name +
-            '&summary=' + this.model.get('pitch') +
+            '&title=' + this.model.company.name +
+            '&summary=' + this.model.pitch +
             '&source=Growth Fountain'),'Growth Fountain Campaingn','width=605,height=545');
     },
 
@@ -132,13 +140,15 @@ module.exports = {
 
     render() {
       const socialMediaScripts = require('helpers/shareButtonHelper.js');
+      const fancybox = require('components/fancybox/js/jquery.fancybox.js');
+      const fancyboxCSS = require('components/fancybox/css/jquery.fancybox.css');
 
       this.$el.html(
         this.template({
           serverUrl: serverUrl,
           Urls: Urls,
-          campaign: this.model.toJSON(),
-          model: this.model
+          values: this.model,
+          formatHelper: formatHelper,
         })
       );
 
@@ -164,6 +174,26 @@ module.exports = {
           }
         };
 
+        /*$('*[data-toggle="lightbox"]').click(function (e) {
+          e.preventDefault();
+          $(this).ekkoLightbox();
+        });*/
+        /*this.$el.delegate('*[data-toggle="lightbox"]', 'click', function(event) {
+          event.preventDefault();
+          // $(this).ekkoLightbox();
+          $(this).fancybox();
+        }); */
+        /*this.$('*[data-toggle="lightbox"]').fancybox({
+          openEffect  : 'elastic',
+          closeEffect : 'elastic',
+
+          helpers : {
+            title : {
+              type : 'inside'
+            }
+          }
+        });*/
+
         this.$el.find('[data-toggle="sticky-onscroll"]').each(function() {
           var sticky = $(this);
           var stickyWrapper = $('<div>').addClass('sticky-wrapper'); // insert hidden element to maintain actual top offset on page
@@ -179,21 +209,20 @@ module.exports = {
           stickyToggle(sticky, stickyWrapper, $(window));
         });
 
-        let photoswipeRun = require('components/campaign/photoswipe_run.js');
         this.commentView = require('components/comment/views.js');
 
-        var a1 = api.makeCacheRequest(Urls['comment-list']() + '?company=' + this.model.get('company').id).
+        $('#ask').after(
+          new this.commentView.form().getHtml({model: {}})
+        );
+
+        var a1 = api.makeCacheRequest(Urls['comment-list']() + '?company=' + this.model.company.id).
           then((comments) => {
             let commentList = new this.commentView.list({
               el: '.comments',
+              model: this.model.company,
               collection: comments,
             }).render();
           });
-        /*
-           window.PhotoSwipe = PhotoSwipe;
-           window.PhotoSwipeUI_Default = PhotoSwipeUI_Default;
-           photoswipeRun('#gallery1');
-           */
       }, 100);
       this.$el.find('.perks .col-lg-4 p').equalHeights();
       this.$el.find('.team .auto-height').equalHeights();
@@ -201,50 +230,77 @@ module.exports = {
         $(event.currentTarget).find('iframe').attr('src', $(event.currentTarget).find('iframe').attr('src'));
       });
 
+      // $('*[data-toggle="lightbox"]').fancybox({
+      $('.fancybox').fancybox({
+        openEffect  : 'none',
+        closeEffect : 'none'
+      });
 
       return this;
     },
 
     _commentSuccess(data) {
-      console.log('comment was succesfull added', data);
       this._success = null;
       this.urlRoot = null;
-      this.model = this.oldModel;
       if (data.parent) { 
         $('#comment_' + data.parent).after(
-          new this.commentView.detail({
+          new this.commentView.detail().getHtml({
             model: data,
-          }).getHtml()
+            company: this.model.company,
+            app: app,
+          })
         );
       } else {
-        new this.commentView.detail({
-          el: '#comment_' + data.parent,
-          model: data,
-        }).render();
+        $('#comment_' + data.parent).html(
+          new this.commentView.detail().getHtml({
+            company: this.model.company,
+            model: data,
+            app: app,
+          })
+        );
       }
-      $('#parent').val('');
-      $('#is_related').val('0');
-      $('#body').val('');
+      this.$el.find('.comment-form-div').remove();
       app.hideLoading();
       app.showLoading = this._showLoading;
     },
 
     checkResponse(e) {
       e.preventDefault();
-      this.$el.find('#parent').val(e.currentTarget.dataset.id);
-      this.$el.find('#body').val('@' + e.currentTarget.dataset.name + ' ');
+      this.$el.find('.comment-form-div').remove();
+      var $el = $(e.currentTarget);
+      $el.parents('.comment').after(
+        new this.commentView.form({
+        }).getHtml({
+          model: {parent: e.currentTarget.dataset.id},
+          company: this.model.company,
+          app: app,
+        })
+      );
     },
 
     submitComment(e) {
       e.preventDefault();
-      console.log('we are here');
-      this._success = this._commentSuccess;
-      this.urlRoot = serverUrl + Urls['comment-list']();
-      this.oldModel = this.model;
-      delete this.model;
-      this._showLoading = app.showLoading;
-      app.showLoading = function(){ };
-      api.submitAction.call(this, e);
+      var data = $(e.target).serializeJSON();
+      let model = new Backbone.Model();
+      model.urlRoot = serverUrl + Urls['comment-list']();
+      data['company'] = this.model.company.id;
+      model.set(data)
+      if (model.isValid(true)) {
+        model.save().
+          then((data) => {
+            this.$el.find('.alert-warning').remove();
+            this._commentSuccess(data);
+          }).
+          fail((xhr, status, text) => {
+            api.errorAction(this, xhr, status, text, this.fields);
+          });
+      } else {
+        if (this.$('.alert').length) {
+          $('#content').scrollTo();
+        } else {
+          this.$el.find('.has-error').scrollTo();
+        }
+      }
     }
   }),
 
@@ -355,3 +411,4 @@ module.exports = {
     },
   }),
 };
+
