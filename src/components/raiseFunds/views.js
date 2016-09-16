@@ -754,6 +754,10 @@ module.exports = {
                 }
             );
 
+            $('.a-investor_presentation').click(function (e) {
+              e.stopPropagation();
+            });
+
             this.calculateNumberOfShares(null);
 
             return this;
