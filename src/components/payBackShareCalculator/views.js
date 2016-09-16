@@ -289,6 +289,7 @@ module.exports = {
                     },
                     colors: ["#d12610", "#37b7f3", "#52e136"],
                     xaxis: {
+                        max: 10,
                         ticks: 11,
                         tickDecimals: 0,
                         tickColor: "#eee"
