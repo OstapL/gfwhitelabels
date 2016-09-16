@@ -38,6 +38,7 @@ module.exports = Backbone.Router.extend({
             );
             $('body').scrollTo();
             app.hideLoading();
+            
             if (name === 'education') {
               require('img/sticky-kit.min.js');
               $('.sticky-side-menu').stick_in_parent();
