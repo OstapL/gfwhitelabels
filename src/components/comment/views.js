@@ -1,20 +1,29 @@
 module.exports = { 
   form: Backbone.View.extend({
     template: require('./templates/form.pug'),
+
+    getHtml(data) {
+      return this.template(data)
+    },
+
     render() {
       this.$el.html(
         this.template({model: this.model})
       )
     },
+
   }),
 
   list: Backbone.View.extend({
     template: require('./templates/list.pug'),
 
     render() {
-      console.log('this', this);
       this.$el.html(
-        this.template({comments: this.collection})
+        this.template({
+          app: app,
+          company: this.model,
+          comments: this.collection,
+        })
       )
       return this;
     },
@@ -24,13 +33,16 @@ module.exports = {
   detail: Backbone.View.extend({
     template: require('./templates/detail.pug'),
 
-    getHtml() {
-      return this.template({model: this.model})
+    getHtml(data) {
+      return this.template(data)
     },
 
     render() {
       this.$el.html(
-        this.template({model: this.model})
+        this.template({
+          model: this.model,
+          app: app,
+        })
       )
       return this;
     },

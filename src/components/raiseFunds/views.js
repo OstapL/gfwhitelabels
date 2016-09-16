@@ -1,7 +1,7 @@
 "use strict";
 
 import formatHelper from '../../helpers/formatHelper';
-let appendHttpIfNecessary = formatHelper.appendHttpIfNecessary;
+const appendHttpIfNecessary = formatHelper.appendHttpIfNecessary;
 
 const dropzone = require('dropzone');
 const dropzoneHelpers = require('helpers/dropzone.js');
@@ -46,14 +46,14 @@ const jsonActions = {
 
 module.exports = {
   company: Backbone.View.extend({
-    urlRoot: Urls['company-list'](),
+    urlRoot: serverUrl + Urls['company-list'](),
     template: require('./templates/company.pug'),
     events: {
       'submit form': 'submit',
       'keyup #zip_code': 'changeZipCode',
       'click .update-location': 'updateLocation',
       'change input[name=phone]': 'formatPhone',
-      'change #website': 'appendHttpIfNecessary',
+      'change #website': appendHttpIfNecessary,
     },
 
     initialize(options) {
@@ -74,9 +74,8 @@ module.exports = {
         $el.val("http://" + url);
       }
     },*/
-    appendHttpIfNecessary: appendHttpIfNecessary,
+
     submit(e) {
-      debugger;
       var data = $(e.target).serializeJSON();
       data['founding_date'] = data['founding_date__year'] + '-' + 
         data['founding_date__month'] + '-' + data['founding_date__day'];
@@ -135,33 +134,20 @@ module.exports = {
     },
 
     _success(data) {            
-      // IF we dont have campaign we need create it
-      if (this.campaign.id) {
-        app.routers.navigate(
-            '/campaign/general_information/' + this.campaign.id,
-            {trigger: true, replace: false}
-            );
+      if (this.campaign.hasOwnProperty('id') == false) {
+        // IF we dont have campaign data
+        // Server should create it
+        this.campaign = data.campaign;
       }
-      else {
-        app.makeRequest('/api/campaign/general_information', 'POST', {
-          company: data.id,
-          business_model: '',
-          intended_use_of_proceeds: '',
-          pitch: ''
-        }).
-        then((campaign) => {
-          app.cache['/api/campaign/general_information/' + campaign.id] = campaign;
-          app.routers.navigate(
-            '/campaign/general_information/' + campaign.id,
-            {trigger: true, replace: true}
-            );
-        })
-      }
+      app.routers.navigate(
+        '/campaign/general_information/' + this.campaign.id,
+        {trigger: true, replace: false}
+      );
     },
   }),
 
   generalInformation: Backbone.View.extend({
-      urlRoot: Urls['campaign-list']() + '/general_information',
+      urlRoot: serverUrl + Urls['campaign-list']() + '/general_information',
       template: require('./templates/generalInformation.pug'),
       events: _.extend({
           'submit form': api.submitAction,
@@ -246,22 +232,26 @@ module.exports = {
   media: Backbone.View.extend({
       events: _.extend({
         'submit form': api.submitAction,
-        'click .delete-image': 'deleteImage',
+        // 'click .delete-image': 'deleteImage',
         'change .videoInteractive input[type="url"]': 'updateVideo',
-        'dragover .media-container,.dropzone': 'globalDragover',
-        'dragleave .media-container,.dropzone': 'globalDragleave',
-        'change #video,.additional_video_link': 'appendHttpIfNecessary',
+        'dragover': 'globalDragover',
+        'dragleave': 'globalDragleave',
+        'change #video,.additional_video_link': 'appendHttpsIfNecessary',
       }, jsonActions.events),
+      urlRoot: serverUrl + Urls['campaign-list']() + '/media',
 
-      appendHttpIfNecessary: appendHttpIfNecessary,
+      appendHttpsIfNecessary(e) {
+        appendHttpIfNecessary(e, true);
+      },
 
       globalDragover () {
-          // console.log('hello');
-          this.$('.dropzone').css({ border: 'dashed 1px lightgray' });
+          // this.$('.dropzone').css({ border: 'dashed 1px lightgray' });
+          this.$('.border-dropzone').addClass('active-border');
       },
 
       globalDragleave () {
-          this.$('.dropzone').css({ border: 'none' });
+          // this.$('.dropzone').css({ border: 'none' });
+          this.$('.border-dropzone').removeClass('active-border');
       },
 
       preinitialize() {
@@ -291,7 +281,6 @@ module.exports = {
       },
 
       render() {
-        this.model.urlRoot = serverUrl + Urls['campaign-list']() + '/media';
         let template = require('./templates/media.pug');
         this.fields['press'].type = 'json';
         this.fields['press'].schema = {
@@ -376,7 +365,7 @@ module.exports = {
           'galleries/' + this.model.get('id'), '', 
           (data) => {
             // console.log(data);
-            $('.photo-scroll').append('<div class="thumb-image-container" style="float: left; overflow: hidden; position: relative;">' +
+            let $el = $('<div class="thumb-image-container" style="float: left; overflow: hidden; position: relative;">' +
               '<div class="delete-image-container" style="position: absolute;">' +
               '<a class="delete-image" href="#" data-id="' + data.image_id + '">' +
               '<i class="fa fa-times"></i>' +
@@ -386,6 +375,8 @@ module.exports = {
               '<img class="img-fluid pull-left" src="' + data.origin_url + '">' +
               '</div>'
               );
+            $('.photo-scroll').append($el);
+            $el.find('.delete-image').click(this.deleteImage.bind(this));
             this.model.save({
               gallery: data.folder_id,
             }, {
@@ -395,6 +386,7 @@ module.exports = {
             });
           },
           );
+        $('.delete-image').click(this.deleteImage.bind(this));
         return this;
       },
 
@@ -417,9 +409,8 @@ module.exports = {
       },
 
       deleteImage(e) {
-          e.stopImmediatePropagation();
-          e.stopPropagation();
           e.preventDefault();
+          e.stopPropagation();
           const image_id = e.currentTarget.dataset.id;
 
           $(e.currentTarget).parent().parent().remove();
@@ -437,7 +428,6 @@ module.exports = {
           var $form = $(e.target).parents('.videoInteractive').parent();
           var video = e.target.value;
           var id = this.getVideoId(video);
-          console.log(id);
 
           // ToDo
           // FixME
@@ -456,6 +446,19 @@ module.exports = {
       events: {
         'submit form': 'submit',
         'click .delete-member': 'deleteMember',
+        'dragover': 'globalDragover',
+        'dragleave': 'globalDragleave',
+      },
+      urlRoot: serverUrl + Urls['campaign-list']() + '/team_members',
+
+      globalDragover () {
+          // this.$('.dropzone').css({ border: 'dashed 1px lightgray' });
+          this.$('.border-dropzone').addClass('active-border');
+      },
+
+      globalDragleave () {
+          // this.$('.dropzone').css({ border: 'none' });
+          this.$('.border-dropzone').removeClass('active-border');
       },
 
       preinitialize() {
@@ -479,7 +482,6 @@ module.exports = {
       },
 
       render() {
-        this.model.urlRoot = serverUrl + Urls['campaign-list']() + '/team_members';
         let template = require('./templates/teamMemberAdd.pug');
         this.fields = {
           first_name: {
@@ -566,7 +568,8 @@ module.exports = {
           })
         );
 
-        dropzoneHelpers.createFileDropzone(
+        // dropzoneHelpers.createFileDropzone(
+        dropzoneHelpers.createImageDropzone(
           dropzone,
           'photo', 
           'members', '', 
@@ -652,6 +655,19 @@ module.exports = {
           'change input[name="security_type"]': 'updateSecurityType',
           'change #minimum_raise,#maximum_raise,#minimum_increment,#premoney_valuation': 'formatNumber',
           'change #minimum_raise,#maximum_raise,#price_per_share,#premoney_valuation': "calculateNumberOfShares",
+          'dragover': 'globalDragover',
+          'dragleave': 'globalDragleave',
+        },
+        urlRoot: serverUrl + Urls['campaign-list']() + '/specifics',
+
+        globalDragover () {
+            // this.$('.dropzone').css({ border: 'dashed 1px lightgray' });
+            this.$('.border-dropzone').addClass('active-border');
+        },
+
+        globalDragleave () {
+            // this.$('.dropzone').css({ border: 'none' });
+            this.$('.border-dropzone').removeClass('active-border');
         },
 
         preinitialize() {
@@ -702,13 +718,12 @@ module.exports = {
         },
 
         updateSecurityType(e) {
-            $('.security_type_list').hide();
             let val = e.currentTarget.value;
+            $('.security_type_list').hide();
             $('.security_type_'  +val).show();
         },
 
         render() {
-            this.model.urlRoot = serverUrl + Urls['campaign-list']() + '/specifics';
             const template = require('./templates/specifics.pug');
             this.$el.html(
                 template({
@@ -724,12 +739,15 @@ module.exports = {
                 'investor_presentation', 
                 'investor_presentation', '', 
                 (data) => {
+                    this.model.urlRoot = this.urlRoot;
                     this.model.save({
                         investor_presentation: data.file_id,
                     }, {
                         patch: true
-                    }).then((model) => {
-                        $('.img-investor_presentation').attr('src', '/img/MS-PowerPoint.png');
+                    }).then((data) => {
+                        const extension = data.investor_presentation_data.name.split('.').pop();
+                        const suffix = extension == 'pdf' ? '_pdf' : (['ppt', 'pptx'].indexOf(extension) != -1 ? '_pptx' : '_file');
+                        $('.img-investor_presentation').attr('src', '/img/default' + suffix + '.png');
                         // $('.img-investor_presentation').after('<a class="link-3" href="' + data.url + '">' + data.name + '</a>');
                         $('.a-investor_presentation').attr('href', data.url).text(data.name);
                     });
@@ -746,6 +764,7 @@ module.exports = {
         events: _.extend({
             'submit form': api.submitAction,
         }, jsonActions.events),
+        urlRoot: serverUrl + Urls['campaign-list']() + '/perks',
 
         preinitialize() {
             // ToDo
@@ -773,7 +792,6 @@ module.exports = {
         },
 
         render() {
-            this.model.urlRoot = serverUrl + Urls['campaign-list']() + '/perks';
             let template = require('./templates/perks.pug');
             this.fields['perks'].type = 'json'
             this.fields['perks'].schema = {

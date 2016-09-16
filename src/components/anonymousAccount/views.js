@@ -10,12 +10,12 @@ module.exports = {
     initialize(options) {
       this.login_fields = options.login_fields;
       this.hello = require('hellojs');
-      this.socialAuth = require('js/views/social-auth.js');
+      this.socialAuth = require('./social-auth.js');
     },
 
     render() {
       this.model.urlRoot = serverUrl + Urls['rest_login']();
-      let template = require('templates/userLogin.pug');
+      let template = require('./templates/login.pug');
       this.$el.html(
         template({
           login_fields: this.login_fields,
@@ -125,12 +125,12 @@ module.exports = {
     initialize(options) {
         this.register_fields = options.register_fields;
         this.hello = require('hellojs');
-        this.socialAuth = require('js/views/social-auth.js');
+        this.socialAuth = require('./social-auth.js');
     },
 
     render() {
         this.model.urlRoot = serverUrl + Urls['rest_register']();
-        let template = require('templates/userSignup.pug');
+        let template = require('./templates/signup.pug');
         this.$el.html(
             template({
                 register_fields: this.register_fields,
@@ -234,10 +234,29 @@ module.exports = {
   }),
 
   reset: Backbone.View.extend({
-        render(){
-            let template = require('templates/reset.pug');
-            this.$el.html(template({}));
-            return this;
-        }
+    events: {
+      'submit form': 'submit',
+    },
+
+    render(){
+      let template = require('./templates/reset.pug');
+      this.$el.html(template({}));
+      return this;
+    },
+
+    submit(e) {
+      e.preventDefault();
+
+      let email = $(e.currentTarget).find('#email').val();
+      api.makeRequest(Urls.rest_password_reset(), {
+        email: email,
+        type: 'POST',
+      }).then((data) => {
+        $('#content').html(
+          '<section class="reset"><div class="container"><div class="col-lg-12"><h2 class="dosis text-uppercase text-sm-center text-xs-center m-t-85">' + data.success + '</h2></div></div></section>'
+        );
+      });
+    }
+
   }),
 };

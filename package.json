@@ -31,6 +31,7 @@
     "gulp-uglify": "^1.5.3",
     "hellojs": "^1.13.4",
     "html-webpack-plugin": "^1.6.1",
+    "jquery": "^3.1.0",
     "jquery.inputmask": "^3.3.1",
     "lodash": "^3.10.1",
     "node-bourbon": "^4.2.3",
