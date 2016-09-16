@@ -6,7 +6,7 @@ global.Backbone.Validation = require('backbone-validation');
 global.Tether = require('tether');
 global.Bootstrap = require('bootstrap/dist/js/bootstrap.min.js');
 global.userModel = require('./js/models/user.js');
-global.Urls = require('./js/jsreverse.js');
+global.Urls = require('./jsreverse.js');
 require('jquery-serializejson/jquery.serializejson.min.js');
 
 // require('sass/mixins_all.sass');
@@ -198,6 +198,7 @@ app.trigger('userReady');
 
 const popoverTemplate = '<div class="popover  divPopover"  role="tooltip"><span class="popover-arrow"></span> <h3 class="popover-title"></h3> <span class="icon-popover"><i class="fa fa-info-circle" aria-hidden="true"></i></span> <span class="popover-content"> XXX </span></div>';
 
+/*
 $('body').on('mouseover', 'div.showPopover', function () {
   var $el = $(this);
   if ($el.attr('aria-describedby') == null) {
@@ -205,10 +206,12 @@ $('body').on('mouseover', 'div.showPopover', function () {
       html: true,
       template: popoverTemplate,
       placement: 'top',
+      focus: true,
     });
     $(this).popover('show');
   }
 });
+*/
 
 $('body').on('focus', 'input.showPopover', function () {
   var $el = $(this);
@@ -217,6 +220,7 @@ $('body').on('focus', 'input.showPopover', function () {
       html: true,
       template: popoverTemplate.replace('divPopover', 'inputPopover'),
       placement: 'top',
+      focus: true,
     });
     $(this).popover('show');
   }
@@ -229,6 +233,7 @@ $('body').on('focus', 'textarea.showPopover', function () {
       html: true,
       template: popoverTemplate.replace('divPopover', 'textareaPopover'),
       placement: 'top',
+      focus: true,
     });
     $(this).popover('show');
   }
