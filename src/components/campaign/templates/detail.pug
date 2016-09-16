@@ -744,14 +744,16 @@ section
         a(href="/api/values/" + values.id + "/invest").btn.btn-primary.text-uppercase Invest
 
 
-#videoModal.modal.fade(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")
+#videoModal.modal.fade.video-modal(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")
     .modal-dialog.modal-lg(role="document")
+        button(type="button", data-dismiss="modal", aria-label="Close").close
+          span(aria-hidden="true") &times;
         .modal-content
             .embed-responsive.embed-responsive-16by9
                 iframe.embed-responsive-item(src="//www.youtube.com/embed/" + app.getVideoId(values.video) + "?rel=0" allowfullscreen="true")
 
 each v,k in values.additional_video
-    div(id="videoModal-" + k tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true").modal.fade
+    div(id="videoModal-" + k tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true").modal.fade.video-modal
         .modal-dialog.modal-lg(role="document")
             .modal-content
                 .embed-responsive.embed-responsive-16by9
