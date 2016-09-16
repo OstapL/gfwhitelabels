@@ -11,7 +11,7 @@ section#home(style="background-image: url(" + (values.header_image_data ? values
         .local-scroll
           a.big-icon.link-6.youtube_popup(data-toggle="modal" href="#videoModal" data-target="#videoModal")
             i.fa.fa-play-circle-o
-          a(href=values.company.website target="_blank").link-6.link-campaing-detail #{ values.company.website }
+          a(href=values.company.website target="_blank").link-6.link-campaing-detail #{ formatHelper.getWebsiteUrl(values.company.website) }
           .row.social-link
             if values.company.facebook
               a(href=values.company.facebook target="_blank").link-6.link-campaing-detail
