@@ -141,9 +141,9 @@
 				image    : '<img class="fancybox-image" src="{href}" alt="" />',
 				iframe   : '<iframe id="fancybox-frame{rnd}" name="fancybox-frame{rnd}" class="fancybox-iframe" frameborder="0" vspace="0" hspace="0" webkitAllowFullScreen mozallowfullscreen allowFullScreen' + (IE ? ' allowtransparency="true"' : '') + '></iframe>',
 				error    : '<p class="fancybox-error">The requested content cannot be loaded.<br/>Please try again later.</p>',
-				closeBtn : '<p title="Close" class="fancybox-item fancybox-close" href="#"></p>',
-				next     : '<p title="Next" class="fancybox-nav fancybox-next" href="#"><span></span></p>',
-				prev     : '<p title="Previous" class="fancybox-nav fancybox-prev" href="#"><span></span></p>',
+				closeBtn : '<span title="Close" class="fancybox-item fancybox-close" href="#"></span>',
+				next     : '<span title="Next" class="fancybox-nav fancybox-next" href="#"><span></span></span>',
+				prev     : '<span title="Previous" class="fancybox-nav fancybox-prev" href="#"><span></span></span>',
 				loading  : '<div id="fancybox-loading"><div></div></div>'
 			},
 
