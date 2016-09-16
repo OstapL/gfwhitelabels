@@ -45,7 +45,7 @@ section#home(style="background-image: url(" + (values.header_image_data ? values
               h2.font-weight-bold #{ values.percentage_revenue }%
           .col-lg-2.p-r-0
             p Days Left
-            h2.font-weight-bold #{ values.days_to_go }
+            h2.font-weight-bold #{ values.length_days }
           .col-lg-4.pull-right
             a(href=Urls['campaign-invest'](values.id)).btn.btn-primary.text-uppercase.pull-right Invest
 
@@ -68,12 +68,14 @@ section.campaigndetail
         .col-lg-12.share
           span.font-weight-bold.d-inline-block Share:
           .d-inline-block
-            a(href=values.company.facebook).link-1.facebook-share
-              i.fa.fa-facebook
-            a(href=values.company.twitter).link-1.twitter-share
-              i.fa.fa-twitter
-            a(href=values.company.linkedin).link-1.linkedin-share
-              i.fa.fa-linkedin
+            a(href=values.company.facebook ).facebook-share
+              i.fa.fa-facebook.link-1
+            a(href=values.company.twitter).twitter-share
+              i.fa.fa-twitter.link-1
+            a(href=values.company.linkedin).linkedin-share
+              i.fa.fa-linkedin.link-1
+            a(href=values.company.linkedin).linkedin-share
+              i.fa.fa-envelope.link-1
             //- a(href=values.company.instagram).link-1
             //-   i.fa.fa-google-plus
     .col-lg-6.right-block-investors.p-l-0
@@ -246,13 +248,13 @@ section
             p #{ v.body }
    
   if values.members
-      section#members.team.border-bottom
+      section#members.border-bottom
         .container
             h2#team.dosis.text-uppercase.text-lg-center.col-lg-12.green-heading Team
             .row
               .col-lg-12.text-center-flex
                 each v,k in values.members
-                    .col-lg-4
+                    .col-lg-4.team
                       a(href="#")
                         .card.text-lg-center
                           img(src=v.photo alt="").img-circle
@@ -267,11 +269,11 @@ section
                               i.fa.fa-facebook
                             p.card-text.text-justify.auto-height #{v.bio}
                             .d-block.text-lg-left.cite_education
-                              a(href="#").link-1.text-lg-left
+                              span.text-lg-left.color-grey
                                 i.fa.fa-home.p-l-0
                                 |  #{v.growup}, #{v.state}
                               //- a(href="#").link-1.pull-right
-                              span.pull-right
+                              span.pull-right.color-grey
                                 i.fa.fa-graduation-cap
                                 |  #{v.college}
             h2.dosis.text-uppercase.text-lg-center.green-heading Articles and Press
@@ -287,7 +289,7 @@ section
                             i.fa.fa-link
                             p.card-text #{ v.headline }
                             .pos-bottom
-                              .links.d-inline-block.card-text #{ v.link }
+                              .links.d-inline-block.card-text #{ formatHelper.getWebsiteUrl(v.link) }
   
   else
       //
@@ -381,18 +383,18 @@ section
         h2#overview.col-lg-12.dosis.text-uppercase.text-lg-center.green-heading overview and terms
         //- h3.col-lg-12.text-lg-center Fundraising Description
         h3.text-uppercase.text-lg-center.green-heading Fundraising Description
-        .col-lg-12.fundraising
+        .col-lg-8.offset-lg-2.fundraising
           .jumbotron.jumbotron-fluid
             .container
               if values.security_type == 0
                 .row
-                  .col-lg-4.p-l-3
+                  .col-lg-5.p-l-3
                     p Type of Security
                     h2.font-weight-bold #{ values.get_security_type_display }
                   //- .col-lg-3.p-l-3
                   //-   p Target Minimum Raise Amonunt
                   //-   h2.font-weight-bold #{ formatHelper.formatPrice(values.minimum_raise) }
-                  .col-lg-4.p-l-3
+                  .col-lg-3.p-l-1
                     p Minimum Investment
                     h2.font-weight-bold #{ formatHelper.formatPrice(values.minimum_increment) }
                   .col-lg-4.p-l-3
@@ -402,13 +404,13 @@ section
                   //-   p Minimum Equity Offered
                   //-   h2.font-weight-bold #{ values.min_number_of_shares }
                 .row
-                  .col-lg-4.p-l-3
+                  .col-lg-5.p-l-3
                     p Pre-Money Valuation
                     h2.font-weight-bold #{ formatHelper.formatPrice(values.premoney_valuation) }
                   //- .col-lg-3.p-l-3
                   //-   p Target Maximum Raise Amount
                   //-   h2.font-weight-bold #{ formatHelper.formatPrice(values.maximum_raise) }
-                  .col-lg-4.p-l-3
+                  .col-lg-3.p-l-1
                     p Price per Share
                     h2.font-weight-bold #{ formatHelper.formatPrice(values.price_per_share) }
                   .col-lg-4.p-l-3
@@ -422,7 +424,7 @@ section
                   .col-lg-4.p-l-3
                     p Type of Security
                     h2.font-weight-bold #{ values.get_security_type_display }
-                  .col-lg-4.p-l-3
+                  .col-lg-4.p-l-0
                     p Target Minimum Raise Amonunt
                     h2.font-weight-bold #{ formatHelper.formatPrice(values.minimum_raise) }
                   .col-lg-4.p-l-3
@@ -432,7 +434,7 @@ section
                   .col-lg-4.p-l-3
                     p Percentage Revenue
                     h2.font-weight-bold #{ values.percentage_revenue }%
-                  .col-lg-4.p-l-3
+                  .col-lg-4.p-l-0
                     p Target Maximum Raise Amount
                     h2.font-weight-bold #{ formatHelper.formatPrice(values.maximum_raise) }
                   .col-lg-4.p-l-3
@@ -498,7 +500,9 @@ section
                 .col-lg-4
                   .jumbotron.jumbotron-fluid
                     .container
-                      h3.m-t-0.m-b-1 Invest #{ formatHelper.formatPrice(v.amount) } or more
+                      h3.m-t-0.m-b-1 Invest 
+                        span #{ formatHelper.formatPrice(v.amount) }
+                        |  or more
                       p.text-justify #{ v.perk }
 
   section.investors-all.border-bottom(style="display: none")
