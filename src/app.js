@@ -198,6 +198,7 @@ app.trigger('userReady');
 
 const popoverTemplate = '<div class="popover  divPopover"  role="tooltip"><span class="popover-arrow"></span> <h3 class="popover-title"></h3> <span class="icon-popover"><i class="fa fa-info-circle" aria-hidden="true"></i></span> <span class="popover-content"> XXX </span></div>';
 
+/*
 $('body').on('mouseover', 'div.showPopover', function () {
   var $el = $(this);
   if ($el.attr('aria-describedby') == null) {
@@ -210,6 +211,7 @@ $('body').on('mouseover', 'div.showPopover', function () {
     $(this).popover('show');
   }
 });
+*/
 
 $('body').on('focus', 'input.showPopover', function () {
   var $el = $(this);
