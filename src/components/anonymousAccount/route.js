@@ -53,7 +53,7 @@ module.exports = Backbone.Router.extend({
 
     loginFacebook() {
         require.ensure([], function() {
-            const socialAuth = require('js/views/social-auth');
+            const socialAuth = require('./social-auth.js');
             const hello = require('hellojs');
 
             hello('facebook').login({
@@ -81,7 +81,7 @@ module.exports = Backbone.Router.extend({
     loginLinkedin() {
 
         require.ensure([], function() {
-            const socialAuth = require('js/views/social-auth.js');
+            const socialAuth = require('./social-auth.js');
             const hello = require('hellojs');
 
             hello('linkedin').login({
@@ -111,7 +111,7 @@ module.exports = Backbone.Router.extend({
     loginGoogle() {
         require.ensure([], function() {
 
-            const socialAuth = require('js/views/social-auth.js');
+            const socialAuth = require('./social-auth.js');
             const hello = require('hellojs');
 
             hello('google').login({
@@ -137,7 +137,7 @@ module.exports = Backbone.Router.extend({
 
     finishSocialLogin() {
         require.ensure([], function() {
-            const socialAuth = require('js/views/social-auth.js');
+            const socialAuth = require('./social-auth.js');
             const hello = require('hellojs');
         });
     },
