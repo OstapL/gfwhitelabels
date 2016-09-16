@@ -399,7 +399,9 @@ section
                     h2.font-weight-bold #{ formatHelper.formatPrice(values.minimum_increment) }
                   .col-lg-4.p-l-3
                     p Minimum # of Shares
-                    h2.font-weight-bold #{ formatHelper.formatNumber(values.min_number_of_shares) }
+                    //- h2.font-weight-bold #{ formatHelper.formatNumber(values.min_number_of_shares) }
+                    h2.font-weight-bold #{ (Math.round(values.minimum_raise.replace(/,/g, '') / values.price_per_share)).toLocaleString('en-US') }
+
                   //- .col-lg-3.p-l-3
                   //-   p Minimum Equity Offered
                   //-   h2.font-weight-bold #{ values.min_number_of_shares }
@@ -415,7 +417,7 @@ section
                     h2.font-weight-bold #{ formatHelper.formatPrice(values.price_per_share) }
                   .col-lg-4.p-l-3
                     p Maximum # of Shares
-                    h2.font-weight-bold #{ formatHelper.formatNumber(values.max_number_of_shares) }
+                    h2.font-weight-bold #{ (Math.round(values.maximum_raise.replace(/,/g, '') / values.price_per_share)).toLocaleString('en-US') }
                   //- .col-lg-3.p-l-3
                   //-   p Maximum Equity Offered
                   //-   h2.font-weight-bold #{ formatHelper.max_number_of_shares }
