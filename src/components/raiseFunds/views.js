@@ -76,7 +76,6 @@ module.exports = {
     },*/
     appendHttpIfNecessary: appendHttpIfNecessary,
     submit(e) {
-      debugger;
       var data = $(e.target).serializeJSON();
       data['founding_date'] = data['founding_date__year'] + '-' + 
         data['founding_date__month'] + '-' + data['founding_date__day'];
@@ -246,7 +245,7 @@ module.exports = {
   media: Backbone.View.extend({
       events: _.extend({
         'submit form': api.submitAction,
-        'click .delete-image': 'deleteImage',
+        // 'click .delete-image': 'deleteImage',
         'change .videoInteractive input[type="url"]': 'updateVideo',
         'dragover': 'globalDragover',
         'dragleave': 'globalDragleave',
@@ -257,11 +256,13 @@ module.exports = {
       appendHttpIfNecessary: appendHttpIfNecessary,
 
       globalDragover () {
-          this.$('.dropzone').css({ border: 'dashed 1px lightgray' });
+          // this.$('.dropzone').css({ border: 'dashed 1px lightgray' });
+          this.$('.dropzone').addClass('active-border');
       },
 
       globalDragleave () {
-          this.$('.dropzone').css({ border: 'none' });
+          // this.$('.dropzone').css({ border: 'none' });
+          this.$('.dropzone').removeClass('active-border');
       },
 
       preinitialize() {
@@ -375,7 +376,7 @@ module.exports = {
           'galleries/' + this.model.get('id'), '', 
           (data) => {
             // console.log(data);
-            $('.photo-scroll').append('<div class="thumb-image-container" style="float: left; overflow: hidden; position: relative;">' +
+            let $el = $('<div class="thumb-image-container" style="float: left; overflow: hidden; position: relative;">' +
               '<div class="delete-image-container" style="position: absolute;">' +
               '<a class="delete-image" href="#" data-id="' + data.image_id + '">' +
               '<i class="fa fa-times"></i>' +
@@ -385,6 +386,8 @@ module.exports = {
               '<img class="img-fluid pull-left" src="' + data.origin_url + '">' +
               '</div>'
               );
+            $('.photo-scroll').append($el);
+            $el.find('.delete-image').click(this.deleteImage.bind(this));
             this.model.save({
               gallery: data.folder_id,
             }, {
@@ -394,6 +397,7 @@ module.exports = {
             });
           },
           );
+        $('.delete-image').click(this.deleteImage.bind(this));
         return this;
       },
 
@@ -416,9 +420,8 @@ module.exports = {
       },
 
       deleteImage(e) {
-          e.stopImmediatePropagation();
-          e.stopPropagation();
           e.preventDefault();
+          e.stopPropagation();
           const image_id = e.currentTarget.dataset.id;
 
           $(e.currentTarget).parent().parent().remove();
@@ -461,11 +464,13 @@ module.exports = {
       urlRoot: serverUrl + Urls['campaign-list']() + '/team_members',
 
       globalDragover () {
-          this.$('.dropzone').css({ border: 'dashed 1px lightgray' });
+          // this.$('.dropzone').css({ border: 'dashed 1px lightgray' });
+          this.$('.dropzone').addClass('active-border');
       },
 
       globalDragleave () {
-          this.$('.dropzone').css({ border: 'none' });
+          // this.$('.dropzone').css({ border: 'none' });
+          this.$('.dropzone').removeClass('active-border');
       },
 
       preinitialize() {
@@ -668,11 +673,13 @@ module.exports = {
         urlRoot: serverUrl + Urls['campaign-list']() + '/specifics',
 
         globalDragover () {
-            this.$('.dropzone').css({ border: 'dashed 1px lightgray' });
+            // this.$('.dropzone').css({ border: 'dashed 1px lightgray' });
+            this.$('.dropzone').addClass('active-border');
         },
 
         globalDragleave () {
-            this.$('.dropzone').css({ border: 'none' });
+            // this.$('.dropzone').css({ border: 'none' });
+            this.$('.dropzone').removeClass('active-border');
         },
 
         preinitialize() {

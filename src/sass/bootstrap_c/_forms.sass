@@ -48,12 +48,15 @@ select.form-control
 		i 
 	.border-dropzone
 		border: dashed 1px $small-text
-		min-height: 155px
+		min-height: 168px
 		max-height: 300px
 		.p-dropzone
-			position: 
-			left: 35px
-			top: 30px
+			position: relative
+			left: 20px
+			top: 35px
+		.img-dropzone
+			img
+				width: 100%
 
 	@media screen and (min-width:992px)
 		// date of birth field
@@ -169,6 +172,7 @@ select.form-control
 			color: $crimson
 			position: relative
 			padding-left: rem(15)
+			display: inline-block
 			&:before
 				content: "\f071"
 				position: absolute

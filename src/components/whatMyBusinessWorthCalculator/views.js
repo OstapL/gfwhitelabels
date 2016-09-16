@@ -85,7 +85,7 @@ module.exports = {
                 });
             });
             
-            return this;
+            return this; 
         }
     }),
 
