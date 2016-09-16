@@ -1,7 +1,7 @@
 "use strict";
 
 import formatHelper from '../../helpers/formatHelper';
-let appendHttpIfNecessary = formatHelper.appendHttpIfNecessary;
+const appendHttpIfNecessary = formatHelper.appendHttpIfNecessary;
 
 const dropzone = require('dropzone');
 const dropzoneHelpers = require('helpers/dropzone.js');
@@ -53,7 +53,7 @@ module.exports = {
       'keyup #zip_code': 'changeZipCode',
       'click .update-location': 'updateLocation',
       'change input[name=phone]': 'formatPhone',
-      'change #website': 'appendHttpIfNecessary',
+      'change #website': appendHttpIfNecessary,
     },
 
     initialize(options) {
@@ -74,7 +74,7 @@ module.exports = {
         $el.val("http://" + url);
       }
     },*/
-    appendHttpIfNecessary: appendHttpIfNecessary,
+
     submit(e) {
       var data = $(e.target).serializeJSON();
       data['founding_date'] = data['founding_date__year'] + '-' + 
@@ -236,11 +236,13 @@ module.exports = {
         'change .videoInteractive input[type="url"]': 'updateVideo',
         'dragover': 'globalDragover',
         'dragleave': 'globalDragleave',
-        'change #video,.additional_video_link': 'appendHttpIfNecessary',
+        'change #video,.additional_video_link': 'appendHttpsIfNecessary',
       }, jsonActions.events),
       urlRoot: serverUrl + Urls['campaign-list']() + '/media',
 
-      appendHttpIfNecessary: appendHttpIfNecessary,
+      appendHttpsIfNecessary(e) {
+        appendHttpIfNecessary(e, true);
+      },
 
       globalDragover () {
           // this.$('.dropzone').css({ border: 'dashed 1px lightgray' });
@@ -426,7 +428,6 @@ module.exports = {
           var $form = $(e.target).parents('.videoInteractive').parent();
           var video = e.target.value;
           var id = this.getVideoId(video);
-          console.log(id);
 
           // ToDo
           // FixME
@@ -717,8 +718,8 @@ module.exports = {
         },
 
         updateSecurityType(e) {
-            $('.security_type_list').hide();
             let val = e.currentTarget.value;
+            $('.security_type_list').hide();
             $('.security_type_'  +val).show();
         },
 
@@ -738,13 +739,13 @@ module.exports = {
                 'investor_presentation', 
                 'investor_presentation', '', 
                 (data) => {
+                    this.model.urlRoot = this.urlRoot;
                     this.model.save({
                         investor_presentation: data.file_id,
                     }, {
                         patch: true
-                    }).then((model) => {
-                        // $('.img-investor_presentation').attr('src', '/img/MS-PowerPoint.png');
-                        const extension = model.investor_presentation_data.name.split('.').pop();
+                    }).then((data) => {
+                        const extension = data.investor_presentation_data.name.split('.').pop();
                         const suffix = extension == 'pdf' ? '_pdf' : (['ppt', 'pptx'].indexOf(extension) != -1 ? '_pptx' : '_file');
                         $('.img-investor_presentation').attr('src', '/img/default' + suffix + '.png');
                         // $('.img-investor_presentation').after('<a class="link-3" href="' + data.url + '">' + data.name + '</a>');
