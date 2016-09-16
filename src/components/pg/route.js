@@ -38,9 +38,8 @@ module.exports = Backbone.Router.extend({
             );
             $('body').scrollTo();
             app.hideLoading();
-            
-            if (name === 'education') {
-              require('img/sticky-kit.min.js');
+            if (['education', 'terms_of_use', 'privacy_policy'].indexOf(name) != -1) {
+              require('components/sticky-kit/js/sticky-kit.js');
               $('.sticky-side-menu').stick_in_parent();
             }
         });
