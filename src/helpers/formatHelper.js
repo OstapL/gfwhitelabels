@@ -46,12 +46,26 @@ module.exports = {
       return percentage_raised;
   },
 
-  appendHttpIfNecessary(e) {
+  appendHttpIfNecessary(e, https) {
     // var $el = $('#website');
       var $el = $(e.target);
       var url = $el.val();
-      if (!(url.startsWith("http://") || url.startsWith("https://"))) {
-        $el.val("http://" + url);
+      debugger;
+      if(https) {
+        https = (https == true ? 'https://' : 'http://')
+        if (!url.startsWith(https)) {
+          $el.val(https + url);
+        }
+      } else {
+        if (!(url.startsWith("http://") || url.startsWith("https://"))) {
+          $el.val("http://" + url);
+        }
       }
+  },
+
+  getWebsiteUrl(href) {
+    var l = document.createElement("a");
+    l.href = href;
+    return l.protocol + '//' +l.host;
   },
 };
