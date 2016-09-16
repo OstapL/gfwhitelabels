@@ -140,15 +140,8 @@ module.exports = {
 
     render() {
       const socialMediaScripts = require('helpers/shareButtonHelper.js');
-      // const ekkoLightbox = require('ekko-lightbox/dist/ekko-lightbox.min.js');
-      // const fancybox = require('../../../../node_modules/fancybox/dist/js/jquery.fancybox.js');
-      // const fancybox = require('fancybox/dist/js/jquery.fancybox.js');
-      const fancybox = require('img/fancybox/js/jquery.fancybox.js');
-      // const fancybox = require('fancybox')($);
-      // require('fancybox/dist/helpers/js/jquery.fancybox-buttons.js');
-      // require('fancybox/dist/helpers/js/jquery.fancybox-thumbs.js');
-      // require('fancybox/dist/helpers/js/jquery.fancybox-media.js');
-      // const fancybox = require('fancybox');
+      const fancybox = require('components/fancybox/js/jquery.fancybox.js');
+      const fancyboxCSS = require('components/fancybox/css/jquery.fancybox.css');
 
       this.$el.html(
         this.template({

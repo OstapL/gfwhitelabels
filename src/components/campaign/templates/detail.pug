@@ -3,10 +3,6 @@ include ../../../templates/mixins.pug
 
 - var percentage_raised = formatHelper.calculateRaisedPercentage(values.minimum_raise, values.amount_raised)
 
-//- link(rel="stylesheet" href="/img/ekko-lightbox.css")
-link(rel="stylesheet" href="/img/jquery.fancybox.css")
-//- link(rel="stylesheet" href="/img/fancybox/helpers/css/jquery.fancybox-buttons.css")
-//- link(rel="stylesheet" href="/img/fancybox/helpers/css/jquery.fancybox-thumbs.css")
 section#home(style="background-image: url(" + (values.header_image_data ? values.header_image_data.url : '/img/default.png') + ")").home-section.bg-dark-alfa-70.parallax-2.fixed-height-small
   .js-height-parent.container
     .home-content
