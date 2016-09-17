@@ -233,10 +233,10 @@ module.exports = {
       events: _.extend({
         'submit form': api.submitAction,
         // 'click .delete-image': 'deleteImage',
-        'change .videoInteractive input[type="url"]': 'updateVideo',
+        'change #video,#additional_video_link': 'updateVideo',
         'dragover': 'globalDragover',
         'dragleave': 'globalDragleave',
-        'change #video,.additional_video_link': 'appendHttpsIfNecessary',
+        'change #press_link': 'appendHttpsIfNecessary',
       }, jsonActions.events),
       urlRoot: serverUrl + Urls['campaign-list']() + '/media',
 
@@ -425,20 +425,22 @@ module.exports = {
       },
 
       updateVideo(e) {
-          var $form = $(e.target).parents('.videoInteractive').parent();
-          var video = e.target.value;
-          var id = this.getVideoId(video);
+        appendHttpIfNecessary(e, true);
+        var $form = $(e.target).parents('.row');
+        var video = e.target.value;
+        debugger;
+        var id = this.getVideoId(video);
 
-          // ToDo
-          // FixME
-          // Bad CHECK
-          //
-          if(id != '') {
-              $form.find('iframe').attr(
-                  'src', '//youtube.com/embed/' +  id + '?rel=0'
+        // ToDo
+        // FixME
+        // Bad CHECK
+        //
+        if(id != '') {
+          $form.find('iframe').attr(
+              'src', '//youtube.com/embed/' +  id + '?rel=0'
               );
-              //e.target.value = id;
-          }
+          //e.target.value = id;
+        }
       }
   }),
 
