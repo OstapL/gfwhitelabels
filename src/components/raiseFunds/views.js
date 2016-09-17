@@ -429,22 +429,15 @@ module.exports = {
       },
 
       updateVideo(e) {
-<<<<<<< HEAD
         appendHttpIfNecessary(e, true);
         var $form = $(e.target).parents('.row');
         var video = e.target.value;
-        debugger;
-=======
-        var $form = $(e.target).parents('.videoInteractive').parent();
-        var video = e.target.value;
->>>>>>> 48963d4d1267c4e59e5e82297a981ff4685a1744
         var id = this.getVideoId(video);
 
         // ToDo
         // FixME
         // Bad CHECK
         //
-<<<<<<< HEAD
         if(id != '') {
           $form.find('iframe').attr(
               'src', '//youtube.com/embed/' +  id + '?rel=0'
@@ -453,16 +446,6 @@ module.exports = {
         }
       }
   }),
-=======
-        if (id != '') {
-          $form.find('iframe').attr(
-              'src', '//youtube.com/embed/' +  id + '?rel=0'
-          );
-          //e.target.value = id;
-        }
-      },
-    }),
->>>>>>> 48963d4d1267c4e59e5e82297a981ff4685a1744
 
   teamMemberAdd: Backbone.View.extend({
       events: {
