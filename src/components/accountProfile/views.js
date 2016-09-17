@@ -107,30 +107,24 @@ module.exports = {
     },
 
     changeZipCode(e) {
-      if (!this.geocodeIsNotInProgress) return false;
+      // if not 5 digit, return
+      if (e.target.value.length < 5) return;
+      if (!e.target.value.match(/\d{5}/)) return;
+      this.getCityStateByZipCode(e.target.value, ({ success=false, city='', state='' }) => {
+        // this.zipCodeField.closest('div').find('.help-block').remove();
+        if (success) {
+          this.$('.js-city-state').text(`${city}, ${state}`);
+          // this.$('#city').val(city);
+          this.$('.js-city').val(city);
+          $('form input[name=city]').val(city);
+          // this.$('#state').val(city);
+          this.$('.js-state').val(state);
+          $('form input[name=state]').val(state);
 
-      clearTimeout(this.zipCodeTimeOut);
-      this.zipCodeTimeOut = setTimeout(() => {
-        this.geocodeIsNotInProgress = false;
-        this.getCityStateByZipCode(e.target.value, ({ success=false, city="", state="" }) => {
-          this.geocodeIsNotInProgress = true;
-          // clear error
-          this.zipCodeField.closest('div').find('.help-block').remove();
-
-                if (success) {
-                    if (!this.usaStates.find((el) => el.name == state)) {
-                        this.resetAddressValues();
-                        return false;
-                    }
-
-                    this.cityStateArea.text(`${city}/${state}`);
-                    this.cityField.val(city);
-                    this.stateField.val(state);
-                } else {
-                    this.resetAddressValues();
-                }
-            });
-        }, 200);
+        } else {
+          console.log('error');
+        }
+      });
     },
 
     resetAddressValues() {
