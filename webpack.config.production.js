@@ -10,11 +10,11 @@ module.exports = {
     output: {
         path: __dirname + '/dist',
         publicPath: '/',
-        filename: 'bundle.js'
+        filename: 'bundle.[hash].js',
     },
 
     resolve: {
-        extensions: ['', '.js', '.pug', '.sass', '.scss'],
+        extensions: ['', '.js', ],
         modulesDirectories: [
             './',
             'js',
@@ -53,7 +53,7 @@ module.exports = {
             dry: false
         }),
         new webpack.optimize.DedupePlugin(),
-        new webpack.optimize.OccurenceOrderPlugin()
+        new webpack.optimize.OccurenceOrderPlugin(),
     ],
 
     module: {
