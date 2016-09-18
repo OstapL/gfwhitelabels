@@ -53,7 +53,7 @@ module.exports = {
       'keyup #zip_code': 'changeZipCode',
       'click .update-location': 'updateLocation',
       'change input[name=phone]': 'formatPhone',
-      'change #website': appendHttpIfNecessary,
+      'change #website,#twitter,#facebook,#instagram,#linkedin': appendHttpIfNecessary,
     },
 
     initialize(options) {
