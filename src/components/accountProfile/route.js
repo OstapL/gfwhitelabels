@@ -3,7 +3,8 @@ module.exports = Backbone.Router.extend({
     'account/profile': 'accountProfile',
     'account/logout': 'logout',
     'account/change-password': 'changePassword',
-    'account/new-password': 'setNewPassword'
+    'reset/password/confirm/': 'setNewPassword',
+    // 'account/new-password': 'setNewPassword',
   },
 
   accountProfile() {
