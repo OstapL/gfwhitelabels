@@ -239,12 +239,15 @@ module.exports = {
         dragover: 'globalDragover',
         dragleave: 'globalDragleave',
         'change #video,.additional_video_link': 'appendHttpsIfNecessary',
+        'change .press_link': 'appendHttpIfNecessary',
       }, jsonActions.events),
       urlRoot: serverUrl + Urls['campaign-list']() + '/media',
 
       appendHttpsIfNecessary(e) {
         appendHttpIfNecessary(e, true);
       },
+
+      appendHttpIfNecessary: appendHttpIfNecessary,
 
       globalDragover() {
         // this.$('.dropzone').css({ border: 'dashed 1px lightgray' });
