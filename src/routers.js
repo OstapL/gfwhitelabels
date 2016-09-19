@@ -1,6 +1,7 @@
 import payBackShareCalculator from 'components/payBackShareCalculator/route';
 import capitalRaiseCalculator from 'components/capitalRaiseCalculator/route';
 import whatMyBusinessWorthCalc from 'components/whatMyBusinessWorthCalculator/route';
+import establishedBusinessCalc from 'components/establishedBusinessCalculator/route';
 import campaignRoute from 'components/campaign/route';
 import pageRoute from 'components/pg/route';
 import raiseFunds from 'components/raiseFunds/route';
@@ -42,6 +43,10 @@ let appRoutes = Backbone.Router.extend({
       this.routes[path] = r7[funcName];
     });
     let r8  = new whatMyBusinessWorthCalc;
+    _.each(r8.routes, (funcName, path) => {
+      this.routes[path] = r8[funcName];
+    });
+    let r9  = new establishedBusinessCalc;
     _.each(r8.routes, (funcName, path) => {
       this.routes[path] = r8[funcName];
     });
