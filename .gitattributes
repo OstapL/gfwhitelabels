@@ -1,0 +1,4 @@
+src/config.js merge=ours
+src/img/logo.png merge=ours
+src/sass/config/_colors.sass merge=ours
+src/sass/config/_vars.sass merge=ours
