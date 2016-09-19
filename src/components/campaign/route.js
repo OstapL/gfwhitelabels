@@ -17,14 +17,11 @@ module.exports = Backbone.Router.extend({
       campaigns.fetch({
         success: (collection, response, options) => {
 
-          console.log('we are here');
           $('body').scrollTo(); 
           $('#content').html('');
-          console.log('we are here');
-          const v = new View.list({
+          new View.list({
             collection: collection,
-          });
-          v.render();
+          }).render();
 
           /*
           setTimeout(() => {
@@ -45,7 +42,6 @@ module.exports = Backbone.Router.extend({
              });
           */
           app.hideLoading();
-          return v;
         },
         error: (model, response, options) => {
           // ToDo

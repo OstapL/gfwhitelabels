@@ -43,6 +43,7 @@
     "postcss-custom-properties": "^5.0.0",
     "postcss-import": "^7.0.0",
     "postcss-loader": "^0.9.1",
+    "pug-cli": "^1.0.0-alpha6",
     "pug-loader": "^2.2.1",
     "resolve-url-loader": "^1.6.0",
     "sass-loader": "^4.0.0",

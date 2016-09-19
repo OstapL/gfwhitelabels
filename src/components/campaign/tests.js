@@ -16,11 +16,10 @@ describe('Campaign Component', function() {
         const ajaxStub = sinon.stub(Backbone, "sync").yieldsTo(
           'success',
           data,
-          'foo'
         );
         const r = new routes();
-        const v = r.list();
-        console.log(v.$el.html());
+        r.list();
+        expect($('#campaignList .one_block .bottom_pr').html()).to.equal('<p>Price per share: $2.00</p><p>Number of shares: 125,000</p>');
         expect(ajaxStub.called).eq.true;
         ajaxStub.restore();
     }),

@@ -21,7 +21,7 @@ module.exports = {
           campaigns: this.collection.toJSON(),
           collection: this.collection,
         })
-        );
+      );
       this.$el.find('.selectpicker').selectpicker();
       //selectPicker('.selectpicker');
       return this;
