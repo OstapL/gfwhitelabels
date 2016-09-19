@@ -1,10 +1,10 @@
 global.config = require('config');
-global.jQuery = global.$ = require('jquery');
+global.$ = global.jQuery = require('jquery');
 global._ = require('underscore');
 global.Backbone = require('backbone');
 global.Backbone.Validation = require('backbone-validation');
-global.Tether = require('tether');
-global.Bootstrap = require('bootstrap/dist/js/bootstrap.min.js');
+window.Tether = require('tether');
+global.Bootstrap = require('bootstrap/dist/js/bootstrap.js');
 global.userModel = require('./js/models/user.js');
 global.Urls = require('./jsreverse.js');
 require('jquery-serializejson/jquery.serializejson.min.js');

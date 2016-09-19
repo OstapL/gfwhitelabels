@@ -1,4 +1,5 @@
-'use strict'
+var routes       = require('./route.js');
+
 var chai     = require('chai');
 var sinon    = require('sinon');
 var should   = chai.should();
@@ -12,16 +13,16 @@ describe('Campaign Component', function() {
         // Check that $.ajax.get was called
         // Check that we have a show right data For both security types
         const stub = $.ajax;
-        import routes from './route'
-        new routes.campaignList();
-        stub.called.eq.true;
+        const r = new routes();
+        r.list();
+        expect(stub.called).eq.true;
+        stub.restore();
     }),
-    if('Campaign Detail', function() {
+    it('Campaign Detail', function() {
         // Check that $.ajax.get was called
         // Check that we have a show right data For both security types
         const stub = $.ajax;
-        import routes from './route'
-        new routes.campaignDetail();
+        new routes.detail();
         stub.called.eq.true;
     })
 })
