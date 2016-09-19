@@ -20,15 +20,3 @@ global.window.localStorage = global.localStorage;
 global.navigator = {userAgent: 'node.js'};
 
 global.app = require('../src/app.js');
-
-
-if(require) {
-  require.ensure = function ensure(param, cb) {
-    cb();
-  };
-}
-if(global.require) {
-  global.require.ensure = function ensure(param, cb) {
-    cb();
-  };
-}

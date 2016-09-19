@@ -12,11 +12,14 @@ describe('Campaign Component', function() {
     it('Campaign List' , function() {
         // Check that $.ajax.get was called
         // Check that we have a show right data For both security types
-        const stub = $.ajax;
+        const ajaxStub = sinon.stub($, "ajax", function() {
+          console.log('stubbed');
+          return 'hello';
+        });
         const r = new routes();
         r.list();
-        expect(stub.called).eq.true;
-        stub.restore();
+        expect(ajaxStub.called).eq.true;
+        ajaxStub.restore();
     }),
     it('Campaign Detail', function() {
         // Check that $.ajax.get was called
