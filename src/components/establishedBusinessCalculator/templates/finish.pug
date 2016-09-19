@@ -5,7 +5,7 @@ include ../../../templates/mixins.pug
     [
         ['Home', '/'],
         ["What's My Business Worth?", '/'],
-        ["shed Business Valuation Calculator", '']
+        ["Established Business Valuation Calculator", '']
     ]
 )
 
@@ -24,11 +24,21 @@ include ../../../templates/mixins.pug
                 li
                     a(href="/calculator/establishedBusiness/finish").current.btn.text-uppercase Finish
 
+
+
+
     .row
         .col-lg-12
             #chart
 
-            .form-group.row.clearfix.m0
-                .col-lg-6.mt30
-                    a(href='/calculator/establishedBusiness/step-3').link-3 Go back
-                    p.text-muted Don&apos;t worry we saved this info
+
+    .row
+        .offset-lg-3.col-lg-6.text-sm-center
+            hr.mt50.mb50
+
+    .row
+        .offset-lg-3.col-lg-6.text-sm-center
+            a(
+                href="/calculator/establishedBusiness/step-3"
+            ).btn.btn-primary.text-uppercase back
+
