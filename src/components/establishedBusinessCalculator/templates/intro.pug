@@ -1,0 +1,37 @@
+
+include ../../../templates/mixins.pug
+
++breadcrumbs('Established Business Valuation Calculator', 'intro',
+    [
+        ['Home', '/'],
+        ["What's My Business Worth?", '/'],
+        ["shed Business Valuation Calculator", '']
+    ]
+)
+
+.container.calculator-container
+    .row
+        .offset-lg-1.col-xs-10
+            ul.list-inline.top-breadcrambs.mb45.established-business
+                li
+                    a(href="/calculator/establishedBusiness/intro").current.btn.text-uppercase Intro
+                li
+                    a(href="/calculator/establishedBusiness/step-1").btn.text-uppercase step 1
+                li
+                    a(href="/calculator/establishedBusiness/step-2").btn.text-uppercase step 2
+                li
+                    a(href="/calculator/establishedBusiness/step-3").btn.text-uppercase step 3
+                li
+                    a(href="/calculator/establishedBusiness/finish").btn.text-uppercase Finish
+
+    .row
+        .offset-lg-3.col-lg-6
+            p Established businesses with historical earnings information can be valued on a quantitative basis. The GrowthFountain valuation calculator uses a set of industry-specific metrics, along with information that you provide, in order to create a more accurate valuation for your company.
+            br
+            p This calculator can be used to determine both the current value of your company and also the percentage of equity that you will need to offer in order to raise a capital amount that you have defined.
+
+    .row
+        .offset-lg-3.col-lg-6.mt50
+                a(
+                    href="/calculator/establishedBusiness/step-1"
+                ).btn.btn-primary.pull-sm-right.text-uppercase Ok, let&apos;s get started
