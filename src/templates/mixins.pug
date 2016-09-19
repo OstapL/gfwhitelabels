@@ -347,9 +347,9 @@ mixin fieldFileDropzone(name, attr, type)
                         p(class='link-1' href="#")
                             p.drop-photo #{attr.text}
                             i(class="fa fa-" + attr.icon)
-                    div.col-lg-7.col-md-7.col-sm-7.col-xs-7.p-r-0.p-l-0.p-dropzone.img-dropzone
+                    div.col-lg-7.col-md-7.col-sm-7.col-xs-7.p-r-0.p-l-0.p-dropzone.img-dropzone.text-lg-center
                         img(src='/img/default' + suffix + '.png' alt=fields[name].label class="img-fluid  img-" + name)
                         if values[name+'_data']
-                          a(href=values[name+'_data'].url) #{ fileName }
+                          a(class=("a-" + name) href=values[name+'_data'].url) #{ fileName }
                         else
-                          a(href="")
+                          a(class=("a-" + name)  href="")

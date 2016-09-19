@@ -10,7 +10,7 @@ module.exports = {
     initialize(options) {
       this.login_fields = options.login_fields;
       this.hello = require('hellojs');
-      this.socialAuth = require('js/views/social-auth.js');
+      this.socialAuth = require('./social-auth.js');
     },
 
     render() {
@@ -125,7 +125,7 @@ module.exports = {
     initialize(options) {
         this.register_fields = options.register_fields;
         this.hello = require('hellojs');
-        this.socialAuth = require('js/views/social-auth.js');
+        this.socialAuth = require('./social-auth.js');
     },
 
     render() {

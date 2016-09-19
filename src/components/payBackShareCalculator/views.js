@@ -4,14 +4,6 @@ import calculatorHelper from '../../helpers/calculatorHelpers';
 import flyPriceFormatter from '../../helpers/flyPriceFormatter';
 import '../../js/graf/graf.js';
 import '../../js/graf/jquery.flot.animator.js';
-/*
-import 'js/jqplot/jquery.jqplot.js';
-import 'jqplot/plugins/jqplot.highlighter.js';
-import 'jqplot/plugins/jqplot.canvasTextRenderer.js';
-import 'jqplot/plugins/jqplot.canvasAxisLabelRenderer.js';
-import 'jqplot/plugins/jqplot.pointLabels.js';
-*/
-
 
 const formatPrice = calculatorHelper.formatPrice;
 
@@ -123,7 +115,7 @@ module.exports = {
 
             // save percent values
             if (elem.dataset.inputMask == "percent") {
-                app.cache.payBackShareCalculator[elem.dataset.modelValue] = elem.dataset.currentValue;
+                app.cache.payBackShareCalculator[elem.dataset.modelValue] = +elem.dataset.currentValue;
             }
         },
 
@@ -157,7 +149,9 @@ module.exports = {
             });
 
             this.inputPercent.inputmask("9{1,4}%", {
-                placeholder: "0"
+                placeholder: "",
+                showMaskOnHover: false,
+                showMaskOnFocus: false
             });
             return this;
         }
@@ -223,20 +217,6 @@ module.exports = {
                 for (let i = 0, size = outputData.length; i < size; i++) {
                     if (outputData[i].multiple) {
                         data.push([i, outputData[i].multiple]);
-
-                        // give the ability to draw one more step
-                        // if (outputData[i].multiple >= maxOfMultipleReturned) {
-                        //     lastStep = true;
-                        // }
-
-                        // if we reach max needed steps, stop the filling
-                        // if (lastStep) {
-                        //     let lastElement = data[0].pop();
-                        //     lastElement[2] = 'Congratulations, Payback Share Contract is complete';
-                        //     data[0].push(lastElement);
-                        //     break;
-                        // }
-
                     }
                 }
                 return data;
@@ -248,6 +228,13 @@ module.exports = {
                 dataRendered: dataRendered(),
                 formatPrice
             }));
+
+            let currentYear = new Date().getFullYear(),
+                ticks = [];
+
+            for (var i = 0; i < 11; i++) {
+                ticks.push([i, 'Year ' + (currentYear + i)]);
+            }
 
             let $chart = $("#chart1"),
                 dataArr = [{
@@ -289,13 +276,17 @@ module.exports = {
                     },
                     colors: ["#d12610", "#37b7f3", "#52e136"],
                     xaxis: {
+                        min: 0,
                         max: 10,
-                        ticks: 11,
+                        ticks,
+                        tickSize: 1,
                         tickDecimals: 0,
-                        tickColor: "#eee"
+                        tickColor: "#eee",
+                        mode: "categories"
                     },
                     yaxis: {
-                        ticks: 11,
+                        ticks: [[0, '0%'], [1, '100%'], [2, '200%'], [3, '300%']],
+                        tickSize: 1,
                         tickDecimals: 0,
                         tickColor: "#eee"
                     }
