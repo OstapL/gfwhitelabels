@@ -1,16 +1,63 @@
-section.home-section.bg-dark-alfa-30(style="background: url(/img/bg.jpg) center center no-repeat; background-size: cover; background-attachment: fixed;")
+section.main_block
     .container
         .row
-            .js-height-full
-                .home-content
-                    .home-text-main.text-lg-center
-                        h1.text-uppercase.dosis Investors and Entrepreneurs:
-                        .col-lg-4.offset-lg-4.text-lg-center.text-sm-center.text-xs-center.m-b-3
-                            span.small-text connecting, funding, and enriching one another, one idea at a time.
-                        .col-lg-12
-                            a(href=Urls['campaign-list']()).btn.btn-lg.btn-primary INVEST
-                            span.hidden-xs  
-                            a(href="/company/create").btn.btn-lg.btn-primary RAISE CAPITAL
+            .col-lg-6.col-md-12
+                .red_opacity
+                    .vert
+                        .vertical_align_container 
+                            h3.form-group A new way to invest or raise capital.
+                            p Through our partnership with 
+                                a(href="https://beta.growthfountain.com" target="_blank") Growth Fountain
+                                |&nbsp;we're pleased to introduce Equity Crowdfunding. With this innovative program:
+                            ul.row 
+                                li - Investors and entrepreneurs can connect to enrich each other.
+                                li - Investors receive equity for their contributions to small businesses.
+                                li - Entrepreneurs can raise capital for their businesses through these contributions.
+                                li - Opportunities are available on local and national levels.
+                                li - Economic growth is spurred by greater exposure and interest.
+
+            .col-lg-6.col-md-12 
+                .logo_container 
+                    .vertical_align_container 
+                        img(src="/img/logo.png" alt="")
+                        .text-lg-center 
+                            p Powered by
+                            img(src="/img/gf_logo_nosub.png" alt="")
+
+section.text_block_white 
+    .container 
+        .row 
+            .col-lg-6.col-md-12.text-uppercase 
+                p 
+                    b To get started
+                    | , CLICK ON “INVEST” TO BROWSE CURRENT OPPORTUNITIES OR “RAISE CAPITAL” TO CREATE A NEW FUND-SOURCING CAMPAIGN.
+
+            .col-lg-6.col-md-12 
+                .text-center 
+                    a(href=Urls['campaign-list']()).btn.btn-info.text-uppercase Invest
+                    .circle_or or
+                    a(href="/company/create").btn.btn-info-dark.text-uppercase Raise capital
+
+section.jeanne_footer 
+    .container 
+        .row.text-lg-center 
+            .col-lg-4.col-md-6.col-sm-12.text-md-right 
+                .container_block 
+                    img(src="/img/footer_com_logo.png" alt="")
+
+
+            .col-lg-6.col-md-6.col-sm-12 
+                .container_block.text-left 
+                    h5 Need help getting your idea started?
+                    p "Build" Business Solutions offer everything from business loans and credit cards to business checking and savings products. Let us help you take your concept or business to the next level.
+
+
+            .col-lg-2.col-md-12 
+                .small_container_block 
+                    h6.form-group.text-uppercase Ready to 
+                        b build
+                        | &nbsp;your business
+                    a(href="/pg/investor_tutorial").btn.light-blue.text-uppercase Start today
 
 section.campaing-list
     .container#campaignList
@@ -36,13 +83,13 @@ section.home-wrap-text-block(style="background: url(/img/section-bg-3.jpg) cente
 section.home-what-is
     .container
         .col-lg-10.offset-lg-1
-            h2.dosis.text-uppercase.text-sm-center.text-xs-center WHAT IS GROWTHFOUNTAIN
+            h2.dosis.text-uppercase.text-sm-center.text-xs-center WHAT IS JEANNE DARC
             .row
                 .col-lg-6
                     .embed-responsive.embed-responsive-16by9.boxshadow
                         iframe(
                             embed-responsive-item="true" 
-                            src="https://player.vimeo.com/video/170651597?title=0&amp;byline=0&amp;portrait=0" 
+                            src="https://player.vimeo.com/video/180959374?title=0&amp;byline=0&amp;portrait=0" 
                             data-webkitallowfullscreen="" 
                             data-mozallowfullscreen="" 
                             data-allowfullscreen=""
@@ -61,22 +108,5 @@ section.home-wrap-text-block.raise-wrap(style="background: url(/img/raise-capita
             .col-lg-12.m-b-3
                 a(href="/company/create").btn.btn-lg.btn-primary.text-uppercase raise capital
                 a(href="/pg/entrepreneurquestions").btn.btn-lg.btn-secondary.text-uppercase learn more
-section.home-our-partners
-    .container
-        .row
-            .col-lg-12
-                h2.dosis.text-uppercase.text-xs-center OUR PARTNERS
-        .row
-            .col-lg-4.text-xs-center
-                a(href="http://www.callahan.com/" target="_blank")
-                    img(src="/img/callahan.png").img-fluid.text-lg-right.text-xs-center.m-x-auto
-            .col-lg-4.text-lg-center.text-xs-center.m-x-auto
-                a(href="https://www.jdcu.org/" target="_blank")
-                    img(src="/img/logo_jd.png").img-fluid.text-xs-center.m-x-auto
-            .col-lg-4.text-lg-left.m-x-auto
-                a(href="https://www.rivermarkcu.org/" target="_blank")
-                    img(src="/img/logo_rivermark.png" ).img-fluid.text-xs-center.m-x-auto
-        .row.mt25
-            .col-lg-4.text-lg-right.text-xs-center
-                a(href="https://www.dcu.org/" target="_blank")
-                    img(src="/img/logo_dcu.jpg").img-fluid.text-xs-center.m-x-auto
+
+.hidden
