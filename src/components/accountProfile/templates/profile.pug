@@ -180,7 +180,7 @@ include ../../../templates/mixins.pug
                             select#state.js-state(name='state').form-control.custom-select
                                 option(checked='checked', value="") State
                                 each state in states
-                                    option= state.name
+                                    option(value=state.abbreviation)= state.name
                         .form-group.row.clearfix.required.m0
                             .row
                                 .col-lg-12
