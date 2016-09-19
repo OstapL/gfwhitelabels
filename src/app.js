@@ -6,7 +6,7 @@ global.Backbone.Validation = require('backbone-validation');
 global.Tether = require('tether');
 global.Bootstrap = require('bootstrap/dist/js/bootstrap.min.js');
 global.userModel = require('./js/models/user.js');
-global.Urls = require('./js/jsreverse.js');
+global.Urls = require('./jsreverse.js');
 require('jquery-serializejson/jquery.serializejson.min.js');
 
 // require('sass/mixins_all.sass');

@@ -69,7 +69,7 @@ mixin fieldBlock(name, data, attr)
                 label(class= attr.text_align ? 'text-lg-' + attr.text_align + ' ' + attr.class1 : ' text-lg-right ' + attr.class1 for=name)= fields[name].label
                 div(class=attr.class2 id=name).date-input
                     - var data = values[name] ? values[name].split('-') : []
-                    .col-lg-4.no-gutter.p-l-0
+                    .col-lg-4.col-md-4.no-gutter.p-l-0.p-r-0
                         input(
                             id=name + '__month'
                             name=name + '__month'
@@ -78,7 +78,7 @@ mixin fieldBlock(name, data, attr)
                             maxlength=2
                             value=data[1]
                           ).form-control
-                    .col-lg-4.no-gutter.p-l-0.p-r-0
+                    .col-lg-4.col-md-4.no-gutter.p-l-0.p-r-0
                         input(
                             id=name + '__day'
                             name=name + '__day'
@@ -87,7 +87,7 @@ mixin fieldBlock(name, data, attr)
                             maxlength=2
                             value=data[2]
                           ).form-control
-                    .col-lg-4.no-gutter.p-r-0.p-l-0
+                    .col-lg-4.col-md-4.no-gutter.p-r-0.p-l-0
                         input(
                             id=name + '__year'
                             name=name + '__year'
@@ -350,6 +350,6 @@ mixin fieldFileDropzone(name, attr, type)
                     div.col-lg-7.col-md-7.col-sm-7.col-xs-7.p-r-0.p-l-0.p-dropzone.img-dropzone.text-lg-center
                         img(src='/img/default' + suffix + '.png' alt=fields[name].label class="img-fluid  img-" + name)
                         if values[name+'_data']
-                          a(href=values[name+'_data'].url) #{ fileName }
+                          a(class=("a-" + name) href=values[name+'_data'].url) #{ fileName }
                         else
-                          a(href="")
+                          a(class=("a-" + name)  href="")
