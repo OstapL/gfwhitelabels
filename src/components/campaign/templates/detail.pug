@@ -3,7 +3,6 @@ include ../../../templates/mixins.pug
 
 - var percentage_raised = formatHelper.calculateRaisedPercentage(values.minimum_raise, values.amount_raised)
 
-link(rel="stylesheet" href="/img/ekko-lightbox.css")
 section#home(style="background-image: url(" + (values.header_image_data ? values.header_image_data.url : '/img/default.png') + ")").home-section.bg-dark-alfa-70.parallax-2.fixed-height-small
   .js-height-parent.container
     .home-content
@@ -12,7 +11,7 @@ section#home(style="background-image: url(" + (values.header_image_data ? values
         .local-scroll
           a.big-icon.link-6.youtube_popup(data-toggle="modal" href="#videoModal" data-target="#videoModal")
             i.fa.fa-play-circle-o
-          a(href=values.company.website target="_blank").link-6.link-campaing-detail #{ values.company.website }
+          a(href=values.company.website target="_blank").link-6.link-campaing-detail #{ formatHelper.getWebsiteUrl(values.company.website) }
           .row.social-link
             if values.company.facebook
               a(href=values.company.facebook target="_blank").link-6.link-campaing-detail
@@ -163,7 +162,7 @@ section
         if values.gallery
             each v,k in values.gallery_data.all_files
                 .col-lg-3.no-padding-img
-                  a(href=app.getThumbnail('1440x900', v.thumbnails) data-size='1440x900' data-toggle="lightbox" data-gallery="multiimages" data-title="People walking down stairs")
+                  a(href=app.getThumbnail('1440x900', v.thumbnails) data-size='1440x900' class="fancybox" rel="gallery1")
                     img(src=app.getThumbnail('270x152', v.thumbnails) alt=values.company.name).img-fluid.img-responsive
         else
 
@@ -238,7 +237,7 @@ section
 
         //- h3.text-lg-center Why We are Raising Capital, and What We’ll Do with It
         h2.dosis.text-uppercase.text-lg-center.green-heading Why We are Raising Capital, and What We’ll Do with It
-        p #{ values.business_values }
+        p #{ values.business_model }
 
       if values.additional_info
         .col-lg-12
@@ -250,6 +249,7 @@ section
   if values.members
       section#members.border-bottom
         .container
+          if values.members && values.members instanceof Array && values.members.length > 0
             h2#team.dosis.text-uppercase.text-lg-center.col-lg-12.green-heading Team
             .row
               .col-lg-12.text-center-flex
@@ -276,11 +276,11 @@ section
                               span.pull-right.color-grey
                                 i.fa.fa-graduation-cap
                                 |  #{v.college}
+          if values.press && Object.keys(values.press).length > 0
             h2.dosis.text-uppercase.text-lg-center.green-heading Articles and Press
             .row
               .col-lg-12.text-center-flex
                 .articles_press
-                if values.press
                   each v,k in values.press
                     .col-lg-4.articles_press
                       a(href=v.link target="_blank")
@@ -399,7 +399,9 @@ section
                     h2.font-weight-bold #{ formatHelper.formatPrice(values.minimum_increment) }
                   .col-lg-4.p-l-3
                     p Minimum # of Shares
-                    h2.font-weight-bold #{ formatHelper.formatNumber(values.min_number_of_shares) }
+                    //- h2.font-weight-bold #{ formatHelper.formatNumber(values.min_number_of_shares) }
+                    h2.font-weight-bold #{ (Math.round(values.minimum_raise.replace(/,/g, '') / values.price_per_share)).toLocaleString('en-US') }
+
                   //- .col-lg-3.p-l-3
                   //-   p Minimum Equity Offered
                   //-   h2.font-weight-bold #{ values.min_number_of_shares }
@@ -415,7 +417,7 @@ section
                     h2.font-weight-bold #{ formatHelper.formatPrice(values.price_per_share) }
                   .col-lg-4.p-l-3
                     p Maximum # of Shares
-                    h2.font-weight-bold #{ formatHelper.formatNumber(values.max_number_of_shares) }
+                    h2.font-weight-bold #{ (Math.round(values.maximum_raise.replace(/,/g, '') / values.price_per_share)).toLocaleString('en-US') }
                   //- .col-lg-3.p-l-3
                   //-   p Maximum Equity Offered
                   //-   h2.font-weight-bold #{ formatHelper.max_number_of_shares }
@@ -626,67 +628,66 @@ section
             aria-labelledby="headingFour"
             ).panel-collapse.collapse  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius inventore iste numquam nemo, fugit nihil fugiat quasi, excepturi repellendus pariatur! Facilis odit cupiditate tenetur, inventore adipisci consequatur eius suscipit voluptas.
         
-  
   section.faq
-    if values.faq && Object.keys(values.faq).length > 0
-    .container
-      h2#faq.col-lg-12.dosis.text-uppercase.text-lg-center.green-heading FAQ
-      .col-lg-8.offset-lg-2
-        .accordion(role="tablist" aria-multiselectable="true")
-          - var counter = 0
-          each v,k in values.faq
-            .panel.panel-default
-              div(id="faq" + k role="tab").panel-heading
-                a(data-toggle="collapse"
-                data-parent="#accordion" 
-                href="#collapsefaq"+ k
-                aria-controls="collapsefaq"+ k
-                class=(counter == 0 ? 'list-group-item-action active' : 'list-group-item-action')
-                style="padding-left:25px"
-                ) #{v.question}
-                    if counter == 0
-                        i.fa.fa-angle-up
-                    else
-                        i.fa.fa-angle-down
-              div(id="collapsefaq" + k role="tabpanel"
-              aria-labelledby="faq" + k
-              class=(counter == 0 ? 'in' : '') + ' panel-collapse collapse'
-              ) #{ v.answer }
-              - counter ++;
-          //
-            .panel.panel-default
-              #faqTwo(role="tab").panel-heading
-                a(data-toggle="collapse"
-                data-parent="#accordion" 
-                href="#collapsefaqTwo"
-                aria-controls="collapsefaqTwo"
-                ).list-group-item-action How did Smartbe start and then evolve? 
-                  i.fa.fa-angle-down
-              #collapsefaqTwo(role="tabpanel"
-              aria-labelledby="faqTwo"
-              ).panel-collapse.collapse  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi, hic, distinctio, enim nam consequuntur iste quos, accusamus blanditiis a id odio perferendis vel perspiciatis provident et! Consequuntur nemo reprehenderit inventore.
-            .panel.panel-default
-              #faqThree(role="tab").panel-heading
-                a(data-toggle="collapse"
-                data-parent="#accordion" 
-                href="#collapsefaqThree"
-                aria-controls="collapsefaqThree"
-                ).list-group-item-action What is your impact?     
-                  i.fa.fa-angle-down
-              #collapsefaqThree(role="tabpanel"
-              aria-labelledby="faqThree"
-              ).panel-collapse.collapse  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius inventore iste numquam nemo, fugit nihil fugiat quasi, excepturi repellendus pariatur! Facilis odit cupiditate tenetur, inventore adipisci consequatur eius suscipit voluptas.
-            .panel.panel-default
-              #faqFour(role="tab").panel-heading
-                a(data-toggle="collapse"
-                data-parent="#accordion" 
-                href="#collapsefaqFour"
-                aria-controls="collapsefaqFour"
-                ).list-group-item-action Do you have any intellectual property?   
-                  i.fa.fa-angle-down
-              #collapsefaqFour(role="tabpanel"
-              aria-labelledby="faqFour"
-              ).panel-collapse.collapse  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius inventore iste numquam nemo, fugit nihil fugiat quasi, excepturi repellendus pariatur! Facilis odit cupiditate tenetur, inventore adipisci consequatur eius suscipit voluptas.
+    if values.faq && Object.keys(values.faq).length > 0 && values.faq[0].question
+      .container
+        h2#faq.col-lg-12.dosis.text-uppercase.text-lg-center.green-heading FAQ
+        .col-lg-8.offset-lg-2
+          .accordion(role="tablist" aria-multiselectable="true")
+            - var counter = 0
+            each v,k in values.faq
+              .panel.panel-default
+                div(id="faq" + k role="tab").panel-heading
+                  a(data-toggle="collapse"
+                  data-parent="#accordion" 
+                  href="#collapsefaq"+ k
+                  aria-controls="collapsefaq"+ k
+                  class=(counter == 0 ? 'list-group-item-action active' : 'list-group-item-action')
+                  style="padding-left:25px"
+                  ) #{v.question}
+                      if counter == 0
+                          i.fa.fa-angle-up
+                      else
+                          i.fa.fa-angle-down
+                div(id="collapsefaq" + k role="tabpanel"
+                aria-labelledby="faq" + k
+                class=(counter == 0 ? 'in' : '') + ' panel-collapse collapse'
+                ) #{ v.answer }
+                - counter ++;
+            //
+              .panel.panel-default
+                #faqTwo(role="tab").panel-heading
+                  a(data-toggle="collapse"
+                  data-parent="#accordion" 
+                  href="#collapsefaqTwo"
+                  aria-controls="collapsefaqTwo"
+                  ).list-group-item-action How did Smartbe start and then evolve? 
+                    i.fa.fa-angle-down
+                #collapsefaqTwo(role="tabpanel"
+                aria-labelledby="faqTwo"
+                ).panel-collapse.collapse  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi, hic, distinctio, enim nam consequuntur iste quos, accusamus blanditiis a id odio perferendis vel perspiciatis provident et! Consequuntur nemo reprehenderit inventore.
+              .panel.panel-default
+                #faqThree(role="tab").panel-heading
+                  a(data-toggle="collapse"
+                  data-parent="#accordion" 
+                  href="#collapsefaqThree"
+                  aria-controls="collapsefaqThree"
+                  ).list-group-item-action What is your impact?     
+                    i.fa.fa-angle-down
+                #collapsefaqThree(role="tabpanel"
+                aria-labelledby="faqThree"
+                ).panel-collapse.collapse  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius inventore iste numquam nemo, fugit nihil fugiat quasi, excepturi repellendus pariatur! Facilis odit cupiditate tenetur, inventore adipisci consequatur eius suscipit voluptas.
+              .panel.panel-default
+                #faqFour(role="tab").panel-heading
+                  a(data-toggle="collapse"
+                  data-parent="#accordion" 
+                  href="#collapsefaqFour"
+                  aria-controls="collapsefaqFour"
+                  ).list-group-item-action Do you have any intellectual property?   
+                    i.fa.fa-angle-down
+                #collapsefaqFour(role="tabpanel"
+                aria-labelledby="faqFour"
+                ).panel-collapse.collapse  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius inventore iste numquam nemo, fugit nihil fugiat quasi, excepturi repellendus pariatur! Facilis odit cupiditate tenetur, inventore adipisci consequatur eius suscipit voluptas.
         
     
   section.ask.border-bottom
@@ -745,14 +746,16 @@ section
         a(href="/api/values/" + values.id + "/invest").btn.btn-primary.text-uppercase Invest
 
 
-#videoModal.modal.fade(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")
+#videoModal.modal.fade.video-modal(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")
     .modal-dialog.modal-lg(role="document")
+        button(type="button", data-dismiss="modal", aria-label="Close").close
+          span(aria-hidden="true") &times;
         .modal-content
             .embed-responsive.embed-responsive-16by9
                 iframe.embed-responsive-item(src="//www.youtube.com/embed/" + app.getVideoId(values.video) + "?rel=0" allowfullscreen="true")
 
 each v,k in values.additional_video
-    div(id="videoModal-" + k tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true").modal.fade
+    div(id="videoModal-" + k tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true").modal.fade.video-modal
         .modal-dialog.modal-lg(role="document")
             .modal-content
                 .embed-responsive.embed-responsive-16by9
