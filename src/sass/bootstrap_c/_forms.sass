@@ -13,7 +13,16 @@ select.form-control
 			color: $black_bg
 	img
 		max-width: 100%// будет перенесен в файл общих стилей - использовать клас бутстрапа .img-fluid
-
+	.radio
+		label.col-lg-3
+			font-weight: bold
+	.radio-input
+		label
+			margin-right: rem(30)
+			font-weight: normal
+		input
+			margin-left: 0
+			margin-right: rem(5)
 	//общие стили для лейблов
 	label
 		@include calc-rem(14)
