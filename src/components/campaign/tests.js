@@ -12,12 +12,15 @@ describe('Campaign Component', function() {
     it('Campaign List' , function() {
         // Check that $.ajax.get was called
         // Check that we have a show right data For both security types
-        const ajaxStub = sinon.stub($, "ajax", function() {
-          console.log('stubbed');
-          return 'hello';
-        });
+        const data = require('./fixtures/list.json');
+        const ajaxStub = sinon.stub(Backbone, "sync").yieldsTo(
+          'success',
+          data,
+          'foo'
+        );
         const r = new routes();
-        r.list();
+        const v = r.list();
+        console.log(v.$el.html());
         expect(ajaxStub.called).eq.true;
         ajaxStub.restore();
     }),

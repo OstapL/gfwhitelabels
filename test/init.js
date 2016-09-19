@@ -1,7 +1,10 @@
 const pug = require('pug');
 
 function compile(module, filename) {
-  var template = pug.compileFile(filename, { pretty: true });
+  var template = pug.compileFile(filename, { 
+    pretty: true,
+    globals: ['require', ],
+  });
   module.exports = template
 }
 
