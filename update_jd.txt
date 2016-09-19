@@ -1,0 +1,25 @@
+			19.09.2016
+
+menuPage.pug,
+team.pug,
+partners.pug,
+overview.pug,
+careers.pug,
+contact.pug
+	line 20 переименовано Team в Growthfountain Team
+	line 21-22 закоментировано - раздела Partners не должно быть на ривермарк и жане дарк
+
+index.html
+	line 83 переименовано Team в Growthfountain Team
+	line 84 закоментировано - раздела Partners не должно быть на ривермарк и жане дарк
+
+	line 40 - изменил название в адресе картинки с logo.png на logo_jd.png
+
+team.pug
+	line 20 переименовано Team в Growthfountain Team
+	line 21-22 закоментировано - раздела Partners не должно быть на ривермарк и жане дарк
+
+mainPage.pug
+	line 22 - изменил название в адресе картинки с logo.png на logo_jd.png
+
+
