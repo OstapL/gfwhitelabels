@@ -16,6 +16,7 @@ describe('Campaign Component', function() {
         const ajaxStub = sinon.stub(Backbone, "sync").yieldsTo(
           'success',
           data,
+          null
         );
         const r = new routes();
         r.list();
