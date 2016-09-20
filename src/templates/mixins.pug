@@ -121,17 +121,21 @@ mixin fieldBlock(name, data, attr)
                                 if k.type == 'text' 
                                     textarea(
                                         id=name + '_' + v
+                                        class=name + '_' + v + " form-control"
                                         name=name + '[' + indexCounter + '][' + v + ']'
                                         placeholder=k.placeholder ? k.placeholder : k.label
-                                      ).form-control #{k[counter]}
+                                        maxLength=k.maxLength ? k.maxLength : ''
+                                      ) #{k[counter]}
                                 else
                                     input(
                                         id=name + '_' + v
+                                        class=name + '_' + v + " form-control"
                                         name=name + '[' + indexCounter + '][' + v + ']'
                                         placeholder=k.placeholder ? k.placeholder : k.label
+                                        maxLength=k.maxLength ? k.maxLength : ''
                                         type=k.type
                                         value=k[counter]
-                                    ).form-control
+                                    )
                         - counter ++
                     - indexCounter ++
                 else
@@ -142,6 +146,7 @@ mixin fieldBlock(name, data, attr)
                         .delete-section-container
                             a(href="#" data-section=name data-index=indexCounter).delete-section
                                 i.fa.fa-times
+                        - console.log(fields[name].schema)
                         each k1,v in fields[name].schema
                             - var k = values[name][kkeys[counter]][v]
                             - var t = fields[name].schema[v]
@@ -151,17 +156,21 @@ mixin fieldBlock(name, data, attr)
                                     if t.type == 'text' 
                                         textarea(
                                             id=name + '_' + v
+                                            class=name + '_' + v + " form-control"
                                             name=name + '[' + indexCounter + '][' + v + ']'
                                             placeholder=t.placeholder ? t.placeholder : t.label
-                                          ).form-control #{k}
+                                            maxLength=t.maxLength ? t.maxLength : ''
+                                          ) #{k}
                                     else
                                         input(
                                             id=name + '_' + v
+                                            class=name + '_' + v + " form-control"
                                             name=name + '[' + indexCounter + '][' + v + ']'
                                             placeholder=t.placeholder ? t.placeholder : t.label
+                                            maxLength=t.maxLength ? t.maxLength : ''
                                             type=t.type
                                             value=k
-                                        ).form-control
+                                        )
                         - counter ++
                         - indexCounter ++
         else if attr.type == 'jsonVideo' 
