@@ -124,6 +124,7 @@ mixin fieldBlock(name, data, attr)
                                         class=name + '_' + v + " form-control"
                                         name=name + '[' + indexCounter + '][' + v + ']'
                                         placeholder=k.placeholder ? k.placeholder : k.label
+                                        maxLength=k.maxLength ? k.maxLength : ''
                                       ) #{k[counter]}
                                 else
                                     input(
@@ -131,6 +132,7 @@ mixin fieldBlock(name, data, attr)
                                         class=name + '_' + v + " form-control"
                                         name=name + '[' + indexCounter + '][' + v + ']'
                                         placeholder=k.placeholder ? k.placeholder : k.label
+                                        maxLength=k.maxLength ? k.maxLength : ''
                                         type=k.type
                                         value=k[counter]
                                     )
@@ -144,6 +146,7 @@ mixin fieldBlock(name, data, attr)
                         .delete-section-container
                             a(href="#" data-section=name data-index=indexCounter).delete-section
                                 i.fa.fa-times
+                        - console.log(fields[name].schema)
                         each k1,v in fields[name].schema
                             - var k = values[name][kkeys[counter]][v]
                             - var t = fields[name].schema[v]
@@ -156,6 +159,7 @@ mixin fieldBlock(name, data, attr)
                                             class=name + '_' + v + " form-control"
                                             name=name + '[' + indexCounter + '][' + v + ']'
                                             placeholder=t.placeholder ? t.placeholder : t.label
+                                            maxLength=t.maxLength ? t.maxLength : ''
                                           ) #{k}
                                     else
                                         input(
@@ -163,6 +167,7 @@ mixin fieldBlock(name, data, attr)
                                             class=name + '_' + v + " form-control"
                                             name=name + '[' + indexCounter + '][' + v + ']'
                                             placeholder=t.placeholder ? t.placeholder : t.label
+                                            maxLength=t.maxLength ? t.maxLength : ''
                                             type=t.type
                                             value=k
                                         )

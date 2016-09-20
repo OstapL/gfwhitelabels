@@ -296,7 +296,7 @@ module.exports = {
             type: 'string',
             label: 'Headline',
             placeholder: 'Title',
-            maxLength: 30,
+            maxLength: 90,
           },
           link: {
             type: 'url',
