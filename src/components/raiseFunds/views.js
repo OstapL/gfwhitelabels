@@ -753,7 +753,7 @@ module.exports = {
                     const suffix = extension == 'pdf' ? '_pdf' : (['ppt', 'pptx'].indexOf(extension) != -1 ? '_pptx' : '_file');
                     $('.img-investor_presentation').attr('src', '/img/default' + suffix + '.png');
                     // $('.img-investor_presentation').after('<a class="link-3" href="' + data.url + '">' + data.name + '</a>');
-                    $('.a-investor_presentation').attr('href', data.url).text(data.name);
+                    // $('.a-investor_presentation').attr('href', data.url).text(data.name);
                   });
               }
         );
