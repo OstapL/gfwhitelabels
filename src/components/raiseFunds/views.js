@@ -431,7 +431,8 @@ module.exports = {
       },
 
       updateVideo(e) {
-        var $form = $(e.target).parents('.videoInteractive').parent();
+        appendHttpIfNecessary(e, true);
+        var $form = $(e.target).parents('.row');
         var video = e.target.value;
         var id = this.getVideoId(video);
 
@@ -439,14 +440,14 @@ module.exports = {
         // FixME
         // Bad CHECK
         //
-        if (id != '') {
+        if(id != '') {
           $form.find('iframe').attr(
               'src', '//youtube.com/embed/' +  id + '?rel=0'
-          );
+              );
           //e.target.value = id;
         }
-      },
-    }),
+      }
+  }),
 
   teamMemberAdd: Backbone.View.extend({
       events: {
