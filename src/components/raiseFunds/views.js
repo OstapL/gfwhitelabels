@@ -6,7 +6,7 @@ const appendHttpIfNecessary = formatHelper.appendHttpIfNecessary;
 const dropzone = require('dropzone');
 const dropzoneHelpers = require('helpers/dropzone.js');
 
-const validation = require('components/validation/js/validation.js');
+const validation = require('components/validation/validation.js');
 
 const jsonActions = {
   events: {
@@ -238,10 +238,10 @@ module.exports = {
       events: _.extend({
         'submit form': api.submitAction,
         // 'click .delete-image': 'deleteImage',
-        'change .videoInteractive input[type="url"]': 'updateVideo',
+        'change #video,.additional_video_link': 'updateVideo',
         dragover: 'globalDragover',
         dragleave: 'globalDragleave',
-        'change #video,.additional_video_link': 'appendHttpsIfNecessary',
+        // 'change #video,.additional_video_link': 'appendHttpsIfNecessary',
         'change .press_link': 'appendHttpIfNecessary',
       }, jsonActions.events),
       urlRoot: serverUrl + Urls['campaign-list']() + '/media',
@@ -596,17 +596,15 @@ module.exports = {
       },
 
       submit(e) {
+        e.preventDefault();
         let json = $(e.target).serializeJSON();
         let data = {
           member: json,
           index: this.index,
         };
         api.submitAction.call(this, e, data);
-        // if (validation.validate(null, null))
-        //   // submit
-        // else {
-        //   // not valid
-        // }
+        // if (validation.validate(this.fields, json, this))
+        //   api.submitAction.call(this, e, data);
       },
     }),
 
