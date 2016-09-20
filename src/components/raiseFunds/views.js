@@ -603,9 +603,9 @@ module.exports = {
           member: json,
           index: this.index,
         };
-        api.submitAction.call(this, e, data);
-        // if (validation.validate(this.fields, json, this))
-        //   api.submitAction.call(this, e, data);
+        // api.submitAction.call(this, e, data);
+        if (validation.validate(this.fields, json, this))
+          api.submitAction.call(this, e, data);
       },
     }),
 
