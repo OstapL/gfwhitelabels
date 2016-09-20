@@ -5,6 +5,9 @@ const appendHttpIfNecessary = formatHelper.appendHttpIfNecessary;
 
 const dropzone = require('dropzone');
 const dropzoneHelpers = require('helpers/dropzone.js');
+
+const validation = require('components/validation/js/validation.js');
+
 const jsonActions = {
   events: {
     'click .add-section': 'addSection',
@@ -599,6 +602,11 @@ module.exports = {
           index: this.index,
         };
         api.submitAction.call(this, e, data);
+        // if (validation.validate(null, null))
+        //   // submit
+        // else {
+        //   // not valid
+        // }
       },
     }),
 
