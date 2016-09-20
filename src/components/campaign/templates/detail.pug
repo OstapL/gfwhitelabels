@@ -374,7 +374,7 @@ section
               h3.d-inline-block Financials
           .col-lg-4.row
             p Company documents
-            a(href="" target="_blank")
+            a(href=(values.investor_presentation ? values.investor_presentation_data.url : '') target="_blank")
               i.fa.fa-file-powerpoint-o.d-inline-block
               h3.d-inline-block Investor Presentation
   section.overview
