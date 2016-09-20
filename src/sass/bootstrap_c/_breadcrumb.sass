@@ -1,14 +1,6 @@
 .breadcrumb
-	-webkit-transform: translateY(-50%)
-	transform: translateY(-50%)
-
-	position: absolute
-	top: 50%
-	right: rem(16)
-
 	background: none
-	text-align: right
-
+	
 	> li
 		display: inline
 		text-transform: uppercase
@@ -18,3 +10,15 @@
 		float: none
 		a
 			color: $black
+
+	@media screen and (min-width: 992px)
+		-webkit-transform: translateY(-50%)
+		transform: translateY(-50%)
+
+		position: absolute
+		top: 50%
+		right: rem(16)
+		text-align: right
+
+	@media screen and (max-width: 991px)
+		padding-left: 0

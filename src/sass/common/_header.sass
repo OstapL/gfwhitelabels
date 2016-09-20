@@ -124,10 +124,7 @@ header.no-overflow
       &.not-log-in-user
         height: rem(66)
 
-@media screen and (max-width: 991px)
-  // on mobile devaices main menu absolute positioned so we need set top padding for main content
-  .page
-    padding-top: rem(65)
+
 
 header
   .navbar-toggleable-md::after
@@ -697,7 +694,14 @@ header
     .list-container
       position: static
 
+
+
   @media screen and (max-width: 385px)
 
     .notification-container
       min-width: 100%
+
+@media screen and (max-width: 991px)
+  // on mobile devaices main menu absolute positioned so we need set top padding for main content
+  .page
+    padding-top: 65px
