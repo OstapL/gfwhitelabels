@@ -503,25 +503,25 @@ module.exports = {
           last_name: {
                       type: 'string',
                       label: 'Last Name',
-                      placholder: 'Jordon',
+                      placeholder: 'Jordon',
                       required: true,
                     },
           title: {
                   type: 'string',
                   label: 'Title',
-                  placholder: 'CEO',
+                  placeholder: 'CEO',
                   required: true,
                 },
           email: {
                   type: 'email',
                   label: 'Email',
-                  placholder: 'imboss@comanpy.com',
+                  placeholder: 'imboss@comanpy.com',
                   required: true,
                 },
           bio: {
                 type: 'text',
                 label: 'Bio',
-                placholder: 'At least 150 characters and no more that 250 charactes',
+                placeholder: 'At least 150 characters and no more that 250 charactes',
                 required: true,
               },
           growup: {
@@ -559,6 +559,7 @@ module.exports = {
         if (this.index != 'new') {
           this.values = this.model.toJSON().members[this.index];
         } else {
+          
           this.values = {
             id: this.model.get('id'),
           };
@@ -602,9 +603,9 @@ module.exports = {
           member: json,
           index: this.index,
         };
-        api.submitAction.call(this, e, data);
-        // if (validation.validate(this.fields, json, this))
-        //   api.submitAction.call(this, e, data);
+        // api.submitAction.call(this, e, data);
+        if (validation.validate(this.fields, json, this))
+          api.submitAction.call(this, e, data);
       },
     }),
 
