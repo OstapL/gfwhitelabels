@@ -177,7 +177,6 @@ module.exports = {
   // Validates that the value has to match the pattern specified.
   // Can be a regular expression or the name of one of the built in patterns
   regex: function(name, attr, data, pattern) {
-    debugger
     let value = data[name];
     if (!value.toString().match(this.patterns[pattern] || pattern)) {
       throw this.format(this.messages[pattern], attr.label, pattern)
