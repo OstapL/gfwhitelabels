@@ -1,38 +1,46 @@
-// require('./rules.js')
-let validator = {
-  required (data, field, value, view) {
-    // if (attr.required == true && value.hasValue() == false)
-    // if (value.required == true) 
-    if (!value) return true;
-
-    let result = !!data[field];
-
-    if (!result) {
-      Backbone.Validation.callbacks.invalid(
-        view, field, 'required'
-      );
-    }
-
-    return result;
-  },
-};
-
-let fixedFeatures = ['type', 'label', 'placeholder'];
+const rules = require('./rules.js');
+const fixedProps = ['type', 'label', 'placeholder'];
+const fixedRegex = ['number', 'url', 'email', 'money', ];
 
 module.exports = {
-  validate(rules, data, view) {
-    let finalResult = true
-    let key = 'first_name';
-    // lop through the rules
-    for (let k in rules) {
-      let field = rules[k];
-      for (let k2 in field) {
-        if (fixedFeatures.indexOf(k2) == -1 && typeof validator[k2] == 'function' ) {
-          if (!validator[k2](data, k ,field[k2], view)) finalResult = false;
-        }
-      }
-    }
+  runRule(rule, value, name, attr) {
+    try {
+      rules[rule](name, value, attr, this.data, this.schema);
+      Backbone.Validation.callbacks.valid(this.view, name);
+    } catch(e) {
+      this.finalResult = false;
+      Backbone.Validation.callbacks.invalid(this.view, name, e);
+    } 
+  },
 
-    return finalResult;
+  runRules(attr, name) {
+    _(attr).each((value, prop) => {
+      if(fixedProps.indexOf(prop) == -1) {
+        this.runRule(prop, value, name, attr);
+      }
+    });
+  },
+
+  validate(schema, data, view) {
+    this.schema = schema;
+    this.data = data;
+    this.view = view;
+    this.finalResult = true
+
+    _(schema).each((attr, name) => {
+      if(fixedRegex.indexOf(attr.type) != -1) {
+        try {
+          data[name] = rules.regex(name, attr, data);
+          this.runRules(attr, name);
+        } catch(e) {
+          finalResult = false;
+          Backbone.Validation.callbacks.invalid(view, name, e);
+        } 
+      } else {
+        this.runRules(attr, name);
+      }
+    });
+
+    return this.finalResult;
   }
 };

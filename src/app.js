@@ -21,7 +21,7 @@ require('jquery-serializejson/jquery.serializejson.min.js');
 _.extend(Backbone.Validation.callbacks, {
   valid: function (view, attr, selector) {
     var $el = view.$('[name=' + attr + ']');
-    $group = $el.parent();
+    var $group = $el.parent();
 
     // if element not found - do nothing
     // we had clean alert-warning before submit
