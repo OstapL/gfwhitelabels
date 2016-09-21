@@ -17,7 +17,7 @@ $gray-dark:                 #0a0a0a
 $body-color: $black_text
 
 $form-group-margin-bottom: 25px
-
+$em-base: 16  //переменная для базы перевода рх в ремы
 $btn-padding-x-lg: rem(46)
 $btn-padding-y-lg: rem(13)
 $btn-padding-x-sm: rem(34)
@@ -153,3 +153,41 @@ $select-btn-border-width: 2px
 // contextual colors
 $text-muted: $small-text
 $brand-info: $wild_willow
+
+// Фукнции
+=mt($time)
+  transition: all $time ease
+  -webkit-transition: all $time ease-in-out
+  -moz-transition: all $time ease-in-out
+  -ms-transition: all $time ease-in-out
+  -o-transition: all $time ease-in-out
+  transition: all $time ease-in-out
+
+=ellipsis() 
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+
+
+=calc-rem($px)                                                                    
+  font-size: $px / 16 + rem                                                     
+
+
+
+
+=calc-rem-padding($px)
+  padding-top: $px / 16 + rem
+  padding-bottom: $px / 16 + rem
+
+=placeholder                                                                      
+  &::-webkit-input-placeholder                                                    
+    @content                                                                      
+  &:-moz-placeholder                                                              
+    @content                                                                      
+  &::-moz-placeholder                                                             
+    @content                                                                      
+  &:-ms-input-placeholder                                                         
+    @content
+// переменные для шрифтов 
+$dosis: 'Dosis', sans-serif
+$open-sans: 'Open Sans', sans-serif
