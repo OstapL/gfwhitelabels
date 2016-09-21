@@ -1,8 +1,8 @@
 include mixins.pug
 - 'use strict'
-script
-   values = { last_name: { label: 'Last name'} }
-
+- var fields = { first_name: { label: 'First Name'} };
+- var fields = { last_name: { label: 'Last Name'} };
+- var fields = { email: { label: 'Email Address'} };
 
 
 
@@ -40,9 +40,42 @@ section.formc-team-members-director.container.m-b-85
   .col-lg-8
     h2.text-uppercase.text-lg-center.text-xs-center.m-t-0.dosis Team members (director)
     form(metod="post" action="").form-section
+      +fieldBlock("first_name", '', {
+        class1: 'col-lg-3 col-md-12 text-md-left',
+        class2: 'col-lg-9 col-md-12',
+        type: 'text',
+        placeholder: 'First Name',
+        })
       +fieldBlock("last_name", '', {
         class1: 'col-lg-3 col-md-12 text-md-left',
         class2: 'col-lg-9 col-md-12',
         type: 'text',
-        placeholder: 'Company Name',
+        placeholder: 'Last Name',
         })
+      +fieldBlock("email", '', {
+        class1: 'col-lg-3 col-md-12 text-md-left',
+        class2: 'col-lg-9 col-md-12',
+        type: 'text',
+        placeholder: 'Email Address',
+        })
+      .row
+        .col-lg-6.col-md-12
+          .col-lg-6.text-lg-right.text-md-left.p-t-0
+            label.p-t-0 Board Service Start Date
+
+          .col-lg-6.p-r-0
+            .row
+              .col-lg-6.p-r-0
+                input(type="number"  placeholder="MM").form-control
+              .col-lg-6.p-r-0
+                input(type="number"  placeholder="YYYY").form-control
+        .col-lg-6.p-l-0.col-md-12
+          .col-lg-6.text-lg-right.text-md-left.p-t-0
+            label.p-t-0 Board Service Start Date
+
+          .col-lg-6
+            .row
+              .col-lg-6.p-r-0
+                input(type="number"  placeholder="MM").form-control
+              .col-lg-6.p-r-0
+                input(type="number"  placeholder="YYYY").form-control
