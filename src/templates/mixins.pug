@@ -193,6 +193,7 @@ mixin fieldBlock(name, data, attr)
                                             placeholder=t.placeholder ? t.placeholder : t.label
                                             type=t.type
                                             class=name + '_' + v + ' form-control'
+                                            data-index=indexCounter
                                         )
                         .col-lg-5.p-l-1.p-r-3.col-md-12.col-xs-12.p-sm-0 
                             .embed-responsive.embed-responsive-16by9 
@@ -220,6 +221,7 @@ mixin fieldBlock(name, data, attr)
                                                 type=t.type
                                                 value=k
                                                 class=name + '_' + v + ' form-control'
+                                                data-index=indexCounter
                                             )
                             .col-lg-5.p-l-1.p-r-3.col-md-12.col-xs-12.p-sm-0  
                                 .embed-responsive.embed-responsive-16by9 
