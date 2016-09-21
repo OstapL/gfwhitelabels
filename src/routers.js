@@ -133,16 +133,5 @@ $(document).ready(function(){
     }
   });
 
-  $('.team-member-list article').click(function(){
-    var targetTextId = $(this).data('id-text');
 
-    if ($(targetTextId).hasClass('open')) {
-      $(targetTextId).removeClass('open').slideUp();
-    } else {
-      $(this).closest('.team-member-list').
-        find('.biography-text.open').removeClass('open').hide();
-      $(targetTextId).addClass('open').slideDown();
-    }
-
-  });
 });
