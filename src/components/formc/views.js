@@ -43,6 +43,7 @@ module.exports = {
     introduction: Backbone.View.extend({
         events: _.extend({
             'submit form': 'submit',
+            'click input[name=failed_to_comply]': 'onComplyChange',
         }, jsonActions.events),
 
         preinitialize() {
@@ -81,6 +82,17 @@ module.exports = {
             );
             return this;
         },
+
+        onComplyChange(e) {
+            let comply = this.$('input[name=failed_to_comply]:checked').val();
+            console.log(comply);
+            if (comply == 'no') {
+                this.$('.explain textarea').text('');
+                this.$('.explain').hide();
+            } else {
+                this.$('.explain').show();
+            }
+        }
 
     }),
 
