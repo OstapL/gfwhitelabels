@@ -13,7 +13,6 @@ module.exports = Backbone.Router.extend({
 
         api.makeCacheRequest(Urls['rest_user_details'](), 'OPTIONS')
           .then((response) => {
-            console.log('r', response);;
             var i = new View.profile({
               el: '#content',
                 model: app.user,

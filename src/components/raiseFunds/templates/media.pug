@@ -2,10 +2,11 @@
 include ../../../templates/mixins.pug
 include menu.pug
 
-+breadcrumbs('Create campaign', '', 
++breadcrumbs('Create Company', '', 
     [
         ['Home', '/'],
-        ['current', 'page.get_absolute_ur'],
+        ['Create campaign', ''],
+        ['Media', ''],
     ]
 )
 
@@ -43,7 +44,7 @@ section.create-company-media.container.media-container
             viewType: 2
         })
 
-      .row.m-b-2.recommended.p-sm-0
+      .row.m-b-2.recommended.p-sm-0.main-video-block
         .col-lg-12
           .col-lg-7
             +fieldBlock("video", '', {

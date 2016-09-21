@@ -5,6 +5,9 @@ const appendHttpIfNecessary = formatHelper.appendHttpIfNecessary;
 
 const dropzone = require('dropzone');
 const dropzoneHelpers = require('helpers/dropzone.js');
+
+const validation = require('components/validation/validation.js');
+
 const jsonActions = {
   events: {
     'click .add-section': 'addSection',
@@ -53,7 +56,7 @@ module.exports = {
       'keyup #zip_code': 'changeZipCode',
       'click .update-location': 'updateLocation',
       'change input[name=phone]': 'formatPhone',
-      'change #website': appendHttpIfNecessary,
+      'change #website,#twitter,#facebook,#instagram,#linkedin': appendHttpIfNecessary,
     },
 
     initialize(options) {
@@ -235,12 +238,19 @@ module.exports = {
       events: _.extend({
         'submit form': api.submitAction,
         // 'click .delete-image': 'deleteImage',
-        'change #video,#additional_video_link': 'updateVideo',
-        'dragover': 'globalDragover',
-        'dragleave': 'globalDragleave',
-        'change #press_link': appendHttpIfNecessary,
+        'change #video,.additional_video_link': 'updateVideo',
+        dragover: 'globalDragover',
+        dragleave: 'globalDragleave',
+        // 'change #video,.additional_video_link': 'appendHttpsIfNecessary',
+        'change .press_link': 'appendHttpIfNecessary',
       }, jsonActions.events),
       urlRoot: serverUrl + Urls['campaign-list']() + '/media',
+
+      appendHttpsIfNecessary(e) {
+        appendHttpIfNecessary(e, true);
+      },
+
+      appendHttpIfNecessary: appendHttpIfNecessary,
 
       globalDragover() {
         // this.$('.dropzone').css({ border: 'dashed 1px lightgray' });
@@ -286,7 +296,7 @@ module.exports = {
             type: 'string',
             label: 'Headline',
             placeholder: 'Title',
-            maxLength: 30,
+            maxLength: 90,
           },
           link: {
             type: 'url',
@@ -425,7 +435,11 @@ module.exports = {
 
       updateVideo(e) {
         appendHttpIfNecessary(e, true);
-        var $form = $(e.target).parents('.row');
+        // var $form = $(e.target).parents('.row');
+        let $videoContainer;
+        if (e.target.id == 'video') $videoContainer = this.$('.main-video-block');
+        else $videoContainer = this.$('.additional-video-block .index_' + $(e.target).data('index'));
+        // var $form = $('.index_' + $(e.target).data('index'));
         var video = e.target.value;
         var id = this.getVideoId(video);
 
@@ -434,7 +448,8 @@ module.exports = {
         // Bad CHECK
         //
         if(id != '') {
-          $form.find('iframe').attr(
+          // $form.find('iframe').attr(
+          $videoContainer.find('iframe').attr(
               'src', '//youtube.com/embed/' +  id + '?rel=0'
               );
           //e.target.value = id;
@@ -493,25 +508,25 @@ module.exports = {
           last_name: {
                       type: 'string',
                       label: 'Last Name',
-                      placholder: 'Jordon',
+                      placeholder: 'Jordon',
                       required: true,
                     },
           title: {
                   type: 'string',
                   label: 'Title',
-                  placholder: 'CEO',
+                  placeholder: 'CEO',
                   required: true,
                 },
           email: {
                   type: 'email',
                   label: 'Email',
-                  placholder: 'imboss@comanpy.com',
+                  placeholder: 'imboss@comanpy.com',
                   required: true,
                 },
           bio: {
                 type: 'text',
                 label: 'Bio',
-                placholder: 'At least 150 characters and no more that 250 charactes',
+                placeholder: 'At least 150 characters and no more that 250 charactes',
                 required: true,
               },
           growup: {
@@ -549,6 +564,7 @@ module.exports = {
         if (this.index != 'new') {
           this.values = this.model.toJSON().members[this.index];
         } else {
+          
           this.values = {
             id: this.model.get('id'),
           };
@@ -586,12 +602,18 @@ module.exports = {
       },
 
       submit(e) {
+        e.preventDefault();
         let json = $(e.target).serializeJSON();
         let data = {
           member: json,
           index: this.index,
         };
-        api.submitAction.call(this, e, data);
+
+        if (validation.validate(this.fields, json, this)) {
+          api.submitAction.call(this, e, data);
+        } else {
+          $('.help-block').scrollTo(45);
+        }
       },
     }),
 
@@ -746,7 +768,7 @@ module.exports = {
                     const suffix = extension == 'pdf' ? '_pdf' : (['ppt', 'pptx'].indexOf(extension) != -1 ? '_pptx' : '_file');
                     $('.img-investor_presentation').attr('src', '/img/default' + suffix + '.png');
                     // $('.img-investor_presentation').after('<a class="link-3" href="' + data.url + '">' + data.name + '</a>');
-                    $('.a-investor_presentation').attr('href', data.url).text(data.name);
+                    // $('.a-investor_presentation').attr('href', data.url).text(data.name);
                   });
               }
         );
