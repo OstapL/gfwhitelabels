@@ -36,20 +36,24 @@ module.exports = {
       },
       dragover: function(e) {
         // $('.dropzone').css({ border: 'dashed 1px lightgray' });
-        $('.border-dropzone').addClass('active-border');        
+        $('.border-dropzone').addClass('active-border'); 
+        $(this.element).find('.border-dropzone').addClass('dragging-over');           
       },
       dragleave: function(e) {
         // $('.dropzone').css({ border: 'none' });
-        $('.border-dropzone').removeClass('active-border');        
+        $('.border-dropzone').removeClass('active-border'); 
+        $(this.element).find('.border-dropzone').removeClass('dragging-over');           
       },
       dragend: function(e) {
         // $('.dropzone').css({ border: 'none' });
         $('.border-dropzone').removeClass('active-border');
+        $(this.element).find('.border-dropzone').removeClass('dragging-over');           
       },
       drop: function(e) {
         $(this.element).find('.uploading').show();
         // $('.dropzone').css({ border: 'none' });
         $('.border-dropzone').removeClass('active-border');        
+        $(this.element).find('.border-dropzone').removeClass('dragging-over');           
       },
       acceptedFiles: 'image/*',
     });
@@ -119,20 +123,24 @@ module.exports = {
       },
       dragover: function(e) {
         // $('.dropzone').css({ border: 'dashed 1px lightgray' });
-        $('.border-dropzone').addClass('active-border');        
+        $('.border-dropzone').addClass('active-border');    
+        $(this.element).find('.border-dropzone').addClass('dragging-over');    
       },
       dragleave: function(e) {
         // $('.dropzone').css({ border: 'none' });
         $('.border-dropzone').removeClass('active-border');        
+        $(this.element).find('.border-dropzone').removeClass('dragging-over');    
       },
       dragend: function(e) {
         // $('.dropzone').css({ border: 'none' });
         $('.border-dropzone').removeClass('active-border');        
+        $(this.element).find('.border-dropzone').removeClass('dragging-over');    
       },
       drop: function(e) {
         $(this.element).find('.uploading').show();
         // $('.dropzone').css({ border: 'none' });
         $('.border-dropzone').removeClass('active-border');        
+        $(this.element).find('.border-dropzone').removeClass('dragging-over');    
       },
       acceptedFiles: 'application/pdf,.pptx,.ppt',
     });
