@@ -57,8 +57,11 @@ section.team-members.container.m-b-85
           //-   option(checked="checked" value="0") ST
           //-   option(value="1") STL
           select(name='state').custom-select
-            option(checked='checked', value="") State
+            option(value="") State
             each state in states
+              if member.state == state.abbreviation
+                option(value=state.abbreviation selected)= state.name
+              else
                 option(value=state.abbreviation)= state.name
       .label-p-t-0
         +fieldBlock("college", '', {
