@@ -58,21 +58,25 @@ module.exports = {
         getSuccessUrl() {
             return  '/formc/team-members/' + this.model.get('id');
         },
-        submit: app.defaultSaveActions.submit,
+        // submit: app.defaultSaveActions.submit,
+        submit: api.submitAction,
 
         initialize(options) {
             this.fields = options.fields;
+            // this.model = options.model;
         },
 
         render() {
-            let template = require('templates/formc/introduction.pug');
+            // let template = require('templates/formc/introduction.pug');
+            let template = require('components/formc/templates/introduction.pug');
 
             this.$el.html(
                 template({
                     serverUrl: serverUrl,
                     Urls: Urls,
                     fields: this.fields,
-                    values: this.model.toJSON(),
+                    values: this.model,
+                    // values: this.model.toJSON(),
                 })
             );
             return this;
@@ -98,7 +102,8 @@ module.exports = {
         getSuccessUrl() {
             return  '/formc/related-parties/' + this.model.get('id');
         },
-        submit: app.defaultSaveActions.submit,
+        // submit: app.defaultSaveActions.submit,
+        submit: api.submitAction,
 
         initialize(options) {
             this.fields = options.fields;
@@ -138,7 +143,8 @@ module.exports = {
         getSuccessUrl() {
             return  '/formc/offering/' + this.model.get('id');
         },
-        submit: app.defaultSaveActions.submit,
+        // submit: app.defaultSaveActions.submit,
+        submit: api.submitAction,
 
         initialize(options) {
             this.fields = options.fields;
@@ -178,7 +184,8 @@ module.exports = {
         getSuccessUrl() {
             return  '/formc/team-members/' + this.model.get('id');
         },
-        submit: app.defaultSaveActions.submit,
+        // submit: app.defaultSaveActions.submit,
+        submit: api.submitAction,
 
         initialize(options) {
             this.fields = options.fields;
