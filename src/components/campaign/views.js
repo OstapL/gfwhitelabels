@@ -11,7 +11,7 @@ module.exports = {
     render() {
       //require('sass/pages/_campaing.sass');
 
-      //require('bootstrap-select/sass/bootstrap-select.scss');
+      require('bootstrap-select/sass/bootstrap-select.scss');
 
       let selectPicker = require('bootstrap-select');
       this.$el.html('');

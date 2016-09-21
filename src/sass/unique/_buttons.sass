@@ -1,0 +1,204 @@
+
+$btn-color: #197471
+$btn-border: #197471
+$btn-bg: transparent
+$btn-hover-bg: #197471
+$btn-hover-color: #fff
+
+$btn-primary-bg: #197471
+$btn-primary-hover-bg: #42bab6
+$btn-primary-border: #197471
+$btn-primary-hover-border: #42bab6
+$btn-primary-color: $white
+$btn-primary-active-border: #0e4240
+$btn-primary-active-bg: #104a48
+$btn-secondary-hover-color: $grey
+$btn-secondary-border: $light_grey
+$btn-secondary-bg: $light_grey
+$btn-secondary-hover-bg: transparent
+$btn-secondary-color: $black
+
+$btn-success-bg: #5cb85c
+$btn-success-border: #5cb85c
+$btn-success-color: $white
+$btn-success-hover-bg: #449d44
+$btn-success-hover-border: #449d44
+
+$btn-danger-bg: #d9534f
+$btn-danger-border: #d9534f
+$btn-danger-color: $white
+$btn-danger-hover-bg: #c9302c
+$btn-danger-hover-border: #c9302c
+
+//btn social
+$btn-facebook-bg: #3b5998
+$btn-facebook-hover-bg: rgba(59, 89, 152, .6)
+
+$btn-linkedin-bg: #257ebb
+$btn-linkedin-hover-bg: rgba(37,126,187, .6)
+
+$btn-google-bg: #d44330
+$btn-google-hover-bg: rgba(212,67,48, .6)
+
+.btn
+	background: $btn-bg
+	color: $btn-color
+	border-color: $btn-border
+	letter-spacing: 2px
+	border: 2px solid $btn-border
+	font-size: rem(13)
+	text-transform: uppercase
+	+mt(.2s)
+	
+	&:hover
+		background: $btn-hover-bg
+		color: $btn-hover-color
+		border-color: $btn-border
+			+mt(.2s)
+	.fa-angle-right
+		padding-left: 5px
+
+.btn-primary
+	background: $btn-primary-bg
+	color: $btn-primary-color
+	border-color: $btn-primary-border
+
+	&:hover
+		background: $btn-primary-hover-bg
+		border-color: $btn-primary-hover-border
+	&:active,
+	&:focus
+		background: $btn-primary-active-bg
+		border-color: $btn-primary-active-border
+		&:focus,
+		&:hover
+			background: $btn-primary-active-bg
+			border-color: $btn-primary-active-border
+
+.btn-secondary
+	background: $btn-secondary-bg
+	color: $btn-secondary-color
+	border-color: $btn-secondary-border
+
+	&:hover
+		background: $btn-secondary-hover-bg
+		color: $btn-secondary-hover-color
+		border-color: $btn-secondary-border
+
+	&.inverse
+		background: $btn-secondary-hover-bg
+		color: $btn-secondary-hover-color
+		border-color: $btn-secondary-border
+
+		&:hover
+			background: $btn-secondary-bg
+			color: $btn-secondary-color
+			border-color: $btn-secondary-border
+
+.btn-success
+	background: $btn-success-bg
+	color: $btn-success-color
+	border-color: $btn-success-border
+
+	&:hover
+		background: $btn-success-hover-bg
+		border-color: $btn-success-hover-border
+
+.btn-danger
+	background: $btn-danger-bg
+	color: $btn-danger-color
+	border-color: $btn-danger-border
+
+	&:hover
+		background: $btn-danger-hover-bg
+		border-color: $btn-danger-hover-border
+
+.btn-facebook
+	background: $btn-facebook-bg
+	border: none
+	color: $white
+	border-radius: 2px
+	&:hover
+		background: $btn-facebook-hover-bg
+
+.btn-linkedin
+	background: $btn-linkedin-bg
+	border: none
+	color: $white
+	border-radius: 2px
+	&:hover
+		background: $btn-linkedin-hover-bg
+
+.btn-google
+	background: $btn-google-bg
+	border: none
+	color: $white
+	border-radius: 2px
+	&:hover
+		background: $btn-google-hover-bg
+
+//Dropdown button
+.btn-dropdown
+	color: $black
+	background: transparent
+	border-radius: rem(2) 0 0 rem(2)
+	border: 1px solid $light_grey
+	letter-spacing: rem(.35)
+	padding: rem(8) rem(15)
+	text-transform: none
+	width: 85%
+	height: rem(35)
+	&:hover
+		background: none
+		border: 1px solid $light_grey
+		color: $small-text
+.dropdown-item
+	font-size: rem(12)
+	padding: rem(3) rem(15)!important
+
+.btn-dropdown-click
+	border-radius: 0 rem(2) rem(2) 0
+	border-left: none
+	border: 1px solid $light_grey
+	background: transparent
+	padding: rem(8)
+	color: $black
+	width: 14%
+	height: rem(35)
+	.dropdown-toggle
+		padding-left: rem(8)
+		padding-right: rem(8)
+		&:after
+			margin-top: 0
+			margin-left: 0
+	&:hover
+		background: none
+		border: 1px solid $light_grey
+		color: $black
+
+//issuer dashboard
+.danger-black
+	border-color: $cod_gray
+	color: $black
+	&:hover
+		background-color: $cod_gray
+		color: $white
+		border-color: $cod_gray
+
+.danger-cancel
+	border-color: $crimson
+	color: $crimson
+	&:hover
+		background-color: $crimson
+		color: $white
+		border-color: $crimson
+
+
+.pointer-events-none
+	pointer-events: none
+	background: $btn-secondary-bg
+	border-color: $btn-secondary-bg
+
+@media only screen and (max-width : 580px)
+	.btn-facebook, .btn-linkedin, .btn-google
+		padding: rem(8) rem(10)

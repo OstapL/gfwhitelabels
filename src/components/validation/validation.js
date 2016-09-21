@@ -7,15 +7,15 @@ module.exports = {
     try {
       rules[rule](name, value, attr, this.data, this.schema);
       Backbone.Validation.callbacks.valid(this.view, name);
-    } catch(e) {
+    } catch (e) {
       this.finalResult = false;
       Backbone.Validation.callbacks.invalid(this.view, name, e);
-    } 
+    }
   },
 
   runRules(attr, name) {
     _(attr).each((value, prop) => {
-      if(fixedProps.indexOf(prop) == -1) {
+      if (fixedProps.indexOf(prop) == -1) {
         this.runRule(prop, value, name, attr);
       }
     });
@@ -25,22 +25,22 @@ module.exports = {
     this.schema = schema;
     this.data = data;
     this.view = view;
-    this.finalResult = true
+    this.finalResult = true;
 
     _(schema).each((attr, name) => {
-      if(fixedRegex.indexOf(attr.type) != -1) {
+      if (fixedRegex.indexOf(attr.type) != -1) {
         try {
-          data[name] = rules.regex(name, attr, data);
+          rules.regex(name, attr, data, attr.type);
           this.runRules(attr, name);
-        } catch(e) {
-          finalResult = false;
+        } catch (e) {
+          this.finalResult = false;
           Backbone.Validation.callbacks.invalid(view, name, e);
-        } 
+        }
       } else {
         this.runRules(attr, name);
       }
     });
 
     return this.finalResult;
-  }
+  },
 };
