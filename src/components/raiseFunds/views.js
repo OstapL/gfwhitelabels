@@ -435,7 +435,11 @@ module.exports = {
 
       updateVideo(e) {
         appendHttpIfNecessary(e, true);
-        var $form = $(e.target).parents('.row');
+        // var $form = $(e.target).parents('.row');
+        let $videoContainer;
+        if (e.target.id == 'video') $videoContainer = this.$('.main-video-block');
+        else $videoContainer = this.$('.additional-video-block .index_' + $(e.target).data('index'));
+        // var $form = $('.index_' + $(e.target).data('index'));
         var video = e.target.value;
         var id = this.getVideoId(video);
 
@@ -444,7 +448,8 @@ module.exports = {
         // Bad CHECK
         //
         if(id != '') {
-          $form.find('iframe').attr(
+          // $form.find('iframe').attr(
+          $videoContainer.find('iframe').attr(
               'src', '//youtube.com/embed/' +  id + '?rel=0'
               );
           //e.target.value = id;
