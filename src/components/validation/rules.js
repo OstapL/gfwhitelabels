@@ -171,10 +171,10 @@ module.exports = {
         }
       },
 
-      // Pattern validator
+      // regex validator
       // Validates that the value has to match the pattern specified.
       // Can be a regular expression or the name of one of the built in patterns
-      pattern: function(value, attr, pattern, model) {
+      regex: function(value, attr, pattern, model) {
         if (!hasValue(value) || !value.toString().match(defaultPatterns[pattern] || pattern)) {
           return this.format(defaultMessages[pattern] || defaultMessages.inlinePattern, this.formatLabel(attr, model), pattern);
         }
