@@ -374,7 +374,7 @@ section
               h3.d-inline-block Financials
           .col-lg-4.row
             p Company documents
-            a(href="" target="_blank")
+            a(href=(values.investor_presentation ? values.investor_presentation_data.url : '') target="_blank")
               i.fa.fa-file-powerpoint-o.d-inline-block
               h3.d-inline-block Investor Presentation
   section.overview
@@ -629,7 +629,7 @@ section
             ).panel-collapse.collapse  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius inventore iste numquam nemo, fugit nihil fugiat quasi, excepturi repellendus pariatur! Facilis odit cupiditate tenetur, inventore adipisci consequatur eius suscipit voluptas.
         
   section.faq
-    if values.faq && Object.keys(values.faq).length > 0 && values.faq[0].question
+    if values.faq && Object.keys(values.faq).length > 0 
       .container
         h2#faq.col-lg-12.dosis.text-uppercase.text-lg-center.green-heading FAQ
         .col-lg-8.offset-lg-2
