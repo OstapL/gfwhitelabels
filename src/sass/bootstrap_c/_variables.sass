@@ -1,44 +1,51 @@
 // use suitable options for configure bootstrap
 
 $font-family-sans-serif:     'Open Sans', sans-serif 
-
-$font-size-base:             .875rem
-$font-size-lg:               .875rem!important
-$font-size-sm:               .75rem!important 
-$font-size-xs:               .65rem 
-
-$font-size-h1:               1.875rem
-$font-size-h2:               1.5rem
-$font-size-h3:               1.125rem
-$font-size-h4:               1rem
-$font-size-h5:               0.875rem
-$font-size-h6:               0.8125rem
-$gray-dark:                 #0a0a0a
+$gray-dark:                 #0a0a0a // что за переменная ? где используется ? 
 $body-color: $black_text
-
-$form-group-margin-bottom: 25px
+$form-group-margin-bottom: 25px // отступы для всех инпутов
 $em-base: 16  //переменная для базы перевода рх в ремы
-$btn-padding-x-lg: rem(46)
-$btn-padding-y-lg: rem(13)
-$btn-padding-x-sm: rem(34)
-$btn-padding-y-sm: rem(5)
-$btn-padding-y:    rem(8)
-$btn-padding-x:    rem(44)
-
 $btn-border-radius: $border-radius
 $btn-border-radius-sm: $border-radius
 $btn-border-radius-lg: $border-radius
-
-
-//forms 
-$input-height: 36px
-$input-height-sm: 36px
-$input-height-lg: 36px
-
-
-$spacer:       1.25rem
+$spacer:       1.25rem // не знаю что это !
 $popover-max-width: 500px
+$input-color: $black // нужен быть не здесь 
+$spacer-y: 11px // что это?
+$input-btn-border-width: $border-width // ?
+// Фукнции
+=mt($time)
+	transition: all $time ease
+	-webkit-transition: all $time ease-in-out
+	-moz-transition: all $time ease-in-out
+	-ms-transition: all $time ease-in-out
+	-o-transition: all $time ease-in-out
+	transition: all $time ease-in-out
 
+=ellipsis() 
+	overflow: hidden;
+	white-space: nowrap;
+	text-overflow: ellipsis;
+
+=calc-rem($px)                                                                    
+	font-size: $px / 16 + rem                                                     
+
+=calc-rem-padding($px)
+	padding-top: $px / 16 + rem
+	padding-bottom: $px / 16 + rem
+
+=placeholder                                                                      
+	&::-webkit-input-placeholder                                                    
+		@content                                                                      
+	&:-moz-placeholder                                                              
+		@content                                                                      
+	&::-moz-placeholder                                                             
+		@content                                                                      
+	&:-ms-input-placeholder                                                         
+		@content
+// переменные для шрифтов 
+$dosis: 'Dosis', sans-serif
+$open-sans: 'Open Sans', sans-serif
 // это точные размеры с ритма, сейчас у нас дефолтная кнопка такая как на ритме смал
 // $btn-padding-x:                  35px !default;
 // $btn-padding-y:                  8px !default;
@@ -83,111 +90,16 @@ $popover-max-width: 500px
 //** Point at which the navbar begins collapsing.
 // @grid-float-breakpoint-max: (@grid-float-breakpoint - 1);
 
-$input-color: $black // нужен быть не здесь 
-$pagination-active-color: $grey
-$pagination-color: $pagination-active-color
-$pagination-padding-y: .16rem
-$pagination-padding-x: .62rem
-$pagination-padding-x-lg: rem(15)
-$pagination-padding-y-lg: rem(6)
-$pagination-active-border: $grey
-$pagination-hover-border: $grey
-$pagination-hover-bg: transparent
-$pagination-hover-color: $grey
-$spacer-y: 11px
-$btn-secondary-color: $black
-
-$input-btn-border-width: $border-width
-
-
-
-$alert-info-bg: none
-$alert-info-border: $black
-$alert-info-text: $black
-
-$alert-success-bg: none
-
-$alert-warning-bg: none
-
-$alert-danger-bg: none
-$alert-danger-border: #ed1c24
-$alert-danger-text: #ed1c24
-
-//ostap
-$jumbotron-bg: #f8f8f8
-$jumbotron-padding: 5px
-
-$list-group-border-radius: 0
-$list-group-border-radius: 0
-$list-group-border-width: 0
-// ToDo
-
-//использую на странице invest 
-// Оставь добавь переменные плиз
-$list-group-active-bg: $puerto_rico
-$list-group-active-color: #f4f4f4
-$list-group-bg: none
-$list-group-hover-bg:  none
-$list-group-link-color:  none
-$list-group-active-text-color: #f4f4f4
-$list-group-link-color: $black_text
-//Breadcrumb
-$breadcrumb-divider-color: $black_text
-$breadcrumb-active-color: #777777
-
-$nav-pills-active-link-color: $grey
 
 
 
 
-$link-color: #111
-
-/* випадающие списки _forms.sass */
-
-$select_height: 36px
-$select-padding-y: 0
-$select-padding-x: 0.75rem
-$select-btn-border-width: 2px
-
-
-// contextual colors
-$text-muted: $small-text
-$brand-info: $wild_willow
-
-// Фукнции
-=mt($time)
-  transition: all $time ease
-  -webkit-transition: all $time ease-in-out
-  -moz-transition: all $time ease-in-out
-  -ms-transition: all $time ease-in-out
-  -o-transition: all $time ease-in-out
-  transition: all $time ease-in-out
-
-=ellipsis() 
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-
-
-=calc-rem($px)                                                                    
-  font-size: $px / 16 + rem                                                     
 
 
 
 
-=calc-rem-padding($px)
-  padding-top: $px / 16 + rem
-  padding-bottom: $px / 16 + rem
 
-=placeholder                                                                      
-  &::-webkit-input-placeholder                                                    
-    @content                                                                      
-  &:-moz-placeholder                                                              
-    @content                                                                      
-  &::-moz-placeholder                                                             
-    @content                                                                      
-  &:-ms-input-placeholder                                                         
-    @content
-// переменные для шрифтов 
-$dosis: 'Dosis', sans-serif
-$open-sans: 'Open Sans', sans-serif
+
+
+
+
