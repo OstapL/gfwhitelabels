@@ -25,7 +25,7 @@ module.exports = {
     this.schema = schema;
     this.data = data;
     this.view = view;
-    let finalResult = true;
+    this.finalResult = true;
 
     _(schema).each((attr, name) => {
       if (fixedRegex.indexOf(attr.type) != -1) {
@@ -33,7 +33,7 @@ module.exports = {
           rules.regex(name, attr, data, attr.type);
           this.runRules(attr, name);
         } catch (e) {
-          finalResult = false;
+          this.finalResult = false;
           Backbone.Validation.callbacks.invalid(view, name, e);
         }
       } else {
@@ -41,6 +41,6 @@ module.exports = {
       }
     });
 
-    return finalResult;
+    return this.finalResult;
   },
 };
