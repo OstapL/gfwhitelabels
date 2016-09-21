@@ -500,65 +500,65 @@ module.exports = {
         let template = require('./templates/teamMemberAdd.pug');
         this.fields = {
           first_name: {
-                        type: 'string',
-                        label: 'First Name',
-                        placeholder: 'John',
-                        required: true,
-                      },
+            type: 'string',
+            label: 'First Name',
+            placeholder: 'John',
+            required: true,
+          },
           last_name: {
-                      type: 'string',
-                      label: 'Last Name',
-                      placeholder: 'Jordon',
-                      required: true,
-                    },
+            type: 'string',
+            label: 'Last Name',
+            placeholder: 'Jordon',
+            required: true,
+          },
           title: {
-                  type: 'string',
-                  label: 'Title',
-                  placeholder: 'CEO',
-                  required: true,
-                },
+            type: 'string',
+            label: 'Title',
+            placeholder: 'CEO',
+            required: true,
+          },
           email: {
-                  type: 'email',
-                  label: 'Email',
-                  placeholder: 'imboss@comanpy.com',
-                  required: true,
-                },
+            type: 'email',
+            label: 'Email',
+            placeholder: 'imboss@comanpy.com',
+            required: true,
+          },
           bio: {
-                type: 'text',
-                label: 'Bio',
-                placeholder: 'At least 150 characters and no more that 250 charactes',
-                required: true,
-              },
+            type: 'text',
+            label: 'Bio',
+            placeholder: 'At least 150 characters and no more that 250 charactes',
+            required: true,
+          },
           growup: {
-                    type: 'string',
-                    label: 'Where did you grow up',
-                    placeholder: 'City',
-                    required: false,
-                  },
+            type: 'string',
+            label: 'Where did you grow up',
+            placeholder: 'City',
+            required: false,
+          },
           state: {
-                  type: 'choice',
-                  required: true,
-                  label: '',
-                },
+            type: 'choice',
+            required: true,
+            label: '',
+          },
           college: {
-                    type: 'string',
-                    label: 'Where did you attend college',
-                    placeholder: 'Collage/University',
-                  },
+            type: 'string',
+            label: 'Where did you attend college',
+            placeholder: 'Collage/University',
+          },
           linkedin: {
-                      type: 'url',
-                      label: 'LinkedIn',
-                      placeholder: 'https://linkedin.com/',
-                    },
+            type: 'url',
+            label: 'LinkedIn',
+            placeholder: 'https://linkedin.com/',
+          },
           facebook: {
-                      type: 'url',
-                      label: 'Facebook',
-                      placeholder: 'https://facebook.com/',
-                    },
+            type: 'url',
+            label: 'Facebook',
+            placeholder: 'https://facebook.com/',
+          },
           photo: {
-                  type: 'dropbox',
-                  label: 'Profile Picture',
-                },
+            type: 'dropbox',
+            label: 'Profile Picture',
+          },
         };
 
         if (this.index != 'new') {
@@ -609,9 +609,13 @@ module.exports = {
           index: this.index,
         };
 
+        $('.help-block').remove();
         if (validation.validate(this.fields, json, this)) {
           api.submitAction.call(this, e, data);
         } else {
+          _(validation.errors).each((el, key) => {
+            Backbone.Validation.callbacks.invalid(this, key, el);
+          });
           $('.help-block').scrollTo(45);
         }
       },
