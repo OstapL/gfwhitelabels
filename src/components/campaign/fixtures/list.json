@@ -1,0 +1,738 @@
+[
+    {
+        "id": 97,
+        "minimum_raise": "250,000",
+        "maximum_raise": "500,000",
+        "security_type": 0,
+        "premoney_valuation": "2,000,000",
+        "minimum_increment": "100",
+        "progress": 0,
+        "list_image_data": null,
+        "get_security_type_display": "Common Equity",
+        "get_absolute_url": "/campaign/97",
+        "company": {
+            "id": 79,
+            "name": "BSX LVL Hydration Band / this is a test for company name",
+            "tagline": "tagline for BSX",
+            "city": "New York",
+            "state": "NY",
+            "website": "http://bsxinsight.com",
+            "founding_date": "2012-02-02",
+            "description": "about us for BSX",
+            "owner": 143,
+            "facebook": "",
+            "twitter": "",
+            "linkedin": "https://www.linkedin.com/in/dustinfreckleton",
+            "instagram": ""
+        },
+        "amount_raised": 0,
+        "price_per_share": "2.00",
+        "min_number_of_shares": 0,
+        "max_number_of_shares": 0,
+        "percentage_revenue": 5,
+        "cap": 2,
+        "expiration_date": "2016-09-18"
+    },
+    {
+        "id": 94,
+        "minimum_raise": "50,000",
+        "maximum_raise": "1,000,000",
+        "security_type": 0,
+        "premoney_valuation": "1,000,000",
+        "minimum_increment": "5,000",
+        "progress": 0,
+        "list_image_data": {
+            "id": 851,
+            "modified_at": "2016-09-17T02:29:03.379199Z",
+            "folder": 37,
+            "url": "https://s3.amazonaws.com/growthfountain-development/filer_public/cf/e9/cfe9d5e9-bf7a-4f9a-8297-24b3d3243312/2016-01-31_0639.png",
+            "name": "2016-01-31_0639.png",
+            "thumbnails": [
+                {
+                    "url": "https://s3.amazonaws.com/growthfountain-development/filer_public_thumbnails/filer_public/cf/e9/cfe9d5e9-bf7a-4f9a-8297-24b3d3243312/2016-01-31_0639.png__255x153_q85_crop_subsampling-2.png",
+                    "size": "255x153"
+                },
+                {
+                    "url": "https://s3.amazonaws.com/growthfountain-development/filer_public_thumbnails/filer_public/cf/e9/cfe9d5e9-bf7a-4f9a-8297-24b3d3243312/2016-01-31_0639.png__350x210_q85_crop_subsampling-2.png",
+                    "size": "350x210"
+                },
+                {
+                    "url": "https://s3.amazonaws.com/growthfountain-development/filer_public_thumbnails/filer_public/cf/e9/cfe9d5e9-bf7a-4f9a-8297-24b3d3243312/2016-01-31_0639.png__1600x548_q85_crop_subsampling-2.png",
+                    "size": "1600x548"
+                }
+            ]
+        },
+        "get_security_type_display": "Common Equity",
+        "get_absolute_url": "/campaign/94",
+        "company": {
+            "id": 76,
+            "name": "Company Name",
+            "tagline": "Our Tagline",
+            "city": "New York",
+            "state": "NY",
+            "website": "http://cnn.com",
+            "founding_date": "2015-12-14",
+            "description": "This is About Us",
+            "owner": 140,
+            "facebook": "",
+            "twitter": "",
+            "linkedin": "",
+            "instagram": ""
+        },
+        "amount_raised": 0,
+        "price_per_share": "24.00",
+        "min_number_of_shares": 0,
+        "max_number_of_shares": 0,
+        "percentage_revenue": 5,
+        "cap": 2,
+        "expiration_date": "2016-09-17"
+    },
+    {
+        "id": 85,
+        "minimum_raise": "200,000",
+        "maximum_raise": "950,000",
+        "security_type": 0,
+        "premoney_valuation": "450,000,000",
+        "minimum_increment": "500",
+        "progress": 0,
+        "list_image_data": {
+            "id": 695,
+            "modified_at": "2016-09-12T20:59:25.114290Z",
+            "folder": 37,
+            "url": "https://s3.amazonaws.com/growthfountain-development/filer_public/05/8f/058fc485-db03-4424-b1b8-0f081921e0a8/netflix_thumbnail.jpg",
+            "name": "netflix_thumbnail.jpg",
+            "thumbnails": [
+                {
+                    "url": "https://s3.amazonaws.com/growthfountain-development/filer_public_thumbnails/filer_public/05/8f/058fc485-db03-4424-b1b8-0f081921e0a8/netflix_thumbnail.jpg__255x153_q85_crop_subsampling-2.jpg",
+                    "size": "255x153"
+                },
+                {
+                    "url": "https://s3.amazonaws.com/growthfountain-development/filer_public_thumbnails/filer_public/05/8f/058fc485-db03-4424-b1b8-0f081921e0a8/netflix_thumbnail.jpg__350x210_q85_crop_subsampling-2.jpg",
+                    "size": "350x210"
+                },
+                {
+                    "url": "https://s3.amazonaws.com/growthfountain-development/filer_public_thumbnails/filer_public/05/8f/058fc485-db03-4424-b1b8-0f081921e0a8/netflix_thumbnail.jpg__1600x548_q85_crop_subsampling-2.jpg",
+                    "size": "1600x548"
+                }
+            ]
+        },
+        "get_security_type_display": "Common Equity",
+        "get_absolute_url": "/campaign/85",
+        "company": {
+            "id": 68,
+            "name": "NetFlix",
+            "tagline": "Watch Anywhere",
+            "city": "Los Gatos",
+            "state": "CA",
+            "website": "http://www.netflix.com/",
+            "founding_date": "2010-12-01",
+            "description": "Netflix Inc. (marketed and stylized as NETFLIX) is an American multinational entertainment company founded on August 29, 1997 in Scotts Valley, California[6] by Reed Hastings and Marc Randolph. It specializes in and provides streaming media and video on demand online and DVD by mail. In 2013, Netflix added film and television production, as well as online distribution. The company is currently headquartered in Los Gatos.\r\n\r\nIn 1998, about a year after Netflix's founding, the company grew by starting in the DVD by mail business.[6] In 2007, Netflix expanded its business with the introduction of streaming media, while retaining the DVD and Blu-ray rental service, with streaming made available to Canada in 2010.[7] As of 2016, Netflix is available in over 190 countries.[8] In 2013, Netflix introduced itself into the film and television industry, with its first series being House of Cards debuting in the same year. It greatly expanded into film in 2015, and now offers its \"Netflix Original\" content through its online library of films and television.[9]\r\n\r\nAs of July 2016, Netflix reported over 83 million subscribers worldwide, including more than 47 million in the United States.[5]",
+            "owner": 118,
+            "facebook": "https://www.facebook.com/netflixus/?brand_redir=475822799216240",
+            "twitter": "https://twitter.com/netflix?ref_src=twsrc%5Egoogle%7Ctwcamp%5Eserp%7Ctwgr%5Eauthor",
+            "linkedin": "https://www.linkedin.com/company/netflix",
+            "instagram": "https://www.instagram.com/netflix/"
+        },
+        "amount_raised": 0,
+        "price_per_share": "5.00",
+        "min_number_of_shares": 0,
+        "max_number_of_shares": 0,
+        "percentage_revenue": 5,
+        "cap": 2,
+        "expiration_date": "2016-09-12"
+    },
+    {
+        "id": 81,
+        "minimum_raise": "100,000",
+        "maximum_raise": "250,000",
+        "security_type": 0,
+        "premoney_valuation": "2,500,000",
+        "minimum_increment": "100",
+        "progress": 0,
+        "list_image_data": {
+            "id": 668,
+            "modified_at": "2016-09-12T00:42:18.713893Z",
+            "folder": 37,
+            "url": "https://s3.amazonaws.com/growthfountain-development/filer_public/1d/73/1d73ab5b-e891-41df-8884-8d3cdceb67c4/occulus_rif.jpg",
+            "name": "occulus_rif.jpg",
+            "thumbnails": [
+                {
+                    "url": "https://s3.amazonaws.com/growthfountain-development/filer_public_thumbnails/filer_public/1d/73/1d73ab5b-e891-41df-8884-8d3cdceb67c4/occulus_rif.jpg__255x153_q85_crop_subsampling-2.jpg",
+                    "size": "255x153"
+                },
+                {
+                    "url": "https://s3.amazonaws.com/growthfountain-development/filer_public_thumbnails/filer_public/1d/73/1d73ab5b-e891-41df-8884-8d3cdceb67c4/occulus_rif.jpg__350x210_q85_crop_subsampling-2.jpg",
+                    "size": "350x210"
+                },
+                {
+                    "url": "https://s3.amazonaws.com/growthfountain-development/filer_public_thumbnails/filer_public/1d/73/1d73ab5b-e891-41df-8884-8d3cdceb67c4/occulus_rif.jpg__1600x548_q85_crop_subsampling-2.jpg",
+                    "size": "1600x548"
+                }
+            ]
+        },
+        "get_security_type_display": "Common Equity",
+        "get_absolute_url": "/campaign/81",
+        "company": {
+            "id": 62,
+            "name": "Oculus Rift",
+            "tagline": "",
+            "city": "New York",
+            "state": "NY",
+            "website": "http://occulusrift.com",
+            "founding_date": "2012-08-01",
+            "description": "Step inside your favorite game.\r\n\r\nOculus Rift is a new virtual reality (VR) headset designed specifically for video games that will change the way you think about gaming forever. With an incredibly wide field of view, high resolution display, and ultra-low latency head tracking, the Rift provides a truly immersive experience that allows you to step inside your favorite game and explore new worlds like never before.\r\n\r\nWe're here raising money on Kickstarter to build development kits of the Rift, so we can get them into the hands of developers faster. Kickstarter has proven to be an amazing platform for accelerating big and small ideas alike. We hope you share our excitement about virtual reality, the Rift, and the future of gaming.  \r\n\r\nDesigned for gamers, by gamers.\r\n\r\nThe Rift takes 3D gaming to the next level. There are a number of VR headsets out there, but none that deliver a truly immersive gaming experience. Most products either lack the technical features required for believable immersion or sit at a very high price-point ($20,000+) reserved for the military or scientific community. \r\n\r\nWe set out to change all that with the Rift, which is designed to maximize immersion, comfort, and pure, uninhibited fun, at a price everyone can afford. \r\n\r\nWe’re working with the best teams in the industry.\r\n\r\n\"What I've got now, is, I honestly think the best VR demo probably the world has ever seen.\"\r\nJohn Carmack, id Software\r\n\r\n\"Needless to say, I'm a believer... We're extremely excited here at Epic Games to get the Unreal Engine integrated with Oculus.\"\r\nCliff Bleszinski, Design Director Epic Games\r\n\r\n\"I think this will be the coolest way to experience games in the future. Simply that... that big.\"\r\nDavid Helgason, CEO Unity\r\n\r\n\"I’m really looking forward to getting a chance to program with it and see what we can do.”\r\nMichael Abrash, Valve\r\n\r\n\"It looks incredibly exciting, if anybody’s going to tackle this set of hard problems, we think that Palmer’s going to do it. So we’d strongly encourage you to support this Kickstarter.”\r\nGabe Newell, President and Owner Valve\r\n\r\nBundling DOOM 3 BFG with the Rift\r\n\r\nWe're including a copy of DOOM 3 BFG Edition, the first Oculus-ready game, with every Rift dev kit on Kickstarter. John Carmack showed DOOM 3 BFG at E3, stunning the press and creating incredible anticipation for the release.",
+            "owner": 111,
+            "facebook": "https://facebook.com/oculusvr",
+            "twitter": "",
+            "linkedin": "https://www.linkedin.com/company/oculus-vr",
+            "instagram": ""
+        },
+        "amount_raised": 0,
+        "price_per_share": "1.00",
+        "min_number_of_shares": 0,
+        "max_number_of_shares": 0,
+        "percentage_revenue": 5,
+        "cap": 2,
+        "expiration_date": "2016-09-12"
+    },
+    {
+        "id": 69,
+        "minimum_raise": "150,000",
+        "maximum_raise": "950,000",
+        "security_type": 0,
+        "premoney_valuation": "0",
+        "minimum_increment": "500",
+        "progress": 0,
+        "list_image_data": {
+            "id": 647,
+            "modified_at": "2016-09-09T20:33:04.359964Z",
+            "folder": 37,
+            "url": "https://s3.amazonaws.com/growthfountain-development/filer_public/d2/a6/d2a67b2e-9159-4fb6-90c0-20230aee0b6c/shutterstock_225241000.jpg",
+            "name": "shutterstock_225241000.jpg",
+            "thumbnails": [
+                {
+                    "url": "https://s3.amazonaws.com/growthfountain-development/filer_public_thumbnails/filer_public/d2/a6/d2a67b2e-9159-4fb6-90c0-20230aee0b6c/shutterstock_225241000.jpg__255x153_q85_crop_subsampling-2.jpg",
+                    "size": "255x153"
+                },
+                {
+                    "url": "https://s3.amazonaws.com/growthfountain-development/filer_public_thumbnails/filer_public/d2/a6/d2a67b2e-9159-4fb6-90c0-20230aee0b6c/shutterstock_225241000.jpg__350x210_q85_crop_subsampling-2.jpg",
+                    "size": "350x210"
+                },
+                {
+                    "url": "https://s3.amazonaws.com/growthfountain-development/filer_public_thumbnails/filer_public/d2/a6/d2a67b2e-9159-4fb6-90c0-20230aee0b6c/shutterstock_225241000.jpg__1600x548_q85_crop_subsampling-2.jpg",
+                    "size": "1600x548"
+                }
+            ]
+        },
+        "get_security_type_display": "Common Equity",
+        "get_absolute_url": "/campaign/69",
+        "company": {
+            "id": 61,
+            "name": "WESTPORT RIVERS VINEYARD & WINERY",
+            "tagline": "your local winery",
+            "city": "New York",
+            "state": "NY",
+            "website": "http://www.wework.com",
+            "founding_date": "1988-01-01",
+            "description": "Our wine shop manager Alan and I recently had the pleasure of visiting Westport Rivers Vineyard & Winery, located in Southeastern Massachusetts. Alan has been several times, but this was my first visit to the largest vineyard in New England. The drive is about an hour south of Boston. Westport, the town closest to the winery, is a beautiful small town adjacent to the Westport River that empties into the Atlantic. During the scenic approach, there are several river embankments and tall tree canopies, until you reach a clearing where it is suddenly vineyards as far as the eye can see!",
+            "owner": 110,
+            "facebook": "",
+            "twitter": "",
+            "linkedin": "",
+            "instagram": ""
+        },
+        "amount_raised": 0,
+        "price_per_share": "0.00",
+        "min_number_of_shares": 0,
+        "max_number_of_shares": 0,
+        "percentage_revenue": 5,
+        "cap": 2,
+        "expiration_date": "2016-09-09"
+    },
+    {
+        "id": 68,
+        "minimum_raise": "6,000",
+        "maximum_raise": "100,000",
+        "security_type": 1,
+        "premoney_valuation": "0",
+        "minimum_increment": "2,000",
+        "progress": 0,
+        "list_image_data": {
+            "id": 640,
+            "modified_at": "2016-09-09T18:14:59.925558Z",
+            "folder": 37,
+            "url": "https://s3.amazonaws.com/growthfountain-development/filer_public/42/53/42535d72-d0f7-4f84-9f3b-b2275bf735b8/bff26287f7f0a9fd385407d8ccac29f5_original.jpg",
+            "name": "bff26287f7f0a9fd385407d8ccac29f5_original.jpg",
+            "thumbnails": [
+                {
+                    "url": "https://s3.amazonaws.com/growthfountain-development/filer_public_thumbnails/filer_public/42/53/42535d72-d0f7-4f84-9f3b-b2275bf735b8/bff26287f7f0a9fd385407d8ccac29f5_original.jpg__255x153_q85_crop_subsampling-2.jpg",
+                    "size": "255x153"
+                },
+                {
+                    "url": "https://s3.amazonaws.com/growthfountain-development/filer_public_thumbnails/filer_public/42/53/42535d72-d0f7-4f84-9f3b-b2275bf735b8/bff26287f7f0a9fd385407d8ccac29f5_original.jpg__350x210_q85_crop_subsampling-2.jpg",
+                    "size": "350x210"
+                },
+                {
+                    "url": "https://s3.amazonaws.com/growthfountain-development/filer_public_thumbnails/filer_public/42/53/42535d72-d0f7-4f84-9f3b-b2275bf735b8/bff26287f7f0a9fd385407d8ccac29f5_original.jpg__1600x548_q85_crop_subsampling-2.jpg",
+                    "size": "1600x548"
+                }
+            ]
+        },
+        "get_security_type_display": "Payback Share",
+        "get_absolute_url": "/campaign/68",
+        "company": {
+            "id": 60,
+            "name": "by ComicMix",
+            "tagline": "Oh, The Places You'll Boldly Go!",
+            "city": "New York",
+            "state": "NY",
+            "website": "http://www.giff.com",
+            "founding_date": "2000-01-01",
+            "description": "Congratulations! You just can’t be beat! You've earned center chair of the best in the fleet!\" Support David Gerrold's new enterprise!",
+            "owner": 109,
+            "facebook": "",
+            "twitter": "www.twiter.com",
+            "linkedin": "",
+            "instagram": ""
+        },
+        "amount_raised": 0,
+        "price_per_share": "0.00",
+        "min_number_of_shares": 0,
+        "max_number_of_shares": 0,
+        "percentage_revenue": 5,
+        "cap": 2,
+        "expiration_date": "2016-09-09"
+    },
+    {
+        "id": 59,
+        "minimum_raise": "50,000",
+        "maximum_raise": "1,000,000",
+        "security_type": 0,
+        "premoney_valuation": "5,000,000",
+        "minimum_increment": "100",
+        "progress": 0,
+        "list_image_data": {
+            "id": 566,
+            "modified_at": "2016-09-07T19:46:38.256049Z",
+            "folder": 37,
+            "url": "https://s3.amazonaws.com/growthfountain-development/filer_public/27/a8/27a886dd-ee13-4e8f-ba21-89c057b1afb2/shift-workspace-600x290.png",
+            "name": "shift-workspace-600x290.png",
+            "thumbnails": [
+                {
+                    "url": "https://s3.amazonaws.com/growthfountain-development/filer_public_thumbnails/filer_public/27/a8/27a886dd-ee13-4e8f-ba21-89c057b1afb2/shift-workspace-600x290.png__255x153_q85_crop_subsampling-2.png",
+                    "size": "255x153"
+                },
+                {
+                    "url": "https://s3.amazonaws.com/growthfountain-development/filer_public_thumbnails/filer_public/27/a8/27a886dd-ee13-4e8f-ba21-89c057b1afb2/shift-workspace-600x290.png__350x210_q85_crop_subsampling-2.png",
+                    "size": "350x210"
+                },
+                {
+                    "url": "https://s3.amazonaws.com/growthfountain-development/filer_public_thumbnails/filer_public/27/a8/27a886dd-ee13-4e8f-ba21-89c057b1afb2/shift-workspace-600x290.png__1600x548_q85_crop_subsampling-2.png",
+                    "size": "1600x548"
+                }
+            ]
+        },
+        "get_security_type_display": "Common Equity",
+        "get_absolute_url": "/campaign/59",
+        "company": {
+            "id": 25,
+            "name": "WeWork",
+            "tagline": "To create a world where people work to make a life, not just a living.",
+            "city": "Lowell",
+            "state": "MA",
+            "website": "http://www.wework.com",
+            "founding_date": "2015-12-05",
+            "description": "about us When we started WeWork in 2010, we wanted to build more than beautiful, shared office spaces. We wanted to build a community. A place you join as an individual, 'me', but where you become part of a greater 'we'. A place where we’re redefining success measured by personal fulfillment, not just the bottom line. Community is our catalyst.\r\nOur mission doesn’t end with the small businesses and entrepreneurs that call us home. We believe in empowering our team to create thei\r\nr own life's work. We move fast and we challenge each other, but we look after each other and care about our culture, which makes working here extremely rewarding. There's a lot of work left for us to do, and we couldn't do it without a single member of our team.",
+            "owner": 30,
+            "facebook": "",
+            "twitter": "",
+            "linkedin": "",
+            "instagram": ""
+        },
+        "amount_raised": 0,
+        "price_per_share": "0.00",
+        "min_number_of_shares": 0,
+        "max_number_of_shares": 0,
+        "percentage_revenue": 5,
+        "cap": 2,
+        "expiration_date": "2016-09-07"
+    },
+    {
+        "id": 57,
+        "minimum_raise": "0",
+        "maximum_raise": "0",
+        "security_type": 0,
+        "premoney_valuation": "0",
+        "minimum_increment": "0",
+        "progress": 0,
+        "list_image_data": {
+            "id": 538,
+            "modified_at": "2016-09-06T21:05:30.471811Z",
+            "folder": 37,
+            "url": "https://s3.amazonaws.com/growthfountain-development/filer_public/df/e3/dfe32515-76b7-4a69-b9f5-b7f21ac89d57/pasta.jpg",
+            "name": "pasta.jpg",
+            "thumbnails": [
+                {
+                    "url": "https://s3.amazonaws.com/growthfountain-development/filer_public_thumbnails/filer_public/df/e3/dfe32515-76b7-4a69-b9f5-b7f21ac89d57/pasta.jpg__255x153_q85_crop_subsampling-2.jpg",
+                    "size": "255x153"
+                },
+                {
+                    "url": "https://s3.amazonaws.com/growthfountain-development/filer_public_thumbnails/filer_public/df/e3/dfe32515-76b7-4a69-b9f5-b7f21ac89d57/pasta.jpg__350x210_q85_crop_subsampling-2.jpg",
+                    "size": "350x210"
+                },
+                {
+                    "url": "https://s3.amazonaws.com/growthfountain-development/filer_public_thumbnails/filer_public/df/e3/dfe32515-76b7-4a69-b9f5-b7f21ac89d57/pasta.jpg__1600x548_q85_crop_subsampling-2.jpg",
+                    "size": "1600x548"
+                }
+            ]
+        },
+        "get_security_type_display": "Common Equity",
+        "get_absolute_url": "/campaign/57",
+        "company": {
+            "id": 51,
+            "name": "Tuscookany",
+            "tagline": "Have fun cooking",
+            "city": "New York",
+            "state": "NY",
+            "website": "http://www.tuscookany.com/cooking/tuscany-cooking-schools/?gclid=CMGe7vLG-84CFcFbhgod_K0D-Q",
+            "founding_date": "2016-08-01",
+            "description": "Learn true Italian style cooking at Tuscany cooking schools and have fun doing it. This is your chance to enjoy hands-on  classes in our Tuscany cooking schools while staying in a luxurious villa in the heart of Tuscany. Tuscookany was elected one of the top ten Tuscany cooking schools by Observer newspaper. Benefit from the knowledge and passion of our local chefs teaching you all there is to know about Italian, Mediterranean and Tuscany cooking on our schools.",
+            "owner": 97,
+            "facebook": "",
+            "twitter": "",
+            "linkedin": "",
+            "instagram": ""
+        },
+        "amount_raised": 0,
+        "price_per_share": "0.00",
+        "min_number_of_shares": 0,
+        "max_number_of_shares": 0,
+        "percentage_revenue": 0,
+        "cap": 0,
+        "expiration_date": "2016-09-06"
+    },
+    {
+        "id": 53,
+        "minimum_raise": "60,000",
+        "maximum_raise": "500,000",
+        "security_type": 0,
+        "premoney_valuation": "0",
+        "minimum_increment": "500",
+        "progress": 0,
+        "list_image_data": {
+            "id": 469,
+            "modified_at": "2016-09-01T22:01:00.252856Z",
+            "folder": 37,
+            "url": "https://s3.amazonaws.com/growthfountain-development/filer_public/44/d0/44d0f486-c72b-4522-9b7b-a2adeae8806b/skybudslist2.jpg",
+            "name": "skybudslist2.jpg",
+            "thumbnails": [
+                {
+                    "url": "https://s3.amazonaws.com/growthfountain-development/filer_public_thumbnails/filer_public/44/d0/44d0f486-c72b-4522-9b7b-a2adeae8806b/skybudslist2.jpg__255x153_q85_crop_subsampling-2.jpg",
+                    "size": "255x153"
+                },
+                {
+                    "url": "https://s3.amazonaws.com/growthfountain-development/filer_public_thumbnails/filer_public/44/d0/44d0f486-c72b-4522-9b7b-a2adeae8806b/skybudslist2.jpg__350x210_q85_crop_subsampling-2.jpg",
+                    "size": "350x210"
+                },
+                {
+                    "url": "https://s3.amazonaws.com/growthfountain-development/filer_public_thumbnails/filer_public/44/d0/44d0f486-c72b-4522-9b7b-a2adeae8806b/skybudslist2.jpg__1600x548_q85_crop_subsampling-2.jpg",
+                    "size": "1600x548"
+                }
+            ]
+        },
+        "get_security_type_display": "Common Equity",
+        "get_absolute_url": "/campaign/53",
+        "company": {
+            "id": 47,
+            "name": "Skybuds",
+            "tagline": "Free your sound",
+            "city": "Portland",
+            "state": "OR",
+            "website": "https://www.skybuds.com",
+            "founding_date": "2015-12-01",
+            "description": "Alpha Audiotronics, Inc's cornerstone product, Skybuds, are truly a wireless earbuds.\r\n\r\nAs music and technology lovers, we want to enhance the listening experience by removing wires. We provide unencumbered audio the way it was meant to be heard. Wherever. Whenever.",
+            "owner": 86,
+            "facebook": "https://www.facebook.com",
+            "twitter": "www.twitter.com",
+            "linkedin": "https://www.linkedin.com",
+            "instagram": "https://www.instagram.com"
+        },
+        "amount_raised": 0,
+        "price_per_share": "0.00",
+        "min_number_of_shares": 0,
+        "max_number_of_shares": 0,
+        "percentage_revenue": 0,
+        "cap": 0,
+        "expiration_date": "2016-09-01"
+    },
+    {
+        "id": 52,
+        "minimum_raise": "0",
+        "maximum_raise": "0",
+        "security_type": 0,
+        "premoney_valuation": "0",
+        "minimum_increment": "0",
+        "progress": 0,
+        "list_image_data": {
+            "id": 451,
+            "modified_at": "2016-08-31T16:17:24.850057Z",
+            "folder": 37,
+            "url": "https://s3.amazonaws.com/growthfountain-development/filer_public/e3/2b/e32b941b-969b-45bf-9eea-890930e54e06/coffee_2.jpg",
+            "name": "coffee_2.jpg",
+            "thumbnails": [
+                {
+                    "url": "https://s3.amazonaws.com/growthfountain-development/filer_public_thumbnails/filer_public/e3/2b/e32b941b-969b-45bf-9eea-890930e54e06/coffee_2.jpg__255x153_q85_crop_subsampling-2.jpg",
+                    "size": "255x153"
+                },
+                {
+                    "url": "https://s3.amazonaws.com/growthfountain-development/filer_public_thumbnails/filer_public/e3/2b/e32b941b-969b-45bf-9eea-890930e54e06/coffee_2.jpg__350x210_q85_crop_subsampling-2.jpg",
+                    "size": "350x210"
+                },
+                {
+                    "url": "https://s3.amazonaws.com/growthfountain-development/filer_public_thumbnails/filer_public/e3/2b/e32b941b-969b-45bf-9eea-890930e54e06/coffee_2.jpg__1600x548_q85_crop_subsampling-2.jpg",
+                    "size": "1600x548"
+                }
+            ]
+        },
+        "get_security_type_display": "Common Equity",
+        "get_absolute_url": "/campaign/52",
+        "company": {
+            "id": 46,
+            "name": "Tweek's Coffee Bar",
+            "tagline": "We'll get you going - fast",
+            "city": "New York",
+            "state": "NY",
+            "website": "http://www.starbucks.com",
+            "founding_date": "1989-07-01",
+            "description": "Description: We’re not just passionate purveyors of coffee, but everything else that goes with a full and rewarding coffeehouse experience. We also offer a selection of premium teas, fine pastries and other delectable treats to please the taste buds. And the music you hear in store is chosen for its artistry and appeal.\r\n\r\nIt’s not unusual to see people coming to Starbucks to chat, meet up or even work. We’re a neighborhood gathering place, a part of the daily routine – and we couldn’t be happier about it. Get to know us and you’ll see: we are so much more than what we brew.\r\n\r\nWe make sure everything we do is through the lens of humanity – from our commitment to the highest quality coffee in the world, to the way we engage with our customers and communities to do business responsibly.",
+            "owner": 75,
+            "facebook": "https://www.facebook.com/Starbucks/",
+            "twitter": "https://twitter.com/starbucks",
+            "linkedin": "https://www.linkedin.com/company/gillies-coffee",
+            "instagram": "https://www.instagram.com/starbucks/"
+        },
+        "amount_raised": 0,
+        "price_per_share": "0.00",
+        "min_number_of_shares": 0,
+        "max_number_of_shares": 0,
+        "percentage_revenue": 0,
+        "cap": 0,
+        "expiration_date": "2016-08-31"
+    },
+    {
+        "id": 48,
+        "minimum_raise": "50,000",
+        "maximum_raise": "1,000,000",
+        "security_type": 0,
+        "premoney_valuation": "500,000",
+        "minimum_increment": "100",
+        "progress": 0,
+        "list_image_data": {
+            "id": 733,
+            "modified_at": "2016-09-13T17:45:49.234734Z",
+            "folder": 37,
+            "url": "https://s3.amazonaws.com/growthfountain-development/filer_public/20/8f/208f2ce1-4776-4816-8a70-d30fab541f21/shutterstock_151474727.jpg",
+            "name": "shutterstock_151474727.jpg",
+            "thumbnails": [
+                {
+                    "url": "https://s3.amazonaws.com/growthfountain-development/filer_public_thumbnails/filer_public/20/8f/208f2ce1-4776-4816-8a70-d30fab541f21/shutterstock_151474727.jpg__255x153_q85_crop_subsampling-2.jpg",
+                    "size": "255x153"
+                },
+                {
+                    "url": "https://s3.amazonaws.com/growthfountain-development/filer_public_thumbnails/filer_public/20/8f/208f2ce1-4776-4816-8a70-d30fab541f21/shutterstock_151474727.jpg__350x210_q85_crop_subsampling-2.jpg",
+                    "size": "350x210"
+                },
+                {
+                    "url": "https://s3.amazonaws.com/growthfountain-development/filer_public_thumbnails/filer_public/20/8f/208f2ce1-4776-4816-8a70-d30fab541f21/shutterstock_151474727.jpg__1600x548_q85_crop_subsampling-2.jpg",
+                    "size": "1600x548"
+                }
+            ]
+        },
+        "get_security_type_display": "Common Equity",
+        "get_absolute_url": "/campaign/48",
+        "company": {
+            "id": 43,
+            "name": "The Doughnut Project",
+            "tagline": "Re-imaging the Doughnut",
+            "city": "New York",
+            "state": "NY",
+            "website": "http://www.thedoughnutproject.com/",
+            "founding_date": "2015-09-01",
+            "description": "this is our description. Every day, we go to work hoping to do two things: share great coffee with our friends and help make the world a little better. It was true when the first Starbucks opened in 1971, and it’s just as true today.\r\n\r\nBack then, the company was a single store in Seattle’s historic Pike Place Market. From just a narrow storefront, Starbucks offered some of the world’s finest fresh-roasted whole bean coffees. The name, inspired by Moby Dick, evoked the romance of the high seas and the seafaring tradition of the early coffee traders.\r\n\r\nIn 1981, Howard Schultz (Starbucks chairman and chief executive officer) had first walked into a Starbucks store. From his first cup of Sumatra, Howard was drawn into Starbucks and joined a year later.\r\n\r\nIn 1983, Howard traveled to Italy and became captivated with Italian coffee bars and the romance of the coffee experience. He had a vision to bring the Italian coffeehouse tradition back to the United States. A place for conversation and a sense of community. A third place between work and home. He left Starbucks for a short period of time to start his own Il Giornale coffeehouses and returned in August 1987 to purchase Starbucks with the help of local investors.\r\n\r\nFrom the beginning, Starbucks set out to be a different kind of company. One that not only celebrated coffee and the rich tradition, but that also brought a feeling of connection.",
+            "owner": 55,
+            "facebook": "https://www.facebook.com/thedoughnutproject/",
+            "twitter": "https://twitter.com/TDP_NYC",
+            "linkedin": "https://www.linkedin.com/in/troy-neal-013163a7",
+            "instagram": "https://www.instagram.com/thedoughnutproject/"
+        },
+        "amount_raised": 0,
+        "price_per_share": "5.00",
+        "min_number_of_shares": 10,
+        "max_number_of_shares": 10000,
+        "percentage_revenue": 0,
+        "cap": 0,
+        "expiration_date": "2016-08-26"
+    },
+    {
+        "id": 46,
+        "minimum_raise": "50,000",
+        "maximum_raise": "1,000,000",
+        "security_type": 0,
+        "premoney_valuation": "10,000,000",
+        "minimum_increment": "100",
+        "progress": 611,
+        "list_image_data": {
+            "id": 422,
+            "modified_at": "2016-08-29T20:05:05.050732Z",
+            "folder": 37,
+            "url": "https://s3.amazonaws.com/growthfountain-development/filer_public/d4/ef/d4eff40b-9bb6-43a2-9916-e9d8fcad9ce7/12568113_892985427466589_1925308380_n.jpg",
+            "name": "12568113_892985427466589_1925308380_n.jpg",
+            "thumbnails": [
+                {
+                    "url": "https://s3.amazonaws.com/growthfountain-development/filer_public_thumbnails/filer_public/d4/ef/d4eff40b-9bb6-43a2-9916-e9d8fcad9ce7/12568113_892985427466589_1925308380_n.jpg__255x153_q85_crop_subsampling-2.jpg",
+                    "size": "255x153"
+                },
+                {
+                    "url": "https://s3.amazonaws.com/growthfountain-development/filer_public_thumbnails/filer_public/d4/ef/d4eff40b-9bb6-43a2-9916-e9d8fcad9ce7/12568113_892985427466589_1925308380_n.jpg__350x210_q85_crop_subsampling-2.jpg",
+                    "size": "350x210"
+                },
+                {
+                    "url": "https://s3.amazonaws.com/growthfountain-development/filer_public_thumbnails/filer_public/d4/ef/d4eff40b-9bb6-43a2-9916-e9d8fcad9ce7/12568113_892985427466589_1925308380_n.jpg__1600x548_q85_crop_subsampling-2.jpg",
+                    "size": "1600x548"
+                }
+            ]
+        },
+        "get_security_type_display": "Common Equity",
+        "get_absolute_url": "/campaign/46",
+        "company": {
+            "id": 29,
+            "name": "Greycork",
+            "tagline": "Make Better Moments at Homes ~wqeqweqwe",
+            "city": "Malverne",
+            "state": "NY",
+            "website": "http://www.greycork.com",
+            "founding_date": "2013-12-01",
+            "description": "Today's consumer-facing furniture brands provide a poor user experience, are littering the earth with cheap and breakable furniture, and lack brand loyalty - especially among consumers between the ages of 20 and 35. Greycork is on a mission to be the go-to brand for this consumer base, and as a result become a billion-dollar brand in the next decade. Our first set of products is a living room collection designed and built with high quality materials and offered for a low price. Orders are placed at our website and are shipped via UPS direct to a customer's door.",
+            "owner": 42,
+            "facebook": "https://www.facebook.com/greycork1/",
+            "twitter": "https://twitter.com/greycork",
+            "linkedin": "",
+            "instagram": "https://instagram.com/greycork"
+        },
+        "amount_raised": 0,
+        "price_per_share": "100.00",
+        "min_number_of_shares": 500,
+        "max_number_of_shares": 10000,
+        "percentage_revenue": 0,
+        "cap": 0,
+        "expiration_date": "2016-08-25"
+    },
+    {
+        "id": 45,
+        "minimum_raise": "80,000",
+        "maximum_raise": "60,000",
+        "security_type": 0,
+        "premoney_valuation": "0",
+        "minimum_increment": "250",
+        "progress": 3,
+        "list_image_data": {
+            "id": 769,
+            "modified_at": "2016-09-14T21:11:52.158129Z",
+            "folder": 37,
+            "url": "https://s3.amazonaws.com/growthfountain-development/filer_public/bb/39/bb398bdb-64d2-4222-b1f9-b8ccb6162e63/bg.jpg",
+            "name": "bg.jpg",
+            "thumbnails": [
+                {
+                    "url": "https://s3.amazonaws.com/growthfountain-development/filer_public_thumbnails/filer_public/bb/39/bb398bdb-64d2-4222-b1f9-b8ccb6162e63/bg.jpg__255x153_q85_crop_subsampling-2.jpg",
+                    "size": "255x153"
+                },
+                {
+                    "url": "https://s3.amazonaws.com/growthfountain-development/filer_public_thumbnails/filer_public/bb/39/bb398bdb-64d2-4222-b1f9-b8ccb6162e63/bg.jpg__350x210_q85_crop_subsampling-2.jpg",
+                    "size": "350x210"
+                },
+                {
+                    "url": "https://s3.amazonaws.com/growthfountain-development/filer_public_thumbnails/filer_public/bb/39/bb398bdb-64d2-4222-b1f9-b8ccb6162e63/bg.jpg__1600x548_q85_crop_subsampling-2.jpg",
+                    "size": "1600x548"
+                }
+            ]
+        },
+        "get_security_type_display": "Common Equity",
+        "get_absolute_url": "/campaign/45",
+        "company": {
+            "id": 23,
+            "name": "Whatever Company",
+            "tagline": "fsafdsa",
+            "city": "Atlantic City",
+            "state": "PR",
+            "website": "http://arthuryip.xyz",
+            "founding_date": "1983-11-24",
+            "description": "asdfas",
+            "owner": 1,
+            "facebook": "https://www.facebook.com/hawaiiciderco://www.facebook.com",
+            "twitter": "it was the best of time.",
+            "linkedin": "http://www.linkedin.com",
+            "instagram": "http://www.instagram.com"
+        },
+        "amount_raised": 0,
+        "price_per_share": "5.00",
+        "min_number_of_shares": 0,
+        "max_number_of_shares": 0,
+        "percentage_revenue": 134,
+        "cap": 15,
+        "expiration_date": "2022-08-23"
+    },
+    {
+        "id": 44,
+        "minimum_raise": "80,000",
+        "maximum_raise": "10,000",
+        "security_type": 0,
+        "premoney_valuation": "8,000,000",
+        "minimum_increment": "100",
+        "progress": 0,
+        "list_image_data": {
+            "id": 540,
+            "modified_at": "2016-09-06T21:42:24.474514Z",
+            "folder": 37,
+            "url": "https://s3.amazonaws.com/growthfountain-development/filer_public/19/2b/192bb28f-e9fd-47af-a521-fd9b236853c3/shapethumb.png",
+            "name": "shapethumb.png",
+            "thumbnails": [
+                {
+                    "url": "https://s3.amazonaws.com/growthfountain-development/filer_public_thumbnails/filer_public/19/2b/192bb28f-e9fd-47af-a521-fd9b236853c3/shapethumb.png__255x153_q85_crop_subsampling-2.png",
+                    "size": "255x153"
+                },
+                {
+                    "url": "https://s3.amazonaws.com/growthfountain-development/filer_public_thumbnails/filer_public/19/2b/192bb28f-e9fd-47af-a521-fd9b236853c3/shapethumb.png__350x210_q85_crop_subsampling-2.png",
+                    "size": "350x210"
+                },
+                {
+                    "url": "https://s3.amazonaws.com/growthfountain-development/filer_public_thumbnails/filer_public/19/2b/192bb28f-e9fd-47af-a521-fd9b236853c3/shapethumb.png__1600x548_q85_crop_subsampling-2.png",
+                    "size": "1600x548"
+                }
+            ]
+        },
+        "get_security_type_display": "Common Equity",
+        "get_absolute_url": "/campaign/44",
+        "company": {
+            "id": 41,
+            "name": "ShapeScale",
+            "tagline": "A scale that scans your body in 3D to show changes in your body and appearance",
+            "city": "New York",
+            "state": "NY",
+            "website": "http://www.shapescale.com/",
+            "founding_date": "2016-07-01",
+            "description": "ShapeScale is a weight scale that digitizes your body in 3D, so you can see exactly how your body is changing over time. It creates a photo-realistic 3D model of you that shows exactly where you have been gaining muscles or losing fat. Partnered with our app, you can track which exercises and diets are working for you and optimize your fitness.",
+            "owner": 52,
+            "facebook": "http://www.facebook.com/shapescale",
+            "twitter": "@shapescale",
+            "linkedin": "http://www.linkedin.com/shapescale",
+            "instagram": "http://www.instagram.com/shapescale"
+        },
+        "amount_raised": 0,
+        "price_per_share": "80.00",
+        "min_number_of_shares": 1000,
+        "max_number_of_shares": 100000,
+        "percentage_revenue": 0,
+        "cap": 0,
+        "expiration_date": "2016-08-23"
+    }
+]

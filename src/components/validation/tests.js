@@ -7,23 +7,30 @@ const rules     = require('./rules.js');
 
 
 describe('Attribute validation', function() {
-    before() {
-    },
+    it('Required', function() {
+      let attr = {
+        label: "City",
+      };
 
-    it('Require' , function() {
-      const attr = {
-        label: "City"
-        required: true
-      }
-      const data = {
+      let data = {
         test: ''
-      }
+      };
 
-      expect(rules.required('test', false, data, attr)).to.not.throw();
-      expect(rules.required('test', true, data, attr)).to.throw();
+
+      // if required = false we don't have to get any error
+      expect(rules.required.bind(rules, 'test', false, attr, data)).to.not.throw();
+
+      // if required = true we should see error
+      expect(rules.required.bind(rules, 'test', true, attr, data)).to.throw(rules.messages.required.replace('{0}', attr.label));
+
+      // For string we dont have to get any exception
       data.test = 'value';
+      expect(rules.required.bind(rules, 'test', false, attr, data)).to.not.throw();
+      expect(rules.required.bind(rules, 'test', true, attr, data)).to.not.throw();
 
-      expect(rules.required('test', false, data, attr)).to.not.throw();
-      expect(rules.required('test', true, data, attr)).to.not.throw();
-    }),
-})
+      // For number we dont have to get any exception
+      data.test = 342;
+      expect(rules.required.bind(rules, 'test', false, attr, data)).to.not.throw();
+      expect(rules.required.bind(rules, 'test', true, attr, data)).to.not.throw();
+    })
+});

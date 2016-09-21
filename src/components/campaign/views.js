@@ -2,6 +2,7 @@ const formatHelper = require('helpers/formatHelper');
 
 module.exports = { 
   list: Backbone.View.extend({
+    el: '#content',
     template: require('./templates/list.pug'),
     initialize(options) {
       this.collection = options.collection;
@@ -10,7 +11,7 @@ module.exports = {
     render() {
       //require('sass/pages/_campaing.sass');
 
-      require('bootstrap-select/sass/bootstrap-select.scss');
+      //require('bootstrap-select/sass/bootstrap-select.scss');
 
       let selectPicker = require('bootstrap-select');
       this.$el.html('');
@@ -20,7 +21,7 @@ module.exports = {
           campaigns: this.collection.toJSON(),
           collection: this.collection,
         })
-        );
+      );
       this.$el.find('.selectpicker').selectpicker();
       //selectPicker('.selectpicker');
       return this;
