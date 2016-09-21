@@ -11,6 +11,7 @@ dependencies:
         - sudo pip install awscli
         - ls -la dist
         - ./deploy.sh
+        - sudo npm install -g mocha
     
     cache_directories:
         - "node_modules"
