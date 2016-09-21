@@ -25,12 +25,12 @@ module.exports = {
     this.schema = schema;
     this.data = data;
     this.view = view;
-    this.finalResult = true
+    let finalResult = true;
 
     _(schema).each((attr, name) => {
       if(fixedRegex.indexOf(attr.type) != -1) {
         try {
-          data[name] = rules.regex(name, attr, data);
+          rules.regex(name, attr, data, attr.type);
           this.runRules(attr, name);
         } catch(e) {
           finalResult = false;
@@ -41,6 +41,6 @@ module.exports = {
       }
     });
 
-    return this.finalResult;
+    return finalResult;
   }
 };
