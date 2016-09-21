@@ -2,7 +2,7 @@
 // -------------------
 
 module.exports = { 
-  patterns = Validation.patterns = {
+  patterns: {
     // Matches any digit(s) (i.e. 0-9)
     digits: /^\d+$/,
 
@@ -35,7 +35,7 @@ module.exports = {
     inlinePattern: '{0} is invalid',    
   },
 
-  validators : {
+  validators : function () {
     // Use native trim when defined
     var trim = String.prototype.trim ?
       function(text) {
@@ -71,13 +71,9 @@ module.exports = {
       // Required validator
       // Validates if the attribute is required or not
       // This can be specified as either a boolean value or a function that returns a boolean value
-      required: function(value, attr, required, model, computed) {
-        var isRequired = _.isFunction(required) ? required.call(model, value, attr, computed) : required;
-        if(!isRequired && !hasValue(value)) {
-          return false; // overrides all other validators
-        }
-        if (isRequired && !hasValue(value)) {
-          return this.format(defaultMessages.required, this.formatLabel(attr, model));
+      required: function(attr, value) {
+        if(attr.required == true && value.hasValue() == false) {
+          Backbone.Validation.invalid(view, attr.name, messages.required)
         }
       },
 
@@ -180,4 +176,5 @@ module.exports = {
         }
       }
     };
+  }
 };
