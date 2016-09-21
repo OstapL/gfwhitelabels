@@ -1,0 +1,48 @@
+include mixins.pug
+- 'use strict'
+script
+   values = { last_name: { label: 'Last name'} }
+
+
+
+
++breadcrumbs('form c', '', 
+    [
+        ['Home', '/'],
+        ['FORM C', ''],
+        ['team members (director)', ''],
+    ]
+)
+
+section.formc-team-members-director.container.m-b-85
+  //START LEFT BLOCK
+  .col-lg-3.create_compaign
+
+    .row
+      .education-link-wrap
+        .jumbotron.jumbotron-fluid
+          h4.font-weight-bold.text-uppercase
+            i.fa.fa-book
+            |  education Links
+          .nav
+            li.nav-item
+              a(href="/pg/investor_tutorial").nav-link.link-3 Issuer Tutorial
+            li.nav-item
+              a(href="/pg/success_guide").nav-link.link-3 Success Guide
+            li.nav-item
+              a(href="/calculator/capitalraise/intro").nav-link.link-3 What's My Business Worth?
+            li.nav-item
+              a(href="#").nav-link.link-3 How Much Should I Raise?
+
+
+
+  //START RIGHT BLOCK
+  .col-lg-8
+    h2.text-uppercase.text-lg-center.text-xs-center.m-t-0.dosis Team members (director)
+    form(metod="post" action="").form-section
+      +fieldBlock("last_name", '', {
+        class1: 'col-lg-3 col-md-12 text-md-left',
+        class2: 'col-lg-9 col-md-12',
+        type: 'text',
+        placeholder: 'Company Name',
+        })
