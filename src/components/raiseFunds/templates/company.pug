@@ -4,6 +4,7 @@ include menu.pug
 +breadcrumbs('Create Company', '', 
     [
         ['Home', '/'],
+        ['Create Company', ''],
         ['Company', ''],
     ]
 )
@@ -119,8 +120,8 @@ section.create-company.container.m-b-85
         .col-lg-6.col-xs-12.date-input.pull-right.required
           .col-date.form-group-m-b-0
             +fieldBlock("founding_date", '', {
-              class1: 'col-lg-5 p-l-0 p-r-0',
-              class2: 'col-lg-7',
+              class1: 'col-lg-5 col-md-3 p-l-0 p-r-0',
+              class2: 'col-lg-7 col-md-8 pull-md-right',
             })
       .border-bottom
       +fieldBlock("address_1", '', {
@@ -187,8 +188,8 @@ section.create-company.container.m-b-85
             type: 'text',
             })
       .row.m-t-2
-          .col-lg-12
-            button(type="submit").btn.btn-primary.text-uppercase.pull-right save
+          .col-lg-12.text-md-center.text-sm-center.text-xs-center
+            button(type="submit").btn.btn-primary.text-uppercase.pull-lg-right save
               i.fa.fa-angle-right
 
 //MODAL

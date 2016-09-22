@@ -4,7 +4,6 @@ include ../../../templates/mixins.pug
 +breadcrumbs('PayBack Share Calculator ', 'step 1', 
     [
         ['Home', '/'],
-        ["What's My Business Worth?", '/'],
         ["PayBack Share Calculator", '']
     ]
 )
@@ -63,6 +62,7 @@ include ../../../templates/mixins.pug
                             input#growLevel.form-control.js-field(
                                 value= data.growLevel,
                                 type='text',
+                                placeholder='0%',
                                 data-input-mask='percent',
                                 data-model-value='growLevel')
 

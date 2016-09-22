@@ -92,6 +92,24 @@ ul.list-blog {
 		}
 	}
 }
+
+@media screen and (max-width: 991px) {
+	ul.list-blog {
+		&-main li {
+			width: 48%;
+		}
+	}
+}
+
+@media screen and (max-width: 543px) {
+	ul.list-blog {
+		&-main li {
+			margin-right: 0%;
+			width: 100%;
+		}
+	}
+}
+
   
 .single-blog {
 	.title-blog {

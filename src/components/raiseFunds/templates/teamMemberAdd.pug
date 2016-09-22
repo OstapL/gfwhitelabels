@@ -2,10 +2,11 @@
 include ../../../templates/mixins.pug
 include menu.pug
 
-+breadcrumbs('CREATE CAMPAIGN', '', 
++breadcrumbs('Create Company', '', 
     [
         ['Home', '/'],
-        ['current', ''],
+        ['Create campaign', ''],
+        ['team member (Advisor)', ''],
     ]
 )
 
@@ -20,81 +21,84 @@ section.team-members.container.m-b-85
       input(type="hidden" name="type" value=type)#type
       input(type="hidden" name="photo" value=member.photo)#photo
       +fieldBlock("first_name", '', {
-        class1: 'col-lg-3 col-md-3',
-        class2: 'col-lg-9 col-md-9',
+        class1: 'col-lg-3 col-md-12',
+        class2: 'col-lg-9 col-md-12',
         type: 'text',
         })
       +fieldBlock("last_name", '', {
-        class1: 'col-lg-3 col-md-3',
-        class2: 'col-lg-9 col-md-9',
+        class1: 'col-lg-3 col-md-12',
+        class2: 'col-lg-9 col-md-12',
         type: 'text',
         })
       +fieldBlock("email", '', {
-        class1: 'col-lg-3 col-md-3',
-        class2: 'col-lg-9 col-md-9',
+        class1: 'col-lg-3 col-md-12',
+        class2: 'col-lg-9 col-md-12',
         type: 'email',
         })
       +fieldBlock("title", '', {
-        class1: 'col-lg-3 col-md-3',
-        class2: 'col-lg-9 col-md-9',
+        class1: 'col-lg-3 col-md-12',
+        class2: 'col-lg-9 col-md-12',
         type: 'text',
         })
       .form-group.row.clearfix.required
-        label.col-lg-3.text-lg-right Bio
-        .col-lg-9
+        label.col-lg-3.col-md-12.text-lg-right Bio
+        .col-lg-9.col-md-12
             textarea(name="bio" placeholder="At least 150 characters and no more than 250 characters" rows="4" maxLength="250").form-control #{ member.bio }
       .row
-        .col-lg-9.recommended.label-p-t-0
+        .col-lg-9.col-md-12.recommended.label-p-t-0
           +fieldBlock("growup", '', {
-            class1: 'col-lg-4 col-md-3',
-            class2: 'col-lg-8 col-md-9',
+            class1: 'col-lg-4 col-md-12',
+            class2: 'col-lg-8 col-md-12',
             type: 'text',
             placeholder: 'City'
             })
-        .col-lg-3
+        .col-lg-3.col-md-12
           //- select(name="state").orderby.custom-select
           //-   option(checked="checked" value="0") ST
           //-   option(value="1") STL
           select(name='state').custom-select
-            option(checked='checked', value="") State
+            option(value="") State
             each state in states
+              if member.state == state.abbreviation
+                option(value=state.abbreviation selected)= state.name
+              else
                 option(value=state.abbreviation)= state.name
       .label-p-t-0
         +fieldBlock("college", '', {
-          class1: 'col-lg-3 col-md-3',
-          class2: 'col-lg-9 col-md-9',
+          class1: 'col-lg-3 col-md-12',
+          class2: 'col-lg-9 col-md-12',
           type: 'text',
           placeholder: 'Name of college or university',
           })
       .row
         .col-lg-6.input-min-width
             +fieldBlock("linkedin", '', {
-              class1: 'col-lg-6 col-md-3',
-              class2: 'col-lg-6 col-md-9',
+              class1: 'col-lg-6 col-md-12',
+              class2: 'col-lg-6 col-md-12',
               type: 'text',
               placeholder: 'Your LinkedIn profile',
               })
         .col-lg-6.input-min-width
             +fieldBlock("facebook", '', {
-              class1: 'col-lg-5 col-md-3',
-              class2: 'col-lg-7 col-md-9',
+              class1: 'col-lg-5 col-md-12',
+              class2: 'col-lg-7 col-md-12',
               type: 'text',
               placeholder: 'Your Facebook profile',
               })
 
       .row.dropzone__photo.media-item
-        .col-lg-3.p-r-12
-          span.pull-right.font-weight-bold  Photo
+        .col-lg-3.p-r-12.col-md-12.text-md-center.text-sm-center.text-xs-center
+          span.pull-lg-right.font-weight-bold  Photo
         .col-lg-9.text-lg-center
           .border-dropzone
-            .col-lg-6.p-dropzone
+            .col-lg-6.col-md-5.col-sm-5.col-xs-5.p-dropzone.text-md-center.text-sm-center.text-xs-center
               span(href="#").link-1
                 p.drop-photo Drop your photo here or click to upload
                 i.fa.fa-camera
-            .col-lg-6.text-lg-center.p-dropzone
+            .col-lg-6.col-md-7.col-sm-7.col-xs-7.text-lg-center.p-dropzone
               img(src=member.photo).img-fluid.img-circle.img-photo
-      .col-lg-12.text-lg-right.p-r-0.p-t-2
-        button(type="submit").btn.btn-primary.text-uppercase.pull-right Save
+      .col-lg-12.text-lg-right.p-r-0.p-t-2.text-md-center.text-sm-center.text-xs-center
+        button(type="submit").btn.btn-primary.text-uppercase.pull-lg-right Save
           //
             .col-lg-6.p-r-0
               .dropdown.pull-right

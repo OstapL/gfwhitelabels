@@ -1,5 +1,6 @@
 src/config.js merge=ours
 src/img/logo.png merge=ours
+
 src/img/u merge=ours
 src/sass/config/_colors.sass merge=ours
 src/sass/config/_vars.sass merge=ours
@@ -46,3 +47,11 @@ src/sass/unique/_jumbotron.sass merge=ours
 src/sass/unique/_normalize.sass merge=ours
 src/sass/unique/_resposive-embed.sass merge=ours
 src/sass/unique/_utilities.sass merge=ours
+
+src/sass/config/_colors.sass merge=ours
+src/sass/config/_vars.sass merge=ours
+src/sass/pages/_index.sass merge=ours
+src/templates/overview.pug merge=ours
+src/templates/mainPage.pug merge=ours
+src/templates/contact.pug merge=ours
+src/templates/careers.pug merge=ours

@@ -1,3 +1,6 @@
+// Polyfill webpack require.ensure.
+if (typeof require.ensure !== `function`) require.ensure = (d, c) => c(require);    
+
 module.exports = Backbone.Router.extend({
   routes: {
     'api/campaign': 'list',
@@ -16,17 +19,15 @@ module.exports = Backbone.Router.extend({
 
           $('body').scrollTo(); 
           $('#content').html('');
-          const i = new View.list({
-            el: '#content',
+          new View.list({
             collection: collection,
-          });
-          i.render();
+          }).render();
 
+          /*
           setTimeout(() => {
             app.cache[window.location.pathname] = i.$el.html();
           }, 500);
 
-          /*
              let filterView = new CampaignFilterView();
              filterView.render();
 

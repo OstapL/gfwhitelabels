@@ -1,0 +1,45 @@
+include ../../../templates/mixins.pug
+
++breadcrumbs("What's My Business Worth?", 'New startup',
+    [
+        ['Home', '/'],
+        ["What's My Business Worth?", '/calculator/selectYourBusiness'],
+        ["Established Business", '']
+    ]
+)
+
+.container.calculator-container
+    .row
+        .offset-lg-2.col-lg-8
+            .warning-block.m0
+                i.fa.fa-exclamation-triangle
+                span.warning-text
+                    | There are two types of securities your business can issue on GrowthFountain:&nbsp;
+                    b Common Equity
+                    | &nbsp;or&nbsp;
+                    b PayBack Share.
+
+    .row
+        .offset-lg-2.col-lg-8.mt45
+            p
+                b Common Equity&nbsp;
+                | represents an ownership share in your business. Common Equity might make sense for you if you expect to reinvest the cash flow your business generates to fund additional growth.
+
+    .row
+        .offset-lg-2.col-lg-8.text-sm-center.mt25
+            a(
+                href="/establishedBusiness/intro"
+            ).btn.btn-lg.btn-primary.text-uppercase Established Business Valuation Calculator
+
+
+    .row
+        .offset-lg-2.col-lg-8.mt45
+            p
+                b PayBack Share &nbsp;
+                | is a GrowthFountain created revenue sharing security; it is a form of investment contract in which the Company shares 5% of its revenue annually with investors.
+
+    .row
+        .offset-lg-2.col-lg-8.text-sm-center.mt25
+            a(
+                href="/calculator/paybackshare/step-1"
+            ).btn.btn-lg.btn-primary.text-uppercase payback share calculator
