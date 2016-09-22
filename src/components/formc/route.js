@@ -1,6 +1,9 @@
 module.exports = Backbone.Router.extend({
   routes: {
     'formc/introduction': 'introduction',
+    'formc/team-members/:id/add/:type/:index': 'teamMemberAdd',
+    'formc/team-members/:id': 'teamMembers',
+
   },
   introduction() {
     // debugger
@@ -13,7 +16,10 @@ module.exports = Backbone.Router.extend({
         failed_to_comply: {
           label: "Failed to Comply",
           required: false,
-          type: 'radio'
+          type: 'radio',
+          validate: function(name, attrs, formData) {
+
+          },
         },
         cc_number: {
           label: "Credit Card",
@@ -21,11 +27,43 @@ module.exports = Backbone.Router.extend({
           type: 'string',
         }
       },
-      model: {
-        failed_to_comply: 'It was the best of times.',
-      },
+      model: new Backbone.Model({
+        // failed_to_comply: 'It was the best of times.',
+        failed_to_comply: '',
+      }),
     });
     app.hideLoading();
     i.render();
+  },
+  
+  teamMembers(id) {
+    const View = require('components/formc/views.js');
+    // var i = new View.memberDirector({
+    var i = new View.teamMembers({
+      el: '#content',
+      fields: {},
+      model: new Backbone.Model({
+        members:[],
+      }),
+    });
+    app.hideLoading();
+    i.render();
+  },
+
+  teamMemberAdd(id, type, index) {
+    const View = require('components/formc/views.js');
+
+    const addForm = new View.teamMemberAdd({
+      el: '#content',
+      model: new Backbone.Model({}),
+      type: type,
+      index: index,
+      fields: {
+        previous_positions: {},
+        experiences: {},
+      },
+    });
+    app.hideLoading();
+    addForm.render();
   },
 });

@@ -3,7 +3,7 @@
 include ../../../templates/mixins.pug
 include menu.pug
 
-+breadcrumbs('Create Formc', '', [['home', '/',], [ 'current', page.get_absolute_url]])
++breadcrumbs('Create Formc', '', [['home', '/'], [ 'Create Formc', page.get_absolute_url], ['Introduction']])
 
 section.formc.introduction.create-company-media.container
   +menu('formc')
@@ -39,7 +39,7 @@ section.formc.introduction.create-company-media.container
               label
                 input(type="radio" name="failed_to_comply" value="no" checked=values['failed_to_comply'] ? false : true)
                 | No
-          .explain
+          div(style='display:' + (values['failed_to_comply'] ? 'block' : 'none') + ';').explain
             .form-group.row
               .col-lg-3.text-lg-right
                 label If Yes, Explain
