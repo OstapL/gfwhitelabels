@@ -108,10 +108,44 @@ section.formc-team-members-director.container.m-b-85
               .col-lg-6.p-r-0
                 input(type="number"  placeholder="YYYY").form-control
       .border-bottom.m-t-3.m-b-3
-      .col-lg-12
-        h3.text-lg-center.text-xs-center.m-t-0 We Need Information for Last 3 Years
+      h3.text-lg-center.text-xs-center.m-t-0 We Need Information for Last 3 Years
+      .row
         b.col-lg-12.m-b-3 Changed roles within the Company? Please list  all positions and offices with the Company held and the period of time in which you served in the position or office.
+      +fieldBlock("position", '', {
+        class1: 'col-lg-3 col-md-12 text-md-left m-b-0',
+        class2: 'col-lg-9 col-md-12',
+        type: 'text',
+        placeholder: 'Position',
+        })
+      .row
+        .col-lg-6.col-md-12
+          .col-lg-6.text-lg-right.text-md-left.p-t-0
+            label.p-t-0.m-b-0 Start Date of Service
 
+          .col-lg-6.p-r-0
+            .row
+              .col-lg-6.p-r-0
+                input(type="number"  placeholder="MM").form-control
+              .col-lg-6.p-r-0
+                input(type="number"  placeholder="YYYY").form-control
+        .col-lg-6.p-l-0.col-md-12.form-group
+          .col-lg-6.text-lg-right.text-md-left.p-t-0
+            label.p-t-0.m-b-0.p-l-2 End Date of Service
+
+
+          .col-lg-6
+            .row
+              .col-lg-6.p-r-0
+                input(type="number"  placeholder="MM").form-control
+              .col-lg-6.p-r-0
+                input(type="number"  placeholder="YYYY").form-control
+      .row.add-link
+        .col-lg-9.offset-1.pull-right
+          a(href="#" data-section="additional_info").link-2.add-section
+            i.fa.fa-plus
+            |  Add Previous Position within tne Company
+      .row
+        b.col-lg-12.m-t-2.m-b-3 Business experience for past three years: Please list your employers, titles and dates of positions held during the past three years with an indication of job responsibilities.
       +fieldBlock("employer", '', {
         class1: 'col-lg-3 col-md-12 text-md-left m-b-0',
         class2: 'col-lg-9 col-md-12',
@@ -162,7 +196,7 @@ section.formc-team-members-director.container.m-b-85
           a(href="#" data-section="additional_info").link-2.add-section
             i.fa.fa-plus
             |  Add Work Experience
-      .border-bottom.m-t-3.m-b-3
-      .row
+
+      .row.m-t-3
         .col-lg-12.text-md-center.text-sm-center-text-xs-center
           a(href="/company/create").btn.btn-primary.text-uppercase.pull-lg-right Save
