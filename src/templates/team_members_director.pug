@@ -4,7 +4,7 @@ include mixins.pug
 - var fields = { last_name: { label: 'Last Name'} };
 - var fields = { email: { label: 'Email Address'} };
 - var fields = { principal_occupation: { label: 'Principal Occupation'} };
-- var fields = { employer_and_principal_business: { label: 'Employer and Principal Business'} };
+- var fields = { employer_and_principal: { label: 'Employer and Principal Business'} };
 - var fields = { position: { label: 'Position'} };
 - var fields = { employer: { label: 'Employer'} };
 - var fields = { employers_principal: { label: 'Employer’s Principal Business'} };
@@ -90,7 +90,7 @@ section.formc-team-members-director.container.m-b-85
         type: 'text',
         placeholder: 'Principal Occupation',
         })
-      +fieldBlock("employer_and_principal_business", '', {
+      +fieldBlock("employer_and_principal", '', {
         class1: 'col-lg-3 col-md-12 text-md-left p-t-0 m-b-0',
         class2: 'col-lg-9 col-md-12',
         type: 'text',
@@ -107,8 +107,9 @@ section.formc-team-members-director.container.m-b-85
                 input(type="number"  placeholder="MM").form-control
               .col-lg-6.p-r-0
                 input(type="number"  placeholder="YYYY").form-control
-      .col-lg-12.border-top
-        h3.text-lg-center.text-xs-center We Need Information for Last 3 Years
+      .border-bottom.m-t-3.m-b-3
+      .col-lg-12
+        h3.text-lg-center.text-xs-center.m-t-0 We Need Information for Last 3 Years
         b.col-lg-12.m-b-3 Changed roles within the Company? Please list  all positions and offices with the Company held and the period of time in which you served in the position or office.
 
       +fieldBlock("employer", '', {
@@ -162,14 +163,6 @@ section.formc-team-members-director.container.m-b-85
             i.fa.fa-plus
             |  Add Work Experience
       .border-bottom.m-t-3.m-b-3
-      .col-lg-5.p-r-0
-        .dropdown
-          button(type="submit"
-          id="dropdownMenuButton"
-          data-toggle="dropdown"
-          aria-haspopup="true"
-          aria-expanded="false"
-          ).btn.btn-primary.text-uppercase.dropdown-toggle Save and add other
-          .dropdown-menu(aria-labelledby="dropdownMenuButton")
-            a(href="").dropdown-item Add Advisor
-            a(href="").dropdown-item Add Team Member
+      .row
+        .col-lg-12.text-md-center.text-sm-center-text-xs-center
+          a(href="/company/create").btn.btn-primary.text-uppercase.pull-lg-right Save
