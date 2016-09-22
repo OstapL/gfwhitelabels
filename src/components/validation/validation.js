@@ -6,10 +6,10 @@ module.exports = {
   runRule(rule, value, name, attr) {
     try {
       rules[rule](name, value, attr, this.data, this.schema);
-      Backbone.Validation.callbacks.valid(this.view, name);
+      //Backbone.Validation.callbacks.valid(this.view, name);
     } catch (e) {
       this.finalResult = false;
-      Backbone.Validation.callbacks.invalid(this.view, name, e);
+      Array.isArray(this.errors[name]) ? this.errors[name].push(e) : this.errors[name] = [e];
     }
   },
 
@@ -21,11 +21,11 @@ module.exports = {
     });
   },
 
-  validate(schema, data, view) {
+  validate(schema, data) {
     this.schema = schema;
     this.data = data;
-    this.view = view;
     this.finalResult = true;
+    this.errors = {};
 
     _(schema).each((attr, name) => {
       if (fixedRegex.indexOf(attr.type) != -1) {
@@ -34,7 +34,9 @@ module.exports = {
           this.runRules(attr, name);
         } catch (e) {
           this.finalResult = false;
-          Backbone.Validation.callbacks.invalid(view, name, e);
+          console.log(e);
+          Array.isArray(this.errors[name]) ? this.errors[name].push(e) : this.errors[name] = [e];
+          //Backbone.Validation.callbacks.invalid(view, name, e);
         }
       } else {
         this.runRules(attr, name);

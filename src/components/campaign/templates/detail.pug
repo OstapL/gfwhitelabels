@@ -61,8 +61,7 @@ section.campaigndetail
         .col-lg-6
           .date-detail
             i.fa.fa-calendar-check-o
-            //- |  Founded in #{ values.company.founding_date }
-            |  Founded in #{ formatHelper.formatDate(values.company.founding_date) }
+            |  Founded #{ formatHelper.formatDate(values.company.founding_date) }
       .row
         .col-lg-12.share
           span.font-weight-bold.d-inline-block Share:
