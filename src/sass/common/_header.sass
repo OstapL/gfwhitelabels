@@ -7,6 +7,7 @@ html.show-menu
   body
     overflow: hidden !important
     height: 100% !important
+    width: 100%
 
   header
     height: 100%
@@ -17,15 +18,14 @@ html.show-menu
     transition: height 0.35s ease-in 200ms
 
     #menuProfile
-      @media screen and (min-width: 992px)
-        -webkit-transition: right 0.45s ease-in 200ms
-        -moz-transition: right 0.45s ease-in 200ms
-        -ms-transition: right 0.45s ease-in 200ms
-        -o-transition: right 0.45s ease-in 200ms
-        transition: right 0.45s ease-in 200ms
+      -webkit-transition: right 0.45s ease-in 200ms
+      -moz-transition: right 0.45s ease-in 200ms
+      -ms-transition: right 0.45s ease-in 200ms
+      -o-transition: right 0.45s ease-in 200ms
+      transition: right 0.45s ease-in 200ms
 
-        position: absolute
-        right: -50px
+      position: absolute
+      right: -50px
 
     button.navbar-toggler
       span 
@@ -455,11 +455,14 @@ header
     background: rgba($menu_backgound_from, .96)
 
     nav
-      position: absolute
+      position: absolute!important
       top: 0
+      left: 0
+      right: 0
       z-index: 2
 
       height: 100%
+      margin: auto
       padding: 0
       overflow: hidden
       // overflow-y: auto 
@@ -489,15 +492,14 @@ header
         opacity: 0
 
       #menuProfile
-        @media screen and (min-width: 992px)
-          -webkit-transition: right 0.35s ease-in 100ms
-          -moz-transition: right 0.35s ease-in 100ms
-          -ms-transition: right 0.35s ease-in 100ms
-          -o-transition: right 0.35s ease-in 100ms
-          transition: right 0.35s ease-in 100ms
+        -webkit-transition: right 0.35s ease-in 100ms
+        -moz-transition: right 0.35s ease-in 100ms
+        -ms-transition: right 0.35s ease-in 100ms
+        -o-transition: right 0.35s ease-in 100ms
+        transition: right 0.35s ease-in 100ms
 
-          position: absolute
-          right: rem(17)
+        position: absolute
+        right: rem(17)
 
       #menuList
         -webkit-transition: visibility 0s linear 1s
