@@ -7,7 +7,6 @@ html.show-menu
   body
     overflow: hidden !important
     height: 100% !important
-    width: 100%
 
   header
     height: 100%
@@ -455,20 +454,15 @@ header
     background: rgba($menu_backgound_from, .96)
 
     nav
-      position: absolute!important
+      position: absolute
       top: 0
-      left: 0
-      right: 0
       z-index: 2
 
       height: 100%
-      margin: auto
       padding: 0
       overflow: hidden
       // overflow-y: auto 
       width: 100%
-
-      border: 1px #fff solid
 
       .list-container.user-info-drop.notification-container
         transform: scale(1.1) translateY(-10px)
@@ -502,8 +496,7 @@ header
 
         position: absolute
         right: rem(17)
-
-        border: 1px #fff solid
+        width: 21px
 
       #menuList
         -webkit-transition: visibility 0s linear 1s
