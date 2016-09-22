@@ -17,14 +17,15 @@ html.show-menu
     transition: height 0.35s ease-in 200ms
 
     #menuProfile
-      -webkit-transition: right 0.45s ease-in 200ms
-      -moz-transition: right 0.45s ease-in 200ms
-      -ms-transition: right 0.45s ease-in 200ms
-      -o-transition: right 0.45s ease-in 200ms
-      transition: right 0.45s ease-in 200ms
+      @media screen and (min-width: 992px)
+        -webkit-transition: right 0.45s ease-in 200ms
+        -moz-transition: right 0.45s ease-in 200ms
+        -ms-transition: right 0.45s ease-in 200ms
+        -o-transition: right 0.45s ease-in 200ms
+        transition: right 0.45s ease-in 200ms
 
-      position: absolute
-      right: -50px
+        position: absolute
+        right: -50px
 
     button.navbar-toggler
       span 
@@ -488,14 +489,15 @@ header
         opacity: 0
 
       #menuProfile
-        -webkit-transition: right 0.35s ease-in 100ms
-        -moz-transition: right 0.35s ease-in 100ms
-        -ms-transition: right 0.35s ease-in 100ms
-        -o-transition: right 0.35s ease-in 100ms
-        transition: right 0.35s ease-in 100ms
+        @media screen and (min-width: 992px)
+          -webkit-transition: right 0.35s ease-in 100ms
+          -moz-transition: right 0.35s ease-in 100ms
+          -ms-transition: right 0.35s ease-in 100ms
+          -o-transition: right 0.35s ease-in 100ms
+          transition: right 0.35s ease-in 100ms
 
-        position: relative
-        right: rem(0)
+          position: absolute
+          right: rem(17)
 
       #menuList
         -webkit-transition: visibility 0s linear 1s
