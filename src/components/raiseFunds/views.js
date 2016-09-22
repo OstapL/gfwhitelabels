@@ -47,6 +47,15 @@ const jsonActions = {
   },
 };
 
+
+const onPreviewAction = function(e) {
+  e.preventDefault();
+  this.$el.find('form').submit()
+  setTimeout(function() {
+    window.open(e.target.dataset.href, 'blank');
+  }, 400);
+};
+
 module.exports = {
   company: Backbone.View.extend({
     urlRoot: serverUrl + Urls['company-list'](),
@@ -55,6 +64,7 @@ module.exports = {
       'submit form': 'submit',
       'keyup #zip_code': 'changeZipCode',
       'click .update-location': 'updateLocation',
+      'click .onPreview': onPreviewAction,
       'change input[name=phone]': 'formatPhone',
       'change #website,#twitter,#facebook,#instagram,#linkedin': appendHttpIfNecessary,
     },
@@ -155,6 +165,7 @@ module.exports = {
       template: require('./templates/generalInformation.pug'),
       events: _.extend({
           'submit form': api.submitAction,
+          'click .onPreview': onPreviewAction,
         }, jsonActions.events),
 
       preinitialize() {
@@ -243,6 +254,7 @@ module.exports = {
         dragleave: 'globalDragleave',
         // 'change #video,.additional_video_link': 'appendHttpsIfNecessary',
         'change .press_link': 'appendHttpIfNecessary',
+        'click .onPreview': onPreviewAction,
       }, jsonActions.events),
       urlRoot: serverUrl + Urls['campaign-list']() + '/media',
 
@@ -683,6 +695,7 @@ module.exports = {
         'change #minimum_raise,#maximum_raise,#price_per_share,#premoney_valuation': 'calculateNumberOfShares',
         dragover: 'globalDragover',
         dragleave: 'globalDragleave',
+        'click .onPreview': onPreviewAction,
       },
       urlRoot: serverUrl + Urls['campaign-list']() + '/specifics',
 
@@ -790,6 +803,7 @@ module.exports = {
   perks: Backbone.View.extend({
       events: _.extend({
           'submit form': api.submitAction,
+          'click .onPreview': onPreviewAction,
         }, jsonActions.events),
       urlRoot: serverUrl + Urls['campaign-list']() + '/perks',
 
