@@ -3,14 +3,7 @@ import 'jquery.inputmask/dist/jquery.inputmask.bundle.js';
 import calculatorHelper from '../../helpers/calculatorHelpers';
 import flyPriceFormatter from '../../helpers/flyPriceFormatter';
 import '../../js/graf/graf.js';
-/*
-import 'js/jqplot/jquery.jqplot.js';
-import 'jqplot/plugins/jqplot.highlighter.js';
-import 'jqplot/plugins/jqplot.canvasTextRenderer.js';
-import 'jqplot/plugins/jqplot.canvasAxisLabelRenderer.js';
-import 'jqplot/plugins/jqplot.pointLabels.js';
-*/
-
+import '../../js/graf/jquery.flot.animator.js';
 
 const formatPrice = calculatorHelper.formatPrice;
 
@@ -122,7 +115,7 @@ module.exports = {
 
             // save percent values
             if (elem.dataset.inputMask == "percent") {
-                app.cache.payBackShareCalculator[elem.dataset.modelValue] = elem.dataset.currentValue;
+                app.cache.payBackShareCalculator[elem.dataset.modelValue] = +elem.dataset.currentValue;
             }
         },
 
@@ -156,7 +149,9 @@ module.exports = {
             });
 
             this.inputPercent.inputmask("9{1,4}%", {
-                placeholder: "0"
+                placeholder: "",
+                showMaskOnHover: false,
+                showMaskOnFocus: false
             });
             return this;
         }
@@ -222,20 +217,6 @@ module.exports = {
                 for (let i = 0, size = outputData.length; i < size; i++) {
                     if (outputData[i].multiple) {
                         data.push([i, outputData[i].multiple]);
-
-                        // give the ability to draw one more step
-                        // if (outputData[i].multiple >= maxOfMultipleReturned) {
-                        //     lastStep = true;
-                        // }
-
-                        // if we reach max needed steps, stop the filling
-                        // if (lastStep) {
-                        //     let lastElement = data[0].pop();
-                        //     lastElement[2] = 'Congratulations, Payback Share Contract is complete';
-                        //     data[0].push(lastElement);
-                        //     break;
-                        // }
-
                     }
                 }
                 return data;
@@ -248,59 +229,84 @@ module.exports = {
                 formatPrice
             }));
 
-            $.plot($("#chart1"), [{
-                data: dataRendered(),
-                label: "Invested amount",
-                lines: {
-                    lineWidth: 1
-                },
-                shadowSize: 0
-            }], {
-                series: {
+            let currentYear = new Date().getFullYear(),
+                ticks = [];
+
+            for (var i = 0; i < 11; i++) {
+                ticks.push([i, 'Year ' + (currentYear + i)]);
+            }
+
+            let $chart = $("#chart1"),
+                dataArr = [{
+                    data: dataRendered(),
+                    animator: { start: 0, steps: 99, duration: 500, direction: "right", lines: true },
+                    label: "Invested amount",
                     lines: {
-                        show: !0,
-                        lineWidth: 2,
-                        fill: !0,
-                        fillColor: {
-                            colors: [{
-                                opacity: .05
-                            }, {
-                                opacity: .01
-                            }]
-                        }
-                    },
-                    points: {
-                        show: !0,
-                        radius: 3,
                         lineWidth: 1
                     },
-                    shadowSize: 2
-                },
-                grid: {
-                    hoverable: !0,
-                    clickable: !0,
-                    tickColor: "#eee",
-                    borderColor: "#eee",
-                    borderWidth: 1
-                },
-                colors: ["#d12610", "#37b7f3", "#52e136"],
-                xaxis: {
-                    ticks: 11,
-                    tickDecimals: 0,
-                    tickColor: "#eee"
-                },
-                yaxis: {
-                    ticks: 11,
-                    tickDecimals: 0,
-                    tickColor: "#eee"
-                }
+                    shadowSize: 0
+                }],
+                options = {
+                    series: {
+                        lines: {
+                            show: !0,
+                            lineWidth: 2,
+                            fill: !0,
+                            fillColor: {
+                                colors: [{
+                                    opacity: .05
+                                }, {
+                                    opacity: .01
+                                }]
+                            }
+                        },
+                        points: {
+                            show: false,
+                            radius: 3,
+                            lineWidth: 1
+                        },
+                        shadowSize: 2
+                    },
+                    grid: {
+                        hoverable: !0,
+                        clickable: !0,
+                        tickColor: "#eee",
+                        borderColor: "#eee",
+                        borderWidth: 1
+                    },
+                    colors: ["#d12610", "#37b7f3", "#52e136"],
+                    xaxis: {
+                        min: 0,
+                        max: 10,
+                        ticks,
+                        tickSize: 1,
+                        tickDecimals: 0,
+                        tickColor: "#eee",
+                        mode: "categories"
+                    },
+                    yaxis: {
+                        ticks: [[0, '0%'], [1, '100%'], [2, '200%'], [3, '300%']],
+                        tickSize: 1,
+                        tickDecimals: 0,
+                        tickColor: "#eee"
+                    }
+                };
+
+            var plotApi = $.plotAnimator($chart, dataArr, options);
+
+            $chart.on("animatorComplete", function() {
+                options.series.points.show = true;
+                $.plot($chart, dataArr, options);
+                
+                let last = plotApi.getData()[0].data.pop();
+                let o = plotApi.pointOffset({x: last[0], y: last[1]});
+                $('<div class="data-point-label">Congratulations, Payback Share Contract is complete</div>').css( {
+                    position: 'absolute',
+                    left: o.left - 200,
+                    top: o.top - 30,
+                    display: 'none'
+                }).appendTo(plotApi.getPlaceholder()).fadeIn('slow');
             });
-
-
-
-
-
-
 
             // drawing jQPlot
             // this.jQPlot = $.jqplot('chart1', {

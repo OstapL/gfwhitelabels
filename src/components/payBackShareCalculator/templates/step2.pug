@@ -4,14 +4,13 @@ include ../../../templates/mixins.pug
 +breadcrumbs('PayBack Share Calculator ', 'step 1', 
     [
         ['Home', '/'],
-        ["What's My Business Worth?", '/'],
         ["PayBack Share Calculator", '']
     ]
 )
 
 .container.calculator-container
     .row
-        .offset-lg-2.col-xs-8
+        .offset-lg-2.col-lg-8
             ul.list-inline.top-breadcrambs.mb45
                 li
                     a(href="/calculator/paybackshare/step-1").btn.text-uppercase Intro
@@ -63,15 +62,16 @@ include ../../../templates/mixins.pug
                             input#growLevel.form-control.js-field(
                                 value= data.growLevel,
                                 type='text',
+                                placeholder='0%',
                                 data-input-mask='percent',
                                 data-model-value='growLevel')
 
                     .form-group.row.clearfix.m0
-                        .col-lg-6.mt30
+                        .col-xs-6.mt30
                             a(href='/calculator/paybackshare/step-1').link-3 Go back
                             p.text-muted Don&apos;t worry we saved this info
 
-                        .col-lg-6.mt30
+                        .col-xs-6.mt30
                             .controls  
                                 button( 
                                     type="submit"
