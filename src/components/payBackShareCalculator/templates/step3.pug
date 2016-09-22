@@ -3,14 +3,13 @@ include ../../../templates/mixins.pug
 +breadcrumbs('PayBack Share Calculator ', 'finish', 
     [
         ['Home', '/'],
-        ["What's My Business Worth?", '/'],
         ["PayBack Share Calculator", '']
     ]
 )
 
 .container.calculator-container
     .row
-        .offset-lg-2.col-xs-8
+        .offset-lg-2.col-lg-8
             ul.list-inline.top-breadcrambs.mb45
                 li
                     a(href="/calculator/paybackshare/step-1").btn.text-uppercase Intro
@@ -35,6 +34,7 @@ include ../../../templates/mixins.pug
             .col-xs-12
                 .js-jq-plot-area
                     #chart1
+                    p.plot-title Multiple Returned
 
         .row
             .col-xs-12.text-sm-center.mt45
@@ -61,11 +61,11 @@ include ../../../templates/mixins.pug
                                     td= formatPrice(val.total)
 
         .row
-            .offset-lg-4.col-lg-4.text-sm-center
+            .offset-lg-4.col-lg-4.offset-sm-3.col-sm-6.text-sm-center
                 hr.mt30.mb50
 
         .row
-            .offset-lg-3.col-lg-6.text-sm-center
+            .offset-sm-3.col-sm-6.text-xs-center
                 a(
                     href="/calculator/paybackshare/step-2"
                 ).btn.btn-primary.text-uppercase back

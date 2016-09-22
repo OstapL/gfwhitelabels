@@ -3,8 +3,6 @@ module.exports = {
     menu: Backbone.View.extend({
         template: require('templates/menuPage.pug'),
         render: function() {
-
-            console.log('js', app.user.toJSON());
             this.$el.html(
                 this.template({
                     serverUrl: serverUrl,
