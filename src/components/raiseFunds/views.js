@@ -211,13 +211,13 @@ module.exports = {
         };
 
         if (this.model.get('faq')) {
-          this.faqIndex = Object.keys(this.model.get('faq')).length - 1;
+          this.faqIndex = Object.keys(this.model.get('faq')).length;
         } else {
           this.faqIndex = 0;
         }
 
         if (this.model.get('additional_info')) {
-          this.additional_infoIndex = Object.keys(this.model.get('additional_info')).length - 1;
+          this.additional_infoIndex = Object.keys(this.model.get('additional_info')).length;
         } else {
           this.additional_infoIndex = 0;
         }
@@ -318,13 +318,13 @@ module.exports = {
           },
         };
         if (this.model.get('press')) {
-          this.pressIndex = Object.keys(this.model.get('press')).length - 1;
+          this.pressIndex = Object.keys(this.model.get('press')).length;
         } else {
           this.pressIndex = 0;
         }
 
         if (this.model.get('additional_video')) {
-          this.additional_videoIndex = Object.keys(this.model.get('additional_video')).length - 1;
+          this.additional_videoIndex = Object.keys(this.model.get('additional_video')).length;
         } else {
           this.additional_videoIndex = 0;
         }
