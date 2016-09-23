@@ -11,12 +11,12 @@ module.exports = Backbone.Router.extend({
       require.ensure([], function() {
         const View = require('components/accountProfile/views.js');
 
-        api.makeCacheRequest(Urls['rest_user_details'](), 'OPTIONS')
+        api.makeCacheRequest(Urls.rest_user_details(), 'OPTIONS')
           .then((response) => {
             var i = new View.profile({
               el: '#content',
-                model: app.user,
-                fields: response.actions.PUT
+              model: app.user.toJSON(),
+              fields: response.actions.PUT
             });
             i.render();
             app.hideLoading();

@@ -4,6 +4,7 @@ const dropzoneHelpers = require('helpers/dropzone.js');
 module.exports = {
   profile: Backbone.View.extend({
     template: require('./templates/profile.pug'),
+    urlRoot: serverUrl + Urls.rest_user_details(),
     events: {
       'submit form': api.submitAction,
       'focus #ssn' : 'showSSNPopover',
@@ -27,6 +28,7 @@ module.exports = {
 
       // define flag for the geocode function respond
       this.geocodeIsNotInProgress = true;
+      this.model.id = '';
     },
 
     render() {
@@ -36,7 +38,7 @@ module.exports = {
       this.$el.html(
         this.template({
           serverUrl: serverUrl,
-          user: app.user.toJSON(),
+          user: this.model,
           fields: this.fields,
           states: this.usaStates,
           dropzoneHelpers: dropzoneHelpers
@@ -58,7 +60,8 @@ module.exports = {
           }, {
             patch: true
           }).then((model) => {
-            console.log('image upload done', model);
+            debugger;
+            $('#user-thumbnail').attr('src','');
           });
         }
       );
@@ -81,8 +84,15 @@ module.exports = {
       return this;
     },
 
-    getSuccessUrl(data) {
-      return '/account/profile';
+    _success(data) {
+      debugger;
+      var r = _.extend(data, localStorage.getItem('user'));
+      localStorage.setItem('user', JSON.stringify(r));
+      app.routers.navigate(
+        '/',
+        { trigger: true, replace: false }
+      );
+      return false;
     },
 
     showSSNPopover(event){
