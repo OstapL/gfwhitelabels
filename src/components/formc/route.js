@@ -46,8 +46,9 @@ module.exports = Backbone.Router.extend({
         members:[],
       }),
     });
-    app.hideLoading();
     i.render();
+    app.hideLoading();
+    $('#content').scrollTo();
   },
 
   teamMemberAdd(id, type, index) {
@@ -63,7 +64,7 @@ module.exports = Backbone.Router.extend({
         experiences: {},
       },
     });
-    app.hideLoading();
     addForm.render();
+    app.hideLoading();
   },
 });

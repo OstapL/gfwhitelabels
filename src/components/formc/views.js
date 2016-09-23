@@ -216,6 +216,49 @@ module.exports = {
                 template = require('components/formc/templates/teamMembersDirector.pug');
                 
             } else if (this.type == 'officer') {
+                this.fields.previous_positions.type = "position";
+                this.fields.previous_positions.schema = {
+                    position: {
+                        type: 'string',
+                        label: 'Position',
+                    },
+                    start_date: {
+                        type: 'date',
+                        label: 'Start Date of Service',
+                    },
+                    end_date_fo_service: {
+                        type: 'date',
+                        label: 'End Date of Service',
+                    }
+                };
+
+                this.fields.experiences.type = "experience";
+                this.fields.experiences.schema = {
+                    employer: {
+                        type: 'string',
+                        label: 'Employer',
+                    },
+                    employer_principal: {
+                        type: 'string',
+                        label: "Employer's Principal Business",
+                    },
+                    title: {
+                        type: 'string',
+                        label: 'Title',
+                    },
+                    responsibilities: {
+                        type: 'date',
+                        label: 'Responsibilities',
+                    },
+                    start_date: {
+                        type: 'date',
+                        label: 'Start Date of Service',
+                    },
+                    end_date: {
+                        type: 'date',
+                        label: 'End Date of Service',
+                    },
+                };
                 template = require('components/formc/templates/teamMembersOfficer.pug');
 
             } else if (this.tyep == 'holder') {
