@@ -71,6 +71,7 @@ module.exports = {
         initialize(options) {
             this.fields = options.fields;
             // this.model = options.model;
+            // Get the type from here, i.e. director, officer, share holder
         },
 
         render() {
@@ -145,6 +146,8 @@ module.exports = {
 
     }),
 
+
+
     teamMemberAdd: Backbone.View.extend({
         events: _.extend({
             'submit form': 'submit',
@@ -152,54 +155,73 @@ module.exports = {
         urlRoot: serverUrl + 'xxxxx' + '/team_members',
         initialize(options) {
             this.fields = options.fields;
+            this.type = options.type;
             // this.faqIndex = 1;
-            this.previous_positionsIndex = 1;
-            this.experiencesIndex = 1;
+            if (this.type == 'director') {
+                this.previous_positionsIndex = 1;
+                this.experiencesIndex = 1;
+            } else if (this.type == 'officer') {
+
+            } else if (this.type == 'holder') {
+
+            }
         },
         render() {
-            this.fields.previous_positions.type = "position";
-            this.fields.previous_positions.schema = {
-                position: {
-                    type: 'string',
-                    label: 'Position',
-                },
-                start_date: {
-                    type: 'date',
-                    label: 'Start Date of Service',
-                },
-                end_date_fo_service: {
-                    type: 'date',
-                    label: 'End Date of Service',
-                }
-            };
+            let template;
+            if (this.type == 'director') {
+                this.fields.previous_positions.type = "position";
+                this.fields.previous_positions.schema = {
+                    position: {
+                        type: 'string',
+                        label: 'Position',
+                    },
+                    start_date: {
+                        type: 'date',
+                        label: 'Start Date of Service',
+                    },
+                    end_date_fo_service: {
+                        type: 'date',
+                        label: 'End Date of Service',
+                    }
+                };
 
-            this.fields.experiences.type = "experience";
-            this.fields.experiences.schema = {
-                employer: {
-                    type: 'string',
-                    label: 'Employer',
-                },
-                employer_principal: {
-                    type: 'string',
-                    label: "Employer's Principal Business",
-                },
-                title: {
-                    type: 'string',
-                    label: 'Title',
-                },
-                responsibilities: {
-                    type: 'date',
-                    label: 'Responsibilities',
-                },
-                start_date: {
-                    type: 'date',
-                    label: 'Start Date of Service',
-                },
-                end_date: {
-                    type: 'date',
-                    label: 'End Date of Service',
-                },
-            };
+                this.fields.experiences.type = "experience";
+                this.fields.experiences.schema = {
+                    employer: {
+                        type: 'string',
+                        label: 'Employer',
+                    },
+                    employer_principal: {
+                        type: 'string',
+                        label: "Employer's Principal Business",
+                    },
+                    title: {
+                        type: 'string',
+                        label: 'Title',
+                    },
+                    responsibilities: {
+                        type: 'date',
+                        label: 'Responsibilities',
+                    },
+                    start_date: {
+                        type: 'date',
+                        label: 'Start Date of Service',
+                    },
+                    end_date: {
+                        type: 'date',
+                        label: 'End Date of Service',
+                    },
+                };
+                // Here I should use different template for different requests.
+                template = require('components/formc/templates/teamMembersDirector.pug');
+                
+            } else if (this.type == 'officer') {
+                template = require('components/formc/templates/teamMembersOfficer.pug');
+
+            } else if (this.tyep == 'holder') {
+                template = require('components/formc/templates/teamMembersOfficer.pug');
+
+            }
 
             if (this.model.get('previous_positions')) {
               this.previous_positionsIndex = Object.keys(this.model.get('previous_positions')).length - 1;
@@ -213,7 +235,6 @@ module.exports = {
               this.experiencesIndex = 0;
             }
 
-            let template = require('components/formc/templates/teamMembersDirector.pug');
 
             this.$el.html(
                 template({
