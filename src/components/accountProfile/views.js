@@ -4,8 +4,9 @@ const dropzoneHelpers = require('helpers/dropzone.js');
 module.exports = {
   profile: Backbone.View.extend({
     template: require('./templates/profile.pug'),
+    urlRoot: serverUrl + Urls.rest_user_details(),
     events: {
-      'submit form': api.submitAction,
+      'submit form': 'submit',
       'focus #ssn' : 'showSSNPopover',
       'focuseout #ssn' : 'hideSSNPopover',
       'keyup #zip_code': 'changeZipCode',
@@ -27,6 +28,7 @@ module.exports = {
 
       // define flag for the geocode function respond
       this.geocodeIsNotInProgress = true;
+      this.model.id = '';
     },
 
     render() {
@@ -36,7 +38,7 @@ module.exports = {
       this.$el.html(
         this.template({
           serverUrl: serverUrl,
-          user: app.user.toJSON(),
+          user: this.model,
           fields: this.fields,
           states: this.usaStates,
           dropzoneHelpers: dropzoneHelpers
@@ -53,12 +55,17 @@ module.exports = {
         'image', 
         'avatars', '', 
         (data) => {
-          this.model.save({
+          app.user.save({
             image: data.file_id,
           }, {
             patch: true
-          }).then((model) => {
-            console.log('image upload done', model);
+          }).then((data) => {
+            $('#user-thumbnail').attr(
+              'src', 
+              app.getThumbnail('55x55', data.image_data.thumbnails)
+            );
+            var r = _.extend(data, localStorage.getItem('user'));
+            localStorage.setItem('user', JSON.stringify(r));
           });
         }
       );
@@ -81,8 +88,41 @@ module.exports = {
       return this;
     },
 
-    getSuccessUrl(data) {
-      return '/account/profile';
+    submit(e) {
+
+      this.$el.find('.alert').remove();
+      e.preventDefault();
+
+      var data = data || $(e.target).serializeJSON();
+
+      let model = new Backbone.Model();
+      model.urlRoot = this.urlRoot;
+      model.set(data);
+      model.set('id', '');
+
+      if (model.isValid(true)) {
+        app.showLoading();
+        model.save().
+          then((data) => {
+            this.$el.find('.alert-warning').remove();
+            $('.popover').popover('hide');
+            $('#user_name').html(data.first_name + ' ' + data.last_name);
+
+            var r = _.extend(data, localStorage.getItem('user'));
+            localStorage.setItem('user', JSON.stringify(r));
+            //$('#content').scrollTo();
+            app.hideLoading();
+          }).
+          fail((xhr, status, text) => {
+            api.errorAction(this, xhr, status, text, this.fields);
+          });
+      } else {
+        if (this.$('.alert').length) {
+          $('#content').scrollTo();
+        } else {
+          this.$el.find('.has-error').scrollTo();
+        }
+      }
     },
 
     showSSNPopover(event){

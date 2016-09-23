@@ -68,7 +68,7 @@ section.create-company.container.m-b-85
         .jumbotron.jumbotron-fluid
           h4.font-weight-bold.text-uppercase
             i.fa.fa-book
-            |  education Links
+            |  Education Links
           .nav
             li.nav-item
               a(href="/pg/investor_tutorial").nav-link.link-3 Issuer Tutorial
@@ -188,8 +188,10 @@ section.create-company.container.m-b-85
             type: 'text',
             })
       .row.m-t-2
-          .col-lg-12.text-md-center.text-sm-center.text-xs-center
-            button(type="submit").btn.btn-primary.text-uppercase.pull-lg-right save
+          .col-lg-12.pull-lg-right.p-r-0.text-lg-right.text-md-center.text-sm-center.text-xs-center
+            if campaign.id
+              button(type="button" data-href=("/api/campaign/" + campaign.id)).btn.btn-secondary.text-uppercase.onPreview.m-r-3 preview
+            button(type="submit").btn.btn-primary.text-uppercase save & next
               i.fa.fa-angle-right
 
 //MODAL
@@ -219,7 +221,7 @@ section.create-company.container.m-b-85
                             .row
                                 .col-lg-12
                                     .col-lg-12.text-lg-center.text-md-center.text-xs-center
-                                            button(data-dismiss="modal").update-location.btn.btn-primary.text-uppercase save
+                                      button(data-dismiss="modal").update-location.btn.btn-primary.text-uppercase save
 
                 .modal-footer
           
