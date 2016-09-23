@@ -47,6 +47,15 @@ const jsonActions = {
   },
 };
 
+
+const onPreviewAction = function(e) {
+  e.preventDefault();
+  this.$el.find('form').submit()
+  setTimeout(function() {
+    window.open(e.target.dataset.href, 'blank');
+  }, 400);
+};
+
 module.exports = {
   company: Backbone.View.extend({
     urlRoot: serverUrl + Urls['company-list'](),
@@ -55,6 +64,7 @@ module.exports = {
       'submit form': 'submit',
       'keyup #zip_code': 'changeZipCode',
       'click .update-location': 'updateLocation',
+      'click .onPreview': onPreviewAction,
       'change input[name=phone]': 'formatPhone',
       'change #website,#twitter,#facebook,#instagram,#linkedin': appendHttpIfNecessary,
     },
@@ -155,6 +165,7 @@ module.exports = {
       template: require('./templates/generalInformation.pug'),
       events: _.extend({
           'submit form': api.submitAction,
+          'click .onPreview': onPreviewAction,
         }, jsonActions.events),
 
       preinitialize() {
@@ -211,13 +222,13 @@ module.exports = {
         };
 
         if (this.model.get('faq')) {
-          this.faqIndex = Object.keys(this.model.get('faq')).length - 1;
+          this.faqIndex = Object.keys(this.model.get('faq')).length;
         } else {
           this.faqIndex = 0;
         }
 
         if (this.model.get('additional_info')) {
-          this.additional_infoIndex = Object.keys(this.model.get('additional_info')).length - 1;
+          this.additional_infoIndex = Object.keys(this.model.get('additional_info')).length;
         } else {
           this.additional_infoIndex = 0;
         }
@@ -243,6 +254,7 @@ module.exports = {
         dragleave: 'globalDragleave',
         // 'change #video,.additional_video_link': 'appendHttpsIfNecessary',
         'change .press_link': 'appendHttpIfNecessary',
+        'click .onPreview': onPreviewAction,
       }, jsonActions.events),
       urlRoot: serverUrl + Urls['campaign-list']() + '/media',
 
@@ -318,13 +330,13 @@ module.exports = {
           },
         };
         if (this.model.get('press')) {
-          this.pressIndex = Object.keys(this.model.get('press')).length - 1;
+          this.pressIndex = Object.keys(this.model.get('press')).length;
         } else {
           this.pressIndex = 0;
         }
 
         if (this.model.get('additional_video')) {
-          this.additional_videoIndex = Object.keys(this.model.get('additional_video')).length - 1;
+          this.additional_videoIndex = Object.keys(this.model.get('additional_video')).length;
         } else {
           this.additional_videoIndex = 0;
         }
@@ -404,7 +416,8 @@ module.exports = {
           var id;
 
           if (provider == 'youtube') {
-            id = url.match(/https:\/\/(?:www.)?(\w*).com\/.*v=(\w*)/)[2];
+            // id = url.match(/https:\/\/(?:www.)?(\w*).com\/.*v=(\w*)/)[2];
+            id = url.match(/https:\/\/(?:www.)?(\w*).com\/.*v=([A-Za-z0-9_-]*)/)[2];
           } else if (provider == 'vimeo') {
             id = url.match(/https:\/\/(?:www.)?(\w*).com\/(\d*)/)[2];
           } else {
@@ -683,6 +696,7 @@ module.exports = {
         'change #minimum_raise,#maximum_raise,#price_per_share,#premoney_valuation': 'calculateNumberOfShares',
         dragover: 'globalDragover',
         dragleave: 'globalDragleave',
+        'click .onPreview': onPreviewAction,
       },
       urlRoot: serverUrl + Urls['campaign-list']() + '/specifics',
 
@@ -790,6 +804,7 @@ module.exports = {
   perks: Backbone.View.extend({
       events: _.extend({
           'submit form': api.submitAction,
+          'click .onPreview': onPreviewAction,
         }, jsonActions.events),
       urlRoot: serverUrl + Urls['campaign-list']() + '/perks',
 
