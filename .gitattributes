@@ -1,4 +1,54 @@
 src/config.js merge=ours
 src/img/logo.png merge=ours
+src/img/u merge=ours
+
+src/sass/unique/_accordion.sass merge=ours
+src/sass/unique/_card.sass merge=ours
+src/sass/unique/_dropdown.sass merge=ours
+src/sass/unique/_list-group.sass merge=ours
+src/sass/unique/_pagination.sass merge=ours
+src/sass/unique/_tables.sass merge=ours
+src/sass/unique/_variables.sass merge=ours
+
+src/sass/unique/_alert.sass merge=ours
+src/sass/unique/_carousel.sass merge=ours
+src/sass/unique/_forms.sass merge=ours
+src/sass/unique/_media.sass merge=ours
+src/sass/unique/_popover.sass merge=ours
+src/sass/unique/_tabs.sass merge=ours
+
+src/sass/unique/_animation.sass merge=ours
+src/sass/unique/_close.sass merge=ours
+src/sass/unique/_grid.sass merge=ours
+src/sass/unique/_modal.sass merge=ours
+src/sass/unique/_print.sass merge=ours
+src/sass/unique/_tags.sass merge=ours
+
+src/sass/unique/_breadcrumb.sass merge=ours
+src/sass/unique/_code.sass merge=ours
+src/sass/unique/_images.sass merge=ours
+src/sass/unique/_nav.sass merge=ours
+src/sass/unique/_progress.sass merge=ours
+src/sass/unique/_tooltip.sass merge=ours
+
+src/sass/unique/_button-group.sass merge=ours
+src/sass/unique/_custom-forms.sass merge=ours
+src/sass/unique/_input-group.sass merge=ours
+src/sass/unique/_navbar.sass merge=ours
+src/sass/unique/_reboot.sass merge=ours
+src/sass/unique/_type.sass merge=ours
+
+src/sass/unique/_buttons.sass merge=ours
+src/sass/unique/_custom.sass merge=ours
+src/sass/unique/_jumbotron.sass merge=ours
+src/sass/unique/_normalize.sass merge=ours
+src/sass/unique/_resposive-embed.sass merge=ours
+src/sass/unique/_utilities.sass merge=ours
+
 src/sass/config/_colors.sass merge=ours
 src/sass/config/_vars.sass merge=ours
+src/sass/pages/_index.sass merge=ours
+src/templates/overview.pug merge=ours
+src/templates/mainPage.pug merge=ours
+src/templates/contact.pug merge=ours
+src/templates/careers.pug merge=ours
