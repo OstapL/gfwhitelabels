@@ -92,8 +92,10 @@ module.exports = {
 
     submit(e) {
       var data = $(e.target).serializeJSON();
-      data['founding_date'] = data['founding_date__year'] + '-' +
-        data.founding_date__month + '-' + data.founding_date__day;
+
+      data['founding_date'] = data.founding_date__year && data.founding_date__month && data.founding_date__day
+        ? data.founding_date__year + '-' + data.founding_date__month + '-' + data.founding_date__day
+        : '';
       delete data.founding_date__day;
       delete data.founding_date__month;
       delete data.founding_date__year;

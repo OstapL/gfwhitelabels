@@ -60,7 +60,7 @@ module.exports = {
     */
 
     this.$('.help-block').remove();
-    if (!validation.validate(this.fields, data.member, this)) {
+    if (!validation.validate(this.fields, data, this)) {
       _(validation.errors).each((el, key) => {
         Backbone.Validation.callbacks.invalid(this, key, el);
       });
