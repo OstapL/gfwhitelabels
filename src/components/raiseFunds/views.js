@@ -6,7 +6,7 @@ const appendHttpIfNecessary = formatHelper.appendHttpIfNecessary;
 const dropzone = require('dropzone');
 const dropzoneHelpers = require('helpers/dropzone.js');
 
-const validation = require('components/validation/validation.js');
+// const validation = require('components/validation/validation.js');
 
 const jsonActions = {
   events: {
@@ -633,7 +633,7 @@ module.exports = {
           index: this.index,
         };
 
-        $('.help-block').remove();
+        /*$('.help-block').remove();
         if (validation.validate(this.fields, json, this)) {
           api.submitAction.call(this, e, data);
         } else {
@@ -641,7 +641,9 @@ module.exports = {
             Backbone.Validation.callbacks.invalid(this, key, el);
           });
           $('.help-block').scrollTo(45);
-        }
+        }*/
+
+        api.submitAction.call(this, e, data);
       },
     }),
 

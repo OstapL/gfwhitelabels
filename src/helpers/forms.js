@@ -1,3 +1,5 @@
+const validation = require('components/validation/validation.js');
+
 module.exports = {
   makeCacheRequest(url, type, data) {
     return this.makeRequest(url, type, data);
@@ -56,6 +58,16 @@ module.exports = {
        };
        this.model.validation = newValidators;
     */
+
+    this.$('.help-block').remove();
+    if (!validation.validate(this.fields, data.member, this)) {
+      _(validation.errors).each((el, key) => {
+        Backbone.Validation.callbacks.invalid(this, key, el);
+      });
+      this.$('.help-block').scrollTo(45);
+      return;
+    }
+
     let model = {};
     model = new Backbone.Model();
     if(this.model.hasOwnProperty('id')) {
