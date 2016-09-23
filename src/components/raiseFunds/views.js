@@ -54,7 +54,7 @@ const onPreviewAction = function(e) {
   app.showLoading();
   setTimeout(function() {
     window.location = e.target.dataset.href + '?preview=1'
-  }, 400);
+  }, 100);
 };
 
 module.exports = {
