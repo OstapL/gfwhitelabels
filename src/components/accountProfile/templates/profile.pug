@@ -11,8 +11,9 @@ include ../../../templates/mixins.pug
     .row 
         aside.col-xl-3
             form(method="post" action="").form
+                - var values = user;
                 +fieldDropzone("image", {
-                  thumbSize: '255x153',
+                  thumbSize: '255x135',
                   default: '/img/default/255x153.png',
                   text: user.first_name + ' ' + user.last_name,
                   icon: 'file-image-o',
