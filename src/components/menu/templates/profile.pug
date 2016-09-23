@@ -2,8 +2,8 @@ if user.token != ""
     li.nav-item.user-info
         a.nav-link.notification.user-info-name
             span
-                img#user-thumbnail(src=dropzoneHelpers.getDropzoneUrl('image', {thumbSize: '55x55'}, user) class="img-fluid")
-            .hidden-md-down #{ user.first_name } #{user.last_name}&nbsp;
+                img#user-thumbnail(src=dropzoneHelpers.getDropzoneUrl('image', {thumbSize: '55x55'}, user) class="img-fluid img-circle")
+            v#user_name.hidden-md-down #{ user.first_name } #{user.last_name}&nbsp;
             i.fa.fa-angle-down
         .list-container.user-info-drop.notification-container.drop-container
             ul.submenu.list-unstyled 
