@@ -180,6 +180,13 @@ module.exports = {
   }),
 
   changePassword: Backbone.View.extend({
+    urlRoot: serverUrl + Urls.rest_password_change(),
+    events: {
+      'submit form': api.submitAction,
+    },
+    getSuccessUrl(data) {
+      return '/account/profile';
+    },
     render(){
       let template = require('./templates/changePassword.pug');
       this.$el.html(template({}));
@@ -188,8 +195,7 @@ module.exports = {
   }),
 
   setNewPassword: Backbone.View.extend({
-    // urlRoot: sererUrl + Urls.
-    urlRoot: serverUrl + '/rest-auth/password/reset/confirm/',
+    urlRoot: serverUrl + Urls.rest_password_reset_confirm(),
     events: {
         'submit form': api.submitAction,
     },
