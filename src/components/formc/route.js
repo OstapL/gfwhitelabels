@@ -3,6 +3,7 @@ module.exports = Backbone.Router.extend({
     'formc/introduction': 'introduction',
     'formc/team-members/:id/add/:type/:index': 'teamMemberAdd',
     'formc/team-members/:id': 'teamMembers',
+    'formc/related-parties/:id': 'relatedParties',
 
   },
   introduction() {
@@ -43,7 +44,8 @@ module.exports = Backbone.Router.extend({
       el: '#content',
       fields: {},
       model: new Backbone.Model({
-        members:[],
+        members:[{"bio":"I am smart. I am smart. I am smart. I am smart. I am smart. I am smart. I am smart. I am smart. I am smart. I am smart. I am smart. I am smart. I am smart. I am smart. I am smart. I am smart. I am smart. I am smart. I am smart. I am smart. I am smart","first_name":"Arthur","last_name":"Yip","title":"CEO","photo":"https://s3.amazonaws.com/growthfountain-development/filer_public/c1/02/c102632a-b9d3-4ce3-b6ff-25758553e82d/3001585_121246046_2.jpg?v=60730","growup":"Brooklyn","linkedin":"https://arthuryip.xyz","state":"AR","college":"Memorial University of Newfoundland","facebook":"https://arthuryip.xyz","type":"member","email":"arthuryip723@gmail.com"},{"bio":"","first_name":"asdg","last_name":"","title":"","photo":"","growup":"","linkedin":"","state":"","college":"","facebook":"","type":"advisor","email":""}],
+        // members:[],
       }),
     });
     i.render();
@@ -65,6 +67,18 @@ module.exports = Backbone.Router.extend({
       },
     });
     addForm.render();
+    app.hideLoading();
+  },
+
+  relatedParties(id) {
+    const View = require('components/formc/views.js');
+    const i = new View.relatedParties({
+      el: '#content',
+      model: new Backbone.Model({}),
+      // fields: {},
+
+    });
+    i.render();
     app.hideLoading();
   },
 });

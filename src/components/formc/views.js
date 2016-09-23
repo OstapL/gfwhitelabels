@@ -168,7 +168,7 @@ module.exports = {
         },
         render() {
             let template;
-            if (this.type == 'director') {
+            if (this.type == 'director' || this.type == 'officer') {
                 this.fields.previous_positions.type = "position";
                 this.fields.previous_positions.schema = {
                     position: {
@@ -212,72 +212,29 @@ module.exports = {
                         label: 'End Date of Service',
                     },
                 };
-                // Here I should use different template for different requests.
-                template = require('components/formc/templates/teamMembersDirector.pug');
-                
-            } else if (this.type == 'officer') {
-                this.fields.previous_positions.type = "position";
-                this.fields.previous_positions.schema = {
-                    position: {
-                        type: 'string',
-                        label: 'Position',
-                    },
-                    start_date: {
-                        type: 'date',
-                        label: 'Start Date of Service',
-                    },
-                    end_date_fo_service: {
-                        type: 'date',
-                        label: 'End Date of Service',
-                    }
-                };
 
-                this.fields.experiences.type = "experience";
-                this.fields.experiences.schema = {
-                    employer: {
-                        type: 'string',
-                        label: 'Employer',
-                    },
-                    employer_principal: {
-                        type: 'string',
-                        label: "Employer's Principal Business",
-                    },
-                    title: {
-                        type: 'string',
-                        label: 'Title',
-                    },
-                    responsibilities: {
-                        type: 'date',
-                        label: 'Responsibilities',
-                    },
-                    start_date: {
-                        type: 'date',
-                        label: 'Start Date of Service',
-                    },
-                    end_date: {
-                        type: 'date',
-                        label: 'End Date of Service',
-                    },
-                };
-                template = require('components/formc/templates/teamMembersOfficer.pug');
+                if (this.model.get('previous_positions')) {
+                  this.previous_positionsIndex = Object.keys(this.model.get('previous_positions')).length;
+                } else {
+                  this.previous_positionsIndex = 0;
+                }
 
-            } else if (this.tyep == 'holder') {
-                template = require('components/formc/templates/teamMembersOfficer.pug');
+                if (this.model.get('experiences')) {
+                  this.experiencesIndex = Object.keys(this.model.get('experiences')).length;
+                } else {
+                  this.experiencesIndex = 0;
+                }
+
+
+                if (this.type == 'director')
+                    template = require('components/formc/templates/teamMembersDirector.pug');
+                else if (this.type == 'officer')
+                    template = require('components/formc/templates/teamMembersOfficer.pug');
+
+            } else if (this.type == 'holder') {
+                template = require('components/formc/templates/teamMembersShareHolder.pug');
 
             }
-
-            if (this.model.get('previous_positions')) {
-              this.previous_positionsIndex = Object.keys(this.model.get('previous_positions')).length - 1;
-            } else {
-              this.previous_positionsIndex = 0;
-            }
-
-            if (this.model.get('experiences')) {
-              this.experiencesIndex = Object.keys(this.model.get('experiences')).length - 1;
-            } else {
-              this.experiencesIndex = 0;
-            }
-
 
             this.$el.html(
                 template({
@@ -325,13 +282,19 @@ module.exports = {
 
         render() {
             let template = require('templates/formc/offering.pug');
+            let values = this.model.toJSON();
+
+            if (!Array.isArray(values.members)) {
+                values.members = [];
+            }
 
             this.$el.html(
                 template({
                     serverUrl: serverUrl,
                     Urls: Urls,
                     fields: this.fields,
-                    values: this.model.toJSON(),
+                    // values: this.model.toJSON(),
+                    values: values,
                 })
             );
             return this;
@@ -372,6 +335,23 @@ module.exports = {
                     serverUrl: serverUrl,
                     Urls: Urls,
                     fields: this.fields,
+                    values: this.model.toJSON(),
+                })
+            );
+            return this;
+        },
+    }),
+
+    relatedParties: Backbone.View.extend({
+        initialize(options) {},
+        
+        render() {
+            let template = require('components/formc/templates/relatedParties.pug');
+            this.$el.html(
+                template({
+                    serverUrl: serverUrl,
+                    Urls: Urls,
+                    // fields: this.fields,
                     values: this.model.toJSON(),
                 })
             );

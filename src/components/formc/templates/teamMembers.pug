@@ -15,6 +15,16 @@ section.create-company-team-add.container
     //START RIGHT BLOCK
     .col-lg-8
         h2.text-uppercase.text-lg-center.text-xs-center.dosis.m-t-0 team members
+        div(style='display: ' + (values.members.length < 1 ? 'block' : 'none')).form-group.text-lg-center.notification
+           .col-lg-12
+             .campaign-warning.warning-team-add.text-lg-left
+               i.fa.fa-exclamation-triangle 
+               span.warning-text 
+                   | Please enter all Officers, Directors and 20% Voting Shareholders.
+                   p We are required by law to run background checks on all of these individuals.  We will email them separately to collect the information required to run these checks - and you'll see the status on your Issuer Dashboard.
+                   p OFFICER means:  president, vice president, secretary, treasurer or principal financial officer, comptroller or principal accounting officer, and any person routinely performing similar functions.
+                   p 20% VOTING SHAREHOLDER means: no earlier than 120 days prior to the date of this offering, please list beneficial owners of 20% or more of issuer’s outstanding voting equity securities.
+
         form(metod="post" action="").form-section
 
             .col-lg-12.text-lg-center.text-md-center.text-sm-center.text-xs-center.m-t-2.m-b-2
@@ -28,12 +38,6 @@ section.create-company-team-add.container
                         i.fa.fa-plus
                         |  ADD 20% VOTING SHAREHOLDER
 
-            div(style='display: ' + (values.members.length < 1 ? 'block' : 'none')).form-group.text-lg-center.notification
-               .col-lg-12
-                 .campaign-warning.warning-team-add.text-lg-left
-                   i.fa.fa-exclamation-triangle 
-                   span.warning-text 
-                   | Warning! You have to add at least 1 team member to proceed.
 
             if values.members
                 - counter = 0
@@ -51,6 +55,6 @@ section.create-company-team-add.container
                     - counter ++
 
             div(style="display: " +  (values.members.length >= 1 ? 'block' : 'none')).col-lg-12.pull-lg-right.p-r-0.m-t-3.text-lg-right.text-md-center.text-sm-center.text-xs-center.buttons-row
-                a(href="/api/campaign/" + values.id target="_blank").btn.btn-secondary.text-uppercase.m-r-3 preview
-                a(href="/campaign/specifics/" + values.id).btn.btn-primary.text-uppercase Go to Specifics
+                //- a(href="/api/campaign/" + values.id target="_blank").btn.btn-secondary.text-uppercase.m-r-3 preview
+                a(href="/formc/related-parties/" + values.id).btn.btn-primary.text-uppercase Go to Related Parties
                     i.fa.fa-angle-right

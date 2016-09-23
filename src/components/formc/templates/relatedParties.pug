@@ -1,0 +1,76 @@
+include ../../../templates/mixins.pug
+include menu.pug
+
+- 'use strict'
+- var fields = { specified_person: { label: 'Specified Person'} };
+- var fields = { relationshop_sssuer: { label: 'Relationshop to Issuer'} };
+- var fields = { nature: { label: 'Nature of Interest in Transation'} };
+- var fields = { amount: { label: 'Amount of Interest'} };
+
+
+
++breadcrumbs('form c', '', 
+    [
+        ['Home', '/'],
+        ['FORM C', ''],
+        ['related parties', ''],
+    ]
+)
+
+section.formc-team-members-director.container.m-b-85
+  +menu('related-parties')
+
+
+
+  //START RIGHT BLOCK
+  .col-lg-8
+    h2.text-uppercase.text-lg-center.text-xs-center.m-t-0.dosis related parties
+    p.pb10.col-lg-12 Please describe any transaction or proposed transaction with related parties in the last 12 months in excess of 5% of capital raised in reliance on 4(a)(6) inclusive of current offering.
+    p.pb10.col-lg-12 Related parties is defined as: any director, officer or 20% voting shareholder (no earlier than 120 days prior to this offering for 20%+ shareholder), any promoter (if organized within past three years), or any family member of the foregoing persons.  Family member includes any child, stepchild, grandchild, parent, stepparent, grandparent, spouse or spousal equivalent, sibling, mother-in-law, father-in-law, son-in-law, daughter-in-law, brother-in-law, or sister-in-law of the person, and includes adoptive relationships.  The term “spousal equivalent” means a cohabitant occupying a relationship generally equivalent to that of a spouse.
+    p.col-lg-12 For each related party transaction identified, please disclose the specific person, the relationship to your company and the nature and amount of his or her interest in the transaction.
+    .col-lg-12
+      .border-bottom.m-t-3.m-b-3
+    .col-lg-12
+      b Have you had any transactions with related parties in the past 12 months?
+    form(metod="post" action="").form-section
+      .col-lg-12.form-group.form-section.m-t-2.m-b-2
+        .radio-input.m-b-2
+          label 
+            input(type="radio")
+            |  Yes
+          label 
+            input(type="radio")
+            |  No
+
+        +fieldBlock("specified_person", '', {
+          class1: 'col-lg-3 col-md-12 text-md-left',
+          class2: 'col-lg-9 col-md-12',
+          type: 'text',
+          placeholder: 'Specified Person',
+          })
+        +fieldBlock("relationshop_sssuer", '', {
+          class1: 'col-lg-3 col-md-12 text-md-left',
+          class2: 'col-lg-9 col-md-12',
+          type: 'text',
+          placeholder: 'Relationshop to Issuer',
+          })
+        +fieldBlock("nature", '', {
+          class1: 'col-lg-3 col-md-12 text-md-left',
+          class2: 'col-lg-9 col-md-12',
+          type: 'text',
+          placeholder: 'Nature of Interest in Transation',
+          })
+        +fieldBlock("amount", '', {
+          class1: 'col-lg-3 col-md-12 text-md-left',
+          class2: 'col-lg-9 col-md-12',
+          type: 'text',
+          placeholder: 'Amount of Interest',
+          })
+        .row.add-link
+          .col-lg-9.offset-1.pull-right
+            a(href="#" data-section="additional_info").link-2.add-section
+              i.fa.fa-plus
+              |  Add Another Related Part
+        .row.m-t-3
+          .col-lg-12.text-md-center.text-sm-center.text-xs-center
+            a(href="#").btn.btn-primary.text-uppercase.pull-lg-right Save
