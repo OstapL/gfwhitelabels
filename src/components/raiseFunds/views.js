@@ -51,8 +51,9 @@ const jsonActions = {
 const onPreviewAction = function(e) {
   e.preventDefault();
   this.$el.find('form').submit()
+  app.showLoading();
   setTimeout(function() {
-    window.open(e.target.dataset.href, 'blank');
+    window.location = e.target.dataset.href + '?preview=1'
   }, 400);
 };
 
