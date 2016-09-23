@@ -1,0 +1,95 @@
+include mixins.pug
+- 'use strict'
+
++breadcrumbs('form c', '', 
+    [
+        ['Home', '/'],
+        ['FORM C', ''],
+        ['Risk Factors', ''],
+    ]
+)
+
+section.formc-team-members-director.container.m-b-85
+  //START LEFT BLOCK
+  .col-lg-3.create_compaign
+
+    .row
+      .education-link-wrap
+        .jumbotron.jumbotron-fluid
+          h4.font-weight-bold.text-uppercase
+            i.fa.fa-book
+            |  education Links
+          .nav
+            li.nav-item
+              a(href="/pg/investor_tutorial").nav-link.link-3 Issuer Tutorial
+            li.nav-item
+              a(href="/pg/success_guide").nav-link.link-3 Success Guide
+            li.nav-item
+              a(href="/calculator/capitalraise/intro").nav-link.link-3 What's My Business Worth?
+            li.nav-item
+              a(href="#").nav-link.link-3 How Much Should I Raise?
+
+
+
+  //START RIGHT BLOCK
+  .col-lg-8
+    h2.text-uppercase.text-lg-center.text-xs-center.m-t-0.dosis.m-b-3 risk factors (MARKET AND CUSTOMER)
+    .col-lg-12
+      p.pb10.pb10.text-justify Please review the following statements that relate to common market and customer risk factors.  If any of these statements reflect potential risks for your company, then you should edit and add such statement so that they are personalized to your company.  Please note that the rules
+        b 
+          u require you to add specificity
+        |  to each risk statement to ensure that an investor understands how the risk applies to your business.
+    .col-sm-12.m-t-2
+      .campaign-warning.m-t-1
+        i.fa.fa-exclamation-triangle 
+        span.warning-text 
+        | You are free use any statement that applies to your business, provided that in each case you customize the final language to be specific to your company.
+    
+    section.risks
+      .col-lg-12
+        .accordion(role="tablist" aria-multiselectable="true")
+          .panel.panel-default
+            #headingOne(role="tab").panel-heading
+              a(data-toggle="collapse"
+              data-parent="#accordion" 
+              href="#collapseOne"
+              aria-expanded="true"
+              aria-controls="collapseOne"
+              ).list-group-item-action.active A crowdfunding investment involves risk.
+                i.fa.fa-angle-up
+            #collapseOne(role="tabpanel"
+            aria-labelledby="headingOne"
+            ).panel-collapse.collapse.in  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Suscipit nobis qui aut. Assumenda nulla possimus quidem officia aperiam quas sed non corporis reprehenderit! Voluptatum placeat eum, expedita sunt velit voluptas?
+          .panel.panel-default
+            #headingTwo(role="tab").panel-heading
+              a(data-toggle="collapse"
+              data-parent="#accordion" 
+              href="#collapseTwo"
+              aria-controls="collapseTwo"
+              ).list-group-item-action In making an investment decision, investors must rely on their own examination of the issuer and the terms of the offering.
+                i.fa.fa-angle-down
+            #collapseTwo(role="tabpanel"
+            aria-labelledby="headingTwo"
+            ).panel-collapse.collapse  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi, hic, distinctio, enim nam consequuntur iste quos, accusamus blanditiis a id odio perferendis vel perspiciatis provident et! Consequuntur nemo reprehenderit inventore.
+          .panel.panel-default
+            #headingThree(role="tab").panel-heading
+              a(data-toggle="collapse"
+              data-parent="#accordion" 
+              href="#collapseThree"
+              aria-controls="collapseThree"
+              ).list-group-item-action The U.S. Securities and Exchange Commission does not pass upon the merits of any secrities offered or the terms of the offering    
+                i.fa.fa-angle-down
+            #collapseThree(role="tabpanel"
+            aria-labelledby="headingThree"
+            ).panel-collapse.collapse  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius inventore iste numquam nemo, fugit nihil fugiat quasi, excepturi repellendus pariatur! Facilis odit cupiditate tenetur, inventore adipisci consequatur eius suscipit voluptas.
+          .panel.panel-default
+            #headingFour(role="tab").panel-heading
+              a(data-toggle="collapse"
+              data-parent="#accordion" 
+              href="#collapseFour"
+              aria-controls="collapseFour"
+              ).list-group-item-action The U.S. Securities and Exchange Commission does not pass upon the merits of any secrities offered or the terms of the offering    
+                i.fa.fa-angle-down
+            #collapseFour(role="tabpanel"
+            aria-labelledby="headingFour"
+            ).panel-collapse.collapse  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius inventore iste numquam nemo, fugit nihil fugiat quasi, excepturi repellendus pariatur! Facilis odit cupiditate tenetur, inventore adipisci consequatur eius suscipit voluptas.
