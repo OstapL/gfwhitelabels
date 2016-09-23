@@ -3,7 +3,8 @@ module.exports = Backbone.Router.extend({
     'account/profile': 'accountProfile',
     'account/logout': 'logout',
     'account/change-password': 'changePassword',
-    'account/new-password': 'setNewPassword'
+    'reset/password/confirm/': 'setNewPassword',
+    // 'account/new-password': 'setNewPassword',
   },
 
   accountProfile() {
@@ -38,8 +39,10 @@ module.exports = Backbone.Router.extend({
   changePassword: function() {
     require.ensure([], function() {
       const View = require('components/accountProfile/views.js');
+      let model = new userModel({id: app.user.pk});
       let i = new View.changePassword({
         el: '#content',
+        model: model,
       });
       i.render();
       app.hideLoading();
@@ -53,7 +56,7 @@ module.exports = Backbone.Router.extend({
       model.baseUrl = '/api/password/reset';
       let i = new View.setNewPassword({
         el: '#content',
-          model: model
+        model: model,
       });
       i.render();
       app.hideLoading();
