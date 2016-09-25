@@ -119,10 +119,15 @@ module.exports = {
         addSection: jsonActions.addSection,
         deleteSection: jsonActions.deleteSection,
         getSuccessUrl() {
-            return  '/formc/related-parties/' + this.model.get('id');
+            return  '/formc/related-parties/1' + this.model.get('id');
         },
         // submit: app.defaultSaveActions.submit,
-        submit: api.submitAction,
+        // submit: api.submitAction,
+        submit(e) {
+            e.preventDefault();
+            app.routers.navigate('/formc/related-parties/1', {trigger: true});
+            app.routers.navigate('/formc/use-of-proceeds/1', {trigger: true});
+        },
 
         initialize(options) {
             this.fields = options.fields;
@@ -145,8 +150,6 @@ module.exports = {
         },
 
     }),
-
-
 
     teamMemberAdd: Backbone.View.extend({
         events: _.extend({
@@ -344,7 +347,16 @@ module.exports = {
 
     relatedParties: Backbone.View.extend({
         initialize(options) {},
+
+        events: _.extend({
+            'submit form': 'submit',
+        }, jsonActions.events),
         
+        submit(e) {
+            e.preventDefault();
+            app.routers.navigate('/formc/offering/1', {trigger: true});
+        },
+
         render() {
             let template = require('components/formc/templates/relatedParties.pug');
             this.$el.html(
@@ -357,5 +369,31 @@ module.exports = {
             );
             return this;
         },
+    }),
+
+    useOfProceeds: Backbone.View.extend({
+       initialize(options) {},
+
+        events: _.extend({
+            'submit form': 'submit',
+        }, jsonActions.events),
+        
+        submit(e) {
+            e.preventDefault();
+            app.routers.navigate('/formc/risk-factors/1', {trigger: true});
+        },
+
+        render() {
+            let template = require('components/formc/templates/relatedParties.pug');
+            this.$el.html(
+                template({
+                    serverUrl: serverUrl,
+                    Urls: Urls,
+                    // fields: this.fields,
+                    values: this.model.toJSON(),
+                })
+            );
+            return this;
+        }, 
     }),
 };

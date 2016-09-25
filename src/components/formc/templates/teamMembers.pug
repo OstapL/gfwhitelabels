@@ -56,5 +56,6 @@ section.create-company-team-add.container
 
             div(style="display: " +  (values.members.length >= 1 ? 'block' : 'none')).col-lg-12.pull-lg-right.p-r-0.m-t-3.text-lg-right.text-md-center.text-sm-center.text-xs-center.buttons-row
                 //- a(href="/api/campaign/" + values.id target="_blank").btn.btn-secondary.text-uppercase.m-r-3 preview
-                a(href="/formc/related-parties/" + values.id).btn.btn-primary.text-uppercase Go to Related Parties
+                //- a(href="/formc/related-parties/" + values.id).btn.btn-primary.text-uppercase Go to Related Parties
+                button.btn.btn-primary.text-uppercase Go to Related Parties
                     i.fa.fa-angle-right
