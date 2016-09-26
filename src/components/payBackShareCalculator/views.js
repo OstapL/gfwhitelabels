@@ -40,9 +40,27 @@ module.exports = {
         events: {
             // calculate your income
             'submit .js-calc-form': 'doCalculation',
+            'keyup [data-input-mask="percent"]': 'savePercents',
+            'blur [data-input-mask="percent"]': 'cutZeros'
+        },
 
-            // remove useless zeros: 0055 => 55
-            'blur .js-field': 'cutZeros'
+        savePercents(e) {
+            let target = e.target,
+                value = parseFloat(e.target.value.replace('$', '') || 0);
+            app.cache.payBackShareCalculator[target.dataset.modelValue] = value;
+        },
+
+        cutZeros(e) {
+            let elem = e.target,
+                value = elem.value.replace('$', '').replace(/,/g, '');
+
+            if (!value) {
+                elem.dataset.currentValue = 0;
+                elem.value = '';
+            } else {
+                elem.dataset.currentValue = parseFloat(value);
+                elem.value = formatPrice(elem.dataset.currentValue);
+            }
         },
 
         doCalculation(e) {
@@ -108,17 +126,6 @@ module.exports = {
             app.routers.navigate('/calculator/paybackshare/step-3', {trigger: true});
         },
 
-        cutZeros(e) {
-            let elem = e.target;
-            elem.dataset.currentValue = parseFloat(elem.value.replace('$', '').replace(/,/g, '') || 0);
-            elem.value = formatPrice(elem.dataset.currentValue);
-
-            // save percent values
-            if (elem.dataset.inputMask == "percent") {
-                app.cache.payBackShareCalculator[elem.dataset.modelValue] = +elem.dataset.currentValue;
-            }
-        },
-
         // get sum of last Annual Distributions
         getPreviousSum(index) {
             let selectedRange = this.outputData.slice(2, index + 1),
@@ -171,6 +178,9 @@ module.exports = {
             if (!this.jQPlot) return;
             this.jQPlot.replot({
                 resetAxes: true,
+                legend: {
+                    show: false
+                },
                 axes: {
                     xaxis: {
                         min: 0,
@@ -240,7 +250,7 @@ module.exports = {
                 dataArr = [{
                     data: dataRendered(),
                     animator: { start: 0, steps: 99, duration: 500, direction: "right", lines: true },
-                    label: "Invested amount",
+                    label: "",
                     lines: {
                         lineWidth: 1
                     },

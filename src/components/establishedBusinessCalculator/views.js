@@ -74,15 +74,7 @@ module.exports = {
         },
 
         events: {
-            // remove useless zeros: 0055 => 55
-            'blur .js-field': 'cutZeros',
             'change .js-select': 'saveValue'
-        },
-
-        cutZeros(e) {
-            let elem = e.target;
-            elem.dataset.currentValue = parseFloat(elem.value.replace('$', '').replace(/,/g, '') || 0);
-            elem.value = formatPrice(elem.dataset.currentValue);
         },
 
         saveValue(e) {
@@ -119,17 +111,6 @@ module.exports = {
         el: '#content',
 
         template: require('./templates/step2.pug'),
-
-        events: {
-            // remove useless zeros: 0055 => 55
-            'blur .js-field': 'cutZeros'
-        },
-
-        cutZeros(e) {
-            let elem = e.target;
-            elem.dataset.currentValue = parseFloat(elem.value.replace('$', '').replace(/,/g, '') || 0);
-            elem.value = formatPrice(elem.dataset.currentValue);
-        },
 
         ui() {
             this.inputPrice = this.$('[data-input-mask="price"]');
@@ -179,22 +160,13 @@ module.exports = {
             app.routers.navigate('/calculator/establishedBusiness/step-2', {trigger: true});
         },
 
-        cutZeros(e) {
-            let elem = e.target;
-            elem.dataset.currentValue = parseFloat(elem.value.replace('$', '').replace(/,/g, '') || 0);
-            elem.value = formatPrice(elem.dataset.currentValue);
-        },
-
         ui() {
             this.inputPrice = this.$('[data-input-mask="price"]');
         },
 
         events: {
             // calculate your income
-            'submit .js-calc-form': 'doCalculation',
-
-            // remove useless zeros: 0055 => 55
-            'blur .js-field': 'cutZeros'
+            'submit .js-calc-form': 'doCalculation'
         },
 
         doCalculation(e) {
@@ -357,7 +329,6 @@ module.exports = {
             $.plot("#chart", [{
                 data: data,
                 animator: { start: 0, steps: 99, duration: 500, direction: "right", lines: true },
-                label: "Invested amount",
                 lines: {
                     lineWidth: 1
                 },
@@ -366,8 +337,9 @@ module.exports = {
                 series: {
                     bars: {
                         show: true,
-                        barWidth: 0.6,
-                        align: "center"
+                        barWidth: 0.5,
+                        align: "center",
+                        fillColor: "#79b7da"
                     }
                 },
                 grid: {
@@ -377,14 +349,19 @@ module.exports = {
                     borderColor: "#eee",
                     borderWidth: 1
                 },
-                colors: ["#d12610", "#37b7f3", "#52e136"],
+                colors: ["#79b7da"],
                 xaxis: {
                     mode: "categories",
                     tickLength: 0,
-                    tickColor: "#eee"
+                    tickColor: "#eee",
+                    autoscaleMargin: 0.1
                 },
                 yaxis: {
-                    tickColor: "#eee"
+                    tickColor: "#eee",
+                    tickFormatter(val, axis) {
+                        return formatPrice(val).replace(/\,/g, ' ');
+                        console.log('val, axis', val, axis);
+                    }
                 }
             });
         }

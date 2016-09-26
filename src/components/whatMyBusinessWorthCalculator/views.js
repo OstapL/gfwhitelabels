@@ -26,31 +26,20 @@ module.exports = {
         initialize() {
             if (!app.cache.whatMyBusinessWorthCalculator) {
                 app.cache.whatMyBusinessWorthCalculator = {
-                    'excessCash': 75000,
-                    'ownCache': 25000,
-                    'projectedRevenueYear': 400000,
-                    'projectedRevenueTwoYears': 550000,
-                    'grossMargin': 55, // 55%
-                    'monthlyOperatingYear': 12000,
-                    'monthlyOperatingTwoYears': 14000,
-                    'workingCapital': 18, // 18%
-                    'additionalOperating': 7200,
-                    'capitalExpenditures': 27500,
-                    'taxRate': 22, // 22%
-                    'annualInterest': 2500
+                    'excessCash': '',
+                    'ownCache': '',
+                    'projectedRevenueYear': '',
+                    'projectedRevenueTwoYears': '',
+                    'grossMargin': '',
+                    'monthlyOperatingYear': '',
+                    'monthlyOperatingTwoYears': '',
+                    'workingCapital': '',
+                    'additionalOperating': '',
+                    'capitalExpenditures': '',
+                    'taxRate': '',
+                    'annualInterest': ''
                 }
             }
-        },
-
-        events: {
-            // remove useless zeros: 0055 => 55
-            'blur .js-field': 'cutZeros'
-        },
-
-        cutZeros(e) {
-            let elem = e.target;
-            elem.dataset.currentValue = parseFloat(elem.value.replace('$', '').replace(/,/g, '') || 0);
-            elem.value = formatPrice(elem.dataset.currentValue);
         },
 
         ui() {
@@ -78,7 +67,10 @@ module.exports = {
             this.bootstrapSlider.each(function() {
                 $(this).bootstrapSlider ({
                     min: 0,
-                    max: 100
+                    max: 100,
+                    formatter: function(value) {
+                        return value + '%'
+                    }
                 }).on('slideStop', function(slider) {
                     let key = slider.target.dataset.modelValue;
                     app.cache.whatMyBusinessWorthCalculator[key] = +slider.value;
@@ -97,9 +89,6 @@ module.exports = {
         events: {
             // calculate your income
             'submit .js-calc-form': 'doCalculation',
-
-            // remove useless zeros: 0055 => 55
-            'blur .js-field': 'cutZeros'
         },
         doCalculation(e) {
             e.preventDefault();
@@ -203,12 +192,6 @@ module.exports = {
             }
         },
 
-        cutZeros(e) {
-            let elem = e.target;
-            elem.dataset.currentValue = parseFloat(elem.value.replace('$', '').replace(/,/g, '') || 0);
-            elem.value = formatPrice(elem.dataset.currentValue);
-        },
-
         ui() {
             // get inputs by inputmask category
             this.inputPrice = this.$('[data-input-mask="price"]');
@@ -239,7 +222,10 @@ module.exports = {
             this.bootstrapSlider.each(function() {
                 $(this).bootstrapSlider({
                     min: 0,
-                    max: 100
+                    max: 100,
+                    formatter: function(value) {
+                        return value + '%'
+                    }
                 }).on('slideStop', function(slider) {
                     let key = slider.target.dataset.modelValue;
                     app.cache.whatMyBusinessWorthCalculator[key] = +slider.value;
