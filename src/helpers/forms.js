@@ -79,7 +79,7 @@ module.exports = {
     if(this.model.hasOwnProperty('urlRoot')) {
       model.urlRoot = this.model.urlRoot;
     } else {
-      model.urlRoot = this.urlRoot;
+      model.urlRoot = serverUrl + this.urlRoot;
     }
 
     model.set(data);
