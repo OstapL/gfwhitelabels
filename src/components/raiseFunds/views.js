@@ -60,7 +60,8 @@ const onPreviewAction = function(e) {
 
 module.exports = {
   company: Backbone.View.extend({
-    urlRoot: serverUrl + Urls['company-list'](),
+    // urlRoot: serverUrl + Urls['company-list'](),
+    urlRoot: Urls['company-list'](),
     template: require('./templates/company.pug'),
     events: {
       'submit form': 'submit',
@@ -166,7 +167,8 @@ module.exports = {
   }),
 
   generalInformation: Backbone.View.extend({
-      urlRoot: serverUrl + Urls['campaign-list']() + '/general_information',
+      // urlRoot: serverUrl + Urls['campaign-list']() + '/general_information',
+      urlRoot: Urls['campaign-list']() + '/general_information',
       template: require('./templates/generalInformation.pug'),
       events: _.extend({
           'submit form': api.submitAction,
@@ -264,7 +266,7 @@ module.exports = {
         'change .press_link': 'appendHttpIfNecessary',
         'click .onPreview': onPreviewAction,
       }, jsonActions.events),
-      urlRoot: serverUrl + Urls['campaign-list']() + '/media',
+      urlRoot: Urls['campaign-list']() + '/media',
 
       appendHttpsIfNecessary(e) {
         appendHttpIfNecessary(e, true);
@@ -361,16 +363,22 @@ module.exports = {
             })
         );
 
+        const Model = require('components/campaign/models.js');
+
         dropzoneHelpers.createImageDropzone(
           dropzone,
           'header_image',
           'campaign_headers', '',
           (data) => {
-            this.model.save({
-              header_image: data.file_id,
-            }, {
-              patch: true,
-            }).then((model) => {
+            // this.model.save({
+            // (new Model.model(this.model)).save({
+            //   header_image: data.file_id,
+            // }, {
+            //   patch: true,
+            // app.makeRequest(this.urlRoot, {header_image: data.file_id, type: 'PATCH'})
+            app.makeRequest(this.urlRoot +'/' + this.model.id, {header_image: data.file_id, type: 'PATCH'})
+            // }).then((model) => {
+            .then((model) => {
               console.log('image upload done', model);
             });
           }
@@ -380,11 +388,14 @@ module.exports = {
           'list_image',
           'campaign_lists', '',
           (data) => {
-            this.model.save({
-              list_image: data.file_id,
-            }, {
-              patch: true,
-            }).then((model) => {
+            // this.model.save({
+            // (new Model.model(this.model)).save({
+            //   list_image: data.file_id,
+            // }, {
+            //   patch: true,
+            app.makeRequest(this.urlRoot +'/' + this.model.id, {list_image: data.file_id, type: 'PATCH'})
+            // }).then((model) => {
+            .then((model) => {
               console.log('image upload done', model);
             });
           }
@@ -408,11 +419,14 @@ module.exports = {
               );
             $('.photo-scroll').append($el);
             $el.find('.delete-image').click(this.deleteImage.bind(this));
-            this.model.save({
-              gallery: data.folder_id,
-            }, {
-              patch: true,
-            }).done((model) => {
+            // this.model.save({
+            // (new Model.model(this.model)).save({
+            //   gallery: data.folder_id,
+            // }, {
+            //   patch: true,
+            app.makeRequest(this.urlRoot +'/' + this.model.id, {gallery: data.folder_id, type: 'PATCH'})
+            // }).done((model) => {
+            .done((model) => {
               console.log('image upload done', model);
             });
           },
@@ -488,7 +502,8 @@ module.exports = {
         dragover: 'globalDragover',
         dragleave: 'globalDragleave',
       },
-      urlRoot: serverUrl + Urls['campaign-list']() + '/team_members',
+      // urlRoot: serverUrl + Urls['campaign-list']() + '/team_members',
+      urlRoot: Urls['campaign-list']() + '/team_members',
 
       globalDragover() {
         // this.$('.dropzone').css({ border: 'dashed 1px lightgray' });
@@ -712,7 +727,7 @@ module.exports = {
         dragleave: 'globalDragleave',
         'click .onPreview': onPreviewAction,
       },
-      urlRoot: serverUrl + Urls['campaign-list']() + '/specifics',
+      urlRoot: Urls['campaign-list']() + '/specifics',
 
       globalDragover() {
         // this.$('.dropzone').css({ border: 'dashed 1px lightgray' });
@@ -786,17 +801,22 @@ module.exports = {
                 dropzoneHelpers: dropzoneHelpers,
               })
         );
+
+        const Model = require('components/campaign/models.js');
         dropzoneHelpers.createFileDropzone(
             dropzone,
             'investor_presentation',
             'investor_presentation', '',
             (data) => {
                 this.model.urlRoot = this.urlRoot;
-                this.model.save({
-                    investor_presentation: data.file_id,
-                  }, {
-                    patch: true,
-                  }).then((data) => {
+                // this.model.save({
+                  // (new Model.model(this.model)).save({
+                  //   investor_presentation: data.file_id,
+                  // }, {
+                  //   patch: true,
+                  app.makeRequest(this.urlRoot +'/' + this.model.id, {investor_presentation: data.file_id, type: 'PATCH'})
+                  // }).then((data) => {
+                  .then((data) => {
                     const extension = data.investor_presentation_data.name.split('.').pop();
                     const suffix = extension == 'pdf' ? '_pdf' : (['ppt', 'pptx'].indexOf(extension) != -1 ? '_pptx' : '_file');
                     $('.img-investor_presentation').attr('src', '/img/default' + suffix + '.png');
@@ -821,7 +841,8 @@ module.exports = {
           'submit form': api.submitAction,
           'click .onPreview': onPreviewAction,
         }, jsonActions.events),
-      urlRoot: serverUrl + Urls['campaign-list']() + '/perks',
+      // urlRoot: serverUrl + Urls['campaign-list']() + '/perks',
+      urlRoot: Urls['campaign-list']() + '/perks',
 
       preinitialize() {
         // ToDo
