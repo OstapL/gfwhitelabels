@@ -293,6 +293,7 @@ mixin fieldDropzone(name, attr, type)
                         div.col-lg-7.col-md-7.col-sm-7.col-xs-7.p-r-0.p-l-3.img-dropzone
                             //- span
                             img(src=dropzoneHelpers.getDropzoneUrl(name, attr, values) alt=fields[name].label class="img-fluid  img-" + name)
+                            input(name=name id=name value=values[name] type="hidden")
 
 
     else if type == 2
@@ -317,6 +318,7 @@ mixin fieldDropzone(name, attr, type)
                             p.drop-photo #{attr.text}
                             i(class='fa fa-' + attr.icon)
                     .all-gallery(class=attr.class2 )
+                        input(name=name id=name value=values[name] type="hidden")
                         .photo-scroll(style="min-height:5rem;")
                             if values[name + '_data']
                                 each v,k in values[name+'_data'].all_files
@@ -324,11 +326,12 @@ mixin fieldDropzone(name, attr, type)
                                         .delete-image-container(style="position: absolute;")
                                             a(href="#" data-id=v.id).delete-image
                                                 i.fa.fa-times
-                                        img( src=v.url).img-fluid.pull-left
+                                        img(src=v.url).img-fluid.pull-left
     else if type == 3
       .drop-photo-block
         h3.widget-title.font-alt #{ attr.title }
         div(class='dropzone__' + name)
+          input(name=name id=name value=values[name] type="hidden")
           img(src=dropzoneHelpers.getDropzoneUrl(name, attr, values) alt=fields[name].label class="img-fluid  img-" + name)
           .drop-image-title.text-xs-center 
               span Drop your profile photo here or click to upload
@@ -359,6 +362,7 @@ mixin fieldFileDropzone(name, attr, type)
                             p.drop-photo #{attr.text}
                             i(class="fa fa-" + attr.icon)
                     div.col-lg-7.col-md-7.col-sm-7.col-xs-7.p-r-0.p-l-0.p-dropzone.img-dropzone.text-lg-center
+                        input(name=name id=name value=values[name] type="hidden")
                         img(src='/img/default' + suffix + '.png' alt=fields[name].label class="img-fluid  img-" + name)
                         if values[name+'_data']
                           a(class=("a-" + name) href=values[name+'_data'].url) #{ fileName }

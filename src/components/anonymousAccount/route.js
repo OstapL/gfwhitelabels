@@ -37,8 +37,8 @@ module.exports = Backbone.Router.extend({
       $.when(a1).done((metaData) => {
         let signView = new View.signup({
           el: '#content',
-          register_fields: metaData.actions.POST,
-          model: new userModel(),
+          fields: metaData.actions.POST,
+          model: {}
         });
         signView.render();
         app.hideLoading();

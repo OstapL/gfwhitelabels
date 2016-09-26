@@ -49,6 +49,13 @@ module.exports = {
 
     var data = data || $(e.target).serializeJSON();
 
+    debugger;
+    // if view already have some data - extend that info
+    if(this.hasOwnProperty('model')) {
+      _.extend(this.model, data);
+      data = this.model;
+    }
+
     /*
        var newValidators = {};
        for(var k in this.fields) {
@@ -66,35 +73,25 @@ module.exports = {
       });
       this.$('.help-block').scrollTo(45);
       return;
-    }
-
-    let model = {};
-    model = new Backbone.Model();
-    if(this.model.hasOwnProperty('id')) {
-      model.set('id', this.model.id);
-    }
-    if(this.model.hasOwnProperty('attributes')) {
-      model.set(this.model.attributes);
-    }
-    if(this.model.hasOwnProperty('urlRoot')) {
-      model.urlRoot = this.model.urlRoot;
     } else {
-      model.urlRoot = serverUrl + this.urlRoot;
-    }
+      let url = this.urlRoot;
+      let type = 'POST';
 
-    model.set(data);
-    //Backbone.Validation.bind(this, { model: model });
+      if(data.hasOwnProperty('id')) {
+        url += '/' + data.id;
+        delete data.id;
+        type = 'PUT';
+      }
 
-    if (model.isValid(true)) {
-      var self = this;
-      model.save().
+      api.makeRequest(url, type, data).
         then((data) => {
+          this.model = data;
           app.showLoading();
 
           // ToDo
           // Create clearity function
           this.$el.find('.alert-warning').remove();
-          self.undelegateEvents();
+          this.undelegateEvents();
           $('.popover').popover('hide');
 
           if (typeof this._success == 'function') {
@@ -102,7 +99,7 @@ module.exports = {
           } else {
             $('#content').scrollTo();
             app.routers.navigate(
-              self.getSuccessUrl(data),
+              this.getSuccessUrl(data),
               { trigger: true, replace: false }
             );
           }
@@ -110,12 +107,6 @@ module.exports = {
         fail((xhr, status, text) => {
           api.errorAction(this, xhr, status, text, this.fields);
         });
-    } else {
-      if (this.$('.alert').length) {
-        $('#content').scrollTo();
-      } else {
-        this.$el.find('.has-error').scrollTo();
-      }
     }
   },
 

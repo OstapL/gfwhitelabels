@@ -388,47 +388,26 @@ module.exports = {
           'list_image',
           'campaign_lists', '',
           (data) => {
-            // this.model.save({
-            // (new Model.model(this.model)).save({
-            //   list_image: data.file_id,
-            // }, {
-            //   patch: true,
             app.makeRequest(this.urlRoot +'/' + this.model.id, {list_image: data.file_id, type: 'PATCH'})
-            // }).then((model) => {
-            .then((model) => {
-              console.log('image upload done', model);
-            });
           }
         );
         dropzoneHelpers.createImageDropzone(
           dropzone,
           'gallery',
-          // 'galleries/' + this.model.get('id'), '',
           'galleries/' + this.model.id, '',
           (data) => {
-            // console.log(data);
             let $el = $('<div class="thumb-image-container" style="float: left; overflow: hidden; position: relative;">' +
               '<div class="delete-image-container" style="position: absolute;">' +
               '<a class="delete-image" href="#" data-id="' + data.image_id + '">' +
               '<i class="fa fa-times"></i>' +
               '</a>' +
               '</div>' +
-              // '<img class="img-fluid pull-left" src="' + data.url + '" style="width: 100px">' +
               '<img class="img-fluid pull-left" src="' + data.origin_url + '">' +
               '</div>'
               );
             $('.photo-scroll').append($el);
             $el.find('.delete-image').click(this.deleteImage.bind(this));
-            // this.model.save({
-            // (new Model.model(this.model)).save({
-            //   gallery: data.folder_id,
-            // }, {
-            //   patch: true,
             app.makeRequest(this.urlRoot +'/' + this.model.id, {gallery: data.folder_id, type: 'PATCH'})
-            // }).done((model) => {
-            .done((model) => {
-              console.log('image upload done', model);
-            });
           },
           );
         $('.delete-image').click(this.deleteImage.bind(this));
@@ -647,17 +626,7 @@ module.exports = {
         let json = $(e.target).serializeJSON();
         json.index = this.index;
 
-        /*$('.help-block').remove();
-        if (validation.validate(this.fields, json, this)) {
-          api.submitAction.call(this, e, json);
-        } else {
-          _(validation.errors).each((el, key) => {
-            Backbone.Validation.callbacks.invalid(this, key, el);
-          });
-          $('.help-block').scrollTo(45);
-        }*/
-
-        api.submitAction.call(this, e, data);
+        api.submitAction.call(this, e, json);
       },
     }),
 
@@ -881,7 +850,7 @@ module.exports = {
               },
             perk: {
                 type: 'string',
-                label: 'We will',
+                label: 'Describe the Perk',
                 placholder: 'Description',
                 values: [],
               },

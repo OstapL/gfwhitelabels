@@ -1,5 +1,6 @@
 module.exports = {
   login: Backbone.View.extend({
+    urlRoot: Urls.account_login(),
     events: {
       'submit .login-form': api.submitAction,
       'click .btn-google': 'loginGoogle',
@@ -115,6 +116,7 @@ module.exports = {
   }),
 
   signup: Backbone.View.extend({
+    urlRoot: Urls.rest_register(),
     events: {
         'submit .signup-form': api.submitAction,
         'click .btn-google': 'loginGoogle',
@@ -123,13 +125,12 @@ module.exports = {
     },
 
     initialize(options) {
-        this.register_fields = options.register_fields;
+        this.fields = options.fields;
         this.hello = require('hellojs');
         this.socialAuth = require('./social-auth.js');
     },
 
     render() {
-        this.model.urlRoot = serverUrl + Urls['rest_register']();
         let template = require('./templates/signup.pug');
         this.$el.html(
             template({
@@ -141,15 +142,14 @@ module.exports = {
 
     _success(data) {
         if(data.hasOwnProperty('key')) {
+            localStorage.removeItem('user');
             localStorage.setItem('token', data.key);
 
-            delete this.model.attributes['password1'];
-            delete this.model.attributes['password2'];
-            delete this.model.attributes['key'];
+            delete this.model.password1;
+            delete this.model.password2;
+            delete this.model.key;
 
-            this.model.set('token', data.key);
-            localStorage.removeItem('user');
-            window.location = '/' //data.next ? data.next : '/account/profile'
+            window.location = app.getParams().next ? app.getParams().next : '/account/profile';
         } else {
             Backbone.Validation.callbacks.invalid(                                 
               this, '', 'Server return no authentication data'
