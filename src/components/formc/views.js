@@ -119,14 +119,14 @@ module.exports = {
         addSection: jsonActions.addSection,
         deleteSection: jsonActions.deleteSection,
         getSuccessUrl() {
-            return  '/formc/related-parties/1' + this.model.get('id');
+            return  '/formc/use-of-proceeds/1' + this.model.get('id');
         },
         // submit: app.defaultSaveActions.submit,
         // submit: api.submitAction,
         submit(e) {
             e.preventDefault();
             app.routers.navigate('/formc/related-parties/1', {trigger: true});
-            app.routers.navigate('/formc/use-of-proceeds/1', {trigger: true});
+            // app.routers.navigate('/formc/use-of-proceeds/1', {trigger: true});
         },
 
         initialize(options) {
@@ -346,19 +346,51 @@ module.exports = {
     }),
 
     relatedParties: Backbone.View.extend({
-        initialize(options) {},
+        initialize(options) {
+            this.fields = options.fields;
+        },
 
         events: _.extend({
             'submit form': 'submit',
         }, jsonActions.events),
+
+        addSection: jsonActions.addSection,
+        deleteSection: jsonActions.deleteSection,
         
         submit(e) {
             e.preventDefault();
-            app.routers.navigate('/formc/offering/1', {trigger: true});
+            app.routers.navigate('formc/use-of-proceeds/1', {trigger: true});
         },
 
         render() {
             let template = require('components/formc/templates/relatedParties.pug');
+            this.fields.transactions.type = 'json';
+            this.fields.transactions.schema = {
+                specified_person: {
+                    type: 'string',
+                    label: 'Specified Person',
+                    placeholder: 'Specified Person',
+                    values: [],
+                },
+                relationship_issuer: {
+                    type: 'string',
+                    label: 'Relationship to Issuer',
+                    placeholder: 'Relationship Issuer',
+                    values: [],
+                },
+                nature: {
+                    type: 'string',
+                    label: 'Nature of Interest in Transaction',
+                    placeholder: 'Nature of Interest in Transaction',
+                    values: [],
+                },
+                amount: {
+                    type: 'number',
+                    label: 'Amount of Interest',
+                    placeholder: 'Amount of Interest',
+                    values: [],
+                },
+            };
             this.$el.html(
                 template({
                     serverUrl: serverUrl,
@@ -384,7 +416,7 @@ module.exports = {
         },
 
         render() {
-            let template = require('components/formc/templates/relatedParties.pug');
+            let template = require('components/formc/templates/useOfProceeds.pug');
             this.$el.html(
                 template({
                     serverUrl: serverUrl,
@@ -395,5 +427,31 @@ module.exports = {
             );
             return this;
         }, 
+    }),
+
+    riskFactors: Backbone.View.extend({
+        initialize(options) {},
+
+        events: _.extend({
+            'submit form': 'submit',
+        }, jsonActions.events),
+        
+        submit(e) {
+            e.preventDefault();
+            app.routers.navigate('/formc/financial-condition/1', {trigger: true});
+        },
+
+        render() {
+            let template = require('components/formc/templates/riskFactorsInstructions.pug');
+            this.$el.html(
+                template({
+                    serverUrl: serverUrl,
+                    Urls: Urls,
+                    // fields: this.fields,
+                    values: this.model.toJSON(),
+                })
+            );
+            return this;
+        },
     }),
 };

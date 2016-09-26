@@ -77,7 +77,9 @@ module.exports = Backbone.Router.extend({
     const i = new View.relatedParties({
       el: '#content',
       model: new Backbone.Model({}),
-      // fields: {},
+      fields: {
+        transactions: {},
+      },
 
     });
     i.render();
@@ -87,6 +89,17 @@ module.exports = Backbone.Router.extend({
   useOfProceeds(id) {
     const View = require('components/formc/views.js');
     const i = new View.useOfProceeds({
+      el: '#content',
+      model: new Backbone.Model({}),
+      // fields: {},
+
+    });
+    i.render();
+    app.hideLoading();
+  },
+  riskFactors(id) {
+    const View = require('components/formc/views.js');
+    const i = new View.riskFactors({
       el: '#content',
       model: new Backbone.Model({}),
       // fields: {},

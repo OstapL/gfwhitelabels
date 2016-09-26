@@ -1,10 +1,13 @@
 - 'use strict'
+include ../../../templates/mixins.pug
+include menu.pug
+
 - var values = {}
-include mixins.pug
+
 +breadcrumbs('Create Formc', '', [['home', '/',], [ 'current', page.get_absolute_url]])
 
 section.formc.use_of_proceeds.create-company-media.container
-  +menu('ащкьс')
+  +menu('formc')
   .col-lg-8
     h2.text-uppercase.text-lg-center.text-xs-center.dosis.m-t-0.mb-50 use of proceeds
     .col-lg-12
@@ -105,7 +108,8 @@ section.formc.use_of_proceeds.create-company-media.container
                     i.fa.fa-question-circle
                 td.w-25.text-lg-center.color-red.font-size-12 $150K
                 td.w-25.text-lg-center
-    .col-lg-12.text-lg-right
-      a(href="#").btn.btn-primary.text-uppercase save
+      .col-lg-12.text-lg-right
+        //- a(href="#").btn.btn-primary.text-uppercase save
+        button.btn.btn-primary.text-uppercase save
 
       
