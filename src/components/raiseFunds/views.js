@@ -618,14 +618,11 @@ module.exports = {
       submit(e) {
         e.preventDefault();
         let json = $(e.target).serializeJSON();
-        let data = {
-          member: json,
-          index: this.index,
-        };
+        json.index = this.index;
 
         $('.help-block').remove();
         if (validation.validate(this.fields, json, this)) {
-          api.submitAction.call(this, e, data);
+          api.submitAction.call(this, e, json);
         } else {
           _(validation.errors).each((el, key) => {
             Backbone.Validation.callbacks.invalid(this, key, el);
