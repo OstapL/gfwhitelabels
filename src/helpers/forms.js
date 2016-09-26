@@ -49,7 +49,6 @@ module.exports = {
 
     var data = data || $(e.target).serializeJSON();
 
-    debugger;
     // if view already have some data - extend that info
     if(this.hasOwnProperty('model')) {
       _.extend(this.model, data);

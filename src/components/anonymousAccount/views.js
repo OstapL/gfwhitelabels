@@ -1,6 +1,6 @@
 module.exports = {
   login: Backbone.View.extend({
-    urlRoot: Urls.account_login(),
+    urlRoot: Urls.rest_login(),
     events: {
       'submit .login-form': api.submitAction,
       'click .btn-google': 'loginGoogle',
@@ -9,7 +9,7 @@ module.exports = {
     },
 
     initialize(options) {
-      this.login_fields = options.login_fields;
+      this.fields = options.fields;
       this.hello = require('hellojs');
       this.socialAuth = require('./social-auth.js');
     },
@@ -19,7 +19,7 @@ module.exports = {
       let template = require('./templates/login.pug');
       this.$el.html(
         template({
-          login_fields: this.login_fields,
+          fields: this.fields,
         })
       );
       return this;
@@ -29,7 +29,8 @@ module.exports = {
       if(data.hasOwnProperty('key')) {
         localStorage.setItem('token', data.key);
         setTimeout(function() {
-          window.location = '/' //data.next ? data.next : '/account/profile'
+          window.location = app.getParams().next ? app.getParams().next : 
+                '/account/profile';
         }, 200);
       } else {
         Backbone.Validation.callbacks.invalid(                                 

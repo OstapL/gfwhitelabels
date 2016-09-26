@@ -16,8 +16,8 @@ module.exports = Backbone.Router.extend({
       $.when(a1).done((metaData) => {
         let loginView = new View.login({
           el: '#content',
-          login_fields: metaData.actions.POST,
-          model: new userModel(),
+          fields: metaData.actions.POST,
+          model: {},
         });
         loginView.render();
         app.hideLoading();
