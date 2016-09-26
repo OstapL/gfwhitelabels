@@ -352,11 +352,23 @@ module.exports = {
 
         events: _.extend({
             'submit form': 'submit',
+            'click input[name=had_transactions]': 'onHadTransactionsChange',
         }, jsonActions.events),
 
         addSection: jsonActions.addSection,
         deleteSection: jsonActions.deleteSection,
         
+        onHadTransactionsChange(e) {
+            let hadTransactions = this.$('input[name=had_transactions]:checked').val();
+
+            if (hadTransactions == 'no') {
+                this.$('.transactions-container').hide();
+                // i'll need to take out transactions elements as well.
+            } else {
+                this.$('.transactions-container').show();
+            }
+        },
+
         submit(e) {
             e.preventDefault();
             app.routers.navigate('formc/use-of-proceeds/1', {trigger: true});

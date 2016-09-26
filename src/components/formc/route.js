@@ -76,7 +76,9 @@ module.exports = Backbone.Router.extend({
     const View = require('components/formc/views.js');
     const i = new View.relatedParties({
       el: '#content',
-      model: new Backbone.Model({}),
+      model: new Backbone.Model({
+        had_transactions: 'yes'
+      }),
       fields: {
         transactions: {},
       },
