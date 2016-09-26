@@ -1,0 +1,161 @@
+include mixins.pug
+- 'use strict'
+- var fields = { title_risk: { label: 'Title for Risk'} };
+- var fields = { describe: { label: 'Describe Your Risk'} };
+
++breadcrumbs('form c', '', 
+    [
+        ['Home', '/'],
+        ['FORM C', ''],
+        ['Risk Factors', ''],
+    ]
+)
+
+section.formc-team-members-director.container.m-b-85
+  //START LEFT BLOCK
+  .col-lg-3.create_compaign
+
+    .row
+      .education-link-wrap
+        .jumbotron.jumbotron-fluid
+          h4.font-weight-bold.text-uppercase
+            i.fa.fa-book
+            |  education Links
+          .nav
+            li.nav-item
+              a(href="/pg/investor_tutorial").nav-link.link-3 Issuer Tutorial
+            li.nav-item
+              a(href="/pg/success_guide").nav-link.link-3 Success Guide
+            li.nav-item
+              a(href="/calculator/capitalraise/intro").nav-link.link-3 What's My Business Worth?
+            li.nav-item
+              a(href="#").nav-link.link-3 How Much Should I Raise?
+
+
+
+  //START RIGHT BLOCK
+  .col-lg-8
+    h2.text-uppercase.text-lg-center.text-xs-center.m-t-0.dosis.m-b-3 risk factors (LEGAL AND REGULATORY)
+    .col-lg-12
+      p.pb10.pb10.text-justify Please review the following statements that relate to common legal and regulatory risk factors. If any of these statements reflect potential risks for your company, then you should edit and add such statement so that they are personalized to your company. Please note that the rules
+        b 
+          u require you to add specificity
+        |  to each risk statement to ensure that an investor understands how the risk applies to your business.  
+    .col-sm-12.m-t-2
+      .campaign-warning.m-t-1
+        i.fa.fa-exclamation-triangle 
+        span.warning-text 
+        | You are free use any statement that applies to your business, provided that in each case you customize the final language to be specific to your company.
+    form(metod="post" action="").form-section 
+      section.risks
+        .col-lg-12
+          .accordion(role="tablist" aria-multiselectable="true")
+            .panel.panel-default
+              #headingOne(role="tab").panel-heading
+                a(data-toggle="collapse"
+                data-parent="#accordion" 
+                href="#collapseOne"
+                aria-expanded="true"
+                aria-controls="collapseOne"
+                ).list-group-item-action.active We rely on various intellectual property rights in order to operate our business and these rights may be challenged. 
+                  i.fa.fa-angle-up
+              #collapseOne(role="tabpanel"
+              aria-labelledby="headingOne"
+              ).panel-collapse.collapse.in
+                
+                textarea(style="max-width:100%; height:150px").form-control The Company’s intellectual property rights may not be sufficiently broad and may notprovide a significant competitive advantage. The steps that the Company has taken to maintain and protect its intellectual property may not prevent it from being challenged, invalidated or circumvented. In some circumstances, enforcement may not be available to us because an infringer has a dominant intellectual property position or for other business reasons. The Company’s failure to obtain or maintain intellectual property rights that convey competitive advantage, adequately protect its intellectual property or detect or prevent circumvention or unauthorized use of such property, could adversely impact the Company’s competitive position and results of operations.   
+                .text-md-center.text-lg-right
+                  .btn.btn-sm.btn-secondary.m-t-1 Save and Add this Risk
+
+
+            .panel.panel-default
+              #headingTwo(role="tab").panel-heading
+                a(data-toggle="collapse"
+                data-parent="#accordion" 
+                href="#collapseTwo"
+                aria-controls="collapseTwo"
+                ).list-group-item-action From time to time, third parties may claim that one or more of our products or services infringe their intellectual property rights.
+
+                  i.fa.fa-angle-down
+              #collapseTwo(role="tabpanel"
+              aria-labelledby="headingTwo"
+              ).panel-collapse.collapse
+
+                .border-block Any dispute or litigation regarding future intellectual property could be costly and time-consuming due to the uncertainty of intellectual property litigation and could divert our management and key personnel from our business operations. A claim of intellectual property infringement could force us to enter into a costly or restrictive license agreement, which might not be available under acceptable terms or at all.  This could require us to redesign our products, which would be costly and time-consuming, and/or could subject us to an injunction against development and sale of certain of our products or services. We may have to pay substantial damages, including damages for past infringement if it is ultimately determined that our product candidates infringe a third party’s proprietary rights. Even if these claims are without merit, defending a lawsuit takes significant time, may be expensive and may divert management’s attention from other business concerns. Any public announcements related to litigation or interference proceedings initiated or threatened against as could cause our business to be harmed. Our intellectual property portfolio may not be useful in asserting a counterclaim, or negotiating a license, in response to a claim of intellectual property infringement. In certain of our businesses we rely on third party intellectual property licenses and we cannot ensure that these licenses will be available to us in the future on favorable terms or at all.    
+                .text-md-center.text-lg-right
+                  .btn.btn-sm.btn-secondary.m-t-1 Edit and Add this Risk 
+            .panel.panel-default
+              #headingThree(role="tab").panel-heading
+                a(data-toggle="collapse"
+                data-parent="#accordion" 
+                href="#collapseThree"
+                aria-controls="collapseThree"
+                ).list-group-item-action A sizable proportion of the products that we manufacture, source, distribute or market are required to comply with regulatory requirements.    
+                  i.fa.fa-angle-down
+              #collapseThree(role="tabpanel"
+              aria-labelledby="headingThree"
+              ).panel-collapse.collapse  
+                .border-block To lawfully operate our businesses, we are required to hold permits, licenses and other regulatory approvals from, and to comply with operating and security standards of, governmental bodies. Failure to maintain or renew necessary permits, licenses or approvals, or noncompliance or concerns over noncompliance may result in suspension of our ability to distribute, import or manufacture products, product recalls or seizures, or criminal and civil sanctions and could have an adverse effect on our results of operations and financial condition.    
+                .text-md-center.text-lg-right
+                  .btn.btn-sm.btn-secondary.m-t-1 Edit and Add this Risk
+            .panel.panel-default
+              #headingFour(role="tab").panel-heading
+                a(data-toggle="collapse"
+                data-parent="#accordion" 
+                href="#collapseFour"
+                aria-controls="collapseFour"
+                ).list-group-item-action There is risk associated with the Company’s indemnification of affiliated parties.    
+                  i.fa.fa-angle-down
+              #collapseFour(role="tabpanel"
+              aria-labelledby="headingFour"
+              ).panel-collapse.collapse
+                .border-block Our Directors and executive officers will be relieved of liability to the Company or our Shareholders for monetary damages for conduct as Directors and executive officers. We may also enter into indemnity agreements with our Directors and executive officers. The exculpation provisions contained therein may have the effect of preventing shareholders from recovering damages against our Directors and executive officers caused by poor judgment or other circumstances. The indemnification provisions may require us to use our assets to defend our Directors and executive officers against claims, including claims arising out of negligence, poor judgment, or other circumstances. The indemnification obligations of the Company will be payable from the assets of the Company.   
+                .text-md-center.text-lg-right
+                  .btn.btn-sm.btn-secondary.m-t-1 Edit and Add this Risk
+            .panel.panel-default
+              #headingFive(role="tab").panel-heading
+                a(data-toggle="collapse"
+                data-parent="#accordion" 
+                href="#collapseFive"
+                aria-controls="collapseFive"
+                ).list-group-item-action Changes in federal, state or local laws and regulations could increase our expenses and adversely affect our results of operations.    
+                  i.fa.fa-angle-down
+              #collapseFive(role="tabpanel"
+              aria-labelledby="headingFive"
+              ).panel-collapse.collapse
+                .border-block Our business is subject to a wide array of laws and regulations. The current political environment, financial reform legislation, the current high level of government intervention and activism and regulatory reform may result in substantial new regulations and disclosure obligations and/or changes in the interpretation of existing laws and regulations, which may lead to additional compliance costs as well as the diversion of our management’s time and attention from strategic initiatives. If we fail to comply with applicable laws and regulations we could be subject to legal risk, including government enforcement action and class action civil litigation that could disrupt our operations and increase our costs of doing business. Changes in the regulatory environment regarding topics such as privacy and information security, product safety or environmental protection, including regulations in response to concerns regarding climate change, collective bargaining activities, minimum wage laws and health care mandates, among others, could also cause our compliance costs to increase and adversely affect our business and results of operations.     
+                .text-md-center.text-lg-right
+                  .btn.btn-sm.btn-secondary.m-t-1 Edit and Add this Risk
+          
+            
+      .col-lg-12.m-t-3
+        p.pb10
+          b In the text box below, please include those legal and regulatory risks that are specific to your business. 
+          |  In brainstorming the proper risks to disclose, you can reference the language above or consider the following questions for guidance:
+        ul
+          li.pb10 Are there any threatened lawsuits, disputes or claims that could harm your business?
+          li.pb10 Are there compliance risks or product liability risks that could harm your business?  
+          li.pb10 Are there related party transactions that could pose a legal risk?
+          li.pb10 Are there specific regulations that could apply to your business in the future?
+        .pb10 In the text box below, please write in full sentences consistent with the sample language provided above. 
+      .col-lg-12
+        +fieldBlock("title_risk", '', {
+          class1: 'col-lg-3 col-md-12 text-md-left',
+          class2: 'col-lg-9 col-md-12',
+          type: 'text',
+          placeholder: 'Title for Risk',
+          })
+        +fieldBlock("describe", '', {
+          class1: 'col-lg-3 col-md-12 text-md-left',
+          class2: 'col-lg-9 col-md-12 big-textarea',
+          type: 'textarea',
+          placeholder: 'Describe Your Risk',
+          })
+        a(href="/company/create").btn.btn-sm.btn-secondary.text-uppercase.pull-lg-right.m-b-3 save and Add this Risk
+
+        .row.m-t-3
+          .col-lg-12.text-md-center.text-sm-center-text-xs-center
+            a(href="/company/create").btn.btn-primary.text-uppercase.pull-lg-right next
+              i.fa.fa-angle-right
+
+
