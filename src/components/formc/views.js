@@ -160,14 +160,14 @@ module.exports = {
             this.fields = options.fields;
             this.type = options.type;
             // this.faqIndex = 1;
-            if (this.type == 'director') {
+            /*if (this.type == 'director') {
                 this.previous_positionsIndex = 1;
                 this.experiencesIndex = 1;
             } else if (this.type == 'officer') {
 
             } else if (this.type == 'holder') {
 
-            }
+            }*/
         },
         render() {
             let template;
@@ -391,6 +391,13 @@ module.exports = {
                     values: [],
                 },
             };
+
+            if (this.model.get('transactions')) {
+              this.transactionsIndex = Object.keys(this.model.get('transactions')).length;
+            } else {
+              this.transactionsIndex = 0;
+            }
+
             this.$el.html(
                 template({
                     serverUrl: serverUrl,
