@@ -1,11 +1,12 @@
 const rules = require('./rules.js');
 const fixedProps = ['type', 'label', 'placeholder'];
-const fixedRegex = ['number', 'url', 'email', 'money', ];
+const fixedRegex = ['number', 'url', 'email', 'money'];
 
 module.exports = {
   runRule(rule, value, name, attr) {
     try {
-      rules[rule](name, value, attr, this.data, this.schema);
+      if (rules[rule])
+        rules[rule](name, value, attr, this.data, this.schema);
       //Backbone.Validation.callbacks.valid(this.view, name);
     } catch (e) {
       this.finalResult = false;
