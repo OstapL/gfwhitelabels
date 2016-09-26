@@ -6,7 +6,7 @@ const appendHttpIfNecessary = formatHelper.appendHttpIfNecessary;
 const dropzone = require('dropzone');
 const dropzoneHelpers = require('helpers/dropzone.js');
 
-const validation = require('components/validation/validation.js');
+// const validation = require('components/validation/validation.js');
 
 const jsonActions = {
   events: {
@@ -30,7 +30,8 @@ const jsonActions = {
             type: this.fields[sectionName].type,
             index: this[sectionName + 'Index'],
           },
-          values: this.model.toJSON(),
+          // values: this.model.toJSON(),
+          values: this.model,
         })
     );
   },
@@ -91,8 +92,10 @@ module.exports = {
 
     submit(e) {
       var data = $(e.target).serializeJSON();
-      data['founding_date'] = data['founding_date__year'] + '-' +
-        data.founding_date__month + '-' + data.founding_date__day;
+
+      data['founding_date'] = data.founding_date__year && data.founding_date__month && data.founding_date__day
+        ? data.founding_date__year + '-' + data.founding_date__month + '-' + data.founding_date__day
+        : '';
       delete data.founding_date__day;
       delete data.founding_date__month;
       delete data.founding_date__year;
@@ -138,7 +141,8 @@ module.exports = {
             serverUrl: serverUrl,
             Urls: Urls,
             fields: this.fields,
-            values: this.model.toJSON(),
+            // values: this.model.toJSON(),
+            values: this.model,
             user: app.user.toJSON(),
             campaign: this.campaign,
             states: this.usaStates,
@@ -222,14 +226,16 @@ module.exports = {
                 },
         };
 
-        if (this.model.get('faq')) {
-          this.faqIndex = Object.keys(this.model.get('faq')).length;
+        // if (this.model.get('faq')) {
+        if (this.model.faq) {
+          // this.faqIndex = Object.keys(this.model.get('faq')).length;
+          this.faqIndex = Object.keys(this.model.faq).length;
         } else {
           this.faqIndex = 0;
         }
 
-        if (this.model.get('additional_info')) {
-          this.additional_infoIndex = Object.keys(this.model.get('additional_info')).length;
+        if (this.model.additional_info) {
+          this.additional_infoIndex = Object.keys(this.model.additional_info).length;
         } else {
           this.additional_infoIndex = 0;
         }
@@ -239,7 +245,8 @@ module.exports = {
               serverUrl: serverUrl,
               Urls: Urls,
               fields: this.fields,
-              values: this.model.toJSON(),
+              // values: this.model.toJSON(),
+              values: this.model,
             })
         );
         return this;
@@ -330,14 +337,15 @@ module.exports = {
             placeholder: 'https://',
           },
         };
-        if (this.model.get('press')) {
-          this.pressIndex = Object.keys(this.model.get('press')).length;
+        // if (this.model.get('press')) {
+        if (this.model.press) {
+          this.pressIndex = Object.keys(this.model.press).length;
         } else {
           this.pressIndex = 0;
         }
 
-        if (this.model.get('additional_video')) {
-          this.additional_videoIndex = Object.keys(this.model.get('additional_video')).length;
+        if (this.model.additional_video) {
+          this.additional_videoIndex = Object.keys(this.model.additional_video).length;
         } else {
           this.additional_videoIndex = 0;
         }
@@ -347,7 +355,8 @@ module.exports = {
               serverUrl: serverUrl,
               Urls: Urls,
               fields: this.fields,
-              values: this.model.toJSON(),
+              // values: this.model.toJSON(),
+              values: this.model,
               dropzoneHelpers: dropzoneHelpers,
             })
         );
@@ -383,7 +392,8 @@ module.exports = {
         dropzoneHelpers.createImageDropzone(
           dropzone,
           'gallery',
-          'galleries/' + this.model.get('id'), '',
+          // 'galleries/' + this.model.get('id'), '',
+          'galleries/' + this.model.id, '',
           (data) => {
             // console.log(data);
             let $el = $('<div class="thumb-image-container" style="float: left; overflow: hidden; position: relative;">' +
@@ -576,11 +586,13 @@ module.exports = {
         };
 
         if (this.index != 'new') {
-          this.values = this.model.toJSON().members[this.index];
+          // this.values = this.model.toJSON().members[this.index];
+          this.values = this.model.members[this.index];
         } else {
           
           this.values = {
-            id: this.model.get('id'),
+            // id: this.model.get('id'),
+            id: this.model.id,
           };
         }
 
@@ -623,7 +635,7 @@ module.exports = {
           index: this.index,
         };
 
-        $('.help-block').remove();
+        /*$('.help-block').remove();
         if (validation.validate(this.fields, json, this)) {
           api.submitAction.call(this, e, data);
         } else {
@@ -631,7 +643,9 @@ module.exports = {
             Backbone.Validation.callbacks.invalid(this, key, el);
           });
           $('.help-block').scrollTo(45);
-        }
+        }*/
+
+        api.submitAction.call(this, e, data);
       },
     }),
 
@@ -650,7 +664,8 @@ module.exports = {
 
     render() {
       let template = require('./templates/teamMembers.pug');
-      let values = this.model.toJSON();
+      // let values = this.model.toJSON();
+      let values = this.model;
 
       if (!Array.isArray(values.members)) {
         values.members = [];
@@ -672,7 +687,8 @@ module.exports = {
         let memberId = e.currentTarget.dataset.id;
 
         if (confirm('Are you sure you would like to delete this team member?')) {
-          app.makeRequest('/api/campaign/team_members/' + this.model.get('id') + '?index=' + memberId, 'DELETE').
+          // app.makeRequest('/api/campaign/team_members/' + this.model.get('id') + '?index=' + memberId, 'DELETE').
+          app.makeRequest('/api/campaign/team_members/' + this.model.id + '?index=' + memberId, 'DELETE').
               then((data) => {
                   this.model.attributes.members.splice(memberId, 1);
                   $(e.currentTarget).parent().remove();
@@ -768,7 +784,8 @@ module.exports = {
                 serverUrl: serverUrl,
                 Urls: Urls,
                 fields: this.fields,
-                values: this.model.toJSON(),
+                // values: this.model.toJSON(),
+                values: this.model,
                 dropzoneHelpers: dropzoneHelpers,
               })
         );
@@ -856,7 +873,8 @@ module.exports = {
                 serverUrl: serverUrl,
                 Urls: Urls,
                 fields: this.fields,
-                values: this.model.toJSON(),
+                // values: this.model.toJSON(),
+                values: this.model,
               })
         );
         return this;
