@@ -50,9 +50,10 @@ module.exports = {
     // var $el = $('#website');
       var $el = $(e.target);
       var url = $el.val();
+      if (!url) return;
       if(https) {
         https = (https == true ? 'https://' : 'http://');
-        url = url.replace('http', 'https');
+        url = url.replace('http://', 'https://');
         if (!url.startsWith(https)) {
           $el.val(https + url);
         }

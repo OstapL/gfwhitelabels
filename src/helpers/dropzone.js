@@ -6,55 +6,67 @@ module.exports = {
       file_name: name,
     };
 
-    if(typeof renameTo != 'undefined' && renameTo != '') {
-      params['rename'] = renameTo;
+    if (typeof renameTo != 'undefined' && renameTo != '') {
+      params.rename = renameTo;
     }
 
-    let dropbox = new Dropzone(".dropzone__" + name, {
+    let dropbox = new Dropzone('.dropzone__' + name, {
       url: serverUrl + Urls['image2-list'](),
       paramName: name,
       params: params,
       createImageThumbnails: false,
       clickable: '.dropzone__' + name + ' span',
-      thumbnail: function(file, dataUrl) {
+      thumbnail: function (file, dataUrl) {
           console.log('preview', file, file.xhr, file.xhr.response, file.xhr.responseText);
-      },
+        },
+
       previewTemplate: `<div class="dz-details">
         </div>
         <div class="dz-progress"><span class="dz-upload" data-dz-uploadprogress></span></div>
         <div class="dz-error-message"><span data-dz-errormessage></span></div>`,
       headers: {
-        'Authorization':  'Token ' + localStorage.getItem('token'),
+        Authorization:  'Token ' + localStorage.getItem('token'),
         'Cache-Control': null,
         'X-Requested-With': null,
       },
-      uploadprogress: function(file, progress, bytesSend) {
+      uploadprogress: function (file, progress, bytesSend) {
         $(this.element).find('.uploading').show();
       },
-      complete: function(file) {
+
+      complete: function (file) {
         $(this.element).find('.uploading').hide();
       },
-      dragover: function(e) {
+
+      dragover: function (e) {
         // $('.dropzone').css({ border: 'dashed 1px lightgray' });
-        $('.border-dropzone').addClass('active-border');        
+        $('.border-dropzone').addClass('active-border');
+        $(this.element).find('.border-dropzone').addClass('dragging-over');
       },
-      dragleave: function(e) {
-        // $('.dropzone').css({ border: 'none' });
-        $('.border-dropzone').removeClass('active-border');        
-      },
-      dragend: function(e) {
+
+      dragleave: function (e) {
         // $('.dropzone').css({ border: 'none' });
         $('.border-dropzone').removeClass('active-border');
+        $(this.element).find('.border-dropzone').removeClass('dragging-over');
       },
-      drop: function(e) {
-        $(this.element).find('.uploading').show();
+
+      dragend: function (e) {
         // $('.dropzone').css({ border: 'none' });
-        $('.border-dropzone').removeClass('active-border');        
+        $('.border-dropzone').removeClass('active-border');
+        $(this.element).find('.border-dropzone').removeClass('dragging-over');
       },
+
+      drop: function (e) {
+        $(this.element).find('.uploading').show();
+
+        // $('.dropzone').css({ border: 'none' });
+        $('.border-dropzone').removeClass('active-border');
+        $(this.element).find('.border-dropzone').removeClass('dragging-over');
+      },
+
       acceptedFiles: 'image/*',
     });
 
-    $('.dropzone__' + name).addClass('dropzone')//.html('Drop file here');
+    $('.dropzone__' + name).addClass('dropzone');//.html('Drop file here');
 
     /*
     dropbox.on('sending', function(data) {
@@ -62,20 +74,18 @@ module.exports = {
     });
     */
 
-    dropbox.on('addedfile', function(file) {
+    dropbox.on('addedfile', function (file) {
       _(this.files).each((f, i) => {
-        if(f.lastModified != file.lastModified) {
+        if (f.lastModified != file.lastModified) {
           this.removeFile(f);
         }
       });
-      //this.removeFile(true);
     });
 
-    dropbox.on("success", (file, data) => {
+    dropbox.on('success', (file, data) => {
       $('.img-' + name).attr('src', data.url);
       $('.a-' + name).attr('href', data.origin_url).html(data.name);
-      console.log(data);
-      if(typeof onSuccess != 'undefined') {
+      if (typeof onSuccess != 'undefined') {
         onSuccess(data);
       }
     });
@@ -86,58 +96,70 @@ module.exports = {
 
     let params = {
       folder: folderName,
-      file_name: name
+      file_name: name,
     };
 
-    if(typeof renameTo != 'undefined' && renameTo != '') {
-      params['rename'] = renameTo;
+    if (typeof renameTo != 'undefined' && renameTo != '') {
+      params.rename = renameTo;
     }
 
-    let dropbox = new Dropzone(".dropzone__" + name, {
+    let dropbox = new Dropzone('.dropzone__' + name, {
       url: serverUrl + Urls['image2-list'](),
       paramName: name,
       params: params,
       createImageThumbnails: false,
       clickable: '.dropzone__' + name + ' span',
-      thumbnail: function(file, dataUrl) {
+      thumbnail: function (file, dataUrl) {
         console.log('preview', file, file.xhr, file.xhr.response, file.xhr.responseText);
       },
+
       previewTemplate: `<div class="dz-details">
         </div>
         <div class="dz-progress"><span class="dz-upload" data-dz-uploadprogress></span></div>
         <div class="dz-error-message"><span data-dz-errormessage></span></div>`,
       headers: {
-        'Authorization':  'Token ' + localStorage.getItem('token'),
+        Authorization:  'Token ' + localStorage.getItem('token'),
         'Cache-Control': null,
         'X-Requested-With': null,
       },
-      uploadprogress: function(file, progress, bytesSend) {
+      uploadprogress: function (file, progress, bytesSend) {
         $(this.element).find('.uploading').show();
       },
-      complete: function(file) {
+
+      complete: function (file) {
         $(this.element).find('.uploading').hide();
       },
-      dragover: function(e) {
+
+      dragover: function (e) {
         // $('.dropzone').css({ border: 'dashed 1px lightgray' });
-        $('.border-dropzone').addClass('active-border');        
+        $('.border-dropzone').addClass('active-border');
+        $(this.element).find('.border-dropzone').addClass('dragging-over');
       },
-      dragleave: function(e) {
+
+      dragleave: function (e) {
         // $('.dropzone').css({ border: 'none' });
-        $('.border-dropzone').removeClass('active-border');        
+        $('.border-dropzone').removeClass('active-border');
+        $(this.element).find('.border-dropzone').removeClass('dragging-over');
       },
-      dragend: function(e) {
+
+      dragend: function (e) {
         // $('.dropzone').css({ border: 'none' });
-        $('.border-dropzone').removeClass('active-border');        
+        $('.border-dropzone').removeClass('active-border');
+        $(this.element).find('.border-dropzone').removeClass('dragging-over');
       },
-      drop: function(e) {
+
+      drop: function (e) {
         $(this.element).find('.uploading').show();
+
         // $('.dropzone').css({ border: 'none' });
-        $('.border-dropzone').removeClass('active-border');        
+        $('.border-dropzone').removeClass('active-border');
+        $(this.element).find('.border-dropzone').removeClass('dragging-over');
       },
+
       acceptedFiles: 'application/pdf,.pptx,.ppt',
     });
 
-    $('.dropzone__' + name).addClass('dropzone')//.html('Drop file here');
+    $('.dropzone__' + name).addClass('dropzone');//.html('Drop file here');
 
     /*
     dropbox.on('sending', function(data) {
@@ -145,19 +167,19 @@ module.exports = {
     });
     */
 
-    dropbox.on('addedfile', function(file) {
+    dropbox.on('addedfile', function (file) {
       _(this.files).each((f, i) => {
-        if(f.lastModified != file.lastModified) {
+        if (f.lastModified != file.lastModified) {
           this.removeFile(f);
         }
       });
     });
 
-    dropbox.on("success", (file, data) => {
+    dropbox.on('success', (file, data) => {
       $('.img-' + name).attr('src', data.url);
       $('.a-' + name).attr('href', data.origin_url).html(data.name);
       console.log(data);
-      if(typeof onSuccess != 'undefined') {
+      if (typeof onSuccess != 'undefined') {
         onSuccess(data);
       }
     });
@@ -167,12 +189,16 @@ module.exports = {
   getDropzoneUrl(name, attr, values) {
     // If we have data attribute for a file  - we will
     // try to find url that match our size
-    if(values[name + '_data'] && attr.thumbSize) {
+
+    if (values[name + '_data'] && attr.thumbSize) {
       let thumbnails = values[name + '_data'].thumbnails;
-      console.log('v', thumbnails, );
-      return app.getThumbnail(attr.thumbSize, thumbnails, attr.default || '/img/default/default.png');
+      return app.getThumbnail(
+        attr.thumbSize,
+        thumbnails,
+        attr.default || '/img/default/default.png'
+      );
     } else {
-      return attr.default || '/img/default/default.png'
+      return attr.default || '/img/default/default.png';
     }
-  }
+  },
 };

@@ -2,7 +2,13 @@
 include ../../../templates/mixins.pug
 include menu.pug
 
-+breadcrumbs('CREATE CAMPAIGN', '', [['home', '/',], [ 'current', page.get_absolute_url]])
++breadcrumbs('Create Company', '', 
+    [
+        ['Home', '/'],
+        ['Create campaign', ''],
+        ['GENERAL INFORMATION', ''],
+    ]
+)
 
 
 section.create-company-general.container.m-b-85
@@ -15,8 +21,8 @@ section.create-company-general.container.m-b-85
           input(type='hidden' name='id' value=values.id id='id')
       .form-group.row.clearfix.required
       +fieldBlock("pitch", '', {
-        class1: 'col-lg-3 col-md-3 text-md-left',
-        class2: 'col-lg-9 col-md-9',
+        class1: 'col-lg-3 col-md-12 text-md-left',
+        class2: 'col-lg-9 col-md-12',
         placeholder: "What's your pitch?",
         type: 'textarea',
         })
@@ -61,7 +67,7 @@ section.create-company-general.container.m-b-85
             i.fa.fa-plus
             |  Add Another FAQ
       .border-bottom.border-bottom-faq
-      .col-lg-12.pull-right.p-r-0.text-lg-right
-        a(href="/api/campaign/" + values.id target="blank").btn.btn-secondary.text-uppercase.m-r-3.m-t-0 preview
+      .col-lg-12.pull-lg-right.p-r-0.text-lg-right.text-md-center.text-sm-center.text-xs-center
+        button(type="submit" data-href="/api/campaign/" + values.id).btn.btn-secondary.text-uppercase.m-r-3.m-t-0.onPreview preview
         button(type="submit").btn.btn-primary.text-uppercase.m-t-0 save
           i.fa.fa-angle-right

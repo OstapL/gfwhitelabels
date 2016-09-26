@@ -1,11 +1,11 @@
 global.config = require('config');
-global.jQuery = global.$ = require('jquery');
+global.$ = global.jQuery = require('jquery');
 global._ = require('underscore');
 global.Backbone = require('backbone');
 global.Backbone.Validation = require('backbone-validation');
-global.Tether = require('tether');
-global.Bootstrap = require('bootstrap/dist/js/bootstrap.min.js');
-global.userModel = require('./js/models/user.js');
+window.Tether = require('tether');
+global.Bootstrap = require('bootstrap/dist/js/bootstrap.js');
+global.userModel = require('components/accountProfile/model.js');
 global.Urls = require('./jsreverse.js');
 require('jquery-serializejson/jquery.serializejson.min.js');
 
@@ -21,7 +21,7 @@ require('jquery-serializejson/jquery.serializejson.min.js');
 _.extend(Backbone.Validation.callbacks, {
   valid: function (view, attr, selector) {
     var $el = view.$('[name=' + attr + ']');
-    $group = $el.parent();
+    var $group = $el.parent();
 
     // if element not found - do nothing
     // we had clean alert-warning before submit
@@ -252,7 +252,9 @@ $(window).scroll(function () {
 
 // для показа биографии на стр. pg/team
 $('body').on('click', '.team-member-list article', function () {
-  var targetTextId = $(this).data('id-text');
+  console.log($(this).css('z-index'));
+console.log($(this).data('id-text-xs'));
+  var targetTextId = $(this).css('z-index') == 2 && $(this).data('id-text-xs') ? $(this).data('id-text-xs') : $(this).data('id-text');
 
   if ($(targetTextId).hasClass('open')) {
     $(targetTextId).removeClass('open').slideUp();
