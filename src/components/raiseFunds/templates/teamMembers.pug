@@ -2,10 +2,11 @@
 include ../../../templates/mixins.pug
 include menu.pug
 
-+breadcrumbs('CREATE CAMPAIGN', '', 
++breadcrumbs('Create Company', '', 
     [
         ['Home', '/'],
-        ['current', ''],
+        ['Create campaign', ''],
+        ['team members', ''],
     ]
 )
 section.create-company-team-add.container
@@ -16,7 +17,7 @@ section.create-company-team-add.container
         h2.text-uppercase.text-lg-center.text-xs-center.dosis.m-t-0 team members
         form(metod="post" action="").form-section
 
-            .col-lg-12.text-lg-center.m-t-2.m-b-2
+            .col-lg-12.text-lg-center.text-md-center.text-sm-center.text-xs-center.m-t-2.m-b-2
                     a(href='/campaign/team-members/' + values.id + '/add/member/new').btn.text-uppercase.m-r-3 
                         i.fa.fa-plus
                         |  ADD TEAM MEMBER 
@@ -46,7 +47,7 @@ section.create-company-team-add.container
                                 i.fa.fa-pencil-square-o
                     - counter ++
 
-            div(style="display: " +  (values.members.length >= 1 ? 'block' : 'none')).col-lg-12.pull-right.p-r-0.m-t-3.text-lg-right.buttons-row
+            div(style="display: " +  (values.members.length >= 1 ? 'block' : 'none')).col-lg-12.pull-lg-right.p-r-0.m-t-3.text-lg-right.text-md-center.text-sm-center.text-xs-center.buttons-row
                 a(href="/api/campaign/" + values.id target="_blank").btn.btn-secondary.text-uppercase.m-r-3 preview
                 a(href="/campaign/specifics/" + values.id).btn.btn-primary.text-uppercase Go to Specifics
                     i.fa.fa-angle-right

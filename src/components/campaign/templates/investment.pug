@@ -13,12 +13,12 @@ include ../../../templates/mixins.pug
   //START LEFT BLOCK
   .row
     .col-lg-7
-      h2.text-uppercase.dosis.m-t-0 Investment
+      h2.text-uppercase.dosis.m-t-0.text-md-center.text-sm-center.text-xs-center.text-lg-left Investment
       .form-section.clearfix
         form(metod="post" action="").invest_form.clearfix
           +fieldBlock("amount", '', {
-              class1: 'col-lg-3 col-md-3',
-              class2: 'col-lg-9 col-md-9',
+              class1: 'col-lg-3 col-md-12',
+              class2: 'col-lg-9 col-md-12',
               type: 'text',
               placeholder: '$2,500',
               text: "$10 of payment processing fee. Your money will be returned to you if the campaign doesn't reach the target goal ($500,000)."
@@ -34,37 +34,37 @@ include ../../../templates/mixins.pug
             +fieldBlock("net_worth", user[net_worth], {'class1': 'col-md-4', 'class2': 'col-md-8', 'type': 'text'})
 
           section.personal_information
-            h2.text-uppercase.dosis Personal Information
+            h2.text-uppercase.dosis.text-md-center.text-sm-center.text-xs-center.text-lg-left Personal Information
               span.small-text.open-sans Required by United States banking laws. This information is transmitted securely and will never be used for any purpose beyond executing your investment. You only have to do this once.
             +fieldBlock("name", '', {
-              class1: 'col-lg-3 col-md-3',
-              class2: 'col-lg-9 col-md-9',
+              class1: 'col-lg-3 col-md-12',
+              class2: 'col-lg-9 col-md-12',
               type: 'text',
               })
             +fieldBlock("phone", '', {
-              class1: 'col-lg-3 col-md-3',
-              class2: 'col-lg-9 col-md-9',
+              class1: 'col-lg-3 col-md-12',
+              class2: 'col-lg-9 col-md-12',
               type: 'text',
               })
             +fieldBlock("street_address_1", '', {
-              class1: 'col-lg-3 col-md-3',
-              class2: 'col-lg-9 col-md-9',
+              class1: 'col-lg-3 col-md-12',
+              class2: 'col-lg-9 col-md-12',
               type: 'text',
               })
             +fieldBlock("street_address_2", '', {
-              class1: 'col-lg-3 col-md-3',
-              class2: 'col-lg-9 col-md-9',
+              class1: 'col-lg-3 col-md-12',
+              class2: 'col-lg-9 col-md-12',
               type: 'text',
               }).street_address_2
             .row
-              .col-lg-7.p-l-2
+              .col-lg-7.p-l-2.col-md-12
                 +fieldBlock("zip_code", '', {
                   class1: 'col-lg-5',
                   class2: 'col-lg-7',
                   })
-              .col-lg-5.city_states
-                label.col-lg-5 City/State
-                .col-lg-7
+              .col-lg-5.city_states.col-md-12
+                label.col-lg-5.col-md-6.col-sm-6.col-xs-6 City/State
+                .col-lg-7.col-md-6.col-sm-6.col-xs-6
                   span(data-toggle="modal" data-target="#city_state_modal" href="#city_state_modal").change_state_city
                     span.input-value.js-city-state New York, NY
                     i.fa.fa-pencil-square-o
@@ -83,8 +83,16 @@ include ../../../templates/mixins.pug
                   placeholder: 'ХХХ-ХХ-XXXX',
                   })
           section.payment-information.border-bottom
-            h2.text-uppercase.dosis Payment information
-              span.small-text.open-sans Link your bank account or manually enter your bank account details.
+            h2.text-uppercase.dosis.text-md-center.text-sm-center.text-xs-center.text-lg-left Payment information
+            .form-group.row.radio
+              label.text-md-right.col-lg-3 Account Type
+              .col-lg-9.radio-input
+                label 
+                  input(type="radio")
+                  |  Checking
+                label 
+                  input(type="radio")
+                  |  Savings
 
             +fieldBlock("route_number", '', {
               class1: 'col-lg-3 col-md-3',
@@ -101,42 +109,79 @@ include ../../../templates/mixins.pug
                   span.help-block GrowthFountain does not store your bank login credentials
 
           section.varification
-            h2.text-uppercase.dosis VERIFICATION
-            +fieldBlock('is_reviewed_edu_material', '1', {
-              class1: 'col-md-2',
-              class2: 'col-md-10',
-              type: 'checkbox',
-              text: 'I have reviewed and understand the education material on GrowthFountain. I understand that GrowthFountain does not offer investment advice or recommendations, and that I have made my own investment decision.'
-            })
-            +fieldBlock('is_understand_terms', '1', {
-              type: 'checkbox',
-              text: 'I understand that it may be difficult to resell securities purchased on GrowthFountain.'
-            })
-            +fieldBlock('is_resell_difficult', '1', {
-              type: 'checkbox',
-              text: 'I understand that it may be difficult to resell securities purchased on GrowthFountain.'
-            })
-            +fieldBlock('is_startup_risk', '1', {
-              type: 'checkbox',
-              text: 'I understand that investing in start-ups and small businesses listed on GrowthFountain is very risky, and that I should not invest any funds unless I can afford to lose my entire investment.'
-            })
-            .form-group.row.mb-20
-              .col-md-10.offset-md-2
-                a(
-                 href=""
-                 ).link-2 Subscription agreement
-            +fieldBlock('agree', '1', {
-              type: 'checkbox',
-              text: 'I agree to the terms of the Subscription Agreement specific to this issuer.'
-            })
-            input(type="hidden" name="state" value="NY") 
-            input(type="hidden" name="city" value="New York") 
+            h2.text-uppercase.dosis.text-md-center.text-sm-center.text-xs-center.text-lg-left CONFIRMATION OF UNDERSTANDING
+            .form-group.row
+              .col-lg-2
+                .row
+                  .col-lg-6.col-md-6.col-sm-6.col-xs-6.text-lg-center
+                    label.d-block.label-true-false TRUE
+                    input(type="radio").d-block.m-x-auto
+                  .col-lg-6.col-md-6.col-sm-6.col-xs-6.text-lg-center
+                    label.d-block.label-true-false FALSE
+                    input(type="radio").d-block.m-x-auto
+                    
+              .col-lg-10
+                label I confirm and represent that (a) I have reviewed the educational material that has been made available on this website, (b) I understand that the entire amount of my investment may be lost and (c) I am in a financial condition to bear the loss of the investment.
+            .form-group.row
+              .col-lg-2
+                .row
+                  .col-lg-6.col-md-6.col-sm-6.col-xs-6.text-lg-center
+                    label.d-block.label-true-false TRUE
+                    input(type="radio").d-block.m-x-auto
+                  .col-lg-6.col-md-6.col-sm-6.col-xs-6.text-lg-center
+                    label.d-block.label-true-false FALSE
+                    input(type="radio").d-block.m-x-auto
+                    
+              .col-lg-10
+                label I understand that there are restrictions on my ability to cancel an investment commitment and obtain a return of my investment.
+            .form-group.row
+              .col-lg-2
+                .row
+                  .col-lg-6.col-md-6.col-sm-6.col-xs-6.text-lg-center
+                    label.d-block.label-true-false TRUE
+                    input(type="radio").d-block.m-x-auto
+                  .col-lg-6.col-md-6.col-sm-6.col-xs-6.text-lg-center
+                    label.d-block.label-true-false FALSE
+                    input(type="radio").d-block.m-x-auto
+                    
+              .col-lg-10
+                label I understand that it may be difficult to resell securities purchased on GrowthFountain.
+            .form-group.row
+              .col-lg-2
+                .row
+                  .col-lg-6.col-md-6.col-sm-6.col-xs-6.text-lg-center
+                    label.d-block.label-true-false TRUE
+                    input(type="radio").d-block.m-x-auto
+                  .col-lg-6.col-md-6.col-sm-6.col-xs-6.text-lg-center
+                    label.d-block.label-true-false FALSE
+                    input(type="radio").d-block.m-x-auto
+                    
+              .col-lg-10
+                label I understand that investing in start-ups and small businesses listed on GrowthFountain is very risky, and that I should not invest any funds unless I can afford to lose my entire investment.
+            h2.text-uppercase.dosis.m-t-3.text-md-center.text-sm-center.text-xs-center.text-lg-left EXECUTION OF SUBSCRIPTION AGREEMENT
+            .col-lg-12
+              .row
+                a(href="#").link-2 Click Here to View the Subscription Agreement
+            .col-lg-12.m-t-2
+              .row
+                .form-group.row
+                  .col-lg-4
+                    input(type="text" placeholder="Type Your Name").form-control
+                    .help-block Electronically Sign Here
+                  .col-lg-4
+                    .electronically
+                      span.by By:
+                      span.name Maria Kravchuk
+
+
 
             .form-group.row
-              .col-md-12
+              .col-md-12.text-md-center.text-sm-center.text-xs-center
                 .controls
                   button(
-                  type="submit").btn.btn-primary.pull-right.text-uppercase invest
+                  type="submit").btn.btn-primary.pull-lg-right.text-uppercase invest
+            input(type="hidden" name="state" value="NY") 
+            input(type="hidden" name="city" value="New York") 
     //END LEFT BLOCK
     //START RIGHT BLOCK
     .col-lg-4.pull-right
@@ -145,18 +190,18 @@ include ../../../templates/mixins.pug
           h2.text-uppercase.dosis.m-t-0 PERKS
             span.small-text.open-sans Investor Perks are not intended to affect the value of the security and investors should evaluate the merits of each investment without regard to any Investor Perks.
           .list-group.list-group-border-invest.invest-right-margin
-          a(href="#" data-from='1000' data-to='1500').list-group-item.list-group-item-action.perk
-            h3.list-group-item-heading 
-              span.text-color-puerto_rico $1000
-              |  Investments 
-            p.list-group-item-text.text-justify FULLY LOADED PACKAGE: The Peloton Bike plus Peloton headphones, Peloton biking shoes, a Peloton heart rate monitor, the Peloton hand weights, a Peloton shirt, and a Peloton sweat mat (you're going to need it!).
-          a(href="#" data-from='1500' data-to='100000').list-group-item.list-group-item-action.perk
-            h3.list-group-item-heading 
-              span.text-color-puerto_rico $1500
-              |  Investments
-            p.list-group-item-text.text-justify The Peloton Bike (and all of the accessories) AND a trip for two to NYC to meet the team and teach (or take) your very own class in the Peloton Studio, to be accessible to all Peloton riders via on-demand classes! (USA ONLY)
+            a(href="#" data-from='1000' data-to='1500').list-group-item.list-group-item-action.perk
+              h3.list-group-item-heading 
+                span.text-color-puerto_rico $1000
+                |  Investments 
+              p.list-group-item-text.text-justify FULLY LOADED PACKAGE: The Peloton Bike plus Peloton headphones, Peloton biking shoes, a Peloton heart rate monitor, the Peloton hand weights, a Peloton shirt, and a Peloton sweat mat (you're going to need it!).
+            a(href="#" data-from='1500' data-to='100000').list-group-item.list-group-item-action.perk
+              h3.list-group-item-heading 
+                span.text-color-puerto_rico $1500
+                |  Investments
+              p.list-group-item-text.text-justify The Peloton Bike (and all of the accessories) AND a trip for two to NYC to meet the team and teach (or take) your very own class in the Peloton Studio, to be accessible to all Peloton riders via on-demand classes! (USA ONLY)
         
-      h2.text-uppercase.dosis Investment Summary
+      h2.text-uppercase.dosis.text-md-center.text-sm-center.text-xs-center Investment Summary
       .jumbotron.jumbotron-fluid.investment-summary
         .container
           .col-md-7

@@ -1,0 +1,49 @@
+include mixins.pug
+- 'use strict'
+
++breadcrumbs('form c', '', 
+    [
+        ['Home', '/'],
+        ['FORM C', ''],
+        ['Risk Factors', ''],
+    ]
+)
+
+section.formc-team-members-director.container.m-b-85
+  //START LEFT BLOCK
+  .col-lg-3.create_compaign
+
+    .row
+      .education-link-wrap
+        .jumbotron.jumbotron-fluid
+          h4.font-weight-bold.text-uppercase
+            i.fa.fa-book
+            |  education Links
+          .nav
+            li.nav-item
+              a(href="/pg/investor_tutorial").nav-link.link-3 Issuer Tutorial
+            li.nav-item
+              a(href="/pg/success_guide").nav-link.link-3 Success Guide
+            li.nav-item
+              a(href="/calculator/capitalraise/intro").nav-link.link-3 What's My Business Worth?
+            li.nav-item
+              a(href="#").nav-link.link-3 How Much Should I Raise?
+
+
+
+  //START RIGHT BLOCK
+  .col-lg-8
+    h2.text-uppercase.text-lg-center.text-xs-center.m-t-0.dosis risk factors (INSTRUCTIONS)
+    .col-lg-12
+      p.pb10.pb10.text-justify The  Crowdfunding rules require that each company offering securities disclose the risks involved in purchasing their securities.  In identifying these risks, each company should avoid generalized statements and focus on those factors that are unique to their company.  Therefore, in completing this risk factor section, it is important that you tailor the description of each risk to your company’s business and
+        b 
+          u.text-uppercase MAKE EACH RISK AS SPECIFIC AS POSSIBLE.
+      p.pb10.text-justify To assist you with this process, we have divided the risk factors into categories so it is easier for you to focus on those types of risk might affect your company.  The categories for your review are: (1) Market and Customer Risk, (2) Financial Risk, (3) Operational Risk, (4) Competitive Risk, (5) Personnel and Third Party Risk, (6) Legal and Regulatory Risk and finally (7) Miscellaneous Risk which is a catch-all category to identify anything not previously covered.
+      p.pb10.text-justify For each of the seven categories identified above, we will provide you with sample language of some of the common risks that apply to crowdfunding companies.  This language is for reference only and while you are free to use this language, it is critical for you to
+        b 
+          u customize each risk to be specific to your company.
+      p.text-justify Even if you may be concerned that identifying too many risks might scare off investors, it is very important that your disclosure of risk be as comprehensive as possible to insulate you from potential liability and to ensure that investors are fully informed.  You should consult with your own attorney if you need assistance in identifying or drafting risks or if you do not fully understand how disclosure can protect you from potential liability.
+      .row.m-t-3
+        .col-lg-12.text-md-center.text-sm-center.text-xs-center
+          a(href="/pg/risk_factors_market").btn.btn-primary.text-uppercase.pull-lg-right next
+            i.fa.fa-angle-right
