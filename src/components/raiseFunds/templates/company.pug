@@ -95,7 +95,17 @@ section.create-company.container.m-b-85
         class1: 'col-lg-3 col-md-12 text-md-left',
         class2: 'col-lg-9 col-md-12',
         type: 'text',
-        placeholder: 'Company Name',
+        placeholder: 'Company Legal Name',
+        })
+      +fieldBlock("industry", '', {
+        class1: 'col-lg-3 col-md-12 text-md-left',
+        class2: 'col-lg-9 col-md-12',
+        type: 'choice',
+        })
+      +fieldBlock("founding_state", '', {
+        class1: 'col-lg-3 col-md-12 text-md-left',
+        class2: 'col-lg-9 col-md-12',
+        type: 'choice',
         })
       +fieldBlock("tagline", '', {
         class1: 'col-lg-3 col-md-12 text-md-left',
