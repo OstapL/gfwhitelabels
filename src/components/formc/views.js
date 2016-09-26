@@ -456,12 +456,39 @@ module.exports = {
         }, jsonActions.events),
         
         submit(e) {
+            // debugger
+            e.preventDefault();
+            app.routers.navigate('/formc/risk-factors/1/market', {trigger: true});
+        },
+
+        render() {
+            let template = require('components/formc/templates/riskFactorsInstructions.pug');
+            this.$el.html(
+                template({
+                    serverUrl: serverUrl,
+                    Urls: Urls,
+                    // fields: this.fields,
+                    values: this.model.toJSON(),
+                })
+            );
+            return this;
+        },
+    }),
+
+    riskFactorsMarket: Backbone.View.extend({
+        initialize(options) {},
+
+        events: _.extend({
+            'submit form': 'submit',
+        }, jsonActions.events),
+
+        submit(e) {
             e.preventDefault();
             app.routers.navigate('/formc/financial-condition/1', {trigger: true});
         },
 
         render() {
-            let template = require('components/formc/templates/riskFactorsInstructions.pug');
+            let template = require('components/formc/templates/riskFactorsMarket.pug');
             this.$el.html(
                 template({
                     serverUrl: serverUrl,

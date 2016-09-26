@@ -5,6 +5,7 @@ module.exports = Backbone.Router.extend({
     'formc/team-members/:id': 'teamMembers',
     'formc/related-parties/:id': 'relatedParties',
     'formc/use-of-proceeds/:id': 'useOfProceeds',
+    'formc/risk-factors/:id/market': 'riskFactorsMarket',
     'formc/risk-factors/:id': 'riskFactors',
 
   },
@@ -102,6 +103,17 @@ module.exports = Backbone.Router.extend({
   riskFactors(id) {
     const View = require('components/formc/views.js');
     const i = new View.riskFactors({
+      el: '#content',
+      model: new Backbone.Model({}),
+      // fields: {},
+
+    });
+    i.render();
+    app.hideLoading();
+  },
+  riskFactorsMarket(id) {
+    const View = require('components/formc/views.js');
+    const i = new View.riskFactorsMarket({
       el: '#content',
       model: new Backbone.Model({}),
       // fields: {},
