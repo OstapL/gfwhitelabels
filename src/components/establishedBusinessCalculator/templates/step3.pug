@@ -4,14 +4,14 @@ include ../../../templates/mixins.pug
 +breadcrumbs('Established Business Valuation Calculator', 'Step 3',
     [
         ['Home', '/'],
-        ["What's My Business Worth?", '/'],
-        ["shed Business Valuation Calculator", '']
+        ["What's My Business Worth?", '/calculator/selectYourBusiness'],
+        ["Established Business Valuation Calculator", '']
     ]
 )
 
 .container.calculator-container
     .row
-        .offset-lg-1.col-xs-10
+        .offset-lg-1.col-lg-10
             ul.list-inline.top-breadcrambs.mb45.established-business
                 li
                     a(href="/calculator/establishedBusiness/intro").btn.text-uppercase Intro
@@ -23,6 +23,13 @@ include ../../../templates/mixins.pug
                     a(href="/calculator/establishedBusiness/step-3").current.btn.text-uppercase step 3
                 li
                     a(href="/calculator/establishedBusiness/finish").btn.text-uppercase Finish
+
+    .row
+        .offset-lg-3.col-lg-6
+            .warning-block
+                i.fa.fa-exclamation-triangle 
+                span.warning-text 
+                    | For the next twelve months, please enter the following information about your business:
 
     .row
         .offset-lg-3.col-lg-6
@@ -55,7 +62,10 @@ include ../../../templates/mixins.pug
 
 
                     .form-group.row
-                        label(for="operatingExpense2").col-lg-12 SG&A, and other Operating Expenses
+                        label(for="operatingExpense2").col-lg-12 
+                            | SG&A, and other Operating Expenses&nbsp;&nbsp;
+                            i(aria-hidden="true").fa.fa-question-circle.text-muted
+
 
                         .col-lg-12
                             input#operatingExpense2.form-control.js-field(
@@ -68,7 +78,8 @@ include ../../../templates/mixins.pug
 
 
                     .form-group.row
-                        label(for="oneTimeExpenses2").col-lg-12 One Time (Extraordinary) Expenses
+                        label(for="oneTimeExpenses2").col-lg-12 One Time (Extraordinary) Expenses&nbsp;&nbsp;
+                            i(aria-hidden="true").fa.fa-question-circle.text-muted
 
                         .col-lg-12
                             input#oneTimeExpenses2.form-control.js-field(
@@ -81,7 +92,8 @@ include ../../../templates/mixins.pug
 
 
                     .form-group.row
-                        label(for="depreciationAmortization2").col-lg-12 Depreciation  & Amortization
+                        label(for="depreciationAmortization2").col-lg-12 Depreciation  & Amortization&nbsp;&nbsp;
+                            i(aria-hidden="true").fa.fa-question-circle.text-muted
 
                         .col-lg-12
                             input#depreciationAmortization2.form-control.js-field(
@@ -120,11 +132,11 @@ include ../../../templates/mixins.pug
 
 
                     .form-group.row.clearfix.m0
-                        .col-lg-6.mt30
+                        .col-xs-6.mt30
                             a(href='/calculator/establishedBusiness/step-1').link-3 Go back
                             p.text-muted Don&apos;t worry we saved this info
 
-                        .col-lg-6.mt30
+                        .col-xs-6.mt30
                             .controls
                                 button.btn.btn-primary.pull-right.text-uppercase(type='submit') Finish
                                 // add class .pointer-events-none to disable all events for this button

@@ -3,7 +3,7 @@ include mixins.pug
 +breadcrumbs('Overview', '', 
     [
         ['Home', '/'],
-        ['Overview', ''],
+        ['Overview', '']
     ]
 )
 
@@ -17,8 +17,8 @@ section.text_block
                     li
                         a.d-inline-block.w-100.pb10(href='/pg/overview') Overview
                     li
-                        a.d-inline-block.w-100.pb10(href='/pg/team') Team
-                    li
+                        a.d-inline-block.w-100.pb10(href='/pg/team') #{teamName}
+                    li.display-partners
                         a.d-inline-block.w-100.pb10(href='/pg/partners') Partners
                     li
                         a.d-inline-block.w-100.pb10(href='/pg/contact') Contact Us

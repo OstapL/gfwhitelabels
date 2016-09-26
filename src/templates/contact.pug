@@ -3,65 +3,89 @@ include mixins.pug
 +breadcrumbs('Contact us', '', 
     [
         ['Home', '/'],
-        ['Contacts us', ''],
+        ['Contacts us', '']
     ]
 )
 
-section#map_canvas.map-block
-    // сейчас тут стоит заглушка, так как необходимо подключить гугл мап
-    img(src="/img/pages/map.png")
-
-
-section.all-contacts.m-t-85.mb50
+section.text_block  
     .container
         .row
-            //temporary hidden phone
-            //- .col-lg-2.offset-lg-2
-            //-     h4.dosis.text-uppercase.m0 Call us
-            //-     p 
-            //-         i.fa.fa-phone
-            //-         | &nbsp; +61 3 8376 6284
+            .col-lg-3 
+                .page_title.border-bottom.mb25
+                    h4.text-uppercase.dosis ABOUT US
+                ul.list-unstyled.mb50.custom
+                    li
+                        a.d-inline-block.w-100.pb10(href='/pg/overview') Overview
+                    li
+                      a.d-inline-block.w-100.pb10(href='/pg/team') #{ teamName }
+                    li.display-partners
+                        a.d-inline-block.w-100.pb10(href='/pg/partners') Partners
+                    li
+                        a.d-inline-block.w-100.pb10(href='/pg/contact') Contact Us
+                    li
+                        a.d-inline-block.w-100.pb10(href='/pg/careers') Careers
+                    li
+                        a.d-inline-block.w-100.pb10(href='/pg/faq') FAQ
+                    li
+                        a.d-inline-block.w-100.pb10(href='/pg/news') In the News
+                    li
+                        // у последнего елемента <a> клас pb10 отстутствует
+                        a.d-inline-block.w-100(href='/pg/blogs') Blog
 
-            .col-lg-4.offset-lg-3
-                h4.dosis.text-uppercase.m0 ADDRESS
-                p 
-                    i.fa.fa-map-marker
-                    | &nbsp; 79 Madison Ave, 5th Floor 
-                    p &nbsp;&nbsp;&nbsp; New York, NY 10016
-            .col-mlg-3
-                h4.dosis.text-uppercase.m0 E-MAIL
-                p 
-                    i.fa.fa-envelope-o
-                    | &nbsp; info@growthfountain.com
+            .col-lg-9
+                section#map_canvas.map-block
+                    // сейчас тут стоит заглушка, так как необходимо подключить гугл мап
+                    img(src="/img/pages/map.png")
 
 
-section.form-section.clearfix 
-    form(method="post" action="").form
-        .container
-            .row
-                .col-lg-9.offset-lg-2
-                    .form-body.clearfix 
+                section.all-contacts.mt50.mb50
+                    .row
+                        //temporary hidden phone
+                        //- .col-lg-2.offset-lg-2
+                        //-     h4.dosis.text-uppercase.m0 Call us
+                        //-     p 
+                        //-         i.fa.fa-phone
+                        //-         | &nbsp; +61 3 8376 6284
+
+                        .col-sm-5.offset-lg-2.offset-sm-1
+                            h4.dosis.text-uppercase.m0 ADDRESS
+                            p 
+                                i.fa.fa-map-marker
+                                | &nbsp; 79 Madison Ave, 5th Floor 
+                                p &nbsp;&nbsp;&nbsp; New York, NY 10016
+                        .col-sm-5.col-lg-4.xs-top-padding
+                            h4.dosis.text-uppercase.m0 E-MAIL
+                            p 
+                                i.fa.fa-envelope-o
+                                | &nbsp; info@growthfountain.com
+
+
+                section.form-section.clearfix 
+                    form(method="post" action="").form
                         .row
-                            .col-lg-4
-                                .form-group.row
-                                    .col-lg-12
-                                        input(name="name" placeholder="Name" type="text" value="").form-control
+                            .col-lg-10.offset-lg-1
+                                .form-body.clearfix 
+                                    .row
+                                        .col-lg-5
+                                            .form-group.row
+                                                .col-lg-12
+                                                    input(name="name" placeholder="Name" type="text" value="").form-control
 
-                                .form-group.row
-                                    .col-lg-12
-                                        input(name="email" placeholder="Email" type="text" value="").form-control
+                                            .form-group.row
+                                                .col-lg-12
+                                                    input(name="email" placeholder="Email" type="text" value="").form-control
 
-                            .col-lg-7
-                                .form-group.row.contact-message
-                                    .col-lg-12
-                                        textarea(name="Message" placeholder="Message" value="").form-control
+                                        .col-lg-7
+                                            .form-group.row.contact-message
+                                                .col-lg-12
+                                                    textarea(name="Message" placeholder="Message" value="").form-control.contacts-textarea
 
-                                .form-group.row.clearfix.m0 
-                                    .col-lg-12
-                                        .controls  
-                                            button(
-                                                type="submit"
-                                            ).btn.btn-primary.pull-right.text-uppercase submit 
+                                            .form-group.row.clearfix.m0 
+                                                .col-lg-12
+                                                    .controls  
+                                                        button(
+                                                            type="submit"
+                                                        ).btn.btn-primary.pull-right.text-uppercase submit 
 
 
 

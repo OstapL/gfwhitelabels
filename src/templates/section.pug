@@ -17,30 +17,112 @@ if attr.type == 'jsonVideo'
                     .col-lg-7.col-md-12.col-xs-12.p-sm-0
                         input(
                             id=name + '_' + v
+                            class=name + '_' + v + ' form-control'
                             name=name + '[' + indexCounter + '][' + v + ']'
                             placeholder=t.placeholder ? t.placeholder : t.label
                             type=t.type
-                        ).form-control
+                            data-index=indexCounter
+                        )
         .col-lg-5.p-l-1.p-r-3.col-md-12.col-xs-12.p-sm-0 
             .embed-responsive.embed-responsive-16by9 
                 iframe.embed-responsive-item(src="//www.youtube.com/embed/?rel=0" allowfullscreen="true")
+else if attr.type == 'position'
+    div(class='form-group clearfix index_' + indexCounter)
+        label.col-lg-3.col-md-12.text-lg-right.p-sm-0= fields[name].schema.position.label
+        .col-lg-9.col-md-12.p-sm0
+            input(
+                class=name + ' form-control'
+                data-index=indexCounter
+            )
+    div(class='index_' + indexCounter)
+        .col-lg-6.col-md-12
+            .col-lg-6.text-lg-right.text-md-left.p-t-0
+                label.p-t-0.m-b-0 Start Date of Service
+            .col-lg-6.p-r-0
+                .row
+                    .col-lg-6.p-r-0
+                        input(type="number"  placeholder="MM").form-control
+                    .col-lg-6.p-r-0
+                        input(type="number"  placeholder="YYYY").form-control
+        .col-lg-6.p-l-0.col-md-12.form-group
+            .col-lg-6.text-lg-right.text-md-left.p-t-0
+                label.p-t-0.m-b-0.p-l-2 End Date of Service
+            .col-lg-6
+                .row
+                    .col-lg-6.p-r-0
+                        input(type="number"  placeholder="MM").form-control
+                    .col-lg-6.p-r-0
+                        input(type="number"  placeholder="YYYY").form-control
+else if attr.type == 'experience'
+    div(class='index_' + indexCounter)
+        +fieldBlock("employer", '', {
+            class1: 'col-lg-3 col-md-12 text-md-left m-b-0',
+            class2: 'col-lg-9 col-md-12',
+            type: 'text',
+            placeholder: 'Employer',
+            })
+        +fieldBlock("employers_principal", '', {
+            class1: 'col-lg-3 col-md-12 text-md-left p-t-0 m-b-0',
+            class2: 'col-lg-9 col-md-12',
+            type: 'text',
+            placeholder: 'Employer’s Principal Business',
+            })
+        +fieldBlock("title", '', {
+            class1: 'col-lg-3 col-md-12 text-md-left  m-b-0',
+            class2: 'col-lg-9 col-md-12',
+            type: 'text',
+            placeholder: 'Title',
+            })
+        +fieldBlock("responsibilities", '', {
+            class1: 'col-lg-3 col-md-12 text-md-left  m-b-0',
+            class2: 'col-lg-9 col-md-12',
+            type: 'text',
+            placeholder: 'Responsibilities',
+            })
+        .row
+            .col-lg-6.col-md-12
+              .col-lg-6.text-lg-right.text-md-left.p-t-0
+                label.p-t-0.m-b-0 Start Date of Service
+
+              .col-lg-6.p-r-0
+                .row
+                  .col-lg-6.p-r-0
+                    input(type="number"  placeholder="MM").form-control
+                  .col-lg-6.p-r-0
+                    input(type="number"  placeholder="YYYY").form-control
+            .col-lg-6.p-l-0.col-md-12.form-group
+              .col-lg-6.text-lg-right.text-md-left.p-t-0
+                label.p-t-0.m-b-0.p-l-2 End Date of Service
+
+              .col-lg-6
+                .row
+                  .col-lg-6.p-r-0
+                    input(type="number"  placeholder="MM").form-control
+                  .col-lg-6.p-r-0
+                    input(type="number"  placeholder="YYYY").form-control
 else
     each k,v in fields[name].schema
+        //- why do we need .videoInteractive here? this is probably for text fields
+        //- Arthur Yip 9-22-2016
         div(class='form-group clearfix videoInteractive index_' + indexCounter)
             label.col-lg-3.col-md-12.text-lg-right.p-sm-0 #{k.label}
             .col-lg-9.col-md-12.p-sm-0
                 if k.type == 'text' 
                     textarea(
                         id=name + '_' + v
+                        class=name + '_' + v + ' form-control'
                         name=name + '[' + indexCounter + '][' + v + ']'
                         placeholder=k.placeholder ? k.placeholder : k.label
                         maxLength=k.maxLength ? k.maxLength : ''
-                      ).form-control
+                        data-index=indexCounter
+                      )
                 else
                     input(
                         id=name + '_' + v
+                        class=name + '_' + v + ' form-control'
                         name=name + '[' + indexCounter + '][' + v + ']'
                         placeholder=k.placeholder ? k.placeholder : k.label
                         maxLength=k.maxLength ? k.maxLength : ''
-                    ).form-control
+                        data-index=indexCounter
+                    )
 - counter ++

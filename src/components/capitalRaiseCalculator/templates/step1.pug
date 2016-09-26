@@ -3,14 +3,14 @@ include ../../../templates/mixins.pug
 +breadcrumbs('Startup Business Valuation Calculator ', 'step 1',
     [
         ['Home', '/'],
-        ["What's My Business Worth?", '/'],
+        ["What's My Business Worth?", '/calculator/selectYourBusiness'],
         ["Startup Business Valuation Calculator", '']
     ]
 )
 
 .container.calculator-container
     .row
-        .offset-lg-2.col-xs-8
+        .offset-lg-2.col-lg-8
             ul.list-inline.top-breadcrambs.mb45
                 li
                     a(href="/calculator/capitalraise/intro").btn.text-uppercase Intro
@@ -62,7 +62,8 @@ include ../../../templates/mixins.pug
                             input#projectedRevenue.form-control.js-field(
                                 value= formatPrice(data.projectedRevenue),
                                 type='text',
-                                placeholder='$0',
+                                placeholder='Revenue Year One',
+                                autocomplete='off'
                                 data-input-mask='price',
                                 data-model-value='projectedRevenue'
                                 data-current-value= data.projectedRevenue)
@@ -73,7 +74,8 @@ include ../../../templates/mixins.pug
                             input#operatingProfit.form-control.js-field(
                                 value= formatPrice(data.operatingProfit),
                                 type='text',
-                                placeholder='$0',
+                                placeholder='Profit Year One ',
+                                autocomplete='off'
                                 data-input-mask='price',
                                 data-model-value='operatingProfit'
                                 data-current-value= data.operatingProfit)
@@ -84,7 +86,8 @@ include ../../../templates/mixins.pug
                             input#projectedRevenueTwo.form-control.js-field(
                                 value= formatPrice(data.projectedRevenueTwo),
                                 type='text',
-                                placeholder='$0',
+                                placeholder='Revenue Year Five',
+                                autocomplete='off'
                                 data-input-mask='price',
                                 data-model-value='projectedRevenueTwo',
                                 data-current-value= data.projectedRevenueTwo)
@@ -95,7 +98,8 @@ include ../../../templates/mixins.pug
                             input#operatingProfitTwo.form-control.js-field(
                                 value= formatPrice(data.operatingProfitTwo),
                                 type='text',
-                                placeholder='$0',
+                                placeholder='Profit Year Five',
+                                autocomplete='off'
                                 data-input-mask='price',
                                 data-model-value='operatingProfitTwo'
                                 data-current-value= data.operatingProfitTwo)
@@ -106,7 +110,8 @@ include ../../../templates/mixins.pug
                             input#CashOnHand.form-control.js-field(
                                 value= formatPrice(data.CashOnHand),
                                 type='text',
-                                placeholder='$0',
+                                placeholder='Cash Holdings',
+                                autocomplete='off'
                                 data-input-mask='price',
                                 data-model-value='CashOnHand',
                                 data-current-value= data.CashOnHand)
@@ -117,7 +122,8 @@ include ../../../templates/mixins.pug
                             input#yourDebt.form-control.js-field(
                                 value= formatPrice(data.yourDebt),
                                 type='text',
-                                placeholder='$0',
+                                placeholder='Current Debt',
+                                autocomplete='off'
                                 data-input-mask='price',
                                 data-model-value='yourDebt'
                                 data-current-value= data.yourDebt)
@@ -128,16 +134,17 @@ include ../../../templates/mixins.pug
                             input#cashRaise.form-control.js-field(
                                 value= formatPrice(data.cashRaise),
                                 type='text',
-                                placeholder='$0',
+                                placeholder='Raise Amount',
+                                autocomplete='off'
                                 data-input-mask='price',
                                 data-model-value='cashRaise',
                                 data-current-value= data.cashRaise)
 
                     .form-group.row.clearfix.m0
-                        .col-lg-6.mt30
+                        .col-xs-6.mt30
                             a(href='/calculator/capitalraise/intro', role='button').link-3 Go back
                             p Don&apos;t worry we saved this info
 
-                        .col-lg-6.mt30
+                        .col-xs-6.mt30
                             .controls
                                 button.btn.btn-primary.pull-right.text-uppercase(type='submit') Finish

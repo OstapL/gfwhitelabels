@@ -1,4 +1,5 @@
-
+.display-partners
+	display: $display_partnres!important
 
 /* сostum progressbar begin */
 
@@ -21,55 +22,13 @@
 
 /*  .progress-container используеться для добавления елементов или текст на progressbar 8   */
 
-.progress
-	margin: 0
 
-.progress[value]::-webkit-progress-value
-	background-color: $progress_bar_background
-	border-top-left-radius: none
-	border-bottom-left-radius: none
-
-/* .think-progress  тонкий progressbar */
-.progress.think-progress
-	height: 2px
-	color: $progress_bar_background
-
-/* .black темний progressbar */
-.progress.black[value]::-webkit-progress-value
-	background-color: $black
 
 /* сostum progressbar end */
 
 /* costum pagination begin */
 
-.pagination
-	width: 100%
-	margin: 0
 
-	.page-item
-		+mt(0.2s)
-
-		a
-			margin-right: 4px
-
-		&:hover a
-			border: 1px solid #a3a3a3
-			color: $grey
-			background: none
-			+mt(0.2s)
-
-	.page-item a:visited,
-	.page-item a:focus
-		text-decoration: none
-		background: none
-	
-	.page-item.active a,
-	.page-item.active a:focus,
-	.page-item.active a:visited
-		background: none
-
-		&:hover
-			background: none
 
 /* costum pagination end */
 
@@ -88,7 +47,7 @@
 				margin-bottom: rem(15)
 
 .warning-block
-	@include calc-rem(14)
+	font-size: rem(14)
 
 	position: relative
 
@@ -108,10 +67,6 @@
 .position-relative
 	position: relative
 
-//временный стиль для заглушки вместо гугл мапс на странице контактов
-.map-block img
-	max-width: none
-
 /* end common styles for pages(faq, overview.. etc..) */
 
 /*дополнительный клас для Заголовков*/
@@ -120,6 +75,35 @@
 .opacity-border
 	opacity: 0.1
 
+.breadcrumb
+	background: none
+	
+	> li
+		display: inline
+		text-transform: uppercase
+		+calc-rem(11)
+		font-family: $dosis
+		letter-spacing: 2.2px
+		float: none
+		a
+			color: $black
+
+		&:last-child 
+			a,
+			span 
+				color: $small-text
+
+	@media screen and (min-width: 992px)
+		-webkit-transform: translateY(-50%)
+		transform: translateY(-50%)
+
+		position: absolute
+		top: 50%
+		right: rem(16)
+		text-align: right
+
+	@media screen and (max-width: 991px)
+		padding-left: 0
 /*Breadcrumb*/
 .header_title
 	margin-bottom: rem(85)
@@ -127,18 +111,31 @@
 	background-color: $alabaster
 	font-family: $dosis
 
-	.br-title,
-	.br-list
-		height: rem(142)
-
 	h1
-		-webkit-transform: translateY(-50%)
-		transform: translateY(-50%)
-
-		position: absolute
-		top: 50%
-
 		line-height: 1.3
+
+
+	@media screen and (min-width: 992px)
+
+		.br-title,
+		.br-list
+			height: rem(142)
+
+		h1
+			-webkit-transform: translateY(-50%)
+			transform: translateY(-50%)
+
+			position: absolute
+			top: 50%
+
+	@media screen and (max-width: 991px)
+		padding: rem(15) 0
+		margin-bottom: rem(40)
+
+.mobile-padding
+	@media screen and (max-width: 543px)
+		padding-top: 0px!important
+		padding-bottom: rem(50)
 
 .pt50
 	padding-top: rem(50)
@@ -147,7 +144,8 @@
 .pb50
 	padding-bottom: rem(50)
 .p50
-	+calc-rem-padding (50) 
+	padding-top: rem(50)
+	padding-bottom: rem(50)
 .pt30
 	padding-top: rem(30)
 .pb10
@@ -224,3 +222,10 @@
 		display: inline-block
 		vertical-align: top
 		text-align: left
+
+// для больших textarea 
+.form-section
+	.big-textarea
+		textarea
+			min-height: 170px
+			width: 100%

@@ -66,6 +66,7 @@ module.exports = function(field, callback) {
                 e.keyCode == settings.HOMEKEYCODE ||
                 e.keyCode == settings.ENDKEYCODE ||
                 e.keyCode == settings.F5KEYCODE ||
+                e.keyCode == settings.ENTERKEYCODE ||
                 (e.ctrlKey && e.keyCode == settings.CKEYCODE)) {
                 skipActions = true;
             } else {
@@ -111,7 +112,19 @@ module.exports = function(field, callback) {
             setTimeout(() => {
                 setFormattedValue(e);
             }, 10);
+        }).on('blur', function(e) {
+            let elem = e.target,
+                value = elem.value.replace('$', '').replace(/,/g, '');
+
+            if (!value) {
+                elem.dataset.currentValue = 0;
+                elem.value = '';
+            } else {
+                elem.dataset.currentValue = parseFloat(value);
+                elem.value = formatPrice(elem.dataset.currentValue);
+            }
         });
+        
 
         function setFormattedValue(e) {
             if (skipActions) {

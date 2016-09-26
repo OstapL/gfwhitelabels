@@ -23,8 +23,7 @@ html.show-menu
       -o-transition: right 0.45s ease-in 200ms
       transition: right 0.45s ease-in 200ms
 
-      position: absolute
-      right: -50px
+      right: -90px
 
     button.navbar-toggler
       span 
@@ -124,10 +123,7 @@ header.no-overflow
       &.not-log-in-user
         height: rem(66)
 
-@media screen and (max-width: 991px)
-  // on mobile devaices main menu absolute positioned so we need set top padding for main content
-  .page
-    padding-top: rem(65)
+
 
 header
   .navbar-toggleable-md::after
@@ -151,6 +147,9 @@ header
           padding: rem(5) rem(15)
 
     .navbar-brand
+      padding-bottom: 0
+      padding-top: 0
+      margin-top: -3px
       width: 20%
 
     .mobile-logo
@@ -159,6 +158,9 @@ header
   .navbar-nav
     height: $navbar_height
     padding: $padding_menu
+
+    &#menuProfile
+      padding-top: 11px
 
     .nav-item
       height: 100%
@@ -171,10 +173,13 @@ header
       & > a 
         cursor: pointer
 
-        font-size: 11px
+        font-size: $font-size-menu
         letter-spacing: 2px
         text-transform: uppercase
         color: $white
+
+        &.user-info-name
+          padding-top: 10px
 
       .list-container
         display: none
@@ -490,6 +495,7 @@ header
 
         position: absolute
         right: rem(17)
+        width: 21px
 
       #menuList
         -webkit-transition: visibility 0s linear 1s
@@ -697,7 +703,14 @@ header
     .list-container
       position: static
 
+
+
   @media screen and (max-width: 385px)
 
     .notification-container
       min-width: 100%
+
+@media screen and (max-width: 991px)
+  // on mobile devaices main menu absolute positioned so we need set top padding for main content
+  .page
+    padding-top: 65px
