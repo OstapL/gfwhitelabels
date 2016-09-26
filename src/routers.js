@@ -1,12 +1,13 @@
-import payBackShareCalculator from 'components/payBackShareCalculator/route';
-import capitalRaiseCalculator from 'components/capitalRaiseCalculator/route';
-import whatMyBusinessWorthCalc from 'components/whatMyBusinessWorthCalculator/route';
-import establishedBusinessCalc from 'components/establishedBusinessCalculator/route';
-import campaignRoute from 'components/campaign/route';
-import pageRoute from 'components/pg/route';
-import raiseFunds from 'components/raiseFunds/route';
-import anonymousAccount from 'components/anonymousAccount/route';
-import accountProfile from 'components/accountProfile/route';
+const payBackShareCalculator = require( 'components/payBackShareCalculator/route');
+const capitalRaiseCalculator = require( 'components/capitalRaiseCalculator/route');
+const whatMyBusinessWorthCalc = require( 'components/whatMyBusinessWorthCalculator/route');
+const campaignRoute = require( 'components/campaign/route');
+const pageRoute = require( 'components/pg/route');
+const raiseFunds = require( 'components/raiseFunds/route');
+const anonymousAccount = require( 'components/anonymousAccount/route');
+const accountProfile = require( 'components/accountProfile/route');
+const establishedBusinessCalc = require( 'components/establishedBusinessCalculator/route');
+const formc = require( 'components/formc/route');
 
 let appRoutes = Backbone.Router.extend({
   routes: {},
@@ -47,7 +48,11 @@ let appRoutes = Backbone.Router.extend({
       this.routes[path] = r8[funcName];
     });
     let r9  = new establishedBusinessCalc;
-    _.each(r8.routes, (funcName, path) => {
+    _.each(r9.routes, (funcName, path) => {
+      this.routes[path] = r8[funcName];
+    });
+    let r10  = new formc;
+    _.each(r10.routes, (funcName, path) => {
       this.routes[path] = r8[funcName];
     });
   },
@@ -133,16 +138,5 @@ $(document).ready(function(){
     }
   });
 
-  $('.team-member-list article').click(function(){
-    var targetTextId = $(this).data('id-text');
 
-    if ($(targetTextId).hasClass('open')) {
-      $(targetTextId).removeClass('open').slideUp();
-    } else {
-      $(this).closest('.team-member-list').
-        find('.biography-text.open').removeClass('open').hide();
-      $(targetTextId).addClass('open').slideDown();
-    }
-
-  });
 });

@@ -13,7 +13,16 @@ select.form-control
 			color: $black_bg
 	img
 		max-width: 100%// будет перенесен в файл общих стилей - использовать клас бутстрапа .img-fluid
-
+	.radio
+		label.col-lg-3
+			font-weight: bold
+	.radio-input
+		label
+			margin-right: rem(30)
+			font-weight: 400
+		input
+			margin-left: 0
+			margin-right: rem(5)
 	//общие стили для лейблов
 	label
 		@include calc-rem(14)
@@ -48,11 +57,10 @@ select.form-control
 		i 
 	.border-dropzone
 		border: dashed 1px $small-text
-		min-height: 168px
+		min-height: 169px
 		max-height: 300px
 		+mt(.2s)
-		&:hover
-			border: dashed 1px $link-1-hover
+	
 		.p-dropzone
 			position: relative
 			left: 20px
@@ -60,6 +68,17 @@ select.form-control
 		.img-dropzone
 			img
 				width: 100%
+		.dz-clickable
+			&:hover
+				color: $link-1-hover	
+				i
+					color: $link-1-hover
+	.active-border
+		border: dashed 1px $link-1-hover
+		.dz-clickable
+			color: $link-1-hover
+			i
+				color: $link-1-hover
 
 	@media screen and (min-width:992px)
 		// date of birth field
