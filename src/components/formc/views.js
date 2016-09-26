@@ -7,6 +7,7 @@ var jsonActions = {
     },
 
     addSection(e) {
+        debugger
         e.preventDefault();
         let sectionName = e.target.dataset.section;
         let template = require('templates/section.pug');
@@ -104,6 +105,7 @@ module.exports = {
     }),
 
     teamMembers: Backbone.View.extend({
+        name: 'teamMembers',
         events: _.extend({
             'submit form': 'submit',
         }, jsonActions.events),
@@ -124,6 +126,7 @@ module.exports = {
         // submit: app.defaultSaveActions.submit,
         // submit: api.submitAction,
         submit(e) {
+            debugger
             e.preventDefault();
             app.routers.navigate('/formc/related-parties/1', {trigger: true});
             // app.routers.navigate('/formc/use-of-proceeds/1', {trigger: true});
@@ -305,7 +308,7 @@ module.exports = {
 
     }),
 
-    useOfProceeds: Backbone.View.extend({
+    /*useOfProceeds: Backbone.View.extend({
         events: _.extend({
             'submit form': 'submit',
         }, jsonActions.events),
@@ -327,10 +330,12 @@ module.exports = {
         submit: api.submitAction,
 
         initialize(options) {
+            debugger
             this.fields = options.fields;
         },
 
         render() {
+            debugger
             let template = require('templates/formc/useofproceeds.pug');
 
             this.$el.html(
@@ -343,9 +348,10 @@ module.exports = {
             );
             return this;
         },
-    }),
+    }),*/
 
     relatedParties: Backbone.View.extend({
+        name: 'relatedParties',
         initialize(options) {
             this.fields = options.fields;
         },
@@ -370,11 +376,13 @@ module.exports = {
         },
 
         submit(e) {
+            debugger
             e.preventDefault();
             app.routers.navigate('formc/use-of-proceeds/1', {trigger: true});
         },
 
         render() {
+            // debugger
             let template = require('components/formc/templates/relatedParties.pug');
             this.fields.transactions.type = 'json';
             this.fields.transactions.schema = {
@@ -440,7 +448,7 @@ module.exports = {
                 template({
                     serverUrl: serverUrl,
                     Urls: Urls,
-                    // fields: this.fields,
+                    fields: this.fields,
                     values: this.model.toJSON(),
                 })
             );

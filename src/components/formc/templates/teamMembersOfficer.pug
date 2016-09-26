@@ -1,5 +1,6 @@
 include ../../../templates/mixins.pug
-include menu.pug
+//- include menu.pug
+include ../../../templates/menuRaiseFund.pug
 
 - 'use strict'
 - var fields = { first_name: { label: 'First Name'} };
@@ -22,7 +23,7 @@ include menu.pug
 )
 
 section.formc-team-members-director.container.m-b-85
-  +menu('formc')
+  +menu('formc', 'team-members-officer')
 
 
   //START RIGHT BLOCK

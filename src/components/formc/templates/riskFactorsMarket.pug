@@ -1,5 +1,6 @@
 include ../../../templates/mixins.pug
-include menu.pug
+//- include menu.pug
+include ../../../templates/menuRaiseFund.pug
 
 - 'use strict'
 - var fields = { title_risk: { label: 'Title for Risk'} };
@@ -14,26 +15,7 @@ include menu.pug
 )
 
 section.formc-team-members-director.container.m-b-85
-  //START LEFT BLOCK
-  .col-lg-3.create_compaign
-
-    .row
-      .education-link-wrap
-        .jumbotron.jumbotron-fluid
-          h4.font-weight-bold.text-uppercase
-            i.fa.fa-book
-            |  education Links
-          .nav
-            li.nav-item
-              a(href="/pg/investor_tutorial").nav-link.link-3 Issuer Tutorial
-            li.nav-item
-              a(href="/pg/success_guide").nav-link.link-3 Success Guide
-            li.nav-item
-              a(href="/calculator/capitalraise/intro").nav-link.link-3 What's My Business Worth?
-            li.nav-item
-              a(href="#").nav-link.link-3 How Much Should I Raise?
-
-
+  +menu('formc', 'risk-factors-market')
 
   //START RIGHT BLOCK
   .col-lg-8

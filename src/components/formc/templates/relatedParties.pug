@@ -1,5 +1,6 @@
 include ../../../templates/mixins.pug
-include menu.pug
+//- include menu.pug
+include ../../../templates/menuRaiseFund.pug
 
 - 'use strict'
 - var fields = { specified_person: { label: 'Specified Person'} };
@@ -18,7 +19,7 @@ include menu.pug
 )
 
 section.formc-team-members-director.container.m-b-85
-  +menu('related-parties')
+  +menu('formc', 'related-parties')
 
 
 

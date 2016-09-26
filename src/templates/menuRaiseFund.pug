@@ -61,14 +61,17 @@ mixin menu(currentSection, currentStep)
                 |  Company
                 span.pull-right
                   i.fa.fa-angle-left
-            #company(role="tabpanel" class="panel-collapse collapse " + (currentStep == 'company' ? 'in' : ''))
+            #company(role="tabpanel" class="panel-collapse collapse " + (currentSection == 'company' ? 'in' : ''))
               .list-group
-                a(href="/company/create" class="list-group-item list-group-item-action " + (currentStep == 'company' ? 'active' : '')) Company
+                a(href="/company/create" class="list-group-item list-group-item-action" + (currentSection == 'company' && currentStep == 'company' ? ' active' : '')) Company
+                  if currentSection == 'company' && currentStep == 'create'
+                    i.fa.fa-check
+                //- +getCompanyUrl(campaign || values, 'company', currentStep, 'create', 'Company')
           .panel.panel-default
             .panel-heading(role="tab")
               a(data-toggle="collapse"
               data-parent="#accordion"
-              href="#campaign"
+              href="#campaign-steps"
               aria-expanded="true"
               class="list-group-item" + (currentStep != 'company' ? ' active ' : '')
               ).list-group-item
@@ -77,13 +80,13 @@ mixin menu(currentSection, currentStep)
                 span.pull-right
                   i.fa.fa-angle-down
             //- #campaign(role="tabpanel" class="panel-collapse collapse" + (currentStep != 'company' ? ' in' : ''))
-            #campaign(role="tabpanel" class="panel-collapse collapse" + (currentSection == 'campaign' ? ' in' : ''))
+            #campaign-steps(role="tabpanel" class="panel-collapse collapse" + (currentSection == 'campaign' ? ' in' : ''))
                 .list-group
-                    +getCompanyUrl(values, 'campaign', currentStep, 'general_information', 'General Information')
-                    +getCompanyUrl(values, 'campaign', currentStep, 'media', 'Media')
-                    +getCompanyUrl(values, 'campaign', currentStep, 'team-members', 'Team Members')
-                    +getCompanyUrl(values, 'campaign', currentStep, 'specifics', 'Specifics')
-                    +getCompanyUrl(values, 'campaign', currentStep, 'perks', 'Perks')
+                    +getCompanyUrl(campaign || values, 'campaign', currentStep, 'general_information', 'General Information')
+                    +getCompanyUrl(campaign || values, 'campaign', currentStep, 'media', 'Media')
+                    +getCompanyUrl(campaign || values, 'campaign', currentStep, 'team-members', 'Team Members')
+                    +getCompanyUrl(campaign || values, 'campaign', currentStep, 'specifics', 'Specifics')
+                    +getCompanyUrl(campaign || values, 'campaign', currentStep, 'perks', 'Perks')
           .panel.panel-default
             .panel-heading(role="tab")
               a(data-toggle="collapse"
@@ -104,12 +107,12 @@ mixin menu(currentSection, currentStep)
                     //- a(href="/formc/use-of-proceeds/1").list-group-item.list-group-item-action Use of Proceeds
                     //- a(href="/formc/risk-factors/1").list-group-item.list-group-item-action Risk Factors
                     //- a(href="#").list-group-item.list-group-item-action Offering
-                    +getCompanyUrl(values, 'formc', currentStep, 'introduction', 'Introduction')
-                    +getCompanyUrl(values, 'formc', currentStep, 'team-members', 'Team Members')
-                    +getCompanyUrl(values, 'formc', currentStep, 'related-parties', 'Related Parties')
-                    +getCompanyUrl(values, 'formc', currentStep, 'use-of-proceeds', 'Use of Proceeds')
-                    +getCompanyUrl(values, 'formc', currentStep, 'risk-factors', 'Risk Factors')
-                    +getCompanyUrl(values, 'formc', currentStep, 'offering', 'Offering')
+                    +getCompanyUrl(campaign || values, 'formc', currentStep, 'introduction', 'Introduction')
+                    +getCompanyUrl(campaign || values, 'formc', currentStep, 'team-members', 'Team Members')
+                    +getCompanyUrl(campaign || values, 'formc', currentStep, 'related-parties', 'Related Parties')
+                    +getCompanyUrl(campaign || values, 'formc', currentStep, 'use-of-proceeds', 'Use of Proceeds')
+                    +getCompanyUrl(campaign || values, 'formc', currentStep, 'risk-factors', 'Risk Factors')
+                    +getCompanyUrl(campaign || values, 'formc', currentStep, 'offering', 'Offering')
 
       .row
         .education-link-wrap

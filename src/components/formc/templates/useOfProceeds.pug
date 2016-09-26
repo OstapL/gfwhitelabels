@@ -1,13 +1,15 @@
 - 'use strict'
 include ../../../templates/mixins.pug
-include menu.pug
+//- include menu.pug
+include ../../../templates/menuRaiseFund.pug
 
-- var values = {}
+// - var values = {}
 
 +breadcrumbs('Create Formc', '', [['home', '/',], [ 'current', page.get_absolute_url]])
 
 section.formc.use_of_proceeds.create-company-media.container
-  +menu('formc')
+  +menu('formc', 'use-of-proceeds')
+
   .col-lg-8
     h2.text-uppercase.text-lg-center.text-xs-center.dosis.m-t-0.mb-50 use of proceeds
     .col-lg-12
