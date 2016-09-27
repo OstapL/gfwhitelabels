@@ -49,7 +49,7 @@ module.exports = {
                 value = parseFloat(e.target.value.replace('$', '') || 0);
             app.cache.payBackShareCalculator[target.dataset.modelValue] = value;
         },
-
+        
         cutZeros(e) {
             let elem = e.target,
                 value = elem.value.replace('$', '').replace(/,/g, '');

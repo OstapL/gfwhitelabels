@@ -39,7 +39,7 @@ module.exports = {
         el: '#content',
 
         template: require('./templates/step1.pug'),
-
+        
         ui() {
             // get inputs by inputmask category
             this.inputPrice = this.$('[data-input-mask="price"]');
