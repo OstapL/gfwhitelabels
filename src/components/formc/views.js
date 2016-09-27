@@ -1,4 +1,5 @@
 "use strict";
+let menuHelper = require('helpers/menuHelper.js');
 
 var jsonActions = {
     events: {
@@ -38,11 +39,11 @@ var jsonActions = {
    },
 };
 
-var menuActions = {
-    events: {
-      'hidden.bs.collapse .panel': 'onCollapse',
-      'show.bs.collapse .panel': 'onCollapse',
-    },
+/*var menuEvents = {
+  'hidden.bs.collapse .panel': 'onCollapse',
+  'show.bs.collapse .panel': 'onCollapse',
+};
+var menuMethods = {
     onCollapse (e) {
       let $elem = $(e.currentTarget);
       let $a = $elem.find('a.list-group-heading');
@@ -55,17 +56,16 @@ var menuActions = {
         $icon.removeClass('fa-angle-down').addClass('fa-angle-left');
       }
     },
-};
-
+};*/
 
 module.exports = {
-    introduction: Backbone.View.extend({
+    introduction: Backbone.View.extend(_.extend(menuHelper.methods, {
         events: _.extend({
             'submit form': 'submit',
             'click input[name=failed_to_comply]': 'onComplyChange',
-        }, jsonActions.events, menuActions.events),
+        }, jsonActions.events, menuHelper.events),
 
-        onCollapse: menuActions.onCollapse,
+        // onCollapse: menuActions.onCollapse,
 
         preinitialize() {
             // ToDo
@@ -122,13 +122,13 @@ module.exports = {
             }
         }
 
-    }),
+    })),
 
-    teamMembers: Backbone.View.extend({
+    teamMembers: Backbone.View.extend(_.extend(menuHelper.methods, {
         name: 'teamMembers',
         events: _.extend({
             'submit form': 'submit',
-        }, jsonActions.events),
+        }, jsonActions.events, menuHelper.events),
 
         preinitialize() {
             // ToDo
@@ -171,12 +171,12 @@ module.exports = {
             return this;
         },
 
-    }),
+    })),
 
-    teamMemberAdd: Backbone.View.extend({
+    teamMemberAdd: Backbone.View.extend(_.extend(menuHelper.methods, {
         events: _.extend({
             'submit form': 'submit',
-        }, jsonActions.events),
+        }, jsonActions.events, menuHelper.events),
         urlRoot: serverUrl + 'xxxxx' + '/team_members',
         initialize(options) {
             this.fields = options.fields;
@@ -278,12 +278,12 @@ module.exports = {
             // navigate back to general member page
             app.routers.navigate('/formc/team-members/' + this.model.id, {trigger: true});
         },
-    }),
+    })),
 
-    offering: Backbone.View.extend({
+    offering: Backbone.View.extend(_.extend(menuHelper.methods, {
         events: _.extend({
             'submit form': 'submit',
-        }, jsonActions.events),
+        }, jsonActions.events, menuHelper.events),
 
         preinitialize() {
             // ToDo
@@ -325,7 +325,7 @@ module.exports = {
             return this;
         },
 
-    }),
+    })),
 
     /*useOfProceeds: Backbone.View.extend({
         events: _.extend({
@@ -367,7 +367,7 @@ module.exports = {
         },
     }),*/
 
-    relatedParties: Backbone.View.extend({
+    relatedParties: Backbone.View.extend(_.extend(menuHelper.methods, {
         name: 'relatedParties',
         initialize(options) {
             this.fields = options.fields;
@@ -376,7 +376,7 @@ module.exports = {
         events: _.extend({
             'submit form': 'submit',
             'click input[name=had_transactions]': 'onHadTransactionsChange',
-        }, jsonActions.events),
+        }, jsonActions.events, menuHelper.events),
 
         addSection: jsonActions.addSection,
         deleteSection: jsonActions.deleteSection,
@@ -443,14 +443,14 @@ module.exports = {
             );
             return this;
         },
-    }),
+    })),
 
-    useOfProceeds: Backbone.View.extend({
+    useOfProceeds: Backbone.View.extend(_.extend(menuHelper.methods, {
        initialize(options) {},
 
         events: _.extend({
             'submit form': 'submit',
-        }, jsonActions.events),
+        }, jsonActions.events, menuHelper.events),
         
         submit(e) {
             e.preventDefault();
@@ -469,14 +469,14 @@ module.exports = {
             );
             return this;
         }, 
-    }),
+    })),
 
-    riskFactors: Backbone.View.extend({
+    riskFactors: Backbone.View.extend(_.extend(menuHelper.methods, {
         initialize(options) {},
 
         events: _.extend({
             'submit form': 'submit',
-        }, jsonActions.events),
+        }, jsonActions.events, menuHelper.events),
         
         submit(e) {
             e.preventDefault();
@@ -495,14 +495,14 @@ module.exports = {
             );
             return this;
         },
-    }),
+    })),
 
-    riskFactorsMarket: Backbone.View.extend({
+    riskFactorsMarket: Backbone.View.extend(_.extend(menuHelper.methods, {
         initialize(options) {},
 
         events: _.extend({
             'submit form': 'submit',
-        }, jsonActions.events),
+        }, jsonActions.events, menuHelper.events),
 
         submit(e) {
             e.preventDefault();
@@ -521,14 +521,14 @@ module.exports = {
             );
             return this;
         },
-    }),
+    })),
 
-    riskFactorsFinancial: Backbone.View.extend({
+    riskFactorsFinancial: Backbone.View.extend(_.extend(menuHelper.methods, {
         initialize(options) {},
 
         events: _.extend({
             'submit form': 'submit',
-        }, jsonActions.events),
+        }, jsonActions.events, menuHelper.events),
 
         submit(e) {
             e.preventDefault();
@@ -547,14 +547,14 @@ module.exports = {
             );
             return this;
         },
-    }),
+    })),
 
-    riskFactorsOperational: Backbone.View.extend({
+    riskFactorsOperational: Backbone.View.extend(_.extend(menuHelper.methods, {
         initialize(options) {},
 
         events: _.extend({
             'submit form': 'submit',
-        }, jsonActions.events),
+        }, jsonActions.events, menuHelper.methods),
 
         submit(e) {
             e.preventDefault();
@@ -573,14 +573,14 @@ module.exports = {
             );
             return this;
         },
-    }),
+    })),
 
-    riskFactorsCompetitive: Backbone.View.extend({
+    riskFactorsCompetitive: Backbone.View.extend(_.extend(menuHelper.methods, {
         initialize(options) {},
 
         events: _.extend({
             'submit form': 'submit',
-        }, jsonActions.events),
+        }, jsonActions.events, menuHelper.events),
 
         submit(e) {
             e.preventDefault();
@@ -599,15 +599,15 @@ module.exports = {
             );
             return this;
         },
-    }),
+    })),
 
 
-    riskFactorsPersonnel: Backbone.View.extend({
+    riskFactorsPersonnel: Backbone.View.extend(_.extend(menuHelper.methods, {
         initialize(options) {},
 
         events: _.extend({
             'submit form': 'submit',
-        }, jsonActions.events),
+        }, jsonActions.events, menuHelper.events),
 
         submit(e) {
             e.preventDefault();
@@ -626,14 +626,14 @@ module.exports = {
             );
             return this;
         },
-    }),
+    })),
 
-    riskFactorsLegal: Backbone.View.extend({
+    riskFactorsLegal: Backbone.View.extend(_.extend(menuHelper.methods, {
         initialize(options) {},
 
         events: _.extend({
             'submit form': 'submit',
-        }, jsonActions.events),
+        }, jsonActions.events, menuHelper.events),
 
         submit(e) {
             e.preventDefault();
@@ -652,14 +652,14 @@ module.exports = {
             );
             return this;
         },
-    }),
+    })),
 
-    riskFactorsMisc: Backbone.View.extend({
+    riskFactorsMisc: Backbone.View.extend(_.extend(menuHelper.methods, {
         initialize(options) {},
 
         events: _.extend({
             'submit form': 'submit',
-        }, jsonActions.events),
+        }, jsonActions.events, menuHelper.events),
 
         submit(e) {
             e.preventDefault();
@@ -678,14 +678,14 @@ module.exports = {
             );
             return this;
         },
-    }),
+    })),
 
-    financialCondition: Backbone.View.extend({
+    financialCondition: Backbone.View.extend(_.extend(menuHelper.methods, {
         initialize(options) {},
 
         events: _.extend({
             'submit form': 'submit',
-        }, jsonActions.events),
+        }, jsonActions.events, menuHelper.events),
 
         submit(e) {
             e.preventDefault();
@@ -704,5 +704,5 @@ module.exports = {
             );
             return this;
         },
-    }),
+    })),
 };

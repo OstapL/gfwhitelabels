@@ -1,4 +1,5 @@
 'use strict';
+let menuHelper = require('helpers/menuHelper.js');
 
 import formatHelper from '../../helpers/formatHelper';
 const appendHttpIfNecessary = formatHelper.appendHttpIfNecessary;
@@ -58,17 +59,17 @@ const onPreviewAction = function(e) {
 };
 
 module.exports = {
-  company: Backbone.View.extend({
+  company: Backbone.View.extend(_.extend(menuHelper.methods, {
     urlRoot: serverUrl + Urls['company-list'](),
     template: require('./templates/company.pug'),
-    events: {
+    events: _.extend({
       'submit form': 'submit',
       'keyup #zip_code': 'changeZipCode',
       'click .update-location': 'updateLocation',
       'click .onPreview': onPreviewAction,
       'change input[name=phone]': 'formatPhone',
       'change #website,#twitter,#facebook,#instagram,#linkedin': appendHttpIfNecessary,
-    },
+    }, menuHelper.events),
 
     initialize(options) {
       this.fields = options.fields;
@@ -159,15 +160,15 @@ module.exports = {
         { trigger: true, replace: false }
       );
     },
-  }),
+  })),
 
-  generalInformation: Backbone.View.extend({
+  generalInformation: Backbone.View.extend(_.extend(menuHelper.methods, {
       urlRoot: serverUrl + Urls['campaign-list']() + '/general_information',
       template: require('./templates/generalInformation.pug'),
       events: _.extend({
           'submit form': api.submitAction,
           'click .onPreview': onPreviewAction,
-        }, jsonActions.events),
+        }, jsonActions.events, menuHelper.events),
 
       preinitialize() {
         // ToDo
@@ -244,9 +245,9 @@ module.exports = {
         );
         return this;
       },
-    }),
+    })),
 
-  media: Backbone.View.extend({
+  media: Backbone.View.extend(_.extend(menuHelper.methods, {
       events: _.extend({
         'submit form': api.submitAction,
         // 'click .delete-image': 'deleteImage',
@@ -256,7 +257,7 @@ module.exports = {
         // 'change #video,.additional_video_link': 'appendHttpsIfNecessary',
         'change .press_link': 'appendHttpIfNecessary',
         'click .onPreview': onPreviewAction,
-      }, jsonActions.events),
+      }, jsonActions.events, menuHelper.events),
       urlRoot: serverUrl + Urls['campaign-list']() + '/media',
 
       appendHttpsIfNecessary(e) {
@@ -469,15 +470,15 @@ module.exports = {
           //e.target.value = id;
         }
       }
-  }),
+  })),
 
-  teamMemberAdd: Backbone.View.extend({
-      events: {
+  teamMemberAdd: Backbone.View.extend(_.extend(menuHelper.methods, {
+      events: _.extend({
         'submit form': 'submit',
         'click .delete-member': 'deleteMember',
         dragover: 'globalDragover',
         dragleave: 'globalDragleave',
-      },
+      }, menuHelper.events),
       urlRoot: serverUrl + Urls['campaign-list']() + '/team_members',
 
       globalDragover() {
@@ -633,12 +634,12 @@ module.exports = {
           $('.help-block').scrollTo(45);
         }
       },
-    }),
+    })),
 
-  teamMembers: Backbone.View.extend({
-    events: {
+  teamMembers: Backbone.View.extend(_.extend(menuHelper.methods, {
+    events: _.extend({
       'click .delete-member': 'deleteMember',
-    },
+    }, menuHelper.events),
 
     preinitialize() {
       // ToDo
@@ -687,10 +688,10 @@ module.exports = {
         }
       },
 
-  }),
+  })),
 
-  specifics: Backbone.View.extend({
-      events: {
+  specifics: Backbone.View.extend(_.extend(menuHelper.methods, {
+      events: _.extend({
         'submit form': api.submitAction,
         'change input[name="security_type"]': 'updateSecurityType',
         'change #minimum_raise,#maximum_raise,#minimum_increment,#premoney_valuation': 'formatNumber',
@@ -698,7 +699,7 @@ module.exports = {
         dragover: 'globalDragover',
         dragleave: 'globalDragleave',
         'click .onPreview': onPreviewAction,
-      },
+      }, menuHelper.events),
       urlRoot: serverUrl + Urls['campaign-list']() + '/specifics',
 
       globalDragover() {
@@ -800,13 +801,13 @@ module.exports = {
 
         return this;
       },
-    }),
+    })),
 
-  perks: Backbone.View.extend({
+  perks: Backbone.View.extend(_.extend(menuHelper.methods, {
       events: _.extend({
           'submit form': api.submitAction,
           'click .onPreview': onPreviewAction,
-        }, jsonActions.events),
+        }, jsonActions.events, menuHelper.events),
       urlRoot: serverUrl + Urls['campaign-list']() + '/perks',
 
       preinitialize() {
@@ -862,11 +863,14 @@ module.exports = {
         return this;
       },
 
-    }),
+    })),
 
-  thankYou: Backbone.View.extend({
+  thankYou: Backbone.View.extend(_.extend(menuHelper.methods, {
     el: '#content',
     template: require('./templates/thankyou.pug'),
+    events: _.extend({
+      // for view events
+    }, menuHelper.events),
 
     render() {
       console.log(this.model);
@@ -877,5 +881,5 @@ module.exports = {
       );
       return this;
     },
-  }),
+  })),
 };
