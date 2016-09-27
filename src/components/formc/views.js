@@ -38,13 +38,34 @@ var jsonActions = {
    },
 };
 
+var menuActions = {
+    events: {
+      'hidden.bs.collapse .panel': 'onCollapse',
+      'show.bs.collapse .panel': 'onCollapse',
+    },
+    onCollapse (e) {
+      let $elem = $(e.currentTarget);
+      let $a = $elem.find('a.list-group-heading');
+      let $icon = $a.find('.fa');
+      if (e.type === 'show') {
+        $a.addClass('active');
+        $icon.removeClass('fa-angle-left').addClass('fa-angle-down');
+      } else if (e.type === 'hidden') {
+        $a.removeClass('active');
+        $icon.removeClass('fa-angle-down').addClass('fa-angle-left');
+      }
+    },
+};
+
 
 module.exports = {
     introduction: Backbone.View.extend({
         events: _.extend({
             'submit form': 'submit',
             'click input[name=failed_to_comply]': 'onComplyChange',
-        }, jsonActions.events),
+        }, jsonActions.events, menuActions.events),
+
+        onCollapse: menuActions.onCollapse,
 
         preinitialize() {
             // ToDo

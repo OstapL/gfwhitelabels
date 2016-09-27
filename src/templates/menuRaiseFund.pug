@@ -26,7 +26,6 @@
 //-           href="#"
 //-           class="list-group-item list-group-item-action disabled" 
 //-         ) #{ name }
-
 mixin getCompanyUrl(campaign, currentSection, currentStep, step, name)
     - let prefix = '/' + currentSection + '/';
     if campaign.id || currentStep == step
@@ -55,12 +54,13 @@ mixin menu(currentSection, currentStep)
               data-parent="#accordion"
               href="#company"
               aria-expanded="true"
-              class="list-group-item" + (currentStep == 'company' ? ' active ' : '')
+              class="list-group-item list-group-heading" + (currentSection == 'company' ? ' active ' : '')
               )
                 i.fa.fa-briefcase
                 |  Company
                 span.pull-right
-                  i.fa.fa-angle-left
+                  //- i.fa.fa-angle-left
+                  i(class="fa " + (currentSection == 'company' ? 'fa-angle-down' : 'fa-angle-left'))
             #company(role="tabpanel" class="panel-collapse collapse " + (currentSection == 'company' ? 'in' : ''))
               .list-group
                 a(href="/company/create" class="list-group-item list-group-item-action" + (currentSection == 'company' && currentStep == 'company' ? ' active' : '')) Company Detail
@@ -73,12 +73,13 @@ mixin menu(currentSection, currentStep)
               data-parent="#accordion"
               href="#campaign-steps"
               aria-expanded="true"
-              class="list-group-item" + (currentStep != 'company' ? ' active ' : '')
+              class="list-group-item list-group-heading" + (currentSection == 'campaign' ? ' active ' : '')
               ).list-group-item
                 i.fa.fa-bar-chart
                 |  Campaign
                 span.pull-right
-                  i.fa.fa-angle-down
+                  //- i.fa.fa-angle-down
+                  i(class="fa " + (currentSection == 'campaign' ? 'fa-angle-down' : 'fa-angle-left'))
             //- #campaign(role="tabpanel" class="panel-collapse collapse" + (currentStep != 'company' ? ' in' : ''))
             #campaign-steps(role="tabpanel" class="panel-collapse collapse" + (currentSection == 'campaign' ? ' in' : ''))
                 .list-group
@@ -93,11 +94,13 @@ mixin menu(currentSection, currentStep)
               data-parent="#accordion"
               href="#form_c"
               aria-expanded="true"
-              ).list-group-item
+              class="list-group-item list-group-heading" + (currentSection == 'formc' ? ' active' : '')
+              )
                 i.fa.fa-university
                 |  form c
                 span.pull-right
-                  i.fa.fa-angle-left
+                  //- i.fa.fa-angle-left
+                  i(class="fa " + (currentSection == 'formc' ? 'fa-angle-down' : 'fa-angle-left'))
             //- #form_c(role="tabpanel").panel-collapse.collapse
             #form_c(role="tabpanel" class="panel-collapse collapse" + (currentSection == 'formc' ? ' in' : ''))
                 .list-group
