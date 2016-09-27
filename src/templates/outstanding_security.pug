@@ -18,6 +18,11 @@ include mixins.pug
 - var fields = { limited: { label: 'How may the rights of the securities being offered be materially limited, diluted or qualified by the rights of any other class of security identified above?'} };
 - var fields = { issuer: { label: 'Are there any differences not reflected above between the securities being offered and each other class of security of the issuer?'} };
 - var fields = { could: { label: 'How could the exercise of rights held by the principal shareholders affect the purchasers of the securities being offered?'} };
+- var fields = { security_type: { label: 'Security Type'} };
+- var fields = { description_security_type: { label: 'Description of Security Type'} };
+- var fields = { amount_authorized: { label: 'Amount Authorized'} };
+- var fields = { amount_outstanding: { label: 'Amount Outstanding'} };
+- var fields = { specify_other_rights: { label: 'Specify Other Rights'} };
 +breadcrumbs('form c', '', 
     [
         ['Home', '/'],
@@ -149,7 +154,7 @@ section.formc-team-members-director.container.m-b-85
         .border-bottom.m-t-3.m-b-3
         h3.text-xs-center Outstanding Securities
         p What other securities are outstanding? Describe the material terms of any other outstanding securies.
-        a(href='#' ).btn.text-uppercase.m-t-2.m-b-2
+        a(data-toggle="modal" data-target="#security_modal" href="#security_modal").btn.text-uppercase.m-t-2.m-b-2
             i.fa.fa-plus
             |  add outstanding securities
         table.table.table-bordered.table-striped.text-xs-center
@@ -238,7 +243,80 @@ section.formc-team-members-director.container.m-b-85
                 .text-md-center.text-sm-center-text-xs-center
                     a(href="#").btn.btn-primary.text-uppercase.pull-lg-right Save
 
+//MODAL
+#security_modal.modal.fade(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")
+    .modal-dialog(role="document")
+        .modal-content
+            .modal-header
+                button(type="button" class="close" data-dismiss="modal" aria-label="Close")
+                    span(aria-hidden="true")
+                        i.fa.fa-times
 
+            .modal-body.p-t-0
+                .form-section    
+                    .row.form-group
+                        .col-lg-12
+                            label Security Type
+                        .col-lg-12
+                            select(name="" style="width:100%").custom-select
+                                option Other
+                                option Debt
+                                option Debt
+                    +fieldBlock("description_security_type", '', {
+                    class1: 'col-lg-12 col-md-12  text-md-left  text-xl-left',
+                    class2: 'col-lg-12 col-md-12 ',
+                    type: 'textarea',
+                    placeholder: 'Description of Security Type',
+                    })
+                    .row
+                        .col-lg-6
+                            +fieldBlock("amount_authorized", '', {
+                            class1: 'col-lg-12 col-md-12  text-md-left  text-xl-left',
+                            class2: 'col-lg-12 col-md-12 ',
+                            type: 'text',
+                            placeholder: 'Amount Authorized',
+                            })
+                        .col-lg-6
+                            +fieldBlock("amount_outstanding", '', {
+                            class1: 'col-lg-12 col-md-12  text-md-left  text-xl-left',
+                            class2: 'col-lg-12 col-md-12 ',
+                            type: 'text',
+                            placeholder: 'Amount Authorized',
+                            })
+                    .row.form-group.m-b-0
+                        .col-lg-3
+                            label Voting Rights
+                        .col-lg-9
+                            .form-group.form-section.m-b-0
+                                .radio-input
+                                    label 
+                                        input(type="radio")
+                                        |  Yes
+                                    label 
+                                      input(type="radio")
+                                      |  No
+                    .row.form-group
+                        .col-lg-3
+                            label Other Rights
+                        .col-lg-9
+                            .form-group.form-section.m-b-0
+                                .radio-input
+                                    label 
+                                        input(type="radio")
+                                        |  Yes
+                                    label 
+                                      input(type="radio")
+                                      |  No
+                    +fieldBlock("specify_other_rights", '', {
+                        class1: 'col-lg-12 col-md-12  text-md-left  text-xl-left',
+                        class2: 'col-lg-12 col-md-12 ',
+                        type: 'text',
+                        placeholder: 'Specify Other Rights',
+                    })
+                .row.m-b-2
+                    .col-lg-12.text-lg-center.text-md-center.text-xs-center
+                        button(data-dismiss="modal").update-location.btn.btn-primary.text-uppercase.pull-lg-right save
+            .modal-footer
 
 
 
