@@ -57,7 +57,6 @@ module.exports = {
     },
 
     smoothScroll(e) {
-      console.log('smooth...');
       e.preventDefault();
       $(document).off("scroll");
       $('.tabs-scroll .nav').find('.nav-link').removeClass('active');
