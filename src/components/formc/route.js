@@ -7,6 +7,7 @@ module.exports = Backbone.Router.extend({
     'formc/use-of-proceeds/:id': 'useOfProceeds',
     'formc/risk-factors/:id/market': 'riskFactorsMarket',
     'formc/risk-factors/:id/financial': 'riskFactorsFinancial',
+    'formc/risk-factors/:id/operational': 'riskFactorsOperational',
     'formc/risk-factors/:id': 'riskFactors',
 
   },
@@ -108,6 +109,7 @@ module.exports = Backbone.Router.extend({
     i.render();
     app.hideLoading();
   },
+
   riskFactors(id) {
     const View = require('components/formc/views.js');
     const i = new View.riskFactors({
@@ -121,6 +123,7 @@ module.exports = Backbone.Router.extend({
     i.render();
     app.hideLoading();
   },
+
   riskFactorsMarket(id) {
     const View = require('components/formc/views.js');
     const i = new View.riskFactorsMarket({
@@ -138,6 +141,20 @@ module.exports = Backbone.Router.extend({
   riskFactorsFinancial(id) {
     const View = require('components/formc/views.js');
     const i = new View.riskFactorsFinancial({
+      el: '#content',
+      model: new Backbone.Model({
+        id: 1,
+      }),
+      // fields: {},
+
+    });
+    i.render();
+    app.hideLoading();
+  },
+
+  riskFactorsOperational(id) {
+    const View = require('components/formc/views.js');
+    const i = new View.riskFactorsOperational({
       el: '#content',
       model: new Backbone.Model({
         id: 1,

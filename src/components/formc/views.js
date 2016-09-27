@@ -518,11 +518,37 @@ module.exports = {
 
         submit(e) {
             e.preventDefault();
-            app.routers.navigate('/formc/financial-condition/1', {trigger: true});
+            app.routers.navigate('/formc/risk-factors/1/operational', {trigger: true});
         },
 
         render() {
             let template = require('components/formc/templates/riskFactorsFinancial.pug');
+            this.$el.html(
+                template({
+                    serverUrl: serverUrl,
+                    Urls: Urls,
+                    // fields: this.fields,
+                    values: this.model.toJSON(),
+                })
+            );
+            return this;
+        },
+    }),
+
+    riskFactorsOperational: Backbone.View.extend({
+        initialize(options) {},
+
+        events: _.extend({
+            'submit form': 'submit',
+        }, jsonActions.events),
+
+        submit(e) {
+            e.preventDefault();
+            app.routers.navigate('/formc/risk-factors/1/competitive', {trigger: true});
+        },
+
+        render() {
+            let template = require('components/formc/templates/riskFactorsOperational.pug');
             this.$el.html(
                 template({
                     serverUrl: serverUrl,
