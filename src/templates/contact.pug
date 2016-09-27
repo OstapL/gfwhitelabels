@@ -7,7 +7,7 @@ include mixins.pug
     ]
 )
 
-section.text_block 
+section.text_block  
     .container
         .row
             .col-lg-3 
@@ -18,7 +18,7 @@ section.text_block
                         a.d-inline-block.w-100.pb10(href='/pg/overview') Overview
                     li
                       a.d-inline-block.w-100.pb10(href='/pg/team') #{ teamName }
-                    li
+                    li.display-partners
                         a.d-inline-block.w-100.pb10(href='/pg/partners') Partners
                     li
                         a.d-inline-block.w-100.pb10(href='/pg/contact') Contact Us
@@ -53,7 +53,7 @@ section.text_block
                                 i.fa.fa-map-marker
                                 | &nbsp; 79 Madison Ave, 5th Floor 
                                 p &nbsp;&nbsp;&nbsp; New York, NY 10016
-                        .col-sm-5.col-lg-3.xs-top-padding
+                        .col-sm-5.col-lg-4.xs-top-padding
                             h4.dosis.text-uppercase.m0 E-MAIL
                             p 
                                 i.fa.fa-envelope-o

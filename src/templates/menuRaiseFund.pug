@@ -63,7 +63,7 @@ mixin menu(currentSection, currentStep)
                   i.fa.fa-angle-left
             #company(role="tabpanel" class="panel-collapse collapse " + (currentSection == 'company' ? 'in' : ''))
               .list-group
-                a(href="/company/create" class="list-group-item list-group-item-action" + (currentSection == 'company' && currentStep == 'company' ? ' active' : '')) Company
+                a(href="/company/create" class="list-group-item list-group-item-action" + (currentSection == 'company' && currentStep == 'company' ? ' active' : '')) Company Detail
                   if currentSection == 'company' && currentStep == 'create'
                     i.fa.fa-check
                 //- +getCompanyUrl(campaign || values, 'company', currentStep, 'create', 'Company')
@@ -119,7 +119,7 @@ mixin menu(currentSection, currentStep)
           .jumbotron.jumbotron-fluid
             h4.font-weight-bold.text-uppercase
               i.fa.fa-book
-              |  education Links
+              |  Education Links
             .nav
               li.nav-item
                 a(href="/pg/investor_tutorial" target="_blank").nav-link.link-3 Issuer Tutorial

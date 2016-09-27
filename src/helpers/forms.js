@@ -42,7 +42,6 @@ module.exports = {
   },
 
   submitAction(e, data) {
-
     this.$el.find('.alert').remove();
     e.preventDefault();
 
