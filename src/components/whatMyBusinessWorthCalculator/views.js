@@ -6,6 +6,23 @@ import 'bootstrap-slider/dist/css/bootstrap-slider.css'
 
 let formatPrice = calculatorHelper.formatPrice;
 
+if (!app.cache.whatMyBusinessWorthCalculator) {
+    app.cache.whatMyBusinessWorthCalculator = {
+        'excessCash': '',
+        'ownCache': '',
+        'projectedRevenueYear': '',
+        'projectedRevenueTwoYears': '',
+        'grossMargin': '',
+        'monthlyOperatingYear': '',
+        'monthlyOperatingTwoYears': '',
+        'workingCapital': '',
+        'additionalOperating': '',
+        'capitalExpenditures': '',
+        'taxRate': '',
+        'annualInterest': ''
+    }
+}
+
 module.exports = {
     intro: Backbone.View.extend({
         el: '#content',
@@ -22,26 +39,7 @@ module.exports = {
         el: '#content',
 
         template: require('./templates/step1.pug'),
-
-        initialize() {
-            if (!app.cache.whatMyBusinessWorthCalculator) {
-                app.cache.whatMyBusinessWorthCalculator = {
-                    'excessCash': '',
-                    'ownCache': '',
-                    'projectedRevenueYear': '',
-                    'projectedRevenueTwoYears': '',
-                    'grossMargin': '',
-                    'monthlyOperatingYear': '',
-                    'monthlyOperatingTwoYears': '',
-                    'workingCapital': '',
-                    'additionalOperating': '',
-                    'capitalExpenditures': '',
-                    'taxRate': '',
-                    'annualInterest': ''
-                }
-            }
-        },
-
+        
         ui() {
             // get inputs by inputmask category
             this.inputPrice = this.$('[data-input-mask="price"]');
@@ -75,6 +73,12 @@ module.exports = {
                     let key = slider.target.dataset.modelValue;
                     app.cache.whatMyBusinessWorthCalculator[key] = +slider.value;
                 });
+            });
+
+            this.$('[data-toggle="tooltip"]').tooltip({
+                html: true,
+                offset: '4px 2px',
+                template: '<div class="tooltip tooltip-custom" role="tooltip"><i class="fa fa-info-circle"></i><div class="tooltip-arrow"></div><div class="tooltip-inner"></div></div>'
             });
             
             return this; 
@@ -200,10 +204,10 @@ module.exports = {
 
         render: function () {
             // disable enter to the step 2 of capitalraise calculator without data entered on the first step
-            if (!this.isFirstStepFilled()) {
-                app.routers.navigate('/calculator/whatmybusinessworth/step-1', {trigger: true});
-                return false;
-            }
+            // if (!this.isFirstStepFilled()) {
+            //     app.routers.navigate('/calculator/whatmybusinessworth/step-1', {trigger: true});
+            //     return false;
+            // }
 
             this.$el.html(this.template({
                 data: app.cache.whatMyBusinessWorthCalculator,
@@ -230,6 +234,12 @@ module.exports = {
                     let key = slider.target.dataset.modelValue;
                     app.cache.whatMyBusinessWorthCalculator[key] = +slider.value;
                 });
+            });
+
+            this.$('[data-toggle="tooltip"]').tooltip({
+                html: true,
+                offset: '4px 2px',
+                template: '<div class="tooltip tooltip-custom" role="tooltip"><i class="fa fa-info-circle"></i><div class="tooltip-arrow"></div><div class="tooltip-inner"></div></div>'
             });
 
             $('body').scrollTop(0);

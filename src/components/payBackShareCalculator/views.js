@@ -49,7 +49,7 @@ module.exports = {
                 value = parseFloat(e.target.value.replace('$', '') || 0);
             app.cache.payBackShareCalculator[target.dataset.modelValue] = value;
         },
-
+        
         cutZeros(e) {
             let elem = e.target,
                 value = elem.value.replace('$', '').replace(/,/g, '');
@@ -316,6 +316,30 @@ module.exports = {
                     top: o.top - 30,
                     display: 'none'
                 }).appendTo(plotApi.getPlaceholder()).fadeIn('slow');
+            });
+
+            $("<div id='flot-tooltip'></div>").css({
+                position: "absolute",
+                display: "none",
+                border: "1px solid #fdd",
+                padding: "2px",
+                "background-color": "#fee",
+                opacity: 0.80
+            }).appendTo("body");
+
+            $chart.bind("plothover", function (event, pos, item) {
+                let $flotTooltip = $("#flot-tooltip");
+                if (item) {
+                    var datapoint = item.datapoint,
+                        x = datapoint[0] + currentYear,
+                        y = datapoint[1] * 100;
+
+                    $flotTooltip.html(`${y}%, Year ${x}`);
+                    $flotTooltip.css({top: item.pageY - 35, left: item.pageX - $flotTooltip.outerWidth(true) / 2})
+                        .fadeIn(200);
+                } else {
+                    $flotTooltip.hide();
+                }
             });
 
             // drawing jQPlot

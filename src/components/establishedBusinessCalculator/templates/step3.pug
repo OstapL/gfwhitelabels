@@ -56,6 +56,7 @@ include ../../../templates/mixins.pug
                                 value= formatPrice(data.goodsCost2),
                                 type='text',
                                 placeholder='Cost of Goods Sold',
+                                autocomplete='off'
                                 data-input-mask='price',
                                 data-model-value='goodsCost2',
                                 data-current-value= data.goodsCost2)
@@ -64,14 +65,14 @@ include ../../../templates/mixins.pug
                     .form-group.row
                         label(for="operatingExpense2").col-lg-12 
                             | SG&A, and other Operating Expenses&nbsp;&nbsp;
-                            i(aria-hidden="true").fa.fa-question-circle.text-muted
-
+                            i(aria-hidden="true",data-toggle="tooltip",data-original-title="<b>Selling, General & Administrative Operating Expense.</b> The sum of all direct and indirect selling expenses and all general and administrative expenses of a company").fa.fa-question-circle.text-muted
 
                         .col-lg-12
                             input#operatingExpense2.form-control.js-field(
                                 value= formatPrice(data.operatingExpense2),
                                 type='text',
                                 placeholder='SG&A Operating Expense',
+                                autocomplete='off'
                                 data-input-mask='price',
                                 data-model-value='operatingExpense2',
                                 data-current-value= data.operatingExpense2)
@@ -79,13 +80,14 @@ include ../../../templates/mixins.pug
 
                     .form-group.row
                         label(for="oneTimeExpenses2").col-lg-12 One Time (Extraordinary) Expenses&nbsp;&nbsp;
-                            i(aria-hidden="true").fa.fa-question-circle.text-muted
+                            i(aria-hidden="true",data-toggle="tooltip",data-original-title="<b>One Time (Extraordinary) Expenses.</b> A rare, infrequent event which financial analysts separate out of the income statement in order to avoid distorting the 'regular' earnings reported by a company. They can include things like adverse legal, regulatory or tax issues, storm damage or restructuring charges.").fa.fa-question-circle.text-muted
 
                         .col-lg-12
                             input#oneTimeExpenses2.form-control.js-field(
                                 value= formatPrice(data.oneTimeExpenses2),
                                 type='text',
                                 placeholder='One Time (Extraordinary) Expenses',
+                                autocomplete='off'
                                 data-input-mask='price',
                                 data-model-value='oneTimeExpenses2',
                                 data-current-value= data.oneTimeExpenses2)
@@ -93,13 +95,14 @@ include ../../../templates/mixins.pug
 
                     .form-group.row
                         label(for="depreciationAmortization2").col-lg-12 Depreciation  & Amortization&nbsp;&nbsp;
-                            i(aria-hidden="true").fa.fa-question-circle.text-muted
+                            i(aria-hidden="true",data-toggle="tooltip",data-original-title="<b>Depreciation</b><br/>The allocation of the cost of assets to periods in which the assets are used.<br/><br/><b>Amoritization</b><br/>To write off the cost of an asset gradually.").fa.fa-question-circle.text-muted
 
                         .col-lg-12
                             input#depreciationAmortization2.form-control.js-field(
                                 value= formatPrice(data.depreciationAmortization2),
                                 type='text',
                                 placeholder='Depreciation & Amortization',
+                                autocomplete='off'
                                 data-input-mask='price',
                                 data-model-value='depreciationAmortization2',
                                 data-current-value= data.depreciationAmortization2)
@@ -113,6 +116,7 @@ include ../../../templates/mixins.pug
                                 value= formatPrice(data.interestPaid2),
                                 type='text',
                                 placeholder='Interest Paid',
+                                autocomplete='off'
                                 data-input-mask='price',
                                 data-model-value='interestPaid2',
                                 data-current-value= data.interestPaid2)
@@ -126,6 +130,7 @@ include ../../../templates/mixins.pug
                                 value= formatPrice(data.taxesPaid2),
                                 type='text',
                                 placeholder='Taxes Paid',
+                                autocomplete='off'
                                 data-input-mask='price',
                                 data-model-value='taxesPaid2',
                                 data-current-value= data.taxesPaid2)
