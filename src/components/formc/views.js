@@ -560,4 +560,109 @@ module.exports = {
             return this;
         },
     }),
+
+    riskFactorsCompetitive: Backbone.View.extend({
+        initialize(options) {},
+
+        events: _.extend({
+            'submit form': 'submit',
+        }, jsonActions.events),
+
+        submit(e) {
+            e.preventDefault();
+            app.routers.navigate('/formc/risk-factors/1/personnel', {trigger: true});
+        },
+
+        render() {
+            let template = require('components/formc/templates/riskFactorsCompetitive.pug');
+            this.$el.html(
+                template({
+                    serverUrl: serverUrl,
+                    Urls: Urls,
+                    // fields: this.fields,
+                    values: this.model.toJSON(),
+                })
+            );
+            return this;
+        },
+    }),
+
+
+    riskFactorsPersonnel: Backbone.View.extend({
+        initialize(options) {},
+
+        events: _.extend({
+            'submit form': 'submit',
+        }, jsonActions.events),
+
+        submit(e) {
+            e.preventDefault();
+            app.routers.navigate('/formc/risk-factors/1/legal', {trigger: true});
+        },
+
+        render() {
+            let template = require('components/formc/templates/riskFactorsPersonnel.pug');
+            this.$el.html(
+                template({
+                    serverUrl: serverUrl,
+                    Urls: Urls,
+                    // fields: this.fields,
+                    values: this.model.toJSON(),
+                })
+            );
+            return this;
+        },
+    }),
+
+    riskFactorsLegal: Backbone.View.extend({
+        initialize(options) {},
+
+        events: _.extend({
+            'submit form': 'submit',
+        }, jsonActions.events),
+
+        submit(e) {
+            e.preventDefault();
+            app.routers.navigate('/formc/risk-factors/1/misc', {trigger: true});
+        },
+
+        render() {
+            let template = require('components/formc/templates/riskFactorsLegal.pug');
+            this.$el.html(
+                template({
+                    serverUrl: serverUrl,
+                    Urls: Urls,
+                    // fields: this.fields,
+                    values: this.model.toJSON(),
+                })
+            );
+            return this;
+        },
+    }),
+
+    riskFactorsMisc: Backbone.View.extend({
+        initialize(options) {},
+
+        events: _.extend({
+            'submit form': 'submit',
+        }, jsonActions.events),
+
+        submit(e) {
+            e.preventDefault();
+            app.routers.navigate('/formc/financial-condition/1', {trigger: true});
+        },
+
+        render() {
+            let template = require('components/formc/templates/riskFactorsMisc.pug');
+            this.$el.html(
+                template({
+                    serverUrl: serverUrl,
+                    Urls: Urls,
+                    // fields: this.fields,
+                    values: this.model.toJSON(),
+                })
+            );
+            return this;
+        },
+    }),
 };

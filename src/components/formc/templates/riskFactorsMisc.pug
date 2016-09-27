@@ -1,0 +1,59 @@
+include ../../../templates/mixins.pug
+//- include menu.pug
+include ../../../templates/menuRaiseFund.pug
+
+- 'use strict'
+- var fields = { title_risk: { label: 'Title for Risk'} };
+- var fields = { describe: { label: 'Describe Your Risk'} };
+
++breadcrumbs('form c', '', 
+    [
+        ['Home', '/'],
+        ['FORM C', ''],
+        ['Risk Factors', ''],
+    ]
+)
+
+section.formc-team-members-director.container.m-b-85
+  +menu('formc', 'risk-factors-market')
+
+
+  //START RIGHT BLOCK
+  .col-lg-8
+    h2.text-uppercase.text-lg-center.text-xs-center.m-t-0.dosis.m-b-3 risk factors (MISCELLANEOUS)
+    .col-lg-12
+      p.text-justify Congratulations on making it through the initial six risk factor sections.  This last category is intended to catch any additional risks that may not have been covered and to give you a final chance to disclose potential risks to investors.
+    
+    form(metod="post" action="").form-section 
+
+      .col-lg-12.m-t-3
+        p.pb10
+          b Are there any other additional risks that are specific to your business? 
+          |  For example:
+        ul
+          li.pb10 Are there technology risks not previously disclosed?
+          li.pb10 Are there insurance or business interruption risks not previously disclosed? 
+          li.pb10 Are there brand or reputation risks not previously disclosed?
+          li.pb10 Are there cost risks not previously disclosed? 
+        .pb10 In the text box below, please add any additional risk factors that have not already been addressed in the previous six categories. 
+      .col-lg-12.m-t-1
+        +fieldBlock("title_risk", '', {
+          class1: 'col-lg-3 col-md-12 text-md-left',
+          class2: 'col-lg-9 col-md-12',
+          type: 'text',
+          placeholder: 'Title for Risk',
+          })
+        +fieldBlock("describe", '', {
+          class1: 'col-lg-3 col-md-12 text-md-left',
+          class2: 'col-lg-9 col-md-12 big-textarea',
+          type: 'textarea',
+          placeholder: 'Describe Your Risk',
+          })
+        a(href="/company/create").btn.btn-sm.btn-secondary.text-uppercase.pull-lg-right.m-b-3 save and Add this Risk
+
+        .row.m-t-3
+          .col-lg-12.text-md-center.text-sm-center-text-xs-center
+            a(href="/company/create").btn.btn-primary.text-uppercase.pull-lg-right next
+              i.fa.fa-angle-right
+
+

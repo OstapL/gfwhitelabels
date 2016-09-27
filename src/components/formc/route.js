@@ -8,6 +8,10 @@ module.exports = Backbone.Router.extend({
     'formc/risk-factors/:id/market': 'riskFactorsMarket',
     'formc/risk-factors/:id/financial': 'riskFactorsFinancial',
     'formc/risk-factors/:id/operational': 'riskFactorsOperational',
+    'formc/risk-factors/:id/competitive': 'riskFactorsCompetitive',
+    'formc/risk-factors/:id/personnel': 'riskFactorsPersonnel',
+    'formc/risk-factors/:id/legal': 'riskFactorsLegal',
+    'formc/risk-factors/:id/misc': 'riskFactorsMisc',
     'formc/risk-factors/:id': 'riskFactors',
 
   },
@@ -155,6 +159,62 @@ module.exports = Backbone.Router.extend({
   riskFactorsOperational(id) {
     const View = require('components/formc/views.js');
     const i = new View.riskFactorsOperational({
+      el: '#content',
+      model: new Backbone.Model({
+        id: 1,
+      }),
+      // fields: {},
+
+    });
+    i.render();
+    app.hideLoading();
+  },
+
+  riskFactorsCompetitive(id) {
+    const View = require('components/formc/views.js');
+    const i = new View.riskFactorsCompetitive({
+      el: '#content',
+      model: new Backbone.Model({
+        id: 1,
+      }),
+      // fields: {},
+
+    });
+    i.render();
+    app.hideLoading();
+  },
+
+  riskFactorsPersonnel(id) {
+    const View = require('components/formc/views.js');
+    const i = new View.riskFactorsPersonnel({
+      el: '#content',
+      model: new Backbone.Model({
+        id: 1,
+      }),
+      // fields: {},
+
+    });
+    i.render();
+    app.hideLoading();
+  },
+
+  riskFactorsLegal(id) {
+    const View = require('components/formc/views.js');
+    const i = new View.riskFactorsLegal({
+      el: '#content',
+      model: new Backbone.Model({
+        id: 1,
+      }),
+      // fields: {},
+
+    });
+    i.render();
+    app.hideLoading();
+  },
+
+  riskFactorsMisc(id) {
+    const View = require('components/formc/views.js');
+    const i = new View.riskFactorsMisc({
       el: '#content',
       model: new Backbone.Model({
         id: 1,

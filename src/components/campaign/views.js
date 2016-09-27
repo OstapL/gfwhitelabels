@@ -46,7 +46,6 @@ module.exports = {
     },
 
     onCollapse (e) {
-      if (!(e.type === 'show' || e.type === 'hidden')) return;
       let $elem = $(e.currentTarget);
       let $icon = $elem.find('.fa');
       let $a = $elem.find('a.list-group-item-action');
