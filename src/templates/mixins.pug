@@ -326,14 +326,18 @@ mixin fieldDropzone(name, attr, type)
                                                 i.fa.fa-times
                                         img( src=v.url).img-fluid.pull-left
     else if type == 3
-      .drop-photo-block
-        h3.widget-title.font-alt #{ attr.title }
-        div(class='dropzone__' + name)
-          img(src=dropzoneHelpers.getDropzoneUrl(name, attr, values) alt=fields[name].label class="img-fluid  img-" + name)
-          .drop-image-title.text-xs-center 
-              span Drop your profile photo here or click to upload
-              div
-                  i.fa.fa-camera 
+      //- .drop-photo-block
+      div(class="drop-photo-block dropzone__" + name)
+        div.border-dropzone
+            span
+                h3.widget-title.font-alt #{ attr.title }
+                //- div(class='dropzone__' + name)
+                div
+                    img(src=dropzoneHelpers.getDropzoneUrl(name, attr, values) alt=fields[name].label class="img-fluid  img-" + name)
+                    .drop-image-title.text-xs-center 
+                        p Drop your profile photo here or click to upload
+                        div
+                            i.fa.fa-camera 
 
 
 mixin fieldFileDropzone(name, attr, type)

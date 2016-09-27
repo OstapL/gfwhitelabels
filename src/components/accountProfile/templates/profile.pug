@@ -10,7 +10,7 @@ include ../../../templates/mixins.pug
 .container.profile.pt-50
     .row 
         aside.col-xl-3
-            form(method="post" action="").form
+            form(method="post" action="").form.form-section
                 - var values = user;
                 +fieldDropzone("image", {
                   thumbSize: '255x135',

@@ -11,7 +11,19 @@ module.exports = {
       'focuseout #ssn' : 'hideSSNPopover',
       'keyup #zip_code': 'changeZipCode',
       'change .js-city': 'changeAddressManually',
-      'change .js-state': 'changeAddressManually'
+      'change .js-state': 'changeAddressManually',
+      dragover: 'globalDragover',
+      dragleave: 'globalDragleave',
+    },
+
+    globalDragover() {
+      // this.$('.dropzone').css({ border: 'dashed 1px lightgray' });
+      this.$('.border-dropzone').addClass('active-border');
+    },
+
+    globalDragleave() {
+      // this.$('.dropzone').css({ border: 'none' });
+      this.$('.border-dropzone').removeClass('active-border');
     },
 
     initialize(options) {
