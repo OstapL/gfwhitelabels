@@ -61,7 +61,7 @@ const onPreviewAction = function(e) {
 module.exports = {
   company: Backbone.View.extend({
     // urlRoot: serverUrl + Urls['company-list'](),
-    urlRoot: Urls['company-list'](),
+    urlRoot: Urls.company_list(),
     template: require('./templates/company.pug'),
     events: {
       'submit form': 'submit',

@@ -85,11 +85,6 @@ section.create-company.container.m-b-85
   .col-lg-8
     h2.text-uppercase.text-lg-center.text-xs-center.m-t-0.dosis Company
     form(metod="post" action="").form-section
-      input(type='hidden' name='state' value=values.state id='state')
-      input(type='hidden' name='city' value=values.city id='city')
-
-      if values.id && values.id != ''
-          input(type='hidden' name='id' value=values.id id='id')
 
       +fieldBlock("name", '', {
         class1: 'col-lg-3 col-md-12 text-md-left',
@@ -101,11 +96,13 @@ section.create-company.container.m-b-85
         class1: 'col-lg-3 col-md-12 text-md-left',
         class2: 'col-lg-9 col-md-12',
         type: 'choice',
+        empty: {display: 'Choose Industry', value: ''},
         })
       +fieldBlock("founding_state", '', {
         class1: 'col-lg-3 col-md-12 text-md-left',
         class2: 'col-lg-9 col-md-12',
         type: 'choice',
+        empty: {display: 'Choose State', value: ''},
         })
       +fieldBlock("tagline", '', {
         class1: 'col-lg-3 col-md-12 text-md-left',
@@ -126,6 +123,7 @@ section.create-company.container.m-b-85
             class1: 'col-lg-6',
             class2: 'col-lg-6',
             type: 'choice',
+            empty: {display: 'Choose', value: ''},
           })
         .col-lg-6.col-xs-12.date-input.pull-right.required
           .col-date.form-group-m-b-0
@@ -151,6 +149,9 @@ section.create-company.container.m-b-85
             class2: 'col-lg-6',
             })
         .col-lg-5.city_states.required
+          input(type='hidden' name='state' value=values.state id='state')
+          input(type='hidden' name='city' value=values.city id='city')
+
           label.col-lg-6.col-xs-6.text-lg-right.text-xs-left City/State
           .col-lg-6.col-xs-6
             a(data-toggle="modal" data-target="#city_state_modal" href="#city_state_modal").change_state_city

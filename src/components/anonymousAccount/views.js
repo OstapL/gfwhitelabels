@@ -1,3 +1,5 @@
+const validation = require('components/validation/validation.js');
+
 module.exports = {
   login: Backbone.View.extend({
     urlRoot: Urls.rest_login(),
@@ -33,9 +35,7 @@ module.exports = {
                 '/account/profile';
         }, 200);
       } else {
-        Backbone.Validation.callbacks.invalid(                                 
-            form, '', 'Server return no authentication data'
-            );
+        validation.invalidMsg(form, '', 'Server return no authentication data');
       }
     },
 
@@ -152,7 +152,7 @@ module.exports = {
 
             window.location = app.getParams().next ? app.getParams().next : '/account/profile';
         } else {
-            Backbone.Validation.callbacks.invalid(                                 
+            validation.invalidMsg(                                 
               this, '', 'Server return no authentication data'
             );
         }

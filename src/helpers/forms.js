@@ -65,10 +65,11 @@ module.exports = {
        this.model.validation = newValidators;
     */
 
+    debugger;
     this.$('.help-block').remove();
     if (!validation.validate(this.fields, data, this)) {
-      _(validation.errors).each((el, key) => {
-        Backbone.Validation.callbacks.invalid(this, key, el);
+      _(validation.errors).each((errors, key) => {
+        validation.invalidMsg(this, key, errors);
       });
       this.$('.help-block').scrollTo(45);
       return;
