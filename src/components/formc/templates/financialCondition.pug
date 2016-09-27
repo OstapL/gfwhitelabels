@@ -1,0 +1,242 @@
+include ../../../templates/mixins.pug
+//- include menu.pug
+include ../../../templates/menuRaiseFund.pug
+
+- 'use strict'
+- var fields = { how_much: { label: 'How much have you sold within the preceeding 12-month period?'} };
+//- var fields = { financials_recent: { label: 'Upload financials for most recent fiscal year'} };
+
+- var fields = { total_assets: { label: 'Total Assets'} };
+- var fields = { cash: { label: 'Cash & Cash Equivalents'} };
+- var fields = { accounts: { label: 'Accounts Receivable'} };
+- var fields = { short: { label: 'Short-term Debt'} };
+- var fields = { long: { label: 'Long-term Debt'} };
+- var fields = { revenues: { label: 'Revenues/Sales'} };
+- var fields = { cost: { label: 'Cost of Goods Sold'} };
+- var fields = { income: { label: 'Total Income'} };
+- var fields = { taxable: { label: 'Taxable Income'} };
+- var fields = { tax: { label: 'Total Tax'} };
++breadcrumbs('form c', '', 
+    [
+        ['Home', '/'],
+        ['FORM C', ''],
+        ['team members (director)', ''],
+    ]
+)
+
+section.formc-team-members-director.container.m-b-85
+  +menu('formc', 'financial-condition')
+
+
+  //START RIGHT BLOCK
+  .col-lg-8
+    h2.text-uppercase.text-lg-center.text-xs-center.m-t-0.dosis financial condition
+    form(metod="post" action="").form-section
+      .col-lg-12
+        b Does the issuer have an operating history?
+        .form-group.form-section.m-t-2.m-b-0
+          .radio-input.m-b-1
+            label 
+              input(type="radio")
+              |  Yes
+            label 
+              input(type="radio")
+              |  No
+        b Please discuss your historical results for each period for which you provide financial statements.  The discussion should focus on financial milestones and operational, liquidity and other challenges.  Please also discuss whether historical results and cash flows are representative of what investors should expect in the future. Take into account the proceeds of the offering and any other known sources of capital. Please discuss how the proceeds from the offering will affect your liquidity, whether these funds are necessary to the viability of the business, and how quickly you anticipate using your available cash.  Please also discuss other available sources of capital, such as lines of credit or required contributions by shareholders, for example.
+        .col-lg-12.p-t-1
+          .row.form-group.form-section
+            .big-textarea
+              textarea(placeholder="Describe your financial condition").form-control
+      .col-lg-12
+        p.m-t-1.m-b-2 Companies are limited to raising $1 million in any 12-month period.
+        p.pb10 You will be required to file a complete set of financial statements, including balance sheet, income statement, statement of cash flows and statement of changes in owners equity and notes to the financial statements. They must be prepared in accordance with U.S. generally accepted accounting principles and must cover the two most recently completed fiscal years or the period(s) since inception, if shorter. If the financial statements are not audited, they must be labeled as “unaudited.” You must provide these financial statements even if you have no operating history.
+        p.m-t-1.m-b-2 If your aggregate offering is:
+        b $100,000 or less:
+        p *Financial statements of the issuer and its predecessors, if any, certified by CEO
+        p *Disclosure of amount of income, taxable income and total tax reflected on federal tax return, cetified by CEO
+        p *If statements are available that have been reviewed or audited by an independent public accountant, they must be provided instead along with a signed audit or review report and need not include information from tax return or certification of CEO
+        b $100,001-$500,000: 
+        p *Financial statements of the issuer and its predecessors, if any, reviewed by an independent public accountant including a signed review report
+        p *If statements are available that have been audited by an independent public accountant, they must be provided instead along with a signed audit report
+        b $500,001-$1,000,000:
+        p *If this is your first offering in reliance on Regulation Crowdfunding, then you’ll need financial statements reviewed by an independent public accountant, along with a signed review report (unless statements are available that have been audited by an independent public accountant, they must be provided instead along with a signed audit report)
+        p *If you have previously sold securities in reliance on Regulation Crowdfunding, you’ll need to provide financial statements audited by an independent public accountant along with a signed audit report.
+        .border-bottom.m-t-3.m-b-3
+        h3 INSTRUCTIONS
+        p.m-b-2 To determine the financial statements required, the Aggregate Offering Amount for purposes means the aggregate amounts offered and sold by the issuer, all entities controlled by or under common control with the issuer, and all predecessors of the issuer in reliance on Section 4(a)(6) of the Securities Act within the preceding 12-month period plus the current maximum offering amount provided on the cover of this Form.
+        p.m-b-2 To determine whether the issuer has previously sold securities in reliance on Regulation Crowdfunding, “issuer” means the issuer, all entities controlled by or under common control with the issuer, and all predecessors of the issuer.
+        p.m-b-2 If the aggregate offering is $100,000 or less, issuers offering securities before filing a tax return for the most recently completed fiscal year may provide information from the tax return filed for the prior year (if any), provided that the issuer provides information from the tax return for the most recently completed fiscal year when it is filed, if filed during the offering period. An issuer that requested an extension of the time to file would not be required to provide information from the tax return until the date when the return is filed, if filed during the offering period.
+        p.m-b-2 To qualify as a public accountant that is independent of the issuer, the accountant must satisfy the independence standards of either:
+          br
+          |  (i) Rule 2-01 of Regulation S-X or
+          br
+          |  (ii) the AICPA.
+        p.m-b-2 The public accountant that audits or reviews the financial statements provided by an issuer must be (1) duly registered and in good standing as a certified public accountant under the laws of the place of his or her residence or principal office or (2) in good standing and entitled to practice as a public accountant under the laws of his or her place of residence or principal office.
+        p.m-b-2 An issuer will not be in compliance with the requirement to provide reviewed financial statement if the issuer received a review report that includes modifications. An issuer will not be in compliance with the requirement to provide audited financial statements if the issuer received a qualified opinion, an adverse opinion, or a disclaimer of opinion.
+        p.m-b-2 The issuer must notify the public accountant of the issuer’s intended use of the public accountant’s audit or review report in the offering.
+        p.m-b-2 For an offering conducted in the first 120 days of a fiscal year, the financial statements provided may be for the two fiscal years prior to the issuer’s most recently completed fiscal year; however, financial statements for the two most recently completed fiscal years must be provided if they are otherwise available. If more than 120 days have passed since the end of the issuer’s most recently completed fiscal year, the financial statements provided must be for the issuer’s two most recently completed fi scal years. If the 120th day falls on a Saturday, Sunday, or holiday, the next business day shall be considered the 120th day for purposes of determining the age of the financial statements.
+        p An issuer may elect to delay complying with any new or revised financial accounting standard until the date that a company that is not an issuer (as defined under section 2(a) of the Sarbanes-Oxley Act of 2002) is required to comply with such new or revised accounting standard, if such standard also applies to companies that are not issuers. Issuers electing such extension of time accommodation must disclose it at the time the issuer files its offering statement and apply the election to all standards. Issuers electing not to use this accommodation must forgo this accommodation for all financial accounting standards and may not elect to rely on this accommodation in any future filings.
+        .border-bottom.m-t-3.m-b-3
+      .col-lg-12
+        b Have you previously sold securities in reliance on Regulation Crowdfunding?
+        .form-group.form-section.m-t-2.m-b-0
+          .radio-input.m-b-1
+            label 
+              input(type="radio")
+              |  Yes
+            label 
+              input(type="radio")
+              |  No
+        +fieldBlock("how_much", '', {
+        class1: 'col-lg-12 col-md-12 text-md-left text-xl-left',
+        class2: 'col-lg-12 col-md-12',
+        type: 'text',
+        placeholder: '',
+        })
+      //
+        .text-lg-right.img-ppt
+          +fieldFileDropzone("financials_recent", {
+            class1: 'col-lg-3',
+            class2: 'col-lg-9 p-l-1 p-r-1',
+            text: 'Drop your PDF or DOC here or click to upload',
+            icon: 'file',
+            default: '/img/default' + suffix + '.png',
+          })
+      // not work in my server 
+        .text-lg-right.img-ppt
+          +fieldFileDropzone("financials_prior", {
+            class1: 'col-lg-3',
+            class2: 'col-lg-9 p-l-1 p-r-1',
+            text: 'Drop your PDF or DOC here or click to upload',
+            icon: 'file',
+            default: '/img/default' + suffix + '.png',
+          })
+      .col-lg-6.col-md-12
+        h3.text-xs-center Most Recent Fiscal Year
+        +fieldBlock("total_assets", '', {
+        class1: 'col-lg-12 col-md-12 text-md-left text-xl-left',
+        class2: 'col-lg-12 col-md-12',
+        type: 'text',
+        placeholder: '',
+        })
+        +fieldBlock("cash", '', {
+        class1: 'col-lg-12 col-md-12 text-md-left text-xl-left',
+        class2: 'col-lg-12 col-md-12',
+        type: 'text',
+        placeholder: '',
+        })
+        +fieldBlock("accounts", '', {
+        class1: 'col-lg-12 col-md-12 text-md-left text-xl-left',
+        class2: 'col-lg-12 col-md-12',
+        type: 'text',
+        placeholder: '',
+        })
+        +fieldBlock("short", '', {
+        class1: 'col-lg-12 col-md-12 text-md-left text-xl-left',
+        class2: 'col-lg-12 col-md-12',
+        type: 'text',
+        placeholder: '',
+        })
+        +fieldBlock("long", '', {
+        class1: 'col-lg-12 col-md-12 text-md-left text-xl-left',
+        class2: 'col-lg-12 col-md-12',
+        type: 'text',
+        placeholder: '',
+        })
+        +fieldBlock("revenues", '', {
+        class1: 'col-lg-12 col-md-12 text-md-left text-xl-left',
+        class2: 'col-lg-12 col-md-12',
+        type: 'text',
+        placeholder: '',
+        })
+        +fieldBlock("cost", '', {
+        class1: 'col-lg-12 col-md-12 text-md-left text-xl-left',
+        class2: 'col-lg-12 col-md-12',
+        type: 'text',
+        placeholder: '',
+        })
+        +fieldBlock("income", '', {
+        class1: 'col-lg-12 col-md-12 text-md-left text-xl-left',
+        class2: 'col-lg-12 col-md-12',
+        type: 'text',
+        placeholder: '',
+        })
+        +fieldBlock("taxable", '', {
+        class1: 'col-lg-12 col-md-12 text-md-left text-xl-left',
+        class2: 'col-lg-12 col-md-12',
+        type: 'text',
+        placeholder: '',
+        })
+        +fieldBlock("tax", '', {
+        class1: 'col-lg-12 col-md-12 text-md-left text-xl-left',
+        class2: 'col-lg-12 col-md-12',
+        type: 'text',
+        placeholder: '',
+        })
+      .col-lg-6.col-md-12
+        h3.text-xs-center Prior Fiscal Year
+        +fieldBlock("total_assets", '', {
+        class1: 'col-lg-12 col-md-12 text-md-left text-xl-left',
+        class2: 'col-lg-12 col-md-12',
+        type: 'text',
+        placeholder: '',
+        })
+        +fieldBlock("cash", '', {
+        class1: 'col-lg-12 col-md-12 text-md-left text-xl-left',
+        class2: 'col-lg-12 col-md-12',
+        type: 'text',
+        placeholder: '',
+        })
+        +fieldBlock("accounts", '', {
+        class1: 'col-lg-12 col-md-12 text-md-left text-xl-left',
+        class2: 'col-lg-12 col-md-12',
+        type: 'text',
+        placeholder: '',
+        })
+        +fieldBlock("short", '', {
+        class1: 'col-lg-12 col-md-12 text-md-left text-xl-left',
+        class2: 'col-lg-12 col-md-12',
+        type: 'text',
+        placeholder: '',
+        })
+        +fieldBlock("long", '', {
+        class1: 'col-lg-12 col-md-12 text-md-left text-xl-left',
+        class2: 'col-lg-12 col-md-12',
+        type: 'text',
+        placeholder: '',
+        })
+        +fieldBlock("revenues", '', {
+        class1: 'col-lg-12 col-md-12 text-md-left text-xl-left',
+        class2: 'col-lg-12 col-md-12',
+        type: 'text',
+        placeholder: '',
+        })
+        +fieldBlock("cost", '', {
+        class1: 'col-lg-12 col-md-12 text-md-left text-xl-left',
+        class2: 'col-lg-12 col-md-12',
+        type: 'text',
+        placeholder: '',
+        })
+        +fieldBlock("income", '', {
+        class1: 'col-lg-12 col-md-12 text-md-left text-xl-left',
+        class2: 'col-lg-12 col-md-12',
+        type: 'text',
+        placeholder: '',
+        })
+        +fieldBlock("taxable", '', {
+        class1: 'col-lg-12 col-md-12 text-md-left text-xl-left',
+        class2: 'col-lg-12 col-md-12',
+        type: 'text',
+        placeholder: '',
+        })
+        +fieldBlock("tax", '', {
+        class1: 'col-lg-12 col-md-12 text-md-left text-xl-left',
+        class2: 'col-lg-12 col-md-12',
+        type: 'text',
+        placeholder: '',
+        })
+      .col-lg-12.m-t-2
+        .text-md-center.text-sm-center-text-xs-center
+          a(href="#").btn.btn-primary.text-uppercase.pull-lg-right Save
+
+

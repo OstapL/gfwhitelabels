@@ -7,7 +7,6 @@ var jsonActions = {
     },
 
     addSection(e) {
-        debugger
         e.preventDefault();
         let sectionName = e.target.dataset.section;
         let template = require('templates/section.pug');
@@ -66,7 +65,7 @@ module.exports = {
             e.preventDefault();
             // FixMe
             // make the index dynamic
-            app.routers.navigate('/formc/team-members/1', {trigger: true});
+            app.routers.navigate('/formc/team-members/' + this.model.id, {trigger: true});
         },
 
         initialize(options) {
@@ -126,9 +125,8 @@ module.exports = {
         // submit: app.defaultSaveActions.submit,
         // submit: api.submitAction,
         submit(e) {
-            debugger
             e.preventDefault();
-            app.routers.navigate('/formc/related-parties/1', {trigger: true});
+            app.routers.navigate('/formc/related-parties/' + this.model.id, {trigger: true});
             // app.routers.navigate('/formc/use-of-proceeds/1', {trigger: true});
         },
 
@@ -257,7 +255,7 @@ module.exports = {
         submit(e) {
             e.preventDefault();
             // navigate back to general member page
-            app.routers.navigate('/formc/team-members/1', {trigger: true});
+            app.routers.navigate('/formc/team-members/' + this.model.id, {trigger: true});
         },
     }),
 
@@ -330,12 +328,10 @@ module.exports = {
         submit: api.submitAction,
 
         initialize(options) {
-            debugger
             this.fields = options.fields;
         },
 
         render() {
-            debugger
             let template = require('templates/formc/useofproceeds.pug');
 
             this.$el.html(
@@ -376,13 +372,11 @@ module.exports = {
         },
 
         submit(e) {
-            debugger
             e.preventDefault();
-            app.routers.navigate('formc/use-of-proceeds/1', {trigger: true});
+            app.routers.navigate('formc/use-of-proceeds/' + this.model.id, {trigger: true});
         },
 
         render() {
-            // debugger
             let template = require('components/formc/templates/relatedParties.pug');
             this.fields.transactions.type = 'json';
             this.fields.transactions.schema = {
@@ -439,7 +433,7 @@ module.exports = {
         
         submit(e) {
             e.preventDefault();
-            app.routers.navigate('/formc/risk-factors/1', {trigger: true});
+            app.routers.navigate('/formc/risk-factors/' + this.model.id, {trigger: true});
         },
 
         render() {
@@ -464,9 +458,8 @@ module.exports = {
         }, jsonActions.events),
         
         submit(e) {
-            // debugger
             e.preventDefault();
-            app.routers.navigate('/formc/risk-factors/1/market', {trigger: true});
+            app.routers.navigate('/formc/risk-factors/' + this.model.id + '/market', {trigger: true});
         },
 
         render() {
@@ -492,7 +485,7 @@ module.exports = {
 
         submit(e) {
             e.preventDefault();
-            app.routers.navigate('/formc/risk-factors/1/financial', {trigger: true});
+            app.routers.navigate('/formc/risk-factors/' + this.model.id + '/financial', {trigger: true});
         },
 
         render() {
@@ -518,7 +511,7 @@ module.exports = {
 
         submit(e) {
             e.preventDefault();
-            app.routers.navigate('/formc/risk-factors/1/operational', {trigger: true});
+            app.routers.navigate('/formc/risk-factors/'  + this.model.id + '/operational', {trigger: true});
         },
 
         render() {
@@ -544,7 +537,7 @@ module.exports = {
 
         submit(e) {
             e.preventDefault();
-            app.routers.navigate('/formc/risk-factors/1/competitive', {trigger: true});
+            app.routers.navigate('/formc/risk-factors/' + this.model.id + '/competitive', {trigger: true});
         },
 
         render() {
@@ -570,7 +563,7 @@ module.exports = {
 
         submit(e) {
             e.preventDefault();
-            app.routers.navigate('/formc/risk-factors/1/personnel', {trigger: true});
+            app.routers.navigate('/formc/risk-factors/' + this.model.id + '/personnel', {trigger: true});
         },
 
         render() {
@@ -597,7 +590,7 @@ module.exports = {
 
         submit(e) {
             e.preventDefault();
-            app.routers.navigate('/formc/risk-factors/1/legal', {trigger: true});
+            app.routers.navigate('/formc/risk-factors/' + this.model.id + '/legal', {trigger: true});
         },
 
         render() {
@@ -623,7 +616,7 @@ module.exports = {
 
         submit(e) {
             e.preventDefault();
-            app.routers.navigate('/formc/risk-factors/1/misc', {trigger: true});
+            app.routers.navigate('/formc/risk-factors/' + this.model.id + '/misc', {trigger: true});
         },
 
         render() {
@@ -649,11 +642,37 @@ module.exports = {
 
         submit(e) {
             e.preventDefault();
-            app.routers.navigate('/formc/financial-condition/1', {trigger: true});
+            app.routers.navigate('/formc/financial-condition/' + this.model.id, {trigger: true});
         },
 
         render() {
             let template = require('components/formc/templates/riskFactorsMisc.pug');
+            this.$el.html(
+                template({
+                    serverUrl: serverUrl,
+                    Urls: Urls,
+                    // fields: this.fields,
+                    values: this.model.toJSON(),
+                })
+            );
+            return this;
+        },
+    }),
+
+    financialCondition: Backbone.View.extend({
+        initialize(options) {},
+
+        events: _.extend({
+            'submit form': 'submit',
+        }, jsonActions.events),
+
+        submit(e) {
+            e.preventDefault();
+            app.routers.navigate('/formc/outstanding-security/' + this.model.id, {trigger: true});
+        },
+
+        render() {
+            let template = require('components/formc/templates/financialCondition.pug');
             this.$el.html(
                 template({
                     serverUrl: serverUrl,
