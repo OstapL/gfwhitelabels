@@ -1,5 +1,6 @@
 const dropzone = require('dropzone');
 const dropzoneHelpers = require('helpers/dropzone.js');
+const validation = require('components/validation/validation.js');
 
 module.exports = {
   profile: Backbone.View.extend({
@@ -183,7 +184,7 @@ module.exports = {
       this.cityStateArea.text('City/State');
       this.cityField.val('');
       this.stateField.val('');
-      Backbone.Validation.callbacks.invalid(this, 'zip_code', 'Sorry your zip code is not found');
+      validation.invalidMsg(this, 'zip_code', 'Sorry your zip code is not found');
     },
 
     changeAddressManually() {

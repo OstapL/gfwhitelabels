@@ -40,12 +40,7 @@ module.exports = {
       'click .see-all-faq': 'seeAllFaq',
       'click .linkresponse': 'checkResponse',
       'submit .comment-form': 'submitComment',
-      // 'click .fancybox-nav': 'preventDefault'
     },
-    /*preventDefault(e) {
-      debugger
-      e.preventDefault();
-    },*/
     initialize(options) {
       $(document).off("scroll", this.onScrollListener);
       $(document).on("scroll", this.onScrollListener);
