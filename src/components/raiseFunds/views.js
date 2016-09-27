@@ -38,9 +38,16 @@ const jsonActions = {
 
   deleteSection(e) {
     e.preventDefault();
-    let sectionName = e.currentTarget.dataset.section;
-    $('.' + sectionName + ' .index_' + e.currentTarget.dataset.index).remove();
-    e.currentTarget.remove();
+    if(confirm('Are you sure?')) {
+      let sectionName = e.currentTarget.dataset.section;
+      if($('.' + sectionName + ' .delete-section-container').length > 1) {
+        $('.' + sectionName + ' .index_' + e.currentTarget.dataset.index).remove();
+        e.currentTarget.offsetParent.remove();
+      } else {
+        $('.' + sectionName + ' .index_' + e.currentTarget.dataset.index + ' input').val('');
+        $('.' + sectionName + ' .index_' + e.currentTarget.dataset.index + ' textarea').val('');
+      }
+    }
 
     // ToDo
     // Fix index counter
@@ -687,16 +694,17 @@ module.exports = {
   }),
 
   specifics: Backbone.View.extend({
+      urlRoot: Urls['campaign-list']() + '/specifics',
       events: {
         'submit form': api.submitAction,
         'change input[name="security_type"]': 'updateSecurityType',
+        'focus #minimum_raise,#maximum_raise,#minimum_increment,#premoney_valuation,#price_per_share': 'clearZeroAmount',
         'change #minimum_raise,#maximum_raise,#minimum_increment,#premoney_valuation': 'formatNumber',
         'change #minimum_raise,#maximum_raise,#price_per_share,#premoney_valuation': 'calculateNumberOfShares',
         dragover: 'globalDragover',
         dragleave: 'globalDragleave',
         'click .onPreview': onPreviewAction,
       },
-      urlRoot: Urls['campaign-list']() + '/specifics',
 
       globalDragover() {
         // this.$('.dropzone').css({ border: 'dashed 1px lightgray' });
@@ -722,6 +730,13 @@ module.exports = {
         var val = parseInt(valStr);
         if (val) {
           $(e.target).val(val.toLocaleString('en-US'));
+        }
+      },
+
+      clearZeroAmount: function (e) {
+        let val = parseInt(e.target.value);
+        if(val == 0 || val == NaN) {
+          e.target.value = '';
         }
       },
 

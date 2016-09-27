@@ -65,7 +65,6 @@ module.exports = {
        this.model.validation = newValidators;
     */
 
-    debugger;
     this.$('.help-block').remove();
     if (!validation.validate(this.fields, data, this)) {
       _(validation.errors).each((errors, key) => {
@@ -133,7 +132,7 @@ module.exports = {
 
       data = data ? data : { Server: status };
       for (let key in data)  {
-        Backbone.Validation.callbacks.invalid(
+        validation.invalidMsg(
           view, key, data[key]
         );
       }

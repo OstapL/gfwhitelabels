@@ -96,7 +96,6 @@ module.exports = {
           this.runRules(attr, name);
         } catch (e) {
           this.finalResult = false;
-          console.log(e);
           Array.isArray(this.errors[name]) ? this.errors[name].push(e) : this.errors[name] = [e];
         }
       } else {
