@@ -285,8 +285,8 @@ mixin fieldDropzone(name, attr, type)
             //- div(class=attr.class2)
             div(class=(attr.class2 + ' dropzone__' + name))
                 div(class="border-dropzone")
-                    div(class="uploading" style="line-height:115px;text-align:center;position:absolute;width:100%;height:100%;left:0;right:0;top:0;bottom:0;z-index:1;display:none;background-color: rgba(255,255,255,0.8);")
-                        img(alt="activity indicator" src="/img/ajax-loader.gif")
+                    div(class="uploading" style="line-height:115px;text-align:center;position:absolute;width:100%;height:100%;left:0;right:0;top:0;bottom:0;z-index:1;display:none;background-color:rgba(255,255,255,0.8);")
+                        img(alt="activity indicator" src="/img/ajax-loader.gif" style="position:absolute;margin:auto;top:0;left:0;right:0;bottom:0;")
                     span
                         //- div(class='col-lg-7 col-md-6 col-xs-12 text-xs-center text-md-center text-lg-center ' + ' dropzone__' + name)
                         div.col-lg-5.col-md-5.col-sm-5.col-xs-5.text-xs-center.text-md-center.text-lg-center.p-dropzone
@@ -334,6 +334,8 @@ mixin fieldDropzone(name, attr, type)
       div(class="drop-photo-block dropzone__" + name)
         h3.widget-title.font-alt #{ attr.title }
         div.border-dropzone
+            div(class="uploading" style="line-height:115px;text-align:center;position:absolute;width:100%;height:100%;left:0;right:0;top:0;bottom:0;z-index:1;display:none;background-color:rgba(255,255,255,0.8);")
+                img(alt="activity indicator" src="/img/ajax-loader.gif" style="position:absolute;margin:auto;top:0;left:0;right:0;bottom:0;")
             span
                 h3.widget-title.font-alt #{ attr.title }
                 //- div(class='dropzone__' + name)
