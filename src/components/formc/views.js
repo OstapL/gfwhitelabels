@@ -1,7 +1,8 @@
 "use strict";
 let menuHelper = require('helpers/menuHelper.js');
+let addSectionHelper = require('helpers/addSectionHelper.js');
 
-var jsonActions = {
+/*var jsonActions = {
     events: {
         'click .add-section': 'addSection',
         'click .delete-section': 'deleteSection',
@@ -37,7 +38,7 @@ var jsonActions = {
         // Fix index counter
         // this[sectionName + 'Index'] --;
    },
-};
+};*/
 
 /*var menuEvents = {
   'hidden.bs.collapse .panel': 'onCollapse',
@@ -63,7 +64,7 @@ module.exports = {
         events: _.extend({
             'submit form': 'submit',
             'click input[name=failed_to_comply]': 'onComplyChange',
-        }, jsonActions.events, menuHelper.events),
+        }, menuHelper.events),
 
         // onCollapse: menuActions.onCollapse,
 
@@ -75,8 +76,8 @@ module.exports = {
             }
         },
 
-        addSection: jsonActions.addSection,
-        deleteSection: jsonActions.deleteSection,
+        // addSection: jsonActions.addSection,
+        // deleteSection: jsonActions.deleteSection,
         getSuccessUrl() {
             // return  '/formc/team-members/' + this.model.get('id');
             return  '/formc/team-members/' + this.model.id;
@@ -85,6 +86,7 @@ module.exports = {
         // submit: api.submitAction,
         submit: function (e) {
             e.preventDefault();
+            e.stopPropagation();
             this.undelegateEvents();
             // FixMe
             // make the index dynamic
@@ -132,7 +134,7 @@ module.exports = {
         name: 'teamMembers',
         events: _.extend({
             'submit form': 'submit',
-        }, jsonActions.events, menuHelper.events),
+        }, menuHelper.events),
 
         preinitialize() {
             // ToDo
@@ -142,8 +144,8 @@ module.exports = {
             }
         },
 
-        addSection: jsonActions.addSection,
-        deleteSection: jsonActions.deleteSection,
+        // addSection: jsonActions.addSection,
+        // deleteSection: jsonActions.deleteSection,
         getSuccessUrl() {
             // return  '/formc/use-of-proceeds/1' + this.model.get('id');
             return  '/formc/use-of-proceeds/1' + this.model.id;
@@ -152,7 +154,7 @@ module.exports = {
         // submit: api.submitAction,
         submit(e) {
             e.preventDefault();
-            // e.stopPropagation();
+            e.stopPropagation();
             this.undelegateEvents();
             app.routers.navigate('/formc/related-parties/' + this.model.id, {trigger: true});
             // app.routers.navigate('/formc/use-of-proceeds/1', {trigger: true});
@@ -182,10 +184,10 @@ module.exports = {
 
     })),
 
-    teamMemberAdd: Backbone.View.extend(_.extend(menuHelper.methods, {
+    teamMemberAdd: Backbone.View.extend(_.extend(addSectionHelper.methods, menuHelper.methods, {
         events: _.extend({
             'submit form': 'submit',
-        }, jsonActions.events, menuHelper.events),
+        }, addSectionHelper.events, menuHelper.events),
         urlRoot: serverUrl + 'xxxxx' + '/team_members',
         initialize(options) {
             this.fields = options.fields;
@@ -282,21 +284,22 @@ module.exports = {
                 })
             );
         },
-        addSection: jsonActions.addSection,
-        deleteSection: jsonActions.deleteSection,
+        // addSection: jsonActions.addSection,
+        // deleteSection: jsonActions.deleteSection,
         getSuccessUrl(data) {},
         submit(e) {
             e.preventDefault();
+            e.stopPropagation();
             this.undelegateEvents();
             // navigate back to general member page
             app.routers.navigate('/formc/team-members/' + this.model.id, {trigger: true});
         },
     })),
 
-    offering: Backbone.View.extend(_.extend(menuHelper.methods, {
+    offering: Backbone.View.extend(_.extend(addSectionHelper.methods, menuHelper.methods, {
         events: _.extend({
             'submit form': 'submit',
-        }, jsonActions.events, menuHelper.events),
+        }, addSectionHelper.events, menuHelper.events),
 
         preinitialize() {
             // ToDo
@@ -306,8 +309,8 @@ module.exports = {
             }
         },
 
-        addSection: jsonActions.addSection,
-        deleteSection: jsonActions.deleteSection,
+        // addSection: jsonActions.addSection,
+        // deleteSection: jsonActions.deleteSection,
         getSuccessUrl() {
             return  '/formc/offering/' + this.model.id;
         },
@@ -383,7 +386,7 @@ module.exports = {
         },
     }),*/
 
-    relatedParties: Backbone.View.extend(_.extend(menuHelper.methods, {
+    relatedParties: Backbone.View.extend(_.extend(addSectionHelper.methods, menuHelper.methods, {
         name: 'relatedParties',
         initialize(options) {
             this.fields = options.fields;
@@ -392,10 +395,10 @@ module.exports = {
         events: _.extend({
             'submit form': 'submit',
             'click input[name=had_transactions]': 'onHadTransactionsChange',
-        }, jsonActions.events, menuHelper.events),
+        }, addSectionHelper.events, menuHelper.events),
 
-        addSection: jsonActions.addSection,
-        deleteSection: jsonActions.deleteSection,
+        // addSection: jsonActions.addSection,
+        // deleteSection: jsonActions.deleteSection,
         
         onHadTransactionsChange(e) {
             let hadTransactions = this.$('input[name=had_transactions]:checked').val();
@@ -410,9 +413,9 @@ module.exports = {
 
         submit(e) {
             e.preventDefault();
+            e.stopPropagation();
             this.undelegateEvents();
 
-            // e.stopPropagation();
             app.routers.navigate('formc/use-of-proceeds/' + this.model.id, {trigger: true});
         },
 
@@ -467,17 +470,17 @@ module.exports = {
         },
     })),
 
-    useOfProceeds: Backbone.View.extend(_.extend(menuHelper.methods, {
+    useOfProceeds: Backbone.View.extend(_.extend(addSectionHelper.methods, menuHelper.methods, {
        initialize(options) {},
 
         events: _.extend({
             'submit form': 'submit',
-        }, jsonActions.events, menuHelper.events),
+        }, addSectionHelper.events, menuHelper.events),
         
         submit(e) {
             e.preventDefault();
+            e.stopPropagation();
             this.undelegateEvents();
-            // e.stopPropagation();
             // app.routers.navigate('/formc/risk-factors/instruction/' + this.model.id, {trigger: true});
             app.routers.navigate('/formc/risk-factors-instruction/' + this.model.id, {trigger: true});
         },
@@ -502,7 +505,7 @@ module.exports = {
 
         events: _.extend({
             'submit form': 'submit',
-        }, jsonActions.events, menuHelper.events),
+        }, menuHelper.events),
         
         submit(e) {
             e.preventDefault();
@@ -535,12 +538,12 @@ module.exports = {
 
         events: _.extend({
             'submit form': 'submit',
-        }, jsonActions.events, menuHelper.events),
+        }, menuHelper.events),
 
         submit(e) {
             e.preventDefault();
+            e.stopPropagation();
             this.undelegateEvents();
-            // e.stopPropagation();
             // app.routers.navigate('/formc/risk-factors/' + this.model.id + '/financial', {trigger: true});
             // app.routers.navigate('/formc/risk-factors/financial/' + this.model.id, {trigger: true});
             app.routers.navigate('/formc/risk-factors-financial/' + this.model.id, {trigger: true});
@@ -568,12 +571,12 @@ module.exports = {
 
         events: _.extend({
             'submit form': 'submit',
-        }, jsonActions.events, menuHelper.events),
+        }, menuHelper.events),
 
         submit(e) {
             e.preventDefault();
+            e.stopPropagation();
             this.undelegateEvents();
-            // e.stopPropagation();
             // app.routers.navigate('/formc/risk-factors/'  + this.model.id + '/operational', {trigger: true});
             // app.routers.navigate('/formc/risk-factors/operational/'  + this.model.id, {trigger: true});
             app.routers.navigate('/formc/risk-factors-operational/'  + this.model.id, {trigger: true});
@@ -601,11 +604,11 @@ module.exports = {
 
         events: _.extend({
             'submit form': 'submit',
-        }, jsonActions.events, menuHelper.methods),
+        }, menuHelper.methods),
 
         submit(e) {
             e.preventDefault();
-            // e.stopPropagation();
+            e.stopPropagation();
             // app.routers.navigate('/formc/risk-factors/' + this.model.id + '/competitive', {trigger: true});
             // app.routers.navigate('/formc/risk-factors/competitive/' + this.model.id, {trigger: true});
             this.undelegateEvents();
@@ -637,12 +640,12 @@ module.exports = {
 
         events: _.extend({
             'submit form': 'submit',
-        }, jsonActions.events, menuHelper.events),
+        }, menuHelper.events),
 
         submit(e) {
             e.preventDefault();
+            e.stopPropagation();
             this.undelegateEvents();
-            // e.stopPropagation();
             // app.routers.navigate('/formc/risk-factors/' + this.model.id + '/personnel', {trigger: true});
             // app.routers.navigate('/formc/risk-factors/personnel/' + this.model.id, {trigger: true});
             app.routers.navigate('/formc/risk-factors-personnel/' + this.model.id, {trigger: true});
@@ -671,12 +674,12 @@ module.exports = {
 
         events: _.extend({
             'submit form': 'submit',
-        }, jsonActions.events, menuHelper.events),
+        }, menuHelper.events),
 
         submit(e) {
             e.preventDefault();
+            e.stopPropagation();
             this.undelegateEvents();
-            // e.stopPropagation();
             // app.routers.navigate('/formc/risk-factors/' + this.model.id + '/legal', {trigger: true});
             // app.routers.navigate('/formc/risk-factors/legal/' + this.model.id, {trigger: true});
             app.routers.navigate('/formc/risk-factors-legal/' + this.model.id, {trigger: true});
@@ -704,12 +707,12 @@ module.exports = {
 
         events: _.extend({
             'submit form': 'submit',
-        }, jsonActions.events, menuHelper.events),
+        }, menuHelper.events),
 
         submit(e) {
             e.preventDefault();
+            e.stopPropagation();
             this.undelegateEvents();
-            // e.stopPropagation();
             // app.routers.navigate('/formc/risk-factors/' + this.model.id + '/misc', {trigger: true});
             // app.routers.navigate('/formc/risk-factors/misc/' + this.model.id, {trigger: true});
             app.routers.navigate('/formc/risk-factors-misc/' + this.model.id, {trigger: true});
@@ -737,12 +740,12 @@ module.exports = {
 
         events: _.extend({
             'submit form': 'submit',
-        }, jsonActions.events, menuHelper.events),
+        }, menuHelper.events),
 
         submit(e) {
             e.preventDefault();
+            e.stopPropagation();
             this.undelegateEvents();
-            // e.stopPropagation();
             app.routers.navigate('/formc/financial-condition/' + this.model.id, {trigger: true});
         },
 
@@ -768,12 +771,12 @@ module.exports = {
 
         events: _.extend({
             'submit form': 'submit',
-        }, jsonActions.events, menuHelper.events),
+        }, menuHelper.events),
 
         submit(e) {
             e.preventDefault();
+            e.stopPropagation();
             this.undelegateEvents();
-            // e.stopPropagation();
             app.routers.navigate('/formc/outstanding-security/' + this.model.id, {trigger: true});
         },
 
@@ -794,17 +797,17 @@ module.exports = {
         },
     })),
 
-    outstandingSecurity: Backbone.View.extend(_.extend(menuHelper.methods, {
+    outstandingSecurity: Backbone.View.extend(_.extend(addSectionHelper.methods, menuHelper.methods, {
         initialize(options) {},
 
         events: _.extend({
             'submit form': 'submit',
-        }, jsonActions.events, menuHelper.events),
+        }, addSectionHelper.events, menuHelper.events),
 
         submit(e) {
             e.preventDefault();
+            e.stopPropagation();
             this.undelegateEvents();
-            // e.stopPropagation();
             app.routers.navigate('/formc/background-check/' + this.model.id, {trigger: true});
         },
 
@@ -828,14 +831,14 @@ module.exports = {
 
         events: _.extend({
             'submit form': 'submit',
-        }, jsonActions.events, menuHelper.events),
+        }, menuHelper.events),
 
         submit(e) {
             // app.currentView && app.currentView.remove();
             // app.currentView == this;
             e.preventDefault();
+            e.stopPropagation();
             this.undelegateEvents();
-            // e.stopPropagation();
             app.routers.navigate('/formc/background-check/' + this.model.id, {trigger: true});
         },
 
