@@ -5,19 +5,39 @@ module.exports = Backbone.Router.extend({
     'formc/team-members/:id': 'teamMembers',
     'formc/related-parties/:id': 'relatedParties',
     'formc/use-of-proceeds/:id': 'useOfProceeds',
-    'formc/risk-factors/:id/market': 'riskFactorsMarket',
-    'formc/risk-factors/:id/financial': 'riskFactorsFinancial',
-    'formc/risk-factors/:id/operational': 'riskFactorsOperational',
-    'formc/risk-factors/:id/competitive': 'riskFactorsCompetitive',
-    'formc/risk-factors/:id/personnel': 'riskFactorsPersonnel',
-    'formc/risk-factors/:id/legal': 'riskFactorsLegal',
-    'formc/risk-factors/:id/misc': 'riskFactorsMisc',
-    'formc/risk-factors/:id': 'riskFactors',
+    // 'formc/risk-factors/:id/market': 'riskFactorsMarket',
+    // 'formc/risk-factors/:id/financial': 'riskFactorsFinancial',
+    // 'formc/risk-factors/:id/operational': 'riskFactorsOperational',
+    // 'formc/risk-factors/:id/competitive': 'riskFactorsCompetitive',
+    // 'formc/risk-factors/:id/personnel': 'riskFactorsPersonnel',
+    // 'formc/risk-factors/:id/legal': 'riskFactorsLegal',
+    // 'formc/risk-factors/:id/misc': 'riskFactorsMisc',
+    // 'formc/risk-factors/:id': 'riskFactors',
+    // 'formc/risk-factors/market/:id': 'riskFactorsMarket',
+    // 'formc/risk-factors/financial/:id': 'riskFactorsFinancial',
+    // 'formc/risk-factors/operational/:id': 'riskFactorsOperational',
+    // 'formc/risk-factors/competitive/:id': 'riskFactorsCompetitive',
+    // 'formc/risk-factors/personnel/:id': 'riskFactorsPersonnel',
+    // 'formc/risk-factors/legal/:id': 'riskFactorsLegal',
+    // 'formc/risk-factors/misc/:id': 'riskFactorsMisc',
+    // 'formc/risk-factors/instruction/:id': 'riskFactorsInstruction',
+    // 'formc/financial-condition/:id': 'financialCondition',
+    // 'formc/outstanding-security/:id': 'outstandingSecurity',
+    // 'formc/background-check/:id': 'backgroundCheck',
+    'formc/risk-factors-market/:id': 'riskFactorsMarket',
+    'formc/risk-factors-financial/:id': 'riskFactorsFinancial',
+    'formc/risk-factors-operational/:id': 'riskFactorsOperational',
+    'formc/risk-factors-competitive/:id': 'riskFactorsCompetitive',
+    'formc/risk-factors-personnel/:id': 'riskFactorsPersonnel',
+    'formc/risk-factors-legal/:id': 'riskFactorsLegal',
+    'formc/risk-factors-misc/:id': 'riskFactorsMisc',
+    'formc/risk-factors-instruction/:id': 'riskFactorsInstruction',
     'formc/financial-condition/:id': 'financialCondition',
     'formc/outstanding-security/:id': 'outstandingSecurity',
     'formc/background-check/:id': 'backgroundCheck',
 
   },
+
   introduction(id) {
     const View = require('components/formc/views.js');
     var i = new View.introduction({
@@ -116,9 +136,9 @@ module.exports = Backbone.Router.extend({
     app.hideLoading();
   },
 
-  riskFactors(id) {
+  riskFactorsInstruction(id) {
     const View = require('components/formc/views.js');
-    const i = new View.riskFactors({
+    const i = new View.riskFactorsInstruction({
       el: '#content',
       model: new Backbone.Model({
         id: id,
@@ -159,6 +179,7 @@ module.exports = Backbone.Router.extend({
   },
 
   riskFactorsOperational(id) {
+    // debugger
     const View = require('components/formc/views.js');
     const i = new View.riskFactorsOperational({
       el: '#content',

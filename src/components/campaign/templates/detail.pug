@@ -275,7 +275,7 @@ section
                               span.pull-right.color-grey
                                 i.fa.fa-graduation-cap
                                 |  #{v.college}
-          if values.press && Object.keys(values.press).length > 0
+          if values.press && Object.keys(values.press).length > 0 && values.press[0].headline != ''
             h2.dosis.text-uppercase.text-lg-center.green-heading Articles and Press
             .row
               .col-lg-12.text-center-flex
@@ -491,7 +491,7 @@ section
 
 
   section#perks.perks
-    if values.perks && Object.keys(values.perks).length > 0
+    if values.perks && Object.keys(values.perks).length > 0 && values.perks[0].perk != ''
       //- h3.col-lg-12.text-lg-center Perks
       .container
         h3.text-uppercase.text-lg-center.green-heading Perks
@@ -628,7 +628,7 @@ section
             ).panel-collapse.collapse  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius inventore iste numquam nemo, fugit nihil fugiat quasi, excepturi repellendus pariatur! Facilis odit cupiditate tenetur, inventore adipisci consequatur eius suscipit voluptas.
         
   section.faq
-    if values.faq && Object.keys(values.faq).length > 0 
+    if values.faq && Object.keys(values.faq).length > 0 && values.faq[0].question != '' 
       .container
         h2#faq.col-lg-12.dosis.text-uppercase.text-lg-center.green-heading FAQ
         .col-lg-8.offset-lg-2
