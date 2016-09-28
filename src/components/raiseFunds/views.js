@@ -149,7 +149,7 @@ module.exports = {
     },
 
     _success(data) {
-      if (this.campaign.hasOwnProperty('id') == false) {
+      if (!this.campaign || this.campaign.hasOwnProperty('id') == false) {
         // IF we dont have campaign data
         // Server should create it
         this.campaign = data.campaign;

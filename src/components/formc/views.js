@@ -454,7 +454,7 @@ module.exports = {
         
         submit(e) {
             e.preventDefault();
-            app.routers.navigate('/formc/risk-factors/' + this.model.id, {trigger: true});
+            app.routers.navigate('/formc/risk-factors/instruction/' + this.model.id, {trigger: true});
         },
 
         render() {
@@ -471,7 +471,7 @@ module.exports = {
         }, 
     })),
 
-    riskFactors: Backbone.View.extend(_.extend(menuHelper.methods, {
+    riskFactorsInstruction: Backbone.View.extend(_.extend(menuHelper.methods, {
         initialize(options) {},
 
         events: _.extend({
@@ -480,7 +480,8 @@ module.exports = {
         
         submit(e) {
             e.preventDefault();
-            app.routers.navigate('/formc/risk-factors/' + this.model.id + '/market', {trigger: true});
+            // app.routers.navigate('/formc/risk-factors/' + this.model.id + '/market', {trigger: true});
+            app.routers.navigate('/formc/risk-factors/market/' + this.model.id, {trigger: true});
         },
 
         render() {
@@ -506,7 +507,8 @@ module.exports = {
 
         submit(e) {
             e.preventDefault();
-            app.routers.navigate('/formc/risk-factors/' + this.model.id + '/financial', {trigger: true});
+            // app.routers.navigate('/formc/risk-factors/' + this.model.id + '/financial', {trigger: true});
+            app.routers.navigate('/formc/risk-factors/financial/' + this.model.id, {trigger: true});
         },
 
         render() {
@@ -532,7 +534,8 @@ module.exports = {
 
         submit(e) {
             e.preventDefault();
-            app.routers.navigate('/formc/risk-factors/'  + this.model.id + '/operational', {trigger: true});
+            // app.routers.navigate('/formc/risk-factors/'  + this.model.id + '/operational', {trigger: true});
+            app.routers.navigate('/formc/risk-factors/operational/'  + this.model.id, {trigger: true});
         },
 
         render() {
@@ -558,7 +561,9 @@ module.exports = {
 
         submit(e) {
             e.preventDefault();
-            app.routers.navigate('/formc/risk-factors/' + this.model.id + '/competitive', {trigger: true});
+            // app.routers.navigate('/formc/risk-factors/' + this.model.id + '/competitive', {trigger: true});
+            app.routers.navigate('/formc/risk-factors/competitive/' + this.model.id, {trigger: true});
+            // debugger
         },
 
         render() {
@@ -584,7 +589,8 @@ module.exports = {
 
         submit(e) {
             e.preventDefault();
-            app.routers.navigate('/formc/risk-factors/' + this.model.id + '/personnel', {trigger: true});
+            // app.routers.navigate('/formc/risk-factors/' + this.model.id + '/personnel', {trigger: true});
+            app.routers.navigate('/formc/risk-factors/personnel/' + this.model.id, {trigger: true});
         },
 
         render() {
@@ -611,7 +617,8 @@ module.exports = {
 
         submit(e) {
             e.preventDefault();
-            app.routers.navigate('/formc/risk-factors/' + this.model.id + '/legal', {trigger: true});
+            // app.routers.navigate('/formc/risk-factors/' + this.model.id + '/legal', {trigger: true});
+            app.routers.navigate('/formc/risk-factors/legal/' + this.model.id, {trigger: true});
         },
 
         render() {
@@ -637,7 +644,8 @@ module.exports = {
 
         submit(e) {
             e.preventDefault();
-            app.routers.navigate('/formc/risk-factors/' + this.model.id + '/misc', {trigger: true});
+            // app.routers.navigate('/formc/risk-factors/' + this.model.id + '/misc', {trigger: true});
+            app.routers.navigate('/formc/risk-factors/misc/' + this.model.id, {trigger: true});
         },
 
         render() {
