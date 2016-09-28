@@ -78,7 +78,8 @@ module.exports = {
         addSection: jsonActions.addSection,
         deleteSection: jsonActions.deleteSection,
         getSuccessUrl() {
-            return  '/formc/team-members/' + this.model.get('id');
+            // return  '/formc/team-members/' + this.model.get('id');
+            return  '/formc/team-members/' + this.model.id;
         },
         // submit: app.defaultSaveActions.submit,
         // submit: api.submitAction,
@@ -107,8 +108,8 @@ module.exports = {
                     serverUrl: serverUrl,
                     Urls: Urls,
                     fields: this.fields,
-                    // values: this.model,
-                    values: this.model.toJSON(),
+                    values: this.model,
+                    // values: this.model.toJSON(),
                 })
             );
             return this;
@@ -144,7 +145,8 @@ module.exports = {
         addSection: jsonActions.addSection,
         deleteSection: jsonActions.deleteSection,
         getSuccessUrl() {
-            return  '/formc/use-of-proceeds/1' + this.model.get('id');
+            // return  '/formc/use-of-proceeds/1' + this.model.get('id');
+            return  '/formc/use-of-proceeds/1' + this.model.id;
         },
         // submit: app.defaultSaveActions.submit,
         // submit: api.submitAction,
@@ -171,8 +173,8 @@ module.exports = {
                     serverUrl: serverUrl,
                     Urls: Urls,
                     fields: this.fields,
-                    values: this.model.toJSON(),
-                    // values: this.model,
+                    // values: this.model.toJSON(),
+                    values: this.model,
                 })
             );
             return this;
@@ -247,14 +249,14 @@ module.exports = {
                     },
                 };
 
-                if (this.model.get('previous_positions')) {
-                  this.previous_positionsIndex = Object.keys(this.model.get('previous_positions')).length;
+                if (this.model.previous_positions) {
+                  this.previous_positionsIndex = Object.keys(this.model.previous_positions).length;
                 } else {
                   this.previous_positionsIndex = 0;
                 }
 
-                if (this.model.get('experiences')) {
-                  this.experiencesIndex = Object.keys(this.model.get('experiences')).length;
+                if (this.model.experiences) {
+                  this.experiencesIndex = Object.keys(this.model.experiences).length;
                 } else {
                   this.experiencesIndex = 0;
                 }
@@ -275,7 +277,8 @@ module.exports = {
                     serverUrl: serverUrl,
                     Urls: Urls,
                     fields: this.fields,
-                    values: this.model.toJSON(),
+                    // values: this.model.toJSON(),
+                    values: this.model,
                 })
             );
         },
@@ -306,7 +309,7 @@ module.exports = {
         addSection: jsonActions.addSection,
         deleteSection: jsonActions.deleteSection,
         getSuccessUrl() {
-            return  '/formc/offering/' + this.model.get('id');
+            return  '/formc/offering/' + this.model.id;
         },
         // submit: app.defaultSaveActions.submit,
         submit: api.submitAction,
@@ -319,7 +322,8 @@ module.exports = {
             // app.currentView && app.currentView.remove();
             // app.currentView == this;
             let template = require('templates/formc/offering.pug');
-            let values = this.model.toJSON();
+            // let values = this.model.toJSON();
+            let values = this.model;
 
             if (!Array.isArray(values.members)) {
                 values.members = [];
@@ -444,8 +448,8 @@ module.exports = {
                 },
             };
 
-            if (this.model.get('transactions')) {
-              this.transactionsIndex = Object.keys(this.model.get('transactions')).length;
+            if (this.model.transactions) {
+              this.transactionsIndex = Object.keys(this.model.transactions).length;
             } else {
               this.transactionsIndex = 0;
             }
@@ -455,7 +459,8 @@ module.exports = {
                     serverUrl: serverUrl,
                     Urls: Urls,
                     // fields: this.fields,
-                    values: this.model.toJSON(),
+                    // values: this.model.toJSON(),
+                    values: this.model,
                 })
             );
             return this;
@@ -484,7 +489,8 @@ module.exports = {
                     serverUrl: serverUrl,
                     Urls: Urls,
                     fields: this.fields,
-                    values: this.model.toJSON(),
+                    // values: this.model.toJSON(),
+                    values: this.model,
                 })
             );
             return this;
@@ -516,7 +522,8 @@ module.exports = {
                     serverUrl: serverUrl,
                     Urls: Urls,
                     // fields: this.fields,
-                    values: this.model.toJSON(),
+                    // values: this.model.toJSON(),
+                    values: this.model,
                 })
             );
             return this;
@@ -548,7 +555,8 @@ module.exports = {
                     serverUrl: serverUrl,
                     Urls: Urls,
                     // fields: this.fields,
-                    values: this.model.toJSON(),
+                    // values: this.model.toJSON(),
+                    values: this.model,
                 })
             );
             return this;
@@ -580,7 +588,8 @@ module.exports = {
                     serverUrl: serverUrl,
                     Urls: Urls,
                     // fields: this.fields,
-                    values: this.model.toJSON(),
+                    // values: this.model.toJSON(),
+                    values: this.model,
                 })
             );
             return this;
@@ -615,7 +624,8 @@ module.exports = {
                     serverUrl: serverUrl,
                     Urls: Urls,
                     // fields: this.fields,
-                    values: this.model.toJSON(),
+                    // values: this.model.toJSON(),
+                    values: this.model,
                 })
             );
             return this;
@@ -647,7 +657,8 @@ module.exports = {
                     serverUrl: serverUrl,
                     Urls: Urls,
                     // fields: this.fields,
-                    values: this.model.toJSON(),
+                    // values: this.model.toJSON(),
+                    values: this.model,
                 })
             );
             return this;
@@ -680,7 +691,8 @@ module.exports = {
                     serverUrl: serverUrl,
                     Urls: Urls,
                     // fields: this.fields,
-                    values: this.model.toJSON(),
+                    // values: this.model.toJSON(),
+                    values: this.model,
                 })
             );
             return this;
@@ -712,7 +724,8 @@ module.exports = {
                     serverUrl: serverUrl,
                     Urls: Urls,
                     // fields: this.fields,
-                    values: this.model.toJSON(),
+                    // values: this.model.toJSON(),
+                    values: this.model,
                 })
             );
             return this;
@@ -742,7 +755,8 @@ module.exports = {
                     serverUrl: serverUrl,
                     Urls: Urls,
                     // fields: this.fields,
-                    values: this.model.toJSON(),
+                    // values: this.model.toJSON(),
+                    values: this.model,
                 })
             );
             return this;
@@ -772,7 +786,8 @@ module.exports = {
                     serverUrl: serverUrl,
                     Urls: Urls,
                     // fields: this.fields,
-                    values: this.model.toJSON(),
+                    // values: this.model.toJSON(),
+                    values: this.model,
                 })
             );
             return this;
@@ -800,7 +815,8 @@ module.exports = {
                     serverUrl: serverUrl,
                     Urls: Urls,
                     // fields: this.fields,
-                    values: this.model.toJSON(),
+                    // values: this.model.toJSON(),
+                    values: this.model,
                 })
             );
             return this;
@@ -830,7 +846,8 @@ module.exports = {
                     serverUrl: serverUrl,
                     Urls: Urls,
                     // fields: this.fields,
-                    values: this.model.toJSON(),
+                    // values: this.model.toJSON(),
+                    values: this.model,
                 })
             );
             return this;

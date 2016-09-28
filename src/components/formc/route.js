@@ -75,11 +75,11 @@ module.exports = Backbone.Router.extend({
     var i = new View.teamMembers({
       el: '#content',
       fields: {},
-      model: new Backbone.Model({
+      model: {
         id: id,
         members:[{"bio":"I am smart. I am smart. I am smart. I am smart. I am smart. I am smart. I am smart. I am smart. I am smart. I am smart. I am smart. I am smart. I am smart. I am smart. I am smart. I am smart. I am smart. I am smart. I am smart. I am smart. I am smart","first_name":"Arthur","last_name":"Yip","title":"CEO","photo":"https://s3.amazonaws.com/growthfountain-development/filer_public/c1/02/c102632a-b9d3-4ce3-b6ff-25758553e82d/3001585_121246046_2.jpg?v=60730","growup":"Brooklyn","linkedin":"https://arthuryip.xyz","state":"AR","college":"Memorial University of Newfoundland","facebook":"https://arthuryip.xyz","type":"member","email":"arthuryip723@gmail.com"},{"bio":"","first_name":"asdg","last_name":"","title":"","photo":"","growup":"","linkedin":"","state":"","college":"","facebook":"","type":"advisor","email":""}],
         // members:[],
-      }),
+      },
     });
     i.render();
     app.hideLoading();
@@ -91,9 +91,9 @@ module.exports = Backbone.Router.extend({
 
     const addForm = new View.teamMemberAdd({
       el: '#content',
-      model: new Backbone.Model({
+      model: {
         id: id,
-      }),
+      },
       type: type,
       index: index,
       fields: {
@@ -109,10 +109,10 @@ module.exports = Backbone.Router.extend({
     const View = require('components/formc/views.js');
     const i = new View.relatedParties({
       el: '#content',
-      model: new Backbone.Model({
+      model: {
         id: id,
         had_transactions: 'yes'
-      }),
+      },
       fields: {
         transactions: {},
       },
@@ -126,9 +126,9 @@ module.exports = Backbone.Router.extend({
     const View = require('components/formc/views.js');
     const i = new View.useOfProceeds({
       el: '#content',
-      model: new Backbone.Model({
+      model: {
         id: id,
-      }),
+      },
       // fields: {},
 
     });
@@ -141,9 +141,9 @@ module.exports = Backbone.Router.extend({
     const View = require('components/formc/views.js');
     const i = new View.riskFactorsInstruction({
       el: '#content',
-      model: new Backbone.Model({
+      model: {
         id: id,
-      }),
+      },
       // fields: {},
 
     });
@@ -156,9 +156,9 @@ module.exports = Backbone.Router.extend({
     const View = require('components/formc/views.js');
     const i = new View.riskFactorsMarket({
       el: '#content',
-      model: new Backbone.Model({
+      model: {
         id: id,
-      }),
+      },
       // fields: {},
 
     });
@@ -171,9 +171,9 @@ module.exports = Backbone.Router.extend({
     const View = require('components/formc/views.js');
     const i = new View.riskFactorsFinancial({
       el: '#content',
-      model: new Backbone.Model({
+      model: {
         id: id,
-      }),
+      },
       // fields: {},
 
     });
@@ -186,9 +186,9 @@ module.exports = Backbone.Router.extend({
     const View = require('components/formc/views.js');
     const i = new View.riskFactorsOperational({
       el: '#content',
-      model: new Backbone.Model({
+      model: {
         id: id,
-      }),
+      },
       // fields: {},
 
     });
@@ -200,9 +200,9 @@ module.exports = Backbone.Router.extend({
     const View = require('components/formc/views.js');
     const i = new View.riskFactorsCompetitive({
       el: '#content',
-      model: new Backbone.Model({
+      model: {
         id: id,
-      }),
+      },
       // fields: {},
 
     });
@@ -214,9 +214,9 @@ module.exports = Backbone.Router.extend({
     const View = require('components/formc/views.js');
     const i = new View.riskFactorsPersonnel({
       el: '#content',
-      model: new Backbone.Model({
+      model: {
         id: id,
-      }),
+      },
       // fields: {},
 
     });
@@ -228,9 +228,9 @@ module.exports = Backbone.Router.extend({
     const View = require('components/formc/views.js');
     const i = new View.riskFactorsLegal({
       el: '#content',
-      model: new Backbone.Model({
+      model: {
         id: id,
-      }),
+      },
       // fields: {},
 
     });
@@ -242,9 +242,9 @@ module.exports = Backbone.Router.extend({
     const View = require('components/formc/views.js');
     const i = new View.riskFactorsMisc({
       el: '#content',
-      model: new Backbone.Model({
+      model: {
         id: id,
-      }),
+      },
       // fields: {},
 
     });
@@ -256,9 +256,9 @@ module.exports = Backbone.Router.extend({
     const View = require('components/formc/views.js');
     const i = new View.financialCondition({
       el: '#content',
-      model: new Backbone.Model({
+      model: {
         id: id,
-      }),
+      },
       // fields: {},
 
     });
@@ -270,9 +270,9 @@ module.exports = Backbone.Router.extend({
     const View = require('components/formc/views.js');
     const i = new View.outstandingSecurity({
       el: '#content',
-      model: new Backbone.Model({
+      model: {
         id: id,
-      }),
+      },
       // fields: {},
 
     });
@@ -284,9 +284,9 @@ module.exports = Backbone.Router.extend({
     const View = require('components/formc/views.js');
     const i = new View.backgroundCheck({
       el: '#content',
-      model: new Backbone.Model({
+      model: {
         id: id,
-      }),
+      },
       // fields: {},
 
     });
