@@ -49,21 +49,25 @@ module.exports = Backbone.Router.extend({
           label: "Failed to Comply",
           required: false,
           type: 'radio',
+          // try min length here.
           validate: function(name, attrs, formData) {
-
+            if (formData.failed_to_comply == '') return true;
+            if (formData.failed_to_comply.length < 100) return false;
+            return true;
           },
+          // minLength: 100,
         },
-        cc_number: {
-          label: "Credit Card",
-          required: true,
-          type: 'string',
-        }
+        // cc_number: {
+        //   label: "Credit Card",
+        //   required: true,
+        //   type: 'string',
+        // }
       },
-      model: new Backbone.Model({
+      model: {
         // failed_to_comply: 'It was the best of times.',
         id: id,
         failed_to_comply: '',
-      }),
+      },
     });
     app.hideLoading();
     i.render();

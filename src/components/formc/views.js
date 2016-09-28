@@ -61,6 +61,8 @@ var menuMethods = {
 
 module.exports = {
     introduction: Backbone.View.extend(_.extend(menuHelper.methods, {
+        urlRoot: Urls['campaign-list']() + '/general_information',
+
         events: _.extend({
             'submit form': 'submit',
             'click input[name=failed_to_comply]': 'onComplyChange',
@@ -84,13 +86,18 @@ module.exports = {
         },
         // submit: app.defaultSaveActions.submit,
         // submit: api.submitAction,
-        submit: function (e) {
+        /*submit: function (e) {
             e.preventDefault();
             e.stopPropagation();
             this.undelegateEvents();
-            // FixMe
-            // make the index dynamic
             app.routers.navigate('/formc/team-members/' + this.model.id, {trigger: true});
+        },*/
+
+        submit(e) {
+            var $target = $(e.target);
+            var data = $target.serializeJSON();
+            data.failed_to_comply = data.failed_to_comply === 'yes' ? $target.find('textarea').text() : '';
+            api.submitAction.call(this, e, data);
         },
 
         initialize(options) {
@@ -538,7 +545,13 @@ module.exports = {
 
         events: _.extend({
             'submit form': 'submit',
+            'click form button.add-risk': 'addRisk',
         }, menuHelper.events),
+
+        addRisk(e) {
+            // collapse the risk text
+            // add the text added to formc
+        },
 
         submit(e) {
             e.preventDefault();
