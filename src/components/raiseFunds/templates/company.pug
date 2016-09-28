@@ -1,5 +1,7 @@
 include ../../../templates/mixins.pug
-include menu.pug
+//- include menu.pug
+include ../../../templates/menuRaiseFund.pug
+
 
 +breadcrumbs('Create Company', '', 
     [
@@ -10,74 +12,75 @@ include menu.pug
 )
 
 section.create-company.container.m-b-85
-  //START LEFT BLOCK
-  .col-lg-3.create_compaign
-    .jumbotron.jumbotron-fluid.row
-      .raise-funds
-        h4.font-weight-bold.text-uppercase.m-b-0 Raise funds
-          .small-text.font-weight-normal.p-t-0 (10% Done)
-      #accordion(role="tablist" aria-multiselectable="true")
-        .panel.panel-default
-          .panel-heading(role="tab")
-            a(data-toggle="collapse"
-            data-parent="#accordion"
-            href="#company"
-            aria-expanded="true"
-            ).list-group-item.active
-              i.fa.fa-briefcase
-              |  Company
-              span.pull-right
-                i.fa.fa-angle-down
-          #company(role="tabpanel").panel-collapse.collapse.in
-            .list-group
-              a(href="#").list-group-item.list-group-item-action.active Company
-        .panel.panel-default
-          .panel-heading(role="tab")
-            a(data-toggle="collapse"
-            data-parent="#accordion"
-            href="#campaign"
-            aria-expanded="true"
-            ).list-group-item
-              i.fa.fa-bar-chart
-              |  Campaign
-              span.pull-right
-                i.fa.fa-angle-left
-          #campaign(role="tabpanel").panel-collapse.collapse
-            .list-group
-                +getCompanyUrl(campaign, '', 'general_information', 'General Information')
-                +getCompanyUrl(campaign, '', 'media', 'Media')
-                +getCompanyUrl(campaign, '', 'team-members', 'Team Members')
-                +getCompanyUrl(campaign, '', 'specifics', 'Specifics')
-                +getCompanyUrl(campaign, '', 'perks', 'Perks')
-        .panel.panel-default
-          .panel-heading(role="tab")
-            a(data-toggle="collapse"
-            data-parent="#accordion"
-            href="#form_c"
-            aria-expanded="true"
-            ).list-group-item
-              i.fa.fa-university
-              |  form c
-              span.pull-right
-                i.fa.fa-angle-left
-          #form_c(role="tabpanel").panel-collapse.collapse
-            .list-group
-              a(href="#").list-group-item.list-group-item-action form c
-    .row
-      .education-link-wrap
-        .jumbotron.jumbotron-fluid
-          h4.font-weight-bold.text-uppercase
-            i.fa.fa-book
-            |  education Links
-          .nav
-            li.nav-item
-              a(href="/pg/investor_tutorial").nav-link.link-3 Issuer Tutorial
-            li.nav-item
-              a(href="/pg/success_guide").nav-link.link-3 Success Guide
-            li.nav-item
-              a(href="/calculator/capitalraise/intro").nav-link.link-3 What's My Business Worth?
-            li.nav-item
-              a(href="#").nav-link.link-3 How Much Should I Raise?
+  +menu('company', 'create')
+  //- //START LEFT BLOCK
+  //- .col-lg-3.create_compaign
+  //-   .jumbotron.jumbotron-fluid.row
+  //-     .raise-funds
+  //-       h4.font-weight-bold.text-uppercase.m-b-0 Raise funds
+  //-         .small-text.font-weight-normal.p-t-0 (10% Done)
+  //-     #accordion(role="tablist" aria-multiselectable="true")
+  //-       .panel.panel-default
+  //-         .panel-heading(role="tab")
+  //-           a(data-toggle="collapse"
+  //-           data-parent="#accordion"
+  //-           href="#company"
+  //-           aria-expanded="true"
+  //-           ).list-group-item.active
+  //-             i.fa.fa-briefcase
+  //-             |  Company
+  //-             span.pull-right
+  //-               i.fa.fa-angle-down
+  //-         #company(role="tabpanel").panel-collapse.collapse.in
+  //-           .list-group
+  //-             a(href="#").list-group-item.list-group-item-action.active Company Detail
+  //-       .panel.panel-default
+  //-         .panel-heading(role="tab")
+  //-           a(data-toggle="collapse"
+  //-           data-parent="#accordion"
+  //-           href="#campaign"
+  //-           aria-expanded="true"
+  //-           ).list-group-item
+  //-             i.fa.fa-bar-chart
+  //-             |  Campaign
+  //-             span.pull-right
+  //-               i.fa.fa-angle-left
+  //-         #campaign(role="tabpanel").panel-collapse.collapse
+  //-           .list-group
+  //-               +getCompanyUrl(campaign, '', 'general_information', 'General Information')
+  //-               +getCompanyUrl(campaign, '', 'media', 'Media')
+  //-               +getCompanyUrl(campaign, '', 'team-members', 'Team Members')
+  //-               +getCompanyUrl(campaign, '', 'specifics', 'Specifics')
+  //-               +getCompanyUrl(campaign, '', 'perks', 'Perks')
+  //-       .panel.panel-default
+  //-         .panel-heading(role="tab")
+  //-           a(data-toggle="collapse"
+  //-           data-parent="#accordion"
+  //-           href="#form_c"
+  //-           aria-expanded="true"
+  //-           ).list-group-item
+  //-             i.fa.fa-university
+  //-             |  form c
+  //-             span.pull-right
+  //-               i.fa.fa-angle-left
+  //-         #form_c(role="tabpanel").panel-collapse.collapse
+  //-           .list-group
+  //-             a(href="#").list-group-item.list-group-item-action form c
+  //-   .row
+  //-     .education-link-wrap
+  //-       .jumbotron.jumbotron-fluid
+  //-         h4.font-weight-bold.text-uppercase
+  //-           i.fa.fa-book
+  //-           |  Education Links
+  //-         .nav
+  //-           li.nav-item
+  //-             a(href="/pg/investor_tutorial").nav-link.link-3 Issuer Tutorial
+  //-           li.nav-item
+  //-             a(href="/pg/success_guide").nav-link.link-3 Success Guide
+  //-           li.nav-item
+  //-             a(href="/calculator/capitalraise/intro").nav-link.link-3 What's My Business Worth?
+  //-           li.nav-item
+  //-             a(href="#").nav-link.link-3 How Much Should I Raise?
 
 
 
@@ -188,8 +191,10 @@ section.create-company.container.m-b-85
             type: 'text',
             })
       .row.m-t-2
-          .col-lg-12.text-md-center.text-sm-center.text-xs-center
-            button(type="submit").btn.btn-primary.text-uppercase.pull-lg-right save
+          .col-lg-12.pull-lg-right.p-r-0.text-lg-right.text-md-center.text-sm-center.text-xs-center
+            if campaign.id
+              button(type="button" data-href=("/api/campaign/" + campaign.id)).btn.btn-secondary.text-uppercase.onPreview.m-r-3 preview
+            button(type="submit").btn.btn-primary.text-uppercase save & next
               i.fa.fa-angle-right
 
 //MODAL
@@ -219,7 +224,7 @@ section.create-company.container.m-b-85
                             .row
                                 .col-lg-12
                                     .col-lg-12.text-lg-center.text-md-center.text-xs-center
-                                            button(data-dismiss="modal").update-location.btn.btn-primary.text-uppercase save
+                                      button(data-dismiss="modal").update-location.btn.btn-primary.text-uppercase save
 
                 .modal-footer
           

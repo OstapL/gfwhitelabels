@@ -1,0 +1,77 @@
+include ../../../templates/mixins.pug
+//- include menu.pug
+include ../../../templates/menuRaiseFund.pug
+
+- 'use strict'
+- var fields = { explain: { label: 'If Yes, Explain'} };
+- var fields = { describe: { label: 'Describe Your Risk'} };
+- var fields = { material_informatione: { label: '1) Such further material information, if any, as may be necessary to make the required statements, in the light of the circumstances under which they are made, not misleading.'} };
+- var fields = { provided_informatione: { label: '2) If youve provided any inforatmion in a format, media or other means not able to be reflected in text or pdf, please include here: (a) a description of the material content of such information; (b) a description of the format in which such disclosure is presented; and (c) in the case of disclosure in video, audio or other dynamic media or format, a transcript or description of such disclosure.'} };
+
++breadcrumbs('form c', '', 
+    [
+        ['Home', '/'],
+        ['FORM C', ''],
+        ['Risk Factors', ''],
+    ]
+)
+
+section.formc-team-members-director.container.m-b-85
+  +menu('formc', 'risk-factors-competitive')
+
+
+
+
+  //START RIGHT BLOCK
+  .col-lg-8
+    h2.text-uppercase.text-lg-center.text-xs-center.m-t-0.dosis.m-b-3 Background  check
+    .col-lg-12
+      b Has the company or any director, officer, 20% voting shareholder or paid securities promoter been subject to:
+      ol.m-t-1
+        li.pb10.font-weight-bold Conviction: felony or misdemeanor, within 10 years prior to this offering (5 years in the case of the company) in connection with the purchase or sale of securities, making false filings with the SEC, or arising out of the conduct of the business of an underwriter, broker, dealer, municipal securities dealer, investment adviser, funding portal or paid solicitor of purchasers of securities?
+        li.pb10.font-weight-bold Subject to court order, judgment or decree, within 5 years prior to this offering, that restrains or enjoins such person from any connection with the purchase or sale of securities, involving any false filing with the SEC, arising out of the conduct of the business of an underwriter, broker, dealer, municipal securities dealer, investment adviser, funding portal or paid solicitor of securities?
+        li.pb10.font-weight-bold Subject to a final order of a state securities commission or similar agency or bank, savings associations, credit union, state insurance commission, federal banking agency, CFTC or NCUA that, at the time of this offering, bars the person from association with an entity regulated by such commission, engaging in the business of securities, insurance or banking, engaging in savings association or credit union activities, or constitutes a final order based on a violation of any law or regulation that prohibits fraudulent, manipulative or deceptive conduct and for which the order was entered within 10 years prior to this offering?
+        li.pb10.font-weight-bold Subject to an SEC order pursuant to Section 15(b) or 15B(c) of the Exchange Act or Section 203(e) or (f) of the Investment Advisers Act of 1940 that, at the time of this offering, suspends or revokes such person’s registration as a broker, dealer, municipal securities dealer, investment adviser or funding portal, places limitations on the activities, functions or operations of such person, bars such person from being associated with any entity or from participating in the offering of any penny stock?
+        li.pb10.font-weight-bold Subject to an SEC order within 5 years prior to this offering, orders the person to cease and desist from violating any scienter-based anti-fraud provision of federal securities laws or Section 5 of the Securities Act?
+        li.pb10.font-weight-bold Suspended or expelled from membership in, or barred from association with a member of a registered national securities exchange or association for conduct inconsistent with just and equitable principles of trade?
+        li.pb10.font-weight-bold Subject to a refusal order, stop order or suspended exemption within 5 years prior to this offering, with regards to a Regulation A offering statement, or was any such person, at the time of filing, the subject of an investigation or proceeding to determine whether a stop order or suspension should be issued?
+        li.font-weight-bold Subject to a United States Postal Service false representation order within 5 years prior to this offering, or is such person subject to a temporary restraining order or preliminary injunction with respect to conduct alleged by the United States Postal Service to constitute a scheme or device for obtaining money or property through the mail by means of false representations?
+      form(metod="post" action="").form-section
+        .form-group.form-section.m-t-1.m-b-0
+          .radio-input.m-b-1
+            label 
+              input(type="radio")
+              |  Yes
+            label 
+              input(type="radio")
+              |  No
+        +fieldBlock("explain", '', {
+          class1: 'col-lg-3 col-md-12 text-md-left text-xl-right',
+          class2: 'col-lg-9 col-md-12',
+          type: 'textarea',
+          placeholder: '',
+        })
+        b In addition to the information expressly required to be included in this Form, include:
+        +fieldBlock("material_informatione", '', {
+          class1: 'col-lg-12 col-md-12 text-md-left text-xl-left',
+          class2: 'col-lg-12 col-md-12',
+          type: 'textarea',
+          placeholder: 'Description',
+        })
+        +fieldBlock("provided_informatione", '', {
+          class1: 'col-lg-12 col-md-12 text-md-left text-xl-left',
+          class2: 'col-lg-12 col-md-12',
+          type: 'textarea',
+          placeholder: 'Description',
+        })
+        .border-bottom.m-t-3.m-b-3
+        p.pb10 The issuer must continue to comply with the ongoing reporting requirements until:
+        ol
+          li.pb10 the issuer is required to file reports under Section 13(a) or Section 15(d) of the Exchange Act;
+          li.pb10 the issuer has filed at least one annual report pursuant to Regulation Crowdfunding and has fewer than 300 holders of record and has total assets that do not exceed $10,000,000;
+          li.pb10 the issuer has filed at least three annual reports pursuant to Regulation Crowdfunding;
+          li.pb10 the issuer or another party repurchases all of the securities issued in reliance on Section 4(a)(6) of the Securities Act, including any payment in full of debt securities or any complete redemp- tion of redeemable securities; or
+          li.pb10 the issuer liquidates or dissolves its business in accordance with state law.
+        .row.m-t-3
+          .col-lg-12.text-md-center.text-sm-center-text-xs-center
+            a(href="#").btn.btn-primary.text-uppercase.pull-lg-right Save

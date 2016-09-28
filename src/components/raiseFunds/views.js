@@ -1,4 +1,5 @@
 'use strict';
+let menuHelper = require('helpers/menuHelper.js');
 
 import formatHelper from '../../helpers/formatHelper';
 const appendHttpIfNecessary = formatHelper.appendHttpIfNecessary;
@@ -47,17 +48,28 @@ const jsonActions = {
   },
 };
 
+
+const onPreviewAction = function(e) {
+  e.preventDefault();
+  this.$el.find('form').submit()
+  app.showLoading();
+  setTimeout(function() {
+    window.location = e.target.dataset.href + '?preview=1'
+  }, 100);
+};
+
 module.exports = {
-  company: Backbone.View.extend({
+  company: Backbone.View.extend(_.extend(menuHelper.methods, {
     urlRoot: serverUrl + Urls['company-list'](),
     template: require('./templates/company.pug'),
-    events: {
+    events: _.extend({
       'submit form': 'submit',
       'keyup #zip_code': 'changeZipCode',
       'click .update-location': 'updateLocation',
+      'click .onPreview': onPreviewAction,
       'change input[name=phone]': 'formatPhone',
       'change #website,#twitter,#facebook,#instagram,#linkedin': appendHttpIfNecessary,
-    },
+    }, menuHelper.events),
 
     initialize(options) {
       this.fields = options.fields;
@@ -148,14 +160,15 @@ module.exports = {
         { trigger: true, replace: false }
       );
     },
-  }),
+  })),
 
-  generalInformation: Backbone.View.extend({
+  generalInformation: Backbone.View.extend(_.extend(menuHelper.methods, {
       urlRoot: serverUrl + Urls['campaign-list']() + '/general_information',
       template: require('./templates/generalInformation.pug'),
       events: _.extend({
           'submit form': api.submitAction,
-        }, jsonActions.events),
+          'click .onPreview': onPreviewAction,
+        }, jsonActions.events, menuHelper.events),
 
       preinitialize() {
         // ToDo
@@ -211,13 +224,13 @@ module.exports = {
         };
 
         if (this.model.get('faq')) {
-          this.faqIndex = Object.keys(this.model.get('faq')).length - 1;
+          this.faqIndex = Object.keys(this.model.get('faq')).length;
         } else {
           this.faqIndex = 0;
         }
 
         if (this.model.get('additional_info')) {
-          this.additional_infoIndex = Object.keys(this.model.get('additional_info')).length - 1;
+          this.additional_infoIndex = Object.keys(this.model.get('additional_info')).length;
         } else {
           this.additional_infoIndex = 0;
         }
@@ -232,9 +245,9 @@ module.exports = {
         );
         return this;
       },
-    }),
+    })),
 
-  media: Backbone.View.extend({
+  media: Backbone.View.extend(_.extend(menuHelper.methods, {
       events: _.extend({
         'submit form': api.submitAction,
         // 'click .delete-image': 'deleteImage',
@@ -243,7 +256,8 @@ module.exports = {
         dragleave: 'globalDragleave',
         // 'change #video,.additional_video_link': 'appendHttpsIfNecessary',
         'change .press_link': 'appendHttpIfNecessary',
-      }, jsonActions.events),
+        'click .onPreview': onPreviewAction,
+      }, jsonActions.events, menuHelper.events),
       urlRoot: serverUrl + Urls['campaign-list']() + '/media',
 
       appendHttpsIfNecessary(e) {
@@ -318,13 +332,13 @@ module.exports = {
           },
         };
         if (this.model.get('press')) {
-          this.pressIndex = Object.keys(this.model.get('press')).length - 1;
+          this.pressIndex = Object.keys(this.model.get('press')).length;
         } else {
           this.pressIndex = 0;
         }
 
         if (this.model.get('additional_video')) {
-          this.additional_videoIndex = Object.keys(this.model.get('additional_video')).length - 1;
+          this.additional_videoIndex = Object.keys(this.model.get('additional_video')).length;
         } else {
           this.additional_videoIndex = 0;
         }
@@ -404,7 +418,8 @@ module.exports = {
           var id;
 
           if (provider == 'youtube') {
-            id = url.match(/https:\/\/(?:www.)?(\w*).com\/.*v=(\w*)/)[2];
+            // id = url.match(/https:\/\/(?:www.)?(\w*).com\/.*v=(\w*)/)[2];
+            id = url.match(/https:\/\/(?:www.)?(\w*).com\/.*v=([A-Za-z0-9_-]*)/)[2];
           } else if (provider == 'vimeo') {
             id = url.match(/https:\/\/(?:www.)?(\w*).com\/(\d*)/)[2];
           } else {
@@ -455,15 +470,15 @@ module.exports = {
           //e.target.value = id;
         }
       }
-  }),
+  })),
 
-  teamMemberAdd: Backbone.View.extend({
-      events: {
+  teamMemberAdd: Backbone.View.extend(_.extend(menuHelper.methods, {
+      events: _.extend({
         'submit form': 'submit',
         'click .delete-member': 'deleteMember',
         dragover: 'globalDragover',
         dragleave: 'globalDragleave',
-      },
+      }, menuHelper.events),
       urlRoot: serverUrl + Urls['campaign-list']() + '/team_members',
 
       globalDragover() {
@@ -619,12 +634,12 @@ module.exports = {
           $('.help-block').scrollTo(45);
         }
       },
-    }),
+    })),
 
-  teamMembers: Backbone.View.extend({
-    events: {
+  teamMembers: Backbone.View.extend(_.extend(menuHelper.methods, {
+    events: _.extend({
       'click .delete-member': 'deleteMember',
-    },
+    }, menuHelper.events),
 
     preinitialize() {
       // ToDo
@@ -673,17 +688,18 @@ module.exports = {
         }
       },
 
-  }),
+  })),
 
-  specifics: Backbone.View.extend({
-      events: {
+  specifics: Backbone.View.extend(_.extend(menuHelper.methods, {
+      events: _.extend({
         'submit form': api.submitAction,
         'change input[name="security_type"]': 'updateSecurityType',
         'change #minimum_raise,#maximum_raise,#minimum_increment,#premoney_valuation': 'formatNumber',
         'change #minimum_raise,#maximum_raise,#price_per_share,#premoney_valuation': 'calculateNumberOfShares',
         dragover: 'globalDragover',
         dragleave: 'globalDragleave',
-      },
+        'click .onPreview': onPreviewAction,
+      }, menuHelper.events),
       urlRoot: serverUrl + Urls['campaign-list']() + '/specifics',
 
       globalDragover() {
@@ -785,12 +801,13 @@ module.exports = {
 
         return this;
       },
-    }),
+    })),
 
-  perks: Backbone.View.extend({
+  perks: Backbone.View.extend(_.extend(menuHelper.methods, {
       events: _.extend({
           'submit form': api.submitAction,
-        }, jsonActions.events),
+          'click .onPreview': onPreviewAction,
+        }, jsonActions.events, menuHelper.events),
       urlRoot: serverUrl + Urls['campaign-list']() + '/perks',
 
       preinitialize() {
@@ -846,11 +863,14 @@ module.exports = {
         return this;
       },
 
-    }),
+    })),
 
-  thankYou: Backbone.View.extend({
+  thankYou: Backbone.View.extend(_.extend(menuHelper.methods, {
     el: '#content',
     template: require('./templates/thankyou.pug'),
+    events: _.extend({
+      // for view events
+    }, menuHelper.events),
 
     render() {
       console.log(this.model);
@@ -861,5 +881,5 @@ module.exports = {
       );
       return this;
     },
-  }),
+  })),
 };
