@@ -1,7 +1,8 @@
 "use strict";
 let menuHelper = require('helpers/menuHelper.js');
+let addSectionHelper = require('helpers/addSectionHelper.js');
 
-var jsonActions = {
+/*var jsonActions = {
     events: {
         'click .add-section': 'addSection',
         'click .delete-section': 'deleteSection',
@@ -37,7 +38,7 @@ var jsonActions = {
         // Fix index counter
         // this[sectionName + 'Index'] --;
    },
-};
+};*/
 
 /*var menuEvents = {
   'hidden.bs.collapse .panel': 'onCollapse',
@@ -63,7 +64,7 @@ module.exports = {
         events: _.extend({
             'submit form': 'submit',
             'click input[name=failed_to_comply]': 'onComplyChange',
-        }, jsonActions.events, menuHelper.events),
+        }, menuHelper.events),
 
         // onCollapse: menuActions.onCollapse,
 
@@ -75,15 +76,18 @@ module.exports = {
             }
         },
 
-        addSection: jsonActions.addSection,
-        deleteSection: jsonActions.deleteSection,
+        // addSection: jsonActions.addSection,
+        // deleteSection: jsonActions.deleteSection,
         getSuccessUrl() {
-            return  '/formc/team-members/' + this.model.get('id');
+            // return  '/formc/team-members/' + this.model.get('id');
+            return  '/formc/team-members/' + this.model.id;
         },
         // submit: app.defaultSaveActions.submit,
         // submit: api.submitAction,
         submit: function (e) {
             e.preventDefault();
+            e.stopPropagation();
+            this.undelegateEvents();
             // FixMe
             // make the index dynamic
             app.routers.navigate('/formc/team-members/' + this.model.id, {trigger: true});
@@ -96,6 +100,8 @@ module.exports = {
         },
 
         render() {
+            // app.currentView && app.currentView.remove();
+            // app.currentView == this;
             // let template = require('templates/formc/introduction.pug');
             let template = require('components/formc/templates/introduction.pug');
 
@@ -104,8 +110,8 @@ module.exports = {
                     serverUrl: serverUrl,
                     Urls: Urls,
                     fields: this.fields,
-                    // values: this.model,
-                    values: this.model.toJSON(),
+                    values: this.model,
+                    // values: this.model.toJSON(),
                 })
             );
             return this;
@@ -128,7 +134,7 @@ module.exports = {
         name: 'teamMembers',
         events: _.extend({
             'submit form': 'submit',
-        }, jsonActions.events, menuHelper.events),
+        }, menuHelper.events),
 
         preinitialize() {
             // ToDo
@@ -138,15 +144,18 @@ module.exports = {
             }
         },
 
-        addSection: jsonActions.addSection,
-        deleteSection: jsonActions.deleteSection,
+        // addSection: jsonActions.addSection,
+        // deleteSection: jsonActions.deleteSection,
         getSuccessUrl() {
-            return  '/formc/use-of-proceeds/1' + this.model.get('id');
+            // return  '/formc/use-of-proceeds/1' + this.model.get('id');
+            return  '/formc/use-of-proceeds/1' + this.model.id;
         },
         // submit: app.defaultSaveActions.submit,
         // submit: api.submitAction,
         submit(e) {
             e.preventDefault();
+            e.stopPropagation();
+            this.undelegateEvents();
             app.routers.navigate('/formc/related-parties/' + this.model.id, {trigger: true});
             // app.routers.navigate('/formc/use-of-proceeds/1', {trigger: true});
         },
@@ -156,6 +165,8 @@ module.exports = {
         },
 
         render() {
+            // app.currentView && app.currentView.remove();
+            // app.currentView == this;
             // let template = require('templates/formc/team-members.pug');
             let template = require('components/formc/templates/teamMembers.pug');
 
@@ -164,8 +175,8 @@ module.exports = {
                     serverUrl: serverUrl,
                     Urls: Urls,
                     fields: this.fields,
-                    values: this.model.toJSON(),
-                    // values: this.model,
+                    // values: this.model.toJSON(),
+                    values: this.model,
                 })
             );
             return this;
@@ -173,10 +184,10 @@ module.exports = {
 
     })),
 
-    teamMemberAdd: Backbone.View.extend(_.extend(menuHelper.methods, {
+    teamMemberAdd: Backbone.View.extend(_.extend(addSectionHelper.methods, menuHelper.methods, {
         events: _.extend({
             'submit form': 'submit',
-        }, jsonActions.events, menuHelper.events),
+        }, addSectionHelper.events, menuHelper.events),
         urlRoot: serverUrl + 'xxxxx' + '/team_members',
         initialize(options) {
             this.fields = options.fields;
@@ -192,6 +203,8 @@ module.exports = {
             }*/
         },
         render() {
+            // app.currentView && app.currentView.remove();
+            // app.currentView == this;
             let template;
             if (this.type == 'director' || this.type == 'officer') {
                 this.fields.previous_positions.type = "position";
@@ -238,14 +251,14 @@ module.exports = {
                     },
                 };
 
-                if (this.model.get('previous_positions')) {
-                  this.previous_positionsIndex = Object.keys(this.model.get('previous_positions')).length;
+                if (this.model.previous_positions) {
+                  this.previous_positionsIndex = Object.keys(this.model.previous_positions).length;
                 } else {
                   this.previous_positionsIndex = 0;
                 }
 
-                if (this.model.get('experiences')) {
-                  this.experiencesIndex = Object.keys(this.model.get('experiences')).length;
+                if (this.model.experiences) {
+                  this.experiencesIndex = Object.keys(this.model.experiences).length;
                 } else {
                   this.experiencesIndex = 0;
                 }
@@ -266,24 +279,27 @@ module.exports = {
                     serverUrl: serverUrl,
                     Urls: Urls,
                     fields: this.fields,
-                    values: this.model.toJSON(),
+                    // values: this.model.toJSON(),
+                    values: this.model,
                 })
             );
         },
-        addSection: jsonActions.addSection,
-        deleteSection: jsonActions.deleteSection,
+        // addSection: jsonActions.addSection,
+        // deleteSection: jsonActions.deleteSection,
         getSuccessUrl(data) {},
         submit(e) {
             e.preventDefault();
+            e.stopPropagation();
+            this.undelegateEvents();
             // navigate back to general member page
             app.routers.navigate('/formc/team-members/' + this.model.id, {trigger: true});
         },
     })),
 
-    offering: Backbone.View.extend(_.extend(menuHelper.methods, {
+    offering: Backbone.View.extend(_.extend(addSectionHelper.methods, menuHelper.methods, {
         events: _.extend({
             'submit form': 'submit',
-        }, jsonActions.events, menuHelper.events),
+        }, addSectionHelper.events, menuHelper.events),
 
         preinitialize() {
             // ToDo
@@ -293,10 +309,10 @@ module.exports = {
             }
         },
 
-        addSection: jsonActions.addSection,
-        deleteSection: jsonActions.deleteSection,
+        // addSection: jsonActions.addSection,
+        // deleteSection: jsonActions.deleteSection,
         getSuccessUrl() {
-            return  '/formc/offering/' + this.model.get('id');
+            return  '/formc/offering/' + this.model.id;
         },
         // submit: app.defaultSaveActions.submit,
         submit: api.submitAction,
@@ -306,8 +322,11 @@ module.exports = {
         },
 
         render() {
+            // app.currentView && app.currentView.remove();
+            // app.currentView == this;
             let template = require('templates/formc/offering.pug');
-            let values = this.model.toJSON();
+            // let values = this.model.toJSON();
+            let values = this.model;
 
             if (!Array.isArray(values.members)) {
                 values.members = [];
@@ -367,7 +386,7 @@ module.exports = {
         },
     }),*/
 
-    relatedParties: Backbone.View.extend(_.extend(menuHelper.methods, {
+    relatedParties: Backbone.View.extend(_.extend(addSectionHelper.methods, menuHelper.methods, {
         name: 'relatedParties',
         initialize(options) {
             this.fields = options.fields;
@@ -376,10 +395,10 @@ module.exports = {
         events: _.extend({
             'submit form': 'submit',
             'click input[name=had_transactions]': 'onHadTransactionsChange',
-        }, jsonActions.events, menuHelper.events),
+        }, addSectionHelper.events, menuHelper.events),
 
-        addSection: jsonActions.addSection,
-        deleteSection: jsonActions.deleteSection,
+        // addSection: jsonActions.addSection,
+        // deleteSection: jsonActions.deleteSection,
         
         onHadTransactionsChange(e) {
             let hadTransactions = this.$('input[name=had_transactions]:checked').val();
@@ -394,10 +413,15 @@ module.exports = {
 
         submit(e) {
             e.preventDefault();
+            e.stopPropagation();
+            this.undelegateEvents();
+
             app.routers.navigate('formc/use-of-proceeds/' + this.model.id, {trigger: true});
         },
 
         render() {
+            // app.currentView && app.currentView.remove();
+            // app.currentView == this;
             let template = require('components/formc/templates/relatedParties.pug');
             this.fields.transactions.type = 'json';
             this.fields.transactions.schema = {
@@ -427,8 +451,8 @@ module.exports = {
                 },
             };
 
-            if (this.model.get('transactions')) {
-              this.transactionsIndex = Object.keys(this.model.get('transactions')).length;
+            if (this.model.transactions) {
+              this.transactionsIndex = Object.keys(this.model.transactions).length;
             } else {
               this.transactionsIndex = 0;
             }
@@ -438,22 +462,25 @@ module.exports = {
                     serverUrl: serverUrl,
                     Urls: Urls,
                     // fields: this.fields,
-                    values: this.model.toJSON(),
+                    // values: this.model.toJSON(),
+                    values: this.model,
                 })
             );
             return this;
         },
     })),
 
-    useOfProceeds: Backbone.View.extend(_.extend(menuHelper.methods, {
+    useOfProceeds: Backbone.View.extend(_.extend(addSectionHelper.methods, menuHelper.methods, {
        initialize(options) {},
 
         events: _.extend({
             'submit form': 'submit',
-        }, jsonActions.events, menuHelper.events),
+        }, addSectionHelper.events, menuHelper.events),
         
         submit(e) {
             e.preventDefault();
+            e.stopPropagation();
+            this.undelegateEvents();
             // app.routers.navigate('/formc/risk-factors/instruction/' + this.model.id, {trigger: true});
             app.routers.navigate('/formc/risk-factors-instruction/' + this.model.id, {trigger: true});
         },
@@ -465,7 +492,8 @@ module.exports = {
                     serverUrl: serverUrl,
                     Urls: Urls,
                     fields: this.fields,
-                    values: this.model.toJSON(),
+                    // values: this.model.toJSON(),
+                    values: this.model,
                 })
             );
             return this;
@@ -477,23 +505,28 @@ module.exports = {
 
         events: _.extend({
             'submit form': 'submit',
-        }, jsonActions.events, menuHelper.events),
+        }, menuHelper.events),
         
         submit(e) {
             e.preventDefault();
+            this.undelegateEvents();
+            // e.stopPropagation();
             // app.routers.navigate('/formc/risk-factors/' + this.model.id + '/market', {trigger: true});
             // app.routers.navigate('/formc/risk-factors/market/' + this.model.id, {trigger: true});
             app.routers.navigate('/formc/risk-factors-market/' + this.model.id, {trigger: true});
         },
 
         render() {
+            // app.currentView && app.currentView.remove();
+            // app.currentView == this;
             let template = require('components/formc/templates/riskFactorsInstructions.pug');
             this.$el.html(
                 template({
                     serverUrl: serverUrl,
                     Urls: Urls,
                     // fields: this.fields,
-                    values: this.model.toJSON(),
+                    // values: this.model.toJSON(),
+                    values: this.model,
                 })
             );
             return this;
@@ -505,23 +538,28 @@ module.exports = {
 
         events: _.extend({
             'submit form': 'submit',
-        }, jsonActions.events, menuHelper.events),
+        }, menuHelper.events),
 
         submit(e) {
             e.preventDefault();
+            e.stopPropagation();
+            this.undelegateEvents();
             // app.routers.navigate('/formc/risk-factors/' + this.model.id + '/financial', {trigger: true});
             // app.routers.navigate('/formc/risk-factors/financial/' + this.model.id, {trigger: true});
             app.routers.navigate('/formc/risk-factors-financial/' + this.model.id, {trigger: true});
         },
 
         render() {
+            // app.currentView && app.currentView.remove();
+            // app.currentView == this;
             let template = require('components/formc/templates/riskFactorsMarket.pug');
             this.$el.html(
                 template({
                     serverUrl: serverUrl,
                     Urls: Urls,
                     // fields: this.fields,
-                    values: this.model.toJSON(),
+                    // values: this.model.toJSON(),
+                    values: this.model,
                 })
             );
             return this;
@@ -533,23 +571,28 @@ module.exports = {
 
         events: _.extend({
             'submit form': 'submit',
-        }, jsonActions.events, menuHelper.events),
+        }, menuHelper.events),
 
         submit(e) {
             e.preventDefault();
+            e.stopPropagation();
+            this.undelegateEvents();
             // app.routers.navigate('/formc/risk-factors/'  + this.model.id + '/operational', {trigger: true});
             // app.routers.navigate('/formc/risk-factors/operational/'  + this.model.id, {trigger: true});
             app.routers.navigate('/formc/risk-factors-operational/'  + this.model.id, {trigger: true});
         },
 
         render() {
+            // app.currentView && app.currentView.remove();
+            // app.currentView == this;
             let template = require('components/formc/templates/riskFactorsFinancial.pug');
             this.$el.html(
                 template({
                     serverUrl: serverUrl,
                     Urls: Urls,
                     // fields: this.fields,
-                    values: this.model.toJSON(),
+                    // values: this.model.toJSON(),
+                    values: this.model,
                 })
             );
             return this;
@@ -561,24 +604,31 @@ module.exports = {
 
         events: _.extend({
             'submit form': 'submit',
-        }, jsonActions.events, menuHelper.methods),
+        }, menuHelper.methods),
 
         submit(e) {
             e.preventDefault();
+            e.stopPropagation();
             // app.routers.navigate('/formc/risk-factors/' + this.model.id + '/competitive', {trigger: true});
             // app.routers.navigate('/formc/risk-factors/competitive/' + this.model.id, {trigger: true});
+            this.undelegateEvents();
+
             app.routers.navigate('/formc/risk-factors-competitive/' + this.model.id, {trigger: true});
+            // app.routers.navigate('/formc/risk-factors-competitive/107', {trigger: true});
             // debugger
         },
 
         render() {
+            // app.currentView && app.currentView.remove();
+            // app.currentView == this;
             let template = require('components/formc/templates/riskFactorsOperational.pug');
             this.$el.html(
                 template({
                     serverUrl: serverUrl,
                     Urls: Urls,
                     // fields: this.fields,
-                    values: this.model.toJSON(),
+                    // values: this.model.toJSON(),
+                    values: this.model,
                 })
             );
             return this;
@@ -590,23 +640,28 @@ module.exports = {
 
         events: _.extend({
             'submit form': 'submit',
-        }, jsonActions.events, menuHelper.events),
+        }, menuHelper.events),
 
         submit(e) {
             e.preventDefault();
+            e.stopPropagation();
+            this.undelegateEvents();
             // app.routers.navigate('/formc/risk-factors/' + this.model.id + '/personnel', {trigger: true});
             // app.routers.navigate('/formc/risk-factors/personnel/' + this.model.id, {trigger: true});
             app.routers.navigate('/formc/risk-factors-personnel/' + this.model.id, {trigger: true});
         },
 
         render() {
+            // app.currentView && app.currentView.remove();
+            // app.currentView == this;
             let template = require('components/formc/templates/riskFactorsCompetitive.pug');
             this.$el.html(
                 template({
                     serverUrl: serverUrl,
                     Urls: Urls,
                     // fields: this.fields,
-                    values: this.model.toJSON(),
+                    // values: this.model.toJSON(),
+                    values: this.model,
                 })
             );
             return this;
@@ -619,23 +674,28 @@ module.exports = {
 
         events: _.extend({
             'submit form': 'submit',
-        }, jsonActions.events, menuHelper.events),
+        }, menuHelper.events),
 
         submit(e) {
             e.preventDefault();
+            e.stopPropagation();
+            this.undelegateEvents();
             // app.routers.navigate('/formc/risk-factors/' + this.model.id + '/legal', {trigger: true});
             // app.routers.navigate('/formc/risk-factors/legal/' + this.model.id, {trigger: true});
             app.routers.navigate('/formc/risk-factors-legal/' + this.model.id, {trigger: true});
         },
 
         render() {
+            // app.currentView && app.currentView.remove();
+            // app.currentView == this;
             let template = require('components/formc/templates/riskFactorsPersonnel.pug');
             this.$el.html(
                 template({
                     serverUrl: serverUrl,
                     Urls: Urls,
                     // fields: this.fields,
-                    values: this.model.toJSON(),
+                    // values: this.model.toJSON(),
+                    values: this.model,
                 })
             );
             return this;
@@ -647,23 +707,28 @@ module.exports = {
 
         events: _.extend({
             'submit form': 'submit',
-        }, jsonActions.events, menuHelper.events),
+        }, menuHelper.events),
 
         submit(e) {
             e.preventDefault();
+            e.stopPropagation();
+            this.undelegateEvents();
             // app.routers.navigate('/formc/risk-factors/' + this.model.id + '/misc', {trigger: true});
             // app.routers.navigate('/formc/risk-factors/misc/' + this.model.id, {trigger: true});
             app.routers.navigate('/formc/risk-factors-misc/' + this.model.id, {trigger: true});
         },
 
         render() {
+            // app.currentView && app.currentView.remove();
+            // app.currentView == this;
             let template = require('components/formc/templates/riskFactorsLegal.pug');
             this.$el.html(
                 template({
                     serverUrl: serverUrl,
                     Urls: Urls,
                     // fields: this.fields,
-                    values: this.model.toJSON(),
+                    // values: this.model.toJSON(),
+                    values: this.model,
                 })
             );
             return this;
@@ -675,21 +740,26 @@ module.exports = {
 
         events: _.extend({
             'submit form': 'submit',
-        }, jsonActions.events, menuHelper.events),
+        }, menuHelper.events),
 
         submit(e) {
             e.preventDefault();
+            e.stopPropagation();
+            this.undelegateEvents();
             app.routers.navigate('/formc/financial-condition/' + this.model.id, {trigger: true});
         },
 
         render() {
+            // app.currentView && app.currentView.remove();
+            // app.currentView == this;
             let template = require('components/formc/templates/riskFactorsMisc.pug');
             this.$el.html(
                 template({
                     serverUrl: serverUrl,
                     Urls: Urls,
                     // fields: this.fields,
-                    values: this.model.toJSON(),
+                    // values: this.model.toJSON(),
+                    values: this.model,
                 })
             );
             return this;
@@ -701,36 +771,43 @@ module.exports = {
 
         events: _.extend({
             'submit form': 'submit',
-        }, jsonActions.events, menuHelper.events),
+        }, menuHelper.events),
 
         submit(e) {
             e.preventDefault();
+            e.stopPropagation();
+            this.undelegateEvents();
             app.routers.navigate('/formc/outstanding-security/' + this.model.id, {trigger: true});
         },
 
         render() {
+            // app.currentView && app.currentView.remove();
+            // app.currentView == this;
             let template = require('components/formc/templates/financialCondition.pug');
             this.$el.html(
                 template({
                     serverUrl: serverUrl,
                     Urls: Urls,
                     // fields: this.fields,
-                    values: this.model.toJSON(),
+                    // values: this.model.toJSON(),
+                    values: this.model,
                 })
             );
             return this;
         },
     })),
 
-    outstandingSecurity: Backbone.View.extend(_.extend(menuHelper.methods, {
+    outstandingSecurity: Backbone.View.extend(_.extend(addSectionHelper.methods, menuHelper.methods, {
         initialize(options) {},
 
         events: _.extend({
             'submit form': 'submit',
-        }, jsonActions.events, menuHelper.events),
+        }, addSectionHelper.events, menuHelper.events),
 
         submit(e) {
             e.preventDefault();
+            e.stopPropagation();
+            this.undelegateEvents();
             app.routers.navigate('/formc/background-check/' + this.model.id, {trigger: true});
         },
 
@@ -741,7 +818,8 @@ module.exports = {
                     serverUrl: serverUrl,
                     Urls: Urls,
                     // fields: this.fields,
-                    values: this.model.toJSON(),
+                    // values: this.model.toJSON(),
+                    values: this.model,
                 })
             );
             return this;
@@ -753,10 +831,14 @@ module.exports = {
 
         events: _.extend({
             'submit form': 'submit',
-        }, jsonActions.events, menuHelper.events),
+        }, menuHelper.events),
 
         submit(e) {
+            // app.currentView && app.currentView.remove();
+            // app.currentView == this;
             e.preventDefault();
+            e.stopPropagation();
+            this.undelegateEvents();
             app.routers.navigate('/formc/background-check/' + this.model.id, {trigger: true});
         },
 
@@ -767,7 +849,8 @@ module.exports = {
                     serverUrl: serverUrl,
                     Urls: Urls,
                     // fields: this.fields,
-                    values: this.model.toJSON(),
+                    // values: this.model.toJSON(),
+                    values: this.model,
                 })
             );
             return this;
