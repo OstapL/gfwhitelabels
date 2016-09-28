@@ -1,0 +1,96 @@
+include mixins.pug
+- 'use strict'
+- var fields = { position: { label: 'Position'} };
+- var fields = { street_address: { label: 'Street Address'} };
+- var fields = { optional_address: { label: 'Optional Address'} };
+- var fields = { zip_code: { label: 'Zip Code'} };
+- var fields = { phone: { label: 'Phone'} };
+- var fields = { social_security: { label: 'Social Security'} };
+
++breadcrumbs('form c and electronic signature', '', 
+    [
+        ['', ''],
+        ['', ''],
+        ['', ''],
+    ]
+)
+
+section.formc-team-members-director.container.m-b-85
+  //START LEFT BLOCK
+  .col-lg-3.create_compaign
+    .jumbotron.jumbotron-fluid.row
+        .raise-funds
+          h4.font-weight-bold.text-uppercase.m-b-0 REQUIRED INFORMATION
+            .small-text (10% Done)
+        .list-group
+          a(href="#").list-group-item Background Check 
+    
+
+
+  //START RIGHT BLOCK
+  .col-lg-8
+    h2.text-uppercase.text-lg-center.text-xs-center.m-t-0.dosis Background Check
+    .col-lg-12
+      p.pb10 Thank you for registration with us and conducting your Offering. This is trully an exciting time for your company, and we’re here to help in any way that we can. Please make sure to check our Resource Center to access valuation tools, education materials and tutorials.
+      p.pb10 As part of the due diligence we are required to conduct on your company, we are required to conduct a background and securities enforcement regulatory history check on you.
+      p.pb10 Please provide the following:
+    form(metod="post" action="").form-section
+      .col-lg-12
+        .form-group.row.m-t-2
+          .col-lg-3.text-xl-right
+            label Name
+          .col-lg-9.p-r-0.p-l-0
+            .col-lg-4
+              input(type="text" placeholder="First Name").form-control
+            .col-lg-4
+              input(type="text" placeholder="Middle Name").form-control
+            .col-lg-4
+              input(type="text" placeholder="Last Name").form-control
+        +fieldBlock("position", '', {
+          class1: 'col-lg-3 col-md-12 text-md-left',
+          class2: 'col-lg-9 col-md-12',
+          type: 'text',
+          placeholder: 'CFO',
+        })
+        +fieldBlock("street_address", '', {
+          class1: 'col-lg-3 col-md-12 text-md-left',
+          class2: 'col-lg-9 col-md-12',
+          type: 'text',
+          placeholder: 'Street Address',
+        })
+        +fieldBlock("optional_address", '', {
+          class1: 'col-lg-3 col-md-12 text-md-left',
+          class2: 'col-lg-9 col-md-12',
+          type: 'text',
+          placeholder: 'Optional Address',
+        })
+        .row
+          .col-lg-6.col-l-65
+            +fieldBlock("zip_code", '', {
+              class1: 'col-lg-6',
+              class2: 'col-lg-6',
+              })
+          .col-lg-5.city_states.required
+            label.col-lg-6.col-xs-6.text-lg-right.text-xs-left City/State
+            .col-lg-6.col-xs-6
+              a(data-toggle="modal" data-target="#city_state_modal" href="#city_state_modal").change_state_city
+                span.input-value.js-city-state= (values.city ? values.city : "(city)") + ", " + (values.state ? values.state : "(state)") 
+                  i.fa.fa-pencil-square-o.link-1
+        +fieldBlock("phone", '', {
+          class1: 'col-lg-3 col-md-12 text-md-left',
+          class2: 'col-lg-9 col-md-12',
+          type: 'text',
+          placeholder: 'Phone',
+        })
+        +fieldBlock("social_security", '', {
+          class1: 'col-lg-3 col-md-12 text-md-left',
+          class2: 'col-lg-9 col-md-12',
+          type: 'text',
+          placeholder: 'Social Security',
+        })
+        .row.m-t-3
+            .col-lg-12.text-md-center.text-sm-center.text-xs-center
+                a(href="#" ).btn.btn-primary.text-uppercase.pull-lg-right submit
+
+
+
