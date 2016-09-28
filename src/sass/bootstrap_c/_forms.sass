@@ -81,6 +81,12 @@ select.form-control
 				color: $link-1-hover
 	.dragging-over
 		border: dashed 1px $dragging-hover-border
+	// класс для инпутов только с border-bottom 
+	.input-border-bottom
+		border: none
+		border-bottom: solid 1px $border-color
+		outline: none
+		padding: 0 rem(10)
 	@media screen and (min-width:992px)
 		// date of birth field
 		.dob label
