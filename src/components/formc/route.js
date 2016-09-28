@@ -137,6 +137,7 @@ module.exports = Backbone.Router.extend({
   },
 
   riskFactorsInstruction(id) {
+    // debugger
     const View = require('components/formc/views.js');
     const i = new View.riskFactorsInstruction({
       el: '#content',
@@ -151,6 +152,7 @@ module.exports = Backbone.Router.extend({
   },
 
   riskFactorsMarket(id) {
+    // debugger
     const View = require('components/formc/views.js');
     const i = new View.riskFactorsMarket({
       el: '#content',
@@ -165,6 +167,7 @@ module.exports = Backbone.Router.extend({
   },
 
   riskFactorsFinancial(id) {
+    // debugger
     const View = require('components/formc/views.js');
     const i = new View.riskFactorsFinancial({
       el: '#content',

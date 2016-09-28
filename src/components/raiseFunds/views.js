@@ -1,5 +1,6 @@
 'use strict';
 let menuHelper = require('helpers/menuHelper.js');
+let addSectionHelper = require('helpers/addSectionHelper.js');
 
 import formatHelper from '../../helpers/formatHelper';
 const appendHttpIfNecessary = formatHelper.appendHttpIfNecessary;
@@ -9,7 +10,7 @@ const dropzoneHelpers = require('helpers/dropzone.js');
 
 // const validation = require('components/validation/validation.js');
 
-const jsonActions = {
+/*const jsonActions = {
   events: {
     'click .add-section': 'addSection',
     'click .delete-section': 'deleteSection',
@@ -54,7 +55,7 @@ const jsonActions = {
     // Fix index counter
     // this[sectionName + 'Index'] --;
   },
-};
+};*/
 
 
 const onPreviewAction = function(e) {
@@ -174,14 +175,14 @@ module.exports = {
     },
   })),
 
-  generalInformation: Backbone.View.extend(_.extend(menuHelper.methods, {
+  generalInformation: Backbone.View.extend(_.extend(addSectionHelper.methods, menuHelper.methods, {
       // urlRoot: serverUrl + Urls['campaign-list']() + '/general_information',
       urlRoot: Urls['campaign-list']() + '/general_information',
       template: require('./templates/generalInformation.pug'),
       events: _.extend({
           'submit form': api.submitAction,
           'click .onPreview': onPreviewAction,
-        }, jsonActions.events, menuHelper.events),
+        }, addSectionHelper.events, menuHelper.events),
 
       preinitialize() {
         // ToDo
@@ -192,8 +193,8 @@ module.exports = {
         }
       },
 
-      addSection: jsonActions.addSection,
-      deleteSection: jsonActions.deleteSection,
+      // addSection: jsonActions.addSection,
+      // deleteSection: jsonActions.deleteSection,
       getSuccessUrl(data) {
         return '/campaign/media/' + data.id;
       },
@@ -263,7 +264,7 @@ module.exports = {
       },
     })),
 
-  media: Backbone.View.extend(_.extend(menuHelper.methods, {
+  media: Backbone.View.extend(_.extend(addSectionHelper.methods, menuHelper.methods, {
       events: _.extend({
         'submit form': api.submitAction,
         // 'click .delete-image': 'deleteImage',
@@ -273,7 +274,7 @@ module.exports = {
         // 'change #video,.additional_video_link': 'appendHttpsIfNecessary',
         'change .press_link': 'appendHttpIfNecessary',
         'click .onPreview': onPreviewAction,
-      }, jsonActions.events, menuHelper.events),
+      }, addSectionHelper.events, menuHelper.events),
       urlRoot: Urls['campaign-list']() + '/media',
 
       appendHttpsIfNecessary(e) {
@@ -300,8 +301,8 @@ module.exports = {
         }
       },
 
-      addSection: jsonActions.addSection,
-      deleteSection: jsonActions.deleteSection,
+      // addSection: jsonActions.addSection,
+      // deleteSection: jsonActions.deleteSection,
       getSuccessUrl(data) {
         return '/campaign/team-members/' + data.id;
       },
@@ -752,8 +753,8 @@ module.exports = {
         this.$('#max_equity_offered').val(Math.round(100 * maxRaise / (maxRaise + premoneyVal)) + '%');
       },
 
-      addSection: jsonActions.addSection,
-      deleteSection: jsonActions.deleteSection,
+      // addSection: jsonActions.addSection,
+      // deleteSection: jsonActions.deleteSection,
       getSuccessUrl(data) {
         return '/campaign/perks/' + data.id;
       },
@@ -821,11 +822,11 @@ module.exports = {
       },
     })),
 
-  perks: Backbone.View.extend(_.extend(menuHelper.methods, {
+  perks: Backbone.View.extend(_.extend(addSectionHelper.methods, menuHelper.methods, {
       events: _.extend({
           'submit form': api.submitAction,
           'click .onPreview': onPreviewAction,
-        }, jsonActions.events, menuHelper.events),
+        }, addSectionHelper.events, menuHelper.events),
       // urlRoot: serverUrl + Urls['campaign-list']() + '/perks',
       urlRoot: Urls['campaign-list']() + '/perks',
 
@@ -837,8 +838,8 @@ module.exports = {
         }
       },
 
-      addSection: jsonActions.addSection,
-      deleteSection: jsonActions.deleteSection,
+      // addSection: jsonActions.addSection,
+      // deleteSection: jsonActions.deleteSection,
       getSuccessUrl(data) {
         return '/campaign/thankyou/' + data.id;
       },
