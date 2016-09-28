@@ -2,6 +2,8 @@
 include ../../../templates/mixins.pug
 //- include menu.pug
 include ../../../templates/menuRaiseFund.pug
+- var fields = { full_time: { label: 'Full-Time'} };
+- var fields = { part_time: { label: 'Part-Time'} };
 
 +breadcrumbs('Create Company', '', 
     [
@@ -27,18 +29,31 @@ section.create-company-team-add.container
                    p 20% VOTING SHAREHOLDER means: no earlier than 120 days prior to the date of this offering, please list beneficial owners of 20% or more of issuer’s outstanding voting equity securities.
 
         form(metod="post" action="").form-section
-
+            .col-lg-12.m-t-1.m-b-2
+                b How many emploees do you have?
+            .col-lg-6
+                +fieldBlock("full_time", '', {
+                    class1: 'col-lg-4 col-md-12 text-md-left',
+                    class2: 'col-lg-8 col-md-12',
+                    type: 'text',
+                })
+            .col-lg-6
+                +fieldBlock("part_time", '', {
+                    class1: 'col-lg-4 col-md-12 text-md-left',
+                    class2: 'col-lg-8 col-md-12',
+                    type: 'text',
+                })
             .col-lg-12.text-lg-center.text-md-center.text-sm-center.text-xs-center.m-t-2.m-b-2
-                    a(href='/formc/team-members/' + values.id + '/add/director/new').btn.text-uppercase.m-r-3 
-                        i.fa.fa-plus
-                        |  ADD DIRECTOR 
-                    a(href='/formc/team-members/' + values.id + '/add/officer/new').btn.text-uppercase 
-                        i.fa.fa-plus
-                        |  ADD OFFICER
-                    a(href='/formc/team-members/' + values.id + '/add/holder/new').btn.text-uppercase 
-                        i.fa.fa-plus
-                        |  ADD 20% VOTING SHAREHOLDER
-
+                a(href='/formc/team-members/' + values.id + '/add/director/new').btn.text-uppercase.m-r-3 
+                    i.fa.fa-plus
+                    |  ADD DIRECTOR 
+                a(href='/formc/team-members/' + values.id + '/add/officer/new').btn.text-uppercase 
+                    i.fa.fa-plus
+                    |  ADD OFFICER
+                a(href='/formc/team-members/' + values.id + '/add/holder/new').btn.text-uppercase.m-t-2 
+                    i.fa.fa-plus
+                    |  ADD 20% VOTING SHAREHOLDER
+            
 
             if values.members
                 - counter = 0
@@ -54,9 +69,32 @@ section.create-company-team-add.container
                             a(href="/formc/team-members/" + values.id + "/add/" + v.type + '/' + counter).link-1
                                 i.fa.fa-pencil-square-o
                     - counter ++
+            .col-lg-12
+                .border-bottom.m-t-3.m-b-3
+            .col-lg-12.m-b-1
+                p Please identify the Officers in your company responsible for the following roles. Please note that, if necessary, the same person may be identified with multiple titles
+            .col-lg-12
+                table.table.table-bordered
+                    thead
+                        tr.color-grey
+                            th.text-xs-center Title
+                            th.text-xs-center Full Name
+                            th.text-xs-center Status
+                    tbody
+                        tr
+                            td CEO/President
+                            td.text-xs-center Kenneth Staut
+                            td.text-xs-center
+                                i.fa.fa-check.color-green
+                        tr
+                            td Principal Financial Officer/Treasurer
+                            td.text-xs-center Michael Jenkins
+                            td.text-xs-center
+                                i.fa.fa-check.color-green
+                        tr
+                            td Controller/Principal Accounting Officer
+                            td
+                                hr(width="40%")
+                            td.text-xs-center.color-red Please Identify
 
-            div(style="display: " +  (values.members.length >= 1 ? 'block' : 'none')).col-lg-12.pull-lg-right.p-r-0.m-t-3.text-lg-right.text-md-center.text-sm-center.text-xs-center.buttons-row
-                //- a(href="/api/campaign/" + values.id target="_blank").btn.btn-secondary.text-uppercase.m-r-3 preview
-                //- a(href="/formc/related-parties/" + values.id).btn.btn-primary.text-uppercase Go to Related Parties
-                button.btn.btn-primary.text-uppercase Go to Related Parties
-                    i.fa.fa-angle-right
+            div(style="display: " +  (values.members.length >= 1 ? 'block' : 'none')).col-lg-12.pull-lg-right.p-r-0.m-t-3
