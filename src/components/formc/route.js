@@ -14,6 +14,8 @@ module.exports = Backbone.Router.extend({
     'formc/risk-factors/:id/misc': 'riskFactorsMisc',
     'formc/risk-factors/:id': 'riskFactors',
     'formc/financial-condition/:id': 'financialCondition',
+    'formc/outstanding-security/:id': 'outstandingSecurity',
+    'formc/background-check/:id': 'backgroundCheck',
 
   },
   introduction(id) {
@@ -229,6 +231,34 @@ module.exports = Backbone.Router.extend({
   financialCondition(id) {
     const View = require('components/formc/views.js');
     const i = new View.financialCondition({
+      el: '#content',
+      model: new Backbone.Model({
+        id: id,
+      }),
+      // fields: {},
+
+    });
+    i.render();
+    app.hideLoading();
+  },
+
+  outstandingSecurity(id) {
+    const View = require('components/formc/views.js');
+    const i = new View.outstandingSecurity({
+      el: '#content',
+      model: new Backbone.Model({
+        id: id,
+      }),
+      // fields: {},
+
+    });
+    i.render();
+    app.hideLoading();
+  },
+
+  backgroundCheck(id) {
+    const View = require('components/formc/views.js');
+    const i = new View.backgroundCheck({
       el: '#content',
       model: new Backbone.Model({
         id: id,

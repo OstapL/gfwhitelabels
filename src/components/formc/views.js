@@ -705,4 +705,56 @@ module.exports = {
             return this;
         },
     })),
+
+    outstandingSecurity: Backbone.View.extend(_.extend(menuHelper.methods, {
+        initialize(options) {},
+
+        events: _.extend({
+            'submit form': 'submit',
+        }, jsonActions.events, menuHelper.events),
+
+        submit(e) {
+            e.preventDefault();
+            app.routers.navigate('/formc/background-check/' + this.model.id, {trigger: true});
+        },
+
+        render() {
+            let template = require('components/formc/templates/outstandingSecurity.pug');
+            this.$el.html(
+                template({
+                    serverUrl: serverUrl,
+                    Urls: Urls,
+                    // fields: this.fields,
+                    values: this.model.toJSON(),
+                })
+            );
+            return this;
+        },
+    })),
+
+    backgroundCheck: Backbone.View.extend(_.extend(menuHelper.methods, {
+        initialize(options) {},
+
+        events: _.extend({
+            'submit form': 'submit',
+        }, jsonActions.events, menuHelper.events),
+
+        submit(e) {
+            e.preventDefault();
+            app.routers.navigate('/formc/background-check/' + this.model.id, {trigger: true});
+        },
+
+        render() {
+            let template = require('components/formc/templates/backgroundCheck.pug');
+            this.$el.html(
+                template({
+                    serverUrl: serverUrl,
+                    Urls: Urls,
+                    // fields: this.fields,
+                    values: this.model.toJSON(),
+                })
+            );
+            return this;
+        },
+    })),
 };
