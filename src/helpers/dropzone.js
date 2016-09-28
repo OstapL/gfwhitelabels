@@ -68,12 +68,6 @@ module.exports = {
 
     $('.dropzone__' + name).addClass('dropzone');//.html('Drop file here');
 
-    /*
-    dropbox.on('sending', function(data) {
-        data.xhr.setRequestHeader("X-CSRFToken", getCSRF());
-    });
-    */
-
     dropbox.on('addedfile', function (file) {
       _(this.files).each((f, i) => {
         if (f.lastModified != file.lastModified) {
@@ -85,6 +79,7 @@ module.exports = {
     dropbox.on('success', (file, data) => {
       $('.img-' + name).attr('src', data.url);
       $('.a-' + name).attr('href', data.origin_url).html(data.name);
+      $('#' + name).val(data.file_id);
       if (typeof onSuccess != 'undefined') {
         onSuccess(data);
       }
@@ -178,7 +173,7 @@ module.exports = {
     dropbox.on('success', (file, data) => {
       $('.img-' + name).attr('src', data.url);
       $('.a-' + name).attr('href', data.origin_url).html(data.name);
-      console.log(data);
+      $('#' + name).val(data.file_id);
       if (typeof onSuccess != 'undefined') {
         onSuccess(data);
       }

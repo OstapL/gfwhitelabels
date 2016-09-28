@@ -42,7 +42,6 @@ module.exports = {
       'click .see-all-faq': 'seeAllFaq',
       'click .linkresponse': 'checkResponse',
       'submit .comment-form': 'submitComment',
-      // 'click .fancybox-nav': 'preventDefault'
     },
 
     onCollapse (e) {
@@ -74,7 +73,6 @@ module.exports = {
     },
 
     smoothScroll(e) {
-      console.log('smooth...');
       e.preventDefault();
       $(document).off("scroll");
       $('.tabs-scroll .nav').find('.nav-link').removeClass('active');
