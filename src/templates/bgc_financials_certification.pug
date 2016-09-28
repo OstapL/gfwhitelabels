@@ -1,0 +1,70 @@
+include mixins.pug
+- 'use strict'
+
+- var fields = { date: { label: 'Date of Most Recent Tax Return'} };
+
++breadcrumbs('form c and electronic signature', '', 
+    [
+        ['', ''],
+        ['', ''],
+        ['', ''],
+    ]
+)
+
+section.formc-team-members-director.container.m-b-85
+  //START LEFT BLOCK
+  .col-lg-3.create_compaign
+    .jumbotron.jumbotron-fluid.row
+        .raise-funds
+          h4.font-weight-bold.text-uppercase.m-b-0 REQUIRED INFORMATION
+            .small-text (10% Done)
+        .list-group
+          a(href="#").list-group-item Background Check
+          a(href="#").list-group-item Form C Electronic Signature  
+    
+
+
+  //START RIGHT BLOCK
+  .col-lg-8
+    h2.text-uppercase.text-lg-center.text-xs-center.m-t-0.dosis.m-b-3 Financials Certification
+    form(metod="post" action="").form-section
+      .col-lg-7.m-b-1
+        +fieldBlock("date", '', {
+          class1: 'col-lg-5 col-md-12 text-md-left p-t-0 m-b-0',
+          class2: 'col-lg-7 col-md-12',
+          type: 'date',
+          placeholder: 'EIN',
+          })
+      .col-lg-12
+        p.m-b-3 A principal executive officer must provide the following certification:
+      .col-lg-12
+        .input-border-block(style="border:solid 1px #ccc; padding:10px 20px")
+          p.pb10 I, 
+            input(type="text" placeholder="autopopulate CEO’s name" style="width:190px;").input-border-bottom
+            |  certify that:
+          p.pb10 1) The financials statement of
+            input(type="text" placeholder="autopopulate company name" style="width:213px;").input-border-bottom
+            |  included in this Form are true and complete in all material respects, and
+          p 2) The tax return information of
+            input(type="text" placeholder="autopopulate company name" style="width:213px;").input-border-bottom
+            |  included in this Form reflects accurately the information reported on the tax return for
+            input(type="text" placeholder="autopopulate company name" style="width:213px;").input-border-bottom
+            |  field for the fiscal year ended.
+      .col-lg-12.investment.m-t-2
+
+        .form-group.row
+          .col-lg-3
+            input(type="text" placeholder="Type Your Name").form-control
+            .help-block Type your name here
+          .col-lg-3
+            .electronically
+              span.by By:
+              span.name Maria Kravchuk
+      .row
+        .col-lg-12.form-group
+          .col-lg-6
+            input(type="text" placeholder="Title").form-control
+            .help-block Title (auto-populate)
+      .m-t-1
+        .col-lg-12.text-md-center.text-sm-center-text-xs-center
+          a(href="#").btn.btn-primary.text-uppercase.pull-lg-right submit
