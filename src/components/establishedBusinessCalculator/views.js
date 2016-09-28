@@ -4,6 +4,7 @@ import flyPriceFormatter from '../../helpers/flyPriceFormatter';
 import lookupData from '../../helpers/capitalraiseCalculatorData';
 import '../../js/graf/graf.js';
 import '../../js/graf/jquery.flot.categories.js';
+import '../../js/graf/jquery.flot.growraf';
 
 
 let formatPrice = calculatorHelper.formatPrice;
@@ -368,6 +369,9 @@ module.exports = {
                         show: true,
                         barWidth: 0.6,
                         align: "center"
+                    },
+                    grow: {
+                        active: true
                     }
                 },
                 grid: {

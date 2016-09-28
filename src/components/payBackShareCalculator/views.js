@@ -3,7 +3,7 @@ import 'jquery.inputmask/dist/jquery.inputmask.bundle.js';
 import calculatorHelper from '../../helpers/calculatorHelpers';
 import flyPriceFormatter from '../../helpers/flyPriceFormatter';
 import '../../js/graf/graf.js';
-import '../../js/graf/jquery.flot.animator.js';
+import '../../js/graf/jquery.flot.growraf';
 
 const formatPrice = calculatorHelper.formatPrice;
 
@@ -236,67 +236,75 @@ module.exports = {
                 ticks.push([i, 'Year ' + (currentYear + i)]);
             }
 
-            let $chart = $("#chart1"),
-                dataArr = [{
-                    data: dataRendered(),
-                    animator: { start: 0, steps: 99, duration: 500, direction: "right", lines: true },
-                    label: "Invested amount",
+            let $chart = $("#chart1");
+            var plotApi = $.plot($chart, [{
+                data: dataRendered(),
+                animator: { start: 0, steps: 100, duration: 500, direction: "right", lines: true },
+                label: "Invested amount",
+                lines: {
+                    lineWidth: 1
+                },
+                shadowSize: 0
+            }], {
+                series: {
                     lines: {
+                        show: !0,
+                        lineWidth: 2,
+                        fill: !0,
+                        fillColor: {
+                            colors: [{
+                                opacity: .05
+                            }, {
+                                opacity: .01
+                            }]
+                        }
+                    },
+                    points: {
+                        show: false,
+                        radius: 3,
                         lineWidth: 1
                     },
-                    shadowSize: 0
-                }],
-                options = {
-                    series: {
-                        lines: {
-                            show: !0,
-                            lineWidth: 2,
-                            fill: !0,
-                            fillColor: {
-                                colors: [{
-                                    opacity: .05
-                                }, {
-                                    opacity: .01
-                                }]
-                            }
-                        },
-                        points: {
-                            show: false,
-                            radius: 3,
-                            lineWidth: 1
-                        },
-                        shadowSize: 2
-                    },
-                    grid: {
-                        hoverable: !0,
-                        clickable: !0,
-                        tickColor: "#eee",
-                        borderColor: "#eee",
-                        borderWidth: 1
-                    },
-                    colors: ["#d12610", "#37b7f3", "#52e136"],
-                    xaxis: {
-                        min: 0,
-                        max: 10,
-                        ticks,
-                        tickSize: 1,
-                        tickDecimals: 0,
-                        tickColor: "#eee",
-                        mode: "categories"
-                    },
-                    yaxis: {
-                        ticks: [[0, '0%'], [1, '100%'], [2, '200%'], [3, '300%']],
-                        tickSize: 1,
-                        tickDecimals: 0,
-                        tickColor: "#eee"
+                    shadowSize: 2,
+                    grow: {
+                        active: true,
+                        growings: [{
+                            reanimate: "continue",
+                            stepDirection: "up",
+                            stepMode: "linear",
+                            valueIndex: 1
+                        }]
+
                     }
-                };
+                },
+                grid: {
+                    hoverable: !0,
+                    clickable: !0,
+                    tickColor: "#eee",
+                    borderColor: "#eee",
+                    borderWidth: 1
+                },
+                colors: ["#d12610", "#37b7f3", "#52e136"],
+                xaxis: {
+                    min: 0,
+                    max: 10,
+                    ticks,
+                    tickSize: 1,
+                    tickDecimals: 0,
+                    tickColor: "#eee",
+                    mode: "categories"
+                },
+                yaxis: {
+                    ticks: [[0, '0%'], [1, '100%'], [2, '200%'], [3, '300%']],
+                    tickSize: 1,
+                    tickDecimals: 0,
+                    tickColor: "#eee"
+                }
+            });
 
-            var plotApi = $.plotAnimator($chart, dataArr, options);
-
-            $chart.on("animatorComplete", function() {
-                options.series.points.show = true;
-                $.plot($chart, dataArr, options);
+            $chart.on("growFinished", function() {
+                console.log('123');
+                //options.series.points.show = true;
+                //$.plot($chart, dataArr, options);
                 
                 let last = plotApi.getData()[0].data.pop();
                 let o = plotApi.pointOffset({x: last[0], y: last[1]});
