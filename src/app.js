@@ -2,7 +2,6 @@ global.config = require('config');
 global.$ = global.jQuery = require('jquery');
 global._ = require('underscore');
 global.Backbone = require('backbone');
-global.Backbone.Validation = require('backbone-validation');
 window.Tether = require('tether');
 global.Bootstrap = require('bootstrap/dist/js/bootstrap.js');
 global.userModel = require('components/accountProfile/model.js');
@@ -10,77 +9,6 @@ global.Urls = require('./jsreverse.js');
 require('jquery-serializejson/jquery.serializejson.min.js');
 
 // require('sass/mixins_all.sass');
-
-// При выводе ошибок для форм у нас может быть две ситуации:
-// 1. Мы выводим ошибку для элементы который у нас есть в форме =>
-// нам нужно вывести это ошибку в help-block рядом с тем элементом где была ошибка
-//
-// 2. Мы выводим ошибку для элемента которого у нас в форме нет или это глобальная ошибка
-// => Нам нужно вывести сообщение в .alert-warning и при необиходимости создать его
-// See: http://thedersen.com/projects/backbone-validation/#configuration/callbacks
-_.extend(Backbone.Validation.callbacks, {
-  valid: function (view, attr, selector) {
-    var $el = view.$('[name=' + attr + ']');
-    var $group = $el.parent();
-
-    // if element not found - do nothing
-    // we had clean alert-warning before submit
-    if ($el.length != 0) {
-      if ($group.find('.help-block').length == 0) {
-        $group = $group.parent();
-      }
-    }
-
-    $group.removeClass('has-error');
-    $group.find('.help-block').remove();
-  },
-
-  invalid: function (view, attr, error, selector) {
-    let $el = view.$('#' + attr);
-    var $group = null;
-
-    if ($el.length == 0) {
-      $el = view.$('[name=' + attr + ']');
-    }
-
-    if (Array.isArray(error) !== true) {
-      error = [error];
-    }
-
-    // if element not found - we will show error just in alert-warning div
-    if ($el.length == 0) {
-      $el = view.$('form > .alert-warning');
-
-      // If we don't have alert-warning - we should create it as
-      // first element in form
-      if ($el.length == 0) {
-
-        $el = $('<div class="alert alert-warning" role="alert">' +
-            error.join(',') + '</div>');
-        if(view.$el.find('form').length == 0) {
-          view.$el.prepend($el);
-        } else {
-          view.$el.find('form').prepend($el);
-        }
-      } else {
-        $el.html(
-          $el.html() + '<p><b>' + view.fields[attr].label + ':</b> ' +
-            error.join(',') + '</p>'
-        );
-      }
-    } else {
-      $group = $el.parent();
-      $group.addClass('has-error');
-      var $errorDiv = $group.find('.help-block');
-
-      if ($errorDiv.length != 0) {
-        $errorDiv.html(error.join(','));
-      } else {
-        $group.append('<div class="help-block">' + error.join(',') + '</div>');
-      }
-    }
-  },
-});
 
 $.fn.scrollTo = function (padding=0) {
   $('html, body').animate({
