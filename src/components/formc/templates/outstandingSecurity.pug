@@ -19,6 +19,7 @@ include ../../../templates/menuRaiseFund.pug
 - var fields = { amount: { label: 'Amount Sold'} };
 - var fields = { use: { label: 'Use of Proceeds'} };
 - var fields = { limited: { label: 'How may the rights of the securities being offered be materially limited, diluted or qualified by the rights of any other class of security identified above?'} };
+- var fields = { offered_modified: { label: 'How may the terms of the securities being offered be modified?'} };
 - var fields = { issuer: { label: 'Are there any differences not reflected above between the securities being offered and each other class of security of the issuer?'} };
 - var fields = { could: { label: 'How could the exercise of rights held by the principal shareholders affect the purchasers of the securities being offered?'} };
 - var fields = { security_type: { label: 'Security Type'} };
@@ -41,7 +42,7 @@ section.formc-team-members-director.container.m-b-85
 
   //START RIGHT BLOCK
   .col-lg-8
-    h2.text-uppercase.text-lg-center.text-xs-center.m-t-0.dosis financial condition
+    h2.text-uppercase.text-lg-center.text-xs-center.m-t-0.dosis outstanding security
     form(metod="post" action="").form-section
       .col-lg-12
         b Do you have any business loans or debt?
@@ -191,6 +192,12 @@ section.formc-team-members-director.container.m-b-85
                             i.fa.fa-times
         .border-bottom.m-t-3.m-b-3 
         +fieldBlock("limited", '', {
+        class1: 'col-lg-12 col-md-12  text-md-left  text-xl-left',
+        class2: 'col-lg-12 col-md-12 ',
+        type: 'textarea',
+        placeholder: 'Description',
+        })
+        +fieldBlock("offered_modified", '', {
         class1: 'col-lg-12 col-md-12  text-md-left  text-xl-left',
         class2: 'col-lg-12 col-md-12 ',
         type: 'textarea',

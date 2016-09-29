@@ -46,20 +46,20 @@ section.formc.introduction.create-company-media.container
                 label If Yes, Explain
               .col-lg-9
                 textarea(rows="3").form-control= values['failed_to_comply']
-          .expiration-block-hide
-            .growthfountain-charges
-              p GrowthFountain charges $500 for Form C generation, background checks and escrow.
-              .form-group.row
-                .col-lg-3.text-lg-right
-                  label Credit Card Number
-                .col-lg-9
-                  .input-icon
-                    i.fa.fa-question-circle
-                  input(type="text").form-control
-                  img(src="/img/visa_logo_6.gif", alt="")
-                  img(src="/img/mastercard_logo_5.gif", alt="")
-                  img(src="/img/amex_512.png", alt="")
-                  img(src="/img/Discover-Logo.png", alt="")
+            .expiration-block
+              .growthfountain-charges
+                p GrowthFountain charges $500 for Form C generation, background checks and escrow.
+                .form-group.row
+                  .col-lg-3.text-lg-right
+                    label Credit Card Number
+                  .col-lg-9
+                    .input-icon
+                      i.fa.fa-question-circle
+                    input(type="text").form-control
+                    img(src="/img/visa_logo_6.gif", alt="")
+                    img(src="/img/mastercard_logo_5.gif", alt="")
+                    img(src="/img/amex_512.png", alt="")
+                    img(src="/img/Discover-Logo.png", alt="")
             
             .expiration
               .form-group.row.m-b-0
@@ -81,33 +81,34 @@ section.formc.introduction.create-company-media.container
                 a(href="#").link-2 Contract for listing your campaign on GrowthFountain
             .row.btn-pay
               .col-lg-12
-                button#pay-btn.btn.btn-lg.btn-primary.text-uppercase pay
+                button#pay-btn.btn.btn-primary.text-uppercase pay
           .electronically-sign
             .col-lg-12
               h3.m-t-0.text-lg-center.m-b-2 Electronically Sign
-            .form-group.row
-              .col-lg-3.text-lg-right
-                label Company name
-              .col-lg-9
-                input(type="text" placeholder="Company name (prepopulated)").form-control
-            .col-lg-7
-              .form-group.row
-                .col-lg-5.text-lg-right
-                  label By:
-                .col-lg-7.border-top-none
-                  input(type="text" placeholder="Signature").form-control
-            .col-lg-5
-              .form-group.row
-                .col-lg-4.text-lg-right.p-l-0
-                  label Type name
-                .col-lg-8.p-r-0
-                  input(type="text" placeholder="Signature").form-control
-            .col-lg-9.offset-lg-3.p-r-0
-              .certify-checkbox
-                .form-group.required
-                  label
-                    input(type="checkbox")
-                    | I'm authorized to sign on behalf of the company
-              .btn-save.text-lg-right
+            .col-lg-8.offset-lg-2.m-t-2.investment
+              .row
+                .col-lg-12.form-group
+                  .col-lg-12
+                    input(type="text" placeholder="Company Name").form-control
+                    .help-block Company Name (pre-populated)
+              .col-lg-12
+                .form-group.row
+                  .col-lg-6
+                    input(type="text" placeholder="Type Your Name").form-control
+                    .help-block Type your name here
+                  .col-lg-6
+                    .electronically
+                      span.by By:
+                      span.name Maria Kravchuk
+
+              .col-lg-12
+                .certify-checkbox
+                  .form-group.required
+                    label
+                      input(type="checkbox")
+                      | I'm authorized to sign on behalf of the company
+            .col-lg-12
+              .row
+                .btn-save.text-lg-right
                   button.submit.btn.btn-primary.text-uppercase save
 
