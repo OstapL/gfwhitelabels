@@ -6,6 +6,51 @@ import '../../js/graf/graf.js';
 import '../../js/graf/jquery.flot.categories.js';
 import '../../js/graf/jquery.flot.growraf';
 
+if (!app.cache.establishedBusinessCalculator) {
+    app.cache.establishedBusinessCalculator = {
+        // 1st page
+        'industry': 'Machinery',
+        'raiseCash': '',
+        'ownCache': '',
+        'currentDebt': '',
+
+        // 2nd page
+        'revenue': '',
+        'goodsCost': '',
+        'operatingExpense': '',
+        'oneTimeExpenses': '',
+        'depreciationAmortization': '',
+        'interestPaid': '',
+        'taxesPaid': '',
+
+        // 3rd page
+        'revenue2': '',
+        'goodsCost2': '',
+        'operatingExpense2': '',
+        'oneTimeExpenses2': '',
+        'depreciationAmortization2': '',
+        'interestPaid2': '',
+        'taxesPaid2': '',
+
+        // calculations
+        'grossprofit': null,
+        'grossprofit2': null,
+        'totalExpenses': null,
+        'totalExpenses2': null,
+        'ebit': null,
+        'ebit2': null,
+        'ebittda': null,
+        'ebittda2': null,
+        'preTaxIncome': null,
+        'preTaxIncome2': null,
+        'netIncome': null,
+        'netIncome2': null,
+
+        // data for the graph on the final page
+        'graphData': null
+    };
+}
+
 
 let formatPrice = calculatorHelper.formatPrice;
 let industryData = lookupData();
@@ -27,63 +72,8 @@ module.exports = {
 
         template: require('./templates/step1.pug'),
 
-        initialize() {
-            if (!app.cache.establishedBusinessCalculator) {
-                app.cache.establishedBusinessCalculator = {
-                    // 1st page
-                    'industry': 'Machinery',
-                    'raiseCash': 250000,
-                    'ownCache': 30000,
-                    'currentDebt': 200000,
-
-                    // 2nd page
-                    'revenue': 750000,
-                    'goodsCost': 200000,
-                    'operatingExpense': 150000,
-                    'oneTimeExpenses': 10000,
-                    'depreciationAmortization': 30000,
-                    'interestPaid': 10000,
-                    'taxesPaid': 30000,
-
-                    // 3rd page
-                    'revenue2': 800000,
-                    'goodsCost2': 225000,
-                    'operatingExpense2': 150000,
-                    'oneTimeExpenses2': 25000,
-                    'depreciationAmortization2': 35000,
-                    'interestPaid2': 10000,
-                    'taxesPaid2': 30000,
-
-                    // calculations
-                    'grossprofit': null,
-                    'grossprofit2': null,
-                    'totalExpenses': null,
-                    'totalExpenses2': null,
-                    'ebit': null,
-                    'ebit2': null,
-                    'ebittda': null,
-                    'ebittda2': null,
-                    'preTaxIncome': null,
-                    'preTaxIncome2': null,
-                    'netIncome': null,
-                    'netIncome2': null,
-
-                    // data for the graph on the final page
-                    'graphData': null
-                };
-            }
-        },
-
         events: {
-            // remove useless zeros: 0055 => 55
-            'blur .js-field': 'cutZeros',
             'change .js-select': 'saveValue'
-        },
-
-        cutZeros(e) {
-            let elem = e.target;
-            elem.dataset.currentValue = parseFloat(elem.value.replace('$', '').replace(/,/g, '') || 0);
-            elem.value = formatPrice(elem.dataset.currentValue);
         },
 
         saveValue(e) {
@@ -121,17 +111,6 @@ module.exports = {
 
         template: require('./templates/step2.pug'),
 
-        events: {
-            // remove useless zeros: 0055 => 55
-            'blur .js-field': 'cutZeros'
-        },
-
-        cutZeros(e) {
-            let elem = e.target;
-            elem.dataset.currentValue = parseFloat(elem.value.replace('$', '').replace(/,/g, '') || 0);
-            elem.value = formatPrice(elem.dataset.currentValue);
-        },
-
         ui() {
             this.inputPrice = this.$('[data-input-mask="price"]');
         },
@@ -142,16 +121,16 @@ module.exports = {
 
         render: function () {
             // disable enter to the step 2 of the establishedBusiness calculator without data
-            if (app.cache.establishedBusinessCalculator) {
-                let { raiseCash, ownCache, currentDebt } = app.cache.establishedBusinessCalculator;
-                if (!raiseCash || !ownCache || !currentDebt) {
-                    this.goToStep1();
-                    return false;
-                }
-            } else {
-                this.goToStep1();
-                return false;
-            }
+            // if (app.cache.establishedBusinessCalculator) {
+            //     let { raiseCash, ownCache, currentDebt } = app.cache.establishedBusinessCalculator;
+            //     if (!raiseCash || !ownCache || !currentDebt) {
+            //         this.goToStep1();
+            //         return false;
+            //     }
+            // } else {
+            //     this.goToStep1();
+            //     return false;
+            // }
 
             this.$el.html(this.template({
                 data: app.cache.establishedBusinessCalculator,
@@ -163,6 +142,12 @@ module.exports = {
             flyPriceFormatter(this.inputPrice, ({ modelValue, currentValue }) => {
                 // save value
                 app.cache.establishedBusinessCalculator[modelValue] = +currentValue;
+            });
+
+            this.$('[data-toggle="tooltip"]').tooltip({
+                html: true,
+                offset: '4px 2px',
+                template: '<div class="tooltip tooltip-custom" role="tooltip"><i class="fa fa-info-circle"></i><div class="tooltip-arrow"></div><div class="tooltip-inner"></div></div>'
             });
 
             $('body').scrollTop(0);
@@ -180,22 +165,13 @@ module.exports = {
             app.routers.navigate('/calculator/establishedBusiness/step-2', {trigger: true});
         },
 
-        cutZeros(e) {
-            let elem = e.target;
-            elem.dataset.currentValue = parseFloat(elem.value.replace('$', '').replace(/,/g, '') || 0);
-            elem.value = formatPrice(elem.dataset.currentValue);
-        },
-
         ui() {
             this.inputPrice = this.$('[data-input-mask="price"]');
         },
 
         events: {
             // calculate your income
-            'submit .js-calc-form': 'doCalculation',
-
-            // remove useless zeros: 0055 => 55
-            'blur .js-field': 'cutZeros'
+            'submit .js-calc-form': 'doCalculation'
         },
 
         doCalculation(e) {
@@ -292,18 +268,18 @@ module.exports = {
 
         render: function () {
             // disable enter to the step 2 of the establishedBusiness calculator without data
-            if (app.cache.establishedBusinessCalculator) {
-                let { revenue, goodsCost, operatingExpense, oneTimeExpenses } = app.cache.establishedBusinessCalculator,
-                    { depreciationAmortization, interestPaid, taxesPaid } = app.cache.establishedBusinessCalculator;
-                if (!revenue || !goodsCost || !operatingExpense || !oneTimeExpenses || !depreciationAmortization ||
-                    !interestPaid || !taxesPaid) {
-                    this.goToStep2();
-                    return false;
-                }
-            } else {
-                this.goToStep2();
-                return false;
-            }
+            // if (app.cache.establishedBusinessCalculator) {
+            //     let { revenue, goodsCost, operatingExpense, oneTimeExpenses } = app.cache.establishedBusinessCalculator,
+            //         { depreciationAmortization, interestPaid, taxesPaid } = app.cache.establishedBusinessCalculator;
+            //     if (!revenue || !goodsCost || !operatingExpense || !oneTimeExpenses || !depreciationAmortization ||
+            //         !interestPaid || !taxesPaid) {
+            //         this.goToStep2();
+            //         return false;
+            //     }
+            // } else {
+            //     this.goToStep2();
+            //     return false;
+            // }
 
             this.$el.html(this.template({
                 data: app.cache.establishedBusinessCalculator,
@@ -316,6 +292,12 @@ module.exports = {
             flyPriceFormatter(this.inputPrice, ({ modelValue, currentValue }) => {
                 // save value
                 app.cache.establishedBusinessCalculator[modelValue] = +currentValue;
+            });
+
+            this.$('[data-toggle="tooltip"]').tooltip({
+                html: true,
+                offset: '4px 2px',
+                template: '<div class="tooltip tooltip-custom" role="tooltip"><i class="fa fa-info-circle"></i><div class="tooltip-arrow"></div><div class="tooltip-inner"></div></div>'
             });
 
             return this;
@@ -354,11 +336,9 @@ module.exports = {
 
         buildGraph() {
             let data = app.cache.establishedBusinessCalculator.graphData;
-
+            
             $.plot("#chart", [{
                 data: data,
-                animator: { start: 0, steps: 99, duration: 500, direction: "right", lines: true },
-                label: "Invested amount",
                 lines: {
                     lineWidth: 1
                 },
@@ -367,8 +347,9 @@ module.exports = {
                 series: {
                     bars: {
                         show: true,
-                        barWidth: 0.6,
-                        align: "center"
+                        barWidth: 0.5,
+                        align: "center",
+                        fillColor: "#79b7da"
                     },
                     grow: {
                         active: true
@@ -381,14 +362,18 @@ module.exports = {
                     borderColor: "#eee",
                     borderWidth: 1
                 },
-                colors: ["#d12610", "#37b7f3", "#52e136"],
+                colors: ["#79b7da"],
                 xaxis: {
                     mode: "categories",
                     tickLength: 0,
-                    tickColor: "#eee"
+                    tickColor: "#eee",
+                    autoscaleMargin: 0.1
                 },
                 yaxis: {
-                    tickColor: "#eee"
+                    tickColor: "#eee",
+                    tickFormatter(val, axis) {
+                        return formatPrice(val).replace(/\,/g, ' ');
+                    }
                 }
             });
         }

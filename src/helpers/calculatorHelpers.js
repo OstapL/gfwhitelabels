@@ -87,6 +87,7 @@ module.exports = {
         RIGHTARROWKEYCODE: 39,
         F5KEYCODE: 116,
         CKEYCODE: 67,
-        VKEYCODE: 86
+        VKEYCODE: 86,
+        ENTERKEYCODE: 13
     }
 };
