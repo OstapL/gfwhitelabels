@@ -1,5 +1,6 @@
 const dropzone = require('dropzone');
 const dropzoneHelpers = require('helpers/dropzone.js');
+const validation = require('components/validation/validation.js');
 
 module.exports = {
   profile: Backbone.View.extend({
@@ -11,7 +12,19 @@ module.exports = {
       'focuseout #ssn' : 'hideSSNPopover',
       'keyup #zip_code': 'changeZipCode',
       'change .js-city': 'changeAddressManually',
-      'change .js-state': 'changeAddressManually'
+      'change .js-state': 'changeAddressManually',
+      dragover: 'globalDragover',
+      dragleave: 'globalDragleave',
+    },
+
+    globalDragover() {
+      // this.$('.dropzone').css({ border: 'dashed 1px lightgray' });
+      this.$('.border-dropzone').addClass('active-border');
+    },
+
+    globalDragleave() {
+      // this.$('.dropzone').css({ border: 'none' });
+      this.$('.border-dropzone').removeClass('active-border');
     },
 
     initialize(options) {
@@ -171,7 +184,7 @@ module.exports = {
       this.cityStateArea.text('City/State');
       this.cityField.val('');
       this.stateField.val('');
-      Backbone.Validation.callbacks.invalid(this, 'zip_code', 'Sorry your zip code is not found');
+      validation.invalidMsg(this, 'zip_code', 'Sorry your zip code is not found');
     },
 
     changeAddressManually() {

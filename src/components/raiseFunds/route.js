@@ -28,7 +28,8 @@ module.exports = Backbone.Router.extend({
           var i = new View.company({
             el: '#content',
             fields: meta[0].actions.POST,
-            model: new Model.model(model[0][0] || {}),
+            // model: new Model.model(model[0][0] || {}),
+            model: model[0][0] || {},
             campaign: campaignData[0] || {},
           });
 
@@ -69,7 +70,8 @@ module.exports = Backbone.Router.extend({
         var i = new View.generalInformation({
           el: '#content',
             fields: meta[0].actions.PUT,
-            model: new Model.model(model[0])
+            // model: new Model.model(model[0])
+            model: model[0]
         });
 
         i.render();
@@ -100,7 +102,8 @@ module.exports = Backbone.Router.extend({
         var i = new View.media({
           el: '#content',
             fields: meta[0].actions.PUT,
-            model: new Model.model(model[0])
+            // model: new Model.model(model[0])
+            model: model[0],
         });
         i.render();
         //app.views.campaign[id].render();
@@ -126,7 +129,8 @@ module.exports = Backbone.Router.extend({
       $.when(a2).done((model) => {
         var i = new View.teamMembers({
           el: '#content',
-          model: new Model.model(model),
+          // model: new Model.model(model),
+          model: model,
         });
         i.render();
         //app.views.campaign[id].render();
@@ -151,7 +155,8 @@ module.exports = Backbone.Router.extend({
       $.when(a2).done((model) => {
         const addForm = new View.teamMemberAdd({
           el: '#content',
-          model: new Model.model(model),
+          // model: new Model.model(model),
+          model: model,
           type: type,
           index: index,
         });
@@ -179,7 +184,8 @@ module.exports = Backbone.Router.extend({
         var i = new View.specifics({
           el: '#content',
           fields: meta[0].actions.PUT,
-          model: new Model.model(model[0]),
+          // model: new Model.model(model[0]),
+          model: model[0],
         });
         i.render();
         //app.views.campaign[id].render();
@@ -210,7 +216,8 @@ module.exports = Backbone.Router.extend({
         var i = new View.perks({
           el: '#content',
           fields: meta[0].actions.PUT,
-          model: new Model.model(model[0]),
+          // model: new Model.model(model[0]),
+          model: model[0],
         });
         i.render();
         //app.views.campaign[id].render();

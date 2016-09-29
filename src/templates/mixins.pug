@@ -63,6 +63,9 @@ mixin fieldBlock(name, data, attr)
                         id=name
                         name=name
                     ).custom-select
+                        if attr.hasOwnProperty('empty')
+                            option(value=attr.empty.value) #{attr.empty.display}
+                          
                         each v in fields[name].choices
                             option(value=v.value selected=(v.value == values[name] ? "selected" : undefined)) #{v.display_name}
         else if attr.type == 'date' 
@@ -282,8 +285,8 @@ mixin fieldDropzone(name, attr, type)
             //- div(class=attr.class2)
             div(class=(attr.class2 + ' dropzone__' + name))
                 div(class="border-dropzone")
-                    div(class="uploading" style="line-height:115px;text-align:center;position:absolute;width:100%;height:100%;left:0;right:0;top:0;bottom:0;z-index:1;display:none;background-color: rgba(255,255,255,0.8);")
-                        img(alt="activity indicator" src="/img/ajax-loader.gif")
+                    div(class="uploading" style="line-height:115px;text-align:center;position:absolute;width:100%;height:100%;left:0;right:0;top:0;bottom:0;z-index:1;display:none;background-color:rgba(255,255,255,0.8);")
+                        img(alt="activity indicator" src="/img/ajax-loader.gif" style="position:absolute;margin:auto;top:0;left:0;right:0;bottom:0;")
                     span
                         //- div(class='col-lg-7 col-md-6 col-xs-12 text-xs-center text-md-center text-lg-center ' + ' dropzone__' + name)
                         div.col-lg-5.col-md-5.col-sm-5.col-xs-5.text-xs-center.text-md-center.text-lg-center.p-dropzone
@@ -293,6 +296,7 @@ mixin fieldDropzone(name, attr, type)
                         div.col-lg-7.col-md-7.col-sm-7.col-xs-7.p-r-0.p-l-3.img-dropzone
                             //- span
                             img(src=dropzoneHelpers.getDropzoneUrl(name, attr, values) alt=fields[name].label class="img-fluid  img-" + name)
+                            input(name=name id=name value=values[name] type="hidden")
 
 
     else if type == 2
@@ -317,6 +321,7 @@ mixin fieldDropzone(name, attr, type)
                             p.drop-photo #{attr.text}
                             i(class='fa fa-' + attr.icon)
                     .all-gallery(class=attr.class2 )
+                        input(name=name id=name value=values[name] type="hidden")
                         .photo-scroll(style="min-height:5rem;")
                             if values[name + '_data']
                                 each v,k in values[name+'_data'].all_files
@@ -324,17 +329,22 @@ mixin fieldDropzone(name, attr, type)
                                         .delete-image-container(style="position: absolute;")
                                             a(href="#" data-id=v.id).delete-image
                                                 i.fa.fa-times
-                                        img( src=v.url).img-fluid.pull-left
+                                        img(src=v.url).img-fluid.pull-left
     else if type == 3
-      .drop-photo-block
+      div(class="drop-photo-block dropzone__" + name)
         h3.widget-title.font-alt #{ attr.title }
-        .border-dropzone
-            div(class='dropzone__' + name)
-              img(src=dropzoneHelpers.getDropzoneUrl(name, attr, values) alt=fields[name].label class="img-fluid m-x-auto  img-" + name)
-              .drop-image-title.text-xs-center.p-l-2.p-r-2 
-                span Drop your profile photo here or click to upload
-                    div
-                        i.fa.fa-camera 
+        div.border-dropzone
+            div(class="uploading" style="line-height:115px;text-align:center;position:absolute;width:100%;height:100%;left:0;right:0;top:0;bottom:0;z-index:1;display:none;background-color:rgba(255,255,255,0.8);")
+                img(alt="activity indicator" src="/img/ajax-loader.gif" style="position:absolute;margin:auto;top:0;left:0;right:0;bottom:0;")
+            span
+                h3.widget-title.font-alt #{ attr.title }
+                //- div(class='dropzone__' + name)
+                div
+                    img(src=dropzoneHelpers.getDropzoneUrl(name, attr, values) alt=fields[name].label class="img-fluid  img-" + name)
+                    .drop-image-title.text-xs-center 
+                        p Drop your profile photo here or click to upload
+                        div
+                            i.fa.fa-camera 
 
 
 mixin fieldFileDropzone(name, attr, type)
@@ -360,6 +370,7 @@ mixin fieldFileDropzone(name, attr, type)
                             p.drop-photo #{attr.text}
                             i(class="fa fa-" + attr.icon)
                     div.col-lg-7.col-md-7.col-sm-7.col-xs-7.p-r-0.p-l-0.p-dropzone.img-dropzone.text-lg-center
+                        input(name=name id=name value=values[name] type="hidden")
                         img(src='/img/default' + suffix + '.png' alt=fields[name].label class="img-fluid  img-" + name)
                         if values[name+'_data']
                           a(class=("a-" + name) href=values[name+'_data'].url) #{ fileName }
