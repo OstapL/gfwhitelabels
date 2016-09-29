@@ -35,7 +35,7 @@ mixin menu(current)
                   i.fa.fa-angle-left
             #company(role="tabpanel" class="panel-collapse collapse " + (current == 'company' ? 'in' : ''))
               .list-group
-                a(href="/company/create" class="list-group-item list-group-item-action " + (current == 'company' ? 'active' : '')) Company
+                a(href="/company/create" class="list-group-item list-group-item-action " + (current == 'company' ? 'active' : '')) Company Detail
           .panel.panel-default
             .panel-heading(role="tab")
               a(data-toggle="collapse"
@@ -68,9 +68,9 @@ mixin menu(current)
                   i.fa.fa-angle-left
             #form_c(role="tabpanel").panel-collapse.collapse
                 .list-group
-                    a(href="#").list-group-item.list-group-item-action form c
+                    a(href="/formc/introduction").list-group-item.list-group-item-action form c
                 .list-group
-                    a(href="#").list-group-item.list-group-item-action Team Member
+                    a(href="formc/team-members/1").list-group-item.list-group-item-action Team Member
                 .list-group
                     a(href="#").list-group-item.list-group-item-action Releated Parties
                 .list-group

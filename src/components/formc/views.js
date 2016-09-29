@@ -7,34 +7,34 @@ var jsonActions = {
     },
 
     addSection(e) {
-                e.preventDefault();
-                let sectionName = e.target.dataset.section;
-                let template = require('templates/section.pug');
-                this[sectionName + 'Index'] ++;
-                $('.' + sectionName).append(
-                    template({
-                        fields: this.fields,
-                        name: sectionName,
-                        attr: {
-                            class1: '',
-                            class2: '',
-                            app: app,
-                            type: this.fields[sectionName].type,
-                            index: this[sectionName + 'Index'],
-                        },
-                        values: this.model.toJSON() 
-                    })
-                );
-            },
+        e.preventDefault();
+        let sectionName = e.target.dataset.section;
+        let template = require('templates/section.pug');
+        this[sectionName + 'Index'] ++;
+        $('.' + sectionName).append(
+            template({
+                fields: this.fields,
+                name: sectionName,
+                attr: {
+                    class1: '',
+                    class2: '',
+                    app: app,
+                    type: this.fields[sectionName].type,
+                    index: this[sectionName + 'Index'],
+                },
+                values: this.model.toJSON() 
+            })
+        );
+    },
 
-   deleteSection(e) {
-                e.preventDefault();
-                let sectionName = e.currentTarget.dataset.section;
-                $('.' + sectionName + ' .index_' + e.currentTarget.dataset.index).remove();
-                e.currentTarget.remove();
-                // ToDo
-                // Fix index counter
-                // this[sectionName + 'Index'] --;
+    deleteSection(e) {
+        e.preventDefault();
+        let sectionName = e.currentTarget.dataset.section;
+        $('.' + sectionName + ' .index_' + e.currentTarget.dataset.index).remove();
+        e.currentTarget.remove();
+        // ToDo
+        // Fix index counter
+        // this[sectionName + 'Index'] --;
    },
 };
 
@@ -43,6 +43,7 @@ module.exports = {
     introduction: Backbone.View.extend({
         events: _.extend({
             'submit form': 'submit',
+            'click input[name=failed_to_comply]': 'onComplyChange',
         }, jsonActions.events),
 
         preinitialize() {
@@ -58,25 +59,47 @@ module.exports = {
         getSuccessUrl() {
             return  '/formc/team-members/' + this.model.get('id');
         },
-        submit: app.defaultSaveActions.submit,
+        // submit: app.defaultSaveActions.submit,
+        // submit: api.submitAction,
+        submit: function (e) {
+            e.preventDefault();
+            // FixMe
+            // make the index dynamic
+            app.routers.navigate('/formc/team-members/1', {trigger: true});
+        },
 
         initialize(options) {
             this.fields = options.fields;
+            // this.model = options.model;
+            // Get the type from here, i.e. director, officer, share holder
         },
 
         render() {
-            let template = require('templates/formc/introduction.pug');
+            // let template = require('templates/formc/introduction.pug');
+            let template = require('components/formc/templates/introduction.pug');
 
             this.$el.html(
                 template({
                     serverUrl: serverUrl,
                     Urls: Urls,
                     fields: this.fields,
+                    // values: this.model,
                     values: this.model.toJSON(),
                 })
             );
             return this;
         },
+
+        onComplyChange(e) {
+            let comply = this.$('input[name=failed_to_comply]:checked').val();
+            // console.log(comply);
+            if (comply == 'no') {
+                this.$('.explain textarea').text('');
+                this.$('.explain').hide();
+            } else {
+                this.$('.explain').show();
+            }
+        }
 
     }),
 
@@ -98,14 +121,163 @@ module.exports = {
         getSuccessUrl() {
             return  '/formc/related-parties/' + this.model.get('id');
         },
-        submit: app.defaultSaveActions.submit,
+        // submit: app.defaultSaveActions.submit,
+        submit: api.submitAction,
 
         initialize(options) {
             this.fields = options.fields;
         },
 
         render() {
-            let template = require('templates/formc/team-members.pug');
+            // let template = require('templates/formc/team-members.pug');
+            let template = require('components/formc/templates/teamMembers.pug');
+
+            this.$el.html(
+                template({
+                    serverUrl: serverUrl,
+                    Urls: Urls,
+                    fields: this.fields,
+                    values: this.model.toJSON(),
+                    // values: this.model,
+                })
+            );
+            return this;
+        },
+
+    }),
+
+
+
+    teamMemberAdd: Backbone.View.extend({
+        events: _.extend({
+            'submit form': 'submit',
+        }, jsonActions.events),
+        urlRoot: serverUrl + 'xxxxx' + '/team_members',
+        initialize(options) {
+            this.fields = options.fields;
+            this.type = options.type;
+            // this.faqIndex = 1;
+            if (this.type == 'director') {
+                this.previous_positionsIndex = 1;
+                this.experiencesIndex = 1;
+            } else if (this.type == 'officer') {
+
+            } else if (this.type == 'holder') {
+
+            }
+        },
+        render() {
+            let template;
+            if (this.type == 'director') {
+                this.fields.previous_positions.type = "position";
+                this.fields.previous_positions.schema = {
+                    position: {
+                        type: 'string',
+                        label: 'Position',
+                    },
+                    start_date: {
+                        type: 'date',
+                        label: 'Start Date of Service',
+                    },
+                    end_date_fo_service: {
+                        type: 'date',
+                        label: 'End Date of Service',
+                    }
+                };
+
+                this.fields.experiences.type = "experience";
+                this.fields.experiences.schema = {
+                    employer: {
+                        type: 'string',
+                        label: 'Employer',
+                    },
+                    employer_principal: {
+                        type: 'string',
+                        label: "Employer's Principal Business",
+                    },
+                    title: {
+                        type: 'string',
+                        label: 'Title',
+                    },
+                    responsibilities: {
+                        type: 'date',
+                        label: 'Responsibilities',
+                    },
+                    start_date: {
+                        type: 'date',
+                        label: 'Start Date of Service',
+                    },
+                    end_date: {
+                        type: 'date',
+                        label: 'End Date of Service',
+                    },
+                };
+                // Here I should use different template for different requests.
+                template = require('components/formc/templates/teamMembersDirector.pug');
+                
+            } else if (this.type == 'officer') {
+                this.fields.previous_positions.type = "position";
+                this.fields.previous_positions.schema = {
+                    position: {
+                        type: 'string',
+                        label: 'Position',
+                    },
+                    start_date: {
+                        type: 'date',
+                        label: 'Start Date of Service',
+                    },
+                    end_date_fo_service: {
+                        type: 'date',
+                        label: 'End Date of Service',
+                    }
+                };
+
+                this.fields.experiences.type = "experience";
+                this.fields.experiences.schema = {
+                    employer: {
+                        type: 'string',
+                        label: 'Employer',
+                    },
+                    employer_principal: {
+                        type: 'string',
+                        label: "Employer's Principal Business",
+                    },
+                    title: {
+                        type: 'string',
+                        label: 'Title',
+                    },
+                    responsibilities: {
+                        type: 'date',
+                        label: 'Responsibilities',
+                    },
+                    start_date: {
+                        type: 'date',
+                        label: 'Start Date of Service',
+                    },
+                    end_date: {
+                        type: 'date',
+                        label: 'End Date of Service',
+                    },
+                };
+                template = require('components/formc/templates/teamMembersOfficer.pug');
+
+            } else if (this.tyep == 'holder') {
+                template = require('components/formc/templates/teamMembersOfficer.pug');
+
+            }
+
+            if (this.model.get('previous_positions')) {
+              this.previous_positionsIndex = Object.keys(this.model.get('previous_positions')).length - 1;
+            } else {
+              this.previous_positionsIndex = 0;
+            }
+
+            if (this.model.get('experiences')) {
+              this.experiencesIndex = Object.keys(this.model.get('experiences')).length - 1;
+            } else {
+              this.experiencesIndex = 0;
+            }
+
 
             this.$el.html(
                 template({
@@ -115,9 +287,15 @@ module.exports = {
                     values: this.model.toJSON(),
                 })
             );
-            return this;
         },
-
+        addSection: jsonActions.addSection,
+        deleteSection: jsonActions.deleteSection,
+        getSuccessUrl(data) {},
+        submit(e) {
+            e.preventDefault();
+            // navigate back to general member page
+            app.routers.navigate('/formc/team-members/1', {trigger: true});
+        },
     }),
 
     offering: Backbone.View.extend({
@@ -138,7 +316,8 @@ module.exports = {
         getSuccessUrl() {
             return  '/formc/offering/' + this.model.get('id');
         },
-        submit: app.defaultSaveActions.submit,
+        // submit: app.defaultSaveActions.submit,
+        submit: api.submitAction,
 
         initialize(options) {
             this.fields = options.fields;
@@ -178,7 +357,8 @@ module.exports = {
         getSuccessUrl() {
             return  '/formc/team-members/' + this.model.get('id');
         },
-        submit: app.defaultSaveActions.submit,
+        // submit: app.defaultSaveActions.submit,
+        submit: api.submitAction,
 
         initialize(options) {
             this.fields = options.fields;

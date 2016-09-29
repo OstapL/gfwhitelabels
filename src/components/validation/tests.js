@@ -152,4 +152,102 @@ describe('Attribute validation', function () {
     // expect(rules.required.bind(rules, 'test', false, attr, data)).to.not.throw();
     // expect(rules.required.bind(rules, 'test', true, attr, data)).to.not.throw();
   });
+
+  it('Form Check', function () {
+
+    const validation = require('./validation.js');
+    let dataJson = {
+      college: "",
+      email: "brian@trunkclub.com",
+      facebook: "",
+      first_name: "Brian",
+      bio: '12313213',
+      growup: "",
+      last_name: "Spaly",
+      linkedin: "https://www.linkedin.com/in/brianspaly",
+    };
+
+    let fields = {
+      first_name: {
+        type: 'string',
+        label: 'First Name',
+        placeholder: 'John',
+        required: true,
+      },
+      last_name: {
+        type: 'string',
+        label: 'Last Name',
+        placeholder: 'Jordon',
+        required: true,
+      },
+      title: {
+        type: 'string',
+        label: 'Title',
+        placeholder: 'CEO',
+        required: true,
+      },
+      email: {
+        type: 'email',
+        label: 'Email',
+        placeholder: 'imboss@comanpy.com',
+        required: true,
+      },
+      bio: {
+        type: 'text',
+        label: 'Bio',
+        placeholder: 'At least 150 characters and no more that 250 charactes',
+        required: true,
+      },
+      growup: {
+        type: 'string',
+        label: 'Where did you grow up',
+        placeholder: 'City',
+        required: false,
+      },
+      state: {
+        type: 'choice',
+        required: true,
+        label: '',
+      },
+      college: {
+        type: 'string',
+        label: 'Where did you attend college',
+        placeholder: 'Collage/University',
+      },
+      linkedin: {
+        type: 'url',
+        label: 'LinkedIn',
+        placeholder: 'https://linkedin.com/',
+      },
+      facebook: {
+        type: 'url',
+        label: 'Facebook',
+        placeholder: 'https://facebook.com/',
+      },
+      /*
+      photo: {
+        type: 'dropbox',
+        label: 'Profile Picture',
+      },
+      */
+    };
+
+    validation.validate(fields, dataJson);
+    expect(validation.errors.title[0]).to.be.equal('Title is required');
+    expect(validation.errors.state[0]).to.be.equal(' is required');
+    expect(validation.validate(fields, dataJson)).to.be.true;
+
+    // // if required = true we should see error
+    // expect(rules.required.bind(rules, 'test', true, attr, data)).to.throw(rules.messages.required.replace('{0}', attr.label));
+
+    // // For string we dont have to get any exception
+    // data.test = 'value';
+    // expect(rules.required.bind(rules, 'test', false, attr, data)).to.not.throw();
+    // expect(rules.required.bind(rules, 'test', true, attr, data)).to.not.throw();
+
+    // // For number we dont have to get any exception
+    // data.test = 342;
+    // expect(rules.required.bind(rules, 'test', false, attr, data)).to.not.throw();
+    // expect(rules.required.bind(rules, 'test', true, attr, data)).to.not.throw();
+  });
 });

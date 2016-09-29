@@ -31,6 +31,8 @@
 		}
 
 		.img {
+			display: inline-block;
+			max-width: 350px;
 			overflow:hidden;
 		}
 		
@@ -47,6 +49,34 @@
 				-o-transform: scale(1.1);
 				transform: scale(1.1);
 			}
+		}
+	}
+}
+
+@media screen and (max-width:991px) {
+	.bg-team-wrap {
+
+		background-attachment: scroll;
+		background-size: auto;
+
+		p {
+			line-height: 1.3;	
+		}
+	}
+}
+
+@media screen and (max-width: 543px) {
+	article {
+		position: relative;
+		z-index: 2;
+	}
+
+	.biography-text {
+		margin-bottom: rem(30)
+	}
+	.bg-team-wrap {
+		h2 {
+			margin-top: rem(23)
 		}
 	}
 }
