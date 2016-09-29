@@ -46,7 +46,7 @@ mixin getRiskFactorsItem(campaign, section, currentStep, step, name)
   - let prefix = '/' + section + '/';
   if campaign.id || currentStep == step
       a(
-        href=prefix + step + "/" + campaign.id 
+        href=prefix + campaign.id + "/" + step
         class="list-group-item list-group-item-action " + (currentStep == step ? 'active' : '')
       ) #{ name }
           if currentStep == step
