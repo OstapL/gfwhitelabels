@@ -83,6 +83,25 @@
 				.in
 					.list-group-item.active
 						color: $black
+			.sub-menu
+				.list-group-heading
+					font-size: rem(12)
+					padding-left: rem(30)
+					color: $small-text
+					&:hover
+						background-color: $gallery
+						color: $black
+				.list-group-item-action
+					padding-left: rem(50)
+					&:before
+						content: '\f0c8'
+						position: absolute
+						left: rem(40)
+						font-family: FontAwesome
+						font-size: rem(3)
+						top: rem(19)
+
+
 	.raise-funds
 		padding-left: rem(15)
 		padding-bottom: rem(10)
