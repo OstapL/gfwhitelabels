@@ -2,8 +2,7 @@
 include ../../../templates/mixins.pug
 //- include menu.pug
 include ../../../templates/menuRaiseFund.pug
-- var fields = { full_time: { label: 'Full-Time'} };
-- var fields = { part_time: { label: 'Part-Time'} };
+- var fields = { full_time: { label: 'Full-Time'}, part_time: { label: 'Part-Time'}};
 
 +breadcrumbs('Create Company', '', 
     [
@@ -81,20 +80,30 @@ section.create-company-team-add.container
                             th.text-xs-center Full Name
                             th.text-xs-center Status
                     tbody
-                        tr
-                            td CEO/President
-                            td.text-xs-center Kenneth Staut
-                            td.text-xs-center
-                                i.fa.fa-check.color-green
-                        tr
-                            td Principal Financial Officer/Treasurer
-                            td.text-xs-center Michael Jenkins
-                            td.text-xs-center
-                                i.fa.fa-check.color-green
-                        tr
-                            td Controller/Principal Accounting Officer
-                            td
-                                hr(width="40%")
-                            td.text-xs-center.color-red Please Identify
+                        - let officerTitles = {ceo: 'CEO/President', financial: 'Principal Financial Officer/Treasurer', controller: 'Controller/Principal Accounting Officer',};
+                        each title, key in officerTitles
+                            - let officer = values.officers[key];
+                            tr
+                                //- td CEO/President
+                                td #{title}
+                                //- td.text-xs-center Kenneth Staut
+                                td.text-xs-center #{officer ? (officer.first_name + ' ' + officer.last_name) : ''}
+                                if officer
+                                    td.text-xs-center
+                                        i.fa.fa-check.color-green
+                                else
+                                    td.text-xs-center.color-red Please Identify
+
+                        //- tr
+                        //-     - let financial = values.officers.financial;
+                        //-     td Principal Financial Officer/Treasurer
+                        //-     td.text-xs-center Michael Jenkins
+                        //-     td.text-xs-center
+                        //-         i.fa.fa-check.color-green
+                        //- tr
+                        //-     td Controller/Principal Accounting Officer
+                        //-     td
+                        //-         hr(width="40%")
+                        //-     td.text-xs-center.color-red Please Identify
 
             div(style="display: " +  (values.members.length >= 1 ? 'block' : 'none')).col-lg-12.pull-lg-right.p-r-0.m-t-3
