@@ -47,6 +47,7 @@ include ../../../templates/mixins.pug
                                 value= formatPrice(data.raiseCash),
                                 type='text',
                                 placeholder='Raise Amount',
+                                autocomplete='off'
                                 data-input-mask='price',
                                 data-model-value='raiseCash',
                                 data-current-value= data.raiseCash)
@@ -59,6 +60,7 @@ include ../../../templates/mixins.pug
                                 value= formatPrice(data.ownCache),
                                 type='text',
                                 placeholder='Cash Holdings',
+                                autocomplete='off'
                                 data-input-mask='price',
                                 data-model-value='ownCache',
                                 data-current-value= data.ownCache)
@@ -71,6 +73,7 @@ include ../../../templates/mixins.pug
                                 value= formatPrice(data.currentDebt),
                                 type='text',
                                 placeholder='Current Debt',
+                                autocomplete='off'
                                 data-input-mask='price',
                                 data-model-value='currentDebt',
                                 data-current-value= data.currentDebt)

@@ -26,15 +26,15 @@ module.exports = {
         initialize() {
             if (!app.cache.capitalRaiseCalculator) {
                 app.cache.capitalRaiseCalculator = {
-                    'excessCash': 100000,
-                    'CashOnHand': 7000,
-                    'projectedRevenue': 500000,
-                    'projectedRevenueTwo': 5000000,
-                    'firstYearExpenses': 350000,
-                    'operatingProfit': 10000,
-                    'operatingProfitTwo': 1500000,
-                    'yourDebt': 50000,
-                    'cashRaise': 1000000,
+                    'excessCash': '',
+                    'CashOnHand': '',
+                    'projectedRevenue': '',
+                    'projectedRevenueTwo': '',
+                    'firstYearExpenses': '',
+                    'operatingProfit': '',
+                    'operatingProfitTwo': '',
+                    'yourDebt': '',
+                    'cashRaise': '',
                     'liquidityAdjustment': 0, // 0 %
 
                     // select boxes
@@ -82,9 +82,6 @@ module.exports = {
         events: {
             // calculate your income
             'submit .js-calc-form': 'doCalculation',
-
-            // remove useless zeros: 0055 => 55
-            'blur .js-field': 'cutZeros',
 
             'change .js-select': 'saveValue'
         },
@@ -152,12 +149,6 @@ module.exports = {
             _.extend(app.cache.capitalRaiseCalculator, calculatedData);
 
             app.routers.navigate('/calculator/capitalraise/finish', {trigger: true});
-        },
-
-        cutZeros(e) {
-            let elem = e.target;
-            elem.dataset.currentValue = parseFloat(elem.value.replace('$', '').replace(/,/g, '') || 0);
-            elem.value = formatPrice(elem.dataset.currentValue);
         },
 
         ui() {
