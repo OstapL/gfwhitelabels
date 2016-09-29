@@ -127,7 +127,9 @@ module.exports = Backbone.Router.extend({
       model: {
         id: id,
       },
-      // fields: {},
+      fields: {
+        'offering-expense': {type: 'row'},
+      },
 
     });
     i.render();

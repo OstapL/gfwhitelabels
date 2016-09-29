@@ -1,0 +1,176 @@
+- 'use strict'
+include ../../../templates/mixins.pug
+//- include menu.pug
+include ../../../templates/menuRaiseFund.pug
+
+// - var values = {}
+- var fields = { business_plan: { label: 'Please upload your business plan'} };
++breadcrumbs('Create Formc', '', [['home', '/',], [ 'current', page.get_absolute_url]])
+
+section.formc.use_of_proceeds.create-company-media.container
+  +menu('formc', 'use-of-proceeds')
+
+  .col-lg-8
+    h2.text-uppercase.text-lg-center.text-xs-center.dosis.m-t-0.mb-50 use of proceeds
+    .col-lg-12
+      b Please provide a detailed description of the intended use of proceeds of this offering.  If you provide a range of possible uses, you should identify and describe each probably use and the factors you might consider in allocating proceeds.  If you will accept proceeds in excess of the target offering amount, you must describe the purpose and method for allocating excess proceeds with similar specificity.
+    form(metod="post" action="").form-section
+      .form-group.intended
+        .col-lg-12
+          textarea(rows="3" placeholder="Intended Use of Proceeds").form-control
+      .table.table-responsive
+        .col-lg-12
+          table.table.table-bordered
+            thead
+              tr
+                th.w-50
+                th.w-25.text-lg-center.font-size-12 If target offering amount sold
+                th.w-25.text-lg-center.font-size-12 If maximum amount sold
+            tbody.offering-expense
+              tr.row-gray
+                td.w-50.p-l-25 Total Proceeds
+                td.w-25.text-lg-center.font-size-12 Minimum Raise
+                td.w-25.text-lg-center.font-size-12 Maximum Raise
+              tr
+                td Less: Offering Expenses
+                  .pull-right
+                    a(href="#" data-section="offering-expense").link-2.add-section Add Another
+              tr
+                td (A)
+                  input(type="text" name="total_proceed_purpose[0]")
+                td
+                  input(type="text" name="total_proceed_min[0]")
+                td
+                  input(type="text" name="total_proceed_max[0]")
+
+              tr
+                td (B)
+                  input(type="text" name="total_proceed_purpose[1]")
+                td
+                  input(type="text" name="total_proceed_min[1]")
+                td
+                  input(type="text" name="total_proceed_max[1]")
+              tr
+                td (C)
+                  input(type="text" name="total_proceed_purpose[2]")
+                td
+                  input(type="text" name="total_proceed_min[2]")
+                td
+                  input(type="text" name="total_proceed_max[2]")
+
+              //- tr
+              //-   td.w-50.p-y-0
+              //-     table.no-border
+              //-       tr
+              //-         td Less: Offering Expenses
+              //-           .pull-right
+              //-             a(href="#").link-2 Add Another
+              //-       tr
+              //-         td (A)
+              //-           input(type="text")
+              //-       tr
+              //-         td (B)
+              //-           input(type="text")
+              //-       tr
+              //-         td (C)
+              //-           input(type="text")
+              //-   td.w-25.text-lg-center.p-y-0
+              //-     table.no-border
+              //-       tr
+              //-         td &nbsp
+              //-       tr
+              //-         td 
+              //-           input(type="text")
+              //-       tr
+              //-         td
+              //-           input(type="text")
+              //-       tr
+              //-         td
+              //-           input(type="text")
+              //-   td.w-25.text-lg-center.p-y-0
+              //-     table.no-border
+              //-       tr
+              //-         td &nbsp
+              //-       tr
+              //-         td 
+              //-           input(type="text")
+              //-       tr
+              //-         td
+              //-           input(type="text")
+              //-       tr
+              //-         td
+              //-           input(type="text")
+
+              
+              //- tr.row-gray
+              //-   td.w-50.p-l-25 Net Proceeds
+              //-     .pull-right.icon
+              //-       i.fa.fa-question-circle
+              //-   td.w-25.text-lg-center.font-size-12
+
+              //-   td.w-25.text-lg-center 
+              //- tr
+              //-   td.w-50.p-y-0
+              //-     table.no-border
+              //-       tr
+              //-         td Use of Net Proceeds
+              //-           .pull-right
+              //-             a(href="#").link-2 Add Another
+              //-       tr
+              //-         td (A)
+              //-           input(type="text")
+              //-       tr
+              //-         td (B)
+              //-           input(type="text")
+              //-       tr
+              //-         td (C)
+              //-           input(type="text")
+              //-   td.w-25.text-lg-center.p-y-0
+              //-     table.no-border
+              //-       tr
+              //-         td &nbsp
+              //-       tr
+              //-         td.font-size-12
+              //-           input(type="text")
+              //-       tr
+              //-         td.font-size-12
+              //-           input(type="text")
+              //-       tr
+              //-         td.font-size-12
+              //-           input(type="text")
+              //-   td.w-25.text-lg-center.p-y-0
+              //-     table.no-border
+              //-       tr
+              //-         td &nbsp
+              //-       tr
+              //-         td 
+              //-           input(type="text")
+              //-       tr
+              //-         td
+              //-           input(type="text")
+              //-       tr
+              //-         td
+              //-           input(type="text")
+              //- tr.row-gray
+              //-   td.w-50.p-l-25 Total Use of Net Proceeds
+              //-     .pull-right.icon
+              //-       i.fa.fa-question-circle
+              //-   td.w-25.text-lg-center.color-red.font-size-12 $150K
+              //-   td.w-25.text-lg-center
+      .col-lg-12
+        .border-bottom.m-b-3
+        h3.text-xs-center Business Plan
+      .col-lg-12.create-perks
+        .text-lg-right.img-ppt
+          +fieldFileDropzone("business_plan", {
+            class1: 'col-lg-3',
+            class2: 'col-lg-9 p-l-1 p-r-1',
+            text: 'Drop your PDF or DOC here or click to upload',
+            icon: 'file',
+            default: '/img/default' + suffix + '.png',
+          })
+      .col-lg-12.text-lg-right.m-t-2
+        //- a(href="#").btn.btn-primary.text-uppercase save
+        button.btn.btn-primary.text-uppercase save
+
+      

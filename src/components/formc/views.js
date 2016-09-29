@@ -469,11 +469,15 @@ module.exports = {
     })),
 
     useOfProceeds: Backbone.View.extend(_.extend(addSectionHelper.methods, menuHelper.methods, {
-       initialize(options) {},
+    // useOfProceeds: Backbone.View.extend(_.extend(menuHelper.methods, {
+       initialize(options) {
+        this.fields = options.fields;
+       },
 
         events: _.extend({
             'submit form': 'submit',
         }, addSectionHelper.events, menuHelper.events),
+        // }, menuHelper.events),
         
         submit(e) {
             e.preventDefault();
@@ -484,6 +488,14 @@ module.exports = {
 
         render() {
             let template = require('components/formc/templates/useOfProceeds.pug');
+        // this.fields['offering-expense'].type = 'row';
+
+            if (this.model.faq) {
+                  // this.faqIndex = Object.keys(this.model.get('faq')).length;
+                  this.faqIndex = Object.keys(this.model.faq).length;
+                } else {
+                  this.faqIndex = 0;
+                }
             this.$el.html(
                 template({
                     serverUrl: serverUrl,
