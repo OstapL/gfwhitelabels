@@ -7,11 +7,10 @@ module.exports = {
   methods: {
       onCollapse (e) {
         // e.preventDefault();
-        e.stopImmediatePropagation();
         e.stopPropagation();
         let $elem = $(e.currentTarget);
-        let $a = $elem.find('a.list-group-heading');
-        let $icon = $a.find('.fa.arrow');
+        let $a = $elem.find('a.list-group-heading:first');
+        let $icon = $a.find('.fa.arrow:first');
         if (e.type === 'show') {
           $a.addClass('active');
           $icon.removeClass('fa-angle-left').addClass('fa-angle-down');

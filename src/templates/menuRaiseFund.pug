@@ -131,16 +131,17 @@ mixin menu(currentSection, currentStep)
                     +getCompanyUrl(campaign || values, 'formc', currentStep, 'use-of-proceeds', 'Use of Proceeds')
                     //- +getCompanyUrl(campaign || values, 'formc', currentStep, 'risk-factors-instruction', 'Risk Factors')
                     .panel.panel-default.sub-menu
+                      - let inRiskFactors = currentStep.startsWith('risk-factors');
                       a(data-toggle="collapse"
                         href="#risk_factors"
                         aria-expanded="true"
-                        class="list-group-item list-group-heading" + (currentSection == 'formc' ? ' active' : '')
+                        class="list-group-item list-group-heading" + (inRiskFactors ? ' active' : '')
                       )
                         |  Risk Factors 
                         span.pull-right
                           //- i.fa.fa-angle-left
-                          i(class="arrow fa " + (currentSection == 'formc' ? 'fa-angle-down' : 'fa-angle-left'))
-                      #risk_factors(role="tabpanel" class="panel-collapse collapse" + (currentStep.startsWith('risk-factors') ? ' in' : ''))
+                          i(class="arrow fa " + (inRiskFactors ? 'fa-angle-down' : 'fa-angle-left'))
+                      #risk_factors(role="tabpanel" class="panel-collapse collapse" + (inRiskFactors ? ' in' : ''))
                         .list-group
                           +getRiskFactorsItem(campaign || values, 'formc', currentStep, 'risk-factors-instruction', 'Introduction')
                           +getRiskFactorsItem(campaign || values, 'formc', currentStep, 'risk-factors-market', 'Market and Customer')

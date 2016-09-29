@@ -33,7 +33,7 @@ module.exports = {
     events: {
       'click .tabs-scroll .nav .nav-link': 'smoothScroll',
       // 'click .list-group-item-action': 'toggleActiveAccordionTab',
-      'hidden.bs.collapse .panel': 'onCollapse',
+      'hide.bs.collapse .panel': 'onCollapse',
       'show.bs.collapse .panel': 'onCollapse',
       'click .linkedin-share': 'shareOnLinkedin',
       'click .facebook-share': 'shareOnFacebook',
@@ -51,7 +51,7 @@ module.exports = {
       if (e.type === 'show') {
         $a.addClass('active');
         $icon.removeClass('fa-angle-down').addClass('fa-angle-up');
-      } else if (e.type === 'hidden') {
+      } else if (e.type === 'hide') {
         $a.removeClass('active');
         $icon.removeClass('fa-angle-up').addClass('fa-angle-down');
       }
