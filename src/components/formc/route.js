@@ -57,6 +57,11 @@ module.exports = Backbone.Router.extend({
           },
           // minLength: 100,
         },
+        certify: {
+          required: true,
+          type: 'checkbox',
+          label: 'Certifing Statement'
+        },
         // cc_number: {
         //   label: "Credit Card",
         //   required: true,
