@@ -46,20 +46,20 @@ section.formc.introduction.create-company-media.container
                 label If Yes, Explain
               .col-lg-9
                 textarea(rows="3").form-control= values['failed_to_comply']
-            .expiration-block
-              .growthfountain-charges
-                p GrowthFountain charges $500 for Form C generation, background checks and escrow.
-                .form-group.row
-                  .col-lg-3.text-lg-right
-                    label Credit Card Number
-                  .col-lg-9
-                    .input-icon
-                      i.fa.fa-question-circle
-                    input(type="text").form-control
-                    img(src="/img/visa_logo_6.gif", alt="")
-                    img(src="/img/mastercard_logo_5.gif", alt="")
-                    img(src="/img/amex_512.png", alt="")
-                    img(src="/img/Discover-Logo.png", alt="")
+          .expiration-block
+            .growthfountain-charges
+              p GrowthFountain charges $500 for Form C generation, background checks and escrow.
+              .form-group.row
+                .col-lg-3.text-lg-right
+                  label Credit Card Number
+                .col-lg-9
+                  .input-icon
+                    i.fa.fa-question-circle
+                  input(type="text").form-control
+                  img(src="/img/visa_logo_6.gif", alt="")
+                  img(src="/img/mastercard_logo_5.gif", alt="")
+                  img(src="/img/amex_512.png", alt="")
+                  img(src="/img/Discover-Logo.png", alt="")
             
             .expiration
               .form-group.row.m-b-0
@@ -82,7 +82,7 @@ section.formc.introduction.create-company-media.container
             .row.btn-pay
               .col-lg-12
                 button#pay-btn.btn.btn-primary.text-uppercase pay
-          .electronically-sign
+          .electronically-sign(style="display:none;")
             .col-lg-12
               h3.m-t-0.text-lg-center.m-b-2 Electronically Sign
             .col-lg-8.offset-lg-2.m-t-2.investment
