@@ -68,7 +68,6 @@ module.exports = {
             'click input[name=failed_to_comply]': 'onComplyChange',
         }, menuHelper.events),
 
-        // onCollapse: menuActions.onCollapse,
 
         preinitialize() {
             // ToDo
@@ -107,9 +106,6 @@ module.exports = {
         },
 
         render() {
-            // app.currentView && app.currentView.remove();
-            // app.currentView == this;
-            // let template = require('templates/formc/introduction.pug');
             let template = require('components/formc/templates/introduction.pug');
 
             this.$el.html(
@@ -173,9 +169,6 @@ module.exports = {
         },
 
         render() {
-            // app.currentView && app.currentView.remove();
-            // app.currentView == this;
-            // let template = require('templates/formc/team-members.pug');
             let template = require('components/formc/templates/teamMembers.pug');
 
             this.$el.html(
@@ -211,8 +204,6 @@ module.exports = {
             }*/
         },
         render() {
-            // app.currentView && app.currentView.remove();
-            // app.currentView == this;
             let template;
             if (this.type == 'director' || this.type == 'officer') {
                 this.fields.previous_positions.type = "position";
@@ -303,8 +294,6 @@ module.exports = {
             e.preventDefault();
             e.stopPropagation();
             this.undelegateEvents();
-            // navigate back to general member page
-            // app.routers.navigate('/formc/team-members/' + this.model.id, {trigger: true});
             app.routers.navigate('/formc/' + this.model.id + '/team-members', {trigger: true});
         },
     })),
@@ -335,8 +324,6 @@ module.exports = {
         },
 
         render() {
-            // app.currentView && app.currentView.remove();
-            // app.currentView == this;
             let template = require('templates/formc/offering.pug');
             // let values = this.model.toJSON();
             let values = this.model;
@@ -429,14 +416,10 @@ module.exports = {
             e.preventDefault();
             e.stopPropagation();
             this.undelegateEvents();
-
-            // app.routers.navigate('formc/use-of-proceeds/' + this.model.id, {trigger: true});
             app.routers.navigate('formc/' + this.model.id + '/use-of-proceeds', {trigger: true});
         },
 
         render() {
-            // app.currentView && app.currentView.remove();
-            // app.currentView == this;
             let template = require('components/formc/templates/relatedParties.pug');
             this.fields.transactions.type = 'json';
             this.fields.transactions.schema = {
@@ -496,8 +479,6 @@ module.exports = {
             e.preventDefault();
             e.stopPropagation();
             this.undelegateEvents();
-            // app.routers.navigate('/formc/risk-factors/instruction/' + this.model.id, {trigger: true});
-            // app.routers.navigate('/formc/risk-factors-instruction/' + this.model.id, {trigger: true});
             app.routers.navigate('/formc/' + this.model.id + '/risk-factors-instruction', {trigger: true});
         },
 
@@ -525,16 +506,12 @@ module.exports = {
         
         submit(e) {
             e.preventDefault();
+            e.stopPropagation();
             this.undelegateEvents();
-            // e.stopPropagation();
-            // app.routers.navigate('/formc/risk-factors/' + this.model.id + '/market', {trigger: true});
-            // app.routers.navigate('/formc/risk-factors/market/' + this.model.id, {trigger: true});
             app.routers.navigate('/formc/' + this.model.id + '/risk-factors-market', {trigger: true});
         },
 
         render() {
-            // app.currentView && app.currentView.remove();
-            // app.currentView == this;
             let template = require('components/formc/templates/riskFactorsInstructions.pug');
             this.$el.html(
                 template({
@@ -566,15 +543,10 @@ module.exports = {
             e.preventDefault();
             e.stopPropagation();
             this.undelegateEvents();
-            // app.routers.navigate('/formc/risk-factors/' + this.model.id + '/financial', {trigger: true});
-            // app.routers.navigate('/formc/risk-factors/financial/' + this.model.id, {trigger: true});
-            // app.routers.navigate('/formc/risk-factors-financial/' + this.model.id, {trigger: true});
             app.routers.navigate('/formc/' + this.model.id + '/risk-factors-financial', {trigger: true});
         },
 
         render() {
-            // app.currentView && app.currentView.remove();
-            // app.currentView == this;
             let template = require('components/formc/templates/riskFactorsMarket.pug');
             this.$el.html(
                 template({
@@ -600,14 +572,10 @@ module.exports = {
             e.preventDefault();
             e.stopPropagation();
             this.undelegateEvents();
-            // app.routers.navigate('/formc/risk-factors/'  + this.model.id + '/operational', {trigger: true});
-            // app.routers.navigate('/formc/risk-factors/operational/'  + this.model.id, {trigger: true});
             app.routers.navigate('/formc/' + this.model.id + '/risk-factors-operational', {trigger: true});
         },
 
         render() {
-            // app.currentView && app.currentView.remove();
-            // app.currentView == this;
             let template = require('components/formc/templates/riskFactorsFinancial.pug');
             this.$el.html(
                 template({
@@ -632,18 +600,12 @@ module.exports = {
         submit(e) {
             e.preventDefault();
             e.stopPropagation();
-            // app.routers.navigate('/formc/risk-factors/' + this.model.id + '/competitive', {trigger: true});
-            // app.routers.navigate('/formc/risk-factors/competitive/' + this.model.id, {trigger: true});
             this.undelegateEvents();
 
             app.routers.navigate('/formc/' + this.model.id + '/risk-factors-competitive', {trigger: true});
-            // app.routers.navigate('/formc/risk-factors-competitive/107', {trigger: true});
-            // debugger
         },
 
         render() {
-            // app.currentView && app.currentView.remove();
-            // app.currentView == this;
             let template = require('components/formc/templates/riskFactorsOperational.pug');
             this.$el.html(
                 template({
@@ -669,14 +631,10 @@ module.exports = {
             e.preventDefault();
             e.stopPropagation();
             this.undelegateEvents();
-            // app.routers.navigate('/formc/risk-factors/' + this.model.id + '/personnel', {trigger: true});
-            // app.routers.navigate('/formc/risk-factors/personnel/' + this.model.id, {trigger: true});
             app.routers.navigate('/formc/' + this.model.id + '/risk-factors-personnel', {trigger: true});
         },
 
         render() {
-            // app.currentView && app.currentView.remove();
-            // app.currentView == this;
             let template = require('components/formc/templates/riskFactorsCompetitive.pug');
             this.$el.html(
                 template({
@@ -703,14 +661,10 @@ module.exports = {
             e.preventDefault();
             e.stopPropagation();
             this.undelegateEvents();
-            // app.routers.navigate('/formc/risk-factors/' + this.model.id + '/legal', {trigger: true});
-            // app.routers.navigate('/formc/risk-factors/legal/' + this.model.id, {trigger: true});
             app.routers.navigate('/formc/' + this.model.id + '/risk-factors-legal', {trigger: true});
         },
 
         render() {
-            // app.currentView && app.currentView.remove();
-            // app.currentView == this;
             let template = require('components/formc/templates/riskFactorsPersonnel.pug');
             this.$el.html(
                 template({
@@ -736,14 +690,10 @@ module.exports = {
             e.preventDefault();
             e.stopPropagation();
             this.undelegateEvents();
-            // app.routers.navigate('/formc/risk-factors/' + this.model.id + '/misc', {trigger: true});
-            // app.routers.navigate('/formc/risk-factors/misc/' + this.model.id, {trigger: true});
             app.routers.navigate('/formc/'  + this.model.id + '/risk-factors-misc', {trigger: true});
         },
 
         render() {
-            // app.currentView && app.currentView.remove();
-            // app.currentView == this;
             let template = require('components/formc/templates/riskFactorsLegal.pug');
             this.$el.html(
                 template({
@@ -773,8 +723,6 @@ module.exports = {
         },
 
         render() {
-            // app.currentView && app.currentView.remove();
-            // app.currentView == this;
             let template = require('components/formc/templates/riskFactorsMisc.pug');
             this.$el.html(
                 template({
@@ -804,8 +752,6 @@ module.exports = {
         },
 
         render() {
-            // app.currentView && app.currentView.remove();
-            // app.currentView == this;
             let template = require('components/formc/templates/financialCondition.pug');
             this.$el.html(
                 template({
@@ -857,8 +803,6 @@ module.exports = {
         }, menuHelper.events),
 
         submit(e) {
-            // app.currentView && app.currentView.remove();
-            // app.currentView == this;
             e.preventDefault();
             e.stopPropagation();
             this.undelegateEvents();
