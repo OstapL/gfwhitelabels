@@ -163,7 +163,8 @@ module.exports = {
             e.preventDefault();
             e.stopPropagation();
             this.undelegateEvents();
-            app.routers.navigate('/formc/related-parties/' + this.model.id, {trigger: true});
+            // app.routers.navigate('/formc/related-parties/' + this.model.id, {trigger: true});
+            app.routers.navigate('/formc/' + this.model.id + '/related-parties', {trigger: true});
             // app.routers.navigate('/formc/use-of-proceeds/1', {trigger: true});
         },
 
@@ -303,7 +304,8 @@ module.exports = {
             e.stopPropagation();
             this.undelegateEvents();
             // navigate back to general member page
-            app.routers.navigate('/formc/team-members/' + this.model.id, {trigger: true});
+            // app.routers.navigate('/formc/team-members/' + this.model.id, {trigger: true});
+            app.routers.navigate('/formc/' + this.model.id + '/team-members', {trigger: true});
         },
     })),
 
@@ -367,6 +369,7 @@ module.exports = {
             // Hack for undelegate previous events
             for(let k in this.events) {
                 $('#content ' + k.split(' ')[1]).undelegate(); 
+                $('#content ' + k.split(' ')[1]).undelegate(); 
             }
         },
 
@@ -427,7 +430,8 @@ module.exports = {
             e.stopPropagation();
             this.undelegateEvents();
 
-            app.routers.navigate('formc/use-of-proceeds/' + this.model.id, {trigger: true});
+            // app.routers.navigate('formc/use-of-proceeds/' + this.model.id, {trigger: true});
+            app.routers.navigate('formc/' + this.model.id + '/use-of-proceeds', {trigger: true});
         },
 
         render() {
@@ -493,7 +497,8 @@ module.exports = {
             e.stopPropagation();
             this.undelegateEvents();
             // app.routers.navigate('/formc/risk-factors/instruction/' + this.model.id, {trigger: true});
-            app.routers.navigate('/formc/risk-factors-instruction/' + this.model.id, {trigger: true});
+            // app.routers.navigate('/formc/risk-factors-instruction/' + this.model.id, {trigger: true});
+            app.routers.navigate('/formc/' + this.model.id + '/risk-factors-instruction', {trigger: true});
         },
 
         render() {
@@ -524,7 +529,7 @@ module.exports = {
             // e.stopPropagation();
             // app.routers.navigate('/formc/risk-factors/' + this.model.id + '/market', {trigger: true});
             // app.routers.navigate('/formc/risk-factors/market/' + this.model.id, {trigger: true});
-            app.routers.navigate('/formc/risk-factors-market/' + this.model.id, {trigger: true});
+            app.routers.navigate('/formc/' + this.model.id + '/risk-factors-market', {trigger: true});
         },
 
         render() {
@@ -563,7 +568,8 @@ module.exports = {
             this.undelegateEvents();
             // app.routers.navigate('/formc/risk-factors/' + this.model.id + '/financial', {trigger: true});
             // app.routers.navigate('/formc/risk-factors/financial/' + this.model.id, {trigger: true});
-            app.routers.navigate('/formc/risk-factors-financial/' + this.model.id, {trigger: true});
+            // app.routers.navigate('/formc/risk-factors-financial/' + this.model.id, {trigger: true});
+            app.routers.navigate('/formc/' + this.model.id + '/risk-factors-financial', {trigger: true});
         },
 
         render() {
@@ -596,7 +602,7 @@ module.exports = {
             this.undelegateEvents();
             // app.routers.navigate('/formc/risk-factors/'  + this.model.id + '/operational', {trigger: true});
             // app.routers.navigate('/formc/risk-factors/operational/'  + this.model.id, {trigger: true});
-            app.routers.navigate('/formc/risk-factors-operational/'  + this.model.id, {trigger: true});
+            app.routers.navigate('/formc/' + this.model.id + '/risk-factors-operational', {trigger: true});
         },
 
         render() {
@@ -630,7 +636,7 @@ module.exports = {
             // app.routers.navigate('/formc/risk-factors/competitive/' + this.model.id, {trigger: true});
             this.undelegateEvents();
 
-            app.routers.navigate('/formc/risk-factors-competitive/' + this.model.id, {trigger: true});
+            app.routers.navigate('/formc/' + this.model.id + '/risk-factors-competitive', {trigger: true});
             // app.routers.navigate('/formc/risk-factors-competitive/107', {trigger: true});
             // debugger
         },
@@ -665,7 +671,7 @@ module.exports = {
             this.undelegateEvents();
             // app.routers.navigate('/formc/risk-factors/' + this.model.id + '/personnel', {trigger: true});
             // app.routers.navigate('/formc/risk-factors/personnel/' + this.model.id, {trigger: true});
-            app.routers.navigate('/formc/risk-factors-personnel/' + this.model.id, {trigger: true});
+            app.routers.navigate('/formc/' + this.model.id + '/risk-factors-personnel', {trigger: true});
         },
 
         render() {
@@ -699,7 +705,7 @@ module.exports = {
             this.undelegateEvents();
             // app.routers.navigate('/formc/risk-factors/' + this.model.id + '/legal', {trigger: true});
             // app.routers.navigate('/formc/risk-factors/legal/' + this.model.id, {trigger: true});
-            app.routers.navigate('/formc/risk-factors-legal/' + this.model.id, {trigger: true});
+            app.routers.navigate('/formc/' + this.model.id + '/risk-factors-legal', {trigger: true});
         },
 
         render() {
@@ -732,7 +738,7 @@ module.exports = {
             this.undelegateEvents();
             // app.routers.navigate('/formc/risk-factors/' + this.model.id + '/misc', {trigger: true});
             // app.routers.navigate('/formc/risk-factors/misc/' + this.model.id, {trigger: true});
-            app.routers.navigate('/formc/risk-factors-misc/' + this.model.id, {trigger: true});
+            app.routers.navigate('/formc/'  + this.model.id + '/risk-factors-misc', {trigger: true});
         },
 
         render() {
@@ -763,7 +769,7 @@ module.exports = {
             e.preventDefault();
             e.stopPropagation();
             this.undelegateEvents();
-            app.routers.navigate('/formc/financial-condition/' + this.model.id, {trigger: true});
+            app.routers.navigate('/formc/' + this.model.id + '/financial-condition', {trigger: true});
         },
 
         render() {
@@ -794,7 +800,7 @@ module.exports = {
             e.preventDefault();
             e.stopPropagation();
             this.undelegateEvents();
-            app.routers.navigate('/formc/outstanding-security/' + this.model.id, {trigger: true});
+            app.routers.navigate('/formc/' + this.model.id + '/outstanding-security', {trigger: true});
         },
 
         render() {
@@ -825,7 +831,7 @@ module.exports = {
             e.preventDefault();
             e.stopPropagation();
             this.undelegateEvents();
-            app.routers.navigate('/formc/background-check/' + this.model.id, {trigger: true});
+            app.routers.navigate('/formc/' + this.model.id + '/background-check', {trigger: true});
         },
 
         render() {
