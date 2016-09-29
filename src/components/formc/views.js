@@ -281,6 +281,8 @@ module.exports = {
 
             }
 
+            require('bootstrap-select/sass/bootstrap-select.scss');
+            let selectPicker = require('bootstrap-select');
             this.$el.html(
                 template({
                     serverUrl: serverUrl,
@@ -290,6 +292,8 @@ module.exports = {
                     values: this.model,
                 })
             );
+            this.$el.find('.selectpicker').selectpicker();
+
         },
         // addSection: jsonActions.addSection,
         // deleteSection: jsonActions.deleteSection,

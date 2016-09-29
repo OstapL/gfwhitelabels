@@ -58,13 +58,22 @@ section.formc-team-members-director.container.m-b-85
             option Principal Financial Officer/Treasurer
             option Vice President
             option Secretary
-            option Controller/Principal Accounting Officer    
-      +fieldBlock("responsibilities", '', {
-        class1: 'col-lg-3 col-md-12 text-md-left  m-b-0',
-        class2: 'col-lg-9 col-md-12',
-        type: 'text',
-        placeholder: 'Responsibilities',
-        })
+            option Controller/Principal Accounting Officer 
+
+      .row.form-group
+        label.col-lg-3.col-md-12.text-md-left.text-lg-right Reponsibilities
+        .col-lg-9.col-md-12
+          select( style="width:100%" multiple="true" title="Title").form-control.selectpicker
+            option(selected) CEO/President
+            option Principal Financial Officer/Treasurer
+            option Controller/Principal Accounting Officer 
+
+      //- +fieldBlock("responsibilities", '', {
+      //-   class1: 'col-lg-3 col-md-12 text-md-left  m-b-0',
+      //-   class2: 'col-lg-9 col-md-12',
+      //-   type: 'text',
+      //-   placeholder: 'Responsibilities',
+      //-   })
       .row
         .col-lg-6.col-md-12
           .col-lg-6.text-lg-right.text-md-left.p-t-0
