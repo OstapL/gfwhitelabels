@@ -6,7 +6,7 @@ const appendHttpIfNecessary = formatHelper.appendHttpIfNecessary;
 const dropzone = require('dropzone');
 const dropzoneHelpers = require('helpers/dropzone.js');
 
-const validation = require('components/validation/validation.js');
+// const validation = require('components/validation/validation.js');
 
 const jsonActions = {
   events: {
@@ -30,16 +30,24 @@ const jsonActions = {
             type: this.fields[sectionName].type,
             index: this[sectionName + 'Index'],
           },
-          values: this.model.toJSON(),
+          // values: this.model.toJSON(),
+          values: this.model,
         })
     );
   },
 
   deleteSection(e) {
     e.preventDefault();
-    let sectionName = e.currentTarget.dataset.section;
-    $('.' + sectionName + ' .index_' + e.currentTarget.dataset.index).remove();
-    e.currentTarget.remove();
+    if(confirm('Are you sure?')) {
+      let sectionName = e.currentTarget.dataset.section;
+      if($('.' + sectionName + ' .delete-section-container').length > 1) {
+        $('.' + sectionName + ' .index_' + e.currentTarget.dataset.index).remove();
+        e.currentTarget.offsetParent.remove();
+      } else {
+        $('.' + sectionName + ' .index_' + e.currentTarget.dataset.index + ' input').val('');
+        $('.' + sectionName + ' .index_' + e.currentTarget.dataset.index + ' textarea').val('');
+      }
+    }
 
     // ToDo
     // Fix index counter
@@ -47,14 +55,26 @@ const jsonActions = {
   },
 };
 
+
+const onPreviewAction = function(e) {
+  e.preventDefault();
+  this.$el.find('form').submit()
+  app.showLoading();
+  setTimeout(function() {
+    window.location = e.target.dataset.href + '?preview=1'
+  }, 100);
+};
+
 module.exports = {
   company: Backbone.View.extend({
-    urlRoot: serverUrl + Urls['company-list'](),
+    // urlRoot: serverUrl + Urls['company-list'](),
+    urlRoot: Urls.company_list(),
     template: require('./templates/company.pug'),
     events: {
       'submit form': 'submit',
       'keyup #zip_code': 'changeZipCode',
       'click .update-location': 'updateLocation',
+      'click .onPreview': onPreviewAction,
       'change input[name=phone]': 'formatPhone',
       'change #website,#twitter,#facebook,#instagram,#linkedin': appendHttpIfNecessary,
     },
@@ -80,8 +100,10 @@ module.exports = {
 
     submit(e) {
       var data = $(e.target).serializeJSON();
-      data['founding_date'] = data['founding_date__year'] + '-' +
-        data.founding_date__month + '-' + data.founding_date__day;
+
+      data['founding_date'] = data.founding_date__year && data.founding_date__month && data.founding_date__day
+        ? data.founding_date__year + '-' + data.founding_date__month + '-' + data.founding_date__day
+        : '';
       delete data.founding_date__day;
       delete data.founding_date__month;
       delete data.founding_date__year;
@@ -127,7 +149,8 @@ module.exports = {
             serverUrl: serverUrl,
             Urls: Urls,
             fields: this.fields,
-            values: this.model.toJSON(),
+            // values: this.model.toJSON(),
+            values: this.model,
             user: app.user.toJSON(),
             campaign: this.campaign,
             states: this.usaStates,
@@ -151,10 +174,12 @@ module.exports = {
   }),
 
   generalInformation: Backbone.View.extend({
-      urlRoot: serverUrl + Urls['campaign-list']() + '/general_information',
+      // urlRoot: serverUrl + Urls['campaign-list']() + '/general_information',
+      urlRoot: Urls['campaign-list']() + '/general_information',
       template: require('./templates/generalInformation.pug'),
       events: _.extend({
           'submit form': api.submitAction,
+          'click .onPreview': onPreviewAction,
         }, jsonActions.events),
 
       preinitialize() {
@@ -210,14 +235,16 @@ module.exports = {
                 },
         };
 
-        if (this.model.get('faq')) {
-          this.faqIndex = Object.keys(this.model.get('faq')).length - 1;
+        // if (this.model.get('faq')) {
+        if (this.model.faq) {
+          // this.faqIndex = Object.keys(this.model.get('faq')).length;
+          this.faqIndex = Object.keys(this.model.faq).length;
         } else {
           this.faqIndex = 0;
         }
 
-        if (this.model.get('additional_info')) {
-          this.additional_infoIndex = Object.keys(this.model.get('additional_info')).length - 1;
+        if (this.model.additional_info) {
+          this.additional_infoIndex = Object.keys(this.model.additional_info).length;
         } else {
           this.additional_infoIndex = 0;
         }
@@ -227,7 +254,8 @@ module.exports = {
               serverUrl: serverUrl,
               Urls: Urls,
               fields: this.fields,
-              values: this.model.toJSON(),
+              // values: this.model.toJSON(),
+              values: this.model,
             })
         );
         return this;
@@ -243,8 +271,9 @@ module.exports = {
         dragleave: 'globalDragleave',
         // 'change #video,.additional_video_link': 'appendHttpsIfNecessary',
         'change .press_link': 'appendHttpIfNecessary',
+        'click .onPreview': onPreviewAction,
       }, jsonActions.events),
-      urlRoot: serverUrl + Urls['campaign-list']() + '/media',
+      urlRoot: Urls['campaign-list']() + '/media',
 
       appendHttpsIfNecessary(e) {
         appendHttpIfNecessary(e, true);
@@ -317,14 +346,15 @@ module.exports = {
             placeholder: 'https://',
           },
         };
-        if (this.model.get('press')) {
-          this.pressIndex = Object.keys(this.model.get('press')).length - 1;
+        // if (this.model.get('press')) {
+        if (this.model.press) {
+          this.pressIndex = Object.keys(this.model.press).length;
         } else {
           this.pressIndex = 0;
         }
 
-        if (this.model.get('additional_video')) {
-          this.additional_videoIndex = Object.keys(this.model.get('additional_video')).length - 1;
+        if (this.model.additional_video) {
+          this.additional_videoIndex = Object.keys(this.model.additional_video).length;
         } else {
           this.additional_videoIndex = 0;
         }
@@ -334,21 +364,28 @@ module.exports = {
               serverUrl: serverUrl,
               Urls: Urls,
               fields: this.fields,
-              values: this.model.toJSON(),
+              // values: this.model.toJSON(),
+              values: this.model,
               dropzoneHelpers: dropzoneHelpers,
             })
         );
+
+        const Model = require('components/campaign/models.js');
 
         dropzoneHelpers.createImageDropzone(
           dropzone,
           'header_image',
           'campaign_headers', '',
           (data) => {
-            this.model.save({
-              header_image: data.file_id,
-            }, {
-              patch: true,
-            }).then((model) => {
+            // this.model.save({
+            // (new Model.model(this.model)).save({
+            //   header_image: data.file_id,
+            // }, {
+            //   patch: true,
+            // app.makeRequest(this.urlRoot, {header_image: data.file_id, type: 'PATCH'})
+            app.makeRequest(this.urlRoot +'/' + this.model.id, {header_image: data.file_id, type: 'PATCH'})
+            // }).then((model) => {
+            .then((model) => {
               console.log('image upload done', model);
             });
           }
@@ -358,40 +395,26 @@ module.exports = {
           'list_image',
           'campaign_lists', '',
           (data) => {
-            this.model.save({
-              list_image: data.file_id,
-            }, {
-              patch: true,
-            }).then((model) => {
-              console.log('image upload done', model);
-            });
+            app.makeRequest(this.urlRoot +'/' + this.model.id, {list_image: data.file_id, type: 'PATCH'})
           }
         );
         dropzoneHelpers.createImageDropzone(
           dropzone,
           'gallery',
-          'galleries/' + this.model.get('id'), '',
+          'galleries/' + this.model.id, '',
           (data) => {
-            // console.log(data);
             let $el = $('<div class="thumb-image-container" style="float: left; overflow: hidden; position: relative;">' +
               '<div class="delete-image-container" style="position: absolute;">' +
               '<a class="delete-image" href="#" data-id="' + data.image_id + '">' +
               '<i class="fa fa-times"></i>' +
               '</a>' +
               '</div>' +
-              // '<img class="img-fluid pull-left" src="' + data.url + '" style="width: 100px">' +
               '<img class="img-fluid pull-left" src="' + data.origin_url + '">' +
               '</div>'
               );
             $('.photo-scroll').append($el);
             $el.find('.delete-image').click(this.deleteImage.bind(this));
-            this.model.save({
-              gallery: data.folder_id,
-            }, {
-              patch: true,
-            }).done((model) => {
-              console.log('image upload done', model);
-            });
+            app.makeRequest(this.urlRoot +'/' + this.model.id, {gallery: data.folder_id, type: 'PATCH'})
           },
           );
         $('.delete-image').click(this.deleteImage.bind(this));
@@ -404,7 +427,8 @@ module.exports = {
           var id;
 
           if (provider == 'youtube') {
-            id = url.match(/https:\/\/(?:www.)?(\w*).com\/.*v=(\w*)/)[2];
+            // id = url.match(/https:\/\/(?:www.)?(\w*).com\/.*v=(\w*)/)[2];
+            id = url.match(/https:\/\/(?:www.)?(\w*).com\/.*v=([A-Za-z0-9_-]*)/)[2];
           } else if (provider == 'vimeo') {
             id = url.match(/https:\/\/(?:www.)?(\w*).com\/(\d*)/)[2];
           } else {
@@ -464,7 +488,8 @@ module.exports = {
         dragover: 'globalDragover',
         dragleave: 'globalDragleave',
       },
-      urlRoot: serverUrl + Urls['campaign-list']() + '/team_members',
+      // urlRoot: serverUrl + Urls['campaign-list']() + '/team_members',
+      urlRoot: Urls['campaign-list']() + '/team_members',
 
       globalDragover() {
         // this.$('.dropzone').css({ border: 'dashed 1px lightgray' });
@@ -500,73 +525,75 @@ module.exports = {
         let template = require('./templates/teamMemberAdd.pug');
         this.fields = {
           first_name: {
-                        type: 'string',
-                        label: 'First Name',
-                        placeholder: 'John',
-                        required: true,
-                      },
+            type: 'string',
+            label: 'First Name',
+            placeholder: 'John',
+            required: true,
+          },
           last_name: {
-                      type: 'string',
-                      label: 'Last Name',
-                      placeholder: 'Jordon',
-                      required: true,
-                    },
+            type: 'string',
+            label: 'Last Name',
+            placeholder: 'Jordon',
+            required: true,
+          },
           title: {
-                  type: 'string',
-                  label: 'Title',
-                  placeholder: 'CEO',
-                  required: true,
-                },
+            type: 'string',
+            label: 'Title',
+            placeholder: 'CEO',
+            required: true,
+          },
           email: {
-                  type: 'email',
-                  label: 'Email',
-                  placeholder: 'imboss@comanpy.com',
-                  required: true,
-                },
+            type: 'email',
+            label: 'Email',
+            placeholder: 'imboss@comanpy.com',
+            required: true,
+          },
           bio: {
-                type: 'text',
-                label: 'Bio',
-                placeholder: 'At least 150 characters and no more that 250 charactes',
-                required: true,
-              },
+            type: 'text',
+            label: 'Bio',
+            placeholder: 'At least 150 characters and no more that 250 charactes',
+            required: true,
+          },
           growup: {
-                    type: 'string',
-                    label: 'Where did you grow up',
-                    placeholder: 'City',
-                    required: false,
-                  },
+            type: 'string',
+            label: 'Where did you grow up',
+            placeholder: 'City',
+            required: false,
+          },
           state: {
-                  type: 'choice',
-                  required: true,
-                  label: '',
-                },
+            type: 'choice',
+            required: true,
+            label: '',
+          },
           college: {
-                    type: 'string',
-                    label: 'Where did you attend college',
-                    placeholder: 'Collage/University',
-                  },
+            type: 'string',
+            label: 'Where did you attend college',
+            placeholder: 'Collage/University',
+          },
           linkedin: {
-                      type: 'url',
-                      label: 'LinkedIn',
-                      placeholder: 'https://linkedin.com/',
-                    },
+            type: 'url',
+            label: 'LinkedIn',
+            placeholder: 'https://linkedin.com/',
+          },
           facebook: {
-                      type: 'url',
-                      label: 'Facebook',
-                      placeholder: 'https://facebook.com/',
-                    },
+            type: 'url',
+            label: 'Facebook',
+            placeholder: 'https://facebook.com/',
+          },
           photo: {
-                  type: 'dropbox',
-                  label: 'Profile Picture',
-                },
+            type: 'dropbox',
+            label: 'Profile Picture',
+          },
         };
 
         if (this.index != 'new') {
-          this.values = this.model.toJSON().members[this.index];
+          // this.values = this.model.toJSON().members[this.index];
+          this.values = this.model.members[this.index];
         } else {
           
           this.values = {
-            id: this.model.get('id'),
+            // id: this.model.get('id'),
+            id: this.model.id,
           };
         }
 
@@ -604,16 +631,9 @@ module.exports = {
       submit(e) {
         e.preventDefault();
         let json = $(e.target).serializeJSON();
-        let data = {
-          member: json,
-          index: this.index,
-        };
+        json.index = this.index;
 
-        if (validation.validate(this.fields, json, this)) {
-          api.submitAction.call(this, e, data);
-        } else {
-          $('.help-block').scrollTo(45);
-        }
+        api.submitAction.call(this, e, json);
       },
     }),
 
@@ -632,7 +652,8 @@ module.exports = {
 
     render() {
       let template = require('./templates/teamMembers.pug');
-      let values = this.model.toJSON();
+      // let values = this.model.toJSON();
+      let values = this.model;
 
       if (!Array.isArray(values.members)) {
         values.members = [];
@@ -654,7 +675,8 @@ module.exports = {
         let memberId = e.currentTarget.dataset.id;
 
         if (confirm('Are you sure you would like to delete this team member?')) {
-          app.makeRequest('/api/campaign/team_members/' + this.model.get('id') + '?index=' + memberId, 'DELETE').
+          // app.makeRequest('/api/campaign/team_members/' + this.model.get('id') + '?index=' + memberId, 'DELETE').
+          app.makeRequest('/api/campaign/team_members/' + this.model.id + '?index=' + memberId, 'DELETE').
               then((data) => {
                   this.model.attributes.members.splice(memberId, 1);
                   $(e.currentTarget).parent().remove();
@@ -672,15 +694,17 @@ module.exports = {
   }),
 
   specifics: Backbone.View.extend({
+      urlRoot: Urls['campaign-list']() + '/specifics',
       events: {
         'submit form': api.submitAction,
         'change input[name="security_type"]': 'updateSecurityType',
+        'focus #minimum_raise,#maximum_raise,#minimum_increment,#premoney_valuation,#price_per_share': 'clearZeroAmount',
         'change #minimum_raise,#maximum_raise,#minimum_increment,#premoney_valuation': 'formatNumber',
         'change #minimum_raise,#maximum_raise,#price_per_share,#premoney_valuation': 'calculateNumberOfShares',
         dragover: 'globalDragover',
         dragleave: 'globalDragleave',
+        'click .onPreview': onPreviewAction,
       },
-      urlRoot: serverUrl + Urls['campaign-list']() + '/specifics',
 
       globalDragover() {
         // this.$('.dropzone').css({ border: 'dashed 1px lightgray' });
@@ -706,6 +730,13 @@ module.exports = {
         var val = parseInt(valStr);
         if (val) {
           $(e.target).val(val.toLocaleString('en-US'));
+        }
+      },
+
+      clearZeroAmount: function (e) {
+        let val = parseInt(e.target.value);
+        if(val == 0 || val == NaN) {
+          e.target.value = '';
         }
       },
 
@@ -749,21 +780,27 @@ module.exports = {
                 serverUrl: serverUrl,
                 Urls: Urls,
                 fields: this.fields,
-                values: this.model.toJSON(),
+                // values: this.model.toJSON(),
+                values: this.model,
                 dropzoneHelpers: dropzoneHelpers,
               })
         );
+
+        const Model = require('components/campaign/models.js');
         dropzoneHelpers.createFileDropzone(
             dropzone,
             'investor_presentation',
             'investor_presentation', '',
             (data) => {
                 this.model.urlRoot = this.urlRoot;
-                this.model.save({
-                    investor_presentation: data.file_id,
-                  }, {
-                    patch: true,
-                  }).then((data) => {
+                // this.model.save({
+                  // (new Model.model(this.model)).save({
+                  //   investor_presentation: data.file_id,
+                  // }, {
+                  //   patch: true,
+                  app.makeRequest(this.urlRoot +'/' + this.model.id, {investor_presentation: data.file_id, type: 'PATCH'})
+                  // }).then((data) => {
+                  .then((data) => {
                     const extension = data.investor_presentation_data.name.split('.').pop();
                     const suffix = extension == 'pdf' ? '_pdf' : (['ppt', 'pptx'].indexOf(extension) != -1 ? '_pptx' : '_file');
                     $('.img-investor_presentation').attr('src', '/img/default' + suffix + '.png');
@@ -786,8 +823,10 @@ module.exports = {
   perks: Backbone.View.extend({
       events: _.extend({
           'submit form': api.submitAction,
+          'click .onPreview': onPreviewAction,
         }, jsonActions.events),
-      urlRoot: serverUrl + Urls['campaign-list']() + '/perks',
+      // urlRoot: serverUrl + Urls['campaign-list']() + '/perks',
+      urlRoot: Urls['campaign-list']() + '/perks',
 
       preinitialize() {
         // ToDo
@@ -826,7 +865,7 @@ module.exports = {
               },
             perk: {
                 type: 'string',
-                label: 'We will',
+                label: 'Describe the Perk',
                 placholder: 'Description',
                 values: [],
               },
@@ -836,7 +875,8 @@ module.exports = {
                 serverUrl: serverUrl,
                 Urls: Urls,
                 fields: this.fields,
-                values: this.model.toJSON(),
+                // values: this.model.toJSON(),
+                values: this.model,
               })
         );
         return this;

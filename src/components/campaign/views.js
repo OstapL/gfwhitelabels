@@ -40,12 +40,7 @@ module.exports = {
       'click .see-all-faq': 'seeAllFaq',
       'click .linkresponse': 'checkResponse',
       'submit .comment-form': 'submitComment',
-      // 'click .fancybox-nav': 'preventDefault'
     },
-    /*preventDefault(e) {
-      debugger
-      e.preventDefault();
-    },*/
     initialize(options) {
       $(document).off("scroll", this.onScrollListener);
       $(document).on("scroll", this.onScrollListener);
@@ -62,7 +57,6 @@ module.exports = {
     },
 
     smoothScroll(e) {
-      console.log('smooth...');
       e.preventDefault();
       $(document).off("scroll");
       $('.tabs-scroll .nav').find('.nav-link').removeClass('active');
@@ -227,6 +221,7 @@ module.exports = {
       }, 100);
       this.$el.find('.perks .col-lg-4 p').equalHeights();
       this.$el.find('.team .auto-height').equalHeights();
+      this.$el.find('.card-inverse p').equalHeights();
       this.$el.find('.modal').on('hidden.bs.modal', function(event) {
         $(event.currentTarget).find('iframe').attr('src', $(event.currentTarget).find('iframe').attr('src'));
       });
