@@ -25,7 +25,7 @@ let userModel = Backbone.Model.extend({
           success: (data) => {
             localStorage.setItem('user', JSON.stringify(this.toJSON()));
             app.trigger('userLoaded', this.toJSON());
-            app.routers.mainPage(); // TODO: FIX THAT !!!
+            //app.routers.mainPage(); // TODO: FIX THAT !!!
           },
           error: (model, xhr, status) => {
             localStorage.removeItem('token');
