@@ -4,7 +4,7 @@ include ../../../templates/mixins.pug
 include ../../../templates/menuRaiseFund.pug
 
 // - var values = {}
-
+- var fields = { business_plan: { label: 'Please upload your business plan'} };
 +breadcrumbs('Create Formc', '', [['home', '/',], [ 'current', page.get_absolute_url]])
 
 section.formc.use_of_proceeds.create-company-media.container
@@ -110,7 +110,19 @@ section.formc.use_of_proceeds.create-company-media.container
                     i.fa.fa-question-circle
                 td.w-25.text-lg-center.color-red.font-size-12 $150K
                 td.w-25.text-lg-center
-      .col-lg-12.text-lg-right
+      .col-lg-12
+        .border-bottom.m-b-3
+        h3.text-xs-center Business Plan
+      .col-lg-12
+        .text-lg-right.img-ppt
+          +fieldFileDropzone("business_plan", {
+            class1: 'col-lg-3',
+            class2: 'col-lg-9 p-l-1 p-r-1',
+            text: 'Drop your PDF or DOC here or click to upload',
+            icon: 'file',
+            default: '/img/default' + suffix + '.png',
+          })
+      .col-lg-12.text-lg-right.m-t-2
         //- a(href="#").btn.btn-primary.text-uppercase save
         button.btn.btn-primary.text-uppercase save
 
