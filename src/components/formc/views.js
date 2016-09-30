@@ -459,7 +459,7 @@ module.exports = {
                 template({
                     serverUrl: serverUrl,
                     Urls: Urls,
-                    // fields: this.fields,
+                    fields: this.fields,
                     // values: this.model.toJSON(),
                     values: this.model,
                 })
@@ -502,11 +502,11 @@ module.exports = {
         // this.fields['offering-expense'].type = 'row';
 
             if (this.model.faq) {
-                  // this.faqIndex = Object.keys(this.model.get('faq')).length;
-                  this.faqIndex = Object.keys(this.model.faq).length;
-                } else {
-                  this.faqIndex = 0;
-                }
+              // this.faqIndex = Object.keys(this.model.get('faq')).length;
+              this.faqIndex = Object.keys(this.model.faq).length;
+            } else {
+              this.faqIndex = 0;
+            }
             this.$el.html(
                 template({
                     serverUrl: serverUrl,

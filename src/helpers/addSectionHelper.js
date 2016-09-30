@@ -10,6 +10,21 @@ module.exports = {
       let sectionName = e.target.dataset.section;
       let template = require('templates/section.pug');
       this[sectionName + 'Index']++;
+      console.log(
+        template({
+          fields: this.fields,
+          name: sectionName,
+          attr: {
+            class1: '',
+            class2: '',
+            app: app,
+            type: this.fields[sectionName].type,
+            index: this[sectionName + 'Index'],
+          },
+          // values: this.model.toJSON(),
+          values: this.model,
+        })
+      );
       $('.' + sectionName).append(
           template({
             fields: this.fields,

@@ -3,10 +3,10 @@ include ../../../templates/mixins.pug
 include ../../../templates/menuRaiseFund.pug
 
 - 'use strict'
-- var fields = { specified_person: { label: 'Specified Person'} };
-- var fields = { relationshop_sssuer: { label: 'Relationshop to Issuer'} };
-- var fields = { nature: { label: 'Nature of Interest in Transation'} };
-- var fields = { amount: { label: 'Amount of Interest'} };
+// - var fields = { specified_person: { label: 'Specified Person'} };
+// - var fields = { relationshop_sssuer: { label: 'Relationshop to Issuer'} };
+// - var fields = { nature: { label: 'Nature of Interest in Transation'} };
+// - var fields = { amount: { label: 'Amount of Interest'} };
 
 
 
@@ -44,31 +44,39 @@ section.formc-team-members-director.container.m-b-85
             |  No
 
         .transactions-container
-          +fieldBlock("specified_person", '', {
-            class1: 'col-lg-3 col-md-12 text-md-left',
-            class2: 'col-lg-9 col-md-12',
-            type: 'text',
-            placeholder: 'Specified Person',
+          //- .delete-section-container
+          //-   a(href="#" data-section=name data-index=0).delete-section
+          //-     i.fa.fa-times
+          //-   +fieldBlock("specified_person", '', {
+          //-     class1: 'col-lg-3 col-md-12 text-md-left',
+          //-     class2: 'col-lg-9 col-md-12',
+          //-     type: 'text',
+          //-     placeholder: 'Specified Person',
+          //-     })
+          //-   +fieldBlock("relationshop_sssuer", '', {
+          //-     class1: 'col-lg-3 col-md-12 text-md-left',
+          //-     class2: 'col-lg-9 col-md-12',
+          //-     type: 'text',
+          //-     placeholder: 'Relationshop to Issuer',
+          //-     })
+          //-   +fieldBlock("nature", '', {
+          //-     class1: 'col-lg-3 col-md-12 text-md-left',
+          //-     class2: 'col-lg-9 col-md-12',
+          //-     type: 'text',
+          //-     placeholder: 'Nature of Interest in Transation',
+          //-     })
+          //-   +fieldBlock("amount", '', {
+          //-     class1: 'col-lg-3 col-md-12 text-md-left',
+          //-     class2: 'col-lg-9 col-md-12',
+          //-     type: 'text',
+          //-     placeholder: 'Amount of Interest',
+          //-     })
+          +fieldBlock("transactions", '', {
+            class1: 'col-lg-3 col-md-3',
+            class2: 'col-lg-9 col-md-9',
+            type: 'json',
             })
-          +fieldBlock("relationshop_sssuer", '', {
-            class1: 'col-lg-3 col-md-12 text-md-left',
-            class2: 'col-lg-9 col-md-12',
-            type: 'text',
-            placeholder: 'Relationshop to Issuer',
-            })
-          +fieldBlock("nature", '', {
-            class1: 'col-lg-3 col-md-12 text-md-left',
-            class2: 'col-lg-9 col-md-12',
-            type: 'text',
-            placeholder: 'Nature of Interest in Transation',
-            })
-          +fieldBlock("amount", '', {
-            class1: 'col-lg-3 col-md-12 text-md-left',
-            class2: 'col-lg-9 col-md-12',
-            type: 'text',
-            placeholder: 'Amount of Interest',
-            })
-          .row.transactions
+          //- .row.transactions
           .row.add-link
             .col-lg-9.offset-1.pull-right
               a(href="#" data-section="transactions").link-2.add-section
