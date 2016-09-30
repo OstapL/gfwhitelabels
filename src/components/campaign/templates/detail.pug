@@ -284,12 +284,15 @@ section
                   each v,k in values.press
                     .col-lg-4.articles_press
                       a(href=v.link target="_blank")
-                        .card.card-inverse
+                        .card.card-inverse.m-b-2
                           .card-title
                             i.fa.fa-link
                             p.card-text #{ v.headline }
                             .pos-bottom
                               .links.d-inline-block.card-text #{ formatHelper.getWebsiteUrl(v.link) }
+                .row.m-b-3
+                  .col-lg-12.text-xs-center
+                    a(href="#").link-4 See All Articles and Press
   
   else
       //
