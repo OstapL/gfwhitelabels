@@ -26,11 +26,12 @@
 //-           href="#"
 //-           class="list-group-item list-group-item-action disabled" 
 //-         ) #{ name }
-mixin getCompanyUrl(campaign, currentSection, currentStep, step, name)
-    - let prefix = '/' + currentSection + '/';
+mixin getCompanyUrl(campaign, section, currentStep, step, name)
+    - let prefix = '/' + section + '/';
+          //- href=prefix + step + "/" + campaign.id 
     if campaign.id || currentStep == step
         a(
-          href=prefix + step + "/" + campaign.id 
+          href=(section == 'formc' ? ('/' + section + '/' + campaign.id + '/' + step ) : ('/' + section + '/' + step + '/' + campaign.id))
           class="list-group-item list-group-item-action " + (currentStep == step ? 'active' : '')
         ) #{ name }
             if currentStep == step
@@ -41,11 +42,11 @@ mixin getCompanyUrl(campaign, currentSection, currentStep, step, name)
           class="list-group-item list-group-item-action disabled" 
         ) #{ name }
 
-mixin getRiskFactorsItem(campaign, currentSection, currentStep, step, name)
-  - let prefix = '/' + currentSection + '/';
+mixin getRiskFactorsItem(campaign, section, currentStep, step, name)
+  - let prefix = '/' + section + '/';
   if campaign.id || currentStep == step
       a(
-        href=prefix + step + "/" + campaign.id 
+        href=prefix + campaign.id + "/" + step
         class="list-group-item list-group-item-action " + (currentStep == step ? 'active' : '')
       ) #{ name }
           if currentStep == step

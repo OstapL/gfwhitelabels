@@ -113,7 +113,17 @@ section.formc.use_of_proceeds.create-company-media.container
       .col-lg-12
         .border-bottom.m-b-3
         h3.text-xs-center Business Plan
-      .col-lg-12.create-perks
+
+      .col-lg-12.form-group.form-section.m-t-2.m-b-2
+        .radio-input.m-b-2
+          label 
+            input(type="radio" name="doc_type" value="describe" checked="checked")
+            |  Describe
+          label 
+            input(type="radio" name="doc_type" value="doc")
+            |  Upload PDF/DOC file
+
+      .col-lg-12.create-perks(style="display:none;").doc
         .text-lg-right.img-ppt
           +fieldFileDropzone("business_plan", {
             class1: 'col-lg-3',
@@ -122,6 +132,11 @@ section.formc.use_of_proceeds.create-company-media.container
             icon: 'file',
             default: '/img/default' + suffix + '.png',
           })
+      .col-lg-12.create-perks.describe
+        .text-lg-right
+          .col-lg-3 Describe your business plan
+          .col-lg-9
+            textarea(style="width:100%; ")
       .col-lg-12.text-lg-right.m-t-2
         //- a(href="#").btn.btn-primary.text-uppercase save
         button.btn.btn-primary.text-uppercase save
