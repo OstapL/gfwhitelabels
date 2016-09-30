@@ -8,25 +8,25 @@ include ../../../templates/menuRaiseFund.pug
 
 
 
-- var fields = { creditor: { label: 'Creditor'} };
-- var fields = { outstanding: { label: 'Outstanding Amount'} };
-- var fields = { rate: { label: 'Interest Rate'} };
-- var fields = { date: { label: 'Maturity Date'} };
-- var fields = { terms: { label: 'Other Material Terms'} };
-- var fields = { date_offering: { label: 'Date of the Offering'} };
-- var fields = { exemption: { label: 'Exemption Relied Upon'} };
-- var fields = { securities: { label: 'Securities Offered'} };
-- var fields = { amount: { label: 'Amount Sold'} };
-- var fields = { use: { label: 'Use of Proceeds'} };
-- var fields = { limited: { label: 'How may the rights of the securities being offered be materially limited, diluted or qualified by the rights of any other class of security identified above?'} };
-- var fields = { offered_modified: { label: 'How may the terms of the securities being offered be modified?'} };
-- var fields = { issuer: { label: 'Are there any differences not reflected above between the securities being offered and each other class of security of the issuer?'} };
-- var fields = { could: { label: 'How could the exercise of rights held by the principal shareholders affect the purchasers of the securities being offered?'} };
-- var fields = { security_type: { label: 'Security Type'} };
-- var fields = { description_security_type: { label: 'Description of Security Type'} };
-- var fields = { amount_authorized: { label: 'Amount Authorized'} };
-- var fields = { amount_outstanding: { label: 'Amount Outstanding'} };
-- var fields = { specify_other_rights: { label: 'Specify Other Rights'} };
+// - var fields = { creditor: { label: 'Creditor'} };
+// - var fields = { outstanding: { label: 'Outstanding Amount'} };
+// - var fields = { rate: { label: 'Interest Rate'} };
+// - var fields = { date: { label: 'Maturity Date'} };
+// - var fields = { terms: { label: 'Other Material Terms'} };
+// - var fields = { date_offering: { label: 'Date of the Offering'} };
+// - var fields = { exemption: { label: 'Exemption Relied Upon'} };
+// - var fields = { securities: { label: 'Securities Offered'} };
+// - var fields = { amount: { label: 'Amount Sold'} };
+// - var fields = { use: { label: 'Use of Proceeds'} };
+// - var fields = { limited: { label: 'How may the rights of the securities being offered be materially limited, diluted or qualified by the rights of any other class of security identified above?'} };
+// - var fields = { offered_modified: { label: 'How may the terms of the securities being offered be modified?'} };
+// - var fields = { issuer: { label: 'Are there any differences not reflected above between the securities being offered and each other class of security of the issuer?'} };
+// - var fields = { could: { label: 'How could the exercise of rights held by the principal shareholders affect the purchasers of the securities being offered?'} };
+// - var fields = { security_type: { label: 'Security Type'} };
+// - var fields = { description_security_type: { label: 'Description of Security Type'} };
+// - var fields = { amount_authorized: { label: 'Amount Authorized'} };
+// - var fields = { amount_outstanding: { label: 'Amount Outstanding'} };
+// - var fields = { specify_other_rights: { label: 'Specify Other Rights'} };
 +breadcrumbs('form c', '', 
     [
         ['Home', '/'],
@@ -54,39 +54,44 @@ section.formc-team-members-director.container.m-b-85
             label 
               input(type="radio")
               |  No
-        +fieldBlock("creditor", '', {
-        class1: 'col-lg-3 col-md-12 text-md-left text-xl-right text-xl-left',
-        class2: 'col-lg-9 col-md-12',
-        type: 'text',
-        placeholder: 'Creditor',
-        })
-        +fieldBlock("outstanding", '', {
-        class1: 'col-lg-3 col-md-12 p-t-0 text-md-left text-xl-right text-xl-left',
-        class2: 'col-lg-9 col-md-12',
-        type: 'text',
-        placeholder: 'Outstanding Amount',
-        })
-        +fieldBlock("rate", '', {
-        class1: 'col-lg-3 col-md-12  text-md-left text-xl-right text-xl-left',
-        class2: 'col-lg-9 col-md-12',
-        type: 'text',
-        placeholder: 'Interest Rate',
-        })
-        +fieldBlock("date", '', {
-        class1: 'col-lg-3 col-md-12  text-md-left text-xl-right text-xl-left',
-        class2: 'col-lg-9 col-md-12',
-        type: 'text',
-        placeholder: 'Maturity Date',
-        })
-        +fieldBlock("terms", '', {
-        class1: 'col-lg-3 col-md-12 p-t-0 text-md-left text-xl-right text-xl-left',
-        class2: 'col-lg-9 col-md-12',
-        type: 'text',
-        placeholder: 'Other Material Terms',
-        })
+        +fieldBlock("loans", '', {
+            class1: 'col-lg-3 col-md-3',
+            class2: 'col-lg-9 col-md-9',
+            type: 'json',
+            })
+        //- +fieldBlock("creditor", '', {
+        //- class1: 'col-lg-3 col-md-12 text-md-left text-xl-right text-xl-left',
+        //- class2: 'col-lg-9 col-md-12',
+        //- type: 'text',
+        //- placeholder: 'Creditor',
+        //- })
+        //- +fieldBlock("outstanding", '', {
+        //- class1: 'col-lg-3 col-md-12 p-t-0 text-md-left text-xl-right text-xl-left',
+        //- class2: 'col-lg-9 col-md-12',
+        //- type: 'text',
+        //- placeholder: 'Outstanding Amount',
+        //- })
+        //- +fieldBlock("rate", '', {
+        //- class1: 'col-lg-3 col-md-12  text-md-left text-xl-right text-xl-left',
+        //- class2: 'col-lg-9 col-md-12',
+        //- type: 'text',
+        //- placeholder: 'Interest Rate',
+        //- })
+        //- +fieldBlock("date", '', {
+        //- class1: 'col-lg-3 col-md-12  text-md-left text-xl-right text-xl-left',
+        //- class2: 'col-lg-9 col-md-12',
+        //- type: 'text',
+        //- placeholder: 'Maturity Date',
+        //- })
+        //- +fieldBlock("terms", '', {
+        //- class1: 'col-lg-3 col-md-12 p-t-0 text-md-left text-xl-right text-xl-left',
+        //- class2: 'col-lg-9 col-md-12',
+        //- type: 'text',
+        //- placeholder: 'Other Material Terms',
+        //- })
         .row.add-link
             .col-lg-9.offset-1.pull-right
-                a(href="#" data-section="additional_info").link-2.add-section
+                a(href="#" data-section="loans").link-2.add-section
                     i.fa.fa-plus
                     |  Add Another Business Loans or Debt
         .col-lg-12.m-t-3
@@ -104,38 +109,43 @@ section.formc-team-members-director.container.m-b-85
             .date-input.required.col-lg-12
             
                 .col-date.form-group.m-b-0
-                    +fieldBlock("date_offering", '', {
-                      class1: 'col-lg-3 col-md-3 ',
-                      class2: 'col-lg-9 col-md-8 pull-md-right',
+                    +fieldBlock("exempt_offerings", '', {
+                        class1: 'col-lg-3 col-md-3',
+                        class2: 'col-lg-9 col-md-9',
+                        type: 'json',
                     })
+                    //- +fieldBlock("date_offering", '', {
+                    //-   class1: 'col-lg-3 col-md-3 ',
+                    //-   class2: 'col-lg-9 col-md-8 pull-md-right',
+                    //- })
 
-        +fieldBlock("exemption", '', {
-        class1: 'col-lg-3 col-md-12  text-md-left text-xl-right text-xl-left',
-        class2: 'col-lg-9 col-md-12',
-        type: 'text',
-        placeholder: 'Exemption Relied Upon',
-        })
-        +fieldBlock("securities", '', {
-        class1: 'col-lg-3 col-md-12  text-md-left text-xl-right text-xl-left',
-        class2: 'col-lg-9 col-md-12',
-        type: 'text',
-        placeholder: 'Securities Offered',
-        })
-        +fieldBlock("amount", '', {
-        class1: 'col-lg-3 col-md-12  text-md-left text-xl-right text-xl-left',
-        class2: 'col-lg-9 col-md-12',
-        type: 'text',
-        placeholder: 'Amount Sold',
-        })
-        +fieldBlock("use", '', {
-        class1: 'col-lg-3 col-md-12  text-md-left text-xl-right text-xl-left',
-        class2: 'col-lg-9 col-md-12',
-        type: 'text',
-        placeholder: 'Use of Proceeds',
-        })
+                    //- +fieldBlock("exemption", '', {
+                    //- class1: 'col-lg-3 col-md-12  text-md-left text-xl-right text-xl-left',
+                    //- class2: 'col-lg-9 col-md-12',
+                    //- type: 'text',
+                    //- placeholder: 'Exemption Relied Upon',
+                    //- })
+                    //- +fieldBlock("securities", '', {
+                    //- class1: 'col-lg-3 col-md-12  text-md-left text-xl-right text-xl-left',
+                    //- class2: 'col-lg-9 col-md-12',
+                    //- type: 'text',
+                    //- placeholder: 'Securities Offered',
+                    //- })
+                    //- +fieldBlock("amount", '', {
+                    //- class1: 'col-lg-3 col-md-12  text-md-left text-xl-right text-xl-left',
+                    //- class2: 'col-lg-9 col-md-12',
+                    //- type: 'text',
+                    //- placeholder: 'Amount Sold',
+                    //- })
+                    //- +fieldBlock("use", '', {
+                    //- class1: 'col-lg-3 col-md-12  text-md-left text-xl-right text-xl-left',
+                    //- class2: 'col-lg-9 col-md-12',
+                    //- type: 'text',
+                    //- placeholder: 'Use of Proceeds',
+                    //- })
         .row.add-link
             .col-lg-9.offset-1.pull-right
-                a(href="#" data-section="additional_info").link-2.add-section
+                a(href="#" data-section="exempt_offerings").link-2.add-section
                     i.fa.fa-plus
                     |  Add Another Exemption Offering
         .border-bottom.m-t-3.m-b-3
