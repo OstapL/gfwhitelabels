@@ -31,34 +31,34 @@ section#home(style="background-image: url(" + (values.header_image_data ? values
     .container
       .top-info-wrap
         .top-info-wrap-item
-          .col-lg-3.p-r-0
+          .col-lg-3.p-r-0.text-xs-center.text-lg-left
             p Type of Security
             h2.font-weight-bold #{ values.get_security_type_display }
           if values.security_type == 0
-            .col-lg-2.p-r-0
+            .col-lg-2.p-r-0.text-xs-center.text-lg-left
               p Pre-Money Valuation
               h2.font-weight-bold #{ formatHelper.formatPrice(values.premoney_valuation) }
           else
-            .col-lg-2.p-r-0
+            .col-lg-2.p-r-0.text-xs-center.text-lg-left
               p Percentage Reveue
               h2.font-weight-bold #{ values.percentage_revenue }%
-          .col-lg-2.p-r-0
+          .col-lg-2.p-r-0.text-xs-center.text-lg-left
             p Days Left
             h2.font-weight-bold #{ values.length_days }
-          .col-lg-4.pull-right
-            a(href=Urls['campaign-invest'](values.id)).btn.btn-primary.text-uppercase.pull-right Invest
+          .col-lg-4.col-md-12.col-xs-12.pull-lg-right.text-xs-center
+            a(href=Urls['campaign-invest'](values.id)).btn.btn-primary.text-uppercase.pull-lg-right Invest
 
 section.campaigndetail
   .container
-    .col-lg-6
-      h1 #{ values.company.tagline }
+    .col-lg-6.p-md-0
+      h1.text-xs-center.text-lg-left #{ values.company.tagline }
       .row.mt20
-        .col-lg-4
+        .col-lg-4.col-xs-6
           //- a(href="").link-1
           .sity-detail
             i.fa.fa-map-marker
             |  #{ values.company.city }, #{ values.company.state }
-        .col-lg-6
+        .col-lg-6.col-xs-6
           .date-detail
             i.fa.fa-calendar-check-o
             |  Founded #{ formatHelper.formatDate(values.company.founding_date) }
@@ -90,7 +90,7 @@ section.campaigndetail
           p Target
           //- h2.font-weight-bold #{ campaign.minimum_raise } - #{ campaign.maximum_raise }
           h2.font-weight-bold #{ formatHelper.formatPrice(values.minimum_raise) } - #{ formatHelper.formatPrice(values.maximum_raise) }
-        .row.col-lg-4.pull-right
+        .row.col-lg-4.pull-lg-right
           p Minimum Investment
           //- h2.font-weight-bold #{ values.minimum_increment }
           h2.font-weight-bold #{ formatHelper.formatPrice(values.minimum_increment) }
@@ -143,11 +143,11 @@ section
   section.about-detail.border-bottom
     .container
       .col-lg-12
-        h2#about.dosis.text-uppercase.text-lg-center.green-heading About #{ values.company.name }
+        h2#about.dosis.text-uppercase.text-lg-center.text-xs-center.green-heading About #{ values.company.name }
         p #{ values.company.description }
 
         //- h3.our.text-lg-center Why You Should Invest
-        h2.dosis.our.text-uppercase.text-lg-center.green-heading Why You Should Invest
+        h2.dosis.our.text-uppercase.text-lg-center.text-xs-center.green-heading Why You Should Invest
         p #{ values.pitch }
 
         //- if values.additional_info
@@ -231,34 +231,34 @@ section
 
       .col-lg-12
         //- h3.our.text-lg-center Our Edge
-        h2.dosis.our.text-uppercase.text-lg-center.green-heading How We Intend to Make Money
+        h2.dosis.our.text-uppercase.text-lg-center.text-xs-center.green-heading How We Intend to Make Money
         p #{ values.intended_use_of_proceeds }
 
         //- h3.text-lg-center Why We are Raising Capital, and What We’ll Do with It
-        h2.dosis.text-uppercase.text-lg-center.green-heading Why We are Raising Capital, and What We’ll Do with It
+        h2.dosis.text-uppercase.text-lg-center.text-xs-center.green-heading Why We are Raising Capital, and What We’ll Do with It
         p #{ values.business_model }
 
       if values.additional_info
         .col-lg-12
           each v,k in values.additional_info
             //- h3.our.text-lg-center #{ v.title }
-            h2.dosis.our.text-uppercase.text-lg-center.green-heading #{ v.title }
+            h2.dosis.our.text-uppercase.text-lg-center.text-xs-center.green-heading #{ v.title }
             p #{ v.body }
    
   if values.members
       section#members.border-bottom
         .container
           if values.members && values.members instanceof Array && values.members.length > 0
-            h2#team.dosis.text-uppercase.text-lg-center.col-lg-12.green-heading Team
+            h2#team.dosis.text-uppercase.text-lg-center.text-xs-center.col-lg-12.green-heading Team
             .row
               .col-lg-12.text-center-flex
                 each v,k in values.members
                     .col-lg-4.team
                       a(href="#")
-                        .card.text-lg-center
+                        .card.text-lg-center.text-xs-center
                           img(src=v.photo alt="").img-circle
                           .card-block
-                            h4.card-title.text-uppercase #{v.first_name} #{v.last_name }
+                            h4.text-xs-center.card-title.text-uppercase #{v.first_name} #{v.last_name }
                             p.card-text
                                 small.text-muted #{v.title }
                             
@@ -268,7 +268,7 @@ section
                               i.fa.fa-facebook
                             p.card-text.text-justify.auto-height #{v.bio}
                             .d-block.text-lg-left.cite_education
-                              span.text-lg-left.color-grey
+                              span.text-lg-left.text-xs-left.pull-left.color-grey
                                 i.fa.fa-home.p-l-0
                                 |  #{v.growup}, #{v.state}
                               //- a(href="#").link-1.pull-right
@@ -276,7 +276,7 @@ section
                                 i.fa.fa-graduation-cap
                                 |  #{v.college}
           if values.press && Object.keys(values.press).length > 0 && values.press[0].headline != ''
-            h2.dosis.text-uppercase.text-lg-center.green-heading Articles and Press
+            h2.dosis.text-uppercase.text-lg-center.text-xs-center.green-heading Articles and Press
             .row
               .col-lg-12.text-center-flex
                 .articles_press
@@ -359,19 +359,19 @@ section
   section.document.border-bottom
     .container
       .row
-        h2#documents.col-lg-12.dosis.text-uppercase.text-lg-center.green-heading Documents
+        h2#documents.col-lg-12.dosis.text-uppercase.text-lg-center.text-xs-center.green-heading Documents
         .col-lg-8.offset-lg-2
-          .col-lg-4
+          .col-lg-4.text-xs-center
             p Official filing on SEC.gov
             a(href="" target="_blank")
               img(src="/img/lrg_US_Department_of_State35.gif").img-document.d-inline-block
               h3.d-inline-block  Form C
-          .col-lg-4
+          .col-lg-4.text-xs-center
             p Company documents
             a(href="" target="_blank")
               i.fa.fa-file-pdf-o.d-inline-block
               h3.d-inline-block Financials
-          .col-lg-4.row
+          .col-lg-4.row.text-xs-center
             p Company documents
             a(href=(values.investor_presentation ? values.investor_presentation_data.url : '') target="_blank")
               i.fa.fa-file-powerpoint-o.d-inline-block
@@ -379,24 +379,24 @@ section
   section.overview
     .container
       .row
-        h2#overview.col-lg-12.dosis.text-uppercase.text-lg-center.green-heading overview and terms
+        h2#overview.col-lg-12.dosis.text-uppercase.text-lg-center.text-xs-center.green-heading overview and terms
         //- h3.col-lg-12.text-lg-center Fundraising Description
-        h3.text-uppercase.text-lg-center.green-heading Fundraising Description
-        .col-lg-8.offset-lg-2.fundraising
+        h3.text-uppercase.text-lg-center.text-xs-center.green-heading Fundraising Description
+        .col-lg-8.offset-lg-2.fundraising.text-xs-center
           .jumbotron.jumbotron-fluid
             .container
               if values.security_type == 0
                 .row
-                  .col-lg-5.p-l-3
+                  .col-lg-5.p-l-3.col-sm-12.p-md-0
                     p Type of Security
                     h2.font-weight-bold #{ values.get_security_type_display }
                   //- .col-lg-3.p-l-3
                   //-   p Target Minimum Raise Amonunt
                   //-   h2.font-weight-bold #{ formatHelper.formatPrice(values.minimum_raise) }
-                  .col-lg-3.p-l-1
+                  .col-lg-3.p-l-1.col-sm-12.p-md-0
                     p Minimum Investment
                     h2.font-weight-bold #{ formatHelper.formatPrice(values.minimum_increment) }
-                  .col-lg-4.p-l-3
+                  .col-lg-4.p-l-3.col-sm-12.p-md-0
                     p Minimum # of Shares
                     //- h2.font-weight-bold #{ formatHelper.formatNumber(values.min_number_of_shares) }
                     h2.font-weight-bold #{ (Math.round(values.minimum_raise.replace(/,/g, '') / values.price_per_share)).toLocaleString('en-US') }
@@ -405,16 +405,16 @@ section
                   //-   p Minimum Equity Offered
                   //-   h2.font-weight-bold #{ values.min_number_of_shares }
                 .row
-                  .col-lg-5.p-l-3
+                  .col-lg-5.p-l-3.col-sm-12.p-md-0
                     p Pre-Money Valuation
                     h2.font-weight-bold #{ formatHelper.formatPrice(values.premoney_valuation) }
                   //- .col-lg-3.p-l-3
                   //-   p Target Maximum Raise Amount
                   //-   h2.font-weight-bold #{ formatHelper.formatPrice(values.maximum_raise) }
-                  .col-lg-3.p-l-1
+                  .col-lg-3.p-l-1.col-sm-12.p-md-0
                     p Price per Share
                     h2.font-weight-bold #{ formatHelper.formatPrice(values.price_per_share) }
-                  .col-lg-4.p-l-3
+                  .col-lg-4.p-l-3.col-sm-12.p-md-0
                     p Maximum # of Shares
                     h2.font-weight-bold #{ (Math.round(values.maximum_raise.replace(/,/g, '') / values.price_per_share)).toLocaleString('en-US') }
                   //- .col-lg-3.p-l-3
@@ -422,23 +422,23 @@ section
                   //-   h2.font-weight-bold #{ formatHelper.max_number_of_shares }
               else
                 .row
-                  .col-lg-4.p-l-3
+                  .col-lg-4.p-l-3.p-md-0
                     p Type of Security
                     h2.font-weight-bold #{ values.get_security_type_display }
-                  .col-lg-4.p-l-0
+                  .col-lg-4.p-l-0.p-md-0
                     p Target Minimum Raise Amonunt
                     h2.font-weight-bold #{ formatHelper.formatPrice(values.minimum_raise) }
-                  .col-lg-4.p-l-3
+                  .col-lg-4.p-l-3.p-md-0
                     p Minimum Investment
                     h2.font-weight-bold #{ formatHelper.formatPrice(values.minimum_increment) }
                 .row
-                  .col-lg-4.p-l-3
+                  .col-lg-4.p-l-3.p-md-0
                     p Percentage Revenue
                     h2.font-weight-bold #{ values.percentage_revenue }%
-                  .col-lg-4.p-l-0
+                  .col-lg-4.p-l-0.p-md-0
                     p Target Maximum Raise Amount
                     h2.font-weight-bold #{ formatHelper.formatPrice(values.maximum_raise) }
-                  .col-lg-4.p-l-3
+                  .col-lg-4.p-l-3.p-md-0
                     p Cap
                     h2.font-weight-bold #{ values.cap }X
               //- .row
@@ -494,7 +494,7 @@ section
     if values.perks && Object.keys(values.perks).length > 0 && values.perks[0].perk != ''
       //- h3.col-lg-12.text-lg-center Perks
       .container
-        h3.text-uppercase.text-lg-center.green-heading Perks
+        h3.text-uppercase.text-lg-center.text-xs-center.green-heading Perks
         .row
           .col-lg-12.text-center-flex
             each v,k in values.perks
@@ -508,7 +508,7 @@ section
 
   section.investors-all.border-bottom(style="display: none")
     .container
-      h3.col-lg-12.text-lg-center Investors
+      h3.col-lg-12.text-lg-center.text-xs-center Investors
       .col-lg-12.text-center-flex
         .col-lg-3.text-lg-center
           a(href="")
@@ -578,7 +578,7 @@ section
           a(href="" style="display: none").link-4 See All Investors
   section.risks.border-bottom
     .container
-      h2#risks.col-lg-12.dosis.text-uppercase.text-lg-center.green-heading Risks
+      h2#risks.col-lg-12.dosis.text-uppercase.text-lg-center.text-xs-center.green-heading Risks
       .col-lg-8.offset-lg-2
         .accordion(role="tablist" aria-multiselectable="true")
           .panel.panel-default
@@ -630,7 +630,7 @@ section
   section.faq
     if values.faq && Object.keys(values.faq).length > 0 && values.faq[0].question != '' 
       .container
-        h2#faq.col-lg-12.dosis.text-uppercase.text-lg-center.green-heading FAQ
+        h2#faq.col-lg-12.dosis.text-uppercase.text-lg-center.text-xs-center.green-heading FAQ
         .col-lg-8.offset-lg-2
           .accordion(role="tablist" aria-multiselectable="true")
             - var counter = 0
@@ -691,7 +691,7 @@ section
     
   section.ask.border-bottom
     .container
-      h2#ask.col-lg-12.dosis.text-uppercase.text-lg-center.green-heading ASK A QUESTION
+      h2#ask.col-lg-12.dosis.text-uppercase.text-lg-center.text-xs-center.green-heading ASK A QUESTION
 
       .col-lg-8.offset-lg-2.pt50.comments
         #comment_null
@@ -738,7 +738,7 @@ section
                     i.fa.fa-thumbs-up
   section.like
     .container
-      .col-lg-12.text-lg-center
+      .col-lg-12.text-lg-center.text-xs-center
         h2
           i.fa.fa-thumbs-up
           |  I’d Like to Invest in #{ values.company.name }!

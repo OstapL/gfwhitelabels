@@ -52,7 +52,7 @@ module.exports = {
     // if view already have some data - extend that info
     if(this.hasOwnProperty('model')) {
       _.extend(this.model, data);
-      data = this.model;
+      data = Object.assign({}, this.model)
     }
 
     /*
