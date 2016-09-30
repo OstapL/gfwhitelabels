@@ -4,7 +4,9 @@ include ../../../templates/mixins.pug
 include ../../../templates/menuRaiseFund.pug
 
 // - var values = {}
+- var fields = { describe: { label: 'Describe your business plan'} };
 - var fields = { business_plan: { label: 'Please upload your business plan'} };
+
 +breadcrumbs('Create Formc', '', [['home', '/',], [ 'current', page.get_absolute_url]])
 
 section.formc.use_of_proceeds.create-company-media.container
@@ -114,8 +116,9 @@ section.formc.use_of_proceeds.create-company-media.container
         .border-bottom.m-b-3
         h3.text-xs-center Business Plan
 
-      .col-lg-12.form-group.form-section.m-t-2.m-b-2
-        .radio-input.m-b-2
+      .col-lg-12.form-group.form-section.m-t-1.m-b-1
+        b Describe your business plan or upload it in the PDF/DOC file
+        .radio-input.m-b-1.m-t-1
           label 
             input(type="radio" name="doc_type" value="describe" checked="checked")
             |  Describe
@@ -132,11 +135,14 @@ section.formc.use_of_proceeds.create-company-media.container
             icon: 'file',
             default: '/img/default' + suffix + '.png',
           })
-      .col-lg-12.create-perks.describe
-        .text-lg-right
-          .col-lg-3 Describe your business plan
-          .col-lg-9
-            textarea(style="width:100%; ")
+      .col-lg-12.describe
+        +fieldBlock("describe", '', {
+          class1: 'col-lg-3 col-md-12 text-md-left p-t-0 m-b-0',
+          class2: 'col-lg-9 col-md-12',
+          type: 'textarea',
+          placeholder: 'Describe your business plan',
+          })
+      
       .col-lg-12.text-lg-right.m-t-2
         //- a(href="#").btn.btn-primary.text-uppercase save
         button.btn.btn-primary.text-uppercase save
