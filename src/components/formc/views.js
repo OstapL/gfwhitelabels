@@ -476,9 +476,20 @@ module.exports = {
 
         events: _.extend({
             'submit form': 'submit',
+            'change input[type=radio][name=doc_type]': 'changeDocType',
         }, addSectionHelper.events, menuHelper.events),
         // }, menuHelper.events),
         
+        changeDocType(e) {
+            if (e.target.value == 'describe') {
+                this.$('.describe').show();
+                this.$('.doc').hide();
+            } else if (e.target.value == 'doc') {
+                this.$('.describe').hide();
+                this.$('.doc').show();
+            }
+        },
+
         submit(e) {
             e.preventDefault();
             e.stopPropagation();
