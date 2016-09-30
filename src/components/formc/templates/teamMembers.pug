@@ -43,13 +43,13 @@ section.create-company-team-add.container
                     type: 'text',
                 })
             .col-lg-12.text-lg-center.text-md-center.text-sm-center.text-xs-center.m-t-2.m-b-2
-                a(href='/formc/team-members/' + values.id + '/add/director/new').btn.text-uppercase.m-r-3 
+                a(href='/formc/' + values.id + '/team-members/add/director/new').btn.text-uppercase.m-r-3 
                     i.fa.fa-plus
                     |  ADD DIRECTOR 
-                a(href='/formc/team-members/' + values.id + '/add/officer/new').btn.text-uppercase 
+                a(href='/formc/' + values.id + '/team-members/add/officer/new').btn.text-uppercase 
                     i.fa.fa-plus
                     |  ADD OFFICER
-                a(href='/formc/team-members/' + values.id + '/add/holder/new').btn.text-uppercase.m-t-2 
+                a(href='/formc/' + values.id + '/team-members/add/holder/new').btn.text-uppercase.m-t-2 
                     i.fa.fa-plus
                     |  ADD 20% VOTING SHAREHOLDER
             
@@ -59,13 +59,13 @@ section.create-company-team-add.container
                 each v,k in values.members
                     .col-lg-3.m-t-2.p-r-0.p-l-0.m-l-2.m-r-2
                         .team-add-item.text-lg-center.text-xs-center
-                            a(href="/formc/team-members/" + values.id + "/add/" + v.type + '/' + counter).link-1
+                            a(href="/formc/" + values.id + "/team-members/add/" + v.type + '/' + counter).link-1
                                 img(src=v.photo alt=v.first_name).img-circle
                             a(href="#" data-id=counter style="position: absolute").link-1.delete-member.pull-right
                                 i.fa.fa-times
                             p.name.text-uppercase #{v.first_name} #{v.last_name}
                             p.small #{ v.title }
-                            a(href="/formc/team-members/" + values.id + "/add/" + v.type + '/' + counter).link-1
+                            a(href="/formc/" + values.id + "/team-members/add/" + v.type + '/' + counter).link-1
                                 i.fa.fa-pencil-square-o
                     - counter ++
             .col-lg-12
@@ -107,7 +107,7 @@ section.create-company-team-add.container
                         //-     td.text-xs-center.color-red Please Identify
 
             div(style="display: " +  (values.members.length >= 1 ? 'block' : 'none')).col-lg-12.pull-lg-right.p-r-0.m-t-3
-            
+
             .row.m-t-3
               .col-lg-12.text-md-center.text-sm-center.text-xs-center
                 button.btn.btn-primary.text-uppercase.pull-lg-right Save
