@@ -275,7 +275,8 @@ section
                               span.pull-right.color-grey
                                 i.fa.fa-graduation-cap
                                 |  #{v.college}
-          if values.press && Object.keys(values.press).length > 0
+
+          if values.press && Object.keys(values.press).length > 0 && values.press[0].headline != ''
             h2.dosis.text-uppercase.text-lg-center.text-xs-center.green-heading Articles and Press
             .row
               .col-lg-12.text-center-flex
@@ -283,12 +284,15 @@ section
                   each v,k in values.press
                     .col-lg-4.articles_press
                       a(href=v.link target="_blank")
-                        .card.card-inverse
+                        .card.card-inverse.m-b-2
                           .card-title
                             i.fa.fa-link
                             p.card-text #{ v.headline }
                             .pos-bottom
                               .links.d-inline-block.card-text #{ formatHelper.getWebsiteUrl(v.link) }
+                .row.m-b-3
+                  .col-lg-12.text-xs-center
+                    a(href="#").link-4 See All Articles and Press
   
   else
       //
@@ -491,7 +495,7 @@ section
 
 
   section#perks.perks
-    if values.perks && Object.keys(values.perks).length > 0
+    if values.perks && Object.keys(values.perks).length > 0 && values.perks[0].perk != ''
       //- h3.col-lg-12.text-lg-center Perks
       .container
         h3.text-uppercase.text-lg-center.text-xs-center.green-heading Perks
@@ -628,7 +632,7 @@ section
             ).panel-collapse.collapse  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius inventore iste numquam nemo, fugit nihil fugiat quasi, excepturi repellendus pariatur! Facilis odit cupiditate tenetur, inventore adipisci consequatur eius suscipit voluptas.
         
   section.faq
-    if values.faq && Object.keys(values.faq).length > 0 
+    if values.faq && Object.keys(values.faq).length > 0 && values.faq[0].question != '' 
       .container
         h2#faq.col-lg-12.dosis.text-uppercase.text-lg-center.text-xs-center.green-heading FAQ
         .col-lg-8.offset-lg-2
