@@ -149,14 +149,7 @@
 	height: 600px
 //main page
 .home-section
-	&:before
-		content: " "
-		width: 100%
-		height: 100%
-		position: absolute
-		top: 0
-		left: 0
-		background: rgba(17, 17, 17, .5)
+
 	.js-height-full
 		max-height: 90vh
 	.home-text-main
@@ -166,18 +159,21 @@
 		h1
 			font-size: rem(48)
 			color: $white
-			letter-spacing: rem(9.6)
+			letter-spacing: rem(4.8)
 			margin-bottom: rem(50)
+			text-shadow: none
 		.small-text
-			line-height: rem(26)
+			line-height: rem(28)
 			color: $white
-			letter-spacing: rem(.6)
+			letter-spacing: rem(.45)
 			font-size: rem(24)
-			font-weight: 300
-		.btn
-			&:first-child
-				margin-right: 30px
-
+			font-weight: 400
+			margin-top: rem(10)
+		.color-black_pearl
+			color: $black_pearl
+.main-page-title
+	font-weight: 600
+	color: $black_pearl
 .home-wrap-text-block
 	position: relative
 	margin-top: rem(50)
@@ -191,10 +187,10 @@
 			left: 0
 			background: rgba(17, 17, 17, .5)
 	h2
-		color: $alabaster
+		color: $white
 		margin-bottom: rem(20)
 	h3
-		color: $alabaster
+		color: $white
 		letter-spacing: rem(.45)
 		line-height: rem(24)
 		margin-top: 0
@@ -204,22 +200,48 @@
 		margin-bottom: rem(45)
 	.m-l-30
 		margin-left: rem(30)
+
+	&.top-block
+		h2
+			color: $black_text
+			margin-bottom: rem(20)
+		h3
+			color: $black_text
+			letter-spacing: rem(.45)
+			line-height: rem(24)
+			margin-top: 0
+			font-weight: 300
 .raise-wrap
 	.btn
 		&:first-child
 			margin-right: rem(30)
 .home-what-is
 	h2
+		color: $black_pearl
 		margin-bottom: rem(50)
+		&.light
+			line-height: rem(28)
+			font-weight: 300
+			letter-spacing: rem(.65)
+			margin-bottom: rem(20)
+	.logo
+		line-height: rem(40)
 	h3
-		color: $cod_gray
 		letter-spacing: rem(.45)
 		line-height: rem(24)
+		margin-bottom: rem(20)
 .home-our-partners
 	img
 		max-width: 255px
 	h2
 		margin-bottom: rem(50)
+.home-wrap-text-block.top-block
+	background: url(/img/dcu-bg-under-banner.png)
+	background-size: 100% 100%
+	-webkit-box-shadow: inset 0px 6px 5px -2px rgba(0,0,0,0.5)
+	-moz-box-shadow: inset 0px 6px 5px -2px rgba(0,0,0,0.5)
+	box-shadow: inset 0px 6px 5px -2px rgba(0,0,0,0.5);
+	border-top: 1px solid $limed_spruce
 
 @media only screen and (max-width : 992px)
 	.home-text-main

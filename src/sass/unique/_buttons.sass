@@ -1,22 +1,19 @@
-
-$btn-color: #197471
-$btn-border: #197471
+$btn-color: $dove_gray
+$btn-border: $dove_gray
 $btn-bg: transparent
-$btn-hover-bg: #197471
-$btn-hover-color: #fff
+$btn-hover-bg: $dove_gray
+$btn-hover-color: $white
 
-$btn-primary-bg: #197471
-$btn-primary-hover-bg: #42bab6
-$btn-primary-border: #197471
-$btn-primary-hover-border: #42bab6
+$btn-primary-bg: $dove_gray
+$btn-primary-hover-bg: $grey_bg
+$btn-primary-border: $dove_gray
+$btn-primary-hover-border: $grey_bg
 $btn-primary-color: $white
-$btn-primary-active-border: #0e4240
-$btn-primary-active-bg: #104a48
-$btn-secondary-hover-color: $grey
-$btn-secondary-border: $light_grey
-$btn-secondary-bg: $light_grey
+
+$btn-secondary-hover-color: $black_text
+$btn-secondary-border: $gallery
+$btn-secondary-bg: $gallery
 $btn-secondary-hover-bg: transparent
-$btn-secondary-color: $black
 
 $btn-success-bg: #5cb85c
 $btn-success-border: #5cb85c
@@ -44,17 +41,19 @@ $btn-google-hover-bg: rgba(212,67,48, .6)
 	background: $btn-bg
 	color: $btn-color
 	border-color: $btn-border
-	letter-spacing: 2px
+	letter-spacing: 1.8px
 	border: 2px solid $btn-border
-	font-size: rem(13)
+	font-size: rem(12)
+	border-radius: 50px
 	text-transform: uppercase
+	font-weight: 600
 	+mt(.2s)
 	
 	&:hover
 		background: $btn-hover-bg
 		color: $btn-hover-color
 		border-color: $btn-border
-			+mt(.2s)
+		+mt(.2s)
 	.fa-angle-right
 		padding-left: 5px
 
@@ -66,14 +65,6 @@ $btn-google-hover-bg: rgba(212,67,48, .6)
 	&:hover
 		background: $btn-primary-hover-bg
 		border-color: $btn-primary-hover-border
-	&:active,
-	&:focus
-		background: $btn-primary-active-bg
-		border-color: $btn-primary-active-border
-		&:focus,
-		&:hover
-			background: $btn-primary-active-bg
-			border-color: $btn-primary-active-border
 
 .btn-secondary
 	background: $btn-secondary-bg
@@ -117,7 +108,7 @@ $btn-google-hover-bg: rgba(212,67,48, .6)
 	background: $btn-facebook-bg
 	border: none
 	color: $white
-	border-radius: 2px
+	border-radius: 50px
 	&:hover
 		background: $btn-facebook-hover-bg
 
@@ -125,7 +116,7 @@ $btn-google-hover-bg: rgba(212,67,48, .6)
 	background: $btn-linkedin-bg
 	border: none
 	color: $white
-	border-radius: 2px
+	border-radius: 50px
 	&:hover
 		background: $btn-linkedin-hover-bg
 
@@ -133,13 +124,13 @@ $btn-google-hover-bg: rgba(212,67,48, .6)
 	background: $btn-google-bg
 	border: none
 	color: $white
-	border-radius: 2px
+	border-radius: 50px
 	&:hover
 		background: $btn-google-hover-bg
 
 //Dropdown button
 .btn-dropdown
-	color: $black
+	color: $btn-color
 	background: transparent
 	border-radius: rem(2) 0 0 rem(2)
 	border: 1px solid $light_grey
@@ -162,15 +153,15 @@ $btn-google-hover-bg: rgba(212,67,48, .6)
 	border: 1px solid $light_grey
 	background: transparent
 	padding: rem(8)
-	color: $black
+	color: $btn-color
 	width: 14%
 	height: rem(35)
 	.dropdown-toggle
-		padding-left: rem(8)
-		padding-right: rem(8)
-		&:after
-			margin-top: 0
-			margin-left: 0
+		 padding-left: rem(8)
+		 padding-right: rem(8)
+		 &:after
+			 margin-top: 0
+			 margin-left: 0
 	&:hover
 		background: none
 		border: 1px solid $light_grey
@@ -198,7 +189,3 @@ $btn-google-hover-bg: rgba(212,67,48, .6)
 	pointer-events: none
 	background: $btn-secondary-bg
 	border-color: $btn-secondary-bg
-
-@media only screen and (max-width : 580px)
-	.btn-facebook, .btn-linkedin, .btn-google
-		padding: rem(8) rem(10)
