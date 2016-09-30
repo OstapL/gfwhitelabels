@@ -1,64 +1,68 @@
-//link color- для каждего сайта цвета разные 
+//link color- для каждего сайта цвета разные
 $link-1-hover: rgba(119, 119, 119, .6)
-$link-2-hover: rgba(174, 208, 124, .6)
-$link-3-hover: rgba(60, 189, 185, .6)
+$link-2-hover: rgba(243, 198, 101, .6)
+$link-3-hover: rgba(0, 107, 150, .6)
 $link-4-hover: rgba(119, 119, 119, .6)
 $link-5-hover: rgba(17, 17, 17, .6)
 $link-6-hover: rgba(255, 255, 255, .6)
 /** End main color **/
-
 //переменная цвета footer
 $footer_background: $alabaster
+
 // Назовем что бы было так что бы было понятно где оно используется
-$menu_backgound_from: $cod_gray // цвет для меню если градиент то левая сторона
-$menu_backgound_to: $cod_gray // цвет для меню если градиент то правая сторона
+$menu_backgound_from: $gray // цвет для меню если градиент то левая сторона
+$menu_backgound_to: $gray // цвет для меню если градиент то правая сторона
 
 //нужно решить что это все ?
 //active class  for authorization title tab 
 $active_tab_authorization: $mine_shaft
+
 //text color for authorization title tab 
 $tab_authorization_text: $black
-// color background button submit form
-$authorization_btn_submit_bg: $cod_gray
 
-// bootstrap slider styles 
+// color background button submit form
+$authorization_btn_submit_bg: $menu_backgound_to
+// bootstrap slider styles
+
 //bg color bootstrap slider tick track(class .slider-selection.tick-slider-selection)
 $btstr_slider_track_tick_bg: $scorpion
+
 //bg color bootstrap slider not tick track(class .slider-track-high)
 $btstr_slider_track_not_tick_bg: $gallery
+
 //bg color bootstrap slider handle block(class .slider-handle)
 $btstr_slider_nandle_block_bg: $wild_willow
+
 //bg color bootstrap slider other handle block(class .slider-tick)
 $btstr_slider_other_nandle_block_bg: $white
 
-// color warning block
 $text_warning_block_color: $crimson
 
 // переменные для главного меню 
-$padding_menu: 14px 0 0 0 
+$padding_menu: 0px 0 0 0 
 $menu_shadows: none
-$navbar_height: 65px
-$navbar-header-padd-top: 8px // паддинг в хедере сверху
-$menu-profile-padd-top: 11px // для вертиального выравнивания меню логин\регистр. и иконки профиля в хедере
+$navbar_height: 53px
+$navbar-header-padd-top: 20px // паддинг в хедере сверху
+$menu-profile-padd-top: 6px // для вертиального выравнивания меню логин\регистр. и иконки профиля в хедере
 
 // нужно проверить !!!
-$border-radius-lg:       2px
-$border-radius-sm:       2px
+$border-width: 1px
+$border-radius: 1px
 // радиус для кнопок 
 $btn-border-radius-lg: 1px
 $btn-border-radius-sm: 1px
+
 //переменная для радиуса инпутов
 $input-border-radius: 1px
 //шрифт по умолчанию 
 $font-family-base: 'Open Sans', sans-serif
-
 // переменная размера шрифта для меню которая используется в common/header.sass
-$font-size-menu: rem(11)
+$font-size-menu: rem(14)
 
-// размеры шрифтов 
+// размеры шрифтов
 $font-size-base:             .875rem
-$font-size-lg:               .875rem!important
-$font-size-sm:               .75rem!important 
+$font-size-lg:               .8125rem!important
+$font-size-sm:               .6875rem!important
 $font-size-xs:               .65rem 
 
 $font-size-h1:               1.875rem
@@ -69,13 +73,12 @@ $font-size-h5:               0.875rem
 $font-size-h6:               0.8125rem
 
 //переменные отступов для кнопок
-$btn-padding-x-lg: rem(46)
-$btn-padding-y-lg: rem(13)
-$btn-padding-x-sm: rem(34)
+$btn-padding-x-lg: rem(44)
+$btn-padding-y-lg: rem(15)
+$btn-padding-x-sm: rem(11)
 $btn-padding-y-sm: rem(5)
-$btn-padding-y:    rem(8)
-$btn-padding-x:    rem(44)
-
+$btn-padding-y:    rem(10)
+$btn-padding-x:    rem(34)
 
 //forms  высота инпутов
 $input-height: 36px
@@ -87,10 +90,10 @@ $border_color: $gallery
 //переменные инпутов радиус
 $border-width: 1px
 $border-radius: 1px
+
 // цвет текста всех инпутов
 $input-color: $black // почему то не работает 
 $custom-select-color: $black
-
 // переменные для пагинации
 $pagination-active-color: $grey
 $pagination-color: $pagination-active-color
@@ -115,8 +118,6 @@ $alert-warning-bg: none
 $alert-danger-bg: none
 $alert-danger-border: #ed1c24
 $alert-danger-text: #ed1c24
-
-
 //ostap
 $jumbotron-bg: #f8f8f8
 $jumbotron-padding: 5px
@@ -156,18 +157,8 @@ $brand-info: $wild_willow
 
 $btn-border-radius: 1px
 
-
-$display_partnres: block
-
-
-$total_sum_progresbar: $puerto_rico
-//цвет прогресс - для каждего сайта разный, менять переменную цвета из файла color.sass
-$progress_bar_background: $wild_willow
-
-
-$progress-bar-color: $wild_willow
-// радиус для custom-select
-$custom-select-border-radius: 1px
-
-//цвет дроп зоны при перетягивании картинки
+$progress_bar_background: $emerald
+$total_sum_progresbar: $cream_can
 $dragging-hover-border: $wild_willow
+
+$display_partnres: none
