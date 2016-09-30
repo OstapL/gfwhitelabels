@@ -149,7 +149,6 @@ mixin fieldBlock(name, data, attr)
                         .delete-section-container
                             a(href="#" data-section=name data-index=indexCounter).delete-section
                                 i.fa.fa-times
-                        - console.log(fields[name].schema)
                         each k1,v in fields[name].schema
                             - var k = values[name][kkeys[counter]][v]
                             - var t = fields[name].schema[v]
