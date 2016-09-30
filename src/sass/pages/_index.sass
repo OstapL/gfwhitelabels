@@ -171,7 +171,9 @@
 			margin-top: rem(10)
 		.color-black_pearl
 			color: $black_pearl
-
+.main-page-title
+	font-weight: 600
+	color: $black_pearl
 .home-wrap-text-block
 	position: relative
 	margin-top: rem(50)
@@ -185,10 +187,10 @@
 			left: 0
 			background: rgba(17, 17, 17, .5)
 	h2
-		color: $alabaster
+		color: $white
 		margin-bottom: rem(20)
 	h3
-		color: $alabaster
+		color: $white
 		letter-spacing: rem(.45)
 		line-height: rem(24)
 		margin-top: 0
@@ -198,6 +200,17 @@
 		margin-bottom: rem(45)
 	.m-l-30
 		margin-left: rem(30)
+
+	&.top-block
+		h2
+			color: $black_text
+			margin-bottom: rem(20)
+		h3
+			color: $black_text
+			letter-spacing: rem(.45)
+			line-height: rem(24)
+			margin-top: 0
+			font-weight: 300
 .raise-wrap
 	.btn
 		&:first-child
@@ -223,7 +236,8 @@
 	h2
 		margin-bottom: rem(50)
 .home-wrap-text-block.top-block
-	background-color: $jelly_bean
+	background: url(/img/dcu-bg-under-banner.png)
+	background-size: 100% 100%
 	-webkit-box-shadow: inset 0px 6px 5px -2px rgba(0,0,0,0.5)
 	-moz-box-shadow: inset 0px 6px 5px -2px rgba(0,0,0,0.5)
 	box-shadow: inset 0px 6px 5px -2px rgba(0,0,0,0.5);
