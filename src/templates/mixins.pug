@@ -119,7 +119,7 @@ mixin fieldBlock(name, data, attr)
                             i.fa.fa-times
                     each k,v in fields[name].schema
                         div(class='form-group clearfix index_' + indexCounter)
-                            label.col-lg-3.text-lg-right #{k.label}
+                            label.col-lg-3.text-lg-right.p-t-0.p-l-3.p-sm-0.m-b-0 #{k.label}
                             .col-lg-9
                                 if k.type == 'text' 
                                     textarea(
