@@ -216,20 +216,24 @@
 		&:first-child
 			margin-right: rem(30)
 .home-what-is
-	h2
+	p
 		color: $black_pearl
-		margin-bottom: rem(50)
-		&.light
-			line-height: rem(28)
-			font-weight: 300
+
+		&.home-what-is-paragraf
+			line-height: rem(19)
+
+		+ span
+			display: inline-block
+			padding: 5px 0 8px 0
+
+			color: $black_pearl
+			font-weight: 400
 			letter-spacing: rem(.65)
-			margin-bottom: rem(20)
-	.logo
-		line-height: rem(40)
-	h3
-		letter-spacing: rem(.45)
-		line-height: rem(24)
-		margin-bottom: rem(20)
+
+	.powered-by-logo
+		img
+			width: rem(175)
+
 .home-our-partners
 	img
 		max-width: 255px
