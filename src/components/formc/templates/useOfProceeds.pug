@@ -22,7 +22,7 @@ section.formc.use_of_proceeds.create-company-media.container
           textarea(rows="3" placeholder="Intended Use of Proceeds").form-control
       .table.table-responsive
         .col-lg-12
-          table.table.table-bordered
+          table.table.table-bordered.use-of-proceeds-table
             thead
               tr
                 th.w-50
@@ -37,35 +37,66 @@ section.formc.use_of_proceeds.create-company-media.container
                 td.w-50.p-y-0
                   table.no-border
                     tr
-                      td Less: Offering Expenses
-                    tr
-                      td (A)
+                      td 
                         .pull-right
-                          a(href="#").link-2 Add Another
+                          a(href="#").link-2
+                            i.fa.fa-plus
+                            |  Add Another
+                        |  Less: Offering Expenses
                     tr
-                      td (B)
+                      td 
+                        .pull-right
+                          .delete-section-container
+                            a(href="#").delete-section
+                              i.fa.fa-times
+                        |  (A)
+                        
                     tr
-                      td (C) 
+                      td
+                        .pull-right
+                          .delete-section-container
+                            a(href="#").delete-section
+                              i.fa.fa-times
+                        |  (B)
+                    tr
+                      td
+                        .pull-right
+                          .delete-section-container
+                            a(href="#").delete-section
+                              i.fa.fa-times
+                        |  (C)
                 td.w-25.text-lg-center.p-y-0
                   table.no-border
                     tr
                       td &nbsp
                     tr
-                      td.border-bottom 
+                      td.font-size-12
+                        .form-section
+                          input(type="text").input-border-bottom.form-control.text-xs-center
                     tr
-                      td.border-bottom
+                      td.font-size-12
+                        .form-section
+                          input(type="text").input-border-bottom.form-control.text-xs-center
                     tr
-                      td.border-bottom
+                      td.font-size-12
+                        .form-section
+                          input(type="text").input-border-bottom.form-control.text-xs-center
                 td.w-25.text-lg-center.p-y-0
                   table.no-border
                     tr
                       td &nbsp
                     tr
-                      td.border-bottom 
+                      td.font-size-12
+                        .form-section
+                          input(type="text").input-border-bottom.form-control.text-xs-center 
                     tr
-                      td.border-bottom
+                      td.font-size-12
+                        .form-section
+                          input(type="text").input-border-bottom.form-control.text-xs-center
                     tr
-                      td.border-bottom
+                      td.font-size-12
+                        .form-section
+                          input(type="text").input-border-bottom.form-control.text-xs-center
               tr.row-gray
                 td.w-50.p-l-25 Net Proceeds
                   .pull-right.icon
@@ -77,35 +108,66 @@ section.formc.use_of_proceeds.create-company-media.container
                 td.w-50.p-y-0
                   table.no-border
                     tr
-                      td Use of Net Proceeds
-                    tr
-                      td (A)
+                      td 
                         .pull-right
-                          a(href="#").link-2 Add Another
+                          a(href="#").link-2
+                            i.fa.fa-plus
+                            |  Add Another
+                        |  Use of Net Proceeds
                     tr
-                      td (B)
+                      td
+                        .pull-right
+                          .delete-section-container
+                            a(href="#").delete-section
+                              i.fa.fa-times
+                        |  (A)
+                        
                     tr
-                      td (C) 
+                      td
+                        .pull-right
+                          .delete-section-container
+                            a(href="#").delete-section
+                              i.fa.fa-times
+                        |  (B)
+                    tr
+                      td
+                        .pull-right
+                          .delete-section-container
+                            a(href="#").delete-section
+                              i.fa.fa-times
+                        |  (C)
                 td.w-25.text-lg-center.p-y-0
                   table.no-border
                     tr
                       td &nbsp
                     tr
-                      td.border-bottom.red.font-size-12 $50k
+                      td.font-size-12
+                        .form-section
+                          input(type="text").input-border-bottom.form-control.text-xs-center
                     tr
-                      td.border-bottom.red.font-size-12 $50k
+                      td.font-size-12
+                        .form-section
+                          input(type="text").input-border-bottom.form-control.text-xs-center
                     tr
-                      td.border-bottom.red.font-size-12 $50k
+                      td.font-size-12
+                        .form-section
+                          input(type="text").input-border-bottom.form-control.text-xs-center
                 td.w-25.text-lg-center.p-y-0
                   table.no-border
                     tr
                       td &nbsp
                     tr
-                      td.border-bottom 
+                      td.font-size-12
+                        .form-section
+                          input(type="text").input-border-bottom.form-control.text-xs-center
                     tr
-                      td.border-bottom
+                      td.font-size-12
+                        .form-section
+                          input(type="text").input-border-bottom.form-control.text-xs-center
                     tr
-                      td.border-bottom
+                      td.font-size-12
+                        .form-section
+                          input(type="text").input-border-bottom.form-control.text-xs-center
               tr.row-gray
                 td.w-50.p-l-25 Total Use of Net Proceeds
                   .pull-right.icon
@@ -116,17 +178,7 @@ section.formc.use_of_proceeds.create-company-media.container
         .border-bottom.m-b-3
         h3.text-xs-center Business Plan
 
-      .col-lg-12.form-group.form-section.m-t-1.m-b-1
-        b Describe your business plan or upload it in the PDF/DOC file
-        .radio-input.m-b-1.m-t-1
-          label 
-            input(type="radio" name="doc_type" value="describe" checked="checked")
-            |  Describe
-          label 
-            input(type="radio" name="doc_type" value="doc")
-            |  Upload PDF/DOC file
-
-      .col-lg-12.create-perks(style="display:none;").doc
+      .col-lg-12.create-perks.doc
         .text-lg-right.img-ppt
           +fieldFileDropzone("business_plan", {
             class1: 'col-lg-3',
@@ -134,13 +186,6 @@ section.formc.use_of_proceeds.create-company-media.container
             text: 'Drop your PDF or DOC here or click to upload',
             icon: 'file',
             default: '/img/default' + suffix + '.png',
-          })
-      .col-lg-12.describe
-        +fieldBlock("describe", '', {
-          class1: 'col-lg-3 col-md-12 text-md-left p-t-0 m-b-0',
-          class2: 'col-lg-9 col-md-12',
-          type: 'textarea',
-          placeholder: 'Describe your business plan',
           })
       
       .col-lg-12.text-lg-right.m-t-2
