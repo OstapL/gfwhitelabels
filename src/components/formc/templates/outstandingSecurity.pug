@@ -154,52 +154,52 @@ section.formc-team-members-director.container.m-b-85
         a(data-toggle="modal" data-target="#security_modal" href="#security_modal").btn.text-uppercase.m-t-2.m-b-2
             i.fa.fa-plus
             |  add outstanding securities
-        table.table.table-bordered.table-striped.text-xs-center
-            thead
-                tr
-                    th(width="19%").text-xs-center Security Type
-                    th(width="19%").text-xs-center Amount Authorized
-                    th(width="19%").text-xs-center Amount Outstanding
-                    th(width="19%").text-xs-center Voting Rights
-                    th(width="19%").text-xs-center Other Rights
-                    th(width="5%")
-            tbody
-                tr
-                    td Debt
-                    td $2,000
-                    td $1,000
-                    td Yes 
-                    td No
-                    td
-                        a(href="#")
-                            i.fa.fa-times
-                tr
-                    td Debt
-                    td $2,000
-                    td $1,000
-                    td Yes 
-                    td No
-                    td 
-                        a(href="#")
-                            i.fa.fa-times
-                tr
-                    td Debt
-                    td $2,000
-                    td $1,000
-                    td Yes 
-                    td No
-                    td 
-                        a(href="#")
-                            i.fa.fa-times
-                tr
-                    td Debt
-                    td $2,000
-                    td $1,000
-                    td Yes 
-                    td No
-                    td 
-                        a(href="#")
-                            i.fa.fa-times
+        .table-responsive
+            table.table.table-bordered.table-striped.text-xs-center.table-outstanding
+                thead
+                    tr
+                        th(width="22%").text-xs-center Security Type
+                        th(width="21%").text-xs-center Amount Authorized
+                        th(width="21%").text-xs-center Amount Outstanding
+                        th(width="20%").text-xs-center Voting Rights
+                        th(width="6%")
+                tbody
+                    tr
+                        td Convertible Debt
+                        td $2,000
+                        td $1,000
+                        td Yes 
+                        td
+                            .delete-section-container
+                                a(href="#").delete-section
+                                    i.fa.fa-times
+                    tr
+                        td Debt
+                        td $2,000
+                        td $1,000
+                        td Yes 
+                        td 
+                            .delete-section-container
+                                a(href="#").delete-section
+                                    i.fa.fa-times
+                    tr
+                        td Debt
+                        td $2,000
+                        td $1,000
+                        td Yes 
+                        td 
+                            .delete-section-container
+                                a(href="#").delete-section
+                                    i.fa.fa-times
+                    tr
+                        td Debt
+                        td $2,000
+                        td $1,000
+                        td Yes 
+                        td 
+                            .delete-section-container
+                                a(href="#").delete-section
+                                    i.fa.fa-times
         .border-bottom.m-t-3.m-b-3 
         +fieldBlock("limited", '', {
         class1: 'col-lg-12 col-md-12  text-md-left  text-xl-left',
