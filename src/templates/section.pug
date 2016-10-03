@@ -2,22 +2,22 @@ include mixins.pug
 
 - counter = 0
 - indexCounter = attr.index || 0
-if attr.type == 'row'
-    tr(class='index_' + indexCounter)
-        td
-            input(type="text" value="abc")
-        td
-            input(type="text" value="abc")
-        //- td
-        //-     input(type="text" value="abc")
-        td
-            .delete-section-container
-                a(href="#" data-section=name data-index=indexCounter).delete-section
-                    i.fa.fa-times
-else
-    .delete-section-container
-        a(href="#" data-section=name data-index=indexCounter).delete-section
-            i.fa.fa-times
+//- if attr.type == 'row'
+//-     tr(class='index_' + indexCounter)
+//-         td
+//-             input(type="text" value="abc")
+//-         td
+//-             input(type="text" value="abc")
+//-         //- td
+//-         //-     input(type="text" value="abc")
+//-         td
+//-             .delete-section-container
+//-                 a(href="#" data-section=name data-index=indexCounter).delete-section
+//-                     i.fa.fa-times
+//- else
+.delete-section-container
+    a(href="#" data-section=name data-index=indexCounter).delete-section
+        i.fa.fa-times
 
     if attr.type == 'jsonVideo'
         div(class='form-group clearfix videoInteractive index_' + indexCounter)
@@ -66,7 +66,7 @@ else
                         .col-lg-6.p-r-0
                             input(type="number"  placeholder="YYYY").form-control
     else if attr.type == 'experience'
-        div(class='index_' + indexCounter)
+        div(class='form-group clearfix index_' + indexCounter)
             +fieldBlock("employer", '', {
                 class1: 'col-lg-3 col-md-12 text-md-left m-b-0',
                 class2: 'col-lg-9 col-md-12',
