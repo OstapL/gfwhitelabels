@@ -273,7 +273,10 @@ module.exports = Backbone.Router.extend({
       model: {
         id: id,
       },
-      // fields: {},
+      fields: {
+        loans: {},
+        exempt_offerings: {},
+      },
 
     });
     i.render();

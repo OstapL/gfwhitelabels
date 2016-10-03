@@ -253,13 +253,15 @@ module.exports = {
                 if (this.model.previous_positions) {
                   this.previous_positionsIndex = Object.keys(this.model.previous_positions).length;
                 } else {
-                  this.previous_positionsIndex = 0;
+                  // this.previous_positionsIndex = 0;
+                  this.previous_positionsIndex = 1;
                 }
 
                 if (this.model.experiences) {
                   this.experiencesIndex = Object.keys(this.model.experiences).length;
                 } else {
-                  this.experiencesIndex = 0;
+                  // this.experiencesIndex = 0;
+                  this.experiencesIndex = 1;
                 }
 
 
@@ -459,7 +461,7 @@ module.exports = {
                 template({
                     serverUrl: serverUrl,
                     Urls: Urls,
-                    // fields: this.fields,
+                    fields: this.fields,
                     // values: this.model.toJSON(),
                     values: this.model,
                 })
@@ -502,11 +504,11 @@ module.exports = {
         // this.fields['offering-expense'].type = 'row';
 
             if (this.model.faq) {
-                  // this.faqIndex = Object.keys(this.model.get('faq')).length;
-                  this.faqIndex = Object.keys(this.model.faq).length;
-                } else {
-                  this.faqIndex = 0;
-                }
+              // this.faqIndex = Object.keys(this.model.get('faq')).length;
+              this.faqIndex = Object.keys(this.model.faq).length;
+            } else {
+              this.faqIndex = 0;
+            }
             this.$el.html(
                 template({
                     serverUrl: serverUrl,
@@ -790,7 +792,9 @@ module.exports = {
     })),
 
     outstandingSecurity: Backbone.View.extend(_.extend(addSectionHelper.methods, menuHelper.methods, {
-        initialize(options) {},
+        initialize(options) {
+            this.fields = options.fields;
+        },
 
         events: _.extend({
             'submit form': 'submit',
@@ -805,11 +809,89 @@ module.exports = {
 
         render() {
             let template = require('components/formc/templates/outstandingSecurity.pug');
+            this.fields.loans.type = 'json';
+            this.fields.loans.schema = {
+                creditor: {
+                    type: 'string',
+                    label: 'Creditor',
+                    placeholder: 'Creditor',
+                    values: [],
+                },
+                outstanding: {
+                    type: 'string',
+                    label: 'Outstanding',
+                    placeholder: 'Outstanding',
+                    values: [],
+                },
+                rate: {
+                    type: 'string',
+                    label: 'Rate',
+                    placeholder: 'Rate',
+                    values: [],
+                },
+                date: {
+                    type: 'date',
+                    label: 'Date',
+                    placeholder: 'Date',
+                    values: [],
+                },
+                terms: {
+                    type: 'string',
+                    label: 'Terms',
+                    placeholder: 'Terms',
+                    values: [],
+                },
+            };
+            this.fields.exempt_offerings.type = 'json';
+            this.fields.exempt_offerings.schema = {
+                date_offering: {
+                    type: 'string',
+                    label: 'Date Offering',
+                    placeholder: 'Date Offering',
+                    values: [],
+                },
+                exemption: {
+                    type: 'string',
+                    label: 'Date Offering',
+                    placeholder: 'Date Offering',
+                    values: [],
+                },
+                securities: {
+                    type: 'string',
+                    label: 'Securities',
+                    placeholder: 'Securities',
+                    values: [],
+                },
+                amount: {
+                    type: 'number',
+                    label: 'Amount',
+                    placeholder: 'Amount',
+                    values: [],
+                },
+                use: {
+                    type: 'string',
+                    label: 'Use',
+                    placeholder: 'Use',
+                    values: [],
+                },
+            };
+
+            if (this.model.loans) {
+              this.loansIndex = Object.keys(this.model.loans).length;
+            } else {
+              this.loansIndex = 0;
+            }
+            if (this.model.exempt_offerings) {
+              this.exempt_offeringsIndex = Object.keys(this.model.exempt_offerings).length;
+            } else {
+              this.exempt_offeringsIndex = 0;
+            }
+
             this.$el.html(
                 template({
                     serverUrl: serverUrl,
                     Urls: Urls,
-                    // fields: this.fields,
+                    fields: this.fields,
                     // values: this.model.toJSON(),
                     values: this.model,
                 })
