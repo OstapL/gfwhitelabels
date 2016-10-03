@@ -59,7 +59,6 @@
   },
   "dependencies": {
     "backbone": "git+https://github.com/jashkenas/backbone.git",
-    "backbone-validation": "^0.11.5",
     "bootstrap-select": "^1.10.0",
     "dropzone": "^4.3.0",
     "extract-text-webpack-plugin": "^0.8.2",
@@ -73,6 +72,7 @@
     "pug-loader": "^2.3.0",
     "pug-walk": "0.0.4",
     "requirejs": "^2.2.0",
+    "socket.io": "^1.4.8",
     "underscore": "^1.8.3"
   }
 }

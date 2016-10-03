@@ -12,12 +12,12 @@ module.exports = Backbone.Router.extend({
   login(id) {
     require.ensure([], function() {
       const View = require('components/anonymousAccount/views.js');
-      let a1 = api.makeRequest(Urls['rest_login'](), 'OPTIONS');
+      let a1 = api.makeRequest(authServer + '/rest-auth/login', 'OPTIONS');
       $.when(a1).done((metaData) => {
         let loginView = new View.login({
           el: '#content',
-          login_fields: metaData.actions.POST,
-          model: new userModel(),
+          fields: metaData.fields,
+          model: {},
         });
         loginView.render();
         app.hideLoading();
@@ -37,8 +37,8 @@ module.exports = Backbone.Router.extend({
       $.when(a1).done((metaData) => {
         let signView = new View.signup({
           el: '#content',
-          register_fields: metaData.actions.POST,
-          model: new userModel(),
+          fields: metaData.actions.POST,
+          model: {}
         });
         signView.render();
         app.hideLoading();

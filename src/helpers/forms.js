@@ -1,3 +1,5 @@
+const validation = require('components/validation/validation.js');
+
 module.exports = {
   makeCacheRequest(url, type, data) {
     return this.makeRequest(url, type, data);
@@ -32,8 +34,16 @@ module.exports = {
       delete data.type;
     }
 
+    if(url.indexOf('http') == -1) {
+      url = serverUrl + url
+    } 
+
+    if(type == 'POST' || type == 'PUT') {
+      data = JSON.stringify(data);
+    }
+
     let params = _.extend({
-      url: serverUrl + url,
+      url: url,
       type: type,
       data: data,
     }, api.requestOptions);
@@ -47,6 +57,12 @@ module.exports = {
 
     var data = data || $(e.target).serializeJSON();
 
+    // if view already have some data - extend that info
+    if(this.hasOwnProperty('model')) {
+      _.extend(this.model, data);
+      data = Object.assign({}, this.model)
+    }
+
     /*
        var newValidators = {};
        for(var k in this.fields) {
@@ -56,33 +72,33 @@ module.exports = {
        };
        this.model.validation = newValidators;
     */
-    let model = {};
-    model = new Backbone.Model();
-    if(this.model.hasOwnProperty('id')) {
-      model.set('id', this.model.id);
-    }
-    if(this.model.hasOwnProperty('attributes')) {
-      model.set(this.model.attributes);
-    }
-    if(this.model.hasOwnProperty('urlRoot')) {
-      model.urlRoot = this.model.urlRoot;
+
+    this.$('.help-block').remove();
+    if (!validation.validate(this.fields, data, this)) {
+      _(validation.errors).each((errors, key) => {
+        validation.invalidMsg(this, key, errors);
+      });
+      this.$('.help-block').scrollTo(45);
+      return;
     } else {
-      model.urlRoot = this.urlRoot;
-    }
+      let url = this.urlRoot;
+      let type = 'POST';
 
-    model.set(data);
-    //Backbone.Validation.bind(this, { model: model });
+      if(data.hasOwnProperty('id')) {
+        url += '/' + data.id;
+        delete data.id;
+        type = 'PUT';
+      }
 
-    if (model.isValid(true)) {
-      var self = this;
-      model.save().
+      api.makeRequest(url, type, data).
         then((data) => {
+          this.model = data;
           app.showLoading();
 
           // ToDo
           // Create clearity function
           this.$el.find('.alert-warning').remove();
-          self.undelegateEvents();
+          this.undelegateEvents();
           $('.popover').popover('hide');
 
           if (typeof this._success == 'function') {
@@ -90,7 +106,7 @@ module.exports = {
           } else {
             $('#content').scrollTo();
             app.routers.navigate(
-              self.getSuccessUrl(data),
+              this.getSuccessUrl(data),
               { trigger: true, replace: false }
             );
           }
@@ -98,12 +114,6 @@ module.exports = {
         fail((xhr, status, text) => {
           api.errorAction(this, xhr, status, text, this.fields);
         });
-    } else {
-      if (this.$('.alert').length) {
-        $('#content').scrollTo();
-      } else {
-        this.$el.find('.has-error').scrollTo();
-      }
     }
   },
 
@@ -130,7 +140,7 @@ module.exports = {
 
       data = data ? data : { Server: status };
       for (let key in data)  {
-        Backbone.Validation.callbacks.invalid(
+        validation.invalidMsg(
           view, key, data[key]
         );
       }
@@ -157,6 +167,7 @@ module.exports = {
 
   requestOptions: {
     dataType: 'json',
+    //contentType: "application/json; charset=utf-8",
     beforeSend: function (xhr) {
       let token = localStorage.getItem('token');
       if (token !== null && token !== '') {

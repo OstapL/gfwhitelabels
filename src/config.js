@@ -1,5 +1,8 @@
 global.serverUrl = "https://django-api.growthfountain.com";
+global.authServer = "http://localhost:8001";
+global.formcServer = "https://api-formc.growthfountain.com";
 global.teamName = 'Team';
+global.teamTitle = "Meet The Team";
 //global.serverUrl = "http://192.168.99.100:8000";
 //global.serverUrl = "http://gfauth.com:8000";
 

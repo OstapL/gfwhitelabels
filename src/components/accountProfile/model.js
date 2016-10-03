@@ -19,13 +19,13 @@ let userModel = Backbone.Model.extend({
       let userData = localStorage.getItem('user');
       this.set('token', localStorage.getItem('token'));
 
-      if (userData == null || userData.image_data == null) {
+      if (userData == null) {
         this.fetch({
           url: serverUrl + Urls.rest_user_details(),
           success: (data) => {
             localStorage.setItem('user', JSON.stringify(this.toJSON()));
             app.trigger('userLoaded', this.toJSON());
-            app.routers.mainPage(); // TODO: FIX THAT !!!
+            //app.routers.mainPage(); // TODO: FIX THAT !!!
           },
           error: (model, xhr, status) => {
             localStorage.removeItem('token');

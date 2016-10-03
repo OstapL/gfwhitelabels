@@ -1,5 +1,8 @@
+const validation = require('components/validation/validation.js');
+
 module.exports = {
   login: Backbone.View.extend({
+    urlRoot: authServer + '/rest-auth/login',
     events: {
       'submit .login-form': api.submitAction,
       'click .btn-google': 'loginGoogle',
@@ -8,7 +11,7 @@ module.exports = {
     },
 
     initialize(options) {
-      this.login_fields = options.login_fields;
+      this.fields = options.fields;
       this.hello = require('hellojs');
       this.socialAuth = require('./social-auth.js');
     },
@@ -18,28 +21,29 @@ module.exports = {
       let template = require('./templates/login.pug');
       this.$el.html(
         template({
-          login_fields: this.login_fields,
+          fields: this.fields,
         })
       );
       return this;
     },
 
     _success(data) {
-      if (data.hasOwnProperty('key')) {
+      debugger;
+      if(data.hasOwnProperty('key')) {
         localStorage.setItem('token', data.key);
-        setTimeout(function () {
-          window.location = '/'; //data.next ? data.next : '/account/profile'
+        localStorage.setItem('user', JSON.stringify(data));
+        setTimeout(function() {
+          window.location = app.getParams().next ? app.getParams().next : 
+                '/account/profile';
         }, 200);
       } else {
-        Backbone.Validation.callbacks.invalid(
-            form, '', 'Server return no authentication data'
-            );
+        validation.invalidMsg(form, '', 'Server return no authentication data');
       }
     },
 
     loginGoogle() {
       this.hello('google').login({
-        scope: 'profile,email', }).
+        scope: 'profile,email'}).
         then((e) => {
           var sendToken = this.socialAuth.sendToken('google', e.authResponse.access_token);
 
@@ -50,195 +54,186 @@ module.exports = {
             api.errorAction(this, data);
           });
         },
-
         function (e) {
           // TODO: notificate user about reason of error;
           app.routers.navigate(
-            '/account/login', { trigger: true, replace: true }
+            '/account/login', {trigger: true, replace: true}
           );
         });
     },
 
-    loginFacebook: function () {
+    loginFacebook: function() {
 
             var self = this;
 
             self.hello('facebook').login({
-                scope: 'public_profile,email', }).then(
+                scope: 'public_profile,email'}).then(
                 function (e) {
                     var sendToken = self.socialAuth.sendToken('facebook', e.authResponse.access_token);
 
                     $.when(sendToken).done(function (data) {
                         localStorage.setItem('token', data.key);
                         window.location = '/account/profile';
-                      }).fail(function (data) {
+                    }).fail(function (data) {
                         api.errorAction(self, data);
-                      });
-                  },
-
+                    });
+                },
                 function (e) {
 
                     // TODO: notificate user about reason of error;
                     app.routers.navigate(
                         '/account/login',
-                        { trigger: true, replace: true }
+                        {trigger: true, replace: true}
                     );
-                  });
+                });
 
-          },
+    },
 
-    loginLinkedin: function () {
+    loginLinkedin: function() {
 
             var self = this;
 
             self.hello('linkedin').login({
-                scope: 'r_basicprofile,r_emailaddress', }).then(
+                scope: 'r_basicprofile,r_emailaddress',}).then(
                 function (e) {
                     var sendToken = self.socialAuth.sendToken('linkedin', e.authResponse.access_token);
 
                     $.when(sendToken).done(function (data) {
                         localStorage.setItem('token', data.key);
                         window.location = '/account/profile';
-                      }).fail(function (data) {
+                    }).fail(function (data) {
                         api.errorAction(self, data);
-                      });
-                  },
-
+                    });
+                },
                 function (e) {
 
                     // TODO: notificate user about reason of error;
                     app.routers.navigate(
                         '/account/login',
-                        { trigger: true, replace: true }
+                        {trigger: true, replace: true}
                     );
-                  });
+                });
 
-          },
+    }
 
   }),
 
   signup: Backbone.View.extend({
+    urlRoot: Urls.rest_register(),
     events: {
         'submit .signup-form': api.submitAction,
         'click .btn-google': 'loginGoogle',
         'click .btn-linkedin': 'loginLinkedin',
-        'click .btn-facebook': 'loginFacebook',
-      },
+        'click .btn-facebook': 'loginFacebook'
+    },
 
     initialize(options) {
-      this.register_fields = options.register_fields;
-      this.hello = require('hellojs');
-      this.socialAuth = require('./social-auth.js');
+        this.fields = options.fields;
+        this.hello = require('hellojs');
+        this.socialAuth = require('./social-auth.js');
     },
 
     render() {
-      this.model.urlRoot = serverUrl + Urls['rest_register']();
-      let template = require('./templates/signup.pug');
-      this.$el.html(
-          template({
-              register_fields: this.register_fields,
+        let template = require('./templates/signup.pug');
+        this.$el.html(
+            template({
+                register_fields: this.register_fields,
             })
-      );
-      return this;
+        );
+        return this;
     },
 
     _success(data) {
-      if (data.hasOwnProperty('key')) {
-        localStorage.setItem('token', data.key);
+        if(data.hasOwnProperty('key')) {
+            localStorage.removeItem('user');
+            localStorage.setItem('token', data.key);
 
-        delete this.model.attributes['password1'];
-        delete this.model.attributes['password2'];
-        delete this.model.attributes['key'];
+            delete this.model.password1;
+            delete this.model.password2;
+            delete this.model.key;
 
-        this.model.set('token', data.key);
-        localStorage.removeItem('user');
-        window.location = '/'; //data.next ? data.next : '/account/profile'
-      } else {
-        Backbone.Validation.callbacks.invalid(
-          this, '', 'Server return no authentication data'
-        );
-      }
+            window.location = app.getParams().next ? app.getParams().next : '/account/profile';
+        } else {
+            validation.invalidMsg(                                 
+              this, '', 'Server return no authentication data'
+            );
+        }
     },
 
     loginGoogle() {
 
-      var self = this;
+        var self = this;
 
-      self.hello('google').login({
-          scope: 'profile,email', }).then(
-          function (e) {
-              var sendToken = self.socialAuth.sendToken('google', e.authResponse.access_token);
+        self.hello('google').login({
+            scope: 'profile,email'}).then(
+            function (e) {
+                var sendToken = self.socialAuth.sendToken('google', e.authResponse.access_token);
 
-              $.when(sendToken).done(function (data) {
+                $.when(sendToken).done(function (data) {
 
-                  localStorage.setItem('token', data.key);
-                  window.location = '/account/profile';
+                    localStorage.setItem('token', data.key);
+                    window.location = '/account/profile';
                 }).fail(function (data) {
-                  api.errorAction(self, data);
+                    api.errorAction(self, data);
                 });
             },
-
-          function (e) {
-              // TODO: notificate user about reason of error;
-              app.routers.navigate(
-                  '/account/login', { trigger: true, replace: true }
-              );
+            function (e) {
+                // TODO: notificate user about reason of error;
+                app.routers.navigate(
+                    '/account/login', {trigger: true, replace: true}
+                );
             });
     },
-
     loginFacebook() {
 
-      var self = this;
+        var self = this;
 
-      self.hello('facebook').login({
-          scope: 'public_profile,email', }).then(
-          function (e) {
-              var sendToken = self.socialAuth.sendToken('facebook', e.authResponse.access_token);
+        self.hello('facebook').login({
+            scope: 'public_profile,email'}).then(
+            function (e) {
+                var sendToken = self.socialAuth.sendToken('facebook', e.authResponse.access_token);
 
-              $.when(sendToken).done(function (data) {
-                  localStorage.setItem('token', data.key);
-                  window.location = '/account/profile';
+                $.when(sendToken).done(function (data) {
+                    localStorage.setItem('token', data.key);
+                    window.location = '/account/profile';
                 }).fail(function (data) {
-                  api.errorAction(self, data);
+                    api.errorAction(self, data);
                 });
             },
+            function (e) {
 
-          function (e) {
-
-              // TODO: notificate user about reason of error;
-              app.routers.navigate(
-                  '/account/login', { trigger: true, replace: true }
-              );
+                // TODO: notificate user about reason of error;
+                app.routers.navigate(
+                    '/account/login', {trigger: true, replace: true}
+                );
             });
 
     },
-
     loginLinkedin() {
 
-      var self = this;
+        var self = this;
 
-      self.hello('linkedin').login({
-          scope: 'r_basicprofile,r_emailaddress', }).then(
-          function (e) {
-              var sendToken = self.socialAuth.sendToken('linkedin', e.authResponse.access_token);
+        self.hello('linkedin').login({
+            scope: 'r_basicprofile,r_emailaddress',}).then(
+            function (e) {
+                var sendToken = self.socialAuth.sendToken('linkedin', e.authResponse.access_token);
 
-              $.when(sendToken).done(function (data) {
-                  localStorage.setItem('token', data.key);
-                  window.location = '/account/profile';
+                $.when(sendToken).done(function (data) {
+                    localStorage.setItem('token', data.key);
+                    window.location = '/account/profile';
                 }).fail(function (data) {
-                  api.errorAction(self, data);
+                    api.errorAction(self, data);
                 });
             },
+            function (e) {
 
-          function (e) {
-
-              // TODO: notificate user about reason of error;
-              app.routers.navigate(
-                  '/account/login', { trigger: true, replace: true }
-              );
+                // TODO: notificate user about reason of error;
+                app.routers.navigate(
+                    '/account/login', {trigger: true, replace: true}
+                );
             });
 
-    },
+    }
   }),
 
   reset: Backbone.View.extend({
@@ -246,7 +241,7 @@ module.exports = {
       'submit form': 'submit',
     },
 
-    render() {
+    render(){
       let template = require('./templates/reset.pug');
       this.$el.html(template({}));
       return this;
@@ -264,7 +259,7 @@ module.exports = {
           '<section class="reset"><div class="container"><div class="col-lg-12"><h2 class="dosis text-uppercase text-sm-center text-xs-center m-t-85">' + data.success + '</h2></div></div></section>'
         );
       });
-    },
+    }
 
   }),
 };
