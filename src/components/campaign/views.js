@@ -39,12 +39,23 @@ module.exports = {
       'click .see-all-risks': 'seeAllRisks',
       'click .see-all-faq': 'seeAllFaq',
       'click .linkresponse': 'checkResponse',
+      // 'click .see-all-article-press': 'seeAllArticlePress',
       'submit .comment-form': 'submitComment',
     },
     initialize(options) {
       $(document).off("scroll", this.onScrollListener);
       $(document).on("scroll", this.onScrollListener);
     },
+
+    // seeAllArticlePress(e) {
+    //   e.preventDefault();
+    //   let $elems = this.$('.hidden-article-press');
+    //   if ($elems.css('display') == 'none') {
+    //     $elems.css('display', 'inline-block');
+    //   } else {
+    //     $elems.css('display', 'none');
+    //   }
+    // },
 
     seeAllRisks(e){
       e.preventDefault();
