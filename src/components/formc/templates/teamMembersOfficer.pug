@@ -129,30 +129,32 @@ section.formc-team-members-director.container.m-b-85
             |  Add Previous Position within the Company                                                             
 
       b.col-lg-12.m-t-3.m-b-3 Business experience for past three years: Please list your employers, titles and dates of positions held during the past three years with an indication of job responsibilities.
-      +fieldBlock("employer", '', {
-        class1: 'col-lg-3 col-md-12 text-md-left m-b-0',
-        class2: 'col-lg-9 col-md-12',
-        type: 'text',
-        placeholder: 'Employer',
-        })
-      +fieldBlock("employers_principal", '', {
-        class1: 'col-lg-3 col-md-12 text-md-left p-t-0 m-b-0',
-        class2: 'col-lg-9 col-md-12',
-        type: 'text',
-        placeholder: 'Employer’s Principal Business',
-        })
-      +fieldBlock("title", '', {
-        class1: 'col-lg-3 col-md-12 text-md-left  m-b-0',
-        class2: 'col-lg-9 col-md-12',
-        type: 'text',
-        placeholder: 'Title',
-        })
-      +fieldBlock("responsibilities", '', {
-        class1: 'col-lg-3 col-md-12 text-md-left  m-b-0',
-        class2: 'col-lg-9 col-md-12',
-        type: 'text',
-        placeholder: 'Responsibilities',
-        })
+      .row
+        .col-lg-12
+          +fieldBlock("employer", '', {
+            class1: 'col-lg-3 col-md-12 text-md-left m-b-0',
+            class2: 'col-lg-9 col-md-12',
+            type: 'text',
+            placeholder: 'Employer',
+            })
+          +fieldBlock("employers_principal", '', {
+            class1: 'col-lg-3 col-md-12 text-md-left p-t-0 m-b-0',
+            class2: 'col-lg-9 col-md-12',
+            type: 'text',
+            placeholder: 'Employer’s Principal Business',
+            })
+          +fieldBlock("title", '', {
+            class1: 'col-lg-3 col-md-12 text-md-left  m-b-0',
+            class2: 'col-lg-9 col-md-12',
+            type: 'text',
+            placeholder: 'Title',
+            })
+          +fieldBlock("responsibilities", '', {
+            class1: 'col-lg-3 col-md-12 text-md-left  m-b-0',
+            class2: 'col-lg-9 col-md-12',
+            type: 'text',
+            placeholder: 'Responsibilities',
+            })
       .row
         .col-lg-6.col-md-12
           .col-lg-6.text-lg-right.text-md-left.p-t-0
@@ -174,7 +176,8 @@ section.formc-team-members-director.container.m-b-85
                 input(type="number"  placeholder="MM").form-control
               .col-lg-6.p-r-0
                 input(type="number"  placeholder="YYYY").form-control
-      .experiences
+      .row
+        .experiences
       .row.add-link
         .col-lg-9.offset-1.pull-right
           a(href="#" data-section="experiences").link-2.add-section
