@@ -231,4 +231,27 @@ module.exports = {
       return this;
     },
   }),
+
+  issueDashboard: Backbone.View.extend({
+
+    render(){
+      const template = require('./templates/issuerDashboard.pug');
+
+      this.$el.html(
+        template({ })
+      );
+
+      const socket = require('socket.io-client')('http://localhost:3000');
+      socket.on('connect', function () {
+        socket.emit('newUser', app.user.id, function (data) {
+          console.log(data); 
+        });
+      });
+      socket.on('notification', function(msg){
+        console.log(msg);
+        $('.notification-container ul').append($('<li>').html('<a>' + msg + '</a>'));
+      });
+      return this;
+    },
+  }),
 };
