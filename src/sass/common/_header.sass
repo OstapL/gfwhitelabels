@@ -129,8 +129,8 @@ header
   .navbar-toggleable-md::after
     clear: none
 
-  background-color: transparent
-  background: $menu_backgound_from
+  background-color: $menu_backgound_from
+  background: $menu_backgound_from $header_bg_image
 
   .navbar
     padding-top: $navbar-header-padd-top
@@ -451,7 +451,8 @@ header
     max-height: none
     width: 100%
 
-    background: rgba($menu_backgound_from, .96)
+    background-color: rgba($menu_backgound_from, .96)
+    background: rgba($menu_backgound_from, .96) $header_bg_image
 
     nav
       position: absolute
