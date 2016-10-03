@@ -34,8 +34,16 @@ module.exports = {
       delete data.type;
     }
 
+    if(url.indexOf('http') == -1) {
+      url = serverUrl + url
+    } 
+
+    if(type == 'POST' || type == 'PUT') {
+      data = JSON.stringify(data);
+    }
+
     let params = _.extend({
-      url: serverUrl + url,
+      url: url,
       type: type,
       data: data,
     }, api.requestOptions);
@@ -159,6 +167,7 @@ module.exports = {
 
   requestOptions: {
     dataType: 'json',
+    //contentType: "application/json; charset=utf-8",
     beforeSend: function (xhr) {
       let token = localStorage.getItem('token');
       if (token !== null && token !== '') {
