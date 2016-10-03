@@ -253,13 +253,15 @@ module.exports = {
                 if (this.model.previous_positions) {
                   this.previous_positionsIndex = Object.keys(this.model.previous_positions).length;
                 } else {
-                  this.previous_positionsIndex = 0;
+                  // this.previous_positionsIndex = 0;
+                  this.previous_positionsIndex = 1;
                 }
 
                 if (this.model.experiences) {
                   this.experiencesIndex = Object.keys(this.model.experiences).length;
                 } else {
-                  this.experiencesIndex = 0;
+                  // this.experiencesIndex = 0;
+                  this.experiencesIndex = 1;
                 }
 
 
