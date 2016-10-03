@@ -763,11 +763,35 @@ module.exports = {
     })),
 
     financialCondition: Backbone.View.extend(_.extend(menuHelper.methods, {
-        initialize(options) {},
+        initialize(options) {
+            this.fields = options.fields;
+        },
 
         events: _.extend({
             'submit form': 'submit',
+            'click input[name=operating_history]': 'onOperatingHistoryChange',
+            'click input[name=previous_security]': 'onPreviousSecurityChange',
         }, menuHelper.events),
+
+        onOperatingHistoryChange(e) {
+            let operatingHistory = this.$('input[name=operating_history]:checked').val();
+
+            if (operatingHistory == 'no') {
+                this.$('.operating-history-container').hide();
+            } else {
+                this.$('.operating-history-container').show();
+            }
+        },
+
+        onPreviousSecurityChange(e) {
+            let previousSecurity = this.$('input[name=previous_security]:checked').val();
+
+            if (previousSecurity == 'no') {
+                this.$('.previous-security-container').hide();
+            } else {
+                this.$('.previous-security-container').show();
+            }
+        },
 
         submit(e) {
             e.preventDefault();
