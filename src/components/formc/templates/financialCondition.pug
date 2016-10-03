@@ -37,10 +37,10 @@ section.formc-team-members-director.container.m-b-85
         .form-group.form-section.m-t-2.m-b-0
           .radio-input.m-b-1
             label 
-              input(type="radio" name="operating_history" value="yes" checked=(values['operating_history'] == 'yes'))
+              input(type="radio" name="operating_history" value="yes" checked=(values['operating_history'] == 'yes') target=".operating-history-container")
               |  Yes
             label 
-              input(type="radio" name="operating_history" value="no" checked=(values['operating_history'] == 'no'))
+              input(type="radio" name="operating_history" value="no" checked=(values['operating_history'] == 'no') target=".operating-history-container")
               |  No
         .operating-history-container(style="display:" + (values['operating_history'] == 'no' ? 'none' : 'block'))
             b Please discuss your historical results for each period for which you provide financial statements.  The discussion should focus on financial milestones and operational, liquidity and other challenges.  Please also discuss whether historical results and cash flows are representative of what investors should expect in the future. Take into account the proceeds of the offering and any other known sources of capital. Please discuss how the proceeds from the offering will affect your liquidity, whether these funds are necessary to the viability of the business, and how quickly you anticipate using your available cash.  Please also discuss other available sources of capital, such as lines of credit or required contributions by shareholders, for example.
@@ -83,10 +83,10 @@ section.formc-team-members-director.container.m-b-85
         .form-group.form-section.m-t-2.m-b-0
           .radio-input.m-b-1
             label 
-              input(type="radio" name="previous_security" value="yes" checked=(values['previous_security'] == 'yes'))
+              input(type="radio" name="previous_security" value="yes" checked=(values['previous_security'] == 'yes') target=".previous-security-container")
               |  Yes
             label 
-              input(type="radio" name="previous_security" value="no" checked=(values['previous_security'] == 'no'))
+              input(type="radio" name="previous_security" value="no" checked=(values['previous_security'] == 'no') target=".previous-security-container")
               |  No
         .previous-security-container(style="display:" + (values['previous_security'] == 'no' ? 'none' : 'block'))
             +fieldBlock("how_much", '', {

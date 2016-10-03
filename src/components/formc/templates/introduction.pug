@@ -35,10 +35,10 @@ section.formc.introduction.create-company-media.container
             p.font-weight-bold Has the issuer or any of its predecessors previously failed to comply with the ongoing reporting requirements of Rule 202 Regulation Crowdfunding?
             .form-group
               label
-                input(type="radio" name="failed_to_comply" value="yes" checked=values['failed_to_comply'] ? true : false)
+                input(type="radio" name="failed_to_comply" value="yes" checked=values['failed_to_comply'] ? true : false target=".explain")
                 | Yes
               label
-                input(type="radio" name="failed_to_comply" value="no" checked=values['failed_to_comply'] ? false : true)
+                input(type="radio" name="failed_to_comply" value="no" checked=values['failed_to_comply'] ? false : true target=".explain")
                 | No
           div(style='display:' + (values['failed_to_comply'] ? 'block' : 'none') + ';').explain
             .form-group.row
