@@ -40,17 +40,18 @@ section.formc-team-members-director.container.m-b-85
         .form-group.form-section.m-t-1.m-b-0
           .radio-input.m-b-1
             label 
-              input(type="radio")
+              input(type="radio" name="transaction_past_year" value="yes" checked=(values['transaction_past_year'] == 'yes') target=".transactions-past-year-container")
               |  Yes
             label 
-              input(type="radio")
+              input(type="radio" name="transaction_past_year" value="no" checked=(values['transaction_past_year'] == 'no') target=".transactions-past-year-container")
               |  No
-        +fieldBlock("explain", '', {
-          class1: 'col-lg-3 col-md-12 text-md-left text-xl-right',
-          class2: 'col-lg-9 col-md-12',
-          type: 'textarea',
-          placeholder: '',
-        })
+        .transactions-past-year-container(style="display:" + (values['transaction_past_year'] == 'no' ? 'none' : 'block'))
+          +fieldBlock("explain", '', {
+            class1: 'col-lg-3 col-md-12 text-md-left text-xl-right',
+            class2: 'col-lg-9 col-md-12',
+            type: 'textarea',
+            placeholder: '',
+          })
         b In addition to the information expressly required to be included in this Form, include:
         +fieldBlock("material_informatione", '', {
           class1: 'col-lg-12 col-md-12 text-md-left text-xl-left',

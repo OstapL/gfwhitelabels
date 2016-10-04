@@ -109,7 +109,7 @@ module.exports = Backbone.Router.extend({
       el: '#content',
       model: {
         id: id,
-        had_transactions: 'yes'
+        had_transactions: 'no'
       },
       fields: {
         transactions: {},
@@ -294,6 +294,7 @@ module.exports = Backbone.Router.extend({
       el: '#content',
       model: {
         id: id,
+        transaction_past_year: 'no',
       },
       // fields: {},
 

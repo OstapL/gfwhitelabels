@@ -399,7 +399,7 @@ module.exports = {
         },
     }),*/
 
-    relatedParties: Backbone.View.extend(_.extend(addSectionHelper.methods, menuHelper.methods, {
+    relatedParties: Backbone.View.extend(_.extend(addSectionHelper.methods, menuHelper.methods, yesNoHelper.methods, {
         name: 'relatedParties',
         initialize(options) {
             this.fields = options.fields;
@@ -407,22 +407,22 @@ module.exports = {
 
         events: _.extend({
             'submit form': 'submit',
-            'click input[name=had_transactions]': 'onHadTransactionsChange',
-        }, addSectionHelper.events, menuHelper.events),
+            // 'click input[name=had_transactions]': 'onHadTransactionsChange',
+        }, addSectionHelper.events, menuHelper.events, yesNoHelper.events),
 
         // addSection: jsonActions.addSection,
         // deleteSection: jsonActions.deleteSection,
         
-        onHadTransactionsChange(e) {
-            let hadTransactions = this.$('input[name=had_transactions]:checked').val();
+        // onHadTransactionsChange(e) {
+        //     let hadTransactions = this.$('input[name=had_transactions]:checked').val();
 
-            if (hadTransactions == 'no') {
-                this.$('.transactions-container').hide();
-                // i'll need to take out transactions elements as well.
-            } else {
-                this.$('.transactions-container').show();
-            }
-        },
+        //     if (hadTransactions == 'no') {
+        //         this.$('.transactions-container').hide();
+        //         // i'll need to take out transactions elements as well.
+        //     } else {
+        //         this.$('.transactions-container').show();
+        //     }
+        // },
 
         submit(e) {
             e.preventDefault();
@@ -934,12 +934,12 @@ module.exports = {
         },
     })),
 
-    backgroundCheck: Backbone.View.extend(_.extend(menuHelper.methods, {
+    backgroundCheck: Backbone.View.extend(_.extend(menuHelper.methods, yesNoHelper.methods, {
         initialize(options) {},
 
         events: _.extend({
             'submit form': 'submit',
-        }, menuHelper.events),
+        }, menuHelper.events, yesNoHelper.events),
 
         submit(e) {
             e.preventDefault();
