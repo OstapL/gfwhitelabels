@@ -49,16 +49,17 @@ section.formc-team-members-director.container.m-b-85
         .form-group.form-section.m-t-2.m-b-0
           .radio-input.m-b-1
             label 
-              input(type="radio")
+              input(type="radio" name="have_loans_debt" value="yes" checked=(values['have_loans_debt'] == 'yes') target=".have-loans-debt")
               |  Yes
             label 
-              input(type="radio")
+              input(type="radio" name="have_loans_debt" value="no" checked=(values['have_loans_debt'] == 'no') target=".have-loans-debt")
               |  No
-        +fieldBlock("loans", '', {
-            class1: 'col-lg-3 col-md-3',
-            class2: 'col-lg-9 col-md-9',
-            type: 'json',
-            })
+        .have-loans-debt(style="display:" + (values['have_loans_debt'] == 'no' ? 'none' : 'block') + ";")
+            +fieldBlock("loans", '', {
+                class1: 'col-lg-3 col-md-3',
+                class2: 'col-lg-9 col-md-9',
+                type: 'json',
+                })
         //- +fieldBlock("creditor", '', {
         //- class1: 'col-lg-3 col-md-12 text-md-left text-xl-right text-xl-left',
         //- class2: 'col-lg-9 col-md-12',
@@ -100,54 +101,55 @@ section.formc-team-members-director.container.m-b-85
                 .form-group.form-section.m-t-2.m-b-0
                   .radio-input.m-b-1
                     label 
-                      input(type="radio")
+                      input(type="radio" name="conduct_exempt_offerings" value="yes" checked=(values['conduct_exempt_offerings'] == 'yes') target=".conduct-exempt-offerings-container")
                       |  Yes
                     label 
-                      input(type="radio")
+                      input(type="radio" name="conduct_exempt_offerings" value="no" checked=(values['conduct_exempt_offerings'] == 'no') target=".conduct-exempt-offerings-container")
                       |  No
-        .row
-            .date-input.required.col-lg-12
-            
-                .col-date.form-group.m-b-0
-                    +fieldBlock("exempt_offerings", '', {
-                        class1: 'col-lg-3 col-md-3',
-                        class2: 'col-lg-9 col-md-9',
-                        type: 'json',
-                    })
-                    //- +fieldBlock("date_offering", '', {
-                    //-   class1: 'col-lg-3 col-md-3 ',
-                    //-   class2: 'col-lg-9 col-md-8 pull-md-right',
-                    //- })
+        .conduct-exempt-offerings-container(style="display:" + (values['conduct_exempt_offerings'] == 'no' ? 'none' : 'block') + ";")
+            .row
+                .date-input.required.col-lg-12
+                
+                    .col-date.form-group.m-b-0
+                        +fieldBlock("exempt_offerings", '', {
+                            class1: 'col-lg-3 col-md-3',
+                            class2: 'col-lg-9 col-md-9',
+                            type: 'json',
+                        })
+                        //- +fieldBlock("date_offering", '', {
+                        //-   class1: 'col-lg-3 col-md-3 ',
+                        //-   class2: 'col-lg-9 col-md-8 pull-md-right',
+                        //- })
 
-                    //- +fieldBlock("exemption", '', {
-                    //- class1: 'col-lg-3 col-md-12  text-md-left text-xl-right text-xl-left',
-                    //- class2: 'col-lg-9 col-md-12',
-                    //- type: 'text',
-                    //- placeholder: 'Exemption Relied Upon',
-                    //- })
-                    //- +fieldBlock("securities", '', {
-                    //- class1: 'col-lg-3 col-md-12  text-md-left text-xl-right text-xl-left',
-                    //- class2: 'col-lg-9 col-md-12',
-                    //- type: 'text',
-                    //- placeholder: 'Securities Offered',
-                    //- })
-                    //- +fieldBlock("amount", '', {
-                    //- class1: 'col-lg-3 col-md-12  text-md-left text-xl-right text-xl-left',
-                    //- class2: 'col-lg-9 col-md-12',
-                    //- type: 'text',
-                    //- placeholder: 'Amount Sold',
-                    //- })
-                    //- +fieldBlock("use", '', {
-                    //- class1: 'col-lg-3 col-md-12  text-md-left text-xl-right text-xl-left',
-                    //- class2: 'col-lg-9 col-md-12',
-                    //- type: 'text',
-                    //- placeholder: 'Use of Proceeds',
-                    //- })
-        .row.add-link
-            .col-lg-9.offset-1.pull-right
-                a(href="#" data-section="exempt_offerings").link-2.add-section
-                    i.fa.fa-plus
-                    |  Add Another Exemption Offering
+                        //- +fieldBlock("exemption", '', {
+                        //- class1: 'col-lg-3 col-md-12  text-md-left text-xl-right text-xl-left',
+                        //- class2: 'col-lg-9 col-md-12',
+                        //- type: 'text',
+                        //- placeholder: 'Exemption Relied Upon',
+                        //- })
+                        //- +fieldBlock("securities", '', {
+                        //- class1: 'col-lg-3 col-md-12  text-md-left text-xl-right text-xl-left',
+                        //- class2: 'col-lg-9 col-md-12',
+                        //- type: 'text',
+                        //- placeholder: 'Securities Offered',
+                        //- })
+                        //- +fieldBlock("amount", '', {
+                        //- class1: 'col-lg-3 col-md-12  text-md-left text-xl-right text-xl-left',
+                        //- class2: 'col-lg-9 col-md-12',
+                        //- type: 'text',
+                        //- placeholder: 'Amount Sold',
+                        //- })
+                        //- +fieldBlock("use", '', {
+                        //- class1: 'col-lg-3 col-md-12  text-md-left text-xl-right text-xl-left',
+                        //- class2: 'col-lg-9 col-md-12',
+                        //- type: 'text',
+                        //- placeholder: 'Use of Proceeds',
+                        //- })
+            .row.add-link
+                .col-lg-9.offset-1.pull-right
+                    a(href="#" data-section="exempt_offerings").link-2.add-section
+                        i.fa.fa-plus
+                        |  Add Another Exemption Offering
         .border-bottom.m-t-3.m-b-3
         h3.text-xs-center Outstanding Securities
         p What other securities are outstanding? Describe the material terms of any other outstanding securies.

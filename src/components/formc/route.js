@@ -275,6 +275,8 @@ module.exports = Backbone.Router.extend({
       el: '#content',
       model: {
         id: id,
+        have_loans_debt: 'no',
+        conduct_exempt_offerings: 'no',
       },
       fields: {
         loans: {},

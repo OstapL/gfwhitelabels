@@ -825,14 +825,14 @@ module.exports = {
         },
     })),
 
-    outstandingSecurity: Backbone.View.extend(_.extend(addSectionHelper.methods, menuHelper.methods, {
+    outstandingSecurity: Backbone.View.extend(_.extend(addSectionHelper.methods, menuHelper.methods, yesNoHelper.methods, {
         initialize(options) {
             this.fields = options.fields;
         },
 
         events: _.extend({
             'submit form': 'submit',
-        }, addSectionHelper.events, menuHelper.events),
+        }, addSectionHelper.events, menuHelper.events, yesNoHelper.events),
 
         submit(e) {
             e.preventDefault();
