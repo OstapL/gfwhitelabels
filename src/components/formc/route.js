@@ -24,7 +24,7 @@ module.exports = Backbone.Router.extend({
     let fieldsR = api.makeCacheRequest(formcServer + '/' + id + '/introduction', 'OPTIONS');
     let dataR = api.makeCacheRequest(formcServer + '/' + id + '/introduction');
 
-    $.when(fieldsR, dataR).done((fields, values) => {
+    $.when(fieldsR, dataR).done((fields, data) => {
       var i = new View.introduction({
         el: '#content',
         // fields: meta[0].actions.POST,
