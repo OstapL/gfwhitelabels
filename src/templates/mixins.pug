@@ -17,6 +17,20 @@ mixin breadcrumbs(title, subtitle, data)
                                 else
                                     a(href=elem[1])= elem[0]
 
+
+mixin nestedBlockFooter(name, text, attr)
+    .row.add-link
+      .col-lg-9.offset-1.pull-right
+        a(href="#" data-section=name).link-2.add-section
+          i.fa.fa-plus
+            |  Add Another #{ text }
+
+
+mixin nestedBlockHeader(name, text, attr)
+  .transactions-container
+    .repeat-block
+
+
 mixin fieldBlock(name, data, attr)
 
     // If we did not created fields vocabulary

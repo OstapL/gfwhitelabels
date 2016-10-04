@@ -16,7 +16,7 @@ section.create-company-team-add.container
 
     //START RIGHT BLOCK
     .col-lg-8
-        h2.text-uppercase.text-lg-center.text-xs-center.dosis.m-t-0 team members
+        h2.text-uppercase.text-lg-center.text-xs-center.dosis.m-t-0.mb50 team members
         //div(style='display: ' + (values.members.length < 1 ? 'block' : 'none')).form-group.text-lg-center.notification
         .col-lg-12
             .warning-block.warning-team-add.text-lg-left
@@ -74,8 +74,8 @@ section.create-company-team-add.container
                 .border-bottom.m-t-3.m-b-3
             .col-lg-12.m-b-1
                 p Please identify the Officers in your company responsible for the following roles. Please note that, if necessary, the same person may be identified with multiple titles
-            .col-lg-12
-                table.table.table-bordered
+            .col-lg-12.table-responsive
+                table.table.table-bordered.mb50
                     thead
                         tr.color-grey
                             th.text-xs-center Title
@@ -111,6 +111,5 @@ section.create-company-team-add.container
 
             div(style="display: " +  (values.team_members.length >= 1 ? 'block' : 'none')).col-lg-12.pull-lg-right.p-r-0.m-t-3
 
-            .m-t-3
-              .col-lg-12.text-md-center.text-sm-center.text-xs-center
+            .col-lg-12.text-md-center.text-sm-center.text-xs-center
                 button.btn.btn-primary.text-uppercase.pull-lg-right Save
