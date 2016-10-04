@@ -19,7 +19,7 @@ include ../../../templates/menuRaiseFund.pug
 )
 
 mixin nestedRelated(name, text, attr)
-  +nestedBlockHeader()
+  +nestedBlockHeader(name, text, attr)
   +fieldBlock('amount_of_interest', values['amount_of_interest'], {
     class1: 'col-lg-3 col-md-3',
     class2: 'col-lg-9 col-md-9',
@@ -28,9 +28,7 @@ mixin nestedRelated(name, text, attr)
     class1: 'col-lg-3 col-md-3',
     class2: 'col-lg-9 col-md-9',
   })
-  +nestedBlockFooter()
-  script
-    - global.nestedRelated = this.nestedRelated
+  +nestedBlockFooter(name, text, attr)
 
 
 section.formc-team-members-director.container.m-b-85
