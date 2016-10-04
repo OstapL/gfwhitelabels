@@ -26,7 +26,7 @@ section.formc-team-members-director.container.m-b-85
   +menu('formc', 'team-members-director')
 
   //START RIGHT BLOCK
-  .col-lg-8
+  .col-lg-8.team-member-formc
     h2.text-uppercase.text-lg-center.text-xs-center.m-t-0.dosis Team members (director)
     form(metod="post" action="").form-section
       +fieldBlock("first_name", '', {
@@ -99,7 +99,7 @@ section.formc-team-members-director.container.m-b-85
         .delete-section-container
           a(href="#" data-section="previous_positions" data-index='0').delete-section
             i.fa.fa-times
-        .form-group.clearfix.index_0
+        .form-group.m-b-0.clearfix.index_0
           +fieldBlock("position", '', {
             class1: 'col-lg-3 col-md-12 text-md-left m-b-0',
             class2: 'col-lg-9 col-md-12',
@@ -140,7 +140,7 @@ section.formc-team-members-director.container.m-b-85
         .delete-section-container
           a(href="#" data-section="experiences" data-index='0').delete-section
             i.fa.fa-times
-        .form-group.clearfix.index_0
+        .form-group.m-b-0.clearfix.index_0
           +fieldBlock("employer", '', {
             class1: 'col-lg-3 col-md-12 text-md-left m-b-0',
             class2: 'col-lg-9 col-md-12',
@@ -185,7 +185,7 @@ section.formc-team-members-director.container.m-b-85
                   .col-lg-6.p-r-0
                     input(type="number"  placeholder="MM").form-control
                   .col-lg-6.p-r-0
-                input(type="number"  placeholder="YYYY").form-control
+                    input(type="number"  placeholder="YYYY").form-control
       .row.add-link
         .col-lg-9.offset-1.pull-right
           a(href="#" data-section="experiences").link-2.add-section
