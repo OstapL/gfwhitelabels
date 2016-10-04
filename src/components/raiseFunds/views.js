@@ -60,8 +60,10 @@ const onPreviewAction = function(e) {
   e.preventDefault();
   this.$el.find('form').submit()
   app.showLoading();
+  let that = this;
   setTimeout(function() {
-    window.location = e.target.dataset.href + '?preview=1'
+    // window.location = e.target.dataset.href + '?preview=1'
+    window.location = '/api/campaign/' + (that.campaign ? that.campaign.id : that.model.id) + '?preview=1'
   }, 100);
 };
 
