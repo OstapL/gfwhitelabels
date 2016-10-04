@@ -317,7 +317,7 @@ section
                   //-           .pos-bottom
                   //-             .links.d-inline-block.card-text #{ formatHelper.getWebsiteUrl(v.link) }
                   //-   - counter++;
-                .row.m-b-3
+                .row.m-b-3(style="display:" + (keys.slice(3).length > 0 ? 'block' : 'none') + ";")
                   .col-lg-12.text-xs-center
                     //- a(href="#hidden-article-press" data-toggle="collapse").link-4.see-all-article-press See All Articles and Press
                     a(href="#hidden-article-press" data-toggle="collapse").link-4.see-all-article-press Show More
