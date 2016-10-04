@@ -1,20 +1,48 @@
 - 'use strict';
-mixin getCompanyUrl(campaign, current, step, name)
-    if campaign.id || current == step
+//- mixin getCompanyUrl(campaign, currentStep, step, name)
+//-     if campaign.id || currentStep == step
+//-         a(
+//-           href="/campaign/" + step + "/" + campaign.id 
+//-           class="list-group-item list-group-item-action " + (currentStep == step ? 'active' : '')
+//-         ) #{ name }
+//-             if currentStep == step
+//-                 i.fa.fa-check
+//-     else
+//-         a(
+//-           href="#"
+//-           class="list-group-item list-group-item-action disabled" 
+//-         ) #{ name }
+
+//- mixin getFormcUrl(campaign, currentStep, step, name)
+//-     if campaign.id || currentStep == step
+//-         a(
+//-           href="/formc/" + step + "/" + campaign.id 
+//-           class="list-group-item list-group-item-action " + (currentStep == step ? 'active' : '')
+//-         ) #{ name }
+//-             if currentStep == step
+//-                 i.fa.fa-check
+//-     else
+//-         a(
+//-           href="#"
+//-           class="list-group-item list-group-item-action disabled" 
+//-         ) #{ name }
+
+mixin getCompanyUrl(campaign, currentSection, currentStep, step, name)
+    - let prefix = '/' + currentSection + '/';
+    if campaign.id || currentStep == step
         a(
-          href="/campaign/" + step + "/" + campaign.id 
-          class="list-group-item list-group-item-action " + (current == step ? 'active' : '')
+          href=prefix + step + "/" + campaign.id 
+          class="list-group-item list-group-item-action " + (currentStep == step ? 'active' : '')
         ) #{ name }
-            if current == step
+            if currentStep == step
                 i.fa.fa-check
     else
         a(
           href="#"
           class="list-group-item list-group-item-action disabled" 
         ) #{ name }
-
         
-mixin menu(current)
+mixin menu(currentSection, currentStep)
     .col-lg-3.create_compaign
       .jumbotron.jumbotron-fluid.row
         .raise-funds
@@ -27,34 +55,35 @@ mixin menu(current)
               data-parent="#accordion"
               href="#company"
               aria-expanded="true"
-              class="list-group-item" + (current == 'company' ? ' active ' : '')
+              class="list-group-item" + (currentStep == 'company' ? ' active ' : '')
               )
                 i.fa.fa-briefcase
                 |  Company
                 span.pull-right
                   i.fa.fa-angle-left
-            #company(role="tabpanel" class="panel-collapse collapse " + (current == 'company' ? 'in' : ''))
+            #company(role="tabpanel" class="panel-collapse collapse " + (currentStep == 'company' ? 'in' : ''))
               .list-group
-                a(href="/company/create" class="list-group-item list-group-item-action " + (current == 'company' ? 'active' : '')) Company
+                a(href="/company/create" class="list-group-item list-group-item-action " + (currentStep == 'company' ? 'active' : '')) Company
           .panel.panel-default
             .panel-heading(role="tab")
               a(data-toggle="collapse"
               data-parent="#accordion"
               href="#campaign"
               aria-expanded="true"
-              class="list-group-item" + (current != 'company' ? ' active ' : '')
+              class="list-group-item" + (currentStep != 'company' ? ' active ' : '')
               ).list-group-item
                 i.fa.fa-bar-chart
                 |  Campaign
                 span.pull-right
                   i.fa.fa-angle-down
-            #campaign(role="tabpanel" class="panel-collapse collapse" + (current != 'company' ? ' in' : ''))
+            //- #campaign(role="tabpanel" class="panel-collapse collapse" + (currentStep != 'company' ? ' in' : ''))
+            #campaign(role="tabpanel" class="panel-collapse collapse" + (currentSection == 'campaign' ? ' in' : ''))
                 .list-group
-                    +getCompanyUrl(values, current, 'general_information', 'General Information')
-                    +getCompanyUrl(values, current, 'media', 'Media')
-                    +getCompanyUrl(values, current, 'team-members', 'Team Members')
-                    +getCompanyUrl(values, current, 'specifics', 'Specifics')
-                    +getCompanyUrl(values, current, 'perks', 'Perks')
+                    +getCompanyUrl(values, 'campaign', currentStep, 'general_information', 'General Information')
+                    +getCompanyUrl(values, 'campaign', currentStep, 'media', 'Media')
+                    +getCompanyUrl(values, 'campaign', currentStep, 'team-members', 'Team Members')
+                    +getCompanyUrl(values, 'campaign', currentStep, 'specifics', 'Specifics')
+                    +getCompanyUrl(values, 'campaign', currentStep, 'perks', 'Perks')
           .panel.panel-default
             .panel-heading(role="tab")
               a(data-toggle="collapse"
@@ -66,15 +95,22 @@ mixin menu(current)
                 |  form c
                 span.pull-right
                   i.fa.fa-angle-left
-            #form_c(role="tabpanel").panel-collapse.collapse
+            //- #form_c(role="tabpanel").panel-collapse.collapse
+            #form_c(role="tabpanel" class="panel-collapse collapse" + (currentSection == 'formc' ? ' in' : ''))
                 .list-group
-                    a(href="/formc/introduction").list-group-item.list-group-item-action form c
-                .list-group
-                    a(href="formc/team-members/1").list-group-item.list-group-item-action Team Member
-                .list-group
-                    a(href="#").list-group-item.list-group-item-action Releated Parties
-                .list-group
-                    a(href="#").list-group-item.list-group-item-action Offering
+                    //- a(href="/formc/introduction").list-group-item.list-group-item-action form c
+                    //- a(href="/formc/team-members/1").list-group-item.list-group-item-action Team Member
+                    //- a(href="/formc/related-parties/1").list-group-item.list-group-item-action Related Parties
+                    //- a(href="/formc/use-of-proceeds/1").list-group-item.list-group-item-action Use of Proceeds
+                    //- a(href="/formc/risk-factors/1").list-group-item.list-group-item-action Risk Factors
+                    //- a(href="#").list-group-item.list-group-item-action Offering
+                    +getCompanyUrl(values, 'formc', currentStep, 'introduction', 'Introduction')
+                    +getCompanyUrl(values, 'formc', currentStep, 'team-members', 'Team Members')
+                    +getCompanyUrl(values, 'formc', currentStep, 'related-parties', 'Related Parties')
+                    +getCompanyUrl(values, 'formc', currentStep, 'use-of-proceeds', 'Use of Proceeds')
+                    +getCompanyUrl(values, 'formc', currentStep, 'risk-factors', 'Risk Factors')
+                    +getCompanyUrl(values, 'formc', currentStep, 'offering', 'Offering')
+
       .row
         .education-link-wrap
           .jumbotron.jumbotron-fluid

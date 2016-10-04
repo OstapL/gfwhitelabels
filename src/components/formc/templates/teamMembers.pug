@@ -1,6 +1,8 @@
 - 'use strict';
 include ../../../templates/mixins.pug
-include menu.pug
+//- include menu.pug
+include ../../../templates/menuRaiseFund.pug
+- var fields = { full_time: { label: 'Full-Time'}, part_time: { label: 'Part-Time'}};
 
 +breadcrumbs('Create Company', '', 
     [
@@ -10,47 +12,105 @@ include menu.pug
     ]
 )
 section.create-company-team-add.container
-    +menu('team-members')
+    +menu('formc', 'team-members')
 
     //START RIGHT BLOCK
     .col-lg-8
         h2.text-uppercase.text-lg-center.text-xs-center.dosis.m-t-0 team members
+        //div(style='display: ' + (values.members.length < 1 ? 'block' : 'none')).form-group.text-lg-center.notification
+        .col-lg-12
+            .warning-block.warning-team-add.text-lg-left
+                i.fa.fa-info-circle 
+                span.warning-text Please enter all Officers, Directors and 20% Voting Shareholders.
+                    br
+                    |  We are required by law to run background checks on all of these individuals.  We will email them separately to collect the information required to run these checks - and you'll see the status on your Issuer Dashboard.
+                    br
+                    |  OFFICER means:  president, vice president, secretary, treasurer or principal financial officer, comptroller or principal accounting officer, and any person routinely performing similar functions.
+                    br
+                    |  20% VOTING SHAREHOLDER means: no earlier than 120 days prior to the date of this offering, please list beneficial owners of 20% or more of issuer’s outstanding voting equity securities.
+
         form(metod="post" action="").form-section
-
+            .col-lg-12.m-t-1.m-b-2
+                b How many emploees do you have?
+            .col-lg-6
+                +fieldBlock("full_time", '', {
+                    class1: 'col-lg-4 col-md-12 text-md-left',
+                    class2: 'col-lg-8 col-md-12',
+                    type: 'text',
+                })
+            .col-lg-6
+                +fieldBlock("part_time", '', {
+                    class1: 'col-lg-4 col-md-12 text-md-left',
+                    class2: 'col-lg-8 col-md-12',
+                    type: 'text',
+                })
             .col-lg-12.text-lg-center.text-md-center.text-sm-center.text-xs-center.m-t-2.m-b-2
-                    a(href='/formc/team-members/' + values.id + '/add/director/new').btn.text-uppercase.m-r-3 
-                        i.fa.fa-plus
-                        |  ADD DIRECTOR 
-                    a(href='/formc/team-members/' + values.id + '/add/officer/new').btn.text-uppercase 
-                        i.fa.fa-plus
-                        |  ADD OFFICER
-                    a(href='/formc/team-members/' + values.id + '/add/holder/new').btn.text-uppercase 
-                        i.fa.fa-plus
-                        |  ADD 20% VOTING SHAREHOLDER
-
-            div(style='display: ' + (values.members.length < 1 ? 'block' : 'none')).form-group.text-lg-center.notification
-               .col-lg-12
-                 .campaign-warning.warning-team-add.text-lg-left
-                   i.fa.fa-exclamation-triangle 
-                   span.warning-text 
-                   | Warning! You have to add at least 1 team member to proceed.
+                a(href='/formc/' + values.id + '/team-members/add/director/new').btn.text-uppercase.m-r-3 
+                    i.fa.fa-plus
+                    |  ADD DIRECTOR 
+                a(href='/formc/' + values.id + '/team-members/add/officer/new').btn.text-uppercase 
+                    i.fa.fa-plus
+                    |  ADD OFFICER
+                a(href='/formc/' + values.id + '/team-members/add/holder/new').btn.text-uppercase.m-t-2 
+                    i.fa.fa-plus
+                    |  ADD 20% VOTING SHAREHOLDER
+            
 
             if values.members
                 - counter = 0
                 each v,k in values.members
                     .col-lg-3.m-t-2.p-r-0.p-l-0.m-l-2.m-r-2
                         .team-add-item.text-lg-center.text-xs-center
-                            a(href="/formc/team-members/" + values.id + "/add/" + v.type + '/' + counter).link-1
+                            a(href="/formc/" + values.id + "/team-members/add/" + v.type + '/' + counter).link-1
                                 img(src=v.photo alt=v.first_name).img-circle
                             a(href="#" data-id=counter style="position: absolute").link-1.delete-member.pull-right
                                 i.fa.fa-times
                             p.name.text-uppercase #{v.first_name} #{v.last_name}
                             p.small #{ v.title }
-                            a(href="/formc/team-members/" + values.id + "/add/" + v.type + '/' + counter).link-1
+                            a(href="/formc/" + values.id + "/team-members/add/" + v.type + '/' + counter).link-1
                                 i.fa.fa-pencil-square-o
                     - counter ++
+            .col-lg-12
+                .border-bottom.m-t-3.m-b-3
+            .col-lg-12.m-b-1
+                p Please identify the Officers in your company responsible for the following roles. Please note that, if necessary, the same person may be identified with multiple titles
+            .col-lg-12
+                table.table.table-bordered
+                    thead
+                        tr.color-grey
+                            th.text-xs-center Title
+                            th.text-xs-center Full Name
+                            th.text-xs-center Status
+                    tbody
+                        - let officerTitles = {ceo: 'CEO/President', financial: 'Principal Financial Officer/Treasurer', controller: 'Controller/Principal Accounting Officer',};
+                        each title, key in officerTitles
+                            - //let officer = values.officers[key];
+                            - let officer = '';
+                            tr
+                                //- td CEO/President
+                                td #{title}
+                                //- td.text-xs-center Kenneth Staut
+                                td.text-xs-center #{officer ? (officer.first_name + ' ' + officer.last_name) : ''}
+                                if officer
+                                    td.text-xs-center
+                                        i.fa.fa-check.color-green
+                                else
+                                    td.text-xs-center.color-red Please Identify
 
-            div(style="display: " +  (values.members.length >= 1 ? 'block' : 'none')).col-lg-12.pull-lg-right.p-r-0.m-t-3.text-lg-right.text-md-center.text-sm-center.text-xs-center.buttons-row
-                a(href="/api/campaign/" + values.id target="_blank").btn.btn-secondary.text-uppercase.m-r-3 preview
-                a(href="/campaign/specifics/" + values.id).btn.btn-primary.text-uppercase Go to Specifics
-                    i.fa.fa-angle-right
+                        //- tr
+                        //-     - let financial = values.officers.financial;
+                        //-     td Principal Financial Officer/Treasurer
+                        //-     td.text-xs-center Michael Jenkins
+                        //-     td.text-xs-center
+                        //-         i.fa.fa-check.color-green
+                        //- tr
+                        //-     td Controller/Principal Accounting Officer
+                        //-     td
+                        //-         hr(width="40%")
+                        //-     td.text-xs-center.color-red Please Identify
+
+            div(style="display: " +  (values.team_members.length >= 1 ? 'block' : 'none')).col-lg-12.pull-lg-right.p-r-0.m-t-3
+
+            .m-t-3
+              .col-lg-12.text-md-center.text-sm-center.text-xs-center
+                button.btn.btn-primary.text-uppercase.pull-lg-right Save

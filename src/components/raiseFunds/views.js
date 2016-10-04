@@ -1,4 +1,6 @@
 'use strict';
+let menuHelper = require('helpers/menuHelper.js');
+let addSectionHelper = require('helpers/addSectionHelper.js');
 
 import formatHelper from '../../helpers/formatHelper';
 const appendHttpIfNecessary = formatHelper.appendHttpIfNecessary;
@@ -8,7 +10,7 @@ const dropzoneHelpers = require('helpers/dropzone.js');
 
 // const validation = require('components/validation/validation.js');
 
-const jsonActions = {
+/*const jsonActions = {
   events: {
     'click .add-section': 'addSection',
     'click .delete-section': 'deleteSection',
@@ -53,7 +55,7 @@ const jsonActions = {
     // Fix index counter
     // this[sectionName + 'Index'] --;
   },
-};
+};*/
 
 
 const onPreviewAction = function(e) {
@@ -66,18 +68,18 @@ const onPreviewAction = function(e) {
 };
 
 module.exports = {
-  company: Backbone.View.extend({
+  company: Backbone.View.extend(_.extend(menuHelper.methods, {
     // urlRoot: serverUrl + Urls['company-list'](),
     urlRoot: Urls.company_list(),
     template: require('./templates/company.pug'),
-    events: {
+    events: _.extend({
       'submit form': 'submit',
       'keyup #zip_code': 'changeZipCode',
       'click .update-location': 'updateLocation',
       'click .onPreview': onPreviewAction,
       'change input[name=phone]': 'formatPhone',
       'change #website,#twitter,#facebook,#instagram,#linkedin': appendHttpIfNecessary,
-    },
+    }, menuHelper.events),
 
     initialize(options) {
       this.fields = options.fields;
@@ -160,7 +162,7 @@ module.exports = {
     },
 
     _success(data) {
-      if (this.campaign.hasOwnProperty('id') == false) {
+      if (!this.campaign || this.campaign.hasOwnProperty('id') == false) {
         // IF we dont have campaign data
         // Server should create it
         this.campaign = data.campaign;
@@ -171,16 +173,16 @@ module.exports = {
         { trigger: true, replace: false }
       );
     },
-  }),
+  })),
 
-  generalInformation: Backbone.View.extend({
+  generalInformation: Backbone.View.extend(_.extend(addSectionHelper.methods, menuHelper.methods, {
       // urlRoot: serverUrl + Urls['campaign-list']() + '/general_information',
       urlRoot: Urls['campaign-list']() + '/general_information',
       template: require('./templates/generalInformation.pug'),
       events: _.extend({
           'submit form': api.submitAction,
           'click .onPreview': onPreviewAction,
-        }, jsonActions.events),
+        }, addSectionHelper.events, menuHelper.events),
 
       preinitialize() {
         // ToDo
@@ -191,8 +193,8 @@ module.exports = {
         }
       },
 
-      addSection: jsonActions.addSection,
-      deleteSection: jsonActions.deleteSection,
+      // addSection: jsonActions.addSection,
+      // deleteSection: jsonActions.deleteSection,
       getSuccessUrl(data) {
         return '/campaign/media/' + data.id;
       },
@@ -260,9 +262,9 @@ module.exports = {
         );
         return this;
       },
-    }),
+    })),
 
-  media: Backbone.View.extend({
+  media: Backbone.View.extend(_.extend(addSectionHelper.methods, menuHelper.methods, {
       events: _.extend({
         'submit form': api.submitAction,
         // 'click .delete-image': 'deleteImage',
@@ -272,7 +274,7 @@ module.exports = {
         // 'change #video,.additional_video_link': 'appendHttpsIfNecessary',
         'change .press_link': 'appendHttpIfNecessary',
         'click .onPreview': onPreviewAction,
-      }, jsonActions.events),
+      }, addSectionHelper.events, menuHelper.events),
       urlRoot: Urls['campaign-list']() + '/media',
 
       appendHttpsIfNecessary(e) {
@@ -299,8 +301,8 @@ module.exports = {
         }
       },
 
-      addSection: jsonActions.addSection,
-      deleteSection: jsonActions.deleteSection,
+      // addSection: jsonActions.addSection,
+      // deleteSection: jsonActions.deleteSection,
       getSuccessUrl(data) {
         return '/campaign/team-members/' + data.id;
       },
@@ -479,15 +481,15 @@ module.exports = {
           //e.target.value = id;
         }
       }
-  }),
+  })),
 
-  teamMemberAdd: Backbone.View.extend({
-      events: {
+  teamMemberAdd: Backbone.View.extend(_.extend(menuHelper.methods, {
+      events: _.extend({
         'submit form': 'submit',
         'click .delete-member': 'deleteMember',
         dragover: 'globalDragover',
         dragleave: 'globalDragleave',
-      },
+      }, menuHelper.events),
       // urlRoot: serverUrl + Urls['campaign-list']() + '/team_members',
       urlRoot: Urls['campaign-list']() + '/team_members',
 
@@ -634,12 +636,12 @@ module.exports = {
 
         api.submitAction.call(this, e, json);
       },
-    }),
+    })),
 
-  teamMembers: Backbone.View.extend({
-    events: {
+  teamMembers: Backbone.View.extend(_.extend(menuHelper.methods, {
+    events: _.extend({
       'click .delete-member': 'deleteMember',
-    },
+    }, menuHelper.events),
 
     preinitialize() {
       // ToDo
@@ -690,11 +692,11 @@ module.exports = {
         }
       },
 
-  }),
+  })),
 
-  specifics: Backbone.View.extend({
+  specifics: Backbone.View.extend(_.extend(menuHelper.methods, {
       urlRoot: Urls['campaign-list']() + '/specifics',
-      events: {
+      events: _.extend({
         'submit form': api.submitAction,
         'change input[name="security_type"]': 'updateSecurityType',
         'focus #minimum_raise,#maximum_raise,#minimum_increment,#premoney_valuation,#price_per_share': 'clearZeroAmount',
@@ -703,7 +705,7 @@ module.exports = {
         dragover: 'globalDragover',
         dragleave: 'globalDragleave',
         'click .onPreview': onPreviewAction,
-      },
+      }, menuHelper.events),
 
       globalDragover() {
         // this.$('.dropzone').css({ border: 'dashed 1px lightgray' });
@@ -750,8 +752,8 @@ module.exports = {
         this.$('#max_equity_offered').val(Math.round(100 * maxRaise / (maxRaise + premoneyVal)) + '%');
       },
 
-      addSection: jsonActions.addSection,
-      deleteSection: jsonActions.deleteSection,
+      // addSection: jsonActions.addSection,
+      // deleteSection: jsonActions.deleteSection,
       getSuccessUrl(data) {
         return '/campaign/perks/' + data.id;
       },
@@ -817,13 +819,13 @@ module.exports = {
 
         return this;
       },
-    }),
+    })),
 
-  perks: Backbone.View.extend({
+  perks: Backbone.View.extend(_.extend(addSectionHelper.methods, menuHelper.methods, {
       events: _.extend({
           'submit form': api.submitAction,
           'click .onPreview': onPreviewAction,
-        }, jsonActions.events),
+        }, addSectionHelper.events, menuHelper.events),
       // urlRoot: serverUrl + Urls['campaign-list']() + '/perks',
       urlRoot: Urls['campaign-list']() + '/perks',
 
@@ -835,8 +837,8 @@ module.exports = {
         }
       },
 
-      addSection: jsonActions.addSection,
-      deleteSection: jsonActions.deleteSection,
+      // addSection: jsonActions.addSection,
+      // deleteSection: jsonActions.deleteSection,
       getSuccessUrl(data) {
         return '/campaign/thankyou/' + data.id;
       },
@@ -881,11 +883,14 @@ module.exports = {
         return this;
       },
 
-    }),
+    })),
 
-  thankYou: Backbone.View.extend({
+  thankYou: Backbone.View.extend(_.extend(menuHelper.methods, {
     el: '#content',
     template: require('./templates/thankyou.pug'),
+    events: _.extend({
+      // for view events
+    }, menuHelper.events),
 
     render() {
       console.log(this.model);
@@ -896,5 +901,5 @@ module.exports = {
       );
       return this;
     },
-  }),
+  })),
 };

@@ -171,7 +171,7 @@ module.exports = {
     beforeSend: function (xhr) {
       let token = localStorage.getItem('token');
       if (token !== null && token !== '') {
-        xhr.setRequestHeader('Authorization', 'Token ' + token);
+        xhr.setRequestHeader('Authorization', token);
       }
     },
   },

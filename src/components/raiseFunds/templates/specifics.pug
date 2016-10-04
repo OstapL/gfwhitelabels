@@ -1,6 +1,7 @@
 - 'use strict';
 include ../../../templates/mixins.pug
-include menu.pug
+//- include menu.pug
+include ../../../templates/menuRaiseFund.pug
 
 +breadcrumbs('Create Company', '', 
     [
@@ -11,7 +12,7 @@ include menu.pug
 )
 
 section.campaign-specifics.container.m-b-85
-  +menu('specifics')
+  +menu('campaign', 'specifics')
 
   //START RIGHT BLOCK
   .col-lg-8

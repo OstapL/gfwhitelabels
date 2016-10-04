@@ -1,6 +1,7 @@
 - 'use strict';
 include ../../../templates/mixins.pug
-include menu.pug
+//- include menu.pug
+include ../../../templates/menuRaiseFund.pug
 
 +breadcrumbs('Create Company', '', 
     [
@@ -9,9 +10,8 @@ include menu.pug
         ['Media', ''],
     ]
 )
-
 section.create-company-media.container.media-container
-  +menu('media')
+  +menu('campaign', 'media')
   //START RIGHT BLOCK
   .col-lg-9
     h2.text-uppercase.dosis.text-lg-center.text-xs-center.dosis.m-t-0.m-b-3 Media

@@ -32,7 +32,9 @@ module.exports = {
     template: require('./templates/detail.pug'),
     events: {
       'click .tabs-scroll .nav .nav-link': 'smoothScroll',
-      'click .list-group-item-action': 'toggleActiveAccordionTab',
+      // 'click .list-group-item-action': 'toggleActiveAccordionTab',
+      'hide.bs.collapse .panel': 'onCollapse',
+      'show.bs.collapse .panel': 'onCollapse',
       'click .linkedin-share': 'shareOnLinkedin',
       'click .facebook-share': 'shareOnFacebook',
       'click .twitter-share': 'shareOnTwitter',
@@ -41,6 +43,20 @@ module.exports = {
       'click .linkresponse': 'checkResponse',
       'submit .comment-form': 'submitComment',
     },
+
+    onCollapse (e) {
+      let $elem = $(e.currentTarget);
+      let $icon = $elem.find('.fa');
+      let $a = $elem.find('a.list-group-item-action');
+      if (e.type === 'show') {
+        $a.addClass('active');
+        $icon.removeClass('fa-angle-down').addClass('fa-angle-up');
+      } else if (e.type === 'hide') {
+        $a.removeClass('active');
+        $icon.removeClass('fa-angle-up').addClass('fa-angle-down');
+      }
+    },
+
     initialize(options) {
       $(document).off("scroll", this.onScrollListener);
       $(document).on("scroll", this.onScrollListener);
@@ -73,7 +89,7 @@ module.exports = {
       });
     },
 
-    toggleActiveAccordionTab(e) {
+/*    toggleActiveAccordionTab(e) {
       let $elem = $(e.target);
       let $icon = $elem.find('.fa');
 
@@ -86,7 +102,7 @@ module.exports = {
           $icon.removeClass('fa-angle-down').addClass('fa-angle-up');
       }
       $elem.toggleClass('active');
-    },
+    },*/
 
     onScrollListener() {
       var scrollPos = $(window).scrollTop(),

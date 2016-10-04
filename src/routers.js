@@ -49,11 +49,11 @@ let appRoutes = Backbone.Router.extend({
     });
     let r9  = new establishedBusinessCalc;
     _.each(r9.routes, (funcName, path) => {
-      this.routes[path] = r8[funcName];
+      this.routes[path] = r9[funcName];
     });
     let r10  = new formc;
     _.each(r10.routes, (funcName, path) => {
-      this.routes[path] = r8[funcName];
+      this.routes[path] = r10[funcName];
     });
   },
 
