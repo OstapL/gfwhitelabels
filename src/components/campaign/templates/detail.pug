@@ -281,18 +281,45 @@ section
             .row
               .col-lg-12.text-center-flex
                 .articles_press
-                  each v,k in values.press
-                    .col-lg-4.articles_press
-                      a(href=v.link target="_blank")
-                        .card.card-inverse.m-b-2
-                          .card-title
-                            i.fa.fa-link
-                            p.card-text #{ v.headline }
-                            .pos-bottom
-                              .links.d-inline-block.card-text #{ formatHelper.getWebsiteUrl(v.link) }
+                  - let keys = Object.keys(values.press);
+                  - let counter = 0;
+                  div
+                    each k in keys.slice(0,3)
+                      - let v = values.press[k]
+                      div(class="col-lg-4 articles_press" + (counter < 3 ? '' : ' hidden-article-press') style="display:" + (counter < 3 ? 'inline-block' : 'none') +';')
+                        a(href=v.link target="_blank")
+                          .card.card-inverse.m-b-2
+                            .card-title
+                              i.fa.fa-link
+                              p.card-text #{ v.headline }
+                              .pos-bottom
+                                .links.d-inline-block.card-text #{ formatHelper.getWebsiteUrl(v.link) }
+                  #hidden-article-press.hidden-article-press.collapse
+                    each k in keys.slice(3)
+                      - let v = values.press[k]
+                      div(class="col-lg-4 articles_press" + (counter < 3 ? '' : ' hidden-article-press') style="display:" + (counter < 3 ? 'inline-block' : 'none') +';')
+                        a(href=v.link target="_blank")
+                          .card.card-inverse.m-b-2
+                            .card-title
+                              i.fa.fa-link
+                              p.card-text #{ v.headline }
+                              .pos-bottom
+                                .links.d-inline-block.card-text #{ formatHelper.getWebsiteUrl(v.link) }
+                  //- each v,k in values.press
+                  //-   //- .col-lg-4.articles_press
+                  //-   div(class="col-lg-4 articles_press" + (counter < 3 ? '' : ' hidden-article-press') style="display:" + (counter < 3 ? 'inline-block' : 'none') +';')
+                  //-     a(href=v.link target="_blank")
+                  //-       .card.card-inverse.m-b-2
+                  //-         .card-title
+                  //-           i.fa.fa-link
+                  //-           p.card-text #{ v.headline }
+                  //-           .pos-bottom
+                  //-             .links.d-inline-block.card-text #{ formatHelper.getWebsiteUrl(v.link) }
+                  //-   - counter++;
                 .row.m-b-3
                   .col-lg-12.text-xs-center
-                    a(href="#").link-4 See All Articles and Press
+                    //- a(href="#hidden-article-press" data-toggle="collapse").link-4.see-all-article-press See All Articles and Press
+                    a(href="#hidden-article-press" data-toggle="collapse").link-4.see-all-article-press Show More
   
   else
       //
