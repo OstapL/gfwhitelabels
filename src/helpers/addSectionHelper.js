@@ -48,7 +48,6 @@ module.exports = {
 
   buildTemplate(name, schema, attr) {
     let template = attr.template;
-    debugger;
     _(schema).each((name, val) => {
       let html = fieldBlock(name, '', schema[name]);
       template = template.replace('{{ ' + name + ' }}', html);

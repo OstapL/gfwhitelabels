@@ -40,7 +40,6 @@ module.exports = {
         },*/
 
         submit(e) {
-            // debugger
             var $target = $(e.target);
             var data = $target.serializeJSON();
             if (data.failed_to_comply_choice == false) {
