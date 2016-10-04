@@ -151,6 +151,7 @@ mixin fieldBlock(name, data, attr)
                                 i.fa.fa-times
                         - console.log(fields[name].schema)
                         each k1,v in fields[name].schema
+                          if values[name][kkeys[counter]]
                             - var k = values[name][kkeys[counter]][v]
                             - var t = fields[name].schema[v]
                             div(class='form-group clearfix index_' + indexCounter )
@@ -212,8 +213,6 @@ mixin fieldBlock(name, data, attr)
                                     i.fa.fa-times
                             .col-lg-7.videoInteractive.p-sm-0.p-r-0
                                 each k1,v in fields[name].schema
-                                    - debugger
-                                    - console.log(fields[name].schema, kkeys, k1, v, values);
                                     if values[name][kkeys[counter]]
                                       - var k = values[name][kkeys[counter]][v]
                                       - var t = fields[name].schema[v]
