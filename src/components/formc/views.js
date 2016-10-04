@@ -384,6 +384,7 @@ module.exports = {
                     Urls: Urls,
                     fields: this.fields,
                     values: this.model,
+                    addSectionHelper: addSectionHelper
                 })
             );
             return this;

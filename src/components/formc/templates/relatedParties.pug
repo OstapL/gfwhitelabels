@@ -18,10 +18,23 @@ include ../../../templates/menuRaiseFund.pug
     ]
 )
 
+mixin nestedRelated(name, text, attr)
+  +nestedBlockHeader()
+  +fieldBlock('amount_of_interest', values['amount_of_interest'], {
+    class1: 'col-lg-3 col-md-3',
+    class2: 'col-lg-9 col-md-9',
+  })
+  +fieldBlock('relationship_to_issuer', values['amount_of_interest'], {
+    class1: 'col-lg-3 col-md-3',
+    class2: 'col-lg-9 col-md-9',
+  })
+  +nestedBlockFooter()
+  script
+    - global.nestedRelated = this.nestedRelated
+
+
 section.formc-team-members-director.container.m-b-85
   +menu('formc', 'related-parties')
-
-
 
   //START RIGHT BLOCK
   .col-lg-8
@@ -43,45 +56,8 @@ section.formc-team-members-director.container.m-b-85
             input(type="radio" name="had_transactions" value="no" checked=(values['had_transactions'] == 'no'))
             |  No
 
-        .transactions-container
-          //- .delete-section-container
-          //-   a(href="#" data-section=name data-index=0).delete-section
-          //-     i.fa.fa-times
-          //-   +fieldBlock("specified_person", '', {
-          //-     class1: 'col-lg-3 col-md-12 text-md-left',
-          //-     class2: 'col-lg-9 col-md-12',
-          //-     type: 'text',
-          //-     placeholder: 'Specified Person',
-          //-     })
-          //-   +fieldBlock("relationshop_sssuer", '', {
-          //-     class1: 'col-lg-3 col-md-12 text-md-left',
-          //-     class2: 'col-lg-9 col-md-12',
-          //-     type: 'text',
-          //-     placeholder: 'Relationshop to Issuer',
-          //-     })
-          //-   +fieldBlock("nature", '', {
-          //-     class1: 'col-lg-3 col-md-12 text-md-left',
-          //-     class2: 'col-lg-9 col-md-12',
-          //-     type: 'text',
-          //-     placeholder: 'Nature of Interest in Transation',
-          //-     })
-          //-   +fieldBlock("amount", '', {
-          //-     class1: 'col-lg-3 col-md-12 text-md-left',
-          //-     class2: 'col-lg-9 col-md-12',
-          //-     type: 'text',
-          //-     placeholder: 'Amount of Interest',
-          //-     })
-          +fieldBlock("transaction_with_related_parties", '', {
-            class1: 'col-lg-3 col-md-3',
-            class2: 'col-lg-9 col-md-9',
-            type: 'json',
-            })
-          //- .row.transactions
-          .row.add-link
-            .col-lg-9.offset-1.pull-right
-              a(href="#" data-section="transaction_with_related_parties").link-2.add-section
-                i.fa.fa-plus
-                |  Add Another Related Part
+          +nestedRelated("transaction_with_related_parties", "bla bla")
+
         .row.m-t-3
           .col-lg-12.text-md-center.text-sm-center.text-xs-center
             button.btn.btn-primary.text-uppercase.pull-lg-right Save
