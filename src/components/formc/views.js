@@ -164,15 +164,15 @@ module.exports = {
             return  '/formc/use-of-proceeds/1' + this.model.id;
         },
         // submit: app.defaultSaveActions.submit,
-        // submit: api.submitAction,
-        submit(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            this.undelegateEvents();
-            // app.routers.navigate('/formc/related-parties/' + this.model.id, {trigger: true});
-            app.routers.navigate('/formc/' + this.model.id + '/related-parties', {trigger: true});
-            // app.routers.navigate('/formc/use-of-proceeds/1', {trigger: true});
-        },
+        submit: api.submitAction,
+        // submit(e) {
+        //     e.preventDefault();
+        //     e.stopPropagation();
+        //     this.undelegateEvents();
+        //     // app.routers.navigate('/formc/related-parties/' + this.model.id, {trigger: true});
+        //     app.routers.navigate('/formc/' + this.model.id + '/related-parties', {trigger: true});
+        //     // app.routers.navigate('/formc/use-of-proceeds/1', {trigger: true});
+        // },
 
         initialize(options) {
             this.fields = options.fields;
@@ -302,12 +302,13 @@ module.exports = {
         // addSection: jsonActions.addSection,
         // deleteSection: jsonActions.deleteSection,
         getSuccessUrl(data) {},
-        submit(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            this.undelegateEvents();
-            app.routers.navigate('/formc/' + this.model.id + '/team-members', {trigger: true});
-        },
+        submit: api.submitAction,
+        // submit(e) {
+        //     e.preventDefault();
+        //     e.stopPropagation();
+        //     this.undelegateEvents();
+        //     app.routers.navigate('/formc/' + this.model.id + '/team-members', {trigger: true});
+        // },
     })),
 
     offering: Backbone.View.extend(_.extend(addSectionHelper.methods, menuHelper.methods, {
@@ -424,12 +425,13 @@ module.exports = {
             }
         },
 
-        submit(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            this.undelegateEvents();
-            app.routers.navigate('formc/' + this.model.id + '/use-of-proceeds', {trigger: true});
-        },
+        submit: api.submitAction,
+        // submit(e) {
+        //     e.preventDefault();
+        //     e.stopPropagation();
+        //     this.undelegateEvents();
+        //     app.routers.navigate('formc/' + this.model.id + '/use-of-proceeds', {trigger: true});
+        // },
 
         render() {
             let template = require('components/formc/templates/relatedParties.pug');
@@ -502,12 +504,13 @@ module.exports = {
             }
         },
 
-        submit(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            this.undelegateEvents();
-            app.routers.navigate('/formc/' + this.model.id + '/risk-factors-instruction', {trigger: true});
-        },
+        submit: api.submitAction,
+        // submit(e) {
+        //     e.preventDefault();
+        //     e.stopPropagation();
+        //     this.undelegateEvents();
+        //     app.routers.navigate('/formc/' + this.model.id + '/risk-factors-instruction', {trigger: true});
+        // },
 
         render() {
             let template = require('components/formc/templates/useOfProceeds.pug');
@@ -538,13 +541,14 @@ module.exports = {
         events: _.extend({
             'submit form': 'submit',
         }, menuHelper.events),
-        
-        submit(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            this.undelegateEvents();
-            app.routers.navigate('/formc/' + this.model.id + '/risk-factors-market', {trigger: true});
-        },
+
+        submit: api.submitAction,        
+        // submit(e) {
+        //     e.preventDefault();
+        //     e.stopPropagation();
+        //     this.undelegateEvents();
+        //     app.routers.navigate('/formc/' + this.model.id + '/risk-factors-market', {trigger: true});
+        // },
 
         render() {
             let template = require('components/formc/templates/riskFactorsInstructions.pug');
@@ -574,12 +578,14 @@ module.exports = {
             // add the text added to formc
         },
 
-        submit(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            this.undelegateEvents();
-            app.routers.navigate('/formc/' + this.model.id + '/risk-factors-financial', {trigger: true});
-        },
+        submit: api.submitAction,
+
+        // submit(e) {
+        //     e.preventDefault();
+        //     e.stopPropagation();
+        //     this.undelegateEvents();
+        //     app.routers.navigate('/formc/' + this.model.id + '/risk-factors-financial', {trigger: true});
+        // },
 
         render() {
             let template = require('components/formc/templates/riskFactorsMarket.pug');
@@ -603,12 +609,13 @@ module.exports = {
             'submit form': 'submit',
         }, menuHelper.events),
 
-        submit(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            this.undelegateEvents();
-            app.routers.navigate('/formc/' + this.model.id + '/risk-factors-operational', {trigger: true});
-        },
+        submit: api.submitAction,
+        // submit(e) {
+        //     e.preventDefault();
+        //     e.stopPropagation();
+        //     this.undelegateEvents();
+        //     app.routers.navigate('/formc/' + this.model.id + '/risk-factors-operational', {trigger: true});
+        // },
 
         render() {
             let template = require('components/formc/templates/riskFactorsFinancial.pug');
@@ -632,13 +639,14 @@ module.exports = {
             'submit form': 'submit',
         }, menuHelper.methods),
 
-        submit(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            this.undelegateEvents();
+        submit: api.submitAction,
+        // submit(e) {
+        //     e.preventDefault();
+        //     e.stopPropagation();
+        //     this.undelegateEvents();
 
-            app.routers.navigate('/formc/' + this.model.id + '/risk-factors-competitive', {trigger: true});
-        },
+        //     app.routers.navigate('/formc/' + this.model.id + '/risk-factors-competitive', {trigger: true});
+        // },
 
         render() {
             let template = require('components/formc/templates/riskFactorsOperational.pug');
@@ -662,12 +670,13 @@ module.exports = {
             'submit form': 'submit',
         }, menuHelper.events),
 
-        submit(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            this.undelegateEvents();
-            app.routers.navigate('/formc/' + this.model.id + '/risk-factors-personnel', {trigger: true});
-        },
+        submit: api.submitAction,
+        // submit(e) {
+        //     e.preventDefault();
+        //     e.stopPropagation();
+        //     this.undelegateEvents();
+        //     app.routers.navigate('/formc/' + this.model.id + '/risk-factors-personnel', {trigger: true});
+        // },
 
         render() {
             let template = require('components/formc/templates/riskFactorsCompetitive.pug');
@@ -692,12 +701,13 @@ module.exports = {
             'submit form': 'submit',
         }, menuHelper.events),
 
-        submit(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            this.undelegateEvents();
-            app.routers.navigate('/formc/' + this.model.id + '/risk-factors-legal', {trigger: true});
-        },
+        submit: api.submitAction,
+        // submit(e) {
+        //     e.preventDefault();
+        //     e.stopPropagation();
+        //     this.undelegateEvents();
+        //     app.routers.navigate('/formc/' + this.model.id + '/risk-factors-legal', {trigger: true});
+        // },
 
         render() {
             let template = require('components/formc/templates/riskFactorsPersonnel.pug');
@@ -721,12 +731,13 @@ module.exports = {
             'submit form': 'submit',
         }, menuHelper.events),
 
-        submit(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            this.undelegateEvents();
-            app.routers.navigate('/formc/'  + this.model.id + '/risk-factors-misc', {trigger: true});
-        },
+        submit: api.submitAction,
+        // submit(e) {
+        //     e.preventDefault();
+        //     e.stopPropagation();
+        //     this.undelegateEvents();
+        //     app.routers.navigate('/formc/'  + this.model.id + '/risk-factors-misc', {trigger: true});
+        // },
 
         render() {
             let template = require('components/formc/templates/riskFactorsLegal.pug');
@@ -750,12 +761,13 @@ module.exports = {
             'submit form': 'submit',
         }, menuHelper.events),
 
-        submit(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            this.undelegateEvents();
-            app.routers.navigate('/formc/' + this.model.id + '/financial-condition', {trigger: true});
-        },
+        submit: api.submitAction,
+        // submit(e) {
+        //     e.preventDefault();
+        //     e.stopPropagation();
+        //     this.undelegateEvents();
+        //     app.routers.navigate('/formc/' + this.model.id + '/financial-condition', {trigger: true});
+        // },
 
         render() {
             let template = require('components/formc/templates/riskFactorsMisc.pug');
@@ -803,12 +815,13 @@ module.exports = {
         //     }
         // },
 
-        submit(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            this.undelegateEvents();
-            app.routers.navigate('/formc/' + this.model.id + '/outstanding-security', {trigger: true});
-        },
+        submit: api.submitAction,
+        // submit(e) {
+        //     e.preventDefault();
+        //     e.stopPropagation();
+        //     this.undelegateEvents();
+        //     app.routers.navigate('/formc/' + this.model.id + '/outstanding-security', {trigger: true});
+        // },
 
         render() {
             let template = require('components/formc/templates/financialCondition.pug');
@@ -834,12 +847,13 @@ module.exports = {
             'submit form': 'submit',
         }, addSectionHelper.events, menuHelper.events),
 
-        submit(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            this.undelegateEvents();
-            app.routers.navigate('/formc/' + this.model.id + '/background-check', {trigger: true});
-        },
+        submit: api.submitAction,
+        // submit(e) {
+        //     e.preventDefault();
+        //     e.stopPropagation();
+        //     this.undelegateEvents();
+        //     app.routers.navigate('/formc/' + this.model.id + '/background-check', {trigger: true});
+        // },
 
         render() {
             let template = require('components/formc/templates/outstandingSecurity.pug');
@@ -941,12 +955,13 @@ module.exports = {
             'submit form': 'submit',
         }, menuHelper.events),
 
-        submit(e) {
-            e.preventDefault();
-            e.stopPropagation();
-            this.undelegateEvents();
-            app.routers.navigate('/formc/background-check/' + this.model.id, {trigger: true});
-        },
+        submit: api.submitAction,
+        // submit(e) {
+        //     e.preventDefault();
+        //     e.stopPropagation();
+        //     this.undelegateEvents();
+        //     app.routers.navigate('/formc/background-check/' + this.model.id, {trigger: true});
+        // },
 
         render() {
             let template = require('components/formc/templates/backgroundCheck.pug');
