@@ -3,63 +3,6 @@ let menuHelper = require('helpers/menuHelper.js');
 let addSectionHelper = require('helpers/addSectionHelper.js');
 let yesNoHelper = require('helpers/yesNoHelper.js');
 
-/*var jsonActions = {
-    events: {
-        'click .add-section': 'addSection',
-        'click .delete-section': 'deleteSection',
-    },
-
-    addSection(e) {
-        e.preventDefault();
-        let sectionName = e.target.dataset.section;
-        let template = require('templates/section.pug');
-        this[sectionName + 'Index'] ++;
-        $('.' + sectionName).append(
-            template({
-                fields: this.fields,
-                name: sectionName,
-                attr: {
-                    class1: '',
-                    class2: '',
-                    app: app,
-                    type: this.fields[sectionName].type,
-                    index: this[sectionName + 'Index'],
-                },
-                values: this.model.toJSON() 
-            })
-        );
-    },
-
-    deleteSection(e) {
-        e.preventDefault();
-        let sectionName = e.currentTarget.dataset.section;
-        $('.' + sectionName + ' .index_' + e.currentTarget.dataset.index).remove();
-        e.currentTarget.remove();
-        // ToDo
-        // Fix index counter
-        // this[sectionName + 'Index'] --;
-   },
-};*/
-
-/*var menuEvents = {
-  'hidden.bs.collapse .panel': 'onCollapse',
-  'show.bs.collapse .panel': 'onCollapse',
-};
-var menuMethods = {
-    onCollapse (e) {
-      let $elem = $(e.currentTarget);
-      let $a = $elem.find('a.list-group-heading');
-      let $icon = $a.find('.fa');
-      if (e.type === 'show') {
-        $a.addClass('active');
-        $icon.removeClass('fa-angle-left').addClass('fa-angle-down');
-      } else if (e.type === 'hidden') {
-        $a.removeClass('active');
-        $icon.removeClass('fa-angle-down').addClass('fa-angle-left');
-      }
-    },
-};*/
-
 module.exports = {
     introduction: Backbone.View.extend(_.extend(menuHelper.methods, yesNoHelper.methods, {
         // urlRoot: Urls['campaign-list']() + '/general_information',
@@ -184,6 +127,7 @@ module.exports = {
         render() {
             let template = require('components/formc/templates/teamMembers.pug');
 
+            this.model.campaign = {id: 72};
             this.$el.html(
                 template({
                     serverUrl: serverUrl,
@@ -439,46 +383,22 @@ module.exports = {
 
         render() {
             let template = require('components/formc/templates/relatedParties.pug');
-            this.fields.transactions.type = 'json';
-            this.fields.transactions.schema = {
-                specified_person: {
-                    type: 'string',
-                    label: 'Specified Person',
-                    placeholder: 'Specified Person',
-                    values: [],
-                },
-                relationship_issuer: {
-                    type: 'string',
-                    label: 'Relationship to Issuer',
-                    placeholder: 'Relationship Issuer',
-                    values: [],
-                },
-                nature: {
-                    type: 'string',
-                    label: 'Nature of Interest in Transaction',
-                    placeholder: 'Nature of Interest in Transaction',
-                    values: [],
-                },
-                amount: {
-                    type: 'number',
-                    label: 'Amount of Interest',
-                    placeholder: 'Amount of Interest',
-                    values: [],
-                },
-            };
 
             if (this.model.transactions) {
-              this.transactionsIndex = Object.keys(this.model.transactions).length;
+              this.transaction_with_related_partiesIndex = Object.keys(this.model.transactions).length;
             } else {
-              this.transactionsIndex = 0;
+              this.transaction_with_related_partiesIndex = 0;
             }
+            this.fields.transaction_with_related_parties.schema.amount_of_interest.label = 'Amount of interest';
+            this.fields.transaction_with_related_parties.schema.nature_of_interest.label = 'nature_of_interest';
+            this.fields.transaction_with_related_parties.schema.relationship_to_issuer.label = 'relationship_to_issuer';
+            this.fields.transaction_with_related_parties.schema.specified_person.label = 'specified_person';
 
             this.$el.html(
                 template({
                     serverUrl: serverUrl,
                     Urls: Urls,
                     fields: this.fields,
-                    // values: this.model.toJSON(),
                     values: this.model,
                 })
             );
@@ -866,77 +786,11 @@ module.exports = {
 
         render() {
             let template = require('components/formc/templates/outstandingSecurity.pug');
-            this.fields.loans.type = 'json';
-            this.fields.loans.schema = {
-                creditor: {
-                    type: 'string',
-                    label: 'Creditor',
-                    placeholder: 'Creditor',
-                    values: [],
-                },
-                outstanding: {
-                    type: 'string',
-                    label: 'Outstanding',
-                    placeholder: 'Outstanding',
-                    values: [],
-                },
-                rate: {
-                    type: 'string',
-                    label: 'Rate',
-                    placeholder: 'Rate',
-                    values: [],
-                },
-                date: {
-                    type: 'date',
-                    label: 'Date',
-                    placeholder: 'Date',
-                    values: [],
-                },
-                terms: {
-                    type: 'string',
-                    label: 'Terms',
-                    placeholder: 'Terms',
-                    values: [],
-                },
-            };
-            this.fields.exempt_offerings.type = 'json';
-            this.fields.exempt_offerings.schema = {
-                date_offering: {
-                    type: 'string',
-                    label: 'Date Offering',
-                    placeholder: 'Date Offering',
-                    values: [],
-                },
-                exemption: {
-                    type: 'string',
-                    label: 'Date Offering',
-                    placeholder: 'Date Offering',
-                    values: [],
-                },
-                securities: {
-                    type: 'string',
-                    label: 'Securities',
-                    placeholder: 'Securities',
-                    values: [],
-                },
-                amount: {
-                    type: 'number',
-                    label: 'Amount',
-                    placeholder: 'Amount',
-                    values: [],
-                },
-                use: {
-                    type: 'string',
-                    label: 'Use',
-                    placeholder: 'Use',
-                    values: [],
-                },
-            };
 
-            if (this.model.loans) {
-              this.loansIndex = Object.keys(this.model.loans).length;
+            if (this.model.business_loans_or_debt) {
+              this.business_loans_or_debtIndex = Object.keys(this.model.business_loans_or_debt).length;
             } else {
-              this.loansIndex = 0;
+              this.business_loans_or_debtIndex = 0;
             }
             if (this.model.exempt_offerings) {
               this.exempt_offeringsIndex = Object.keys(this.model.exempt_offerings).length;

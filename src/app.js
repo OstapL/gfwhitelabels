@@ -37,7 +37,7 @@ Backbone.sync = function (method, model, options) {
     //xhr.setRequestHeader('X-CSRFToken', getCSRF());
     let token = localStorage.getItem('token');
     if (token !== null && token !== '') {
-      xhr.setRequestHeader('Authorization', 'Token ' + token);
+      xhr.setRequestHeader('Authorization', token);
     }
   };
 
@@ -180,8 +180,6 @@ $(window).scroll(function () {
 
 // для показа биографии на стр. pg/team
 $('body').on('click', '.team-member-list article', function () {
-  console.log($(this).css('z-index'));
-console.log($(this).data('id-text-xs'));
   var targetTextId = $(this).css('z-index') == 2 && $(this).data('id-text-xs') ? $(this).data('id-text-xs') : $(this).data('id-text');
 
   if ($(targetTextId).hasClass('open')) {

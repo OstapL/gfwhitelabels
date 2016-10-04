@@ -12,11 +12,11 @@ module.exports = Backbone.Router.extend({
   login(id) {
     require.ensure([], function() {
       const View = require('components/anonymousAccount/views.js');
-      let a1 = api.makeRequest(Urls['rest_login'](), 'OPTIONS');
+      let a1 = api.makeRequest(authServer + '/rest-auth/login', 'OPTIONS');
       $.when(a1).done((metaData) => {
         let loginView = new View.login({
           el: '#content',
-          fields: metaData.actions.POST,
+          fields: metaData.fields,
           model: {},
         });
         loginView.render();

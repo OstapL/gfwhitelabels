@@ -20,68 +20,38 @@ module.exports = Backbone.Router.extend({
 
   introduction(id) {
     const View = require('components/formc/views.js');
-    var i = new View.introduction({
-      el: '#content',
-      // fields: meta[0].actions.POST,
-      // model: new Model.model(model[0][0] || {}),
-      fields: {
-        failed_to_comply: {
-          label: "Failed to Comply",
-          required: false,
-          type: 'radio',
-          // try min length here.
-          validate: function(name, attrs, formData) {
-            if (formData.failed_to_comply == '') return true;
-            if (formData.failed_to_comply.length < 100) return false;
-            return true;
-          },
-          // minLength: 100,
-        },
-        certify: {
-          required: true,
-          type: 'checkbox',
-          label: 'Certifing Statement'
-        },
-        // cc_number: {
-        //   label: "Credit Card",
-        //   required: true,
-        //   type: 'string',
-        // }
-      },
-      model: {
-        // failed_to_comply: 'It was the best of times.',
-        id: id,
-        failed_to_comply: '',
-      },
-    });
-    app.hideLoading();
-    i.render();
+
+    let fieldsR = api.makeCacheRequest(formcServer + '/' + id + '/introduction', 'OPTIONS');
+    let dataR = api.makeCacheRequest(formcServer + '/' + id + '/introduction');
+
+    $.when(fieldsR, dataR).done((fields, data) => {
+      var i = new View.introduction({
+        el: '#content',
+        // fields: meta[0].actions.POST,
+        // model: new Model.model(model[0][0] || {}),
+        fields: fields[0].fields, 
+        model: data[0], 
+      });
+      app.hideLoading();
+      i.render();
+    })
   },
   
   teamMembers(id) {
     const View = require('components/formc/views.js');
     // var i = new View.memberDirector({
-    var i = new View.teamMembers({
-      el: '#content',
-      fields: {},
-      model: {
-        id: id,
-        members:[
-          {"bio":"I am smart. I am smart. I am smart. I am smart. I am smart. I am smart. I am smart. I am smart. I am smart. I am smart. I am smart. I am smart. I am smart. I am smart. I am smart. I am smart. I am smart. I am smart. I am smart. I am smart. I am smart","first_name":"Arthur","last_name":"Yip","title":"CEO","photo":"https://s3.amazonaws.com/growthfountain-development/filer_public/c1/02/c102632a-b9d3-4ce3-b6ff-25758553e82d/3001585_121246046_2.jpg?v=60730","growup":"Brooklyn","linkedin":"https://arthuryip.xyz","state":"AR","college":"Memorial University of Newfoundland","facebook":"https://arthuryip.xyz","type":"director","email":"arthuryip723@gmail.com"},
-          {"bio":"","first_name":"asdg","last_name":"","title":"","photo":"","growup":"","linkedin":"","state":"","college":"","facebook":"","type":"officer","email":""},
-          {"bio":"I am smart. I am smart. I am smart. I am smart. I am smart. I am smart. I am smart. I am smart. I am smart. I am smart. I am smart. I am smart. I am smart. I am smart. I am smart. I am smart. I am smart. I am smart. I am smart. I am smart. I am smart","first_name":"Arthur","last_name":"Yip","title":"CEO","photo":"https://s3.amazonaws.com/growthfountain-development/filer_public/c1/02/c102632a-b9d3-4ce3-b6ff-25758553e82d/3001585_121246046_2.jpg?v=60730","growup":"Brooklyn","linkedin":"https://arthuryip.xyz","state":"AR","college":"Memorial University of Newfoundland","facebook":"https://arthuryip.xyz","type":"holder","email":"arthuryip723@gmail.com"},
-        ],
-        officers: {
-          ceo: {first_name: 'ken', last_name: 'staut'},
-          financial: {first_name: 'hillary', last_name: 'clinton'},
-          // controller: {first_name: 'donald', last_name: 'trump'},
-        },
-        // members:[],
-      },
+    let dataR = api.makeCacheRequest(formcServer + '/' + id + '/team-members', 'GET');
+
+    $.when(dataR).done((data) => {
+      const i = new View.teamMembers({
+        el: '#content',
+        fields: {},
+        model: data
+      });
+      i.render();
+      app.hideLoading();
+      $('#content').scrollTo();
     });
-    i.render();
-    app.hideLoading();
-    $('#content').scrollTo();
   },
 
   teamMemberAdd(id, type, index) {
@@ -105,35 +75,36 @@ module.exports = Backbone.Router.extend({
 
   relatedParties(id) {
     const View = require('components/formc/views.js');
-    const i = new View.relatedParties({
-      el: '#content',
-      model: {
-        id: id,
-        had_transactions: 'no'
-      },
-      fields: {
-        transactions: {},
-      },
 
-    });
-    i.render();
-    app.hideLoading();
+    let fieldsR = api.makeCacheRequest(formcServer + '/' + id + '/related-parties', 'OPTIONS');
+    let dataR = api.makeCacheRequest(formcServer + '/' + id + '/related-parties');
+
+    $.when(fieldsR, dataR).done((fields, data) => {
+      const i = new View.relatedParties({
+        el: '#content',
+        fields: fields[0].fields,
+        model: data[0],
+      });
+      i.render();
+      app.hideLoading();
+    })
   },
 
   useOfProceeds(id) {
     const View = require('components/formc/views.js');
-    const i = new View.useOfProceeds({
-      el: '#content',
-      model: {
-        id: id,
-      },
-      fields: {
-        'offering-expense': {type: 'row'},
-      },
 
+    let fieldsR = api.makeCacheRequest(formcServer + '/' + id + '/use-of-proceeds', 'OPTIONS');
+    let dataR = api.makeCacheRequest(formcServer + '/' + id + '/use-of-proceeds');
+
+    $.when(fieldsR, dataR).done((fields, data) => {
+      const i = new View.useOfProceeds({
+        el: '#content',
+        model: data[0],
+        fields: fields[0].fields,
+      });
+      i.render();
+      app.hideLoading();
     });
-    i.render();
-    app.hideLoading();
   },
 
   riskFactorsInstruction(id) {
@@ -254,53 +225,53 @@ module.exports = Backbone.Router.extend({
 
   financialCondition(id) {
     const View = require('components/formc/views.js');
-    const i = new View.financialCondition({
-      el: '#content',
-      model: {
-        id: id,
-        operating_history: 'no',
-        previous_security: 'no',
-      },
-      fields: {
-      },
 
+    let fieldsR = api.makeCacheRequest(formcServer + '/' + id + '/financial-condition', 'OPTIONS');
+    let dataR = api.makeCacheRequest(formcServer + '/' + id + '/financial-condition');
+
+    $.when(fieldsR, dataR).done((fields, data) => {
+      const i = new View.financialCondition({
+        el: '#content',
+        model: data[0], 
+        fields: fields[0].fields,
+      });
+      i.render();
+      app.hideLoading();
     });
-    i.render();
-    app.hideLoading();
   },
 
   outstandingSecurity(id) {
     const View = require('components/formc/views.js');
-    const i = new View.outstandingSecurity({
-      el: '#content',
-      model: {
-        id: id,
-        have_loans_debt: 'no',
-        conduct_exempt_offerings: 'no',
-      },
-      fields: {
-        loans: {},
-        exempt_offerings: {},
-      },
 
+    let fieldsR = api.makeCacheRequest(formcServer + '/' + id + '/outstanding-security', 'OPTIONS');
+    let dataR = api.makeCacheRequest(formcServer + '/' + id + '/outstanding-security');
+
+    $.when(fieldsR, dataR).done((fields, data) => {
+      const i = new View.outstandingSecurity({
+        el: '#content',
+        model: data[0],
+        fields: fields[0].fields 
+      });
+      i.render();
+      app.hideLoading();
     });
-    i.render();
-    app.hideLoading();
   },
 
   backgroundCheck(id) {
     const View = require('components/formc/views.js');
-    const i = new View.backgroundCheck({
-      el: '#content',
-      model: {
-        id: id,
-        transaction_past_year: 'no',
-      },
-      // fields: {},
 
+    let fieldsR = api.makeCacheRequest(formcServer + '/' + id + '/background-check', 'OPTIONS');
+    let dataR = api.makeCacheRequest(formcServer + '/' + id + '/background-check');
+
+    $.when(fieldsR, dataR).done((fields, data) => {
+      const i = new View.backgroundCheck({
+        el: '#content',
+        model: data,
+        fields: fields,
+      });
+      i.render();
+      app.hideLoading();
     });
-    i.render();
-    app.hideLoading();
   },
 
 });

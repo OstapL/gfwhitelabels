@@ -33,8 +33,17 @@ module.exports = {
       type = data.type;
       delete data.type;
     }
+
+    if(url.indexOf('http') == -1) {
+      url = serverUrl + url
+    } 
+
+    if(type == 'POST' || type == 'PUT') {
+      data = JSON.stringify(data);
+    }
+
     let params = _.extend({
-      url: url.startsWith('http') ? url : serverUrl + url,
+      url: url,
       type: type,
       data: data,
     }, api.requestOptions);
@@ -51,7 +60,7 @@ module.exports = {
     // if view already have some data - extend that info
     if(this.hasOwnProperty('model')) {
       _.extend(this.model, data);
-      data = this.model;
+      data = Object.assign({}, this.model)
     }
 
     /*
@@ -107,7 +116,6 @@ module.exports = {
           }
         }).
         fail((xhr, status, text) => {
-          // debugger
           api.errorAction(this, xhr, status, text, this.fields);
         });
     }
@@ -163,10 +171,11 @@ module.exports = {
 
   requestOptions: {
     dataType: 'json',
+    //contentType: "application/json; charset=utf-8",
     beforeSend: function (xhr) {
       let token = localStorage.getItem('token');
       if (token !== null && token !== '') {
-        xhr.setRequestHeader('Authorization', 'Token ' + token);
+        xhr.setRequestHeader('Authorization', token);
       }
     },
   },

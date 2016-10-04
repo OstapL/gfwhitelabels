@@ -2,7 +2,7 @@ const validation = require('components/validation/validation.js');
 
 module.exports = {
   login: Backbone.View.extend({
-    urlRoot: Urls.rest_login(),
+    urlRoot: authServer + '/rest-auth/login',
     events: {
       'submit .login-form': api.submitAction,
       'click .btn-google': 'loginGoogle',
@@ -28,11 +28,13 @@ module.exports = {
     },
 
     _success(data) {
+      debugger;
       if(data.hasOwnProperty('key')) {
         localStorage.setItem('token', data.key);
+        localStorage.setItem('user', JSON.stringify(data));
         setTimeout(function() {
           window.location = app.getParams().next ? app.getParams().next : 
-                '/account/profile';
+                '/formc/17/introduction';
         }, 200);
       } else {
         validation.invalidMsg(form, '', 'Server return no authentication data');

@@ -19,7 +19,7 @@ let userModel = Backbone.Model.extend({
       let userData = localStorage.getItem('user');
       this.set('token', localStorage.getItem('token'));
 
-      if (userData == null || userData.image_data == null) {
+      if (userData == null) {
         this.fetch({
           url: serverUrl + Urls.rest_user_details(),
           success: (data) => {

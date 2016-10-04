@@ -564,7 +564,6 @@ module.exports = {
           },
           state: {
             type: 'choice',
-            required: true,
             label: '',
           },
           college: {
@@ -680,9 +679,9 @@ module.exports = {
           // app.makeRequest('/api/campaign/team_members/' + this.model.get('id') + '?index=' + memberId, 'DELETE').
           app.makeRequest('/api/campaign/team_members/' + this.model.id + '?index=' + memberId, 'DELETE').
               then((data) => {
-                  this.model.attributes.members.splice(memberId, 1);
+                  this.model.members.splice(memberId, 1);
                   $(e.currentTarget).parent().remove();
-                  if (this.model.attributes.members.length < 1) {
+                  if (this.model.members.length < 1) {
                     this.$el.find('.notification').show();
                     this.$el.find('.buttons-row').hide();
                   } else {

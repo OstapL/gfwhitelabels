@@ -84,7 +84,8 @@ section.create-company-team-add.container
                     tbody
                         - let officerTitles = {ceo: 'CEO/President', financial: 'Principal Financial Officer/Treasurer', controller: 'Controller/Principal Accounting Officer',};
                         each title, key in officerTitles
-                            - let officer = values.officers[key];
+                            - //let officer = values.officers[key];
+                            - let officer = '';
                             tr
                                 //- td CEO/President
                                 td #{title}
@@ -108,7 +109,7 @@ section.create-company-team-add.container
                         //-         hr(width="40%")
                         //-     td.text-xs-center.color-red Please Identify
 
-            div(style="display: " +  (values.members.length >= 1 ? 'block' : 'none')).col-lg-12.pull-lg-right.p-r-0.m-t-3
+            div(style="display: " +  (values.team_members.length >= 1 ? 'block' : 'none')).col-lg-12.pull-lg-right.p-r-0.m-t-3
 
             .m-t-3
               .col-lg-12.text-md-center.text-sm-center.text-xs-center
