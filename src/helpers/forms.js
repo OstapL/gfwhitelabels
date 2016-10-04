@@ -38,9 +38,11 @@ module.exports = {
       url = serverUrl + url
     } 
 
+    /*
     if(type == 'POST' || type == 'PUT') {
       data = JSON.stringify(data);
     }
+    */
 
     let params = _.extend({
       url: url,
