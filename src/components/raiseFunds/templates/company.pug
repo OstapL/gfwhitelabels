@@ -65,7 +65,7 @@ section.create-company.container.m-b-85
               a(href="#").list-group-item.list-group-item-action form c
     .row
       .col-lg-12.text-xs-center
-        button(type="button" data-href=("#")).btn.btn-secondary.text-uppercase.m-t-2 preview
+        button(type="button" data-href=("#")).btn.btn-secondary.text-uppercase.m-t-2.onPreview(style="display:" + (campaign.id ? 'block' : 'none') + ";") preview
         button(type="submit").btn.btn-primary.text-uppercase.m-t-2 submit campaign
     .row
       .education-link-wrap
