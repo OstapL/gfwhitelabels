@@ -19,7 +19,6 @@ module.exports = {
     },
 
     formatPhone(e) {
-      debugger
       this.$('input[name=phone]').val(this.$('input[name=phone]').val().replace(/^\(?(\d{3})\)?-?(\d{3})-?(\d{4})$/, '$1-$2-$3'));
     },
 
