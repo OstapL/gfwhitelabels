@@ -64,6 +64,10 @@ section.create-company.container.m-b-85
             .list-group
               a(href="#").list-group-item.list-group-item-action form c
     .row
+      .col-lg-12.text-xs-center
+        button(type="button" data-href=("#")).btn.btn-secondary.text-uppercase.m-t-2 preview
+        button(type="submit").btn.btn-primary.text-uppercase.m-t-2 submit campaign
+    .row
       .education-link-wrap
         .jumbotron.jumbotron-fluid
           h4.font-weight-bold.text-uppercase
@@ -198,12 +202,12 @@ section.create-company.container.m-b-85
             class2: 'col-lg-7 col-md-12', 
             type: 'text',
             })
-      .row.m-t-2
-          .col-lg-12.pull-lg-right.p-r-0.text-lg-right.text-md-center.text-sm-center.text-xs-center
-            if campaign.id
-              button(type="button" data-href=("/api/campaign/" + campaign.id)).btn.btn-secondary.text-uppercase.onPreview.m-r-3 preview
-            button(type="submit").btn.btn-primary.text-uppercase save & next
-              i.fa.fa-angle-right
+      .row.m-t-2.pull-lg-right.text-md-center.text-sm-center.text-xs-center
+        .col-lg-12
+        if campaign.id
+          // button(type="button" data-href=("/api/campaign/" + campaign.id)).btn.btn-secondary.text-uppercase.onPreview.m-r-3 preview
+          button(type="submit").btn.btn-primary.text-uppercase save and continue
+            i.fa.fa-angle-right
 
 //MODAL
 #city_state_modal.modal.fade(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")
