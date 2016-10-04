@@ -1,6 +1,7 @@
 "use strict";
 let menuHelper = require('helpers/menuHelper.js');
 let addSectionHelper = require('helpers/addSectionHelper.js');
+let yesNoHelper = require('helpers/yesNoHelper.js');
 
 /*var jsonActions = {
     events: {
@@ -60,13 +61,14 @@ var menuMethods = {
 };*/
 
 module.exports = {
-    introduction: Backbone.View.extend(_.extend(menuHelper.methods, {
+    introduction: Backbone.View.extend(_.extend(menuHelper.methods, yesNoHelper.methods, {
         urlRoot: Urls['campaign-list']() + '/general_information',
 
         events: _.extend({
             'submit form': 'submit',
-            'click input[name=failed_to_comply]': 'onComplyChange',
-        }, menuHelper.events),
+            // 'click input[name=failed_to_comply]': 'onComplyChange',
+            // 'click input:radio': 'onComplyChange',
+        }, menuHelper.events, yesNoHelper.events),
 
 
         preinitialize() {
@@ -120,16 +122,24 @@ module.exports = {
             return this;
         },
 
-        onComplyChange(e) {
-            let comply = this.$('input[name=failed_to_comply]:checked').val();
-            // console.log(comply);
-            if (comply == 'no') {
-                this.$('.explain textarea').text('');
-                this.$('.explain').hide();
-            } else {
-                this.$('.explain').show();
-            }
-        }
+        // onComplyChange(e) {
+        //     // let comply = this.$('input[name=failed_to_comply]:checked').val();
+        //     let $target = $(e.target);
+        //     let val = $target.val();
+        //     let targetElem = $target.attr('target');
+        //     // console.log(comply);
+        //     // if (comply == 'no') {
+        //     //     this.$('.explain textarea').text('');
+        //     //     this.$('.explain').hide();
+        //     // } else {
+        //     //     this.$('.explain').show();
+        //     // }
+        //     if (val == 'no') {
+        //         this.$(targetElem).hide();
+        //     } else {
+        //         this.$(targetElem).show();
+        //     }
+        // }
 
     })),
 
@@ -762,12 +772,36 @@ module.exports = {
         },
     })),
 
-    financialCondition: Backbone.View.extend(_.extend(menuHelper.methods, {
-        initialize(options) {},
+    financialCondition: Backbone.View.extend(_.extend(menuHelper.methods, yesNoHelper.methods, {
+        initialize(options) {
+            this.fields = options.fields;
+        },
 
         events: _.extend({
             'submit form': 'submit',
-        }, menuHelper.events),
+            // 'click input[name=operating_history]': 'onOperatingHistoryChange',
+            // 'click input[name=previous_security]': 'onPreviousSecurityChange',
+        }, menuHelper.events, yesNoHelper.events),
+
+        // onOperatingHistoryChange(e) {
+        //     let operatingHistory = this.$('input[name=operating_history]:checked').val();
+
+        //     if (operatingHistory == 'no') {
+        //         this.$('.operating-history-container').hide();
+        //     } else {
+        //         this.$('.operating-history-container').show();
+        //     }
+        // },
+
+        // onPreviousSecurityChange(e) {
+        //     let previousSecurity = this.$('input[name=previous_security]:checked').val();
+
+        //     if (previousSecurity == 'no') {
+        //         this.$('.previous-security-container').hide();
+        //     } else {
+        //         this.$('.previous-security-container').show();
+        //     }
+        // },
 
         submit(e) {
             e.preventDefault();

@@ -258,8 +258,11 @@ module.exports = Backbone.Router.extend({
       el: '#content',
       model: {
         id: id,
+        operating_history: 'no',
+        previous_security: 'no',
       },
-      // fields: {},
+      fields: {
+      },
 
     });
     i.render();
