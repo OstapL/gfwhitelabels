@@ -33,9 +33,8 @@ module.exports = {
       type = data.type;
       delete data.type;
     }
-
     let params = _.extend({
-      url: serverUrl + url,
+      url: url.startsWith('http') ? url : serverUrl + url,
       type: type,
       data: data,
     }, api.requestOptions);
@@ -64,7 +63,7 @@ module.exports = {
        };
        this.model.validation = newValidators;
     */
-
+    
     this.$('.help-block').remove();
     if (!validation.validate(this.fields, data, this)) {
       _(validation.errors).each((errors, key) => {
@@ -76,8 +75,12 @@ module.exports = {
       let url = this.urlRoot;
       let type = 'POST';
 
-      if(data.hasOwnProperty('id')) {
+      if(!url.includes('formc') && data.hasOwnProperty('id')) {
         url += '/' + data.id;
+        delete data.id;
+        type = 'PUT';
+      } else if (url.includes('formc') && data.hasOwnProperty('id')) {
+        url = url.replace(':id', data.id);
         delete data.id;
         type = 'PUT';
       }

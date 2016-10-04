@@ -62,7 +62,8 @@ var menuMethods = {
 
 module.exports = {
     introduction: Backbone.View.extend(_.extend(menuHelper.methods, yesNoHelper.methods, {
-        urlRoot: Urls['campaign-list']() + '/general_information',
+        // urlRoot: Urls['campaign-list']() + '/general_information',
+        urlRoot: 'https://api-formc.growthfountain.com' + '/introduction',
 
         events: _.extend({
             'submit form': 'submit',
@@ -95,6 +96,7 @@ module.exports = {
         },*/
 
         submit(e) {
+            // debugger
             var $target = $(e.target);
             var data = $target.serializeJSON();
             data.failed_to_comply = data.failed_to_comply === 'yes' ? $target.find('textarea').text() : '';
@@ -144,6 +146,7 @@ module.exports = {
     })),
 
     teamMembers: Backbone.View.extend(_.extend(menuHelper.methods, {
+        urlRoot: 'https://api-formc.growthfountain.com/' + ':id' + '/team-members',
         name: 'teamMembers',
         events: _.extend({
             'submit form': 'submit',
@@ -401,6 +404,7 @@ module.exports = {
     }),*/
 
     relatedParties: Backbone.View.extend(_.extend(addSectionHelper.methods, menuHelper.methods, yesNoHelper.methods, {
+        urlRoot: 'https://api-formc.growthfountain.com/' + ':id' + '/related-parties',
         name: 'relatedParties',
         initialize(options) {
             this.fields = options.fields;
@@ -484,6 +488,8 @@ module.exports = {
 
     useOfProceeds: Backbone.View.extend(_.extend(addSectionHelper.methods, menuHelper.methods, {
     // useOfProceeds: Backbone.View.extend(_.extend(menuHelper.methods, {
+        urlRoot: 'https://api-formc.growthfountain.com/' + ':id' + '/use-of-proceeds',
+
        initialize(options) {
         this.fields = options.fields;
        },
@@ -785,6 +791,8 @@ module.exports = {
     })),
 
     financialCondition: Backbone.View.extend(_.extend(menuHelper.methods, yesNoHelper.methods, {
+        urlRoot: 'https://api-formc.growthfountain.com/' + ':id' + '/financial-condition',
+
         initialize(options) {
             this.fields = options.fields;
         },
@@ -839,6 +847,7 @@ module.exports = {
     })),
 
     outstandingSecurity: Backbone.View.extend(_.extend(addSectionHelper.methods, menuHelper.methods, yesNoHelper.methods, {
+        urlRoot: 'https://api-formc.growthfountain.com/' + ':id' + '/outstanding-security',
         initialize(options) {
             this.fields = options.fields;
         },
