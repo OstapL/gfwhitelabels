@@ -74,6 +74,7 @@ module.exports = {
     */
     
     this.$('.help-block').remove();
+    debugger
     if (!validation.validate(this.fields, data, this)) {
       _(validation.errors).each((errors, key) => {
         validation.invalidMsg(this, key, errors);

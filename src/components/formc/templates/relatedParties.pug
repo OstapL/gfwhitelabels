@@ -37,13 +37,13 @@ section.formc-team-members-director.container.m-b-85
       .col-lg-12.form-group.form-section.m-t-2.m-b-2
         .radio-input.m-b-2
           label 
-            input(type="radio" name="had_transactions" value="yes" checked=(values['had_transactions'] == 'yes') target=".transactions-container")
+            input(type="radio" name="had_transactions" value="true" checked=values['had_transactions'] target=".transactions-container")
             |  Yes
           label 
-            input(type="radio" name="had_transactions" value="no" checked=(values['had_transactions'] == 'no') target=".transactions-container")
+            input(type="radio" name="had_transactions" value="false" checked=!values['had_transactions'] target=".transactions-container")
             |  No
 
-        .transactions-container(style="display:" + (values['had_transactions'] == 'no' ? 'none' : 'block'))
+        .transactions-container(style="display:" + (values['had_transactions'] ? 'block' : 'none'))
           //- .delete-section-container
           //-   a(href="#" data-section=name data-index=0).delete-section
           //-     i.fa.fa-times

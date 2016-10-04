@@ -7,9 +7,9 @@ module.exports = {
         let $target = $(e.target);
         let val = $target.val();
         let targetElem = $target.attr('target');
-        if (val == 'no') {
+        if (val == 'false') {
             this.$(targetElem).hide();
-        } else {
+        } else if (val == 'true') {
             this.$(targetElem).show();
         }
     },

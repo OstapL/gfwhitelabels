@@ -6,7 +6,7 @@ let yesNoHelper = require('helpers/yesNoHelper.js');
 module.exports = {
     introduction: Backbone.View.extend(_.extend(menuHelper.methods, yesNoHelper.methods, {
         // urlRoot: Urls['campaign-list']() + '/general_information',
-        urlRoot: 'https://api-formc.growthfountain.com' + '/introduction',
+        urlRoot: 'https://api-formc.growthfountain.com/' + ':id' + '/introduction',
 
         events: _.extend({
             'submit form': 'submit',
@@ -27,7 +27,8 @@ module.exports = {
         // deleteSection: jsonActions.deleteSection,
         getSuccessUrl() {
             // return  '/formc/team-members/' + this.model.get('id');
-            return  '/formc/team-members/' + this.model.id;
+            // return  '/formc/team-members/' + this.model.id;
+            return  '/formc/' + this.model.id + '/team-members';
         },
         // submit: app.defaultSaveActions.submit,
         // submit: api.submitAction,
@@ -42,7 +43,9 @@ module.exports = {
             // debugger
             var $target = $(e.target);
             var data = $target.serializeJSON();
-            data.failed_to_comply = data.failed_to_comply === 'yes' ? $target.find('textarea').text() : '';
+            if (data.failed_to_comply_choice == false) {
+                data.failed_to_comply = 'Please explain.';
+            }
             api.submitAction.call(this, e, data);
         },
 
