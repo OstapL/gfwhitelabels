@@ -1,0 +1,453 @@
+include ../../../templates/mixins.pug
+
++breadcrumbs('issuer dashboard', '', 
+    [
+        ['Home', '/'],
+        ['issuer dashboard', ''],
+    ]
+)
+section.issuer-dashbord-top
+  .container
+    .row
+      .col-md-4
+        .img_under_text
+          img(src="/img/smartbe-intelligent-stroller.jpg" alt="")
+          h2.text-uppercase.dosis.m-t-0 company name
+          .timer_day 19 Days Left
+        .share-block.d-inline-block
+          span.font-weight-bold Share:
+          .social-dark.d-inline-block
+            a(href="").link-1
+              i.fa.fa-envelope-o
+            a(href="").link-1
+              i.fa.fa-twitter
+            a(href="").link-1
+              i.fa.fa-facebook
+            a(href="").link-1
+              i.fa.fa-google-plus
+            a(href="").link-1
+              i.fa.fa-linkedin
+
+      .col-md-2.col-sm-6
+        a(href="").dashboard-stat
+          .visual
+            i.fa.fa-bar-chart
+          .details
+            .number
+              span(
+                data-counter="counterup"
+                data-value="750"
+              ) $750K
+            .desc Amount Raised
+
+      .col-md-2.col-sm-6
+        a.dashboard-stat.dashboard-stat-v2.grey(href="")
+          .visual
+            i.fa.fa-briefcase
+          .details
+            .number
+              span(
+                data-counter="counterup"
+                data-value="1349"
+              ) 1349
+            .desc Number of Investors
+
+      .col-md-2.col-sm-6
+        a.dashboard-stat.dashboard-stat-v2.grey(href="")
+          .visual
+            i.fa.fa-users
+          .details
+            .number
+              span(
+                data-counter="counterup"
+                data-value="1500"
+              ) 1,5K
+            .desc Page Views
+
+      .col-md-2.col-sm-6
+        a.dashboard-stat.dashboard-stat-v2.grey(href="")
+          .visual
+            i.fa.fa-comments
+          .details
+            .number
+              span(
+                data-counter="counterup"
+                data-value="456"
+              ) 456
+            .desc New Interactions
+
+      .col-md-7.col-sm-7.p-r-0
+        .tpl-progress
+          progress.progress.big_prog(
+            value="21"
+            max="100"
+          ) 21%
+          span.circle_progress(
+            style="width:21%"
+          )
+            i.fa.fa-circle-o
+          span.text_position(
+            style="left:21%"
+          ) 12 May
+            br
+            | $750K Raised
+        .progress_description
+          .pull-left
+            p.text-uppercase 1 may
+            span Begining of campaigne
+          .pull-right.text-lg-right
+            p 1 june
+            span End of campaign
+          .clearfix
+      .col-md-1.col-sm-1
+        .right_fixed_text.text-lg-center
+          b $500K
+          span Goal
+      .col-md-8.col-sm-12.text-lg-center
+        a.btn.btn-secondary.text-uppercase(href="") view campaing
+          i.fa.fa-angle-right(
+            aria-hidden="true"
+          )
+    .col-lg-12.border-bottom-50
+section.grafic-dashboard
+  .container
+    .row
+      .col-md-12
+        .portlet.light.portlet-fit.bordered
+          .portlet-title.portlet-hei75
+            .caption
+              h2.text-uppercase.m-t-0 Investments
+            .actions
+              .btn-group.btn-group-devided(
+                data-toggle="buttons"
+              )
+                label.btn.btn-transparent.dark.btn-outline.btn-circle.btn-sm.active
+                  input.toggle#option1(
+                    type="radio"
+                    name="options"
+                  ) 
+                  | Actions
+                label.btn.btn-transparent.dark.btn-outline.btn-circle.btn-sm
+                  input.toggle#option2(
+                    type="radio"
+                    name="options"
+                  ) 
+                  | Settings
+          .portlet-body.grafic-padding
+            .chart#chart_2
+              canvas.flot-base(
+                width="1110"
+                height="300"
+                style="direction: ltr; position: absolute; left: 0px; top: 0px; width: 1110; height: 300px"
+              )
+              .flot-text
+                .flot-x-axis.flot-x1-axis.xAxis.x1Axis
+                  div 1 MAY
+                  .flot-tick-label.tickLabel 2 MAY
+                  .flot-tick-label.tickLabel 3 MAY
+                  .flot-tick-label.tickLabel 4 MAY
+                  .flot-tick-label.tickLabel 5 MAY
+                  .flot-tick-label.tickLabel 6 MAY
+                  .flot-tick-label.tickLabel 7 MAY
+                  .flot-tick-label.tickLabel 8 MAY
+                  .flot-tick-label.tickLabel 9 MAY
+                  .flot-tick-label.tickLabel 10 MAY
+                  .flot-tick-label.tickLabel 11 MAY
+                  .flot-tick-label.tickLabel 12 MAY
+                  .flot-tick-label.tickLabel 13 MAY
+                  .flot-tick-label.tickLabel 14 MAY
+                  .flot-tick-label.tickLabel 15 MAY
+                .flot-y-axis.flot-y1-axis.yAxis.y1Axis
+                  .flot-tick-label.tickLabel 0
+                  .flot-tick-label.tickLabel 10
+                  .flot-tick-label.tickLabel 20
+                  .flot-tick-label.tickLabel 30
+                  .flot-tick-label.tickLabel 40
+                  .flot-tick-label.tickLabel 50
+                  .flot-tick-label.tickLabel 60
+                  .flot-tick-label.tickLabel 70
+                  .flot-tick-label.tickLabel 80
+                  .flot-tick-label.tickLabel 90
+                  .flot-tick-label.tickLabel 100
+                  .flot-tick-label.tickLabel 110
+                  .flot-tick-label.tickLabel 120
+                  .flot-tick-label.tickLabel 130
+                  .flot-tick-label.tickLabel 140
+              canvas.flot-overlay(
+                width="1110"
+                height="300"
+                style="direction: ltr; position: absolute; left: 0px; top: 0px; width: 1110px; height: 300px;"
+              )
+              .legend
+                table
+                  tr
+                    td.legendLabel Unique Visits
+                  tr
+                    td.legendLabel Page Views
+
+section.investors-dashbord-comment
+  .container
+    .row
+      .col-md-12
+        h2.dosis.text-uppercase Investor question & answer
+      .col-md-5
+        .comments-list
+          ul.nav.standart-nav-tabs(role="tablist")
+            li.nav-item
+              a.nav-link.text-uppercase.active#new-tab(
+                data-toggle="tab"
+                href="#new"
+                role="tab"
+                aria-controls="home"
+                aria-expanded="true"
+              ) New
+            li.nav-item
+              a.nav-link.text-uppercase#answered-tab(
+                data-toggle="tab"
+                href="#answered"
+                role="tab"
+                aria-controls="answered"
+                aria-expanded="false"
+              ) Answered
+            .clearfix
+          .tab-content
+            .tab-pane.fade.active.in#new(
+              role="tabpanel"
+              aria-labelledby="new-tab"
+              aria-expanded="true"
+            )
+              .all-comments
+                .one-comment
+                  .user-photo
+                    img(src="/img/avatar1.jpg" alt="").img-circle
+
+                  .text-and-name
+                    .name-date
+                      h6.text-uppercase.pull-left Maria Kravchuk
+                      span.pull-right 13 Jun, 10.30 AM
+
+                    .comment-text
+                      p Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua...
+
+                    .clearfix
+
+                .one-comment
+                  .user-photo
+                    img(src="/img/avatar1.jpg" alt="").img-circle
+
+                  .text-and-name
+                    .name-date
+                      h6.text-uppercase.pull-left Maria Kravchuk
+                      span.pull-right 13 Jun, 10.30 AM
+
+                    .comment-text
+                      p Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua...
+
+                    .clearfix
+ 
+                .one-comment
+                  .user-photo
+                    img(src="/img/avatar1.jpg" alt="").img-circle
+
+                  .text-and-name
+                    .name-date
+                      h6.text-uppercase.pull-left Maria Kravchuk
+                      span.pull-right 13 Jun, 10.30 AM
+
+                    .comment-text
+                      p Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua...
+
+                    .clearfix
+                      
+                .one-comment
+                  .user-photo
+                    img(src="/img/avatar1.jpg" alt="").img-circle
+
+                  .text-and-name
+                    .name-date
+                      h6.text-uppercase.pull-left Maria Kravchuk
+                      span.pull-right 13 Jun, 10.30 AM
+
+                    .comment-text
+                      p Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua...
+
+                    .clearfix
+                      
+                .one-comment
+                  .user-photo
+                    img(src="/img/avatar1.jpg" alt="").img-circle
+
+                  .text-and-name
+                    .name-date
+                      h6.text-uppercase.pull-left Maria Kravchuk
+                      span.pull-right 13 Jun, 10.30 AM
+
+                    .comment-text
+                      p Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua...
+
+                    .clearfix
+                      
+                .one-comment
+                  .user-photo
+                    img(src="/img/avatar1.jpg" alt="").img-circle
+
+                  .text-and-name
+                    .name-date
+                      h6.text-uppercase.pull-left Maria Kravchuk
+                      span.pull-right 13 Jun, 10.30 AM
+
+                    .comment-text
+                      p Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua...
+
+                    .clearfix
+               
+
+            .tab-pane.fade#answered(
+              role="tabpanel"
+              aria-labelledby="answered-tab"
+              aria-expanded="false"
+            )
+              .all-comments
+                .one-comment
+                  .user-photo
+                    img(src="/img/avatar1.jpg" alt="").img-circle
+
+                  .text-and-name
+                    .name-date
+                      h6.text-uppercase.pull-left Maria Kravchuk
+                      span.pull-right 13 Jun, 10.30 AM
+
+                    .comment-text
+                      p Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua...
+
+                    .clearfix
+
+                .one-comment
+                  .user-photo
+                    img(src="/img/avatar1.jpg" alt="").img-circle
+
+                  .text-and-name
+                    .name-date
+                      h6.text-uppercase.pull-left Maria Kravchuk
+                      span.pull-right 13 Jun, 10.30 AM
+
+                    .comment-text
+                      p Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua...
+
+                    .clearfix
+ 
+                .one-comment
+                  .user-photo
+                    img(src="/img/avatar1.jpg" alt="").img-circle
+
+                  .text-and-name
+                    .name-date
+                      h6.text-uppercase.pull-left Maria Kravchuk
+                      span.pull-right 13 Jun, 10.30 AM
+
+                    .comment-text
+                      p Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua...
+
+                    .clearfix
+                      
+                .one-comment
+                  .user-photo
+                    img(src="/img/avatar1.jpg" alt="").img-circle
+
+                  .text-and-name
+                    .name-date
+                      h6.text-uppercase.pull-left Maria Kravchuk
+                      span.pull-right 13 Jun, 10.30 AM
+
+                    .comment-text
+                      p Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua...
+
+                    .clearfix
+                      
+                .one-comment
+                  .user-photo
+                    img(src="/img/avatar1.jpg" alt="").img-circle
+
+                  .text-and-name
+                    .name-date
+                      h6.text-uppercase.pull-left Maria Kravchuk
+                      span.pull-right 13 Jun, 10.30 AM
+
+                    .comment-text
+                      p Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua...
+
+                    .clearfix
+                      
+                .one-comment
+                  .user-photo
+                    img(src="/img/avatar1.jpg" alt="").img-circle
+
+                  .text-and-name
+                    .name-date
+                      h6.text-uppercase.pull-left Maria Kravchuk
+                      span.pull-right 13 Jun, 10.30 AM
+
+                    .comment-text
+                      p Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua...
+
+                    .clearfix
+      .col-md-7
+        .comments-list
+          .add-comment
+            .user-photo
+              img(src="/img/avatar1.jpg").img-circle
+
+            .text-and-name
+              .name-date
+                h6.text-uppercase Maria Kravchuk
+                span 13 Jun, 10.30 AM
+              .comment-text
+                p Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.
+
+              .clearfix
+
+              .actions
+                a(href="").link-1 Rejected
+                span |
+                a(href="").link-1 Response
+
+              .clearfix
+          .form-add-comment
+            .form-group.row
+              form(action="" metod="").form-section
+                textarea.input-md.form-control(
+                  name="text"
+                  rows="8"
+                  placeholder="Maria Kravchuk"
+                  maxlength="400"
+                )
+                input.btn.btn-primary(
+                  type="button"
+                  name=""
+                  value="SUBMIT"
+                )
+      .col-lg-12
+        hr.line-dashboard
+section.danger-zone-dashboard
+  .container
+    .col-lg-12
+      .row
+        h2.dosis.text-uppercase.m-t-0 Danger Zone
+      .row.m-b-25
+        .col-lg-3
+          a(
+          href="#"
+          ).btn.text-uppercase material Change
+        .col-lg-9
+          .text-block
+            p Do you have new information that a reasonable investor would consider important in deciding whether or not to purchase your securities?  If so, click here to amend your offering.
+      .row
+        .col-lg-3
+            a(
+            href="#"
+            ).btn.danger-cancel.text-uppercase cancel campaign
+        .col-lg-9
+          .text-block.text-p-t-6
+            p Click here to cancel your offering.
+script(src="/js/graf/graf.js" type="text/javascript")
+script(src="/js/graph_data.js" type="text/javascript")
