@@ -45,27 +45,29 @@ section.formc-team-members-director.container.m-b-85
             label 
               input(type="radio")
               |  No
-        +fieldBlock("explain", '', {
-          class1: 'col-lg-3 col-md-12 text-md-left text-xl-right',
-          class2: 'col-lg-9 col-md-12',
-          type: 'textarea',
-          placeholder: '',
-        })
-        b In addition to the information expressly required to be included in this Form, include:
+        .m-b-3
+          +fieldBlock("explain", '', {
+            class1: 'col-lg-3 col-md-12 text-md-left text-xl-right',
+            class2: 'col-lg-9 col-md-12',
+            type: 'textarea',
+            placeholder: '',
+          })
+        .row.pb10
+          b.col-lg-12 In addition to the information expressly required to be included in this Form, include:
         +fieldBlock("material_informatione", '', {
           class1: 'col-lg-12 col-md-12 text-md-left text-xl-left',
-          class2: 'col-lg-12 col-md-12',
+          class2: 'col-lg-12 col-md-12 big-textarea',
           type: 'textarea',
           placeholder: 'Description',
         })
         +fieldBlock("provided_informatione", '', {
           class1: 'col-lg-12 col-md-12 text-md-left text-xl-left',
-          class2: 'col-lg-12 col-md-12',
+          class2: 'col-lg-12 col-md-12 big-textarea',
           type: 'textarea',
           placeholder: 'Description',
         })
         .border-bottom.m-t-3.m-b-3
-        p.pb10 The issuer must continue to comply with the ongoing reporting requirements until:
+        h3.pb10.m-b-0 The issuer must continue to comply with the ongoing reporting requirements until:
         ol
           li.pb10 the issuer is required to file reports under Section 13(a) or Section 15(d) of the Exchange Act;
           li.pb10 the issuer has filed at least one annual report pursuant to Regulation Crowdfunding and has fewer than 300 holders of record and has total assets that do not exceed $10,000,000;
