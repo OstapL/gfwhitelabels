@@ -115,66 +115,70 @@ section.formc-team-members-director.container.m-b-85
           })
       .col-lg-6.col-md-12
         h3.text-xs-center Most Recent Fiscal Year
-        +fieldBlock("total_assets", '', {
-        class1: 'col-lg-12 col-md-12 text-md-left text-xl-left',
-        class2: 'col-lg-12 col-md-12',
-        type: 'text',
-        placeholder: '',
-        })
-        +fieldBlock("cash", '', {
-        class1: 'col-lg-12 col-md-12 text-md-left text-xl-left',
-        class2: 'col-lg-12 col-md-12',
-        type: 'text',
-        placeholder: '',
-        })
-        +fieldBlock("accounts", '', {
-        class1: 'col-lg-12 col-md-12 text-md-left text-xl-left',
-        class2: 'col-lg-12 col-md-12',
-        type: 'text',
-        placeholder: '',
-        })
-        +fieldBlock("short", '', {
-        class1: 'col-lg-12 col-md-12 text-md-left text-xl-left',
-        class2: 'col-lg-12 col-md-12',
-        type: 'text',
-        placeholder: '',
-        })
-        +fieldBlock("long", '', {
-        class1: 'col-lg-12 col-md-12 text-md-left text-xl-left',
-        class2: 'col-lg-12 col-md-12',
-        type: 'text',
-        placeholder: '',
-        })
-        +fieldBlock("revenues", '', {
-        class1: 'col-lg-12 col-md-12 text-md-left text-xl-left',
-        class2: 'col-lg-12 col-md-12',
-        type: 'text',
-        placeholder: '',
-        })
-        +fieldBlock("cost", '', {
-        class1: 'col-lg-12 col-md-12 text-md-left text-xl-left',
-        class2: 'col-lg-12 col-md-12',
-        type: 'text',
-        placeholder: '',
-        })
-        +fieldBlock("income", '', {
-        class1: 'col-lg-12 col-md-12 text-md-left text-xl-left',
-        class2: 'col-lg-12 col-md-12',
-        type: 'text',
-        placeholder: '',
-        })
-        +fieldBlock("taxable", '', {
-        class1: 'col-lg-12 col-md-12 text-md-left text-xl-left',
-        class2: 'col-lg-12 col-md-12',
-        type: 'text',
-        placeholder: '',
-        })
-        +fieldBlock("tax", '', {
-        class1: 'col-lg-12 col-md-12 text-md-left text-xl-left',
-        class2: 'col-lg-12 col-md-12',
-        type: 'text',
-        placeholder: '',
-        })
+        .form-group.row.total_assets.text
+            label.text-lg-right.col-lg-12.col-md-12.text-md-left.text-xl-left Total assets
+            .col-lg-12.col-md-12
+                input.form-control(id="total_assets" name="total_assets" placeholder="total_assets" type="text" data-content="" value="")
+        //- +fieldBlock("total_assets", '', {
+        //- class1: 'col-lg-12 col-md-12 text-md-left text-xl-left',
+        //- class2: 'col-lg-12 col-md-12',
+        //- type: 'text',
+        //- placeholder: '',
+        //- })
+        //- +fieldBlock("cash_and_equivalents", '', {
+        //- class1: 'col-lg-12 col-md-12 text-md-left text-xl-left',
+        //- class2: 'col-lg-12 col-md-12',
+        //- type: 'text',
+        //- placeholder: '',
+        //- })
+        //- +fieldBlock("account_receivable", '', {
+        //- class1: 'col-lg-12 col-md-12 text-md-left text-xl-left',
+        //- class2: 'col-lg-12 col-md-12',
+        //- type: 'text',
+        //- placeholder: '',
+        //- })
+        //- +fieldBlock("short_term_debt", '', {
+        //- class1: 'col-lg-12 col-md-12 text-md-left text-xl-left',
+        //- class2: 'col-lg-12 col-md-12',
+        //- type: 'text',
+        //- placeholder: '',
+        //- })
+        //- +fieldBlock("long_term_debt", '', {
+        //- class1: 'col-lg-12 col-md-12 text-md-left text-xl-left',
+        //- class2: 'col-lg-12 col-md-12',
+        //- type: 'text',
+        //- placeholder: '',
+        //- })
+        //- +fieldBlock("revenues_sales", '', {
+        //- class1: 'col-lg-12 col-md-12 text-md-left text-xl-left',
+        //- class2: 'col-lg-12 col-md-12',
+        //- type: 'text',
+        //- placeholder: '',
+        //- })
+        //- +fieldBlock("cost_of_goods_sold", '', {
+        //- class1: 'col-lg-12 col-md-12 text-md-left text-xl-left',
+        //- class2: 'col-lg-12 col-md-12',
+        //- type: 'text',
+        //- placeholder: '',
+        //- })
+        //- +fieldBlock("total_income", '', {
+        //- class1: 'col-lg-12 col-md-12 text-md-left text-xl-left',
+        //- class2: 'col-lg-12 col-md-12',
+        //- type: 'text',
+        //- placeholder: '',
+        //- })
+        //- +fieldBlock("taxable_income", '', {
+        //- class1: 'col-lg-12 col-md-12 text-md-left text-xl-left',
+        //- class2: 'col-lg-12 col-md-12',
+        //- type: 'text',
+        //- placeholder: '',
+        //- })
+        //- +fieldBlock("total_tax", '', {
+        //- class1: 'col-lg-12 col-md-12 text-md-left text-xl-left',
+        //- class2: 'col-lg-12 col-md-12',
+        //- type: 'text',
+        //- placeholder: '',
+        //- })
       .col-lg-6.col-md-12
         h3.text-xs-center Prior Fiscal Year
         +fieldBlock("total_assets", '', {
