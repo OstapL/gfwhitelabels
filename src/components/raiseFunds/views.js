@@ -414,6 +414,7 @@ module.exports = {
               );
             $('.photo-scroll').append($el);
             $el.find('.delete-image').click(this.deleteImage.bind(this));
+            $('#gallery').val(data.folder_id);
             app.makeRequest(this.urlRoot +'/' + this.model.id, {gallery: data.folder_id, type: 'PATCH'})
           },
           );
