@@ -155,7 +155,7 @@ section.formc-team-members-director.container.m-b-85
             i.fa.fa-plus
             |  add outstanding securities
         .table-responsive
-            table.table.table-bordered.table-striped.text-xs-center.table-outstanding
+            table.table.table-bordered.table-striped.text-xs-center.table-outstanding.m-b-0
                 thead
                     tr
                         th(width="22%").text-xs-center Security Type
@@ -203,25 +203,25 @@ section.formc-team-members-director.container.m-b-85
         .border-bottom.m-t-3.m-b-3 
         +fieldBlock("limited", '', {
         class1: 'col-lg-12 col-md-12  text-md-left  text-xl-left',
-        class2: 'col-lg-12 col-md-12 ',
+        class2: 'col-lg-12 col-md-12 big-textarea',
         type: 'textarea',
         placeholder: 'Description',
         })
         +fieldBlock("offered_modified", '', {
         class1: 'col-lg-12 col-md-12  text-md-left  text-xl-left',
-        class2: 'col-lg-12 col-md-12 ',
+        class2: 'col-lg-12 col-md-12 big-textarea',
         type: 'textarea',
         placeholder: 'Description',
         })
         +fieldBlock("issuer", '', {
         class1: 'col-lg-12 col-md-12  text-md-left  text-xl-left',
-        class2: 'col-lg-12 col-md-12 ',
+        class2: 'col-lg-12 col-md-12 big-textarea',
         type: 'textarea',
         placeholder: 'Description', 
         })
         +fieldBlock("could", '', {
         class1: 'col-lg-12 col-md-12  text-md-left  text-xl-left',
-        class2: 'col-lg-12 col-md-12 ',
+        class2: 'col-lg-12 col-md-12 big-textarea',
         type: 'textarea',
         placeholder: 'Description',
         })
@@ -239,7 +239,7 @@ section.formc-team-members-director.container.m-b-85
                     | - a sale of the company or company assets
                     br
                     | - transactions with related parties 
-            .col-lg-12
+            .col-lg-12.big-textarea
                  textarea(placeholder="Description").form-control
         .col-lg-12.m-t-2
             .row
@@ -263,14 +263,17 @@ section.formc-team-members-director.container.m-b-85
                             label Security Type
                         .col-lg-12
                             select(name="" style="width:100%").custom-select
+                                option Preferred Stock
+                                option Common Stock
+                                option Debt
+                                option Warrants
+                                option Options
                                 option Other
-                                option Debt
-                                option Debt
                     +fieldBlock("description_security_type", '', {
                     class1: 'col-lg-12 col-md-12  text-md-left  text-xl-left',
-                    class2: 'col-lg-12 col-md-12 ',
+                    class2: 'col-lg-12 col-md-12 big-textarea',
                     type: 'textarea',
-                    placeholder: 'Description of Security Type',
+                    placeholder: 'Description',
                     })
                     .row
                         .col-lg-6
@@ -299,24 +302,8 @@ section.formc-team-members-director.container.m-b-85
                                     label 
                                       input(type="radio")
                                       |  No
-                    .row.form-group
-                        .col-lg-3
-                            label Other Rights
-                        .col-lg-9
-                            .form-group.form-section.m-b-0
-                                .radio-input
-                                    label 
-                                        input(type="radio")
-                                        |  Yes
-                                    label 
-                                      input(type="radio")
-                                      |  No
-                    +fieldBlock("specify_other_rights", '', {
-                        class1: 'col-lg-12 col-md-12  text-md-left  text-xl-left',
-                        class2: 'col-lg-12 col-md-12 ',
-                        type: 'text',
-                        placeholder: 'Specify Other Rights',
-                    })
+                    
+
                 .row.m-b-2
                     .col-lg-12.text-lg-center.text-md-center.text-xs-center
                         button(data-dismiss="modal").update-location.btn.btn-primary.text-uppercase.pull-lg-right save
