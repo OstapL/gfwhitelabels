@@ -24,10 +24,18 @@ mixin nestedRelated(name, text, attr)
     class1: 'col-lg-3 col-md-3',
     class2: 'col-lg-9 col-md-9',
   })
-  +fieldBlock('relationship_to_issuer', values['amount_of_interest'], {
+  +fieldBlock('relationship_to_issuer', values['relationship_to_issuer'], {
     class1: 'col-lg-3 col-md-3',
     class2: 'col-lg-9 col-md-9',
   })
+  +fieldBlock("nature_of_interest", values['nature_of_interest'], {
+    class1: 'col-lg-3 col-md-12 text-md-left',
+    class2: 'col-lg-9 col-md-12',
+    })
+  +fieldBlock("specified_person", values['specified_person'], {
+    class1: 'col-lg-3 col-md-12 text-md-left',
+    class2: 'col-lg-9 col-md-12',
+    })
   +nestedBlockFooter(name, text, attr)
 
 
@@ -48,14 +56,19 @@ section.formc-team-members-director.container.m-b-85
       .col-lg-12.form-group.form-section.m-t-2.m-b-2
         .radio-input.m-b-2
           label 
-            input(type="radio" name="had_transactions" value="yes" checked=(values['had_transactions'] == 'yes'))
+            input(type="radio" name="had_transactions" value="true" checked=values['had_transactions'] target=".transactions-container")
             |  Yes
           label 
-            input(type="radio" name="had_transactions" value="no" checked=(values['had_transactions'] == 'no'))
+            input(type="radio" name="had_transactions" value="false" checked=!values['had_transactions'] target=".transactions-container")
             |  No
+      .transactions-container(style="display:" + (values['had_transactions'] ? 'block' : 'none'))
+        +fieldBlock("transaction_with_related_parties", "", {type: 'json'})
+        .row.add-link
+          .col-lg-9.offset-1.pull-right
+            a(href="#" data-section="transaction_with_related_parties").link-2.add-section
+              i.fa.fa-plus
+              |  Add Another Related Part
 
-          +nestedRelated("transaction_with_related_parties", "bla bla")
-
-        .row.m-t-3
-          .col-lg-12.text-md-center.text-sm-center.text-xs-center
-            button.btn.btn-primary.text-uppercase.pull-lg-right Save
+      .row.m-t-3
+        .col-lg-12.text-md-center.text-sm-center.text-xs-center
+          button.btn.btn-primary.text-uppercase.pull-lg-right Save

@@ -93,6 +93,7 @@ module.exports = {
       if (fixedRegex.indexOf(attr.type) != -1) {
         try {
           rules.regex(name, attr, data, attr.type);
+          debugger
           this.runRules(attr, name);
         } catch (e) {
           this.finalResult = false;
