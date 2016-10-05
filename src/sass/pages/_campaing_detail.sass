@@ -150,6 +150,11 @@
 		.progress_bar_container
 			span
 				margin-bottom: rem(5)
+
+			.progress[value]::-webkit-progress-value
+                background-color: $progress_bar_background
+                border-top-left-radius: none
+                border-bottom-left-radius: none
 	.share
 		padding-top: rem(15)
 		a
