@@ -58,37 +58,31 @@
           span.sr-only Next
 
 section.jeanne_footer.top-block
-    .container 
-        .row.text-lg-center 
-            .col-lg-4.col-md-6.col-sm-12.text-md-right 
-                .container_block 
-                    img(src="/img/footer_com_logo.png" alt="")
+  .container 
+    .row.text-lg-center 
+      .col-lg-3.col-md-6.col-sm-12.text-md-right 
+        img(src="/img/footer_com_logo.png" alt="")
 
+      .col-lg-6.col-md-6.col-sm-12 
+        .container_block.text-left 
+          h3.text-uppercase.font-weight-bold.m-t-0 Need help getting your idea started?
+          p "Build" Business Solutions offer everything from business loansand credit cards to business checking and savings products.Let us help you take your concept or business to the next level.
 
-            .col-lg-6.col-md-6.col-sm-12 
-                .container_block.text-left 
-                    h5 Need help getting your idea started?
-                    p "Build" Business Solutions offer everything from business loans and credit cards to business checking and savings products. Let us help you take your concept or business to the next level.
-
-
-            .col-lg-2.col-md-12 
-                .small_container_block 
-                    h6.form-group.text-uppercase Ready to 
-                        b build
-                        | &nbsp;your business
-                    a(href="/pg/investor_tutorial").btn.text-uppercase Start today
+      .col-lg-3.col-md-12 
+          h4.text-uppercase.m-b-2 READY TO BUILD YOUR BUSINESS
+          a(href="/pg/investor_tutorial").btn.btn-primary.text-uppercase Start today
 
 section.campaing-list.m-t-85
     .container#campaignList
         .col-lg-12
-            h2.dosis.text-uppercase.text-sm-center.m-t-0.mb50 What's Popular
+            h2.dosis.text-uppercase.text-sm-center.m-t-0.mb50.font-weight-bold TRENDING
 
         include ../components/campaign/templates/_list.pug
 
         .col-lg-12.text-lg-center.text-md-center.text-xs-center
             a(href="/api/campaign").link-4 See All
 
-section.home-wrap-text-block(style="background: url(/img/cd-depsoite-campaign-hero-size-2.png) bottom center no-repeat; background-size: cover; background-attachment: fixed;")
+section.home-wrap-text-block(style="background: url(/img/JDA-Scenic-1.jpg) bottom center no-repeat; background-size: cover; background-attachment: fixed;")
     .opasity-block
         .container.text-lg-center.text-xs-center.text-sm-center
             .col-lg-8.offset-lg-2
@@ -97,33 +91,36 @@ section.home-wrap-text-block(style="background: url(/img/cd-depsoite-campaign-he
             .col-lg-12
                 a(href="/account/login").btn.btn-lg.btn-secondary.text-uppercase Sign up to start investing
                 .learn-link
-                    a(href="/pg/education").link-2 Understand the Risks
+                    a(href="/pg/education").link-3 Understand the Risks
 
 section.home-what-is
     .container
         .col-lg-12
-            h2.text-uppercase.text-sm-center.text-xs-center.font-weight-bold A PLATFORM BUILT FOR OUR COMMUNITY
+            h2.text-uppercase.text-sm-center.text-xs-center.font-weight-bold A new way to invest or raise capital
             .row
                 .col-lg-6
                     .embed-responsive.embed-responsive-16by9.boxshadow
                         iframe(
                             embed-responsive-item="true" 
-                            src="https://player.vimeo.com/video/180959588?title=0&amp;byline=0&amp;portrait=0" 
+                            src="https://player.vimeo.com/video/180959374?title=0&amp;byline=0&amp;portrait=0" 
                             data-webkitallowfullscreen="" 
                             data-mozallowfullscreen="" 
                             data-allowfullscreen=""
                         )
 
                 .col-lg-6
-                    h2.m-t-1.text-lg-center.text-xs-center.light.open-sans Through our partnership with GrowthFountain we’re pleased to introduce Equity Crowdfunding.
-                    h3.m-t-0.text-justify.font-weight-normal Discover, support and invest in the businesses within our community, and receive ownership for your contribution.
-                    h3.m-t-0.text-lg-center.text-xs-center.font-weight-normal It’s people helping people at an entirely new level.
-                    .logo
+                    p.text-lg-center.text-xs-center.font-weight-light.open-sans.pb10 Through our partnership with Growth Fountain we're pleased to introduce Equity Crowdfunding. With this innovative program:
+                    p.pb10 - Investors and entrepreneurs can connect to enrich each other.
+                    p.pb10 - Investors receive equity for their contributions to small businesses.
+                    p.pb10 - Entrepreneurs can raise capital for their businesses through these contributions
+                    p.pb10 - Opportunities are available on local and national levels.
+                    p.pb10 - Economic growth is spurred by greater exposure and interest.
+                    .logo.m-t-2
                         .col-lg-4.p-x-0
                             a(href="")
-                                img(src="/img/logo/logo-color-png-r.png").img-fluid
+                                img(src="/img/logo_jd.png").img-fluid
                         .col-lg-4
-                            p.small.text-lg-center.text-xs-center.font-weight-bold.text-uppercase Powered by
+                            p.small.text-lg-center.text-xs-center.font-weight-bold.text-uppercase.m-t-1 Powered by
                         .col-lg-4.p-x-0
                             a(href="#")
                                 img(src="/img/logo/GF.png").img-fluid
