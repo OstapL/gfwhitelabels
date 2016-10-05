@@ -711,6 +711,25 @@ module.exports = {
               this.exempt_offeringsIndex = 0;
             }
 
+            this.fields.exempt_offering.schema.exemption_relied_upon.label = "Exemption Relied upon";
+            this.fields.exempt_offering.schema.use_of_proceeds.label = "Use of Proceeds";
+            this.fields.exempt_offering.schema.offering_date.label = "Date of The Offering";
+            this.fields.exempt_offering.schema.amount_sold.label = "Amount Sold";
+            this.fields.exempt_offering.schema.securities_offered.label = "Securities Offered";
+
+            this.fields.business_loans_or_debt.schema.maturity_date.label = "Maturity Date";
+            this.fields.business_loans_or_debt.schema.outstaind_amount.label = "Outstanding Date";
+            this.fields.business_loans_or_debt.schema.interest_rate.label = "Interest Rate";
+            this.fields.business_loans_or_debt.schema.other_material_terms.label = "Other Material Terms";
+            this.fields.business_loans_or_debt.schema.creditor.label = "Creditor";
+
+            this.fields.principal_shareholders_affect.label = 'How could the exercise of rights held by the principal shareholders affect the purchasers of the securities being offered?';
+            this.fields.risks_to_purchasers.label = '';
+            // this.fields.security_modified.label = 'How may the terms of the securities being offered be modified?';
+            this.fields.security_differences.label = 'Are there any differences not reflected above between the securities being offered and each other class of security of the issuer?';
+            this.fields.rights_of_securities_beign.label = 'How may the rights of the securities being offered be materially limited, diluted or qualified by the rights of any other class of security identified above?';
+
+
             this.$el.html(
                 template({
                     serverUrl: serverUrl,

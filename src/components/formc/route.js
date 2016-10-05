@@ -272,6 +272,22 @@ module.exports = Backbone.Router.extend({
 
   outstandingSecurity(id) {
     const View = require('components/formc/views.js');
+      const i = new View.outstandingSecurity({
+        el: '#content',
+        model: {
+          id: id,
+        },
+        // fields: {
+        //   loans: {},
+        //   exempt_offering: {},
+        //   business_loans_or_debt: {},
+        // },
+        fields:
+      {"principal_shareholders_affect": {"type": "string", "required": true}, "business_loans_or_debt": {"schema": {"maturity_date": {"type": "integer", "required": true}, "other_material_terms": {"type": "integer", "required": true}, "creditor": {"type": "string", "required": true}, "outstaind_amount": {"type": "integer", "required": true}, "interest_rate": {"type": "integer", "required": true}}, "type": "nested", "required": true}, "risks_to_purchasers": {"type": "string", "required": true}, "exempt_offering": {"schema": {"exemption_relied_upon": {"type": "integer", "required": true}, "use_of_proceeds": {"type": "integer", "required": true}, "offering_date": {"type": "date", "required": true}, "amount_sold": {"type": "integer", "required": true}, "securities_offered": {"type": "integer", "required": true}}, "type": "nested", "required": true}, "outstanding_securities_choice": {"type": "boolean", "required": true}, "security_differences": {"type": "string", "required": true}, "rights_of_securities_beign": {"type": "string", "required": true}, "outstanding_securities": {"schema": {"voting_right": {"type": "integer", "required": true}, "security_type": {"type": "string", "required": true}, "amount_outstanding": {"type": "integer", "required": true}, "amount_authroized": {"type": "integer", "required": true}, "other_rights": {"type": "integer", "required": true}}, "type": "nested", "required": true}},
+      });
+      i.render();
+      app.hideLoading();
+      return;
 
     let fieldsR = api.makeCacheRequest(formcServer + '/' + id + '/outstanding-security', 'OPTIONS');
     let dataR = api.makeCacheRequest(formcServer + '/' + id + '/outstanding-security');

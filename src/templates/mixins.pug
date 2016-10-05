@@ -130,6 +130,7 @@ mixin fieldBlock(name, data, attr)
                     .delete-section-container
                         a(href="#" data-section=name data-index=indexCounter).delete-section
                             i.fa.fa-times
+                    - console.log(fields[name]);
                     each k,v in fields[name].schema
                         div(class='form-group clearfix index_' + indexCounter)
                             label.col-lg-3.text-lg-right.p-t-0.p-l-3.p-sm-0.m-b-0 #{k.label}
