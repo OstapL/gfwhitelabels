@@ -224,9 +224,15 @@ module.exports = {
             // prepare data for drawing jQPlot
             let dataRendered = function() {
                 let data = [];
+                let hasNotEmpty = false;
                 for (let i = 0, size = outputData.length; i < size; i++) {
                     if (outputData[i].multiple) {
                         data.push([i, outputData[i].multiple]);
+                        hasNotEmpty = true;
+                    } else {
+                        if (!hasNotEmpty) {
+                            data.push([i, 0]);
+                        }
                     }
                 }
                 return data;
@@ -245,6 +251,7 @@ module.exports = {
             for (var i = 0; i < 11; i++) {
                 ticks.push([i, 'Year ' + (currentYear + i)]);
             }
+
 
             let $chart = $("#chart1");
             var plotApi = $.plot($chart, [{
@@ -270,7 +277,7 @@ module.exports = {
                         }
                     },
                     points: {
-                        show: false,
+                        show: true,
                         radius: 3,
                         lineWidth: 1
                     },
@@ -312,7 +319,6 @@ module.exports = {
             });
 
             $chart.on("growFinished", function() {
-                console.log('123');
                 //options.series.points.show = true;
                 //$.plot($chart, dataArr, options);
                 
@@ -320,7 +326,7 @@ module.exports = {
                 let o = plotApi.pointOffset({x: last[0], y: last[1]});
                 $('<div class="data-point-label">Congratulations, Payback Share Contract is complete</div>').css( {
                     position: 'absolute',
-                    left: o.left - 200,
+                    left: o.left - 500,
                     top: o.top - 30,
                     display: 'none'
                 }).appendTo(plotApi.getPlaceholder()).fadeIn('slow');

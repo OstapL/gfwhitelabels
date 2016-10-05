@@ -28,6 +28,7 @@ include ../../../templates/mixins.pug
                         .col-lg-12
                             select#industry.form-control.js-select(
                                 data-model-value='industry')
+                                option(value = '')= '---'
                                 each val, index in industryData
                                     if val == data.industry
                                         option(selected)= val
@@ -39,6 +40,7 @@ include ../../../templates/mixins.pug
                         .col-lg-12
                             select#industryEstablishment.form-control.js-select(
                                 data-model-value='industryEstablishment')
+                                    option(value = '')= '---'
                                     each item in selects.industryEstablishment
                                         if item.value == data.industryEstablishment
                                             option(selected, value= item.value)= item.text
@@ -50,6 +52,7 @@ include ../../../templates/mixins.pug
                         .col-lg-12
                             select#typeOfEstablishment.form-control.js-select(
                                 data-model-value='typeOfEstablishment')
+                                    option(value = '')= '---'
                                     each item in selects.typeOfEstablishment
                                         if item.value == data.typeOfEstablishment
                                             option(selected, value= item.value)= item.text
