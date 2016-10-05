@@ -68,6 +68,7 @@ module.exports = {
 
     $('.dropzone__' + name).addClass('dropzone');//.html('Drop file here');
 
+
     dropbox.on('addedfile', function (file) {
       _(this.files).each((f, i) => {
         if (f.lastModified != file.lastModified) {

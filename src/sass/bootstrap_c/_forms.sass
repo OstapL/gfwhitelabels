@@ -71,11 +71,14 @@ select.form-control
 		.dz-clickable
 			&:hover
 				color: $link-1-hover	
+				i
+					color: $link-1-hover
 
 	.active-border
 		border: dashed 1px $link-1-hover
 		.dz-clickable
 			color: $link-1-hover
+
 
 	.dragging-over
 		border: dashed 1px $dragging-hover-border
@@ -84,6 +87,10 @@ select.form-control
 	.big-label-text
 		position: relative
 		top: rem(-15)
+			i
+				color: $link-1-hover
+
+
 	@media screen and (min-width:992px)
 		// date of birth field
 		.dob label

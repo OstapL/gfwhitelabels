@@ -8,6 +8,7 @@ const dropzoneHelpers = require('helpers/dropzone.js');
 
 // const validation = require('components/validation/validation.js');
 
+
 const jsonActions = {
   events: {
     'click .add-section': 'addSection',
@@ -239,12 +240,14 @@ module.exports = {
         if (this.model.faq) {
           // this.faqIndex = Object.keys(this.model.get('faq')).length;
           this.faqIndex = Object.keys(this.model.faq).length;
+
         } else {
           this.faqIndex = 0;
         }
 
         if (this.model.additional_info) {
           this.additional_infoIndex = Object.keys(this.model.additional_info).length;
+
         } else {
           this.additional_infoIndex = 0;
         }
@@ -274,6 +277,12 @@ module.exports = {
         'click .onPreview': onPreviewAction,
       }, jsonActions.events),
       urlRoot: Urls['campaign-list']() + '/media',
+
+      appendHttpsIfNecessary(e) {
+        appendHttpIfNecessary(e, true);
+      },
+
+      appendHttpIfNecessary: appendHttpIfNecessary,
 
       appendHttpsIfNecessary(e) {
         appendHttpIfNecessary(e, true);
@@ -349,12 +358,14 @@ module.exports = {
         // if (this.model.get('press')) {
         if (this.model.press) {
           this.pressIndex = Object.keys(this.model.press).length;
+
         } else {
           this.pressIndex = 0;
         }
 
         if (this.model.additional_video) {
           this.additional_videoIndex = Object.keys(this.model.additional_video).length;
+
         } else {
           this.additional_videoIndex = 0;
         }
@@ -633,6 +644,7 @@ module.exports = {
         json.index = this.index;
 
         api.submitAction.call(this, e, json);
+
       },
     }),
 
