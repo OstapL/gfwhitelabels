@@ -1,82 +1,129 @@
-section.home-section.bg-dark-alfa-30(style="background: url(/img/bg.jpg) center center no-repeat; background-size: cover; background-attachment: fixed;")
-    .container
-        .row
-            .js-height-full
-                .home-content
-                    .home-text-main.text-lg-center
-                        h1.text-uppercase.dosis Investors and Entrepreneurs:
-                        .col-lg-4.offset-lg-4.text-lg-center.text-sm-center.text-xs-center.m-b-3
-                            span.small-text connecting, funding, and enriching one another, one idea at a time.
-                        .col-lg-12
-                            a(href=Urls['campaign-list']()).btn.btn-lg.btn-primary INVEST
-                            span.hidden-xs  
-                            a(href="/company/create").btn.btn-lg.btn-primary RAISE CAPITAL
+.home-section
+    section.main-page-slider
+      #carousel-main(data-ride="carousel" data-interval="30000").carousel.carousel-main
+        ol.carousel-indicators
+            li(data-target="#carousel-main" data-slide-to="0").active
+            li(data-target="#carousel-main" data-slide-to="1")
+            li(data-target="#carousel-main" data-slide-to="2")
 
-section.campaing-list
+
+        .carousel-inner(role="listbox")
+            .carousel-item.active.t40
+                img(src="/img/JDA-Scenic-2.jpg" alt="...").img-fluid
+                .carousel-caption
+                    .home-content
+                        .home-text-main.text-lg-center
+                            .col-lg-12
+                                h1.text-uppercase.font-weight-bold.m-b-2 RAISE CAPITAL WITH US
+                            .col-lg-12.m-b-2.m-t-0
+                                h2.m-t-0.small-text Start investing locally
+                            .col-lg-12
+                                a(href=Urls['campaign-list']()).btn.btn-lg.btn-primary.m-r-3 invest
+                                a(href="/company/create").btn.btn-lg.btn-primary RAISE CAPITAL
+
+            .carousel-item.t40
+                img(src="/img/JDA-Scenic-3.jpg" alt="...").img-fluid
+                .carousel-caption
+                    .home-content
+                        .home-text-main.text-lg-right
+                            .col-lg-12
+                                h1.text-uppercase.text-lg-right.font-weight-bold.m-b-2.color-black_pearl RAISE CAPITAL WITH US
+                            .col-lg-12.text-lg-right.m-b-2.m-t-0
+                                h2.m-t-0.small-text.color-black_pearl Start investing locally
+                            .col-lg-12.text-lg-right
+                                a(href=Urls['campaign-list']()).btn.btn-lg.btn-primary.m-r-3 invest
+                                a(href="#").btn.btn-lg.btn-primary raise capital
+            .carousel-item.t40
+                img(src="/img/JDA-Scenic-4.jpg" alt="...").img-fluid
+                .carousel-caption
+                    .home-content
+                        .home-text-main.text-lg-left
+                            .col-lg-12
+                                h1.text-uppercase.text-lg-left.font-weight-bold.m-b-2.color-black_pearl YOUR SUCCESS IS OUR SUCCESS
+                            .col-lg-12.text-lg-left.m-b-2.m-t-0
+                                h2.m-t-0.small-text.color-black_pearl Start investing locally
+                            .col-lg-12.text-lg-left
+                                a(href=Urls['campaign-list']()).btn.btn-lg.btn-primary.m-r-3 invest
+                                a(href="/company/create").btn.btn-lg.btn-primary raise capital
+
+        a(href="#carousel-main"
+        role="button" 
+        data-slide="prev").left.carousel-control
+          span(aria-hidden="true").icon-prev
+          span.sr-only Previous
+        a(href="#carousel-main"
+        role="button" 
+        data-slide="next").right.carousel-control
+          span(aria-hidden="true").icon-next
+          span.sr-only Next
+
+section.jeanne_footer.top-block
+    .container 
+        .row.text-lg-center 
+            .col-lg-4.col-md-6.col-sm-12.text-md-right 
+                .container_block 
+                    img(src="/img/footer_com_logo.png" alt="")
+
+
+            .col-lg-6.col-md-6.col-sm-12 
+                .container_block.text-left 
+                    h5 Need help getting your idea started?
+                    p "Build" Business Solutions offer everything from business loans and credit cards to business checking and savings products. Let us help you take your concept or business to the next level.
+
+
+            .col-lg-2.col-md-12 
+                .small_container_block 
+                    h6.form-group.text-uppercase Ready to 
+                        b build
+                        | &nbsp;your business
+                    a(href="/pg/investor_tutorial").btn.text-uppercase Start today
+
+section.campaing-list.m-t-85
     .container#campaignList
         .col-lg-12
-            h2.dosis.text-uppercase.text-sm-center.text-xs-center What's Popular
+            h2.dosis.text-uppercase.text-sm-center.m-t-0.mb50 What's Popular
 
         include ../components/campaign/templates/_list.pug
 
         .col-lg-12.text-lg-center.text-md-center.text-xs-center
             a(href="/api/campaign").link-4 See All
 
-section.home-wrap-text-block(style="background: url(/img/section-bg-3.jpg) center center no-repeat; background-size: cover; background-attachment: fixed;")
+section.home-wrap-text-block(style="background: url(/img/cd-depsoite-campaign-hero-size-2.png) bottom center no-repeat; background-size: cover; background-attachment: fixed;")
     .opasity-block
         .container.text-lg-center.text-xs-center.text-sm-center
-            .col-lg-6.offset-lg-3
-                h2.dosis.text-uppercase INVEST IN YOUR LOCAL COMMUNITY
+            .col-lg-8.offset-lg-2
+                h2.text-uppercase.font-weight-bold INVEST IN YOUR LOCAL COMMUNITY
                 h3 Find companies in your neighborhood, and help them grow through your investment.
             .col-lg-12
                 a(href="/account/login").btn.btn-lg.btn-secondary.text-uppercase Sign up to start investing
                 .learn-link
-                    a(href="/pg/education").link-3 Understand the Risks
+                    a(href="/pg/education").link-2 Understand the Risks
 
 section.home-what-is
     .container
-        .col-lg-10.offset-lg-1
-            h2.dosis.text-uppercase.text-sm-center.text-xs-center WHAT IS GROWTHFOUNTAIN
+        .col-lg-12
+            h2.text-uppercase.text-sm-center.text-xs-center.font-weight-bold A PLATFORM BUILT FOR OUR COMMUNITY
             .row
                 .col-lg-6
                     .embed-responsive.embed-responsive-16by9.boxshadow
                         iframe(
                             embed-responsive-item="true" 
-                            src="https://player.vimeo.com/video/170651597?title=0&amp;byline=0&amp;portrait=0" 
+                            src="https://player.vimeo.com/video/180959588?title=0&amp;byline=0&amp;portrait=0" 
                             data-webkitallowfullscreen="" 
                             data-mozallowfullscreen="" 
                             data-allowfullscreen=""
                         )
 
-                .col-lg-5
-                    h3.m-t-0.text-justify We banded together with a simple mission – to connect small businesses to all the tools they need to succeed – including financial, human and social capital.
-                    h3.m-t-0.text-justify.m-b-0 Our goal is to level the playing field and make things easy for entrepreneurs to focus on what matters – their product or service!
-
-section.home-wrap-text-block.raise-wrap(style="background: url(/img/raise-capital.png) center center no-repeat; background-size: cover; background-attachment: fixed;")
-    .opasity-block
-        .container.text-lg-center.text-xs-center
-            .col-lg-6.offset-lg-3
-                h2.dosis.text-uppercase  Raise capital with us
-                h3 How does conducting a Regulation Crowdfunding offering actually work? Access our investor network to raise capital for your company now.
-            .col-lg-12.m-b-3
-                a(href="/company/create").btn.btn-lg.btn-primary.text-uppercase raise capital
-                a(href="/pg/entrepreneurquestions").btn.btn-lg.btn-secondary.text-uppercase learn more
-section.home-our-partners
-    .container
-        .row
-            .col-lg-12
-                h2.dosis.text-uppercase.text-xs-center OUR PARTNERS
-        .row
-            .col-lg-4.text-xs-center
-                a(href="http://www.callahan.com/" target="_blank")
-                    img(src="/img/callahan.png").img-fluid.text-lg-right.text-xs-center.m-x-auto
-            .col-lg-4.text-lg-center.text-xs-center.m-x-auto
-                a(href="https://www.jdcu.org/" target="_blank")
-                    img(src="/img/logo_jd.png").img-fluid.text-xs-center.m-x-auto
-            .col-lg-4.text-lg-left.m-x-auto
-                a(href="https://www.rivermarkcu.org/" target="_blank")
-                    img(src="/img/logo_rivermark.png" ).img-fluid.text-xs-center.m-x-auto
-        .row.mt25
-            .col-lg-4.text-lg-right.text-xs-center
-                a(href="https://www.dcu.org/" target="_blank")
-                    img(src="/img/logo_dcu.jpg").img-fluid.text-xs-center.m-x-auto
+                .col-lg-6
+                    h2.m-t-1.text-lg-center.text-xs-center.light.open-sans Through our partnership with GrowthFountain we’re pleased to introduce Equity Crowdfunding.
+                    h3.m-t-0.text-justify.font-weight-normal Discover, support and invest in the businesses within our community, and receive ownership for your contribution.
+                    h3.m-t-0.text-lg-center.text-xs-center.font-weight-normal It’s people helping people at an entirely new level.
+                    .logo
+                        .col-lg-4.p-x-0
+                            a(href="")
+                                img(src="/img/logo/logo-color-png-r.png").img-fluid
+                        .col-lg-4
+                            p.small.text-lg-center.text-xs-center.font-weight-bold.text-uppercase Powered by
+                        .col-lg-4.p-x-0
+                            a(href="#")
+                                img(src="/img/logo/GF.png").img-fluid
