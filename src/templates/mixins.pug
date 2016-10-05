@@ -40,7 +40,6 @@ mixin fieldBlock(name, data, attr)
         - fields[name] = {}
         - fields[name]['label'] = name
         - fields[name]['required'] = false
-
     if values == null
         - values = {}
     if values[name] == null
@@ -250,7 +249,7 @@ mixin fieldBlock(name, data, attr)
                 div(class=attr.class2)
                     input(
                         id=name
-                        name=name
+                        name=(name)
                         placeholder=attr.placeholder ? attr.placeholder : fields[name].label
                         type=attr.type ? attr.type : 'text'
                         class=(fields[name].help_text ? 'showPopover' : '') 
@@ -259,6 +258,33 @@ mixin fieldBlock(name, data, attr)
                         maxlength = attr.maxlength ? attr.maxlength : false
                         disabled=(attr.disabled ? attr.disabled : false)
                       ).form-control
+
+mixin fieldBlock2(name, data, attr, nameForForm)
+    // If we did not created fields vocabulary
+    // Assume it is empty field
+    if fields[name] == null
+        - console.log('bad field', name);
+        - fields[name] = {}
+        - fields[name]['label'] = name
+        - fields[name]['required'] = false
+    if values == null
+        - values = {}
+    // if values[name] == null
+    - values[name] = data
+    - attr.type = attr.type ? attr.type : fields[name].type
+    label(class= attr.text_align ? 'text-lg-' + attr.text_align + ' ' + attr.class1 : ' text-lg-right ' + attr.class1 for=name)= fields[name].label
+    div(class=attr.class2)
+        input(
+            id=name
+            name=(nameForForm || name)
+            placeholder=attr.placeholder ? attr.placeholder : fields[name].label
+            type=attr.type ? attr.type : 'text'
+            class=(fields[name].help_text ? 'showPopover' : '') 
+            data-content=(fields[name].help_text ? fields[name].help_text : '')
+            value=values[name]
+            maxlength = attr.maxlength ? attr.maxlength : false
+            disabled=(attr.disabled ? attr.disabled : false)
+          ).form-control
 
 mixin fieldDropzone(name, attr, type)
     // If we did not created fields vocabulary

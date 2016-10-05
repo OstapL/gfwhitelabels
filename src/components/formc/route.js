@@ -92,6 +92,18 @@ module.exports = Backbone.Router.extend({
 
   useOfProceeds(id) {
     const View = require('components/formc/views.js');
+      const i = new View.useOfProceeds({
+        el: '#content',
+        model: {
+          id: id,
+        },
+        fields: {
+          'offering-expense': {type: 'row'},
+        },
+      });
+      i.render();
+      app.hideLoading();
+      return;
 
     let fieldsR = api.makeCacheRequest(formcServer + '/' + id + '/use-of-proceeds', 'OPTIONS');
     let dataR = api.makeCacheRequest(formcServer + '/' + id + '/use-of-proceeds');
@@ -222,6 +234,25 @@ module.exports = Backbone.Router.extend({
   financialCondition(id) {
     const View = require('components/formc/views.js');
 
+      const i = new View.financialCondition({
+        el: '#content',
+        model: {
+          "id": id,
+          "previously_sold_securities": "XXX",
+          "financials_for_prior_fiscal_year": 500,
+          "sold_securities_data": [
+            {"total_assets": 100, "long_term_debt": 500, "short_term_debt": 400, "cost_of_goods_sold": 700, "account_receivable": 300, "cash_and_equivalents": 200, "revenues_sales": 600},
+            {"total_assets": 10, "long_term_debt": 50, "short_term_debt": 40, "cost_of_goods_sold": 70, "account_receivable": 30, "cash_and_equivalents": 20, "revenues_sales": 60}
+          ],
+          "financials_for_most_recent_fiscal_year": 100,
+        },
+        // fields: fields[0].fields,
+        fields: {},
+      });
+      i.render();
+      app.hideLoading();
+      return;
+
     let fieldsR = api.makeCacheRequest(formcServer + '/' + id + '/financial-condition', 'OPTIONS');
     let dataR = api.makeCacheRequest(formcServer + '/' + id + '/financial-condition');
 
@@ -234,6 +265,7 @@ module.exports = Backbone.Router.extend({
       i.render();
       app.hideLoading();
     });
+
   },
 
   outstandingSecurity(id) {
