@@ -13,8 +13,13 @@ module.exports = {
       'keyup #zip_code': 'changeZipCode',
       'change .js-city': 'changeAddressManually',
       'change .js-state': 'changeAddressManually',
+      'change input[name=phone]': 'formatPhone',
       dragover: 'globalDragover',
       dragleave: 'globalDragleave',
+    },
+
+    formatPhone(e) {
+      this.$('input[name=phone]').val(this.$('input[name=phone]').val().replace(/^\(?(\d{3})\)?-?(\d{3})-?(\d{4})$/, '$1-$2-$3'));
     },
 
     globalDragover() {
