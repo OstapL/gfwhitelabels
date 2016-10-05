@@ -38,15 +38,15 @@ module.exports = {
                     'liquidityAdjustment': 0, // 0 %
 
                     // select boxes
-                    'industry': 'Machinery',
+                    'industry': '',
 
                     // 'New and potentially growing quickly' - 1
                     // 'Fairly well established' - 2
-                    'industryEstablishment': 1,
+                    'industryEstablishment': 0,
 
                     // 'Be an improvement to what is currently on the market' - 3
                     // 'Be revolutionary and disruptive to the market' - 4
-                    'typeOfEstablishment': 4
+                    'typeOfEstablishment': 0
                 }
             }
 
