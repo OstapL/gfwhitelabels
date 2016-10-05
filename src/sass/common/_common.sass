@@ -20,61 +20,6 @@
 	.circle
 		top: -5px
 
-/*  .progress-container используеться для добавления елементов или текст на progressbar 8   */
-
-.progress
-	margin: 0
-
-.progress[value]::-webkit-progress-value
-	background-color: $progress_bar_background
-	border-top-left-radius: none
-	border-bottom-left-radius: none
-
-/* .think-progress  тонкий progressbar */
-.progress.think-progress
-	height: 2px
-	color: $progress_bar_background
-
-/* .black темний progressbar */
-.progress.black[value]::-webkit-progress-value
-	background-color: $black
-
-/* сostum progressbar end */
-
-/* costum pagination begin */
-
-.pagination
-	width: 100%
-	margin: 0
-
-	.page-item
-		+mt(0.2s)
-
-		a
-			margin-right: 4px
-
-		&:hover a
-			border: 1px solid #a3a3a3
-			color: $grey
-			background: none
-			+mt(0.2s)
-
-	.page-item a:visited,
-	.page-item a:focus
-		text-decoration: none
-		background: none
-	
-	.page-item.active a,
-	.page-item.active a:focus,
-	.page-item.active a:visited
-		background: none
-
-		&:hover
-			background: none
-
-/* costum pagination end */
-
-/* common styles for pages(faq, overview.. etc..) */
 .text_block
 	.page_title
 		width: 100%
@@ -88,23 +33,6 @@
 			li 
 				margin-bottom: rem(15)
 
-.warning-block
-	@include calc-rem(14)
-
-	position: relative
-
-	padding: rem(10) rem(20)
-	padding-left: rem(35)
-	margin-bottom: rem(20)
-
-	border: 1px $crimson solid
-
-	color: $crimson
-
-	i 
-		position: absolute
-		top: rem(14)
-		left: rem(10)
 
 .position-relative
 	position: relative
@@ -118,24 +46,11 @@
 	opacity: 0.1
 
 /*Breadcrumb*/
-.header_title
-	margin-bottom: rem(85)
-	
-	background-color: $alabaster
-	font-family: $dosis
 
-	.br-title,
-	.br-list
-		height: rem(142)
 
-	h1
-		-webkit-transform: translateY(-50%)
-		transform: translateY(-50%)
-
-		position: absolute
-		top: 50%
-
-		line-height: 1.3
+@media screen and (max-width: 991px)
+	.mpb50
+		padding-bottom: rem(50)
 
 .pt50
 	padding-top: rem(50)
@@ -144,7 +59,8 @@
 .pb50
 	padding-bottom: rem(50)
 .p50
-	+calc-rem-padding (50) 
+	padding-top: rem(50)
+	padding-bottom: rem(50)
 .pt30
 	padding-top: rem(30)
 .pb10
@@ -198,7 +114,8 @@
 
 .m-b-85
 	margin-bottom: rem(85)
-
+.m-b-10
+	margin-bottom: rem(10)
 .row.no-gutters
 	margin-right: 0;
 	margin-left: 0;
@@ -221,3 +138,16 @@
 		display: inline-block
 		vertical-align: top
 		text-align: left
+
+// для больших textarea 
+.form-section
+	.big-textarea
+		textarea
+			min-height: 170px
+			width: 100%
+
+.color-green
+	color: $wild_willow
+
+.letter-spacing-normal
+	letter-spacing: normal

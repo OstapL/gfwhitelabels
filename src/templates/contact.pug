@@ -3,11 +3,11 @@ include mixins.pug
 +breadcrumbs('Contact us', '', 
     [
         ['Home', '/'],
-        ['Contacts us', ''],
+        ['Contacts us', '']
     ]
 )
 
-section.text_block 
+section.text_block  
     .container
         .row
             .col-lg-3 
@@ -17,7 +17,7 @@ section.text_block
                     li
                         a.d-inline-block.w-100.pb10(href='/pg/overview') Overview
                     li
-                        a.d-inline-block.w-100.pb10(href='/pg/team') #{teamName}
+                      a.d-inline-block.w-100.pb10(href='/pg/team') #{ teamName }
                     li.display-partners
                         a.d-inline-block.w-100.pb10(href='/pg/partners') Partners
                     li
@@ -47,13 +47,13 @@ section.text_block
                         //-         i.fa.fa-phone
                         //-         | &nbsp; +61 3 8376 6284
 
-                        .col-lg-5.offset-lg-2
+                        .col-sm-5.offset-lg-2.offset-sm-1
                             h4.dosis.text-uppercase.m0 ADDRESS
                             p 
                                 i.fa.fa-map-marker
                                 | &nbsp; 79 Madison Ave, 5th Floor 
                                 p &nbsp;&nbsp;&nbsp; New York, NY 10016
-                        .col-mlg-3
+                        .col-sm-5.col-lg-4.xs-top-padding
                             h4.dosis.text-uppercase.m0 E-MAIL
                             p 
                                 i.fa.fa-envelope-o

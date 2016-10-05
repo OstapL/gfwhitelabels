@@ -39,16 +39,32 @@ module.exports = {
       'click .see-all-risks': 'seeAllRisks',
       'click .see-all-faq': 'seeAllFaq',
       'click .linkresponse': 'checkResponse',
+      // 'click .see-all-article-press': 'seeAllArticlePress',
+      'hidden.bs.collapse #hidden-article-press' :'onArticlePressCollapse',
+      'shown.bs.collapse #hidden-article-press' :'onArticlePressCollapse',
       'submit .comment-form': 'submitComment',
-      // 'click .fancybox-nav': 'preventDefault'
     },
-    /*preventDefault(e) {
-      debugger
-      e.preventDefault();
-    },*/
     initialize(options) {
       $(document).off("scroll", this.onScrollListener);
       $(document).on("scroll", this.onScrollListener);
+    },
+
+    // seeAllArticlePress(e) {
+    //   e.preventDefault();
+    //   let $elems = this.$('.hidden-article-press');
+    //   if ($elems.css('display') == 'none') {
+    //     $elems.css('display', 'inline-block');
+    //   } else {
+    //     $elems.css('display', 'none');
+    //   }
+    // },
+
+    onArticlePressCollapse(e) {
+      if (e.type == 'hidden') {
+        this.$('.see-all-article-press').text('Show More')
+      } else if (e.type == 'shown') {
+        this.$('.see-all-article-press').text('Show Less')
+      }
     },
 
     seeAllRisks(e){
@@ -62,7 +78,6 @@ module.exports = {
     },
 
     smoothScroll(e) {
-      console.log('smooth...');
       e.preventDefault();
       $(document).off("scroll");
       $('.tabs-scroll .nav').find('.nav-link').removeClass('active');
@@ -227,6 +242,7 @@ module.exports = {
       }, 100);
       this.$el.find('.perks .col-lg-4 p').equalHeights();
       this.$el.find('.team .auto-height').equalHeights();
+      this.$el.find('.card-inverse p').equalHeights();
       this.$el.find('.modal').on('hidden.bs.modal', function(event) {
         $(event.currentTarget).find('iframe').attr('src', $(event.currentTarget).find('iframe').attr('src'));
       });

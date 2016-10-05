@@ -1,13 +1,15 @@
-const payBackShareCalculator = require( 'components/payBackShareCalculator/route');
-const capitalRaiseCalculator = require( 'components/capitalRaiseCalculator/route');
-const whatMyBusinessWorthCalc = require( 'components/whatMyBusinessWorthCalculator/route');
-const campaignRoute = require( 'components/campaign/route');
-const pageRoute = require( 'components/pg/route');
-const raiseFunds = require( 'components/raiseFunds/route');
-const anonymousAccount = require( 'components/anonymousAccount/route');
-const accountProfile = require( 'components/accountProfile/route');
-const establishedBusinessCalc = require( 'components/establishedBusinessCalculator/route');
-const formc = require( 'components/formc/route');
+
+const payBackShareCalculator = require('components/payBackShareCalculator/route');
+const capitalRaiseCalculator = require('components/capitalRaiseCalculator/route');
+const whatMyBusinessWorthCalc = require('components/whatMyBusinessWorthCalculator/route');
+const campaignRoute = require('components/campaign/route');
+const pageRoute = require('components/pg/route');
+const raiseFunds = require('components/raiseFunds/route');
+const anonymousAccount = require('components/anonymousAccount/route');
+const accountProfile = require('components/accountProfile/route');
+const establishedBusinessCalc = require('components/establishedBusinessCalculator/route');
+const formc = require('components/formc/route');
+
 
 let appRoutes = Backbone.Router.extend({
   routes: {},
@@ -57,7 +59,7 @@ let appRoutes = Backbone.Router.extend({
     });
   },
 
-  back: function(e) {
+  back: function (e) {
     // Create requirements and do clean up before
     // running view function
     // Undelegate and clear all popovers
@@ -67,9 +69,9 @@ let appRoutes = Backbone.Router.extend({
     $('.popover').popover('hide');
   },
 
-  execute: function(callback, args, name) {
+  execute: function (callback, args, name) {
     if (callback) callback.apply(this, args);
-  }, 
+  },
 
 });
 
@@ -77,12 +79,12 @@ app.on('userLoaded', function (data) {
 
   app.routers = new appRoutes();
   app.user.url = serverUrl + Urls['rest_user_details']();
-  Backbone.history.start({pushState: true});
+  Backbone.history.start({ pushState: true });
 
   window.addEventListener('popstate', app.routers.back);
 
   // if user is not authenticated - add login/sign up popup
-  if(data.id == '') {
+  if (data.id == '') {
     $('body').after(
       `<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
@@ -105,7 +107,7 @@ app.on('userLoaded', function (data) {
       </div>
       </div>
       `
-      )
+      );
   }
 
   let menu = require('components/menu/views.js');
@@ -125,18 +127,16 @@ app.on('userLoaded', function (data) {
   app.trigger('menuReady');
 });
 
-$(document).ready(function(){
+$(document).ready(function () {
 
   // show bottom logo while scrolling page
   $(window).scroll(function () {
     var $bottomLogo = $('#fade_in_logo');
     var offsetTopBottomLogo = $bottomLogo.offset().top;
 
-    if (($(window).scrollTop() + $(window).height() >= offsetTopBottomLogo) && 
+    if (($(window).scrollTop() + $(window).height() >= offsetTopBottomLogo) &&
       !$bottomLogo.hasClass('fade-in')) {
       $bottomLogo.addClass('fade-in');
     }
   });
-
-
 });

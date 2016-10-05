@@ -8,11 +8,14 @@ $em-base: 16  //переменная для базы перевода рх в р
 $btn-border-radius: $border-radius
 $btn-border-radius-sm: $border-radius
 $btn-border-radius-lg: $border-radius
-$spacer:       1.25rem
+$spacer:       1.25rem // не знаю что это !
 $popover-max-width: 500px
-$spacer-y: 11px
-$input-btn-border-width: $border-width
+$input-color: $black // нужен быть не здесь 
+$spacer-y: 11px // что это?
+$input-btn-border-width: $border-width // ?
+
 // $btn-secondary-color: $black
+
 
 
 // Фукнции
@@ -29,7 +32,6 @@ $input-btn-border-width: $border-width
 	white-space: nowrap;
 	text-overflow: ellipsis;
 
-
 =calc-rem($px)                                                                    
 	font-size: $px / 16 + rem                                                     
 
@@ -45,7 +47,10 @@ $input-btn-border-width: $border-width
 	&::-moz-placeholder                                                             
 		@content                                                                      
 	&:-ms-input-placeholder                                                         
-		@content 
-
+		@content
+// переменные для шрифтов 
 $dosis: 'Dosis', sans-serif
 $open-sans: 'Open Sans', sans-serif
+
+$dropdown-min-width: 100%
+

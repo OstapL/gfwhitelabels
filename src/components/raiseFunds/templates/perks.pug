@@ -19,12 +19,11 @@ section.create-perks.container
     form(metod="post" action="").form-section
       .form-group
         .col-sm-12.p-r-0
-          .campaign-warning 
-            i.fa.fa-exclamation-triangle 
-            span.warning-text 
-            | Investment decisions can depend as much on emotional attachment to your company as they do on potential return. Evidence suggests that investors particularly like to invest in companies that give them perks - or tangible rewards of ownership, as well as continued contact post-investment.We recommend offering at least one item, and perhaps more, depending on the level of investment. For example, all investors could receive coupons or discounts. If the company makes a widget, who
-            | invest a minimimum of $500 receive a free widget. Please consider the cost of shipping and production when you offer to send an investor a free item based on their investment - make sure it works for you monetarily and make sure to manage expectations appropriately. Offering perks is completely optional and up to you - you can even offer honorable mention on a website, a signed picture, etc. Investor perks are not intended to affect the value of the security andshould evaluate the
-            | merits of each investment without regard to any Investor Perks.
+          .warning-block  
+            i.fa.fa-info-circle
+            span.warning-text Investment decisions can depend as much on emotional attachment to your company as they do on potential return. Evidence suggests that investors particularly like to invest in companies that give them perks - or tangible rewards of ownership, as well as continued contact post-investment. We recommend offering at least one item, and perhaps more, depending on the level of investment. For example, all investors could receive coupons or discounts. If the company makes a widget, who invest a minimimum of $500 receive a free widget. Please consider the cost of shipping and production when you offer to send an investor a free item based on their investment - make sure it works for you monetarily and make sure to manage expectations appropriately. Offering perks is completely optional and up to you - you can even offer honorable mention on a website, a signed picture, etc.
+              br
+              |  Investor perks are not intended to affect the value of the security and should evaluate the merits of each investment without regard to any Investor Perks.
         .col-lg-12
           .row
             .articles
@@ -38,6 +37,6 @@ section.create-perks.container
                   i.fa.fa-plus
                   |  Add Another Perks Level
         .col-lg-12.pull-lg-right.p-r-0.m-t-3.text-lg-right.text-md-center.text-sm-center.text-xs-center
-              button(type="submit" data-href="/api/campaign/" + values.id).btn.btn-secondary.text-uppercase.m-r-3.onPreview preview
-              button(type="submit").btn.btn-primary.text-uppercase save
+              // button(type="submit" data-href="/api/campaign/" + values.id).btn.btn-secondary.text-uppercase.m-r-3.onPreview preview
+              button(type="submit").btn.btn-primary.text-uppercase save and continue
                 i.fa.fa-angle-right

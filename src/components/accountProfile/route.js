@@ -5,6 +5,7 @@ module.exports = Backbone.Router.extend({
     'account/change-password': 'changePassword',
     'reset/password/confirm/': 'setNewPassword',
     // 'account/new-password': 'setNewPassword',
+    'dashboard/issue-dashboard': 'issueDashboard',
   },
 
   accountProfile() {
@@ -57,6 +58,17 @@ module.exports = Backbone.Router.extend({
       let i = new View.setNewPassword({
         el: '#content',
         model: model,
+      });
+      i.render();
+      app.hideLoading();
+    });
+  },
+
+  issueDashboard: function() {
+    require.ensure([], function() {
+      const View = require('components/accountProfile/views.js');
+      let i = new View.issueDashboard({
+        el: '#content',
       });
       i.render();
       app.hideLoading();

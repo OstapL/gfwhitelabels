@@ -29,6 +29,10 @@ ul.list-blog {
 				margin-right: 0;
 			}
 
+			article {
+				height: 100%;
+			}
+
 			a {
 				color: $black_text;
 			}
@@ -92,18 +96,53 @@ ul.list-blog {
 	}
 }
 
+@media screen and (max-width: 1200px) {
+	ul.list-blog {
+		&-main li {
+			height: 390px;
+		}
+	}
+}
+
 @media screen and (max-width: 991px) {
 	ul.list-blog {
 		&-main li {
 			width: 48%;
 		}
 	}
+
+	.comments.blog-comments {
+		.p-l-0 {
+			padding-left: 15px!important;
+		}
+
+		.p-r-0 {
+			padding-right: 15px!important;
+		}
+
+		.comment_text {
+			textarea {
+				margin-bottom: 20px;
+			}
+		}
+
+	}
 }
+@media screen and (max-width: 640px) {
+	ul.list-blog {
+		&-main li {
+			height: 375px;
+		}
+	}
+}
+
+
 
 @media screen and (max-width: 543px) {
 	ul.list-blog {
 		&-main li {
 			margin-right: 0%;
+			height: 355px;
 			width: 100%;
 		}
 	}
@@ -154,6 +193,8 @@ ul.list-blog {
 	 
 				}
 			}
+
+
 
 			i {
 				margin-top: -1px;

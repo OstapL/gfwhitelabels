@@ -10,7 +10,7 @@ include ../../../templates/mixins.pug
 .container.profile.pt-50
     .row 
         aside.col-xl-3
-            form(method="post" action="").form
+            form(method="post" action="").form.form-section
                 - var values = user;
                 +fieldDropzone("image", {
                   thumbSize: '255x135',
@@ -19,8 +19,9 @@ include ../../../templates/mixins.pug
                   icon: 'file-image-o',
                   viewType: 3
                   })
-            .row
-                a(href="/account/change-password").link-3 Need to change your password?
+            .row.m-t-2
+                .col-lg-12
+                    a(href="/account/change-password").link-3 Need to change your password?
 
 
         .col-xl-9.col-lg-12
