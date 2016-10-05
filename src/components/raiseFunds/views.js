@@ -6,6 +6,7 @@ const appendHttpIfNecessary = formatHelper.appendHttpIfNecessary;
 const dropzone = require('dropzone');
 const dropzoneHelpers = require('helpers/dropzone.js');
 const leavingConfirmationHelper = require('helpers/leavingConfirmationHelper.js');
+const phoneHelper = require('helpers/phoneHelper.js');
 
 // const validation = require('components/validation/validation.js');
 
@@ -69,7 +70,7 @@ const onPreviewAction = function(e) {
 };
 
 module.exports = {
-  company: Backbone.View.extend(_.extend(leavingConfirmationHelper.methods, {
+  company: Backbone.View.extend(_.extend(leavingConfirmationHelper.methods, phoneHelper.methods, {
     // urlRoot: serverUrl + Urls['company-list'](),
     urlRoot: Urls.company_list(),
     template: require('./templates/company.pug'),
@@ -78,9 +79,8 @@ module.exports = {
       'keyup #zip_code': 'changeZipCode',
       'click .update-location': 'updateLocation',
       'click .onPreview': onPreviewAction,
-      'change input[name=phone]': 'formatPhone',
       'change #website,#twitter,#facebook,#instagram,#linkedin': appendHttpIfNecessary,
-    }, leavingConfirmationHelper.events),
+    }, leavingConfirmationHelper.events, phoneHelper.events),
 
     initialize(options) {
       this.fields = options.fields;
@@ -93,14 +93,6 @@ module.exports = {
       });
     },
 
-    /*appendHttpIfNecessary(e) {
-      var $el = $('#website');
-      var url = $el.val();
-      if (!(url.startsWith("http://") || url.startsWith("https://"))) {
-        $el.val("http://" + url);
-      }
-    },*/
-
     submit(e) {
       var data = $(e.target).serializeJSON();
 
@@ -111,10 +103,6 @@ module.exports = {
       delete data.founding_date__month;
       delete data.founding_date__year;
       api.submitAction.call(this, e, data);
-    },
-
-    formatPhone(e) {
-      this.$('input[name=phone]').val(this.$('input[name=phone]').val().replace(/^\(?(\d{3})\)?-?(\d{3})-?(\d{4})$/, '$1-$2-$3'));
     },
 
     updateLocation(e) {
