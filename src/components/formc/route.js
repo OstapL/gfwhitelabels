@@ -25,10 +25,9 @@ module.exports = Backbone.Router.extend({
     let dataR = api.makeCacheRequest(formcServer + '/' + id + '/introduction');
 
     $.when(fieldsR, dataR).done((fields, data) => {
-      var i = new View.introduction({
+      data[0].id = id;
+      const i = new View.introduction({
         el: '#content',
-        // fields: meta[0].actions.POST,
-        // model: new Model.model(model[0][0] || {}),
         fields: fields[0].fields, 
         model: data[0], 
       });
@@ -43,6 +42,7 @@ module.exports = Backbone.Router.extend({
     let dataR = api.makeCacheRequest(formcServer + '/' + id + '/team-members', 'GET');
 
     $.when(dataR).done((data) => {
+      data[0].id = id;
       const i = new View.teamMembers({
         el: '#content',
         fields: {},
@@ -80,6 +80,7 @@ module.exports = Backbone.Router.extend({
     let dataR = api.makeCacheRequest(formcServer + '/' + id + '/related-parties');
 
     $.when(fieldsR, dataR).done((fields, data) => {
+      data[0].id = id;
       const i = new View.relatedParties({
         el: '#content',
         fields: fields[0].fields,
@@ -109,6 +110,7 @@ module.exports = Backbone.Router.extend({
     let dataR = api.makeCacheRequest(formcServer + '/' + id + '/use-of-proceeds');
 
     $.when(fieldsR, dataR).done((fields, data) => {
+      data[0].id = id;
       const i = new View.useOfProceeds({
         el: '#content',
         model: data[0],

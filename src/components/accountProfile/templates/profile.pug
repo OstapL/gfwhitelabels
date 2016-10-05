@@ -55,6 +55,8 @@ include ../../../templates/mixins.pug
                     .row 
                         section.form-section.clearfix 
                             form(method="post" action="").form
+                                input(type="hidden" name="city" values=values['city'])
+                                input(type="hidden" name="state" value=values['state'])
                                 .form-body.clearfix 
                                     .col-xs-12
                                         section.right-block 
@@ -71,7 +73,7 @@ include ../../../templates/mixins.pug
                                                         label.col-lg-5.col-xs-6.text-lg-right.text-xs-left City/State
                                                         .col-lg-6.col-xs-6
                                                             a(data-toggle="modal" data-target="#city_state_modal" href="#city_state_modal").change_state_city
-                                                                span.input-value.js-city-state (City),(State)
+                                                                span.input-value.js-city-state #{ values['city'] ? values['city'] : '(City)' }, #{ values['state'] ? values['state'] : '(State)' }
                                                                 i.fa.fa-pencil-square-o.link-1
 
                                             .row 
@@ -180,12 +182,15 @@ include ../../../templates/mixins.pug
                 .container.form-section
                     form.col-lg-10.offset-lg-1.border-bottom
                         .form-group.row.clearfix.required
-                            input#city.js-city(type="text" placeholder="City").form-control
+                            input#city.js-city(type="text" placeholder="City" value=values['city']).form-control
                         .form-group.row.clearfix.required
                             select#state.js-state(name='state').form-control.custom-select
                                 option(checked='checked', value="") State
                                 each state in states
-                                    option(value=state.abbreviation)= state.name
+                                    if state.abbreviation == values.state
+                                        option(value=state.abbreviation selected)= state.name
+                                    else
+                                        option(value=state.abbreviation)= state.name
                         .form-group.row.clearfix.required.m0
                             .row
                                 .col-lg-12

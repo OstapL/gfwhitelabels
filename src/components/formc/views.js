@@ -5,13 +5,10 @@ let yesNoHelper = require('helpers/yesNoHelper.js');
 
 module.exports = {
     introduction: Backbone.View.extend(_.extend(menuHelper.methods, yesNoHelper.methods, {
-        // urlRoot: Urls['campaign-list']() + '/general_information',
-        urlRoot: 'https://api-formc.growthfountain.com/' + ':id' + '/introduction',
+        urlRoot: formcServer + '/:id' + '/introduction',
 
         events: _.extend({
             'submit form': 'submit',
-            // 'click input[name=failed_to_comply]': 'onComplyChange',
-            // 'click input:radio': 'onComplyChange',
         }, menuHelper.events, yesNoHelper.events),
 
 
@@ -23,25 +20,15 @@ module.exports = {
             }
         },
 
-        // addSection: jsonActions.addSection,
-        // deleteSection: jsonActions.deleteSection,
         getSuccessUrl() {
-            // return  '/formc/team-members/' + this.model.get('id');
-            // return  '/formc/team-members/' + this.model.id;
-            return  '/formc/' + this.model.id + '/team-members';
+          return  '/formc/' + this.model.id + '/team-members';
         },
-        // submit: app.defaultSaveActions.submit,
-        // submit: api.submitAction,
-        /*submit: function (e) {
-            e.preventDefault();
-            e.stopPropagation();
-            this.undelegateEvents();
-            app.routers.navigate('/formc/team-members/' + this.model.id, {trigger: true});
-        },*/
 
         submit(e) {
             var $target = $(e.target);
             var data = $target.serializeJSON();
+            // ToDo
+            // Fix this
             if (data.failed_to_comply_choice == false) {
                 data.failed_to_comply = 'Please explain.';
             }
@@ -50,8 +37,6 @@ module.exports = {
 
         initialize(options) {
             this.fields = options.fields;
-            // this.model = options.model;
-            // Get the type from here, i.e. director, officer, share holder
         },
 
         render() {
@@ -63,35 +48,15 @@ module.exports = {
                     Urls: Urls,
                     fields: this.fields,
                     values: this.model,
-                    // values: this.model.toJSON(),
                 })
             );
             return this;
         },
 
-        // onComplyChange(e) {
-        //     // let comply = this.$('input[name=failed_to_comply]:checked').val();
-        //     let $target = $(e.target);
-        //     let val = $target.val();
-        //     let targetElem = $target.attr('target');
-        //     // console.log(comply);
-        //     // if (comply == 'no') {
-        //     //     this.$('.explain textarea').text('');
-        //     //     this.$('.explain').hide();
-        //     // } else {
-        //     //     this.$('.explain').show();
-        //     // }
-        //     if (val == 'no') {
-        //         this.$(targetElem).hide();
-        //     } else {
-        //         this.$(targetElem).show();
-        //     }
-        // }
-
     })),
 
     teamMembers: Backbone.View.extend(_.extend(menuHelper.methods, {
-        urlRoot: 'https://api-formc.growthfountain.com/' + ':id' + '/team-members',
+        urlRoot: formcServer + '/:id' + '/team-members',
         name: 'teamMembers',
         events: _.extend({
             'submit form': 'submit',
@@ -105,22 +70,10 @@ module.exports = {
             }
         },
 
-        // addSection: jsonActions.addSection,
-        // deleteSection: jsonActions.deleteSection,
         getSuccessUrl() {
-            // return  '/formc/use-of-proceeds/1' + this.model.get('id');
-            return  '/formc/use-of-proceeds/1' + this.model.id;
+            return  '/formc/' + this.model.id + '/use-of-proceeds';
         },
-        // submit: app.defaultSaveActions.submit,
         submit: api.submitAction,
-        // submit(e) {
-        //     e.preventDefault();
-        //     e.stopPropagation();
-        //     this.undelegateEvents();
-        //     // app.routers.navigate('/formc/related-parties/' + this.model.id, {trigger: true});
-        //     app.routers.navigate('/formc/' + this.model.id + '/related-parties', {trigger: true});
-        //     // app.routers.navigate('/formc/use-of-proceeds/1', {trigger: true});
-        // },
 
         initialize(options) {
             this.fields = options.fields;
@@ -148,19 +101,10 @@ module.exports = {
         events: _.extend({
             'submit form': 'submit',
         }, addSectionHelper.events, menuHelper.events),
-        urlRoot: serverUrl + 'xxxxx' + '/team_members',
+        urlRoot: formcServer + '/:id' + '/team_members',
         initialize(options) {
             this.fields = options.fields;
             this.type = options.type;
-            // this.faqIndex = 1;
-            /*if (this.type == 'director') {
-                this.previous_positionsIndex = 1;
-                this.experiencesIndex = 1;
-            } else if (this.type == 'officer') {
-
-            } else if (this.type == 'holder') {
-
-            }*/
         },
         render() {
             let template;
@@ -248,16 +192,8 @@ module.exports = {
             this.$el.find('.selectpicker').selectpicker();
 
         },
-        // addSection: jsonActions.addSection,
-        // deleteSection: jsonActions.deleteSection,
         getSuccessUrl(data) {},
         submit: api.submitAction,
-        // submit(e) {
-        //     e.preventDefault();
-        //     e.stopPropagation();
-        //     this.undelegateEvents();
-        //     app.routers.navigate('/formc/' + this.model.id + '/team-members', {trigger: true});
-        // },
     })),
 
     offering: Backbone.View.extend(_.extend(addSectionHelper.methods, menuHelper.methods, {
@@ -273,12 +209,9 @@ module.exports = {
             }
         },
 
-        // addSection: jsonActions.addSection,
-        // deleteSection: jsonActions.deleteSection,
         getSuccessUrl() {
             return  '/formc/offering/' + this.model.id;
         },
-        // submit: app.defaultSaveActions.submit,
         submit: api.submitAction,
 
         initialize(options) {
@@ -287,7 +220,6 @@ module.exports = {
 
         render() {
             let template = require('templates/formc/offering.pug');
-            // let values = this.model.toJSON();
             let values = this.model;
 
             if (!Array.isArray(values.members)) {
@@ -350,7 +282,7 @@ module.exports = {
     }),*/
 
     relatedParties: Backbone.View.extend(_.extend(addSectionHelper.methods, menuHelper.methods, yesNoHelper.methods, {
-        urlRoot: 'https://api-formc.growthfountain.com/' + ':id' + '/related-parties',
+        urlRoot: formcServer + '/:id' + '/related-parties',
         name: 'relatedParties',
         initialize(options) {
             this.fields = options.fields;
@@ -358,33 +290,12 @@ module.exports = {
 
         events: _.extend({
             'submit form': 'submit',
-            // 'click input[name=had_transactions]': 'onHadTransactionsChange',
         }, addSectionHelper.events, menuHelper.events, yesNoHelper.events),
 
-        // addSection: jsonActions.addSection,
-        // deleteSection: jsonActions.deleteSection,
-        
-        // onHadTransactionsChange(e) {
-        //     let hadTransactions = this.$('input[name=had_transactions]:checked').val();
-
-        //     if (hadTransactions == 'no') {
-        //         this.$('.transactions-container').hide();
-        //         // i'll need to take out transactions elements as well.
-        //     } else {
-        //         this.$('.transactions-container').show();
-        //     }
-        // },
-
         submit: api.submitAction,
-        // submit(e) {
-        //     e.preventDefault();
-        //     e.stopPropagation();
-        //     this.undelegateEvents();
-        //     app.routers.navigate('formc/' + this.model.id + '/use-of-proceeds', {trigger: true});
-        // },
 
         render() {
-            let template = require('components/formc/templates/relatedParties.pug');
+            let template = require('./templates/relatedParties.pug');
 
             if (this.model.transactions) {
               this.transaction_with_related_partiesIndex = Object.keys(this.model.transactions).length;
@@ -410,7 +321,6 @@ module.exports = {
     })),
 
     useOfProceeds: Backbone.View.extend(_.extend(addSectionHelper.methods, menuHelper.methods, {
-    // useOfProceeds: Backbone.View.extend(_.extend(menuHelper.methods, {
         urlRoot: 'https://api-formc.growthfountain.com/' + ':id' + '/use-of-proceeds',
 
        initialize(options) {
@@ -770,7 +680,7 @@ module.exports = {
     })),
 
     outstandingSecurity: Backbone.View.extend(_.extend(addSectionHelper.methods, menuHelper.methods, yesNoHelper.methods, {
-        urlRoot: 'https://api-formc.growthfountain.com/' + ':id' + '/outstanding-security',
+        urlRoot: formcServer + '/:id' + '/outstanding-security',
         initialize(options) {
             this.fields = options.fields;
         },
