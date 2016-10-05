@@ -74,7 +74,6 @@ module.exports = {
     */
     
     this.$('.help-block').remove();
-    debugger
     if (!validation.validate(this.fields, data, this)) {
       _(validation.errors).each((errors, key) => {
         validation.invalidMsg(this, key, errors);
@@ -85,11 +84,7 @@ module.exports = {
       let url = this.urlRoot;
       let type = 'POST';
 
-      if(!url.includes('formc') && data.hasOwnProperty('id')) {
-        url += '/' + data.id;
-        delete data.id;
-        type = 'PUT';
-      } else if (url.includes('formc') && data.hasOwnProperty('id')) {
+      if (data.hasOwnProperty('id')) {
         url = url.replace(':id', data.id);
         delete data.id;
         type = 'PUT';
@@ -97,7 +92,6 @@ module.exports = {
 
       api.makeRequest(url, type, data).
         then((data) => {
-          this.model = data;
           app.showLoading();
 
           // ToDo

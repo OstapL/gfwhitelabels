@@ -10,20 +10,20 @@ include ../../../templates/mixins.pug
 .container
     .row
         .col-sm-8.offset-sm-2
-            h2.text-xs-center.thankyou-title.m0 #[i(aria-hidden="true").fa.fa-thumbs-o-up] We need to review you campaign
+            h2.text-xs-center.thankyou-title.m0.letter-spacing-normal #[i(aria-hidden="true").fa.fa-check-square-o.color-green]  We need to review you campaign!
 
     .row
-        .col-sm-8.offset-sm-2.mb50.mt50
+        .col-sm-8.offset-sm-2.mb30.mt30
             hr
     
     .row
         .col-sm-12
-            .result-info-block.m-x-auto
-                ul.info-text-block.list-unstyled
-                    li We need to review you campaign
-                    li Thank you for submitting a campaign. 
-                    li We will review and contact you shortly.
-
-                .info-btn-block.pt50
-                    a(href="/api/campaign/" + values.id).btn.btn-lg.btn-secondary PREVIEW
-                        i.fa.fa-angle-down
+            .result-info-block.m-x-auto.text-xs-center
+                p We need to review you campaign
+                    br
+                    |  Thank you for submitting a campaign.
+                    br
+                    |  We will review and contact you shortly.
+                .info-btn-block.m-t-3
+                    a(href="/api/campaign/" + values.id).btn.btn-secondary PREVIEW
+                        
