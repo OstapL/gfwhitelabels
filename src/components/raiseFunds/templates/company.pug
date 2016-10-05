@@ -65,7 +65,7 @@ section.create-company.container.m-b-85
               a(href="#").list-group-item.list-group-item-action form c
     .row
       .col-lg-12.text-xs-center
-        button(type="button" data-href=("#")).btn.btn-secondary.text-uppercase.m-t-2 preview
+        button(type="button" data-href=("#")).btn.btn-secondary.text-uppercase.m-t-2.onPreview(style="display:" + (campaign.id ? 'inline-block' : 'none') + ";") preview
         button(type="submit").btn.btn-primary.text-uppercase.m-t-2 submit campaign
     .row
       .education-link-wrap
@@ -206,8 +206,8 @@ section.create-company.container.m-b-85
         .col-lg-12
         if campaign.id
           // button(type="button" data-href=("/api/campaign/" + campaign.id)).btn.btn-secondary.text-uppercase.onPreview.m-r-3 preview
-          button(type="submit").btn.btn-primary.text-uppercase save and continue
-            i.fa.fa-angle-right
+        button(type="submit").btn.btn-primary.text-uppercase save and continue
+          i.fa.fa-angle-right
 
 //MODAL
 #city_state_modal.modal.fade(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")
