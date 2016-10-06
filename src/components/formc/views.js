@@ -304,8 +304,8 @@ module.exports = {
         render() {
             let template = require('./templates/relatedParties.pug');
 
-            if (this.model.transactions) {
-              this.transaction_with_related_partiesIndex = Object.keys(this.model.transactions).length;
+            if (this.model.transaction_with_related_parties) {
+              this.transaction_with_related_partiesIndex = Object.keys(this.model.transaction_with_related_parties).length;
             } else {
               this.transaction_with_related_partiesIndex = 0;
             }
@@ -586,12 +586,22 @@ module.exports = {
         submit: api.submitAction,
 
         render() {
+            this.fields.sold_securities_data.schema.taxable_income.label = "Taxable Income";
+            this.fields.sold_securities_data.schema.total_income.label = "Total Income";
+            this.fields.sold_securities_data.schema.total_tax.label = "Total Tax";
+            this.fields.sold_securities_data.schema.total_assets.label = "Total Assets";
+            this.fields.sold_securities_data.schema.long_term_debt.label = "Long Term Debt";
+            this.fields.sold_securities_data.schema.short_term_debt.label = "Short Term Debt";
+            this.fields.sold_securities_data.schema.cost_of_goods_sold.label = "Cost of Goods Sold";
+            this.fields.sold_securities_data.schema.account_receivable.label = "Account Receivable";
+            this.fields.sold_securities_data.schema.cash_and_equivalents.label = "Cash Equivalents";
+            this.fields.sold_securities_data.schema.revenues_sales.label = "Revenues Sales";
             let template = require('components/formc/templates/financialCondition.pug');
             this.$el.html(
                 template({
                     serverUrl: serverUrl,
                     Urls: Urls,
-                    // fields: this.fields,
+                    fields: this.fields,
                     values: this.model,
                 })
             );

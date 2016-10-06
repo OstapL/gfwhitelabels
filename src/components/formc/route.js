@@ -249,7 +249,17 @@ module.exports = Backbone.Router.extend({
           "financials_for_most_recent_fiscal_year": 100,
         },
         // fields: fields[0].fields,
-        fields: {},
+        fields: {sold_securities_data: {schema: {total_assets: {type: 'integer', required: true},
+          cash_and_equivalents: {type: 'integer', required: true},
+          account_receivable: {type: 'integer', required: true},
+          short_term_debt: {type: 'integer', required: true},
+          long_term_debt: {type: 'integer', required: true},
+          revenues_sales: {type: 'integer', required: true},
+          cost_of_goods_sold: {type: 'integer', required: true},
+          total_income: {type: 'integer', required: true},
+          taxable_income: {type: 'integer', required: true},
+          total_tax: {type: 'integer', required: true},}
+        }},
       });
       i.render();
       app.hideLoading();

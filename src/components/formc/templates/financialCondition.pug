@@ -3,19 +3,19 @@ include ../../../templates/mixins.pug
 include ../../../templates/menuRaiseFund.pug
 
 - 'use strict'
-- var fields = { how_much: { label: 'How much have you sold within the preceeding 12-month period?'} };
+// - var fields = { how_much: { label: 'How much have you sold within the preceeding 12-month period?'} };
 //- var fields = { financials_recent: { label: 'Upload financials for most recent fiscal year'} };
 
-- var fields = { total_assets: { label: 'Total Assets'} };
-- var fields = { cash: { label: 'Cash & Cash Equivalents'} };
-- var fields = { accounts: { label: 'Accounts Receivable'} };
-- var fields = { short: { label: 'Short-term Debt'} };
-- var fields = { long: { label: 'Long-term Debt'} };
-- var fields = { revenues: { label: 'Revenues/Sales'} };
-- var fields = { cost: { label: 'Cost of Goods Sold'} };
-- var fields = { income: { label: 'Total Income'} };
-- var fields = { taxable: { label: 'Taxable Income'} };
-- var fields = { tax: { label: 'Total Tax'} };
+// - var fields = { total_assets: { label: 'Total Assets'} };
+// - var fields = { cash: { label: 'Cash & Cash Equivalents'} };
+// - var fields = { accounts: { label: 'Accounts Receivable'} };
+// - var fields = { short: { label: 'Short-term Debt'} };
+// - var fields = { long: { label: 'Long-term Debt'} };
+// - var fields = { revenues: { label: 'Revenues/Sales'} };
+// - var fields = { cost: { label: 'Cost of Goods Sold'} };
+// - var fields = { income: { label: 'Total Income'} };
+// - var fields = { taxable: { label: 'Taxable Income'} };
+// - var fields = { tax: { label: 'Total Tax'} };
 +breadcrumbs('form c', '', 
     [
         ['Home', '/'],
@@ -125,7 +125,7 @@ section.formc-team-members-director.container.m-b-85
                 class2: 'col-lg-12 col-md-12',
                 type: 'text',
                 placeholder: '',
-                }, "sold_securities_data[" + k + "][" + k2 + "]")
+                }, "sold_securities_data[" + k + "][" + k2 + "]", fields.sold_securities_data.schema[k2].label)
               // - values[k2] = null;
       .col-lg-12.m-t-2
       .text-md-center.text-sm-center-text-xs-center
