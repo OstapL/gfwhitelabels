@@ -1,12 +1,13 @@
 const dropzone = require('dropzone');
 const dropzoneHelpers = require('helpers/dropzone.js');
 const validation = require('components/validation/validation.js');
+const phoneHelper = require('helpers/phoneHelper.js');
 
 module.exports = {
-  profile: Backbone.View.extend({
+  profile: Backbone.View.extend(_.extend(phoneHelper.methods, {
     template: require('./templates/profile.pug'),
     urlRoot: serverUrl + Urls.rest_user_details(),
-    events: {
+    events: _.extend({
       'submit form': 'submit',
       'focus #ssn' : 'showSSNPopover',
       'focuseout #ssn' : 'hideSSNPopover',
@@ -15,7 +16,8 @@ module.exports = {
       'change .js-state': 'changeAddressManually',
       dragover: 'globalDragover',
       dragleave: 'globalDragleave',
-    },
+    }, phoneHelper.events),
+
 
     globalDragover() {
       // this.$('.dropzone').css({ border: 'dashed 1px lightgray' });
@@ -190,7 +192,7 @@ module.exports = {
     changeAddressManually() {
       this.cityStateArea.text(`${this.cityField.val()}/${this.stateField.val()}`);
     }
-  }),
+  })),
 
   changePassword: Backbone.View.extend({
     urlRoot: serverUrl + Urls.rest_password_change(),
@@ -211,11 +213,13 @@ module.exports = {
     urlRoot: serverUrl + Urls.rest_password_reset_confirm(),
     events: {
         'submit form': api.submitAction,
+
     },
 
     getSuccessUrl(data) {
       return '/account/profile';
     },
+
 
     /*_success(data) {
       // Do the login in here too.
@@ -228,6 +232,29 @@ module.exports = {
         uid: params.uid,
         token: params.token,
       }));
+      return this;
+    },
+  }),
+
+  issueDashboard: Backbone.View.extend({
+
+    render(){
+      const template = require('./templates/issuerDashboard.pug');
+
+      this.$el.html(
+        template({ })
+      );
+
+      const socket = require('socket.io-client')('http://localhost:3000');
+      socket.on('connect', function () {
+        socket.emit('newUser', app.user.id, function (data) {
+          console.log(data); 
+        });
+      });
+      socket.on('notification', function(msg){
+        console.log(msg);
+        $('.notification-container ul').append($('<li>').html('<a>' + msg + '</a>'));
+      });
       return this;
     },
   }),
