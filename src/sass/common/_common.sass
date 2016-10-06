@@ -1,10 +1,12 @@
 .display-partners
 	display: $display_partnres!important
 
+
 // cтилизация заголовков на странице education.pug
 .heading-education
 	color: $color_heading_education
 	font-weight: $heading_education_font_weight
+
 
 .progress-container
 	position: relative
@@ -72,24 +74,6 @@
 				margin-bottom: rem(15)
 
 
-.warning-block
-	@include calc-rem(14)
-
-	position: relative
-
-	padding: rem(10) rem(20)
-	padding-left: rem(35)
-	margin-bottom: rem(20)
-
-	border: 1px $crimson solid
-
-	color: $crimson
-
-	i 
-		position: absolute
-		top: rem(14)
-		left: rem(10)
-
 .position-relative
 	position: relative
 
@@ -115,7 +99,8 @@
 .pb50
 	padding-bottom: rem(50)
 .p50
-	+calc-rem-padding (50) 
+	padding-top: rem(50)
+	padding-bottom: rem(50)
 .pt30
 	padding-top: rem(30)
 .pb10
@@ -169,7 +154,8 @@
 
 .m-b-85
 	margin-bottom: rem(85)
-
+.m-b-10
+	margin-bottom: rem(10)
 .row.no-gutters
 	margin-right: 0;
 	margin-left: 0;
@@ -192,3 +178,16 @@
 		display: inline-block
 		vertical-align: top
 		text-align: left
+
+// для больших textarea 
+.form-section
+	.big-textarea
+		textarea
+			min-height: 170px
+			width: 100%
+
+.color-green
+	color: $wild_willow
+
+.letter-spacing-normal
+	letter-spacing: normal

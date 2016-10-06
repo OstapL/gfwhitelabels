@@ -6,7 +6,7 @@ module.exports = Backbone.Router.extend({
 
   },
   introduction() {
-    // debugger
+
     const View = require('components/formc/views.js');
     var i = new View.introduction({
       el: '#content',
