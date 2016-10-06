@@ -55,7 +55,7 @@ module.exports = {
     this.$el.find('.alert').remove();
     e.preventDefault();
 
-    var data = data || $(e.target).serializeJSON();
+    var data = data || $(e.target).serializeJSON({useIntKeysAsArrayIndex: true});
 
     // if view already have some data - extend that info
     if(this.hasOwnProperty('model')) {
