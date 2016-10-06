@@ -243,8 +243,8 @@ module.exports = Backbone.Router.extend({
           "previously_sold_securities": "XXX",
           "financials_for_prior_fiscal_year": 500,
           "sold_securities_data": [
-            {"total_assets": 100, "long_term_debt": 500, "short_term_debt": 400, "cost_of_goods_sold": 700, "account_receivable": 300, "cash_and_equivalents": 200, "revenues_sales": 600},
-            {"total_assets": 10, "long_term_debt": 50, "short_term_debt": 40, "cost_of_goods_sold": 70, "account_receivable": 30, "cash_and_equivalents": 20, "revenues_sales": 60}
+            {'taxable_income': 111, 'total_income': 222, 'total_tax': 333, "total_assets": 100, "long_term_debt": 500, "short_term_debt": 400, "cost_of_goods_sold": 700, "account_receivable": 300, "cash_and_equivalents": 200, "revenues_sales": 600},
+            {'taxable_income': 11, 'total_income': 22, 'total_tax': 33, "total_assets": 10, "long_term_debt": 50, "short_term_debt": 40, "cost_of_goods_sold": 70, "account_receivable": 30, "cash_and_equivalents": 20, "revenues_sales": 60}
           ],
           "financials_for_most_recent_fiscal_year": 100,
         },

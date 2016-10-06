@@ -40,7 +40,7 @@ section.formc.introduction.create-company-media.container
               label
                 input(type="radio" name="failed_to_comply_choice" value="false" checked=!values['failed_to_comply_choice'] target=".explain")
                 | No
-          div(style='display:' + (values['failed_to_comply_choice'] ? 'block' : 'none') + ';').explain
+          div(style='display:' + (values['failed_to_comply_choice'] ? 'block' : 'none') + ';').explain.shown-yes
             .form-group.row
               .col-lg-3.text-lg-right
                 label If Yes, Explain

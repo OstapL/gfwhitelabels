@@ -32,22 +32,25 @@ section.formc-team-members-director.container.m-b-85
   .col-lg-8
     h2.text-uppercase.text-lg-center.text-xs-center.m-t-0.dosis.mb45 financial condition
     form(metod="post" action="").form-section
+      input(type="hidden" name="financials_condition_choice" value="true")
       .col-lg-12
         b Does the issuer have an operating history?
         .form-group.form-section.m-t-2.m-b-0
           .radio-input.m-b-1
             label 
-              input(type="radio" name="operating_history" value="true" checked=(values['operating_history']) target=".operating-history-container")
+              input(type="radio" name="operating_history_choice" value="true" checked=(values['operating_history_choice']) target=".operating-history-container")
               |  Yes
             label 
-              input(type="radio" name="operating_history" value="false" checked=(!values['operating_history']) target=".operating-history-container")
+              input(type="radio" name="operating_history_choice" value="false" checked=(!values['operating_history_choice']) target=".operating-history-container")
               |  No
-        .operating-history-container(style="display:" + (values['operating_history'] ? 'block' : 'none') + ";")
+        .operating-history-container.shown-yes(style="display:" + (values['operating_history'] ? 'block' : 'none') + ";")
             b Please discuss your historical results for each period for which you provide financial statements.  The discussion should focus on financial milestones and operational, liquidity and other challenges.  Please also discuss whether historical results and cash flows are representative of what investors should expect in the future. Take into account the proceeds of the offering and any other known sources of capital. Please discuss how the proceeds from the offering will affect your liquidity, whether these funds are necessary to the viability of the business, and how quickly you anticipate using your available cash.  Please also discuss other available sources of capital, such as lines of credit or required contributions by shareholders, for example.
-            .col-lg-12.p-t-1
-              .row.form-group.form-section
-                .big-textarea
-                  textarea(placeholder="Describe your financial condition").form-control
+        .operating-history-container.shown-no(style="display:" + (values['operating_history'] ? 'none' : 'block') + ";")
+            b Please discuss financial milestones and operational, liquidity and other challenges. Please discuss how the proceeds from the offering will affect your liquidity, whether these funds are necessary to the viability of the business, and how quickly you anticipate using your available cash.  Please also discuss other available sources of capital, such as lines of credit or required contributions by shareholders, for example.
+        .col-lg-12.p-t-1
+          .row.form-group.form-section
+            .big-textarea
+              textarea(placeholder="Describe your financial condition" name="financial_milestone").form-control
       .col-lg-12
         p.m-t-1.m-b-2 Companies are limited to raising $1 million in any 12-month period.
         p.pb10 You will be required to file a complete set of financial statements, including balance sheet, income statement, statement of cash flows and statement of changes in owners equity and notes to the financial statements. They must be prepared in accordance with U.S. generally accepted accounting principles and must cover the two most recently completed fiscal years or the period(s) since inception, if shorter. If the financial statements are not audited, they must be labeled as “unaudited.” You must provide these financial statements even if you have no operating history.
@@ -83,13 +86,13 @@ section.formc-team-members-director.container.m-b-85
         .form-group.form-section.m-t-2.m-b-0
           .radio-input.m-b-1
             label 
-              input(type="radio" name="previous_security" value="true" checked=(values['previous_security']) target=".previous-security-container")
+              input(type="radio" name="sold_securities_choice" value="true" checked=(values['sold_securities_choice']) target=".previous-security-container")
               |  Yes
             label 
-              input(type="radio" name="previous_security" value="false" checked=(!values['previous_security']) target=".previous-security-container")
+              input(type="radio" name="sold_securities_choice" value="false" checked=(!values['sold_securities_choice']) target=".previous-security-container")
               |  No
-        .previous-security-container(style="display:" + (values['previous_security'] ? 'block' : 'none'))
-            +fieldBlock("how_much", '', {
+        .previous-security-container.shown-yes(style="display:" + (values['previous_security'] ? 'block' : 'none'))
+            +fieldBlock("sold_securities_amount", '', {
             class1: 'col-lg-12 col-md-12 text-md-left text-xl-left',
             class2: 'col-lg-12 col-md-12',
             type: 'text',
@@ -122,7 +125,7 @@ section.formc-team-members-director.container.m-b-85
                 class2: 'col-lg-12 col-md-12',
                 type: 'text',
                 placeholder: '',
-                }, "sold_security_data[" + k + "]['" + k2 + "']")
+                }, "sold_securities_data[" + k + "][" + k2 + "]")
               // - values[k2] = null;
       .col-lg-12.m-t-2
       .text-md-center.text-sm-center-text-xs-center

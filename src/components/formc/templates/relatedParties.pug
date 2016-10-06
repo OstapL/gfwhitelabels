@@ -61,7 +61,7 @@ section.formc-team-members-director.container.m-b-85
           label 
             input(type="radio" name="transaction_with_related_parties_choice" value="false" checked=!values['transaction_with_related_parties_choice'] target=".transactions-container")
             |  No
-      .transactions-container(style="display:" + (values['transaction_with_related_parties_choice'] ? 'block' : 'none'))
+      .transactions-container.shown-yes(style="display:" + (values['transaction_with_related_parties_choice'] ? 'block' : 'none'))
         +fieldBlock("transaction_with_related_parties", "", {type: 'json'})
         .row.add-link
           .col-lg-9.offset-1.pull-right
