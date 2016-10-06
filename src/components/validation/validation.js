@@ -71,6 +71,7 @@ module.exports = {
         rules[rule](name, value, attr, this.data, this.schema);
     } catch (e) {
       this.finalResult = false;
+      name = name.replace(/\./g, '_');
       Array.isArray(this.errors[name]) ? this.errors[name].push(e) : this.errors[name] = [e];
     }
   },
@@ -90,7 +91,25 @@ module.exports = {
     this.errors = {};
 
     _(schema).each((attr, name) => {
-      if (fixedRegex.indexOf(attr.type) != -1) {
+      if (attr.type == 'nested' && attr.required == true) {
+        _(attr.schema).each((attr, subname) => {
+          if (fixedRegex.indexOf(attr.type) != -1) {
+            _(data[name]).each((jsonFields, index) => {
+              try {
+                rules.regex(name, attr, data, attr.type);
+                this.runRules(attr, name);
+              } catch (e) {
+                this.finalResult = false;
+                Array.isArray(this.errors[name]) ? this.errors[name].push(e) : this.errors[name] = [e];
+              }
+            });
+          } else {
+            _(data[name]).each((jsonFields, index) => {
+              this.runRules(attr, name + '.' + index + '.' + subname);
+            });
+          }
+        })
+      } else if (fixedRegex.indexOf(attr.type) != -1) {
         try {
           rules.regex(name, attr, data, attr.type);
           this.runRules(attr, name);

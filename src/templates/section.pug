@@ -20,7 +20,7 @@ else
             i.fa.fa-times
 
     if attr.type == 'jsonVideo'
-        div(class='form-group clearfix videoInteractive index_' + indexCounter)
+        div(class='form-group clearfix videoInteractive index_' + indexCounter+ ' ' + (k.required == true ? ' required ' : ' '))
             .col-lg-7.videoInteractive.p-sm-0.p-r-0
                 each k1,v in fields[name].schema
                     - var t = fields[name].schema[v]
@@ -28,8 +28,8 @@ else
                         label.col-lg-5.col-md-12.col-xs-12.text-lg-right.font-weight-bold.p-sm-0 #{t.label}
                         .col-lg-7.col-md-12.col-xs-12.p-sm-0
                             input(
-                                id=name + '_' + v
-                                class=name + '_' + v + ' form-control'
+                                id=name + '_' + indexCounter + '_' + v
+                                class=name + '_' + indexCounter + '_' + v + ' form-control'
                                 name=name + '[' + indexCounter + '][' + v + ']'
                                 placeholder=t.placeholder ? t.placeholder : t.label
                                 type=t.type
@@ -42,7 +42,7 @@ else
     //-     div proceedRow
     else if attr.type == 'position'
         .row
-            div(class='form-group clearfix index_' + indexCounter)
+            div(class='form-group clearfix index_' + indexCounter+ ' ' + (k.required == true ? ' required ' : ' '))
                 label.col-lg-3.col-md-12.text-lg-right.p-sm-0= fields[name].schema.position.label
                 .col-lg-9.col-md-12.p-sm0
                     input(
@@ -69,7 +69,7 @@ else
                             .col-lg-6.p-r-0
                                 input(type="number"  placeholder="YYYY").form-control
     else if attr.type == 'experience'
-        div(class='index_' + indexCounter)
+        div(class='index_' + indexCounter+ ' ' + (k.required == true ? ' required ' : ' '))
             .col-lg-12
             +fieldBlock("employer", '', {
                 class1: 'col-lg-3 col-md-12 text-md-left m-b-0',
@@ -119,13 +119,13 @@ else
         each k,v in fields[name].schema
             //- why do we need .videoInteractive here? this is probably for text fields
             //- Arthur Yip 9-22-2016
-            div(class='form-group clearfix videoInteractive index_' + indexCounter)
+            div(class='form-group clearfix videoInteractive index_' + indexCounter+ ' ' + (k.required == true ? ' required ' : ' '))
                 label.col-lg-3.col-md-12.text-lg-right.p-sm-0 #{k.label}
                 .col-lg-9.col-md-12.p-sm-0
                     if k.type == 'text' 
                         textarea(
-                            id=name + '_' + v
-                            class=name + '_' + v + ' form-control'
+                            id=name + '_' + indexCounter + '_' + v
+                            class=name + '_' + indexCounter + '_' + v + ' form-control'
                             name=name + '[' + indexCounter + '][' + v + ']'
                             placeholder=k.placeholder ? k.placeholder : k.label
                             maxLength=k.maxLength ? k.maxLength : ''
@@ -133,8 +133,8 @@ else
                           )
                     else
                         input(
-                            id=name + '_' + v
-                            class=name + '_' + v + ' form-control'
+                            id=name + '_' + indexCounter + '_' + v
+                            class=name + '_' + indexCounter + '_' + v + ' form-control'
                             name=name + '[' + indexCounter + '][' + v + ']'
                             placeholder=k.placeholder ? k.placeholder : k.label
                             maxLength=k.maxLength ? k.maxLength : ''

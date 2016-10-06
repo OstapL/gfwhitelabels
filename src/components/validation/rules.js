@@ -44,6 +44,17 @@ module.exports = {
     });
   },
 
+  getData(data, name) {
+    // Return data for json field and for regular field
+    // Check if name have any . references - if yes it is json field
+    // if not - it is regular field
+    if(name.indexOf('.') == -1) {
+      return data[name];
+    } else {
+      return name.split('.').reduce((o,i)=>o[i], data);
+    }
+  },
+
   // Determines whether or not a value is a number
   isNumber: function (value) {
     return _.isNumber(value) || (_.isString(value) && value.match(defaultPatterns.number));
@@ -69,7 +80,7 @@ module.exports = {
   // Validates if the attribute is required or not
   // This can be specified as either a boolean value or a function that returns a boolean value
   required: function (name, rule, attr, data) {
-    if (rule && this.hasValue(data[name]) == false) {
+    if (rule && this.hasValue(this.getData(data, name)) == false) {
       throw this.format(this.messages.required, attr.label);
     }
   },
@@ -98,7 +109,7 @@ module.exports = {
   // Validates that the value has to be a number and equal to or less than
   // the max value specified
   max: function (name, rule, attr, data) {
-    let value = data[name];
+    let value = this.getData(data, name);
     if (!isNumber(value) || value > rule) {
       throw this.format(this.messages.max, attr.label, rule);
     }
@@ -108,7 +119,7 @@ module.exports = {
   // Validates that the value has to be a number and equal to or between
   // the two numbers specified
   range: function (name, rule, attr, data) {
-    let value = data[name];
+    let value = this.getData(data, name);
     if (!isNumber(value) || value < rule[0] || value > rule[1]) {
       throw this.format(this.messages.range, attr.label, rule[0], rule[1]);
     }
@@ -118,7 +129,7 @@ module.exports = {
   // Validates that the value has to be a string with length equal to
   // the length value specified
   length: function (name, rule, attr, data) {
-    let value = data[name];
+    let value = this.getData(data, name);
     if (!_.isString(value) || value.length !== rule) {
       throw this.format(this.messages.length, attr.label, rule);
     }
@@ -128,7 +139,7 @@ module.exports = {
   // Validates that the value has to be a string with length equal to or greater than
   // the min length value specified
   minLength: function (name, rule, attr, data) {
-    let value = data[name];
+    let value = this.getData(data, name);
     if (!_.isString(value) || value.length < rule) {
       throw this.format(this.messages.minLength, attr.label, rule);
     }
@@ -147,7 +158,7 @@ module.exports = {
   // Validates that the value has to be a string and equal to or between
   // the two numbers specified
   rangeLength: function (name, rule, attr, data) {
-    let value = data[name];
+    let value = this.getData(data, name);
     if (!_.isString(value) || value.length < rule[0] || value.length > rule[1]) {
       throw this.format(this.messages.rangeLength, attr.label, rule[0], rule[1]);
     }
@@ -157,7 +168,7 @@ module.exports = {
   // Validates that the value has to be equal to one of the elements in
   // the specified array. Case sensitive matching
   oneOf: function (name, rule, attr, data) {
-    let value = data[name];
+    let value = this.getData(data, name);
     if (!_.include(rule, value)) {
       throw this.format(this.messages.oneOf,  attr.label, rule.join(', '));
     }
@@ -167,7 +178,7 @@ module.exports = {
   // Validates that the value has to be equal to the value of the attribute
   // with the name specified
   equalTo: function (name, rule, attr, data, schema) {
-    let value = data[name];
+    let value = this.getData(data, name);
     let equalTo = data[schema[attr.equal].name];
     if (value !== equalTo) {
       throw this.format(this.messages.equalTo, attr.label, data[schema[attr.equal].name]);
@@ -179,7 +190,7 @@ module.exports = {
   // Can be a regular expression or the name of one of the built in patterns
   // We are testing only regex for empty set use required rule
   regex: function (name, attr, data, pattern) {
-    let value = data[name];
+    let value = this.getData(data, name);
     if (this.hasValue(value) && !value.toString().match(this.patterns[pattern] || pattern)) {
       throw this.format(this.messages[pattern], attr.label, pattern);
     }
