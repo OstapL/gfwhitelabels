@@ -44,22 +44,28 @@ section.formc-team-members-director.container.m-b-85
   .col-lg-8
     h2.text-uppercase.text-lg-center.text-xs-center.m-t-0.dosis.mb45 outstanding security
     form(metod="post" action="").form-section
+      input(name="outstanding_securities_choice" type="hidden" value="false")
       .col-lg-12
         b Do you have any business loans or debt?
         .form-group.form-section.m-t-2.m-b-0
           .radio-input.m-b-1
             label 
-              input(type="radio" name="have_loans_debt" value="yes" checked=(values['have_loans_debt'] == 'yes') target=".have-loans-debt")
+              input(type="radio" name="have_loans_debt" value="true" checked=(values['have_loans_debt']) target=".have-loans-debt")
               |  Yes
             label 
-              input(type="radio" name="have_loans_debt" value="no" checked=(values['have_loans_debt'] == 'no') target=".have-loans-debt")
+              input(type="radio" name="have_loans_debt" value="false" checked=(!values['have_loans_debt']) target=".have-loans-debt")
               |  No
-        .have-loans-debt(style="display:" + (values['have_loans_debt'] == 'no' ? 'none' : 'block') + ";")
+        .have-loans-debt(style="display:" + (values['have_loans_debt'] ? 'block' : 'none') + ";")
             +fieldBlock("business_loans_or_debt", '', {
                 class1: 'col-lg-3 col-md-3',
                 class2: 'col-lg-9 col-md-9',
                 type: 'json',
                 })
+            .row.add-link
+                .col-lg-9.offset-1.pull-right
+                    a(href="#" data-section="loans").link-2.add-section
+                        i.fa.fa-plus
+                        |  Add Another Business Loans or Debt
         //- +fieldBlock("creditor", '', {
         //- class1: 'col-lg-3 col-md-12 text-md-left text-xl-right text-xl-left',
         //- class2: 'col-lg-9 col-md-12',
@@ -90,23 +96,18 @@ section.formc-team-members-director.container.m-b-85
         //- type: 'text',
         //- placeholder: 'Other Material Terms',
         //- })
-        .row.add-link
-            .col-lg-9.offset-1.pull-right
-                a(href="#" data-section="loans").link-2.add-section
-                    i.fa.fa-plus
-                    |  Add Another Business Loans or Debt
         .col-lg-12.m-t-3
             .row
                 b An "exempt offering" is any offering of securities which is exempted from the registration requirements of the Securities Act.Have you conducted any exempt offerings in the past three years?
                 .form-group.form-section.m-t-2.m-b-0
                   .radio-input.m-b-1
                     label 
-                      input(type="radio" name="conduct_exempt_offerings" value="yes" checked=(values['conduct_exempt_offerings'] == 'yes') target=".conduct-exempt-offerings-container")
+                      input(type="radio" name="conduct_exempt_offerings" value="true" checked=(values['conduct_exempt_offerings']) target=".conduct-exempt-offerings-container")
                       |  Yes
                     label 
-                      input(type="radio" name="conduct_exempt_offerings" value="no" checked=(values['conduct_exempt_offerings'] == 'no') target=".conduct-exempt-offerings-container")
+                      input(type="radio" name="conduct_exempt_offerings" value="false" checked=(!values['conduct_exempt_offerings']) target=".conduct-exempt-offerings-container")
                       |  No
-        .conduct-exempt-offerings-container(style="display:" + (values['conduct_exempt_offerings'] == 'no' ? 'none' : 'block') + ";")
+        .conduct-exempt-offerings-container(style="display:" + (values['conduct_exempt_offerings'] ? 'block' : 'none') + ";")
             .row
                 .date-input.required.col-lg-12
                 
@@ -116,6 +117,8 @@ section.formc-team-members-director.container.m-b-85
                             class2: 'col-lg-9 col-md-9',
                             type: 'json',
                         })
+
+
                         //- +fieldBlock("date_offering", '', {
                         //-   class1: 'col-lg-3 col-md-3 ',
                         //-   class2: 'col-lg-9 col-md-8 pull-md-right',
@@ -203,25 +206,25 @@ section.formc-team-members-director.container.m-b-85
                                 a(href="#").delete-section
                                     i.fa.fa-times
         .border-bottom.m-t-3.m-b-3 
-        +fieldBlock("limited", '', {
+        +fieldBlock("rights_of_securities_beign", '', {
         class1: 'col-lg-12 col-md-12  text-md-left  text-xl-left',
         class2: 'col-lg-12 col-md-12 big-textarea',
         type: 'textarea',
         placeholder: 'Description',
         })
-        +fieldBlock("offered_modified", '', {
-        class1: 'col-lg-12 col-md-12  text-md-left  text-xl-left',
-        class2: 'col-lg-12 col-md-12 big-textarea',
-        type: 'textarea',
-        placeholder: 'Description',
-        })
-        +fieldBlock("issuer", '', {
+        //- +fieldBlock("terms_modified", '', {
+        //- class1: 'col-lg-12 col-md-12  text-md-left  text-xl-left',
+        //- class2: 'col-lg-12 col-md-12 big-textarea',
+        //- type: 'textarea',
+        //- placeholder: 'Description',
+        //- })
+        +fieldBlock("security_differences", '', {
         class1: 'col-lg-12 col-md-12  text-md-left  text-xl-left',
         class2: 'col-lg-12 col-md-12 big-textarea',
         type: 'textarea',
         placeholder: 'Description', 
         })
-        +fieldBlock("could", '', {
+        +fieldBlock("principal_shareholders_affect", '', {
         class1: 'col-lg-12 col-md-12  text-md-left  text-xl-left',
         class2: 'col-lg-12 col-md-12 big-textarea',
         type: 'textarea',
@@ -242,7 +245,7 @@ section.formc-team-members-director.container.m-b-85
                     br
                     | - transactions with related parties 
             .col-lg-12.big-textarea
-                 textarea(placeholder="Description").form-control
+                 textarea(placeholder="Description" name="risks_to_purchasers").form-control
         .col-lg-12.m-t-2
             .row
                 .text-md-center.text-sm-center-text-xs-center

@@ -45,5 +45,4 @@ module.exports = {
       // this[sectionName + 'Index'] --;
     },
   },
-
 };
