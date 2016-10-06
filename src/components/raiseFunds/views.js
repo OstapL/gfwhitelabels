@@ -5,6 +5,8 @@ const appendHttpIfNecessary = formatHelper.appendHttpIfNecessary;
 
 const dropzone = require('dropzone');
 const dropzoneHelpers = require('helpers/dropzone.js');
+const leavingConfirmationHelper = require('helpers/leavingConfirmationHelper.js');
+const phoneHelper = require('helpers/phoneHelper.js');
 
 // const validation = require('components/validation/validation.js');
 
@@ -60,24 +62,25 @@ const onPreviewAction = function(e) {
   e.preventDefault();
   this.$el.find('form').submit()
   app.showLoading();
+  let that = this;
   setTimeout(function() {
-    window.location = e.target.dataset.href + '?preview=1'
+    // window.location = e.target.dataset.href + '?preview=1'
+    window.location = '/api/campaign/' + (that.campaign ? that.campaign.id : that.model.id) + '?preview=1'
   }, 100);
 };
 
 module.exports = {
-  company: Backbone.View.extend({
+  company: Backbone.View.extend(_.extend(leavingConfirmationHelper.methods, phoneHelper.methods, {
     // urlRoot: serverUrl + Urls['company-list'](),
     urlRoot: Urls.company_list(),
     template: require('./templates/company.pug'),
-    events: {
+    events: _.extend({
       'submit form': 'submit',
       'keyup #zip_code': 'changeZipCode',
       'click .update-location': 'updateLocation',
       'click .onPreview': onPreviewAction,
-      'change input[name=phone]': 'formatPhone',
       'change #website,#twitter,#facebook,#instagram,#linkedin': appendHttpIfNecessary,
-    },
+    }, leavingConfirmationHelper.events, phoneHelper.events),
 
     initialize(options) {
       this.fields = options.fields;
@@ -90,14 +93,6 @@ module.exports = {
       });
     },
 
-    /*appendHttpIfNecessary(e) {
-      var $el = $('#website');
-      var url = $el.val();
-      if (!(url.startsWith("http://") || url.startsWith("https://"))) {
-        $el.val("http://" + url);
-      }
-    },*/
-
     submit(e) {
       var data = $(e.target).serializeJSON();
 
@@ -108,10 +103,6 @@ module.exports = {
       delete data.founding_date__month;
       delete data.founding_date__year;
       api.submitAction.call(this, e, data);
-    },
-
-    formatPhone(e) {
-      this.$('input[name=phone]').val(this.$('input[name=phone]').val().replace(/^\(?(\d{3})\)?-?(\d{3})-?(\d{4})$/, '$1-$2-$3'));
     },
 
     updateLocation(e) {
@@ -171,16 +162,16 @@ module.exports = {
         { trigger: true, replace: false }
       );
     },
-  }),
+  })),
 
-  generalInformation: Backbone.View.extend({
+  generalInformation: Backbone.View.extend(_.extend(leavingConfirmationHelper.methods, {
       // urlRoot: serverUrl + Urls['campaign-list']() + '/general_information',
       urlRoot: Urls['campaign-list']() + '/general_information',
       template: require('./templates/generalInformation.pug'),
       events: _.extend({
           'submit form': api.submitAction,
           'click .onPreview': onPreviewAction,
-        }, jsonActions.events),
+        }, jsonActions.events, leavingConfirmationHelper.events),
 
       preinitialize() {
         // ToDo
@@ -260,9 +251,9 @@ module.exports = {
         );
         return this;
       },
-    }),
+    })),
 
-  media: Backbone.View.extend({
+  media: Backbone.View.extend(_.extend(leavingConfirmationHelper.methods, {
       events: _.extend({
         'submit form': api.submitAction,
         // 'click .delete-image': 'deleteImage',
@@ -272,7 +263,7 @@ module.exports = {
         // 'change #video,.additional_video_link': 'appendHttpsIfNecessary',
         'change .press_link': 'appendHttpIfNecessary',
         'click .onPreview': onPreviewAction,
-      }, jsonActions.events),
+      }, jsonActions.events, leavingConfirmationHelper.events),
       urlRoot: Urls['campaign-list']() + '/media',
 
       appendHttpsIfNecessary(e) {
@@ -414,6 +405,7 @@ module.exports = {
               );
             $('.photo-scroll').append($el);
             $el.find('.delete-image').click(this.deleteImage.bind(this));
+            $('#gallery').val(data.folder_id);
             app.makeRequest(this.urlRoot +'/' + this.model.id, {gallery: data.folder_id, type: 'PATCH'})
           },
           );
@@ -479,15 +471,15 @@ module.exports = {
           //e.target.value = id;
         }
       }
-  }),
+  })),
 
-  teamMemberAdd: Backbone.View.extend({
-      events: {
+  teamMemberAdd: Backbone.View.extend(_.extend(leavingConfirmationHelper.methods, {
+      events: _.extend({
         'submit form': 'submit',
         'click .delete-member': 'deleteMember',
         dragover: 'globalDragover',
         dragleave: 'globalDragleave',
-      },
+      }, leavingConfirmationHelper.events),
       // urlRoot: serverUrl + Urls['campaign-list']() + '/team_members',
       urlRoot: Urls['campaign-list']() + '/team_members',
 
@@ -634,7 +626,7 @@ module.exports = {
 
         api.submitAction.call(this, e, json);
       },
-    }),
+    })),
 
   teamMembers: Backbone.View.extend({
     events: {
@@ -692,9 +684,9 @@ module.exports = {
 
   }),
 
-  specifics: Backbone.View.extend({
+  specifics: Backbone.View.extend(_.extend(leavingConfirmationHelper.methods, {
       urlRoot: Urls['campaign-list']() + '/specifics',
-      events: {
+      events: _.extend({
         'submit form': api.submitAction,
         'change input[name="security_type"]': 'updateSecurityType',
         'focus #minimum_raise,#maximum_raise,#minimum_increment,#premoney_valuation,#price_per_share': 'clearZeroAmount',
@@ -703,7 +695,7 @@ module.exports = {
         dragover: 'globalDragover',
         dragleave: 'globalDragleave',
         'click .onPreview': onPreviewAction,
-      },
+      }, leavingConfirmationHelper.events),
 
       globalDragover() {
         // this.$('.dropzone').css({ border: 'dashed 1px lightgray' });
@@ -817,13 +809,13 @@ module.exports = {
 
         return this;
       },
-    }),
+    })),
 
-  perks: Backbone.View.extend({
+  perks: Backbone.View.extend(_.extend(leavingConfirmationHelper.methods, {
       events: _.extend({
           'submit form': api.submitAction,
           'click .onPreview': onPreviewAction,
-        }, jsonActions.events),
+        }, jsonActions.events, leavingConfirmationHelper.events),
       // urlRoot: serverUrl + Urls['campaign-list']() + '/perks',
       urlRoot: Urls['campaign-list']() + '/perks',
 
@@ -881,7 +873,7 @@ module.exports = {
         return this;
       },
 
-    }),
+    })),
 
   thankYou: Backbone.View.extend({
     el: '#content',
