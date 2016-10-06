@@ -39,14 +39,15 @@ module.exports = Backbone.Router.extend({
   teamMembers(id) {
     const View = require('components/formc/views.js');
     // var i = new View.memberDirector({
+    let fieldsR = api.makeCacheRequest(formcServer + '/' + id + '/team-members', 'OPTIONS');
     let dataR = api.makeCacheRequest(formcServer + '/' + id + '/team-members', 'GET');
 
-    $.when(dataR).done((data) => {
+    $.when(fieldsR, dataR).done((fields, data) => {
       data[0].id = id;
       const i = new View.teamMembers({
         el: '#content',
-        fields: {},
-        model: data
+        fields: fields[0].fields,
+        model: data[0]
       });
       i.render();
       app.hideLoading();
