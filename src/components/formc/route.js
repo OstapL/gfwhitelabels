@@ -320,10 +320,11 @@ module.exports = Backbone.Router.extend({
     let dataR = api.makeCacheRequest(formcServer + '/' + id + '/background-check');
 
     $.when(fieldsR, dataR).done((fields, data) => {
+      console.log(fields);
       const i = new View.backgroundCheck({
         el: '#content',
         model: data,
-        fields: fields,
+        fields: fields[0].fields,
       });
       i.render();
       app.hideLoading();
