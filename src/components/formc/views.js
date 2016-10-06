@@ -295,10 +295,7 @@ module.exports = {
         // submit: api.submitAction,
         submit(e) {
             var $target = $(e.target);
-            var data = $target.serializeJSON();
-            data.transaction_with_related_parties = $.map(data.transaction_with_related_parties, function(value, index) {
-                return [value];
-            });
+            var data = $target.serializeJSON({useIntKeysAsArrayIndex: true});
 
             if (data.had_transactions == 'false') data.transaction_with_related_parties = [];
             api.submitAction.call(this, e, data);
@@ -615,13 +612,7 @@ module.exports = {
         // submit: api.submitAction,
         submit(e) {
             var $target = $(e.target);
-            var data = $target.serializeJSON();
-            data.business_loans_or_debt = $.map(data.business_loans_or_debt, function(value, index) {
-                return [value];
-            });
-            data.exempt_offering = $.map(data.exempt_offering, function(value, index) {
-                return [value];
-            });
+            var data = $target.serializeJSON({useIntKeysAsArrayIndex: true});
             if (data.have_loans_debt == 'false') data.business_loans_or_debt = [];
             if (data.conduct_exempt_offerings == 'false') data.exempt_offering = [];
             if (!data.outstanding_securities) data.outstanding_securities = [];
@@ -656,7 +647,7 @@ module.exports = {
 
             this.fields.principal_shareholders_affect.label = 'How could the exercise of rights held by the principal shareholders affect the purchasers of the securities being offered?';
             this.fields.risks_to_purchasers.label = '';
-            // this.fields.terms_modified.label = 'How may the terms of the securities being offered be modified?';
+            this.fields.terms_modified.label = 'How may the terms of the securities being offered be modified?';
             this.fields.security_differences.label = 'Are there any differences not reflected above between the securities being offered and each other class of security of the issuer?';
             this.fields.rights_of_securities_beign.label = 'How may the rights of the securities being offered be materially limited, diluted or qualified by the rights of any other class of security identified above?';
 
