@@ -44,6 +44,7 @@ section.formc-team-members-director.container.m-b-85
   .col-lg-8
     h2.text-uppercase.text-lg-center.text-xs-center.m-t-0.dosis.mb45 outstanding security
     form(metod="post" action="").form-section
+      input(name="outstanding_securities_choice" type="hidden" value="false")
       .col-lg-12
         b Do you have any business loans or debt?
         .form-group.form-section.m-t-2.m-b-0
@@ -211,7 +212,7 @@ section.formc-team-members-director.container.m-b-85
         type: 'textarea',
         placeholder: 'Description',
         })
-        //- +fieldBlock("security_modified", '', {
+        //- +fieldBlock("terms_modified", '', {
         //- class1: 'col-lg-12 col-md-12  text-md-left  text-xl-left',
         //- class2: 'col-lg-12 col-md-12 big-textarea',
         //- type: 'textarea',
