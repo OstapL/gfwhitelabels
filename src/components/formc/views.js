@@ -292,7 +292,17 @@ module.exports = {
             'submit form': 'submit',
         }, addSectionHelper.events, menuHelper.events, yesNoHelper.events),
 
-        submit: api.submitAction,
+        // submit: api.submitAction,
+        submit(e) {
+            var $target = $(e.target);
+            var data = $target.serializeJSON();
+            data.transaction_with_related_parties = $.map(data.transaction_with_related_parties, function(value, index) {
+                return [value];
+            });
+
+            if (data.had_transactions == 'false') data.transaction_with_related_parties = [];
+            api.submitAction.call(this, e, data);
+        },
 
         render() {
             let template = require('./templates/relatedParties.pug');
@@ -302,10 +312,10 @@ module.exports = {
             } else {
               this.transaction_with_related_partiesIndex = 0;
             }
-            this.fields.transaction_with_related_parties.schema.amount_of_interest.label = 'Amount of interest';
-            this.fields.transaction_with_related_parties.schema.nature_of_interest.label = 'nature_of_interest';
-            this.fields.transaction_with_related_parties.schema.relationship_to_issuer.label = 'relationship_to_issuer';
-            this.fields.transaction_with_related_parties.schema.specified_person.label = 'specified_person';
+            this.fields.transaction_with_related_parties.schema.amount_of_interest.label = 'Amount of Interest';
+            this.fields.transaction_with_related_parties.schema.nature_of_interest.label = 'Nature of Interst';
+            this.fields.transaction_with_related_parties.schema.relationship_to_issuer.label = 'Relationship to Issuer';
+            this.fields.transaction_with_related_parties.schema.specified_person.label = 'Specified Person';
 
             this.$el.html(
                 template({

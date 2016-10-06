@@ -115,7 +115,7 @@ section.formc-team-members-director.container.m-b-85
           })
       each v, k in values.sold_securities_data
         .col-lg-6.col-md-12
-          h3.text-xs-center Most Recent Fiscal Year
+          h3.text-xs-center= (k == 0 ? 'Most Recent Fiscal Year' : 'Prior Fiscal Year')
             each v2, k2 in v
               +fieldBlock2(k2, v2, {
                 class1: 'col-lg-12 col-md-12 text-md-left text-xl-left',
