@@ -1,4 +1,3 @@
-
 .calculator-container
     h3,h2,h4 
         line-height: 1.35!important
@@ -16,22 +15,29 @@
         li 
             display: inline-block
             margin-right: .5%
-            width: 32%
+            width: 33%
+
+            &:last-child
+                margin-right: 0
 
             a 
                 padding: rem(14)
                 width: 100%
 
-                border-color: $alabaster
-                background: $alabaster
+                border-color: $calc_tabs_bg
+                background: $calc_tabs_bg
 
                 text-align: center
                 color: $small-text
 
+                &.btn
+                    border-radius: $calc_tabs_radius
+
+
                 &.current
                     pointer-events: none
-                    background: $btn-primary-hover-bg
-                    border-color: $btn-primary-hover-bg
+                    background: $calc_tabs_current_bg
+                    border-color: $calc_tabs_current_bg
                     color: $white
                     cursor: default
 
@@ -39,11 +45,11 @@
             padding: 0 2%
 
             li
-                width: 24%
+                width: 24.6%
 
         &.established-business
             li
-                width: 19.5%
+                width: 19.6%
 
     .simple-list
         padding-left: rem(17)
@@ -67,9 +73,38 @@
         tbody tr th
             text-align: center
 
+    @media screen and (max-width: 992px)
+        .mb30xs    
+            margin-bottom: rem(30)
 
+    @media screen and (max-width:543px)
+        &.select-business
+            .btn-lg
+                padding-left: rem(9)
+                padding-right: rem(9)
 
+            .sm-font-xs
+                font-size: 9px!important
 
+        .p-r-0
+            padding-right: rem(9)!important
+        .p-l-0
+            padding-left: rem(9)!important
+
+        .top-breadcrambs
+            &.capitalraise
+                padding: 0
+
+            &.established-business
+                li a
+                    letter-spacing: 1px
+                    padding: rem(14) rem(5)
+
+    @media screen and (max-width:380px)
+        &.select-business
+            .btn-lg.p0btn
+                padding-left: rem(0)
+                padding-right: rem(0)
 
 .table-custom-data
     table-layout: fixed

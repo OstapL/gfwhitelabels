@@ -1,0 +1,188 @@
+include ../../../templates/mixins.pug
+include menu.pug
+
+- 'use strict'
+- var fields = { first_name: { label: 'First Name'} };
+- var fields = { last_name: { label: 'Last Name'} };
+- var fields = { email: { label: 'Email Address'} };
+- var fields = { principal_occupation: { label: 'Principal Occupation'} };
+- var fields = { employer_and_principal: { label: 'Employer and Principal Business'} };
+- var fields = { position: { label: 'Position'} };
+- var fields = { employer: { label: 'Employer'} };
+- var fields = { employers_principal: { label: 'Employer’s Principal Business'} };
+- var fields = { title: { label: 'Title'} };
+- var fields = { responsibilities: { label: 'Responsibilities'} };
+
++breadcrumbs('form c', '', 
+    [
+        ['Home', '/'],
+        ['FORM C', ''],
+        ['team members (director)', ''],
+    ]
+)
+
+section.formc-team-members-director.container.m-b-85
+  +menu('formc')
+
+  //START RIGHT BLOCK
+  .col-lg-8
+    h2.text-uppercase.text-lg-center.text-xs-center.m-t-0.dosis Team members (director)
+    form(metod="post" action="").form-section
+      +fieldBlock("first_name", '', {
+        class1: 'col-lg-3 col-md-12 text-md-left',
+        class2: 'col-lg-9 col-md-12',
+        type: 'text',
+        placeholder: 'First Name',
+        })
+      +fieldBlock("last_name", '', {
+        class1: 'col-lg-3 col-md-12 text-md-left',
+        class2: 'col-lg-9 col-md-12',
+        type: 'text',
+        placeholder: 'Last Name',
+        })
+      +fieldBlock("email", '', {
+        class1: 'col-lg-3 col-md-12 text-md-left',
+        class2: 'col-lg-9 col-md-12',
+        type: 'text',
+        placeholder: 'Email Address',
+        })
+      .row
+        .col-lg-6.col-md-12
+          .col-lg-6.text-lg-right.text-md-left.p-t-0
+            label.p-t-0.m-b-0 Board Service Start Date
+
+          .col-lg-6.p-r-0
+            .row
+              .col-lg-6.p-r-0
+                input(type="number"  placeholder="MM").form-control
+              .col-lg-6.p-r-0
+                input(type="number"  placeholder="YYYY").form-control
+        .col-lg-6.p-l-0.col-md-12.form-group
+          .col-lg-6.text-lg-right.text-md-left.p-t-0
+            label.p-t-0.m-b-0 Board Service Start Date
+
+          .col-lg-6
+            .row
+              .col-lg-6.p-r-0
+                input(type="number"  placeholder="MM").form-control
+              .col-lg-6.p-r-0
+                input(type="number"  placeholder="YYYY").form-control
+      +fieldBlock("principal_occupation", '', {
+        class1: 'col-lg-3 col-md-12 text-md-left ',
+        class2: 'col-lg-9 col-md-12',
+        type: 'text',
+        placeholder: 'Principal Occupation',
+        })
+      +fieldBlock("employer_and_principal", '', {
+        class1: 'col-lg-3 col-md-12 text-md-left p-t-0 m-b-0',
+        class2: 'col-lg-9 col-md-12',
+        type: 'text',
+        placeholder: 'Employer and Principal Business',
+        })
+      .row
+        .col-lg-6.col-md-12
+          .col-lg-6.text-lg-right.text-md-left.p-t-0
+            label.p-t-0.m-b-0 Employer Start Date
+
+          .col-lg-6.p-r-0
+            .row
+              .col-lg-6.p-r-0
+                input(type="number"  placeholder="MM").form-control
+              .col-lg-6.p-r-0
+                input(type="number"  placeholder="YYYY").form-control
+      .border-bottom.m-t-3.m-b-3
+      h3.text-lg-center.text-xs-center.m-t-0 We Need Information for Last 3 Years
+      .row
+        b.col-lg-12.m-b-3 Changed roles within the Company? Please list  all positions and offices with the Company held and the period of time in which you served in the position or office.
+      +fieldBlock("position", '', {
+        class1: 'col-lg-3 col-md-12 text-md-left m-b-0',
+        class2: 'col-lg-9 col-md-12',
+        type: 'text',
+        placeholder: 'Position',
+        })
+      .row
+        .col-lg-6.col-md-12
+          .col-lg-6.text-lg-right.text-md-left.p-t-0
+            label.p-t-0.m-b-0 Start Date of Service
+
+          .col-lg-6.p-r-0
+            .row
+              .col-lg-6.p-r-0
+                input(type="number"  placeholder="MM").form-control
+              .col-lg-6.p-r-0
+                input(type="number"  placeholder="YYYY").form-control
+        .col-lg-6.p-l-0.col-md-12.form-group
+          .col-lg-6.text-lg-right.text-md-left.p-t-0
+            label.p-t-0.m-b-0.p-l-2 End Date of Service
+
+
+          .col-lg-6
+            .row
+              .col-lg-6.p-r-0
+                input(type="number"  placeholder="MM").form-control
+              .col-lg-6.p-r-0
+                input(type="number"  placeholder="YYYY").form-control
+      .row.previous_positions
+      .row.add-link
+        .col-lg-9.offset-1.pull-right
+          a(href="#" data-section="previous_positions").link-2.add-section
+            i.fa.fa-plus
+            |  Add Previous Position within tne Company
+      .row
+        b.col-lg-12.m-t-2.m-b-3 Business experience for past three years: Please list your employers, titles and dates of positions held during the past three years with an indication of job responsibilities.
+      +fieldBlock("employer", '', {
+        class1: 'col-lg-3 col-md-12 text-md-left m-b-0',
+        class2: 'col-lg-9 col-md-12',
+        type: 'text',
+        placeholder: 'Employer',
+        })
+      +fieldBlock("employers_principal", '', {
+        class1: 'col-lg-3 col-md-12 text-md-left p-t-0 m-b-0',
+        class2: 'col-lg-9 col-md-12',
+        type: 'text',
+        placeholder: 'Employer’s Principal Business',
+        })
+      +fieldBlock("title", '', {
+        class1: 'col-lg-3 col-md-12 text-md-left  m-b-0',
+        class2: 'col-lg-9 col-md-12',
+        type: 'text',
+        placeholder: 'Title',
+        })
+      +fieldBlock("responsibilities", '', {
+        class1: 'col-lg-3 col-md-12 text-md-left  m-b-0',
+        class2: 'col-lg-9 col-md-12',
+        type: 'text',
+        placeholder: 'Responsibilities',
+        })
+      .row
+        .col-lg-6.col-md-12
+          .col-lg-6.text-lg-right.text-md-left.p-t-0
+            label.p-t-0.m-b-0 Start Date of Service
+
+          .col-lg-6.p-r-0
+            .row
+              .col-lg-6.p-r-0
+                input(type="number"  placeholder="MM").form-control
+              .col-lg-6.p-r-0
+                input(type="number"  placeholder="YYYY").form-control
+        .col-lg-6.p-l-0.col-md-12.form-group
+          .col-lg-6.text-lg-right.text-md-left.p-t-0
+            label.p-t-0.m-b-0.p-l-2 End Date of Service
+
+          .col-lg-6
+            .row
+              .col-lg-6.p-r-0
+                input(type="number"  placeholder="MM").form-control
+              .col-lg-6.p-r-0
+                input(type="number"  placeholder="YYYY").form-control
+      .experiences
+      .row.add-link
+        .col-lg-9.offset-1.pull-right
+          a(href="#" data-section="experiences").link-2.add-section
+            i.fa.fa-plus
+            |  Add Work Experience
+
+      .row.m-t-3
+        .col-lg-12.text-md-center.text-sm-center-text-xs-center
+          //- a(href="/company/create").btn.btn-primary.text-uppercase.pull-lg-right Save
+          button.btn.btn-primary.text-uppercase.pull-lg-right Save

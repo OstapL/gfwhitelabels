@@ -1,6 +1,10 @@
+.display-partners
+	display: $display_partnres!important
 
-
-/* сostum progressbar begin */
+// cтилизация заголовков на странице education.pug
+.heading-education
+	color: $color_heading_education
+	font-weight: $heading_education_font_weight
 
 .progress-container
 	position: relative
@@ -18,29 +22,6 @@
 
 	.circle
 		top: -5px
-
-/*  .progress-container используеться для добавления елементов или текст на progressbar 8   */
-
-.progress
-	margin: 0
-
-.progress[value]::-webkit-progress-value
-	background-color: $progress_bar_background
-	border-top-left-radius: none
-	border-bottom-left-radius: none
-
-/* .think-progress  тонкий progressbar */
-.progress.think-progress
-	height: 2px
-	color: $progress_bar_background
-
-/* .black темний progressbar */
-.progress.black[value]::-webkit-progress-value
-	background-color: $black
-
-/* сostum progressbar end */
-
-/* costum pagination begin */
 
 .pagination
 	width: 100%
@@ -62,7 +43,7 @@
 	.page-item a:focus
 		text-decoration: none
 		background: none
-	
+	  
 	.page-item.active a,
 	.page-item.active a:focus,
 	.page-item.active a:visited
@@ -121,43 +102,10 @@
 	opacity: 0.1
 
 /*Breadcrumb*/
-.header_title
-	margin-bottom: rem(85)
-	
-	background-color: $alabaster
-	font-family: $open-sans
 
-	h1
-		margin-top: rem(11)
-		margin-left: rem(15)
-		font-weight: 600
 
-		-webkit-transform: translateY(-50%)
-		transform: translateY(-50%)
-
-		line-height: 1.3
-		.small-text
-			font-weight: normal
-	@media screen and (min-width: 992px)
-
-		.br-title,
-		.br-list
-			height: rem(142)
-
-		h1
-			-webkit-transform: translateY(-50%)
-			transform: translateY(-50%)
-
-			position: absolute
-			top: 50%
-
-	@media screen and (max-width: 991px)
-		padding: rem(15) 0
-		margin-bottom: rem(40)
-
-.mobile-padding
-	@media screen and (max-width: 543px)
-		padding-top: 0px!important
+@media screen and (max-width: 991px)
+	.mpb50
 		padding-bottom: rem(50)
 
 .pt50
