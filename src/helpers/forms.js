@@ -72,7 +72,6 @@ module.exports = {
        };
        this.model.validation = newValidators;
     */
-    
     this.$('.help-block').remove();
     if (!validation.validate(this.fields, data, this)) {
       _(validation.errors).each((errors, key) => {

@@ -93,6 +93,18 @@ module.exports = Backbone.Router.extend({
 
   useOfProceeds(id) {
     const View = require('components/formc/views.js');
+      const i = new View.useOfProceeds({
+        el: '#content',
+        model: {
+          id: id,
+        },
+        fields: {
+          'offering-expense': {type: 'row'},
+        },
+      });
+      i.render();
+      app.hideLoading();
+      return;
 
     let fieldsR = api.makeCacheRequest(formcServer + '/' + id + '/use-of-proceeds', 'OPTIONS');
     let dataR = api.makeCacheRequest(formcServer + '/' + id + '/use-of-proceeds');
@@ -110,7 +122,6 @@ module.exports = Backbone.Router.extend({
   },
 
   riskFactorsInstruction(id) {
-    // debugger
     const View = require('components/formc/views.js');
     const i = new View.riskFactorsInstruction({
       el: '#content',
@@ -125,7 +136,6 @@ module.exports = Backbone.Router.extend({
   },
 
   riskFactorsMarket(id) {
-    // debugger
     const View = require('components/formc/views.js');
     const i = new View.riskFactorsMarket({
       el: '#content',
@@ -140,7 +150,6 @@ module.exports = Backbone.Router.extend({
   },
 
   riskFactorsFinancial(id) {
-    // debugger
     const View = require('components/formc/views.js');
     const i = new View.riskFactorsFinancial({
       el: '#content',
@@ -155,7 +164,6 @@ module.exports = Backbone.Router.extend({
   },
 
   riskFactorsOperational(id) {
-    // debugger
     const View = require('components/formc/views.js');
     const i = new View.riskFactorsOperational({
       el: '#content',
@@ -228,6 +236,25 @@ module.exports = Backbone.Router.extend({
   financialCondition(id) {
     const View = require('components/formc/views.js');
 
+      const i = new View.financialCondition({
+        el: '#content',
+        model: {
+          "id": id,
+          "previously_sold_securities": "XXX",
+          "financials_for_prior_fiscal_year": 500,
+          "sold_securities_data": [
+            {"total_assets": 100, "long_term_debt": 500, "short_term_debt": 400, "cost_of_goods_sold": 700, "account_receivable": 300, "cash_and_equivalents": 200, "revenues_sales": 600},
+            {"total_assets": 10, "long_term_debt": 50, "short_term_debt": 40, "cost_of_goods_sold": 70, "account_receivable": 30, "cash_and_equivalents": 20, "revenues_sales": 60}
+          ],
+          "financials_for_most_recent_fiscal_year": 100,
+        },
+        // fields: fields[0].fields,
+        fields: {},
+      });
+      i.render();
+      app.hideLoading();
+      return;
+
     let fieldsR = api.makeCacheRequest(formcServer + '/' + id + '/financial-condition', 'OPTIONS');
     let dataR = api.makeCacheRequest(formcServer + '/' + id + '/financial-condition');
 
@@ -240,10 +267,27 @@ module.exports = Backbone.Router.extend({
       i.render();
       app.hideLoading();
     });
+
   },
 
   outstandingSecurity(id) {
     const View = require('components/formc/views.js');
+      const i = new View.outstandingSecurity({
+        el: '#content',
+        model: {
+          id: id,
+        },
+        // fields: {
+        //   loans: {},
+        //   exempt_offering: {},
+        //   business_loans_or_debt: {},
+        // },
+        fields:
+          {"principal_shareholders_affect": {"type": "string", "required": true}, "business_loans_or_debt": {"schema": {"maturity_date": {"type": "integer", "required": true}, "other_material_terms": {"type": "integer", "required": true}, "creditor": {"type": "string", "required": true}, "outstaind_amount": {"type": "integer", "required": true}, "interest_rate": {"type": "integer", "required": true}}, "type": "nested", "required": false}, "risks_to_purchasers": {"type": "string", "required": true}, "exempt_offering": {"schema": {"exemption_relied_upon": {"type": "integer", "required": true}, "use_of_proceeds": {"type": "integer", "required": true}, "offering_date": {"type": "date", "required": true}, "amount_sold": {"type": "integer", "required": true}, "securities_offered": {"type": "integer", "required": true}}, "type": "nested", "required": false}, "outstanding_securities_choice": {"type": "boolean", "required": true}, "security_differences": {"type": "string", "required": true}, "rights_of_securities_beign": {"type": "string", "required": true}, "outstanding_securities": {"schema": {"voting_right": {"type": "integer", "required": true}, "security_type": {"type": "string", "required": true}, "amount_outstanding": {"type": "integer", "required": true}, "amount_authroized": {"type": "integer", "required": true}, "other_rights": {"type": "integer", "required": true}}, "type": "nested", "required": false}},
+      });
+      i.render();
+      app.hideLoading();
+      return;
 
     let fieldsR = api.makeCacheRequest(formcServer + '/' + id + '/outstanding-security', 'OPTIONS');
     let dataR = api.makeCacheRequest(formcServer + '/' + id + '/outstanding-security');
