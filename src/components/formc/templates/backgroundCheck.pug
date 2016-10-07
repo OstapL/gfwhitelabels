@@ -40,12 +40,12 @@ section.formc-team-members-director.container.m-b-85
         .form-group.form-section.m-t-1.m-b-0
           .radio-input.m-b-1
             label 
-              input(type="radio" name="transaction_past_year" value="yes" checked=(values['transaction_past_year'] == 'yes') target=".transactions-past-year-container")
+              input(type="radio" name="company_or_director_subjected_to" value="true" checked=(values['company_or_director_subjected_to']) target=".transactions-past-year-container")
               |  Yes
             label 
-              input(type="radio" name="transaction_past_year" value="no" checked=(values['transaction_past_year'] == 'no') target=".transactions-past-year-container")
+              input(type="radio" name="company_or_director_subjected_to" value="false" checked=(!values['company_or_director_subjected_to']) target=".transactions-past-year-container")
               |  No
-        .m-b-3.transactions-past-year-container(style="display:" + (values['transaction_past_year'] == 'no' ? 'none' : 'block'))
+        .m-b-3.transactions-past-year-container.shown-yes(style="display:" + (values['company_or_director_subjected_to'] ? 'block' : 'none'))
           +fieldBlock("explain", '', {
             class1: 'col-lg-3 col-md-12 text-md-left text-xl-right',
             class2: 'col-lg-9 col-md-12',
@@ -60,7 +60,7 @@ section.formc-team-members-director.container.m-b-85
           type: 'textarea',
           placeholder: 'Description',
         })
-        +fieldBlock("provided_informatione", '', {
+        +fieldBlock("descrption_material_information", '', {
           class1: 'col-lg-12 col-md-12 text-md-left text-xl-left',
           class2: 'col-lg-12 col-md-12 big-textarea',
           type: 'textarea',
@@ -76,4 +76,5 @@ section.formc-team-members-director.container.m-b-85
           li.pb10 the issuer liquidates or dissolves its business in accordance with state law.
         .row.m-t-3
           .col-lg-12.text-md-center.text-sm-center-text-xs-center
-            a(href="#").btn.btn-primary.text-uppercase.pull-lg-right Save
+            //- a(href="#").btn.btn-primary.text-uppercase.pull-lg-right Save
+            button.btn.btn-primary.text-uppercase.pull-lg-right Save

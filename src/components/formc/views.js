@@ -304,8 +304,8 @@ module.exports = {
         render() {
             let template = require('./templates/relatedParties.pug');
 
-            if (this.model.transactions) {
-              this.transaction_with_related_partiesIndex = Object.keys(this.model.transactions).length;
+            if (this.model.transaction_with_related_parties) {
+              this.transaction_with_related_partiesIndex = Object.keys(this.model.transaction_with_related_parties).length;
             } else {
               this.transaction_with_related_partiesIndex = 0;
             }
@@ -586,12 +586,22 @@ module.exports = {
         submit: api.submitAction,
 
         render() {
+            this.fields.sold_securities_data.schema.taxable_income.label = "Taxable Income";
+            this.fields.sold_securities_data.schema.total_income.label = "Total Income";
+            this.fields.sold_securities_data.schema.total_tax.label = "Total Tax";
+            this.fields.sold_securities_data.schema.total_assets.label = "Total Assets";
+            this.fields.sold_securities_data.schema.long_term_debt.label = "Long Term Debt";
+            this.fields.sold_securities_data.schema.short_term_debt.label = "Short Term Debt";
+            this.fields.sold_securities_data.schema.cost_of_goods_sold.label = "Cost of Goods Sold";
+            this.fields.sold_securities_data.schema.account_receivable.label = "Account Receivable";
+            this.fields.sold_securities_data.schema.cash_and_equivalents.label = "Cash Equivalents";
+            this.fields.sold_securities_data.schema.revenues_sales.label = "Revenues Sales";
             let template = require('components/formc/templates/financialCondition.pug');
             this.$el.html(
                 template({
                     serverUrl: serverUrl,
                     Urls: Urls,
-                    // fields: this.fields,
+                    fields: this.fields,
                     values: this.model,
                 })
             );
@@ -667,7 +677,10 @@ module.exports = {
     })),
 
     backgroundCheck: Backbone.View.extend(_.extend(menuHelper.methods, yesNoHelper.methods, {
-        initialize(options) {},
+        urlRoot: formcServer + '/:id' + '/background-check',
+        initialize(options) {
+            this.fields = options.fields;
+        },
 
         events: _.extend({
             'submit form': 'submit',
@@ -676,12 +689,16 @@ module.exports = {
         submit: api.submitAction,
 
         render() {
+            console.log(this.fields);
+            this.fields.company_or_director_subjected_to.label = 'abc';
+            this.fields.descrption_material_information.label = "2) If you've provide any information in a format, media or other means not able to be reflected in text or pdf, please include here: (a) a description of the material content of such information; (b) a description of the format in which such disclosure is presented; and (c) in the case of disclosure in video, audio or other dynamic media or format, a transcript or description of such disclosure.";
+            this.fields.material_information.label = '1) Such further material information, if any, as may be neessary to make the required statments, in the light of the cirsumstances under which they are made, not misleading.';
             let template = require('components/formc/templates/backgroundCheck.pug');
             this.$el.html(
                 template({
                     serverUrl: serverUrl,
                     Urls: Urls,
-                    // fields: this.fields,
+                    fields: this.fields,
                     values: this.model,
                 })
             );

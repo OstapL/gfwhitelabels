@@ -55,7 +55,7 @@ section.formc-team-members-director.container.m-b-85
             label 
               input(type="radio" name="have_loans_debt" value="false" checked=(!values['have_loans_debt']) target=".have-loans-debt")
               |  No
-        .have-loans-debt(style="display:" + (values['have_loans_debt'] ? 'block' : 'none') + ";")
+        .have-loans-debt.shown-yes(style="display:" + (values['have_loans_debt'] ? 'block' : 'none') + ";")
             +fieldBlock("business_loans_or_debt", '', {
                 class1: 'col-lg-3 col-md-3',
                 class2: 'col-lg-9 col-md-9',
@@ -107,7 +107,7 @@ section.formc-team-members-director.container.m-b-85
                     label 
                       input(type="radio" name="conduct_exempt_offerings" value="false" checked=(!values['conduct_exempt_offerings']) target=".conduct-exempt-offerings-container")
                       |  No
-        .conduct-exempt-offerings-container(style="display:" + (values['conduct_exempt_offerings'] ? 'block' : 'none') + ";")
+        .conduct-exempt-offerings-container.shown-yes(style="display:" + (values['conduct_exempt_offerings'] ? 'block' : 'none') + ";")
             .row
                 .date-input.required.col-lg-12
                 

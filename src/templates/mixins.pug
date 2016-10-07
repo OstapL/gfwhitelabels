@@ -264,7 +264,7 @@ mixin fieldBlock(name, data, attr)
                         disabled=(attr.disabled ? attr.disabled : false)
                       ).form-control
 
-mixin fieldBlock2(name, data, attr, nameForForm)
+mixin fieldBlock2(name, data, attr, nameForForm, label)
     // If we did not created fields vocabulary
     // Assume it is empty field
     if fields[name] == null
@@ -277,7 +277,7 @@ mixin fieldBlock2(name, data, attr, nameForForm)
     // if values[name] == null
     - values[name] = data
     - attr.type = attr.type ? attr.type : fields[name].type
-    label(class= attr.text_align ? 'text-lg-' + attr.text_align + ' ' + attr.class1 : ' text-lg-right ' + attr.class1 for=name)= fields[name].label
+    label(class= attr.text_align ? 'text-lg-' + attr.text_align + ' ' + attr.class1 : ' text-lg-right ' + attr.class1 for=name)= label || fields[name].label
     div(class=attr.class2)
         input(
             id=name

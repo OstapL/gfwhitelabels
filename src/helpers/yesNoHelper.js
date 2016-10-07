@@ -8,9 +8,11 @@ module.exports = {
         let val = $target.val();
         let targetElem = $target.attr('target');
         if (val == 'false') {
-            this.$(targetElem).hide();
+            this.$(targetElem + '.shown-yes').hide();
+            this.$(targetElem + '.shown-no').show();
         } else if (val == 'true') {
-            this.$(targetElem).show();
+            this.$(targetElem + '.shown-yes').show();
+            this.$(targetElem + '.shown-no').hide();
         }
     },
   },

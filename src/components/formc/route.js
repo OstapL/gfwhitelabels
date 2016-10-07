@@ -244,13 +244,23 @@ module.exports = Backbone.Router.extend({
           "previously_sold_securities": "XXX",
           "financials_for_prior_fiscal_year": 500,
           "sold_securities_data": [
-            {"total_assets": 100, "long_term_debt": 500, "short_term_debt": 400, "cost_of_goods_sold": 700, "account_receivable": 300, "cash_and_equivalents": 200, "revenues_sales": 600},
-            {"total_assets": 10, "long_term_debt": 50, "short_term_debt": 40, "cost_of_goods_sold": 70, "account_receivable": 30, "cash_and_equivalents": 20, "revenues_sales": 60}
+            {'taxable_income': 111, 'total_income': 222, 'total_tax': 333, "total_assets": 100, "long_term_debt": 500, "short_term_debt": 400, "cost_of_goods_sold": 700, "account_receivable": 300, "cash_and_equivalents": 200, "revenues_sales": 600},
+            {'taxable_income': 11, 'total_income': 22, 'total_tax': 33, "total_assets": 10, "long_term_debt": 50, "short_term_debt": 40, "cost_of_goods_sold": 70, "account_receivable": 30, "cash_and_equivalents": 20, "revenues_sales": 60}
           ],
           "financials_for_most_recent_fiscal_year": 100,
         },
         // fields: fields[0].fields,
-        fields: {},
+        fields: {sold_securities_data: {schema: {total_assets: {type: 'integer', required: true},
+          cash_and_equivalents: {type: 'integer', required: true},
+          account_receivable: {type: 'integer', required: true},
+          short_term_debt: {type: 'integer', required: true},
+          long_term_debt: {type: 'integer', required: true},
+          revenues_sales: {type: 'integer', required: true},
+          cost_of_goods_sold: {type: 'integer', required: true},
+          total_income: {type: 'integer', required: true},
+          taxable_income: {type: 'integer', required: true},
+          total_tax: {type: 'integer', required: true},}
+        }},
       });
       i.render();
       app.hideLoading();
@@ -311,10 +321,11 @@ module.exports = Backbone.Router.extend({
     let dataR = api.makeCacheRequest(formcServer + '/' + id + '/background-check');
 
     $.when(fieldsR, dataR).done((fields, data) => {
+      console.log(fields);
       const i = new View.backgroundCheck({
         el: '#content',
         model: data,
-        fields: fields,
+        fields: fields[0].fields,
       });
       i.render();
       app.hideLoading();
