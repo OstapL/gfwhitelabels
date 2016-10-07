@@ -518,6 +518,7 @@ module.exports = {
         'click .delete-member': 'deleteMember',
         dragover: 'globalDragover',
         dragleave: 'globalDragleave',
+        'click .submit_form': submitCampaign,
       }, leavingConfirmationHelper.events),
       // urlRoot: serverUrl + Urls['campaign-list']() + '/team_members',
       urlRoot: Urls['campaign-list']() + '/team_members',
@@ -673,6 +674,7 @@ module.exports = {
   teamMembers: Backbone.View.extend({
     events: {
       'click .delete-member': 'deleteMember',
+      'click .submit_form': submitCampaign,
     },
 
     preinitialize() {
