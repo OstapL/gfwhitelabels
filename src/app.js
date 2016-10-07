@@ -242,6 +242,10 @@ $('body').on('click', 'a', function (event) {
     $('#content').undelegate();
     $('form').undelegate();
     $('.popover').remove();
+
+    $('.modal-backdrop').remove();
+    $('body').removeClass('modal-open');
+
     if (app.cache.hasOwnProperty(url) == false) {
       app.routers.navigate(
           url, { trigger: true, replace: false }

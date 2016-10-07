@@ -57,6 +57,39 @@ const jsonActions = {
   },
 };
 
+const submitCampaign = function submitCampaign(e) {
+  e.preventDefault();
+  var data = $(e.target).serializeJSON();
+  this.oldSuccess = this._success;
+  this._success = function(data) {
+    if(
+        data.progress.general_information == true &&
+        data.progress.media == true &&
+        data.progress.specifics == true &&
+        data.progress.team-members == true
+    ) {
+      this.router('/campaign/thankyou/' + data.id);
+    } else {
+      var errors = {};
+      _(data.progress).each((d, k) => {
+        if(k != 'perks') {
+          if(d == false)  {
+            $('#company_publish .'+k).removeClass('collapse');
+          } else {
+            $('#company_publish .'+k).addClass('collapse');
+          }
+        }
+      });
+      $('#company_publish').modal('toggle')
+      console.log(errors);
+      app.hideLoading();
+    }
+    this._success = this.oldSuccess();
+  }
+
+  api.submitAction.call(this, e, data);
+};
+
 
 const onPreviewAction = function(e) {
   e.preventDefault();
@@ -79,6 +112,7 @@ module.exports = {
       'keyup #zip_code': 'changeZipCode',
       'click .update-location': 'updateLocation',
       'click .onPreview': onPreviewAction,
+      'click .submit_form': submitCampaign,
       'change #website,#twitter,#facebook,#instagram,#linkedin': appendHttpIfNecessary,
     }, leavingConfirmationHelper.events, phoneHelper.events),
 
@@ -171,6 +205,7 @@ module.exports = {
       events: _.extend({
           'submit form': api.submitAction,
           'click .onPreview': onPreviewAction,
+          'click .submit_form': submitCampaign,
         }, jsonActions.events, leavingConfirmationHelper.events),
 
       preinitialize() {
@@ -262,6 +297,7 @@ module.exports = {
         dragleave: 'globalDragleave',
         // 'change #video,.additional_video_link': 'appendHttpsIfNecessary',
         'change .press_link': 'appendHttpIfNecessary',
+        'click .submit_form': submitCampaign,
         'click .onPreview': onPreviewAction,
       }, jsonActions.events, leavingConfirmationHelper.events),
       urlRoot: Urls['campaign-list']() + '/media',
@@ -285,7 +321,6 @@ module.exports = {
       preinitialize() {
         // ToDo
         // Hack for undelegate previous events
-        debugger;
         for (let k in this.events) {
           $('#content ' + k.split(' ')[1]).undelegate();
         }
@@ -627,7 +662,6 @@ module.exports = {
         e.preventDefault();
         let json = $(e.target).serializeJSON();
         json.index = this.index;
-        debugger;
 
         api.submitAction.call(this, e, json);
       },
@@ -700,6 +734,7 @@ module.exports = {
         dragover: 'globalDragover',
         dragleave: 'globalDragleave',
         'click .onPreview': onPreviewAction,
+        'click .submit_form': submitCampaign,
       }, leavingConfirmationHelper.events),
 
       globalDragover() {
@@ -820,6 +855,7 @@ module.exports = {
       events: _.extend({
           'submit form': api.submitAction,
           'click .onPreview': onPreviewAction,
+          'click .submit_form': submitCampaign,
         }, jsonActions.events, leavingConfirmationHelper.events),
       // urlRoot: serverUrl + Urls['campaign-list']() + '/perks',
       urlRoot: Urls['campaign-list']() + '/perks',

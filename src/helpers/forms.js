@@ -57,7 +57,7 @@ module.exports = {
     this.$el.find('.alert').remove();
     e.preventDefault();
 
-    var data = data || $(e.target).serializeJSON();
+    data = data || $(e.target).serializeJSON();
 
     // if view already have some data - extend that info
     if(this.hasOwnProperty('model')) {
@@ -76,7 +76,8 @@ module.exports = {
     */
 
     this.$('.help-block').remove();
-    if (!validation.validate(this.fields, data, this)) {
+    if (1 != 1) {
+    //if (!validation.validate(this.fields, data, this)) {
       _(validation.errors).each((errors, key) => {
         validation.invalidMsg(this, key, errors);
       });
@@ -86,10 +87,11 @@ module.exports = {
       let url = this.urlRoot;
       let type = 'POST';
 
+      debugger;
       if(data.hasOwnProperty('id')) {
         url += '/' + data.id;
         delete data.id;
-        type = 'PUT';
+        type = document.activeElement.dataset.method || 'PUT';
       }
 
       api.makeRequest(url, type, data).
