@@ -113,6 +113,7 @@ mixin fieldBlock(name, data, attr)
                             value=data[0]
                           ).form-control
         else if attr.type == 'textarea' 
+                - console.log(values)
                 label(class= attr.text_align ? 'text-lg-' + attr.text_align + ' ' + attr.class1 : ' text-lg-right ' + attr.class1 for=name)= fields[name].label
                 div(class=attr.class2)
                     textarea(
@@ -130,7 +131,6 @@ mixin fieldBlock(name, data, attr)
                     .delete-section-container
                         a(href="#" data-section=name data-index=indexCounter).delete-section
                             i.fa.fa-times
-                    - console.log(fields[name]);
                     each k,v in fields[name].schema
                         - console.log(k, v)
                         div(class='form-group clearfix index_' + indexCounter + ' ' + (k.required == true ? ' required ' : ' '))

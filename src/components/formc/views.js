@@ -693,8 +693,7 @@ module.exports = {
         submit: api.submitAction,
 
         render() {
-            console.log(this.fields);
-            this.fields.company_or_director_subjected_to.label = 'abc';
+            this.fields.company_or_director_subjected_to.label = 'If Yes, Explain';
             this.fields.descrption_material_information.label = "2) If you've provide any information in a format, media or other means not able to be reflected in text or pdf, please include here: (a) a description of the material content of such information; (b) a description of the format in which such disclosure is presented; and (c) in the case of disclosure in video, audio or other dynamic media or format, a transcript or description of such disclosure.";
             this.fields.material_information.label = '1) Such further material information, if any, as may be neessary to make the required statments, in the light of the cirsumstances under which they are made, not misleading.';
             let template = require('components/formc/templates/backgroundCheck.pug');

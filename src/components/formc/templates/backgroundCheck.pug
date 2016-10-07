@@ -3,10 +3,10 @@ include ../../../templates/mixins.pug
 include ../../../templates/menuRaiseFund.pug
 
 - 'use strict'
-- var fields = { explain: { label: 'If Yes, Explain'} };
-- var fields = { describe: { label: 'Describe Your Risk'} };
-- var fields = { material_informatione: { label: '1) Such further material information, if any, as may be necessary to make the required statements, in the light of the circumstances under which they are made, not misleading.'} };
-- var fields = { provided_informatione: { label: '2) If youve provided any inforatmion in a format, media or other means not able to be reflected in text or pdf, please include here: (a) a description of the material content of such information; (b) a description of the format in which such disclosure is presented; and (c) in the case of disclosure in video, audio or other dynamic media or format, a transcript or description of such disclosure.'} };
+// - var fields = { explain: { label: 'If Yes, Explain'} };
+// - var fields = { describe: { label: 'Describe Your Risk'} };
+// - var fields = { material_informatione: { label: '1) Such further material information, if any, as may be necessary to make the required statements, in the light of the circumstances under which they are made, not misleading.'} };
+// - var fields = { provided_informatione: { label: '2) If youve provided any inforatmion in a format, media or other means not able to be reflected in text or pdf, please include here: (a) a description of the material content of such information; (b) a description of the format in which such disclosure is presented; and (c) in the case of disclosure in video, audio or other dynamic media or format, a transcript or description of such disclosure.'} };
 
 +breadcrumbs('form c', '', 
     [
@@ -50,11 +50,11 @@ section.formc-team-members-director.container.m-b-85
             class1: 'col-lg-3 col-md-12 text-md-left text-xl-right',
             class2: 'col-lg-9 col-md-12',
             type: 'textarea',
-            placeholder: '',
+            placeholder: 'Explain',
           })
         .row.pb10
           b.col-lg-12 In addition to the information expressly required to be included in this Form, include:
-        +fieldBlock("material_informatione", '', {
+        +fieldBlock("material_information", '', {
           class1: 'col-lg-12 col-md-12 text-md-left text-xl-left',
           class2: 'col-lg-12 col-md-12 big-textarea',
           type: 'textarea',
