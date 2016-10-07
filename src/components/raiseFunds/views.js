@@ -294,6 +294,7 @@ module.exports = {
       preinitialize() {
         // ToDo
         // Hack for undelegate previous events
+        debugger;
         for (let k in this.events) {
           $('#content ' + k.split(' ')[1]).undelegate();
         }
@@ -599,14 +600,17 @@ module.exports = {
           };
         }
 
+        this.values.progress = this.model.progress;
+
         this.usaStates = require('helpers/usa-states');
         this.$el.html(
           template({
             serverUrl: serverUrl,
             Urls: Urls,
             fields: this.fields,
+            campaign: this.model,
             member: this.values,
-            values: this.values,
+            values: this.model,
             type: this.type,
             index: this.index,
             states: this.usaStates,
@@ -634,11 +638,12 @@ module.exports = {
         e.preventDefault();
         let json = $(e.target).serializeJSON();
         json.index = this.index;
+        debugger;
 
         api.submitAction.call(this, e, json);
 
       },
-    })),
+  })),
 
   teamMembers: Backbone.View.extend({
     events: {
