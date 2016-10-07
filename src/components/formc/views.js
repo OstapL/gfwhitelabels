@@ -400,16 +400,29 @@ module.exports = {
     }, menuHelper.methods)),
 
     riskFactorsMarket: Backbone.View.extend(_.extend({
-        initialize(options) {},
-
+        initialize(options) {
+            this.fields = options.fields;
+        },
+        urlRoot: formcServer + '/:id' + '/risk-factors-market',
         events: _.extend({
-            'submit form': 'submit',
+            // 'submit form': 'submit',
             'click form button.add-risk': 'addRisk',
         }, menuHelper.events),
 
         addRisk(e) {
+            event.preventDefault();
             // collapse the risk text
             // add the text added to formc
+            // make the field uneditable
+            $(e.target).parents('form').find('textarea').attr('readonly', true);
+            let $form = $(e.target).parents('form')
+            var data = $form.serializeJSON({useIntKeysAsArrayIndex: true});
+            api.submitAction.call(this, e, data);
+        },
+
+        _success(){
+            app.hideLoading();
+            debugger
         },
 
         submit: api.submitAction,
@@ -585,6 +598,10 @@ module.exports = {
 
         submit: api.submitAction,
 
+        getSuccessUrl() {
+            return  '/formc/' + this.model.id + '/outstanding-security';
+        },
+
         render() {
             this.fields.sold_securities_data.schema.taxable_income.label = "Taxable Income";
             this.fields.sold_securities_data.schema.total_income.label = "Total Income";
@@ -684,6 +701,11 @@ module.exports = {
         urlRoot: formcServer + '/:id' + '/background-check',
         initialize(options) {
             this.fields = options.fields;
+        },
+
+        getSuccessUrl() {
+          // return  '/formc/' + this.model.id + '/background-check';
+          return  '/formc/' + this.model.id + '/outstanding-security';
         },
 
         events: _.extend({

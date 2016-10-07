@@ -138,16 +138,20 @@ module.exports = Backbone.Router.extend({
 
   riskFactorsMarket(id) {
     const View = require('components/formc/views.js');
-    const i = new View.riskFactorsMarket({
-      el: '#content',
-      model: {
-        id: id,
-      },
-      // fields: {},
 
+    let fieldsR = api.makeCacheRequest(formcServer + '/' + id + '/risk-factors-market', 'OPTIONS');
+    let dataR = api.makeCacheRequest(formcServer + '/' + id + '/risk-factors-market');
+
+    $.when(fieldsR, dataR).done((fields, data) => {
+      data[0].id = id;
+      const i = new View.riskFactorsMarket({
+        el: '#content',
+        model: data[0], 
+        fields: fields[0].fields,
+      });
+      i.render();
+      app.hideLoading();
     });
-    i.render();
-    app.hideLoading();
   },
 
   riskFactorsFinancial(id) {
