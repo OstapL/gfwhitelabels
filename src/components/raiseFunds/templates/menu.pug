@@ -5,13 +5,15 @@ mixin getCompanyUrl(campaign, current, step, name)
           href="/campaign/" + step + "/" + campaign.id 
           class="list-group-item list-group-item-action " + (current == step ? 'active' : '')
         ) #{ name }
-            if current == step
-                i.fa.fa-check
+          if campaign.progress[step] == true
+            i.fa.fa-check
     else
         a(
           href="#"
           class="list-group-item list-group-item-action disabled" 
         ) #{ name }
+        if campaign.progress[step] == true
+          i.fa.fa-check
 
         
 mixin menu(current)
