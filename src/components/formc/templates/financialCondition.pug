@@ -116,6 +116,7 @@ section.formc-team-members-director.container.m-b-85
             icon: 'file',
             default: '/img/default' + suffix + '.png',
           })
+      // - console.log(values.sold_securities_data)
       each v, k in values.sold_securities_data
         .col-lg-6.col-md-12
           h3.text-xs-center= (k == 0 ? 'Most Recent Fiscal Year' : 'Prior Fiscal Year')

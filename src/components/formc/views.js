@@ -629,6 +629,10 @@ module.exports = {
             api.submitAction.call(this, e, data);
         },
 
+        getSuccessUrl() {
+            return  '/formc/' + this.model.id + '/background-check';
+        },
+
         render() {
             let template = require('components/formc/templates/outstandingSecurity.pug');
 
