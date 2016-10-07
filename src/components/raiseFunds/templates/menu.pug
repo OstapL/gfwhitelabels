@@ -78,7 +78,7 @@ mixin menu(current)
       .row
         .col-lg-12.text-xs-center
           button(type="button" data-href=("#")).btn.btn-secondary.text-uppercase.m-t-2.onPreview preview
-          button(type="button" class='submit_form' ddata-toggle="modal" ddata-target="#compani_publish" href="#compani_publish").btn.btn-primary.text-uppercase.m-t-2 submit campaign
+          button(type="button" class='submit_form').btn.btn-primary.text-uppercase.m-t-2 submit campaign
       .row
         .education-link-wrap
           .jumbotron.jumbotron-fluid
@@ -94,35 +94,35 @@ mixin menu(current)
                 a(href="/calculator/capitalraise/intro" target="_blank").nav-link.link-3 What's My Business Worth?
               li.nav-item
                 a(href="/calculator/whatmybusinessworth/intro" target="_blank").nav-link.link-3 How Much Should I Raise?
-#company_publish.modal.fade(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")
-  .modal-dialog(role="document")
-    .modal-content
-      .modal-header
-        button(type="button" class="close" data-dismiss="modal" aria-label="Close")
-          span(aria-hidden="true")
-            i.fa.fa-times
-        h2(class="modal-title").text-lg-center.text-uppercase.text-md-center.text-xs-center.line-height-1.dosis.m-t-1 COMPLETE THE FOLLOWING TO PUBLISH YOUR COMPANY
+      #company_publish.modal.fade(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")
+        .modal-dialog(role="document")
+          .modal-content
+            .modal-header
+              button(type="button" class="close" data-dismiss="modal" aria-label="Close")
+                span(aria-hidden="true")
+                  i.fa.fa-times
+              h2(class="modal-title").text-lg-center.text-uppercase.text-md-center.text-xs-center.line-height-1.dosis.m-t-1 COMPLETE THE FOLLOWING TO PUBLISH YOUR COMPANY
 
-      .modal-body.m-b-2
-        .form-section
-          .col-lg-6.pull-left.p-l-0.general_information.collapse
-            h3.m-b-0.m-t-0 General Information
-          .col-lg-6.text-xs-right.m-b-10.p-r-0.general_information.collapse
-            a(href="/campaign/general_information/" + values.id + "?check=1").btn.btn-sm.btn-secondary.text-uppercase.m-t-0 Edit
-          .col-lg-6.pull-left.p-l-0.media.collapse
-            h3.m-b-0.m-t-0 Media 
-          .col-lg-6.text-xs-right.m-b-10.p-r-0.media.collapse
-            a(href='/campaign/media/' + values.id + '/?check=1').btn.btn-sm.btn-secondary.text-uppercase.m-t-0 Edit
-          .col-lg-6.pull-left.p-l-0.team-members.collapse
-            h3.m-b-0.m-t-0 Team Members 
-          .col-lg-6.text-xs-right.m-b-10.p-r-0.team-members.collapse
-            a(href='/campaign/team-members/' + values.id + '/?check=1').btn.btn-sm.btn-secondary.text-uppercase.m-t-0 Edit
-          .col-lg-6.pull-left.p-l-0.specifics.collapse
-            h3.m-b-0.m-t-0 Specifics 
-          .col-lg-6.text-xs-right.m-b-10.p-r-0.specifics.collapse
-            a(href='/campaign/specifics/' + values.id + '?check=1').btn.btn-sm.btn-secondary.text-uppercase.m-t-0 Edit
-          .col-lg-6.pull-left.p-l-0.perks.collapse
-            h3.m-b-0.m-t-0 Perks 
-          .col-lg-6.text-xs-right.mb30.p-r-0.perks.collapse
-            a(href='/campaign/perks/' + values.id + '?check=1').btn.btn-sm.btn-secondary.text-uppercase.m-t-0 Edit
-      .modal-footer
+            .modal-body.m-b-2
+              .form-section
+                .col-lg-6.pull-left.p-l-0.general_information.collapse
+                  h3.m-b-0.m-t-0 General Information
+                .col-lg-6.text-xs-right.m-b-10.p-r-0.general_information.collapse
+                  a(href="/campaign/general_information/" + values.id + "?check=1").btn.btn-sm.btn-secondary.text-uppercase.m-t-0 Edit
+                .col-lg-6.pull-left.p-l-0.media.collapse
+                  h3.m-b-0.m-t-0 Media 
+                .col-lg-6.text-xs-right.m-b-10.p-r-0.media.collapse
+                  a(href='/campaign/media/' + values.id + '/?check=1').btn.btn-sm.btn-secondary.text-uppercase.m-t-0 Edit
+                .col-lg-6.pull-left.p-l-0.team-members.collapse
+                  h3.m-b-0.m-t-0 Team Members 
+                .col-lg-6.text-xs-right.m-b-10.p-r-0.team-members.collapse
+                  a(href='/campaign/team-members/' + values.id + '/?check=1').btn.btn-sm.btn-secondary.text-uppercase.m-t-0 Edit
+                .col-lg-6.pull-left.p-l-0.specifics.collapse
+                  h3.m-b-0.m-t-0 Specifics 
+                .col-lg-6.text-xs-right.m-b-10.p-r-0.specifics.collapse
+                  a(href='/campaign/specifics/' + values.id + '?check=1').btn.btn-sm.btn-secondary.text-uppercase.m-t-0 Edit
+                .col-lg-6.pull-left.p-l-0.perks.collapse
+                  h3.m-b-0.m-t-0 Perks 
+                .col-lg-6.text-xs-right.mb30.p-r-0.perks.collapse
+                  a(href='/campaign/perks/' + values.id + '?check=1').btn.btn-sm.btn-secondary.text-uppercase.m-t-0 Edit
+            .modal-footer

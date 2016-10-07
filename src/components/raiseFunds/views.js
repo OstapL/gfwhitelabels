@@ -61,7 +61,11 @@ const submitCampaign = function submitCampaign(e) {
   e.preventDefault();
   var data = $(e.target).serializeJSON();
   this.oldSuccess = this._success;
-  this._success = function(data) {
+  this._success = (data) => {
+    if(data.hasOwnProperty('progress') === false) {
+      data.progress = this.campaign.progress;
+      data.id = this.campaign.id;
+    }
     if(
         data.progress.general_information == true &&
         data.progress.media == true &&
@@ -80,11 +84,10 @@ const submitCampaign = function submitCampaign(e) {
           }
         }
       });
-      $('#company_publish').modal('toggle')
-      console.log(errors);
+      $('#company_publish').modal('toggle');
       app.hideLoading();
     }
-    this._success = this.oldSuccess();
+    this._success = this.oldSuccess;
   }
 
   api.submitAction.call(this, e, data);

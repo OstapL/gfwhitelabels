@@ -239,12 +239,13 @@ $('body').on('click', 'a', function (event) {
     // overise we will trigger app router function
     var url = href;
 
+    // Clear page
     $('#content').undelegate();
     $('form').undelegate();
     $('.popover').remove();
 
     $('.modal-backdrop').remove();
-    $('body').removeClass('modal-open');
+    $('.modal-open').removeClass('modal-open');
 
     if (app.cache.hasOwnProperty(url) == false) {
       app.routers.navigate(
