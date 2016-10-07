@@ -4,7 +4,7 @@ let addSectionHelper = require('helpers/addSectionHelper.js');
 let yesNoHelper = require('helpers/yesNoHelper.js');
 
 module.exports = {
-    introduction: Backbone.View.extend(_.extend(menuHelper.methods, yesNoHelper.methods, {
+    introduction: Backbone.View.extend(_.extend({
         urlRoot: formcServer + '/:id' + '/introduction',
 
         events: _.extend({
@@ -53,9 +53,9 @@ module.exports = {
             return this;
         },
 
-    })),
+    }, menuHelper.methods, yesNoHelper.methods)),
 
-    teamMembers: Backbone.View.extend(_.extend(menuHelper.methods, {
+    teamMembers: Backbone.View.extend(_.extend({
         urlRoot: formcServer + '/:id' + '/team-members',
         name: 'teamMembers',
         events: _.extend({
@@ -95,9 +95,9 @@ module.exports = {
             return this;
         },
 
-    })),
+    }, menuHelper.methods)),
 
-    teamMemberAdd: Backbone.View.extend(_.extend(addSectionHelper.methods, menuHelper.methods, {
+    teamMemberAdd: Backbone.View.extend(_.extend({
         events: _.extend({
             'submit form': 'submit',
         }, addSectionHelper.events, menuHelper.events),
@@ -194,9 +194,9 @@ module.exports = {
         },
         getSuccessUrl(data) {},
         submit: api.submitAction,
-    })),
+    }, addSectionHelper.methods, menuHelper.methods)),
 
-    offering: Backbone.View.extend(_.extend(addSectionHelper.methods, menuHelper.methods, {
+    offering: Backbone.View.extend(_.extend({
         events: _.extend({
             'submit form': 'submit',
         }, addSectionHelper.events, menuHelper.events),
@@ -238,7 +238,7 @@ module.exports = {
             return this;
         },
 
-    })),
+    }, addSectionHelper.methods, menuHelper.methods)),
 
     /*useOfProceeds: Backbone.View.extend({
         events: _.extend({
@@ -281,7 +281,7 @@ module.exports = {
         },
     }),*/
 
-    relatedParties: Backbone.View.extend(_.extend(addSectionHelper.methods, menuHelper.methods, yesNoHelper.methods, {
+    relatedParties: Backbone.View.extend(_.extend({
         urlRoot: formcServer + '/:id' + '/related-parties',
         name: 'relatedParties',
         initialize(options) {
@@ -325,9 +325,9 @@ module.exports = {
             );
             return this;
         },
-    })),
+    }, addSectionHelper.methods, menuHelper.methods, yesNoHelper.methods)),
 
-    useOfProceeds: Backbone.View.extend(_.extend(addSectionHelper.methods, menuHelper.methods, {
+    useOfProceeds: Backbone.View.extend(_.extend({
         urlRoot: 'https://api-formc.growthfountain.com/' + ':id' + '/use-of-proceeds',
 
        initialize(options) {
@@ -373,9 +373,9 @@ module.exports = {
             );
             return this;
         }, 
-    })),
+    }, addSectionHelper.methods, menuHelper.methods)),
 
-    riskFactorsInstruction: Backbone.View.extend(_.extend(menuHelper.methods, {
+    riskFactorsInstruction: Backbone.View.extend(_.extend({
         initialize(options) {},
 
         events: _.extend({
@@ -397,9 +397,9 @@ module.exports = {
             );
             return this;
         },
-    })),
+    }, menuHelper.methods)),
 
-    riskFactorsMarket: Backbone.View.extend(_.extend(menuHelper.methods, {
+    riskFactorsMarket: Backbone.View.extend(_.extend({
         initialize(options) {},
 
         events: _.extend({
@@ -427,9 +427,9 @@ module.exports = {
             );
             return this;
         },
-    })),
+    }, menuHelper.methods)),
 
-    riskFactorsFinancial: Backbone.View.extend(_.extend(menuHelper.methods, {
+    riskFactorsFinancial: Backbone.View.extend(_.extend({
         initialize(options) {},
 
         events: _.extend({
@@ -451,9 +451,9 @@ module.exports = {
             );
             return this;
         },
-    })),
+    }, menuHelper.methods)),
 
-    riskFactorsOperational: Backbone.View.extend(_.extend(menuHelper.methods, {
+    riskFactorsOperational: Backbone.View.extend(_.extend({
         initialize(options) {},
 
         events: _.extend({
@@ -475,9 +475,9 @@ module.exports = {
             );
             return this;
         },
-    })),
+    }, menuHelper.methods)),
 
-    riskFactorsCompetitive: Backbone.View.extend(_.extend(menuHelper.methods, {
+    riskFactorsCompetitive: Backbone.View.extend(_.extend({
         initialize(options) {},
 
         events: _.extend({
@@ -499,10 +499,10 @@ module.exports = {
             );
             return this;
         },
-    })),
+    }, menuHelper.methods)),
 
 
-    riskFactorsPersonnel: Backbone.View.extend(_.extend(menuHelper.methods, {
+    riskFactorsPersonnel: Backbone.View.extend(_.extend({
         initialize(options) {},
 
         events: _.extend({
@@ -524,9 +524,9 @@ module.exports = {
             );
             return this;
         },
-    })),
+    }, menuHelper.methods)),
 
-    riskFactorsLegal: Backbone.View.extend(_.extend(menuHelper.methods, {
+    riskFactorsLegal: Backbone.View.extend(_.extend({
         initialize(options) {},
 
         events: _.extend({
@@ -547,9 +547,9 @@ module.exports = {
             );
             return this;
         },
-    })),
+    }, menuHelper.methods)),
 
-    riskFactorsMisc: Backbone.View.extend(_.extend(menuHelper.methods, {
+    riskFactorsMisc: Backbone.View.extend(_.extend({
         initialize(options) {},
 
         events: _.extend({
@@ -570,9 +570,9 @@ module.exports = {
             );
             return this;
         },
-    })),
+    }, menuHelper.methods)),
 
-    financialCondition: Backbone.View.extend(_.extend(menuHelper.methods, yesNoHelper.methods, {
+    financialCondition: Backbone.View.extend(_.extend({
         urlRoot: 'https://api-formc.growthfountain.com/' + ':id' + '/financial-condition',
 
         initialize(options) {
@@ -607,9 +607,9 @@ module.exports = {
             );
             return this;
         },
-    })),
+    }, menuHelper.methods, yesNoHelper.methods)),
 
-    outstandingSecurity: Backbone.View.extend(_.extend(addSectionHelper.methods, menuHelper.methods, yesNoHelper.methods, {
+    outstandingSecurity: Backbone.View.extend(_.extend({
         urlRoot: formcServer + '/:id' + '/outstanding-security',
         initialize(options) {
             this.fields = options.fields;
@@ -678,9 +678,9 @@ module.exports = {
             );
             return this;
         },
-    })),
+    }, addSectionHelper.methods, menuHelper.methods, yesNoHelper.methods)),
 
-    backgroundCheck: Backbone.View.extend(_.extend(menuHelper.methods, yesNoHelper.methods, {
+    backgroundCheck: Backbone.View.extend(_.extend({
         urlRoot: formcServer + '/:id' + '/background-check',
         initialize(options) {
             this.fields = options.fields;
@@ -707,5 +707,5 @@ module.exports = {
             );
             return this;
         },
-    })),
+    }, menuHelper.methods, yesNoHelper.methods)),
 };
