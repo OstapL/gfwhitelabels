@@ -403,7 +403,7 @@ module.exports = {
         initialize(options) {
             this.fields = options.fields;
         },
-        urlRoot: formcServer + '/:id' + '/risk-factors-market',
+        urlRoot: formcServer + '/:id' + '/risk-factors-market/1',
         events: _.extend({
             // 'submit form': 'submit',
             'click form button.add-risk': 'addRisk',
@@ -414,7 +414,6 @@ module.exports = {
             // collapse the risk text
             // add the text added to formc
             // make the field uneditable
-            $(e.target).parents('form').find('textarea').attr('readonly', true);
             let $form = $(e.target).parents('form')
             var data = $form.serializeJSON({useIntKeysAsArrayIndex: true});
             api.submitAction.call(this, e, data);
@@ -422,7 +421,10 @@ module.exports = {
 
         _success(){
             app.hideLoading();
-            debugger
+            $(e.target).parents('form').find('textarea').attr('readonly', true);
+            // change to text of button to delete
+            // mark the risk saved
+            // if delete, take it out again
         },
 
         submit: api.submitAction,
