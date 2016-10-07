@@ -306,10 +306,10 @@ module.exports = Backbone.Router.extend({
     let dataR = api.makeCacheRequest(formcServer + '/' + id + '/background-check');
 
     $.when(fieldsR, dataR).done((fields, data) => {
-      console.log(fields);
+      data[0].id = id;
       const i = new View.backgroundCheck({
         el: '#content',
-        model: data,
+        model: data[0],
         fields: fields[0].fields,
       });
       i.render();
