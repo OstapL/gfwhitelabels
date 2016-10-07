@@ -103,7 +103,7 @@ const onPreviewAction = function(e) {
 };
 
 module.exports = {
-  company: Backbone.View.extend(_.extend(leavingConfirmationHelper.methods, phoneHelper.methods, {
+  company: Backbone.View.extend(_.extend({
     // urlRoot: serverUrl + Urls['company-list'](),
     urlRoot: Urls.company_list(),
     template: require('./templates/company.pug'),
@@ -196,9 +196,9 @@ module.exports = {
         { trigger: true, replace: false }
       );
     },
-  })),
+  },leavingConfirmationHelper.methods, phoneHelper.methods)),
 
-  generalInformation: Backbone.View.extend(_.extend(leavingConfirmationHelper.methods, {
+  generalInformation: Backbone.View.extend(_.extend({
       // urlRoot: serverUrl + Urls['campaign-list']() + '/general_information',
       urlRoot: Urls['campaign-list']() + '/general_information',
       template: require('./templates/generalInformation.pug'),
@@ -286,9 +286,9 @@ module.exports = {
         );
         return this;
       },
-    })),
+    },leavingConfirmationHelper.methods)),
 
-  media: Backbone.View.extend(_.extend(leavingConfirmationHelper.methods, {
+  media: Backbone.View.extend(_.extend({
       events: _.extend({
         'submit form': api.submitAction,
         // 'click .delete-image': 'deleteImage',
@@ -507,9 +507,9 @@ module.exports = {
           //e.target.value = id;
         }
       }
-  })),
+  }, leavingConfirmationHelper.methods)),
 
-  teamMemberAdd: Backbone.View.extend(_.extend(leavingConfirmationHelper.methods, {
+  teamMemberAdd: Backbone.View.extend(_.extend({
       events: _.extend({
         'submit form': 'submit',
         'click .delete-member': 'deleteMember',
@@ -665,7 +665,7 @@ module.exports = {
 
         api.submitAction.call(this, e, json);
       },
-  })),
+  }, leavingConfirmationHelper.methods)),
 
   teamMembers: Backbone.View.extend({
     events: {
@@ -723,7 +723,7 @@ module.exports = {
 
   }),
 
-  specifics: Backbone.View.extend(_.extend(leavingConfirmationHelper.methods, {
+  specifics: Backbone.View.extend(_.extend({
       urlRoot: Urls['campaign-list']() + '/specifics',
       events: _.extend({
         'submit form': api.submitAction,
@@ -849,9 +849,9 @@ module.exports = {
 
         return this;
       },
-    })),
+    }, leavingConfirmationHelper.methods)),
 
-  perks: Backbone.View.extend(_.extend(leavingConfirmationHelper.methods, {
+  perks: Backbone.View.extend(_.extend({
       events: _.extend({
           'submit form': api.submitAction,
           'click .onPreview': onPreviewAction,
@@ -914,7 +914,7 @@ module.exports = {
         return this;
       },
 
-    })),
+    }, leavingConfirmationHelper.methods, )),
 
   thankYou: Backbone.View.extend({
     el: '#content',
