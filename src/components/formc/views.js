@@ -414,8 +414,9 @@ module.exports = {
             // collapse the risk text
             // add the text added to formc
             // make the field uneditable
-            let $form = $(e.target).parents('form')
+            let $form = $(e.target).parents('form');
             var data = $form.serializeJSON({useIntKeysAsArrayIndex: true});
+            debugger
             api.submitAction.call(this, e, data);
         },
 
