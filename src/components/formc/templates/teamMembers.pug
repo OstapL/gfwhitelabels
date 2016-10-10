@@ -2,7 +2,6 @@
 include ../../../templates/mixins.pug
 //- include menu.pug
 include ../../../templates/menuRaiseFund.pug
-- var fields = { full_time: { label: 'Full-Time'}, part_time: { label: 'Part-Time'}};
 
 +breadcrumbs('Create Company', '', 
     [
@@ -34,16 +33,14 @@ section.create-company-team-add.container
             .col-lg-12.m-t-1.m-b-2
                 b How many emploees do you have?
             .col-lg-6
-                +fieldBlock("full_time", '', {
+                +fieldBlock("full_time_employers", '', {
                     class1: 'col-lg-4 col-md-12 text-md-left',
                     class2: 'col-lg-8 col-md-12',
-                    type: 'text',
                 })
             .col-lg-6
-                +fieldBlock("part_time", '', {
+                +fieldBlock("part_time_employers", '', {
                     class1: 'col-lg-4 col-md-12 text-md-left',
                     class2: 'col-lg-8 col-md-12',
-                    type: 'text',
                 })
             .col-lg-12.text-lg-center.text-md-center.text-sm-center.text-xs-center.m-t-2.m-b-2
                 a(href='/formc/' + values.id + '/team-members/add/director/new').btn.text-uppercase.m-r-3 
@@ -57,9 +54,9 @@ section.create-company-team-add.container
                     |  ADD 20% VOTING SHAREHOLDER
             
 
-            if values.members
+            if values.team_members
                 - counter = 0
-                each v,k in values.members
+                each v,k in values.team_members
                     .col-lg-3.m-t-2.p-r-0.p-l-0.m-l-2.m-r-2
                         .team-add-item.text-lg-center.text-xs-center
                             a(href="/formc/" + values.id + "/team-members/add/" + v.type + '/' + counter).link-1
@@ -113,4 +110,4 @@ section.create-company-team-add.container
             div(style="display: " +  (values.team_members.length >= 1 ? 'block' : 'none')).col-lg-12.pull-lg-right.p-r-0.m-t-3
 
             .col-lg-12.text-md-center.text-sm-center.text-xs-center
-                button.btn.btn-primary.text-uppercase.pull-lg-right Save
+                button(type="submit").btn.btn-primary.text-uppercase.pull-lg-right Save
