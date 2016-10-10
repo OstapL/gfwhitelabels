@@ -87,8 +87,6 @@ module.exports = {
         url = url.replace(':id', data.id);
         delete data.id;
         // type = 'PUT';
-        // type = 'PATCH';
-        debugger
         type = document.activeElement.dataset.method || 'PUT';
       }
 
