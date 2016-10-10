@@ -406,7 +406,7 @@ module.exports = {
         urlRoot: formcServer + '/:id' + '/risk-factors-market/1',
         events: _.extend({
             // 'submit form': 'submit',
-            'click form button.add-risk': 'addRisk',
+            'click .add-risk': 'addRisk',
         }, menuHelper.events),
 
         addRisk(e) {
@@ -636,7 +636,7 @@ module.exports = {
 
         events: _.extend({
             'submit form': 'submit',
-            'click button.save-outstanding': 'addOutstanding',
+            'click .save-outstanding': 'addOutstanding',
         }, addSectionHelper.events, menuHelper.events, yesNoHelper.events),
 
         // submit: api.submitAction,
