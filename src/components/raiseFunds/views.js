@@ -72,7 +72,7 @@ const onPreviewAction = function(e) {
 };
 
 module.exports = {
-  company: Backbone.View.extend(_.extend(lmenuHelper.methods, eavingConfirmationHelper.methods, phoneHelper.methods, {
+  company: Backbone.View.extend(_.extend(menuHelper.methods, eavingConfirmationHelper.methods, phoneHelper.methods, {
     // urlRoot: serverUrl + Urls['company-list'](),
     urlRoot: Urls.company_list(),
     template: require('./templates/company.pug'),
