@@ -507,6 +507,7 @@ module.exports = {
                         k: index,
                         v: data,
                     }));
+                    $('.add-risk-form').find('input:text, textarea').val('');
                 }
                 // $(e.target).parents('form').find('textarea').attr('readonly', true);
                 // change to text of button to delete
