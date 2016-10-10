@@ -112,10 +112,7 @@ const doCampaignValidation = function doCampaignValidation(e, data) {
       data.progress.specifics == true &&
       data.progress['team-members'] == true
   ) {
-    app.routers.navigate(
-      '/campaign/thankyou/' + data.id,
-      { trigger: true, replace: false }
-    );
+    $('#company_publish_confirm').modal('show');
   } else {
     var errors = {};
     _(data.progress).each((d, k) => {

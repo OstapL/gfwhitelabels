@@ -241,6 +241,23 @@ section.create-company.container.m-b-85
           .col-lg-6.text-xs-right.mb30.p-r-0.perks.collapse
             a(href='/campaign/perks/' + campaign.id + '?check=1').btn.btn-sm.btn-secondary.text-uppercase.m-t-0 Edit
       .modal-footer
+#company_publish_confirm.modal.fade(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")
+  .modal-dialog(role="document")
+    .modal-content
+      .modal-header
+        button(type="button" class="close" data-dismiss="modal" aria-label="Close")
+          span(aria-hidden="true")
+            i.fa.fa-times
+        h2(class="modal-title").text-lg-center.text-uppercase.text-md-center.text-xs-center.line-height-1.dosis.m-t-1 Are you sure you want to submit ?
+
+      .modal-body.m-b-2
+        .col-sm-12
+            .result-info-block.m-x-auto.text-xs-center
+                |  Once you submit, you will no longer have the ability to edit your Campaign
+                .info-btn-block.mb30
+                    a(href="#" data-dismiss="modal").btn.m-t-2.m-r-1.btn-secondary Cancel
+                    a(href="/campaign/thankyou/" + campaign.id).btn.m-t-2.btn-primary.text-uppercase Yes
+      .modal-footer
 //MODAL
 #city_state_modal.modal.fade(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")
     .modal-dialog(role="document")
