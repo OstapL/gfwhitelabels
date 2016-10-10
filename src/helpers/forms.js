@@ -55,7 +55,7 @@ module.exports = {
     this.$el.find('.alert').remove();
     e.preventDefault();
 
-    var data = data || $(e.target).serializeJSON({useIntKeysAsArrayIndex: true});
+    data = data || $(e.target).serializeJSON({useIntKeysAsArrayIndex: true});
 
     // if view already have some data - extend that info
     if(this.hasOwnProperty('model')) {
@@ -86,8 +86,10 @@ module.exports = {
       if (data.hasOwnProperty('id')) {
         url = url.replace(':id', data.id);
         delete data.id;
-        type = 'PUT';
+        // type = 'PUT';
         // type = 'PATCH';
+        debugger
+        type = document.activeElement.dataset.method || 'PUT';
       }
 
       api.makeRequest(url, type, data).
