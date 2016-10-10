@@ -16,7 +16,7 @@ section.create-company-general.container.m-b-85
 
   .col-lg-8
     h2.text-uppercase.text-lg-center.text-xs-center.dosis.m-t-0 GENERAL INFORMATION
-    form(metod="post" action="").form-section
+    form(method="PATCH" action="").form-section
       if values.id && values.id != ''
           input(type='hidden' name='id' value=values.id id='id')
       .form-group.row.clearfix.required
