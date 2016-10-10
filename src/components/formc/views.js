@@ -416,7 +416,6 @@ module.exports = {
             // make the field uneditable
             let $form = $(e.target).parents('form');
             var data = $form.serializeJSON({useIntKeysAsArrayIndex: true});
-            debugger
             api.submitAction.call(this, e, data);
         },
 
@@ -637,6 +636,7 @@ module.exports = {
 
         events: _.extend({
             'submit form': 'submit',
+            'click button.save-outstanding': 'addOutstanding',
         }, addSectionHelper.events, menuHelper.events, yesNoHelper.events),
 
         // submit: api.submitAction,
@@ -647,6 +647,10 @@ module.exports = {
             if (data.conduct_exempt_offerings == 'false') data.exempt_offering = [];
             if (!data.outstanding_securities) data.outstanding_securities = [];
             api.submitAction.call(this, e, data);
+        },
+
+        addOutstanding(e) {
+            e.preventDefault();
         },
 
         getSuccessUrl() {

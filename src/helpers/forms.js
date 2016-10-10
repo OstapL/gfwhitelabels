@@ -38,7 +38,7 @@ module.exports = {
       url = serverUrl + url
     } 
 
-    if(type == 'POST' || type == 'PUT') {
+    if(type == 'POST' || type == 'PUT' || type == 'PATCH') {
       data = JSON.stringify(data);
     }
 
@@ -87,6 +87,7 @@ module.exports = {
         url = url.replace(':id', data.id);
         delete data.id;
         type = 'PUT';
+        // type = 'PATCH';
       }
 
       api.makeRequest(url, type, data).
