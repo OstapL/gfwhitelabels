@@ -402,29 +402,117 @@ module.exports = {
     riskFactorsMarket: Backbone.View.extend(_.extend({
         initialize(options) {
             this.fields = options.fields;
+            this.defaultRisks = {
+                0: {
+                    title: 'There is a limited market for the Company’s product or services',
+                    risk: 'Although we have identified what we believe to be a need in the market for our products and services, there can be no assurance that demand or a market will develop or that we will be able to create a viable business. Our future financial performance will depend, at least in part, upon the introduction and market acceptance of our products and services. Potential customers may be unwilling to accept, utilize or recommend any of our proposed products or services. If we are unable to commercialize and market such products or services when planned, we may not achieve any market acceptance or generate revenue.',
+                },
+                1: {
+                    title: 'We must correctly predict, identify, and interpret changes in consumer preferences and demand, offer new products to meet those changes, and respond to competitive innovation.',
+                    risk: 'Our success depends on our ability to predict, identify, and interpret the tastes and habits of consumers and to offer products that appeal to consumer preferences. If we do not offer products that appeal to consumers, our sales and market share will decrease. If we do not accurately predict which shifts in consumer preferences will be long-term, or if we fail to introduce new and improved products to satisfy those preferences, our sales could decline. If we fail to expand our product offerings successfully across product categories, or if we do not rapidly develop products in faster growing and more profitable categories, demand for our products could decrease, which could materially and adversely affect our product sales, financial condition, and results of operations.',
+                },
+                2: {
+                    title: 'We may be adversely affected by cyclicality, volatility or an extended downturn in the United States or worldwide economy, or in the industries we serve.',
+                    risk: 'Our operating results, business and financial condition could be significantly harmed by an extended economic downturn or future downturns, especially in regions or industries where our operations are heavily concentrated. Further, we may face increased pricing pressures during such periods as customers seek to use lower cost or fee services, which may adversely affect our financial condition and results of operations.',
+                },
+                3: {
+                    title: 'Failure to obtain new clients or renew client contracts on favorable terms could adversely affect results of operations.',
+                    risk: 'We may face pricing pressure in obtaining and retaining our clients.  On some occasions, this pricing pressure may result in lower revenue from a client than we had anticipated based on our previous agreement with that client. This reduction in revenue could result in an adverse effect on our business and results of operations. Further, failure to renew client contracts on favorable terms could have an adverse effect on our business. If we are not successful in achieving a high rate of contract renewals on favorable terms, our business and results of operations could be adversely affected.',
+                },
+                4: {
+                    title: 'Our business and results of operations may be adversely affected if we are unable to maintain our customer experience or provide high quality customer service.',
+                    risk: 'The success of our business largely depends on our ability to provide superior customer experience and high quality customer service, which in turn depends on a variety of factors, such as our ability to continue to provide a reliable and user-friendly website interface for our customers to browse and purchase our products, reliable and timely delivery of our products, and superior after sales services. If our customers are not satisfied, our reputation and customer loyalty could be negatively affected.',
+                },
+            };
+            this.fields.title = {label: 'Title for Risk'};
+            this.fields.risk = {label: 'Describe Your Risk'};
         },
-        urlRoot: formcServer + '/:id' + '/risk-factors-market/1',
+        urlRoot: formcServer + '/:id' + '/risk-factors-market/:index',
         events: _.extend({
             // 'submit form': 'submit',
             'click .add-risk': 'addRisk',
+            'click .edit-risk': 'editRisk',
+            'click .delete-risk': 'deleteRisk',
         }, menuHelper.events),
 
+        deleteRisk(e) {
+            e.preventDefault();
+            if (!confirm('Do you really want to delete this risk?')) return;
+            // send the request
+            // delete
+            var data = {};
+            data.index = $(e.target).data('index');
+            api.submitRisk.call(this, e, data);
+        },
+
+        editRisk(e) {
+            e.preventDefault();
+            let $target = $(e.target);
+            let index = $target.data('index');
+            $('textarea[index=' + index + ']').attr('readonly', false);
+            // let $form = $('form[index=' + index + ']');
+            let $panel = $('.risk-panel[index=' + index + ']');
+            $panel.find('.add-risk').css({display: 'inline-block'});
+            $panel.find('.alter-risk').css({display: 'none'});
+            $panel.find('.added').text('');
+            // $target.css({display: 'none'});
+        },
+
         addRisk(e) {
-            event.preventDefault();
+            e.preventDefault();
             // collapse the risk text
             // add the text added to formc
             // make the field uneditable
             let $form = $(e.target).parents('form');
             var data = $form.serializeJSON({useIntKeysAsArrayIndex: true});
-            api.submitAction.call(this, e, data);
+            if (!data.index) {
+                // find the largest data
+                let index = Object.keys(this.defaultRisks).length - 1;
+                $('.additional-risk-panel').each(function(idx, elem) {
+                    let $elem = $(this);
+                    let panelIdx = parseInt($elem.attr('index'))
+                    if (panelIdx > index) index = panelIdx;
+                });
+                data.index = index + 1;
+            }
+            api.submitRisk.call(this, e, data);
         },
 
-        _success(){
-            app.hideLoading();
-            $(e.target).parents('form').find('textarea').attr('readonly', true);
-            // change to text of button to delete
-            // mark the risk saved
-            // if delete, take it out again
+        _success(response, index, data, type){
+            // app.hideLoading();
+            if (type == 'DELETE') {
+                // if default risk
+                if (index < Object.keys(this.defaultRisks).length) {
+                    let $panel = $('.risk-panel[index=' + index + ']');
+                    $panel.find('textarea').text(this.defaultRisks[index].risk);
+                    $panel.find('.add-risk').css({display: 'inline-block'});
+                    $panel.find('.alter-risk').css({display: 'none'});
+                    $panel.find('.added').text('');
+                } else {
+                    let $panel = $('.risk-panel[index=' + index + ']');
+                    $panel.remove();
+                }
+            } else {
+                this.$('textarea[index=' + index + ']').attr('readonly', true);
+                let $panel = $('.risk-panel[index=' + index + ']');
+                if ($panel.length > 0) {
+                    // $panel.find('.edit-risk').css({display: 'inline-block'});
+                    $panel.find('.alter-risk').css({display: 'inline-block'});
+                    $panel.find('.add-risk').css({display: 'none'});
+                    $panel.find('.added').text(' (added to Form C)');
+                } else {
+                    // create and append panel
+                    let template = require('./templates/risk.pug');
+                    $('#accordion-risk').append(template({
+                        k: index,
+                        v: data,
+                    }));
+                }
+                // $(e.target).parents('form').find('textarea').attr('readonly', true);
+                // change to text of button to delete
+                // mark the risk saved
+                // if delete, take it out again
+            }
         },
 
         submit: api.submitAction,
@@ -435,9 +523,11 @@ module.exports = {
                 template({
                     serverUrl: serverUrl,
                     Urls: Urls,
-                    // fields: this.fields,
+                    fields: this.fields,
                     // values: this.model.toJSON(),
                     values: this.model,
+                    // defaultRisks: defaultRisks,
+                    defaultRisks: this.defaultRisks,
                 })
             );
             return this;
