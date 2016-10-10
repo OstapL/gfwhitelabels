@@ -156,7 +156,7 @@ module.exports = {
         url = url.replace(':id', data.id);
         delete data.id;
         // type = 'PUT';
-        type = document.activeElement.dataset.method || 'PUT';
+        type = $(e.target).data('method') || 'PUT';
       }
 
       let riskIndex = data.index;
