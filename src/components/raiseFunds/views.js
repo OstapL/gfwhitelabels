@@ -7,8 +7,7 @@ const dropzone = require('dropzone');
 const dropzoneHelpers = require('helpers/dropzone.js');
 const leavingConfirmationHelper = require('helpers/leavingConfirmationHelper.js');
 const phoneHelper = require('helpers/phoneHelper.js');
-
-// const validation = require('components/validation/validation.js');
+const validation = require('components/validation/validation.js');
 
 const jsonActions = {
   events: {
@@ -59,40 +58,78 @@ const jsonActions = {
 
 const submitCampaign = function submitCampaign(e) {
   e.preventDefault();
-  var data = $(e.target).serializeJSON();
-  this.oldSuccess = this._success;
-  this._success = (data) => {
-    if(data.hasOwnProperty('progress') === false) {
-      data.progress = this.campaign.progress;
-      data.id = this.campaign.id;
-    }
-    if(
-        data.progress.general_information == true &&
-        data.progress.media == true &&
-        data.progress.specifics == true &&
-        data.progress.team-members == true
-    ) {
-      this.router('/campaign/thankyou/' + data.id);
-    } else {
-      var errors = {};
-      _(data.progress).each((d, k) => {
-        if(k != 'perks') {
-          if(d == false)  {
-            $('#company_publish .'+k).removeClass('collapse');
-          } else {
-            $('#company_publish .'+k).addClass('collapse');
-          }
-        }
-      });
-      $('#company_publish').modal('toggle');
-      app.hideLoading();
-    }
-    this._success = this.oldSuccess;
-  }
+  let $form = this.$el.find('form');
+  var data = $form.serializeJSON();
 
-  api.submitAction.call(this, e, data);
+  _.extend(this.model, data);
+  data = Object.assign({}, this.model);
+
+  // ToDo
+  // Refactor code
+  if(this.hasOwnProperty('index')) {
+    data.index = this.index;
+  };
+
+  this.$('.help-block').remove();
+  if (!validation.validate(this.fields, data, this)) {
+    _(validation.errors).each((errors, key) => {
+      validation.invalidMsg(this, key, errors);
+    });
+    this.$('.help-block').scrollTo(45);
+    return;
+  } else {
+    let url = this.urlRoot + '/' + data.id;
+    let type = 'PUT';
+    delete data.id;
+
+    api.makeRequest(url, type, data).
+      then((data) => {
+
+        if(this.hasOwnProperty('campaign')) {
+          data.id = this.campaign.id;
+        };
+
+        // if we saved company information we will not have any progress data in
+        // response
+        if(data.hasOwnProperty('progress') == false) {
+          data.progress = this.campaign.progress;
+        }
+
+        doCampaignValidation(e, data);
+    });
+  }
 };
 
+const doCampaignValidation = function doCampaignValidation(e, data) {
+
+  if(data == null) {
+    data = this.model;
+  }
+
+  if(
+      data.progress.general_information == true &&
+      data.progress.media == true &&
+      data.progress.specifics == true &&
+      data.progress['team-members'] == true
+  ) {
+    app.routers.navigate(
+      '/campaign/thankyou/' + data.id,
+      { trigger: true, replace: false }
+    );
+  } else {
+    var errors = {};
+    _(data.progress).each((d, k) => {
+      if(k != 'perks') {
+        if(d == false)  {
+          $('#company_publish .'+k).removeClass('collapse');
+        } else {
+          $('#company_publish .'+k).addClass('collapse');
+        }
+      }
+    });
+    $('#company_publish').modal('toggle');
+  }
+};
 
 const onPreviewAction = function(e) {
   e.preventDefault();
@@ -242,26 +279,26 @@ module.exports = {
         this.fields.faq.type = 'json';
         this.fields.faq.schema = {
           question: {
-                      type: 'string',
-                      label: 'Question',
-                    },
+            type: 'string',
+            label: 'Question',
+          },
           answer: {
-                    type: 'text',
-                    label: 'Answer',
-                  },
+            type: 'text',
+            label: 'Answer',
+          },
         };
         this.fields.additional_info.type = 'json';
         this.fields.additional_info.schema = {
           title: {
-                  type: 'string',
-                  label: 'Optional Additional Section',
-                  placeholder: 'Section Title',
-                },
+            type: 'string',
+            label: 'Optional Additional Section',
+            placeholder: 'Section Title',
+          },
           body: {
-                  type: 'text',
-                  label: '',
-                  placeholder: 'Description',
-                },
+            type: 'text',
+            label: '',
+            placeholder: 'Description',
+          },
         };
 
         // if (this.model.get('faq')) {
@@ -287,6 +324,16 @@ module.exports = {
               values: this.model,
             })
         );
+
+        if(app.getParams().check == '1') {
+          var data = this.$el.find('form').serializeJSON();
+          if (!validation.validate(this.fields, data, this)) {
+            _(validation.errors).each((errors, key) => {
+              validation.invalidMsg(this, key, errors);
+            });
+            this.$('.help-block').prev().scrollTo(5);
+          }
+        }
         return this;
       },
     },leavingConfirmationHelper.methods)),
@@ -518,7 +565,7 @@ module.exports = {
         'click .delete-member': 'deleteMember',
         dragover: 'globalDragover',
         dragleave: 'globalDragleave',
-        'click .submit_form': submitCampaign,
+        'click .submit_form': doCampaignValidation,
       }, leavingConfirmationHelper.events),
       // urlRoot: serverUrl + Urls['campaign-list']() + '/team_members',
       urlRoot: Urls['campaign-list']() + '/team_members',
@@ -674,7 +721,7 @@ module.exports = {
   teamMembers: Backbone.View.extend({
     events: {
       'click .delete-member': 'deleteMember',
-      'click .submit_form': submitCampaign,
+      'click .submit_form': doCampaignValidation,
     },
 
     preinitialize() {

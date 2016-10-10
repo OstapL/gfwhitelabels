@@ -80,7 +80,7 @@ module.exports = {
       _(validation.errors).each((errors, key) => {
         validation.invalidMsg(this, key, errors);
       });
-      this.$('.help-block').scrollTo(45);
+      this.$('.help-block').prev().scrollTo(5);
       return;
     } else {
       let url = this.urlRoot;
@@ -161,7 +161,7 @@ module.exports = {
     if (view.$el.find('.alert').length) {
       view.$el.find('.alert').scrollTo();
     } else {
-      view.$el.find('.has-error').scrollTo();
+      view.$el.find('.has-error').prev().scrollTo(5);
     }
 
     app.hideLoading();
