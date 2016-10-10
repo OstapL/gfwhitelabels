@@ -76,7 +76,7 @@ module.exports = {
     */
 
     this.$('.help-block').remove();
-    if (e.target.getAttribute('method') != 'PATCH' && !validation.validate(this.fields, data, this)) {
+    if (e.target.dataset.method != 'PATCH' && !validation.validate(this.fields, data, this)) {
       _(validation.errors).each((errors, key) => {
         validation.invalidMsg(this, key, errors);
       });
@@ -89,7 +89,7 @@ module.exports = {
       if(data.hasOwnProperty('id')) {
         url += '/' + data.id;
         delete data.id;
-        type = e.target.getAttribute('method') || 'PUT';
+        type = e.target.dataset.method || 'PUT';
       }
 
       api.makeRequest(url, type, data).
