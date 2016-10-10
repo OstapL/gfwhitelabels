@@ -104,12 +104,13 @@ module.exports = {
         urlRoot: formcServer + '/:id' + '/team_members',
         initialize(options) {
             this.fields = options.fields;
-            this.type = options.type;
+            this.role = options.role;
         },
         render() {
             let template;
-            if (this.type == 'director' || this.type == 'officer') {
-                this.fields.previous_positions.type = "position";
+            if (this.role == 'director' || this.role == 'officer') {
+                /*
+                this.fields.previous_positions.role = "position";
                 this.fields.previous_positions.schema = {
                     position: {
                         type: 'string',
@@ -152,6 +153,7 @@ module.exports = {
                         label: 'End Date of Service',
                     },
                 };
+                */
 
                 if (this.model.previous_positions) {
                   this.previous_positionsIndex = Object.keys(this.model.previous_positions).length;
@@ -168,12 +170,12 @@ module.exports = {
                 }
 
 
-                if (this.type == 'director')
+                if (this.role == 'director')
                     template = require('components/formc/templates/teamMembersDirector.pug');
-                else if (this.type == 'officer')
+                else if (this.role == 'officer')
                     template = require('components/formc/templates/teamMembersOfficer.pug');
 
-            } else if (this.type == 'holder') {
+            } else if (this.role == 'holder') {
                 template = require('components/formc/templates/teamMembersShareHolder.pug');
 
             }
