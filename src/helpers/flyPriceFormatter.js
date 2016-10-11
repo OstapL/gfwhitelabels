@@ -68,6 +68,7 @@ module.exports = function(field, callback) {
                 e.keyCode == settings.F5KEYCODE ||
                 e.keyCode == settings.ENTERKEYCODE ||
                 ((e.ctrlKey || e.metaKey) && e.keyCode == settings.CKEYCODE) ||
+                ((e.ctrlKey || e.metaKey) && e.keyCode == settings.AKEYCODE) ||
                 ((e.ctrlKey || e.metaKey) && e.keyCode == settings.VKEYCODE)
                 ) {
                 skipActions = true;

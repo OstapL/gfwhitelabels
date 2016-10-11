@@ -6,6 +6,7 @@ import '../../js/graf/graf.js';
 import '../../js/graf/jquery.flot.growraf';
 
 const formatPrice = calculatorHelper.formatPrice;
+const minPersents = 200;
 
 module.exports = {
     step1: Backbone.View.extend({
@@ -321,15 +322,17 @@ module.exports = {
             $chart.on("growFinished", function() {
                 //options.series.points.show = true;
                 //$.plot($chart, dataArr, options);
-                
+
                 let last = plotApi.getData()[0].data.pop();
                 let o = plotApi.pointOffset({x: last[0], y: last[1]});
-                $('<div class="data-point-label">Congratulations, Payback Share Contract is complete</div>').css( {
-                    position: 'absolute',
-                    left: o.left - 500,
-                    top: o.top - 30,
-                    display: 'none'
-                }).appendTo(plotApi.getPlaceholder()).fadeIn('slow');
+                if (last[1] * 100 >= minPersents) {
+                    $('<div class="data-point-label">Congratulations, Payback Share Contract is complete</div>').css( {
+                        position: 'absolute',
+                        left: o.left - 500,
+                        top: o.top - 30,
+                        display: 'none'
+                    }).appendTo(plotApi.getPlaceholder()).fadeIn('slow');
+                }
             });
 
             $("<div id='flot-tooltip'></div>").css({
