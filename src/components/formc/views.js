@@ -4,7 +4,7 @@ let addSectionHelper = require('helpers/addSectionHelper.js');
 let yesNoHelper = require('helpers/yesNoHelper.js');
 
 module.exports = {
-    introduction: Backbone.View.extend(_.extend(menuHelper.methods, yesNoHelper.methods, {
+    introduction: Backbone.View.extend(_.extend({
         urlRoot: formcServer + '/:id' + '/introduction',
 
         events: _.extend({
@@ -53,9 +53,9 @@ module.exports = {
             return this;
         },
 
-    })),
+    }, menuHelper.methods, yesNoHelper.methods)),
 
-    teamMembers: Backbone.View.extend(_.extend(menuHelper.methods, {
+    teamMembers: Backbone.View.extend(_.extend({
         urlRoot: formcServer + '/:id' + '/team-members',
         name: 'teamMembers',
         events: _.extend({
@@ -95,9 +95,9 @@ module.exports = {
             return this;
         },
 
-    })),
+    }, menuHelper.methods)),
 
-    teamMemberAdd: Backbone.View.extend(_.extend(addSectionHelper.methods, menuHelper.methods, {
+    teamMemberAdd: Backbone.View.extend(_.extend({
         events: _.extend({
             'submit form': 'submit',
         }, addSectionHelper.events, menuHelper.events),
@@ -196,9 +196,9 @@ module.exports = {
         },
         getSuccessUrl(data) {},
         submit: api.submitAction,
-    })),
+    }, addSectionHelper.methods, menuHelper.methods)),
 
-    offering: Backbone.View.extend(_.extend(addSectionHelper.methods, menuHelper.methods, {
+    offering: Backbone.View.extend(_.extend({
         events: _.extend({
             'submit form': 'submit',
         }, addSectionHelper.events, menuHelper.events),
@@ -240,7 +240,7 @@ module.exports = {
             return this;
         },
 
-    })),
+    }, addSectionHelper.methods, menuHelper.methods)),
 
     /*useOfProceeds: Backbone.View.extend({
         events: _.extend({
@@ -283,7 +283,7 @@ module.exports = {
         },
     }),*/
 
-    relatedParties: Backbone.View.extend(_.extend(addSectionHelper.methods, menuHelper.methods, yesNoHelper.methods, {
+    relatedParties: Backbone.View.extend(_.extend({
         urlRoot: formcServer + '/:id' + '/related-parties',
         name: 'relatedParties',
         initialize(options) {
@@ -327,9 +327,9 @@ module.exports = {
             );
             return this;
         },
-    })),
+    }, addSectionHelper.methods, menuHelper.methods, yesNoHelper.methods)),
 
-    useOfProceeds: Backbone.View.extend(_.extend(addSectionHelper.methods, menuHelper.methods, {
+    useOfProceeds: Backbone.View.extend(_.extend({
         urlRoot: 'https://api-formc.growthfountain.com/' + ':id' + '/use-of-proceeds',
 
        initialize(options) {
@@ -375,9 +375,9 @@ module.exports = {
             );
             return this;
         }, 
-    })),
+    }, addSectionHelper.methods, menuHelper.methods)),
 
-    riskFactorsInstruction: Backbone.View.extend(_.extend(menuHelper.methods, {
+    riskFactorsInstruction: Backbone.View.extend(_.extend({
         initialize(options) {},
 
         events: _.extend({
@@ -399,19 +399,34 @@ module.exports = {
             );
             return this;
         },
-    })),
+    }, menuHelper.methods)),
 
-    riskFactorsMarket: Backbone.View.extend(_.extend(menuHelper.methods, {
-        initialize(options) {},
-
+    riskFactorsMarket: Backbone.View.extend(_.extend({
+        initialize(options) {
+            this.fields = options.fields;
+        },
+        urlRoot: formcServer + '/:id' + '/risk-factors-market/1',
         events: _.extend({
-            'submit form': 'submit',
+            // 'submit form': 'submit',
             'click form button.add-risk': 'addRisk',
         }, menuHelper.events),
 
         addRisk(e) {
+            event.preventDefault();
             // collapse the risk text
             // add the text added to formc
+            // make the field uneditable
+            let $form = $(e.target).parents('form');
+            var data = $form.serializeJSON({useIntKeysAsArrayIndex: true});
+            api.submitAction.call(this, e, data);
+        },
+
+        _success(){
+            app.hideLoading();
+            $(e.target).parents('form').find('textarea').attr('readonly', true);
+            // change to text of button to delete
+            // mark the risk saved
+            // if delete, take it out again
         },
 
         submit: api.submitAction,
@@ -429,9 +444,9 @@ module.exports = {
             );
             return this;
         },
-    })),
+    }, menuHelper.methods)),
 
-    riskFactorsFinancial: Backbone.View.extend(_.extend(menuHelper.methods, {
+    riskFactorsFinancial: Backbone.View.extend(_.extend({
         initialize(options) {},
 
         events: _.extend({
@@ -453,9 +468,9 @@ module.exports = {
             );
             return this;
         },
-    })),
+    }, menuHelper.methods)),
 
-    riskFactorsOperational: Backbone.View.extend(_.extend(menuHelper.methods, {
+    riskFactorsOperational: Backbone.View.extend(_.extend({
         initialize(options) {},
 
         events: _.extend({
@@ -477,9 +492,9 @@ module.exports = {
             );
             return this;
         },
-    })),
+    }, menuHelper.methods)),
 
-    riskFactorsCompetitive: Backbone.View.extend(_.extend(menuHelper.methods, {
+    riskFactorsCompetitive: Backbone.View.extend(_.extend({
         initialize(options) {},
 
         events: _.extend({
@@ -501,10 +516,10 @@ module.exports = {
             );
             return this;
         },
-    })),
+    }, menuHelper.methods)),
 
 
-    riskFactorsPersonnel: Backbone.View.extend(_.extend(menuHelper.methods, {
+    riskFactorsPersonnel: Backbone.View.extend(_.extend({
         initialize(options) {},
 
         events: _.extend({
@@ -526,9 +541,9 @@ module.exports = {
             );
             return this;
         },
-    })),
+    }, menuHelper.methods)),
 
-    riskFactorsLegal: Backbone.View.extend(_.extend(menuHelper.methods, {
+    riskFactorsLegal: Backbone.View.extend(_.extend({
         initialize(options) {},
 
         events: _.extend({
@@ -549,9 +564,9 @@ module.exports = {
             );
             return this;
         },
-    })),
+    }, menuHelper.methods)),
 
-    riskFactorsMisc: Backbone.View.extend(_.extend(menuHelper.methods, {
+    riskFactorsMisc: Backbone.View.extend(_.extend({
         initialize(options) {},
 
         events: _.extend({
@@ -572,9 +587,9 @@ module.exports = {
             );
             return this;
         },
-    })),
+    }, menuHelper.methods)),
 
-    financialCondition: Backbone.View.extend(_.extend(menuHelper.methods, yesNoHelper.methods, {
+    financialCondition: Backbone.View.extend(_.extend({
         urlRoot: 'https://api-formc.growthfountain.com/' + ':id' + '/financial-condition',
 
         initialize(options) {
@@ -586,6 +601,10 @@ module.exports = {
         }, menuHelper.events, yesNoHelper.events),
 
         submit: api.submitAction,
+
+        getSuccessUrl() {
+            return  '/formc/' + this.model.id + '/outstanding-security';
+        },
 
         render() {
             this.fields.sold_securities_data.schema.taxable_income.label = "Taxable Income";
@@ -609,9 +628,9 @@ module.exports = {
             );
             return this;
         },
-    })),
+    }, menuHelper.methods, yesNoHelper.methods)),
 
-    outstandingSecurity: Backbone.View.extend(_.extend(addSectionHelper.methods, menuHelper.methods, yesNoHelper.methods, {
+    outstandingSecurity: Backbone.View.extend(_.extend({
         urlRoot: formcServer + '/:id' + '/outstanding-security',
         initialize(options) {
             this.fields = options.fields;
@@ -619,6 +638,7 @@ module.exports = {
 
         events: _.extend({
             'submit form': 'submit',
+            'click button.save-outstanding': 'addOutstanding',
         }, addSectionHelper.events, menuHelper.events, yesNoHelper.events),
 
         // submit: api.submitAction,
@@ -629,6 +649,10 @@ module.exports = {
             if (data.conduct_exempt_offerings == 'false') data.exempt_offering = [];
             if (!data.outstanding_securities) data.outstanding_securities = [];
             api.submitAction.call(this, e, data);
+        },
+
+        addOutstanding(e) {
+            e.preventDefault();
         },
 
         getSuccessUrl() {
@@ -680,12 +704,17 @@ module.exports = {
             );
             return this;
         },
-    })),
+    }, addSectionHelper.methods, menuHelper.methods, yesNoHelper.methods)),
 
-    backgroundCheck: Backbone.View.extend(_.extend(menuHelper.methods, yesNoHelper.methods, {
+    backgroundCheck: Backbone.View.extend(_.extend({
         urlRoot: formcServer + '/:id' + '/background-check',
         initialize(options) {
             this.fields = options.fields;
+        },
+
+        getSuccessUrl() {
+          // return  '/formc/' + this.model.id + '/background-check';
+          return  '/formc/' + this.model.id + '/outstanding-security';
         },
 
         events: _.extend({
@@ -695,8 +724,7 @@ module.exports = {
         submit: api.submitAction,
 
         render() {
-            console.log(this.fields);
-            this.fields.company_or_director_subjected_to.label = 'abc';
+            this.fields.company_or_director_subjected_to.label = 'If Yes, Explain';
             this.fields.descrption_material_information.label = "2) If you've provide any information in a format, media or other means not able to be reflected in text or pdf, please include here: (a) a description of the material content of such information; (b) a description of the format in which such disclosure is presented; and (c) in the case of disclosure in video, audio or other dynamic media or format, a transcript or description of such disclosure.";
             this.fields.material_information.label = '1) Such further material information, if any, as may be neessary to make the required statments, in the light of the cirsumstances under which they are made, not misleading.';
             let template = require('components/formc/templates/backgroundCheck.pug');
@@ -710,5 +738,5 @@ module.exports = {
             );
             return this;
         },
-    })),
+    }, menuHelper.methods, yesNoHelper.methods)),
 };
