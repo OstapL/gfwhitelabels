@@ -27,7 +27,6 @@ module.exports = {
   },
 
   makeRequest(url, type, data) {
-
     // We can pass type as a string
     // or we can pass dict with type and data
     if (typeof type === 'object') {
