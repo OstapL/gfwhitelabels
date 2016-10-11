@@ -317,6 +317,7 @@ section
                   //-           .pos-bottom
                   //-             .links.d-inline-block.card-text #{ formatHelper.getWebsiteUrl(v.link) }
                   //-   - counter++;
+
                 .row.m-b-3(style="display:" + (keys.slice(3).length > 0 ? 'block' : 'none') + ";")
                   .col-lg-12.text-xs-center
                     //- a(href="#hidden-article-press" data-toggle="collapse").link-4.see-all-article-press See All Articles and Press
@@ -414,7 +415,7 @@ section
         h2#overview.col-lg-12.dosis.text-uppercase.text-lg-center.text-xs-center.green-heading overview and terms
         //- h3.col-lg-12.text-lg-center Fundraising Description
         h3.text-uppercase.text-lg-center.text-xs-center.green-heading Fundraising Description
-        .col-lg-8.offset-lg-2.fundraising.text-xs-center
+        .col-lg-8.offset-lg-2.fundraising
           .jumbotron.jumbotron-fluid
             .container
               if values.security_type == 0
@@ -793,55 +794,3 @@ each v,k in values.additional_video
                 .embed-responsive.embed-responsive-16by9
                     - var link =  app.getVideoId(v.link)
                     iframe.embed-responsive-item(src="//www.youtube.com/embed/" + link + "?rel=0" allowfullscreen="true")
-
-//modal sing_up
-#sing_up.modal.fade(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")
-  .modal-dialog(role="document")
-    .modal-content
-      .modal-header
-        button(type="button" class="close" data-dismiss="modal" aria-label="Close")
-          span(aria-hidden="true")
-            i.fa.fa-times
-        h2#sing_up(class="modal-title").text-lg-center.text-uppercase.dosis sign up
-        p.text-lg-center Have an account?
-          a(href="")  Log In
-      .modal-body
-        .container.form-section
-          form.col-lg-10.offset-lg-1.border-bottom
-            .form-group.row.clearfix.required
-              input#first_name(type="text" placeholder="First name").form-control
-            .form-group.row.clearfix.required
-              input#last_name(type="text" placeholder="Last name").form-control
-            .form-group.row.clearfix.required
-              input#email(type="email" placeholder="E-mail").form-control
-            .form-group.row.clearfix.required
-              input#password(type="password" placeholder="Password").form-control
-            .form-group.row.clearfix.required.m-b-0
-              input#re_password(type="password" placeholder="Re-enter password").form-control
-            .form-group.row.clearfix.required
-              .row
-                .col-lg-12
-                  label
-                    input(type="checkbox")
-                    span.label-text I consent to electronic signature and electronic delivery of documentation
-                  label.p-t-6
-                    input(type="checkbox")
-                    span.label-text I agree to the
-                      a(href="").link-3  Terms of Service
-                      |  and 
-                      a(href="").link-3  Privacy Policy.
-                  .col-lg-12.text-lg-center
-                      button.btn.btn-primary.text-uppercase sing up
-                  .col-lg-12.border-bottom.or
-                    span or
-            .social-btn
-              button.btn.btn-block.btn-facebook.text-uppercase
-                i.fa.fa-facebook
-                |  SIGN UP with Facebook
-              button.btn.btn-block.btn-linkedin.text-uppercase
-                i.fa.fa-linkedin
-                |  SIGN UP with linkedin
-              button.btn.btn-block.btn-google.text-uppercase
-                i.fa.fa-google-plus
-                |  SIGN UP with Google
-        .modal-footer
