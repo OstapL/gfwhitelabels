@@ -66,9 +66,15 @@ module.exports = Backbone.Router.extend({
     }
 
     $.when(fieldsR, dataR).done((fields, data) => {
+      if(data) {
+        data[0].formc_id = id;
+        data = data[0];
+      } else {
+        data = {formc_id: id};
+      }
       const addForm = new View.teamMemberAdd({
         el: '#content',
-        model: data ? data[0] : {},
+        model: data,
         role: role,
         index: index,
         fields: fields[0].fields,

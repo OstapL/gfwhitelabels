@@ -59,7 +59,6 @@ module.exports = {
         urlRoot: formcServer + '/:id' + '/team-members',
         name: 'teamMembers',
         events: _.extend({
-            'submit form': 'submit',
         }, menuHelper.events),
 
         preinitialize() {
@@ -80,7 +79,7 @@ module.exports = {
         },
 
         render() {
-            let template = require('components/formc/templates/teamMembers.pug');
+            let template = require('./templates/teamMembers.pug');
 
             this.model.campaign = {id: 72};
             this.$el.html(
@@ -101,7 +100,7 @@ module.exports = {
         events: _.extend({
             'submit form': 'submit',
         }, addSectionHelper.events, menuHelper.events),
-        urlRoot: formcServer + '/:id' + '/team_members',
+        urlRoot: formcServer + '/:id' + '/team-members',
         initialize(options) {
             this.fields = options.fields;
             this.role = options.role;
@@ -109,51 +108,6 @@ module.exports = {
         render() {
             let template;
             if (this.role == 'director' || this.role == 'officer') {
-                /*
-                this.fields.previous_positions.role = "position";
-                this.fields.previous_positions.schema = {
-                    position: {
-                        type: 'string',
-                        label: 'Position',
-                    },
-                    start_date: {
-                        type: 'date',
-                        label: 'Start Date of Service',
-                    },
-                    end_date_fo_service: {
-                        type: 'date',
-                        label: 'End Date of Service',
-                    }
-                };
-
-                this.fields.experiences.type = "experience";
-                this.fields.experiences.schema = {
-                    employer: {
-                        type: 'string',
-                        label: 'Employer',
-                    },
-                    employer_principal: {
-                        type: 'string',
-                        label: "Employer's Principal Business",
-                    },
-                    title: {
-                        type: 'string',
-                        label: 'Title',
-                    },
-                    responsibilities: {
-                        type: 'date',
-                        label: 'Responsibilities',
-                    },
-                    start_date: {
-                        type: 'date',
-                        label: 'Start Date of Service',
-                    },
-                    end_date: {
-                        type: 'date',
-                        label: 'End Date of Service',
-                    },
-                };
-                */
 
                 if (this.model.previous_positions) {
                   this.previous_positionsIndex = Object.keys(this.model.previous_positions).length;
@@ -170,14 +124,18 @@ module.exports = {
                 }
 
 
-                if (this.role == 'director')
+                debugger;
+                this.urlRoot = this.urlRoot.replace(':id', this.model.formc_id);
+                this.urlRoot += '/' + this.role;
+                if (this.role == 'director') {
                     template = require('components/formc/templates/teamMembersDirector.pug');
-                else if (this.role == 'officer')
+                }
+                else if (this.role == 'officer') {
                     template = require('components/formc/templates/teamMembersOfficer.pug');
+                }
 
             } else if (this.role == 'holder') {
-                template = require('components/formc/templates/teamMembersShareHolder.pug');
-
+              template = require('components/formc/templates/teamMembersShareHolder.pug');
             }
 
             require('bootstrap-select/sass/bootstrap-select.scss');
@@ -187,7 +145,6 @@ module.exports = {
                     serverUrl: serverUrl,
                     Urls: Urls,
                     fields: this.fields,
-                    // values: this.model.toJSON(),
                     values: this.model,
                 })
             );
@@ -195,7 +152,26 @@ module.exports = {
 
         },
         getSuccessUrl(data) {},
-        submit: api.submitAction,
+        submit: function(e) {
+          var data = $(e.target).serializeJSON({ useIntKeysAsArrayIndex: true });
+
+          data['boarding_service_start_date'] = data.boarding_service_start_date__year && data.boarding_service_start_date__month
+            ? data.boarding_service_start_date__year + '-' + data.boarding_service_start_date__month + '-' + '01'
+            : '';
+          delete data.boarding_service_start_date__month;
+          delete data.boarding_service_start_date__year;
+          data['boarding_service_end_date'] = data.boarding_service_end_date__year && data.boarding_service_end_date__month
+            ? data.boarding_service_end_date__year + '-' + data.boarding_service_end_date__month + '-' + '01'
+            : '';
+          delete data.boarding_service_end_date__month;
+          delete data.boarding_service_end_date__year;
+          data['employer_start_date'] = data.employer_start_date__year && data.employer_start_date__month
+            ? data.employer_start_date__year + '-' + data.employer_start_date__month + '-' + '01'
+            : '';
+          delete data.employer_start_date__year;
+          delete data.employer_start_date__month;
+          api.submitAction.call(this, e, data);
+        },
     }, addSectionHelper.methods, menuHelper.methods)),
 
     offering: Backbone.View.extend(_.extend({
