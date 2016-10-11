@@ -10,6 +10,19 @@ module.exports = Backbone.Router.extend({
     'campaign/thankyou/:id': 'thankyou',
   },
 
+  execute: function (callback, args, name) {
+    if (app.user.is_anonymous()) {
+      const pView = require('components/anonymousAccount/views.js');
+      require.ensure([], function() {
+        new pView.popupLogin().render(window.location.pathname);
+        app.hideLoading();
+        $('#sign_up').modal();
+      });
+      return false;
+    }
+    if (callback) callback.apply(this, args);
+  },
+
   company() {
     if (!app.user.is_anonymous()) {
       const Model = require('components/company/models.js');
@@ -234,6 +247,7 @@ module.exports = Backbone.Router.extend({
 
   thankyou(id) {
     if (!app.user.is_anonymous()) {
+      app.showLoading();
       $('body').scrollTo(); 
       const Model = require('components/campaign/models.js');
       const View = require('components/raiseFunds/views.js');
