@@ -55,7 +55,7 @@ module.exports = {
     this.$el.find('.alert').remove();
     e.preventDefault();
 
-    data = data || $(e.target).serializeJSON({useIntKeysAsArrayIndex: true});
+    data = data || $(e.target).serializeJSON({ useIntKeysAsArrayIndex: true });
 
     // if view already have some data - extend that info
     if(this.hasOwnProperty('model')) {
@@ -72,22 +72,22 @@ module.exports = {
        };
        this.model.validation = newValidators;
     */
+
     this.$('.help-block').remove();
-    if (!validation.validate(this.fields, data, this)) {
+    if (e.target.dataset.method != 'PATCH' && !validation.validate(this.fields, data, this)) {
       _(validation.errors).each((errors, key) => {
         validation.invalidMsg(this, key, errors);
       });
-      this.$('.help-block').scrollTo(45);
+      this.$('.help-block').prev().scrollTo(5);
       return;
     } else {
       let url = this.urlRoot;
       let type = 'POST';
 
-      if (data.hasOwnProperty('id')) {
+      if(data.hasOwnProperty('id')) {
         url = url.replace(':id', data.id);
         delete data.id;
-        // type = 'PUT';
-        type = document.activeElement.dataset.method || 'PUT';
+        type = e.target.dataset.method || 'PUT';
       }
 
       api.makeRequest(url, type, data).
@@ -158,7 +158,7 @@ module.exports = {
     if (view.$el.find('.alert').length) {
       view.$el.find('.alert').scrollTo();
     } else {
-      view.$el.find('.has-error').scrollTo();
+      view.$el.find('.has-error').prev().scrollTo(5);
     }
 
     app.hideLoading();
@@ -170,7 +170,7 @@ module.exports = {
     beforeSend: function (xhr) {
       let token = localStorage.getItem('token');
       if (token !== null && token !== '') {
-        xhr.setRequestHeader('Authorization', token);
+        xhr.setRequestHeader('Authorization', 'Bearer ' + token);
       }
     },
   },

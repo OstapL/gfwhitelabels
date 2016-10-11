@@ -405,34 +405,24 @@ module.exports = {
         urlRoot: formcServer + '/:id' + '/risk-factors-market/:index',
         events: _.extend({
             'submit form': 'submit',
-            'click form button.add-risk': 'addRisk',
         }, menuHelper.events),
 
         initialize(options) {
             this.fields = options.fields;
         },
 
-        addRisk(e) {
-            event.preventDefault();
-            // collapse the risk text
-            // add the text added to formc
-            // make the field uneditable
-            let $form = $(e.target).parents('form');
-            var data = $form.serializeJSON({useIntKeysAsArrayIndex: true});
-            api.submitAction.call(this, e, data);
-        },
-
-        _success(){
-            app.hideLoading();
-            $(e.target).parents('form').find('textarea').attr('readonly', true);
-            // change to text of button to delete
-            // mark the risk saved
-            // if delete, take it out again
-        },
-
         submit(e) {
-          this.urlRoot = this.urlRoot.replace(':index', $(e.target).find('.index').val());
-          api.submitAction(this, e);
+          e.preventDefault();
+          let index = e.target.dataset.index;
+          let url = this.urlRoot.replace(':id', this.model.id).replace(':index', index);
+          let data = $(e.target).serializeJSON({ useIntKeysAsArrayIndex: true });
+
+          api.makeRequest(url, 'PATCH', data).then((data) => {
+            $(e.target).find('textarea').prop('readonly', true);
+          }).
+          fail((xhr, status, text) => {
+            api.errorAction(this, xhr, status, text, this.fields);
+          });
         },
 
         render() {

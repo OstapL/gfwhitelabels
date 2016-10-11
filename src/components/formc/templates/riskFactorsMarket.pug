@@ -46,12 +46,11 @@ section.formc-team-members-director.container.m-b-85
               #collapseOne(role="tabpanel"
               aria-labelledby="headingOne"
               ).panel-collapse.collapse.in
-                form(data-method="PATCH" action="")
+                form(data-method="PATCH" data-index="0")
                   input(type="hidden" name="title" value="There is a limited market for the Company’s product or services")
-                  input(type="hidden" name="index" value='0' class="index")
                   textarea(style="max-width:100%; height:150px" name="risk").form-control Although we have identified what we believe to be a need in the market for our products and services, there can be no assurance that demand or a market will develop or that we will be able to create a viable business. Our future financial performance will depend, at least in part, upon the introduction and market acceptance of our products and services. Potential customers may be unwilling to accept, utilize or recommend any of our proposed products or services. If we are unable to commercialize and market such products or services when planned, we may not achieve any market acceptance or generate revenue. 
                   .text-md-center.text-lg-right
-                    button.btn.btn-sm.btn-secondary.m-t-1.add-risk Save and Add this Risk
+                    button(type="submit").btn.btn-sm.btn-secondary.m-t-1.add-risk Save and Add this Risk
 
             .panel.panel-default
               #headingTwo(role="tab").panel-heading
@@ -64,9 +63,8 @@ section.formc-team-members-director.container.m-b-85
               #collapseTwo(role="tabpanel"
               aria-labelledby="headingTwo"
               ).panel-collapse.collapse
-                form(method="post" action="")
+                form(method="post" data-index="0")
                   input(type="hidden" name="market_and_customer_risk[1][title]" value="We must correctly predict, identify, and interpret changes in consumer preferences and demand, offer new products to meet those changes, and respond to competitive innovation.")
-                  input(type="hidden" name="index" value='0' class="index")
                   textarea(style="max-width:100%; height:150px" name="market_and_customer_risk[1][risk]").form-control Our success depends on our ability to predict, identify, and interpret the tastes and habits of consumers and to offer products that appeal to consumer preferences. If we do not offer products that appeal to consumers, our sales and market share will decrease. If we do not accurately predict which shifts in consumer preferences will be long-term, or if we fail to introduce new and improved products to satisfy those preferences, our sales could decline. If we fail to expand our product offerings successfully across product categories, or if we do not rapidly develop products in faster growing and more profitable categories, demand for our products could decrease, which could materially and adversely affect our product sales, financial condition, and results of operations. 
                   .text-md-center.text-lg-right
                     button.btn.btn-sm.btn-secondary.m-t-1.add-risk Edit and Add this Risk 
