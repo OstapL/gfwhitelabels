@@ -253,11 +253,20 @@ module.exports = {
                 averagePe = Math.round((ntmPeDiscount + ltmPeDiscount) / 2);
 
             // prepare data for the graph
+
+            var color01 = '#00cde2';
+            var color02 = '#ffb700';
+            var color03 = '#7ac70c';
+            var color04 = '#313541';
+            var color05 = '#fc3232';
+            var color06 = '#1cb0f6';
+            var color07 = '#00c07f';
+
             calculatedData.graphData = [
-                ["GF Valuation", averageValuation],
-                ["P/S", averagePs],
-                ["EV/EBITDA", averageEv],
-                ["P/E", averagePe]
+                {data: [[0, averageValuation]], color: '#5596c4'},
+                {data: [[1, averagePs]], color: '#c0d2eb'},
+                {data: [[2, averageEv]], color: '#fd9c47'},
+                {data: [[3, averagePe]], color: '#fdc997'}
             ];
 
             // save calculated data
@@ -336,23 +345,38 @@ module.exports = {
 
         buildGraph() {
             let data = app.cache.establishedBusinessCalculator.graphData;
-            
-            $.plot("#chart", [{
-                data: data,
-                lines: {
-                    lineWidth: 1
-                },
-                shadowSize: 0
-            }], {
+
+            $.plot($("#chart"), data, {
                 series: {
+                    lines: {
+                        fill: false
+                    },
+                    points: {show: false},
                     bars: {
                         show: true,
-                        barWidth: 0.5,
-                        align: "center",
-                        fillColor: "#79b7da"
+                        align: 'center',
+                        barWidth: 0.6,
+                        fill: 1
                     },
                     grow: {
                         active: true
+                    }
+                },
+                xaxis: {
+                    tickColor: "#eee",
+                    autoscaleMargin: 0.1,
+                    tickLength: 0,
+                    ticks: [
+                        [0, "GF Valuation"],
+                        [1, "P/S"],
+                        [2, "EV/EBITDA"],
+                        [3, "P/E"]
+                    ]
+                },
+                yaxis: {
+                    tickColor: "#eee",
+                    tickFormatter(val, axis) {
+                        return formatPrice(val).replace(/\,/g, ' ');
                     }
                 },
                 grid: {
@@ -361,19 +385,6 @@ module.exports = {
                     tickColor: "#eee",
                     borderColor: "#eee",
                     borderWidth: 1
-                },
-                colors: ["#79b7da"],
-                xaxis: {
-                    mode: "categories",
-                    tickLength: 0,
-                    tickColor: "#eee",
-                    autoscaleMargin: 0.1
-                },
-                yaxis: {
-                    tickColor: "#eee",
-                    tickFormatter(val, axis) {
-                        return formatPrice(val).replace(/\,/g, ' ');
-                    }
                 }
             });
         }
