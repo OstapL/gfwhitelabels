@@ -234,6 +234,7 @@ module.exports = Backbone.Router.extend({
 
   thankyou(id) {
     if (!app.user.is_anonymous()) {
+      app.showLoading();
       $('body').scrollTo(); 
       const Model = require('components/campaign/models.js');
       const View = require('components/raiseFunds/views.js');

@@ -1,12 +1,13 @@
 const dropzone = require('dropzone');
 const dropzoneHelpers = require('helpers/dropzone.js');
 const validation = require('components/validation/validation.js');
+const phoneHelper = require('helpers/phoneHelper.js');
 
 module.exports = {
-  profile: Backbone.View.extend({
+  profile: Backbone.View.extend(_.extend(phoneHelper.methods, {
     template: require('./templates/profile.pug'),
     urlRoot: serverUrl + Urls.rest_user_details(),
-    events: {
+    events: _.extend({
       'submit form': 'submit',
       'focus #ssn' : 'showSSNPopover',
       'focuseout #ssn' : 'hideSSNPopover',
@@ -16,7 +17,8 @@ module.exports = {
       'change input[name=phone]': 'formatPhone',
       dragover: 'globalDragover',
       dragleave: 'globalDragleave',
-    },
+    }, phoneHelper.events),
+
 
     formatPhone(e) {
       this.$('input[name=phone]').val(this.$('input[name=phone]').val().replace(/^\(?(\d{3})\)?-?(\d{3})-?(\d{4})$/, '$1-$2-$3'));
@@ -195,7 +197,7 @@ module.exports = {
     changeAddressManually() {
       this.cityStateArea.text(`${this.cityField.val()}/${this.stateField.val()}`);
     }
-  }),
+  })),
 
   changePassword: Backbone.View.extend({
     urlRoot: serverUrl + Urls.rest_password_change(),
