@@ -205,6 +205,26 @@ section.formc-team-members-director.container.m-b-85
                             .delete-section-container
                                 a(href="#").delete-section
                                     i.fa.fa-times
+
+                    each v, k in values.outstanding_securities
+                        tr(class="index_" + k)
+                            td
+                                | #{v.security_type}
+                                input(type="hidden" name="outstanding_securities[" + k + "][security_type]" value=v.security_type)
+                            td
+                                | #{v.amount_authroized}
+                                input(type="hidden" name="outstanding_securities[" + k + "][amount_authroized]" value=v.amount_authroized)
+                            td
+                                | #{v.amount_outstanding}
+                                input(type="hidden" name="outstanding_securities[" + k + "][amount_outstanding]" value=v.amount_outstanding)
+                            td
+                                | #{v.voting_right}
+                                input(type="hidden" name="outstanding_securities[" + k + "][voting_right]" value=v.voting_right)
+                                input(type="hidden" name="outstanding_securities[" + k + "][other_rights" value=v.other_rights)
+                            td 
+                                .delete-section-container
+                                    a(href="#" data-section="securities-table" data-index=k).delete-outstanding
+                                        i.fa.fa-times
         .border-bottom.m-t-3.m-b-3 
         +fieldBlock("rights_of_securities_beign", '', {
         class1: 'col-lg-12 col-md-12  text-md-left  text-xl-left',
@@ -303,10 +323,10 @@ section.formc-team-members-director.container.m-b-85
                                 .form-group.form-section.m-b-0
                                     .radio-input
                                         label 
-                                            input(type="radio" name="voting_right" value="true")
+                                            input(type="radio" name="voting_right" value="1")
                                             |  Yes
                                         label 
-                                          input(type="radio" name="voting_right" value="false")
+                                          input(type="radio" name="voting_right" value="0")
                                           |  No
                         
 
