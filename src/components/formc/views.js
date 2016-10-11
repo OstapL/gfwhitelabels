@@ -756,6 +756,7 @@ module.exports = {
             // console.log(data);
             // add an entry
             let template = require('./templates/security.pug');
+            console.log(data);
             $('.securities-table tbody').append(template({
                 values: data,
                 index: this.outstanding_securitiesIndex
