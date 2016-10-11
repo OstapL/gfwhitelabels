@@ -1,7 +1,7 @@
 module.exports = Backbone.Router.extend({
   routes: {
     'formc/:id/introduction': 'introduction',
-    'formc/:id/team-members/add/:type/:index': 'teamMemberAdd',
+    'formc/:id/team-members/:type/:index': 'teamMemberAdd',
     'formc/:id/team-members': 'teamMembers',
     'formc/:id/related-parties': 'relatedParties',
     'formc/:id/use-of-proceeds': 'useOfProceeds',
@@ -55,23 +55,33 @@ module.exports = Backbone.Router.extend({
     });
   },
 
-  teamMemberAdd(id, type, index) {
+  teamMemberAdd(id, role, index) {
     const View = require('components/formc/views.js');
 
-    const addForm = new View.teamMemberAdd({
-      el: '#content',
-      model: {
-        id: id,
-      },
-      type: type,
-      index: index,
-      fields: {
-        previous_positions: {},
-        experiences: {},
-      },
+    let fieldsR = api.makeCacheRequest(formcServer + '/' + id + '/team-members/' + role, 'OPTIONS');
+
+    let dataR = null;
+    if(id != 'new') {
+      dataR = api.makeCacheRequest(formcServer + '/' + id + '/team-members', 'GET');
+    }
+
+    $.when(fieldsR, dataR).done((fields, data) => {
+      if(data) {
+        data[0].formc_id = id;
+        data = data[0];
+      } else {
+        data = {formc_id: id};
+      }
+      const addForm = new View.teamMemberAdd({
+        el: '#content',
+        model: data,
+        role: role,
+        index: index,
+        fields: fields[0].fields,
+      });
+      addForm.render();
+      app.hideLoading();
     });
-    addForm.render();
-    app.hideLoading();
   },
 
   relatedParties(id) {

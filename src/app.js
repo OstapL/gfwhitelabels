@@ -8,8 +8,6 @@ global.userModel = require('components/accountProfile/model.js');
 global.Urls = require('./jsreverse.js');
 require('jquery-serializejson/jquery.serializejson.min.js');
 
-// require('sass/mixins_all.sass');
-
 $.fn.scrollTo = function (padding=0) {
   $('html, body').animate({
     scrollTop: $(this).offset().top - padding + 'px',

@@ -58,7 +58,7 @@ mixin fieldBlock(name, data, attr)
                 div(class=attr.class2  ? attr.class2 : 'col-md-10')
                     label(for=name).text-justify #{attr.text}
         else if attr.type == 'radio' 
-                label(class= attr.text_align ? 'text-md-' + attr.text_align + ' ' + attr.class1 : ' text-md-right ' + attr.class1 for=name)= fields[name].label
+                label(class= attr.text_align ? 'text-md-' + attr.text_align + ' ' + attr.class1 : ' text-md-right ' + attr.class1 for=name)= (attr.label ? attr.label : fields[name].label)
                 div(class=attr.class2 + ' radio-input')
                     each v in fields[name].choices
                         label
@@ -70,7 +70,7 @@ mixin fieldBlock(name, data, attr)
                                 value=v.value)
                             | #{v.display_name}
         else if attr.type == 'choice' 
-                label(class= attr.text_align ? 'text-md-' + attr.text_align + ' ' + attr.class1 : ' text-lg-right ' + attr.class1 for=name)= fields[name].label
+                label(class= attr.text_align ? 'text-md-' + attr.text_align + ' ' + attr.class1 : ' text-lg-right ' + attr.class1 for=name)= (attr.label ? attr.label : fields[name].label)
                 div(class=attr.class2)
                     select(
                         id=name
@@ -82,7 +82,7 @@ mixin fieldBlock(name, data, attr)
                         each v in fields[name].choices
                             option(value=v.value selected=(v.value == values[name] ? "selected" : undefined)) #{v.display_name}
         else if attr.type == 'date' 
-                label(class= attr.text_align ? 'text-lg-' + attr.text_align + ' ' + attr.class1 : ' text-lg-right ' + attr.class1 for=name)= fields[name].label
+                label(class= attr.text_align ? 'text-lg-' + attr.text_align + ' ' + attr.class1 : ' text-lg-right ' + attr.class1 for=name)= (attr.label ? attr.label : fields[name].label)
                 div(class=attr.class2 id=name).date-input
                     - var data = values[name] ? values[name].split('-') : []
                     .col-lg-4.col-md-4.no-gutter.p-l-0.p-r-0
@@ -113,7 +113,7 @@ mixin fieldBlock(name, data, attr)
                             value=data[0]
                           ).form-control
         else if attr.type == 'textarea' 
-                label(class= attr.text_align ? 'text-lg-' + attr.text_align + ' ' + attr.class1 : ' text-lg-right ' + attr.class1 for=name)= fields[name].label
+                label(class= attr.text_align ? 'text-lg-' + attr.text_align + ' ' + attr.class1 : ' text-lg-right ' + attr.class1 for=name)= (attr.label ? attr.label : fields[name].label)
                 div(class=attr.class2)
                     textarea(
                         id=name
@@ -248,7 +248,7 @@ mixin fieldBlock(name, data, attr)
                         - counter ++
                         - indexCounter ++
         else
-                label(class= attr.text_align ? 'text-lg-' + attr.text_align + ' ' + attr.class1 : ' text-lg-right ' + attr.class1 for=name)= fields[name].label
+                label(class= attr.text_align ? 'text-lg-' + attr.text_align + ' ' + attr.class1 : ' text-lg-right ' + attr.class1 for=name)= (attr.label ? attr.label : fields[name].label)
                 div(class=attr.class2)
                     input(
                         id=name
@@ -288,6 +288,34 @@ mixin fieldBlock2(name, data, attr, nameForForm, label)
             maxlength = attr.maxlength ? attr.maxlength : false
             disabled=(attr.disabled ? attr.disabled : false)
           ).form-control
+
+
+mixin fieldDateMonth(name, attr)
+
+  div(class=attr.class id=name).date-input
+      - var data = values[name] ? values[name].split('-') : []
+      input(
+          id=name + '__month'
+          name=name + '__month'
+          placeholder=(attr.placeholder ? attr.placeholder : "MM")
+          type=(attr.type ? attr.type : 'number')
+          maxlength=2
+          value=data[1]
+        ).form-control
+
+
+mixin fieldDateYear(name, attr)
+  div(class=attr.class id=name).date-input
+      - var data = values[name] ? values[name].split('-') : []
+      input(
+          id=name + '__year'
+          name=name + '__year'
+          placeholder=(attr.placeholder ? attr.placeholder : "YYYY")
+          type=(attr.type ? attr.type : 'number')
+          maxlength=2
+          value=data[2]
+        ).form-control
+
 
 mixin fieldDropzone(name, attr, type)
     // If we did not created fields vocabulary

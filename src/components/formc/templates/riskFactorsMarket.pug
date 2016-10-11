@@ -15,9 +15,6 @@ include ../../../templates/menuRaiseFund.pug
 )
 
 mixin showRisk(name, index, title, risk)
-  //- if values[name].hasOwnProperty(index)
-  //-   textarea(style="max-width:100%; height:150px" name="risk" readonly="true").form-control #{values[name][index].risk}
-  //- else
   form(data-method="PATCH" data-index=(index) index=index)
     input(type="hidden" name="title" value=title)
     textarea(style="max-width:100%; height:150px" name="risk" readonly index=index).form-control #{ values[name].hasOwnProperty(index) ? values[name][index].risk : risk }
@@ -27,7 +24,7 @@ mixin showRisk(name, index, title, risk)
       button(type="submit" style="display: none").btn.btn-sm.btn-secondary.m-t-1.add-risk.buttons.editing-state Save and Add this Risk
       button(style="display:" + (values[name].hasOwnProperty(index) ? 'none' : 'inline-block') + ";" data-index=index).btn.btn-sm.btn-secondary.m-t-1.edit-risk.buttons.unadded-state Edit and Add this Risk
 
-mixin showRiskSection(v, k)
+mixin showRiskForm(v, k)
   .panel.panel-default.risk-panel(index=k)
     #headingOne(role="tab").panel-heading
       a(data-toggle="collapse"
@@ -62,11 +59,11 @@ section.formc-team-members-director.container.m-b-85
         .col-lg-12
           #accordion-risk.pannel-group.accordion.accordion-risk(role="tablist" aria-multiselectable="true")
             each v, k in defaultRisks
-              +showRiskSection(v, k)
+              +showRiskForm(v, k)
 
             each v, k in values['market_and_customer_risk']
               - if (!k < Object.keys(defaultRisks).length)
-                +showRiskSection(v, k)
+                +showRiskForm(v, k)
 
     .col-lg-12.m-t-3
       p.pb10
@@ -99,5 +96,3 @@ section.formc-team-members-director.container.m-b-85
           //- a(href="/company/create").btn.btn-primary.text-uppercase.pull-lg-right next
           button.btn.btn-primary.text-uppercase.pull-lg-right next
             i.fa.fa-angle-right
-
-

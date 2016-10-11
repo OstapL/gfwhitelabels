@@ -48,7 +48,7 @@ module.exports = {
         }
       } else {
         $el.html(
-          $el.html() + '<p><b>' + view.fields[attr].label + ':</b> ' +
+          $el.html() + '<p><b>' + view.fields[attr].name + ':</b> ' +
             error.join(',') + '</p>'
         );
       }
