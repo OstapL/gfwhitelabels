@@ -1,0 +1,9 @@
+tr
+  td= values.security_type
+  td= values.amount_authorized
+  td= values.amount_outstanding
+  td= values.voting_right ? 'Yes' : 'No'
+  td 
+    .delete-section-container
+      a(href="#").delete-section
+        i.fa.fa-times

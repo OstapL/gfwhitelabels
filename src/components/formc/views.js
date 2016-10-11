@@ -734,7 +734,7 @@ module.exports = {
 
         events: _.extend({
             'submit form': 'submit',
-            'click .save-outstanding': 'addOutstanding',
+            'click .add-outstanding': 'addOutstanding',
         }, addSectionHelper.events, menuHelper.events, yesNoHelper.events),
 
         // submit: api.submitAction,
@@ -749,6 +749,15 @@ module.exports = {
 
         addOutstanding(e) {
             e.preventDefault();
+            // get the form
+            let $form = $(".modal-form");
+            let data = $form.serializeJSON();
+            // console.log(data);
+            // add an entry
+            let template = require('./templates/security.pug');
+            $('.securities-table tbody').append(template({
+                values: data,
+            }));
         },
 
         getSuccessUrl() {
