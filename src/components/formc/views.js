@@ -735,6 +735,7 @@ module.exports = {
         events: _.extend({
             'submit form': 'submit',
             'click .add-outstanding': 'addOutstanding',
+            'click .delete-outstanding': 'deleteOutstanding',
         }, addSectionHelper.events, menuHelper.events, yesNoHelper.events),
 
         // submit: api.submitAction,
@@ -757,7 +758,22 @@ module.exports = {
             let template = require('./templates/security.pug');
             $('.securities-table tbody').append(template({
                 values: data,
+                index: this.outstanding_securitiesIndex
             }));
+            this.outstanding_securitiesIndex++;
+        },
+
+        deleteOutstanding(e) {
+          e.preventDefault();
+          if(confirm('Are you sure?')) {
+            let sectionName = e.currentTarget.dataset.section;
+            $('.' + sectionName + ' .index_' + e.currentTarget.dataset.index).remove();
+            // e.currentTarget.offsetParent.remove();
+          }
+
+          // ToDo
+          // Fix index counter
+          // this[sectionName + 'Index'] --;
         },
 
         getSuccessUrl() {
@@ -798,6 +814,11 @@ module.exports = {
 
             this.fields.outstanding_securities.label = 'Outstanding Securities';
 
+            if (this.model.outstanding_securities) {
+              this.outstanding_securitiesIndex = Object.keys(this.model.outstanding_securities).length;
+            } else {
+              this.outstanding_securitiesIndex = 0;
+            }
 
             this.$el.html(
                 template({

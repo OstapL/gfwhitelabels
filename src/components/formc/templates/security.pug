@@ -1,9 +1,11 @@
-tr
+- let indexCounter = index || 0
+
+tr(class='index_' + indexCounter)
   td= values.security_type
   td= values.amount_authorized
   td= values.amount_outstanding
   td= values.voting_right ? 'Yes' : 'No'
   td 
     .delete-section-container
-      a(href="#").delete-section
+      a(href="#" data-section="securities-table" data-index=indexCounter).delete-outstanding
         i.fa.fa-times
