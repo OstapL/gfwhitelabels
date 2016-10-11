@@ -452,9 +452,11 @@ module.exports = {
             $('textarea[index=' + index + ']').attr('readonly', false);
             // let $form = $('form[index=' + index + ']');
             let $panel = $('.risk-panel[index=' + index + ']');
-            $panel.find('.add-risk').css({display: 'inline-block'});
-            $panel.find('.alter-risk').css({display: 'none'});
-            $panel.find('.added').text('');
+            // $panel.find('.add-risk').css({display: 'inline-block'});
+            // $panel.find('.alter-risk').css({display: 'none'});
+            $panel.find('.buttons').css({display: 'none'});
+            $panel.find('.editing-state').css({display: 'inline-block'});
+            $panel.find('.added-span').text('');
             // $target.css({display: 'none'});
         },
 
@@ -484,10 +486,13 @@ module.exports = {
                 // if default risk
                 if (index < Object.keys(this.defaultRisks).length) {
                     let $panel = $('.risk-panel[index=' + index + ']');
-                    $panel.find('textarea').text(this.defaultRisks[index].risk);
-                    $panel.find('.add-risk').css({display: 'inline-block'});
-                    $panel.find('.alter-risk').css({display: 'none'});
-                    $panel.find('.added').text('');
+                    // $panel.find('textarea').text(this.defaultRisks[index].risk).attr('readonly', false);
+                    $panel.find('textarea').val(this.defaultRisks[index].risk);
+                    // $panel.find('.add-risk').css({display: 'inline-block'});
+                    // $panel.find('.alter-risk').css({display: 'none'});
+                    $panel.find('.buttons').css({display: 'none'});
+                    $panel.find('.unadded-state').css({display: 'inline-block'});
+                    $panel.find('.added-span').text('');
                 } else {
                     let $panel = $('.risk-panel[index=' + index + ']');
                     $panel.remove();
@@ -497,9 +502,11 @@ module.exports = {
                 let $panel = $('.risk-panel[index=' + index + ']');
                 if ($panel.length > 0) {
                     // $panel.find('.edit-risk').css({display: 'inline-block'});
-                    $panel.find('.alter-risk').css({display: 'inline-block'});
-                    $panel.find('.add-risk').css({display: 'none'});
-                    $panel.find('.added').text(' (added to Form C)');
+                    // $panel.find('.alter-risk').css({display: 'inline-block'});
+                    // $panel.find('.add-risk').css({display: 'none'});
+                    $panel.find('.buttons').css({display: 'none'});
+                    $panel.find('.added-state').css({display: 'inline-block'});
+                    $panel.find('.added-span').text(' (added to Form C)');
                 } else {
                     // create and append panel
                     let template = require('./templates/risk.pug');

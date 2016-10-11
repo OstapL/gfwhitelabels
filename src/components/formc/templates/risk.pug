@@ -17,7 +17,7 @@
       input(type="hidden" name="title" value=v.title)
       textarea(style="max-width:100%; height:150px" name="risk" index=k readonly).form-control= v.risk
       .text-md-center.text-lg-right
-        span(style="display:inline-block;").alter-risk
+        span(style="display:inline-block;").alter-risk.added-state.buttons
           button(data-index=k).btn.btn-sm.btn-secondary.m-t-1.edit-risk Edit Risk
           button(data-index=(k) data-method="DELETE").btn.btn-sm.btn-secondary.m-t-1.delete-risk Delete Risk
-        button(style="display:none;" data-method="PATCH" data-concat="false").btn.btn-sm.btn-secondary.m-t-1.add-risk Save and Add this Risk
+        button(style="display:none;" data-method="PATCH" data-concat="false").btn.btn-sm.btn-secondary.m-t-1.add-risk.editing-state.buttons Save and Add this Risk
