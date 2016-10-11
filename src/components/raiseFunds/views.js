@@ -5,8 +5,9 @@ const appendHttpIfNecessary = formatHelper.appendHttpIfNecessary;
 
 const dropzone = require('dropzone');
 const dropzoneHelpers = require('helpers/dropzone.js');
-
-// const validation = require('components/validation/validation.js');
+const leavingConfirmationHelper = require('helpers/leavingConfirmationHelper.js');
+const phoneHelper = require('helpers/phoneHelper.js');
+const validation = require('components/validation/validation.js');
 
 const jsonActions = {
   events: {
@@ -55,6 +56,77 @@ const jsonActions = {
   },
 };
 
+const submitCampaign = function submitCampaign(e) {
+  e.preventDefault();
+  let $form = this.$el.find('form');
+  var data = $form.serializeJSON();
+
+  _.extend(this.model, data);
+  data = Object.assign({}, this.model);
+
+  // ToDo
+  // Refactor code
+  if(this.hasOwnProperty('index')) {
+    data.index = this.index;
+  };
+
+  this.$('.help-block').remove();
+  if (!validation.validate(this.fields, data, this)) {
+    _(validation.errors).each((errors, key) => {
+      validation.invalidMsg(this, key, errors);
+    });
+    this.$('.help-block').scrollTo(45);
+    return;
+  } else {
+    let url = this.urlRoot + '/' + data.id;
+    let type = 'PUT';
+    delete data.id;
+
+    api.makeRequest(url, type, data).
+      then((data) => {
+
+        if(this.hasOwnProperty('campaign')) {
+          data.id = this.campaign.id;
+        };
+
+        // if we saved company information we will not have any progress data in
+        // response
+        if(data.hasOwnProperty('progress') == false) {
+          data.progress = this.campaign.progress;
+        }
+
+        doCampaignValidation(e, data);
+    });
+  }
+};
+
+const doCampaignValidation = function doCampaignValidation(e, data) {
+
+  if(data == null) {
+    data = this.model;
+  }
+
+  if(
+      data.progress.general_information == true &&
+      data.progress.media == true &&
+      data.progress.specifics == true &&
+      data.progress['team-members'] == true
+  ) {
+    $('#company_publish_confirm').modal('show');
+  } else {
+    var errors = {};
+    _(data.progress).each((d, k) => {
+      if(k != 'perks') {
+        if(d == false)  {
+          $('#company_publish .'+k).removeClass('collapse');
+        } else {
+          $('#company_publish .'+k).addClass('collapse');
+        }
+      }
+    });
+    $('#company_publish').modal('toggle');
+  }
+};
 
 const onPreviewAction = function(e) {
   e.preventDefault();
@@ -68,18 +140,18 @@ const onPreviewAction = function(e) {
 };
 
 module.exports = {
-  company: Backbone.View.extend({
+  company: Backbone.View.extend(_.extend({
     // urlRoot: serverUrl + Urls['company-list'](),
     urlRoot: Urls.company_list(),
     template: require('./templates/company.pug'),
-    events: {
+    events: _.extend({
       'submit form': 'submit',
       'keyup #zip_code': 'changeZipCode',
       'click .update-location': 'updateLocation',
       'click .onPreview': onPreviewAction,
-      'change input[name=phone]': 'formatPhone',
+      'click .submit_form': submitCampaign,
       'change #website,#twitter,#facebook,#instagram,#linkedin': appendHttpIfNecessary,
-    },
+    }, leavingConfirmationHelper.events, phoneHelper.events),
 
     initialize(options) {
       this.fields = options.fields;
@@ -92,14 +164,6 @@ module.exports = {
       });
     },
 
-    /*appendHttpIfNecessary(e) {
-      var $el = $('#website');
-      var url = $el.val();
-      if (!(url.startsWith("http://") || url.startsWith("https://"))) {
-        $el.val("http://" + url);
-      }
-    },*/
-
     submit(e) {
       var data = $(e.target).serializeJSON();
 
@@ -110,10 +174,6 @@ module.exports = {
       delete data.founding_date__month;
       delete data.founding_date__year;
       api.submitAction.call(this, e, data);
-    },
-
-    formatPhone(e) {
-      this.$('input[name=phone]').val(this.$('input[name=phone]').val().replace(/^\(?(\d{3})\)?-?(\d{3})-?(\d{4})$/, '$1-$2-$3'));
     },
 
     updateLocation(e) {
@@ -173,16 +233,17 @@ module.exports = {
         { trigger: true, replace: false }
       );
     },
-  }),
+  },leavingConfirmationHelper.methods, phoneHelper.methods)),
 
-  generalInformation: Backbone.View.extend({
+  generalInformation: Backbone.View.extend(_.extend({
       // urlRoot: serverUrl + Urls['campaign-list']() + '/general_information',
       urlRoot: Urls['campaign-list']() + '/general_information',
       template: require('./templates/generalInformation.pug'),
       events: _.extend({
           'submit form': api.submitAction,
           'click .onPreview': onPreviewAction,
-        }, jsonActions.events),
+          'click .submit_form': submitCampaign,
+        }, jsonActions.events, leavingConfirmationHelper.events),
 
       preinitialize() {
         // ToDo
@@ -215,26 +276,26 @@ module.exports = {
         this.fields.faq.type = 'json';
         this.fields.faq.schema = {
           question: {
-                      type: 'string',
-                      label: 'Question',
-                    },
+            type: 'string',
+            label: 'Question',
+          },
           answer: {
-                    type: 'text',
-                    label: 'Answer',
-                  },
+            type: 'text',
+            label: 'Answer',
+          },
         };
         this.fields.additional_info.type = 'json';
         this.fields.additional_info.schema = {
           title: {
-                  type: 'string',
-                  label: 'Optional Additional Section',
-                  placeholder: 'Section Title',
-                },
+            type: 'string',
+            label: 'Optional Additional Section',
+            placeholder: 'Section Title',
+          },
           body: {
-                  type: 'text',
-                  label: '',
-                  placeholder: 'Description',
-                },
+            type: 'text',
+            label: '',
+            placeholder: 'Description',
+          },
         };
 
         // if (this.model.get('faq')) {
@@ -260,11 +321,21 @@ module.exports = {
               values: this.model,
             })
         );
+
+        if(app.getParams().check == '1') {
+          var data = this.$el.find('form').serializeJSON();
+          if (!validation.validate(this.fields, data, this)) {
+            _(validation.errors).each((errors, key) => {
+              validation.invalidMsg(this, key, errors);
+            });
+            this.$('.help-block').prev().scrollTo(5);
+          }
+        }
         return this;
       },
-    }),
+    },leavingConfirmationHelper.methods)),
 
-  media: Backbone.View.extend({
+  media: Backbone.View.extend(_.extend({
       events: _.extend({
         'submit form': api.submitAction,
         // 'click .delete-image': 'deleteImage',
@@ -273,8 +344,9 @@ module.exports = {
         dragleave: 'globalDragleave',
         // 'change #video,.additional_video_link': 'appendHttpsIfNecessary',
         'change .press_link': 'appendHttpIfNecessary',
+        'click .submit_form': submitCampaign,
         'click .onPreview': onPreviewAction,
-      }, jsonActions.events),
+      }, jsonActions.events, leavingConfirmationHelper.events),
       urlRoot: Urls['campaign-list']() + '/media',
 
       appendHttpsIfNecessary(e) {
@@ -482,15 +554,16 @@ module.exports = {
           //e.target.value = id;
         }
       }
-  }),
+  }, leavingConfirmationHelper.methods)),
 
-  teamMemberAdd: Backbone.View.extend({
-      events: {
+  teamMemberAdd: Backbone.View.extend(_.extend({
+      events: _.extend({
         'submit form': 'submit',
         'click .delete-member': 'deleteMember',
         dragover: 'globalDragover',
         dragleave: 'globalDragleave',
-      },
+        'click .submit_form': doCampaignValidation,
+      }, leavingConfirmationHelper.events),
       // urlRoot: serverUrl + Urls['campaign-list']() + '/team_members',
       urlRoot: Urls['campaign-list']() + '/team_members',
 
@@ -599,14 +672,17 @@ module.exports = {
           };
         }
 
+        this.values.progress = this.model.progress;
+
         this.usaStates = require('helpers/usa-states');
         this.$el.html(
           template({
             serverUrl: serverUrl,
             Urls: Urls,
             fields: this.fields,
+            campaign: this.model,
             member: this.values,
-            values: this.values,
+            values: this.model,
             type: this.type,
             index: this.index,
             states: this.usaStates,
@@ -637,11 +713,12 @@ module.exports = {
 
         api.submitAction.call(this, e, json);
       },
-    }),
+  }, leavingConfirmationHelper.methods)),
 
   teamMembers: Backbone.View.extend({
     events: {
       'click .delete-member': 'deleteMember',
+      'click .submit_form': doCampaignValidation,
     },
 
     preinitialize() {
@@ -695,9 +772,9 @@ module.exports = {
 
   }),
 
-  specifics: Backbone.View.extend({
+  specifics: Backbone.View.extend(_.extend({
       urlRoot: Urls['campaign-list']() + '/specifics',
-      events: {
+      events: _.extend({
         'submit form': api.submitAction,
         'change input[name="security_type"]': 'updateSecurityType',
         'focus #minimum_raise,#maximum_raise,#minimum_increment,#premoney_valuation,#price_per_share': 'clearZeroAmount',
@@ -706,7 +783,8 @@ module.exports = {
         dragover: 'globalDragover',
         dragleave: 'globalDragleave',
         'click .onPreview': onPreviewAction,
-      },
+        'click .submit_form': submitCampaign,
+      }, leavingConfirmationHelper.events),
 
       globalDragover() {
         // this.$('.dropzone').css({ border: 'dashed 1px lightgray' });
@@ -820,13 +898,14 @@ module.exports = {
 
         return this;
       },
-    }),
+    }, leavingConfirmationHelper.methods)),
 
-  perks: Backbone.View.extend({
+  perks: Backbone.View.extend(_.extend({
       events: _.extend({
           'submit form': api.submitAction,
           'click .onPreview': onPreviewAction,
-        }, jsonActions.events),
+          'click .submit_form': submitCampaign,
+        }, jsonActions.events, leavingConfirmationHelper.events),
       // urlRoot: serverUrl + Urls['campaign-list']() + '/perks',
       urlRoot: Urls['campaign-list']() + '/perks',
 
@@ -884,7 +963,7 @@ module.exports = {
         return this;
       },
 
-    }),
+    }, leavingConfirmationHelper.methods, )),
 
   thankYou: Backbone.View.extend({
     el: '#content',

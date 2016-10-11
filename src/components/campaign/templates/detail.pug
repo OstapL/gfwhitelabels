@@ -317,6 +317,7 @@ section
                   //-           .pos-bottom
                   //-             .links.d-inline-block.card-text #{ formatHelper.getWebsiteUrl(v.link) }
                   //-   - counter++;
+
                 .row.m-b-3(style="display:" + (keys.slice(3).length > 0 ? 'block' : 'none') + ";")
                   .col-lg-12.text-xs-center
                     //- a(href="#hidden-article-press" data-toggle="collapse").link-4.see-all-article-press See All Articles and Press
@@ -414,7 +415,7 @@ section
         h2#overview.col-lg-12.dosis.text-uppercase.text-lg-center.text-xs-center.green-heading overview and terms
         //- h3.col-lg-12.text-lg-center Fundraising Description
         h3.text-uppercase.text-lg-center.text-xs-center.green-heading Fundraising Description
-        .col-lg-8.offset-lg-2.fundraising.text-xs-center
+        .col-lg-8.offset-lg-2.fundraising
           .jumbotron.jumbotron-fluid
             .container
               if values.security_type == 0
