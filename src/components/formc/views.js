@@ -402,14 +402,15 @@ module.exports = {
     }, menuHelper.methods)),
 
     riskFactorsMarket: Backbone.View.extend(_.extend({
+        urlRoot: formcServer + '/:id' + '/risk-factors-market/:index',
+        events: _.extend({
+            'submit form': 'submit',
+            'click form button.add-risk': 'addRisk',
+        }, menuHelper.events),
+
         initialize(options) {
             this.fields = options.fields;
         },
-        urlRoot: formcServer + '/:id' + '/risk-factors-market/1',
-        events: _.extend({
-            // 'submit form': 'submit',
-            'click form button.add-risk': 'addRisk',
-        }, menuHelper.events),
 
         addRisk(e) {
             event.preventDefault();
@@ -429,7 +430,10 @@ module.exports = {
             // if delete, take it out again
         },
 
-        submit: api.submitAction,
+        submit(e) {
+          this.urlRoot = this.urlRoot.replace(':index', $(e.target).find('.index').val());
+          api.submitAction(this, e);
+        },
 
         render() {
             let template = require('components/formc/templates/riskFactorsMarket.pug');
