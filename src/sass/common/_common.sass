@@ -2,10 +2,12 @@
 	display: $display_partnres!important
 
 
-// cтилизация заголовков на странице education.pug
+// цвет заголовков на странице education.pug
 .heading-education
 	color: $color_heading_education
 	font-weight: $heading_education_font_weight
+
+/* сostum progressbar begin */
 
 
 .progress-container
@@ -76,8 +78,6 @@
 
 .warning-block
 	@include calc-rem(14)
-
-
 .position-relative
 	position: relative
 
@@ -157,7 +157,8 @@
 
 .m-b-85
 	margin-bottom: rem(85)
-
+.m-b-10
+	margin-bottom: rem(10)
 .row.no-gutters
 	margin-right: 0;
 	margin-left: 0;
@@ -180,3 +181,16 @@
 		display: inline-block
 		vertical-align: top
 		text-align: left
+
+// для больших textarea 
+.form-section
+	.big-textarea
+		textarea
+			min-height: 170px
+			width: 100%
+
+.color-green
+	color: $wild_willow
+
+.letter-spacing-normal
+	letter-spacing: normal

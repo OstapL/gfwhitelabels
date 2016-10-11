@@ -40,6 +40,8 @@ module.exports = {
       'click .see-all-faq': 'seeAllFaq',
       'click .linkresponse': 'checkResponse',
       // 'click .see-all-article-press': 'seeAllArticlePress',
+      'hidden.bs.collapse #hidden-article-press' :'onArticlePressCollapse',
+      'shown.bs.collapse #hidden-article-press' :'onArticlePressCollapse',
       'submit .comment-form': 'submitComment',
     },
     initialize(options) {
@@ -56,6 +58,15 @@ module.exports = {
     //     $elems.css('display', 'none');
     //   }
     // },
+
+
+    onArticlePressCollapse(e) {
+      if (e.type == 'hidden') {
+        this.$('.see-all-article-press').text('Show More')
+      } else if (e.type == 'shown') {
+        this.$('.see-all-article-press').text('Show Less')
+      }
+    },
 
     seeAllRisks(e){
       e.preventDefault();
