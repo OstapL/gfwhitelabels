@@ -22,7 +22,7 @@
 //-           button(data-index=(k) data-method="DELETE").btn.btn-sm.btn-secondary.m-t-1.delete-risk Delete Risk
 //-         button(style="display:none;" data-method="PATCH" data-concat="false").btn.btn-sm.btn-secondary.m-t-1.add-risk.editing-state.buttons Save and Add this Risk
 
-mixin showRisk(name, index, title, risk)
+mixin showRisk(index, title, risk)
   //- if values[name].hasOwnProperty(index)
   //-   textarea(style="max-width:100%; height:150px" name="risk" readonly="true").form-control #{values[name][index].risk}
   //- else
@@ -48,4 +48,4 @@ mixin showRisk(name, index, title, risk)
   #collapseOne(role="tabpanel"
   aria-labelledby="headingOne"
   ).panel-collapse.collapse.in
-    +showRisk('market_and_customer_risk', k, v.title, v.risk)
+    +showRisk(k, v.title, v.risk)
