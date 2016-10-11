@@ -1,27 +1,3 @@
-//- .panel.panel-default.risk-panel.additional-risk-panel(index=k)
-//-   #heading-10(role="tab").panel-heading
-//-     a(data-toggle="collapse"
-//-     data-parent="#accordion-risk" 
-//-     href="#collapse-" + k
-//-     aria-expanded="true"
-//-     aria-controls="collapseOne"
-//-     ).list-group-item-action.active
-//-       | #{v.title}
-//-       span.added  (added to Form C)
-//-       i.fa.fa-angle-up
-//-   div(id=("collapse-" + k) role="tabpanel"
-//-   aria-labelledby="headingOne"
-//-   ).panel-collapse.collapse.in
-//-     form(method="post" action="")
-//-       input(type="hidden" name="index" value=k)
-//-       input(type="hidden" name="title" value=v.title)
-//-       textarea(style="max-width:100%; height:150px" name="risk" index=k readonly).form-control= v.risk
-//-       .text-md-center.text-lg-right
-//-         span(style="display:inline-block;").alter-risk.added-state.buttons
-//-           button(data-index=k).btn.btn-sm.btn-secondary.m-t-1.edit-risk Edit Risk
-//-           button(data-index=(k) data-method="DELETE").btn.btn-sm.btn-secondary.m-t-1.delete-risk Delete Risk
-//-         button(style="display:none;" data-method="PATCH" data-concat="false").btn.btn-sm.btn-secondary.m-t-1.add-risk.editing-state.buttons Save and Add this Risk
-
 mixin showRisk(index, title, risk)
   //- if values[name].hasOwnProperty(index)
   //-   textarea(style="max-width:100%; height:150px" name="risk" readonly="true").form-control #{values[name][index].risk}
