@@ -719,6 +719,7 @@ module.exports = {
     events: {
       'click .delete-member': 'deleteMember',
       'click .submit_form': doCampaignValidation,
+      'click .onPreview': onPreviewAction,
     },
 
     preinitialize() {
