@@ -720,6 +720,12 @@ module.exports = {
       'click .delete-member': 'deleteMember',
       'click .submit_form': doCampaignValidation,
       'click .onPreview': onPreviewAction,
+      'submit form': 'submit',
+    },
+
+    // this is for no navigating to new page in the onPreviewAction method
+    submit(e) {
+      e.preventDefault();
     },
 
     preinitialize() {
