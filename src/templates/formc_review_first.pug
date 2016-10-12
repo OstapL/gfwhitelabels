@@ -13,33 +13,33 @@ section.formc-review
       section.page-formc-review
         p.small.text-xs-left FORM C Offering Material for
         p.small
-          a(href="#").link-1 [issuer_short_name]* 
+          a(href="#" class="show-input" data-name="issuer_short_name").link-1 issuer_short_name
           |  as Issuer
         
         h3.text-xs-center
-          a(href="#") issuer_legal_name*
+          a(href="#" class="show-input" data-name="issuer_legal_name") issuer_legal_name
         h3.text-xs-center.m-b-0.m-t-0.pb10 A 
-          a(href="") [jurisdiction_of_organization]*
+          a(href="#" class="show-input" data-name="jurisdiction_of_organization") jurisdiction_of_organization
         h3.text-xs-center.m-t-0 
-          a(href="#") [Corporate_Structure]*
+          a(href="#" class="show-input" data-name="Corporate_Structure") Corporate_Structure
         p.text-xs-center.m-b-1
-          a(href="#") website
+          a(href="#" class="show-input" data-name="website") website
         
         p.text-xs-center.font-weight-bold $
-          a(href="#") [ maximum_raise ]*
+          a(href="#" class="show-input" data-name="maximum_raise") maximum_raise
           |   MAXIMUM OFFERING
         p.text-xs-center.font-weight-bold.m-b-3 $
-          a(href="#") [ minimum_raise ]*
+          a(href="#" class="show-input" data-name="minimum_raise") minimum_raise
           |   MINIMUM OFFERING
 
         p.text-xs-center.font-weight-bold.pb10 OFFERING PRICE: $
-          a(href="#") [price_per_share]* 
+          a(href="#" class="show-input" data-name="price_per_share") price_per_share
           |  per Share
         p.text-xs-center.font-weight-bold
-          a(href="#") [security_type]*
+          a(href="#" class="show-input" data-name="security_type") security_type
           |  Offered
         p.text-xs-center.font-weight-bold $
-          a(href="#") [minimum_incriment]*
+          a(href="#" class="show-input" data-name="minimum_incriment") minimum_incriment
           |  MINIMUM INVESTMENT
 
         p.text-uppercase.text-xs-center.m-t-3.m-b-2 
@@ -49,7 +49,7 @@ section.formc-review
         p.pb10 GrowthFountain Capital LLC is acting as the funding portal in this offering of securities in reliance on section 4(a)(6) of the Securities Act of 1933 (15 U.S.C. 77d(a)(6)).  To participate in this offering, you must open an account at www.GrowthFountain.com.
         p.pb10 A crowdfunding investment involves risk. You should not invest any funds in this offering unless you can afford to lose your entire investment. In making an investment decision, investors must rely on their own examination of the issuer and the terms of the offering, including the merits and risks involved. These securities have not been recommended or approved by any federal or state securities commission or regulatory authority. Furthermore, these authorities have not passed upon the accuracy or adequacy of this document, or the completeness of any information contained herein or listed with the funding portal.  These securities are being offered under an exemption from registration; however, the U.S. Securities and Exchange Commission has not made an independent determination that these securities are exempt from registration.  GrowthFountain Capital LLC and its affiliates are not making any investment recommendation in connection with making this offering material available to you.
         p The date of this offering material being listed on the funding portal at www.GrowthFountain.com is
-          a(href="#")  [live.date]*
+          a(href="#" class="show-input" data-name="live.date")  live.date
         p.page-namder.text-xs-right.m-t-3 Page 
           b 1
           |  of 
@@ -1511,7 +1511,7 @@ section.formc-review
                   a(href="#") Officer.2.position_end.2 
         p.pb10.text-indent Employment information from previous employers over the last three years for each of the Company’s directors is as follows:
         p.pb10
-          a(href="#") director.1.first_name director.1.last_name
+          a(href="#" class="text-input" data-name="director.1.first_name_director.1.last_name") director.1.first_name director.1.last_name
         .table-responsive.m-t-1
           table.table.table-bordered
             theader
@@ -1596,7 +1596,7 @@ section.formc-review
       section.page-formc-review.m-t-1
         p.small.text-xs-left FORM C Offering Material for
         p.small.pb10
-          a(href="#").link-1 [issuer_short_name]* 
+          a(href="" class="text-input" data-input-id="issuer_short_name").link-1 [issuer_short_name]* 
           |  as Issuer
         h2.text-uppercase.text-xs-center.font-weight-bold EXHIBIT D: EXCERPTS
         p See Attached
@@ -1604,3 +1604,9 @@ section.formc-review
           b 35
           |  of 
           b  37
+
+
+
+
+
+

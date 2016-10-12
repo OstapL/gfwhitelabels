@@ -38,7 +38,38 @@ module.exports = Backbone.Router.extend({
             );
             $('body').scrollTo();
             app.hideLoading();
-            
+            $('.show-input').on('click', function(event) {
+              if ($(event.target).hasClass('noactive')) {
+                  return false;
+                }
+
+                var $this = $(event.target),
+                  inputId = $this.data('name'),
+                  $input = $('input' + '#' + inputId);
+
+                $this.hide();
+
+                if ($input.length == 0) {
+                  $input = $('<input type="text" id="' + inputId + '" name="' + inputId + '" class="text-input"/>');
+                  $this.after($input);
+                }
+
+                $input.fadeIn().focus();
+            });
+
+            $('body').on('focusout', '.text-input', function(event) {
+                var $this = $(event.target),
+                    value = $this.val(),
+                    inputId = $this.attr('id'),
+                    $span = $('[data-name="' + inputId + '"]');
+
+                if (value !== '') {
+                    $span.text(value);
+                }
+
+                $this.hide();
+                $span.fadeIn();
+            });
             if (['education', 'terms_of_use', 'privacy_policy'].indexOf(name) != -1) {
                 require('components/sticky-kit/js/sticky-kit.js');
                 $('.sticky-side-menu').stick_in_parent()
