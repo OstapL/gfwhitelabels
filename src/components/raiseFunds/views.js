@@ -563,9 +563,14 @@ module.exports = {
         dragover: 'globalDragover',
         dragleave: 'globalDragleave',
         'click .submit_form': doCampaignValidation,
+        'change #linkedin,#facebook': 'appendHttpsIfNecessary',
       }, leavingConfirmationHelper.events),
       // urlRoot: serverUrl + Urls['campaign-list']() + '/team_members',
       urlRoot: Urls['campaign-list']() + '/team_members',
+
+      appendHttpsIfNecessary(e) {
+        appendHttpIfNecessary(e, true);
+      },
 
       globalDragover() {
         // this.$('.dropzone').css({ border: 'dashed 1px lightgray' });
