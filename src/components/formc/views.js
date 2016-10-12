@@ -315,9 +315,34 @@ module.exports = {
         events: _.extend({
             'submit form': 'submit',
             'change input[type=radio][name=doc_type]': 'changeDocType',
+            'click .add-proceed': 'addProceed',
+            'click .delete-proceed': 'deleteProceed',
         }, addSectionHelper.events, menuHelper.events),
         // }, menuHelper.events),
         
+        addProceed(e) {
+            e.preventDefault();
+            let $target = $(e.target);
+            let template = require('./templates/proceed.pug');
+            let type = $target.data('type');
+            let dataType;
+            if (type == 'net') dataType = 'use_of_net_proceeds';
+            else if (type == 'expense') dataType = 'less_offering_express';
+            $('.' + type + '-table tbody').append(template({
+                type: type,
+                dataType: dataType,
+                index: 0,
+            }));
+        },
+
+        deleteProceed(e) {
+            e.preventDefault();
+            let $target = $(e.currentTarget);
+            let type = $target.data('type');
+            let index = $target.data('index');
+            $('.' + type + '-table tr.index_' + index).remove();
+        },
+
         changeDocType(e) {
             if (e.target.value == 'describe') {
                 this.$('.describe').show();
@@ -720,7 +745,6 @@ module.exports = {
             // console.log(data);
             // add an entry
             let template = require('./templates/security.pug');
-            console.log(data);
             $('.securities-table tbody').append(template({
                 values: data,
                 index: this.outstanding_securitiesIndex
