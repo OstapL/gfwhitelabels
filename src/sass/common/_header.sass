@@ -1,5 +1,9 @@
 // mixin for centering elements in header
 =centered
+  -webkit-transform: translateY(-50%)
+  -moz-transform: translateY(-50%)
+  -ms-transform: translateY(-50%)
+  -o-transform: translateY(-50%)
   transform: translateY(-50%)
 
   position: relative
@@ -493,6 +497,10 @@ header
       width: 100%
 
       .list-container.user-info-drop.notification-container
+        -webkit-transform: scale(1.1) translateY(-10px)
+        -moz-transform: scale(1.1) translateY(-10px)
+        -ms-transform: scale(1.1) translateY(-10px)
+        -o-transform: scale(1.1) translateY(-10px)
         transform: scale(1.1) translateY(-10px)
 
         transition-delay: 200ms, 200ms
