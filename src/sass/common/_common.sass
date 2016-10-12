@@ -1,6 +1,7 @@
 .display-partners
 	display: $display_partnres!important
 
+
 // цвет заголовков на странице education.pug
 .heading-education
 	color: $color_heading_education
@@ -8,23 +9,56 @@
 
 /* сostum progressbar begin */
 
+
 .progress-container
-	position: relative
+    position: relative
 
-	span
-		position: absolute
-		top: 0
-		line-height: 11px
-		text-align: right
+    span
+        position: absolute
+        top: 0
+        line-height: 11px
+        text-align: right
 
-		i
-			font-weight: bold
-			background: $white
-			margin-top: -11px
+        i
+            font-weight: bold
+            background: $white
+            margin-top: -11px
 
-	.circle
-		top: -5px
+    .circle
+        top: -5px
 
+.pagination
+	width: 100%
+	margin: 0
+
+	.page-item
+		+mt(0.2s)
+
+		a
+			margin-right: 4px
+
+		&:hover a
+			border: 1px solid #a3a3a3
+			color: $grey
+			background: none
+			+mt(0.2s)
+
+	.page-item a:visited,
+	.page-item a:focus
+		text-decoration: none
+		background: none
+	  
+	.page-item.active a,
+	.page-item.active a:focus,
+	.page-item.active a:visited
+		background: none
+
+		&:hover
+			background: none
+
+/* costum pagination end */
+
+/* common styles for pages(faq, overview.. etc..) */
 .text_block
 	.page_title
 		width: 100%
@@ -32,13 +66,18 @@
 
 		h4
 			font-weight: 400
-  
-		ul.simple-list 
+	ul 
+		li
+
+
+		&.simple-list 
 			padding-left: rem(20)
 			li 
 				margin-bottom: rem(15)
 
 
+.warning-block
+	@include calc-rem(14)
 .position-relative
 	position: relative
 
@@ -64,8 +103,7 @@
 .pb50
 	padding-bottom: rem(50)
 .p50
-	padding-top: rem(50)
-	padding-bottom: rem(50)
+	+calc-rem-padding (50) 
 .pt30
 	padding-top: rem(30)
 .pb10

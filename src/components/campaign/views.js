@@ -59,6 +59,7 @@ module.exports = {
     //   }
     // },
 
+
     onArticlePressCollapse(e) {
       if (e.type == 'hidden') {
         this.$('.see-all-article-press').text('Show More')

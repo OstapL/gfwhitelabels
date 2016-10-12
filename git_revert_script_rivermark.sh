@@ -1,0 +1,11 @@
+git checkout 783b6a9bbabda34d386c32b59ed4617525c8cf9e src/templates/overview.pug
+git checkout 783b6a9bbabda34d386c32b59ed4617525c8cf9e src/img/logo.pug
+
+git checkout 783b6a9bbabda34d386c32b59ed4617525c8cf9e src/templates/menuProfile.pug
+git checkout 783b6a9bbabda34d386c32b59ed4617525c8cf9e src/sass/config/_vars.sass
+git checkout 783b6a9bbabda34d386c32b59ed4617525c8cf9e src/sass/common/_common.sass
+
+git checkout 783b6a9bbabda34d386c32b59ed4617525c8cf9e src/sass/bootstrap_c/_variables.sass
+git checkout 783b6a9bbabda34d386c32b59ed4617525c8cf9e src/sass/bootstrap_c/_type.sass
+git checkout 783b6a9bbabda34d386c32b59ed4617525c8cf9e src/sass/bootstrap_c/_forms.sass 
+git checkout 783b6a9bbabda34d386c32b59ed4617525c8cf9e src/sass/bootstrap_c/_buttons.sass 

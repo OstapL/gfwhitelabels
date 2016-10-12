@@ -16,7 +16,7 @@ section.create-company-general.container.m-b-85
 
   .col-lg-8
     h2.text-uppercase.text-lg-center.text-xs-center.dosis.m-t-0 GENERAL INFORMATION
-    form(metod="post" action="").form-section
+    form(data-method="PATCH" action="").form-section
       if values.id && values.id != ''
           input(type='hidden' name='id' value=values.id id='id')
       .form-group.row.clearfix.required
@@ -68,7 +68,7 @@ section.create-company-general.container.m-b-85
             |  Add Another FAQ
       .border-bottom.border-bottom-faq
       .col-lg-12.pull-lg-right.p-r-0.text-lg-right.text-md-center.text-sm-center.text-xs-center
-        // button(type="submit" data-href="/api/campaign/" + values.id).btn.btn-secondary.text-uppercase.m-r-3.m-t-0.onPreview preview
-        button(type="submit").btn.btn-primary.text-uppercase.m-t-0 save and continue
+        // button(type="submit").btn.btn-secondary.text-uppercase.m-r-3.m-t-0 Fields Review
+        button(type="submit" data-method="PATCH").btn.btn-primary.text-uppercase.m-t-0 save and continue
           i.fa.fa-angle-right
 
