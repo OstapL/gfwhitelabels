@@ -920,8 +920,13 @@ module.exports = {
 
       addSection: jsonActions.addSection,
       deleteSection: jsonActions.deleteSection,
-      getSuccessUrl(data) {
-        return '/campaign/thankyou/' + data.id;
+      // getSuccessUrl(data) {
+      //   return '/campaign/thankyou/' + data.id;
+      // },
+
+      _success(data) {
+        // Do nothing after you save the perks.
+        window.location.reload();
       },
 
       initialize(options) {
