@@ -39,6 +39,7 @@ module.exports = Backbone.Router.extend({
             $('body').scrollTo();
             app.hideLoading();
             $('.show-input').on('click', function(event) {
+              event.preventDefault();
               if ($(event.target).hasClass('noactive')) {
                   return false;
                 }

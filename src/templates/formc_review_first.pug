@@ -21,7 +21,7 @@ section.formc-review
         h3.text-xs-center.m-b-0.m-t-0.pb10 A 
           a(href="#" class="show-input" data-name="jurisdiction_of_organization") jurisdiction_of_organization
         h3.text-xs-center.m-t-0 
-          a(href="#" class="show-input" data-name="Corporate_Structure") Corporate_Structure
+          a(href="#" class="show-input" data-name="corporate_structure") Corporate_Structure
         p.text-xs-center.m-b-1
           a(href="#" class="show-input" data-name="website") website
         
@@ -58,7 +58,7 @@ section.formc-review
       section.page-formc-review.m-t-1
         p.small.text-xs-left FORM C Offering Material for
         p.small
-          a(href="#").link-1 [issuer_short_name]* 
+          a(href="#" class="show-input" data-name="issuer_short_name").link-1 issuer_short_name
           |  as Issuer
 
         h2.text-uppercase.text-xs-center.font-weight-bold TABLE OF CONTENTS
@@ -112,7 +112,7 @@ section.formc-review
       section.page-formc-review.m-t-1
         p.small.text-xs-left FORM C Offering Material for
         p.small
-          a(href="#").link-1 [issuer_short_name]* 
+          a(href="#" class="show-input" data-name="issuer_short_name").link-1 issuer_short_name 
           |  as Issuer
         h2.text-uppercase.text-xs-center.font-weight-bold OVERVIEW INFORMATION
         .one-block.m-b-1
@@ -122,34 +122,34 @@ section.formc-review
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
               p.font-weight-bold Name of issuer:
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
-              a(href="#") issuer_legal_name
+              a(href="#" class="show-input" data-name="issuer_legal_name") issuer_legal_name
           .row
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
               p.font-weight-bold Entity Form:
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
-              a(href="#") issuer_legal_name
+              a(href="#" class="show-input" data-name="corporate_structure") corporate_structure
           .row
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
               p.font-weight-bold Jurisdiction of Organization:
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
-              a(href="#") jurisdiction_of_organization
+              a(href="#" class="show-input" data-name="jurisdiction_of_organization") jurisdiction_of_organization
           .row
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
               p.font-weight-bold Date of Organization:
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
-              a(href="#") founding_date
+              a(href="#" class="show-input" data-name="founding_date") founding_date
           .row
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
               p.font-weight-bold Physical address:
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
-              a(href="#") address_1, address_2
+              a(href="#" class="show-input" data-name="address_1_zip_code") address_1, address_2
                 br
                 |  City, State  zip_code
           .row
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
               p.font-weight-bold Website address:
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
-              a(href="#") issuer_legal_name
+              a(href="#" class="show-input" data-name="issuer_legal_name") issuer_legal_name
         .one-block.m-b-1
           h3.font-weight-bold.m-t-0.m-b-0.pb10 
             u Intermediary Information
@@ -195,7 +195,7 @@ section.formc-review
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
               p.font-weight-bold Type of security offered:
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
-              a(href="#") security_type
+              a(href="#" class="show-input" data-name="security_type") security_type
           .row
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
               p.font-weight-bold Voting rights:
@@ -205,42 +205,42 @@ section.formc-review
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
               p.font-weight-bold Minimum target number of securities being offered:
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
-              a(href="#") min_number_of_shares
+              a(href="#" class="show-input" data-name="min_number_of_shares") min_number_of_shares
           .row
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
               p.font-weight-bold Price of security:
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
-              a(href="#") price_per_share
+              a(href="#" class="show-input" data-name="price_per_share") price_per_share
           .row
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
               p.font-weight-bold Minimum target amount of offering:
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
-              a(href="#") minimum_raise
+              a(href="#" class="show-input" data-name="minimum_raise") minimum_raise
           .row
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
               p.font-weight-bold Oversubscription allowed:
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
-              a(href="#") [Yes]
+              a(href="#" class="show-input" data-name="oversubscription") Yes
           .row
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
               p.font-weight-bold Allocation method of oversubscription:
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
-              a(href="#") [Yes]
+              a(href="#" class="show-input" data-name="allocation_method") Yes
           .row
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
               p.font-weight-bold Oversubscription allowed:
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
-              a(href="#") [First Come First Served]
+              a(href="#" class="show-input" data-name="first_come_first_served") First Come First Served
           .row
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
               p.font-weight-bold Maximum amount of offering:
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
-              a(href="#") maximum_raise
+              a(href="#" class="show-input" data-name="maximum_raise") maximum_raise
           .row
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
               p.font-weight-bold Deadline to reach target amount:
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
-              a(href="#") close.date
+              a(href="#" class="show-input" data-name="close_date") close_date
         p.page-namder.text-xs-right.m-t-3 Page 
           b 3
           |  of 
@@ -249,7 +249,7 @@ section.formc-review
       section.page-formc-review.m-t-1
         p.small.text-xs-left FORM C Offering Material for
         p.small
-          a(href="#").link-1 [issuer_short_name]* 
+          a(href="#" class="show-input" data-name="issuer_short_name").link-1 issuer_short_name
           |  as Issuer
         h2.text-uppercase.text-xs-center.font-weight-bold INTRODUCTORY NOTICES
         h3.font-weight-bold.m-t-0.m-b-0.pb10 
@@ -257,30 +257,30 @@ section.formc-review
         p.pb10 This offering material, including all the exhibits attached hereto (collectively, the 
           u “Material”
           |  ) describes the terms relating to an offer and sale of securities to qualified investors consistent with the rules and regulations of Regulation Crowdfunding (17 CFR §227).
-          a(href="#") [issuer_legal_name]
+          a(href="#" class="show-input" data-name="issuer_legal_name") issuer_legal_name
           |  ,a 
-          a(href="#")  [jurisdiction_of_organization] [Corporate_Structure]
+          a(href="#" class="show-input" data-name="jurisdiction_of_organization")  jurisdiction_of_organization Corporate_Structure
           |  (the “Company”), is offering up to
-          a(href="#") [max_number_of_shares] 
-          |  shares of 
-          a(href="#") [security_type] 
+          a(href="#" class="show-input" data-name="max_number_of_shares") max_number_of_shares
+          |   shares of 
+          a(href="#" class="show-input" data-name="security_type") security_type 
           |  (the 
           u “Shares”)
           |  at an offering price of $
-          a(href="#") [price_per_share] 
+          a(href="#" class="show-input" data-name="price_per_share") price_per_share 
           |  per Share for a maximum aggregate offering price of $ 
-          a(href="#") [minimum_raise].
+          a(href="#" class="show-input" data-name="minimum_raise") minimum_raise.
         p.pb10 The Company has established a minimum offering of at least 
-          a(href="#") [min_number_of_shares] 
+          a(href="#" class="show-input" data-name="min_number_of_shares") min_number_of_shares 
           |  Shares for a minimum aggregate offering price of $ 
-          a(href="#") [minimum_raise] 
+          a(href="#" class="show-input" data-name="minimum_raise") minimum_raise 
           | prior to 
-          a(href="#") [close.date] 
+          a(href="#" class="show-input" data-name="close_date") close.date 
           |  (the 
           u “Offering”
           |  ).  If the sum of the investment commitments does not equal or exceed this minimum target amount at the Offering deadline, no securities will be sold in the Offering, investment commitments will be cancelled and committed funds will be returned. There can be no assurance that the minimum number of the Shares offered will be subscribed for and therefore these if no guarantee that this Offering will be completed.
         p.pb10 The minimum subscription by an investor is a $
-          a(href="#") [minimum_incriment] 
+          a(href="#" class="show-input" data-name="minimum_incriment") minimum_incriment 
           |  investment.  Each investor interested in participating in this Offering must register at 
           a(href="www.GrowthFountain.com").link-2 www.GrowthFountain.com.
           |  The website GrowthFountain.com (the 
@@ -303,7 +303,7 @@ section.formc-review
       section.page-formc-review.m-t-1
         p.small.text-xs-left FORM C Offering Material for
         p.small.pb10
-          a(href="#").link-1 [issuer_short_name]* 
+          a(href="#" class="show-input" data-name="issuer_short_name").link-1 issuer_short_name 
           |  as Issuer
         p.pb10 dispose of the Shares.  This Material contains significant additional disclosure of investment risks to be reviewed by each potential investor.  Each investor should review all pf the risks related to this Offering prior to making a commitment to invest in the Shares.
         h3.font-weight-bold.m-t-0.m-b-0.pb10 
@@ -314,7 +314,7 @@ section.formc-review
         h3.font-weight-bold.m-t-0.m-b-0.pb10 
           u Changes Are Possible In Certain Circumstances
         p.pb10 The Company reserves the right to modify any of the terms of the Offering at any time before the Offering closes. However, if any material changes are made, each investor will be notified and will be required to reconfirm their investment commitment within 5 days of such notice or their entire investment commitment shall be cancelled. Investors are also given the right to terminate an investment at any time prior to 48 hours from a notified closing date.  Additional details on the procedures involved with this Offering are contained later in this Material.  Additional information relating to this Offering, including communication channels allowing investors to pose questions and receive answers, is available through the Intermediary on the Platform at GrowthFountain.com/
-          a(href="#") campaign.link
+          a(href="#" class="show-input" data-name="campaign_link") campaign.link
         p.page-namder.text-xs-right.m-t-3 Page 
           b 5
           |  of 
@@ -323,33 +323,33 @@ section.formc-review
       section.page-formc-review.m-t-1
         p.small.text-xs-left FORM C Offering Material for
         p.small.pb10
-          a(href="#").link-1 [issuer_short_name]* 
+          a(href="#" class="show-input" data-name="issuer_short_name").link-1 issuer_short_name
           |  as Issuer
         h2.text-uppercase.text-xs-center.font-weight-bold DESCRIPTION OF THE ISSUER’S BUSINESS
         h3.font-weight-bold.m-t-0.m-b-0.pb10 
           u The Company
         p.pb10
-          a(href="#") [issuer_legal_name]
+          a(href="#" class="show-input" data-name="issuer_legal_name") issuer_legal_name
           | , was organized on 
-          a(href="#") [founding_date]
+          a(href="#" class="show-input" data-name="founding_date") founding_date
           | , as a 
-          a(href="#") [jurisdiction_of_organization] 
-          a(href="#") [Corporate_Structure]. 
+          a(href="#" class="show-input" data-name="jurisdiction_of_organization") jurisdiction_of_organization
+          a(href="#" class="show-input" data-name="сorporate_Structure") Corporate_Structure.
           |  The Company’s headquarters is located 
-          a(href="#") address_1, address_2, city, state, zip_code.  
+          a(href="#" class="show-input" data-name="address_1_zip_code") address_1, address_2, city, state, zip_code.
           |  The Company’s website is 
-          a(href="#")  [website].
+          a(href="#" class="show-input" data-name="website")  website.
         h3.font-weight-bold.m-t-0.m-b-0.pb10 
           u Business Overview
         p.p-l-2.pb10 
-            a(href="#") [pitch].
+            a(href="#" class="show-input" data-name="pitch") pitch.
         p.p-l-2.pb10
-            a(href="#") [business_model].
+            a(href="#" class="show-input" data-name="business_model") business_model.
         h3.font-weight-bold.m-t-0.m-b-0.pb10 
           u Business Plan
         p.p-l-2.pb10 Please refer to the copy of the Company’s business plan which is attached as Exhibit A hereto.
         p.p-l-2.pb10
-            a(href="#") [description].
+            a(href="#" class="show-input" data-name="description") description.
         p.page-namder.text-xs-right.m-t-3 Page 
           b 6
           |  of 
@@ -358,16 +358,16 @@ section.formc-review
       section.page-formc-review.m-t-1
         p.small.text-xs-left FORM C Offering Material for
         p.small.pb10
-          a(href="#").link-1 [issuer_short_name]* 
+          a(href="#" class="show-input" data-name="issuer_short_name").link-1 issuer_short_name
           |  as Issuer
         h2.text-uppercase.text-xs-center.font-weight-bold MANAGEMENT & MATERIAL PERSONS
         p.pb10 Specific biographical information on each of the Company’s officers and members of its Board of Directors of is attached as Exhibit D.  Exhibit D contains information on the last three years of employment and supplements the information summarized below.  The Company has confirmed that no officer, director or 20% shareholder would cause a violation of Rule 503(a) of the Crowdfunding Regulations (17 CFR §227.503).
         h3.font-weight-bold.m-t-0.m-b-0.pb10 
           u Number of Total Employees
         p.p-l-2 Full time employees: 
-          a(href="#") [full_time_employee]
+          a(href="#" class="show-input" data-name="full_time_employee") full_time_employee
         p.p-l-2.pb10 Part time employees: 
-          a(href="#") [part_time_employee]
+          a(href="#" class="show-input" data-name="part_time_employee") part_time_employee
         h3.font-weight-bold.m-t-0.m-b-0.pb10 
           u Officers
         p.pb10 The following information has been provided by the Company as true and correct regarding each of the Company’s officers.  For purposes of this Form C, the term “officer” means a president, vice president, secretary, treasurer or principal financial officer, comptroller or principal accounting officer, and any person routinely performing similar functions.
@@ -381,43 +381,43 @@ section.formc-review
             tbody
               tr
                 td.text-xs-center
-                  a(href="#") Officer.1.first_name
+                  a(href="#" class="show-input" data-name="officer.1.first_name") Officer.1.first_name
                   br
-                  a(href="#") Officer.1.last_name
+                  a(href="#" class="show-input" data-name="officer.1.last_name") Officer.1.last_name
                 td.text-xs-center
-                  a(href="#") officer.1.start_date:
+                  a(href="#" class="show-input" data-name="officer.1.start_date") officer.1.start_date
                   br
-                  a(href="#") officer.1.end_date: 
+                  a(href="#" class="show-input" data-name="officer.1.end_date ") officer.1.end_date
                 td.text-xs-center
-                  a(href="#") officer.1.title,
+                  a(href="#" class="show-input" data-name="officer.1.title") officer.1.title
                   br
-                  a(href="#") officer.1.responsibilities,
+                  a(href="#" class="show-input" data-name="officer.1.responsibilities") officer.1.responsibilities
               tr
                 td.text-xs-center
-                  a(href="#") Officer.2.first_name 
+                  a(href="#" class="show-input" data-name="officer.2.first_name") Officer.2.first_name
                   br
-                  a(href="#") Officer.2.last_name
+                  a(href="#" class="show-input" data-name="officer.2.last_name") Officer.2.last_name
                 td.text-xs-center
-                  a(href="#") officer.2.start_date:
+                  a(href="#" class="show-input" data-name="officer.2.start_date") officer.2.start_date
                   br
-                  a(href="#") officer.2.end_date: 
+                  a(href="#" class="show-input" data-name="officer.2.end_date") officer.2.end_date
                 td.text-xs-center
-                  a(href="#") officer.2.title,
+                  a(href="#" class="show-input" data-name="officer.2.title") officer.2.title
                   br
-                  a(href="#") officer.2.responsibilities,
+                  a(href="#" class="show-input" data-name="officer.2.responsibilities") officer.2.responsibilities
               tr
                 td.text-xs-center
-                  a(href="#") Officer.3.first_name 
+                  a(href="#" class="show-input" data-name="officer.3.first_name ") Officer.3.first_name
                   br
-                  a(href="#") Officer.3.last_name
+                  a(href="#" class="show-input" data-name="officer.3.last_name") Officer.3.last_name
                 td.text-xs-center
-                  a(href="#") officer.3.start_date:
+                  a(href="#" class="show-input" data-name="officer.3.start_date") officer.3.start_date
                   br
-                  a(href="#") officer.3.end_date: 
+                  a(href="#" class="show-input" data-name="officer.3.end_date ") officer.3.end_date
                 td.text-xs-center
-                  a(href="#") officer.3.title,
+                  a(href="#" class="show-input" data-name="officer.3.title") officer.3.title
                   br
-                  a(href="#") officer.3.responsibilities,
+                  a(href="#" class="show-input" data-name="officer.3.responsibilities") officer.3.responsibilities
         h3.font-weight-bold.m-t-0.m-b-0.pb10 
           u Board of Directors
         p.pb10 The following information has been provided by the Company as true and correct regarding each of the Company’s directors (and any person performing a similar function):
@@ -431,43 +431,43 @@ section.formc-review
             tbody
               tr
                 td.text-xs-center
-                  a(href="#") director.1.first_name 
+                  a(href="#" class="show-input" data-name="director.1.first_name") director.1.first_name
                   br
-                  a(href="#") director.1.last_name
+                  a(href="#" class="show-input" data-name="director.1.last_name") director.1.last_name
                 td.text-xs-center
-                  a(href="#") Director.1.service_start 
+                  a(href="#" class="show-input" data-name="director.1.service_start ") Director.1.service_start
                   br
-                  a(href="#") Director.1.service_end
+                  a(href="#" class="show-input" data-name="director.1.service_end") Director.1.service_end
                 td.text-xs-center
-                  a(href="#") Director.1.occupation, 
+                  a(href="#" class="show-input" data-name="director.1.occupation") Director.1.occupation
                   br
-                  a(href="#") director.1.employer, director.1.title
+                  a(href="#" class="show-input" data-name="director.1.employer") director.1.employer, director.1.title
               tr
                 td.text-xs-center
-                  a(href="#") director.2.first_name 
+                  a(href="#" class="show-input" data-name="director.2.first_name ") director.2.first_name
                   br
-                  a(href="#") director.2.last_name
+                  a(href="#" class="show-input" data-name="director.2.last_name") director.2.last_name
                 td.text-xs-center
-                  a(href="#") Director.2.service_start 
+                  a(href="#" class="show-input" data-name="director.2.service_start ") Director.2.service_start
                   br
-                  a(href="#") Director.2.service_end
+                  a(href="#" class="show-input" data-name="director.2.service_end") Director.2.service_end
                 td.text-xs-center
-                  a(href="#") Director.2.occupation, 
+                  a(href="#" class="show-input" data-name="director.2.occupation") Director.2.occupation,
                   br
-                  a(href="#") director.2.employer, director.1.title
+                  a(href="#" class="show-input" data-name="director.2.employer") director.2.employer, director.1.title
               tr
                 td.text-xs-center
-                  a(href="#") director.3.first_name 
+                  a(href="#" class="show-input" data-name="director.3.first_name ") director.3.first_name
                   br
-                  a(href="#") director.3.last_name
+                  a(href="#" class="show-input" data-name="director.3.last_name") director.3.last_name
                 td.text-xs-center
-                  a(href="#") Director.3.service_start 
+                  a(href="#" class="show-input" data-name="director.3.service_start") Director.3.service_start
                   br
-                  a(href="#") Director.3.service_end
+                  a(href="#" class="show-input" data-name="director.3.service_end") Director.3.service_end
                 td.text-xs-center
-                  a(href="#") Director.3.occupation, 
+                  a(href="#" class="show-input" data-name="director.3.occupation") Director.3.occupation,
                   br
-                  a(href="#") director.3.employer, director.1.title
+                  a(href="#" class="show-input" data-name="director.3.employer") director.3.employer, director.1.title
         p.page-namder.text-xs-right.m-t-3 Page 
           b 7
           |  of 
@@ -476,7 +476,7 @@ section.formc-review
       section.page-formc-review.m-t-1
         p.small.text-xs-left FORM C Offering Material for
         p.small.pb10
-          a(href="#").link-1 [issuer_short_name]* 
+          a(href="#" class="show-input" data-name="issuer_short_name").link-1 issuer_short_name
           |  as Issuer
         h3.font-weight-bold.m-t-0.m-b-0.pb10 
           u 20% Holders
@@ -492,26 +492,26 @@ section.formc-review
             tbody
               tr
                 td.text-xs-center
-                  a(href="#") Holder.1.first_name 
+                  a(href="#" class="show-input" data-name="holder.1.first_name") Holder.1.first_name
                   br
-                  a(href="#") Holder.1.last_name
+                  a(href="#" class="show-input" data-name="holder.1.last_name") Holder.1.last_name
                 td.text-xs-center
-                  a(href="#") Holder.1.class_shares
+                  a(href="#" class="show-input" data-name="holder.1.class_shares") Holder.1.class_shares
                 td.text-xs-center
-                  a(href="#") Holder.1.number_shares
+                  a(href="#" class="show-input" data-name="holder.1.number_shares") Holder.1.number_shares
                 td.text-xs-center
-                  a(href="#") Holder.1.voting_power
+                  a(href="#" class="show-input" data-name="holder.1.voting_power") Holder.1.voting_power
               tr
                 td.text-xs-center
-                  a(href="#") Holder.2.first_name 
+                  a(href="#" class="show-input" data-name="holder.2.first_name") Holder.2.first_name
                   br
-                  a(href="#") Holder.2.last_name
+                  a(href="#" class="show-input" data-name="holder.2.last_name") Holder.2.last_name
                 td.text-xs-center
-                  a(href="#") Holder.2.class_shares
+                  a(href="#" class="show-input" data-name="holder.2.class_shares") Holder.2.class_shares
                 td.text-xs-center
-                  a(href="#") Holder.2.number_shares
+                  a(href="#" class="show-input" data-name="holder.2.number_shares") Holder.2.number_shares
                 td.text-xs-center
-                  a(href="#") Holder.2.voting_power
+                  a(href="#" class="show-input" data-name="holder.2.voting_power") Holder.2.voting_power
 
         p.pb10 The Company has confirmed that information above is accurate for the period spanning 120 days prior to the date of filing of this Material.   For any calculation above of total voting power, all securities are included for which the person directly or indirectly has or shares the voting power, which includes the power to vote or to direct the voting of such securities. If the person has the right to acquire voting power of such securities within 60 days, including through the exercise of any option, warrant or right, the conversion of a security, or other arrangement, or if securities are held by a member of the family, through corporations or partnerships, or otherwise in a manner that would allow a person to direct or control the voting of the securities (or share in such direction or control — as, for example, a co-trustee) they are included as being “beneficially owned.” For any calculation of outstanding voting equity securities, all outstanding options are assumed to be exercised and all outstanding convertible securities converted.
         h3.font-weight-bold.m-t-0.m-b-0.pb10 
@@ -526,7 +526,7 @@ section.formc-review
       section.page-formc-review.m-t-1
         p.small.text-xs-left FORM C Offering Material for
         p.small.pb10
-          a(href="#").link-1 [issuer_short_name]* 
+          a(href="#" class="show-input" data-name="issuer_short_name").link-1 issuer_short_name
           |  as Issuer
         p.pb10 LOGIC: if related.answer_toggle = yes then:
         p.pb10 The Company is disclosing certain related party transactions below arising from any of the transactions occurring in the Company’s last fiscal year.  As used here, the term “related party” includes: (1) any director or officer of the Company; (2) any person who is, as of the most recent practicable date, the beneficial owner of twenty percent (20%) or more of the Company’s outstanding voting equity securities, calculated on the basis of voting power; (3) if the Company was incorporated or organized within the past three years, any promoter of the Company; or (4) any immediate family member of any of the foregoing persons.  Only those transactions are listed in which the related party had or is expected to have a direct or indirect material interest in such transaction, and the list includes transactions with entities under common control with the issuer.  As used here, the term “transaction” includes, but is not limited to, any financial transaction, arrangement or relationship (including any indebtedness or guarantee of indebtedness) or any series of similar transactions, arrangements or relationships.  Where it is not practicable to state the approximate amount of the interest, the amount involved in the transaction has been approximated.
@@ -542,13 +542,13 @@ section.formc-review
             tbody
               tr
                 td.text-xs-center
-                  a(href="#") specified_person
+                  a(href="#" class="show-input" data-name="specified_person") specified_person
                 td.text-xs-center
-                  a(href="#") relationship_to_issuer
+                  a(href="#" class="show-input" data-name="relationship_to_issuer") relationship_to_issuer
                 td.text-xs-center
-                  a(href="#") nature_of_interest
+                  a(href="#" class="show-input" data-name="nature_of_interest") nature_of_interest
                 td.text-xs-center
-                  a(href="#") amount_of_interest
+                  a(href="#" class="show-input" data-name="amount_of_interest") amount_of_interest
         p.pb10 The term “immediate family member” includes any child, stepchild, grandchild, parent, stepparent, grandparent, spouse or spousal equivalent, sibling, mother-in-law, father-in-law, son-in-law, daughter-in-law, brother-in-law, or sister-in-law of the person, and includes adoptive relationships. The term “spousal equivalent” means a co-habitant occupying a relationship generally equivalent to that of a spouse.
         p.page-namder.text-xs-right.m-t-3 Page 
           b 9
@@ -558,13 +558,13 @@ section.formc-review
       section.page-formc-review.m-t-1
         p.small.text-xs-left FORM C Offering Material for
         p.small.pb10
-          a(href="#").link-1 [issuer_short_name]* 
+          a(href="#" class="show-input" data-name="issuer_short_name").link-1 issuer_short_name
           |  as Issuer
         h2.text-uppercase.text-xs-center.font-weight-bold PROCEDURE FOR PURCHASING SECURITIES
         h3.font-weight-bold.m-t-0.m-b-0.pb10 
           u Minimum Commitment and Closing Date
         p.pb10 To participate in this Offering, each investor must purchase securities in a minimum dollar amount equal to $
-          a(href="#") [minimum_incriment]
+          a(href="#" class="show-input" data-name="minimum_incriment") minimum_incriment
           |  The securities are being offered until [close.date], unless notice is provided to investors at least five (5) business days prior to any change in such date.  The Company reserves the right to change the closing date with such notice and with a minimum twenty-one (21) day period in which to carry out the offering.
         h3.font-weight-bold.m-t-0.m-b-0.pb10 
           u Account Opening Requirement
@@ -580,7 +580,7 @@ section.formc-review
       section.page-formc-review.m-t-1
         p.small.text-xs-left FORM C Offering Material for
         p.small.pb10
-          a(href="#").link-1 [issuer_short_name]* 
+          a(href="#" class="show-input" data-name="issuer_short_name").link-1 issuer_short_name
           |  as Issuer
         p.pb10 commitments collectively, the issuer would be able to close the transaction on the original target closing date or an earlier date with at least five business days prior notice to the investors; and (5) the funds would be released by the escrow agent to the issuer, less any required fees sent to the Intermediary, and the issuer would issue the securities to the investor.
         h3.font-weight-bold.m-t-0.m-b-0.pb10 
@@ -600,7 +600,7 @@ section.formc-review
       section.page-formc-review.m-t-1
         p.small.text-xs-left FORM C Offering Material for
         p.small.pb10
-          a(href="#").link-1 [issuer_short_name]* 
+          a(href="#" class="show-input" data-name="issuer_short_name").link-1 issuer_short_name
           |  as Issuer
         p.pb10 LOGIC: if transfer_method = full service then:
         p.pb10 The issuer will use a full-service third-party transfer agent to handle the delivery of all certificates.  In addition, the fully executed Subscription Agreement relating to the Offering will serve as a written record of the transaction and will be available on the Platform via the investor dashboard.  The investor will also receive email confirmation of the successful closing of the Offering which will confirm the number of securities purchased and the amount paid.
@@ -624,7 +624,7 @@ section.formc-review
       section.page-formc-review.m-t-1
         p.small.text-xs-left FORM C Offering Material for
         p.small.pb10
-          a(href="#").link-1 [issuer_short_name]* 
+          a(href="#" class="show-input" data-name="issuer_short_name").link-1 issuer_short_name
           |  as Issuer
         p.pb10 execution of a Subscription Agreement available on the Platform, which contains, among other things, certain representations, warranties and covenants.  The Company must secure investor commitments that equal or exceed the minimum target amount for the Offering prior to the applicable closing date, or the Offering will be canceled and investor funds committed in connection with the Offering will be returned.  An investor commitment is conditional after being made, but only up until the time that is 48 hours before the applicable closing date.  For the 48-hour period prior to the applicable closing date, investor commitments may not be cancelled by the investor but in certain circumstances may still be returned (e.g. if the target minimum amount is not met).   As a reminder, investors are required to reconfirm their investment commitment after receiving notice of a material change to the Offering.  If an investor takes no action to reconfirm the investment commitment after the Company notifies the investor of a material change, the commitment will be cancelled and funds relating to that Offering returned. 
         h3.font-weight-bold.m-t-0.m-b-0.pb10 
@@ -639,7 +639,7 @@ section.formc-review
       section.page-formc-review.m-t-1
         p.small.text-xs-left FORM C Offering Material for
         p.small.pb10
-          a(href="#").link-1 [issuer_short_name]* 
+          a(href="#" class="show-input" data-name="issuer_short_name").link-1 issuer_short_name
           |  as Issuer
         h2.text-uppercase.text-xs-center.font-weight-bold CAPITAL STRUCTURE OF THE ISSUER
         h3.font-weight-bold.m-t-0.m-b-0.pb10 
@@ -655,94 +655,87 @@ section.formc-review
                 th.text-xs-center Voting Rights
             tbody
               tr
-                td.text-xs-center
-                  a(href="#") cap_type
                 td
-                  a(href="#") cap_type_XXX outstanding
+                  a(href="#" class="show-input" data-name="cap_type") cap_type
                 td
-                  a(href="#") cap_type_XXX outstanding
+                  a(href="#" class="show-input" data-name="cap_type_XXX_outstanding_1") cap_type_XXX outstanding
                 td
-                  a(href="#") cap_type_XXX_voting
+                  a(href="#" class="show-input" data-name="cap_type_XXX_outstanding_1-2") cap_type_XXX outstanding
+                td
+                  a(href="#" class="show-input" data-name="cap_type_XXX_voting_1") cap_type_XXX_voting
               tr
-                td.text-xs-center
-                  a(href="#") Common Stock
                 td
-                  a(href="#") cap_type_XXX_authorized
+                  a(href="#" class="show-input" data-name="common_stock") Common Stock
                 td
-                  a(href="#") cap_type_XXX outstanding
+                  a(href="#" class="show-input" data-name="cap_type_XXX_authorized_2") cap_type_XXX_authorized
                 td
-                  a(href="#") cap_type_XXX_voting
+                  a(href="#" class="show-input" data-name="cap_type_XXX_outstanding_2") cap_type_XXX outstanding
+                td
+                  a(href="#" class="show-input" data-name="cap_type_XXX_voting_2") cap_type_XXX_voting
               tr
-                td.text-xs-center
-                  a(href="#") Preferred Stock
                 td
-                  a(href="#") cap_type_XXX_authorized
+                  a(href="#" class="show-input" data-name="preferred_stock") Preferred Stock
                 td
-                  a(href="#") cap_type_XXX outstanding
+                  a(href="#" class="show-input" data-name="cap_type_XXX_authorized_3") cap_type_XXX_authorized
                 td
-                  a(href="#") cap_type_XXX_voting
+                  a(href="#" class="show-input" data-name="cap_type_XXX_outstanding_3") cap_type_XXX_outstanding
+                td
+                  a(href="#" class="show-input" data-name="cap_type_XXX_voting_3") cap_type_XXX_voting
               tr
-                td.text-xs-center
-                  a(href="#") Debt
                 td
-                  a(href="#") cap_type_XXX_authorized
+                  a(href="#" class="show-input" data-name="debt") Debt
                 td
-                  a(href="#") cap_type_XXX outstanding
+                  a(href="#" class="show-input" data-name="cap_type_XXX_authorized_4") cap_type_XXX_authorized
                 td
-                  a(href="#") cap_type_XXX_voting
+                  a(href="#" class="show-input" data-name="cap_type_XXX_outstanding_4") cap_type_XXX outstanding
+                td
+                  a(href="#" class="show-input" data-name="cap_type_XXX_voting_4") cap_type_XXX_voting
               tr
-                td.text-xs-center
-                  a(href="#") Warrants
                 td
-                  a(href="#") cap_type_XXX_authorized
+                  a(href="#" class="show-input" data-name="warrants") Warrants
                 td
-                  a(href="#") cap_type_XXX outstanding
+                  a(href="#" class="show-input" data-name="cap_type_XXX_authorized_5") cap_type_XXX_authorized
                 td
-                  a(href="#") cap_type_XXX_voting
+                  a(href="#" class="show-input" data-name="cap_type_XXX_outstanding_5") cap_type_XXX outstanding
+                td
+                  a(href="#" class="show-input" data-name="cap_type_XXX_voting_5") cap_type_XXX_voting
               tr
-                td.text-xs-center
-                  a(href="#") Options
                 td
-                  a(href="#") cap_type_XXX_authorized
+                  a(href="#" class="show-input" data-name="options") Options
                 td
-                  a(href="#") cap_type_XXX outstanding
+                  a(href="#" class="show-input" data-name="cap_type_XXX_authorized_6") cap_type_XXX_authorized
                 td
-                  a(href="#") cap_type_XXX_voting
+                  a(href="#" class="show-input" data-name="cap_type_XXX_outstanding_6") cap_type_XXX outstanding
+                td
+                  a(href="#" class="show-input" data-name="cap_type_XXX_voting_6") cap_type_XXX_voting
               tr
-                td.text-xs-center
-                  a(href="#") Other1
                 td
-                  a(href="#") cap_type_XXX_authorized
+                  a(href="#" class="show-input" data-name="other_1") Other1
                 td
-                  a(href="#") cap_type_XXX outstanding
+                  a(href="#" class="show-input" data-name="cap_type_XXX_authorized_7") cap_type_XXX_authorized
                 td
-                  a(href="#") cap_type_XXX_voting
+                  a(href="#" class="show-input" data-name="cap_type_XXX_outstanding_7") cap_type_XXX outstanding
+                td
+                  a(href="#" class="show-input" data-name="cap_type_XXX_voting_7") cap_type_XXX_voting
               tr
-                td.text-xs-center
-                  a(href="#") Other2
                 td
-                  a(href="#") cap_type_XXX_authorized
+                  a(href="#" class="show-input" data-name="other_2") Other2
                 td
-                  a(href="#") cap_type_XXX outstanding
+                  a(href="#" class="show-input" data-name="cap_type_XXX_authorized_8") cap_type_XXX_authorized
                 td
-                  a(href="#") cap_type_XXX_voting
+                  a(href="#" class="show-input" data-name="cap_type_XXX_outstanding_8") cap_type_XXX outstanding
+                td
+                  a(href="#" class="show-input" data-name="cap_type_XXX_voting_8") cap_type_XXX_voting
         h3.font-weight-bold.m-t-0.m-b-0.pb10 
           u Description of Securities, Material Terms and Other Rights:
         p.pb10 LOGIC: The description for each separate security that is listed above appears below
-        p
-          a(href="#") cap_type_common_description
-        p
-          a(href="#") cap_type_perferred_description
-        p
-          a(href="#") cap_type_debt_description
-        p
-          a(href="#") cap_type_warrants_description
-        p
-          a(href="#") cap_type_options_description
-        p
-          a(href="#") cap_type_other.1_description 
-        p
-          a(href="#") cap_type_other.2_description
+        p.pb10 cap_type_common_description
+        p.pb10 cap_type_perferred_description
+        p.pb10 cap_type_debt_description
+        p.pb10 cap_type_warrants_description
+        p.pb10 cap_type_options_description
+        p.pb10 cap_type_other.1_description 
+        p.pb10 cap_type_other.2_description
         p.p-t-1 rights_toggle 
         p.page-namder.text-xs-right.m-t-3 Page 
           b 14
@@ -752,7 +745,7 @@ section.formc-review
       section.page-formc-review.m-t-1
         p.small.text-xs-left FORM C Offering Material for
         p.small.pb10
-          a(href="#").link-1 [issuer_short_name]* 
+          a(href="#" class="show-input" data-name="issuer_short_name").link-1 issuer_short_name 
           |  as Issuer
         h2.text-uppercase.text-xs-center.font-weight-bold DESCRIPTION OF SECURITIES OFFERED
         h3.font-weight-bold.m-t-0.m-b-0.pb10 
@@ -764,7 +757,7 @@ section.formc-review
         h3.font-weight-bold.m-t-0.m-b-0.pb10 
           u Voting Rights and Limitations
         p.pb10 The Shares have no voting rights and will be excluded from all voting.  Additionally, the Shares have no liquidation or preference rights. 
-          a(href="#") modify_method
+          a(href="#" class="show-input" data-name="modify_method") modify_method
         h3.font-weight-bold.m-t-0.m-b-0.pb10 
           u Restrictions on Transfer of Shares
         p.pb10 Consistent with Subpart E of Regulation Crowdfunding (17 CFR 501), securities issued in this Offering pursuant to section 4(a)(6) of the Securities Act (15 U.S.C. 77d(a)(6)) may not be transferred by any purchaser of such securities during the one-year period beginning when the securities were issued, unless such securities are transferred to a limited group including (a) to the Company, (b) to an accredited investor, (c) as part of an offering registered with the SEC, or (d) to a family member, trust or equivalent.  In connection with any participation in this Offering, each potential investor may be required to agree not to dispose of or otherwise sell or transfer any of the Shares, until there is in effect a registration statement under the Securities Act covering such proposed disposition or if such disposition will not require registration under the Securities Act.
@@ -776,27 +769,27 @@ section.formc-review
       section.page-formc-review.m-t-1
         p.small.text-xs-left FORM C Offering Material for
         p.small.pb10
-          a(href="#").link-1 [issuer_short_name]* 
+          a(href="#" class="show-input" data-name="issuer_short_name").link-1 issuer_short_name
           |  as Issuer
         h3.font-weight-bold.m-t-0.m-b-0.pb10 
           u Distinguishing the Securities
         p.pb10 Differences between the securities being offered and the other classes of securities:
         p.p-l-2.pb10
-          a(href="#") security_differences
+          a(href="#" class="show-input" data-name="security_differences") security_differences
         p.pb10 Ability of one class of security to materially limit, dilute or qualify the rights of another class:
         p.p-l-2.pb10
-          a(href="#") rights_of_securities_being
+          a(href="#" class="show-input" data-name="rights_of_securities_being") rights_of_securities_being
         p.pb10 Ability of any principal shareholders to affect the purchasers of the securities being offered:
         p.p-l-2.pb10
-          a(href="#") principal_shareholders_affect
+          a(href="#" class="show-input" data-name="principal_shareholders_affect") principal_shareholders_affect
         h3.font-weight-bold.m-t-0.m-b-0.pb10 
           u Valuation of the Securities
         p.pb10 The offering price of the securities in this Offering has been established by the Company and does not necessarily bear any specific relation to the assets, book value or potential earnings of the Company or any other recognized criteria of value. The Shares have not been registered under the Securities Exchange Act of 1934 and have not been traded or quoted on any exchange or quotation system. There is no public market in which shareholders may sell their Shares, and there can be no assurance given that such a market will ever develop. The securities offered hereby are restricted by law and the ability to transfer and interests in the Shares is severely limited.
         p.pb10 Method by which the offered securities are valued:
         p.p-l-2.pb10
-          a(href="#") valuation_determine
+          a(href="#" class="show-input" data-name="valuation_determine") valuation_determine
         p.p-l-2.pb10
-          a(href="#") valuation_determine_describe
+          a(href="#" class="show-input" data-name="valuation_determine_describe") valuation_determine_describe
         p.pb10 The price of each Share was determined by the Company in good faith based on its own assessment of its current position and the possibility of future growth.  The Company has taken into account its own internal calculation of potential future revenue and based on such forward looking estimates has created a valuation that reflects the multiple or premium determined by the Company to be appropriate in this situation.  The Company acknowledges that the valuation bears no relationship to established value criteria such as net tangible assets or a multiple of earnings per share.  The Company accepts that some investors may conclude that the current valuation is not an indication of the actual value of the Company.
         p LOGIC: if valuation_determine = use_BIZcalculator then:
         p.page-namder.text-xs-right.m-t-3 Page 
@@ -807,7 +800,7 @@ section.formc-review
       section.page-formc-review.m-t-1
         p.small.text-xs-left FORM C Offering Material for
         p.small.pb10
-          a(href="#").link-1 [issuer_short_name]* 
+          a(href="#" class="show-input" data-name="issuer_short_name").link-1 issuer_short_name
           |  as Issuer
         p.pb10 The price of each Share was determined by the Company in good faith based on its own assessment of its current position and the benchmarking reference range determined by the use of certain business calculators provided by the Intermediary.  Such calculators use the data provided by the Company and do not reflect any advice or recommendation on the part of the Intermediary.  In working with the calculators, the Company considered its current capital structure, including current debt and cash, and assembled an income statement from the last twelve months including an estimate of net income and EBITDA.  The Company also made projections for the next twelve months along with a similar estimate of net income and EBITDA.
         p.pb10 The Company then looked at potential peers that trade in public markets and considered a variety of metrics, including but not limited to Price/Sales, Enterprise Value/EBITDA and Price/Equity.  The Company applied a 20% liquidity discount to publically traded peers and utilized an average of different valuation metrics to derive a benchmarking range for the Company’s ultimate value.
@@ -821,22 +814,22 @@ section.formc-review
       section.page-formc-review.m-t-1
         p.small.text-xs-left FORM C Offering Material for
         p.small.pb10
-          a(href="#").link-1 [issuer_short_name]* 
+          a(href="#" class="show-input" data-name="issuer_short_name").link-1 issuer_short_name
           |  as Issuer
         h2.text-uppercase.text-xs-center.font-weight-bold USE OF PROCEEDS
         p.pb10 The Company intends to apply the proceeds of this Offering substantially as set forth herein, subject to reallocation by management as it deems in the best interests of the Company. The actual use of proceeds of this Offering is subject to the discretion of management and the board of directors, and may include general corporate purposes.
         p.pb10
-          a(href="#") intended_use_of_proceeds 
+          a(href="#" class="show-input" data-name="intended_use_of_proceeds") intended_use_of_proceeds
         h3.font-weight-bold.m-t-0.m-b-0.pb10 
           u Assuming A Minimum Raise
         p.pb10
-          a(href="#") use_of_net_proceeds_minimum 
+          a(href="#" class="show-input" data-name="use_of_net_proceeds_minimum") use_of_net_proceeds_minimum
         h3.font-weight-bold.m-t-0.m-b-0.pb10 
           u  Assuming A Maximum Raise
         p.pb10 [LOGIC: Exclude if no max raise]
         p.pb10 In the case that the Offering is oversubscribed and closes with the maximum amount achieved, the Company anticipates using the proceeds in the following manner: 
         p.pb10
-          a(href="#") use_of_net_proceeds_maximum 
+          a(href="#" class="show-input" data-name="use_of_net_proceeds_maximum") use_of_net_proceeds_maximum
         p.pb10 The following table reflects our anticipated estimated use of proceeds:
         .table-responsive.m-t-1
           table.table.table-bordered
@@ -865,37 +858,37 @@ section.formc-review
                   br
                   |  Broker Expenses
                 td.text-xs-center
-                  a(href="#") $28,000
+                  a(href="#" class="show-input" data-name="amount_1") $28,000
                 td.text-xs-center
-                  a(href="#") 7.00%
+                  a(href="#" class="show-input" data-name="proceeds_1") 7.00%
                 td.text-xs-center
-                  a(href="#") $70,000
+                  a(href="#" class="show-input" data-name="amount_2") $70,000
                 td.text-xs-center
-                  a(href="#") 7.00%
+                  a(href="#" class="show-input" data-name="proceeds_2") 7.00%
               tr
                 td Misc. Offering Costs 
                   br
                   | (Legal)
                 td.text-xs-center
-                  a(href="#") $4,500
+                  a(href="#" class="show-input" data-name="amount_1_1") $4,500
                 td.text-xs-center
-                  a(href="#") 1.13%
+                  a(href="#" class="show-input" data-name="proceeds_1_1") 1.13%
                 td.text-xs-center
-                  a(href="#") $4,500
+                  a(href="#" class="show-input" data-name="amount_2_1") $4,500
                 td.text-xs-center
-                  a(href="#") 0.45%
+                  a(href="#" class="show-input" data-name="proceeds_2_1") 0.45%
               tr
                 td Misc. Offering Costs 
                   br
                   | (Marketing)
                 td.text-xs-center
-                  a(href="#") $12,000
+                  a(href="#" class="show-input" data-name="amount_1_2") $12,000
                 td.text-xs-center
-                  a(href="#") 3.75%
+                  a(href="#" class="show-input" data-name="proceeds_1_2") 3.75%
                 td.text-xs-center
-                  a(href="#") $12,000
+                  a(href="#" class="show-input" data-name="amount_2_2") $12,000
                 td.text-xs-center
-                  a(href="#") 1.50%
+                  a(href="#" class="show-input" data-name="proceeds_2_2") 1.50%
               tr
                 td Misc. Offering Costs 
                   br
