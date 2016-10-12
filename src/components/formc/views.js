@@ -141,6 +141,7 @@ module.exports = {
 
             require('bootstrap-select/sass/bootstrap-select.scss');
             let selectPicker = require('bootstrap-select');
+
             let positionsHtml = require('./templates/snippets/positions.pug')({
               attr: _.extend(
                 {}, this.fields.positions
@@ -152,11 +153,9 @@ module.exports = {
               attr: _.extend(
                 {}, this.fields.business_experiences
               ),
-              name: 'positions',
+              name: 'business_experiences',
               value: {}
             });
-
-            console.log(positionsHtml);
 
             this.$el.html(
                 template({
@@ -171,28 +170,54 @@ module.exports = {
                 })
             );
             this.$el.find('.selectpicker').selectpicker();
-
         },
 
-        getSuccessUrl(data) {},
+        getSuccessUrl(data) {
+          debugger;
+        },
+
         submit: function(e) {
           var data = $(e.target).serializeJSON({ useIntKeysAsArrayIndex: true });
 
-          data['boarding_service_start_date'] = data.boarding_service_start_date__year && data.boarding_service_start_date__month
-            ? data.boarding_service_start_date__year + '-' + data.boarding_service_start_date__month + '-' + '01'
+          data['board_service_start_date'] = data.board_service_start_date__year && data.board_service_start_date__month
+            ? data.board_service_start_date__year + '-' + data.board_service_start_date__month + '-' + '01'
             : '';
-          delete data.boarding_service_start_date__month;
-          delete data.boarding_service_start_date__year;
-          data['boarding_service_end_date'] = data.boarding_service_end_date__year && data.boarding_service_end_date__month
-            ? data.boarding_service_end_date__year + '-' + data.boarding_service_end_date__month + '-' + '01'
+          delete data.board_service_start_date__month;
+          delete data.board_service_start_date__year;
+          data['board_service_end_date'] = data.board_service_end_date__year && data.board_service_end_date__month
+            ? data.board_service_end_date__year + '-' + data.board_service_end_date__month + '-' + '01'
             : '';
-          delete data.boarding_service_end_date__month;
-          delete data.boarding_service_end_date__year;
+          delete data.board_service_end_date__month;
+          delete data.board_service_end_date__year;
           data['employer_start_date'] = data.employer_start_date__year && data.employer_start_date__month
             ? data.employer_start_date__year + '-' + data.employer_start_date__month + '-' + '01'
             : '';
           delete data.employer_start_date__year;
           delete data.employer_start_date__month;
+          _(data.positions).each((el, i) => {
+            el.start_date_of_service = el.start_date_of_service__year && el.start_date_of_service__month
+              ? el.start_date_of_service__year + '-' + el.start_date_of_service__month + '-' + '01'
+              : '';
+            delete el.start_date_of_service__year;
+            delete el.start_date_of_service__month;
+            el.end_date_of_service = el.end_date_of_service__year && el.end_date_of_service__month
+              ? el.end_date_of_service__year + '-' + el.end_date_of_service__month + '-' + '01'
+              : '';
+            delete el.end_date_of_service__year;
+            delete el.end_date_of_service__month;
+          });
+          _(data.business_experiences).each((el, i) => {
+            el.start_date_of_service = el.start_date_of_service__year && el.start_date_of_service__month
+              ? el.start_date_of_service__year + '-' + el.start_date_of_service__month + '-' + '01'
+              : '';
+            delete el.start_date_of_service__year;
+            delete el.start_date_of_service__month;
+            el.end_date_of_service = el.end_date_of_service__year && el.end_date_of_service__month
+              ? el.end_date_of_service__year + '-' + el.end_date_of_service__month + '-' + '01'
+              : '';
+            delete el.end_date_of_service__year;
+            delete el.end_date_of_service__month;
+          });
           api.submitAction.call(this, e, data);
         },
     }, addSectionHelper.methods, menuHelper.methods)),

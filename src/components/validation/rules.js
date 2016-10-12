@@ -17,7 +17,7 @@ module.exports = {
   },
 
   messages: {
-    required: '{0} is required',
+    required: 'Is required',
     acceptance: '{0} must be accepted',
     min: '{0} must be greater than or equal to {1}',
     max: '{0} must be less than or equal to {1}',
@@ -81,7 +81,7 @@ module.exports = {
   // This can be specified as either a boolean value or a function that returns a boolean value
   required: function (name, rule, attr, data) {
     if (rule && this.hasValue(this.getData(data, name)) == false) {
-      throw this.format(this.messages.required, attr.label);
+      throw this.format(this.messages.required);
     }
   },
 

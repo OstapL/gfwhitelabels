@@ -1,4 +1,4 @@
-include ../../../../templates/mixins.pug
+include ../../../../templates/fields_mixins.pug
 
 mixin row(index)
 
@@ -6,12 +6,11 @@ mixin row(index)
     a(href="#" data-section=name data-index=index).delete-section
       i.fa.fa-times
 
-  - console.log('test test');
   div(data-index=index class=name)
     +fieldLabelText("position", _.extend({
       class1: 'col-lg-3 col-md-12 text-md-left m-b-0',
       class2: 'col-lg-9 col-md-12',
-      name: 'positions[' + index + ']["position"]',
+      name: 'positions[' + index + '][position]',
       label: 'Position',
       type: 'text',
       value: value[index] ? value[index].position : '',
@@ -22,19 +21,19 @@ mixin row(index)
       .col-lg-6.col-md-12
         .col-lg-6.text-lg-right.text-md-left.p-t-0
           label.p-t-0.m-b-0 Start Date of Service
-        .col-lg-6.p-t-0
+        #start_date_of_service.col-lg-6.p-t-0
           .row
             +fieldDateMonth("start_date_of_service", _.extend({
               class: 'col-lg-6 p-r-0',
               placeholder: 'MM',
-              name: 'positions[' + index + ']["start_date_of_service"]',
+              name: 'positions[' + index + '][start_date_of_service]',
               label: 'Start Date Of Service',
               value: value[index] ? value[index].start_date_of_service : ''
             }, attr.start_date_of_service))
             +fieldDateYear("start_date_of_service", _.extend({
               class: 'col-lg-6 p-r-0',
               placeholder: 'YYYY',
-              name: 'positions[' + index + ']["start_date_of_service"]',
+              name: 'positions[' + index + '][start_date_of_service]',
               label: 'End Date Of Service',
               value: value[index] ? value[index].start_date_of_service : ''
             }, attr.start_date_of_service))
@@ -42,18 +41,18 @@ mixin row(index)
       .col-lg-6.col-md-12.p-l-0
         .col-lg-6.text-lg-right.text-md-left.p-t-0
           label.p-t-0.m-b-0 End Date of Service
-        .col-lg-6.p-t-0
+        #end_date_of_service.col-lg-6.p-t-0
           .row
             +fieldDateMonth("end_date_of_service", _.extend({
               class: 'col-lg-6 p-r-0',
               placeholder: 'MM',
-              name: 'positions[' + index + ']["end_date_of_service"]',
+              name: 'positions[' + index + '][end_date_of_service]',
               value: value[index] ? value[index].end_date_of_service : '',
             }, attr.end_date_of_service))
             +fieldDateYear("end_date_of_service", _.extend({
               class: 'col-lg-6 p-r-0',
               placeholder: 'YYYY',
-              name: 'positions[' + index + ']["end_date_of_service"]',
+              name: 'positions[' + index + '][end_date_of_service]',
               value: value[index] ? value[index].end_date_of_service : '',
             }, attr.end_date_of_service))
 
