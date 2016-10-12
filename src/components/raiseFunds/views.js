@@ -909,7 +909,6 @@ module.exports = {
 
   perks: Backbone.View.extend(_.extend({
       events: _.extend({
-          // 'submit form': api.submitAction,
           'submit form': 'onSubmit',
           'click .onPreview': onPreviewAction,
           'click .submit_form': submitCampaign,
