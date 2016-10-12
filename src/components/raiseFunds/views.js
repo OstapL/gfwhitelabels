@@ -909,12 +909,39 @@ module.exports = {
 
   perks: Backbone.View.extend(_.extend({
       events: _.extend({
-          'submit form': api.submitAction,
+          // 'submit form': api.submitAction,
+          'submit form': 'onSubmit',
           'click .onPreview': onPreviewAction,
           'click .submit_form': submitCampaign,
         }, jsonActions.events, leavingConfirmationHelper.events),
       // urlRoot: serverUrl + Urls['campaign-list']() + '/perks',
       urlRoot: Urls['campaign-list']() + '/perks',
+
+      onSubmit(e) {
+        e.preventDefault();
+        let url = this.urlRoot;
+        let data = $(e.target).serializeJSON({ useIntKeysAsArrayIndex: true });
+        if(this.hasOwnProperty('model')) {
+          _.extend(this.model, data);
+          data = Object.assign({}, this.model)
+        }
+        let type = 'POST';
+        if(data.hasOwnProperty('id')) {
+          url += '/' + data.id;
+          delete data.id;
+          type = e.target.dataset.method;
+        }
+
+        app.showLoading();
+        api.makeRequest(url, type, data).then((data) => {
+          this.model = data;
+          app.hideLoading()
+        }).
+        fail((xhr, status, text) => {
+          api.errorAction(this, xhr, status, text, this.fields);
+          app.hideLoading();
+        });
+      },
 
       preinitialize() {
         // ToDo
@@ -926,11 +953,6 @@ module.exports = {
 
       addSection: jsonActions.addSection,
       deleteSection: jsonActions.deleteSection,
-
-      _success(data) {
-        // Do nothing after you save the perks.
-        window.location.reload();
-      },
 
       initialize(options) {
         this.fields = options.fields;
