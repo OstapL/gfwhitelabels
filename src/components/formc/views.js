@@ -97,14 +97,16 @@ module.exports = {
     }, menuHelper.methods)),
 
     teamMemberAdd: Backbone.View.extend(_.extend({
+        urlRoot: formcServer + '/:id' + '/team-members',
         events: _.extend({
             'submit form': 'submit',
         }, addSectionHelper.events, menuHelper.events),
-        urlRoot: formcServer + '/:id' + '/team-members',
+
         initialize(options) {
             this.fields = options.fields;
             this.role = options.role;
         },
+
         render() {
             let template;
             if (this.role == 'director' || this.role == 'officer') {
@@ -124,7 +126,6 @@ module.exports = {
                 }
 
 
-                debugger;
                 this.urlRoot = this.urlRoot.replace(':id', this.model.formc_id);
                 this.urlRoot += '/' + this.role;
                 if (this.role == 'director') {
@@ -140,17 +141,39 @@ module.exports = {
 
             require('bootstrap-select/sass/bootstrap-select.scss');
             let selectPicker = require('bootstrap-select');
+            let positionsHtml = require('./templates/snippets/positions.pug')({
+              attr: _.extend(
+                {}, this.fields.positions
+              ),
+              name: 'positions',
+              value: {}
+            });
+            let businessHtml = require('./templates/snippets/business_experiences.pug')({
+              attr: _.extend(
+                {}, this.fields.business_experiences
+              ),
+              name: 'positions',
+              value: {}
+            });
+
+            console.log(positionsHtml);
+
             this.$el.html(
                 template({
-                    serverUrl: serverUrl,
-                    Urls: Urls,
-                    fields: this.fields,
-                    values: this.model,
+                  serverUrl: serverUrl,
+                  Urls: Urls,
+                  fields: this.fields,
+                  values: this.model,
+                  templates: {
+                    positions: positionsHtml,
+                    businessExperiences: businessHtml
+                  },
                 })
             );
             this.$el.find('.selectpicker').selectpicker();
 
         },
+
         getSuccessUrl(data) {},
         submit: function(e) {
           var data = $(e.target).serializeJSON({ useIntKeysAsArrayIndex: true });

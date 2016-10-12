@@ -290,31 +290,49 @@ mixin fieldBlock2(name, data, attr, nameForForm, label)
           ).form-control
 
 
-mixin fieldDateMonth(name, attr)
+mixin fieldLabelText(name, attr)
+  - attr = attr ? attr : fields[name];
+  - attr.value = attr.value ? attr.value : values ? values[name] : '';
+  div(class=(attr.type != 'nested' ? "form-group " : '' ) + (attr.row == 0 ? '' : 'row ') + name + (attr.required == true ? ' required ' : ' ') + ' ' + attr.type)
+    label(class= attr.text_align ? 'text-lg-' + attr.text_align + ' ' + attr.class1 : ' text-lg-right ' + attr.class1 for=name)= attr.label
+    div(class=attr.class2)
+        input(
+            id=name
+            name=attr.name || name
+            placeholder=attr.placeholder ? attr.placeholder :attr.label
+            type=attr.type ? attr.type : 'text'
+            class=(attr.help_text ? 'showPopover' : '') 
+            data-content=(attr.help_text ?attr.help_text : '')
+            value=attr.value
+            maxlength = attr.maxlength ? attr.maxlength : false
+            disabled=(attr.disabled ? attr.disabled : false)
+          ).form-control
 
+
+mixin fieldDateMonth(name, attr)
   div(class=attr.class id=name).date-input
-      - var data = values[name] ? values[name].split('-') : []
-      input(
-          id=name + '__month'
-          name=name + '__month'
-          placeholder=(attr.placeholder ? attr.placeholder : "MM")
-          type=(attr.type ? attr.type : 'number')
-          maxlength=2
-          value=data[1]
-        ).form-control
+    - var value = attr.value ? attr.value.split('-') : values && values[name] ? values[name].split('-') : []
+    input(
+        id=name + '__month'
+        name=name + '__month'
+        placeholder=(attr.placeholder ? attr.placeholder : "MM")
+        type=(attr.type ? attr.type : 'number')
+        maxlength=2
+        value=value[1]
+      ).form-control
 
 
 mixin fieldDateYear(name, attr)
   div(class=attr.class id=name).date-input
-      - var data = values[name] ? values[name].split('-') : []
-      input(
-          id=name + '__year'
-          name=name + '__year'
-          placeholder=(attr.placeholder ? attr.placeholder : "YYYY")
-          type=(attr.type ? attr.type : 'number')
-          maxlength=2
-          value=data[2]
-        ).form-control
+    - var value = attr.value ? attr.value.split('-') : values && values[name] ? values[name].split('-') : []
+    input(
+        id=name + '__year'
+        name=name + '__year'
+        placeholder=(attr.placeholder ? attr.placeholder : "YYYY")
+        type=(attr.type ? attr.type : 'number')
+        maxlength=2
+        value=value[2]
+      ).form-control
 
 
 mixin fieldDropzone(name, attr, type)

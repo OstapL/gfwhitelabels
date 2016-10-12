@@ -1,0 +1,99 @@
+include ../../../../templates/mixins.pug 
+
+mixin row(index)
+  .delete-section-container
+    a(href="#" data-section=name data-index=index).delete-section
+      i.fa.fa-times
+
+  div(data-index=index class=name)
+    +fieldLabelText("employer", _.extend({
+      class1: 'col-lg-3 col-md-12 text-md-left m-b-0',
+      class2: 'col-lg-9 col-md-12',
+      name: 'business_experiences[' + index + ']["employer"]',
+      label: 'Position',
+      value: value[index] ? value[index].employer : '',
+      placeholder: 'Position',
+      }, attr.employer))
+
+    +fieldLabelText("employer_principal", _.extend({
+      class1: 'col-lg-3 col-md-12 text-md-left m-b-0',
+      class2: 'col-lg-9 col-md-12',
+      name: 'business_experiences[' + index + ']["employer_principal"]',
+      label: 'Employer Principal',
+      value: value[index] ? value[index].employer : '',
+      placeholder: 'Position',
+      }, attr.employer_principal))
+
+    +fieldLabelText("title", _.extend({
+      class1: 'col-lg-3 col-md-12 text-md-left m-b-0',
+      class2: 'col-lg-9 col-md-12',
+      name: 'business_experiences[' + index + ']["title"]',
+      label: 'Title',
+      value: value[index] ? value[index].employer : '',
+      placeholder: 'Title',
+      }, attr.title))
+
+    +fieldLabelText("responsibilities", _.extend({
+      class1: 'col-lg-3 col-md-12 text-md-left m-b-0',
+      class2: 'col-lg-9 col-md-12',
+      name: 'business_experiences[' + index + ']["responsibilities"]',
+      value: value[index] ? value[index].employer : '',
+      label: 'Responsibilities',
+      placeholder: 'Responsibilities',
+      }, attr.responsibilities))
+
+    .row.form-group
+      .col-lg-6.col-md-12
+        .col-lg-6.text-lg-right.text-md-left.p-t-0
+          label.p-t-0.m-b-0 Start Date of Service
+        .col-lg-6.p-t-0
+          .row
+            +fieldDateMonth("start_date_of_service", _.extend({
+              class: 'col-lg-6 p-r-0',
+              placeholder: 'MM',
+              name: 'business_experiences[' + index + ']["start_date_of_service"]',
+              label: 'Start Date Of Service',
+              value: value[index] ? value[index].start_date_of_service : '',
+            }, attr.start_date_of_service))
+            +fieldDateYear("start_date_of_service", _.extend({
+              class: 'col-lg-6 p-r-0',
+              placeholder: 'YYYY',
+              name: 'business_experiences[' + index + ']["start_date_of_service"]',
+              label: 'End Date Of Service',
+              value: value[index] ? value[index].start_date_of_service : '',
+            }, attr.start_date_of_service))
+            
+      .col-lg-6.col-md-12.p-l-0
+        .col-lg-6.text-lg-right.text-md-left.p-t-0
+          label.p-t-0.m-b-0 End Date of Service
+        .col-lg-6.p-t-0
+          .row
+            +fieldDateMonth("end_date_of_service", _.extend({
+              class: 'col-lg-6 p-r-0',
+              placeholder: 'MM',
+              name: 'business_experiences[' + index + ']["end_date_of_service"]',
+              value: value[index] ? value[index].employer : '',
+              value: value.end_date_of_service
+            }, attr.end_date_of_service))
+            +fieldDateYear("end_date_of_service", _.extend({
+              class: 'col-lg-6 p-r-0',
+              placeholder: 'YYYY',
+              name: 'business_experiences[' + index + ']["end_date_of_service"]',
+              value: value[index] ? value[index].end_date_of_service : '',
+            }, attr.end_date_of_service))
+
+b.col-lg-12.m-t-2.m-b-3 Business experience for past three years: Please list your employers, titles and dates of positions held during the past three years with an indication of job responsibilities.
+div(class=(attr.type != 'nested' ? "form-group " : '' ) + (attr.row == 0 ? '' : 'row ') + name + (attr.required == true ? ' required ' : ' ') + ' ' + attr.type)
+
+  if value.length == 0 || Object.keys(value) == 0
+    +row(0)
+
+  else
+    each v in value
+      +row(v)
+
+  .row.add-link
+    .col-lg-9.offset-1.pull-right
+      a(href="#" data-section=name).link-2.add-section
+        i.fa.fa-plus
+        |  Add Work Experience
