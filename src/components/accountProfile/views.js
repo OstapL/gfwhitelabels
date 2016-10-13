@@ -4,7 +4,7 @@ const validation = require('components/validation/validation.js');
 const phoneHelper = require('helpers/phoneHelper.js');
 
 module.exports = {
-  profile: Backbone.View.extend(_.extend(phoneHelper.methods, {
+  profile: Backbone.View.extend(_.extend({
     template: require('./templates/profile.pug'),
     urlRoot: serverUrl + Urls.rest_user_details(),
     events: _.extend({
@@ -192,7 +192,7 @@ module.exports = {
     changeAddressManually() {
       this.cityStateArea.text(`${this.cityField.val()}/${this.stateField.val()}`);
     }
-  })),
+  }, phoneHelper.methods)),
 
   changePassword: Backbone.View.extend({
     urlRoot: serverUrl + Urls.rest_password_change(),
