@@ -130,12 +130,13 @@ const doCampaignValidation = function doCampaignValidation(e, data) {
 
 const onPreviewAction = function(e) {
   e.preventDefault();
+  let pathname = location.pathname;
   this.$el.find('form').submit()
   app.showLoading();
   let that = this;
   setTimeout(function() {
     // window.location = e.target.dataset.href + '?preview=1'
-    window.location = '/api/campaign/' + (that.campaign ? that.campaign.id : that.model.id) + '?preview=1&previous=' + location.pathname;
+    window.location = '/api/campaign/' + (that.campaign ? that.campaign.id : that.model.id) + '?preview=1&previous=' + pathname;
   }, 100);
 };
 

@@ -49,8 +49,7 @@ module.exports = {
       $(document).on("scroll", this.onScrollListener);
       let params = app.getParams();
       this.edit = false;
-      // this.model.owner_id = 197;
-      if (params.preview == '1' && this.model.owner_id == app.user.get('id')) {
+      if (params.preview == '1' && this.model.owner == app.user.get('id')) {
         // see if owner match current user
         this.edit = true;
         this.previous = params.previous;

@@ -47,7 +47,8 @@ section#home(style="background-image: url(" + (values.header_image_data ? values
             h2.font-weight-bold #{ values.length_days }
           .col-lg-4.col-md-12.col-xs-12.pull-lg-right.text-xs-center
             if edit
-              a(href='/' + previous).btn.btn-primary.text-uppercase.pull-lg-right Edit
+              a(href=previous ? previous : '/campaign/general_information/' + values.id).btn.btn-primary.text-uppercase.pull-lg-right Edit
+              //- a(href=previous).btn.btn-primary.text-uppercase.pull-lg-right Edit
             a(href=Urls['campaign-invest'](values.id)).btn.btn-primary.text-uppercase.pull-lg-right Invest
 
 section.campaigndetail
