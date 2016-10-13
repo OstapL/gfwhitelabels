@@ -16,7 +16,7 @@ section.create-perks.container
   //START RIGHT BLOCK
   .col-lg-8
     h2.text-uppercase.text-lg-center.text-xs-center.dosis.m-t-0 perks
-    form(metod="post" action="").form-section
+    form(data-method="PATCH" action="").form-section
       .form-group
         .col-sm-12.p-r-0
           .warning-block  
@@ -38,5 +38,5 @@ section.create-perks.container
                   |  Add Another Perks Level
         .col-lg-12.pull-lg-right.p-r-0.m-t-3.text-lg-right.text-md-center.text-sm-center.text-xs-center
               // button(type="submit" data-href="/api/campaign/" + values.id).btn.btn-secondary.text-uppercase.m-r-3.onPreview preview
-              button(type="submit").btn.btn-primary.text-uppercase save and continue
+              button(type="submit").btn.btn-primary.text-uppercase save
                 i.fa.fa-angle-right

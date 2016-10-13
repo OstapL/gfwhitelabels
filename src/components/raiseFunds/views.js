@@ -7,8 +7,7 @@ const dropzone = require('dropzone');
 const dropzoneHelpers = require('helpers/dropzone.js');
 const leavingConfirmationHelper = require('helpers/leavingConfirmationHelper.js');
 const phoneHelper = require('helpers/phoneHelper.js');
-
-// const validation = require('components/validation/validation.js');
+const validation = require('components/validation/validation.js');
 
 
 const jsonActions = {
@@ -58,6 +57,77 @@ const jsonActions = {
   },
 };
 
+const submitCampaign = function submitCampaign(e) {
+  e.preventDefault();
+  let $form = this.$el.find('form');
+  var data = $form.serializeJSON();
+
+  _.extend(this.model, data);
+  data = Object.assign({}, this.model);
+
+  // ToDo
+  // Refactor code
+  if(this.hasOwnProperty('index')) {
+    data.index = this.index;
+  };
+
+  this.$('.help-block').remove();
+  if (!validation.validate(this.fields, data, this)) {
+    _(validation.errors).each((errors, key) => {
+      validation.invalidMsg(this, key, errors);
+    });
+    this.$('.help-block').scrollTo(45);
+    return;
+  } else {
+    let url = this.urlRoot + '/' + data.id;
+    let type = 'PUT';
+    delete data.id;
+
+    api.makeRequest(url, type, data).
+      then((data) => {
+
+        if(this.hasOwnProperty('campaign')) {
+          data.id = this.campaign.id;
+        };
+
+        // if we saved company information we will not have any progress data in
+        // response
+        if(data.hasOwnProperty('progress') == false) {
+          data.progress = this.campaign.progress;
+        }
+
+        doCampaignValidation(e, data);
+    });
+  }
+};
+
+const doCampaignValidation = function doCampaignValidation(e, data) {
+
+  if(data == null) {
+    data = this.model;
+  }
+
+  if(
+      data.progress.general_information == true &&
+      data.progress.media == true &&
+      data.progress.specifics == true &&
+      data.progress['team-members'] == true
+  ) {
+    $('#company_publish_confirm').modal('show');
+  } else {
+    var errors = {};
+    _(data.progress).each((d, k) => {
+      if(k != 'perks') {
+        if(d == false)  {
+          $('#company_publish .'+k).removeClass('collapse');
+        } else {
+          $('#company_publish .'+k).addClass('collapse');
+        }
+      }
+    });
+    $('#company_publish').modal('toggle');
+  }
+};
 
 const onPreviewAction = function(e) {
   e.preventDefault();
@@ -71,7 +141,7 @@ const onPreviewAction = function(e) {
 };
 
 module.exports = {
-  company: Backbone.View.extend(_.extend(leavingConfirmationHelper.methods, phoneHelper.methods, {
+  company: Backbone.View.extend(_.extend({
     // urlRoot: serverUrl + Urls['company-list'](),
     urlRoot: Urls.company_list(),
     template: require('./templates/company.pug'),
@@ -80,6 +150,7 @@ module.exports = {
       'keyup #zip_code': 'changeZipCode',
       'click .update-location': 'updateLocation',
       'click .onPreview': onPreviewAction,
+      'click .submit_form': submitCampaign,
       'change #website,#twitter,#facebook,#instagram,#linkedin': appendHttpIfNecessary,
     }, leavingConfirmationHelper.events, phoneHelper.events),
 
@@ -163,15 +234,16 @@ module.exports = {
         { trigger: true, replace: false }
       );
     },
-  })),
+  },leavingConfirmationHelper.methods, phoneHelper.methods)),
 
-  generalInformation: Backbone.View.extend(_.extend(leavingConfirmationHelper.methods, {
+  generalInformation: Backbone.View.extend(_.extend({
       // urlRoot: serverUrl + Urls['campaign-list']() + '/general_information',
       urlRoot: Urls['campaign-list']() + '/general_information',
       template: require('./templates/generalInformation.pug'),
       events: _.extend({
           'submit form': api.submitAction,
           'click .onPreview': onPreviewAction,
+          'click .submit_form': submitCampaign,
         }, jsonActions.events, leavingConfirmationHelper.events),
 
       preinitialize() {
@@ -205,26 +277,26 @@ module.exports = {
         this.fields.faq.type = 'json';
         this.fields.faq.schema = {
           question: {
-                      type: 'string',
-                      label: 'Question',
-                    },
+            type: 'string',
+            label: 'Question',
+          },
           answer: {
-                    type: 'text',
-                    label: 'Answer',
-                  },
+            type: 'text',
+            label: 'Answer',
+          },
         };
         this.fields.additional_info.type = 'json';
         this.fields.additional_info.schema = {
           title: {
-                  type: 'string',
-                  label: 'Optional Additional Section',
-                  placeholder: 'Section Title',
-                },
+            type: 'string',
+            label: 'Optional Additional Section',
+            placeholder: 'Section Title',
+          },
           body: {
-                  type: 'text',
-                  label: '',
-                  placeholder: 'Description',
-                },
+            type: 'text',
+            label: '',
+            placeholder: 'Description',
+          },
         };
 
         // if (this.model.get('faq')) {
@@ -252,11 +324,21 @@ module.exports = {
               values: this.model,
             })
         );
+
+        if(app.getParams().check == '1') {
+          var data = this.$el.find('form').serializeJSON();
+          if (!validation.validate(this.fields, data, this)) {
+            _(validation.errors).each((errors, key) => {
+              validation.invalidMsg(this, key, errors);
+            });
+            this.$('.help-block').prev().scrollTo(5);
+          }
+        }
         return this;
       },
-    })),
+    },leavingConfirmationHelper.methods)),
 
-  media: Backbone.View.extend(_.extend(leavingConfirmationHelper.methods, {
+  media: Backbone.View.extend(_.extend({
       events: _.extend({
         'submit form': api.submitAction,
         // 'click .delete-image': 'deleteImage',
@@ -265,6 +347,7 @@ module.exports = {
         dragleave: 'globalDragleave',
         // 'change #video,.additional_video_link': 'appendHttpsIfNecessary',
         'change .press_link': 'appendHttpIfNecessary',
+        'click .submit_form': submitCampaign,
         'click .onPreview': onPreviewAction,
       }, jsonActions.events, leavingConfirmationHelper.events),
       urlRoot: Urls['campaign-list']() + '/media',
@@ -294,7 +377,6 @@ module.exports = {
       preinitialize() {
         // ToDo
         // Hack for undelegate previous events
-        debugger;
         for (let k in this.events) {
           $('#content ' + k.split(' ')[1]).undelegate();
         }
@@ -483,17 +565,23 @@ module.exports = {
           //e.target.value = id;
         }
       }
-  })),
+  }, leavingConfirmationHelper.methods)),
 
-  teamMemberAdd: Backbone.View.extend(_.extend(leavingConfirmationHelper.methods, {
+  teamMemberAdd: Backbone.View.extend(_.extend({
       events: _.extend({
         'submit form': 'submit',
         'click .delete-member': 'deleteMember',
         dragover: 'globalDragover',
         dragleave: 'globalDragleave',
+        'click .submit_form': doCampaignValidation,
+        'change #linkedin,#facebook': 'appendHttpsIfNecessary',
       }, leavingConfirmationHelper.events),
       // urlRoot: serverUrl + Urls['campaign-list']() + '/team_members',
       urlRoot: Urls['campaign-list']() + '/team_members',
+
+      appendHttpsIfNecessary(e) {
+        appendHttpIfNecessary(e, true);
+      },
 
       globalDragover() {
         // this.$('.dropzone').css({ border: 'dashed 1px lightgray' });
@@ -638,16 +726,23 @@ module.exports = {
         e.preventDefault();
         let json = $(e.target).serializeJSON();
         json.index = this.index;
-        debugger;
 
         api.submitAction.call(this, e, json);
 
       },
-  })),
+  }, leavingConfirmationHelper.methods)),
 
   teamMembers: Backbone.View.extend({
     events: {
       'click .delete-member': 'deleteMember',
+      'click .submit_form': doCampaignValidation,
+      'click .onPreview': onPreviewAction,
+      'submit form': 'submit',
+    },
+
+    // this is for no navigating to new page in the onPreviewAction method
+    submit(e) {
+      e.preventDefault();
     },
 
     preinitialize() {
@@ -701,7 +796,7 @@ module.exports = {
 
   }),
 
-  specifics: Backbone.View.extend(_.extend(leavingConfirmationHelper.methods, {
+  specifics: Backbone.View.extend(_.extend({
       urlRoot: Urls['campaign-list']() + '/specifics',
       events: _.extend({
         'submit form': api.submitAction,
@@ -712,6 +807,7 @@ module.exports = {
         dragover: 'globalDragover',
         dragleave: 'globalDragleave',
         'click .onPreview': onPreviewAction,
+        'click .submit_form': submitCampaign,
       }, leavingConfirmationHelper.events),
 
       globalDragover() {
@@ -826,15 +922,42 @@ module.exports = {
 
         return this;
       },
-    })),
+    }, leavingConfirmationHelper.methods)),
 
-  perks: Backbone.View.extend(_.extend(leavingConfirmationHelper.methods, {
+  perks: Backbone.View.extend(_.extend({
       events: _.extend({
-          'submit form': api.submitAction,
+          'submit form': 'onSubmit',
           'click .onPreview': onPreviewAction,
+          'click .submit_form': submitCampaign,
         }, jsonActions.events, leavingConfirmationHelper.events),
       // urlRoot: serverUrl + Urls['campaign-list']() + '/perks',
       urlRoot: Urls['campaign-list']() + '/perks',
+
+      onSubmit(e) {
+        e.preventDefault();
+        let url = this.urlRoot;
+        let data = $(e.target).serializeJSON({ useIntKeysAsArrayIndex: true });
+        if(this.hasOwnProperty('model')) {
+          _.extend(this.model, data);
+          data = Object.assign({}, this.model)
+        }
+        let type = 'POST';
+        if(data.hasOwnProperty('id')) {
+          url += '/' + data.id;
+          delete data.id;
+          type = e.target.dataset.method;
+        }
+
+        app.showLoading();
+        api.makeRequest(url, type, data).then((data) => {
+          this.model = data;
+          app.hideLoading()
+        }).
+        fail((xhr, status, text) => {
+          api.errorAction(this, xhr, status, text, this.fields);
+          app.hideLoading();
+        });
+      },
 
       preinitialize() {
         // ToDo
@@ -846,9 +969,6 @@ module.exports = {
 
       addSection: jsonActions.addSection,
       deleteSection: jsonActions.deleteSection,
-      getSuccessUrl(data) {
-        return '/campaign/thankyou/' + data.id;
-      },
 
       initialize(options) {
         this.fields = options.fields;
@@ -890,7 +1010,7 @@ module.exports = {
         return this;
       },
 
-    })),
+    }, leavingConfirmationHelper.methods, )),
 
   thankYou: Backbone.View.extend({
     el: '#content',
