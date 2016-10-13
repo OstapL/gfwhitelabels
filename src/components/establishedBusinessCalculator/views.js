@@ -253,15 +253,6 @@ module.exports = {
                 averagePe = Math.round((ntmPeDiscount + ltmPeDiscount) / 2);
 
             // prepare data for the graph
-
-            var color01 = '#00cde2';
-            var color02 = '#ffb700';
-            var color03 = '#7ac70c';
-            var color04 = '#313541';
-            var color05 = '#fc3232';
-            var color06 = '#1cb0f6';
-            var color07 = '#00c07f';
-
             calculatedData.graphData = [
                 {data: [[0, averageValuation]], color: '#5596c4'},
                 {data: [[1, averagePs]], color: '#c0d2eb'},
@@ -334,7 +325,17 @@ module.exports = {
                 return false;
             }
 
-            this.$el.html(this.template());
+            let graphData = app.cache.establishedBusinessCalculator.graphData;
+            let estimate = graphData[0].data[0][1];
+            let data = app.cache.establishedBusinessCalculator;
+            let raiseCash = data.raiseCash;
+
+            this.$el.html(this.template({
+                estimate: calculatorHelper.formatPrice(estimate),
+                raise: calculatorHelper.formatPrice(raiseCash),
+                offer: ((100 * raiseCash) / estimate).toFixed(2),
+                offer2: industryData[data.industry]
+            }));
 
             this.buildGraph();
 
