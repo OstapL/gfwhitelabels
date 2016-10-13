@@ -151,8 +151,12 @@ module.exports = {
       'click .update-location': 'updateLocation',
       'click .onPreview': onPreviewAction,
       'click .submit_form': submitCampaign,
-      'change #website,#twitter,#facebook,#instagram,#linkedin': appendHttpIfNecessary,
+      'change #website,#twitter,#facebook,#instagram,#linkedin': 'appendHttpsIfNecessary',
     }, leavingConfirmationHelper.events, phoneHelper.events),
+
+    appendHttpsIfNecessary(e) {
+      appendHttpIfNecessary(e, true);
+    },
 
     initialize(options) {
       this.fields = options.fields;
