@@ -38,8 +38,8 @@ mixin fieldDateYear(name, attr)
         name=(attr.name || name) + '__year'
         placeholder=(attr.placeholder ? attr.placeholder : "YYYY")
         type='number'
-        maxlength=2
-        value=value[2]
+        maxlength=4
+        value=value[0]
       ).form-control
 
 

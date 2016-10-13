@@ -56,17 +56,18 @@ section.create-company-team-add.container
             if values.team_members
                 - counter = 0
                 each v,k in values.team_members
-                    .col-lg-3.m-t-2.p-r-0.p-l-0.m-l-2.m-r-2
-                        .team-add-item.text-lg-center.text-xs-center
-                            a(href="/formc/" + values.id + "/team-members/add/" + v.type + '/' + counter).link-1
-                                img(src=v.photo alt=v.first_name).img-circle
-                            a(href="#" data-id=counter style="position: absolute").link-1.delete-member.pull-right
-                                i.fa.fa-times
-                            p.name.text-uppercase #{v.first_name} #{v.last_name}
-                            p.small #{ v.title }
-                            a(href="/formc/" + values.id + "/team-members/add/" + v.type + '/' + counter).link-1
-                                i.fa.fa-pencil-square-o
-                    - counter ++
+                  - console.log('member ', v, k);
+                  .col-lg-3.m-t-2.p-r-0.p-l-0.m-l-2.m-r-2
+                      .team-add-item.text-lg-center.text-xs-center
+                        a(href="/formc/" + values.id + "/team-members/" + roles[v.role] + '/' + v.uuid).link-1
+                          img(src=v.photo alt=v.first_name).img-circle
+                        a(href="#" data-id=counter style="position: absolute").link-1.delete-member.pull-right
+                            i.fa.fa-times
+                        p.name.text-uppercase #{v.first_name} #{v.last_name}
+                        p.small #{ v.title }
+                        a(href="/formc/" + values.id + "/team-members/" + roles[v.role] + '/' + v.uuid).link-1
+                            i.fa.fa-pencil-square-o
+                  - counter ++
             .col-lg-12
                 .border-bottom.m-t-3.m-b-3
             .col-lg-12.m-b-1
