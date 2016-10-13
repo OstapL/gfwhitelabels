@@ -135,7 +135,7 @@ const onPreviewAction = function(e) {
   let that = this;
   setTimeout(function() {
     // window.location = e.target.dataset.href + '?preview=1'
-    window.location = '/api/campaign/' + (that.campaign ? that.campaign.id : that.model.id) + '?preview=1'
+    window.location = '/api/campaign/' + (that.campaign ? that.campaign.id : that.model.id) + '?preview=1&previous=' + location.pathname;
   }, 100);
 };
 

@@ -47,6 +47,14 @@ module.exports = {
     initialize(options) {
       $(document).off("scroll", this.onScrollListener);
       $(document).on("scroll", this.onScrollListener);
+      let params = app.getParams();
+      this.edit = false;
+      // this.model.owner_id = 197;
+      if (params.preview == '1' && this.model.owner_id == app.user.get('id')) {
+        // see if owner match current user
+        this.edit = true;
+        this.previous = params.previous;
+      }
     },
 
     // seeAllArticlePress(e) {
@@ -165,6 +173,8 @@ module.exports = {
           Urls: Urls,
           values: this.model,
           formatHelper: formatHelper,
+          edit: this.edit,
+          previous: this.previous,
         })
       );
 
