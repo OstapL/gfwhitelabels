@@ -108,18 +108,6 @@ module.exports = Backbone.Router.extend({
 
   useOfProceeds(id) {
     const View = require('components/formc/views.js');
-      // const i = new View.useOfProceeds({
-      //   el: '#content',
-      //   model: {
-      //     id: id,
-      //   },
-      //   fields: {
-      //     'offering-expense': {type: 'row'},
-      //   },
-      // });
-      // i.render();
-      // app.hideLoading();
-      // return;
 
     let fieldsR = api.makeCacheRequest(formcServer + '/' + id + '/use-of-proceeds', 'OPTIONS');
     let dataR = api.makeCacheRequest(formcServer + '/' + id + '/use-of-proceeds');
