@@ -9,7 +9,6 @@ const accountProfile = require('components/accountProfile/route');
 const establishedBusinessCalc = require('components/establishedBusinessCalculator/route');
 
 Backbone.Router.execute = function (callback, args, name) {
-  debugger;
   console.log('asdfasfdasd ', callback, args, name);
   if (name == '/company/create' && !app.user.is_anonymouse()) {
     const template = require('components/anonymousAccount/templates/popupLogin.pug');
