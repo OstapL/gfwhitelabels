@@ -11,10 +11,10 @@ include menu.pug
 )
 
 section.create-perks.container
-  +menu('perks')
+  
 
   //START RIGHT BLOCK
-  .col-lg-8
+  .col-lg-10.offset-lg-1.col-xl-8.offset-xl-0.push-xl-3
     h2.text-uppercase.text-lg-center.text-xs-center.dosis.m-t-0 perks
     form(data-method="PATCH" action="").form-section
       .form-group
@@ -40,3 +40,4 @@ section.create-perks.container
               // button(type="submit" data-href="/api/campaign/" + values.id).btn.btn-secondary.text-uppercase.m-r-3.onPreview preview
               button(type="submit").btn.btn-primary.text-uppercase save
                 i.fa.fa-angle-right
+  +menu('perks')
