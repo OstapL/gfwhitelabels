@@ -361,12 +361,10 @@ module.exports = {
       appendHttpIfNecessary: appendHttpIfNecessary,
 
       globalDragover() {
-        // this.$('.dropzone').css({ border: 'dashed 1px lightgray' });
         this.$('.border-dropzone').addClass('active-border');
       },
 
       globalDragleave() {
-        // this.$('.dropzone').css({ border: 'none' });
         this.$('.border-dropzone').removeClass('active-border');
       },
 
@@ -569,21 +567,32 @@ module.exports = {
         dragleave: 'globalDragleave',
         'click .submit_form': doCampaignValidation,
         'change #linkedin,#facebook': 'appendHttpsIfNecessary',
+        'click .cancel': 'cancel',
       }, leavingConfirmationHelper.events),
       // urlRoot: serverUrl + Urls['campaign-list']() + '/team_members',
       urlRoot: Urls['campaign-list']() + '/team_members',
+
+      cancel(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        this.undelegateEvents();
+        if (confirm("Doe you really want to leave?")) {
+          app.routers.navigate(
+            '/campaign/team-members/' + this.model.id,
+            { trigger: true, replace: false }
+          );
+        }
+      },
 
       appendHttpsIfNecessary(e) {
         appendHttpIfNecessary(e, true);
       },
 
       globalDragover() {
-        // this.$('.dropzone').css({ border: 'dashed 1px lightgray' });
         this.$('.border-dropzone').addClass('active-border');
       },
 
       globalDragleave() {
-        // this.$('.dropzone').css({ border: 'none' });
         this.$('.border-dropzone').removeClass('active-border');
       },
 
