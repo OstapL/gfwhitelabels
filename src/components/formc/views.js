@@ -57,7 +57,6 @@ module.exports = {
 
   teamMembers: Backbone.View.extend(_.extend({
     urlRoot: formcServer + '/:id' + '/team-members',
-    name: 'teamMembers',
     events: _.extend({
     }, menuHelper.events),
 
@@ -113,15 +112,31 @@ module.exports = {
       this.fields = options.fields;
       this.role = options.role;
 
+      this.labels = {
+        experiences: {
+          employer: '',
+          employer_principal: '',
+          title: '',
+          responsibilities: '',
+          start_date_of_service: '',
+          end_date_of_service: '',
+        },
+        positions: {
+          position: '',
+          start_date_of_service: '',
+          end_date_of_service: '',
+        },
+      };
+      this.assignLabels();
+
+      this.createIndexes();
+      this.buildJsonTemplates('formc');
     },
 
     render() {
       let template = null;
-      let jsonTemplates = {};
 
-      if(
-          this.model.hasOwnProperty('uuid')  &&
-          this.model.uuid != '') {
+      if(this.model.hasOwnProperty('uuid')  && this.model.uuid != '') {
         this.model.id = this.model.formc_id;
         this.urlRoot += '/' + this.role + '/' + this.model.uuid;
       } else {
@@ -129,28 +144,12 @@ module.exports = {
         this.urlRoot += '/' + this.role;
       }
 
-      if (this.role == 'director' || this.role == 'officer') {
-        jsonTemplates.positions= require('./templates/snippets/positions.pug')({
-          attr: _.extend(
-          {}, this.fields.positions
-          ),
-          name: 'positions',
-          value: this.model.positions || {},
-          first_run: 1,
-        });
-        jsonTemplates.businessExperiences = require('./templates/snippets/business_experiences.pug')({
-          attr: _.extend(
-          {}, this.fields.business_experiences,
-          ),
-          name: 'business_experiences',
-          value: this.model.business_experiences || {},
-          first_run: 1,
-        });
-      }
       if (this.role == 'director') {
         template = require('components/formc/templates/teamMembersDirector.pug');
+        this.buildJsonTemplates('formc');
       } else if(this.role == 'officer') {
         template = require('components/formc/templates/teamMembersOfficer.pug');
+        this.buildJsonTemplates('formc');
       } else if (this.role == 'shareholder') {
         template = require('components/formc/templates/teamMembersShareHolder.pug');
       }
@@ -160,18 +159,18 @@ module.exports = {
 
       this.$el.html(
         template({
-        serverUrl: serverUrl,
-        Urls: Urls,
-        fields: this.fields,
-        values: this.model,
-        templates: jsonTemplates
+          serverUrl: serverUrl,
+          Urls: Urls,
+          fields: this.fields,
+          values: this.model,
+          templates: this.jsonTemplates
         })
       );
       this.$el.find('.selectpicker').selectpicker();
     },
 
     getSuccessUrl(data) {
-      return '/formc/' + this.model.formc_id + '/team_members';
+      return '/formc/' + this.model.formc_id + '/team-members';
     },
 
     submit: function(e) {
@@ -205,7 +204,7 @@ module.exports = {
       delete el.end_date_of_service__year;
       delete el.end_date_of_service__month;
       });
-      _(data.business_experiences).each((el, i) => {
+      _(data.experiences).each((el, i) => {
       el.start_date_of_service = el.start_date_of_service__year && el.start_date_of_service__month
         ? el.start_date_of_service__year + '-' + el.start_date_of_service__month + '-' + '01'
         : '';
@@ -307,37 +306,48 @@ module.exports = {
   }),*/
 
   relatedParties: Backbone.View.extend(_.extend({
+    el: '#content',
     urlRoot: formcServer + '/:id' + '/related-parties',
-    name: 'relatedParties',
-    initialize(options) {
-      this.fields = options.fields;
-    },
 
     events: _.extend({
       'submit form': 'submit',
     }, addSectionHelper.events, menuHelper.events, yesNoHelper.events),
+
+    initialize(options) {
+      this.fields = options.fields;
+
+      this.labels = {
+        transaction_with_related_parties: {
+          amount_of_interest: 'Amount of Interest',
+          nature_of_interest: 'Nature of Interst',
+          relationship_to_issuer: 'Relationship to Issuer',
+          specified_person: 'Specified Person',
+        }
+      };
+      this.assignLabels();
+
+      this.createIndexes();
+      this.buildJsonTemplates('formc');
+
+    },
 
     // submit: api.submitAction,
     submit(e) {
       var $target = $(e.target);
       var data = $target.serializeJSON({useIntKeysAsArrayIndex: true});
 
-      if (data.had_transactions == 'false') data.transaction_with_related_parties = [];
+      if (data.had_transactions == 'false') {
+        data.transaction_with_related_parties = [];
+      }
       api.submitAction.call(this, e, data);
+    },
+
+    getSuccessUrl(data) {
+      return '/formc/' + this.model.id + '/use-of-proceeds'
     },
 
     render() {
       let template = require('./templates/relatedParties.pug');
-
-      if (this.model.transaction_with_related_parties) {
-        this.transaction_with_related_partiesIndex = Object.keys(this.model.transaction_with_related_parties).length;
-      } else {
-        this.transaction_with_related_partiesIndex = 0;
-      }
-      this.fields.transaction_with_related_parties.schema.amount_of_interest.label = 'Amount of Interest';
-      this.fields.transaction_with_related_parties.schema.nature_of_interest.label = 'Nature of Interst';
-      this.fields.transaction_with_related_parties.schema.relationship_to_issuer.label = 'Relationship to Issuer';
-      this.fields.transaction_with_related_parties.schema.specified_person.label = 'Specified Person';
 
       this.$el.html(
         template({
@@ -345,7 +355,7 @@ module.exports = {
           Urls: Urls,
           fields: this.fields,
           values: this.model,
-          addSectionHelper: addSectionHelper
+          templates: this.jsonTemplates,
         })
       );
       return this;

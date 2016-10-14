@@ -1,14 +1,16 @@
-include ../../../../templates/fields_mixins.pug
+include ../../../../templates/fields_mixins.pug 
 
 mixin row(value, index)
-  - var index = index;
 
   div(data-index=index class=name + ' addSectionBlock')
     .delete-section-container
       a(href="#" data-section=name data-index=index).delete-sectionnew
         i.fa.fa-times
 
-    +fieldNestedTextLabel(name, "position", value, index, {})
+    +fieldNestedTextLabel(name, "employer", value, index, {})
+    +fieldNestedTextLabel(name, "employer_principal", value, index, {})
+    +fieldNestedTextLabel(name, "title", value, index, {})
+    +fieldNestedTextLabel(name, "responsibilities", value, index, {})
 
     .row.form-group
       .col-lg-6.col-md-12
@@ -24,15 +26,13 @@ mixin row(value, index)
           label.p-t-0.m-b-0 End Date of Service
         #end_date_of_service.col-lg-6.p-t-0
           .row
-            +fieldNestedDateMonth(name, "start_date_of_service", value, index, {})
+            +fieldNestedDateMonth(name, "end_date_of_service", value, index, {})
             +fieldNestedDateYear(name, "end_date_of_service", value, index, {})
-
 
 mixin run()
 
   if first_run
-    h3.text-lg-center.text-xs-center.m-t-0 We Need Information for Last 3 Years
-    b.col-lg-12.m-b-3 Changed roles within the Company? Please list  all positions and offices with the Company held and the period of time in which you served in the position or office.
+    b.col-lg-12.m-t-2.m-b-3 Business experience for past three years: Please list your employers, titles and dates of positions held during the past three years with an indication of job responsibilities.
 
     div(class=(attr.row == 0 ? '' : 'row ') + name + '_block' + (attr.required == true ? ' required ' : ' ') + ' nested')
       div(class=(attr.row == 0 ? '' : 'row ') + name + '_container' + (attr.required == true ? ' required ' : ' ') + ' nested')
@@ -44,13 +44,13 @@ mixin run()
           each value, index in values
             +row(value, index)
 
-      .row.add-link
-        .col-lg-9.offset-1.pull-right
-          a(href="#" data-section=name data-comp='formc' data-template='positions').link-2.add-sectionnew
-            i.fa.fa-plus
-            |  Add position
+    .row.add-link
+      .col-lg-9.offset-1.pull-right
+        a(href="#" data-section=name data-comp='formc' data-template="experiences").link-2.add-sectionnew
+          i.fa.fa-plus
+          |  Add Work Experience
+
   else
     +row({}, index)
-
 
 +run()

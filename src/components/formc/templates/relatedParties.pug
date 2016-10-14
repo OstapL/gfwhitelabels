@@ -2,13 +2,6 @@ include ../../../templates/mixins.pug
 //- include menu.pug
 include ../../../templates/menuRaiseFund.pug
 
-- 'use strict'
-// - var fields = { specified_person: { label: 'Specified Person'} };
-// - var fields = { relationshop_sssuer: { label: 'Relationshop to Issuer'} };
-// - var fields = { nature: { label: 'Nature of Interest in Transation'} };
-// - var fields = { amount: { label: 'Amount of Interest'} };
-
-
 
 +breadcrumbs('form c', '', 
     [
@@ -20,22 +13,6 @@ include ../../../templates/menuRaiseFund.pug
 
 mixin nestedRelated(name, text, attr)
   +nestedBlockHeader(name, text, attr)
-  +fieldBlock('amount_of_interest', values['amount_of_interest'], {
-    class1: 'col-lg-3 col-md-3 text-md-left',
-    class2: 'col-lg-9 col-md-9',
-  })
-  +fieldBlock('relationship_to_issuer', values['relationship_to_issuer'], {
-    class1: 'col-lg-3 col-md-3 text-md-left',
-    class2: 'col-lg-9 col-md-9',
-  })
-  +fieldBlock("nature_of_interest", values['nature_of_interest'], {
-    class1: 'col-lg-3 col-md-12 text-md-left',
-    class2: 'col-lg-9 col-md-12',
-    })
-  +fieldBlock("specified_person", values['specified_person'], {
-    class1: 'col-lg-3 col-md-12 text-md-left',
-    class2: 'col-lg-9 col-md-12',
-    })
   +nestedBlockFooter(name, text, attr)
 
 
@@ -62,12 +39,7 @@ section.formc-team-members-director.container.m-b-85
             input(type="radio" name="transaction_with_related_parties_choice" value="false" checked=!values['transaction_with_related_parties_choice'] target=".transactions-container")
             |  No
       .transactions-container.shown-yes(style="display:" + (values['transaction_with_related_parties_choice'] ? 'block' : 'none'))
-        +fieldBlock("transaction_with_related_parties", "", {type: 'json'})
-        .row.add-link
-          .col-lg-9.offset-1.pull-right
-            a(href="#" data-section="transaction_with_related_parties").link-2.add-section
-              i.fa.fa-plus
-              |  Add Another Related Part
+        |!{ templates.transaction_with_related_parties }
 
       .row.m-t-3
         .col-lg-12.text-md-center.text-sm-center.text-xs-center

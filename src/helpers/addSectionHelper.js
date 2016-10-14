@@ -81,17 +81,46 @@ module.exports = {
     },
 
     createIndexes() {
+      this.jsonTemplates = {};
       _(this.fields).each((el, key) => {
         if(el.type == 'nested') {
-          if(typeof options.model[key] != 'object') {
-            this[key + 'Index'] = -1;
+          if(typeof this.model[key] != 'object') {
+            this[key + 'Index'] =  0;
           }
           else {
-            this[key + 'Index'] = Array.isArray(options.model[key]) ? 
-              options.model[key].length - 1: Object.keys(options.model[key]).length - 1;
+            this[key + 'Index'] = Array.isArray(this.model[key]) ? 
+              this.model[key].length - 1: Object.keys(this.model[key]).length - 1;
+            if(this[key + 'Index'] == -1) {
+              this[key + 'Index'] = 0;
+            }
           }
         }
       });
-    }
+    },
+
+    buildJsonTemplates(component) {
+      _(this.fields).each((el, key) => {
+        if(el.type == 'nested') {
+          this.jsonTemplates[key] = require('components/' + component + '/templates/snippets/' + key + '.pug')({
+            attr: _.extend(
+              {}, this.fields[key]
+            ),
+            name: key,
+            values: this.model[key] || {},
+            first_run: 1,
+          });
+        }
+      });
+    },
+
+    assignLabels() {
+      _(this.fields).each((el, key) => {
+        if(el.type == 'nested') {
+          _(el.schema).each((subel, subkey) => {
+            subel.label = this.labels[key][subkey];
+          });
+        }
+      });
+    },
   },
 };
