@@ -3,8 +3,8 @@ include ../../../templates/mixins.pug
 include ../../../templates/menuRaiseFund.pug
 
 - 'use strict'
-- var fields = { title_risk: { label: 'Title for Risk'} };
-- var fields = { describe: { label: 'Describe Your Risk'} };
+// - var fields = { title_risk: { label: 'Title for Risk'} };
+// - var fields = { describe: { label: 'Describe Your Risk'} };
 
 +breadcrumbs('form c', '', 
     [
@@ -15,15 +15,29 @@ include ../../../templates/menuRaiseFund.pug
 )
 
 mixin showRisk(name, index, title, risk)
+  form(data-method="PATCH" data-index=(index) index=index)
+    input(type="hidden" name="title" value=title)
+    textarea(style="max-width:100%; height:150px" name="risk" readonly index=index).form-control #{ values[name].hasOwnProperty(index) ? values[name][index].risk : risk }
+    .text-md-center.text-lg-right
+      button(style="display: " + (values[name].hasOwnProperty(index) ? 'inline-block' : 'none') + ';' data-index=index).btn.btn-sm.btn-seconday.m-t-1.edit-risk.buttons.added-state  Edit risk
+      button(style="display: " + (values[name].hasOwnProperty(index) ? 'inline-block' : 'none') + ';' data-index=index).btn.btn-sm.btn-seconday.m-t-1.delete.buttons.added-state  Delete risk
+      button(type="submit" style="display: none").btn.btn-sm.btn-secondary.m-t-1.add-risk.buttons.editing-state Save and Add this Risk
+      button(style="display:" + (values[name].hasOwnProperty(index) ? 'none' : 'inline-block') + ";" data-index=index).btn.btn-sm.btn-secondary.m-t-1.edit-risk.buttons.unadded-state Edit and Add this Risk
 
-  if values[name].hasOwnProperty(index)
-    textarea(style="max-width:100%; height:150px" name="risk" readonly="true").form-control #{values[name][index].risk}
-  else
-    form(data-method="PATCH" data-index=index)
-      input(type="hidden" name="title" value=title)
-      textarea(style="max-width:100%; height:150px" name="risk").form-control #{ risk }
-      .text-md-center.text-lg-right
-        button(type="submit").btn.btn-sm.btn-secondary.m-t-1.add-risk Save and Add this Risk
+mixin showRiskForm(v, k)
+  .panel.panel-default.risk-panel(index=k)
+    #headingOne(role="tab").panel-heading
+      a(data-toggle="collapse"
+      data-parent="#accordion-risk" 
+      href="#collapseOne"
+      aria-expanded="true"
+      aria-controls="collapseOne"
+      ).list-group-item-action.active= v.title
+        i.fa.fa-angle-up
+    #collapseOne(role="tabpanel"
+    aria-labelledby="headingOne"
+    ).panel-collapse.collapse.in
+      +showRisk('market_and_customer_risk', k, v.title, v.risk)
 
 section.formc-team-members-director.container.m-b-85
   +menu('formc', 'risk-factors-market')
@@ -40,113 +54,45 @@ section.formc-team-members-director.container.m-b-85
       .warning-block.m-t-1
         i.fa.fa-info-circle
         span.warning-text You are free use any statement that applies to your business, provided that in each case you customize the final language to be specific to your company.
-    //- form(metod="post" action="").form-section 
     .form-section
       section.risks
         .col-lg-12
           #accordion-risk.pannel-group.accordion.accordion-risk(role="tablist" aria-multiselectable="true")
-            .panel.panel-default
-              #headingOne(role="tab").panel-heading
-                a(data-toggle="collapse"
-                data-parent="#accordion-risk" 
-                href="#collapseOne"
-                aria-expanded="true"
-                aria-controls="collapseOne"
-                ).list-group-item-action.active There is a limited market for the Company’s product or services
-                  i.fa.fa-angle-up
-              #collapseOne(role="tabpanel"
-              aria-labelledby="headingOne"
-              ).panel-collapse.collapse.in
-                +showRisk('market_and_customer_risk', 0, 'There is a limited market for the Company’s product or services', 'Although we have identified what we believe to be a need in the market for our products and services, there can be no assurance that demand or a market will develop or that we will be able to create a viable business. Our future financial performance will depend, at least in part, upon the introduction and market acceptance of our products and services. Potential customers may be unwilling to accept, utilize or recommend any of our proposed products or services. If we are unable to commercialize and market such products or services when planned, we may not achieve any market acceptance or generate revenue.')
+            each v, k in defaultRisks
+              +showRiskForm(v, k)
 
-            .panel.panel-default
-              #headingTwo(role="tab").panel-heading
-                a(data-toggle="collapse"
-                data-parent="#accordion-risk" 
-                href="#collapseTwo"
-                aria-controls="collapseTwo"
-                ).list-group-item-action We must correctly predict, identify, and interpret changes in consumer preferences and demand, offer new products to meet those changes, and respond to competitive innovation. 
-                  i.fa.fa-angle-down
-              #collapseTwo(role="tabpanel"
-              aria-labelledby="headingTwo"
-              ).panel-collapse.collapse
-                form(method="post" data-index="0")
-                  input(type="hidden" name="market_and_customer_risk[1][title]" value="We must correctly predict, identify, and interpret changes in consumer preferences and demand, offer new products to meet those changes, and respond to competitive innovation.")
-                  textarea(style="max-width:100%; height:150px" name="market_and_customer_risk[1][risk]").form-control Our success depends on our ability to predict, identify, and interpret the tastes and habits of consumers and to offer products that appeal to consumer preferences. If we do not offer products that appeal to consumers, our sales and market share will decrease. If we do not accurately predict which shifts in consumer preferences will be long-term, or if we fail to introduce new and improved products to satisfy those preferences, our sales could decline. If we fail to expand our product offerings successfully across product categories, or if we do not rapidly develop products in faster growing and more profitable categories, demand for our products could decrease, which could materially and adversely affect our product sales, financial condition, and results of operations. 
-                  .text-md-center.text-lg-right
-                    button.btn.btn-sm.btn-secondary.m-t-1.add-risk Edit and Add this Risk 
-            .panel.panel-default
-              #headingThree(role="tab").panel-heading
-                a(data-toggle="collapse"
-                data-parent="#accordion-risk" 
-                href="#collapseThree"
-                aria-controls="collapseThree"
-                ).list-group-item-action We may be adversely affected by cyclicality, volatility or an extended downturn in the United States or worldwide economy, or in the industries we serve.    
-                  i.fa.fa-angle-down
-              #collapseThree(role="tabpanel"
-              aria-labelledby="headingThree"
-              ).panel-collapse.collapse  
-                input(type="hidden" name="index" value='0' class="index")
-                textarea(style="max-width:100%; height:150px").form-control Our operating results, business and financial condition could be significantly harmed by an extended economic downturn or future downturns, especially in regions or industries where our operations are heavily concentrated. Further, we may face increased pricing pressures during such periods as customers seek to use lower cost or fee services, which may adversely affect our financial condition and results of operations. 
-                .text-md-center.text-lg-right
-                  .btn.btn-sm.btn-secondary.m-t-1 Edit and Add this Risk
-            .panel.panel-default
-              #headingFour(role="tab").panel-heading
-                a(data-toggle="collapse"
-                data-parent="#accordion-risk" 
-                href="#collapseFour"
-                aria-controls="collapseFour"
-                ).list-group-item-action Failure to obtain new clients or renew client contracts on favorable terms could adversely affect results of operations.    
-                  i.fa.fa-angle-down
-              #collapseFour(role="tabpanel"
-              aria-labelledby="headingFour"
-              ).panel-collapse.collapse
-                input(type="hidden" name="index" value='0' class="index")
-                textarea(style="max-width:100%; height:150px").form-control We may face pricing pressure in obtaining and retaining our clients.  On some occasions, this pricing pressure may result in lower revenue from a client than we had anticipated based on our previous agreement with that client. This reduction in revenue could result in an adverse effect on our business and results of operations. Further, failure to renew client contracts on favorable terms could have an adverse effect on our business. If we are not successful in achieving a high rate of contract renewals on favorable terms, our business and results of operations could be adversely affected.  
-                .text-md-center.text-lg-right
-                  .btn.btn-sm.btn-secondary.m-t-1 Edit and Add this Risk
-            .panel.panel-default
-              #headingFour(role="tab").panel-heading
-                a(data-toggle="collapse"
-                data-parent="#accordion-risk" 
-                href="#collapseFive"
-                aria-controls="collapseFour"
-                ).list-group-item-action Our business and results of operations may be adversely affected if we are unable to maintain our customer experience or provide high quality customer service.    
-                  i.fa.fa-angle-down
-              #collapseFive(role="tabpanel"
-              aria-labelledby="collapseFive"
-              ).panel-collapse.collapse
-                input(type="hidden" name="index" value='0' class="index")
-                textarea(style="max-width:100%; height:150px").form-control The success of our business largely depends on our ability to provide superior customer experience and high quality customer service, which in turn depends on a variety of factors, such as our ability to continue to provide a reliable and user-friendly website interface for our customers to browse and purchase our products, reliable and timely delivery of our products, and superior after sales services. If our customers are not satisfied, our reputation and customer loyalty could be negatively affected.   
-                .text-md-center.text-lg-right
-                  .btn.btn-sm.btn-secondary.m-t-1 Edit and Add this Risk
-      .col-lg-12.m-t-3
-        p.pb10
-          b In the text box below, please include those market and customer risks that are specific to your business.
-          |  In brainstorming the proper risks to disclose, please consider the following questions for guidance:
-        ul
-          li.pb10 Does your market have seasonal fluctuations or other unpredictable characteristics?
-          li.pb10 Are your customers concentrated in a few areas or accounts?
-          li.pb10 Is there risk around losing major customers or the risk they may not timely pay you?
-          li.pb10 Are there any risks identifying customers or risks around ensuring their retention?
-          li.pb10 In the text box below, please write in full sentences consistent with the sample language provided above.
-      .col-lg-12
-        +fieldBlock("title_risk", '', {
+            each v, k in values['market_and_customer_risk']
+              - if (!k < Object.keys(defaultRisks).length)
+                +showRiskForm(v, k)
+
+    .col-lg-12.m-t-3
+      p.pb10
+        b In the text box below, please include those market and customer risks that are specific to your business.
+        |  In brainstorming the proper risks to disclose, please consider the following questions for guidance:
+      ul
+        li.pb10 Does your market have seasonal fluctuations or other unpredictable characteristics?
+        li.pb10 Are your customers concentrated in a few areas or accounts?
+        li.pb10 Is there risk around losing major customers or the risk they may not timely pay you?
+        li.pb10 Are there any risks identifying customers or risks around ensuring their retention?
+        li.pb10 In the text box below, please write in full sentences consistent with the sample language provided above.
+    .col-lg-12
+      form(data-method="PATCH").add-risk-form
+        +fieldBlock("title", '', {
           class1: 'col-lg-3 col-md-12 text-md-left',
           class2: 'col-lg-9 col-md-12',
           type: 'text',
           placeholder: 'Title for Risk',
           })
-        +fieldBlock("describe", '', {
+        +fieldBlock("risk", '', {
           class1: 'col-lg-3 col-md-12 text-md-left',
           class2: 'col-lg-9 col-md-12 big-textarea',
           type: 'textarea',
           placeholder: 'Describe Your Risk',
           })
-        a(href="/company/create").btn.btn-sm.btn-secondary.text-uppercase.pull-lg-right.m-b-3 save and Add this Risk
+        button(data-method="PATCH" data-concat="false").btn.btn-sm.btn-secondary.text-uppercase.pull-lg-right.m-b-3.add-risk save and Add this Risk
 
-        .row.m-t-3
-          .col-lg-12.text-md-center.text-sm-center-text-xs-center
-            //- a(href="/company/create").btn.btn-primary.text-uppercase.pull-lg-right next
-            button.btn.btn-primary.text-uppercase.pull-lg-right next
-              i.fa.fa-angle-right
+      .row.m-t-3
+        .col-lg-12.text-md-center.text-sm-center-text-xs-center
+          //- a(href="/company/create").btn.btn-primary.text-uppercase.pull-lg-right next
+          button.btn.btn-primary.text-uppercase.pull-lg-right next
+            i.fa.fa-angle-right

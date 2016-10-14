@@ -1,3 +1,5 @@
+'use strict';
+
 const validation = require('components/validation/validation.js');
 
 module.exports = {
@@ -25,7 +27,6 @@ module.exports = {
   },
 
   makeRequest(url, type, data) {
-
     // We can pass type as a string
     // or we can pass dict with type and data
     if (typeof type === 'object') {
@@ -102,6 +103,76 @@ module.exports = {
 
           if (typeof this._success == 'function') {
             this._success(data);
+          } else {
+            $('#content').scrollTo();
+            app.routers.navigate(
+              this.getSuccessUrl(data),
+              { trigger: true, replace: false }
+            );
+          }
+        }).
+        fail((xhr, status, text) => {
+          api.errorAction(this, xhr, status, text, this.fields);
+        });
+    }
+  },
+
+  submitRisk(e, data) {
+    this.$el.find('.alert').remove();
+    e.preventDefault();
+
+    data = data || $(e.target).serializeJSON({useIntKeysAsArrayIndex: true});
+
+    // if view already have some data - extend that info
+    if(this.hasOwnProperty('model') && !(document.activeElement.dataset.concat == 'false')) {
+      _.extend(this.model, data);
+      data = Object.assign({}, this.model)
+    } else if (this.hasOwnProperty('model')) {
+      data.id = this.model.id;
+    }
+
+    /*
+       var newValidators = {};
+       for(var k in this.fields) {
+       if (k.required == true) {
+       newValidators[k] = baseModel.validation[k];
+       }
+       };
+       this.model.validation = newValidators;
+    */
+    this.$('.help-block').remove();
+    if (!validation.validate(this.fields, data, this)) {
+      _(validation.errors).each((errors, key) => {
+        validation.invalidMsg(this, key, errors);
+      });
+      this.$('.help-block').scrollTo(45);
+      return;
+    } else {
+      let url = this.urlRoot;
+      let type = 'POST';
+
+      if (data.hasOwnProperty('id')) {
+        url = url.replace(':id', data.id);
+        delete data.id;
+        // type = 'PUT';
+        type = $(e.target).data('method') || 'PUT';
+      }
+
+      let riskIndex = data.index;
+      let riskData = data;
+      url = url.replace(':index', riskIndex);
+
+      api.makeRequest(url, type, data).
+        then((data) => {
+          // app.showLoading();
+
+          // ToDo
+          // Create clearity function
+          this.$el.find('.alert-warning').remove();
+          $('.popover').popover('hide');
+
+          if (typeof this._success == 'function') {
+            this._success(data, riskIndex, riskData, type);
           } else {
             $('#content').scrollTo();
             app.routers.navigate(

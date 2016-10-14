@@ -19,10 +19,10 @@ section.formc.use_of_proceeds.create-company-media.container
     form(metod="post" action="").form-section
       .form-group.intended
         .col-lg-12
-          textarea(rows="3" placeholder="Intended Use of Proceeds").form-control
+          textarea(rows="3" placeholder="Intended Use of Proceeds" name="intended_use_of_proceeds").form-control
       .table.table-responsive
         .col-lg-12
-          table.table.table-bordered.use-of-proceeds-table
+          table.table.table-bordered.use-of-proceeds-table.expense-table
             thead
               tr
                 th.w-50
@@ -37,7 +37,7 @@ section.formc.use_of_proceeds.create-company-media.container
                 td.border-t-n.p-l-r-20
                   .pull-left Less: Offering Expenses
                   .pull-right
-                    a(href="#").link-2
+                    a(href="#" data-type='expense').link-2.add-proceed
                       i.fa.fa-plus
                       |  Add Another
                 td.border-b-t-none
@@ -72,7 +72,6 @@ section.formc.use_of_proceeds.create-company-media.container
                 td.border-b-t-none.w-25.font-size-12
                   .form-section
                     input(type="text").input-border-bottom.form-control.text-xs-center
-
               tr.border-b-t-none.p-t-b-5
                 td.border-t-n.d-block.input-w-80
                   .d-inline-block.pull-left.p-r-1 (C)
@@ -88,17 +87,20 @@ section.formc.use_of_proceeds.create-company-media.container
                   .form-section
                     input(type="text").input-border-bottom.form-control.text-xs-center
 
+          table.table.table-bordered.use-of-proceeds-table.net-table
+            thead
               tr.color-grey
                 td.w-50.p-l-r-20 Net Proceeds
                   .pull-right.icon
                     i.fa.fa-question-circle
                 td.w-25.text-lg-center.font-size-12  $100K
                 td.w-25.text-lg-center
+            tbody
               tr
                 td.border-t-n.p-l-r-20
                   .pull-left Use of Net Proceeds
                   .pull-right
-                    a(href="#").link-2
+                    a(href="#" data-type='net').link-2.add-proceed
                       i.fa.fa-plus
                       |  Add Another
                 td.border-b-t-none

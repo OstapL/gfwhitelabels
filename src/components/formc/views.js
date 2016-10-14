@@ -365,16 +365,41 @@ module.exports = {
   useOfProceeds: Backbone.View.extend(_.extend({
     urlRoot: 'https://api-formc.growthfountain.com/' + ':id' + '/use-of-proceeds',
 
-     initialize(options) {
-    this.fields = options.fields;
-     },
+    initialize(options) {
+      this.fields = options.fields;
+    },
 
     events: _.extend({
       'submit form': 'submit',
       'change input[type=radio][name=doc_type]': 'changeDocType',
+      'click .add-proceed': 'addProceed',
+      'click .delete-proceed': 'deleteProceed',
     }, addSectionHelper.events, menuHelper.events),
     // }, menuHelper.events),
-    
+
+    addProceed(e) {
+      e.preventDefault();
+      let $target = $(e.target);
+      let template = require('./templates/proceed.pug');
+      let type = $target.data('type');
+      let dataType;
+      if (type == 'net') dataType = 'use_of_net_proceeds';
+      else if (type == 'expense') dataType = 'less_offering_express';
+      $('.' + type + '-table tbody').append(template({
+        type: type,
+        dataType: dataType,
+        index: 0,
+      }));
+    },
+
+    deleteProceed(e) {
+      e.preventDefault();
+      let $target = $(e.currentTarget);
+      let type = $target.data('type');
+      let index = $target.data('index');
+      $('.' + type + '-table tr.index_' + index).remove();
+    },
+
     changeDocType(e) {
       if (e.target.value == 'describe') {
         this.$('.describe').show();
@@ -438,23 +463,112 @@ module.exports = {
     urlRoot: formcServer + '/:id' + '/risk-factors-market/:index',
     events: _.extend({
       'submit form': 'submit',
+      'click .delete': 'deleteRisk',
+      'click .edit-risk': 'editRisk',
     }, menuHelper.events),
 
     initialize(options) {
       this.fields = options.fields;
+      this.fields.title = {label: 'Title for Risk'};
+      this.fields.risk = {label: 'Describe Your Risk'};
+      this.defaultRisks = {
+        0: {
+          title: 'There is a limited market for the Company’s product or services',
+          risk: 'Although we have identified what we believe to be a need in the market for our products and services, there can be no assurance that demand or a market will develop or that we will be able to create a viable business. Our future financial performance will depend, at least in part, upon the introduction and market acceptance of our products and services. Potential customers may be unwilling to accept, utilize or recommend any of our proposed products or services. If we are unable to commercialize and market such products or services when planned, we may not achieve any market acceptance or generate revenue.',
+        },
+        1: {
+          title: 'We must correctly predict, identify, and interpret changes in consumer preferences and demand, offer new products to meet those changes, and respond to competitive innovation.',
+          risk: 'Our success depends on our ability to predict, identify, and interpret the tastes and habits of consumers and to offer products that appeal to consumer preferences. If we do not offer products that appeal to consumers, our sales and market share will decrease. If we do not accurately predict which shifts in consumer preferences will be long-term, or if we fail to introduce new and improved products to satisfy those preferences, our sales could decline. If we fail to expand our product offerings successfully across product categories, or if we do not rapidly develop products in faster growing and more profitable categories, demand for our products could decrease, which could materially and adversely affect our product sales, financial condition, and results of operations.',
+        },
+        2: {
+          title: 'We may be adversely affected by cyclicality, volatility or an extended downturn in the United States or worldwide economy, or in the industries we serve.',
+          risk: 'Our operating results, business and financial condition could be significantly harmed by an extended economic downturn or future downturns, especially in regions or industries where our operations are heavily concentrated. Further, we may face increased pricing pressures during such periods as customers seek to use lower cost or fee services, which may adversely affect our financial condition and results of operations.',
+        },
+        3: {
+          title: 'Failure to obtain new clients or renew client contracts on favorable terms could adversely affect results of operations.',
+          risk: 'We may face pricing pressure in obtaining and retaining our clients.  On some occasions, this pricing pressure may result in lower revenue from a client than we had anticipated based on our previous agreement with that client. This reduction in revenue could result in an adverse effect on our business and results of operations. Further, failure to renew client contracts on favorable terms could have an adverse effect on our business. If we are not successful in achieving a high rate of contract renewals on favorable terms, our business and results of operations could be adversely affected.',
+        },
+        4: {
+          title: 'Our business and results of operations may be adversely affected if we are unable to maintain our customer experience or provide high quality customer service.',
+          risk: 'The success of our business largely depends on our ability to provide superior customer experience and high quality customer service, which in turn depends on a variety of factors, such as our ability to continue to provide a reliable and user-friendly website interface for our customers to browse and purchase our products, reliable and timely delivery of our products, and superior after sales services. If our customers are not satisfied, our reputation and customer loyalty could be negatively affected.',
+        },
+      };
+    },
+
+    deleteRisk(e) {
+      e.stopPropagation();
+      e.preventDefault();
+      let index = e.target.dataset.index;
+      let url = this.urlRoot.replace(':id', this.model.id).replace(':index', index);
+      // let data = $(e.target).serializeJSON({ useIntKeysAsArrayIndex: true });
+
+      api.makeRequest(url, 'DELETE', {}).then((data) => {
+        if (index < Object.keys(this.defaultRisks).length) {
+          $(e.target).find('textarea').prop('readonly', true);
+          let $form = $('form[index=' + index + ']');
+          $form.find('.buttons').css({display: 'none'});
+          $form.find('.unadded-state').css({display: 'inline-block'});
+          $form.find('textarea').val(this.defaultRisks[index].risk);
+        } else {
+          let $section = $('.risk-panel[index=' + index + ']');
+          $section.remove();
+        }
+      // $form.find('.added-span').text(' (added to Form C)');
+      }).fail((xhr, status, text) => {
+        api.errorAction(this, xhr, status, text, this.fields);
+      });
+
+    },
+
+    editRisk(e) {
+      e.preventDefault();
+      let $target = $(e.target);
+      let index = $target.data('index');
+      $('textarea[index=' + index + ']').attr('readonly', false);
+      // let $form = $('form[index=' + index + ']');
+      let $form = $('form[index=' + index + ']');
+      // $panel.find('.add-risk').css({display: 'inline-block'});
+      // $panel.find('.alter-risk').css({display: 'none'});
+      $form.find('.buttons').css({display: 'none'});
+      $form.find('.editing-state').css({display: 'inline-block'});
+      $form.find('.added-span').text('');
+      // $target.css({display: 'none'});
     },
 
     submit(e) {
       e.preventDefault();
       let index = e.target.dataset.index;
+      if (!index) {
+        index = Object.keys(this.defaultRisks).length - 1;
+        $('.risk-panel').each(function(idx, elem) {
+          let $elem = $(this);
+          let panelIdx = parseInt($elem.attr('index'))
+          if (panelIdx > index) index = panelIdx;
+        });
+        index += 1;
+      }
       let url = this.urlRoot.replace(':id', this.model.id).replace(':index', index);
-      let data = $(e.target).serializeJSON({ useIntKeysAsArrayIndex: true });
+      let formData = $(e.target).serializeJSON({ useIntKeysAsArrayIndex: true });
 
-      api.makeRequest(url, 'PATCH', data).then((data) => {
-      $(e.target).find('textarea').prop('readonly', true);
+      api.makeRequest(url, 'PATCH', formData).then((data) => {
+        $(e.target).find('textarea').prop('readonly', true);
+        let $form = $('form[index=' + index + ']');
+        if ($form.length > 0) { // find the form    
+          $form.find('.buttons').css({display: 'none'});
+          $form.find('.added-state').css({display: 'inline-block'});
+          $form.find('.added-span').text(' (added to Form C)');
+        } else {
+          // create and append panel
+          let template = require('./templates/risk.pug');
+          $('#accordion-risk').append(template({
+            k: index,
+            v: formData,
+          }));
+          $('.add-risk-form').find('input:text, textarea').val('');
+        }
       }).
       fail((xhr, status, text) => {
-      api.errorAction(this, xhr, status, text, this.fields);
+        api.errorAction(this, xhr, status, text, this.fields);
       });
     },
 
@@ -464,9 +578,10 @@ module.exports = {
         template({
           serverUrl: serverUrl,
           Urls: Urls,
-          // fields: this.fields,
+          fields: this.fields,
           // values: this.model.toJSON(),
           values: this.model,
+          defaultRisks: this.defaultRisks,
         })
       );
       return this;
@@ -665,7 +780,8 @@ module.exports = {
 
     events: _.extend({
       'submit form': 'submit',
-      'click button.save-outstanding': 'addOutstanding',
+      'click .add-outstanding': 'addOutstanding',
+      'click .delete-outstanding': 'deleteOutstanding',
     }, addSectionHelper.events, menuHelper.events, yesNoHelper.events),
 
     // submit: api.submitAction,
@@ -680,6 +796,30 @@ module.exports = {
 
     addOutstanding(e) {
       e.preventDefault();
+      // get the form
+      let $form = $(".modal-form");
+      let data = $form.serializeJSON();
+      // console.log(data);
+      // add an entry
+      let template = require('./templates/security.pug');
+      $('.securities-table tbody').append(template({
+        values: data,
+        index: this.outstanding_securitiesIndex
+      }));
+      this.outstanding_securitiesIndex++;
+    },
+
+    deleteOutstanding(e) {
+      e.preventDefault();
+      if(confirm('Are you sure?')) {
+        let sectionName = e.currentTarget.dataset.section;
+        $('.' + sectionName + ' .index_' + e.currentTarget.dataset.index).remove();
+        // e.currentTarget.offsetParent.remove();
+      }
+
+      // ToDo
+      // Fix index counter
+      // this[sectionName + 'Index'] --;
     },
 
     getSuccessUrl() {
@@ -720,6 +860,11 @@ module.exports = {
 
       this.fields.outstanding_securities.label = 'Outstanding Securities';
 
+      if (this.model.outstanding_securities) {
+        this.outstanding_securitiesIndex = Object.keys(this.model.outstanding_securities).length;
+      } else {
+        this.outstanding_securitiesIndex = 0;
+      }
 
       this.$el.html(
         template({

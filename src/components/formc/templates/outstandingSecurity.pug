@@ -160,7 +160,7 @@ section.formc-team-members-director.container.m-b-85
             i.fa.fa-plus
             |  add outstanding securities
         .table-responsive
-            table.table.table-bordered.table-striped.text-xs-center.table-outstanding.m-b-0
+            table.table.table-bordered.table-striped.text-xs-center.table-outstanding.m-b-0.securities-table
                 thead
                     tr
                         th(width="22%").text-xs-center Security Type
@@ -205,6 +205,26 @@ section.formc-team-members-director.container.m-b-85
                             .delete-section-container
                                 a(href="#").delete-section
                                     i.fa.fa-times
+
+                    each v, k in values.outstanding_securities
+                        tr(class="index_" + k)
+                            td
+                                | #{v.security_type}
+                                input(type="hidden" name="outstanding_securities[" + k + "][security_type]" value=v.security_type)
+                            td
+                                | #{v.amount_authroized}
+                                input(type="hidden" name="outstanding_securities[" + k + "][amount_authroized]" value=v.amount_authroized)
+                            td
+                                | #{v.amount_outstanding}
+                                input(type="hidden" name="outstanding_securities[" + k + "][amount_outstanding]" value=v.amount_outstanding)
+                            td
+                                | #{v.voting_right}
+                                input(type="hidden" name="outstanding_securities[" + k + "][voting_right]" value=v.voting_right)
+                                input(type="hidden" name="outstanding_securities[" + k + "][other_rights" value=v.other_rights)
+                            td 
+                                .delete-section-container
+                                    a(href="#" data-section="securities-table" data-index=k).delete-outstanding
+                                        i.fa.fa-times
         .border-bottom.m-t-3.m-b-3 
         +fieldBlock("rights_of_securities_beign", '', {
         class1: 'col-lg-12 col-md-12  text-md-left  text-xl-left',
@@ -262,56 +282,57 @@ section.formc-team-members-director.container.m-b-85
                         i.fa.fa-times
 
             .modal-body.p-t-0
-                .form-section    
-                    .row.form-group
-                        .col-lg-12
-                            label Security Type
-                        .col-lg-12
-                            select(name="" style="width:100%").custom-select
-                                option Preferred Stock
-                                option Common Stock
-                                option Debt
-                                option Warrants
-                                option Options
-                                option Other
-                    +fieldBlock("description_security_type", '', {
-                    class1: 'col-lg-12 col-md-12  text-md-left  text-xl-left',
-                    class2: 'col-lg-12 col-md-12 big-textarea',
-                    type: 'textarea',
-                    placeholder: 'Description',
-                    })
-                    .row
-                        .col-lg-6
-                            +fieldBlock("amount_authorized", '', {
-                            class1: 'col-lg-12 col-md-12  text-md-left  text-xl-left',
-                            class2: 'col-lg-12 col-md-12 ',
-                            type: 'text',
-                            placeholder: 'Amount Authorized',
-                            })
-                        .col-lg-6
-                            +fieldBlock("amount_outstanding", '', {
-                            class1: 'col-lg-12 col-md-12  text-md-left  text-xl-left',
-                            class2: 'col-lg-12 col-md-12 ',
-                            type: 'text',
-                            placeholder: 'Amount Authorized',
-                            })
-                    .row.form-group.m-b-0
-                        .col-lg-3
-                            label Voting Rights
-                        .col-lg-9
-                            .form-group.form-section.m-b-0
-                                .radio-input
-                                    label 
-                                        input(type="radio")
-                                        |  Yes
-                                    label 
-                                      input(type="radio")
-                                      |  No
-                    
+                form.modal-form
+                    .form-section    
+                        .row.form-group
+                            .col-lg-12
+                                label Security Type
+                            .col-lg-12
+                                select(name="security_type" style="width:100%").custom-select
+                                    option Preferred Stock
+                                    option Common Stock
+                                    option Debt
+                                    option Warrants
+                                    option Options
+                                    option Other
+                        +fieldBlock("other_rights", '', {
+                        class1: 'col-lg-12 col-md-12  text-md-left  text-xl-left',
+                        class2: 'col-lg-12 col-md-12 big-textarea',
+                        type: 'textarea',
+                        placeholder: 'Description',
+                        })
+                        .row
+                            .col-lg-6
+                                +fieldBlock("amount_authorized", '', {
+                                class1: 'col-lg-12 col-md-12  text-md-left  text-xl-left',
+                                class2: 'col-lg-12 col-md-12 ',
+                                type: 'text',
+                                placeholder: 'Amount Authorized',
+                                })
+                            .col-lg-6
+                                +fieldBlock("amount_outstanding", '', {
+                                class1: 'col-lg-12 col-md-12  text-md-left  text-xl-left',
+                                class2: 'col-lg-12 col-md-12 ',
+                                type: 'text',
+                                placeholder: 'Amount Authorized',
+                                })
+                        .row.form-group.m-b-0
+                            .col-lg-3
+                                label Voting Rights
+                            .col-lg-9
+                                .form-group.form-section.m-b-0
+                                    .radio-input
+                                        label 
+                                            input(type="radio" name="voting_right" value="1")
+                                            |  Yes
+                                        label 
+                                          input(type="radio" name="voting_right" value="0")
+                                          |  No
+                        
 
-                .row.m-b-2
-                    .col-lg-12.text-lg-center.text-md-center.text-xs-center
-                        button(data-dismiss="modal").update-location.btn.btn-primary.text-uppercase.pull-lg-right.add-outstanding save
+                    .row.m-b-2
+                        .col-lg-12.text-lg-center.text-md-center.text-xs-center
+                            button(data-dismiss="modal").update-location.btn.btn-primary.text-uppercase.pull-lg-right.add-outstanding save
             .modal-footer
 
 
