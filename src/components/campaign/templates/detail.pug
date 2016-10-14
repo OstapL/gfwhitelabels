@@ -245,8 +245,9 @@ section
         .col-lg-12
           each v,k in values.additional_info
             //- h3.our.text-lg-center #{ v.title }
-            h2.dosis.our.text-uppercase.text-lg-center.text-xs-center.green-heading #{ v.title }
-            p #{ v.body }
+            if v
+              h2.dosis.our.text-uppercase.text-lg-center.text-xs-center.green-heading #{ v.title }
+              p #{ v.body }
    
   if values.members
       section#members.border-bottom
@@ -672,24 +673,25 @@ section
           .accordion(role="tablist" aria-multiselectable="true")
             - var counter = 0
             each v,k in values.faq
-              .panel.panel-default
-                div(id="faq" + k role="tab").panel-heading
-                  a(data-toggle="collapse"
-                  data-parent="#accordion" 
-                  href="#collapsefaq"+ k
-                  aria-controls="collapsefaq"+ k
-                  class=(counter == 0 ? 'list-group-item-action active' : 'list-group-item-action')
-                  style="padding-left:25px"
-                  ) #{v.question}
-                      if counter == 0
-                          i.fa.fa-angle-up
-                      else
-                          i.fa.fa-angle-down
-                div(id="collapsefaq" + k role="tabpanel"
-                aria-labelledby="faq" + k
-                class=(counter == 0 ? 'in' : '') + ' panel-collapse collapse'
-                ) #{ v.answer }
-                - counter ++;
+              if v
+                .panel.panel-default
+                  div(id="faq" + k role="tab").panel-heading
+                    a(data-toggle="collapse"
+                    data-parent="#accordion" 
+                    href="#collapsefaq"+ k
+                    aria-controls="collapsefaq"+ k
+                    class=(counter == 0 ? 'list-group-item-action active' : 'list-group-item-action')
+                    style="padding-left:25px"
+                    ) #{v.question}
+                        if counter == 0
+                            i.fa.fa-angle-up
+                        else
+                            i.fa.fa-angle-down
+                  div(id="collapsefaq" + k role="tabpanel"
+                  aria-labelledby="faq" + k
+                  class=(counter == 0 ? 'in' : '') + ' panel-collapse collapse'
+                  ) #{ v.answer }
+                  - counter ++;
             //
               .panel.panel-default
                 #faqTwo(role="tab").panel-heading
