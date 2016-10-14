@@ -963,7 +963,8 @@ module.exports = {
         app.showLoading();
         api.makeRequest(url, type, data).then((data) => {
           this.model = data;
-          app.hideLoading()
+          app.hideLoading();
+          $('button.submit_form').click();
         }).
         fail((xhr, status, text) => {
           api.errorAction(this, xhr, status, text, this.fields);
