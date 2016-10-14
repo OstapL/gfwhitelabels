@@ -48,6 +48,13 @@ module.exports = {
     },
 
     addSectionNew(e) {
+      /** Create nested fields section 
+       ** MUST HAVE: 
+       **  - Target dataset comp - name of the component
+       **  - Target dataset template  - name of the template to render
+       ** Will look for the template in components/{{ component }}/templates/snippet/{{ template }}.pug
+      */
+
       e.preventDefault();
       const sectionName = e.target.dataset.section;
       const template = require('components/' + e.target.dataset.comp + '/templates/snippets/' + e.target.dataset.template + '.pug');
@@ -65,6 +72,12 @@ module.exports = {
     },
 
     deleteSectionNew(e) {
+      /** Delete nested fields section 
+       ** Looks for parent .addSectionBlock and delete hole block
+       ** TODO
+       ** Reorder blocks after deleting
+      */
+
       e.preventDefault();
       if(confirm('Are you sure?')) {
         let sectionName = e.currentTarget.dataset.section;
@@ -81,6 +94,10 @@ module.exports = {
     },
 
     createIndexes() {
+      /*
+       * Will create indexes for nested fields 
+       */
+
       this.jsonTemplates = {};
       _(this.fields).each((el, key) => {
         if(el.type == 'nested') {
@@ -99,6 +116,13 @@ module.exports = {
     },
 
     buildJsonTemplates(component) {
+      /*
+       * Build html for nested fields
+       * PARAMS:
+       *    - component: name of the component 
+       * MUST RUN AFTER createIndex function
+       */
+
       _(this.fields).each((el, key) => {
         if(el.type == 'nested') {
           this.jsonTemplates[key] = require('components/' + component + '/templates/snippets/' + key + '.pug')({
@@ -114,6 +138,12 @@ module.exports = {
     },
 
     assignLabels() {
+      /*
+       * Assign labels for nested fields
+       * PARAMS:
+       *    - using this.labels dict
+       */
+
       _(this.fields).each((el, key) => {
         if(el.type == 'nested') {
           _(el.schema).each((subel, subkey) => {
