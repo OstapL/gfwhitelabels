@@ -563,9 +563,14 @@ module.exports = {
         dragover: 'globalDragover',
         dragleave: 'globalDragleave',
         'click .submit_form': doCampaignValidation,
+        'change #linkedin,#facebook': 'appendHttpsIfNecessary',
       }, leavingConfirmationHelper.events),
       // urlRoot: serverUrl + Urls['campaign-list']() + '/team_members',
       urlRoot: Urls['campaign-list']() + '/team_members',
+
+      appendHttpsIfNecessary(e) {
+        appendHttpIfNecessary(e, true);
+      },
 
       globalDragover() {
         // this.$('.dropzone').css({ border: 'dashed 1px lightgray' });
@@ -719,6 +724,13 @@ module.exports = {
     events: {
       'click .delete-member': 'deleteMember',
       'click .submit_form': doCampaignValidation,
+      'click .onPreview': onPreviewAction,
+      'submit form': 'submit',
+    },
+
+    // this is for no navigating to new page in the onPreviewAction method
+    submit(e) {
+      e.preventDefault();
     },
 
     preinitialize() {
@@ -902,12 +914,38 @@ module.exports = {
 
   perks: Backbone.View.extend(_.extend({
       events: _.extend({
-          'submit form': api.submitAction,
+          'submit form': 'onSubmit',
           'click .onPreview': onPreviewAction,
           'click .submit_form': submitCampaign,
         }, jsonActions.events, leavingConfirmationHelper.events),
       // urlRoot: serverUrl + Urls['campaign-list']() + '/perks',
       urlRoot: Urls['campaign-list']() + '/perks',
+
+      onSubmit(e) {
+        e.preventDefault();
+        let url = this.urlRoot;
+        let data = $(e.target).serializeJSON({ useIntKeysAsArrayIndex: true });
+        if(this.hasOwnProperty('model')) {
+          _.extend(this.model, data);
+          data = Object.assign({}, this.model)
+        }
+        let type = 'POST';
+        if(data.hasOwnProperty('id')) {
+          url += '/' + data.id;
+          delete data.id;
+          type = e.target.dataset.method;
+        }
+
+        app.showLoading();
+        api.makeRequest(url, type, data).then((data) => {
+          this.model = data;
+          app.hideLoading()
+        }).
+        fail((xhr, status, text) => {
+          api.errorAction(this, xhr, status, text, this.fields);
+          app.hideLoading();
+        });
+      },
 
       preinitialize() {
         // ToDo
@@ -919,9 +957,6 @@ module.exports = {
 
       addSection: jsonActions.addSection,
       deleteSection: jsonActions.deleteSection,
-      getSuccessUrl(data) {
-        return '/campaign/thankyou/' + data.id;
-      },
 
       initialize(options) {
         this.fields = options.fields;
