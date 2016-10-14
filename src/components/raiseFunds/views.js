@@ -361,12 +361,10 @@ module.exports = {
       appendHttpIfNecessary: appendHttpIfNecessary,
 
       globalDragover() {
-        // this.$('.dropzone').css({ border: 'dashed 1px lightgray' });
         this.$('.border-dropzone').addClass('active-border');
       },
 
       globalDragleave() {
-        // this.$('.dropzone').css({ border: 'none' });
         this.$('.border-dropzone').removeClass('active-border');
       },
 
@@ -578,12 +576,10 @@ module.exports = {
       },
 
       globalDragover() {
-        // this.$('.dropzone').css({ border: 'dashed 1px lightgray' });
         this.$('.border-dropzone').addClass('active-border');
       },
 
       globalDragleave() {
-        // this.$('.dropzone').css({ border: 'none' });
         this.$('.border-dropzone').removeClass('active-border');
       },
 
