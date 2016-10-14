@@ -481,7 +481,7 @@ header
         transition: height 0.45s ease-out, opacity 0.25s ease-out, transform 0.25s ease-out, -webkit-transform 0.25s ease-out
         
         position: absolute
-        top: rem(43)
+        top: rem(30)
         
         display: block
         height: 0
@@ -712,6 +712,11 @@ header
 
     .notification-container
       min-width: 100%
+    header.no-overflow
+      nav
+        .list-container.user-info-drop.notification-container
+          top: rem(35)
+
 
 @media screen and (max-width: 991px)
   // on mobile devaices main menu absolute positioned so we need set top padding for main content
