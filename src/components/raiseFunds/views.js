@@ -130,12 +130,13 @@ const doCampaignValidation = function doCampaignValidation(e, data) {
 
 const onPreviewAction = function(e) {
   e.preventDefault();
+  let pathname = location.pathname;
   this.$el.find('form').submit()
   app.showLoading();
   let that = this;
   setTimeout(function() {
     // window.location = e.target.dataset.href + '?preview=1'
-    window.location = '/api/campaign/' + (that.campaign ? that.campaign.id : that.model.id) + '?preview=1'
+    window.location = '/api/campaign/' + (that.campaign ? that.campaign.id : that.model.id) + '?preview=1&previous=' + pathname;
   }, 100);
 };
 
@@ -150,8 +151,12 @@ module.exports = {
       'click .update-location': 'updateLocation',
       'click .onPreview': onPreviewAction,
       'click .submit_form': submitCampaign,
-      'change #website,#twitter,#facebook,#instagram,#linkedin': appendHttpIfNecessary,
+      'change #website,#twitter,#facebook,#instagram,#linkedin': 'appendHttpsIfNecessary',
     }, leavingConfirmationHelper.events, phoneHelper.events),
+
+    appendHttpsIfNecessary(e) {
+      appendHttpIfNecessary(e, true);
+    },
 
     initialize(options) {
       this.fields = options.fields;
