@@ -1,0 +1,56 @@
+include ../../../../templates/fields_mixins.pug 
+
+mixin row(value, index)
+
+  div(data-index=index class=name + ' addSectionBlock')
+    .delete-section-container
+      a(href="#" data-section=name data-index=index).delete-sectionnew
+        i.fa.fa-times
+
+    +fieldNestedTextLabel(name, "employer", value, index, {})
+    +fieldNestedTextLabel(name, "employer_principal", value, index, {})
+    +fieldNestedTextLabel(name, "title", value, index, {})
+    +fieldNestedTextLabel(name, "responsibilities", value, index, {})
+
+    .row.form-group
+      .col-lg-6.col-md-12
+        .col-lg-6.text-lg-right.text-md-left.p-t-0
+          label.p-t-0.m-b-0 Start Date of Service
+        #start_date_of_service.col-lg-6.p-t-0
+          .row
+            +fieldNestedDateMonth(name, "start_date_of_service", value, index, {})
+            +fieldNestedDateYear(name, "start_date_of_service", value, index, {})
+            
+      .col-lg-6.col-md-12.p-l-0
+        .col-lg-6.text-lg-right.text-md-left.p-t-0
+          label.p-t-0.m-b-0 End Date of Service
+        #end_date_of_service.col-lg-6.p-t-0
+          .row
+            +fieldNestedDateMonth(name, "end_date_of_service", value, index, {})
+            +fieldNestedDateYear(name, "end_date_of_service", value, index, {})
+
+mixin run()
+
+  if first_run
+    b.col-lg-12.m-t-2.m-b-3 Business experience for past three years: Please list your employers, titles and dates of positions held during the past three years with an indication of job responsibilities.
+
+    div(class=(attr.row == 0 ? '' : 'row ') + name + '_block' + (attr.required == true ? ' required ' : ' ') + ' nested')
+      div(class=(attr.row == 0 ? '' : 'row ') + name + '_container' + (attr.required == true ? ' required ' : ' ') + ' nested')
+
+        if value == null || value.length == 0 || Object.keys(value) == 0
+          +row({}, 0)
+
+        else
+          each value, index in values
+            +row(value, index)
+
+    .row.add-link
+      .col-lg-9.offset-1.pull-right
+        a(href="#" data-section=name data-comp='formc' data-template="experiences").link-2.add-sectionnew
+          i.fa.fa-plus
+          |  Add Work Experience
+
+  else
+    +row({}, index)
+
++run()

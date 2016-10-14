@@ -1,21 +1,7 @@
 include ../../../templates/mixins.pug
-//- include menu.pug
+include ../../../templates/fields_mixins.pug
 include ../../../templates/menuRaiseFund.pug
 
-- 'use strict'
-// - var fields = { how_much: { label: 'How much have you sold within the preceeding 12-month period?'} };
-//- var fields = { financials_recent: { label: 'Upload financials for most recent fiscal year'} };
-
-// - var fields = { total_assets: { label: 'Total Assets'} };
-// - var fields = { cash: { label: 'Cash & Cash Equivalents'} };
-// - var fields = { accounts: { label: 'Accounts Receivable'} };
-// - var fields = { short: { label: 'Short-term Debt'} };
-// - var fields = { long: { label: 'Long-term Debt'} };
-// - var fields = { revenues: { label: 'Revenues/Sales'} };
-// - var fields = { cost: { label: 'Cost of Goods Sold'} };
-// - var fields = { income: { label: 'Total Income'} };
-// - var fields = { taxable: { label: 'Taxable Income'} };
-// - var fields = { tax: { label: 'Total Tax'} };
 +breadcrumbs('form c', '', 
     [
         ['Home', '/'],
@@ -44,17 +30,17 @@ section.formc-team-members-director.container.m-b-85
               input(type="radio" name="operating_history_choice" value="false" checked=(!values['operating_history_choice']) target=".operating-history-container")
               |  No
         .operating-history-container.shown-yes(style="display:" + (values['operating_history'] ? 'block' : 'none') + ";")
-            b Please discuss your historical results for each period for which you provide financial statements.  The discussion should focus on financial milestones and operational, liquidity and other challenges.  Please also discuss whether historical results and cash flows are representative of what investors should expect in the future. Take into account the proceeds of the offering and any other known sources of capital. Please discuss how the proceeds from the offering will affect your liquidity, whether these funds are necessary to the viability of the business, and how quickly you anticipate using your available cash.  Please also discuss other available sources of capital, such as lines of credit or required contributions by shareholders, for example.
-            .col-lg-12.p-t-1
-              .row.form-group.form-section
-                .big-textarea
-                  textarea(placeholder="Describe your financial condition" name="historical_results").form-control
+          +fieldTextareaLabel("historical_results", _.extend({
+            class: 'col-lg-12',
+            label: 'Please discuss your historical results for each period for which you provide financial statements.  The discussion should focus on financial milestones and operational, liquidity and other challenges.  Please also discuss whether historical results and cash flows are representative of what investors should expect in the future. Take into account the proceeds of the offering and any other known sources of capital. Please discuss how the proceeds from the offering will affect your liquidity, whether these funds are necessary to the viability of the business, and how quickly you anticipate using your available cash.  Please also discuss other available sources of capital, such as lines of credit or required contributions by shareholders, for example.',
+            placeholder: "Describe your historical results",
+          }, fields.historical_results))
         .operating-history-container.shown-no(style="display:" + (values['operating_history'] ? 'none' : 'block') + ";")
-            b Please discuss financial milestones and operational, liquidity and other challenges. Please discuss how the proceeds from the offering will affect your liquidity, whether these funds are necessary to the viability of the business, and how quickly you anticipate using your available cash.  Please also discuss other available sources of capital, such as lines of credit or required contributions by shareholders, for example.
-            .col-lg-12.p-t-1
-              .row.form-group.form-section
-                .big-textarea
-                  textarea(placeholder="Describe your financial condition" name="financial_milestone").form-control
+          +fieldTextareaLabel("financial_milestone", _.extend({
+            class: 'col-lg-12',
+            label: 'Please discuss financial milestones and operational, liquidity and other challenges. Please discuss how the proceeds from the offering will affect your liquidity, whether these funds are necessary to the viability of the business, and how quickly you anticipate using your available cash.  Please also discuss other available sources of capital, such as lines of credit or required contributions by shareholders, for example.',
+            placeholder: "Describe your financial condition",
+          }, fields.financial_milestone))
       .col-lg-12
         p.m-t-1.m-b-2 Companies are limited to raising $1 million in any 12-month period.
         p.pb10 You will be required to file a complete set of financial statements, including balance sheet, income statement, statement of cash flows and statement of changes in owners equity and notes to the financial statements. They must be prepared in accordance with U.S. generally accepted accounting principles and must cover the two most recently completed fiscal years or the period(s) since inception, if shorter. If the financial statements are not audited, they must be labeled as “unaudited.” You must provide these financial statements even if you have no operating history.

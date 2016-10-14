@@ -1,0 +1,96 @@
+mixin prepareNestedField(nestedName, name, value, index, myAttr)
+  - _.extend(myAttr, attr.schema[name]);
+  - myAttr.value = value[name] ? value[name]: '';
+  - myAttr.id = nestedName + '__' + index + '__' + name + '';
+
+
+mixin fieldNestedTextLabel(nestedName, name, value, index, myAttr)
+  +prepareNestedField(nestedName, name, value, index, myAttr)
+  - myAttr.class1 = myAttr.class1 ? myAttr.class1 : 'text-lg-right col-lg-3 col-md-12 text-md-left';
+  - myAttr.class2 = myAttr.class2 ? myAttr.class2 : 'col-lg-9 col-md-12';
+  +fieldTextLabel(
+    nestedName + '[' + index + '][' + name + ']',
+    myAttr
+  )
+
+
+mixin fieldNestedDateMonth(nestedName, name, value, index, myAttr)
+  +prepareNestedField(nestedName, name, value, index, myAttr)
+  - myAttr.class = myAttr.class ? myAttr.class : 'col-lg-6 p-r-0';
+  +fieldDateMonth(
+    nestedName + '[' + index + '][' + name + ']',
+    myAttr
+  )
+
+
+mixin fieldNestedDateYear(nestedName, name, value, index, myAttr)
+  +prepareNestedField(nestedName, name, value, index, myAttr)
+  - myAttr.class = myAttr.class ? myAttr.class : 'col-lg-6 p-r-0';
+  +fieldDateYear(
+    nestedName + '[' + index + '][' + name + ']',
+    myAttr
+  )
+
+
+mixin fieldTextLabel(name, attr)
+  - attr = attr ? attr : fields[name];
+  - attr.value = attr.value ? attr.value : values ? values[name] : '';
+  div(class="form-group "  + (attr.row == 0 ? '' : 'row ') + name + (attr.required == true ? ' required ' : ' ') + ' ' + attr.type)
+    label(class= attr.text_align ? 'text-lg-' + attr.text_align + ' ' + attr.class1 : ' text-lg-right ' + attr.class1 for=name)= attr.label
+    div(class=attr.class2)
+        input(
+            id=attr.id || name
+            name=attr.name || name
+            placeholder=attr.placeholder ? attr.placeholder :attr.label
+            type=attr.type ? attr.type : 'text'
+            class=(attr.help_text ? 'showPopover' : '') 
+            data-content=(attr.help_text ?attr.help_text : '')
+            value=attr.value
+            maxlength = attr.maxlength ? attr.maxlength : false
+            disabled=(attr.disabled ? attr.disabled : false)
+          ).form-control
+
+
+mixin fieldTextareaLabel(name, attr)
+  - attr = attr ? attr : fields[name];
+  - attr.value = attr.value ? attr.value : values ? values[name] : '';
+  div(class="form-group " + (attr.row == 0 ? '' : 'row ') + name + (attr.required == true ? ' required ' : ' ') + attr.type + ' ' + attr.class)
+    label(class=attr.class_label for=name)= attr.label
+    .big-textarea
+      textarea(
+        id=name
+        name=attr.name || name
+        placeholder=attr.placeholder ? attr.placeholder :attr.label
+        type=attr.type ? attr.type : 'text'
+        class=(attr.help_text ? 'showPopover' : '') 
+        data-content=(attr.help_text ?attr.help_text : '')
+        value=attr.value
+        maxlength = attr.maxlength ? attr.maxlength : false
+        disabled=(attr.disabled ? attr.disabled : false)
+      ).form-control
+
+
+mixin fieldDateMonth(name, attr)
+  div(class=attr.class + ' ' + name + (attr.required == true ? ' required ' : ' ') + ' ' + attr.type).date-input
+    - var value = attr.value ? attr.value.split('-') : values && values[name] ? values[name].split('-') : []
+    input(
+        id=name + '__month'
+        name=(attr.name || name) + '__month'
+        placeholder=(attr.placeholder ? attr.placeholder : "MM")
+        type='number'
+        maxlength=2
+        value=value[1]
+      ).form-control
+
+
+mixin fieldDateYear(name, attr)
+  div(class=attr.class + ' ' + name + (attr.required == true ? ' required ' : ' ') + ' ' + attr.type).date-input
+    - var value = attr.value ? attr.value.split('-') : values && values[name] ? values[name].split('-') : []
+    input(
+        id=name + '__year'
+        name=(attr.name || name) + '__year'
+        placeholder=(attr.placeholder ? attr.placeholder : "YYYY")
+        type='number'
+        maxlength=4
+        value=value[0]
+      ).form-control

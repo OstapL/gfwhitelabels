@@ -20,8 +20,16 @@ module.exports = {
   },
 
   invalidMsg: function (view, attr, error, selector) {
-    let $el = view.$('#' + attr);
-    var $group = null;
+    let $el = null;
+    let $group = null;
+
+    if(attr.indexOf('__') != -1) {
+      let sel = attr.split('__');
+      $el = view.$('.' + sel[0] + '[data-index="' + sel[1] + '"] #' + sel[2]);
+    }
+    else {
+      $el = view.$('#' + attr);
+    }
 
     if ($el.length == 0) {
       $el = view.$('[name=' + attr + ']');
@@ -39,8 +47,8 @@ module.exports = {
       // first element in form
       if ($el.length == 0) {
 
-        $el = $('<div class="alert alert-warning" role="alert">' +
-            error.join(',') + '</div>');
+        $el = $('<div class="alert alert-warning" role="alert"><p><b>' + attr + 
+            ':</b> ' + error.join(',') + '</div>');
         if(view.$el.find('form').length == 0) {
           view.$el.prepend($el);
         } else {
@@ -48,7 +56,7 @@ module.exports = {
         }
       } else {
         $el.html(
-          $el.html() + '<p><b>' + view.fields[attr].name + ':</b> ' +
+          $el.html() + '<p><b>' + attr + ':</b> ' +
             error.join(',') + '</p>'
         );
       }
@@ -71,7 +79,7 @@ module.exports = {
         rules[rule](name, value, attr, this.data, this.schema);
     } catch (e) {
       this.finalResult = false;
-      name = name.replace(/\./g, '_');
+      name = name.replace(/\./g, '__');
       Array.isArray(this.errors[name]) ? this.errors[name].push(e) : this.errors[name] = [e];
     }
   },
