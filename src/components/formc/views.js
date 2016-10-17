@@ -76,6 +76,16 @@ module.exports = {
 
     initialize(options) {
       this.fields = options.fields;
+      // this.labels = {
+      //   full_time_employers: 'Full Time Employees',
+      //   part_time_employers: 'Part Time Employees',
+      // };
+      // this.labels = {};
+      this.fields.full_time_employers = {label: 'Full Time Employees'};
+      this.fields.part_time_employers = {label: 'Part Time Employees'};
+      // this.fields.full_time_employers.label = 'Full Time Employees';
+      // this.fields.part_time_employers.label = 'Part Time Employees';
+      // this.assignLabels();
     },
 
     render() {
@@ -99,7 +109,7 @@ module.exports = {
       return this;
     },
 
-  }, menuHelper.methods)),
+  }, menuHelper.methods, addSectionHelper.methods)),
 
   teamMemberAdd: Backbone.View.extend(_.extend({
     urlRoot: formcServer + '/:id' + '/team-members',
@@ -319,7 +329,7 @@ module.exports = {
       this.labels = {
         transaction_with_related_parties: {
           amount_of_interest: 'Amount of Interest',
-          nature_of_interest: 'Nature of Interst',
+          nature_of_interest: 'Nature of Interest in Transaction',
           relationship_to_issuer: 'Relationship to Issuer',
           specified_person: 'Specified Person',
         }
@@ -741,6 +751,19 @@ module.exports = {
 
     initialize(options) {
       this.fields = options.fields;
+      this.labels = {
+        taxable_income: "Taxable Income",
+        total_income: "Total Income",
+        total_tax: "Total Tax",
+        total_assets: "Total Assets",
+        long_term_debt: "Long Term Debt",
+        short_term_debt: "Short Term Debt",
+        cost_of_goods_sold: "Cost of Goods Sold",
+        account_receivable: "Account Receivable",
+        cash_and_equivalents: "Cash Equivalents",
+        revenues_sales: "Revenues Sales",
+      };
+      this.assignLabels();
     },
 
     events: _.extend({
@@ -754,16 +777,16 @@ module.exports = {
     },
 
     render() {
-      this.fields.sold_securities_data.schema.taxable_income.label = "Taxable Income";
-      this.fields.sold_securities_data.schema.total_income.label = "Total Income";
-      this.fields.sold_securities_data.schema.total_tax.label = "Total Tax";
-      this.fields.sold_securities_data.schema.total_assets.label = "Total Assets";
-      this.fields.sold_securities_data.schema.long_term_debt.label = "Long Term Debt";
-      this.fields.sold_securities_data.schema.short_term_debt.label = "Short Term Debt";
-      this.fields.sold_securities_data.schema.cost_of_goods_sold.label = "Cost of Goods Sold";
-      this.fields.sold_securities_data.schema.account_receivable.label = "Account Receivable";
-      this.fields.sold_securities_data.schema.cash_and_equivalents.label = "Cash Equivalents";
-      this.fields.sold_securities_data.schema.revenues_sales.label = "Revenues Sales";
+      // this.fields.sold_securities_data.schema.taxable_income.label = "Taxable Income";
+      // this.fields.sold_securities_data.schema.total_income.label = "Total Income";
+      // this.fields.sold_securities_data.schema.total_tax.label = "Total Tax";
+      // this.fields.sold_securities_data.schema.total_assets.label = "Total Assets";
+      // this.fields.sold_securities_data.schema.long_term_debt.label = "Long Term Debt";
+      // this.fields.sold_securities_data.schema.short_term_debt.label = "Short Term Debt";
+      // this.fields.sold_securities_data.schema.cost_of_goods_sold.label = "Cost of Goods Sold";
+      // this.fields.sold_securities_data.schema.account_receivable.label = "Account Receivable";
+      // this.fields.sold_securities_data.schema.cash_and_equivalents.label = "Cash Equivalents";
+      // this.fields.sold_securities_data.schema.revenues_sales.label = "Revenues Sales";
       let template = require('components/formc/templates/financialCondition.pug');
       this.$el.html(
         template({
@@ -781,6 +804,29 @@ module.exports = {
     urlRoot: formcServer + '/:id' + '/outstanding-security',
     initialize(options) {
       this.fields = options.fields;
+      this.labels = {
+        exempt_offering: {
+          exemption_relied_upon: "Exemption Relied upon",
+          use_of_proceeds: "Use of Proceeds",
+          offering_date: "Date of The Offering",
+          amount_sold: "Amount Sold",
+          securities_offered: "Securities Offered",
+        },
+        business_loans_or_debt: {
+          maturity_date: "Maturity Date",
+          outstaind_amount: "Outstanding Date",
+          interest_rate: "Interest Rate",
+          other_material_terms: "Other Material Terms",
+          creditor: "Creditor"
+        },
+        principal_shareholders_affect: 'How could the exercise of rights held by the principal shareholders affect the purchasers of the securities being offered?',
+        risks_to_purchasers: '',
+        terms_modified: 'How may the terms of the securities being offered be modified?',
+        security_differences: 'Are there any differences not reflected above between the securities being offered and each other class of security of the issuer?',
+        rights_of_securities_beign: 'How may the rights of the securities being offered be materially limited, diluted or qualified by the rights of any other class of security identified above?',
+        outstanding_securities: 'Outstanding Securities',
+      };
+      this.assignLabels();
     },
 
     events: _.extend({
@@ -845,26 +891,6 @@ module.exports = {
         this.exempt_offeringsIndex = 0;
       }
 
-      this.fields.exempt_offering.schema.exemption_relied_upon.label = "Exemption Relied upon";
-      this.fields.exempt_offering.schema.use_of_proceeds.label = "Use of Proceeds";
-      this.fields.exempt_offering.schema.offering_date.label = "Date of The Offering";
-      this.fields.exempt_offering.schema.amount_sold.label = "Amount Sold";
-      this.fields.exempt_offering.schema.securities_offered.label = "Securities Offered";
-
-      this.fields.business_loans_or_debt.schema.maturity_date.label = "Maturity Date";
-      this.fields.business_loans_or_debt.schema.outstaind_amount.label = "Outstanding Date";
-      this.fields.business_loans_or_debt.schema.interest_rate.label = "Interest Rate";
-      this.fields.business_loans_or_debt.schema.other_material_terms.label = "Other Material Terms";
-      this.fields.business_loans_or_debt.schema.creditor.label = "Creditor";
-
-      this.fields.principal_shareholders_affect.label = 'How could the exercise of rights held by the principal shareholders affect the purchasers of the securities being offered?';
-      this.fields.risks_to_purchasers.label = '';
-      this.fields.terms_modified.label = 'How may the terms of the securities being offered be modified?';
-      this.fields.security_differences.label = 'Are there any differences not reflected above between the securities being offered and each other class of security of the issuer?';
-      this.fields.rights_of_securities_beign.label = 'How may the rights of the securities being offered be materially limited, diluted or qualified by the rights of any other class of security identified above?';
-
-      this.fields.outstanding_securities.label = 'Outstanding Securities';
-
       if (this.model.outstanding_securities) {
         this.outstanding_securitiesIndex = Object.keys(this.model.outstanding_securities).length;
       } else {
@@ -887,6 +913,12 @@ module.exports = {
     urlRoot: formcServer + '/:id' + '/background-check',
     initialize(options) {
       this.fields = options.fields;
+      this.labels = {
+        company_or_director_subjected_to: 'If Yes, Explain',
+        descrption_material_information: "2) If you've provide any information in a format, media or other means not able to be reflected in text or pdf, please include here: (a) a description of the material content of such information; (b) a description of the format in which such disclosure is presented; and (c) in the case of disclosure in video, audio or other dynamic media or format, a transcript or description of such disclosure.",
+        material_information: '1) Such further material information, if any, as may be neessary to make the required statments, in the light of the cirsumstances under which they are made, not misleading.',
+      };
+      this.assignLabels();
     },
 
     getSuccessUrl() {
@@ -901,9 +933,6 @@ module.exports = {
     submit: api.submitAction,
 
     render() {
-      this.fields.company_or_director_subjected_to.label = 'If Yes, Explain';
-      this.fields.descrption_material_information.label = "2) If you've provide any information in a format, media or other means not able to be reflected in text or pdf, please include here: (a) a description of the material content of such information; (b) a description of the format in which such disclosure is presented; and (c) in the case of disclosure in video, audio or other dynamic media or format, a transcript or description of such disclosure.";
-      this.fields.material_information.label = '1) Such further material information, if any, as may be neessary to make the required statments, in the light of the cirsumstances under which they are made, not misleading.';
       let template = require('components/formc/templates/backgroundCheck.pug');
       this.$el.html(
         template({
@@ -915,5 +944,5 @@ module.exports = {
       );
       return this;
     },
-  }, menuHelper.methods, yesNoHelper.methods)),
+  }, menuHelper.methods, yesNoHelper.methods, addSectionHelper.methods)),
 };
