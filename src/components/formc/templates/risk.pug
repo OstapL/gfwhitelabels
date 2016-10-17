@@ -6,22 +6,23 @@ mixin showRisk(index, title, risk)
     input(type="hidden" name="title" value=title)
     textarea(style="max-width:100%; height:150px" name="risk" readonly index=index).form-control #{ risk }
     .text-md-center.text-lg-right
-      button(style="display: " + ('inline-block') + ';' data-index=index).btn.btn-sm.btn-seconday.m-t-1.edit-risk.buttons.added-state  Edit risk
-      button(style="display: " + ('inline-block') + ';' data-index=index).btn.btn-sm.btn-seconday.m-t-1.delete.buttons.added-state  Delete risk
-      button(type="submit" style="display: none;").btn.btn-sm.btn-secondary.m-t-1.add-risk.buttons.editing-state Save and Add this Risk
-      button(style="display:" + ('none') + ";" data-index=index).btn.btn-sm.btn-secondary.m-t-1.edit-risk.buttons.unadded-state Edit and Add this Risk
+      button(style="display: " + ('inline-block') + ';' data-index=index).btn.btn-sm.m-t-1.edit-risk.buttons.added-state  Edit risk
+      button(style="display: " + ('inline-block') + ';' data-index=index).btn.btn-sm.m-t-1.delete.buttons.added-state  Delete risk
+      button(type="submit" style="display: none;").btn.btn-sm.m-t-1.add-risk.buttons.editing-state Save and Add this Risk
+      button(style="display:" + ('none') + ";" data-index=index).btn.btn-sm.m-t-1.edit-risk.buttons.unadded-state Edit Risk
 
 
 .panel.panel-default.risk-panel(index=k)
   #headingOne(role="tab").panel-heading
     a(data-toggle="collapse"
     data-parent="#accordion-risk" 
-    href="#collapseOne"
+    href="#collapse-" + k
     aria-expanded="true"
-    aria-controls="collapseOne"
-    ).list-group-item-action.active= v.title
+    aria-controls="collapse-" + k
+    class="list-group-item-action active added-risk-title"
+    )= v.title
       i.fa.fa-angle-up
-  #collapseOne(role="tabpanel"
-  aria-labelledby="headingOne"
-  ).panel-collapse.collapse.in
+  .panel-collapse.collapse.in(role="tabpanel"
+  aria-labelledby="headingOne" id=("collapse-" + k)
+  )
     +showRisk(k, v.title, v.risk)
