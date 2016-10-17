@@ -302,14 +302,15 @@ section
                   #hidden-article-press.hidden-article-press.collapse
                     each k in keys.slice(3)
                       - let v = values.press[k]
-                      div(class="col-lg-4 articles_press" + (counter < 3 ? '' : ' hidden-article-press') style="display:" + (counter < 3 ? 'inline-block' : 'none') +';')
-                        a(href=v.link target="_blank")
-                          .card.card-inverse.m-b-2
-                            .card-title
-                              i.fa.fa-link
-                              p.card-text #{ v.headline }
-                              .pos-bottom
-                                .links.d-inline-block.card-text #{ formatHelper.getWebsiteUrl(v.link) }
+                      if v
+                        div(class="col-lg-4 articles_press" + (counter < 3 ? '' : ' hidden-article-press') style="display:" + (counter < 3 ? 'inline-block' : 'none') +';')
+                          a(href=v.link target="_blank")
+                            .card.card-inverse.m-b-2
+                              .card-title
+                                i.fa.fa-link
+                                p.card-text #{ v.headline }
+                                .pos-bottom
+                                  .links.d-inline-block.card-text #{ formatHelper.getWebsiteUrl(v.link) }
                   //- each v,k in values.press
                   //-   //- .col-lg-4.articles_press
                   //-   div(class="col-lg-4 articles_press" + (counter < 3 ? '' : ' hidden-article-press') style="display:" + (counter < 3 ? 'inline-block' : 'none') +';')
@@ -793,9 +794,10 @@ section
                 iframe.embed-responsive-item(src="//www.youtube.com/embed/" + app.getVideoId(values.video) + "?rel=0" allowfullscreen="true")
 
 each v,k in values.additional_video
-    div(id="videoModal-" + k tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true").modal.fade.video-modal
-        .modal-dialog.modal-lg(role="document")
-            .modal-content
-                .embed-responsive.embed-responsive-16by9
-                    - var link =  app.getVideoId(v.link)
-                    iframe.embed-responsive-item(src="//www.youtube.com/embed/" + link + "?rel=0" allowfullscreen="true")
+    if v
+      div(id="videoModal-" + k tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true").modal.fade.video-modal
+          .modal-dialog.modal-lg(role="document")
+              .modal-content
+                  .embed-responsive.embed-responsive-16by9
+                      - var link =  app.getVideoId(v.link)
+                      iframe.embed-responsive-item(src="//www.youtube.com/embed/" + link + "?rel=0" allowfullscreen="true")
