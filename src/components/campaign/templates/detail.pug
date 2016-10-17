@@ -291,7 +291,7 @@ section
                     each k in keys.slice(0,3)
                       - let v = values.press[k]
                       if v
-                        div(class="col-lg-4 articles_press" + (counter < 3 ? '' : ' hidden-article-press') style="display:" + (counter < 3 ? 'inline-block' : 'none') +';')
+                        div(class="col-xl-4  col-sm-12 articles_press" + (counter < 3 ? '' : ' hidden-article-press') style="display:" + (counter < 3 ? 'inline-block' : 'none') +';')
                           a(href=v.link target="_blank")
                             .card.card-inverse.m-b-2
                               .card-title
@@ -302,7 +302,7 @@ section
                   #hidden-article-press.hidden-article-press.collapse
                     each k in keys.slice(3)
                       - let v = values.press[k]
-                      div(class="col-lg-4 articles_press" + (counter < 3 ? '' : ' hidden-article-press') style="display:" + (counter < 3 ? 'inline-block' : 'none') +';')
+                      div(class="col-xl-4  col-sm-12 articles_press" + (counter < 3 ? '' : ' hidden-article-press') style="display:" + (counter < 3 ? 'inline-block' : 'none') +';')
                         a(href=v.link target="_blank")
                           .card.card-inverse.m-b-2
                             .card-title
@@ -420,7 +420,7 @@ section
         //- h3.col-lg-12.text-lg-center Fundraising Description
         h3.text-uppercase.text-lg-center.text-xs-center.green-heading Fundraising Description
         .col-lg-8.offset-lg-2.fundraising
-          .jumbotron.jumbotron-fluid
+          .jumbotron.jumbotron-fluid.text-xs-center.text-xl-left
             .container
               if values.security_type == 0
                 .row
@@ -536,7 +536,7 @@ section
           .col-lg-12.text-center-flex
             each v,k in values.perks
               if v
-                .col-lg-4
+                .col-xl-4.col-lg-12
                   .jumbotron.jumbotron-fluid
                     .container
                       h3.m-t-0.m-b-1 Invest 
@@ -736,7 +736,7 @@ section
         #comment_null
         .col-lg-12.p-r-0
           .hr
-          .col-lg-1
+          .col-lg-1.text-xs-center.text-lg-left
             img(src="/img/avatar10.jpg" alt="").img-circle
           .col-lg-11
             .comments-wrap
@@ -756,7 +756,7 @@ section
                   a(href="").link-1
                     i.fa.fa-thumbs-up
         .col-lg-11.offset-lg-1.pt30.p-r-0
-          .col-lg-1
+          .col-lg-1.text-xs-center.text-lg-left
             img(src="/img/avatar10.jpg" alt="").img-circle
           .col-lg-11
             .comments-wrap

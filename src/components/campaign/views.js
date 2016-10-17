@@ -249,7 +249,7 @@ module.exports = {
             }).render();
           });
       }, 100);
-      this.$el.find('.perks .col-lg-4 p').equalHeights();
+      this.$el.find('.perks .col-xl-4 p').equalHeights();
       this.$el.find('.team .auto-height').equalHeights();
       this.$el.find('.card-inverse p').equalHeights();
       this.$el.find('.modal').on('hidden.bs.modal', function(event) {
