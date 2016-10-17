@@ -11,10 +11,10 @@ include menu.pug
 )
 
 section.team-members.container.m-b-85
-  +menu('team-members')
+  
 
   //START RIGHT BLOCK
-  .col-lg-8
+  .col-lg-10.offset-lg-1.col-xl-8.offset-xl-0.push-xl-3
     h2.text-uppercase.text-lg-center.text-xs-center.dosis.m-t-0 team member (#{type})
 
     form(method="post" action="").form-section
@@ -90,17 +90,21 @@ section.team-members.container.m-b-85
 
       .row.dropzone__photo.media-item
         .col-lg-3.p-r-12.col-md-12.text-md-center.text-sm-center.text-xs-center
-          span.pull-lg-right.font-weight-bold  Photo
-        .col-lg-9.text-lg-center
-          .border-dropzone
-            .col-lg-6.col-md-5.col-sm-5.col-xs-5.p-dropzone.text-md-center.text-sm-center.text-xs-center
-              span(href="#").link-1
-                p.drop-photo Drop your photo here or click to upload
-                i.fa.fa-camera
-            .col-lg-6.col-md-7.col-sm-7.col-xs-7.text-lg-center.p-dropzone
-              img(src=member.photo).img-fluid.img-circle.img-photo
+          .pull-lg-right.font-weight-bold  Photo
+        div(style="position:relative;").clearfix
+          div(class="uploading" style="line-height:115px;text-align:center;position:absolute;width:100%;height:100%;left:0;right:0;top:0;bottom:0;z-index:1;display:none;background-color:rgba(255,255,255,0.8);")
+            img(alt="activity indicator" src="/img/ajax-loader.gif" style="position:absolute;margin:auto;top:0;left:0;right:0;bottom:0;")
+          span
+            .col-lg-9.text-lg-center
+              .border-dropzone.col-lg-12.gallery
+                .col-lg-6.col-md-5.col-sm-5.col-xs-5.p-dropzone.text-md-center.text-sm-center.text-xs-center.p-dropzone
+                  div(href="#")
+                    p.drop-photo Drop your photo here or click to upload
+                    i.fa.fa-camera
+                .col-lg-6.col-md-7.col-sm-7.col-xs-7.text-lg-center.p-dropzone
+                  img(src=member.photo).img-fluid.img-circle.img-photo
       .col-lg-12.text-lg-right.p-r-0.p-t-2.text-md-center.text-sm-center.text-xs-center
-        button(type="submit").btn.btn-secondary.text-uppercase.m-r-3 cancel
+        button.btn.btn-secondary.text-uppercase.m-r-3.cancel cancel
         button(type="submit").btn.btn-primary.text-uppercase.pull-lg-right Save
           //
             .col-lg-6.p-r-0
@@ -114,3 +118,4 @@ section.team-members.container.m-b-85
                 .dropdown-menu(aria-labelledby="dropdownMenuButton")
                   a(href="").dropdown-item Add Advisor
                   a(href="").dropdown-item Add Team Member
+  +menu('team-members')
