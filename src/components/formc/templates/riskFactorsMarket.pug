@@ -26,17 +26,18 @@ mixin showRisk(name, index, title, risk)
 
 mixin showRiskForm(v, k)
   .panel.panel-default.risk-panel(index=k)
-    #headingOne(role="tab").panel-heading
+    .panel-heading(role="tab" id="heading-" + k)
       a(data-toggle="collapse"
       data-parent="#accordion-risk" 
-      href="#collapseOne"
+      href="#collapse-" + k
       aria-expanded="true"
       aria-controls="collapseOne"
       ).list-group-item-action.active= v.title
         i.fa.fa-angle-up
-    #collapseOne(role="tabpanel"
+    .panel-collapse.collapse.in(role="tabpanel"
+    id="collapse-" + k
     aria-labelledby="headingOne"
-    ).panel-collapse.collapse.in
+    )
       +showRisk('market_and_customer_risk', k, v.title, v.risk)
 
 section.formc-team-members-director.container.m-b-85
