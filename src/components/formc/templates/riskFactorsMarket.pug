@@ -62,7 +62,7 @@ section.formc-team-members-director.container.m-b-85
               +showRiskForm(v, k)
 
             each v, k in values['market_and_customer_risk']
-              - if (!k < Object.keys(defaultRisks).length)
+              - if (!(k < Object.keys(defaultRisks).length))
                 +showRiskForm(v, k)
 
     .col-lg-12.m-t-3
