@@ -146,14 +146,15 @@ mixin fieldBlock(name, data, attr)
                     - indexCounter = attr.index || 0
                     - var kkeys = Object.keys(values[name])
                     each el in values[name]
-                        .delete-section-container
-                            a(href="#" data-section=name data-index=indexCounter).delete-section
-                                i.fa.fa-times
-                        - console.log(fields[name].schema)
-                        each k1,v in fields[name].schema
-                          if values[name][kkeys[counter]]
+                        if values[name][kkeys[counter]]
+                          .delete-section-container.col-lg-12
+                              a(href="#" data-section=name data-index=indexCounter).delete-section
+                                  i.fa.fa-times
+
+                          each k1,v in fields[name].schema
                             - var k = values[name][kkeys[counter]][v]
                             - var t = fields[name].schema[v]
+
                             div(class='form-group clearfix index_' + indexCounter )
                                 label.col-lg-3.col-md-12.text-lg-right.p-l-3.p-sm-0.m-b-0.p-t-0 #{t.label}
                                 .col-lg-9.col-md-12.p-sm-0
@@ -199,7 +200,7 @@ mixin fieldBlock(name, data, attr)
                                             class=name + '_' + v + ' form-control'
                                             data-index=indexCounter
                                         )
-                        .col-lg-5.p-l-1.p-r-3.col-md-12.col-xs-12.p-sm-0 
+                        .col-lg-5.p-l-1.col-md-12.col-xs-12.p-sm-0 
                             .embed-responsive.embed-responsive-16by9 
                                 iframe.embed-responsive-item(src="//www.youtube.com/embed/?rel=0" allowfullscreen="true")
                 else
@@ -207,7 +208,7 @@ mixin fieldBlock(name, data, attr)
                     - indexCounter = attr.index || 0
                     - var kkeys = Object.keys(values[name])
                     each el in values[name]
-                        div(class='form-group clearfix index_' + indexCounter)
+                        div(class='form-group col-lg-12 clearfix index_' + indexCounter)
                             .delete-section-container
                                 a(href="#" data-section=name data-index=indexCounter).delete-section
                                     i.fa.fa-times
@@ -229,7 +230,7 @@ mixin fieldBlock(name, data, attr)
                                                   data-index=indexCounter
                                               )
                             if values[name][kkeys[counter]]
-                              .col-lg-5.p-l-1.p-r-3.col-md-12.col-xs-12.p-sm-0  
+                              .col-lg-5.p-l-1.col-md-12.col-xs-12.p-sm-0.p-r-0  
                                   .embed-responsive.embed-responsive-16by9 
                                       - var link = app.getVideoId(values[name][kkeys[counter]].link)
                                       iframe.embed-responsive-item(src="//www.youtube.com/embed/" + link + "?rel=0" allowfullscreen="true")
@@ -287,7 +288,7 @@ mixin fieldDropzone(name, attr, type)
                     //- i(class="fa fa-" + attr.icon)
             //- div(class=attr.class2)
             div(class=(attr.class2 + ' dropzone__' + name))
-                div(class="border-dropzone")
+                div.col-lg-12.border-dropzone.p-r-0
                     div(class="uploading" style="line-height:115px;text-align:center;position:absolute;width:100%;height:100%;left:0;right:0;top:0;bottom:0;z-index:1;display:none;background-color:rgba(255,255,255,0.8);")
                         img(alt="activity indicator" src="/img/ajax-loader.gif" style="position:absolute;margin:auto;top:0;left:0;right:0;bottom:0;")
                     span
@@ -316,8 +317,8 @@ mixin fieldDropzone(name, attr, type)
             //-         i(class='fa fa-' + attr.icon)
         //- .col-lg-5.p-l-1.p-r-3.p-sm-0.col-md-12.col-xs-12
         //- div(class='col-lg-5 p-l-1 p-r-3 p-sm-0 col-md-12 col-xs-12' style="border:solid 1px red;")
-        div(class='dropzone__' + name + ' col-lg-9 p-l-1 p-r-3 p-sm-0 col-md-12 col-xs-12')
-            div(class="border-dropzone")
+        div(class='dropzone__' + name + ' col-lg-9 p-l-1 p-sm-0 col-md-12 col-xs-12')
+            div(class="border-dropzone col-lg-12 gallery")
                 span
                     div(class=attr.class1 + ' text-lg-center text-xs-center text-md-center media-item')
                         p(href="#").link-1
@@ -364,9 +365,9 @@ mixin fieldFileDropzone(name, attr, type)
           span.pull-right.pull-xs-none.font-weight-bold #{fields[name].label}
 
         div(class=(attr.class2 + ' dropzone__' + name))
-            div(class="border-dropzone")
+            div(class="border-dropzone col-lg-12 gallery")
                 div(class="uploading" style="line-height:115px;text-align:center;position:absolute;width:100%;height:100%;left:0;right:0;top:0;bottom:0;z-index:1;display:none;background-color: rgba(255,255,255,0.8);")
-                    img(alt="activity indicator" src="/img/ajax-loader.gif")
+                    img(alt="activity indicator" src="/img/ajax-loader.gif" style="position:absolute;margin:auto;top:0;left:0;right:0;bottom:0;")
                 span
                     div.col-lg-5.col-md-5.col-sm-5.col-xs-5.text-xs-center.text-md-center.text-lg-center.p-dropzone
                         p(class='link-1' href="#")
