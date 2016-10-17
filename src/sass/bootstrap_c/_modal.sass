@@ -1,5 +1,5 @@
 .modal-lg
-	min-width: rem(900)
+	width: 90%
 .modal-dialog
 	max-width: rem(540)
 	.modal-content
@@ -57,21 +57,34 @@
 					color: $small-text
 					font-size: rem(14)
 
+
 	.modal-footer
 		border: none
 		margin: 0
 		padding: 0
-
- 
-[id^="videoModal"]
-	.modal-dialog 
-		position: absolute
-		top: 50% !important
-		left: 50%!important
+@media only screen and (max-width : 768px)
+	.modal-dialog	
+		.modal-body
+			padding: rem(10) rem(0)
+	[id^="videoModal"]
+		left: 50%
 		transform: translate(-50%, -55%) !important
 		-ms-transform: translate(-50%, -55%) !important
 		-webkit-transform: translate(-50%, -55%) !important
-		min-height: 506px
+		top: 45%
+		width: 100%
+		.modal-dialog 
+			left: 45%!important
+[id^="videoModal"]
+	height: 100%
+	.modal-dialog 
+		position: absolute
+		top: 20%
+		left: 50%
+		transform: translate(-50%, -55%) !important
+		-ms-transform: translate(-50%, -55%) !important
+		-webkit-transform: translate(-50%, -55%) !important
+
 		
 		.modal-content 
 			min-height: 100%
@@ -83,8 +96,9 @@
 
 		.close
 		    position: absolute
-		    right: rem(-37)
-		    top: rem(-34)
+		    right: 0
+		    top: 0
+		    z-index: 999
 
 		    color: $white
 		    font-size: rem(33)
