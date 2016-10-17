@@ -63,5 +63,25 @@
                         | #{campaign.get_security_type_display}
                     span.right_desc
                         b Industry: 
-                        | Lorem ipsum
+                        case campaign.company.industry
+                            when 1
+                                | Entertainment
+                            when 2
+                                | Food Service
+                            when 3
+                                | Technology
+                            when 4
+                                | Wellness
+                            when 5
+                                | Fashion
+                            when 6
+                                | Sports
+                            when 7
+                                | Environment
+                            when 8
+                                | Education
+                            when 9
+                                | Community
+                            default
+                                | Other 
                     .clear
