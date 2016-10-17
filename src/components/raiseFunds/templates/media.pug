@@ -11,14 +11,14 @@ include menu.pug
 )
 
 section.create-company-media.container.media-container
-  +menu('media')
+  
   //START RIGHT BLOCK
-  .col-lg-9
+  .col-lg-10.offset-lg-1.col-xl-8.offset-xl-0.push-xl-3
     h2.text-uppercase.dosis.text-lg-center.text-xs-center.dosis.m-t-0.m-b-3 Media
     form(data-method="PATCH" action="").form-section
       +fieldDropzone("header_image", {
         class1: 'col-lg-3 col-xs-12 col-md-12 text-xs-center text-lg-right',
-        class2: 'col-lg-9 col-xs-12 col-md-12 text-sm-center p-sm-0 p-l-1 p-r-3',
+        class2: 'col-lg-9 col-xs-12 col-md-12 text-sm-center p-sm-0',
         thumbSize: '255x153',
         default: '/img/default/255x153.png',
         text: 'Drop your photo here or click to upload',
@@ -26,18 +26,19 @@ section.create-company-media.container.media-container
         })
       +fieldDropzone("list_image", {
         class1: 'col-lg-3 col-xs-12 col-md-12 text-xs-center text-lg-right',
-        class2: 'col-lg-9 col-xs-12 col-md-12 text-sm-center p-sm-0 p-l-1 p-r-3 ',
+        class2: 'col-lg-9 col-xs-12 col-md-12 text-sm-center p-sm-0 p-l-1',
         thumbSize: '255x153',
         default: '/img/default/255x153.png',
         text: 'Drop your photo here or click to upload',
         icon: 'file-image-o'
         })
-      .col-lg-12.border-top
-        h3.text-lg-center.col-md-center.col-xs-center Recommended Additional Media
+      .border-bottom.m-t-3.m-b-3
+      .col-lg-12
+        h3.text-lg-center.col-md-center.col-xs-center.m-t-0 Recommended Additional Media
       .row.m-b-2
         +fieldDropzone("gallery", {
             class1: 'col-lg-5 text-sm-center col-xs-4 col-sm-5 col-md-5 text-xs-center p-dropzone',
-            class2: 'col-lg-7 col-xs-8 col-sm-7 col-md-7 text-sm-center p-r-0 p-l-3',
+            class2: 'col-lg-7 col-xs-8 col-sm-7 col-md-7 text-sm-center p-r-0',
             default: '/img/default/77x45.png',
             text: 'Drop your photo here or click to upload',
             icon: 'file-image-o',
@@ -45,7 +46,7 @@ section.create-company-media.container.media-container
         })
 
       .row.m-b-2.recommended.p-sm-0.main-video-block
-        .col-lg-12
+        .col-lg-12.p-sm-0
           .col-lg-7
             +fieldBlock("video", '', {
               class1: 'col-lg-5 col-md-5 col-md-12 p-sm-0',
@@ -54,18 +55,17 @@ section.create-company-media.container.media-container
               placeholder: 'https://www.youtube.com/'
               })
           
-          #video_source.col-lg-5.p-sm-0.p-l-p-r
+          #video_source.col-lg-5.p-sm-0.p-r-0
             .embed-responsive.embed-responsive-16by9
               iframe.embed-responsive-item(src="//www.youtube.com/embed/" + app.getVideoId(values.video) + "?rel=0" allowfullscreen="true")
       
-      .m-b-0.additional-video-block
-        .row
-          .col-lg-12
-            +fieldBlock("additional_video", '', {
-              class1: 'col-lg-3 col-md-4 col-md-12 p-sm-0',
-              class2: 'col-lg-9 col-md-8 col-md-12 p-sm-0',
-              type: 'jsonVideo',
-              })
+      .row.m-b-0.additional-video-block
+        .col-lg-12.p-sm-0
+          +fieldBlock("additional_video", '', {
+            class1: 'col-lg-3 col-md-4 col-md-12 p-sm-0',
+            class2: 'col-lg-9 col-md-8 col-md-12 p-sm-0',
+            type: 'jsonVideo',
+            })
           .row.m-t-0.addition-position
               .col-lg-9.offset-1.pull-right
                   a(href="#" data-section="additional_video").link-2.add-section
@@ -85,20 +85,24 @@ section.create-company-media.container.media-container
             .col-lg-5.p-l-1.p-r-3
               .embed-responsive.embed-responsive-16by9
                 iframe.embed-responsive-item(src="//www.youtube.com/embed/zpOULjyy-n8?rel=0" allowfullscreen="true")
-      
-      .col-lg-12.border-top.m-t-0
-        h3.text-lg-center.col-md-center.col-xs-center Articles and Press
-        .row.articles
-          +fieldBlock("press", ' m-b-0', {
-            class1: 'col-lg-3 col-md-12',
-            class2: 'col-lg-9 col-md-12',
-            type: 'json',
-            })
-          .col-lg-8.offset-lg-3.col-md-12.p-l-1.m-b-1.p-sm-0
-            a(href="#" data-section='press').link-2.add-section
-              i.fa.fa-plus
-              |  Add Another Article
-          .col-lg-12.pull-lg-right.p-r-0.text-lg-right.text-sm-center.text-md-center.text-xs-center.p-sm-0
-              // button(type="submit").btn.btn-secondary.text-uppercase.m-r-3.m-t-0 Fields Review
-              button(type="submit" data-method="PATCH").btn.btn-primary.text-uppercase save and continue
-                i.fa.fa-angle-right
+      .border-bottom.m-t-0.m-b-3.col-lg-12
+      .col-lg-12
+        h3.text-lg-center.col-md-center.col-xs-center.m-t-0 Articles and Press
+
+      .row
+        .col-lg-12  
+          .articles
+            +fieldBlock("press", ' m-b-0', {
+              class1: 'col-lg-3 col-md-12',
+              class2: 'col-lg-9 col-md-12',
+              type: 'json',
+              })
+            .col-lg-8.offset-lg-3.col-md-12.p-l-1.m-b-3.p-sm-0
+              a(href="#" data-section='press').link-2.add-section
+                i.fa.fa-plus
+                |  Add Another Article
+      .col-lg-12.pull-lg-right.p-r-0.text-lg-right.text-sm-center.text-md-center.text-xs-center.p-sm-0
+        // button(type="submit").btn.btn-secondary.text-uppercase.m-r-3.m-t-0 Fields Review
+        button(type="submit" data-method="PATCH").btn.btn-primary.text-uppercase save and continue
+          i.fa.fa-angle-right
+  +menu('media')
