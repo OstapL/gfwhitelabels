@@ -126,7 +126,7 @@ header.no-overflow
       -o-transition: none
       transform: none
   
-      height: rem(144)
+      height: 144px
       opacity: 1
 
       background: rgba( $menu_backgound_from, .96)
@@ -533,6 +533,7 @@ header
         position: absolute
         right: 17px
         width: 21px
+        // padding-top: 25px!important
 
         li.nav-item.user-info
           margin-left: 0!important
@@ -765,6 +766,11 @@ header
 
     .notification-container
       min-width: 100%
+    header.no-overflow
+      nav
+        .list-container.user-info-drop.notification-container
+          top: rem(35)
+
 
 @media screen and (max-width: 991px)
   // on mobile devaices main menu absolute positioned so we need set top padding for main content

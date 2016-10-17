@@ -46,6 +46,9 @@ section#home(style="background-image: url(" + (values.header_image_data ? values
             p Days Left
             h2.font-weight-bold #{ values.length_days }
           .col-lg-4.col-md-12.col-xs-12.pull-lg-right.text-xs-center
+            if edit
+              a(href=previous ? previous : '/campaign/general_information/' + values.id).btn.btn-primary.text-uppercase.pull-lg-right &nbspEdit&nbsp&nbsp
+              //- a(href=previous).btn.btn-primary.text-uppercase.pull-lg-right Edit
             a(href=Urls['campaign-invest'](values.id)).btn.btn-primary.text-uppercase.pull-lg-right Invest
 
 section.campaigndetail
@@ -167,28 +170,28 @@ section
 
             .col-lg-3.no-padding-img
               a(href="/img/values/smartbe-intelligent-stroller_1.jpg" data-toggle="modal" data-size='1600x900')
-                img(src="/img/values/smartbe-intelligent-stroller_1.jpg" alt="").img-fluid
+                img(src="/img/default/255x153.png" alt="").img-fluid
             .col-lg-3.no-padding-img
               a(href="/img/values/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
-                img(src="/img/values/smartbe-intelligent-stroller_2.jpg" alt="").img-fluid
+                img(src="/img/default/255x153.png" alt="").img-fluid
             .col-lg-3.no-padding-img
               a(href="/img/values/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
-                img(src="/img/values/smartbe-intelligent-stroller_3.jpg" alt="").img-fluid
+                img(src="/img/default/255x153.png" alt="").img-fluid
             .col-lg-3.no-padding-img
               a(href="/img/values/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
-                img(src="/img/values/smartbe-intelligent-stroller_4.jpg" alt="").img-fluid
+                img(src="/img/default/255x153.png" alt="").img-fluid
             .col-lg-3.no-padding-img
               a(href="/img/values/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
-                img(src="/img/values/smartbe-intelligent-stroller_5.jpg" alt="").img-fluid
+                img(src="/img/default/255x153.png" alt="").img-fluid
             .col-lg-3.no-padding-img
               a(href="/img/values/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
-                img(src="/img/values/smartbe-intelligent-stroller_6.jpg" alt="").img-fluid
+                img(src="/img/default/255x153.png" alt="").img-fluid
             .col-lg-3.no-padding-img
               a(href="/img/values/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
-                img(src="/img/values/smartbe-intelligent-stroller_7.jpg" alt="").img-fluid
+                img(src="/img/default/255x153.png" alt="").img-fluid
             .col-lg-3.no-padding-img
               a(href="/img/values/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
-                img(src="/img/values/smartbe-intelligent-stroller_8.jpg" alt="").img-fluid
+                img(src="/img/default/255x153.png" alt="").img-fluid
 
       .row
         .col-lg-12.text-center-flex
@@ -242,8 +245,9 @@ section
         .col-lg-12
           each v,k in values.additional_info
             //- h3.our.text-lg-center #{ v.title }
-            h2.dosis.our.text-uppercase.text-lg-center.text-xs-center.green-heading #{ v.title }
-            p #{ v.body }
+            if v
+              h2.dosis.our.text-uppercase.text-lg-center.text-xs-center.green-heading #{ v.title }
+              p #{ v.body }
    
   if values.members
       section#members.border-bottom
@@ -669,24 +673,25 @@ section
           .accordion(role="tablist" aria-multiselectable="true")
             - var counter = 0
             each v,k in values.faq
-              .panel.panel-default
-                div(id="faq" + k role="tab").panel-heading
-                  a(data-toggle="collapse"
-                  data-parent="#accordion" 
-                  href="#collapsefaq"+ k
-                  aria-controls="collapsefaq"+ k
-                  class=(counter == 0 ? 'list-group-item-action active' : 'list-group-item-action')
-                  style="padding-left:25px"
-                  ) #{v.question}
-                      if counter == 0
-                          i.fa.fa-angle-up
-                      else
-                          i.fa.fa-angle-down
-                div(id="collapsefaq" + k role="tabpanel"
-                aria-labelledby="faq" + k
-                class=(counter == 0 ? 'in' : '') + ' panel-collapse collapse'
-                ) #{ v.answer }
-                - counter ++;
+              if v
+                .panel.panel-default
+                  div(id="faq" + k role="tab").panel-heading
+                    a(data-toggle="collapse"
+                    data-parent="#accordion" 
+                    href="#collapsefaq"+ k
+                    aria-controls="collapsefaq"+ k
+                    class=(counter == 0 ? 'list-group-item-action active' : 'list-group-item-action')
+                    style="padding-left:25px"
+                    ) #{v.question}
+                        if counter == 0
+                            i.fa.fa-angle-up
+                        else
+                            i.fa.fa-angle-down
+                  div(id="collapsefaq" + k role="tabpanel"
+                  aria-labelledby="faq" + k
+                  class=(counter == 0 ? 'in' : '') + ' panel-collapse collapse'
+                  ) #{ v.answer }
+                  - counter ++;
             //
               .panel.panel-default
                 #faqTwo(role="tab").panel-heading
