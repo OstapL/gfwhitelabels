@@ -9,55 +9,8 @@ const dropzone = require('dropzone');
 const dropzoneHelpers = require('helpers/dropzone.js');
 const leavingConfirmationHelper = require('helpers/leavingConfirmationHelper.js');
 const phoneHelper = require('helpers/phoneHelper.js');
+const jsonActions = require('helpers/addSectionHelper.js');
 
-// const validation = require('components/validation/validation.js');
-
-/*const jsonActions = {
-  events: {
-    'click .add-section': 'addSection',
-    'click .delete-section': 'deleteSection',
-  },
-
-  addSection(e) {
-    e.preventDefault();
-    let sectionName = e.target.dataset.section;
-    let template = require('templates/section.pug');
-    this[sectionName + 'Index']++;
-    $('.' + sectionName).append(
-        template({
-          fields: this.fields,
-          name: sectionName,
-          attr: {
-            class1: '',
-            class2: '',
-            app: app,
-            type: this.fields[sectionName].type,
-            index: this[sectionName + 'Index'],
-          },
-          // values: this.model.toJSON(),
-          values: this.model,
-        })
-    );
-  },
-
-  deleteSection(e) {
-    e.preventDefault();
-    if(confirm('Are you sure?')) {
-      let sectionName = e.currentTarget.dataset.section;
-      if($('.' + sectionName + ' .delete-section-container').length > 1) {
-        $('.' + sectionName + ' .index_' + e.currentTarget.dataset.index).remove();
-        e.currentTarget.offsetParent.remove();
-      } else {
-        $('.' + sectionName + ' .index_' + e.currentTarget.dataset.index + ' input').val('');
-        $('.' + sectionName + ' .index_' + e.currentTarget.dataset.index + ' textarea').val('');
-      }
-    }
-
-    // ToDo
-    // Fix index counter
-    // this[sectionName + 'Index'] --;
-  },
-};*/
 
 
 const onPreviewAction = function(e) {
@@ -72,7 +25,7 @@ const onPreviewAction = function(e) {
 };
 
 module.exports = {
-  company: Backbone.View.extend(_.extend(menuHelper.methods, eavingConfirmationHelper.methods, phoneHelper.methods, {
+  company: Backbone.View.extend(_.extend(menuHelper.methods, leavingConfirmationHelper.methods, phoneHelper.methods, {
     // urlRoot: serverUrl + Urls['company-list'](),
     urlRoot: Urls.company_list(),
     template: require('./templates/company.pug'),
