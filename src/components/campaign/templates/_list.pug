@@ -3,7 +3,7 @@
 .row
     for campaign in campaigns
 
-        .col-lg-4.col-xs-12.col-sm-12.col-md-12
+        .col-xl-4.col-lg-6.col-xs-12.col-sm-12.col-md-12
             a(href=Urls['campaign-detail'](campaign.id)).block_link
             .one_block
                 .for_img
@@ -63,5 +63,25 @@
                         | #{campaign.get_security_type_display}
                     span.right_desc
                         b Industry: 
-                        | Lorem ipsum
+                        case campaign.company.industry
+                            when 1
+                                | Entertainment
+                            when 2
+                                | Food Service
+                            when 3
+                                | Technology
+                            when 4
+                                | Wellness
+                            when 5
+                                | Fashion
+                            when 6
+                                | Sports
+                            when 7
+                                | Environment
+                            when 8
+                                | Education
+                            when 9
+                                | Community
+                            default
+                                | Other 
                     .clear
