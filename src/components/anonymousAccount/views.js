@@ -14,7 +14,6 @@ module.exports = {
     },
 
     _success(data) {
-      debugger;
       if(data.hasOwnProperty('key')) {
         localStorage.setItem('token', data.key);
         setTimeout(() => {

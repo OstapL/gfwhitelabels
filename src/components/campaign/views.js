@@ -47,6 +47,13 @@ module.exports = {
     initialize(options) {
       $(document).off("scroll", this.onScrollListener);
       $(document).on("scroll", this.onScrollListener);
+      let params = app.getParams();
+      this.edit = false;
+      if (params.preview == '1' && this.model.owner == app.user.get('id')) {
+        // see if owner match current user
+        this.edit = true;
+        this.previous = params.previous;
+      }
     },
 
     // seeAllArticlePress(e) {
@@ -166,6 +173,8 @@ module.exports = {
           Urls: Urls,
           values: this.model,
           formatHelper: formatHelper,
+          edit: this.edit,
+          previous: this.previous,
         })
       );
 
@@ -241,7 +250,7 @@ module.exports = {
             }).render();
           });
       }, 100);
-      this.$el.find('.perks .col-lg-4 p').equalHeights();
+      this.$el.find('.perks .col-xl-4 p').equalHeights();
       this.$el.find('.team .auto-height').equalHeights();
       this.$el.find('.card-inverse p').equalHeights();
       this.$el.find('.modal').on('hidden.bs.modal', function(event) {
