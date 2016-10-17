@@ -31,21 +31,21 @@ section#home(style="background-image: url(" + (values.header_image_data ? values
     .container
       .top-info-wrap
         .top-info-wrap-item
-          .col-lg-3.p-r-0.text-xs-center.text-lg-left
+          .col-lg-3.p-r-0.p-sm-0.text-xs-center.text-lg-left
             p Type of Security
             h2.font-weight-bold #{ values.get_security_type_display }
           if values.security_type == 0
-            .col-lg-2.p-r-0.text-xs-center.text-lg-left
+            .col-lg-2.p-r-0.p-sm-0.text-xs-center.text-lg-left
               p Pre-Money Valuation
               h2.font-weight-bold #{ formatHelper.formatPrice(values.premoney_valuation) }
           else
-            .col-lg-2.p-r-0.text-xs-center.text-lg-left
+            .col-lg-2.p-r-0.p-sm-0.text-xs-center.text-lg-left
               p Percentage Reveue
               h2.font-weight-bold #{ values.percentage_revenue }%
-          .col-lg-2.p-r-0.text-xs-center.text-lg-left
+          .col-lg-2.p-r-0.p-sm-0.text-xs-center.text-lg-left
             p Days Left
             h2.font-weight-bold #{ values.length_days }
-          .col-lg-4.col-md-12.col-xs-12.pull-lg-right.text-xs-center
+          .col-lg-4.p-sm-0.col-md-12.col-xs-12.pull-lg-right.text-xs-center
             if edit
               a(href=previous ? previous : '/campaign/general_information/' + values.id).btn.btn-primary.text-uppercase.pull-lg-right &nbspEdit&nbsp&nbsp
               //- a(href=previous).btn.btn-primary.text-uppercase.pull-lg-right Edit
