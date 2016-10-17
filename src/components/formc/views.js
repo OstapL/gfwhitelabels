@@ -384,8 +384,21 @@ module.exports = {
       'change input[type=radio][name=doc_type]': 'changeDocType',
       'click .add-proceed': 'addProceed',
       'click .delete-proceed': 'deleteProceed',
+      'click .min-net-proceeds': 'calculate',
     }, addSectionHelper.events, menuHelper.events),
     // }, menuHelper.events),
+
+    calculate(e) {
+      // Add all min-expense
+      // debugger
+      let minNetProceeds = this.$('.min-expense').map(function (e) { return parseInt($(this).val()); }).toArray().reduce(function (total, num) { return total + num; });
+      let maxNetProceeds = this.$('.max-expense').map(function (e) { return parseInt($(this).val()); }).toArray().reduce(function (total, num) { return total + num; });
+      this.$('.min-net-proceeds').text(minNetProceeds);
+      this.$('.max-net-proceeds').text(minNetProceeds);
+      // this.$('.min-total-proceeds').text();
+      // return true if the table is valid in terms of the calculation, else return false
+      return false;
+    },
 
     addProceed(e) {
       e.preventDefault();
@@ -393,7 +406,7 @@ module.exports = {
       let template = require('./templates/proceed.pug');
       let type = $target.data('type');
       let dataType;
-      if (type == 'net') dataType = 'use_of_net_proceeds';
+      if (type == 'use') dataType = 'use_of_net_proceeds';
       else if (type == 'expense') dataType = 'less_offering_express';
       $('.' + type + '-table tbody').append(template({
         type: type,
