@@ -498,6 +498,7 @@ module.exports = {
     deleteRisk(e) {
       e.stopPropagation();
       e.preventDefault();
+      if (!confirm("Do you really want to delete this risk?")) return;
       let index = e.target.dataset.index;
       let url = this.urlRoot.replace(':id', this.model.id).replace(':index', index);
       // let data = $(e.target).serializeJSON({ useIntKeysAsArrayIndex: true });
@@ -505,10 +506,12 @@ module.exports = {
       api.makeRequest(url, 'DELETE', {}).then((data) => {
         if (index < Object.keys(this.defaultRisks).length) {
           $(e.target).find('textarea').prop('readonly', true);
-          let $form = $('form[index=' + index + ']');
+          let $form = this.$('form[index=' + index + ']');
           $form.find('.buttons').css({display: 'none'});
           $form.find('.unadded-state').css({display: 'inline-block'});
           $form.find('textarea').val(this.defaultRisks[index].risk);
+          let $panel = this.$('.risk-panel[index=' + index + ']');
+          $panel.find('a').removeClass('added-risk-title');
         } else {
           let $section = $('.risk-panel[index=' + index + ']');
           $section.remove();
@@ -557,6 +560,8 @@ module.exports = {
           $form.find('.buttons').css({display: 'none'});
           $form.find('.added-state').css({display: 'inline-block'});
           $form.find('.added-span').text(' (added to Form C)');
+          let $panel = this.$('.risk-panel[index=' + index + ']');
+          $panel.find('a').addClass('added-risk-title');
         } else {
           // create and append panel
           let template = require('./templates/risk.pug');
