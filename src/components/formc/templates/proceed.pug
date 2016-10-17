@@ -1,0 +1,14 @@
+tr(class='border-b-t-none p-t-b-5 index_' + index).border-b-t-none.p-t-b-5
+  td.border-t-n.d-block.input-w-80
+    .d-inline-block.pull-left.p-r-1 (C)
+    input(type="text" name=dataType + '[' + index + '][description]').input-border-bottom.form-control.font-size-12.pull-left
+    .d-inline-block.pull-right
+      .delete-section-container
+        a(href="#" data-index=(index) data-type=type).delete-proceed
+          i.fa.fa-times
+  td.border-b-t-none.w-25.font-size-12
+    .form-section
+      input(type="text" name=dataType + '[' + index + '][min]').input-border-bottom.form-control.text-xs-center
+  td.border-b-t-none.w-25.font-size-12
+    .form-section
+      input(type="text" name=dataType + '[' + index + '][max]').input-border-bottom.form-control.text-xs-center
