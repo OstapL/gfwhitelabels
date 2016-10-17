@@ -11,10 +11,10 @@ include menu.pug
 )
 
 section.team-members.container.m-b-85
-  +menu('team-members')
+  
 
   //START RIGHT BLOCK
-  .col-lg-8
+  .col-lg-10.offset-lg-1.col-xl-8.offset-xl-0.push-xl-3
     h2.text-uppercase.text-lg-center.text-xs-center.dosis.m-t-0 team member (#{type})
 
     form(method="post" action="").form-section
@@ -96,9 +96,9 @@ section.team-members.container.m-b-85
             img(alt="activity indicator" src="/img/ajax-loader.gif" style="position:absolute;margin:auto;top:0;left:0;right:0;bottom:0;")
           span
             .col-lg-9.text-lg-center
-              .border-dropzone
-                .col-lg-6.col-md-5.col-sm-5.col-xs-5.p-dropzone.text-md-center.text-sm-center.text-xs-center
-                  div(href="#").link-1
+              .border-dropzone.col-lg-12.gallery
+                .col-lg-6.col-md-5.col-sm-5.col-xs-5.p-dropzone.text-md-center.text-sm-center.text-xs-center.p-dropzone
+                  div(href="#")
                     p.drop-photo Drop your photo here or click to upload
                     i.fa.fa-camera
                 .col-lg-6.col-md-7.col-sm-7.col-xs-7.text-lg-center.p-dropzone
@@ -118,3 +118,4 @@ section.team-members.container.m-b-85
                 .dropdown-menu(aria-labelledby="dropdownMenuButton")
                   a(href="").dropdown-item Add Advisor
                   a(href="").dropdown-item Add Team Member
+  +menu('team-members')
