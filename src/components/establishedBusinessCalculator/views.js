@@ -333,8 +333,7 @@ module.exports = {
             this.$el.html(this.template({
                 estimate: calculatorHelper.formatPrice(estimate),
                 raise: calculatorHelper.formatPrice(raiseCash),
-                offer: ((100 * raiseCash) / estimate).toFixed(2),
-                offer2: industryData[data.industry]
+                offer: ((100 * raiseCash) / estimate).toFixed(2)
             }));
 
             this.buildGraph();
