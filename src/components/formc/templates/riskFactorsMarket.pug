@@ -17,34 +17,29 @@ include ../../../templates/menuRaiseFund.pug
 mixin showRisk(name, index, title, risk)
   form(data-method="PATCH" data-index=(index) index=index)
     input(type="hidden" name="title" value=title)
-    textarea(style="max-width:100%; height:150px" name="risk" readonly index=index).form-control #{ values[name].hasOwnProperty(index) ? values[name][index].risk : risk }
+    div( name="risk" readonly index=index).block-border #{ values[name].hasOwnProperty(index) ? values[name][index].risk : risk }
     .text-md-center.text-lg-right
-      button(style="display: " + (values[name].hasOwnProperty(index) ? 'inline-block' : 'none') + ';' data-index=index).btn.btn-sm.m-t-1.edit-risk.buttons.added-state  Edit risk
-      button(style="display: " + (values[name].hasOwnProperty(index) ? 'inline-block' : 'none') + ';' data-index=index).btn.btn-sm.m-t-1.delete.buttons.added-state  Delete risk
-      button(type="submit" style="display: none").btn.btn-sm.m-t-1.add-risk.buttons.editing-state Save and Add this Risk
-      button(style="display:" + (values[name].hasOwnProperty(index) ? 'none' : 'inline-block') + ";" data-index=index).btn.btn-sm.m-t-1.edit-risk.buttons.unadded-state Edit Risk
+      button(style="display: " + (values[name].hasOwnProperty(index) ? 'inline-block' : 'none') + ';' data-index=index).btn.btn-secondary.btn-sm.m-t-1.edit-risk.buttons.added-state  Edit risk
+      button(style="display: " + (values[name].hasOwnProperty(index) ? 'inline-block' : 'none') + ';' data-index=index).btn.btn-secondary.btn-sm.m-t-1.m-l-1.delete.buttons.added-state  Delete risk
+      button(type="submit" style="display: none").btn.btn-secondary.btn-sm.m-t-1.add-risk.buttons.editing-state Save and Add this Risk
+      button(style="display:" + (values[name].hasOwnProperty(index) ? 'none' : 'inline-block') + ";" data-index=index).btn.btn-secondary.btn-sm.m-t-1.edit-risk.buttons.unadded-state Edit Risk
 
 mixin showRiskForm(v, k)
   .panel.panel-default.risk-panel(index=k)
     .panel-heading(role="tab" id=("heading-" + k))
-      a(data-toggle="collapse"
+      a(data-toggle="collapsing"
       data-parent="#accordion-risk" 
       href="#collapse-" + k
-      aria-expanded="true"
+      aria-expanded="false"
       aria-controls="collapse-" + k
       class=("list-group-item-action active" + (values['market_and_customer_risk'].hasOwnProperty(k) ? ' added-risk-title' : ''))
       )= v.title
-        i.fa.fa-angle-up
     .panel-collapse.collapse.in(role="tabpanel"
     id="collapse-" + k
     aria-labelledby=("heading-" + k)
     )
       +showRisk('market_and_customer_risk', k, v.title, v.risk)
 
-style(type="text/css").
-  .added-risk-title {
-    background-color: #42bab6 !important;
-  }
 
 section.formc-team-members-director.container.m-b-85
   +menu('formc', 'risk-factors-market')
@@ -60,7 +55,7 @@ section.formc-team-members-director.container.m-b-85
     .col-sm-12.m-t-2
       .warning-block.m-t-1
         i.fa.fa-info-circle
-        span.warning-text You are free use any statement that applies to your business, provided that in each case you customize the final language to be specific to your company.
+        span.warning-text You are free to use any statement that applies to your business, provided that in each case you customize the final language to be specific to your company.
     .form-section
       section.risks
         .col-lg-12
