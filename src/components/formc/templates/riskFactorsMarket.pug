@@ -1,6 +1,7 @@
 include ../../../templates/mixins.pug
 //- include menu.pug
 include ../../../templates/menuRaiseFund.pug
+include riskFactorsMixins.pug
 
 - 'use strict'
 // - var fields = { title_risk: { label: 'Title for Risk'} };
@@ -13,33 +14,6 @@ include ../../../templates/menuRaiseFund.pug
         ['Risk Factors', ''],
     ]
 )
-
-mixin showRisk(name, index, title, risk)
-  form(data-method="PATCH" data-index=(index) index=index)
-    input(type="hidden" name="title" value=title)
-    textarea(style="max-width:100%; height:150px" name="risk" readonly index=index).form-control #{ values[name].hasOwnProperty(index) ? values[name][index].risk : risk }
-    .text-md-center.text-lg-right
-      button(style="display: " + (values[name].hasOwnProperty(index) ? 'inline-block' : 'none') + ';' data-index=index).btn.btn-sm.m-t-1.edit-risk.buttons.added-state  Edit risk
-      button(style="display: " + (values[name].hasOwnProperty(index) ? 'inline-block' : 'none') + ';' data-index=index).btn.btn-sm.m-t-1.delete.buttons.added-state  Delete risk
-      button(type="submit" style="display: none").btn.btn-sm.m-t-1.add-risk.buttons.editing-state Save and Add this Risk
-      button(style="display:" + (values[name].hasOwnProperty(index) ? 'none' : 'inline-block') + ";" data-index=index).btn.btn-sm.m-t-1.edit-risk.buttons.unadded-state Edit Risk
-
-mixin showRiskForm(v, k)
-  .panel.panel-default.risk-panel(index=k)
-    .panel-heading(role="tab" id=("heading-" + k))
-      a(data-toggle="collapse"
-      data-parent="#accordion-risk" 
-      href="#collapse-" + k
-      aria-expanded="true"
-      aria-controls="collapse-" + k
-      class=("list-group-item-action active" + (values['market_and_customer_risk'].hasOwnProperty(k) ? ' added-risk-title' : ''))
-      )= v.title
-        i.fa.fa-angle-up
-    .panel-collapse.collapse.in(role="tabpanel"
-    id="collapse-" + k
-    aria-labelledby=("heading-" + k)
-    )
-      +showRisk('market_and_customer_risk', k, v.title, v.risk)
 
 style(type="text/css").
   .added-risk-title {
@@ -66,11 +40,11 @@ section.formc-team-members-director.container.m-b-85
         .col-lg-12
           #accordion-risk.pannel-group.accordion.accordion-risk(role="tablist" aria-multiselectable="true")
             each v, k in defaultRisks
-              +showRiskForm(v, k)
+              +showRiskForm(v, k, 'market_and_customer_risk')
 
             each v, k in values['market_and_customer_risk']
               - if (!(k < Object.keys(defaultRisks).length))
-                +showRiskForm(v, k)
+                +showRiskForm(v, k, 'market_and_customer_risk')
 
     .col-lg-12.m-t-3
       p.pb10
@@ -81,7 +55,7 @@ section.formc-team-members-director.container.m-b-85
         li.pb10 Are your customers concentrated in a few areas or accounts?
         li.pb10 Is there risk around losing major customers or the risk they may not timely pay you?
         li.pb10 Are there any risks identifying customers or risks around ensuring their retention?
-        li.pb10 In the text box below, please write in full sentences consistent with the sample language provided above.
+      .pb10 In the text box below, please write in full sentences consistent with the sample language provided above.
     .col-lg-12
       form(data-method="PATCH").add-risk-form
         +fieldBlock("title", '', {
@@ -100,6 +74,5 @@ section.formc-team-members-director.container.m-b-85
 
       .row.m-t-3
         .col-lg-12.text-md-center.text-sm-center-text-xs-center
-          //- a(href="/company/create").btn.btn-primary.text-uppercase.pull-lg-right next
-          button.btn.btn-primary.text-uppercase.pull-lg-right next
+          a(href="/formc/" + values.id + "/risk-factors-financial").btn.btn-primary.text-uppercase.pull-lg-right next
             i.fa.fa-angle-right
