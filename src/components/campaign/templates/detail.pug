@@ -75,7 +75,7 @@ section.campaigndetail
               i.fa.fa-twitter.link-1
             a(href=values.company.linkedin).linkedin-share
               i.fa.fa-linkedin.link-1
-            a(href=values.company.linkedin).linkedin-share
+            a(href=values.company.linkedin).email-share
               i.fa.fa-envelope.link-1
             //- a(href=values.company.instagram).link-1
             //-   i.fa.fa-google-plus
@@ -197,6 +197,7 @@ section
         .col-lg-12.text-center-flex
           if values.additional_video
               each v,k in values.additional_video
+                if v
                   .col-lg-4
                     .card.card-inverse
                       - var link =  app.getVideoId(v.link)
