@@ -300,7 +300,7 @@ module.exports = {
                 
                 let last = plotApi.getData()[0].data.pop();
                 let o = plotApi.pointOffset({x: last[0], y: last[1]});
-                $('<div class="data-point-label">Congratulations, Payback Share Contract is complete</div>').css( {
+                $('<div class="data-point-label">Congratulations, Revenue Share Contract is complete</div>').css( {
                     position: 'absolute',
                     left: o.left - 200,
                     top: o.top - 30,
@@ -311,7 +311,7 @@ module.exports = {
             // drawing jQPlot
             // this.jQPlot = $.jqplot('chart1', {
             //     seriesColors: ["red"],
-            //     title: 'Payback Graph',
+            //     title: 'Revenue Graph',
             //     animate: true,
             //     dataRenderer: dataRendered,
             //     seriesDefaults: {
