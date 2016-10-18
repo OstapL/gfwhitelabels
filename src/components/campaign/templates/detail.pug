@@ -250,7 +250,7 @@ section
               p #{ v.body }
    
   if values.members
-      section#members.border-bottom
+      section#members
         .container
           if values.members && values.members instanceof Array && values.members.length > 0
             h2#team.dosis.text-uppercase.text-lg-center.text-xs-center.col-lg-12.green-heading Team
@@ -331,7 +331,7 @@ section
                   //-             .links.d-inline-block.card-text #{ formatHelper.getWebsiteUrl(v.link) }
                   //-   - counter++;
 
-                .row.m-b-3(style="display:" + (showMore ? 'block' : 'none') + ";")
+                .row(style="display:" + (showMore ? 'block' : 'none') + ";")
                   .col-lg-12.text-xs-center
                     //- a(href="#hidden-article-press" data-toggle="collapse").link-4.see-all-article-press See All Articles and Press
                     a(href="#hidden-article-press" data-toggle="collapse").link-4.see-all-article-press Show More
@@ -402,10 +402,11 @@ section
                       a(href="#").link-1.pull-right
                         i.fa.fa-graduation-cap
                         |  Dickinson College
+  .col-lg-12.border-bottom.m-t-3.m-b-3
   section.document.border-bottom
     .container
       .row
-        h2#documents.col-lg-12.dosis.text-uppercase.text-lg-center.text-xs-center.green-heading Documents
+        h2#documents.col-lg-12.dosis.text-uppercase.text-lg-center.text-xs-center.green-heading.m-t-0 Documents
         .col-xl-8.offset-xl-2.col-lg-10.offset-lg-1.col-sm-12.offset-sm-0
           .col-lg-4.text-xs-center
             p Official filing on SEC.gov
