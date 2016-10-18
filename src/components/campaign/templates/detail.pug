@@ -62,7 +62,7 @@ section.campaigndetail
             i.fa.fa-map-marker
             |  #{ values.company.city }, #{ values.company.state }
         .col-lg-6.col-xs-6
-          .date-detail
+          .date-detail.pull-md-right.pull-lg-left
             i.fa.fa-calendar-check-o
             |  Founded #{ formatHelper.formatDate(values.company.founding_date) }
       .row
@@ -79,7 +79,7 @@ section.campaigndetail
               i.fa.fa-envelope.link-1
             //- a(href=values.company.instagram).link-1
             //-   i.fa.fa-google-plus
-    .col-lg-6.right-block-investors.p-l-0
+    .col-lg-6.right-block-investors.p-l-0.p-sm-0
       .progress_bar_container
         //- span Less than 20% Funded
         span Less than #{ percentage_raised }% Funded
@@ -89,11 +89,11 @@ section.campaigndetail
         .clear
         progress(value=percentage_raised max="100").progress
       .mt25
-        .row.col-lg-8
+        .row.col-xl-8.col-md-6
           p Target
           //- h2.font-weight-bold #{ campaign.minimum_raise } - #{ campaign.maximum_raise }
           h2.font-weight-bold #{ formatHelper.formatPrice(values.minimum_raise) } - #{ formatHelper.formatPrice(values.maximum_raise) }
-        .row.col-lg-4.pull-lg-right
+        .row.col-xl-4.col-md-6.pull-lg-right
           p Minimum Investment
           //- h2.font-weight-bold #{ values.minimum_increment }
           h2.font-weight-bold #{ formatHelper.formatPrice(values.minimum_increment) }
@@ -258,27 +258,26 @@ section
               .col-lg-12.text-center-flex
                 each v,k in values.members
                     .col-lg-4.team
-                      a(href="#")
-                        .card.text-lg-center.text-xs-center
-                          img(src=v.photo alt="").img-circle
-                          .card-block
-                            h4.text-xs-center.card-title.text-uppercase #{v.first_name} #{v.last_name }
-                            p.card-text
-                                small.text-muted #{v.title }
+                      .card.text-lg-center.text-xs-center
+                        img(src=v.photo alt="").img-circle
+                        .card-block
+                          h4.text-xs-center.card-title.text-uppercase #{v.first_name} #{v.last_name }
+                          p.card-text
+                              small.text-muted #{v.title }
                             
-                            a(href=v.linkedin target="_blank").link-1
-                              i.fa.fa-linkedin.more
-                            a(href=v.facebook target="_blank").link-1
-                              i.fa.fa-facebook
-                            p.card-text.text-justify.auto-height #{v.bio}
-                            .d-block.text-lg-left.cite_education
-                              span.text-lg-left.text-xs-left.pull-left.color-grey
-                                i.fa.fa-home.p-l-0
-                                |  #{v.growup}, #{v.state}
-                              //- a(href="#").link-1.pull-right
-                              span.pull-right.color-grey
-                                i.fa.fa-graduation-cap
-                                |  #{v.college}
+                          a(href=v.linkedin target="_blank").link-1
+                            i.fa.fa-linkedin.more
+                          a(href=v.facebook target="_blank").link-1
+                            i.fa.fa-facebook
+                          p.card-text.text-justify.auto-height #{v.bio}
+                          .d-block.text-lg-left.cite_education
+                            span.text-lg-left.text-xs-left.pull-left.color-grey
+                              i.fa.fa-home.p-l-0
+                              |  #{v.growup}, #{v.state}
+                            //- a(href="#").link-1.pull-right
+                            span.pull-right.color-grey
+                              i.fa.fa-graduation-cap
+                              |  #{v.college}
 
           if values.press && Object.keys(values.press).length > 0 && values.press[0].headline != ''
             - let showMore = false;
@@ -407,7 +406,7 @@ section
     .container
       .row
         h2#documents.col-lg-12.dosis.text-uppercase.text-lg-center.text-xs-center.green-heading Documents
-        .col-lg-8.offset-lg-2
+        .col-xl-8.offset-xl-2.col-lg-10.offset-lg-1.col-sm-12.offset-sm-0
           .col-lg-4.text-xs-center
             p Official filing on SEC.gov
             a(href="" target="_blank")
@@ -429,7 +428,7 @@ section
         h2#overview.col-lg-12.dosis.text-uppercase.text-lg-center.text-xs-center.green-heading overview and terms
         //- h3.col-lg-12.text-lg-center Fundraising Description
         h3.text-uppercase.text-lg-center.text-xs-center.green-heading Fundraising Description
-        .col-lg-8.offset-lg-2.fundraising
+        .col-xl-8.offset-xl-2.col-lg-10.offset-lg-1.col-md-12.offset-md-0.fundraising
           .jumbotron.jumbotron-fluid.text-xs-center.text-xl-left
             .container
               if values.security_type == 0
