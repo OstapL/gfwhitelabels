@@ -38,11 +38,12 @@ ul.list-blog {
 			}
 
 
-			h3 {
-				font-weight: 400;
+			h3.blog-item-title {
+				font-weight: $blog-item-title-weight;
+				font-size: $blog-item-title-f-size;
 				margin-top: rem(0);
 				margin-bottom: rem(5);
-				letter-spacing: 2.2px;
+				letter-spacing: $blog-item-title-let-space;
 			}
 
 			p {
