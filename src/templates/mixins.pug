@@ -248,6 +248,8 @@ mixin fieldBlock(name, data, attr)
                         - counter ++
                         - indexCounter ++
         else
+            - console.log(fields)
+            - console.log(name)
                 label(class= attr.text_align ? 'text-lg-' + attr.text_align + ' ' + attr.class1 : ' text-lg-right ' + attr.class1 for=name)= (attr.label ? attr.label : fields[name].label)
                 div(class=attr.class2)
                     input(

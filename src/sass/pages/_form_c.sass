@@ -130,3 +130,19 @@
       .fa-question-circle
         color: $small-text
         margin-right: rem(15)
+.risk-panel
+  .added-risk-title
+    background-color: $puerto_rico!important
+    color: $white!important
+    &:after
+      content: '\f00c'
+      font: normal normal normal 12px/1 FontAwesome
+      position: relative
+      left: 10px
+      top: 0
+      background-color: rgba(255,255,255,0.5)
+      color: $white
+      padding: 5px
+      border-radius: 100%
+  .form-control[readonly]
+    background-color: transparent

@@ -1,7 +1,7 @@
 mixin showRisk(name, index, title, risk)
   form(data-method="PATCH" data-index=(index) index=index)
     input(type="hidden" name="title" value=title)
-    textarea(style="max-width:100%; height:150px" name="risk" readonly index=index).form-control #{ values[name].hasOwnProperty(index) ? values[name][index].risk : risk }
+    textarea(name="risk" readonly index=index).form-control.big-textarea #{ values[name].hasOwnProperty(index) ? values[name][index].risk : risk }
     .text-md-center.text-lg-right
       button(style="display: " + (values[name].hasOwnProperty(index) ? 'inline-block' : 'none') + ';' data-index=index).btn.btn-sm.m-t-1.edit-risk.buttons.added-state  Edit risk
       button(style="display: " + (values[name].hasOwnProperty(index) ? 'inline-block' : 'none') + ';' data-index=index).btn.btn-sm.m-t-1.delete.buttons.added-state  Delete risk
@@ -11,10 +11,10 @@ mixin showRisk(name, index, title, risk)
 mixin showRiskForm(v, k, field)
   .panel.panel-default.risk-panel(index=k)
     .panel-heading(role="tab" id=("heading-" + k))
-      a(data-toggle="collapse"
+      a(data-toggle="collapsing"
       data-parent="#accordion-risk" 
       href="#collapse-" + k
-      aria-expanded="true"
+      aria-expanded="false"
       aria-controls="collapse-" + k
       class=("list-group-item-action active" + (values[field].hasOwnProperty(k) ? ' added-risk-title' : ''))
       )= v.title

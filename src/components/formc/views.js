@@ -724,6 +724,8 @@ module.exports = {
           risk: "Although we target our advertising and marketing efforts on current and potential customers who we believe are likely to be in the market for the products we sell, we cannot assure you that our advertising and marketing efforts will achieve our desired results. In addition, we periodically adjust our advertising expenditures in an effort to optimize the return on such expenditures. Any decrease in the level of our advertising expenditures, which may be made to optimize such return could adversely affect our sales.",            
         },
       };
+      this.labels = labels;
+      this.assignLabels();
     },
 
     events: _.extend({
@@ -775,6 +777,8 @@ module.exports = {
           risk: "While the Company is aware of certain competitors in the market, there is the possibility that new competitors may enter and that they may be better funded.  To the extent that the market becomes more crowded, this may make it more difficult for us to differentiate our value proposition or to get in front of right partners and customers.  It may be difficult to compete with new entrants if there is pricing pressure or changes in market demand.   The Company may also have a hard time competing against companies who can negotiate for better prices from suppliers, produce goods and services on a large scale more economically, or take advantage of bigger marketing budgets.",            
         }
       };
+      this.labels = labels;
+      this.assignLabels();
     },
 
     events: _.extend({
@@ -835,6 +839,8 @@ module.exports = {
           risk: "The Company may rely on nondisclosure and noncompetition agreements with employees, consultants and other parties to protect, in part, trade secrets and other proprietary rights. There can be no assurance that these agreements will adequately protect the Company’s trade secrets and other proprietary rights and will not be breached, that the Company will have adequate remedies for any breach, that others will not independently develop substantially equivalent proprietary information or that third parties will not otherwise gain access to our trade secrets or other proprietary rights.",            
         }
       };
+      this.labels = labels;
+      this.assignLabels();
     },
 
     events: _.extend({
@@ -890,6 +896,8 @@ module.exports = {
           risk: "Our business is subject to a wide array of laws and regulations. The current political environment, financial reform legislation, the current high level of government intervention and activism and regulatory reform may result in substantial new regulations and disclosure obligations and/or changes in the interpretation of existing laws and regulations, which may lead to additional compliance costs as well as the diversion of our management’s time and attention from strategic initiatives. If we fail to comply with applicable laws and regulations we could be subject to legal risk, including government enforcement action and class action civil litigation that could disrupt our operations and increase our costs of doing business. Changes in the regulatory environment regarding topics such as privacy and information security, product safety or environmental protection, including regulations in response to concerns regarding climate change, collective bargaining activities, minimum wage laws and health care mandates, among others, could also cause our compliance costs to increase and adversely affect our business and results of operations.",
         },
       };
+      this.labels = labels;
+      this.assignLabels();
     },
 
     events: _.extend({
@@ -923,6 +931,8 @@ module.exports = {
     urlRoot: formcServer + '/:id' + '/risk-factors-misc/:index',
     initialize(options) {
       this.defaultRisks = {};
+      this.labels = labels;
+      this.assignLabels();
     },
 
     events: _.extend({
