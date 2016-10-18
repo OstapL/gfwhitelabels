@@ -3,6 +3,87 @@ let menuHelper = require('helpers/menuHelper.js');
 let addSectionHelper = require('helpers/addSectionHelper.js');
 let yesNoHelper = require('helpers/yesNoHelper.js');
 
+const deleteRisk = function (e) {
+  e.stopPropagation();
+  e.preventDefault();
+  if (!confirm("Do you really want to delete this risk?")) return;
+  let index = e.target.dataset.index;
+  let url = this.urlRoot.replace(':id', this.model.id).replace(':index', index);
+  // let data = $(e.target).serializeJSON({ useIntKeysAsArrayIndex: true });
+
+  api.makeRequest(url, 'DELETE', {}).then((data) => {
+    if (index < Object.keys(this.defaultRisks).length) {
+      $(e.target).find('textarea').prop('readonly', true);
+      let $form = this.$('form[index=' + index + ']');
+      $form.find('.buttons').css({display: 'none'});
+      $form.find('.unadded-state').css({display: 'inline-block'});
+      $form.find('textarea').val(this.defaultRisks[index].risk);
+      let $panel = this.$('.risk-panel[index=' + index + ']');
+      $panel.find('a').removeClass('added-risk-title');
+    } else {
+      let $section = $('.risk-panel[index=' + index + ']');
+      $section.remove();
+    }
+  // $form.find('.added-span').text(' (added to Form C)');
+  }).fail((xhr, status, text) => {
+    api.errorAction(this, xhr, status, text, this.fields);
+  });
+};
+
+const editRisk = function (e) {
+  e.preventDefault();
+  let $target = $(e.target);
+  let index = $target.data('index');
+  $('textarea[index=' + index + ']').attr('readonly', false);
+  // let $form = $('form[index=' + index + ']');
+  let $form = $('form[index=' + index + ']');
+  // $panel.find('.add-risk').css({display: 'inline-block'});
+  // $panel.find('.alter-risk').css({display: 'none'});
+  $form.find('.buttons').css({display: 'none'});
+  $form.find('.editing-state').css({display: 'inline-block'});
+  $form.find('.added-span').text('');
+  // $target.css({display: 'none'});
+};
+
+const submitRisk = function (e) {
+  e.preventDefault();
+  let index = e.target.dataset.index;
+  if (!index) {
+    index = Object.keys(this.defaultRisks).length - 1;
+    $('.risk-panel').each(function(idx, elem) {
+      let $elem = $(this);
+      let panelIdx = parseInt($elem.attr('index'))
+      if (panelIdx > index) index = panelIdx;
+    });
+    index += 1;
+  }
+  let url = this.urlRoot.replace(':id', this.model.id).replace(':index', index);
+  let formData = $(e.target).serializeJSON({ useIntKeysAsArrayIndex: true });
+
+  api.makeRequest(url, 'PATCH', formData).then((data) => {
+    $(e.target).find('textarea').prop('readonly', true);
+    let $form = $('form[index=' + index + ']');
+    if ($form.length > 0) { // find the form    
+      $form.find('.buttons').css({display: 'none'});
+      $form.find('.added-state').css({display: 'inline-block'});
+      $form.find('.added-span').text(' (added to Form C)');
+      let $panel = this.$('.risk-panel[index=' + index + ']');
+      $panel.find('a').addClass('added-risk-title');
+    } else {
+      // create and append panel
+      let template = require('./templates/risk.pug');
+      $('#accordion-risk').append(template({
+        k: index,
+        v: formData,
+      }));
+      $('.add-risk-form').find('input:text, textarea').val('');
+    }
+  }).
+  fail((xhr, status, text) => {
+    api.errorAction(this, xhr, status, text, this.fields);
+  });
+};
+
 module.exports = {
   introduction: Backbone.View.extend(_.extend({
     urlRoot: formcServer + '/:id' + '/introduction',
@@ -518,87 +599,91 @@ module.exports = {
       };
     },
 
-    deleteRisk(e) {
-      e.stopPropagation();
-      e.preventDefault();
-      if (!confirm("Do you really want to delete this risk?")) return;
-      let index = e.target.dataset.index;
-      let url = this.urlRoot.replace(':id', this.model.id).replace(':index', index);
-      // let data = $(e.target).serializeJSON({ useIntKeysAsArrayIndex: true });
+    deleteRisk: deleteRisk,
+    editRisk: editRisk,
+    submit: submitRisk,
 
-      api.makeRequest(url, 'DELETE', {}).then((data) => {
-        if (index < Object.keys(this.defaultRisks).length) {
-          $(e.target).find('textarea').prop('readonly', true);
-          let $form = this.$('form[index=' + index + ']');
-          $form.find('.buttons').css({display: 'none'});
-          $form.find('.unadded-state').css({display: 'inline-block'});
-          $form.find('textarea').val(this.defaultRisks[index].risk);
-          let $panel = this.$('.risk-panel[index=' + index + ']');
-          $panel.find('a').removeClass('added-risk-title');
-        } else {
-          let $section = $('.risk-panel[index=' + index + ']');
-          $section.remove();
-        }
-      // $form.find('.added-span').text(' (added to Form C)');
-      }).fail((xhr, status, text) => {
-        api.errorAction(this, xhr, status, text, this.fields);
-      });
+    // deleteRisk(e) {
+    //   e.stopPropagation();
+    //   e.preventDefault();
+    //   if (!confirm("Do you really want to delete this risk?")) return;
+    //   let index = e.target.dataset.index;
+    //   let url = this.urlRoot.replace(':id', this.model.id).replace(':index', index);
+    //   // let data = $(e.target).serializeJSON({ useIntKeysAsArrayIndex: true });
 
-    },
+    //   api.makeRequest(url, 'DELETE', {}).then((data) => {
+    //     if (index < Object.keys(this.defaultRisks).length) {
+    //       $(e.target).find('textarea').prop('readonly', true);
+    //       let $form = this.$('form[index=' + index + ']');
+    //       $form.find('.buttons').css({display: 'none'});
+    //       $form.find('.unadded-state').css({display: 'inline-block'});
+    //       $form.find('textarea').val(this.defaultRisks[index].risk);
+    //       let $panel = this.$('.risk-panel[index=' + index + ']');
+    //       $panel.find('a').removeClass('added-risk-title');
+    //     } else {
+    //       let $section = $('.risk-panel[index=' + index + ']');
+    //       $section.remove();
+    //     }
+    //   // $form.find('.added-span').text(' (added to Form C)');
+    //   }).fail((xhr, status, text) => {
+    //     api.errorAction(this, xhr, status, text, this.fields);
+    //   });
 
-    editRisk(e) {
-      e.preventDefault();
-      let $target = $(e.target);
-      let index = $target.data('index');
-      $('textarea[index=' + index + ']').attr('readonly', false);
-      // let $form = $('form[index=' + index + ']');
-      let $form = $('form[index=' + index + ']');
-      // $panel.find('.add-risk').css({display: 'inline-block'});
-      // $panel.find('.alter-risk').css({display: 'none'});
-      $form.find('.buttons').css({display: 'none'});
-      $form.find('.editing-state').css({display: 'inline-block'});
-      $form.find('.added-span').text('');
-      // $target.css({display: 'none'});
-    },
+    // },
 
-    submit(e) {
-      e.preventDefault();
-      let index = e.target.dataset.index;
-      if (!index) {
-        index = Object.keys(this.defaultRisks).length - 1;
-        $('.risk-panel').each(function(idx, elem) {
-          let $elem = $(this);
-          let panelIdx = parseInt($elem.attr('index'))
-          if (panelIdx > index) index = panelIdx;
-        });
-        index += 1;
-      }
-      let url = this.urlRoot.replace(':id', this.model.id).replace(':index', index);
-      let formData = $(e.target).serializeJSON({ useIntKeysAsArrayIndex: true });
+    // editRisk(e) {
+    //   e.preventDefault();
+    //   let $target = $(e.target);
+    //   let index = $target.data('index');
+    //   $('textarea[index=' + index + ']').attr('readonly', false);
+    //   // let $form = $('form[index=' + index + ']');
+    //   let $form = $('form[index=' + index + ']');
+    //   // $panel.find('.add-risk').css({display: 'inline-block'});
+    //   // $panel.find('.alter-risk').css({display: 'none'});
+    //   $form.find('.buttons').css({display: 'none'});
+    //   $form.find('.editing-state').css({display: 'inline-block'});
+    //   $form.find('.added-span').text('');
+    //   // $target.css({display: 'none'});
+    // },
 
-      api.makeRequest(url, 'PATCH', formData).then((data) => {
-        $(e.target).find('textarea').prop('readonly', true);
-        let $form = $('form[index=' + index + ']');
-        if ($form.length > 0) { // find the form    
-          $form.find('.buttons').css({display: 'none'});
-          $form.find('.added-state').css({display: 'inline-block'});
-          $form.find('.added-span').text(' (added to Form C)');
-          let $panel = this.$('.risk-panel[index=' + index + ']');
-          $panel.find('a').addClass('added-risk-title');
-        } else {
-          // create and append panel
-          let template = require('./templates/risk.pug');
-          $('#accordion-risk').append(template({
-            k: index,
-            v: formData,
-          }));
-          $('.add-risk-form').find('input:text, textarea').val('');
-        }
-      }).
-      fail((xhr, status, text) => {
-        api.errorAction(this, xhr, status, text, this.fields);
-      });
-    },
+    // submit(e) {
+    //   e.preventDefault();
+    //   let index = e.target.dataset.index;
+    //   if (!index) {
+    //     index = Object.keys(this.defaultRisks).length - 1;
+    //     $('.risk-panel').each(function(idx, elem) {
+    //       let $elem = $(this);
+    //       let panelIdx = parseInt($elem.attr('index'))
+    //       if (panelIdx > index) index = panelIdx;
+    //     });
+    //     index += 1;
+    //   }
+    //   let url = this.urlRoot.replace(':id', this.model.id).replace(':index', index);
+    //   let formData = $(e.target).serializeJSON({ useIntKeysAsArrayIndex: true });
+
+    //   api.makeRequest(url, 'PATCH', formData).then((data) => {
+    //     $(e.target).find('textarea').prop('readonly', true);
+    //     let $form = $('form[index=' + index + ']');
+    //     if ($form.length > 0) { // find the form    
+    //       $form.find('.buttons').css({display: 'none'});
+    //       $form.find('.added-state').css({display: 'inline-block'});
+    //       $form.find('.added-span').text(' (added to Form C)');
+    //       let $panel = this.$('.risk-panel[index=' + index + ']');
+    //       $panel.find('a').addClass('added-risk-title');
+    //     } else {
+    //       // create and append panel
+    //       let template = require('./templates/risk.pug');
+    //       $('#accordion-risk').append(template({
+    //         k: index,
+    //         v: formData,
+    //       }));
+    //       $('.add-risk-form').find('input:text, textarea').val('');
+    //     }
+    //   }).
+    //   fail((xhr, status, text) => {
+    //     api.errorAction(this, xhr, status, text, this.fields);
+    //   });
+    // },
 
     render() {
       let template = require('components/formc/templates/riskFactorsMarket.pug');
