@@ -9,7 +9,35 @@ include mixins.pug
 
 section.formc-review
   .container
-    .col-lg-10.offset-lg-1
+    .col-lg-3.sticky-side-menu
+      .page_title.border-bottom.mb25
+        h4.text-uppercase.dosis TABLE OF CONTENTS
+      ul.list-unstyled.mb50.custom
+        li
+          a.d-inline-block.w-100.pb10(href='#overview_information') Overview Information
+        li
+          a.d-inline-block.w-100.pb10(href='#introductory_notices') Introductory Notices
+        li.display-partners
+          a.d-inline-block.w-100.pb10(href='#description_business') Description of the Issuer’s Business
+        li
+          a.d-inline-block.w-100.pb10(href='#management_material_persons') Management & Material Persons
+        li
+          a.d-inline-block.w-100.pb10(href='#procedure_purchasing_securities') Procedure for Purchasing Securities
+        li
+          a.d-inline-block.w-100.pb10(href='#capital_structure') Capital Structure of the Issuer
+        li
+          a.d-inline-block.w-100.pb10(href='#description_securities') Description of Securities Offered
+        li
+          a.d-inline-block.w-100.pb10(href='#use_of_proceeds') Use of Proceeds
+        li
+          a.d-inline-block.w-100.pb10(href='#financial_condition') Financial Condition
+        li
+          a.d-inline-block.w-100.pb10(href='#risk_factors') Risk Factors
+        li
+          // у последнего елемента <a> клас pb10 отстутствует
+          a.d-inline-block.w-100(href='#eligibility_information') Eligibility Information
+
+    .col-xl-9
       section.page-formc-review
         p.small.text-xs-left FORM C Offering Material for
         p.small
@@ -58,63 +86,9 @@ section.formc-review
       section.page-formc-review.m-t-1
         p.small.text-xs-left FORM C Offering Material for
         p.small
-          a(href="#" class="show-input" data-name="issuer_short_name").link-1 issuer_short_name
-          |  as Issuer
-
-        h2.text-uppercase.text-xs-center.font-weight-bold TABLE OF CONTENTS
-        
-        p.pb10
-          a(href="#").text-xs-left.font-weight-bold OVERVIEW INFORMATION
-        p.pb10
-          a(href="#").text-xs-left.font-weight-bold INTRODUCTORY NOTICES
-        p.pb10
-          a(href="#").text-xs-left.font-weight-bold DESCRIPTION OF THE ISSUER’S BUSINESS
-        p.pb10
-          a(href="#").text-xs-left.font-weight-bold MANAGEMENT & MATERIAL PERSONS
-        p.pb10
-          a(href="#").text-xs-left.font-weight-bold PROCEDURE FOR PURCHASING SECURITIES
-        p.pb10
-          a(href="#").text-xs-left.font-weight-bold CAPITAL STRUCTURE OF THE ISSUER
-        p.pb10
-          a(href="#").text-xs-left.font-weight-bold DESCRIPTION OF SECURITIES OFFERED
-        p.pb10
-          a(href="#").text-xs-left.font-weight-bold USE OF PROCEEDS
-        p.pb10
-          a(href="#").text-xs-left.font-weight-bold FINANCIAL CONDITION
-        p.pb10
-          a(href="#").text-xs-left.font-weight-bold RISK FACTORS
-        p.pb10
-          a(href="#").text-xs-left.font-weight-bold ELIGIBILITY INFORMATION
-        p.pb10
-          a(href="#").text-xs-left.font-weight-bold OTHER MATTERS
-        p.pb10
-          a(href="#").text-xs-left.font-weight-bold REPORTING OBLIGATIONS
-        p.pb10
-          a(href="#").text-xs-left.font-weight-bold 
-            em EXHIBIT A:
-            |  BUSINESS PLAN
-        p.pb10
-          a(href="#").text-xs-left.font-weight-bold 
-            em EXHIBIT B:
-            |  FINANCIAL STATEMENTS
-        p.pb10
-          a(href="#").text-xs-left.font-weight-bold 
-            em EXHIBIT C:
-            |  BIOGRAPHICAL INFORMATION
-        p.pb10
-          a(href="#").text-xs-left.font-weight-bold 
-            em EXHIBIT D:
-            |  EXCERPTS FROM ORGANIZATIONAL DOCUMENTATION
-        p.page-namder.text-xs-right.m-t-3 Page 
-          b 2
-          |  of 
-          b  37
-      section.page-formc-review.m-t-1
-        p.small.text-xs-left FORM C Offering Material for
-        p.small
           a(href="#" class="show-input" data-name="issuer_short_name").link-1 issuer_short_name 
           |  as Issuer
-        h2.text-uppercase.text-xs-center.font-weight-bold OVERVIEW INFORMATION
+        h2.text-uppercase.text-xs-center.font-weight-bold#overview_information OVERVIEW INFORMATION
         .one-block.m-b-1
           h3.font-weight-bold.m-t-0.m-b-0.pb10 
             u Issuer Information
@@ -251,7 +225,7 @@ section.formc-review
         p.small
           a(href="#" class="show-input" data-name="issuer_short_name").link-1 issuer_short_name
           |  as Issuer
-        h2.text-uppercase.text-xs-center.font-weight-bold INTRODUCTORY NOTICES
+        h2.text-uppercase.text-xs-center.font-weight-bold#introductory_notices INTRODUCTORY NOTICES
         h3.font-weight-bold.m-t-0.m-b-0.pb10 
           u Offering Made Pursuant To Regulation Crowdfunding
         p.pb10.text-indent This offering material, including all the exhibits attached hereto (collectively, the 
@@ -325,7 +299,7 @@ section.formc-review
         p.small.pb10
           a(href="#" class="show-input" data-name="issuer_short_name").link-1 issuer_short_name
           |  as Issuer
-        h2.text-uppercase.text-xs-center.font-weight-bold DESCRIPTION OF THE ISSUER’S BUSINESS
+        h2.text-uppercase.text-xs-center.font-weight-bold#description_business DESCRIPTION OF THE ISSUER’S BUSINESS
         h3.font-weight-bold.m-t-0.m-b-0.pb10 
           u The Company
         p.pb10.text-indent
@@ -360,7 +334,7 @@ section.formc-review
         p.small.pb10
           a(href="#" class="show-input" data-name="issuer_short_name").link-1 issuer_short_name
           |  as Issuer
-        h2.text-uppercase.text-xs-center.font-weight-bold MANAGEMENT & MATERIAL PERSONS
+        h2.text-uppercase.text-xs-center.font-weight-bold#management_material_persons MANAGEMENT & MATERIAL PERSONS
         p.pb10.text-indent Specific biographical information on each of the Company’s officers and members of its Board of Directors of is attached as Exhibit D.  Exhibit D contains information on the last three years of employment and supplements the information summarized below.  The Company has confirmed that no officer, director or 20% shareholder would cause a violation of Rule 503(a) of the Crowdfunding Regulations (17 CFR §227.503).
         h3.font-weight-bold.m-t-0.m-b-0.pb10 
           u Number of Total Employees
@@ -560,7 +534,7 @@ section.formc-review
         p.small.pb10
           a(href="#" class="show-input" data-name="issuer_short_name").link-1 issuer_short_name
           |  as Issuer
-        h2.text-uppercase.text-xs-center.font-weight-bold PROCEDURE FOR PURCHASING SECURITIES
+        h2.text-uppercase.text-xs-center.font-weight-bold#procedure_purchasing_securities PROCEDURE FOR PURCHASING SECURITIES
         h3.font-weight-bold.m-t-0.m-b-0.pb10 
           u Minimum Commitment and Closing Date
         p.pb10.text-indent To participate in this Offering, each investor must purchase securities in a minimum dollar amount equal to $
@@ -641,7 +615,7 @@ section.formc-review
         p.small.pb10
           a(href="#" class="show-input" data-name="issuer_short_name").link-1 issuer_short_name
           |  as Issuer
-        h2.text-uppercase.text-xs-center.font-weight-bold CAPITAL STRUCTURE OF THE ISSUER
+        h2.text-uppercase.text-xs-center.font-weight-bold#capital_structure CAPITAL STRUCTURE OF THE ISSUER
         h3.font-weight-bold.m-t-0.m-b-0.pb10 
           u Description of the Issuer’s Existing Securities
         p.pb10.text-indent The outstanding and authorized amounts of the Company’s existing securities are identified in the table below.  Please note that the Company has indicated that this table includes (a) all instruments that could convert into securities such as convertible debt, (b) securities that are reserved for issuance upon exercise or conversion such as an option plan and (c) any other instruments that could be expected to impact the capitalization of the Company.
@@ -747,7 +721,7 @@ section.formc-review
         p.small.pb10
           a(href="#" class="show-input" data-name="issuer_short_name").link-1 issuer_short_name 
           |  as Issuer
-        h2.text-uppercase.text-xs-center.font-weight-bold DESCRIPTION OF SECURITIES OFFERED
+        h2.text-uppercase.text-xs-center.font-weight-bold#description_securities DESCRIPTION OF SECURITIES OFFERED
         h3.font-weight-bold.m-t-0.m-b-0.pb10 
           u General Terms
         p.pb10.text-indent The type of security being offered is non-voting shares of our common stock.  This means purchasers of the Shares will have no voting rights whatsoever.  Potential investors should reference the actual terms and provisions of the capital stock contained in the Company's [Certificate of Incorporation and the Company’s bylaws] attached as Exhibit C as well as the Subscription Agreement for the Shares. Each investor is responsible for reviewing and understanding such documents and can use the communication channels on the Platform to request clarification or additional information.
@@ -816,7 +790,7 @@ section.formc-review
         p.small.pb10
           a(href="#" class="show-input" data-name="issuer_short_name").link-1 issuer_short_name
           |  as Issuer
-        h2.text-uppercase.text-xs-center.font-weight-bold USE OF PROCEEDS
+        h2.text-uppercase.text-xs-center.font-weight-bold#use_of_proceeds USE OF PROCEEDS
         p.pb10.text-indent The Company intends to apply the proceeds of this Offering substantially as set forth herein, subject to reallocation by management as it deems in the best interests of the Company. The actual use of proceeds of this Offering is subject to the discretion of management and the board of directors, and may include general corporate purposes.
         p.pb10
           a(href="#" class="show-input" data-name="intended_use_of_proceeds") intended_use_of_proceeds
@@ -977,7 +951,7 @@ section.formc-review
         p.small.pb10
           a(href="#" class="show-input" data-name="issuer_short_name").link-1 issuer_short_name
           |  as Issuer
-        h2.text-uppercase.text-xs-center.font-weight-bold FINANCIAL CONDITION
+        h2.text-uppercase.text-xs-center.font-weight-bold#financial_condition FINANCIAL CONDITION
         p.pb10.text-indent References to the future financial condition of the Company may contain forward-looking statements. Such forward-looking statements are not guarantees of future performance and involve uncertainties and other factors which may cause the Company’s actual results, performance or achievements to be materially different from any future results, performance or achievements expressed or implied by such forward-looking statements. Actual operating results may be affected by various factors including, without limitation, changes in national economic conditions, competitive market conditions, uncertainties related to government regulation, and actual versus projected timing of events, all of which may cause such actual results to differ materially from what is expressed or forecast in this Material.  For purposes of this section, any reference to the Company includes its predecessors, if any.  The Company's actual results may differ materially from those discussed herein.
         h3.font-weight-bold.m-t-0.m-b-0.pb10 
           u Prior Operating History
@@ -1152,7 +1126,7 @@ section.formc-review
         p.small.pb10
           a(href="#" class="show-input" data-name="issuer_short_name").link-1 issuer_short_name
           |  as Issuer
-        h2.text-uppercase.text-xs-center.font-weight-bold CROWDFUNDING RISK FACTORS
+        h2.text-uppercase.text-xs-center.font-weight-bold#risk_factors CROWDFUNDING RISK FACTORS
         p.pb10.text-indent An investment in the Company’s securities involves substantial risk.  Prospective investors should carefully consider the risk factors referred to in this Material. An investor should not invest any funds in the Offering unless he or she can afford to lose his or her entire investment.  In making an investment decision, investors must rely on their own examination of the Company and the terms of the Offering, including the merits and risks involved.  The Shares have not been recommended or reviewed by any federal or state securities commission or regulatory authority.  There is no ready market for the sale of the Shares and it may be difficult or impossible for an investor to sell or otherwise dispose of the Shares.
         h3.font-weight-bold.m-t-0.m-b-0.pb10 
           u Risks from Relying on Issuer Supplied Information
@@ -1253,7 +1227,7 @@ section.formc-review
         p.small.pb10
           a(href="#" class="show-input" data-name="issuer_short_name").link-1 issuer_short_name
           |  as Issuer
-        h2.text-uppercase.text-xs-center.font-weight-bold ELIGIBILITY INFORMATION
+        h2.text-uppercase.text-xs-center.font-weight-bold#eligibility_information ELIGIBILITY INFORMATION
         h3.font-weight-bold.m-t-0.m-b-0.pb10 
           u General Eligibility
         p.pb10.text-indent The Company has certified that all of the following statements are TRUE for the Company in connection with this Offering.
