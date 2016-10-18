@@ -68,14 +68,19 @@
 			padding: rem(10) rem(0)
 	[id^="videoModal"]
 		.modal-dialog
-			margin: auto 
+			margin: auto
+			width: 100%
+			.close
+				right: 0!important
+				top: 0!important
 [id^="videoModal"]
-	top: 25%
+	top: 10%
 	.modal-dialog
+		max-width: rem(700)
 		.close
 		    position: absolute
-		    right: 0
-		    top: 0
+		    right: -40px
+		    top: -40px
 		    z-index: 999
 		    color: $white
 		    font-size: rem(33)
