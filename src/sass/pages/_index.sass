@@ -158,25 +158,22 @@
 		height: 100%
 		h1
 			font-size: rem(48)
-			color: $white
 			letter-spacing: rem(4.8)
-			margin-bottom: rem(50)
 			text-shadow: none
-		.small-text
-			line-height: rem(28)
-			color: $white
-			letter-spacing: rem(.45)
-			font-size: rem(24)
-			font-weight: 400
-			margin-top: rem(10)
+
 		.color-black_pearl
 			color: $black_pearl
+
+		.btn
+			&:first-child
+				margin-right: 30px
 .main-page-title
 	font-weight: 600
 	color: $black_pearl
+
 .home-wrap-text-block
 	position: relative
-	margin-top: rem(50)
+
 	.opasity-block
 		&:before
 			content: " "
@@ -186,15 +183,9 @@
 			top: 0
 			left: 0
 			background: rgba(17, 17, 17, .5)
-	h2
+	h2, h3
 		color: $white
-		margin-bottom: rem(20)
-	h3
-		color: $white
-		letter-spacing: rem(.45)
-		line-height: rem(24)
-		margin-top: 0
-		font-weight: 300
+
 	.learn-link
 		margin-top: rem(20)
 		margin-bottom: rem(45)
@@ -202,15 +193,9 @@
 		margin-left: rem(30)
 
 	&.top-block
-		h2
+		h2, h3
 			color: $black_text
-			margin-bottom: rem(20)
-		h3
-			color: $black_text
-			letter-spacing: rem(.45)
-			line-height: rem(24)
-			margin-top: 0
-			font-weight: 300
+
 .raise-wrap
 	.btn
 		&:first-child
@@ -246,10 +231,15 @@
 	box-shadow: inset 0px 6px 5px -2px rgba(0,0,0,0.5);
 	border-top: 1px solid $limed_spruce
 
-@media only screen and (max-width : 992px)
-	.home-text-main
+@media only screen and (min-width : 992px) and (max-width : 1150px)
+	.home-section .home-text-main
 		h1
-			line-height: rem(42)
+			font-size: 30px
+
+@media only screen and (max-width : 991px)
+	.home-section .home-text-main
+		h1
+			font-size: 30px
 	.home-wrap-text-block
 		padding-top: rem(5)
 
@@ -265,11 +255,7 @@
 			padding: rem(8) rem(15)!important
 			&:first-child
 				margin-right: 5px!important
-		.small-text
-			font-size: rem(18)
-		h1
-			line-height: rem(28)
-			font-size: rem(24)!important
+
 	.home-wrap-text-block
 		padding-top: rem(5)
 		h2
@@ -288,7 +274,13 @@
 			&:first-child
 				margin-right: 5px
 
-@media only screen and (max-width : 320px)
+@media only screen and (max-width : 480px)
+	.home-section .home-text-main
+		h1
+			font-size: 24px
+		h2
+			font-size: 14px
+
 	.raise-wrap
 		.container
 			padding-left: 0
