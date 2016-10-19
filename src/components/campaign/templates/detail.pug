@@ -131,8 +131,9 @@ section.border-bottom-scroll
           a(href="#documents").nav-link Documents
         li.nav-item.text-uppercase
           a(href="#overview").nav-link Overview and terms
-        li.nav-item.text-uppercase
-          a(href="#risks").nav-link risks
+        if !preview
+          li.nav-item.text-uppercase
+            a(href="#risks").nav-link risks
         li.nav-item.text-uppercase
           a(href="#faq").nav-link faq
         li.nav-item.text-uppercase
@@ -625,56 +626,57 @@ section
                   small.text-muted New York, NY
         .col-lg-12.text-lg-center
           a(href="" style="display: none").link-4 See All Investors
-  section.risks.border-bottom
-    .container
-      h2#risks.col-lg-12.dosis.text-uppercase.text-lg-center.text-xs-center.green-heading Risks
-      .col-lg-8.offset-lg-2
-        .accordion(role="tablist" aria-multiselectable="true")
-          .panel.panel-default
-            #headingOne(role="tab").panel-heading
-              a(data-toggle="collapse"
-              data-parent="#accordion" 
-              href="#collapseOne"
-              aria-expanded="true"
-              aria-controls="collapseOne"
-              ).list-group-item-action.active A crowdfunding investment involves risk.
-                i.fa.fa-angle-up
-            #collapseOne(role="tabpanel"
-            aria-labelledby="headingOne"
-            ).panel-collapse.collapse.in  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Suscipit nobis qui aut. Assumenda nulla possimus quidem officia aperiam quas sed non corporis reprehenderit! Voluptatum placeat eum, expedita sunt velit voluptas?
-          .panel.panel-default
-            #headingTwo(role="tab").panel-heading
-              a(data-toggle="collapse"
-              data-parent="#accordion" 
-              href="#collapseTwo"
-              aria-controls="collapseTwo"
-              ).list-group-item-action In making an investment decision, investors must rely on their own examination of the issuer and the terms of the offering.
-                i.fa.fa-angle-down
-            #collapseTwo(role="tabpanel"
-            aria-labelledby="headingTwo"
-            ).panel-collapse.collapse  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi, hic, distinctio, enim nam consequuntur iste quos, accusamus blanditiis a id odio perferendis vel perspiciatis provident et! Consequuntur nemo reprehenderit inventore.
-          .panel.panel-default
-            #headingThree(role="tab").panel-heading
-              a(data-toggle="collapse"
-              data-parent="#accordion" 
-              href="#collapseThree"
-              aria-controls="collapseThree"
-              ).list-group-item-action The U.S. Securities and Exchange Commission does not pass upon the merits of any secrities offered or the terms of the offering    
-                i.fa.fa-angle-down
-            #collapseThree(role="tabpanel"
-            aria-labelledby="headingThree"
-            ).panel-collapse.collapse  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius inventore iste numquam nemo, fugit nihil fugiat quasi, excepturi repellendus pariatur! Facilis odit cupiditate tenetur, inventore adipisci consequatur eius suscipit voluptas.
-          .panel.panel-default
-            #headingFour(role="tab").panel-heading
-              a(data-toggle="collapse"
-              data-parent="#accordion" 
-              href="#collapseFour"
-              aria-controls="collapseFour"
-              ).list-group-item-action The U.S. Securities and Exchange Commission does not pass upon the merits of any secrities offered or the terms of the offering    
-                i.fa.fa-angle-down
-            #collapseFour(role="tabpanel"
-            aria-labelledby="headingFour"
-            ).panel-collapse.collapse  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius inventore iste numquam nemo, fugit nihil fugiat quasi, excepturi repellendus pariatur! Facilis odit cupiditate tenetur, inventore adipisci consequatur eius suscipit voluptas.
+  if !preview        
+    section.risks.border-bottom
+      .container
+        h2#risks.col-lg-12.dosis.text-uppercase.text-lg-center.text-xs-center.green-heading Risks
+        .col-lg-8.offset-lg-2
+          .accordion(role="tablist" aria-multiselectable="true")
+            .panel.panel-default
+              #headingOne(role="tab").panel-heading
+                a(data-toggle="collapse"
+                data-parent="#accordion" 
+                href="#collapseOne"
+                aria-expanded="true"
+                aria-controls="collapseOne"
+                ).list-group-item-action.active A crowdfunding investment involves risk.
+                  i.fa.fa-angle-up
+              #collapseOne(role="tabpanel"
+              aria-labelledby="headingOne"
+              ).panel-collapse.collapse.in  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Suscipit nobis qui aut. Assumenda nulla possimus quidem officia aperiam quas sed non corporis reprehenderit! Voluptatum placeat eum, expedita sunt velit voluptas?
+            .panel.panel-default
+              #headingTwo(role="tab").panel-heading
+                a(data-toggle="collapse"
+                data-parent="#accordion" 
+                href="#collapseTwo"
+                aria-controls="collapseTwo"
+                ).list-group-item-action In making an investment decision, investors must rely on their own examination of the issuer and the terms of the offering.
+                  i.fa.fa-angle-down
+              #collapseTwo(role="tabpanel"
+              aria-labelledby="headingTwo"
+              ).panel-collapse.collapse  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi, hic, distinctio, enim nam consequuntur iste quos, accusamus blanditiis a id odio perferendis vel perspiciatis provident et! Consequuntur nemo reprehenderit inventore.
+            .panel.panel-default
+              #headingThree(role="tab").panel-heading
+                a(data-toggle="collapse"
+                data-parent="#accordion" 
+                href="#collapseThree"
+                aria-controls="collapseThree"
+                ).list-group-item-action The U.S. Securities and Exchange Commission does not pass upon the merits of any secrities offered or the terms of the offering    
+                  i.fa.fa-angle-down
+              #collapseThree(role="tabpanel"
+              aria-labelledby="headingThree"
+              ).panel-collapse.collapse  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius inventore iste numquam nemo, fugit nihil fugiat quasi, excepturi repellendus pariatur! Facilis odit cupiditate tenetur, inventore adipisci consequatur eius suscipit voluptas.
+            .panel.panel-default
+              #headingFour(role="tab").panel-heading
+                a(data-toggle="collapse"
+                data-parent="#accordion" 
+                href="#collapseFour"
+                aria-controls="collapseFour"
+                ).list-group-item-action The U.S. Securities and Exchange Commission does not pass upon the merits of any secrities offered or the terms of the offering    
+                  i.fa.fa-angle-down
+              #collapseFour(role="tabpanel"
+              aria-labelledby="headingFour"
+              ).panel-collapse.collapse  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius inventore iste numquam nemo, fugit nihil fugiat quasi, excepturi repellendus pariatur! Facilis odit cupiditate tenetur, inventore adipisci consequatur eius suscipit voluptas.
         
   section.faq
     if values.faq && Object.keys(values.faq).length > 0 && values.faq[0].question != '' 
