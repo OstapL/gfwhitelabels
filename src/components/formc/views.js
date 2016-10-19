@@ -244,16 +244,16 @@ module.exports = {
       this.labels = {
         experiences: {
           employer: 'Employer',
-          employer_principal: '',
-          title: '',
-          responsibilities: '',
-          start_date_of_service: '',
-          end_date_of_service: '',
+          employer_principal: 'Employer Principal',
+          title: "Employer's Principal Business",
+          responsibilities: 'Responsibilities',
+          start_date_of_service: 'Start Date of Service',
+          end_date_of_service: 'End Date of Service',
         },
         positions: {
-          position: '',
-          start_date_of_service: '',
-          end_date_of_service: '',
+          position: 'Position',
+          start_date_of_service: 'Start Date of Service',
+          end_date_of_service: 'End Date of Service',
         },
       };
       this.assignLabels();
