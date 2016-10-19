@@ -93,9 +93,33 @@ const labels = {
   title: 'Title for Risk',
   risk: 'Describe Your Risk',
   market_and_customer_risk: {
-    title: 'title',
-    risk: 'risk',
-  }
+    title: 'Title for Risk',
+    risk: 'Describe Your Risk',
+  },
+  financial_risk: {
+    title: 'Title for Risk',
+    risk: 'Describe Your Risk',
+  },
+  operational_risk: {
+    title: 'Title for Risk',
+    risk: 'Describe Your Risk',
+  },
+  competitive_risk: {
+    title: 'Title for Risk',
+    risk: 'Describe Your Risk',
+  },
+  personnel_and_third_parties_risk: {
+    title: 'Title for Risk',
+    risk: 'Describe Your Risk',
+  },
+  legal_and_regulatory_risk: {
+    title: 'Title for Risk',
+    risk: 'Describe Your Risk',
+  },
+  miscellaneous_risk: {
+    title: 'Title for Risk',
+    risk: 'Describe Your Risk',    
+  },
 };
 
 module.exports = {
@@ -219,17 +243,17 @@ module.exports = {
 
       this.labels = {
         experiences: {
-          employer: '',
-          employer_principal: '',
-          title: '',
-          responsibilities: '',
-          start_date_of_service: '',
-          end_date_of_service: '',
+          employer: 'Employer',
+          employer_principal: 'Employer Principal',
+          title: "Employer's Principal Business",
+          responsibilities: 'Responsibilities',
+          start_date_of_service: 'Start Date of Service',
+          end_date_of_service: 'End Date of Service',
         },
         positions: {
-          position: '',
-          start_date_of_service: '',
-          end_date_of_service: '',
+          position: 'Position',
+          start_date_of_service: 'Start Date of Service',
+          end_date_of_service: 'End Date of Service',
         },
       };
       this.assignLabels();
@@ -586,8 +610,8 @@ module.exports = {
 
     initialize(options) {
       this.fields = options.fields;
-      // this.fields.title = {label: 'Title for Risk'};
-      // this.fields.risk = {label: 'Describe Your Risk'};
+      this.fields.title = {label: 'Title for Risk'};
+      this.fields.risk = {label: 'Describe Your Risk'};
       this.defaultRisks = {
         0: {
           title: 'There is a limited market for the Company’s product or services',
@@ -637,6 +661,9 @@ module.exports = {
   riskFactorsFinancial: Backbone.View.extend(_.extend({
     urlRoot: formcServer + '/:id' + '/risk-factors-financial/:index',
     initialize(options) {
+      this.fields = options.fields;
+      this.fields.title = {label: 'Title for Risk'};
+      this.fields.risk = {label: 'Describe Your Risk'};
       this.defaultRisks = {
         0: {
           title: "The amount of capital the Company is attempting to raise in the Offering is not enough to sustain the Company's current business plan.",
@@ -681,11 +708,12 @@ module.exports = {
 
     render() {
       let template = require('components/formc/templates/riskFactorsFinancial.pug');
+      console.log(this.fields);
       this.$el.html(
         template({
           serverUrl: serverUrl,
           Urls: Urls,
-          // fields: this.fields,
+          fields: this.fields,
           // values: this.model.toJSON(),
           values: this.model,
           defaultRisks: this.defaultRisks,
@@ -698,6 +726,9 @@ module.exports = {
   riskFactorsOperational: Backbone.View.extend(_.extend({
     urlRoot: formcServer + '/:id' + '/risk-factors-operational/:index',
     initialize(options) {
+      this.fields = options.fields;
+      this.fields.title = {label: 'Title for Risk'};
+      this.fields.risk = {label: 'Describe Your Risk'};
       this.defaultRisks = {
         0: {
           title: "We have a limited operating history upon which you can e valuate our performance.",
@@ -736,7 +767,7 @@ module.exports = {
       'submit form': 'submit',
       'click .delete': 'deleteRisk',
       'click .edit-risk': 'editRisk',
-    }, menuHelper.methods),
+    }, menuHelper.methods, addSectionHelper.methods),
 
     // submit: api.submitAction,
 
@@ -750,7 +781,7 @@ module.exports = {
         template({
           serverUrl: serverUrl,
           Urls: Urls,
-          // fields: this.fields,
+          fields: this.fields,
           // values: this.model.toJSON(),
           values: this.model,
           defaultRisks: this.defaultRisks,
@@ -758,11 +789,14 @@ module.exports = {
       );
       return this;
     },
-  }, menuHelper.methods)),
+  }, menuHelper.methods, addSectionHelper.methods)),
 
   riskFactorsCompetitive: Backbone.View.extend(_.extend({
     urlRoot: formcServer + '/:id' + '/risk-factors-competitive/:index',
     initialize(options) {
+      this.fields = options.fields;
+      this.fields.title = {label: 'Title for Risk'};
+      this.fields.risk = {label: 'Describe Your Risk'};
       this.defaultRisks = {
         0: {
           title: "The development and commercialization of our services is highly competitive.",
@@ -803,7 +837,7 @@ module.exports = {
         template({
           serverUrl: serverUrl,
           Urls: Urls,
-          // fields: this.fields,
+          fields: this.fields,
           // values: this.model.toJSON(),
           values: this.model,
           defaultRisks: this.defaultRisks,
@@ -811,12 +845,15 @@ module.exports = {
       );
       return this;
     },
-  }, menuHelper.methods)),
+  }, menuHelper.methods, addSectionHelper.methods)),
 
 
   riskFactorsPersonnel: Backbone.View.extend(_.extend({
     urlRoot: formcServer + '/:id' + '/risk-factors-personnel/:index',
     initialize(options) {
+      this.fields = options.fields;
+      this.fields.title = {label: 'Title for Risk'};
+      this.fields.risk = {label: 'Describe Your Risk'};
       this.defaultRisks = {
         0: {
           title: "Our company may be unable to retain senior personnel. ",
@@ -865,7 +902,7 @@ module.exports = {
         template({
           serverUrl: serverUrl,
           Urls: Urls,
-          // fields: this.fields,
+          fields: this.fields,
           // values: this.model.toJSON(),
           values: this.model,
           defaultRisks: this.defaultRisks,
@@ -873,11 +910,14 @@ module.exports = {
       );
       return this;
     },
-  }, menuHelper.methods)),
+  }, menuHelper.methods, addSectionHelper.methods)),
 
   riskFactorsLegal: Backbone.View.extend(_.extend({
     urlRoot: formcServer + '/:id' + '/risk-factors-legal/:index',
     initialize(options) {
+      this.fields = options.fields;
+      this.fields.title = {label: 'Title for Risk'};
+      this.fields.risk = {label: 'Describe Your Risk'};
       this.defaultRisks = {
         0: {
           title: "We rely on various intellectual property rights in order to operate our business and these rights may be challenged.",
@@ -922,18 +962,21 @@ module.exports = {
         template({
           serverUrl: serverUrl,
           Urls: Urls,
-          // fields: this.fields,
+          fields: this.fields,
           values: this.model,
           defaultRisks: this.defaultRisks,
         })
       );
       return this;
     },
-  }, menuHelper.methods)),
+  }, menuHelper.methods, addSectionHelper.methods)),
 
   riskFactorsMisc: Backbone.View.extend(_.extend({
     urlRoot: formcServer + '/:id' + '/risk-factors-misc/:index',
     initialize(options) {
+      this.fields = options.fields;
+      this.fields.title = {label: 'Title for Risk'};
+      this.fields.risk = {label: 'Describe Your Risk'};
       this.defaultRisks = {};
       this.labels = labels;
       this.assignLabels();
@@ -957,14 +1000,14 @@ module.exports = {
         template({
           serverUrl: serverUrl,
           Urls: Urls,
-          // fields: this.fields,
+          fields: this.fields,
           values: this.model,
           defaultRisks: this.defaultRisks,
         })
       );
       return this;
     },
-  }, menuHelper.methods)),
+  }, menuHelper.methods, addSectionHelper.methods)),
 
   financialCondition: Backbone.View.extend(_.extend({
     urlRoot: formcServer + '/:id/financial-condition',
