@@ -426,6 +426,10 @@ module.exports = {
     }, addSectionHelper.events, menuHelper.events),
     // }, menuHelper.events),
 
+    getSuccessUrl() {
+      return  '/formc/' + this.model.id + '/risk-factors-instruction';
+    },
+
     calculate(e) {
       // Add all min-expense
       let minNetProceeds = this.$('.min-expense').map(function (e) { return parseInt($(this).val()); }).toArray().reduce(function (total, num) { return total + num; });
