@@ -33,6 +33,7 @@ module.exports = {
     events: {
       'click .tabs-scroll .nav .nav-link': 'smoothScroll',
       'click .list-group-item-action': 'toggleActiveAccordionTab',
+      'click .email-share': 'sharWithEmail',
       'click .linkedin-share': 'shareOnLinkedin',
       'click .facebook-share': 'shareOnFacebook',
       'click .twitter-share': 'shareOnTwitter',
@@ -54,6 +55,7 @@ module.exports = {
         this.edit = true;
         this.previous = params.previous;
       }
+      this.preview = params.preview ? true : false;
     },
 
     // seeAllArticlePress(e) {
@@ -133,6 +135,11 @@ module.exports = {
       });
     },
 
+    sharWithEmail (e) {
+      event.preventDefault();
+      window.open('mailto:?subject=check this link&body=' + window.location.href);
+    },
+
     shareOnFacebook(event) {
       event.preventDefault();
       FB.ui({
@@ -174,6 +181,7 @@ module.exports = {
           formatHelper: formatHelper,
           edit: this.edit,
           previous: this.previous,
+          preview: this.preview,
         })
       );
 
@@ -249,7 +257,7 @@ module.exports = {
             }).render();
           });
       }, 100);
-      this.$el.find('.perks .col-lg-4 p').equalHeights();
+      this.$el.find('.perks .col-xl-4 p').equalHeights();
       this.$el.find('.team .auto-height').equalHeights();
       this.$el.find('.card-inverse p').equalHeights();
       this.$el.find('.modal').on('hidden.bs.modal', function(event) {
