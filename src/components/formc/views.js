@@ -976,7 +976,6 @@ module.exports = {
 
     initialize(options) {
       this.fields = options.fields;
-<<<<<<< HEAD
       
       // TODO
       // Fix for default file values
