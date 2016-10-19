@@ -149,6 +149,9 @@ module.exports = {
           _(el.schema).each((subel, subkey) => {
             subel.label = this.labels[key][subkey];
           });
+        } else {
+          debugger
+          el.label = this.labels[key];
         }
       });
     },
