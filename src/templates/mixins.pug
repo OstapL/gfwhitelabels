@@ -232,8 +232,13 @@ mixin fieldBlock(name, data, attr)
                             if values[name][kkeys[counter]]
                               .col-lg-5.p-l-1.col-md-12.col-xs-12.p-sm-0.p-r-0  
                                   .embed-responsive.embed-responsive-16by9 
-                                      - var link = app.getVideoId(values[name][kkeys[counter]].link)
-                                      iframe.embed-responsive-item(src="//www.youtube.com/embed/" + link + "?rel=0" allowfullscreen="true")
+                                      - let additionalVideo = app.getVideoId(values[name][kkeys[counter]].link);
+                                      if additionalVideo && additionalVideo.provider == 'youtube'
+                                        iframe.embed-responsive-item(src="//www.youtube.com/embed/" + additionalVideo.id + "?rel=0" allowfullscreen="true")
+                                      else if additionalVideo && additionalVideo.provider == 'vimeo'
+                                        iframe.embed-responsive-item(src="//player.vimeo.com/video/" + additionalVideo.id allowfullscreen="true")
+                                      else
+                                        iframe.embed-responsive-item(src="//www.youtube.com/embed/" + (additionalVideo && additionalVideo.id) allowfullscreen="true")
                         - counter ++
                         - indexCounter ++
         else
