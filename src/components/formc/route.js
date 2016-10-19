@@ -158,86 +158,110 @@ module.exports = Backbone.Router.extend({
 
   riskFactorsFinancial(id) {
     const View = require('components/formc/views.js');
-    const i = new View.riskFactorsFinancial({
-      el: '#content',
-      model: {
-        id: id,
-      },
-      // fields: {},
 
+    let fieldsR = api.makeCacheRequest(formcServer + '/' + id + '/risk-factors-financial', 'OPTIONS');
+    let dataR = api.makeCacheRequest(formcServer + '/' + id + '/risk-factors-financial');
+
+    $.when(fieldsR, dataR).done((fields, data) => {
+      data[0].id = id;
+      const i = new View.riskFactorsFinancial({
+        el: '#content',
+        model: data[0], 
+        fields: fields[0].fields,
+      });
+      i.render();
+      app.hideLoading();
     });
-    i.render();
-    app.hideLoading();
   },
 
   riskFactorsOperational(id) {
     const View = require('components/formc/views.js');
-    const i = new View.riskFactorsOperational({
-      el: '#content',
-      model: {
-        id: id,
-      },
-      // fields: {},
 
+    let fieldsR = api.makeCacheRequest(formcServer + '/' + id + '/risk-factors-operational', 'OPTIONS');
+    let dataR = api.makeCacheRequest(formcServer + '/' + id + '/risk-factors-operational');
+
+    $.when(fieldsR, dataR).done((fields, data) => {
+      data[0].id = id;
+      const i = new View.riskFactorsOperational({
+        el: '#content',
+        model: data[0], 
+        fields: fields[0].fields,
+      });
+      i.render();
+      app.hideLoading();
     });
-    i.render();
-    app.hideLoading();
   },
 
   riskFactorsCompetitive(id) {
     const View = require('components/formc/views.js');
-    const i = new View.riskFactorsCompetitive({
-      el: '#content',
-      model: {
-        id: id,
-      },
-      // fields: {},
 
+    let fieldsR = api.makeCacheRequest(formcServer + '/' + id + '/risk-factors-competitive', 'OPTIONS');
+    let dataR = api.makeCacheRequest(formcServer + '/' + id + '/risk-factors-competitive');
+
+    $.when(fieldsR, dataR).done((fields, data) => {
+      data[0].id = id;
+      const i = new View.riskFactorsCompetitive({
+        el: '#content',
+        model: data[0], 
+        fields: fields[0].fields,
+      });
+      i.render();
+      app.hideLoading();
     });
-    i.render();
-    app.hideLoading();
   },
 
   riskFactorsPersonnel(id) {
     const View = require('components/formc/views.js');
-    const i = new View.riskFactorsPersonnel({
-      el: '#content',
-      model: {
-        id: id,
-      },
-      // fields: {},
 
+    let fieldsR = api.makeCacheRequest(formcServer + '/' + id + '/risk-factors-personnel', 'OPTIONS');
+    let dataR = api.makeCacheRequest(formcServer + '/' + id + '/risk-factors-personnel');
+
+    $.when(fieldsR, dataR).done((fields, data) => {
+      data[0].id = id;
+      const i = new View.riskFactorsPersonnel({
+        el: '#content',
+        model: data[0], 
+        fields: fields[0].fields,
+      });
+      i.render();
+      app.hideLoading();
     });
-    i.render();
-    app.hideLoading();
   },
 
   riskFactorsLegal(id) {
     const View = require('components/formc/views.js');
-    const i = new View.riskFactorsLegal({
-      el: '#content',
-      model: {
-        id: id,
-      },
-      // fields: {},
 
+    let fieldsR = api.makeCacheRequest(formcServer + '/' + id + '/risk-factors-legal', 'OPTIONS');
+    let dataR = api.makeCacheRequest(formcServer + '/' + id + '/risk-factors-legal');
+
+    $.when(fieldsR, dataR).done((fields, data) => {
+      data[0].id = id;
+      const i = new View.riskFactorsLegal({
+        el: '#content',
+        model: data[0], 
+        fields: fields[0].fields,
+      });
+      i.render();
+      app.hideLoading();
     });
-    i.render();
-    app.hideLoading();
   },
 
   riskFactorsMisc(id) {
     const View = require('components/formc/views.js');
-    const i = new View.riskFactorsMisc({
-      el: '#content',
-      model: {
-        id: id,
-      },
-      // fields: {},
 
+    let fieldsR = api.makeCacheRequest(formcServer + '/' + id + '/risk-factors-misc', 'OPTIONS');
+    let dataR = api.makeCacheRequest(formcServer + '/' + id + '/risk-factors-misc');
+
+    $.when(fieldsR, dataR).done((fields, data) => {
+      data[0].id = id;
+      const i = new View.riskFactorsMisc({
+        el: '#content',
+        model: data[0], 
+        fields: fields[0].fields,
+      });
+      i.render();
+      app.hideLoading();
     });
-    i.render();
-    app.hideLoading();
   },
 
   financialCondition(id) {
