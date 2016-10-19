@@ -1,4 +1,4 @@
-const dropzone = require('dropzone');
+const Dropzone = require('dropzone');
 
 module.exports = {
 
@@ -16,7 +16,7 @@ module.exports = {
       this.$('.border-dropzone').removeClass('active-border');
     },
 
-    createImageDropzone(Dropzone, name, folderName, renameTo, onSuccess) {
+    createImageDropzone(name, folderName, renameTo, onSuccess) {
 
       let params = {
         folder: folderName,
@@ -104,7 +104,7 @@ module.exports = {
 
     },
 
-    createFileDropzone(Dropzone, name, folderName, renameTo, onSuccess) {
+    createFileDropzone(name, folderName, renameTo, onSuccess) {
 
       let params = {
         folder: folderName,
@@ -218,7 +218,7 @@ module.exports = {
       _(this.fields).each((el, key) => {
         if(el.type == 'file') {
           this.createFileDropzone(
-            dropzone, key, key, '',
+            key, key, '',
             (data) => {
               let params = {
                 type: 'PATCH',
@@ -233,7 +233,7 @@ module.exports = {
           );
         } else if(el.type == 'image') {
           this.createImageDropzone(
-            dropzone, key, key, '',
+            key, key, '',
             (data) => {
               let params = {
                 type: 'PATCH',
@@ -248,7 +248,7 @@ module.exports = {
           );
         } else if(el.type == 'folder') {
           this.createFolderDropzone(
-            dropzone, key, key, '',
+            key, key, '',
             (data) => {
               let params = {
                 type: 'PATCH',
