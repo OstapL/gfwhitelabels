@@ -63,7 +63,7 @@ section.create-company-media.container.media-container
               else if mainVideo && mainVideo.provider == 'vimeo'
                 iframe.embed-responsive-item(src="//player.vimeo.com/video/" + mainVideo.id allowfullscreen="true")
               else
-                iframe.embed-responsive-item(src="//www.youtube.com/embed/" + (mainVideo && mainVideo.id) allowfullscreen="true")
+                iframe.embed-responsive-item(src="//www.youtube.com/embed/?rel=0" allowfullscreen="true")
 
       .row.m-b-0.additional-video-block
         .col-lg-12.p-sm-0
