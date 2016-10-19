@@ -23,13 +23,7 @@ module.exports = {
     let $el = null;
     let $group = null;
 
-    if(attr.indexOf('__') != -1) {
-      let sel = attr.split('__');
-      $el = view.$('.' + sel[0] + '[data-index="' + sel[1] + '"] #' + sel[2]);
-    }
-    else {
-      $el = view.$('#' + attr);
-    }
+    $el = view.$('#' + attr);
 
     if ($el.length == 0) {
       $el = view.$('[name=' + attr + ']');

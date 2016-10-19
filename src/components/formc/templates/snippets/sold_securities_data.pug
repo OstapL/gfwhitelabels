@@ -1,0 +1,27 @@
+include ../../../../templates/fields_mixins.pug
+
+- console.log(values);
+.col-lg-6.col-md-12
+  h3.text-xs-center Most Recent Fiscal Year
+  +fieldNestedTextLabel('sold_securities_data', "total_assets", values[0] ? values[0].total_assets : '', 0, {class1: ' text-lg-right col-lg-12 col-md-12 text-md-left text-xl-left', class2: 'col-lg-12 col-md-12'})
+  +fieldNestedTextLabel('sold_securities_data', "cash_and_equivalents", values[0] ? values[0].cash_and_equivalents : '', 0, {class1: ' text-lg-right col-lg-12 col-md-12 text-md-left text-xl-left', class2: 'col-lg-12 col-md-12'})
+  +fieldNestedTextLabel('sold_securities_data', "account_receivable", values[0] ? values[0].account_receivable : '', 0, {class1: ' text-lg-right col-lg-12 col-md-12 text-md-left text-xl-left', class2: 'col-lg-12 col-md-12'})
+  +fieldNestedTextLabel('sold_securities_data', "short_term_debt", values[0] ? values[0].short_term_debt : '', 0, {class1: ' text-lg-right col-lg-12 col-md-12 text-md-left text-xl-left', class2: 'col-lg-12 col-md-12'})
+  +fieldNestedTextLabel('sold_securities_data', "long_term_debt", values[0] ? values[0].long_term_debt : '', 0, {class1: ' text-lg-right col-lg-12 col-md-12 text-md-left text-xl-left', class2: 'col-lg-12 col-md-12'})
+  +fieldNestedTextLabel('sold_securities_data', "revenues_sales", values[0] ? values[0].revenues_sales : '', 0, {class1: ' text-lg-right col-lg-12 col-md-12 text-md-left text-xl-left', class2: 'col-lg-12 col-md-12'})
+  +fieldNestedTextLabel('sold_securities_data', "cost_of_goods_sold", values[0] ? values[0].cost_of_goods_sold : '', 0, {class1: ' text-lg-right col-lg-12 col-md-12 text-md-left text-xl-left', class2: 'col-lg-12 col-md-12'})
+  +fieldNestedTextLabel('sold_securities_data', "total_income", values[0] ? values[0].total_income : '', 0, {class1: ' text-lg-right col-lg-12 col-md-12 text-md-left text-xl-left', class2: 'col-lg-12 col-md-12'})
+  +fieldNestedTextLabel('sold_securities_data', "taxable_income", values[0] ? values[0].taxable_income : '', 0, {class1: ' text-lg-right col-lg-12 col-md-12 text-md-left text-xl-left', class2: 'col-lg-12 col-md-12'})
+  +fieldNestedTextLabel('sold_securities_data', "total_tax", values[0] ? values[0].total_tax : '', 0, {class1: ' text-lg-right col-lg-12 col-md-12 text-md-left text-xl-left', class2: 'col-lg-12 col-md-12'})
+.col-lg-6.col-md-12
+  h3.text-xs-center Prior Fiscal Year
+  +fieldNestedTextLabel('sold_securities_data', "total_assets", values[1] ? values[1].total_assets : '', 1, {class1: ' text-lg-right col-lg-12 col-md-12 text-md-left text-xl-left', class2: 'col-lg-12 col-md-12'})
+  +fieldNestedTextLabel('sold_securities_data', "cash_and_equivalents", values[1] ? values[1].cash_and_equivalents : '', 1, {class1: ' text-lg-right col-lg-12 col-md-12 text-md-left text-xl-left', class2: 'col-lg-12 col-md-12'})
+  +fieldNestedTextLabel('sold_securities_data', "account_receivable", values[1] ? values[1].account_receivable : '', 1, {class1: ' text-lg-right col-lg-12 col-md-12 text-md-left text-xl-left', class2: 'col-lg-12 col-md-12'})
+  +fieldNestedTextLabel('sold_securities_data', "short_term_debt", values[1] ? values[1].short_term_debt : '', 1, {class1: ' text-lg-right col-lg-12 col-md-12 text-md-left text-xl-left', class2: 'col-lg-12 col-md-12'})
+  +fieldNestedTextLabel('sold_securities_data', "long_term_debt", values[1] ? values[1].long_term_debt : '', 1, {class1: ' text-lg-right col-lg-12 col-md-12 text-md-left text-xl-left', class2: 'col-lg-12 col-md-12'})
+  +fieldNestedTextLabel('sold_securities_data', "revenues_sales", values[1] ? values[1].revenues_sales : '', 1, {class1: ' text-lg-right col-lg-12 col-md-12 text-md-left text-xl-left', class2: 'col-lg-12 col-md-12'})
+  +fieldNestedTextLabel('sold_securities_data', "cost_of_goods_sold", values[1] ? values[1].cost_of_goods_sold : '', 1, {class1: ' text-lg-right col-lg-12 col-md-12 text-md-left text-xl-left', class2: 'col-lg-12 col-md-12'})
+  +fieldNestedTextLabel('sold_securities_data', "total_income", values[1] ? values[1].total_income : '', 1, {class1: ' text-lg-right col-lg-12 col-md-12 text-md-left text-xl-left', class2: 'col-lg-12 col-md-12'})
+  +fieldNestedTextLabel('sold_securities_data', "taxable_income", values[1] ? values[1].taxable_income : '', 1, {class1: ' text-lg-right col-lg-12 col-md-12 text-md-left text-xl-left', class2: 'col-lg-12 col-md-12'})
+  +fieldNestedTextLabel('sold_securities_data', "total_tax", values[1] ? values[1].total_tax : '', 1, {class1: ' text-lg-right col-lg-12 col-md-12 text-md-left text-xl-left', class2: 'col-lg-12 col-md-12'})

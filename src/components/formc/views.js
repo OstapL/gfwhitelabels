@@ -1,7 +1,12 @@
 "use strict";
-let menuHelper = require('helpers/menuHelper.js');
-let addSectionHelper = require('helpers/addSectionHelper.js');
-let yesNoHelper = require('helpers/yesNoHelper.js');
+
+const menuHelper = require('helpers/menuHelper.js');
+const addSectionHelper = require('helpers/addSectionHelper.js');
+const yesNoHelper = require('helpers/yesNoHelper.js');
+
+const dropzone = require('dropzone');
+const dropzoneHelpers = require('helpers/dropzone.js');
+
 
 module.exports = {
   introduction: Backbone.View.extend(_.extend({
@@ -732,45 +737,66 @@ module.exports = {
   }, menuHelper.methods)),
 
   financialCondition: Backbone.View.extend(_.extend({
-    urlRoot: 'https://api-formc.growthfountain.com/' + ':id' + '/financial-condition',
+    urlRoot: formcServer + '/:id/financial-condition',
+
+    events: _.extend({
+      'submit form': api.submitAction,
+    }, menuHelper.events, yesNoHelper.events, addSectionHelper.events, dropzoneHelpers.events),
 
     initialize(options) {
       this.fields = options.fields;
+      
+      // TODO
+      // Fix for default file values
+      if(this.model.financials_for_most_recent_fiscal_year_id == null) {
+        this.model.financials_for_most_recent_fiscal_year_id = 'null';
+      }
+
+      if(this.model.financials_for_prior_fiscal_year_id == null) {
+        this.model.financials_for_prior_fiscal_year_id = 'null';
+      }
+
+
+      this.labels = {
+        sold_securities_data: {
+          taxable_income: "Taxable Income",
+          total_income: "Total Income",
+          total_tax: "Total Tax",
+          total_assets: "Total Assets",
+          long_term_debt: "Long Term Debt",
+          short_term_debt: "Short Term Debt",
+          cost_of_goods_sold: "Cost of Goods Sold",
+          account_receivable: "Account Receivable",
+          cash_and_equivalents: "Cash Equivalents",
+          revenues_sales: "Revenues Sales",
+        }
+      };
+      this.assignLabels();
+
+      this.createIndexes();
+      this.buildJsonTemplates('formc');
     },
-
-    events: _.extend({
-      'submit form': 'submit',
-    }, menuHelper.events, yesNoHelper.events),
-
-    submit: api.submitAction,
 
     getSuccessUrl() {
       return  '/formc/' + this.model.id + '/outstanding-security';
     },
 
     render() {
-      this.fields.sold_securities_data.schema.taxable_income.label = "Taxable Income";
-      this.fields.sold_securities_data.schema.total_income.label = "Total Income";
-      this.fields.sold_securities_data.schema.total_tax.label = "Total Tax";
-      this.fields.sold_securities_data.schema.total_assets.label = "Total Assets";
-      this.fields.sold_securities_data.schema.long_term_debt.label = "Long Term Debt";
-      this.fields.sold_securities_data.schema.short_term_debt.label = "Short Term Debt";
-      this.fields.sold_securities_data.schema.cost_of_goods_sold.label = "Cost of Goods Sold";
-      this.fields.sold_securities_data.schema.account_receivable.label = "Account Receivable";
-      this.fields.sold_securities_data.schema.cash_and_equivalents.label = "Cash Equivalents";
-      this.fields.sold_securities_data.schema.revenues_sales.label = "Revenues Sales";
-      let template = require('components/formc/templates/financialCondition.pug');
+      let template = require('./templates/financialCondition.pug');
+
       this.$el.html(
         template({
           serverUrl: serverUrl,
           Urls: Urls,
           fields: this.fields,
           values: this.model,
+          templates: this.jsonTemplates,
         })
       );
+      this.createDropzones();
       return this;
     },
-  }, menuHelper.methods, yesNoHelper.methods)),
+  }, menuHelper.methods, yesNoHelper.methods, addSectionHelper.methods, dropzoneHelpers.methods)),
 
   outstandingSecurity: Backbone.View.extend(_.extend({
     urlRoot: formcServer + '/:id' + '/outstanding-security',

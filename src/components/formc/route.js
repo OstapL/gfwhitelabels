@@ -243,11 +243,11 @@ module.exports = Backbone.Router.extend({
   financialCondition(id) {
     const View = require('components/formc/views.js');
 
-    let fieldsR = api.makeCacheRequest(
+    let fieldsR = api.makeRequest(
       formcServer + '/' + id + '/financial-condition', 
       'OPTIONS'
     );
-    let dataR = api.makeCacheRequest(
+    let dataR = api.makeRequest(
       formcServer + '/' + id + '/financial-condition'
     );
 
