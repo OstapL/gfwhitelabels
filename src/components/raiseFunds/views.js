@@ -810,7 +810,19 @@ module.exports = {
         dragleave: 'globalDragleave',
         'click .onPreview': onPreviewAction,
         'click .submit_form': submitCampaign,
+        'click .submit-specifics': 'checkMinMaxRaise',
       }, leavingConfirmationHelper.events),
+
+      checkMinMaxRaise(e) {
+        let min = this.$('input[name=minimum_raise]').val();
+        let max = this.$('input[name=maximum_raise]').val();
+        min = parseInt(min.replace(/,/g, ''));
+        max = parseInt(max.replace(/,/g, ''));
+        if (!(min && max) || !(min < max)) {
+          alert("Maximum Raise must be larger than Minimum Raise!");
+          e.preventDefault();
+        }
+      },
 
       globalDragover() {
         // this.$('.dropzone').css({ border: 'dashed 1px lightgray' });
