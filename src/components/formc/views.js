@@ -18,13 +18,14 @@ const deleteRisk = function (e) {
 
   api.makeRequest(url, 'DELETE', {}).then((data) => {
     if (index < Object.keys(this.defaultRisks).length) {
-      $(e.target).find('textarea').prop('readonly', true);
       let $form = this.$('form[index=' + index + ']');
       $form.find('.buttons').css({display: 'none'});
       $form.find('.unadded-state').css({display: 'inline-block'});
       $form.find('textarea').val(this.defaultRisks[index].risk);
       let $panel = this.$('.risk-panel[index=' + index + ']');
       $panel.find('a').removeClass('added-risk-title');
+      let $textarea = $(e.target).find('textarea');
+      $textarea.prop('readonly', true).addClass('borderless-textarea').css({ height: $textarea.prop('scrollHeight')+'px' });
     } else {
       let $section = $('.risk-panel[index=' + index + ']');
       $section.remove();
@@ -39,7 +40,6 @@ const editRisk = function (e) {
   e.preventDefault();
   let $target = $(e.target);
   let index = $target.data('index');
-  $('textarea[index=' + index + ']').attr('readonly', false);
   // let $form = $('form[index=' + index + ']');
   let $form = $('form[index=' + index + ']');
   // $panel.find('.add-risk').css({display: 'inline-block'});
@@ -47,6 +47,7 @@ const editRisk = function (e) {
   $form.find('.buttons').css({display: 'none'});
   $form.find('.editing-state').css({display: 'inline-block'});
   $form.find('.added-span').text('');
+  $('textarea[index=' + index + ']').attr('readonly', false).removeClass('borderless-textarea').css({height: ''});
   // $target.css({display: 'none'});
 };
 
@@ -66,7 +67,8 @@ const submitRisk = function (e) {
   let formData = $(e.target).serializeJSON({ useIntKeysAsArrayIndex: true });
 
   api.makeRequest(url, 'PATCH', formData).then((data) => {
-    $(e.target).find('textarea').prop('readonly', true);
+    let $textarea = $(e.target).find('textarea')
+    $textarea.prop('readonly', true).addClass('borderless-textarea').css({ height: $textarea.prop('scrollHeight')+'px' });
     let $form = $('form[index=' + index + ']');
     if ($form.length > 0) { // find the form    
       $form.find('.buttons').css({display: 'none'});
@@ -654,6 +656,9 @@ module.exports = {
           defaultRisks: this.defaultRisks,
         })
       );
+      this.$('textarea').each(function () {
+        $(this).css({height: this.scrollHeight + 'px'});
+      });
       return this;
     },
   }, menuHelper.methods, addSectionHelper.methods)),
@@ -719,6 +724,9 @@ module.exports = {
           defaultRisks: this.defaultRisks,
         })
       );
+      this.$('textarea').each(function () {
+        $(this).css({height: this.scrollHeight + 'px'});
+      });
       return this;
     },
   }, menuHelper.methods, addSectionHelper.methods)),
@@ -787,6 +795,9 @@ module.exports = {
           defaultRisks: this.defaultRisks,
         })
       );
+      this.$('textarea').each(function () {
+        $(this).css({height: this.scrollHeight + 'px'});
+      });
       return this;
     },
   }, menuHelper.methods, addSectionHelper.methods)),
@@ -843,6 +854,9 @@ module.exports = {
           defaultRisks: this.defaultRisks,
         })
       );
+      this.$('textarea').each(function () {
+        $(this).css({height: this.scrollHeight + 'px'});
+      });
       return this;
     },
   }, menuHelper.methods, addSectionHelper.methods)),
@@ -908,6 +922,9 @@ module.exports = {
           defaultRisks: this.defaultRisks,
         })
       );
+      this.$('textarea').each(function () {
+        $(this).css({height: this.scrollHeight + 'px'});
+      });
       return this;
     },
   }, menuHelper.methods, addSectionHelper.methods)),
@@ -967,6 +984,9 @@ module.exports = {
           defaultRisks: this.defaultRisks,
         })
       );
+      this.$('textarea').each(function () {
+        $(this).css({height: this.scrollHeight + 'px'});
+      });
       return this;
     },
   }, menuHelper.methods, addSectionHelper.methods)),
@@ -1005,6 +1025,9 @@ module.exports = {
           defaultRisks: this.defaultRisks,
         })
       );
+      this.$('textarea').each(function () {
+        $(this).css({height: this.scrollHeight + 'px'});
+      });
       return this;
     },
   }, menuHelper.methods, addSectionHelper.methods)),
