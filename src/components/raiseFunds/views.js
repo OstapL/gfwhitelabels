@@ -544,16 +544,13 @@ module.exports = {
         else $videoContainer = this.$('.additional-video-block .index_' + $(e.target).data('index'));
         // var $form = $('.index_' + $(e.target).data('index'));
         var video = e.target.value;
-        // var id = this.getVideoId(video);
         var res = this.getVideoId(video);
 
         // ToDo
         // FixME
         // Bad CHECK
         //
-        // if(id != '') {
         if(res.id && res.provider) {
-          // $form.find('iframe').attr(
           if (res.provider == 'youtube')
             $videoContainer.find('iframe').attr(
               'src', '//youtube.com/embed/' +  res.id + '?rel=0'
