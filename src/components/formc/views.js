@@ -736,7 +736,7 @@ module.exports = {
       'submit form': 'submit',
       'click .delete': 'deleteRisk',
       'click .edit-risk': 'editRisk',
-    }, menuHelper.methods),
+    }, menuHelper.methods, addSectionHelper.methods),
 
     // submit: api.submitAction,
 
@@ -758,7 +758,7 @@ module.exports = {
       );
       return this;
     },
-  }, menuHelper.methods)),
+  }, menuHelper.methods, addSectionHelper.methods)),
 
   riskFactorsCompetitive: Backbone.View.extend(_.extend({
     urlRoot: formcServer + '/:id' + '/risk-factors-competitive/:index',
@@ -811,7 +811,7 @@ module.exports = {
       );
       return this;
     },
-  }, menuHelper.methods)),
+  }, menuHelper.methods, addSectionHelper.methods)),
 
 
   riskFactorsPersonnel: Backbone.View.extend(_.extend({
@@ -873,7 +873,7 @@ module.exports = {
       );
       return this;
     },
-  }, menuHelper.methods)),
+  }, menuHelper.methods, addSectionHelper.methods)),
 
   riskFactorsLegal: Backbone.View.extend(_.extend({
     urlRoot: formcServer + '/:id' + '/risk-factors-legal/:index',
@@ -929,7 +929,7 @@ module.exports = {
       );
       return this;
     },
-  }, menuHelper.methods)),
+  }, menuHelper.methods, addSectionHelper.methods)),
 
   riskFactorsMisc: Backbone.View.extend(_.extend({
     urlRoot: formcServer + '/:id' + '/risk-factors-misc/:index',
@@ -964,7 +964,7 @@ module.exports = {
       );
       return this;
     },
-  }, menuHelper.methods)),
+  }, menuHelper.methods, addSectionHelper.methods)),
 
   financialCondition: Backbone.View.extend(_.extend({
     urlRoot: formcServer + '/:id/financial-condition',
