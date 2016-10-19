@@ -485,7 +485,6 @@ module.exports = {
 
     calculate(e) {
       // Add all min-expense
-      // debugger
       let minNetProceeds = this.$('.min-expense').map(function (e) { return parseInt($(this).val()); }).toArray().reduce(function (total, num) { return total + num; });
       let maxNetProceeds = this.$('.max-expense').map(function (e) { return parseInt($(this).val()); }).toArray().reduce(function (total, num) { return total + num; });
       this.$('.min-net-proceeds').text(minNetProceeds);

@@ -150,7 +150,6 @@ module.exports = {
             subel.label = this.labels[key][subkey];
           });
         } else {
-          debugger
           el.label = this.labels[key];
         }
       });
