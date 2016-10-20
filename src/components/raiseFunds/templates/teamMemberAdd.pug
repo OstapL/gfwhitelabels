@@ -15,13 +15,12 @@ section.team-members.container.m-b-85
 
   //START RIGHT BLOCK
   .col-lg-10.offset-lg-1.col-xl-8.offset-xl-0.push-xl-3
-    h2.text-uppercase.text-lg-center.text-xs-center.dosis.m-t-0 team member (#{type})
+    h2.text-uppercase.text-lg-center.text-xs-center.dosis.m-t-0 #{type == 'advisor' ? 'advisor' : 'team member'}
 
     form(method="post" action="").form-section
       input(type="hidden" name="type" value=type)#type
       input(type="hidden" name="photo" value=member.photo)#photo
       - values = member;
-      - console.log(values);
       +fieldBlock("first_name", '', {
         class1: 'col-lg-3 col-md-12',
         class2: 'col-lg-9 col-md-12',
@@ -37,11 +36,20 @@ section.team-members.container.m-b-85
         class2: 'col-lg-9 col-md-12',
         type: 'email',
         })
-      +fieldBlock("title", '', {
-        class1: 'col-lg-3 col-md-12',
-        class2: 'col-lg-9 col-md-12',
-        type: 'text',
-        })
+      if type == 'advisor'
+        +fieldBlock("title", 'Advisor', {
+          class1: 'col-lg-3 col-md-12',
+          class2: 'col-lg-9 col-md-12',
+          type: 'text',
+          disabled: true,
+          })
+      else
+        +fieldBlock("title", '', {
+          class1: 'col-lg-3 col-md-12',
+          class2: 'col-lg-9 col-md-12',
+          type: 'text',
+          })
+
       .form-group.row.clearfix.required
         label.col-lg-3.col-md-12.text-lg-right Bio
         .col-lg-9.col-md-12
