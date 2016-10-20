@@ -94,6 +94,10 @@ module.exports = {
     }
   },
 
+  min_value: function (name, rule, attr, data) {
+    this.min(nam, rule, attr, data);
+  },
+
   // Max validator
   // Validates that the value has to be a number and equal to or less than
   // the max value specified
@@ -102,6 +106,10 @@ module.exports = {
     if (!isNumber(value) || value > rule) {
       throw this.format(this.messages.max, attr.label, rule);
     }
+  },
+
+  max_value: function (name, rule, attr, data) {
+    this.max(nam, rule, attr, data);
   },
 
   // Range validator

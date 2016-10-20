@@ -79,7 +79,7 @@ section.create-company.container.m-b-85
             class1: 'col-lg-6',
             class2: 'col-lg-6',
             })
-        .col-lg-5.city_states.required
+        .col-lg-5.city_states.required.sity-state-error
           input(type='hidden' name='state' value=values.state id='state')
           input(type='hidden' name='city' value=values.city id='city')
 
@@ -190,8 +190,10 @@ section.create-company.container.m-b-85
               a(href="#").list-group-item.list-group-item-action form c
     .row
       .col-lg-12.text-xs-center
-        button(type="button" data-href=("#")).btn.btn-secondary.text-uppercase.m-t-2.onPreview preview
-        button(type="button" class='submit_form').btn.btn-primary.text-uppercase.m-t-2 submit campaign
+        .row
+          button(type="button" data-href=("#")).btn.btn-secondary.text-uppercase.m-t-2.onPreview preview
+        .row
+          button(type="button" class='submit_form').btn.btn-primary.text-uppercase.m-t-2 submit campaign
     .row
       .education-link-wrap
         .jumbotron.jumbotron-fluid

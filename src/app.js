@@ -88,6 +88,7 @@ let app = {
   getVideoId(url) {
     try {
       var provider = url.match(/https:\/\/(:?www.)?(\w*)/)[2];
+      provider = provider.toLowerCase();
       var id;
 
       if (provider == 'youtube') {
@@ -98,7 +99,7 @@ let app = {
         console.log(url, 'Takes a YouTube or Vimeo URL');
       }
       
-      return id;
+      return {id: id, provider: provider};
     } catch (err) {
       console.log(url, 'Takes a YouTube or Vimeo URL');
     }
