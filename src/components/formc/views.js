@@ -422,7 +422,7 @@ module.exports = {
       'change input[type=radio][name=doc_type]': 'changeDocType',
       'click .add-proceed': 'addProceed',
       'click .delete-proceed': 'deleteProceed',
-      'click .min-net-proceeds': 'calculate',
+      'change .min-expense,.max-expense,.min-use,.max-use': 'calculate',
     }, addSectionHelper.events, menuHelper.events),
     // }, menuHelper.events),
 
@@ -430,15 +430,35 @@ module.exports = {
       return  '/formc/' + this.model.id + '/risk-factors-instruction';
     },
 
+    _getSum(selector) {
+        let values = this.$(selector).map(function (e) { return parseInt($(this).val() ? $(this).val() : 0); }).toArray();
+        if (values.length == 0) values.push(0);
+        return values.reduce(function (total, num) { return total + num; });
+    },
+
     calculate(e) {
       // Add all min-expense
-      let minNetProceeds = this.$('.min-expense').map(function (e) { return parseInt($(this).val()); }).toArray().reduce(function (total, num) { return total + num; });
-      let maxNetProceeds = this.$('.max-expense').map(function (e) { return parseInt($(this).val()); }).toArray().reduce(function (total, num) { return total + num; });
+      let minRaise = 100000;
+      let maxRaise = 200000;
+
+      // let minNetProceeds = this.$('.min-expense').map(function (e) { return parseInt($(this).val()); }).toArray().reduce(function (total, num) { return total + num; });
+      // let maxNetProceeds = this.$('.max-expense').map(function (e) { return parseInt($(this).val()); }).toArray().reduce(function (total, num) { return total + num; });
+      let minNetProceeds = minRaise - this._getSum('.min-expense');
+      let maxNetProceeds = maxRaise - this._getSum('.max-expense');
+      
       this.$('.min-net-proceeds').text(minNetProceeds);
-      this.$('.max-net-proceeds').text(minNetProceeds);
+      this.$('.max-net-proceeds').text(maxNetProceeds);
+
+      // let minTotalUse = this.$('.min-use').map(function (e) { return parseInt($(this).val()); }).toArray().reduce(function (total, num) { return total + num; });
+      // let maxTotalUse = this.$('.max-use').map(function (e) { return parseInt($(this).val()); }).toArray().reduce(function (total, num) { return total + num; });
+      let minTotalUse = this._getSum('.min-use');
+      let maxTotalUse = this._getSum('.max-use');
+
+      this.$('.min-total-use').text(minTotalUse);
+      this.$('.max-total-use').text(maxTotalUse);
       // this.$('.min-total-proceeds').text();
       // return true if the table is valid in terms of the calculation, else return false
-      return false;
+      return (minNetProceeds == minTotalUse) && (maxNetProceeds == maxTotalUse);
     },
 
     addProceed(e) {
@@ -452,7 +472,7 @@ module.exports = {
       $('.' + type + '-table tbody').append(template({
         type: type,
         dataType: dataType,
-        index: 0,
+        index: this[dataType + 'Index']++,
       }));
     },
 
@@ -474,18 +494,34 @@ module.exports = {
       }
     },
 
-    submit: api.submitAction,
+    // submit: api.submitAction,
+
+    submit(e) {
+      if (!this.calculate(null)) {
+        e.preventDefault();
+        alert('Total Use of Net Proceeds must equal Net Proceeds!');
+        return;
+      }
+      var $target = $(e.target);
+      var data = $target.serializeJSON({useIntKeysAsArrayIndex: true});
+      api.submitAction.call(this, e, data);
+    },
 
     render() {
       let template = require('components/formc/templates/useOfProceeds.pug');
     // this.fields['offering-expense'].type = 'row';
-
-      if (this.model.faq) {
-        // this.faqIndex = Object.keys(this.model.get('faq')).length;
-        this.faqIndex = Object.keys(this.model.faq).length;
+      if (this.model.less_offering_express) {
+        this.less_offering_expressIndex = Object.keys(this.model.less_offering_express).length;
       } else {
-        this.faqIndex = 0;
+        this.less_offering_expressIndex = 0;
       }
+
+      if (this.model.use_of_proceeds) {
+        this.use_of_net_proceedsIndex = Object.keys(this.model.use_of_net_proceeds).length;
+      } else {
+        this.use_of_net_proceedsIndex = 0;
+      }
+
       this.$el.html(
         template({
           serverUrl: serverUrl,
@@ -495,6 +531,7 @@ module.exports = {
           values: this.model,
         })
       );
+      this.calculate(null);
       return this;
     }, 
   }, addSectionHelper.methods, menuHelper.methods)),
