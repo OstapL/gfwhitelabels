@@ -50,7 +50,12 @@ section#home(style="background-image: url(" + (values.header_image_data ? values
               a(href=previous ? previous : '/campaign/general_information/' + values.id).btn.btn-primary.text-uppercase.pull-lg-right &nbspEdit&nbsp&nbsp
               //- a(href=previous).btn.btn-primary.text-uppercase.pull-lg-right Edit
             a(href=Urls['campaign-invest'](values.id)).btn.btn-primary.text-uppercase.pull-lg-right Invest
-
+section.edit-campaign.hidden-sm-down
+  .edit-campaign-wrap
+    .row
+      button(type="button" data-href=("#")).btn.btn-secondary.text-uppercase.m-b-2 Edit campaign
+    .row
+      button(type="button" class='submit_form').btn.btn-primary.text-uppercase submit campaign
 section.campaigndetail
   .container
     .col-lg-6.p-md-0
@@ -62,7 +67,7 @@ section.campaigndetail
             i.fa.fa-map-marker
             |  #{ values.company.city }, #{ values.company.state }
         .col-lg-6.col-xs-6
-          .date-detail
+          .date-detail.pull-md-right.pull-lg-left
             i.fa.fa-calendar-check-o
             |  Founded #{ formatHelper.formatDate(values.company.founding_date) }
       .row
@@ -75,11 +80,11 @@ section.campaigndetail
               i.fa.fa-twitter.link-1
             a(href=values.company.linkedin).linkedin-share
               i.fa.fa-linkedin.link-1
-            a(href=values.company.linkedin).linkedin-share
+            a(href=values.company.linkedin).email-share
               i.fa.fa-envelope.link-1
             //- a(href=values.company.instagram).link-1
             //-   i.fa.fa-google-plus
-    .col-lg-6.right-block-investors.p-l-0
+    .col-lg-6.right-block-investors.p-l-0.p-sm-0
       .progress_bar_container
         //- span Less than 20% Funded
         span Less than #{ percentage_raised }% Funded
@@ -89,11 +94,11 @@ section.campaigndetail
         .clear
         progress(value=percentage_raised max="100").progress
       .mt25
-        .row.col-lg-8
+        .row.col-xl-8.col-md-6
           p Target
           //- h2.font-weight-bold #{ campaign.minimum_raise } - #{ campaign.maximum_raise }
           h2.font-weight-bold #{ formatHelper.formatPrice(values.minimum_raise) } - #{ formatHelper.formatPrice(values.maximum_raise) }
-        .row.col-lg-4.pull-lg-right
+        .row.col-xl-4.col-md-6.pull-lg-right
           p Minimum Investment
           //- h2.font-weight-bold #{ values.minimum_increment }
           h2.font-weight-bold #{ formatHelper.formatPrice(values.minimum_increment) }
@@ -119,7 +124,7 @@ section.campaigndetail
                 a(href="")
                   <img src="/img/avatar1.jpg" alt="..." class="img-circle">
               a(href="#" style="display: none").link-1 see all...
-section.border-bottom-scroll
+section.border-bottom-scroll.hidden-lg-down
   .container.tabs-scroll
     nav( data-toggle="sticky-onscroll").navbar.navbar-default.sticky
       ul.nav.nav-pills.nav-pills-values
@@ -132,12 +137,10 @@ section.border-bottom-scroll
         li.nav-item.text-uppercase
           a(href="#overview").nav-link Overview and terms
         li.nav-item.text-uppercase
-          a(href="#risks").nav-link risks
-        li.nav-item.text-uppercase
           a(href="#faq").nav-link faq
         li.nav-item.text-uppercase
           a(href="#ask").nav-link Ask a Question
-        a(href=Urls['campaign-invest'](values.id)).btn.btn-primary.text-uppercase.pull-right invest
+        a(href=Urls['campaign-invest'](values.id)).btn.btn-primary.text-uppercase.pull-xl-right.pull-lg-left invest
 section
   .scrollspy-example(data-spy="scroll"
   data-target="#navbar-example2"
@@ -197,6 +200,7 @@ section
         .col-lg-12.text-center-flex
           if values.additional_video
               each v,k in values.additional_video
+                if v
                   .col-lg-4
                     .card.card-inverse
                       - var link =  app.getVideoId(v.link)
@@ -242,15 +246,14 @@ section
         p #{ values.business_model }
 
       if values.additional_info
-        .col-lg-12
-          each v,k in values.additional_info
-            //- h3.our.text-lg-center #{ v.title }
-            if v
+        each v,k in values.additional_info
+          if v && v.title && v.body
+            .col-lg-12
               h2.dosis.our.text-uppercase.text-lg-center.text-xs-center.green-heading #{ v.title }
               p #{ v.body }
    
   if values.members
-      section#members.border-bottom
+      section#members
         .container
           if values.members && values.members instanceof Array && values.members.length > 0
             h2#team.dosis.text-uppercase.text-lg-center.text-xs-center.col-lg-12.green-heading Team
@@ -258,31 +261,32 @@ section
               .col-lg-12.text-center-flex
                 each v,k in values.members
                     .col-lg-4.team
-                      a(href="#")
-                        .card.text-lg-center.text-xs-center
-                          img(src=v.photo alt="").img-circle
-                          .card-block
-                            h4.text-xs-center.card-title.text-uppercase #{v.first_name} #{v.last_name }
-                            p.card-text
-                                small.text-muted #{v.title }
+                      .card.text-lg-center.text-xs-center
+                        img(src=v.photo alt="").img-circle
+                        .card-block
+                          h4.text-xs-center.card-title.text-uppercase #{v.first_name} #{v.last_name }
+                          p.card-text
+                              small.text-muted #{v.title }
                             
-                            a(href=v.linkedin target="_blank").link-1
-                              i.fa.fa-linkedin.more
-                            a(href=v.facebook target="_blank").link-1
-                              i.fa.fa-facebook
-                            p.card-text.text-justify.auto-height #{v.bio}
-                            .d-block.text-lg-left.cite_education
-                              span.text-lg-left.text-xs-left.pull-left.color-grey
-                                i.fa.fa-home.p-l-0
-                                |  #{v.growup}, #{v.state}
-                              //- a(href="#").link-1.pull-right
-                              span.pull-right.color-grey
-                                i.fa.fa-graduation-cap
-                                |  #{v.college}
-
+                          a(href=v.linkedin target="_blank").link-1
+                            i.fa.fa-linkedin.more
+                          a(href=v.facebook target="_blank").link-1
+                            i.fa.fa-facebook
+                          p.card-text.text-justify.auto-height #{v.bio}
+                          .d-block.text-lg-left.cite_education
+                            span.text-lg-left.text-xs-left.pull-left.color-grey
+                              i.fa.fa-home.p-l-0
+                              |  #{v.growup}, #{v.state}
+                            //- a(href="#").link-1.pull-right
+                            span.pull-right.color-grey
+                              i.fa.fa-graduation-cap
+                              |  #{v.college}
+      .col-lg-12.border-bottom.m-b-3
+      section.articles
+        .container
           if values.press && Object.keys(values.press).length > 0 && values.press[0].headline != ''
             - let showMore = false;
-            h2.dosis.text-uppercase.text-lg-center.text-xs-center.green-heading Articles and Press
+            h2.dosis.text-uppercase.text-lg-center.text-xs-center.green-heading.m-t-0 Articles and Press
             .row
               .col-lg-12.text-center-flex
                 .articles_press
@@ -332,7 +336,7 @@ section
                   //-             .links.d-inline-block.card-text #{ formatHelper.getWebsiteUrl(v.link) }
                   //-   - counter++;
 
-                .row.m-b-3(style="display:" + (showMore ? 'block' : 'none') + ";")
+                .row(style="display:" + (showMore ? 'block' : 'none') + ";")
                   .col-lg-12.text-xs-center
                     //- a(href="#hidden-article-press" data-toggle="collapse").link-4.see-all-article-press See All Articles and Press
                     a(href="#hidden-article-press" data-toggle="collapse").link-4.see-all-article-press Show More
@@ -403,11 +407,12 @@ section
                       a(href="#").link-1.pull-right
                         i.fa.fa-graduation-cap
                         |  Dickinson College
+  .col-lg-12.border-bottom.m-t-2.m-b-3
   section.document.border-bottom
     .container
       .row
-        h2#documents.col-lg-12.dosis.text-uppercase.text-lg-center.text-xs-center.green-heading Documents
-        .col-lg-8.offset-lg-2
+        h2#documents.col-lg-12.dosis.text-uppercase.text-lg-center.text-xs-center.green-heading.m-t-0 Documents
+        .col-xl-8.offset-xl-2.col-lg-10.offset-lg-1.col-sm-12.offset-sm-0
           .col-lg-4.text-xs-center
             p Official filing on SEC.gov
             a(href="" target="_blank")
@@ -428,8 +433,8 @@ section
       .row
         h2#overview.col-lg-12.dosis.text-uppercase.text-lg-center.text-xs-center.green-heading overview and terms
         //- h3.col-lg-12.text-lg-center Fundraising Description
-        h3.text-uppercase.text-lg-center.text-xs-center.green-heading Fundraising Description
-        .col-lg-8.offset-lg-2.fundraising
+        h3.text-lg-center.text-xs-center.green-heading Fundraising Description
+        .col-xl-8.offset-xl-2.col-lg-10.offset-lg-1.col-md-12.offset-md-0.fundraising
           .jumbotron.jumbotron-fluid.text-xs-center.text-xl-left
             .container
               if values.security_type == 0
@@ -541,7 +546,7 @@ section
     if values.perks && Object.keys(values.perks).length > 0 && values.perks[0].perk != ''
       //- h3.col-lg-12.text-lg-center Perks
       .container
-        h3.text-uppercase.text-lg-center.text-xs-center.green-heading Perks
+        h3.text-lg-center.text-xs-center.green-heading Perks
         .row
           .col-lg-12.text-center-flex
             each v,k in values.perks
@@ -624,58 +629,8 @@ section
                   small.text-muted New York, NY
         .col-lg-12.text-lg-center
           a(href="" style="display: none").link-4 See All Investors
-  section.risks.border-bottom
-    .container
-      h2#risks.col-lg-12.dosis.text-uppercase.text-lg-center.text-xs-center.green-heading Risks
-      .col-lg-8.offset-lg-2
-        .accordion(role="tablist" aria-multiselectable="true")
-          .panel.panel-default
-            #headingOne(role="tab").panel-heading
-              a(data-toggle="collapse"
-              data-parent="#accordion" 
-              href="#collapseOne"
-              aria-expanded="true"
-              aria-controls="collapseOne"
-              ).list-group-item-action.active A crowdfunding investment involves risk.
-                i.fa.fa-angle-up
-            #collapseOne(role="tabpanel"
-            aria-labelledby="headingOne"
-            ).panel-collapse.collapse.in  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Suscipit nobis qui aut. Assumenda nulla possimus quidem officia aperiam quas sed non corporis reprehenderit! Voluptatum placeat eum, expedita sunt velit voluptas?
-          .panel.panel-default
-            #headingTwo(role="tab").panel-heading
-              a(data-toggle="collapse"
-              data-parent="#accordion" 
-              href="#collapseTwo"
-              aria-controls="collapseTwo"
-              ).list-group-item-action In making an investment decision, investors must rely on their own examination of the issuer and the terms of the offering.
-                i.fa.fa-angle-down
-            #collapseTwo(role="tabpanel"
-            aria-labelledby="headingTwo"
-            ).panel-collapse.collapse  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi, hic, distinctio, enim nam consequuntur iste quos, accusamus blanditiis a id odio perferendis vel perspiciatis provident et! Consequuntur nemo reprehenderit inventore.
-          .panel.panel-default
-            #headingThree(role="tab").panel-heading
-              a(data-toggle="collapse"
-              data-parent="#accordion" 
-              href="#collapseThree"
-              aria-controls="collapseThree"
-              ).list-group-item-action The U.S. Securities and Exchange Commission does not pass upon the merits of any secrities offered or the terms of the offering    
-                i.fa.fa-angle-down
-            #collapseThree(role="tabpanel"
-            aria-labelledby="headingThree"
-            ).panel-collapse.collapse  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius inventore iste numquam nemo, fugit nihil fugiat quasi, excepturi repellendus pariatur! Facilis odit cupiditate tenetur, inventore adipisci consequatur eius suscipit voluptas.
-          .panel.panel-default
-            #headingFour(role="tab").panel-heading
-              a(data-toggle="collapse"
-              data-parent="#accordion" 
-              href="#collapseFour"
-              aria-controls="collapseFour"
-              ).list-group-item-action The U.S. Securities and Exchange Commission does not pass upon the merits of any secrities offered or the terms of the offering    
-                i.fa.fa-angle-down
-            #collapseFour(role="tabpanel"
-            aria-labelledby="headingFour"
-            ).panel-collapse.collapse  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius inventore iste numquam nemo, fugit nihil fugiat quasi, excepturi repellendus pariatur! Facilis odit cupiditate tenetur, inventore adipisci consequatur eius suscipit voluptas.
-        
-  section.faq
+  .border-bottom.m-t-3
+  section.faq.p-b-0
     if values.faq && Object.keys(values.faq).length > 0 && values.faq[0].question != '' 
       .container
         h2#faq.col-lg-12.dosis.text-uppercase.text-lg-center.text-xs-center.green-heading FAQ
@@ -737,7 +692,7 @@ section
                 aria-labelledby="faqFour"
                 ).panel-collapse.collapse  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius inventore iste numquam nemo, fugit nihil fugiat quasi, excepturi repellendus pariatur! Facilis odit cupiditate tenetur, inventore adipisci consequatur eius suscipit voluptas.
         
-    
+  .border-bottom.m-t-3
   section.ask.border-bottom
     .container
       h2#ask.col-lg-12.dosis.text-uppercase.text-lg-center.text-xs-center.green-heading ASK A QUESTION
