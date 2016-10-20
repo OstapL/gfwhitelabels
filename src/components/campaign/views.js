@@ -41,7 +41,6 @@ module.exports = {
       'click .see-all-faq': 'seeAllFaq',
       'click .linkresponse': 'checkResponse',
       // 'click .see-all-article-press': 'seeAllArticlePress',
-      'click .more-less': 'showMore',
       'hidden.bs.collapse #hidden-article-press' :'onArticlePressCollapse',
       'shown.bs.collapse #hidden-article-press' :'onArticlePressCollapse',
       'submit .comment-form': 'submitComment',
@@ -57,16 +56,6 @@ module.exports = {
         this.previous = params.previous;
       }
       this.preview = params.preview ? true : false;
-    },
-
-    showMore(e) {
-      e.preventDefault();
-      let $a = $(e.target);
-      let k = $a.data('index');
-      let $p = this.$('.member-bio[index=' + k + ']');
-      $p.text($p.data('full-text'));
-      $p.css({ height: 'auto' });
-      $a.hide();
     },
 
     // seeAllArticlePress(e) {
