@@ -46,16 +46,16 @@ section#home(style="background-image: url(" + (values.header_image_data ? values
             p Days Left
             h2.font-weight-bold #{ values.length_days }
           .col-lg-4.p-sm-0.col-md-12.col-xs-12.pull-lg-right.text-xs-center
-            if edit
-              a(href=previous ? previous : '/campaign/general_information/' + values.id).btn.btn-primary.text-uppercase.pull-lg-right &nbspEdit&nbsp&nbsp
-              //- a(href=previous).btn.btn-primary.text-uppercase.pull-lg-right Edit
             a(href=Urls['campaign-invest'](values.id)).btn.btn-primary.text-uppercase.pull-lg-right Invest
-section.edit-campaign.hidden-sm-down
-  .edit-campaign-wrap
-    .row
-      button(type="button" data-href=("#")).btn.btn-secondary.text-uppercase.m-b-2 Edit campaign
-    .row
-      button(type="button" class='submit_form').btn.btn-primary.text-uppercase submit campaign
+
+if app.getParams().preview == '1'
+  section.edit-campaign.hidden-sm-down
+    .edit-campaign-wrap
+      .row
+        a(href=app.getParams().previous).btn.btn-secondary.text-uppercase.m-b-2 Edit campaign
+      .row
+        button(type="button" class='submit_form').btn.btn-primary.text-uppercase Submit campaign
+
 section.campaigndetail
   .container
     .col-lg-6.p-md-0
@@ -272,15 +272,22 @@ section
                             i.fa.fa-linkedin.more
                           a(href=v.facebook target="_blank").link-1
                             i.fa.fa-facebook
-                          p.card-text.text-justify.auto-height #{v.bio}
-                          .d-block.text-lg-left.cite_education
-                            span.text-lg-left.text-xs-left.pull-left.color-grey
-                              i.fa.fa-home.p-l-0
-                              |  #{v.growup}, #{v.state}
-                            //- a(href="#").link-1.pull-right
-                            span.pull-right.color-grey
-                              i.fa.fa-graduation-cap
-                              |  #{v.college}
+                          div
+                            div(style="position:relative;")
+                              if v.bio.length > 175
+                                div(style="position:absolute;bottom:0;right:0;")
+                                  a.more-less(data-index=(k) style="font-size:14px;color:#00C2BC;font-weight:bold;") Read More
+                                p.card-text.text-justify.auto-height.member-bio(index=(k) data-full-text=(v.bio)) #{v.bio.substr(0, 175) + '...'}
+                              else
+                                p.card-text.text-justify.auto-height.member-bio #{v.bio}
+                            .d-block.text-lg-left.cite_education
+                              span.text-lg-left.text-xs-left.pull-left.color-grey
+                                i.fa.fa-home.p-l-0
+                                |  #{v.growup}, #{v.state}
+                              //- a(href="#").link-1.pull-right
+                              span.pull-right.color-grey
+                                  i.fa.fa-graduation-cap
+                                  |  #{v.college}
       .col-lg-12.border-bottom.m-b-3
       section.articles
         .container
