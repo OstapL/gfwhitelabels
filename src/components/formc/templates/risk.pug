@@ -6,10 +6,10 @@ mixin showRisk(index, title, risk)
     input(type="hidden" name="title" value=title)
     textarea(name="risk" readonly index=index).form-control.big-textarea.borderless-textarea #{ risk }
     .text-md-center.text-lg-right
-      button(style="display: " + ('inline-block') + ';' data-index=index).btn.btn-secondary.btn-sm.m-t-1.edit-risk.buttons.added-state  Edit risk
-      button(style="display: " + ('inline-block') + ';' data-index=index).btn.btn-secondary.btn-sm.m-t-1.delete.buttons.added-state  Delete risk
-      button(type="submit" style="display: none;").btn.btn-secondary.btn-sm.m-t-1.add-risk.buttons.editing-state Save and Add this Risk
-      button(style="display:" + ('none') + ";" data-index=index).btn.btn-secondary.btn-sm.m-t-1.edit-risk.buttons.unadded-state Edit Risk
+      button(style="display: " + ('inline-block') + ';' data-index=index).btn.btn-secondary.btn-sm.m-t-1.edit-risk.risk-button.added-state  Edit risk
+      button(style="display: " + ('inline-block') + ';' data-index=index).btn.btn-secondary.btn-sm.m-t-1.delete.risk-button.added-state  Delete risk
+      button(type="submit" style="display: none;").btn.btn-secondary.btn-sm.m-t-1.add-risk.risk-button.editing-state Save and Add this Risk
+      button(style="display:" + ('none') + ";" data-index=index).btn.btn-secondary.btn-sm.m-t-1.edit-risk.risk-button.unadded-state Edit Risk
 
 
 .panel.panel-default.risk-panel(index=k)
