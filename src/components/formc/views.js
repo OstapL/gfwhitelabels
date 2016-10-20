@@ -6,88 +6,7 @@ const yesNoHelper = require('helpers/yesNoHelper.js');
 
 const dropzone = require('dropzone');
 const dropzoneHelpers = require('helpers/dropzone.js');
-
-
-const deleteRisk = function (e) {
-  e.stopPropagation();
-  e.preventDefault();
-  if (!confirm("Do you really want to delete this risk?")) return;
-  let index = e.target.dataset.index;
-  let url = this.urlRoot.replace(':id', this.model.id).replace(':index', index);
-  // let data = $(e.target).serializeJSON({ useIntKeysAsArrayIndex: true });
-
-  api.makeRequest(url, 'DELETE', {}).then((data) => {
-    if (index < Object.keys(this.defaultRisks).length) {
-      $(e.target).find('textarea').prop('readonly', true);
-      let $form = this.$('form[index=' + index + ']');
-      $form.find('.buttons').css({display: 'none'});
-      $form.find('.unadded-state').css({display: 'inline-block'});
-      $form.find('textarea').val(this.defaultRisks[index].risk);
-      let $panel = this.$('.risk-panel[index=' + index + ']');
-      $panel.find('a').removeClass('added-risk-title');
-    } else {
-      let $section = $('.risk-panel[index=' + index + ']');
-      $section.remove();
-    }
-  // $form.find('.added-span').text(' (added to Form C)');
-  }).fail((xhr, status, text) => {
-    api.errorAction(this, xhr, status, text, this.fields);
-  });
-};
-
-const editRisk = function (e) {
-  e.preventDefault();
-  let $target = $(e.target);
-  let index = $target.data('index');
-  $('textarea[index=' + index + ']').attr('readonly', false);
-  // let $form = $('form[index=' + index + ']');
-  let $form = $('form[index=' + index + ']');
-  // $panel.find('.add-risk').css({display: 'inline-block'});
-  // $panel.find('.alter-risk').css({display: 'none'});
-  $form.find('.buttons').css({display: 'none'});
-  $form.find('.editing-state').css({display: 'inline-block'});
-  $form.find('.added-span').text('');
-  // $target.css({display: 'none'});
-};
-
-const submitRisk = function (e) {
-  e.preventDefault();
-  let index = e.target.dataset.index;
-  if (!index) {
-    index = Object.keys(this.defaultRisks).length - 1;
-    $('.risk-panel').each(function(idx, elem) {
-      let $elem = $(this);
-      let panelIdx = parseInt($elem.attr('index'))
-      if (panelIdx > index) index = panelIdx;
-    });
-    index += 1;
-  }
-  let url = this.urlRoot.replace(':id', this.model.id).replace(':index', index);
-  let formData = $(e.target).serializeJSON({ useIntKeysAsArrayIndex: true });
-
-  api.makeRequest(url, 'PATCH', formData).then((data) => {
-    $(e.target).find('textarea').prop('readonly', true);
-    let $form = $('form[index=' + index + ']');
-    if ($form.length > 0) { // find the form    
-      $form.find('.buttons').css({display: 'none'});
-      $form.find('.added-state').css({display: 'inline-block'});
-      $form.find('.added-span').text(' (added to Form C)');
-      let $panel = this.$('.risk-panel[index=' + index + ']');
-      $panel.find('a').addClass('added-risk-title');
-    } else {
-      // create and append panel
-      let template = require('./templates/risk.pug');
-      $('#accordion-risk').append(template({
-        k: index,
-        v: formData,
-      }));
-      $('.add-risk-form').find('input:text, textarea').val('');
-    }
-  }).
-  fail((xhr, status, text) => {
-    api.errorAction(this, xhr, status, text, this.fields);
-  });
-};
+const riskFactorsHelper = require('helpers/riskFactorsHelper.js');
 
 const labels = {
   title: 'Title for Risk',
@@ -507,6 +426,10 @@ module.exports = {
     }, addSectionHelper.events, menuHelper.events),
     // }, menuHelper.events),
 
+    getSuccessUrl() {
+      return  '/formc/' + this.model.id + '/risk-factors-instruction';
+    },
+
     calculate(e) {
       // Add all min-expense
       let minNetProceeds = this.$('.min-expense').map(function (e) { return parseInt($(this).val()); }).toArray().reduce(function (total, num) { return total + num; });
@@ -602,11 +525,7 @@ module.exports = {
 
   riskFactorsMarket: Backbone.View.extend(_.extend({
     urlRoot: formcServer + '/:id' + '/risk-factors-market/:index',
-    events: _.extend({
-      'submit form': 'submit',
-      'click .delete': 'deleteRisk',
-      'click .edit-risk': 'editRisk',
-    }, menuHelper.events),
+    events: _.extend({}, menuHelper.events, riskFactorsHelper.events),
 
     initialize(options) {
       this.fields = options.fields;
@@ -638,9 +557,9 @@ module.exports = {
       this.assignLabels();
     },
 
-    deleteRisk: deleteRisk,
-    editRisk: editRisk,
-    submit: submitRisk,
+    deleteRisk: riskFactorsHelper.deleteRisk,
+    editRisk: riskFactorsHelper.editRisk,
+    submit: riskFactorsHelper.submitRisk,
 
     render() {
       let template = require('components/formc/templates/riskFactorsMarket.pug');
@@ -654,12 +573,17 @@ module.exports = {
           defaultRisks: this.defaultRisks,
         })
       );
+      this.$('textarea').each(function () {
+        $(this).css({height: this.scrollHeight + 'px'});
+      });
       return this;
     },
   }, menuHelper.methods, addSectionHelper.methods)),
 
   riskFactorsFinancial: Backbone.View.extend(_.extend({
     urlRoot: formcServer + '/:id' + '/risk-factors-financial/:index',
+    events: _.extend({}, menuHelper.events, riskFactorsHelper.events),
+
     initialize(options) {
       this.fields = options.fields;
       this.fields.title = {label: 'Title for Risk'};
@@ -694,17 +618,11 @@ module.exports = {
       this.assignLabels();
     },
 
-    events: _.extend({
-      'submit form': 'submit',
-      'click .delete': 'deleteRisk',
-      'click .edit-risk': 'editRisk',
-    }, menuHelper.events),
-
     // submit: api.submitAction,
 
-    deleteRisk: deleteRisk,
-    editRisk: editRisk,
-    submit: submitRisk,    
+    deleteRisk: riskFactorsHelper.deleteRisk,
+    editRisk: riskFactorsHelper.editRisk,
+    submit: riskFactorsHelper.submitRisk,
 
     render() {
       let template = require('components/formc/templates/riskFactorsFinancial.pug');
@@ -719,12 +637,16 @@ module.exports = {
           defaultRisks: this.defaultRisks,
         })
       );
+      this.$('textarea').each(function () {
+        $(this).css({height: this.scrollHeight + 'px'});
+      });
       return this;
     },
   }, menuHelper.methods, addSectionHelper.methods)),
 
   riskFactorsOperational: Backbone.View.extend(_.extend({
     urlRoot: formcServer + '/:id' + '/risk-factors-operational/:index',
+    events: _.extend({}, menuHelper.events, riskFactorsHelper.events),
     initialize(options) {
       this.fields = options.fields;
       this.fields.title = {label: 'Title for Risk'};
@@ -763,17 +685,11 @@ module.exports = {
       this.assignLabels();
     },
 
-    events: _.extend({
-      'submit form': 'submit',
-      'click .delete': 'deleteRisk',
-      'click .edit-risk': 'editRisk',
-    }, menuHelper.methods, addSectionHelper.methods),
-
     // submit: api.submitAction,
 
-    deleteRisk: deleteRisk,
-    editRisk: editRisk,
-    submit: submitRisk, 
+    deleteRisk: riskFactorsHelper.deleteRisk,
+    editRisk: riskFactorsHelper.editRisk,
+    submit: riskFactorsHelper.submitRisk,
 
     render() {
       let template = require('components/formc/templates/riskFactorsOperational.pug');
@@ -787,12 +703,16 @@ module.exports = {
           defaultRisks: this.defaultRisks,
         })
       );
+      this.$('textarea').each(function () {
+        $(this).css({height: this.scrollHeight + 'px'});
+      });
       return this;
     },
   }, menuHelper.methods, addSectionHelper.methods)),
 
   riskFactorsCompetitive: Backbone.View.extend(_.extend({
     urlRoot: formcServer + '/:id' + '/risk-factors-competitive/:index',
+    events: _.extend({}, menuHelper.events, riskFactorsHelper.events),
     initialize(options) {
       this.fields = options.fields;
       this.fields.title = {label: 'Title for Risk'};
@@ -819,17 +739,11 @@ module.exports = {
       this.assignLabels();
     },
 
-    events: _.extend({
-      'submit form': 'submit',
-      'click .delete': 'deleteRisk',
-      'click .edit-risk': 'editRisk',
-    }, menuHelper.events),
-
     // submit: api.submitAction,
 
-    deleteRisk: deleteRisk,
-    editRisk: editRisk,
-    submit: submitRisk,  
+    deleteRisk: riskFactorsHelper.deleteRisk,
+    editRisk: riskFactorsHelper.editRisk,
+    submit: riskFactorsHelper.submitRisk,
 
     render() {
       let template = require('components/formc/templates/riskFactorsCompetitive.pug');
@@ -843,6 +757,9 @@ module.exports = {
           defaultRisks: this.defaultRisks,
         })
       );
+      this.$('textarea').each(function () {
+        $(this).css({height: this.scrollHeight + 'px'});
+      });
       return this;
     },
   }, menuHelper.methods, addSectionHelper.methods)),
@@ -850,6 +767,7 @@ module.exports = {
 
   riskFactorsPersonnel: Backbone.View.extend(_.extend({
     urlRoot: formcServer + '/:id' + '/risk-factors-personnel/:index',
+    events: _.extend({}, menuHelper.events, riskFactorsHelper.events),
     initialize(options) {
       this.fields = options.fields;
       this.fields.title = {label: 'Title for Risk'};
@@ -884,17 +802,11 @@ module.exports = {
       this.assignLabels();
     },
 
-    events: _.extend({
-      'submit form': 'submit',
-      'click .delete': 'deleteRisk',
-      'click .edit-risk': 'editRisk',
-    }, menuHelper.events),
-
     // submit: api.submitAction,
 
-    deleteRisk: deleteRisk,
-    editRisk: editRisk,
-    submit: submitRisk, 
+    deleteRisk: riskFactorsHelper.deleteRisk,
+    editRisk: riskFactorsHelper.editRisk,
+    submit: riskFactorsHelper.submitRisk,
 
     render() {
       let template = require('components/formc/templates/riskFactorsPersonnel.pug');
@@ -908,12 +820,16 @@ module.exports = {
           defaultRisks: this.defaultRisks,
         })
       );
+      this.$('textarea').each(function () {
+        $(this).css({height: this.scrollHeight + 'px'});
+      });
       return this;
     },
   }, menuHelper.methods, addSectionHelper.methods)),
 
   riskFactorsLegal: Backbone.View.extend(_.extend({
     urlRoot: formcServer + '/:id' + '/risk-factors-legal/:index',
+    events: _.extend({}, menuHelper.events, riskFactorsHelper.events),
     initialize(options) {
       this.fields = options.fields;
       this.fields.title = {label: 'Title for Risk'};
@@ -944,17 +860,11 @@ module.exports = {
       this.assignLabels();
     },
 
-    events: _.extend({
-      'submit form': 'submit',
-      'click .delete': 'deleteRisk',
-      'click .edit-risk': 'editRisk',
-    }, menuHelper.events),
-
     // submit: api.submitAction,
 
-    deleteRisk: deleteRisk,
-    editRisk: editRisk,
-    submit: submitRisk, 
+    deleteRisk: riskFactorsHelper.deleteRisk,
+    editRisk: riskFactorsHelper.editRisk,
+    submit: riskFactorsHelper.submitRisk,
 
     render() {
       let template = require('components/formc/templates/riskFactorsLegal.pug');
@@ -967,12 +877,16 @@ module.exports = {
           defaultRisks: this.defaultRisks,
         })
       );
+      this.$('textarea').each(function () {
+        $(this).css({height: this.scrollHeight + 'px'});
+      });
       return this;
     },
   }, menuHelper.methods, addSectionHelper.methods)),
 
   riskFactorsMisc: Backbone.View.extend(_.extend({
     urlRoot: formcServer + '/:id' + '/risk-factors-misc/:index',
+    events: _.extend({}, menuHelper.events, riskFactorsHelper.events),
     initialize(options) {
       this.fields = options.fields;
       this.fields.title = {label: 'Title for Risk'};
@@ -982,17 +896,11 @@ module.exports = {
       this.assignLabels();
     },
 
-    events: _.extend({
-      'submit form': 'submit',
-      'click .delete': 'deleteRisk',
-      'click .edit-risk': 'editRisk',
-    }, menuHelper.events),
-
     // submit: api.submitAction,
 
-    deleteRisk: deleteRisk,
-    editRisk: editRisk,
-    submit: submitRisk, 
+    deleteRisk: riskFactorsHelper.deleteRisk,
+    editRisk: riskFactorsHelper.editRisk,
+    submit: riskFactorsHelper.submitRisk,
 
     render() {
       let template = require('components/formc/templates/riskFactorsMisc.pug');
@@ -1005,6 +913,9 @@ module.exports = {
           defaultRisks: this.defaultRisks,
         })
       );
+      this.$('textarea').each(function () {
+        $(this).css({height: this.scrollHeight + 'px'});
+      });
       return this;
     },
   }, menuHelper.methods, addSectionHelper.methods)),
@@ -1185,7 +1096,7 @@ module.exports = {
       this.fields = options.fields;
       this.labels = {
         company_or_director_subjected_to: 'If Yes, Explain',
-        descrption_material_information: "2) If you've provide any information in a format, media or other means not able to be reflected in text or pdf, please include here: (a) a description of the material content of such information; (b) a description of the format in which such disclosure is presented; and (c) in the case of disclosure in video, audio or other dynamic media or format, a transcript or description of such disclosure.",
+        descrption_material_information: "2) If you've provided any information in a format, media or other means not able to be reflected in text or pdf, please include here: (a) a description of the material content of such information; (b) a description of the format in which such disclosure is presented; and (c) in the case of disclosure in video, audio or other dynamic media or format, a transcript or description of such disclosure.",
         material_information: '1) Such further material information, if any, as may be neessary to make the required statments, in the light of the cirsumstances under which they are made, not misleading.',
       };
       this.assignLabels();

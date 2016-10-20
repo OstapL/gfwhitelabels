@@ -1,7 +1,18 @@
+style(type='text/css').
+  .borderless-textarea {
+    border: none;
+    resize: none;
+    min-height: 10px !important;
+  }
+
+  .buttons {
+    margin-left: 20px;
+  }
+
 mixin showRisk(name, index, title, risk)
   form(data-method="PATCH" data-index=(index) index=index)
     input(type="hidden" name="title" value=title)
-    textarea(name="risk" readonly index=index).form-control.big-textarea #{ values[name].hasOwnProperty(index) ? values[name][index].risk : risk }
+    textarea(name="risk" readonly index=index).form-control.big-textarea.borderless-textarea #{ values[name].hasOwnProperty(index) ? values[name][index].risk : risk }
     .text-md-center.text-lg-right
       button(style="display: " + (values[name].hasOwnProperty(index) ? 'inline-block' : 'none') + ';' data-index=index).btn.btn-secondary.btn-sm.m-t-1.edit-risk.buttons.added-state  Edit risk
       button(style="display: " + (values[name].hasOwnProperty(index) ? 'inline-block' : 'none') + ';' data-index=index).btn.btn-secondary.btn-sm.m-t-1.delete.buttons.added-state  Delete risk
@@ -18,7 +29,6 @@ mixin showRiskForm(v, k, field)
       aria-controls="collapse-" + k
       class=("list-group-item-action active" + (values[field].hasOwnProperty(k) ? ' added-risk-title' : ''))
       )= v.title
-        i.fa.fa-angle-up
     .panel-collapse.collapse.in(role="tabpanel"
     id="collapse-" + k
     aria-labelledby=("heading-" + k)

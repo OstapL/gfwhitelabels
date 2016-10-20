@@ -4,7 +4,7 @@ mixin showRisk(index, title, risk)
   //- else
   form(data-method="PATCH" data-index=(index) index=index)
     input(type="hidden" name="title" value=title)
-    textarea(name="risk" readonly index=index).form-control.big-textarea #{ risk }
+    textarea(name="risk" readonly index=index).form-control.big-textarea.borderless-textarea #{ risk }
     .text-md-center.text-lg-right
       button(style="display: " + ('inline-block') + ';' data-index=index).btn.btn-secondary.btn-sm.m-t-1.edit-risk.buttons.added-state  Edit risk
       button(style="display: " + ('inline-block') + ';' data-index=index).btn.btn-secondary.btn-sm.m-t-1.delete.buttons.added-state  Delete risk
@@ -21,7 +21,6 @@ mixin showRisk(index, title, risk)
     aria-controls="collapse-" + k
     class="list-group-item-action active added-risk-title"
     )= v.title
-      i.fa.fa-angle-up
   .panel-collapse.collapse.in(role="tabpanel"
   aria-labelledby="headingOne" id=("collapse-" + k)
   )

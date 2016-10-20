@@ -17,9 +17,10 @@ section.formc.use_of_proceeds.create-company-media.container
     .col-lg-12
       b Please provide a detailed description of the intended use of proceeds of this offering.  If you provide a range of possible uses, you should identify and describe each probably use and the factors you might consider in allocating proceeds.  If you will accept proceeds in excess of the target offering amount, you must describe the purpose and method for allocating excess proceeds with similar specificity.
     form(metod="post" action="").form-section
+      input(type="hidden" value=values.business_plan_file_id name="business_plan_file_id")
       .form-group.intended
         .col-lg-12
-          textarea(rows="3" placeholder="Intended Use of Proceeds" name="intended_use_of_proceeds").form-control
+          textarea(rows="3" placeholder="Intended Use of Proceeds" name="intended_use_of_proceeds").form-control= values.intended_use_of_proceeds
       .table.table-responsive
         .col-lg-12
           table.table.table-bordered.use-of-proceeds-table.expense-table
