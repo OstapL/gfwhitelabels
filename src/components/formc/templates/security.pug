@@ -6,15 +6,15 @@ tr(class='index_' + indexCounter)
     input(type="hidden" name="outstanding_securities[" + indexCounter + "][security_type]" value=values.security_type)
   td
     | #{values.amount_authorized}
-    input(type="hidden" name="outstanding_securities[" + indexCounter + "][amount_authroized" value=values.amount_authorized)
+    input(type="hidden" name="outstanding_securities[" + indexCounter + "][amount_authroized]" value=values.amount_authorized)
   td
     | #{values.amount_outstanding}
-    input(type="hidden" name="outstanding_securities[" + indexCounter + "][amount_outstanding" value=values.amount_outstanding)
+    input(type="hidden" name="outstanding_securities[" + indexCounter + "][amount_outstanding]" value=values.amount_outstanding)
     
   td
     | #{values.voting_right ? 'Yes' : 'No'}
-    input(type="hidden" name="outstanding_securities[" + indexCounter + "][voting_right" value=values.voting_right)
-    input(type="hidden" name="outstanding_securities[" + indexCounter + "][other_rights" value=values.other_rights)
+    input(type="hidden" name="outstanding_securities[" + indexCounter + "][voting_right]" value=values.voting_right)
+    input(type="hidden" name="outstanding_securities[" + indexCounter + "][terms_and_rights]" value=values.terms_and_rights)
 
   td 
     .delete-section-container

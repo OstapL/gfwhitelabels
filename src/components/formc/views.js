@@ -1037,11 +1037,11 @@ module.exports = {
           other_material_terms: "Other Material Terms",
           creditor: "Creditor"
         },
-        principal_shareholders_affect: 'How could the exercise of rights held by the principal shareholders affect the purchasers of the securities being offered?',
-        risks_to_purchasers: '',
-        terms_modified: 'How may the terms of the securities being offered be modified?',
+        rights_of_securities: 'How may the rights of the securities being offered be materially limited, diluted or qualified by the rights of any other class of security identified above?',
+        terms_of_securities: 'How may the terms of the securities being offered be modified?',
         security_differences: 'Are there any differences not reflected above between the securities being offered and each other class of security of the issuer?',
-        rights_of_securities_beign: 'How may the rights of the securities being offered be materially limited, diluted or qualified by the rights of any other class of security identified above?',
+        exercise_of_rights: 'How could the exercise of rights held by the principal shareholders affect the purchasers of the securities being offered?',
+        risks_to_purchasers: '',
         outstanding_securities: 'Outstanding Securities',
       };
       this.assignLabels();

@@ -81,7 +81,6 @@ module.exports = {
   // This can be specified as either a boolean value or a function that returns a boolean value
   required: function (name, rule, attr, data) {
     if (rule && this.hasValue(this.getData(data, name)) == false) {
-      debugger
       throw this.format(this.messages.required);
     }
   },

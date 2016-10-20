@@ -169,47 +169,61 @@ section.formc-team-members-director.container.m-b-85
                         th(width="20%").text-xs-center Voting Rights
                         th(width="6%")
                 tbody
-                    tr
-                        td Convertible Debt
-                        td $2,000
-                        td $1,000
-                        td Yes 
-                        td
-                            .delete-section-container
-                                a(href="#").delete-section
-                                    i.fa.fa-times
-                    tr
-                        td Debt
-                        td $2,000
-                        td $1,000
-                        td Yes 
-                        td 
-                            .delete-section-container
-                                a(href="#").delete-section
-                                    i.fa.fa-times
-                    tr
-                        td Debt
-                        td $2,000
-                        td $1,000
-                        td Yes 
-                        td 
-                            .delete-section-container
-                                a(href="#").delete-section
-                                    i.fa.fa-times
-                    tr
-                        td Debt
-                        td $2,000
-                        td $1,000
-                        td Yes 
-                        td 
-                            .delete-section-container
-                                a(href="#").delete-section
-                                    i.fa.fa-times
+                    //- tr
+                    //-     td Convertible Debt
+                    //-     td $2,000
+                    //-     td $1,000
+                    //-     td Yes 
+                    //-     td
+                    //-         .delete-section-container
+                    //-             a(href="#").delete-section
+                    //-                 i.fa.fa-times
+                    //- tr
+                    //-     td Debt
+                    //-     td $2,000
+                    //-     td $1,000
+                    //-     td Yes 
+                    //-     td 
+                    //-         .delete-section-container
+                    //-             a(href="#").delete-section
+                    //-                 i.fa.fa-times
+                    //- tr
+                    //-     td Debt
+                    //-     td $2,000
+                    //-     td $1,000
+                    //-     td Yes 
+                    //-     td 
+                    //-         .delete-section-container
+                    //-             a(href="#").delete-section
+                    //-                 i.fa.fa-times
+                    //- tr
+                    //-     td Debt
+                    //-     td $2,000
+                    //-     td $1,000
+                    //-     td Yes 
+                    //-     td 
+                    //-         .delete-section-container
+                    //-             a(href="#").delete-section
+                    //-                 i.fa.fa-times
 
                     each v, k in values.outstanding_securities
                         tr(class="index_" + k)
                             td
-                                | #{v.security_type}
+                                - let securityType;
+                                case v.security_type
+                                    when 0
+                                        - securityType = 'Preferred Stock';
+                                    when 1
+                                        - securityType = 'Common Stock';
+                                    when 2
+                                        - securityType = 'Debt';
+                                    when 3
+                                        - securityType = 'Warrants';
+                                    when 4
+                                        - securityType = 'Options';
+                                    default
+                                        - securityType = 'Other';
+                                | #{securityType}
                                 input(type="hidden" name="outstanding_securities[" + k + "][security_type]" value=v.security_type)
                             td
                                 | #{v.amount_authroized}
@@ -218,21 +232,21 @@ section.formc-team-members-director.container.m-b-85
                                 | #{v.amount_outstanding}
                                 input(type="hidden" name="outstanding_securities[" + k + "][amount_outstanding]" value=v.amount_outstanding)
                             td
-                                | #{v.voting_right}
-                                input(type="hidden" name="outstanding_securities[" + k + "][voting_right]" value=v.voting_right)
-                                input(type="hidden" name="outstanding_securities[" + k + "][other_rights" value=v.other_rights)
+                                | #{v.voting_right ? 'Yes' : 'No'}
+                                input(type="hidden" name="outstanding_securities[" + k + "][voting_right]" value=v.voting_right.toString())
+                                input(type="hidden" name="outstanding_securities[" + k + "][terms_and_rights]" value=v.terms_and_rights)
                             td 
                                 .delete-section-container
                                     a(href="#" data-section="securities-table" data-index=k).delete-outstanding
                                         i.fa.fa-times
         .border-bottom.m-t-3.m-b-3 
-        +fieldBlock("rights_of_securities_beign", '', {
+        +fieldBlock("rights_of_securities", '', {
         class1: 'col-lg-12 col-md-12  text-md-left  text-xl-left',
         class2: 'col-lg-12 col-md-12 big-textarea',
         type: 'textarea',
         placeholder: 'Description',
         })
-        +fieldBlock("terms_modified", '', {
+        +fieldBlock("terms_of_securities", '', {
         class1: 'col-lg-12 col-md-12  text-md-left  text-xl-left',
         class2: 'col-lg-12 col-md-12 big-textarea',
         type: 'textarea',
@@ -244,7 +258,7 @@ section.formc-team-members-director.container.m-b-85
         type: 'textarea',
         placeholder: 'Description', 
         })
-        +fieldBlock("principal_shareholders_affect", '', {
+        +fieldBlock("exercise_of_rights", '', {
         class1: 'col-lg-12 col-md-12  text-md-left  text-xl-left',
         class2: 'col-lg-12 col-md-12 big-textarea',
         type: 'textarea',
@@ -289,13 +303,13 @@ section.formc-team-members-director.container.m-b-85
                                 label Security Type
                             .col-lg-12
                                 select(name="security_type" style="width:100%").custom-select
-                                    option Preferred Stock
-                                    option Common Stock
-                                    option Debt
-                                    option Warrants
-                                    option Options
-                                    option Other
-                        +fieldBlock("other_rights", '', {
+                                    option(value='0') Preferred Stock
+                                    option(value='1') Common Stock
+                                    option(value='2') Debt
+                                    option(value='3') Warrants
+                                    option(value='4') Options
+                                    option(value='5') Other
+                        +fieldBlock("terms_and_rights", '', {
                         class1: 'col-lg-12 col-md-12  text-md-left  text-xl-left',
                         class2: 'col-lg-12 col-md-12 big-textarea',
                         type: 'textarea',
