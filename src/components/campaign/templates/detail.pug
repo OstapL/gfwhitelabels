@@ -50,12 +50,15 @@ section#home(style="background-image: url(" + (values.header_image_data ? values
               a(href=previous ? previous : '/campaign/general_information/' + values.id).btn.btn-primary.text-uppercase.pull-lg-right &nbspEdit&nbsp&nbsp
               //- a(href=previous).btn.btn-primary.text-uppercase.pull-lg-right Edit
             a(href=Urls['campaign-invest'](values.id)).btn.btn-primary.text-uppercase.pull-lg-right Invest
-section.edit-campaign.hidden-sm-down
-  .edit-campaign-wrap
-    .row
-      button(type="button" data-href=("#")).btn.btn-secondary.text-uppercase.m-b-2 Edit campaign
-    .row
-      button(type="button" class='submit_form').btn.btn-primary.text-uppercase submit campaign
+
+if app.getParams().preview == '1'
+  section.edit-campaign.hidden-sm-down
+    .edit-campaign-wrap
+      .row
+        button(type="button" data-href=app.getParams().previous).btn.btn-secondary.text-uppercase.m-b-2 Edit campaign
+      .row
+        button(type="button" class='submit_form').btn.btn-primary.text-uppercase submit campaign
+
 section.campaigndetail
   .container
     .col-lg-6.p-md-0
