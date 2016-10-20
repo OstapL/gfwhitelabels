@@ -1,23 +1,14 @@
-style(type='text/css').
-  .borderless-textarea {
-    border: none;
-    resize: none;
-    min-height: 10px !important;
-  }
 
-  .buttons {
-    margin-left: 20px;
-  }
 
 mixin showRisk(name, index, title, risk)
   form(data-method="PATCH" data-index=(index) index=index)
     input(type="hidden" name="title" value=title)
     textarea(name="risk" readonly index=index).form-control.big-textarea.borderless-textarea #{ values[name].hasOwnProperty(index) ? values[name][index].risk : risk }
     .text-md-center.text-lg-right
-      button(style="display: " + (values[name].hasOwnProperty(index) ? 'inline-block' : 'none') + ';' data-index=index).btn.btn-secondary.btn-sm.m-t-1.edit-risk.buttons.added-state  Edit risk
-      button(style="display: " + (values[name].hasOwnProperty(index) ? 'inline-block' : 'none') + ';' data-index=index).btn.btn-secondary.btn-sm.m-t-1.delete.buttons.added-state  Delete risk
-      button(type="submit" style="display: none").btn.btn-secondary.btn-sm.m-t-1.add-risk.buttons.editing-state Save and Add this Risk
-      button(style="display:" + (values[name].hasOwnProperty(index) ? 'none' : 'inline-block') + ";" data-index=index).btn.btn-secondary.btn-sm.m-t-1.edit-risk.buttons.unadded-state Edit Risk
+      button(style="display: " + (values[name].hasOwnProperty(index) ? 'inline-block' : 'none') + ';' data-index=index).btn.btn-secondary.btn-sm.m-t-1.edit-risk.risk-button.added-state  Edit risk
+      button(style="display: " + (values[name].hasOwnProperty(index) ? 'inline-block' : 'none') + ';' data-index=index).btn.btn-secondary.btn-sm.m-t-1.delete.risk-button.added-state  Delete risk
+      button(type="submit" style="display: none").btn.btn-secondary.btn-sm.m-t-1.add-risk.risk-button.editing-state Save and Add this Risk
+      button(style="display:" + (values[name].hasOwnProperty(index) ? 'none' : 'inline-block') + ";" data-index=index).btn.btn-secondary.btn-sm.m-t-1.edit-risk.risk-button.unadded-state Edit Risk
 
 mixin showRiskForm(v, k, field)
   .panel.panel-default.risk-panel(index=k)
