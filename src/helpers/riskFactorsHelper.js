@@ -15,7 +15,7 @@ module.exports = {
     api.makeRequest(url, 'DELETE', {}).then((data) => {
       if (index < Object.keys(this.defaultRisks).length) {
         let $form = this.$('form[index=' + index + ']');
-        $form.find('.buttons').css({display: 'none'});
+        $form.find('.risk-button').css({display: 'none'});
         $form.find('.unadded-state').css({display: 'inline-block'});
         $form.find('textarea').val(this.defaultRisks[index].risk);
         let $panel = this.$('.risk-panel[index=' + index + ']');
@@ -40,7 +40,7 @@ module.exports = {
     let $form = $('form[index=' + index + ']');
     // $panel.find('.add-risk').css({display: 'inline-block'});
     // $panel.find('.alter-risk').css({display: 'none'});
-    $form.find('.buttons').css({display: 'none'});
+    $form.find('.risk-button').css({display: 'none'});
     $form.find('.editing-state').css({display: 'inline-block'});
     $form.find('.added-span').text('');
     $('textarea[index=' + index + ']').attr('readonly', false).removeClass('borderless-textarea').css({height: ''});
@@ -67,7 +67,7 @@ module.exports = {
       $textarea.prop('readonly', true).addClass('borderless-textarea').css({ height: $textarea.prop('scrollHeight')+'px' });
       let $form = $('form[index=' + index + ']');
       if ($form.length > 0) { // find the form    
-        $form.find('.buttons').css({display: 'none'});
+        $form.find('.risk-button').css({display: 'none'});
         $form.find('.added-state').css({display: 'inline-block'});
         $form.find('.added-span').text(' (added to Form C)');
         let $panel = this.$('.risk-panel[index=' + index + ']');
