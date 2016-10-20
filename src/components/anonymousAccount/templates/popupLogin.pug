@@ -39,11 +39,11 @@
                         label
                             input(type="checkbox" name="checkbox1" value="1")
                             span.label-text I agree to the
-                              a(href="/pg/terms_of_use").link-3  Terms of Service
+                              a(href="/pg/terms_of_use" target="_blank").link-3  Terms of Service
                               | , 
-                              a(href="/pg/privacy_policy").link-3  Privacy Policy.
-                              | and
-                              a(href="/pg/esign").link-3  Electronic Signature and Electronic Delivery of Documentation.
+                              a(href="/pg/privacy_policy" target="_blank").link-3  Privacy Policy
+                              |  and
+                              a(href="/pg/electronic_signature" target="_blank").link-3  Electronic Signature and Electronic Delivery of Documentation.
                     .col-lg-12.text-xs-center
                         button(type="submit").btn.btn-primary.text-uppercase Sign up
                     .col-lg-12.border-bottom.or
@@ -71,7 +71,7 @@
               p.small-text.text-xs-center New to GrowthFountain? 
                 a(href="#" onclick="$('#sign_in').modal('hide');$('#sign_up').modal()").link-3 Sign up
           .modal-body
-            .container.form-section
+            .form-section
               form.login-form.col-lg-10.offset-lg-1.border-bottom
                   .col-lg-12
                       .form-group.row.clearfix.required
