@@ -130,12 +130,13 @@ const doCampaignValidation = function doCampaignValidation(e, data) {
 
 const onPreviewAction = function(e) {
   e.preventDefault();
+  let pathname = location.pathname;
   this.$el.find('form').submit()
   app.showLoading();
   let that = this;
   setTimeout(function() {
     // window.location = e.target.dataset.href + '?preview=1'
-    window.location = '/api/campaign/' + (that.campaign ? that.campaign.id : that.model.id) + '?preview=1'
+    window.location = '/api/campaign/' + (that.campaign ? that.campaign.id : that.model.id) + '?preview=1&previous=' + pathname;
   }, 100);
 };
 
@@ -150,8 +151,12 @@ module.exports = {
       'click .update-location': 'updateLocation',
       'click .onPreview': onPreviewAction,
       'click .submit_form': submitCampaign,
-      'change #website,#twitter,#facebook,#instagram,#linkedin': appendHttpIfNecessary,
+      'change #website,#twitter,#facebook,#instagram,#linkedin': 'appendHttpsIfNecessary',
     }, leavingConfirmationHelper.events, phoneHelper.events),
+
+    appendHttpsIfNecessary(e) {
+      appendHttpIfNecessary(e, true);
+    },
 
     initialize(options) {
       this.fields = options.fields;
@@ -356,12 +361,10 @@ module.exports = {
       appendHttpIfNecessary: appendHttpIfNecessary,
 
       globalDragover() {
-        // this.$('.dropzone').css({ border: 'dashed 1px lightgray' });
         this.$('.border-dropzone').addClass('active-border');
       },
 
       globalDragleave() {
-        // this.$('.dropzone').css({ border: 'none' });
         this.$('.border-dropzone').removeClass('active-border');
       },
 
@@ -499,6 +502,7 @@ module.exports = {
       getVideoId(url) {
         try {
           var provider = url.match(/https:\/\/(:?www.)?(\w*)/)[2];
+          provider = provider.toLowerCase();
           var id;
 
           if (provider == 'youtube') {
@@ -513,7 +517,7 @@ module.exports = {
           return '';
         }
 
-        return id;
+        return {id: id, provider: provider};
       },
 
       deleteImage(e) {
@@ -540,17 +544,21 @@ module.exports = {
         else $videoContainer = this.$('.additional-video-block .index_' + $(e.target).data('index'));
         // var $form = $('.index_' + $(e.target).data('index'));
         var video = e.target.value;
-        var id = this.getVideoId(video);
+        var res = this.getVideoId(video);
 
         // ToDo
         // FixME
         // Bad CHECK
         //
-        if(id != '') {
-          // $form.find('iframe').attr(
-          $videoContainer.find('iframe').attr(
-              'src', '//youtube.com/embed/' +  id + '?rel=0'
-              );
+        if(res.id && res.provider) {
+          if (res.provider == 'youtube')
+            $videoContainer.find('iframe').attr(
+              'src', '//youtube.com/embed/' +  res.id + '?rel=0'
+            );
+          else
+            $videoContainer.find('iframe').attr(
+              'src', '//player.vimeo.com/video/' +  res.id
+            );
           //e.target.value = id;
         }
       }
@@ -564,21 +572,32 @@ module.exports = {
         dragleave: 'globalDragleave',
         'click .submit_form': doCampaignValidation,
         'change #linkedin,#facebook': 'appendHttpsIfNecessary',
+        'click .cancel': 'cancel',
       }, leavingConfirmationHelper.events),
       // urlRoot: serverUrl + Urls['campaign-list']() + '/team_members',
       urlRoot: Urls['campaign-list']() + '/team_members',
+
+      cancel(e) {
+        e.preventDefault();
+        e.stopPropagation();
+        this.undelegateEvents();
+        if (confirm("Doe you really want to leave?")) {
+          app.routers.navigate(
+            '/campaign/team-members/' + this.model.id,
+            { trigger: true, replace: false }
+          );
+        }
+      },
 
       appendHttpsIfNecessary(e) {
         appendHttpIfNecessary(e, true);
       },
 
       globalDragover() {
-        // this.$('.dropzone').css({ border: 'dashed 1px lightgray' });
         this.$('.border-dropzone').addClass('active-border');
       },
 
       globalDragleave() {
-        // this.$('.dropzone').css({ border: 'none' });
         this.$('.border-dropzone').removeClass('active-border');
       },
 
@@ -796,7 +815,19 @@ module.exports = {
         dragleave: 'globalDragleave',
         'click .onPreview': onPreviewAction,
         'click .submit_form': submitCampaign,
+        'click .submit-specifics': 'checkMinMaxRaise',
       }, leavingConfirmationHelper.events),
+
+      checkMinMaxRaise(e) {
+        let min = this.$('input[name=minimum_raise]').val();
+        let max = this.$('input[name=maximum_raise]').val();
+        min = parseInt(min.replace(/,/g, ''));
+        max = parseInt(max.replace(/,/g, ''));
+        if (!(min && max) || !(min < max)) {
+          alert("Maximum Raise must be larger than Minimum Raise!");
+          e.preventDefault();
+        }
+      },
 
       globalDragover() {
         // this.$('.dropzone').css({ border: 'dashed 1px lightgray' });
@@ -908,6 +939,16 @@ module.exports = {
 
         this.calculateNumberOfShares(null);
 
+        if(app.getParams().check == '1') {
+          var data = this.$el.find('form').serializeJSON();
+          if (!validation.validate(this.fields, data, this)) {
+            _(validation.errors).each((errors, key) => {
+              validation.invalidMsg(this, key, errors);
+            });
+            this.$('.help-block').prev().scrollTo(5);
+          }
+        }
+
         return this;
       },
     }, leavingConfirmationHelper.methods)),
@@ -940,7 +981,8 @@ module.exports = {
         app.showLoading();
         api.makeRequest(url, type, data).then((data) => {
           this.model = data;
-          app.hideLoading()
+          app.hideLoading();
+          $('button.submit_form').click();
         }).
         fail((xhr, status, text) => {
           api.errorAction(this, xhr, status, text, this.fields);
