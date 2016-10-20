@@ -2,7 +2,21 @@
 
 tr(class='index_' + indexCounter)
   td
-    | #{values.security_type}
+    - let securityType;
+    case parseInt(values.security_type)
+      when 0
+        - securityType = 'Preferred Stock';
+      when 1
+        - securityType = 'Common Stock';
+      when 2
+        - securityType = 'Debt';
+      when 3
+        - securityType = 'Warrants';
+      when 4
+        - securityType = 'Options';
+      default
+        - securityType = 'Other';
+    | #{securityType}
     input(type="hidden" name="outstanding_securities[" + indexCounter + "][security_type]" value=values.security_type)
   td
     | #{values.amount_authorized}
