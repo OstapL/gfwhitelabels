@@ -18,12 +18,27 @@ module.exports = Backbone.Router.extend({
     'formc/:id/background-check': 'backgroundCheck',
   },
 
+  execute: function (callback, args, name) {
+    if (app.user.is_anonymous()) {
+      const pView = require('components/anonymousAccount/views.js');
+      require.ensure([], function() {
+        new pView.popupLogin().render(window.location.pathname);
+        app.hideLoading();
+        $('#sign_up').modal();
+      });
+      return false;
+    }
+    if (callback) callback.apply(this, args);
+    else alert('Not such url');
+  },
+
   introduction(id) {
     const View = require('components/formc/views.js');
 
     let fieldsR = api.makeCacheRequest(formcServer + '/' + id + '/introduction', 'OPTIONS');
     let dataR = api.makeCacheRequest(formcServer + '/' + id + '/introduction');
 
+    $('#content').scrollTo();
     $.when(fieldsR, dataR).done((fields, data) => {
       data[0].id = id;
       const i = new View.introduction({
@@ -42,6 +57,7 @@ module.exports = Backbone.Router.extend({
     let fieldsR = api.makeCacheRequest(formcServer + '/' + id + '/team-members', 'OPTIONS');
     let dataR = api.makeCacheRequest(formcServer + '/' + id + '/team-members', 'GET');
 
+    $('#content').scrollTo();
     $.when(fieldsR, dataR).done((fields, data) => {
       data[0].id = id;
       const i = new View.teamMembers({
@@ -65,6 +81,7 @@ module.exports = Backbone.Router.extend({
       dataR = api.makeCacheRequest(formcServer + '/' + id + '/team-members', 'GET');
     }
 
+    $('#content').scrollTo();
     $.when(fieldsR, dataR).done((fields, data) => {
       if(data) {
         data = data[0].team_members.filter(function(el) { return el.uuid == uuid})[0]
@@ -95,6 +112,7 @@ module.exports = Backbone.Router.extend({
       formcServer + '/' + id + '/related-parties'
     );
 
+    $('#content').scrollTo();
     $.when(fieldsR, dataR).done((fields, data) => {
       data[0].id = id;
       const i = new View.relatedParties({
@@ -112,6 +130,7 @@ module.exports = Backbone.Router.extend({
     let fieldsR = api.makeCacheRequest(formcServer + '/' + id + '/use-of-proceeds', 'OPTIONS');
     let dataR = api.makeCacheRequest(formcServer + '/' + id + '/use-of-proceeds');
 
+    $('#content').scrollTo();
     $.when(fieldsR, dataR).done((fields, data) => {
       data[0].id = id;
       const i = new View.useOfProceeds({
@@ -144,6 +163,7 @@ module.exports = Backbone.Router.extend({
     let fieldsR = api.makeCacheRequest(formcServer + '/' + id + '/risk-factors-market', 'OPTIONS');
     let dataR = api.makeCacheRequest(formcServer + '/' + id + '/risk-factors-market');
 
+    $('#content').scrollTo();
     $.when(fieldsR, dataR).done((fields, data) => {
       data[0].id = id;
       const i = new View.riskFactorsMarket({

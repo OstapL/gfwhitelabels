@@ -609,17 +609,17 @@ module.exports = {
       if (confirm('Are you sure you would like to delete this team member?')) {
         // app.makeRequest('/api/campaign/team_members/' + this.model.get('id') + '?index=' + memberId, 'DELETE').
         app.makeRequest('/api/campaign/team_members/' + this.model.id + '?index=' + memberId, 'DELETE').
-            then((data) => {
-                this.model.members.splice(memberId, 1);
-                $(e.currentTarget).parent().remove();
-                if (this.model.members.length < 1) {
-                  this.$el.find('.notification').show();
-                  this.$el.find('.buttons-row').hide();
-                } else {
-                  this.$el.find('.notification').hide();
-                  this.$el.find('.buttons-row').show();
-                }
-              });
+        then((data) => {
+          this.model.members.splice(memberId, 1);
+          $(e.currentTarget).parent().remove();
+          if (this.model.members.length < 1) {
+            this.$el.find('.notification').show();
+            this.$el.find('.buttons-row').hide();
+          } else {
+            this.$el.find('.notification').hide();
+            this.$el.find('.buttons-row').show();
+          }
+        });
       }
     },
 

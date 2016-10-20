@@ -96,6 +96,8 @@ module.exports = {
   teamMembers: Backbone.View.extend(_.extend({
     urlRoot: formcServer + '/:id' + '/team-members',
     events: _.extend({
+      'submit form': api.submitAction,
+      'click .delete-member': 'deleteMember',
     }, menuHelper.events),
 
     preinitialize() {
@@ -107,29 +109,42 @@ module.exports = {
     },
 
     getSuccessUrl() {
-      return  '/formc/' + this.model.id + '/use-of-proceeds';
+      this.$el.find('h2').scrollTo();
     },
-
-    submit: api.submitAction,
 
     initialize(options) {
       this.fields = options.fields;
-      // this.labels = {
-      //   full_time_employers: 'Full Time Employees',
-      //   part_time_employers: 'Part Time Employees',
-      // };
-      // this.labels = {};
       this.fields.full_time_employers = {label: 'Full Time Employees'};
       this.fields.part_time_employers = {label: 'Part Time Employees'};
-      // this.fields.full_time_employers.label = 'Full Time Employees';
-      // this.fields.part_time_employers.label = 'Part Time Employees';
-      // this.assignLabels();
+    },
+
+    deleteMember: function (e) {
+      let memberId = e.currentTarget.dataset.id;
+      let role = e.currentTarget.dataset.role;
+
+      if (confirm('Are you sure you would like to delete this team member?')) {
+        // app.makeRequest('/api/campaign/team_members/' + this.model.get('id') + '?index=' + memberId, 'DELETE').
+        api.makeRequest(
+          this.urlRoot.replace(':id', this.model.id) + '/' + role + '/' + memberId, 
+          'DELETE'
+        ).
+        then((data) => {
+          this.model.members.splice(memberId, 1);
+          $(e.currentTarget).parent().remove();
+          if (this.model.members.length < 1) {
+            this.$el.find('.notification').show();
+            this.$el.find('.buttons-row').hide();
+          } else {
+            this.$el.find('.notification').hide();
+            this.$el.find('.buttons-row').show();
+          }
+        });
+      }
     },
 
     render() {
       let template = require('./templates/teamMembers.pug');
 
-      this.model.campaign = {id: 72};
       this.$el.html(
         template({
           serverUrl: serverUrl,
@@ -983,6 +998,12 @@ module.exports = {
 
   outstandingSecurity: Backbone.View.extend(_.extend({
     urlRoot: formcServer + '/:id' + '/outstanding-security',
+    events: _.extend({
+      'submit form': 'submit',
+      'click .add-outstanding': 'addOutstanding',
+      'click .delete-outstanding': 'deleteOutstanding',
+    }, addSectionHelper.events, menuHelper.events, yesNoHelper.events),
+
     initialize(options) {
       this.fields = options.fields;
       this.labels = {
@@ -1008,15 +1029,11 @@ module.exports = {
         outstanding_securities: 'Outstanding Securities',
       };
       this.assignLabels();
+
+      this.createIndexes();
+      this.buildJsonTemplates('formc');
     },
 
-    events: _.extend({
-      'submit form': 'submit',
-      'click .add-outstanding': 'addOutstanding',
-      'click .delete-outstanding': 'deleteOutstanding',
-    }, addSectionHelper.events, menuHelper.events, yesNoHelper.events),
-
-    // submit: api.submitAction,
     submit(e) {
       var $target = $(e.target);
       var data = $target.serializeJSON({useIntKeysAsArrayIndex: true});
@@ -1084,6 +1101,7 @@ module.exports = {
           Urls: Urls,
           fields: this.fields,
           values: this.model,
+          templates: this.jsonTemplates,
         })
       );
       return this;
