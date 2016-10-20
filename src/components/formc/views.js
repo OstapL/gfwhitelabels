@@ -516,7 +516,7 @@ module.exports = {
         this.less_offering_expressIndex = 0;
       }
 
-      if (this.model.use_of_proceeds) {
+      if (this.model.use_of_net_proceeds) {
         this.use_of_net_proceedsIndex = Object.keys(this.model.use_of_net_proceeds).length;
       } else {
         this.use_of_net_proceedsIndex = 0;
