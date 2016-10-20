@@ -77,8 +77,10 @@ mixin menu(current)
                     a(href="#").list-group-item.list-group-item-action Offering
       .row
         .col-lg-12.text-xs-center
-          button(type="button" data-href=("#")).btn.btn-secondary.text-uppercase.m-t-2.onPreview preview
-          button(type="button" class='submit_form').btn.btn-primary.text-uppercase.m-t-2 submit campaign
+          .row
+            button(type="button" data-href=("#")).btn.btn-secondary.text-uppercase.m-t-2.onPreview preview
+          .row
+            button(type="button" class='submit_form').btn.btn-primary.text-uppercase.m-t-2 submit campaign
       .row
         .education-link-wrap
           .jumbotron.jumbotron-fluid

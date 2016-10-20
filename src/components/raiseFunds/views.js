@@ -502,6 +502,7 @@ module.exports = {
       getVideoId(url) {
         try {
           var provider = url.match(/https:\/\/(:?www.)?(\w*)/)[2];
+          provider = provider.toLowerCase();
           var id;
 
           if (provider == 'youtube') {
@@ -516,7 +517,7 @@ module.exports = {
           return '';
         }
 
-        return id;
+        return {id: id, provider: provider};
       },
 
       deleteImage(e) {
@@ -543,17 +544,21 @@ module.exports = {
         else $videoContainer = this.$('.additional-video-block .index_' + $(e.target).data('index'));
         // var $form = $('.index_' + $(e.target).data('index'));
         var video = e.target.value;
-        var id = this.getVideoId(video);
+        var res = this.getVideoId(video);
 
         // ToDo
         // FixME
         // Bad CHECK
         //
-        if(id != '') {
-          // $form.find('iframe').attr(
-          $videoContainer.find('iframe').attr(
-              'src', '//youtube.com/embed/' +  id + '?rel=0'
-              );
+        if(res.id && res.provider) {
+          if (res.provider == 'youtube')
+            $videoContainer.find('iframe').attr(
+              'src', '//youtube.com/embed/' +  res.id + '?rel=0'
+            );
+          else
+            $videoContainer.find('iframe').attr(
+              'src', '//player.vimeo.com/video/' +  res.id
+            );
           //e.target.value = id;
         }
       }
@@ -810,7 +815,19 @@ module.exports = {
         dragleave: 'globalDragleave',
         'click .onPreview': onPreviewAction,
         'click .submit_form': submitCampaign,
+        'click .submit-specifics': 'checkMinMaxRaise',
       }, leavingConfirmationHelper.events),
+
+      checkMinMaxRaise(e) {
+        let min = this.$('input[name=minimum_raise]').val();
+        let max = this.$('input[name=maximum_raise]').val();
+        min = parseInt(min.replace(/,/g, ''));
+        max = parseInt(max.replace(/,/g, ''));
+        if (!(min && max) || !(min < max)) {
+          alert("Maximum Raise must be larger than Minimum Raise!");
+          e.preventDefault();
+        }
+      },
 
       globalDragover() {
         // this.$('.dropzone').css({ border: 'dashed 1px lightgray' });
