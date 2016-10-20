@@ -254,6 +254,7 @@ mixin fieldBlock(name, data, attr)
                         value=values[name]
                         maxlength = attr.maxlength ? attr.maxlength : false
                         disabled=(attr.disabled ? attr.disabled : false)
+                        readonly=(attr.readonly ? attr.readonly : false)
                       ).form-control
 
 mixin fieldDropzone(name, attr, type)
