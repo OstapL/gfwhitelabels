@@ -152,7 +152,7 @@ ul.list-blog {
   
 .single-blog {
 	.title-blog {
-		font-weight: 400;
+		font-weight: $blog-item-title-weight;
 	}
 	
 	.blog-img {
