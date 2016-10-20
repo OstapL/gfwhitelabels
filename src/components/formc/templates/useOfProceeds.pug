@@ -87,6 +87,21 @@ section.formc.use_of_proceeds.create-company-media.container
                 td.border-b-t-none.w-25.font-size-12
                   .form-section
                     input(type="text").input-border-bottom.form-control.text-xs-center
+              each k, v in values.less_offering_express
+                tr.border-b-t-none.p-t-b-5
+                  td.border-t-n.d-block.input-w-80
+                    .d-inline-block.pull-left.p-r-1 (C)
+                    input(type="text" ).input-border-bottom.form-control.font-size-12.pull-left
+                    .d-inline-block.pull-right
+                      .delete-section-container
+                        a(href="#").delete-section
+                          i.fa.fa-times
+                  td.border-b-t-none.w-25.font-size-12
+                    .form-section
+                      input(type="text" value=k.min).input-border-bottom.form-control.text-xs-center
+                  td.border-b-t-none.w-25.font-size-12
+                    .form-section
+                      input(type="text" value=k.max).input-border-bottom.form-control.text-xs-center
 
           table.table.table-bordered.use-of-proceeds-table.net-table
             thead
@@ -151,6 +166,21 @@ section.formc.use_of_proceeds.create-company-media.container
                 td.border-b-t-none.w-25.font-size-12
                   .form-section
                     input(type="text").input-border-bottom.form-control.text-xs-center
+              each k, v in values.use_of_net_proceeds
+                tr.border-b-t-none.p-t-b-5
+                  td.border-t-n.d-block.input-w-80
+                    .d-inline-block.pull-left.p-r-1 (C)
+                    input(type="text" ).input-border-bottom.form-control.font-size-12.pull-left
+                    .d-inline-block.pull-right
+                      .delete-section-container
+                        a(href="#").delete-section
+                          i.fa.fa-times
+                  td.border-b-t-none.w-25.font-size-12
+                    .form-section
+                      input(type="text" value=k.min).input-border-bottom.form-control.text-xs-center
+                  td.border-b-t-none.w-25.font-size-12
+                    .form-section
+                      input(type="text" value=k.max).input-border-bottom.form-control.text-xs-center
 
               tr.row-gray
                 td.w-50.p-l-25 Total Use of Net Proceeds
