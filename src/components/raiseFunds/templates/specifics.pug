@@ -69,7 +69,7 @@ section.campaign-specifics.container.m-b-85
 
       h3.text-lg-center.col-md-center.text-xs-center.col-lg-12.pre-money-terms Pre-Money Valuation and Equity Terms
       .col-lg-12.text-lg-center.text-md-center.text-xs-center.m-b-1.p-b-1
-        a(href="https://github.com/vladyslav2/gfwhitelabels/files/470205/growthfountain_security_description.pdf" target="_blank").link-2 Click here to see descriptions of Common Equity and PayBack Share
+        a(href="https://github.com/vladyslav2/gfwhitelabels/files/470205/growthfountain_security_description.pdf" target="_blank").link-2 Click here to see descriptions of Common Equity and Revenue Share
 
       .pre-money-terms
         +fieldBlock("security_type", '', {
@@ -90,7 +90,7 @@ section.campaign-specifics.container.m-b-85
                   button(data-toggle="dropdown" aria-haspopup="true" aria-expanded="false").btn.dropdown-toggle.dropdown-toggle-split.btn-dropdown-click
                     span.sr-only 
                   .dropdown-menu
-                    a(href="/calculator/paybackshare/step-1" target="_blank").dropdown-item Payback Share Calculator
+                    a(href="/calculator/paybackshare/step-1" target="_blank").dropdown-item Revenue Share Calculator
                     a(href="/calculator/capitalraise/intro" target="_blank").dropdown-item How Much Should I Raise?
                     a(href="/calculator/establishedBusiness/intro" target="_blank").dropdown-item Established Business Valuation
                     a(href="/calculator/selectCalculator" target="_blank").dropdown-item New Startup Valuation
@@ -211,13 +211,13 @@ section.campaign-specifics.container.m-b-85
                   button(data-toggle="dropdown" aria-haspopup="true" aria-expanded="false").btn.dropdown-toggle.dropdown-toggle-split.btn-dropdown-click
                     span.sr-only 
                   .dropdown-menu
-                    a(href="/calculator/paybackshare/step-1" target="_blank").dropdown-item Payback Share Calculator
+                    a(href="/calculator/paybackshare/step-1" target="_blank").dropdown-item Revenue Share Calculator
                     a(href="/calculator/capitalraise/intro" target="_blank").dropdown-item How Much Should I Raise?
                     a(href="/calculator/establishedBusiness/intro" target="_blank").dropdown-item Established Business Valuation
                     a(href="/calculator/selectCalculator" target="_blank").dropdown-item New Startup Valuation
           
           .col-lg-9.offset-lg-3.p-r-0
-            h4.m-t-1.font-weight-bold Here’s how PayBack Share works:
+            h4.m-t-1.font-weight-bold Here’s how Revenue Share works:
             ol.simple-list.mb45
               li.p-b-1 Share 5% of your company's revenue with investors annually, until;
               li.p-b-1 You have paid investors back two times the invested amount (distributions are capped at (2x) the investment amount, at which point the contract is deemed fulfilled);
@@ -231,9 +231,9 @@ section.campaign-specifics.container.m-b-85
           li.pb10 We’ll notify investors when the targeted offering amount has been reached.
           li.pb10.text-justify If you reach your targeted offering amount prior to your deadline, you may close the offering early if you provide five business days notice of the new deadline.
           li.pb10.text-justify If an investor doesn’t cancel their commitment before the 48 hour period prior to the deadline, the funds will be released to you and investors will receive securities in exchange for their investment.
-          li.pb10.text-justify f you make a material change to the offering, an investor’s investment commitment will be cancelled unless they reconfirm their commitment.
+          li.pb10.text-justify If you make a material change to the offering, an investor’s investment commitment will be cancelled unless they reconfirm their commitment.
       .col-lg-12.pull-lg-right.p-r-0.m-t-2.text-lg-right.text-md-center.text-sm-center.text-xs-center
               // button(type="submit").btn.btn-secondary.text-uppercase.m-r-3.m-t-0 Fields Review
-              button(type="submit" data-method="PATCH").btn.btn-primary.text-uppercase save and continue
+              button(type="submit" data-method="PATCH").btn.btn-primary.text-uppercase.submit-specifics save and continue
                 i.fa.fa-angle-right
   +menu('specifics')

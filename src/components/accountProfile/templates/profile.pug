@@ -9,7 +9,7 @@ include ../../../templates/mixins.pug
       
 .container.profile.pt-50
     .row 
-        aside.col-xl-3
+        aside.col-xl-3.m-b-1
             form(method="post" action="").form.form-section
                 - var values = user;
                 +fieldDropzone("image", {
@@ -20,7 +20,7 @@ include ../../../templates/mixins.pug
                   viewType: 3
                   })
             .row.m-t-2
-                .col-lg-12
+                .col-lg-12.text-xs-center
                     a(href="/account/change-password").link-3 Need to change your password?
 
 
@@ -84,11 +84,11 @@ include ../../../templates/mixins.pug
                                             
                  
                                             .form-group.row.clearfix.m0 
-                                                .col-lg-11.mt30
+                                                .col-lg-11.mt30.text-xs-center
                                                     .controls  
                                                         button(
                                                             type="submit"
-                                                        ).btn.btn-primary.pull-right SAVE 
+                                                        ).btn.btn-primary.pull-lg-right SAVE 
 
                 #financial_info.tab-pane.fade(aria-expanded="true")
                     .row 
@@ -126,11 +126,11 @@ include ../../../templates/mixins.pug
                                               
 
                                             .form-group.row.clearfix.m0
-                                                .col-lg-11.mt30
+                                                .col-lg-11.mt30.text-xs-center
                                                     .controls  
                                                         button(
                                                             type="submit"
-                                                        ).btn.btn-primary.pull-right SAVE 
+                                                        ).btn.btn-primary.pull-lg-right SAVE 
                                                     
                 #investment_preferences.tab-pane.fade(aria-expanded="true")
                     .row 
@@ -153,11 +153,11 @@ include ../../../templates/mixins.pug
                                         +fieldBlock("important_attributes", user.important_attributes, {'class1': 'col-lg-10 offset-lg-1  thin-label', 'class2': ' col-lg-10 offset-lg-1 ', 'type': 'text', 'text_align': 'left'})
              
                                         .form-group.row.clearfix.m0 
-                                            .col-lg-11.mt25
+                                            .col-lg-11.mt25.text-xs-center
                                                 .controls  
                                                     button(
                                                         type="submit"
-                                                    ).btn.btn-primary.pull-right SAVE 
+                                                    ).btn.btn-primary.pull-lg-right SAVE 
                                         
     .popover-content-ssn 
         i.fa.fa-info-circle 
@@ -175,7 +175,7 @@ include ../../../templates/mixins.pug
                 button(type="button" class="close" data-dismiss="modal" aria-label="Close")
                     span(aria-hidden="true")
                         i.fa.fa-times
-                h2(class="modal-title").text-lg-center.text-uppercase.dosis City/State
+                h2(class="modal-title").text-xs-center.text-uppercase.dosis City/State
 
             .modal-body
                 .container.form-section
@@ -193,7 +193,7 @@ include ../../../templates/mixins.pug
                         .form-group.row.clearfix.required.m0
                             .row
                                 .col-lg-12
-                                    .col-lg-12.text-lg-center
+                                    .col-lg-12.text-xs-center
                                             button.btn.btn-primary.text-uppercase save
                 .modal-footer
 

@@ -122,6 +122,10 @@ app.on('userLoaded', function (data) {
     el: '#menuList',
   });
   app.menu.render();
+  let i = new menu.footer({
+    el: '.footer_new',
+  });
+  i.render();
 
   app.notification = new menu.notification({
     el: '#menuNotification',
