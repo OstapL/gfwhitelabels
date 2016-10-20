@@ -149,7 +149,7 @@ ul.list-blog {
   
 .single-blog {
 	.title-blog {
-		letter-spacing: rem(2.4)
+		font-weight: $blog-item-title-weight;
 	}
 	
 	.blog-img {
