@@ -120,7 +120,10 @@ mixin fieldBlock(name, data, attr)
                     each k,v in fields[name].schema
                         div(class='form-group clearfix index_' + indexCounter)
                             label.col-lg-3.text-lg-right.p-t-0.p-l-3.p-sm-0.m-b-0 #{k.label}
-                            .col-lg-9
+                            div(
+                              class=(fields[name].help_text && v == 'title' ? ' showPopover' : '') 
+                              data-content=(fields[name].help_text  && v == 'title'?  fields[name].help_text: 'disabled')
+                            ).col-lg-9.col-md-12.p-sm-0
                                 if k.type == 'text' 
                                     textarea(
                                         id=name + '_' + v
@@ -155,9 +158,12 @@ mixin fieldBlock(name, data, attr)
                             - var k = values[name][kkeys[counter]][v]
                             - var t = fields[name].schema[v]
 
-                            div(class='form-group clearfix index_' + indexCounter )
+                            div(class='form-group clearfix index_' + indexCounter)
                                 label.col-lg-3.col-md-12.text-lg-right.p-l-3.p-sm-0.m-b-0.p-t-0 #{t.label}
-                                .col-lg-9.col-md-12.p-sm-0
+                                div(
+                                  class=(fields[name].help_text && v == 'title' ? ' showPopover' : '') 
+                                  data-content=(fields[name].help_text  && v == 'title'?  fields[name].help_text: 'disabled')
+                                ).col-lg-9.col-md-12.p-sm-0
                                     if t.type == 'text' 
                                         textarea(
                                             id=name + '_' + v
@@ -325,7 +331,7 @@ mixin fieldDropzone(name, attr, type)
         //- .col-lg-5.p-l-1.p-r-3.p-sm-0.col-md-12.col-xs-12
         //- div(class='col-lg-5 p-l-1 p-r-3 p-sm-0 col-md-12 col-xs-12' style="border:solid 1px red;")
         div(class='dropzone__' + name + ' col-lg-9 p-l-1 p-sm-0 col-md-12 col-xs-12')
-            div(class="border-dropzone col-lg-12 gallery")
+            div(class="border-dropzone col-lg-12 p-r-0 gallery")
                 span
                     div(class=attr.class1 + ' text-lg-center text-xs-center text-md-center media-item')
                         p(href="#").link-1
