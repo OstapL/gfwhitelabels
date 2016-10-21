@@ -179,7 +179,10 @@ module.exports = {
 
     sharWithEmail (e) {
       event.preventDefault();
-      window.open('mailto:?subject=check this link&body=' + window.location.href);
+      // Check out COMPANY NAME's fundraise on GrowthFountain
+      let companyName = this.model.company.name;
+      let text = "Check out " + companyName + "'s fundraise on GrowthFountain";
+      window.open("mailto:?subject=" + text + "&body=" + text + "%0D%0A" + window.location.href);
     },
 
     shareOnFacebook(event) {
