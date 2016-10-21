@@ -276,12 +276,14 @@ section
                             a(href="#").show-more-members.link-3 Read More
                           .d-block.text-lg-left.cite_education
                             span.text-lg-left.text-xs-left.pull-left.color-grey
-                              i.fa.fa-home.p-l-0
-                              |  #{v.growup}, #{v.state}
-                            //- a(href="#").link-1.pull-right
+                              if v.growup && v.state
+                                i.fa.fa-home.p-l-0
+                                |  #{v.growup}, #{v.state}
+                              //- a(href="#").link-1.pull-right
                             span.pull-right.color-grey
-                              i.fa.fa-graduation-cap
-                              |  #{v.college}
+                              if v.college
+                                i.fa.fa-graduation-cap
+                                |  #{v.college}
       .col-lg-12.border-bottom.m-b-3
       section.articles
         .container
