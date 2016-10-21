@@ -40,6 +40,7 @@ module.exports = {
       'click .see-all-risks': 'seeAllRisks',
       'click .see-all-faq': 'seeAllFaq',
       'click .linkresponse': 'checkResponse',
+      'click .show-more-members': 'readMore',
       // 'click .see-all-article-press': 'seeAllArticlePress',
       'click .more-less': 'showMore',
       'hidden.bs.collapse #hidden-article-press' :'onArticlePressCollapse',
@@ -315,6 +316,11 @@ module.exports = {
       });
 
       return this;
+    },
+
+    readMore(e) {
+      e.preventDefault();
+      $(e.target).parent().addClass('show-more-detail');
     },
 
     _commentSuccess(data) {

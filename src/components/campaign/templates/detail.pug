@@ -322,7 +322,8 @@ section
                           a(href=v.facebook target="_blank").link-1
                             i.fa.fa-facebook
                           p.card-text.text-justify.hide-more-detail #{v.bio}
-                            a(href="#").show-more-members.link-3 Read More
+                            if v.bio.length > 200
+                              a(href="#").show-more-members.link-3 Read More
                           .d-block.text-lg-left.cite_education
                             span.text-lg-left.text-xs-left.pull-left.color-grey
                               if v.growup && v.state
