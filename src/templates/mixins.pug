@@ -214,6 +214,7 @@ mixin fieldBlock(name, data, attr)
                     - indexCounter = attr.index || 0
                     - var kkeys = Object.keys(values[name])
                     each el in values[name]
+                      if values[name][kkeys[counter]]
                         div(class='form-group col-lg-12 clearfix index_' + indexCounter)
                             .delete-section-container
                                 a(href="#" data-section=name data-index=indexCounter).delete-section
