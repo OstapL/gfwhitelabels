@@ -272,22 +272,16 @@ section
                             i.fa.fa-linkedin.more
                           a(href=v.facebook target="_blank").link-1
                             i.fa.fa-facebook
-                          div
-                            div(style="position:relative;")
-                              if v.bio.length > 175
-                                div(style="position:absolute;bottom:0;right:0;")
-                                  a.more-less(data-index=(k) style="font-size:14px;color:#00C2BC;font-weight:bold;") Read More
-                                p.card-text.text-justify.auto-height.member-bio(index=(k) data-full-text=(v.bio)) #{v.bio.substr(0, 175) + '...'}
-                              else
-                                p.card-text.text-justify.auto-height.member-bio #{v.bio}
-                            .d-block.text-lg-left.cite_education
-                              span.text-lg-left.text-xs-left.pull-left.color-grey
-                                i.fa.fa-home.p-l-0
-                                |  #{v.growup}, #{v.state}
-                              //- a(href="#").link-1.pull-right
-                              span.pull-right.color-grey
-                                  i.fa.fa-graduation-cap
-                                  |  #{v.college}
+                          p.card-text.text-justify.hide-more-detail #{v.bio}
+                            a(href="#").show-more-members.link-3 Read More
+                          .d-block.text-lg-left.cite_education
+                            span.text-lg-left.text-xs-left.pull-left.color-grey
+                              i.fa.fa-home.p-l-0
+                              |  #{v.growup}, #{v.state}
+                            //- a(href="#").link-1.pull-right
+                            span.pull-right.color-grey
+                              i.fa.fa-graduation-cap
+                              |  #{v.college}
       .col-lg-12.border-bottom.m-b-3
       section.articles
         .container
