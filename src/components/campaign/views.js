@@ -157,7 +157,7 @@ module.exports = {
         method: 'share',
         href: window.location.href,
         caption: this.model.company.tagline,
-        description: this.model.pitch,
+        description: this.model.company.description,
         title: this.model.company.name,
         picture: (this.model.header_image_data ? this.model.header_image_data.url : null),
       }, function(response){});
@@ -167,7 +167,7 @@ module.exports = {
       event.preventDefault();
       window.open(encodeURI('https://www.linkedin.com/shareArticle?mini=true&url=' + window.location.href +
             '&title=' + this.model.company.name +
-            '&summary=' + this.model.pitch +
+            '&summary=' + this.model.company.description +
             '&source=Growth Fountain'),'Growth Fountain Campaingn','width=605,height=545');
     },
 
