@@ -275,6 +275,9 @@ module.exports = {
         $(event.currentTarget).find('iframe').attr('src', $(event.currentTarget).find('iframe').attr('src'));
       });
 
+      //this.$('body').on('.click', '.show-more-members', function() {
+      //  $('.hide-more-detail').addClass('.show-more-detail');
+      // });
       // $('*[data-toggle="lightbox"]').fancybox({
       $('.fancybox').fancybox({
         openEffect  : 'none',

@@ -201,10 +201,35 @@
 			margin-top: 0
 
 	h2
-		margin-bottom: 25px
+		margin-bottom: rem(25)
 	h3.our
-		margin-top: 45px
-		margin-bottom: 20px
+		margin-top: rem(45)
+		margin-bottom: rem(20)
+#members
+	.hide-more-detail
+		height: 83px
+		overflow: hidden
+		position: relative
+	.hide-more-detail.show-more-detail
+		height: auto!important
+		.show-more-members
+			display: none
+	.show-more-members
+		position: absolute
+		right: 0
+		bottom: -2px
+		z-index: 2
+		background-color: white
+		padding-left: rem(17)
+		&:before
+			content: '...'
+			position: absolute
+			left: 0
+			top: 0
+			z-index: 2
+			color: $black
+
+
 
 .articles_press
 	.card
@@ -212,7 +237,7 @@
 		min-height: rem(148)
 		background-color: $alabaster
 		text-align: center
-		padding: 30px
+		padding: rem(30)
 		margin-bottom: rem(45)
 		border: none
 		&:hover
