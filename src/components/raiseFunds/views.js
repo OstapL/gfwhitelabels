@@ -291,6 +291,7 @@ module.exports = {
           },
         };
         this.fields.additional_info.type = 'json';
+        this.fields.additional_info.help_text = 'Is there anything else you want to tell your potential investors? Received any accolades? Patents? Major contracts? Distributors, etc?';
         this.fields.additional_info.schema = {
           title: {
             type: 'string',
