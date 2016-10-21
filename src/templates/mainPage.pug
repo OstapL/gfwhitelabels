@@ -5,10 +5,10 @@ section.home-section.bg-dark-alfa-30.hide-bg-fixed(style="background: url(/img/b
                 .home-content
                     .home-text-main.text-lg-center
                         h1.text-uppercase.dosis your success is our success
-                        .col-lg-12.offset-lg-12.text-lg-center.text-sm-center.text-xs-center
+                        .col-lg-6.offset-lg-3.text-lg-center.text-sm-center.text-xs-center
                             span.small-text Invest in your neighbor, your community, or entrepreneurs you believe in
-                        .col-lg-12.m-b-3
-                            a(href="/pg/education").link-3 Understand the Risks
+                        .col-lg-12.m-t-1.m-b-2
+                            a(href="/pg/education").link-6 Understand the Risks
                         .col-lg-12
                             a(href=Urls['campaign-list']()).btn.btn-lg.btn-primary INVEST
                             span.hidden-xs  
@@ -17,7 +17,7 @@ section.home-section.bg-dark-alfa-30.hide-bg-fixed(style="background: url(/img/b
 section.campaing-list
     .container#campaignList
         .col-lg-12
-            h2.dosis.text-uppercase.text-sm-center.text-xs-center What's Popular
+            h2.dosis.text-uppercase.text-sm-center.text-xs-center.m-t-85.m-b-3 What's Popular
 
         include ../components/campaign/templates/_list.pug
 
@@ -37,10 +37,14 @@ section.home-wrap-text-block.hide-bg-fixed(style="background: url(/img/section-b
 
 section.home-what-is
     .container
-        .col-lg-10.offset-lg-1
-            h2.dosis.text-uppercase.text-sm-center.text-xs-center WHAT IS GROWTHFOUNTAIN
+        .col-lg-8.offset-lg-2
+            h2.dosis.text-uppercase.text-sm-center.text-xs-center.m-t-3.mb30 WHAT IS GROWTHFOUNTAIN
             .row
-                .col-lg-6
+                .col-lg-12
+                    h3.m-t-0.m-b-1.text-xs-center We banded together with a simple mission – to connect small businesses to all the tools they need to succeed – including financial, human and social capital.
+                    h3.m-t-0.text-xs-center Our goal is to level the playing field and make things easy for entrepreneurs to focus on what matters – their product or service!
+            .row
+                .col-lg-12
                     .embed-responsive.embed-responsive-16by9.boxshadow
                         iframe(
                             embed-responsive-item="true" 
@@ -49,10 +53,7 @@ section.home-what-is
                             data-mozallowfullscreen="" 
                             data-allowfullscreen=""
                         )
-
-                .col-lg-5
-                    h3.m-t-0.text-justify We banded together with a simple mission – to connect small businesses to all the tools they need to succeed – including financial, human and social capital.
-                    h3.m-t-0.text-justify.m-b-0 Our goal is to level the playing field and make things easy for entrepreneurs to focus on what matters – their product or service!
+            
 
 section.home-wrap-text-block.raise-wrap.hide-bg-fixed(style="background: url(/img/raise-capital.png) center center no-repeat; background-size: cover; background-attachment: fixed;")
     .opasity-block
@@ -69,16 +70,17 @@ section.home-our-partners
             .col-lg-12
                 h2.dosis.text-uppercase.text-xs-center.mb25 OUR PARTNERS
         .row
-            .col-lg-4.text-xs-center.mt25
+
+            .col-lg-4.text-xs-center.p-b-3
                 a(href="http://www.callahan.com/" target="_blank")
                     img(src="/img/callahan.png").img-fluid.text-lg-right.text-xs-center.m-x-auto
-            .col-lg-4.text-lg-center.text-xs-center.m-x-auto.mt25
+            .col-lg-4.text-lg-center.text-xs-center.m-x-auto.p-b-3
                 a(href="https://www.jdcu.org/" target="_blank")
                     img(src="/img/logo_jd.png").img-fluid.text-xs-center.m-x-auto
-            .col-lg-4.text-lg-left.m-x-auto.mt25
+            .col-lg-4.text-lg-left.m-x-auto.p-b-3
                 a(href="https://www.rivermarkcu.org/" target="_blank")
                     img(src="/img/logo_rivermark.png" ).img-fluid.text-xs-center.m-x-auto
-        .row
-            .col-lg-4.text-lg-right.text-xs-center.mt45
+        .row.text-xs-center
+            .col-lg-4.text-xs-center
                 a(href="https://www.dcu.org/" target="_blank")
-                    img(src="/img/logo_dcu.jpg").img-fluid.text-xs-center.m-x-auto
+                    img(src="/img/logo_dcu.jpg").img-fluid.text-xs-center.m-x-auto.p-r-1
