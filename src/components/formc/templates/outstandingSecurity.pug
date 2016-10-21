@@ -1,4 +1,5 @@
 include ../../../templates/mixins.pug
+include ../../../templates/fields_mixins.pug
 include ../../../templates/menuRaiseFund.pug
 
 +breadcrumbs('form c', '', 
@@ -43,16 +44,8 @@ section.formc-team-members-director.container.m-b-85
                       input(type="radio" name="conduct_exempt_offerings" value="false" checked=(!values['conduct_exempt_offerings']) target=".conduct-exempt-offerings-container")
                       |  No
         .conduct-exempt-offerings-container.shown-yes(style="display:" + (values['conduct_exempt_offerings'] ? 'block' : 'none') + ";")
-            .row
-                .date-input.required.col-lg-12
-                    .col-date.form-group.m-b-0
-                        |!{ templates.exempt_offering }
+            |!{ templates.exempt_offering }
 
-            .row.add-link
-                .col-lg-9.offset-1.pull-right
-                    a(href="#" data-section="exempt_offerings").link-2.add-section
-                        i.fa.fa-plus
-                        |  Add Another Exemption Offering
         .border-bottom.m-t-3.m-b-3
         h3.text-xs-center Outstanding Securities
         p What other securities are outstanding? Describe the material terms of any other outstanding securies.
@@ -126,32 +119,25 @@ section.formc-team-members-director.container.m-b-85
                                     a(href="#" data-section="securities-table" data-index=k).delete-outstanding
                                         i.fa.fa-times
         .border-bottom.m-t-3.m-b-3 
-        +fieldBlock("rights_of_securities_beign", '', {
-        class1: 'col-lg-12 col-md-12  text-md-left  text-xl-left',
-        class2: 'col-lg-12 col-md-12 big-textarea',
-        type: 'textarea',
-        placeholder: 'Description',
-        })
-        +fieldBlock("terms_modified", '', {
-        class1: 'col-lg-12 col-md-12  text-md-left  text-xl-left',
-        class2: 'col-lg-12 col-md-12 big-textarea',
-        type: 'textarea',
-        placeholder: 'Description',
-        })
-        +fieldBlock("security_differences", '', {
-        class1: 'col-lg-12 col-md-12  text-md-left  text-xl-left',
-        class2: 'col-lg-12 col-md-12 big-textarea',
-        type: 'textarea',
-        placeholder: 'Description', 
-        })
-        +fieldBlock("principal_shareholders_affect", '', {
-        class1: 'col-lg-12 col-md-12  text-md-left  text-xl-left',
-        class2: 'col-lg-12 col-md-12 big-textarea',
-        type: 'textarea',
-        placeholder: 'Description',
-        })
+        +fieldTextareaLabel("rights_of_securities", _.extend({
+          class1: 'col-lg-12 col-md-12  text-md-left  text-xl-left',
+          class2: 'col-lg-12 col-md-12 big-textarea',
+          placeholder: 'Description',
+        }, fields.rights_of_securities))
+        +fieldTextareaLabel("terms_of_securities", _.extend({
+          class1: 'col-lg-12 col-md-12  text-md-left  text-xl-left',
+          class2: 'col-lg-12 col-md-12 big-textarea',
+        }, fields.terms_of_securities))
+        +fieldTextareaLabel("security_differences", _.extend({
+          class1: 'col-lg-12 col-md-12  text-md-left  text-xl-left',
+          class2: 'col-lg-12 col-md-12 big-textarea',
+        }, fields.security_differences))
+        +fieldTextareaLabel("exercise_of_rights", _.extend({
+          class1: 'col-lg-12 col-md-12  text-md-left  text-xl-left',
+          class2: 'col-lg-12 col-md-12 big-textarea',
+        }, fields.exercise_of_rights))
         
-        .row.form-group.form-section
+        .row.form-group.form-section.required
             .col-lg-12
                 label Please discuss risks to purchasers of securities relating to:
                     br
@@ -165,74 +151,10 @@ section.formc-team-members-director.container.m-b-85
                     br
                     | - transactions with related parties 
             .col-lg-12.big-textarea
-                 textarea(placeholder="Description" name="risks_to_purchasers").form-control= values['risks_to_purchasers']
+                 textarea(placeholder="Description" id="risks_to_purchasers" name="risks_to_purchasers").form-control= values['risks_to_purchasers']
         .col-lg-12.m-t-2
             .row
                 .text-md-center.text-sm-center-text-xs-center
                     button.btn.btn-primary.text-uppercase.pull-lg-right Save
 
-//MODAL
-#security_modal.modal.fade(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")
-    .modal-dialog(role="document")
-        .modal-content
-            .modal-header
-                button(type="button" class="close" data-dismiss="modal" aria-label="Close")
-                    span(aria-hidden="true")
-                        i.fa.fa-times
-
-            .modal-body.p-t-0
-                form.modal-form
-                    .form-section    
-                        .row.form-group
-                            .col-lg-12
-                                label Security Type
-                            .col-lg-12
-                                select(name="security_type" style="width:100%").custom-select
-                                    option Preferred Stock
-                                    option Common Stock
-                                    option Debt
-                                    option Warrants
-                                    option Options
-                                    option Other
-                        +fieldBlock("other_rights", '', {
-                        class1: 'col-lg-12 col-md-12  text-md-left  text-xl-left',
-                        class2: 'col-lg-12 col-md-12 big-textarea',
-                        type: 'textarea',
-                        placeholder: 'Description',
-                        })
-                        .row
-                            .col-lg-6
-                                +fieldBlock("amount_authorized", '', {
-                                class1: 'col-lg-12 col-md-12  text-md-left  text-xl-left',
-                                class2: 'col-lg-12 col-md-12 ',
-                                type: 'text',
-                                placeholder: 'Amount Authorized',
-                                })
-                            .col-lg-6
-                                +fieldBlock("amount_outstanding", '', {
-                                class1: 'col-lg-12 col-md-12  text-md-left  text-xl-left',
-                                class2: 'col-lg-12 col-md-12 ',
-                                type: 'text',
-                                placeholder: 'Amount Authorized',
-                                })
-                        .row.form-group.m-b-0
-                            .col-lg-3
-                                label Voting Rights
-                            .col-lg-9
-                                .form-group.form-section.m-b-0
-                                    .radio-input
-                                        label 
-                                            input(type="radio" name="voting_right" value="1")
-                                            |  Yes
-                                        label 
-                                          input(type="radio" name="voting_right" value="0")
-                                          |  No
-                        
-
-                    .row.m-b-2
-                        .col-lg-12.text-lg-center.text-md-center.text-xs-center
-                            button(data-dismiss="modal").update-location.btn.btn-primary.text-uppercase.pull-lg-right.add-outstanding save
-            .modal-footer
-
-
-
+|!{ templates.outstanding_securities }

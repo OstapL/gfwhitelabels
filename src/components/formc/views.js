@@ -1006,7 +1006,53 @@ module.exports = {
 
     initialize(options) {
       this.fields = options.fields;
+      this.fields.outstanding_securities.schema.security_type.type = 'choice';
+      this.fields.outstanding_securities.schema.security_type.choices = [
+        {
+          value: 0,
+          display_name: 'Preferred Stock',
+        },
+        {
+          value: 1,
+          display_name: 'Common Stock',
+        },
+        {
+          value: 2,
+          display_name: 'Debt',
+        },
+        {
+          value: 3,
+          display_name: 'Warrants',
+        },
+        {
+          value: 4,
+          display_name: 'Options',
+        },
+        {
+          value: 5,
+          display_name: 'Other',
+        },
+      ];
+      this.fields.outstanding_securities.schema.voting_right.type = 'radio';
+      this.fields.outstanding_securities.schema.voting_right.choices = [
+        {
+          value: 1,
+          display_name: 'Yes',
+        },
+        {
+          value: 0,
+          display_name: 'No',
+        },
+      ]
       this.labels = {
+        outstanding_securities: {
+          security_type: "Security Type",
+          custom_security_type: "Custom Security Type",
+          other_rights: "Other Rights",
+          amount_authroized: "Amount Authorized",
+          amount_outstanding: "Amount Outstanding",
+          voting_right: "Voting right",
+        },
         exempt_offering: {
           exemption_relied_upon: "Exemption Relied upon",
           use_of_proceeds: "Use of Proceeds",
@@ -1016,22 +1062,22 @@ module.exports = {
         },
         business_loans_or_debt: {
           maturity_date: "Maturity Date",
-          outstaind_amount: "Outstanding Date",
+          outstanding_amount: "Outstanding Date",
           interest_rate: "Interest Rate",
           other_material_terms: "Other Material Terms",
           creditor: "Creditor"
         },
-        principal_shareholders_affect: 'How could the exercise of rights held by the principal shareholders affect the purchasers of the securities being offered?',
+        exercise_of_rights: 'How could the exercise of rights held by the principal shareholders affect the purchasers of the securities being offered?',
         risks_to_purchasers: '',
-        terms_modified: 'How may the terms of the securities being offered be modified?',
+        terms_of_securities: 'How may the terms of the securities being offered be modified?',
         security_differences: 'Are there any differences not reflected above between the securities being offered and each other class of security of the issuer?',
-        rights_of_securities_beign: 'How may the rights of the securities being offered be materially limited, diluted or qualified by the rights of any other class of security identified above?',
-        outstanding_securities: 'Outstanding Securities',
+        rights_of_securities: 'How may the rights of the securities being offered be materially limited, diluted or qualified by the rights of any other class of security identified above?',
       };
       this.assignLabels();
 
       this.createIndexes();
       this.buildJsonTemplates('formc');
+
     },
 
     submit(e) {
@@ -1076,24 +1122,7 @@ module.exports = {
     },
 
     render() {
-      let template = require('components/formc/templates/outstandingSecurity.pug');
-
-      if (this.model.business_loans_or_debt) {
-        this.business_loans_or_debtIndex = Object.keys(this.model.business_loans_or_debt).length;
-      } else {
-        this.business_loans_or_debtIndex = 0;
-      }
-      if (this.model.exempt_offerings) {
-        this.exempt_offeringsIndex = Object.keys(this.model.exempt_offerings).length;
-      } else {
-        this.exempt_offeringsIndex = 0;
-      }
-
-      if (this.model.outstanding_securities) {
-        this.outstanding_securitiesIndex = Object.keys(this.model.outstanding_securities).length;
-      } else {
-        this.outstanding_securitiesIndex = 0;
-      }
+      let template = require('./templates/outstandingSecurity.pug');
 
       this.$el.html(
         template({
