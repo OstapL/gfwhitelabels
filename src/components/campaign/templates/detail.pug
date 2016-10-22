@@ -49,6 +49,55 @@ section#home(style="background-image: url(" + (values.header_image_data ? values
             a(href=Urls['campaign-invest'](values.id)).btn.btn-primary.text-uppercase.pull-lg-right Invest
 
 if app.getParams().preview == '1'
+  #company_publish.modal.fade(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")
+    .modal-dialog(role="document")
+      .modal-content
+        .modal-header
+          button(type="button" class="close" data-dismiss="modal" aria-label="Close")
+            span(aria-hidden="true")
+              i.fa.fa-times
+          h2(class="modal-title").text-lg-center.text-uppercase.text-md-center.text-xs-center.line-height-1.dosis.m-t-1 COMPLETE THE FOLLOWING TO SUBMIT YOUR CAMPAIGN
+
+        .modal-body.m-b-2
+          .form-section
+            .col-lg-6.pull-left.p-l-0.general_information.collapse
+              h3.m-b-0.m-t-0 General Information
+            .col-lg-6.text-xs-right.m-b-10.p-r-0.general_information.collapse
+              a(href="/campaign/general_information/" + values.id + "?check=1").btn.btn-sm.btn-secondary.text-uppercase.m-t-0 Edit
+            .col-lg-6.pull-left.p-l-0.media.collapse
+              h3.m-b-0.m-t-0 Media 
+            .col-lg-6.text-xs-right.m-b-10.p-r-0.media.collapse
+              a(href='/campaign/media/' + values.id + '?check=1').btn.btn-sm.btn-secondary.text-uppercase.m-t-0 Edit
+            .col-lg-6.pull-left.p-l-0.team-members.collapse
+              h3.m-b-0.m-t-0 Team Members 
+            .col-lg-6.text-xs-right.m-b-10.p-r-0.team-members.collapse
+              a(href='/campaign/team-members/' + values.id + '?check=1').btn.btn-sm.btn-secondary.text-uppercase.m-t-0 Edit
+            .col-lg-6.pull-left.p-l-0.specifics.collapse
+              h3.m-b-0.m-t-0 Specifics 
+            .col-lg-6.text-xs-right.m-b-10.p-r-0.specifics.collapse
+              a(href='/campaign/specifics/' + values.id + '?check=1').btn.btn-sm.btn-secondary.text-uppercase.m-t-0 Edit
+            .col-lg-6.pull-left.p-l-0.perks.collapse
+              h3.m-b-0.m-t-0 Perks 
+            .col-lg-6.text-xs-right.mb30.p-r-0.perks.collapse
+              a(href='/campaign/perks/' + values.id + '?check=1').btn.btn-sm.btn-secondary.text-uppercase.m-t-0 Edit
+        .modal-footer
+  #company_publish_confirm.modal.fade(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")
+    .modal-dialog(role="document")
+      .modal-content
+        .modal-header
+          button(type="button" class="close" data-dismiss="modal" aria-label="Close")
+            span(aria-hidden="true")
+              i.fa.fa-times
+          h2(class="modal-title").text-lg-center.text-uppercase.text-md-center.text-xs-center.line-height-1.dosis.m-t-1 Are you sure you want to submit ?
+
+        .modal-body.m-b-2
+          .col-sm-12
+              .result-info-block.m-x-auto.text-xs-center
+                  |  Once you submit, you will no longer have the ability to edit your Campaign
+                  .info-btn-block.mb30
+                      a(href="#" data-dismiss="modal").btn.m-t-2.m-r-1.btn-secondary Cancel
+                      a(href="/campaign/thankyou/" + values.id).btn.m-t-2.btn-primary.text-uppercase Yes
+        .modal-footer
   section.edit-campaign.hidden-sm-down
     .edit-campaign-wrap
       .row
@@ -161,6 +210,7 @@ section
         //-     //- h3.our.text-lg-center #{ v.title }
         //-     h2.dosis.our.text-uppercase.text-lg-center.campaign-subheading #{ v.title }
         //-     p #{ v.body }
+
       
       #gallery1.col-lg-12.pt50.photo-gallegy.text-center-flex
         if values.gallery
@@ -272,15 +322,18 @@ section
                           a(href=v.facebook target="_blank").link-1
                             i.fa.fa-facebook
                           p.card-text.text-justify.hide-more-detail #{v.bio}
-                            a(href="#").show-more-members.link-3 Read More
+                            if v.bio.length > 200
+                              a(href="#").show-more-members.link-3 Read More
                           .d-block.text-lg-left.cite_education
                             span.text-lg-left.text-xs-left.pull-left.color-grey
-                              i.fa.fa-home.p-l-0
-                              |  #{v.growup}, #{v.state}
-                            //- a(href="#").link-1.pull-right
+                              if v.growup && v.state
+                                i.fa.fa-home.p-l-0
+                                |  #{v.growup}, #{v.state}
+                              //- a(href="#").link-1.pull-right
                             span.pull-right.color-grey
-                              i.fa.fa-graduation-cap
-                              |  #{v.college}
+                              if v.college
+                                i.fa.fa-graduation-cap
+                                |  #{v.college}
       .col-lg-12.border-bottom.m-b-3
       section.articles
         .container
@@ -335,6 +388,7 @@ section
                   //-           .pos-bottom
                   //-             .links.d-inline-block.card-text #{ formatHelper.getWebsiteUrl(v.link) }
                   //-   - counter++;
+
                 .row(style="display:" + (showMore ? 'block' : 'none') + ";")
                   .col-lg-12.text-xs-center
                     //- a(href="#hidden-article-press" data-toggle="collapse").link-4.see-all-article-press See All Articles and Press
@@ -365,6 +419,7 @@ section
                       a(href="#").link-1.pull-right
                         i.fa.fa-graduation-cap
                         |  Dickinson College
+
             .col-lg-4
               a(href="")
                 .card.text-lg-center
@@ -509,6 +564,7 @@ section
               //-     .col-lg-3.p-l-3
               //-       p Expiration Date
               //-       h2.font-weight-bold #{ values.formatDate(values.expiration_date) }
+
               //- .row
               //-   if values.security_type == 0
               //-     .col-lg-3.p-l-3
@@ -537,6 +593,8 @@ section
               //-     .col-lg-3.p-l-3
               //-       p Length of the values
               //-       h2.font-weight-bold #{ values.days_to_go } days
+
+
   section#perks.perks
     if values.perks && Object.keys(values.perks).length > 0 && values.perks[0].perk != ''
       //- h3.col-lg-12.text-lg-center Perks
@@ -623,7 +681,7 @@ section
                 p.card-text
                   small.text-muted New York, NY
         .col-lg-12.text-lg-center
-          a(href="" style="display: none").link-4 See All Investors
+          a(href="" style="display: none").link-4 See All Investors
   .border-bottom.m-t-3
   section.faq.p-b-0
     if values.faq && Object.keys(values.faq).length > 0 && values.faq[0].question != '' 
@@ -750,7 +808,14 @@ section
           span(aria-hidden="true") &times;
         .modal-content
             .embed-responsive.embed-responsive-16by9
-                iframe.embed-responsive-item(src="//www.youtube.com/embed/" + app.getVideoId(values.video) + "?rel=0" allowfullscreen="true")
+                - let mainVideo = app.getVideoId(values.video);
+                if mainVideo && mainVideo.provider == 'youtube'
+                  iframe.embed-responsive-item(src="//www.youtube.com/embed/" + mainVideo.id + "?rel=0" allowfullscreen="true")
+                else if mainVideo && mainVideo.provider == 'vimeo'
+                  iframe.embed-responsive-item(src="//player.vimeo.com/video/" + mainVideo.id allowfullscreen="true")
+                else
+                  iframe.embed-responsive-item(src="//www.youtube.com/embed/?rel=0" allowfullscreen="true")
+                //- iframe.embed-responsive-item(src="//www.youtube.com/embed/" + app.getVideoId(values.video) + "?rel=0" allowfullscreen="true")
 
 each v,k in values.additional_video
     if v
@@ -758,5 +823,12 @@ each v,k in values.additional_video
           .modal-dialog.modal-lg(role="document")
               .modal-content
                   .embed-responsive.embed-responsive-16by9
-                      - var link =  app.getVideoId(v.link)
-                      iframe.embed-responsive-item(src="//www.youtube.com/embed/" + link + "?rel=0" allowfullscreen="true")
+                      //- - var link =  app.getVideoId(v.link)
+                      - let additionalVideo = app.getVideoId(v.link);
+                      if additionalVideo && additionalVideo.provider == 'youtube'
+                        iframe.embed-responsive-item(src="//www.youtube.com/embed/" + additionalVideo.id + "?rel=0" allowfullscreen="true")
+                      else if additionalVideo && additionalVideo.provider == 'vimeo'
+                        iframe.embed-responsive-item(src="//player.vimeo.com/video/" + additionalVideo.id allowfullscreen="true")
+                      else
+                        iframe.embed-responsive-item(src="//www.youtube.com/embed/?rel=0" allowfullscreen="true")
+                      //- iframe.embed-responsive-item(src="//www.youtube.com/embed/" + link + "?rel=0" allowfullscreen="true")
