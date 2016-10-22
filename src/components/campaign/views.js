@@ -40,11 +40,13 @@ module.exports = {
       'click .see-all-risks': 'seeAllRisks',
       'click .see-all-faq': 'seeAllFaq',
       'click .linkresponse': 'checkResponse',
+      'click .show-more-members': 'readMore',
       // 'click .see-all-article-press': 'seeAllArticlePress',
       'click .more-less': 'showMore',
       'hidden.bs.collapse #hidden-article-press' :'onArticlePressCollapse',
       'shown.bs.collapse #hidden-article-press' :'onArticlePressCollapse',
       'submit .comment-form': 'submitComment',
+      'click .submit_form': 'submitCampaign',
     },
     initialize(options) {
       $(document).off("scroll", this.onScrollListener);
@@ -57,6 +59,35 @@ module.exports = {
         this.previous = params.previous;
       }
       this.preview = params.preview ? true : false;
+    },
+
+    submitCampaign(e) {
+
+      api.makeRequest(
+        serverUrl + '/api/campaign/general_information/' + this.model.id,
+        'GET'
+      ).then(function(data) {
+        if(
+            data.progress.general_information == true &&
+            data.progress.media == true &&
+            data.progress.specifics == true &&
+            data.progress['team-members'] == true
+        ) {
+          $('#company_publish_confirm').modal('show');
+        } else {
+          var errors = {};
+          _(data.progress).each((d, k) => {
+            if(k != 'perks') {
+              if(d == false)  {
+                $('#company_publish .'+k).removeClass('collapse');
+              } else {
+                $('#company_publish .'+k).addClass('collapse');
+              }
+            }
+          });
+          $('#company_publish').modal('toggle');
+        }
+      });
     },
 
     showMore(e) {
@@ -286,6 +317,11 @@ module.exports = {
       });
 
       return this;
+    },
+
+    readMore(e) {
+      e.preventDefault();
+      $(e.target).parent().addClass('show-more-detail');
     },
 
     _commentSuccess(data) {
