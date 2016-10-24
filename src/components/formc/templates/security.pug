@@ -2,19 +2,33 @@
 
 tr(class='index_' + indexCounter)
   td
-    | #{values.security_type}
+    - let securityType;
+    case parseInt(values.security_type)
+      when 0
+        - securityType = 'Preferred Stock';
+      when 1
+        - securityType = 'Common Stock';
+      when 2
+        - securityType = 'Debt';
+      when 3
+        - securityType = 'Warrants';
+      when 4
+        - securityType = 'Options';
+      default
+        - securityType = 'Other';
+    | #{securityType}
     input(type="hidden" name="outstanding_securities[" + indexCounter + "][security_type]" value=values.security_type)
   td
-    | #{values.amount_authorized}
-    input(type="hidden" name="outstanding_securities[" + indexCounter + "][amount_authroized" value=values.amount_authorized)
+    | #{values.amount_authroized}
+    input(type="hidden" name="outstanding_securities[" + indexCounter + "][amount_authroized]" value=values.amount_authroized)
   td
     | #{values.amount_outstanding}
-    input(type="hidden" name="outstanding_securities[" + indexCounter + "][amount_outstanding" value=values.amount_outstanding)
+    input(type="hidden" name="outstanding_securities[" + indexCounter + "][amount_outstanding]" value=values.amount_outstanding)
     
   td
     | #{values.voting_right ? 'Yes' : 'No'}
-    input(type="hidden" name="outstanding_securities[" + indexCounter + "][voting_right" value=values.voting_right)
-    input(type="hidden" name="outstanding_securities[" + indexCounter + "][other_rights" value=values.other_rights)
+    input(type="hidden" name="outstanding_securities[" + indexCounter + "][voting_right]" value=values.voting_right)
+    input(type="hidden" name="outstanding_securities[" + indexCounter + "][terms_and_rights]" value=values.terms_and_rights)
 
   td 
     .delete-section-container
