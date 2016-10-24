@@ -96,6 +96,8 @@ module.exports = {
   teamMembers: Backbone.View.extend(_.extend({
     urlRoot: formcServer + '/:id' + '/team-members',
     events: _.extend({
+      'submit form': api.submitAction,
+      'click .delete-member': 'deleteMember',
     }, menuHelper.events),
 
     preinitialize() {
@@ -107,29 +109,42 @@ module.exports = {
     },
 
     getSuccessUrl() {
-      return  '/formc/' + this.model.id + '/use-of-proceeds';
+      this.$el.find('h2').scrollTo();
     },
-
-    submit: api.submitAction,
 
     initialize(options) {
       this.fields = options.fields;
-      // this.labels = {
-      //   full_time_employers: 'Full Time Employees',
-      //   part_time_employers: 'Part Time Employees',
-      // };
-      // this.labels = {};
       this.fields.full_time_employers = {label: 'Full Time Employees'};
       this.fields.part_time_employers = {label: 'Part Time Employees'};
-      // this.fields.full_time_employers.label = 'Full Time Employees';
-      // this.fields.part_time_employers.label = 'Part Time Employees';
-      // this.assignLabels();
+    },
+
+    deleteMember: function (e) {
+      let memberId = e.currentTarget.dataset.id;
+      let role = e.currentTarget.dataset.role;
+
+      if (confirm('Are you sure you would like to delete this team member?')) {
+        // app.makeRequest('/api/campaign/team_members/' + this.model.get('id') + '?index=' + memberId, 'DELETE').
+        api.makeRequest(
+          this.urlRoot.replace(':id', this.model.id) + '/' + role + '/' + memberId, 
+          'DELETE'
+        ).
+        then((data) => {
+          this.model.members.splice(memberId, 1);
+          $(e.currentTarget).parent().remove();
+          if (this.model.members.length < 1) {
+            this.$el.find('.notification').show();
+            this.$el.find('.buttons-row').hide();
+          } else {
+            this.$el.find('.notification').hide();
+            this.$el.find('.buttons-row').show();
+          }
+        });
+      }
     },
 
     render() {
       let template = require('./templates/teamMembers.pug');
 
-      this.model.campaign = {id: 72};
       this.$el.html(
         template({
           serverUrl: serverUrl,
@@ -1020,9 +1035,61 @@ module.exports = {
 
   outstandingSecurity: Backbone.View.extend(_.extend({
     urlRoot: formcServer + '/:id' + '/outstanding-security',
+    events: _.extend({
+      'submit form': 'submit',
+      'click .add-outstanding': 'addOutstanding',
+      'click .delete-outstanding': 'deleteOutstanding',
+    }, addSectionHelper.events, menuHelper.events, yesNoHelper.events),
+
     initialize(options) {
       this.fields = options.fields;
+      this.fields.outstanding_securities.schema.security_type.type = 'choice';
+      this.fields.outstanding_securities.schema.security_type.choices = [
+        {
+          value: 0,
+          display_name: 'Preferred Stock',
+        },
+        {
+          value: 1,
+          display_name: 'Common Stock',
+        },
+        {
+          value: 2,
+          display_name: 'Debt',
+        },
+        {
+          value: 3,
+          display_name: 'Warrants',
+        },
+        {
+          value: 4,
+          display_name: 'Options',
+        },
+        {
+          value: 5,
+          display_name: 'Other',
+        },
+      ];
+      this.fields.outstanding_securities.schema.voting_right.type = 'radio';
+      this.fields.outstanding_securities.schema.voting_right.choices = [
+        {
+          value: 1,
+          display_name: 'Yes',
+        },
+        {
+          value: 0,
+          display_name: 'No',
+        },
+      ]
       this.labels = {
+        outstanding_securities: {
+          security_type: "Security Type",
+          custom_security_type: "Custom Security Type",
+          other_rights: "Other Rights",
+          amount_authroized: "Amount Authorized",
+          amount_outstanding: "Amount Outstanding",
+          voting_right: "Voting right",
+        },
         exempt_offering: {
           exemption_relied_upon: "Exemption Relied upon",
           use_of_proceeds: "Use of Proceeds",
@@ -1032,28 +1099,24 @@ module.exports = {
         },
         business_loans_or_debt: {
           maturity_date: "Maturity Date",
-          outstaind_amount: "Outstanding Date",
+          outstanding_amount: "Outstanding Date",
           interest_rate: "Interest Rate",
           other_material_terms: "Other Material Terms",
           creditor: "Creditor"
         },
-        rights_of_securities: 'How may the rights of the securities being offered be materially limited, diluted or qualified by the rights of any other class of security identified above?',
-        terms_of_securities: 'How may the terms of the securities being offered be modified?',
-        security_differences: 'Are there any differences not reflected above between the securities being offered and each other class of security of the issuer?',
         exercise_of_rights: 'How could the exercise of rights held by the principal shareholders affect the purchasers of the securities being offered?',
         risks_to_purchasers: '',
-        outstanding_securities: 'Outstanding Securities',
+        terms_of_securities: 'How may the terms of the securities being offered be modified?',
+        security_differences: 'Are there any differences not reflected above between the securities being offered and each other class of security of the issuer?',
+        rights_of_securities: 'How may the rights of the securities being offered be materially limited, diluted or qualified by the rights of any other class of security identified above?',
       };
       this.assignLabels();
+
+      this.createIndexes();
+      this.buildJsonTemplates('formc');
+
     },
 
-    events: _.extend({
-      'submit form': 'submit',
-      'click .add-outstanding': 'addOutstanding',
-      'click .delete-outstanding': 'deleteOutstanding',
-    }, addSectionHelper.events, menuHelper.events, yesNoHelper.events),
-
-    // submit: api.submitAction,
     submit(e) {
       var $target = $(e.target);
       var data = $target.serializeJSON({useIntKeysAsArrayIndex: true});
@@ -1072,7 +1135,8 @@ module.exports = {
       // add an entry
       let template = require('./templates/security.pug');
       $('.securities-table tbody').append(template({
-        values: data,
+        // values: data,
+        values: data.outstanding_securities.undefined,
         index: this.outstanding_securitiesIndex
       }));
       this.outstanding_securitiesIndex++;
@@ -1096,18 +1160,7 @@ module.exports = {
     },
 
     render() {
-      let template = require('components/formc/templates/outstandingSecurity.pug');
-
-      if (this.model.business_loans_or_debt) {
-        this.business_loans_or_debtIndex = Object.keys(this.model.business_loans_or_debt).length;
-      } else {
-        this.business_loans_or_debtIndex = 0;
-      }
-      if (this.model.exempt_offerings) {
-        this.exempt_offeringsIndex = Object.keys(this.model.exempt_offerings).length;
-      } else {
-        this.exempt_offeringsIndex = 0;
-      }
+      let template = require('./templates/outstandingSecurity.pug');
 
       if (this.model.outstanding_securities) {
         this.outstanding_securitiesIndex = Object.keys(this.model.outstanding_securities).length;
@@ -1121,6 +1174,7 @@ module.exports = {
           Urls: Urls,
           fields: this.fields,
           values: this.model,
+          templates: this.jsonTemplates,
         })
       );
       return this;

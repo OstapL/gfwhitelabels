@@ -1,0 +1,77 @@
+include ../../../../templates/fields_mixins.pug
+
+mixin row(value, index)
+  - var index = index;
+
+  div(data-index=index class=name + ' addSectionBlock')
+    .delete-section-container
+      a(href="#" data-section=name data-index=index).delete-sectionnew
+        i.fa.fa-times
+
+
+mixin run()
+
+  if first_run
+    div(class=(attr.row == 0 ? '' : 'row ') + name + '_block' + (attr.required == true ? ' required ' : ' ') + ' nested')
+      div(class=(attr.row == 0 ? '' : 'row ') + name + '_container' + (attr.required == true ? ' required ' : ' ') + ' nested')
+
+        #security_modal.modal.fade(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")
+          .modal-dialog(role="document")
+            .modal-content
+                .modal-header
+                  button(type="button" class="close" data-dismiss="modal" aria-label="Close")
+                    span(aria-hidden="true")
+                      i.fa.fa-times
+
+                .modal-body.p-t-0
+                  form.modal-form
+                    .form-section    
+                      +fieldNestedChoiceLabel(name, "security_type", "", index, {
+                        class1: 'col-lg-12',
+                        class2: 'col-lg-12',
+                      })
+                      +fieldNestedTextLabel(name, "custom_security_type", "", index, {
+                        class1: 'col-lg-12',
+                        class2: 'col-lg-12',
+                      })
+                      +fieldNestedTextareaLabel(name, "terms_and_rights", "", index, {
+                        class1: 'col-lg-12',
+                        class2: 'col-lg-12 big-textarea',
+                        placeholder: 'Description'
+                      })
+                      .row
+                        .col-lg-6
+                          +fieldNestedTextLabel(name, "amount_authroized", "", index, {
+                            class1: 'col-lg-12',
+                            class2: 'col-lg-12',
+                            label: 'Amount Authorized',
+                          })
+                        .col-lg-6
+                          +fieldNestedTextLabel(name, "amount_outstanding", "", index, {
+                            class1: 'col-lg-12',
+                            class2: 'col-lg-12',
+                            label: 'Amount Outstanding',
+                          })
+                      .row.form-group.m-b-0
+                        +fieldNestedRadioLabel(name, "voting_right", "", index, {
+                          class1: 'col-lg-3',
+                          class2: 'col-lg-9',
+                        })
+
+                      .row.m-b-2
+                          .col-lg-12.text-lg-center.text-md-center.text-xs-center
+                              button(data-dismiss="modal").update-location.btn.btn-primary.text-uppercase.pull-lg-right.add-outstanding save
+                .modal-footer
+
+        if value == null || value.length == 0 || Object.keys(value) == 0
+          +row({}, 0)
+
+        else
+          each value, index in values
+            +row(value, index)
+
+  else
+    +row({}, index)
+
+
++run()

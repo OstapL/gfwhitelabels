@@ -19,8 +19,8 @@ tr(class='index_' + indexCounter)
     | #{securityType}
     input(type="hidden" name="outstanding_securities[" + indexCounter + "][security_type]" value=values.security_type)
   td
-    | #{values.amount_authorized}
-    input(type="hidden" name="outstanding_securities[" + indexCounter + "][amount_authroized]" value=values.amount_authorized)
+    | #{values.amount_authroized}
+    input(type="hidden" name="outstanding_securities[" + indexCounter + "][amount_authroized]" value=values.amount_authroized)
   td
     | #{values.amount_outstanding}
     input(type="hidden" name="outstanding_securities[" + indexCounter + "][amount_outstanding]" value=values.amount_outstanding)

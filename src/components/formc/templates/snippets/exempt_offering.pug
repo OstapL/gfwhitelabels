@@ -1,0 +1,45 @@
+include ../../../../templates/fields_mixins.pug
+
+mixin row(value, index)
+  - var index = index;
+
+  div(data-index=index class=name + ' addSectionBlock')
+    .delete-section-container
+      a(href="#" data-section=name data-index=index).delete-sectionnew
+        i.fa.fa-times
+
+    +fieldNestedTextLabel(name, "amount_sold", value, index, {})
+    +fieldNestedTextLabel(name, "exemption_relied_upon", value, index, {})
+    +fieldNestedTextLabel(name, "offering_date", value, index, {})
+    +fieldNestedTextLabel(name, "securities_offered", value, index, {})
+    +fieldNestedTextLabel(name, "use_of_proceeds", value, index, {})
+
+
+mixin run()
+
+  if first_run
+    div(class=(attr.row == 0 ? '' : 'row ') + name + '_block' + (attr.required == true ? ' required ' : ' ') + ' nested')
+      div(class=(attr.row == 0 ? '' : 'row ') + name + '_container' + (attr.required == true ? ' required ' : ' ') + ' nested')
+
+        .row
+          .date-input.required.col-lg-12
+            .col-date.form-group.m-b-0
+
+              if value == null || value.length == 0 || Object.keys(value) == 0
+                +row({}, 0)
+
+              else
+                each value, index in values
+                  +row(value, index)
+
+        .row.add-link
+          .col-lg-9.offset-1.pull-right
+            a(href="#" data-section=name data-comp='formc' data-template='exempt_offering').link-2.add-sectionnew
+              i.fa.fa-plus
+              |  Add Another Exemption Offering
+
+  else
+    +row({}, index)
+
+
++run()

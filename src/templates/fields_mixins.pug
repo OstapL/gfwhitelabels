@@ -14,6 +14,36 @@ mixin fieldNestedTextLabel(nestedName, name, value, index, myAttr)
   )
 
 
+mixin fieldNestedTextareaLabel(nestedName, name, value, index, myAttr)
+  +prepareNestedField(nestedName, name, value, index, myAttr)
+  - myAttr.class1 = myAttr.class1 ? myAttr.class1 : 'text-lg-right col-lg-3 col-md-12 text-md-left';
+  - myAttr.class2 = myAttr.class2 ? myAttr.class2 : 'col-lg-9 col-md-12';
+  +fieldTextareaLabel(
+    nestedName + '[' + index + '][' + name + ']',
+    myAttr
+  )
+
+
+mixin fieldNestedChoiceLabel(nestedName, name, value, index, myAttr)
+  +prepareNestedField(nestedName, name, value, index, myAttr)
+  - myAttr.class1 = myAttr.class1 ? myAttr.class1 : 'text-lg-right col-lg-3 col-md-12 text-md-left';
+  - myAttr.class2 = myAttr.class2 ? myAttr.class2 : 'col-lg-9 col-md-12';
+  +fieldChoiceLabel(
+    nestedName + '[' + index + '][' + name + ']',
+    myAttr
+  )
+
+
+mixin fieldNestedRadioLabel(nestedName, name, value, index, myAttr)
+  +prepareNestedField(nestedName, name, value, index, myAttr)
+  - myAttr.class1 = myAttr.class1 ? myAttr.class1 : 'text-lg-right col-lg-3 col-md-12 text-md-left';
+  - myAttr.class2 = myAttr.class2 ? myAttr.class2 : 'col-lg-9 col-md-12';
+  +fieldRadioLabel(
+    nestedName + '[' + index + '][' + name + ']',
+    myAttr
+  )
+
+
 mixin fieldNestedDateMonth(nestedName, name, value, index, myAttr)
   +prepareNestedField(nestedName, name, value, index, myAttr)
   - myAttr.class = myAttr.class ? myAttr.class : 'col-lg-6 p-r-0';
@@ -35,8 +65,9 @@ mixin fieldNestedDateYear(nestedName, name, value, index, myAttr)
 mixin fieldTextLabel(name, attr)
   - attr = attr ? attr : fields[name];
   - attr.value = attr.value ? attr.value : values ? values[name] : '';
+  - console.log(name, attr);
   div(class="form-group "  + (attr.row == 0 ? '' : 'row ') + name + (attr.required == true ? ' required ' : ' ') + ' ' + attr.type)
-    label(class= attr.text_align ? 'text-lg-' + attr.text_align + ' ' + attr.class1 : ' text-lg-right ' + attr.class1 for=name)= attr.label
+    label(class=attr.class1 for=attr.id)= attr.label
     div(class=attr.class2)
         input(
             id=attr.id || name
@@ -54,20 +85,55 @@ mixin fieldTextLabel(name, attr)
 mixin fieldTextareaLabel(name, attr)
   - attr = attr ? attr : fields[name];
   - attr.value = attr.value ? attr.value : values ? values[name] : '';
-  div(class="form-group " + (attr.row == 0 ? '' : 'row ') + name + (attr.required == true ? ' required ' : ' ') + attr.type + ' ' + attr.class)
-    label(class=attr.class_label for=name)= attr.label
-    .big-textarea
+  div(class="form-group "  + (attr.row == 0 ? '' : 'row ') + name + (attr.required == true ? ' required ' : ' ') + ' ' + attr.type)
+    label(class=attr.class1 for=attr.id)= attr.label
+    div(class=attr.class2)
       textarea(
-        id=name
+        id=attr.id || name
         name=attr.name || name
         placeholder=attr.placeholder ? attr.placeholder :attr.label
         type=attr.type ? attr.type : 'text'
         class=(attr.help_text ? 'showPopover' : '') 
         data-content=(attr.help_text ?attr.help_text : '')
-        value=attr.value
         maxlength = attr.maxlength ? attr.maxlength : false
         disabled=(attr.disabled ? attr.disabled : false)
-      ).form-control
+      ).form-control=attr.value
+
+
+mixin fieldChoiceLabel(name, attr)
+  - attr = attr ? attr : fields[name];
+  - attr.value = attr.value ? attr.value : values ? values[name] : '';
+  div(class="form-group "  + (attr.row == 0 ? '' : 'row ') + name + (attr.required == true ? ' required ' : ' ') + ' ' + attr.type)
+    label(class=attr.class1 for=attr.id)= attr.label
+    div(class=attr.class2)
+      select(
+          id=name
+          name=name
+      ).custom-select
+          if attr.hasOwnProperty('empty')
+              option(value=attr.empty.value) #{attr.empty.display}
+            
+          each v in attr.choices
+              option(value=v.value selected=(v.value == attr.value ? "selected" : undefined)) #{v.display_name}
+
+
+mixin fieldRadioLabel(name, attr)
+  - attr = attr ? attr : fields[name];
+  - attr.value = attr.value ? attr.value : values ? values[name] : '';
+  div(class=attr.class1)
+    label= attr.label
+  div(class=attr.class2)
+    div(class="form-group m-b-0 "  + (attr.row == 0 ? '' : 'row ') + name + (attr.required == true ? ' required ' : ' ') + ' ' + attr.type)
+      .radio-input
+        each v in attr.choices
+          label
+            input(
+              type="radio" 
+              class="form-check-input" 
+              name=name
+              checked=(v.value == attr.value ? "checked" : undefined)
+              value=v.value)
+            | #{v.display_name}
 
 
 mixin fieldDateMonth(name, attr)

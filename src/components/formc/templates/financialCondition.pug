@@ -31,13 +31,15 @@ section.formc-team-members-director.container.m-b-85
               |  No
         .operating-history-container.shown-yes(style="display:" + (values['operating_history'] ? 'block' : 'none') + ";")
           +fieldTextareaLabel("financials_condition_yes", _.extend({
-            class: 'col-lg-12',
+            class1: 'col-lg-12',
+            class2: 'big-textarea',
             label: 'Please discuss your historical results for each period for which you provide financial statements.  The discussion should focus on financial milestones and operational, liquidity and other challenges.  Please also discuss whether historical results and cash flows are representative of what investors should expect in the future. Take into account the proceeds of the offering and any other known sources of capital. Please discuss how the proceeds from the offering will affect your liquidity, whether these funds are necessary to the viability of the business, and how quickly you anticipate using your available cash.  Please also discuss other available sources of capital, such as lines of credit or required contributions by shareholders, for example.',
             placeholder: "Describe your historical results",
           }, fields.financials_condition_yes))
         .operating-history-container.shown-no(style="display:" + (values['operating_history'] ? 'none' : 'block') + ";")
           +fieldTextareaLabel("financials_condition_no", _.extend({
-            class: 'col-lg-12',
+            class1: 'col-lg-12',
+            class2: 'big-textarea',
             label: 'Please discuss financial milestones and operational, liquidity and other challenges. Please discuss how the proceeds from the offering will affect your liquidity, whether these funds are necessary to the viability of the business, and how quickly you anticipate using your available cash.  Please also discuss other available sources of capital, such as lines of credit or required contributions by shareholders, for example.',
             placeholder: "Describe your financial condition",
           }, fields.financials_condition_no))

@@ -57,6 +57,7 @@ module.exports = {
     e.preventDefault();
 
     data = data || $(e.target).serializeJSON({ useIntKeysAsArrayIndex: true });
+    api.fixDateFields(data);
 
     // if view already have some data - extend that info
     if(this.hasOwnProperty('model')) {
@@ -174,5 +175,20 @@ module.exports = {
         xhr.setRequestHeader('Authorization', 'Bearer ' + token);
       }
     },
+  },
+
+  fixDateFields(data) {
+    _(this.fields).each((el, key) => {
+      if(el.type == 'date') {
+        debugger;
+        var key_year = key + '__year';
+        var key_month = key + '__month';
+        data[key] = data[key_year] && data[key_month]
+          ? data[key_year] + '-' + data[key_month] + '-' + '01'
+          : '';
+        delete data[key_year];
+        delete data[key_month];
+      }
+    });
   },
 };

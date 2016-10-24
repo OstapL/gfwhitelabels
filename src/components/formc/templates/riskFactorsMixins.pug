@@ -1,13 +1,4 @@
-style(type='text/css').
-  .borderless-textarea {
-    border: none;
-    resize: none;
-    min-height: 10px !important;
-  }
 
-  .risk-button {
-    margin-left: 20px;
-  }
 
 mixin showRisk(name, index, title, risk)
   form(data-method="PATCH" data-index=(index) index=index)
