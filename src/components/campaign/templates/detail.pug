@@ -252,8 +252,16 @@ section
                 if v
                   .col-lg-4
                     .card.card-inverse
-                      - var link =  app.getVideoId(v.link)
-                      img(src="http://img.youtube.com/vi/" + link + "/0.jpg" alt="" style="width: 338px").card-img
+                      - let additionalVideo = app.getVideoId(v.link);
+                      // - var link =  app.getVideoId(v.link)
+                      //- img(src="http://img.youtube.com/vi/" + link + "/0.jpg" alt="" style="width: 338px").card-img
+                      if additionalVideo && additionalVideo.provider == 'youtube'
+                        img(src="http://img.youtube.com/vi/" + additionalVideo.id + "/0.jpg" alt="" style="width: 338px").card-img
+                      else if additionalVideo && additionalVideo.provider == 'vimeo'
+                        //- iframe.embed-responsive-item(src="//player.vimeo.com/video/" + additionalVideo.id allowfullscreen="true")
+                        img(src="" alt="" style="width: 338px;" data-vimeo-id=additionalVideo.id).card-img.vimeo-thumbnail
+                      else
+                        img(src="http://img.youtube.com/vi/" + additionalVideo.id + "/0.jpg" alt="" style="width: 338px").card-img
                       .card-img-overlay
                         .card-title
                           a(data-toggle="modal" href="#videoModal-" + k data-target="#videoModal-" + k).small-icon.link-6

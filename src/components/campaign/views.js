@@ -318,6 +318,22 @@ module.exports = {
         closeEffect : 'none'
       });
 
+      // fetch vimeo
+      $('.vimeo-thumbnail').each(function(elem, idx) {
+        let id = $(this).data('vimeo-id');
+        let url = 'http://vimeo.com/api/v2/video/' + id + '.xml';
+        $.ajax({
+          method: 'GET',
+          url: url,
+          success: function(data) {
+            let $xml = $(data);
+            let thumbnailUrl = $xml.find('thumbnail_medium').text();
+            let id = $xml.find('id').text();
+            $('.vimeo-thumbnail[data-vimeo-id=' + id + ']').attr('src', thumbnailUrl);
+          },
+        });
+      });
+
       return this;
     },
 
