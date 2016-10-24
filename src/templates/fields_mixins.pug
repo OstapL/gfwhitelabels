@@ -125,13 +125,14 @@ mixin fieldRadioLabel(name, attr)
     label= attr.label
   div(class=attr.class2)
     div(class="form-group m-b-0 "  + (attr.row == 0 ? '' : 'row ') + attr.id | name + (attr.required == true ? ' required ' : ' ') + ' ' + attr.type)
-      .radio-input
+      div(class=attr.class2).radio-input
         each v in attr.choices
           label
             input(
               type="radio" 
               class="form-check-input" 
               name=name
+              data-value-type = (attr.type == 'boolean' ? attr.type : '')
               checked=(v.value == attr.value ? "checked" : undefined)
               value=v.value)
             | #{v.display_name}

@@ -1,19 +1,19 @@
 module.exports = {
   events: {
-    'click input:radio': 'onRadioButtonChange',
+    'click .yesno input:radio': 'onRadioButtonChange',
   },
   methods: {
     onRadioButtonChange(e) {
-        let $target = $(e.target);
-        let val = $target.val();
-        let targetElem = $target.attr('target');
-        if (val == 'false') {
-            this.$(targetElem + '.shown-yes').hide();
-            this.$(targetElem + '.shown-no').show();
-        } else if (val == 'true') {
-            this.$(targetElem + '.shown-yes').show();
-            this.$(targetElem + '.shown-no').hide();
-        }
+      const val = e.target.value;
+      const name = e.target.name;
+      
+      if (val == 0 || val == 'false' || val == '0') {
+        this.$('.' + name + '.shown-yes').hide();
+        this.$('.' + name + '.shown-no').show();
+      } else {
+        this.$('.' + name + '.shown-yes').show();
+        this.$('.' + name + '.shown-no').hide();
+      }
     },
   },
 };

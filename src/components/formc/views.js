@@ -976,6 +976,7 @@ module.exports = {
     urlRoot: formcServer + '/:id/financial-condition',
 
     events: _.extend({
+      'submit #security_model_form': 'newOutstanding',
       'submit form': api.submitAction,
     }, menuHelper.events, yesNoHelper.events, addSectionHelper.events, dropzoneHelpers.events),
 
@@ -1036,14 +1037,34 @@ module.exports = {
   outstandingSecurity: Backbone.View.extend(_.extend({
     urlRoot: formcServer + '/:id' + '/outstanding-security',
     events: _.extend({
-      'submit form': 'submit',
-      'change #outstanding_securities__undefined__security_type': 'outstandingSecurityUpdate',
-      'click .add-outstanding': 'addOutstanding',
+      'submit #security_model_form': 'addOutstanding',
+      'submit .form-section': 'submit',
+      'change #security_type': 'outstandingSecurityUpdate',
       'click .delete-outstanding': 'deleteOutstanding',
     }, addSectionHelper.events, menuHelper.events, yesNoHelper.events),
 
     initialize(options) {
       this.fields = options.fields;
+      this.fields.business_loans_or_debt_choice.choices = [
+        {
+          value: 1,
+          display_name: 'Yes',
+        },
+        {
+          value: 0,
+          display_name: 'No',
+        },
+      ]
+      this.fields.exempt_offering_choice.choices = [
+        {
+          value: 1,
+          display_name: 'Yes',
+        },
+        {
+          value: 0,
+          display_name: 'No',
+        },
+      ]
       this.fields.outstanding_securities.schema.security_type.type = 'choice';
       this.fields.outstanding_securities.schema.security_type.choices = [
         {
@@ -1100,11 +1121,13 @@ module.exports = {
         },
         business_loans_or_debt: {
           maturity_date: "Maturity Date",
-          outstanding_amount: "Outstanding Date",
+          outstanding_amount: "Outstanding Amount",
           interest_rate: "Interest Rate",
           other_material_terms: "Other Material Terms",
           creditor: "Creditor"
         },
+        business_loans_or_debt_choice: 'Do you have any business loans or debt?',
+        exempt_offering_choice: 'An "exempt offering" is any offering of securities which is exempted from the registration requirements of the Securities Act.^CHave you conducted any exempt offerings in the past three years?',
         exercise_of_rights: 'How could the exercise of rights held by the principal shareholders affect the purchasers of the securities being offered?',
         risks_to_purchasers: '',
         terms_of_securities: 'How may the terms of the securities being offered be modified?',
@@ -1119,36 +1142,59 @@ module.exports = {
     },
 
     outstandingSecurityUpdate(e) {
-      if(e.target.options[e.target.selectedIndex].value == 5) {
-       $('#security_modal .outstanding_securities__undefined__custom_security_type').show(); 
+      if(e.target.options[e.target.selectedIndex].value == '5') {
+       $('#security_modal #custom_security_type').parent().parent().show(); 
       } else {
-       $('#security_modal .outstanding_securities__undefined__custom_security_type').hide(); 
+       $('#security_modal #custom_security_type').parent().parent().hide(); 
       }
     },
 
     submit(e) {
-      var $target = $(e.target);
-      var data = $target.serializeJSON({useIntKeysAsArrayIndex: true});
-      if (data.have_loans_debt == 'false') data.business_loans_or_debt = [];
-      if (data.conduct_exempt_offerings == 'false') data.exempt_offering = [];
-      if (!data.outstanding_securities) data.outstanding_securities = [];
+      let $target = $(e.target);
+      let data = $target.serializeJSON({useIntKeysAsArrayIndex: true});
+      if (data.business_loans_or_debt_choice == 0) {
+        data.business_loans_or_debt = [];
+      }
+      if (data.exempt_offering_choice == 0) {
+        data.exempt_offering = [];
+      }
+      if (!data.outstanding_securities) {
+        data.outstanding_securities = [];
+      }
       api.submitAction.call(this, e, data);
     },
 
     addOutstanding(e) {
       e.preventDefault();
-      // get the form
-      let $form = $(".modal-form");
-      let data = $form.serializeJSON();
-      // console.log(data);
-      // add an entry
-      let template = require('./templates/security.pug');
-      $('.securities-table tbody').append(template({
-        // values: data,
-        values: data.outstanding_securities.undefined,
-        index: this.outstanding_securitiesIndex
-      }));
-      this.outstanding_securitiesIndex++;
+      const data = $(e.target).serializeJSON({ useIntKeysAsArrayIndex: true });
+
+      const sectionName = e.target.dataset.section;
+      const template = require('./templates/snippets/outstanding_securities.pug');
+      this[sectionName + 'Index']++;
+
+      $('.' + sectionName + '_container').append(
+        template({
+          fields: this.fields[sectionName],
+          name: sectionName,
+          attr: this.fields[sectionName],
+          value: data,
+          index: this[sectionName + 'Index']
+        })
+      );
+      this.model[sectionName].push(data);
+      api.makeRequest(
+        this.urlRoot.replace(':id', this.model.id), 
+        'PATCH', 
+        {
+          'outstanding_securities': this.model[sectionName]
+        }
+      );
+      $('#security_modal').modal('hide');
+
+      e.target.querySelectorAll('input').forEach(function(el, i) { 
+        el.value = '';
+      });
+      e.target.querySelector('textarea').value = "";
     },
 
     deleteOutstanding(e) {
@@ -1186,7 +1232,7 @@ module.exports = {
           templates: this.jsonTemplates,
         })
       );
-      $('#security_modal .outstanding_securities__undefined__custom_security_type').hide(); 
+      $('#security_modal #custom_security_type').parent().parent().hide(); 
       return this;
     },
   }, addSectionHelper.methods, menuHelper.methods, yesNoHelper.methods)),
