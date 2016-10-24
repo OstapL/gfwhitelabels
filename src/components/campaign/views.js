@@ -321,7 +321,7 @@ module.exports = {
       // fetch vimeo
       $('.vimeo-thumbnail').each(function(elem, idx) {
         let id = $(this).data('vimeo-id');
-        let url = 'http://vimeo.com/api/v2/video/' + id + '.xml';
+        let url = window.location.protocol + '//vimeo.com/api/v2/video/' + id + '.xml';
         $.ajax({
           method: 'GET',
           url: url,
