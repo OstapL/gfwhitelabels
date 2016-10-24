@@ -156,9 +156,9 @@
 		position: absolute
 		top: 0
 		left: 0
-		background: rgba(17, 17, 17, .3)
+		background: rgba(17, 17, 17, .5)
 	.js-height-full
-		max-height: 550px
+		max-height: 90vh
 	.home-text-main
 		vertical-align: middle
 		display: table-cell
@@ -167,18 +167,18 @@
 			font-size: rem(48)
 			color: $white
 			letter-spacing: rem(9.6)
-			margin-bottom: rem(30)
+			margin-bottom: rem(50)
 		.small-text
 			line-height: rem(26)
 			color: $white
 			letter-spacing: rem(.6)
 			font-size: rem(24)
 			font-weight: 300
-		.link-6
-			font-size: rem(14)
 		.btn
 			&:first-child
 				margin-right: 30px
+		.link-6
+			font-size: rem(14)
 
 .home-wrap-text-block
 	position: relative
@@ -214,9 +214,8 @@
 	h3
 		color: $cod_gray
 		letter-spacing: rem(.45)
+		line-height: rem(24)
 		font-weight: lighter
-		line-height: 24px
-		margin-bottom: rem(30)
 .home-our-partners
 	img
 		max-width: 255px
@@ -264,6 +263,12 @@
 		.btn
 			&:first-child
 				margin-right: 5px
+
+@media only screen and (max-width : 360px)
+	.raise-wrap
+		.btn
+			&:first-child
+				margin-right: 10px
 
 @media only screen and (max-width : 320px)
 	.raise-wrap

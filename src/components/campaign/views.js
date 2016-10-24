@@ -40,11 +40,13 @@ module.exports = {
       'click .see-all-risks': 'seeAllRisks',
       'click .see-all-faq': 'seeAllFaq',
       'click .linkresponse': 'checkResponse',
+      'click .show-more-members': 'readMore',
       // 'click .see-all-article-press': 'seeAllArticlePress',
       'click .more-less': 'showMore',
       'hidden.bs.collapse #hidden-article-press' :'onArticlePressCollapse',
       'shown.bs.collapse #hidden-article-press' :'onArticlePressCollapse',
       'submit .comment-form': 'submitComment',
+      'click .submit_form': 'submitCampaign',
     },
     initialize(options) {
       $(document).off("scroll", this.onScrollListener);
@@ -57,6 +59,35 @@ module.exports = {
         this.previous = params.previous;
       }
       this.preview = params.preview ? true : false;
+    },
+
+    submitCampaign(e) {
+
+      api.makeRequest(
+        serverUrl + '/api/campaign/general_information/' + this.model.id,
+        'GET'
+      ).then(function(data) {
+        if(
+            data.progress.general_information == true &&
+            data.progress.media == true &&
+            data.progress.specifics == true &&
+            data.progress['team-members'] == true
+        ) {
+          $('#company_publish_confirm').modal('show');
+        } else {
+          var errors = {};
+          _(data.progress).each((d, k) => {
+            if(k != 'perks') {
+              if(d == false)  {
+                $('#company_publish .'+k).removeClass('collapse');
+              } else {
+                $('#company_publish .'+k).addClass('collapse');
+              }
+            }
+          });
+          $('#company_publish').modal('toggle');
+        }
+      });
     },
 
     showMore(e) {
@@ -157,7 +188,7 @@ module.exports = {
         method: 'share',
         href: window.location.href,
         caption: this.model.company.tagline,
-        description: this.model.pitch,
+        description: this.model.company.description,
         title: this.model.company.name,
         picture: (this.model.header_image_data ? this.model.header_image_data.url : null),
       }, function(response){});
@@ -167,7 +198,7 @@ module.exports = {
       event.preventDefault();
       window.open(encodeURI('https://www.linkedin.com/shareArticle?mini=true&url=' + window.location.href +
             '&title=' + this.model.company.name +
-            '&summary=' + this.model.pitch +
+            '&summary=' + this.model.company.description +
             '&source=Growth Fountain'),'Growth Fountain Campaingn','width=605,height=545');
     },
 
@@ -285,6 +316,11 @@ module.exports = {
       });
 
       return this;
+    },
+
+    readMore(e) {
+      e.preventDefault();
+      $(e.target).parent().addClass('show-more-detail');
     },
 
     _commentSuccess(data) {

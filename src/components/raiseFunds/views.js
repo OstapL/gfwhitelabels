@@ -290,6 +290,7 @@ module.exports = {
           },
         };
         this.fields.additional_info.type = 'json';
+        this.fields.additional_info.help_text = 'Is there anything else you want to tell your potential investors? Received any accolades? Patents? Major contracts? Distributors, etc?';
         this.fields.additional_info.schema = {
           title: {
             type: 'string',
@@ -948,6 +949,11 @@ module.exports = {
             this.$('.help-block').prev().scrollTo(5);
           }
         }
+
+        if (this.model.company.corporate_structure == 2) {
+          this.$('input[type=radio][name=security_type][value=0]').prop('disabled', true);
+          this.$('input[type=radio][name=security_type][value=1]').click();
+        }        
 
         return this;
       },

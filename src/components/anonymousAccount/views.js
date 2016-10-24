@@ -241,6 +241,8 @@ module.exports = {
 
     initialize(options) {
         this.fields = options.fields;
+        this.fields.checkbox1.messageRequired = 'You must agree to the terms ' +
+          'before creating an account';
         this.hello = require('hellojs');
         this.socialAuth = require('./social-auth.js');
     },
