@@ -1037,6 +1037,7 @@ module.exports = {
     urlRoot: formcServer + '/:id' + '/outstanding-security',
     events: _.extend({
       'submit form': 'submit',
+      'change #outstanding_securities__undefined__security_type': 'outstandingSecurityUpdate',
       'click .add-outstanding': 'addOutstanding',
       'click .delete-outstanding': 'deleteOutstanding',
     }, addSectionHelper.events, menuHelper.events, yesNoHelper.events),
@@ -1117,6 +1118,14 @@ module.exports = {
 
     },
 
+    outstandingSecurityUpdate(e) {
+      if(e.target.options[e.target.selectedIndex].value == 5) {
+       $('#security_modal .outstanding_securities__undefined__custom_security_type').show(); 
+      } else {
+       $('#security_modal .outstanding_securities__undefined__custom_security_type').hide(); 
+      }
+    },
+
     submit(e) {
       var $target = $(e.target);
       var data = $target.serializeJSON({useIntKeysAsArrayIndex: true});
@@ -1177,6 +1186,7 @@ module.exports = {
           templates: this.jsonTemplates,
         })
       );
+      $('#security_modal .outstanding_securities__undefined__custom_security_type').hide(); 
       return this;
     },
   }, addSectionHelper.methods, menuHelper.methods, yesNoHelper.methods)),
