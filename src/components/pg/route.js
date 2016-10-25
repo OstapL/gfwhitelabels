@@ -74,12 +74,12 @@ module.exports = Backbone.Router.extend({
                 })
             }
 
-            let $content = $('#content')
+            let $content = $('#content');
 
             $('.list-group-item-action').click(function (e) {
               $content.find('.list-group-item-action').removeClass('active');
               $content.find('.fa').removeClass('fa-angle-up').addClass('fa-angle-down');
-              
+
               let $elem = $(e.target);
               let $icon = $elem.find('.fa');
 
