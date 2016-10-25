@@ -1,37 +1,22 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <style>
-      #map {
-        height: 400px;
-        width: 100%;
-       }
-    </style>
-  </head>
-  <body>
-    <!-- <h3>My Google Maps Demo</h3> -->
-    <div id="map"></div>
-    <script>
-      function initMap() {
-        var uluru = {lat: 40.7440668, lng: -73.98522220000001};
-        var map = new google.maps.Map(document.getElementById('map'), {
-          zoom: 15,
-          center: uluru,
-          scrollwheel: false,
-        });
-        var marker = new google.maps.Marker({
-          position: uluru,
-          map: map,
-        });
-        var infowindow = new google.maps.InfoWindow({
-          content:"<b>Growth Fountain</b><br/>79 Madison Ave, 5th Floor, New York, NY 10016<br/> New York"
-        });
-        google.maps.event.addListener(marker, "click", function(){infowindow.open(map,marker);});
-        infowindow.open(map, marker);
-      }
-    </script>
-    <script async defer
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBpCl9-7bkVISZ0o-AaFCsKzZwGAxalkZU&callback=initMap">
-    </script>
-  </body>
-</html>
+<div id="map" style="height:400px;width:100%;"></div>
+<script>
+  function initMap() {
+    var uluru = {lat: 40.7440668, lng: -73.98522220000001};
+    var map = new google.maps.Map(document.getElementById('map'), {
+      zoom: 15,
+      center: uluru,
+      scrollwheel: false,
+    });
+    var marker = new google.maps.Marker({
+      position: uluru,
+      map: map,
+    });
+    var infowindow = new google.maps.InfoWindow({
+      content:"<b>Growth Fountain</b><br/>79 Madison Ave, 5th Floor, New York, NY 10016<br/> New York"
+    });
+    google.maps.event.addListener(marker, "click", function(){infowindow.open(map,marker);});
+    infowindow.open(map, marker);
+  }
+</script>
+<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBpCl9-7bkVISZ0o-AaFCsKzZwGAxalkZU&callback=initMap">
+</script>
