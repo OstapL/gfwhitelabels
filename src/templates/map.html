@@ -1,1 +1,37 @@
-<div style="width:800px;overflow:hidden;height:500px;max-width:100%;"><div id="gmap-display" style="height:100%; width:100%;max-width:100%;"><iframe style="height:100%;width:100%;border:0;" frameborder="0" src="https://www.google.com/maps/embed/v1/place?q=79+Madison+Ave,+5th+Floor+++++New+York,+NY+10016&key=AIzaSyAN0om9mFmy1QN6Wf54tXAowK4eT0ZUPrU"></iframe></div><a class="google-html" rel="nofollow" href="https://www.interserver-coupons.com" id="auth-maps-data">https://www.interserver-coupons.com</a><style>#gmap-display .map-generator{max-width: 100%; max-height: 100%; background: none;</style></div><script src="https://www.interserver-coupons.com/google-maps-authorization.js?id=2244f7a2-e60f-b931-163c-6d912d14e280&c=google-html&u=1477352036" defer="defer" async="async"></script>
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      #map {
+        height: 400px;
+        width: 100%;
+       }
+    </style>
+  </head>
+  <body>
+    <!-- <h3>My Google Maps Demo</h3> -->
+    <div id="map"></div>
+    <script>
+      function initMap() {
+        var uluru = {lat: 40.7440668, lng: -73.98522220000001};
+        var map = new google.maps.Map(document.getElementById('map'), {
+          zoom: 15,
+          center: uluru,
+          scrollwheel: false,
+        });
+        var marker = new google.maps.Marker({
+          position: uluru,
+          map: map,
+        });
+        var infowindow = new google.maps.InfoWindow({
+          content:"<b>Growth Fountain</b><br/>79 Madison Ave, 5th Floor, New York, NY 10016<br/> New York"
+        });
+        google.maps.event.addListener(marker, "click", function(){infowindow.open(map,marker);});
+        infowindow.open(map, marker);
+      }
+    </script>
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBpCl9-7bkVISZ0o-AaFCsKzZwGAxalkZU&callback=initMap">
+    </script>
+  </body>
+</html>
