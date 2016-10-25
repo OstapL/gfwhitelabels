@@ -574,6 +574,7 @@ module.exports = {
         'click .submit_form': doCampaignValidation,
         'change #linkedin,#facebook': 'appendHttpsIfNecessary',
         'click .cancel': 'cancel',
+        'click .onPreview': onPreviewAction,
       }, leavingConfirmationHelper.events),
       // urlRoot: serverUrl + Urls['campaign-list']() + '/team_members',
       urlRoot: Urls['campaign-list']() + '/team_members',
@@ -582,7 +583,7 @@ module.exports = {
         e.preventDefault();
         e.stopPropagation();
         this.undelegateEvents();
-        if (confirm("Doe you really want to leave?")) {
+        if (confirm("Do you really want to leave?")) {
           app.routers.navigate(
             '/campaign/team-members/' + this.model.id,
             { trigger: true, replace: false }
