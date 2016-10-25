@@ -34,7 +34,11 @@
 			border-radius: rem(20);
 		}
 	} 
-
+	.profile-user-name {
+		font-size: rem(14);
+		letter-spacing: rem(2.4);
+		text-transform: uppercase;
+	}
 	.drop-photo-block {
 		h3 {
 			margin-top: 0
