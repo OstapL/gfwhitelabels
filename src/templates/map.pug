@@ -1,5 +1,5 @@
-<div id="map" style="height:400px;width:100%;"></div>
-<script>
+#map(style="height:400px;width:100%;")
+script(type="text/javascript").
   function initMap() {
     var uluru = {lat: 40.7440668, lng: -73.98522220000001};
     var map = new google.maps.Map(document.getElementById('map'), {
@@ -17,6 +17,4 @@
     google.maps.event.addListener(marker, "click", function(){infowindow.open(map,marker);});
     infowindow.open(map, marker);
   }
-</script>
-<script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBpCl9-7bkVISZ0o-AaFCsKzZwGAxalkZU&callback=initMap">
-</script>
+script(async defer src="https://maps.googleapis.com/maps/api/js?key=" + googleMapKey + "&callback=initMap")
