@@ -17,10 +17,10 @@ module.exports = {
         let $form = this.$('form[index=' + index + ']');
         $form.find('.risk-button').css({display: 'none'});
         $form.find('.unadded-state').css({display: 'inline-block'});
-        $form.find('textarea').val(this.defaultRisks[index].risk);
+        let $textarea = $form.find('textarea');
+        $textarea.val(this.defaultRisks[index].risk);
         let $panel = this.$('.risk-panel[index=' + index + ']');
         $panel.find('a').removeClass('added-risk-title');
-        let $textarea = $(e.target).find('textarea');
         $textarea.prop('readonly', true).addClass('borderless-textarea').css({ height: $textarea.prop('scrollHeight')+'px' });
       } else {
         let $section = $('.risk-panel[index=' + index + ']');
