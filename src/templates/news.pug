@@ -1,97 +1,102 @@
 include mixins.pug
 
 +breadcrumbs('IN THE NEWS', '', 
-    [
-        ['Home', '/'],
-        ['In The News', '']
-    ]
+  [
+    ['Home', '/'],
+    ['In The News', '']
+  ]
 )
 
 section.text_block 
-    .container
-        .row
-            .col-lg-3.hidden-md-down  
-                .page_title.border-bottom.mb25
-                    h4.text-uppercase.dosis ARCHIVES
-                ul.list-unstyled.mb50.list-blog-aside
-                    //- li
-                    //-     a.d-inline-block.w-100.pb10(href='') August 2016
-                        
-                    //- li
-                    //-     a.d-inline-block.w-100.pb10(href='') March 2015
+  .container
+    .row
+      .col-lg-3.hidden-md-down  
+        .page_title.border-bottom.mb25
+          h4.text-uppercase.dosis ABOUT US
+        ul.list-unstyled.custom
+          li
+            a(href='/pg/overview').d-inline-block.w-100.pb10 Overview
+          li
+            a(href='/pg/team').d-inline-block.w-100.pb10 #{teamName}
+          li.display-partners
+            a(href='/pg/partners').d-inline-block.w-100.pb10 Partners
+          li
+            a(href='/pg/contact').d-inline-block.w-100.pb10 Contact Us
+          li
+            a(href='/pg/careers').d-inline-block.w-100.pb10 Careers
+          li
+            a(href='/pg/news').d-inline-block.w-100.pb10 In the News
+          li
+            a(href='/pg/faq').d-inline-block.w-100.pb10 FAQ
 
-                    //- li
-                    //-     // у последнего елемента <a> клас pb10 отстутствует
-                    //-     a.d-inline-block.w-100.pb10(href='' alt="") November 2014
+      .col-lg-9
+        ul.list-unstyled.m0
+          li.border-bottom.pb50.mb50
+            .row
+              .col-lg-4
+                .news-img.text-xs-center.mpb50
+                  a(href="https://creator.wework.com/grow-your-business/expert-advice-ken-stauts-4-reasons-equity-crowdfunding-worth/" target="_blank")
+                    img(src="/img/pages/n4.png")
+                
+              .col-lg-8
+                h4.open-sans.letter-spacing-0.text-muted.m0
+                  a(href="https://creator.wework.com/grow-your-business/expert-advice-ken-stauts-4-reasons-equity-crowdfunding-worth/" target="_blank")
+                    b
+                      | Expert Advice: Ken Staut’s 4 Reasons Why Equity Crowdfunding Is Worth it
+                    .small-text
+                      | 9 August, 2016
+                
+                p.pt10 Building a business requires quick access to capital. And Ken Staut, founder of GrowthFountain, wants to make finding funding even easier. GrowthFountain is a platform dedicated to equity crowdfunding. Most startups are familiar with the terms “equity” and “crowdfunding” on... stratosphere. What...
 
-            .col-lg-9
-                ul.list-unstyled.m0
-                    li.border-bottom.pb50.mb50
-                        .row
-                            .col-lg-4
-                                .news-img.text-xs-center.mpb50
-                                    a(href="https://creator.wework.com/grow-your-business/expert-advice-ken-stauts-4-reasons-equity-crowdfunding-worth/" target="_blank")
-                                        img(src="/img/pages/n4.png")
-                                
-                            .col-lg-8
-                                h4.open-sans.letter-spacing-0.text-muted.m0
-                                    a(href="https://creator.wework.com/grow-your-business/expert-advice-ken-stauts-4-reasons-equity-crowdfunding-worth/" target="_blank")
-                                        b
-                                            | Expert Advice: Ken Staut’s 4 Reasons Why Equity Crowdfunding Is Worth it
-                                        .small-text
-                                            | 9 August, 2016
-                                
-                                p.pt10 Building a business requires quick access to capital. And Ken Staut, founder of GrowthFountain, wants to make finding funding even easier. GrowthFountain is a platform dedicated to equity crowdfunding. Most startups are familiar with the terms “equity” and “crowdfunding” on... stratosphere. What...
+          li.border-bottom.pb50.mb50
+            .row
+              .col-lg-4
+                .news-img.text-xs-center.mpb50
+                  a(href="http://www.tsys.com/ngenuity-journal/mastering-a-new-type-of-crowdfunding-with-equity-investments.cfm" target="_blank")
+                    img(src="/img/pages/news1.png")
+                
+              .col-lg-8
+                h4.open-sans.letter-spacing-0.text-muted.m0
+                  a(href="http://www.tsys.com/ngenuity-journal/mastering-a-new-type-of-crowdfunding-with-equity-investments.cfm" target="_blank")
+                    b
+                      | Mastering A New Type of Crowdfunding With. Equity Investments
+                    .small-text
+                      | 10 March, 2015
+                
+                p.pt10 Crowdfunding is the process of funding a project or venture by raising small amounts of money from a large number of people. Many have encountered some types of crowdfunding already ─ perhaps having been invited to join a Kickstarter campaign or contributing to a cause on Indiegogo...
 
-                    li.border-bottom.pb50.mb50
-                        .row
-                            .col-lg-4
-                                .news-img.text-xs-center.mpb50
-                                    a(href="http://www.tsys.com/ngenuity-journal/mastering-a-new-type-of-crowdfunding-with-equity-investments.cfm" target="_blank")
-                                        img(src="/img/pages/news1.png")
-                                
-                            .col-lg-8
-                                h4.open-sans.letter-spacing-0.text-muted.m0
-                                    a(href="http://www.tsys.com/ngenuity-journal/mastering-a-new-type-of-crowdfunding-with-equity-investments.cfm" target="_blank")
-                                        b
-                                            | Mastering A New Type of Crowdfunding With. Equity Investments
-                                        .small-text
-                                            | 10 March, 2015
-                                
-                                p.pt10 Crowdfunding is the process of funding a project or venture by raising small amounts of money from a large number of people. Many have encountered some types of crowdfunding already ─ perhaps having been invited to join a Kickstarter campaign or contributing to a cause on Indiegogo...
-
-                    li.border-bottom.pb50.mb50
-                        .row
-                            .col-lg-4
-                                .news-img.text-xs-center.mpb50
-                                    a(href="http://www.crowdfundinsider.com/2014/11/54809-callahan-associates-announces-strategic-partnership-growthfountain-opening-crowdfunding-opportunities-millions-credit-union-members/" target="_blank")
-                                        img(src="/img/pages/news3.png")
-                                
-                            .col-lg-8
-                                h4.open-sans.letter-spacing-0.text-muted.m0
-                                    a(href="http://www.crowdfundinsider.com/2014/11/54809-callahan-associates-announces-strategic-partnership-growthfountain-opening-crowdfunding-opportunities-millions-credit-union-members/" target="_blank")
-                                        b
-                                            | Callahan &amp; Associates Announces Strategic Partnership with GrowthFountain Opening Crowdfunding Opportunities for Millions of Credit Union Members
-                                        .small-text
-                                            | 3 November, 2014
-                                
-                                p.pt10 Washington, DC — Callahan &amp; Associates, an innovative thought leader to credit union industry decision-makers, and GrowthFountain, a crowdfunding... marketplace
-                    
-                    // there are no .border-bottom .pb50 classes in last element of list
-                    li
-                        .row
-                            .col-lg-4
-                                .news-img.text-xs-center.mpb50
-                                    a(href="http://www.cutimes.com/2014/11/21/callahan-pact-creates-crowdfunding-platform" target="_blank")
-                                        img(src="/img/pages/news2.png")
-                                
-                            .col-lg-8
-                                h4.open-sans.letter-spacing-0.text-muted.m0
-                                    a(href="http://www.cutimes.com/2014/11/21/callahan-pact-creates-crowdfunding-platform" target="_blank")
-                                        b
-                                            | Callahan Pact Creates Crowdfunding Platform
-                                        .small-text
-                                            | 21 November, 2014
-                                
-                                p.pt10 Callahan & Associates has launched a strategic alliance with GrowthFountain that may allow credit unions to help pioneer the crowdfunding trail. GrowthFountain will provide support, tutorials and tools to help startups and small businesses to raise capital...
-                    
+          li.border-bottom.pb50.mb50
+            .row
+              .col-lg-4
+                .news-img.text-xs-center.mpb50
+                  a(href="http://www.crowdfundinsider.com/2014/11/54809-callahan-associates-announces-strategic-partnership-growthfountain-opening-crowdfunding-opportunities-millions-credit-union-members/" target="_blank")
+                    img(src="/img/pages/news3.png")
+                
+              .col-lg-8
+                h4.open-sans.letter-spacing-0.text-muted.m0
+                  a(href="http://www.crowdfundinsider.com/2014/11/54809-callahan-associates-announces-strategic-partnership-growthfountain-opening-crowdfunding-opportunities-millions-credit-union-members/" target="_blank")
+                    b
+                      | Callahan &amp; Associates Announces Strategic Partnership with GrowthFountain Opening Crowdfunding Opportunities for Millions of Credit Union Members
+                    .small-text
+                      | 3 November, 2014
+                
+                p.pt10 Washington, DC — Callahan &amp; Associates, an innovative thought leader to credit union industry decision-makers, and GrowthFountain, a crowdfunding... marketplace
+          
+          // there are no .border-bottom .pb50 classes in last element of list
+          li
+            .row
+              .col-lg-4
+                .news-img.text-xs-center.mpb50
+                  a(href="http://www.cutimes.com/2014/11/21/callahan-pact-creates-crowdfunding-platform" target="_blank")
+                    img(src="/img/pages/news2.png")
+                
+              .col-lg-8
+                h4.open-sans.letter-spacing-0.text-muted.m0
+                  a(href="http://www.cutimes.com/2014/11/21/callahan-pact-creates-crowdfunding-platform" target="_blank")
+                    b
+                      | Callahan Pact Creates Crowdfunding Platform
+                    .small-text
+                      | 21 November, 2014
+                
+                p.pt10 Callahan & Associates has launched a strategic alliance with GrowthFountain that may allow credit unions to help pioneer the crowdfunding trail. GrowthFountain will provide support, tutorials and tools to help startups and small businesses to raise capital...
+          
