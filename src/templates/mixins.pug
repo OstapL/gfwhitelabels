@@ -349,7 +349,6 @@ mixin fieldDropzone(name, attr, type)
                                         img(src=v.url).img-fluid.pull-left
     else if type == 3
       div(class="drop-photo-block dropzone__" + name)
-        h3.widget-title.font-alt #{ attr.title }
         div.border-dropzone
             div(class="uploading" style="line-height:115px;text-align:center;position:absolute;width:100%;height:100%;left:0;right:0;top:0;bottom:0;z-index:1;display:none;background-color:rgba(255,255,255,0.8);")
                 img(alt="activity indicator" src="/img/ajax-loader.gif" style="position:absolute;margin:auto;top:0;left:0;right:0;bottom:0;")
