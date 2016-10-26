@@ -180,7 +180,10 @@ module.exports = {
 
     sharWithEmail (e) {
       event.preventDefault();
-      window.open('mailto:?subject=check this link&body=' + window.location.href);
+      // Check out COMPANY NAME's fundraise on GrowthFountain
+      let companyName = this.model.company.name;
+      let text = "Check out " + companyName + "'s fundraise on GrowthFountain";
+      window.open("mailto:?subject=" + text + "&body=" + text + "%0D%0A" + window.location.href);
     },
 
     shareOnFacebook(event) {
@@ -314,6 +317,22 @@ module.exports = {
       $('.fancybox').fancybox({
         openEffect  : 'none',
         closeEffect : 'none'
+      });
+
+      // fetch vimeo
+      $('.vimeo-thumbnail').each(function(elem, idx) {
+        let id = $(this).data('vimeo-id');
+        let url = window.location.protocol + '//vimeo.com/api/v2/video/' + id + '.xml';
+        $.ajax({
+          method: 'GET',
+          url: url,
+          success: function(data) {
+            let $xml = $(data);
+            let thumbnailUrl = $xml.find('thumbnail_medium').text();
+            let id = $xml.find('id').text();
+            $('.vimeo-thumbnail[data-vimeo-id=' + id + ']').attr('src', thumbnailUrl);
+          },
+        });
       });
 
       return this;

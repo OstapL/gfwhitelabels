@@ -1,120 +1,117 @@
 .home-section
-    section.main-page-slider
-      #carousel-main(data-ride="carousel" data-interval="30000").carousel.carousel-main
-        ol.carousel-indicators
-            li(data-target="#carousel-main" data-slide-to="0").active
-            li(data-target="#carousel-main" data-slide-to="1")
-            li(data-target="#carousel-main" data-slide-to="2")
+  section.main-page-slider
+    div(data-ride="carousel" data-interval="30000")#carousel-main.carousel.carousel-main
+      ol.carousel-indicators
+        li(data-target="#carousel-main" data-slide-to="0").active
+        li(data-target="#carousel-main" data-slide-to="1")
+        li(data-target="#carousel-main" data-slide-to="2")
 
+      div(role="listbox").carousel-inner
+        .carousel-item.active.t40
+          img(src="/img/slide_1.jpg" alt="...").img-fluid
+          .carousel-caption
+            .home-content
+              .home-text-main.text-lg-center
+                .col-lg-12
+                  h1.text-uppercase.font-weight-bold.m0 YOUR SUCCESS IS OUR SUCCESS
+                .col-lg-12
+                  h2.mt15.mb15.letter-spacing-normal Start investing locally
+                  a(href="/pg/education").link-2 Understand the Risks
+                .col-lg-12.mt45.m-t-m-10
+                  a(href=Urls['campaign-list']()).btn.btn-lg.btn-primary.m-r-2 invest
+                  a(href="/company/create").btn.btn-lg.btn-primary RAISE CAPITAL
 
-        .carousel-inner(role="listbox")
-            .carousel-item.active.t40
-                img(src="/img/slide_1.jpg" alt="...").img-fluid
-                .carousel-caption
-                    .home-content
-                        .home-text-main.text-lg-center
-                            .col-lg-12
-                                h1.text-uppercase.font-weight-bold.m0 YOUR SUCCESS IS OUR SUCCESS
-                            .col-lg-12
-                                h2.mt15.mb15 Start investing locally
-                                a(href="/pg/education").link-2 Understand the Risks
-                            .col-lg-12.mt45
-                                a(href=Urls['campaign-list']()).btn.btn-lg.btn-primary.m-r-2 invest
-                                a(href="/company/create").btn.btn-lg.btn-primary RAISE CAPITAL
+        .carousel-item.t40
+          img(src="/img/slide_2.jpg" alt="...").img-fluid
+          .carousel-caption
+            .home-content
+              .home-text-main.text-lg-right
+                .col-lg-12
+                  h1.text-uppercase.text-lg-right.font-weight-bold.m0 YOUR SUCCESS IS OUR SUCCESS
+                .col-lg-12.text-lg-right
+                  h2.mt15.mb15.letter-spacing-normal Start investing locally
+                  a(href="/pg/education").link-2 Understand the Risks
+                .col-lg-12.text-lg-right.mt45.m-t-m-10
+                  a(href=Urls['campaign-list']()).btn.btn-lg.btn-primary.m-r-3 invest
+                  a(href="#").btn.btn-lg.btn-primary raise capital
+        .carousel-item.t40
+          img(src="/img/slide_3.jpg" alt="...").img-fluid
+          .carousel-caption
+            .home-content
+              .home-text-main.text-lg-left
+                .col-lg-12
+                  h1.text-uppercase.text-lg-left.font-weight-bold.m0 YOUR SUCCESS IS OUR SUCCESS
+                .col-lg-12.text-lg-left
+                  h2.mt15.mb15.letter-spacing-normal Start investing locally
+                  a(href="/pg/education").link-2 Understand the Risks
+                .col-lg-12.text-lg-left.mt45.m-t-m-10
+                  a(href=Urls['campaign-list']()).btn.btn-lg.btn-primary.m-r-3 invest
+                  a(href="/company/create").btn.btn-lg.btn-primary raise capital
 
-            .carousel-item.t40
-                img(src="/img/slide_2.jpg" alt="...").img-fluid
-                .carousel-caption
-                    .home-content
-                        .home-text-main.text-lg-right
-                            .col-lg-12
-                                h1.text-uppercase.text-lg-right.font-weight-bold.m0 YOUR SUCCESS IS OUR SUCCESS
-                            .col-lg-12.text-lg-right
-                                h2.mt15.mb15 start investing locally
-                                a(href="/pg/education").link-2 Understand the Risks
-                            .col-lg-12.text-lg-right.mt45
-                                a(href=Urls['campaign-list']()).btn.btn-lg.btn-primary.m-r-3 invest
-                                a(href="#").btn.btn-lg.btn-primary raise capital
-            .carousel-item.t40
-                img(src="/img/slide_3.jpg" alt="...").img-fluid
-                .carousel-caption
-                    .home-content
-                        .home-text-main.text-lg-left
-                            .col-lg-12
-                                h1.text-uppercase.text-lg-left.font-weight-bold.m0 YOUR SUCCESS IS OUR SUCCESS
-                            .col-lg-12.text-lg-left
-                                h2.mt15.mb15 start investing locally
-                                a(href="/pg/education").link-2 Understand the Risks
-                            .col-lg-12.text-lg-left.mt45
-                                a(href=Urls['campaign-list']()).btn.btn-lg.btn-primary.m-r-3 invest
-                                a(href="/company/create").btn.btn-lg.btn-primary raise capital
-
-        a(href="#carousel-main"
-        role="button" 
-        data-slide="prev").left.carousel-control
-          span(aria-hidden="true").icon-prev
-          span.sr-only Previous
-        a(href="#carousel-main"
-        role="button" 
-        data-slide="next").right.carousel-control
-          span(aria-hidden="true").icon-next
-          span.sr-only Next
+    a(href="#carousel-main"
+    role="button" 
+    data-slide="prev").left.carousel-control
+      span(aria-hidden="true").icon-prev
+      span.sr-only Previous
+    a(href="#carousel-main"
+    role="button" 
+    data-slide="next").right.carousel-control
+      span(aria-hidden="true").icon-next
+      span.sr-only Next
 
 section.home-wrap-text-block.top-block
-    .opasity-blocks.hide-bg-fixed(style="background: url(/img/dcu-bg-under-banner.jpg) top center;  background-attachment: fixed;")
-        .container.text-lg-center.text-xs-center.text-sm-center
-            .col-lg-12.mt45.mb45
-                p.mb25 DCU (Digital Federal Credit Union) is not a registered broker/dealer, nor is it affiliated with GrowthFountain LLC, GrowthFountain Capital LLC, or the issuers of securities on this site.  Neither DCU nor its officers, directors, or employees make any warranty, express or implied, of any kind whatsoever related to the adequacy, accuracy, or completeness of any information on this site or the use of information on this site.  DCU does not give investment advice or recommendations for any investment offered on this platform and no communication, through this web site or otherwise, should be construed as such. 
-                h3.font-weight-bold.m0 Not NCUA Insured  | Not Credit Union Guaranteed | May Lose Value
-
+  div(style="background: url(/img/dcu-bg-under-banner.jpg) top center;  background-attachment: fixed;").opasity-blocks.hide-bg-fixed
+    .container.text-lg-center.text-xs-center.text-sm-center
+      .col-lg-12.mt45.mb45
+        p.mb25 DCU (Digital Federal Credit Union) is not a registered broker/dealer, nor is it affiliated with GrowthFountain LLC, GrowthFountain Capital LLC, or the issuers of securities on this site.  Neither DCU nor its officers, directors, or employees make any warranty, express or implied, of any kind whatsoever related to the adequacy, accuracy, or completeness of any information on this site or the use of information on this site.  DCU does not give investment advice or recommendations for any investment offered on this platform and no communication, through this web site or otherwise, should be construed as such. 
+        h3.font-weight-bold.m0 Not NCUA Insured  | Not Credit Union Guaranteed | May Lose Value
 
 section.campaing-list.m-t-85
-    .container#campaignList
-        .col-lg-12
-            h2.text-uppercase.text-sm-center.m-t-0.mb50.font-weight-bold.main-page-title TRENDING
+  .container#campaignList
+    .col-lg-12
+      h2.text-uppercase.text-xs-center.m-t-0.mb50.font-weight-bold.main-page-title TRENDING
 
-        include ../components/campaign/templates/_list.pug
+    include ../components/campaign/templates/_list.pug
 
-        .col-lg-12.text-lg-center.text-md-center.text-xs-center
-            a(href="/api/campaign").link-4 See All
+    .col-lg-12.text-lg-center.text-md-center.text-xs-center
+      a(href="/api/campaign").link-4 See All
 
-section.home-wrap-text-block.hide-bg-fixed(style="background: url(/img/dcu-bg-bottom-block.jpg) top center no-repeat; background-size: 100% auto; background-attachment: fixed;")
-    .opasity-block
-        .container.text-lg-center.text-xs-center.text-sm-center
-            .col-lg-8.offset-lg-2
-                h2.text-uppercase.font-weight-bold INVEST IN YOUR LOCAL COMMUNITY
-                h3.letter-spacing-normal Find companies in your neighborhood, and help them grow through your investment.
-            .col-lg-12
-                a(href="/account/login").btn.btn-lg.btn-secondary.text-uppercase Sign up to start investing
-                .learn-link
-                    a(href="/pg/education").link-2 Understand the Risks
+section(style="background: url(/img/dcu-bg-bottom-block.jpg) top center no-repeat; background-size: cover; background-attachment: fixed;").home-wrap-text-block.hide-bg-fixed.m-t-3
+  .opasity-block
+    .container.text-lg-center.text-xs-center.text-sm-center
+      .col-lg-8.offset-lg-2
+        h2.text-uppercase.font-weight-bold INVEST IN YOUR LOCAL COMMUNITY
+        h3.letter-spacing-normal Find companies in your neighborhood, and help them grow through your investment.
+      .col-lg-12
+        a(href="/account/login").btn.btn-lg.btn-secondary.text-uppercase Sign up to start investing
+        .learn-link
+          a(href="/pg/education").link-2 Understand the Risks
 
 section.home-what-is
-    .container
-        .col-lg-12
-            h2.text-uppercase.text-sm-center.text-xs-center.font-weight-bold.mb50 Connecting investors and entrepreneurs
-            .row
-                .col-lg-6
-                    .embed-responsive.embed-responsive-16by9.boxshadow
-                        iframe(
-                            embed-responsive-item="true" 
-                            src="https://player.vimeo.com/video/170651597?title=0&amp;byline=0&amp;portrait=0" 
-                            data-webkitallowfullscreen="" 
-                            data-mozallowfullscreen="" 
-                            data-allowfullscreen=""
-                        )
+  .container
+    .col-lg-12
+      h2.text-uppercase.text-sm-center.text-xs-center.font-weight-bold.mb50 Connecting investors and entrepreneurs
+      .row
+        .col-lg-6
+          .embed-responsive.embed-responsive-16by9.boxshadow
+            iframe(
+              embed-responsive-item="true" 
+              src="https://player.vimeo.com/video/170651597?title=0&amp;byline=0&amp;portrait=0" 
+              data-webkitallowfullscreen="" 
+              data-mozallowfullscreen="" 
+              data-allowfullscreen="")
 
-                .col-lg-6
-                    p.mb15.text-xs-center.home-what-is-paragraf This innovative equity crowdfunding partnership between DCU and Growth Fountain offers investors and entrepreneurs a unique way to connect, invest, raise capital, and grow ideas.
-                    p.mb15.text-xs-center.home-what-is-paragraf Local and national entrepreneurs can use this as a way to connect with and raise capital from investors interested in their ideas and small businesses.
-                    p.mb20.text-xs-center.home-what-is-paragraf Whether you’re an interested investor looking for exciting ideas and businesses to back or an entrepreneur looking to grow your business, this platform is a great way to get started.
-                    
-                    .logo
-                        .row
-                            .col-lg-12.text-xs-center
-                                p.text-uppercase.font-weight-bold equity crowdfunding
-                                span.text-xs-center.text-xs-center Powered by
-                        .row
-                            .offset-sm-4.col-sm-4.text-xs-center
-                                a(href="#").powered-by-logo
-                                    img(src="/img/logo/GF.png")
+        .col-lg-6
+          p.mb15.text-xs-center.home-what-is-paragraf This innovative equity crowdfunding partnership between DCU and Growth Fountain offers investors and entrepreneurs a unique way to connect, invest, raise capital, and grow ideas.
+          p.mb15.text-xs-center.home-what-is-paragraf Local and national entrepreneurs can use this as a way to connect with and raise capital from investors interested in their ideas and small businesses.
+          p.mb20.text-xs-center.home-what-is-paragraf Whether you’re an interested investor looking for exciting ideas and businesses to back or an entrepreneur looking to grow your business, this platform is a great way to get started.
+          
+          .logo
+            .row
+              .col-lg-12.text-xs-center
+                p.text-uppercase.font-weight-bold equity crowdfunding
+                span.text-xs-center.text-xs-center Powered by
+            .row
+              .offset-sm-4.col-sm-4.text-xs-center
+                a(href="#").powered-by-logo
+                  img(src="/img/logo/GF.png")
