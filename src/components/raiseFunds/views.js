@@ -62,7 +62,7 @@ const submitCampaign = function submitCampaign(e) {
   var data = $form.serializeJSON();
 
   _.extend(this.model, data);
-  data = Object.assign({}, this.model);
+  data = e.extend({}, this.model);
 
   // ToDo
   // Refactor code
@@ -977,7 +977,7 @@ module.exports = {
         let data = $(e.target).serializeJSON({ useIntKeysAsArrayIndex: true });
         if(this.hasOwnProperty('model')) {
           _.extend(this.model, data);
-          data = Object.assign({}, this.model)
+          data = _.extend({}, this.model)
         }
         let type = 'POST';
         if(data.hasOwnProperty('id')) {

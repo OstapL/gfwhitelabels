@@ -60,11 +60,11 @@ section.create-company-media.container.media-container
             .embed-responsive.embed-responsive-16by9
               - let mainVideo = app.getVideoId(values.video);
               if mainVideo && mainVideo.provider == 'youtube'
-                iframe.embed-responsive-item(src="//www.youtube.com/embed/" + mainVideo.id + "?rel=0" allowfullscreen="true")
+                iframe(src="//www.youtube.com/embed/" + mainVideo.id + "?rel=0" allowfullscreen="true").embed-responsive-item
               else if mainVideo && mainVideo.provider == 'vimeo'
-                iframe.embed-responsive-item(src="//player.vimeo.com/video/" + mainVideo.id allowfullscreen="true")
+                iframe(src="//player.vimeo.com/video/" + mainVideo.id allowfullscreen="true").embed-responsive-item
               else
-                iframe.embed-responsive-item(src="//www.youtube.com/embed/?rel=0" allowfullscreen="true")
+                iframe(src="//www.youtube.com/embed/?rel=0" allowfullscreen="true").embed-responsive-item
 
       .row.m-b-0.additional-video-block
         .col-lg-12.p-sm-0
@@ -74,10 +74,10 @@ section.create-company-media.container.media-container
             type: 'jsonVideo',
             })
           .row.m-t-0.addition-position
-              .col-lg-9.offset-1.pull-right
-                  a(href="#" data-section="additional_video").link-2.add-section
-                    i.fa.fa-plus
-                    |  Add Another Video
+            .col-lg-9.offset-1.pull-right
+              a(href="#" data-section="additional_video").link-2.add-section
+                i.fa.fa-plus
+                |  Add Another Video
         // 
             adsf
             .col-lg-7

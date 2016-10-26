@@ -36,65 +36,57 @@ section.issuer-dashbord-top
             .number
               span(
                 data-counter="counterup"
-                data-value="750"
-              ) $750K
+                data-value="750") $750K
             .desc Amount Raised
 
       .col-md-2.col-sm-6
-        a.dashboard-stat.dashboard-stat-v2.grey(href="")
+        a(href="").dashboard-stat.dashboard-stat-v2.grey
           .visual
             i.fa.fa-briefcase
           .details
             .number
               span(
                 data-counter="counterup"
-                data-value="1349"
-              ) 1349
+                data-value="1349") 1349
             .desc Number of Investors
 
       .col-md-2.col-sm-6
-        a.dashboard-stat.dashboard-stat-v2.grey(href="")
+        a(href="").dashboard-stat.dashboard-stat-v2.grey
           .visual
             i.fa.fa-users
           .details
             .number
               span(
                 data-counter="counterup"
-                data-value="1500"
-              ) 1,5K
+                data-value="1500") 1,5K
             .desc Page Views
 
       .col-md-2.col-sm-6
-        a.dashboard-stat.dashboard-stat-v2.grey(href="")
+        a(href="").dashboard-stat.dashboard-stat-v2.grey
           .visual
             i.fa.fa-comments
           .details
             .number
               span(
                 data-counter="counterup"
-                data-value="456"
-              ) 456
+                data-value="456") 456
             .desc New Interactions
 
       .col-md-7.col-sm-7.p-r-0
         .tpl-progress
-          progress.progress.big_prog(
+          progress(
             value="21"
-            max="100"
-          ) 21%
-          span.circle_progress(
-            style="width:21%"
-          )
+            max="100").progress.big_prog 21%
+          span(
+            style="width:21%").circle_progress
             i.fa.fa-circle-o
-          span.text_position(
-            style="left:21%"
-          ) 12 May
+          span(style="left:21%").text_position 12 May
             br
             | $750K Raised
         .progress_description
           .pull-left
             p.text-uppercase 1 may
-            span Begining of campaigne
+            span Begining of campaign
           .pull-right.text-lg-right
             p 1 june
             span End of campaign
@@ -104,10 +96,8 @@ section.issuer-dashbord-top
           b $500K
           span Goal
       .col-md-8.col-sm-12.text-lg-center
-        a.btn.btn-secondary.text-uppercase(href="") view Campaign
-          i.fa.fa-angle-right(
-            aria-hidden="true"
-          )
+        a(href="").btn.btn-secondary.text-uppercase view Campaign
+          i(aria-hidden="true").fa.fa-angle-right
     .col-lg-12.border-bottom-50
 section.grafic-dashboard
   .container
@@ -118,28 +108,23 @@ section.grafic-dashboard
             .caption
               h2.text-uppercase.m-t-0 Investments
             .actions
-              .btn-group.btn-group-devided(
-                data-toggle="buttons"
-              )
+              div(data-toggle="buttons").btn-group.btn-group-devided
                 label.btn.btn-transparent.dark.btn-outline.btn-circle.btn-sm.active
-                  input.toggle#option1(
+                  input(
                     type="radio"
-                    name="options"
-                  ) 
+                    name="options").toggle#option1
                   | Actions
                 label.btn.btn-transparent.dark.btn-outline.btn-circle.btn-sm
-                  input.toggle#option2(
+                  input(
                     type="radio"
-                    name="options"
-                  ) 
+                    name="options").toggle#option2 
                   | Settings
           .portlet-body.grafic-padding
             .chart#chart_2
-              canvas.flot-base(
+              canvas(
                 width="1110"
                 height="300"
-                style="direction: ltr; position: absolute; left: 0px; top: 0px; width: 1110; height: 300px"
-              )
+                style="direction: ltr; position: absolute; left: 0px; top: 0px; width: 1110; height: 300px").flot-base
               .flot-text
                 .flot-x-axis.flot-x1-axis.xAxis.x1Axis
                   div 1 MAY
@@ -173,11 +158,10 @@ section.grafic-dashboard
                   .flot-tick-label.tickLabel 120
                   .flot-tick-label.tickLabel 130
                   .flot-tick-label.tickLabel 140
-              canvas.flot-overlay(
+              canvas(
                 width="1110"
                 height="300"
-                style="direction: ltr; position: absolute; left: 0px; top: 0px; width: 1110px; height: 300px;"
-              )
+                style="direction: ltr; position: absolute; left: 0px; top: 0px; width: 1110px; height: 300px;").flot-overlay
               .legend
                 table
                   tr
@@ -192,30 +176,27 @@ section.investors-dashbord-comment
         h2.dosis.text-uppercase Investor question & answer
       .col-md-5
         .comments-list
-          ul.nav.standart-nav-tabs(role="tablist")
+          ul(role="tablist").nav.standart-nav-tabs
             li.nav-item
-              a.nav-link.text-uppercase.active#new-tab(
+              a(
                 data-toggle="tab"
                 href="#new"
                 role="tab"
                 aria-controls="home"
-                aria-expanded="true"
-              ) New
+                aria-expanded="true").nav-link.text-uppercase.active#new-tab New
             li.nav-item
-              a.nav-link.text-uppercase#answered-tab(
+              a(
                 data-toggle="tab"
                 href="#answered"
                 role="tab"
                 aria-controls="answered"
-                aria-expanded="false"
-              ) Answered
+                aria-expanded="false").nav-link.text-uppercase#answered-tab Answered
             .clearfix
           .tab-content
-            .tab-pane.fade.active.in#new(
+            div(
               role="tabpanel"
               aria-labelledby="new-tab"
-              aria-expanded="true"
-            )
+              aria-expanded="true").tab-pane.fade.active.in#new
               .all-comments
                 .one-comment
                   .user-photo
@@ -300,13 +281,11 @@ section.investors-dashbord-comment
                       p Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua...
 
                     .clearfix
-               
 
-            .tab-pane.fade#answered(
+            div(
               role="tabpanel"
               aria-labelledby="answered-tab"
-              aria-expanded="false"
-            )
+              aria-expanded="false").tab-pane.fade#answered
               .all-comments
                 .one-comment
                   .user-photo
@@ -415,17 +394,15 @@ section.investors-dashbord-comment
           .form-add-comment
             .form-group.row
               form(action="" metod="").form-section
-                textarea.input-md.form-control(
+                textarea(
                   name="text"
                   rows="8"
                   placeholder="Maria Kravchuk"
-                  maxlength="400"
-                )
-                input.btn.btn-primary(
+                  maxlength="400").input-md.form-control
+                input(
                   type="button"
                   name=""
-                  value="SUBMIT"
-                )
+                  value="SUBMIT").btn.btn-primary
       .col-lg-12
         hr.line-dashboard
 section.danger-zone-dashboard
@@ -435,19 +412,16 @@ section.danger-zone-dashboard
         h2.dosis.text-uppercase.m-t-0 Danger Zone
       .row.m-b-25
         .col-lg-3
-          a(
-          href="#"
-          ).btn.text-uppercase material Change
+          a(href="#").btn.text-uppercase material Change
         .col-lg-9
           .text-block
             p Do you have new information that a reasonable investor would consider important in deciding whether or not to purchase your securities?  If so, click here to amend your offering.
       .row
         .col-lg-3
-            a(
-            href="#"
-            ).btn.danger-cancel.text-uppercase cancel campaign
+          a(href="#").btn.danger-cancel.text-uppercase cancel campaign
         .col-lg-9
           .text-block.text-p-t-6
             p Click here to cancel your offering.
+            
 script(src="/js/graf/graf.js" type="text/javascript")
 script(src="/js/graph_data.js" type="text/javascript")
