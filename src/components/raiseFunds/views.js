@@ -62,7 +62,7 @@ const submitCampaign = function submitCampaign(e) {
   var data = $form.serializeJSON();
 
   _.extend(this.model, data);
-  data = Object.assign({}, this.model);
+  data = e.extend({}, this.model);
 
   // ToDo
   // Refactor code
@@ -574,6 +574,7 @@ module.exports = {
         'click .submit_form': doCampaignValidation,
         'change #linkedin,#facebook': 'appendHttpsIfNecessary',
         'click .cancel': 'cancel',
+        'click .onPreview': onPreviewAction,
       }, leavingConfirmationHelper.events),
       // urlRoot: serverUrl + Urls['campaign-list']() + '/team_members',
       urlRoot: Urls['campaign-list']() + '/team_members',
@@ -582,7 +583,7 @@ module.exports = {
         e.preventDefault();
         e.stopPropagation();
         this.undelegateEvents();
-        if (confirm("Doe you really want to leave?")) {
+        if (confirm("Do you really want to leave?")) {
           app.routers.navigate(
             '/campaign/team-members/' + this.model.id,
             { trigger: true, replace: false }
@@ -950,6 +951,13 @@ module.exports = {
           }
         }
 
+        if (this.model.company.corporate_structure == 2) {
+          this.$('input[type=radio][name=security_type][value=0]').prop('disabled', true);
+          this.$('input[type=radio][name=security_type][value=1]').attr('checked', true);
+          $('.security_type_list').hide();
+          $('.security_type_1').show();
+        }        
+
         return this;
       },
     }, leavingConfirmationHelper.methods)),
@@ -969,7 +977,7 @@ module.exports = {
         let data = $(e.target).serializeJSON({ useIntKeysAsArrayIndex: true });
         if(this.hasOwnProperty('model')) {
           _.extend(this.model, data);
-          data = Object.assign({}, this.model)
+          data = _.extend({}, this.model)
         }
         let type = 'POST';
         if(data.hasOwnProperty('id')) {
