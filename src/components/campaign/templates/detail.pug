@@ -252,8 +252,13 @@ section
                 if v
                   .col-lg-4
                     .card.card-inverse
-                      - var link =  app.getVideoId(v.link)
-                      img(src="http://img.youtube.com/vi/" + link + "/0.jpg" alt="" style="width: 338px").card-img
+                      - let additionalVideo = app.getVideoId(v.link);
+                      if additionalVideo && additionalVideo.provider == 'youtube'
+                        img(src="http://img.youtube.com/vi/" + additionalVideo.id + "/0.jpg" alt="" style="width: 338px").card-img
+                      else if additionalVideo && additionalVideo.provider == 'vimeo'
+                        img(src="" alt="" style="width: 338px;" data-vimeo-id=additionalVideo.id).card-img.vimeo-thumbnail
+                      else
+                        img(src="http://img.youtube.com/vi/" + additionalVideo.id + "/0.jpg" alt="" style="width: 338px").card-img
                       .card-img-overlay
                         .card-title
                           a(data-toggle="modal" href="#videoModal-" + k data-target="#videoModal-" + k).small-icon.link-6
@@ -530,7 +535,7 @@ section
                   .col-lg-4.p-l-3.p-md-0
                     p Type of Security
                     h2.font-weight-bold #{ values.get_security_type_display }
-                  .col-lg-4.p-l-0.p-md-0
+                  .col-lg-4.p-l-2.p-r-0.p-md-0
                     p Target Minimum Raise Amonunt
                     h2.font-weight-bold #{ formatHelper.formatPrice(values.minimum_raise) }
                   .col-lg-4.p-l-3.p-md-0
@@ -540,7 +545,7 @@ section
                   .col-lg-4.p-l-3.p-md-0
                     p Percentage Revenue
                     h2.font-weight-bold #{ values.percentage_revenue }%
-                  .col-lg-4.p-l-0.p-md-0
+                  .col-lg-4.p-l-2.p-r-0.p-md-0
                     p Target Maximum Raise Amount
                     h2.font-weight-bold #{ formatHelper.formatPrice(values.maximum_raise) }
                   .col-lg-4.p-l-3.p-md-0
@@ -808,7 +813,14 @@ section
           span(aria-hidden="true") &times;
         .modal-content
             .embed-responsive.embed-responsive-16by9
-                iframe.embed-responsive-item(src="//www.youtube.com/embed/" + app.getVideoId(values.video) + "?rel=0" allowfullscreen="true")
+                - let mainVideo = app.getVideoId(values.video);
+                if mainVideo && mainVideo.provider == 'youtube'
+                  iframe.embed-responsive-item(src="//www.youtube.com/embed/" + mainVideo.id + "?rel=0" allowfullscreen="true")
+                else if mainVideo && mainVideo.provider == 'vimeo'
+                  iframe.embed-responsive-item(src="//player.vimeo.com/video/" + mainVideo.id allowfullscreen="true")
+                else
+                  iframe.embed-responsive-item(src="//www.youtube.com/embed/?rel=0" allowfullscreen="true")
+                //- iframe.embed-responsive-item(src="//www.youtube.com/embed/" + app.getVideoId(values.video) + "?rel=0" allowfullscreen="true")
 
 each v,k in values.additional_video
     if v
@@ -816,5 +828,12 @@ each v,k in values.additional_video
           .modal-dialog.modal-lg(role="document")
               .modal-content
                   .embed-responsive.embed-responsive-16by9
-                      - var link =  app.getVideoId(v.link)
-                      iframe.embed-responsive-item(src="//www.youtube.com/embed/" + link + "?rel=0" allowfullscreen="true")
+                      //- - var link =  app.getVideoId(v.link)
+                      - let additionalVideo = app.getVideoId(v.link);
+                      if additionalVideo && additionalVideo.provider == 'youtube'
+                        iframe.embed-responsive-item(src="//www.youtube.com/embed/" + additionalVideo.id + "?rel=0" allowfullscreen="true")
+                      else if additionalVideo && additionalVideo.provider == 'vimeo'
+                        iframe.embed-responsive-item(src="//player.vimeo.com/video/" + additionalVideo.id allowfullscreen="true")
+                      else
+                        iframe.embed-responsive-item(src="//www.youtube.com/embed/?rel=0" allowfullscreen="true")
+                      //- iframe.embed-responsive-item(src="//www.youtube.com/embed/" + link + "?rel=0" allowfullscreen="true")
