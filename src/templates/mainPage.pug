@@ -1,4 +1,4 @@
-.home-section
+.home-section.hidden-sm-down
   section.main-page-slider
     div(data-ride="carousel" data-interval="30000")#carousel-main.carousel.carousel-main
       ol.carousel-indicators
@@ -44,7 +44,21 @@
       data-slide="next").right.carousel-control
         span(aria-hidden="true").icon-next
         span.sr-only Next
-
+section(style="background: url(/img/slider_1.png) center center no-repeat; background-size: cover; background-attachment: fixed;").home-section.bg-dark-alfa-30.hide-bg-fixed.hidden-md-up
+  .container
+    .row
+      .js-height-full
+        .home-content
+          .home-text-main.text-lg-center
+            h1.text-uppercase.dosis RAISE CAPITAL WITH US
+            .col-lg-6.offset-lg-3.text-lg-center.text-sm-center.text-xs-center
+              span.small-text Invest in your neighbor, your community, or entrepreneurs you believe in
+            .col-lg-12.m-t-1.m-b-2
+              a(href="/pg/education").link-2 Start investing locally
+            .col-lg-12
+              a(href=Urls['campaign-list']()).btn.btn-lg.btn-primary.m-r-3 invest
+              span.hidden-xs  
+                a(href="/company/create").btn.btn-lg.btn-primary RAISE CAPITAL
 section.home-wrap-text-block.top-block.m-t-0
   div(style="background: url(/img/main_bg_section.jpg) top center;  background-attachment: fixed;").opasity-blocks.hide-bg-fixed
     .container.text-lg-center.text-xs-center.text-sm-center
