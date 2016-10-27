@@ -47,6 +47,7 @@ include ../../../templates/mixins.pug
                                 value= formatPrice(data.raiseCash),
                                 type='text',
                                 placeholder='Raise Amount',
+                                autocomplete='off'
                                 data-input-mask='price',
                                 data-model-value='raiseCash',
                                 data-current-value= data.raiseCash)
@@ -59,18 +60,20 @@ include ../../../templates/mixins.pug
                                 value= formatPrice(data.ownCache),
                                 type='text',
                                 placeholder='Cash Holdings',
+                                autocomplete='off'
                                 data-input-mask='price',
                                 data-model-value='ownCache',
                                 data-current-value= data.ownCache)
 
                     .form-group.row
-                        label(for="currentDebt").col-lg-12 How much cash, beyond what's needed for immediate operating needs, does your business currently have?
+                        label(for="currentDebt").col-lg-12 How much debt is your business currently carrying?
 
                         .col-lg-12
                             input#currentDebt.form-control.js-field(
                                 value= formatPrice(data.currentDebt),
                                 type='text',
                                 placeholder='Current Debt',
+                                autocomplete='off'
                                 data-input-mask='price',
                                 data-model-value='currentDebt',
                                 data-current-value= data.currentDebt)
