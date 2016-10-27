@@ -1,76 +1,74 @@
 include mixins.pug
 
 +breadcrumbs('Overview', '', 
-    [
-        ['Home', '/'],
-        ['Overview', ''],
-    ]
+  [
+    ['Home', '/'],
+    ['Overview', ''],
+  ]
 )
 
 section.text_block 
-    .container
+  .container
+    .row
+      .col-lg-3.hidden-md-down 
+        .page_title.border-bottom.mb25
+          h4.text-uppercase.dosis ABOUT US
+        ul.list-unstyled.mb50.custom
+          li
+            a(href='/pg/overview').d-inline-block.w-100.pb10 Overview
+          li
+            a(href='/pg/team').d-inline-block.w-100.pb10 #{teamName}
+          li.display-partners
+            a(href='/pg/partners').d-inline-block.w-100.pb10 Partners
+          li
+            a(href='/pg/contact').d-inline-block.w-100.pb10 Contact Us
+          li
+            a(href='/pg/careers').d-inline-block.w-100.pb10 Careers
+          li
+            a(href='/pg/faq').d-inline-block.w-100.pb10 FAQ
+          li
+            a(href='/pg/news').d-inline-block.w-100.pb10 In the News
+          li
+            // у последнего елемента <a> клас pb10 отстутствует
+            //a(href='/pg/blogs').d-inline-block.w-100 Blog
+
+      .col-lg-9
         .row
-            .col-lg-3 
-                .page_title.border-bottom.mb25
-                    h4.text-uppercase.dosis ABOUT US
-                ul.list-unstyled.mb50.custom
-                    li
-                        a.d-inline-block.w-100.pb10(href='/pg/overview') Overview
-                    li
-                        a.d-inline-block.w-100.pb10(href='/pg/team') #{teamName}
-                    li.display-partners
-                        a.d-inline-block.w-100.pb10(href='/pg/partners') Partners
-                    li
-                        a.d-inline-block.w-100.pb10(href='/pg/contact') Contact Us
-                    li
-                        a.d-inline-block.w-100.pb10(href='/pg/careers') Careers
-                    li
-                        a.d-inline-block.w-100.pb10(href='/pg/faq') FAQ
-                    li
-                        a.d-inline-block.w-100.pb10(href='/pg/news') In the News
-                    li
-                        // у последнего елемента <a> клас pb10 отстутствует
-                        a.d-inline-block.w-100(href='/pg/blogs') Blog
+          .col-lg-12.text-xs-center
+            h2.text-uppercase.dosis.m0 Overview
+            
+        .row
+          .col-lg-12.mt45
 
-            .col-lg-9
-                .row
-                    .col-lg-12.text-xs-center
-                        h2.text-uppercase.dosis.m0 Overview
-                        
-                .row
-                    .col-lg-12.mt45
+            h3.font-weight-bold.m-t-0 Strength. Commitment. Community.
 
-                        h3.font-weight-bold.m-t-0 Strength. Commitment. Community.
+            p.pb10.text-justify GrowthFountain and Jeanne D’Arc Credit Union have teamed up to fuel access to capital for the small businesses and entrepreneurs in our community. Our collective mission is to level the playing field for small businesses by reducing friction and providing the tools you need to succeed: access to financial, human and social capital.
 
-                        p.pb10.text-justify GrowthFountain and Jeanne D’Arc Credit Union have teamed up to fuel access to capital for the small businesses and entrepreneurs in our community. Our collective mission is to level the playing field for small businesses by reducing friction and providing the tools you need to succeed: access to financial, human and social capital.
+            p.pb10.text-justify “People helping people” is not just a saying, it’s our philosophy. This platform can help provide a source of sustainable organic growth within our community. As entrepreneurs and investors connect, fund and support one another, something interesting happens. Communities start to build, grow and thrive. Jobs are created, money stays in the local community and recirculates which creates economic development. Imagine the potential to rejuvenate and grow local communities all across the country. Being part of this revolution is what has us so excited – we are proud to show our commitment to help strengthen our communities.
 
-                        p.pb10.text-justify “People helping people” is not just a saying, it’s our philosophy. This platform can help provide a source of sustainable organic growth within our community. As entrepreneurs and investors connect, fund and support one another, something interesting happens. Communities start to build, grow and thrive. Jobs are created, money stays in the local community and recirculates which creates economic development. Imagine the potential to rejuvenate and grow local communities all across the country. Being part of this revolution is what has us so excited – we are proud to show our commitment to help strengthen our communities.
+            p.pb10.text-justify Please feel free to take advantage of all of the tools, tutorials and calculators we have available on our platform, including:
 
-                        p.pb10.text-justify Please feel free to take advantage of all of the tools, tutorials and calculators we have available on our platform, including:
+            ul.simple-list
+              li.pb10.text-justify 
+                b Raise Capital:  
+                | Access our investor network to raise financial capital for your company
+              li.pb10.text-justify
+                b Education Material:  
+                |  Learn how does investing in Regulation Crowdfunding offerings actually work
+              li.pb10.text-justify 
+                b Success Guide:  
+                | Use this tool to help your company prepare your fundraising campaign
+              li.pb10.text-justify
+                b Investor and Business Tutorials:  
+                | Delve deeper into the rules and obligations of Regulation Crowdfunding
+              li.pb10.text-justify
+                b Capital Raise Calculator:  
+                | Determine how much money you might need to raise to accomplish your goals
+              li.pb10.text-justify 
+                b What’s my Business Worth?:  
+                | This tool helps you benchmark valuations for similar companies
+              li.pb10.text-justify
+                b FAQ:  
+                | Scroll through our Frequently Asked Questions to gain additional insight into how it all works
 
-                        ul.simple-list
-                            li.pb10.text-justify 
-                                b Raise Capital:  
-                                | Access our investor network to raise financial capital for your company
-                            li.pb10.text-justify
-                                b Education Material:  
-                                |  Learn how does investing in Regulation Crowdfunding offerings actually work
-                            li.pb10.text-justify 
-                                b Success Guide:  
-                                | Use this tool to help your company prepare your fundraising campaign
-                            li.pb10.text-justify
-                                b Investor and Business Tutorials:  
-                                | Delve deeper into the rules and obligations of Regulation Crowdfunding
-                            li.pb10.text-justify
-                                b Capital Raise Calculator:  
-                                | Determine how much money you might need to raise to accomplish your goals
-                            li.pb10.text-justify 
-                                b What’s my Business Worth?:  
-                                | This tool helps you benchmark valuations for similar companies
-                            li.pb10.text-justify
-                                b FAQ:  
-                                | Scroll through our Frequently Asked Questions to gain additional insight into how it all works
-
-                        p.text-justify Together, we can help support entrepreneurs and grow businesses that otherwise might not have had the chance.
-
-                        
+            p.text-justify Together, we can help support entrepreneurs and grow businesses that otherwise might not have had the chance.
