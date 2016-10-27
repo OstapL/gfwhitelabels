@@ -334,7 +334,7 @@ module.exports = {
                 estimate: calculatorHelper.formatPrice(estimate),
                 raise: calculatorHelper.formatPrice(raiseCash),
                 offer: calculatorHelper.formatPrice(
-                  raiseCash / (estimate + raiseCash)
+                  (raiseCash * 100 / (estimate + raiseCash)).toFixed(2)
                 )
             }));
 
