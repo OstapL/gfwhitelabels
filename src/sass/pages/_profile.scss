@@ -192,10 +192,14 @@
 	@media screen and (max-width: 991px) {
 		.profile-tabs.nav-tabs {
 			text-align: center;
+			margin-left: 0;
 			li.nav-item {
 				display: inline;
 				float: none;
 			}
+		}
+		.m-b-md-25 {
+			margin-bottom: rem(25);
 		}
 	}
 

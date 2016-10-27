@@ -41,12 +41,8 @@ mixin fieldInput(name, attr)
     .col-xl-9.col-lg-12
       ul.nav.nav-tabs.profile-tabs
         li(aria-expanded="false").nav-item
-          a(
-            href="#account_info"
-            data-toggle="tab" 
-            aria-expanded="true"
-            role="tab").active.nav-link.uppercase Profile information
-        li.nav-item  
+          a(href="#account_info" data-toggle="tab"  aria-expanded="true" role="tab").active.nav-link.uppercase Profile information
+        li.nav-item
           a(
             href="#financial_info" 
             data-toggle="tab" 
@@ -65,11 +61,11 @@ mixin fieldInput(name, attr)
                   .col-xs-12
                     section.right-block
                       .form-group.row
-                        label.col-lg-3.text-xl-right Legal Name
-                        +fieldInput("first_name", {'class': 'col-lg-4 ','placeholder':'First Name' })
-                        +fieldInput("last_name", {'class': 'col-lg-4 ','placeholder':'Last Name' })
+                        label.col-lg-3.text-lg-right.text-xs-left Legal Name
+                        +fieldInput("first_name", {'class': 'col-lg-4 m-b-md-25','placeholder':'First Name' })
+                        +fieldInput("last_name", {'class': 'col-lg-4','placeholder':'Last Name' })
                       .form-group.row
-                        label.col-lg-3.text-xl-right Country
+                        label.col-lg-3.text-lg-right.text-xs-left Country
                         .col-lg-8
                           select.custom-select.w-100
                             option United States
@@ -106,9 +102,7 @@ mixin fieldInput(name, attr)
                       .form-group.row.clearfix.m0 
                         .col-lg-11.mt30.text-xs-center
                           .controls  
-                            button(
-                              type="submit").btn.btn-primary.pull-lg-right SAVE 
-
+                            button(type="submit").btn.btn-primary.pull-lg-right SAVE 
         div(aria-expanded="true")#financial_info.tab-pane.fade
           .row 
             section.form-section.clearfix 
@@ -144,12 +138,10 @@ mixin fieldInput(name, attr)
 
                       +fieldBlock("annual_income", user[annual_income], {'class1': 'col-lg-3 ', 'class2': 'col-lg-8 ', 'type': 'text'})
                       +fieldBlock("net_worth", user[net_worth], {'class1': 'col-lg-3', 'class2': 'col-lg-8 ', 'type': 'text'})
-                        
                       .form-group.row.clearfix.m0
                         .col-lg-11.mt30.text-xs-center
                           .controls  
-                            button(
-                              type="submit").btn.btn-primary.pull-lg-right SAVE  
+                            button(type="submit").btn.btn-primary.pull-lg-right SAVE  
                     
   .popover-content-ssn 
     i.fa.fa-info-circle 
@@ -160,7 +152,7 @@ mixin fieldInput(name, attr)
 
 //MODAL
 div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")#city_state_modal.modal.fade
-  .modal-dialog(role="document")
+  div(role="document").modal-dialog
     .modal-content
       .modal-header
         button(type="button" data-dismiss="modal" aria-label="Close").close
