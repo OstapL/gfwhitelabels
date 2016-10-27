@@ -62,7 +62,7 @@ const submitCampaign = function submitCampaign(e) {
   var data = $form.serializeJSON();
 
   _.extend(this.model, data);
-  data = e.extend({}, this.model);
+  data = _.extend({}, this.model);
 
   // ToDo
   // Refactor code

@@ -1,11 +1,12 @@
 import './styles/style.sass'
-import 'jquery.inputmask/dist/jquery.inputmask.bundle.js';
+//import 'jquery.inputmask/dist/jquery.inputmask.bundle.js';
 import calculatorHelper from '../../helpers/calculatorHelpers';
 import flyPriceFormatter from '../../helpers/flyPriceFormatter';
 import '../../js/graf/graf.js';
-import '../../js/graf/jquery.flot.animator.js';
+import '../../js/graf/jquery.flot.growraf';
 
 const formatPrice = calculatorHelper.formatPrice;
+const minPersents = 200;
 
 module.exports = {
     step1: Backbone.View.extend({
@@ -40,9 +41,27 @@ module.exports = {
         events: {
             // calculate your income
             'submit .js-calc-form': 'doCalculation',
+            'keyup [data-input-mask="percent"]': 'savePercents',
+            'blur [data-input-mask="percent"]': 'cutZeros'
+        },
 
-            // remove useless zeros: 0055 => 55
-            'blur .js-field': 'cutZeros'
+        savePercents(e) {
+            let target = e.target,
+                value = parseFloat(e.target.value.replace('$', '') || 0);
+            app.cache.payBackShareCalculator[target.dataset.modelValue] = value;
+        },
+
+        cutZeros(e) {
+            let elem = e.target,
+                value = elem.value.replace('$', '').replace(/,/g, '');
+
+            if (!value) {
+                elem.dataset.currentValue = 0;
+                elem.value = '';
+            } else {
+                elem.dataset.currentValue = parseFloat(value);
+                elem.value = formatPrice(elem.dataset.currentValue);
+            }
         },
 
         doCalculation(e) {
@@ -102,21 +121,11 @@ module.exports = {
 
             // save data
             app.cache.payBackShareCalculator.outputData = this.outputData;
+            app.cache.payBackShareCalculator.nextYearRevenue = e.target.querySelector('#nextYearRevenue').value.replace('$', '').replace(',','');
             app.cache.payBackShareCalculator.maxOfMultipleReturned = maxOfMultipleReturned;
 
             // navigate to the finish step
             app.routers.navigate('/calculator/paybackshare/step-3', {trigger: true});
-        },
-
-        cutZeros(e) {
-            let elem = e.target;
-            elem.dataset.currentValue = parseFloat(elem.value.replace('$', '').replace(/,/g, '') || 0);
-            elem.value = formatPrice(elem.dataset.currentValue);
-
-            // save percent values
-            if (elem.dataset.inputMask == "percent") {
-                app.cache.payBackShareCalculator[elem.dataset.modelValue] = +elem.dataset.currentValue;
-            }
         },
 
         // get sum of last Annual Distributions
@@ -148,11 +157,13 @@ module.exports = {
                 app.cache.payBackShareCalculator[modelValue] = +currentValue;
             });
 
+            /*
             this.inputPercent.inputmask("9{1,4}%", {
                 placeholder: "",
                 showMaskOnHover: false,
                 showMaskOnFocus: false
             });
+            */
             return this;
         }
     }),
@@ -171,6 +182,9 @@ module.exports = {
             if (!this.jQPlot) return;
             this.jQPlot.replot({
                 resetAxes: true,
+                legend: {
+                    show: false
+                },
                 axes: {
                     xaxis: {
                         min: 0,
@@ -214,9 +228,15 @@ module.exports = {
             // prepare data for drawing jQPlot
             let dataRendered = function() {
                 let data = [];
+                let hasNotEmpty = false;
                 for (let i = 0, size = outputData.length; i < size; i++) {
                     if (outputData[i].multiple) {
                         data.push([i, outputData[i].multiple]);
+                        hasNotEmpty = true;
+                    } else {
+                        if (!hasNotEmpty) {
+                            data.push([i, 0]);
+                        }
                     }
                 }
                 return data;
@@ -236,82 +256,116 @@ module.exports = {
                 ticks.push([i, 'Year ' + (currentYear + i)]);
             }
 
-            let $chart = $("#chart1"),
-                dataArr = [{
-                    data: dataRendered(),
-                    animator: { start: 0, steps: 99, duration: 500, direction: "right", lines: true },
-                    label: "Invested amount",
+
+            let $chart = $("#chart1");
+            var plotApi = $.plot($chart, [{
+                data: dataRendered(),
+                animator: { start: 0, steps: 100, duration: 500, direction: "right", lines: true },
+                label: "Invested amount",
+                lines: {
+                    lineWidth: 1
+                },
+                shadowSize: 0
+            }], {
+                series: {
                     lines: {
+                        show: !0,
+                        lineWidth: 2,
+                        fill: !0,
+                        fillColor: {
+                            colors: [{
+                                opacity: .05
+                            }, {
+                                opacity: .01
+                            }]
+                        }
+                    },
+                    points: {
+                        show: true,
+                        radius: 3,
                         lineWidth: 1
                     },
-                    shadowSize: 0
-                }],
-                options = {
-                    series: {
-                        lines: {
-                            show: !0,
-                            lineWidth: 2,
-                            fill: !0,
-                            fillColor: {
-                                colors: [{
-                                    opacity: .05
-                                }, {
-                                    opacity: .01
-                                }]
-                            }
-                        },
-                        points: {
-                            show: false,
-                            radius: 3,
-                            lineWidth: 1
-                        },
-                        shadowSize: 2
-                    },
-                    grid: {
-                        hoverable: !0,
-                        clickable: !0,
-                        tickColor: "#eee",
-                        borderColor: "#eee",
-                        borderWidth: 1
-                    },
-                    colors: ["#d12610", "#37b7f3", "#52e136"],
-                    xaxis: {
-                        min: 0,
-                        max: 10,
-                        ticks,
-                        tickSize: 1,
-                        tickDecimals: 0,
-                        tickColor: "#eee",
-                        mode: "categories"
-                    },
-                    yaxis: {
-                        ticks: [[0, '0%'], [1, '100%'], [2, '200%'], [3, '300%']],
-                        tickSize: 1,
-                        tickDecimals: 0,
-                        tickColor: "#eee"
+                    shadowSize: 2,
+                    grow: {
+                        active: true,
+                        growings: [{
+                            reanimate: "continue",
+                            stepDirection: "up",
+                            stepMode: "linear",
+                            valueIndex: 1
+                        }]
+
                     }
-                };
+                },
+                grid: {
+                    hoverable: !0,
+                    clickable: !0,
+                    tickColor: "#eee",
+                    borderColor: "#eee",
+                    borderWidth: 1
+                },
+                colors: ["#d12610", "#37b7f3", "#52e136"],
+                xaxis: {
+                    min: 0,
+                    max: 10,
+                    ticks,
+                    tickSize: 1,
+                    tickDecimals: 0,
+                    tickColor: "#eee",
+                    mode: "categories"
+                },
+                yaxis: {
+                    ticks: [[0, '0%'], [1, '100%'], [2, '200%'], [3, '300%']],
+                    tickSize: 1,
+                    tickDecimals: 0,
+                    tickColor: "#eee"
+                }
+            });
 
-            var plotApi = $.plotAnimator($chart, dataArr, options);
+            $chart.on("growFinished", function() {
+                //options.series.points.show = true;
+                //$.plot($chart, dataArr, options);
 
-            $chart.on("animatorComplete", function() {
-                options.series.points.show = true;
-                $.plot($chart, dataArr, options);
-                
                 let last = plotApi.getData()[0].data.pop();
                 let o = plotApi.pointOffset({x: last[0], y: last[1]});
-                $('<div class="data-point-label">Congratulations, Revenue Share Contract is complete</div>').css( {
-                    position: 'absolute',
-                    left: o.left - 200,
-                    top: o.top - 30,
-                    display: 'none'
-                }).appendTo(plotApi.getPlaceholder()).fadeIn('slow');
+                if (last[1] * 100 >= minPersents) {
+                    $('<div class="data-point-label">Congratulations, Payback Share Contract is complete</div>').css( {
+                        position: 'absolute',
+                        left: o.left - 500,
+                        top: o.top - 30,
+                        display: 'none'
+                    }).appendTo(plotApi.getPlaceholder()).fadeIn('slow');
+                }
+            });
+
+            $("<div id='flot-tooltip'></div>").css({
+                position: "absolute",
+                display: "none",
+                border: "1px solid #fdd",
+                padding: "2px",
+                "background-color": "#fee",
+                opacity: 0.80
+            }).appendTo("body");
+
+            $chart.bind("plothover", function (event, pos, item) {
+                let $flotTooltip = $("#flot-tooltip");
+                if (item) {
+                    var datapoint = item.datapoint,
+                        x = datapoint[0] + currentYear,
+                        y = datapoint[1] * 100;
+
+                    $flotTooltip.html(`${y}%, Year ${x}`);
+                    $flotTooltip.css({top: item.pageY - 35, left: item.pageX - $flotTooltip.outerWidth(true) / 2})
+                        .fadeIn(200);
+                } else {
+                    $flotTooltip.hide();
+                }
             });
 
             // drawing jQPlot
             // this.jQPlot = $.jqplot('chart1', {
             //     seriesColors: ["red"],
-            //     title: 'Revenue Graph',
+            //     title: 'Payback Graph',
             //     animate: true,
             //     dataRenderer: dataRendered,
             //     seriesDefaults: {

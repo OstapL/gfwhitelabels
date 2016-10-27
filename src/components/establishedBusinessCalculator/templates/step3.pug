@@ -2,134 +2,147 @@
 include ../../../templates/mixins.pug
 
 +breadcrumbs('Established Business Valuation Calculator', 'Step 3',
-  [
-    ['Home', '/'],
-    ["What's My Business Worth?", '/calculator/selectYourBusiness'],
-    ["Established Business Valuation Calculator", '']
-  ]
+    [
+        ['Home', '/'],
+        ["What's My Business Worth?", '/calculator/selectYourBusiness'],
+        ["Established Business Valuation Calculator", '']
+    ]
 )
 
 .container.calculator-container
-  .row
-    .offset-lg-1.col-lg-10
-      ul.list-inline.top-breadcrambs.mb45.established-business
-        li
-          a(href="/calculator/establishedBusiness/intro").btn.text-uppercase Intro
-        li
-          a(href="/calculator/establishedBusiness/step-1").btn.text-uppercase step 1
-        li
-          a(href="/calculator/establishedBusiness/step-2").btn.text-uppercase step 2
-        li
-          a(href="/calculator/establishedBusiness/step-3").current.btn.text-uppercase step 3
-        li
-          a(href="/calculator/establishedBusiness/finish").btn.text-uppercase Finish
+    .row
+        .offset-lg-1.col-lg-10
+            ul.list-inline.top-breadcrambs.mb45.established-business
+                li
+                    a(href="/calculator/establishedBusiness/intro").btn.text-uppercase Intro
+                li
+                    a(href="/calculator/establishedBusiness/step-1").btn.text-uppercase step 1
+                li
+                    a(href="/calculator/establishedBusiness/step-2").btn.text-uppercase step 2
+                li
+                    a(href="/calculator/establishedBusiness/step-3").current.btn.text-uppercase step 3
+                li
+                    a(href="/calculator/establishedBusiness/finish").btn.text-uppercase Finish
 
-  .row
-    .offset-lg-3.col-lg-6
-      .warning-block
-        i.fa.fa-exclamation-triangle 
-        span.warning-text For 
-          b the next twelve months, 
-          |  please enter the following information about your business:
+    .row
+        .offset-lg-3.col-lg-6
+            .warning-block
+                i.fa.fa-exclamation-triangle 
+                span.warning-text For 
+                    b the next twelve months, 
+                    |  please enter the following information about your business:
 
-  .row
-    .offset-lg-3.col-lg-6
-      form(method="post" action="").js-calc-form
-        .form-body.clearfix
-          .form-group.row
-            label(for="revenue2").col-lg-12 Revenue
+    .row
+        .offset-lg-3.col-lg-6
+            form(method="post" action="").js-calc-form
+                .form-body.clearfix
+                    .form-group.row
+                        label(for="revenue2").col-lg-12 Revenue
 
-            .col-lg-12
-              input(
-                value= formatPrice(data.revenue2),
-                type='text',
-                placeholder='Revenue',
-                data-input-mask='price',
-                data-model-value='revenue2',
-                data-current-value= data.revenue2)#revenue2.form-control.js-field
+                        .col-lg-12
+                            input#revenue2.form-control.js-field(
+                                value= formatPrice(data.revenue2),
+                                type='text',
+                                placeholder='Revenue',
+                                data-input-mask='price',
+                                data-model-value='revenue2',
+                                data-current-value= data.revenue2)
 
-          .form-group.row
-            label(for="goodsCost2").col-lg-12 Cost of Goods Sold
 
-            .col-lg-12
-              input(
-                value= formatPrice(data.goodsCost2),
-                type='text',
-                placeholder='Cost of Goods Sold',
-                data-input-mask='price',
-                data-model-value='goodsCost2',
-                data-current-value= data.goodsCost2)#goodsCost2.form-control.js-field
+                    .form-group.row
+                        label(for="goodsCost2").col-lg-12 Cost of Goods Sold
 
-          .form-group.row
-            label(for="operatingExpense2").col-lg-12 
-              | SG&A, and other Operating Expenses&nbsp;&nbsp;
-              i(aria-hidden="true").fa.fa-question-circle.text-muted
+                        .col-lg-12
+                            input#goodsCost2.form-control.js-field(
+                                value= formatPrice(data.goodsCost2),
+                                type='text',
+                                placeholder='Cost of Goods Sold',
+                                autocomplete='off'
+                                data-input-mask='price',
+                                data-model-value='goodsCost2',
+                                data-current-value= data.goodsCost2)
 
-            .col-lg-12
-              input(
-                value= formatPrice(data.operatingExpense2),
-                type='text',
-                placeholder='SG&A Operating Expense',
-                data-input-mask='price',
-                data-model-value='operatingExpense2',
-                data-current-value= data.operatingExpense2)#operatingExpense2.form-control.js-field
 
-          .form-group.row
-            label(for="oneTimeExpenses2").col-lg-12 One Time (Extraordinary) Expenses&nbsp;&nbsp;
-              i(aria-hidden="true").fa.fa-question-circle.text-muted
+                    .form-group.row
+                        label(for="operatingExpense2").col-lg-12 
+                            | SG&A, and other Operating Expenses&nbsp;&nbsp;
+                            i(aria-hidden="true",data-toggle="tooltip",data-original-title="<b>Selling, General & Administrative Operating Expense.</b> The sum of all direct and indirect selling expenses and all general and administrative expenses of a company").fa.fa-question-circle.text-muted
 
-            .col-lg-12
-              input(
-                value= formatPrice(data.oneTimeExpenses2),
-                type='text',
-                placeholder='One Time (Extraordinary) Expenses',
-                data-input-mask='price',
-                data-model-value='oneTimeExpenses2',
-                data-current-value= data.oneTimeExpenses2)#oneTimeExpenses2.form-control.js-field
+                        .col-lg-12
+                            input#operatingExpense2.form-control.js-field(
+                                value= formatPrice(data.operatingExpense2),
+                                type='text',
+                                placeholder='SG&A Operating Expense',
+                                autocomplete='off'
+                                data-input-mask='price',
+                                data-model-value='operatingExpense2',
+                                data-current-value= data.operatingExpense2)
 
-          .form-group.row
-            label(for="depreciationAmortization2").col-lg-12 Depreciation  & Amortization&nbsp;&nbsp;
-              i(aria-hidden="true").fa.fa-question-circle.text-muted
 
-            .col-lg-12
-              input(
-                value= formatPrice(data.depreciationAmortization2),
-                type='text',
-                placeholder='Depreciation & Amortization',
-                data-input-mask='price',
-                data-model-value='depreciationAmortization2',
-                data-current-value= data.depreciationAmortization2)#depreciationAmortization2.form-control.js-field
+                    .form-group.row
+                        label(for="oneTimeExpenses2").col-lg-12 One Time (Extraordinary) Expenses&nbsp;&nbsp;
+                            i(aria-hidden="true",data-toggle="tooltip",data-original-title="<b>One Time (Extraordinary) Expenses.</b> A rare, infrequent event which financial analysts separate out of the income statement in order to avoid distorting the 'regular' earnings reported by a company. They can include things like adverse legal, regulatory or tax issues, storm damage or restructuring charges.").fa.fa-question-circle.text-muted
 
-          .form-group.row
-            label(for="interestPaid2").col-lg-12 Interest Paid
+                        .col-lg-12
+                            input#oneTimeExpenses2.form-control.js-field(
+                                value= formatPrice(data.oneTimeExpenses2),
+                                type='text',
+                                placeholder='One Time (Extraordinary) Expenses',
+                                autocomplete='off'
+                                data-input-mask='price',
+                                data-model-value='oneTimeExpenses2',
+                                data-current-value= data.oneTimeExpenses2)
 
-            .col-lg-12
-              input(
-                value= formatPrice(data.interestPaid2),
-                type='text',
-                placeholder='Interest Paid',
-                data-input-mask='price',
-                data-model-value='interestPaid2',
-                data-current-value= data.interestPaid2)#interestPaid2.form-control.js-field
 
-          .form-group.row
-            label(for="taxesPaid2").col-lg-12 Taxes Paid
+                    .form-group.row
+                        label(for="depreciationAmortization2").col-lg-12 Depreciation  & Amortization&nbsp;&nbsp;
+                            i(aria-hidden="true",data-toggle="tooltip",data-original-title="<b>Depreciation</b><br/>The allocation of the cost of assets to periods in which the assets are used.<br/><br/><b>Amoritization</b><br/>To write off the cost of an asset gradually.").fa.fa-question-circle.text-muted
 
-            .col-lg-12
-              input(
-                value= formatPrice(data.taxesPaid2),
-                type='text',
-                placeholder='Taxes Paid',
-                data-input-mask='price',
-                data-model-value='taxesPaid2',
-                data-current-value= data.taxesPaid2)#taxesPaid2.form-control.js-field
+                        .col-lg-12
+                            input#depreciationAmortization2.form-control.js-field(
+                                value= formatPrice(data.depreciationAmortization2),
+                                type='text',
+                                placeholder='Depreciation & Amortization',
+                                autocomplete='off'
+                                data-input-mask='price',
+                                data-model-value='depreciationAmortization2',
+                                data-current-value= data.depreciationAmortization2)
 
-          .form-group.row.clearfix.m0
-            .col-xs-6.mt30
-              a(href='/calculator/establishedBusiness/step-1').link-3 Go back
-              p.text-muted Don&apos;t worry we saved this info
 
-            .col-xs-6.mt30
-              .controls
-                button(type='submit').btn.btn-primary.pull-right.text-uppercase Finish
-                // add class .pointer-events-none to disable all events for this button
+                    .form-group.row
+                        label(for="interestPaid2").col-lg-12 Interest Paid
+
+                        .col-lg-12
+                            input#interestPaid2.form-control.js-field(
+                                value= formatPrice(data.interestPaid2),
+                                type='text',
+                                placeholder='Interest Paid',
+                                autocomplete='off'
+                                data-input-mask='price',
+                                data-model-value='interestPaid2',
+                                data-current-value= data.interestPaid2)
+
+
+                    .form-group.row
+                        label(for="taxesPaid2").col-lg-12 Taxes Paid
+
+                        .col-lg-12
+                            input#taxesPaid2.form-control.js-field(
+                                value= formatPrice(data.taxesPaid2),
+                                type='text',
+                                placeholder='Taxes Paid',
+                                autocomplete='off'
+                                data-input-mask='price',
+                                data-model-value='taxesPaid2',
+                                data-current-value= data.taxesPaid2)
+
+
+                    .form-group.row.clearfix.m0
+                        .col-xs-6.mt30
+                            a(href='/calculator/establishedBusiness/step-1').link-3 Go back
+                            p.text-muted Don&apos;t worry we saved this info
+
+                        .col-xs-6.mt30
+                            .controls
+                                button.btn.btn-primary.pull-right.text-uppercase(type='submit') Finish
+                                // add class .pointer-events-none to disable all events for this button
