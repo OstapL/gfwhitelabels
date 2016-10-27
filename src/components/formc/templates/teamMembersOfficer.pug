@@ -24,7 +24,6 @@ include menu.pug
 section.formc-team-members-director.container.m-b-85
   +menu('formc')
 
-
   //START RIGHT BLOCK
   .col-lg-8
     h2.text-uppercase.text-lg-center.text-xs-center.m-t-0.dosis Team members (officer)
@@ -51,7 +50,7 @@ section.formc-team-members-director.container.m-b-85
       .row.form-group
         label.col-lg-3.col-md-12.text-md-left.text-lg-right Title
         .col-lg-9.col-md-12
-          select( style="width:100%" ).custom-select
+          select(style="width:100%").custom-select
             option(selected) CEO/President, Controller/Principal Accounting Officer
             option CEO/President   
             option Principal Financial Officer/Treasurer
@@ -101,7 +100,6 @@ section.formc-team-members-director.container.m-b-85
           .col-lg-6.text-lg-right.text-md-left.p-t-0
             label.p-t-0.m-b-0.p-l-2 End Date of Service
 
-
           .col-lg-6
             .row
               .col-lg-6.p-r-0
@@ -113,7 +111,7 @@ section.formc-team-members-director.container.m-b-85
         .col-lg-9.offset-1.pull-right
           a(href="#" data-section="previous_positions").link-2.add-section
             i.fa.fa-plus
-            |  Add Previous Position within the Company                                                             
+            |  Add Previous Position within the Company   
       .row
         b.col-lg-12.m-t-3.m-b-3 Business experience for past three years: Please list your employers, titles and dates of positions held during the past three years with an indication of job responsibilities.
       +fieldBlock("employer", '', {

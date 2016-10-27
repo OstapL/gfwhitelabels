@@ -3,13 +3,13 @@ include ../../../templates/mixins.pug
 
 - var percentage_raised = formatHelper.calculateRaisedPercentage(values.minimum_raise, values.amount_raised)
 
-section#home(style="background-image: url(" + (values.header_image_data ? values.header_image_data.url : '/img/default.png') + ")").home-section.bg-dark-alfa-70.parallax-2.fixed-height-small.hide-bg-fixed
+section(style="background-image: url(" + (values.header_image_data ? values.header_image_data.url : '/img/default.png') + ")")#home.home-section.bg-dark-alfa-70.parallax-2.fixed-height-small.hide-bg-fixed
   .js-height-parent.container-fluid
     .home-content
       .home-text.text-lg-center
         h1.hs-line-14.font-alt.margin-bottom-50.mb-xs-30 #{ values.company.name }
         .local-scroll
-          a.big-icon.link-6.youtube_popup(data-toggle="modal" href="#videoModal" data-target="#videoModal")
+          a(data-toggle="modal" href="#videoModal" data-target="#videoModal").big-icon.link-6.youtube_popup
             i.fa.fa-play-circle-o
           a(href=values.company.website target="_blank").link-6.link-campaing-detail #{ formatHelper.getWebsiteUrl(values.company.website) }
           .row.social-link
@@ -49,14 +49,14 @@ section#home(style="background-image: url(" + (values.header_image_data ? values
             a(href=Urls['campaign-invest'](values.id)).btn.btn-primary.text-uppercase.pull-lg-right Invest
 
 if app.getParams().preview == '1'
-  #company_publish.modal.fade(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")
-    .modal-dialog(role="document")
+  div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")#company_publish.modal.fade
+    div(role="document").modal-dialog
       .modal-content
         .modal-header
-          button(type="button" class="close" data-dismiss="modal" aria-label="Close")
+          button(type="button" data-dismiss="modal" aria-label="Close").close
             span(aria-hidden="true")
               i.fa.fa-times
-          h2(class="modal-title").text-lg-center.text-uppercase.text-md-center.text-xs-center.line-height-1.dosis.m-t-1 COMPLETE THE FOLLOWING TO SUBMIT YOUR CAMPAIGN
+          h2.text-lg-center.text-uppercase.text-md-center.text-xs-center.line-height-1.dosis.m-t-1.modal-title COMPLETE THE FOLLOWING TO SUBMIT YOUR CAMPAIGN
 
         .modal-body.m-b-2
           .form-section
@@ -81,29 +81,29 @@ if app.getParams().preview == '1'
             .col-lg-6.text-xs-right.mb30.p-r-0.perks.collapse
               a(href='/campaign/perks/' + values.id + '?check=1').btn.btn-sm.btn-secondary.text-uppercase.m-t-0 Edit
         .modal-footer
-  #company_publish_confirm.modal.fade(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")
-    .modal-dialog(role="document")
+  div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")#company_publish_confirm.modal.fade
+    div(role="document").modal-dialog
       .modal-content
         .modal-header
-          button(type="button" class="close" data-dismiss="modal" aria-label="Close")
+          button(type="button" data-dismiss="modal" aria-label="Close").close
             span(aria-hidden="true")
               i.fa.fa-times
-          h2(class="modal-title").text-lg-center.text-uppercase.text-md-center.text-xs-center.line-height-1.dosis.m-t-1 Are you sure you want to submit ?
+          h2.text-lg-center.text-uppercase.text-md-center.text-xs-center.line-height-1.dosis.m-t-1.modal-title Are you sure you want to submit ?
 
         .modal-body.m-b-2
           .col-sm-12
-              .result-info-block.m-x-auto.text-xs-center
-                  |  Once you submit, you will no longer have the ability to edit your Campaign
-                  .info-btn-block.mb30
-                      a(href="#" data-dismiss="modal").btn.m-t-2.m-r-1.btn-secondary Cancel
-                      a(href="/campaign/thankyou/" + values.id).btn.m-t-2.btn-primary.text-uppercase Yes
+            .result-info-block.m-x-auto.text-xs-center
+              |  Once you submit, you will no longer have the ability to edit your Campaign
+              .info-btn-block.mb30
+                a(href="#" data-dismiss="modal").btn.m-t-2.m-r-1.btn-secondary Cancel
+                a(href="/campaign/thankyou/" + values.id).btn.m-t-2.btn-primary.text-uppercase Yes
         .modal-footer
   section.edit-campaign.hidden-sm-down
     .edit-campaign-wrap
       .row
         a(href=app.getParams().previous).btn.btn-secondary.text-uppercase.m-b-2 Edit campaign
       .row
-        button(type="button" class='submit_form').btn.btn-primary.text-uppercase Submit campaign
+        button(type="button").btn.btn-primary.text-uppercase.submit_form Submit campaign
 
 section.campaigndetail
   .container
@@ -123,7 +123,7 @@ section.campaigndetail
         .col-lg-12.share
           span.font-weight-bold.d-inline-block Share:
           .d-inline-block
-            a(href=values.company.facebook ).facebook-share
+            a(href=values.company.facebook).facebook-share
               i.fa.fa-facebook.link-1
             a(href=values.company.twitter).twitter-share
               i.fa.fa-twitter.link-1
@@ -151,7 +151,7 @@ section.campaigndetail
           p Minimum Investment
           //- h2.font-weight-bold #{ values.minimum_increment }
           h2.font-weight-bold #{ formatHelper.formatPrice(values.minimum_increment) }
-        .row.col-lg-12.investors-block(style="display: none")
+        div(style="display: none").row.col-lg-12.investors-block
           .col-lg-2.p-l-0
             p Investors
             h2.font-weight-bold 17
@@ -159,23 +159,23 @@ section.campaigndetail
             ul
               li
                 a(href="")
-                  <img src="/img/avatar1.jpg" alt="..." class="img-circle">
+                  img(src="/img/avatar1.jpg" alt="...").img-circle
               li
                 a(href="")
-                  <img src="/img/avatar6.jpg" alt="..." class="img-circle">
+                  img(src="/img/avatar6.jpg" alt="...").img-circle
               li
                 a(href="")
-                  <img src="/img/avatar1.jpg" alt="..." class="img-circle">
+                  img(src="/img/avatar1.jpg" alt="...").img-circle
               li
                 a(href="")
-                  <img src="/img/avatar6.jpg" alt="..." class="img-circle">
+                  img(src="/img/avatar6.jpg" alt="...").img-circle
               li
                 a(href="")
-                  <img src="/img/avatar1.jpg" alt="..." class="img-circle">
+                  img(src="/img/avatar1.jpg" alt="...").img-circle
               a(href="#" style="display: none").link-1 see all...
 section.border-bottom-scroll.hidden-lg-down
   .container.tabs-scroll
-    nav( data-toggle="sticky-onscroll").navbar.navbar-default.sticky
+    nav(data-toggle="sticky-onscroll").navbar.navbar-default.sticky
       ul.nav.nav-pills.nav-pills-values
         li.nav-item.text-uppercase
           a(href="#about").nav-link.active About
@@ -191,10 +191,10 @@ section.border-bottom-scroll.hidden-lg-down
           a(href="#ask").nav-link Ask a Question
         a(href=Urls['campaign-invest'](values.id)).btn.btn-primary.text-uppercase.pull-xl-right.pull-lg-left invest
 section
-  .scrollspy-example(data-spy="scroll"
+  div(data-spy="scroll"
   data-target="#navbar-example2"
-  data-offset="0"
-  )
+  data-offset="0").scrollspy-example
+
   section.about-detail.border-bottom
     .container
       .col-lg-12
@@ -210,80 +210,84 @@ section
         //-     //- h3.our.text-lg-center #{ v.title }
         //-     h2.dosis.our.text-uppercase.text-lg-center.campaign-subheading #{ v.title }
         //-     p #{ v.body }
-
       
       #gallery1.col-lg-12.pt50.photo-gallegy.text-center-flex
         if values.gallery
-            each v,k in values.gallery_data.all_files
-                .col-lg-4.no-padding-img
-                  a(href=app.getThumbnail('1440x900', v.thumbnails) data-size='1440x900' class="fancybox" rel="gallery1")
-                    img(src=app.getThumbnail('362x220', v.thumbnails) alt=values.company.name).img-fluid.img-responsive
+          each v,k in values.gallery_data.all_files
+            .col-lg-4.no-padding-img
+              a(href=app.getThumbnail('1440x900', v.thumbnails) data-size='1440x900' rel="gallery1").fancybox
+                img(src=app.getThumbnail('362x220', v.thumbnails) alt=values.company.name).img-fluid.img-responsive
         else
 
-            .col-lg-3.no-padding-img
-              a(href="/img/values/smartbe-intelligent-stroller_1.jpg" data-toggle="modal" data-size='1600x900')
-                img(src="/img/default/255x153.png" alt="").img-fluid
-            .col-lg-3.no-padding-img
-              a(href="/img/values/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
-                img(src="/img/default/255x153.png" alt="").img-fluid
-            .col-lg-3.no-padding-img
-              a(href="/img/values/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
-                img(src="/img/default/255x153.png" alt="").img-fluid
-            .col-lg-3.no-padding-img
-              a(href="/img/values/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
-                img(src="/img/default/255x153.png" alt="").img-fluid
-            .col-lg-3.no-padding-img
-              a(href="/img/values/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
-                img(src="/img/default/255x153.png" alt="").img-fluid
-            .col-lg-3.no-padding-img
-              a(href="/img/values/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
-                img(src="/img/default/255x153.png" alt="").img-fluid
-            .col-lg-3.no-padding-img
-              a(href="/img/values/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
-                img(src="/img/default/255x153.png" alt="").img-fluid
-            .col-lg-3.no-padding-img
-              a(href="/img/values/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
-                img(src="/img/default/255x153.png" alt="").img-fluid
+          .col-lg-3.no-padding-img
+            a(href="/img/values/smartbe-intelligent-stroller_1.jpg" data-toggle="modal" data-size='1600x900')
+              img(src="/img/default/255x153.png" alt="").img-fluid
+          .col-lg-3.no-padding-img
+            a(href="/img/values/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
+              img(src="/img/default/255x153.png" alt="").img-fluid
+          .col-lg-3.no-padding-img
+            a(href="/img/values/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
+              img(src="/img/default/255x153.png" alt="").img-fluid
+          .col-lg-3.no-padding-img
+            a(href="/img/values/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
+              img(src="/img/default/255x153.png" alt="").img-fluid
+          .col-lg-3.no-padding-img
+            a(href="/img/values/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
+              img(src="/img/default/255x153.png" alt="").img-fluid
+          .col-lg-3.no-padding-img
+            a(href="/img/values/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
+              img(src="/img/default/255x153.png" alt="").img-fluid
+          .col-lg-3.no-padding-img
+            a(href="/img/values/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
+              img(src="/img/default/255x153.png" alt="").img-fluid
+          .col-lg-3.no-padding-img
+            a(href="/img/values/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
+              img(src="/img/default/255x153.png" alt="").img-fluid
 
       .row
         .col-lg-12.text-center-flex
           if values.additional_video
-              each v,k in values.additional_video
-                if v
-                  .col-lg-4
-                    .card.card-inverse
-                      - var link =  app.getVideoId(v.link)
-                      img(src="http://img.youtube.com/vi/" + link + "/0.jpg" alt="" style="width: 338px").card-img
-                      .card-img-overlay
-                        .card-title
-                          a(data-toggle="modal" href="#videoModal-" + k data-target="#videoModal-" + k).small-icon.link-6
-                              i.fa.fa-play-circle-o
-                        h3.card-text.text-lg-center #{ v.headline }
+            each v,k in values.additional_video
+              if v
+                .col-lg-4
+                  .card.card-inverse
+                    - let additionalVideo = app.getVideoId(v.link);
+                    if additionalVideo && additionalVideo.provider == 'youtube'
+                      img(src="http://img.youtube.com/vi/" + additionalVideo.id + "/0.jpg" alt="" style="width: 338px").card-img
+                    else if additionalVideo && additionalVideo.provider == 'vimeo'
+                      img(src="" alt="" style="width: 338px;" data-vimeo-id=additionalVideo.id).card-img.vimeo-thumbnail
+                    else
+                      img(src="http://img.youtube.com/vi/" + "/0.jpg" alt="" style="width: 338px").card-img
+                    .card-img-overlay
+                      .card-title
+                        a(data-toggle="modal" href="#videoModal-" + k data-target="#videoModal-" + k).small-icon.link-6
+                          i.fa.fa-play-circle-o
+                      h3.card-text.text-lg-center #{ v.headline }
           else
-              .col-lg-4
-                .card.card-inverse
-                  img(src="/img/Smartbe-Intelligent-Stroller-5.jpg" alt="").card-img
-                  .card-img-overlay
-                    .card-title
-                      a(data-toggle="modal" href="#videoModal-2" data-target="#videoModal-2").small-icon.link-6
-                          i.fa.fa-play-circle-o
-                    h3.card-text.text-lg-center Title for Optional Video 2
-              .col-lg-4
-                .card.card-inverse
-                  img(src="/img/Smartbe-Intelligent-Stroller-5.jpg" alt="").card-img
-                  .card-img-overlay
-                    .card-title
-                      a(data-toggle="modal" href="#videoModal-3" data-target="#videoModal-3").small-icon.link-6
-                          i.fa.fa-play-circle-o
-                    h3.card-text.text-lg-center Title for Optional Video 3
-              .col-lg-4
-                .card.card-inverse
-                  img(src="/img/Smartbe-Intelligent-Stroller-5.jpg" alt="").card-img
-                  .card-img-overlay
-                    .card-title
-                      a(data-toggle="modal" href="#videoModal-3" data-target="#videoModal-3").small-icon.link-6
-                          i.fa.fa-play-circle-o
-                    h3.card-text.text-lg-center Title for Optional Video 3
+            .col-lg-4
+              .card.card-inverse
+                img(src="/img/Smartbe-Intelligent-Stroller-5.jpg" alt="").card-img
+                .card-img-overlay
+                  .card-title
+                    a(data-toggle="modal" href="#videoModal-2" data-target="#videoModal-2").small-icon.link-6
+                      i.fa.fa-play-circle-o
+                  h3.card-text.text-lg-center Title for Optional Video 2
+            .col-lg-4
+              .card.card-inverse
+                img(src="/img/Smartbe-Intelligent-Stroller-5.jpg" alt="").card-img
+                .card-img-overlay
+                  .card-title
+                    a(data-toggle="modal" href="#videoModal-3" data-target="#videoModal-3").small-icon.link-6
+                      i.fa.fa-play-circle-o
+                  h3.card-text.text-lg-center Title for Optional Video 3
+            .col-lg-4
+              .card.card-inverse
+                img(src="/img/Smartbe-Intelligent-Stroller-5.jpg" alt="").card-img
+                .card-img-overlay
+                  .card-title
+                    a(data-toggle="modal" href="#videoModal-3" data-target="#videoModal-3").small-icon.link-6
+                      i.fa.fa-play-circle-o
+                  h3.card-text.text-lg-center Title for Optional Video 3
 
       .col-lg-12
         //- h3.our.text-lg-center Our Edge
@@ -302,97 +306,97 @@ section
               p #{ v.body }
    
   if values.members
-      section#members
-        .container
-          if values.members && values.members instanceof Array && values.members.length > 0
-            h2#team.dosis.text-uppercase.text-lg-center.text-xs-center.col-lg-12.campaign-subheading Team
-            .row
-              .col-lg-12.text-center-flex
-                each v,k in values.members
-                    .col-lg-4.team
-                      .card.text-lg-center.text-xs-center
-                        img(src=v.photo alt="").img-circle
-                        .card-block
-                          h4.text-xs-center.card-title.text-uppercase #{v.first_name} #{v.last_name }
-                          p.card-text
-                              small.text-muted #{v.title }
-                            
-                          a(href=v.linkedin target="_blank").link-1
-                            i.fa.fa-linkedin.more
-                          a(href=v.facebook target="_blank").link-1
-                            i.fa.fa-facebook
-                          p.card-text.text-justify.hide-more-detail #{v.bio}
-                            if v.bio.length > 200
-                              a(href="#").show-more-members.link-3 Read More
-                          .d-block.text-lg-left.cite_education
-                            span.text-lg-left.text-xs-left.pull-left.color-grey
-                              if v.growup && v.state
-                                i.fa.fa-home.p-l-0
-                                |  #{v.growup}, #{v.state}
-                              //- a(href="#").link-1.pull-right
-                            span.pull-right.color-grey
-                              if v.college
-                                i.fa.fa-graduation-cap
-                                |  #{v.college}
-      .col-lg-12.border-bottom.m-b-3
-      section.articles
-        .container
-          if values.press && Object.keys(values.press).length > 0 && values.press[0].headline != ''
-            - let showMore = false;
-            h2.dosis.text-uppercase.text-lg-center.text-xs-center.campaign-subheading.m-t-0 Articles and Press
-            .row
-              .col-lg-12.text-center-flex
-                .articles_press
-                  - let keys = Object.keys(values.press);
-                  - let counter = 0;
-                  - let lastArticleIdx = 0;
-                  div
-                    each k in keys
-                      if counter >= 3
-                        - break;
-                      - let v = values.press[k]
-                      if v
-                        - counter++;
-                        - lastArticleIdx = k;
-                        div(class="col-xl-4  col-sm-12 articles_press")
-                          a(href=v.link target="_blank")
-                            .card.card-inverse.m-b-2
-                              .card-title
-                                i.fa.fa-link
-                                p.card-text #{ v.headline }
-                                .pos-bottom
-                                  .links.d-inline-block.card-text #{ formatHelper.getWebsiteUrl(v.link) }
-                  #hidden-article-press.hidden-article-press.collapse
-                    each k in keys
-                      if k <= lastArticleIdx
-                        - continue;
-                      - let v = values.press[k]
-                      if v
-                        - showMore = true;
-                        div(class="col-xl-4  col-sm-12 articles_press")
-                          a(href=v.link target="_blank")
-                            .card.card-inverse.m-b-2
-                              .card-title
-                                i.fa.fa-link
-                                p.card-text #{ v.headline }
-                                .pos-bottom
-                                  .links.d-inline-block.card-text #{ formatHelper.getWebsiteUrl(v.link) }
-                  //- each v,k in values.press
-                  //-   //- .col-lg-4.articles_press
-                  //-   div(class="col-lg-4 articles_press" + (counter < 3 ? '' : ' hidden-article-press') style="display:" + (counter < 3 ? 'inline-block' : 'none') +';')
-                  //-     a(href=v.link target="_blank")
-                  //-       .card.card-inverse.m-b-2
-                  //-         .card-title
-                  //-           i.fa.fa-link
-                  //-           p.card-text #{ v.headline }
-                  //-           .pos-bottom
-                  //-             .links.d-inline-block.card-text #{ formatHelper.getWebsiteUrl(v.link) }
-                  //-   - counter++;
+    section#members
+      .container
+        if values.members && values.members instanceof Array && values.members.length > 0
+          h2#team.dosis.text-uppercase.text-lg-center.text-xs-center.col-lg-12.campaign-subheading Team
+          .row
+            .col-lg-12.text-center-flex
+              each v,k in values.members
+                .col-lg-4.team
+                  .card.text-lg-center.text-xs-center
+                    img(src=v.photo alt="").img-circle
+                    .card-block
+                      h4.text-xs-center.card-title.text-uppercase #{v.first_name} #{v.last_name }
+                      p.card-text
+                        small.text-muted #{v.title }
+                        
+                      a(href=v.linkedin target="_blank").link-1
+                        i.fa.fa-linkedin.more
+                      a(href=v.facebook target="_blank").link-1
+                        i.fa.fa-facebook
+                      p.card-text.text-justify.hide-more-detail #{v.bio}
+                        if v.bio.length > 200
+                          a(href="#").show-more-members.link-3 Read More
+                      .d-block.text-lg-left.cite_education
+                        span.text-lg-left.text-xs-left.pull-left.color-grey
+                          if v.growup && v.state
+                            i.fa.fa-home.p-l-0
+                            |  #{v.growup}, #{v.state}
+                          //- a(href="#").link-1.pull-right
+                        span.pull-right.color-grey
+                          if v.college
+                            i.fa.fa-graduation-cap
+                            |  #{v.college}
+    .col-lg-12.border-bottom.m-b-3
+    section.articles
+      .container
+        if values.press && Object.keys(values.press).length > 0 && values.press[0].headline != ''
+          - let showMore = false;
+          h2.dosis.text-uppercase.text-lg-center.text-xs-center.campaign-subheading.m-t-0 Articles and Press
+          .row
+            .col-lg-12.text-center-flex
+              .articles_press
+                - let keys = Object.keys(values.press);
+                - let counter = 0;
+                - let lastArticleIdx = 0;
+                div
+                  each k in keys
+                    if counter >= 3
+                      - break;
+                    - let v = values.press[k]
+                    if v
+                      - counter++;
+                      - lastArticleIdx = k;
+                      div.col-xl-4.col-sm-12.articles_press
+                        a(href=v.link target="_blank")
+                          .card.card-inverse.m-b-2
+                            .card-title
+                              i.fa.fa-link
+                              p.card-text #{ v.headline }
+                              .pos-bottom
+                                .links.d-inline-block.card-text #{ formatHelper.getWebsiteUrl(v.link) }
+                #hidden-article-press.hidden-article-press.collapse
+                  each k in keys
+                    if k <= lastArticleIdx
+                      - continue;
+                    - let v = values.press[k]
+                    if v
+                      - showMore = true;
+                      div.col-xl-4.col-sm-12.articles_press
+                        a(href=v.link target="_blank")
+                          .card.card-inverse.m-b-2
+                            .card-title
+                              i.fa.fa-link
+                              p.card-text #{ v.headline }
+                              .pos-bottom
+                                .links.d-inline-block.card-text #{ formatHelper.getWebsiteUrl(v.link) }
+                //- each v,k in values.press
+                //-   //- .col-lg-4.articles_press
+                //-   div(class="col-lg-4 articles_press" + (counter < 3 ? '' : ' hidden-article-press') style="display:" + (counter < 3 ? 'inline-block' : 'none') +';')
+                //-     a(href=v.link target="_blank")
+                //-       .card.card-inverse.m-b-2
+                //-         .card-title
+                //-           i.fa.fa-link
+                //-           p.card-text #{ v.headline }
+                //-           .pos-bottom
+                //-             .links.d-inline-block.card-text #{ formatHelper.getWebsiteUrl(v.link) }
+                //-   - counter++;
 
-                .row(style="display:" + (showMore ? 'block' : 'none') + ";")
-                  .col-lg-12.text-xs-center
-                    //- a(href="#hidden-article-press" data-toggle="collapse").link-4.see-all-article-press See All Articles and Press
-                    a(href="#hidden-article-press" data-toggle="collapse").link-4.see-all-article-press Show More
+              div(style="display:" + (showMore ? 'block' : 'none') + ";").row
+                .col-lg-12.text-xs-center
+                  //- a(href="#hidden-article-press" data-toggle="collapse").link-4.see-all-article-press See All Articles and Press
+                  a(href="#hidden-article-press" data-toggle="collapse").link-4.see-all-article-press Show More
   
   else
       //
@@ -594,7 +598,6 @@ section
               //-       p Length of the values
               //-       h2.font-weight-bold #{ values.days_to_go } days
 
-
   section#perks.perks
     if values.perks && Object.keys(values.perks).length > 0 && values.perks[0].perk != ''
       //- h3.col-lg-12.text-lg-center Perks
@@ -612,7 +615,7 @@ section
                         |  or more
                       p.text-justify #{ v.perk }
 
-  section.investors-all.border-bottom(style="display: none")
+  section(style="display: none").investors-all.border-bottom
     .container
       h3.col-lg-12.text-lg-center.text-xs-center Investors
       .col-lg-12.text-center-flex
@@ -688,7 +691,7 @@ section
       .container
         h2#faq.col-lg-12.dosis.text-uppercase.text-lg-center.text-xs-center.campaign-subheading FAQ
         .col-lg-8.offset-lg-2
-          .accordion(role="tablist" aria-multiselectable="true")
+          div(role="tablist" aria-multiselectable="true").accordion
             - var counter = 0
             each v,k in values.faq
               if v
@@ -699,12 +702,11 @@ section
                     href="#collapsefaq"+ k
                     aria-controls="collapsefaq"+ k
                     class=(counter == 0 ? 'list-group-item-action active' : 'list-group-item-action')
-                    style="padding-left:25px"
-                    ) #{v.question}
-                        if counter == 0
-                            i.fa.fa-angle-up
-                        else
-                            i.fa.fa-angle-down
+                    style="padding-left:25px") #{v.question}
+                      if counter == 0
+                        i.fa.fa-angle-up
+                      else
+                        i.fa.fa-angle-down
                   div(id="collapsefaq" + k role="tabpanel"
                   aria-labelledby="faq" + k
                   class=(counter == 0 ? 'in' : '') + ' panel-collapse collapse'
@@ -799,36 +801,35 @@ section
         h2
           i.fa.fa-thumbs-up
           |  I’d Like to Invest in #{ values.company.name }!
-        a(href="/api/values/" + values.id + "/invest").btn.btn-primary.text-uppercase Invest
+        a(href="/api/campaign/" + values.id + "/invest").btn.btn-primary.text-uppercase Invest
 
-
-#videoModal.modal.fade.video-modal(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")
-    .modal-dialog.modal-lg(role="document")
-        button(type="button", data-dismiss="modal", aria-label="Close").close
-          span(aria-hidden="true") &times;
-        .modal-content
-            .embed-responsive.embed-responsive-16by9
-                - let mainVideo = app.getVideoId(values.video);
-                if mainVideo && mainVideo.provider == 'youtube'
-                  iframe.embed-responsive-item(src="//www.youtube.com/embed/" + mainVideo.id + "?rel=0" allowfullscreen="true")
-                else if mainVideo && mainVideo.provider == 'vimeo'
-                  iframe.embed-responsive-item(src="//player.vimeo.com/video/" + mainVideo.id allowfullscreen="true")
-                else
-                  iframe.embed-responsive-item(src="//www.youtube.com/embed/?rel=0" allowfullscreen="true")
-                //- iframe.embed-responsive-item(src="//www.youtube.com/embed/" + app.getVideoId(values.video) + "?rel=0" allowfullscreen="true")
+div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")#videoModal.modal.fade.video-modal
+  div(role="document").modal-dialog.modal-lg
+    button(type="button", data-dismiss="modal", aria-label="Close").close
+      span(aria-hidden="true") &times;
+    .modal-content
+      .embed-responsive.embed-responsive-16by9
+        - let mainVideo = app.getVideoId(values.video);
+        if mainVideo && mainVideo.provider == 'youtube'
+          iframe.embed-responsive-item(src="//www.youtube.com/embed/" + mainVideo.id + "?rel=0" allowfullscreen="true")
+        else if mainVideo && mainVideo.provider == 'vimeo'
+          iframe.embed-responsive-item(src="//player.vimeo.com/video/" + mainVideo.id allowfullscreen="true")
+        else
+          iframe.embed-responsive-item(src="//www.youtube.com/embed/?rel=0" allowfullscreen="true")
+        //- iframe.embed-responsive-item(src="//www.youtube.com/embed/" + app.getVideoId(values.video) + "?rel=0" allowfullscreen="true")
 
 each v,k in values.additional_video
-    if v
-      div(id="videoModal-" + k tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true").modal.fade.video-modal
-          .modal-dialog.modal-lg(role="document")
-              .modal-content
-                  .embed-responsive.embed-responsive-16by9
-                      //- - var link =  app.getVideoId(v.link)
-                      - let additionalVideo = app.getVideoId(v.link);
-                      if additionalVideo && additionalVideo.provider == 'youtube'
-                        iframe.embed-responsive-item(src="//www.youtube.com/embed/" + additionalVideo.id + "?rel=0" allowfullscreen="true")
-                      else if additionalVideo && additionalVideo.provider == 'vimeo'
-                        iframe.embed-responsive-item(src="//player.vimeo.com/video/" + additionalVideo.id allowfullscreen="true")
-                      else
-                        iframe.embed-responsive-item(src="//www.youtube.com/embed/?rel=0" allowfullscreen="true")
-                      //- iframe.embed-responsive-item(src="//www.youtube.com/embed/" + link + "?rel=0" allowfullscreen="true")
+  if v
+    div(id="videoModal-" + k tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true").modal.fade.video-modal
+      div(role="document").modal-dialog.modal-lg
+        .modal-content
+          .embed-responsive.embed-responsive-16by9
+            //- - var link =  app.getVideoId(v.link)
+            - let additionalVideo = app.getVideoId(v.link);
+            if additionalVideo && additionalVideo.provider == 'youtube'
+              iframe(src="//www.youtube.com/embed/" + additionalVideo.id + "?rel=0" allowfullscreen="true").embed-responsive-item
+            else if additionalVideo && additionalVideo.provider == 'vimeo'
+              iframe(src="//player.vimeo.com/video/" + additionalVideo.id allowfullscreen="true").embed-responsive-item
+            else
+              iframe(src="//www.youtube.com/embed/?rel=0" allowfullscreen="true").embed-responsive-item
+            //- iframe.embed-responsive-item(src="//www.youtube.com/embed/" + link + "?rel=0" allowfullscreen="true")

@@ -1,62 +1,56 @@
 section.singup
-    .container
+  .container
+    .col-lg-12
+      h2.dosis.text-uppercase.text-sm-center.text-xs-center sign up
+        p.small-text Have an account?
+          a(href="/account/login").link-3  Log In
+    
+    .col-xl-4.col-lg-6.col-sm-8.offset-sm-2.col-md-8.offset-md-2.offset-lg-3.offset-xl-4
+      form(action="" metod="post").form-section.signup-form
         .col-lg-12
-            h2.dosis.text-uppercase.text-sm-center.text-xs-center sign up
-                p.small-text Have an account?
-                    a(href="/account/login").link-3  Log In
-        
-        .col-xl-4.col-lg-6.col-sm-8.offset-sm-2.col-md-8.offset-md-2.offset-lg-3.offset-xl-4
-            form(action="" metod="post").form-section.signup-form
-                .col-lg-12
-                    .form-group.row.clearfix.required
-                        input(type="text"
-                        placeholder="First name"
-                        name="first_name").form-control
-                    .form-group.row.clearfix.required
-                        input(type="text"
-                        placeholder="Last name"
-                        name="last_name").form-control
-                    .form-group.row.clearfix.required
-                        input(type="email"
-                        placeholder="E-mail"
-                        name="email").form-control
-                    .form-group.row.clearfix.required
-                        input(type="password"
-                        placeholder="Password"
-                        name="password1").form-control
-                    .form-group.row.clearfix.required
-                        input(type="password"
-                        placeholder="Re-enter password"
-                        name="password2").form-control
-                    .form-group.row.clearfix.required
-                        .row
-                            .col-lg-12
-                                label
-                                    input(type="checkbox" name="checkbox1" value="1")
-                                    span.label-text I agree to the
-                                      a(href="/pg/terms_of_use" target="_blank").link-3  Terms of Service
-                                      | , 
-                                      a(href="/pg/privacy_policy" target="_blank").link-3  Privacy Policy 
-                                      | and
-                                      a(href="/pg/electronic_signature" target="_blank").link-3  Electronic Signature and Electronic Delivery of Documentation.
-                .col-lg-12.m-t-1
-                    .row.text-xs-center
-                        button(type="submit")#register-submit-btn.btn.btn-primary.text-uppercase sign up
-                .col-lg-12.border-bottom.or
-                    span or
-                .social-btn.col-lg-12
-                    a(data-original-title="facebook"
-                    href="#"
-                    ).btn.btn-block.btn-facebook.text-uppercase
-                        i.fa.fa-facebook
-                        |  SIGN UP with Facebook
-                    a(data-original-title="Linkedin"
-                    href="#"
-                    ).btn.btn-block.btn-linkedin.text-uppercase
-                        i.fa.fa-linkedin
-                        |  SIGN UP with linkedin
-                    a(data-original-title="Google Plus"
-                    href="#"
-                    ).btn.btn-block.btn-google.text-uppercase
-                        i.fa.fa-google-plus
-                        |  SIGN UP with Google  
+          .form-group.row.clearfix.required
+            input(type="text"
+            placeholder="First name"
+            name="first_name").form-control
+          .form-group.row.clearfix.required
+            input(type="text"
+            placeholder="Last name"
+            name="last_name").form-control
+          .form-group.row.clearfix.required
+            input(type="email"
+            placeholder="E-mail"
+            name="email").form-control
+          .form-group.row.clearfix.required
+            input(type="password"
+            placeholder="Password"
+            name="password1").form-control
+          .form-group.row.clearfix.required
+            input(type="password"
+            placeholder="Re-enter password"
+            name="password2").form-control
+          .form-group.row.clearfix.required
+            .row
+              .col-lg-12
+                label
+                  input(type="checkbox" name="checkbox1" value="1")
+                  span.label-text I agree to the
+                    a(href="/pg/terms_of_use" target="_blank").link-3  Terms of Use
+                    | , 
+                    a(href="/pg/privacy_policy" target="_blank").link-3  Privacy Policy 
+                    | and
+                    a(href="/pg/electronic_signature" target="_blank").link-3  Electronic Signature and Electronic Delivery of Documentation.
+        .col-lg-12.m-t-1
+          .row.text-xs-center
+            button(type="submit")#register-submit-btn.btn.btn-primary.text-uppercase sign up
+        .col-lg-12.border-bottom.or
+          span or
+        .social-btn.col-lg-12
+          a(data-original-title="facebook" href="#").btn.btn-block.btn-facebook.text-uppercase
+            i.fa.fa-facebook
+            |  SIGN UP with Facebook
+          a(data-original-title="Linkedin" href="#").btn.btn-block.btn-linkedin.text-uppercase
+            i.fa.fa-linkedin
+            |  SIGN UP with linkedin
+          a(data-original-title="Google Plus" href="#").btn.btn-block.btn-google.text-uppercase
+            i.fa.fa-google-plus
+            |  SIGN UP with Google  

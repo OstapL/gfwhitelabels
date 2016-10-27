@@ -29,12 +29,17 @@
 
 	.profile-tabs.nav-tabs {
 		margin-bottom: rem(15);
+		margin-left: rem(110);
 		
 		li.nav-item a.nav-link {
 			border-radius: rem(20);
 		}
 	} 
-
+	.profile-user-name {
+		font-size: rem(14);
+		letter-spacing: rem(2.4);
+		text-transform: uppercase;
+	}
 	.drop-photo-block {
 		h3 {
 			margin-top: 0
@@ -187,10 +192,14 @@
 	@media screen and (max-width: 991px) {
 		.profile-tabs.nav-tabs {
 			text-align: center;
+			margin-left: 0;
 			li.nav-item {
 				display: inline;
 				float: none;
 			}
+		}
+		.m-b-md-25 {
+			margin-bottom: rem(25);
 		}
 	}
 

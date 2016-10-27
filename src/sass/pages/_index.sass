@@ -242,7 +242,20 @@
 			font-size: 30px
 	.home-wrap-text-block
 		padding-top: rem(5)
-
+	.js-height-full
+		&:before
+			width: 100%
+			background-color: #000000
+			opacity: .3
+			position: absolute
+			content: ''
+			height: 100%
+			left: 0
+			bottom: 0
+		.link-2
+			color: $white
+		h1, span
+			color: $white
 @media only screen and (max-width : 768px)
 	.home-text-main
 		h1
@@ -266,7 +279,7 @@
 	.home-what-is
 		h2
 			line-height: rem(28)
- 	.raise-wrap
+	.raise-wrap
 		.container
 			padding-left: 0
 			padding-right: 0

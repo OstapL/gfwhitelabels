@@ -1,75 +1,73 @@
 - 'use strict';
 section.small-section.filter
-    form(
-        action="/campaigns/" 
-        method="get" 
-        role="form"
-    )
-        .container
-            .row
-                .col-lg-3
-                    .one_drop
-                        select.form-control(multiple="true" title="INDUSTRY").selectpicker
-                            option Advertising & Marketing
-                            option Arts, Fashion, & Media
-                            option Business to Business
-                            option Cleantech
-                            option Construction & Manufacturing
-                            option Consumer Products
-                            option Energy/Transport
-
-                .col-lg-3
-                    .one_drop
-                        select(multiple="true" title="STAGE").form-control.selectpicker
-                            option Pre-seed
-                            option Seed
-                            option Bridge to Series A
-                            option Series A
-                            option Bridge to Series B
-                            option Series B
-
-                .col-lg-3
-                    .one_drop
-                        select(multiple="true" title="LOCATION").form-control.selectpicker
-                            option Locations
-                            option Los Angeles, CA
-                            option San Francisco, CA
-                            option New York, NY
-                            option Las Vegas, NV
-
-                .col-lg-3
-                    .one_drop
-                        select(multiple="true" title="DEAL TYPE").form-control.selectpicker
-                            option Common Equity
-                            option Revenue Share
-
-            .create-alert-block
-                .row
-                    .col-sm-6.col-lg-9.col-xl-10.col-xs-12.text-sm-left.text-xs-center
-                        a(href="#").pull-xl-right.btn.btn-sm.mr30.text-uppercase.auth-pop create alert
-
-                    .col-sm-6.col-lg-3.col-xl-2.col-xs-12.text-xs-center
-                        select.orderby.custom-select
-                            option(checked="checked" value="0") Order by
-section.campaing-list
-    .container#campaignList
-        include _list.pug
-
-section.pagination
+  form(
+      action="/campaigns/" 
+      method="get" 
+      role="form")
     .container
-        .row
-            .col-lg-12
-                nav
-                    ul.pagination.pagination-sm
-                        li.page-item.active
-                            a(href="#").page-link 1
-                        li.page-item
-                            a(href="#").page-link 2
-                        li.page-item
-                            a(href="#").page-link 3
-                        li.page-item
-                            a(href="#" aria-label="Next").page-link
-                                span(aria-hidden="true")
-                                    i.fa.fa-angle-right
-                                span.sr-only Next
+      .row
+        .col-lg-3
+          .one_drop
+            select(multiple="true" title="INDUSTRY").form-control.selectpicker
+              option Advertising & Marketing
+              option Arts, Fashion, & Media
+              option Business to Business
+              option Cleantech
+              option Construction & Manufacturing
+              option Consumer Products
+              option Energy/Transport
 
+        .col-lg-3
+          .one_drop
+            select(multiple="true" title="STAGE").form-control.selectpicker
+              option Pre-seed
+              option Seed
+              option Bridge to Series A
+              option Series A
+              option Bridge to Series B
+              option Series B
+
+        .col-lg-3
+          .one_drop
+            select(multiple="true" title="LOCATION").form-control.selectpicker
+              option Locations
+              option Los Angeles, CA
+              option San Francisco, CA
+              option New York, NY
+              option Las Vegas, NV
+
+        .col-lg-3
+          .one_drop
+            select(multiple="true" title="DEAL TYPE").form-control.selectpicker
+              option Common Equity
+              option Revenue Share
+
+      .create-alert-block
+        .row
+          .col-sm-6.col-lg-9.col-xl-10.col-xs-12.text-sm-left.text-xs-center
+            a(href="#").pull-xl-right.btn.btn-sm.mr30.text-uppercase.auth-pop create alert
+
+          .col-sm-6.col-lg-3.col-xl-2.col-xs-12.text-xs-center
+            select.orderby.custom-select
+              option(checked="checked" value="0") Order by
+section.campaing-list
+  .container#campaignList
+    include _list.pug
+
+//- section.pagination
+//-     .container
+//-         .row
+//-             .col-lg-12
+//-                 nav
+//-                     ul.pagination.pagination-sm
+//-                         li.page-item.active
+//-                             a(href="#").page-link 1
+//-                         li.page-item
+//-                             a(href="#").page-link 2
+//-                         li.page-item
+//-                             a(href="#").page-link 3
+//-                         li.page-item
+//-                             a(href="#" aria-label="Next").page-link
+//-                                 span(aria-hidden="true")
+//-                                     i.fa.fa-angle-right
+//-                                 span.sr-only Next

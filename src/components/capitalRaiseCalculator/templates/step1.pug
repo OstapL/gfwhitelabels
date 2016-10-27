@@ -28,6 +28,7 @@ include ../../../templates/mixins.pug
                         .col-lg-12
                             select#industry.form-control.js-select(
                                 data-model-value='industry')
+                                option(value = '')= '---'
                                 each val, index in industryData
                                     if val == data.industry
                                         option(selected)= val
@@ -39,6 +40,7 @@ include ../../../templates/mixins.pug
                         .col-lg-12
                             select#industryEstablishment.form-control.js-select(
                                 data-model-value='industryEstablishment')
+                                    option(value = '')= '---'
                                     each item in selects.industryEstablishment
                                         if item.value == data.industryEstablishment
                                             option(selected, value= item.value)= item.text
@@ -50,6 +52,7 @@ include ../../../templates/mixins.pug
                         .col-lg-12
                             select#typeOfEstablishment.form-control.js-select(
                                 data-model-value='typeOfEstablishment')
+                                    option(value = '')= '---'
                                     each item in selects.typeOfEstablishment
                                         if item.value == data.typeOfEstablishment
                                             option(selected, value= item.value)= item.text
@@ -62,7 +65,8 @@ include ../../../templates/mixins.pug
                             input#projectedRevenue.form-control.js-field(
                                 value= formatPrice(data.projectedRevenue),
                                 type='text',
-                                placeholder='$0',
+                                placeholder='Revenue Year One',
+                                autocomplete='off'
                                 data-input-mask='price',
                                 data-model-value='projectedRevenue'
                                 data-current-value= data.projectedRevenue)
@@ -73,7 +77,8 @@ include ../../../templates/mixins.pug
                             input#operatingProfit.form-control.js-field(
                                 value= formatPrice(data.operatingProfit),
                                 type='text',
-                                placeholder='$0',
+                                placeholder='Profit Year One ',
+                                autocomplete='off'
                                 data-input-mask='price',
                                 data-model-value='operatingProfit'
                                 data-current-value= data.operatingProfit)
@@ -84,7 +89,8 @@ include ../../../templates/mixins.pug
                             input#projectedRevenueTwo.form-control.js-field(
                                 value= formatPrice(data.projectedRevenueTwo),
                                 type='text',
-                                placeholder='$0',
+                                placeholder='Revenue Year Five',
+                                autocomplete='off'
                                 data-input-mask='price',
                                 data-model-value='projectedRevenueTwo',
                                 data-current-value= data.projectedRevenueTwo)
@@ -95,7 +101,8 @@ include ../../../templates/mixins.pug
                             input#operatingProfitTwo.form-control.js-field(
                                 value= formatPrice(data.operatingProfitTwo),
                                 type='text',
-                                placeholder='$0',
+                                placeholder='Profit Year Five',
+                                autocomplete='off'
                                 data-input-mask='price',
                                 data-model-value='operatingProfitTwo'
                                 data-current-value= data.operatingProfitTwo)
@@ -106,7 +113,8 @@ include ../../../templates/mixins.pug
                             input#CashOnHand.form-control.js-field(
                                 value= formatPrice(data.CashOnHand),
                                 type='text',
-                                placeholder='$0',
+                                placeholder='Cash Holdings',
+                                autocomplete='off'
                                 data-input-mask='price',
                                 data-model-value='CashOnHand',
                                 data-current-value= data.CashOnHand)
@@ -117,7 +125,8 @@ include ../../../templates/mixins.pug
                             input#yourDebt.form-control.js-field(
                                 value= formatPrice(data.yourDebt),
                                 type='text',
-                                placeholder='$0',
+                                placeholder='Current Debt',
+                                autocomplete='off'
                                 data-input-mask='price',
                                 data-model-value='yourDebt'
                                 data-current-value= data.yourDebt)
@@ -128,7 +137,8 @@ include ../../../templates/mixins.pug
                             input#cashRaise.form-control.js-field(
                                 value= formatPrice(data.cashRaise),
                                 type='text',
-                                placeholder='$0',
+                                placeholder='Raise Amount',
+                                autocomplete='off'
                                 data-input-mask='price',
                                 data-model-value='cashRaise',
                                 data-current-value= data.cashRaise)
