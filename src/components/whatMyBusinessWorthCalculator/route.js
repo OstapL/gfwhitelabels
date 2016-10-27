@@ -2,6 +2,7 @@ module.exports = Backbone.Router.extend({
   routes: {
     'calculator/selectYourBusiness': 'selectYourBusiness',
     'calculator/selectCalculator': 'selectCalculator',
+    'calculator/selectCalculator2': 'selectCalculator2',
     'calculator/whatmybusinessworth/intro': 'calculatorWhatMyBusinessWorthIntro',
     'calculator/whatmybusinessworth/step-1': 'calculatorWhatMyBusinessWorthStep1',
     'calculator/whatmybusinessworth/step-2': 'calculatorWhatMyBusinessWorthStep2',
@@ -32,6 +33,23 @@ module.exports = Backbone.Router.extend({
         this.render();
       },
       template: require('./templates/selectCalculator.pug'),
+      render: function () {
+        this.$el.html(this.template());
+        return this;
+      }
+    });
+
+    new View();
+    app.hideLoading();
+  },
+
+  selectCalculator2() {
+    let View = Backbone.View.extend({
+      el: '#content',
+      initialize: function() {
+        this.render();
+      },
+      template: require('./templates/selectCalculator2.pug'),
       render: function () {
         this.$el.html(this.template());
         return this;

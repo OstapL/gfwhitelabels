@@ -39,6 +39,7 @@ include ../../../templates/mixins.pug
                 value= formatPrice(data.raiseMoney),
                 type='text',
                 placeholder='$0',
+                autocomplete="off"
                 data-input-mask='price',
                 data-model-value='raiseMoney',
                 data-current-value= data.raiseMoney)#raiseMoney.form-control.js-field
@@ -51,6 +52,7 @@ include ../../../templates/mixins.pug
                 value= formatPrice(data.nextYearRevenue),
                 type='text',
                 placeholder='$0',
+                autocomplete="off"
                 data-input-mask='price',
                 data-model-value='nextYearRevenue',
                 data-current-value= data.nextYearRevenue)#nextYearRevenue.form-control.js-field
@@ -63,6 +65,7 @@ include ../../../templates/mixins.pug
                 value= data.growLevel,
                 type='text',
                 placeholder='0%',
+                autocomplete="off"
                 data-input-mask='percent',
                 data-model-value='growLevel')#growLevel.form-control.js-field
 
