@@ -61,11 +61,11 @@ mixin fieldInput(name, attr)
                   .col-xs-12
                     section.right-block
                       .form-group.row
-                        label.col-lg-3.text-xl-right Legal Name
-                        +fieldInput("first_name", {'class': 'col-lg-4 ','placeholder':'First Name' })
-                        +fieldInput("last_name", {'class': 'col-lg-4 ','placeholder':'Last Name' })
+                        label.col-lg-3.text-lg-right.text-xs-left Legal Name
+                        +fieldInput("first_name", {'class': 'col-lg-4 m-b-md-25','placeholder':'First Name' })
+                        +fieldInput("last_name", {'class': 'col-lg-4','placeholder':'Last Name' })
                       .form-group.row
-                        label.col-lg-3.text-xl-right Country
+                        label.col-lg-3.text-lg-right.text-xs-left Country
                         .col-lg-8
                           select.custom-select.w-100
                             option United States
