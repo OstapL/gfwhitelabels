@@ -1030,6 +1030,7 @@ module.exports = {
                 label: 'If an Investor Invests Over',
                 placeholder: '$',
                 values: [],
+                inputType: 'number'
               },
             perk: {
                 type: 'string',
