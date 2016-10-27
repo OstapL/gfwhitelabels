@@ -11,7 +11,6 @@ include menu.pug
 )
 
 section.campaign-specifics.container.m-b-85
-  
 
   //START RIGHT BLOCK
   .col-lg-10.offset-lg-1.col-xl-8.offset-xl-0.push-xl-3
@@ -62,8 +61,8 @@ section.campaign-specifics.container.m-b-85
             icon: 'file',
             default: '/img/default' + suffix + '.png',
         })
-            //- default: fileName && (fileName.endsWith('.pdf') || fileName.endsWith('.pptx')) ? '/img/default' + suffix + '.png' : '/img/MS-PowerPoint.png',
-            //- default: '/img/MS-PowerPoint.png',
+        //- default: fileName && (fileName.endsWith('.pdf') || fileName.endsWith('.pptx')) ? '/img/default' + suffix + '.png' : '/img/MS-PowerPoint.png',
+        //- default: '/img/MS-PowerPoint.png',
 
       .row.border-top
 
@@ -78,151 +77,147 @@ section.campaign-specifics.container.m-b-85
           type: 'radio',
           })
 
+      div(style=(values.security_type == 0 ? '' :  "display: none")).security_type_list.security_type_0
+        .row
+          .col-lg-6.col-md-12.col-l-65.m-l-30.form-group.row.clearfix
+            label.col-lg-5.col-md-12.text-lg-right Link to Calculators
+            .col-lg-7.col-md-12
+              .btn-group
+                button(data-toggle="dropdown" aria-haspopup="true" aria-expanded="false").btn.btn-dropdown Link to Calculators
+                button(data-toggle="dropdown" aria-haspopup="true" aria-expanded="false").btn.dropdown-toggle.dropdown-toggle-split.btn-dropdown-click
+                  span.sr-only 
+                .dropdown-menu
+                  a(href="/calculator/paybackshare/step-1" target="_blank").dropdown-item Revenue Share Calculator
+                  a(href="/calculator/whatmybusinessworth/intro" target="_blank").dropdown-item How Much Should I Raise?
+                  a(href="/calculator/establishedBusiness/intro" target="_blank").dropdown-item Established Business Valuation
+                  a(href="/calculator/selectCalculator" target="_blank").dropdown-item New Startup Valuation
+          .col-lg-5.col-md-12.col-l-65.p-l-0.p-r-1.pre-money-p-r-0.pull-lg-right.pull-md-left
+            +fieldBlock("premoney_valuation", '', {
+              class1: 'col-lg-4 col-md-12', 
+              class2: 'col-lg-6 col-md-12', 
+              type: 'text',
+              placeholder: '$',
+              })
+        .label-top-6
+          +fieldBlock("price_per_share", '', {
+             class1: 'col-lg-3 col-md-12',
+             class2: 'col-lg-9 col-md-12',
+             type: 'text',
+             placeholder: '$',
+             })
+        
+        .row.m-t-2.form-group-m-b-15
+          .col-lg-6.col-l-65
+            +fieldBlock("min_number_of_shares", '', {
+              class1: 'col-lg-6 p-l-2 col-md-12 p-sm-0', 
+              class2: 'col-lg-6 col-md-12', 
+              type: 'text',
+              placeholder: '$',
+              disabled: true,
+              })
 
+          .col-lg-6.col-l-65
+            +fieldBlock("max_number_of_shares", '', {
+              class1: 'col-lg-5 col-md-12', 
+              class2: 'col-lg-7 col-md-12', 
+              type: 'text',
+              placeholder: '$',
+              disabled: true,
+              })
 
-      .security_type_list.security_type_0(style=(values.security_type == 0 ? '' :  "display: none"))
-          .row
-            .col-lg-6.col-md-12.col-l-65.m-l-30.form-group.row.clearfix
-              label.col-lg-5.col-md-12.text-lg-right Link to Calculators
-              .col-lg-7.col-md-12
-                .btn-group
-                  button(data-toggle="dropdown" aria-haspopup="true" aria-expanded="false").btn.btn-dropdown Link to Calculators
-                  button(data-toggle="dropdown" aria-haspopup="true" aria-expanded="false").btn.dropdown-toggle.dropdown-toggle-split.btn-dropdown-click
-                    span.sr-only 
-                  .dropdown-menu
-                    a(href="/calculator/paybackshare/step-1" target="_blank").dropdown-item Revenue Share Calculator
-                    a(href="/calculator/whatmybusinessworth/intro" target="_blank").dropdown-item How Much Should I Raise?
-                    a(href="/calculator/establishedBusiness/intro" target="_blank").dropdown-item Established Business Valuation
-                    a(href="/calculator/selectCalculator" target="_blank").dropdown-item New Startup Valuation
-            .col-lg-5.col-md-12.col-l-65.p-l-0.p-r-1.pre-money-p-r-0.pull-lg-right.pull-md-left
-              +fieldBlock("premoney_valuation", '', {
-                class1: 'col-lg-4 col-md-12', 
-                class2: 'col-lg-6 col-md-12', 
-                type: 'text',
-                placeholder: '$',
-                })
-          .label-top-6
-            +fieldBlock("price_per_share", '', {
-               class1: 'col-lg-3 col-md-12',
-               class2: 'col-lg-9 col-md-12',
-               type: 'text',
-               placeholder: '$',
-               })
-          
-          .row.m-t-2.form-group-m-b-15
-            .col-lg-6.col-l-65
-              +fieldBlock("min_number_of_shares", '', {
-                class1: 'col-lg-6 p-l-2 col-md-12 p-sm-0', 
-                class2: 'col-lg-6 col-md-12', 
-                type: 'text',
-                placeholder: '$',
-                disabled: true,
-                })
+        .row.m-t-2.form-group-m-b-15
+          .col-lg-6.col-l-65
+            .form-group.row.min_equity_offered.required
+              label(for="min_equity_offered").text-lg-right.col-lg-6.p-l-2.col-md-12 Minimum Equity Offered
+              .col-lg-6.col-md-12
+                input(name="min_equity_offered" placeholder="$" type="text" value="0" disabled).form-control#min_equity_offered
 
-            .col-lg-6.col-l-65
-              +fieldBlock("max_number_of_shares", '', {
-                class1: 'col-lg-5 col-md-12', 
-                class2: 'col-lg-7 col-md-12', 
-                type: 'text',
-                placeholder: '$',
-                disabled: true,
-                })
+          .col-lg-6.col-l-65
+            .form-group.row.max_equity_offered.required
+              label(for="max_equity_offered").text-lg-right.col-lg-5.col-md-12 Maximum Equity Offered
+              .col-lg-6.col-md-12
+                input(name="max_equity_offered" placeholder="$" type="text" value="0" disabled).form-control#max_equity_offered
 
-          .row.m-t-2.form-group-m-b-15
-            .col-lg-6.col-l-65
-              .form-group.row.min_equity_offered.required
-                label(for="min_equity_offered").text-lg-right.col-lg-6.p-l-2.col-md-12 Minimum Equity Offered
-                .col-lg-6.col-md-12
-                  input.form-control#min_equity_offered(name="min_equity_offered" placeholder="$" type="text" value="0" disabled)
+        //- .row.m-t-2.form-group-m-b-15
+        //-   .col-lg-6.col-l-65
+        //-     +fieldBlock("min_equity_offered", '', {
+        //-       class1: 'col-lg-6 p-l-2', 
+        //-       class2: 'col-lg-6 col-md-9', 
+        //-       type: 'text',
+        //-       placeholder: '$',
+        //-       disabled: true,
+        //-       })
 
-            .col-lg-6.col-l-65
-              .form-group.row.max_equity_offered.required
-                label(for="max_equity_offered").text-lg-right.col-lg-5.col-md-12 Maximum Equity Offered
-                .col-lg-6.col-md-12
-                  input.form-control#max_equity_offered(name="max_equity_offered" placeholder="$" type="text" value="0" disabled)
+        //-   .col-lg-6.col-l-65
+        //-     +fieldBlock("max_equity_offered", '', {
+        //-       class1: 'col-lg-5 col-md-3', 
+        //-       class2: 'col-lg-7 col-md-9', 
+        //-       type: 'text',
+        //-       placeholder: '$',
+        //-       disabled: true,
+        //-       })
+          //- .col-lg-6 Maximum # of Share: 
+          //-   span#min_number_of_share 1000
 
+      div(style=(values.security_type == 1 ? '' :  "display: none")).security_type_list.security_type_1
+        //- .row
+        //- .label-top-6
+        //-   +fieldBlock("percentage_revenue", '', {
+        //-      class1: 'col-lg-3 col-md-4',
+        //-      class2: 'col-lg-9 col-md-8',
+        //-      type: 'text',
+        //-      placeholder: '$',
+        //-      })
+        
+        //- .row.m-t-2.form-group-m-b-15
+        //-   .col-lg-6.col-l-65.label-top-6
+        //-     +fieldBlock("cap", '', {
+        //-       class1: 'col-lg-6 p-l-2', 
+        //-       class2: 'col-lg-6 col-md-9', 
+        //-       type: 'text',
+        //-       placeholder: '$',
+        //-       })
+        //-   .col-lg-6.col-l-65.label-top-6
+        //-     +fieldBlock("expiration_date", '', {
+        //-       class1: 'col-lg-6 p-r-2', 
+        //-       class2: 'col-lg-6 col-md-9', 
+        //-       type: 'date',
+        //-       })
 
+        .row.m-t-2.form-group-m-b-15.label-top-6
+          .col-lg-6.col-l-65.col-md-12
+            .form-group.row.min_equity_offered.required
+              label(for="min_equity_offered").text-lg-right.col-lg-6.p-l-2.col-md-12 Percentage Revenue
+              .col-lg-6.col-md-12
+                input(name="min_equity_offered" placeholder="$" type="text" value="5%" disabled).form-control
 
-          //- .row.m-t-2.form-group-m-b-15
-          //-   .col-lg-6.col-l-65
-          //-     +fieldBlock("min_equity_offered", '', {
-          //-       class1: 'col-lg-6 p-l-2', 
-          //-       class2: 'col-lg-6 col-md-9', 
-          //-       type: 'text',
-          //-       placeholder: '$',
-          //-       disabled: true,
-          //-       })
+          .col-lg-6.col-l-65
+            .form-group.row.max_equity_offered.required
+              label(for="max_equity_offered").text-lg-right.col-lg-5.col-md-12 Cap
+              .col-lg-6.col-md-12
+                input(name="max_equity_offered" placeholder="$" type="text" value="2X" disabled).form-control
 
-          //-   .col-lg-6.col-l-65
-          //-     +fieldBlock("max_equity_offered", '', {
-          //-       class1: 'col-lg-5 col-md-3', 
-          //-       class2: 'col-lg-7 col-md-9', 
-          //-       type: 'text',
-          //-       placeholder: '$',
-          //-       disabled: true,
-          //-       })
-            //- .col-lg-6 Maximum # of Share: 
-            //-   span#min_number_of_share 1000
-
-      .security_type_list.security_type_1(style=(values.security_type == 1 ? '' :  "display: none"))
-          //- .row
-          //- .label-top-6
-          //-   +fieldBlock("percentage_revenue", '', {
-          //-      class1: 'col-lg-3 col-md-4',
-          //-      class2: 'col-lg-9 col-md-8',
-          //-      type: 'text',
-          //-      placeholder: '$',
-          //-      })
-          
-          //- .row.m-t-2.form-group-m-b-15
-          //-   .col-lg-6.col-l-65.label-top-6
-          //-     +fieldBlock("cap", '', {
-          //-       class1: 'col-lg-6 p-l-2', 
-          //-       class2: 'col-lg-6 col-md-9', 
-          //-       type: 'text',
-          //-       placeholder: '$',
-          //-       })
-          //-   .col-lg-6.col-l-65.label-top-6
-          //-     +fieldBlock("expiration_date", '', {
-          //-       class1: 'col-lg-6 p-r-2', 
-          //-       class2: 'col-lg-6 col-md-9', 
-          //-       type: 'date',
-          //-       })
-
-          .row.m-t-2.form-group-m-b-15.label-top-6
-            .col-lg-6.col-l-65.col-md-12
-              .form-group.row.min_equity_offered.required
-                label(for="min_equity_offered").text-lg-right.col-lg-6.p-l-2.col-md-12 Percentage Revenue
-                .col-lg-6.col-md-12
-                  input.form-control(name="min_equity_offered" placeholder="$" type="text" value="5%" disabled)
-
-            .col-lg-6.col-l-65
-              .form-group.row.max_equity_offered.required
-                label(for="max_equity_offered").text-lg-right.col-lg-5.col-md-12 Cap
-                .col-lg-6.col-md-12
-                  input.form-control(name="max_equity_offered" placeholder="$" type="text" value="2X" disabled)
-
-          .row
-            .col-lg-6.col-md-12.col-l-65.m-l-30.form-group.row.clearfix
-              label.col-lg-5.text-lg-right Link to Calculators
-              .col-lg-7
-                .btn-group
-                  button(data-toggle="dropdown" aria-haspopup="true" aria-expanded="false").btn.btn-dropdown Link to Calculators
-                  button(data-toggle="dropdown" aria-haspopup="true" aria-expanded="false").btn.dropdown-toggle.dropdown-toggle-split.btn-dropdown-click
-                    span.sr-only 
-                  .dropdown-menu
-                    a(href="/calculator/paybackshare/step-1" target="_blank").dropdown-item Revenue Share Calculator
-                    a(href="/calculator/whatmybusinessworth/intro" target="_blank").dropdown-item How Much Should I Raise?
-                    a(href="/calculator/establishedBusiness/intro" target="_blank").dropdown-item Established Business Valuation
-                    a(href="/calculator/selectCalculator" target="_blank").dropdown-item New Startup Valuation
-          
-          .col-lg-9.offset-lg-3.p-r-0
-            h4.m-t-1.font-weight-bold.letter-spacing-normal Here’s how Revenue Share works:
-            ol.simple-list.mb45
-              li.p-b-1 Share 5% of your company's revenue with investors annually, until;
-              li.p-b-1 You have paid investors back two times the invested amount (distributions are capped at (2x) the investment amount, at which point the contract is deemed fulfilled);
-              li.p-b-1 No distributions are required until the second full calendar year and the company is allowed one year of forbearance as needed;
-              li In the event of default, investors become general unsecured creditors (senior to equity).
+        .row
+          .col-lg-6.col-md-12.col-l-65.m-l-30.form-group.row.clearfix
+            label.col-lg-5.text-lg-right Link to Calculators
+            .col-lg-7
+              .btn-group
+                button(data-toggle="dropdown" aria-haspopup="true" aria-expanded="false").btn.btn-dropdown Link to Calculators
+                button(data-toggle="dropdown" aria-haspopup="true" aria-expanded="false").btn.dropdown-toggle.dropdown-toggle-split.btn-dropdown-click
+                  span.sr-only 
+                .dropdown-menu
+                  a(href="/calculator/paybackshare/step-1" target="_blank").dropdown-item Revenue Share Calculator
+                  a(href="/calculator/whatmybusinessworth/intro" target="_blank").dropdown-item How Much Should I Raise?
+                  a(href="/calculator/establishedBusiness/intro" target="_blank").dropdown-item Established Business Valuation
+                  a(href="/calculator/selectCalculator" target="_blank").dropdown-item New Startup Valuation
+        
+        .col-lg-9.offset-lg-3.p-r-0
+          h4.m-t-1.font-weight-bold.letter-spacing-normal Here’s how Revenue Share works:
+          ol.simple-list.mb45
+            li.p-b-1 Share 5% of your company's revenue with investors annually, until;
+            li.p-b-1 You have paid investors back two times the invested amount (distributions are capped at (2x) the investment amount, at which point the contract is deemed fulfilled);
+            li.p-b-1 No distributions are required until the second full calendar year and the company is allowed one year of forbearance as needed;
+            li In the event of default, investors become general unsecured creditors (senior to equity).
       
       .col-lg-12.border-top.m-t-0
         h3 Here some important things to remember about the campaign process.
@@ -233,7 +228,7 @@ section.campaign-specifics.container.m-b-85
           li.pb10.text-justify If an investor doesn’t cancel their commitment before the 48 hour period prior to the deadline, the funds will be released to you and investors will receive securities in exchange for their investment.
           li.pb10.text-justify If you make a material change to the offering, an investor’s investment commitment will be cancelled unless they reconfirm their commitment.
       .col-lg-12.pull-lg-right.p-r-0.m-t-2.text-lg-right.text-md-center.text-sm-center.text-xs-center
-              // button(type="submit").btn.btn-secondary.text-uppercase.m-r-3.m-t-0 Fields Review
-              button(type="submit" data-method="PATCH").btn.btn-primary.text-uppercase.submit-specifics save and continue
-                i.fa.fa-angle-right
+        // button(type="submit").btn.btn-secondary.text-uppercase.m-r-3.m-t-0 Fields Review
+        button(type="submit" data-method="PATCH").btn.btn-primary.text-uppercase.submit-specifics save and continue
+          i.fa.fa-angle-right
   +menu('specifics')

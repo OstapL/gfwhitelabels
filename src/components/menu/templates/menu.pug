@@ -1,60 +1,60 @@
 li.nav-item.hidden-md-down
-    a.nav-link(href=Urls['campaign-list']())
-        i.fa.fa-search 
-        |  Explore
-li.nav-item.active
-    a.nav-link(href="#") About us 
-        i.fa.fa-angle-down
-    .list-container
-        ul.submenu.list-unstyled
-            li
-                a.nav-link(href="/pg/overview") Overview
-            li
-                a.nav-link(href="/pg/team") #{teamName}
-            li.display-partners
-                a.nav-link(href="/pg/partners") Partners
-            li
-                a.nav-link(href="/pg/contact") Contact Us
-            li
-                a.nav-link(href="/pg/careers") Careers
-            li
-                a.nav-link(href="/pg/news") In the News
-            li
-                a.nav-link(href="/pg/faq") FAQ
-            //- li
-            //-     a.nav-link(href="/pg/blogs") Blog
-    li.nav-item
-        a.nav-link(href="#") Resource center 
-            i.fa.fa-angle-down
-        .list-container.two-columns
-            ul.submenu.list-unstyled
-                li.nav-link-sm
-                    p For Investors
-                li
-                    a.nav-link(href="/pg/investor_tutorial") Investor Tutorial
-                li
-                    a.nav-link(href="/pg/education") Education
-                li
-                    a.nav-link(href="/pg/investorquestions") FAQ
-            ul.submenu.list-unstyled
-                li.nav-link-sm
-                    p For Businesses
-                li
-                    a.nav-link(href="/pg/business_tutorial") Business Tutorial
-                //- li
-                //-     a.nav-link(href=Urls['campaign-list']()) Campaign Material
-                li
-                    a.nav-link(href="/pg/success_guide") Success Guide
-                li
-                    a.nav-link(href="/calculator/paybackshare/step-1") Revenue Share Calculator
-                li
-                    a.nav-link(href="/calculator/whatmybusinessworth/intro") How Much Should I Raise?
-                li
-                    a.nav-link(href="/calculator/selectYourBusiness") What's My Business Worth?
-                li
-                    a.nav-link(href="/pg/entrepreneurquestions") FAQ
-    li.nav-item
-        a.nav-link(href="/company/create") Raise Funds 
+  a(href=Urls['campaign-list']()).nav-link
+    i.fa.fa-search 
+    |  Explore
+li.nav-item
+  a(href="#").nav-link About us 
+    i.fa.fa-angle-down
+  .list-container
+    ul.submenu.list-unstyled
+      li
+        a(href="/pg/overview").nav-link Overview
+      li
+        a(href="/pg/team").nav-link #{teamName}
+      li.display-partners
+        a(href="/pg/partners").nav-link Partners
+      li
+        a(href="/pg/contact").nav-link Contact Us
+      li
+        a(href="/pg/careers").nav-link Careers
+      li
+        a(href="/pg/news").nav-link In the News
+      li
+        a(href="/pg/faq").nav-link FAQ
+      //- li
+      //-     a.nav-link(href="/pg/blogs") Blog
+  li.nav-item
+    a(href="#").nav-link Resource center 
+      i.fa.fa-angle-down
+    .list-container.two-columns
+      ul.submenu.list-unstyled
+        li.nav-link-sm
+          p For Investors
+        li
+          a(href="/pg/investor_tutorial").nav-link Investor Tutorial
+        li
+          a(href="/pg/education").nav-link Education
+        li
+          a(href="/pg/investorquestions").nav-link FAQ
+      ul.submenu.list-unstyled
+        li.nav-link-sm
+          p For Businesses
+        li
+          a(href="/pg/business_tutorial").nav-link Business Tutorial
+        //- li
+        //-     a.nav-link(href=Urls['campaign-list']()) Campaign Material
+        li
+          a(href="/pg/success_guide").nav-link Success Guide
+        li
+          a(href="/calculator/paybackshare/step-1").nav-link Revenue Share Calculator
+        li
+          a(href="/calculator/whatmybusinessworth/intro").nav-link How Much Should I Raise?
+        li
+          a(href="/calculator/selectYourBusiness").nav-link What's My Business Worth?
+        li
+          a(href="/pg/entrepreneurquestions").nav-link FAQ
+  li.nav-item
+    a(href="/company/create").nav-link Raise Capital
 
-    li.nav-item
-        a.nav-link.hidden-lg-up(href="/api/campaign") Explore
+  li.nav-item
+    a(href="/api/campaign").nav-link.hidden-lg-up Explore
