@@ -1,18 +1,16 @@
 include ../../../templates/mixins.pug
 
 +breadcrumbs("What's My Business Worth?", '',
-    [
-        ['Home', '/'],
-        ["What's My Business Worth?", '']
-    ]
+  [
+    ['Home', '/'],
+    ["What's My Business Worth?", '']
+  ]
 )
 
 .container.calculator-container.select-business
-    .row
-        .col-lg-6.text-lg-right.text-xs-center.mb30xs
-            a(href="/calculator/selectCalculator2").btn.btn-lg.btn-primary.text-uppercase i have an established business
+  .row
+    .col-lg-6.text-lg-right.text-xs-center.mb30xs
+      a(href="/calculator/selectCalculator2").btn.btn-lg.btn-primary.text-uppercase i have an established business
 
-        .col-lg-6.text-lg-left.text-xs-center
-            a(
-                href="/calculator/selectCalculator"
-            ).btn.btn-lg.btn-primary.text-uppercase i have a brand new startup
+    .col-lg-6.text-lg-left.text-xs-center
+      a(href="/calculator/selectCalculator").btn.btn-lg.btn-primary.text-uppercase i have a brand new startup
