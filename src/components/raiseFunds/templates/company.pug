@@ -187,7 +187,7 @@ section.create-company.container.m-b-85
           div(role="tabpanel")#form_c.panel-collapse.collapse
             .list-group
               a(href="#").list-group-item.list-group-item-action form c
-    .row
+    .row(style="visibility:" + (campaign.id ? 'visible' : 'hidden'))
       .col-lg-12.text-xs-center
         .row
           button(type="button" data-href=("#")).btn.btn-secondary.text-uppercase.m-t-2.onPreview preview
