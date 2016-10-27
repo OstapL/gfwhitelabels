@@ -1,153 +1,150 @@
 include ../../../templates/mixins.pug
 
 +breadcrumbs('Startup Business Valuation Calculator ', 'step 1',
-    [
-        ['Home', '/'],
-        ["What's My Business Worth?", '/calculator/selectYourBusiness'],
-        ["Startup Business Valuation Calculator", '']
-    ]
+  [
+    ['Home', '/'],
+    ["What's My Business Worth?", '/calculator/selectYourBusiness'],
+    ["Startup Business Valuation Calculator", '']
+  ]
 )
 
 .container.calculator-container
-    .row
-        .offset-lg-2.col-lg-8
-            ul.list-inline.top-breadcrambs.mb45
-                li
-                    a(href="/calculator/capitalraise/intro").btn.text-uppercase Intro
-                li
-                    a(href="/calculator/capitalraise/step-1").current.btn.text-uppercase step 1
-                li
-                    a(href="/calculator/capitalraise/finish").btn.text-uppercase finish
+  .row
+    .offset-lg-2.col-lg-8
+      ul.list-inline.top-breadcrambs.mb45
+        li
+          a(href="/calculator/capitalraise/intro").btn.text-uppercase Intro
+        li
+          a(href="/calculator/capitalraise/step-1").current.btn.text-uppercase step 1
+        li
+          a(href="/calculator/capitalraise/finish").btn.text-uppercase finish
 
-    .row
-        .offset-lg-3.col-lg-6
-            form.js-calc-form
-                .form-body.clearfix
-                    .form-group.row
-                        label.col-lg-12.col-form-label(for='industry') Please provide the industry to which your business belongs.
-                        .col-lg-12
-                            select#industry.form-control.js-select(
-                                data-model-value='industry')
-                                option(value = '')= '---'
-                                each val, index in industryData
-                                    if val == data.industry
-                                        option(selected)= val
-                                    else
-                                        option= val
+  .row
+    .offset-lg-3.col-lg-6
+      form.js-calc-form
+        .form-body.clearfix
+          .form-group.row
+            label(for='industry').col-lg-12.col-form-label Please provide the industry to which your business belongs.
+            .col-lg-12
+              select(data-model-value='industry')#industry.form-control.js-select
+                option(value = '')= '---'
+                each val, index in industryData
+                  if val == data.industry
+                    option(selected)= val
+                  else
+                    option= val
 
-                    .form-group.row
-                        label.col-lg-12.col-form-label(for='industryEstablishment') Is your industry fairly well established? Or is it new, with the potential to quickly grow?
-                        .col-lg-12
-                            select#industryEstablishment.form-control.js-select(
-                                data-model-value='industryEstablishment')
-                                    option(value = '')= '---'
-                                    each item in selects.industryEstablishment
-                                        if item.value == data.industryEstablishment
-                                            option(selected, value= item.value)= item.text
-                                        else
-                                            option(value= item.value)= item.text
+          .form-group.row
+            label(for='industryEstablishment').col-lg-12.col-form-label Is your industry fairly well established? Or is it new, with the potential to quickly grow?
+            .col-lg-12
+              select(data-model-value='industryEstablishment')#industryEstablishment.form-control.js-select
+                option(value = '')= '---'
+                each item in selects.industryEstablishment
+                  if item.value == data.industryEstablishment
+                    option(selected, value= item.value)= item.text
+                  else
+                    option(value= item.value)= item.text
 
-                    .form-group.row
-                        label.col-lg-12.col-form-label(for='typeOfEstablishment') Would you describe your product or service as a solid improvement over what the market currently offers? Or is it revolutionary, with the potential to be disruptive to the market?
-                        .col-lg-12
-                            select#typeOfEstablishment.form-control.js-select(
-                                data-model-value='typeOfEstablishment')
-                                    option(value = '')= '---'
-                                    each item in selects.typeOfEstablishment
-                                        if item.value == data.typeOfEstablishment
-                                            option(selected, value= item.value)= item.text
-                                        else
-                                            option(value= item.value)= item.text
+          .form-group.row
+            label(for='typeOfEstablishment').col-lg-12.col-form-label Would you describe your product or service as a solid improvement over what the market currently offers? Or is it revolutionary, with the potential to be disruptive to the market?
+            .col-lg-12
+              select(data-model-value='typeOfEstablishment')#typeOfEstablishment.form-control.js-select
+                option(value = '')= '---'
+                each item in selects.typeOfEstablishment
+                  if item.value == data.typeOfEstablishment
+                    option(selected, value= item.value)= item.text
+                  else
+                    option(value= item.value)= item.text
 
-                    .form-group.row
-                        label.col-lg-12.col-form-label(for='projectedRevenue') How much revenue do you expect your business will produce in Year 1?
-                        .col-lg-12
-                            input#projectedRevenue.form-control.js-field(
-                                value= formatPrice(data.projectedRevenue),
-                                type='text',
-                                placeholder='Revenue Year One',
-                                autocomplete='off'
-                                data-input-mask='price',
-                                data-model-value='projectedRevenue'
-                                data-current-value= data.projectedRevenue)
+          .form-group.row
+            label(for='projectedRevenue').col-lg-12.col-form-label How much revenue do you expect your business will produce in Year 1?
+            .col-lg-12
+              input(
+                value= formatPrice(data.projectedRevenue),
+                type='text',
+                placeholder='Revenue Year One',
+                autocomplete='off'
+                data-input-mask='price',
+                data-model-value='projectedRevenue'
+                data-current-value= data.projectedRevenue)#projectedRevenue.form-control.js-field
 
-                    .form-group.row
-                        label.col-lg-12.col-form-label(for='operatingProfit') How much operating profit do you expect to earn in Year 1?
-                        .col-lg-12
-                            input#operatingProfit.form-control.js-field(
-                                value= formatPrice(data.operatingProfit),
-                                type='text',
-                                placeholder='Profit Year One ',
-                                autocomplete='off'
-                                data-input-mask='price',
-                                data-model-value='operatingProfit'
-                                data-current-value= data.operatingProfit)
+          .form-group.row
+            label(for='operatingProfit').col-lg-12.col-form-label How much operating profit do you expect to earn in Year 1?
+            .col-lg-12
+              input(
+                value= formatPrice(data.operatingProfit),
+                type='text',
+                placeholder='Profit Year One ',
+                autocomplete='off'
+                data-input-mask='price',
+                data-model-value='operatingProfit'
+                data-current-value= data.operatingProfit)#operatingProfit.form-control.js-field
 
-                    .form-group.row
-                        label.col-lg-12.col-form-label(for='projectedRevenueTwo') How much revenue do you expect your business will produce in Year 5?
-                        .col-lg-12
-                            input#projectedRevenueTwo.form-control.js-field(
-                                value= formatPrice(data.projectedRevenueTwo),
-                                type='text',
-                                placeholder='Revenue Year Five',
-                                autocomplete='off'
-                                data-input-mask='price',
-                                data-model-value='projectedRevenueTwo',
-                                data-current-value= data.projectedRevenueTwo)
-                    
-                    .form-group.row
-                        label.col-lg-12.col-form-label(for='operatingProfitTwo') How much operating profit do you expect to earn in Year 5?
-                        .col-lg-12
-                            input#operatingProfitTwo.form-control.js-field(
-                                value= formatPrice(data.operatingProfitTwo),
-                                type='text',
-                                placeholder='Profit Year Five',
-                                autocomplete='off'
-                                data-input-mask='price',
-                                data-model-value='operatingProfitTwo'
-                                data-current-value= data.operatingProfitTwo)
+          .form-group.row
+            label(for='projectedRevenueTwo').col-lg-12.col-form-label How much revenue do you expect your business will produce in Year 5?
+            .col-lg-12
+              input(
+                value= formatPrice(data.projectedRevenueTwo),
+                type='text',
+                placeholder='Revenue Year Five',
+                autocomplete='off'
+                data-input-mask='price',
+                data-model-value='projectedRevenueTwo',
+                data-current-value= data.projectedRevenueTwo)#projectedRevenueTwo.form-control.js-field
+          
+          .form-group.row
+            label(for='operatingProfitTwo').col-lg-12.col-form-label How much operating profit do you expect to earn in Year 5?
+            .col-lg-12
+              input(
+                value= formatPrice(data.operatingProfitTwo),
+                type='text',
+                placeholder='Profit Year Five',
+                autocomplete='off'
+                data-input-mask='price',
+                data-model-value='operatingProfitTwo'
+                data-current-value= data.operatingProfitTwo)#operatingProfitTwo.form-control.js-field
 
-                    .form-group.row
-                        label.col-lg-12.col-form-label(for='CashOnHand') How much cash, beyond what's needed for immediate operating needs, does your business currently have?
-                        .col-lg-12
-                            input#CashOnHand.form-control.js-field(
-                                value= formatPrice(data.CashOnHand),
-                                type='text',
-                                placeholder='Cash Holdings',
-                                autocomplete='off'
-                                data-input-mask='price',
-                                data-model-value='CashOnHand',
-                                data-current-value= data.CashOnHand)
+          .form-group.row
+            label(for='CashOnHand').col-lg-12.col-form-label How much cash, beyond what's needed for immediate operating needs, does your business currently have?
+            .col-lg-12
+              input(
+                value= formatPrice(data.CashOnHand),
+                type='text',
+                placeholder='Cash Holdings',
+                autocomplete='off'
+                data-input-mask='price',
+                data-model-value='CashOnHand',
+                data-current-value= data.CashOnHand)#CashOnHand.form-control.js-field
 
-                    .form-group.row
-                        label.col-lg-12.col-form-label(for='yourDebt') How much debt is your business currently carrying?
-                        .col-lg-12
-                            input#yourDebt.form-control.js-field(
-                                value= formatPrice(data.yourDebt),
-                                type='text',
-                                placeholder='Current Debt',
-                                autocomplete='off'
-                                data-input-mask='price',
-                                data-model-value='yourDebt'
-                                data-current-value= data.yourDebt)
+          .form-group.row
+            label(for='yourDebt').col-lg-12.col-form-label How much debt is your business currently carrying?
+            .col-lg-12
+              input(
+                value= formatPrice(data.yourDebt),
+                type='text',
+                placeholder='Current Debt',
+                autocomplete='off'
+                data-input-mask='price',
+                data-model-value='yourDebt'
+                data-current-value= data.yourDebt)#yourDebt.form-control.js-field
 
-                    .form-group.row
-                        label.col-lg-12.col-form-label(for='cashRaise') How much cash do you plan to raise?
-                        .col-lg-12
-                            input#cashRaise.form-control.js-field(
-                                value= formatPrice(data.cashRaise),
-                                type='text',
-                                placeholder='Raise Amount',
-                                autocomplete='off'
-                                data-input-mask='price',
-                                data-model-value='cashRaise',
-                                data-current-value= data.cashRaise)
+          .form-group.row
+            label(for='cashRaise').col-lg-12.col-form-label How much cash do you plan to raise?
+            .col-lg-12
+              input(
+                value= formatPrice(data.cashRaise),
+                type='text',
+                placeholder='Raise Amount',
+                autocomplete='off'
+                data-input-mask='price',
+                data-model-value='cashRaise',
+                data-current-value= data.cashRaise)#cashRaise.form-control.js-field
 
-                    .form-group.row.clearfix.m0
-                        .col-xs-6.mt30
-                            a(href='/calculator/capitalraise/intro', role='button').link-3 Go back
-                            p Don&apos;t worry we saved this info
+          .form-group.row.clearfix.m0
+            .col-xs-6.mt30
+              a(href='/calculator/capitalraise/intro', role='button').link-3 Go back
+              p Don&apos;t worry we saved this info
 
-                        .col-xs-6.mt30
-                            .controls
-                                button.btn.btn-primary.pull-right.text-uppercase(type='submit') Finish
+            .col-xs-6.mt30
+              .controls
+                button(type='submit').btn.btn-primary.pull-right.text-uppercase Finish
