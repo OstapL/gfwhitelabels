@@ -154,6 +154,9 @@ section.create-company.container.m-b-85
           div(role="tabpanel")#company.panel-collapse.collapse.in
             .list-group
               a(href="#").list-group-item.list-group-item-action.active Company Detail
+                if campaign.id
+                  .icon-check
+                    i.fa.fa-check-circle-o
         .panel.panel-default
           div(role="tab").panel-heading
             a(data-toggle="collapse"

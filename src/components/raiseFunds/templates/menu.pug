@@ -31,6 +31,8 @@ mixin menu(current)
           div(role="tabpanel" class="panel-collapse collapse " + (current == 'company' ? 'in' : ''))#company
             .list-group
               a(href="/company/create" class="list-group-item list-group-item-action " + (current == 'company' ? 'active' : '')) Company Detail
+                .icon-check
+                  i.fa.fa-check-circle-o
         .panel.panel-default
           div(role="tab").panel-heading
             a(data-toggle="collapse"
