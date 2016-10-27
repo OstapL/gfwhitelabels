@@ -358,7 +358,7 @@ section
                     if v
                       - counter++;
                       - lastArticleIdx = k;
-                      div.col-xl-4.col-sm-12.articles_press
+                      div.col-xl-4.col-xs-12.col-sm-12.col-md-12.col-lg-6.articles_press
                         a(href=v.link target="_blank")
                           .card.card-inverse.m-b-2
                             .card-title
@@ -373,7 +373,7 @@ section
                     - let v = values.press[k]
                     if v
                       - showMore = true;
-                      div.col-xl-4.col-sm-12.articles_press
+                      div.col-xs-12.col-sm-12.col-md-12.col-lg-6.articles_press
                         a(href=v.link target="_blank")
                           .card.card-inverse.m-b-2
                             .card-title
@@ -607,7 +607,7 @@ section
           .col-lg-12.text-center-flex
             each v,k in values.perks
               if v
-                .col-xl-4.col-lg-12
+                .col-xl-4.col-xs-12.col-lg-6
                   .jumbotron.jumbotron-fluid
                     .container
                       h3.m-t-0.m-b-1 Invest 
