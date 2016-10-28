@@ -12,30 +12,32 @@ section.formc-review
     .col-lg-3.sticky-side-menu
       .page_title.border-bottom.mb25
         h4.text-uppercase.dosis TABLE OF CONTENTS
-      ul.list-unstyled.mb50.custom
+      ul.list-unstyled.m-b-1.custom
         li
-          a.d-inline-block.w-100.pb10(href='#overview_information') Overview Information
+          a(href='#overview_information').d-inline-block.w-100.pb10 Overview Information
         li
-          a.d-inline-block.w-100.pb10(href='#introductory_notices') Introductory Notices
+          a(href='#introductory_notices').d-inline-block.w-100.pb10 Introductory Notices
         li.display-partners
-          a.d-inline-block.w-100.pb10(href='#description_business') Description of the Issuer’s Business
+          a(href='#description_business').d-inline-block.w-100.pb10 Description of the Issuer’s Business
         li
-          a.d-inline-block.w-100.pb10(href='#management_material_persons') Management & Material Persons
+          a(href='#management_material_persons').d-inline-block.w-100.pb10 Management & Material Persons
         li
-          a.d-inline-block.w-100.pb10(href='#procedure_purchasing_securities') Procedure for Purchasing Securities
+          a(href='#procedure_purchasing_securities').d-inline-block.w-100.pb10 Procedure for Purchasing Securities
         li
-          a.d-inline-block.w-100.pb10(href='#capital_structure') Capital Structure of the Issuer
+          a(href='#capital_structure').d-inline-block.w-100.pb10 Capital Structure of the Issuer
         li
-          a.d-inline-block.w-100.pb10(href='#description_securities') Description of Securities Offered
+          a(href='#description_securities').d-inline-block.w-100.pb10 Description of Securities Offered
         li
-          a.d-inline-block.w-100.pb10(href='#use_of_proceeds') Use of Proceeds
+          a(href='#use_of_proceeds').d-inline-block.w-100.pb10 Use of Proceeds
         li
-          a.d-inline-block.w-100.pb10(href='#financial_condition') Financial Condition
+          a(href='#financial_condition').d-inline-block.w-100.pb10 Financial Condition
         li
-          a.d-inline-block.w-100.pb10(href='#risk_factors') Risk Factors
+          a(href='#risk_factors').d-inline-block.w-100.pb10 Risk Factors
         li
           // у последнего елемента <a> клас pb10 отстутствует
-          a.d-inline-block.w-100(href='#eligibility_information') Eligibility Information
+          a(href='#eligibility_information').d-inline-block.w-100 Eligibility Information
+      .col-lg-12.text-xs-center
+        a(data-toggle="modal" data-target="#formc_review_popup" href="#formc_review_popup").btn.btn-primary submit Form C
 
     .col-xl-9
       section.warning-formc-review.m-b-3
@@ -1522,7 +1524,22 @@ section.formc-review
         p See Attached
   
 
-
+//MODAL
+#formc_review_popup.modal.fade(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")
+  .modal-dialog(role="document")
+    .modal-content
+      .modal-header.p-b-0
+        button(type="button" class="close" data-dismiss="modal" aria-label="Close")
+          span(aria-hidden="true")
+            i.fa.fa-times
+      .modal-body.p-t-0
+        .container.form-section
+          h3.m-t-0.text-xs-center.letter-spacing-normal.m-b-1 Once you submit, you will no longer have the ability to edit your Form C.
+          h3.m-t-0.text-xs-center.letter-spacing-normal.m-b-2 Are you sure you want to submit?
+          .col-lg-12.text-lg-center.m-b-2
+            a(href="/pg/formc_review_congratulations").btn.btn-primary.btn-sm.m-r-2 Yes
+            button(type="button" data-dismiss="modal" aria-label="Close").btn.btn-secondary.btn-sm cancel
+                .modal-footer
 
 
 
