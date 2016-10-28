@@ -66,7 +66,6 @@ mixin fieldInput(name, attr)
                         label.col-lg-3.text-lg-right.text-xs-left Country
                         .col-lg-8
                           - user.country = 'us';
-                          //- - user.city = 'brooklyn';
                           select(name="country").custom-select.w-100.country-select
                             option(value="us") United States
                             option(value="ua") UA
@@ -97,10 +96,6 @@ mixin fieldInput(name, attr)
                           else
                             +fieldBlock("city", user.city, {'class1': 'col-lg-6 ', 'class2': 'col-lg-6 ', 'type': 'text'})
                         .col-lg-5
-                          //- if user.country == 'us'
-                          //-   +fieldBlock("state", user.state, {'class1': 'col-lg-5 ', 'class2': 'col-lg-7 ', 'type': 'text', disabled: true})
-                          //- else
-                          //-   +fieldBlock("state", user.state, {'class1': 'col-lg-5 ', 'class2': 'col-lg-7 ', 'type': 'text'})
                           .form-group.row.state.text
                             label.text-lg-right.col-lg-5(for="state") State/Province/Region
                             div.col-lg-7
@@ -111,13 +106,6 @@ mixin fieldInput(name, attr)
                             label.text-lg-right.col-lg-6(for="zip_code") Postal Code
                             div.col-lg-6
                               input.form-control(name='zip_code' placeholder='Postal Code' type="text" value=user.zip_code)
-                          //- if user.country == 'us'
-                          //-   +fieldBlock("zip_code", user.zip_code, {'class1': 'col-lg-6 ', 'class2': 'col-lg-6 ', 'type': 'text', disabled: true})
-                          //- else
-                          //-   +fieldBlock("zip_code", user.zip_code, {'class1': 'col-lg-6 ', 'class2': 'col-lg-6 ', 'type': 'text'})
-
-                        //- .col-lg-5
-                        //-   +fieldBlock("phone", user.phone, {'class1': 'col-lg-5 ', 'class2': 'col-lg-7 ', 'type': 'text'})
                       .row 
                         .col-lg-6
                           +fieldBlock("phone", user.phone, {'class1': 'col-lg-6 ', 'class2': 'col-lg-6 ', 'type': 'text'})
