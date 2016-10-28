@@ -2,80 +2,78 @@
 include ../../../templates/mixins.pug
 
 +breadcrumbs('Revenue Share Calculator ', 'step 1', 
-    [
-        ['Home', '/'],
-        ["Revenue Share Calculator", '']
-    ]
+  [
+    ['Home', '/'],
+    ["Revenue Share Calculator", '']
+  ]
 )
 
 .container.calculator-container
-    .row
-        .offset-lg-2.col-lg-8
-            ul.list-inline.top-breadcrambs.mb45
-                li
-                    a(href="/calculator/paybackshare/step-1").btn.text-uppercase Intro
-                li
-                    a(href="/calculator/paybackshare/step-2").current.btn.text-uppercase step 1
-                li
-                    a(href="/calculator/paybackshare/step-3").btn.text-uppercase finish
+  .row
+    .offset-lg-2.col-lg-8
+      ul.list-inline.top-breadcrambs.mb45
+        li
+          a(href="/calculator/paybackshare/step-1").btn.text-uppercase Intro
+        li
+          a(href="/calculator/paybackshare/step-2").current.btn.text-uppercase step 1
+        li
+          a(href="/calculator/paybackshare/step-3").btn.text-uppercase finish
 
-    .row
-        .offset-lg-3.col-lg-6
-            .warning-block
-                i.fa.fa-exclamation-triangle 
-                span.warning-text 
-                    | This calculator will give you an idea of distributions associated with issuing Revenue Share
+  .row
+    .offset-lg-3.col-lg-6
+      .warning-block
+        i.fa.fa-exclamation-triangle 
+        span.warning-text 
+          | This calculator will give you an idea of distributions associated with issuing Revenue Share
 
-    .row
-        .offset-lg-3.col-lg-6
-            form(method="post" action="").js-calc-form
-                .form-body.clearfix 
+  .row
+    .offset-lg-3.col-lg-6
+      form(method="post" action="").js-calc-form
+        .form-body.clearfix 
 
-                    .form-group.row
-                        label(for="raiseMoney").col-lg-12 How much money do you plan to raise?
+          .form-group.row
+            label(for="raiseMoney").col-lg-12 How much money do you plan to raise?
 
-                        .col-lg-12
-                            input#raiseMoney.form-control.js-field(
-                                value= formatPrice(data.raiseMoney),
-                                type='text',
-                                placeholder='$0',
-                                autocomplete="off"
-                                data-input-mask='price',
-                                data-model-value='raiseMoney',
-                                data-current-value= data.raiseMoney)
+            .col-lg-12
+              input(
+                value= formatPrice(data.raiseMoney),
+                type='text',
+                placeholder='$0',
+                autocomplete="off"
+                data-input-mask='price',
+                data-model-value='raiseMoney',
+                data-current-value= data.raiseMoney)#raiseMoney.form-control.js-field
 
-                    .form-group.row
-                        label(for="nextYearRevenue").col-lg-12 What do you expect your revenue to be next year?
+          .form-group.row
+            label(for="nextYearRevenue").col-lg-12 What do you expect your revenue to be next year?
 
-                        .col-lg-12
-                            input#nextYearRevenue.form-control.js-field(
-                                value= formatPrice(data.nextYearRevenue),
-                                type='text',
-                                placeholder='$0',
-                                autocomplete="off"
-                                data-input-mask='price',
-                                data-model-value='nextYearRevenue',
-                                data-current-value= data.nextYearRevenue)
+            .col-lg-12
+              input(
+                value= formatPrice(data.nextYearRevenue),
+                type='text',
+                placeholder='$0',
+                autocomplete="off"
+                data-input-mask='price',
+                data-model-value='nextYearRevenue',
+                data-current-value= data.nextYearRevenue)#nextYearRevenue.form-control.js-field
 
-                    .form-group.row
-                        label(for="growLevel").col-lg-12 At what rate do you expect your revenue to grow each year?
+          .form-group.row
+            label(for="growLevel").col-lg-12 At what rate do you expect your revenue to grow each year?
 
-                        .col-lg-12
-                            input#growLevel.form-control.js-field(
-                                value= data.growLevel,
-                                type='text',
-                                placeholder='0%',
-                                autocomplete="off"
-                                data-input-mask='percent',
-                                data-model-value='growLevel')
+            .col-lg-12
+              input(
+                value= data.growLevel,
+                type='text',
+                placeholder='0%',
+                autocomplete="off"
+                data-input-mask='percent',
+                data-model-value='growLevel')#growLevel.form-control.js-field
 
-                    .form-group.row.clearfix.m0
-                        .col-xs-6.mt30
-                            a(href='/calculator/paybackshare/step-1').link-3 Go back
+          .form-group.row.clearfix.m0
+            .col-xs-6.mt30
+              a(href='/calculator/paybackshare/step-1').link-3 Go back
 
-                        .col-xs-6.mt30
-                            .controls  
-                                button( 
-                                    type="submit"
-                                ).btn.btn-primary.pull-right.text-uppercase Next 
-                                // add class .pointer-events-none to disable all events for this button
+            .col-xs-6.mt30
+              .controls  
+                button(type="submit").btn.btn-primary.pull-right.text-uppercase Next 
+                // add class .pointer-events-none to disable all events for this button
