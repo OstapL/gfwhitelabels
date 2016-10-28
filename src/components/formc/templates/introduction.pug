@@ -55,7 +55,7 @@ section.formc.introduction.create-company-media.container
                 .col-lg-9
                   .input-icon
                     i.fa.fa-question-circle
-                  input(type="text").form-control
+                  input(type="text" data-stripe="number").form-control
                   img(src="/img/visa_logo_6.gif", alt="")
                   img(src="/img/mastercard_logo_5.gif", alt="")
                   img(src="/img/amex_512.png", alt="")
@@ -67,18 +67,22 @@ section.formc.introduction.create-company-media.container
                   label Expiration
                 .col-lg-4.date-input
                   .col-lg-6.p-l-0
-                    input(type="text" placeholder="MM").form-control
+                    input(type="text" placeholder="MM" data-stripe="exp_month").form-control
                   .col-lg-6.p-r-0
-                    input(type="text" placeholder="YYY").form-control
+                    input(type="text" placeholder="YYY" data-stripe="exp_year").form-control
                 .col-lg-2
                   label CVV Code
                 .col-lg-3.p-l-0
                     .input-icon
                       i.fa.fa-question-circle
-                    input(type="text").form-control
+                    input(type="text" data-stripe="cvc").form-control
             .row
               .col-lg-12.offset-lg-3
                 a(href="#").link-2 Contract for listing your campaign on GrowthFountain
             .row.btn-pay
               .col-lg-12
                 button#pay-btn.btn.btn-primary.text-uppercase pay
+
+
+
+
