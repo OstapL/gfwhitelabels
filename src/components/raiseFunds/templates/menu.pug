@@ -23,25 +23,27 @@ mixin menu(current)
             data-parent="#accordion"
             href="#company"
             aria-expanded="true"
-            class="list-group-item" + (current == 'company' ? ' active ' : ''))
+            class="list-group-item list-group-heading" + (current == 'company' ? ' active ' : ''))
               i.fa.fa-briefcase
               |  Company
               span.pull-right
-                i.fa.fa-angle-left
+                i.fa.fa-angle-left.arrow
           div(role="tabpanel" class="panel-collapse collapse " + (current == 'company' ? 'in' : ''))#company
             .list-group
               a(href="/company/create" class="list-group-item list-group-item-action " + (current == 'company' ? 'active' : '')) Company Detail
+                .icon-check
+                  i.fa.fa-check-circle-o
         .panel.panel-default
           div(role="tab").panel-heading
             a(data-toggle="collapse"
             data-parent="#accordion"
             href="#campaign"
             aria-expanded="true"
-            class="list-group-item" + (current != 'company' ? ' active ' : '')).list-group-item
+            class="list-group-item list-group-heading" + (current != 'company' ? ' active ' : ''))
               i.fa.fa-bar-chart
               |  Campaign
               span.pull-right
-                i.fa.fa-angle-down
+                i.fa.fa-angle-down.arrow
           div(role="tabpanel" class="panel-collapse collapse" + (current != 'company' ? ' in' : ''))#campaign
             .list-group
               +getCompanyUrl(values, current, 'general_information', 'General Information')
@@ -54,11 +56,11 @@ mixin menu(current)
             a(data-toggle="collapse"
             data-parent="#accordion"
             href="#form_c"
-            aria-expanded="true").list-group-item
+            aria-expanded="true").list-group-item.list-group-heading
               i.fa.fa-university
               |  form c
               span.pull-right
-                i.fa.fa-angle-left
+                i.fa.fa-angle-left.arrow
           div(role="tabpanel")#form_c.panel-collapse.collapse
             .list-group
               a(href="/formc/introduction").list-group-item.list-group-item-action form c

@@ -8,6 +8,7 @@ const dropzoneHelpers = require('helpers/dropzone.js');
 const leavingConfirmationHelper = require('helpers/leavingConfirmationHelper.js');
 const phoneHelper = require('helpers/phoneHelper.js');
 const validation = require('components/validation/validation.js');
+const menuHelper = require('helpers/menuHelper.js');
 
 
 const jsonActions = {
@@ -153,7 +154,7 @@ module.exports = {
       'click .onPreview': onPreviewAction,
       'click .submit_form': submitCampaign,
       'change #website,#twitter,#facebook,#instagram,#linkedin': 'appendHttpsIfNecessary',
-    }, leavingConfirmationHelper.events, phoneHelper.events),
+    }, leavingConfirmationHelper.events, phoneHelper.events, menuHelper.events),
 
     appendHttpsIfNecessary(e) {
       appendHttpIfNecessary(e, true);
@@ -239,7 +240,7 @@ module.exports = {
         { trigger: true, replace: false }
       );
     },
-  },leavingConfirmationHelper.methods, phoneHelper.methods)),
+  }, leavingConfirmationHelper.methods, phoneHelper.methods, menuHelper.methods)),
 
   generalInformation: Backbone.View.extend(_.extend({
       // urlRoot: serverUrl + Urls['campaign-list']() + '/general_information',
@@ -249,7 +250,7 @@ module.exports = {
           'submit form': api.submitAction,
           'click .onPreview': onPreviewAction,
           'click .submit_form': submitCampaign,
-        }, jsonActions.events, leavingConfirmationHelper.events),
+        }, jsonActions.events, leavingConfirmationHelper.events, menuHelper.events),
 
       preinitialize() {
         // ToDo
@@ -342,7 +343,7 @@ module.exports = {
         }
         return this;
       },
-    },leavingConfirmationHelper.methods)),
+    }, leavingConfirmationHelper.methods, menuHelper.methods)),
 
   media: Backbone.View.extend(_.extend({
       events: _.extend({
@@ -355,7 +356,7 @@ module.exports = {
         'change .press_link': 'appendHttpIfNecessary',
         'click .submit_form': submitCampaign,
         'click .onPreview': onPreviewAction,
-      }, jsonActions.events, leavingConfirmationHelper.events),
+      }, jsonActions.events, leavingConfirmationHelper.events, menuHelper.events),
       urlRoot: Urls['campaign-list']() + '/media',
 
       appendHttpsIfNecessary(e) {
@@ -574,7 +575,7 @@ module.exports = {
           //e.target.value = id;
         }
       }
-  }, leavingConfirmationHelper.methods)),
+  }, leavingConfirmationHelper.methods, menuHelper.methods)),
 
   teamMemberAdd: Backbone.View.extend(_.extend({
       events: _.extend({
@@ -586,7 +587,7 @@ module.exports = {
         'change #linkedin,#facebook': 'appendHttpsIfNecessary',
         'click .cancel': 'cancel',
         'click .onPreview': onPreviewAction,
-      }, leavingConfirmationHelper.events),
+      }, leavingConfirmationHelper.events, menuHelper.events),
       // urlRoot: serverUrl + Urls['campaign-list']() + '/team_members',
       urlRoot: Urls['campaign-list']() + '/team_members',
 
@@ -751,15 +752,15 @@ module.exports = {
         api.submitAction.call(this, e, json);
 
       },
-  }, leavingConfirmationHelper.methods)),
+  }, leavingConfirmationHelper.methods, menuHelper.methods)),
 
-  teamMembers: Backbone.View.extend({
-    events: {
+  teamMembers: Backbone.View.extend(_.extend({
+    events: _.extend({
       'click .delete-member': 'deleteMember',
       'click .submit_form': doCampaignValidation,
       'click .onPreview': onPreviewAction,
       'submit form': 'submit',
-    },
+    }, menuHelper.events),
 
     // this is for no navigating to new page in the onPreviewAction method
     submit(e) {
@@ -815,7 +816,7 @@ module.exports = {
         }
       },
 
-  }),
+  }, menuHelper.methods)),
 
   specifics: Backbone.View.extend(_.extend({
       urlRoot: Urls['campaign-list']() + '/specifics',
@@ -830,7 +831,7 @@ module.exports = {
         'click .onPreview': onPreviewAction,
         'click .submit_form': submitCampaign,
         'click .submit-specifics': 'checkMinMaxRaise',
-      }, leavingConfirmationHelper.events),
+      }, leavingConfirmationHelper.events, menuHelper.events),
 
       checkMinMaxRaise(e) {
         let min = this.$('input[name=minimum_raise]').val();
@@ -972,14 +973,14 @@ module.exports = {
 
         return this;
       },
-    }, leavingConfirmationHelper.methods)),
+    }, leavingConfirmationHelper.methods, menuHelper.methods)),
 
   perks: Backbone.View.extend(_.extend({
       events: _.extend({
           'submit form': 'onSubmit',
           'click .onPreview': onPreviewAction,
           'click .submit_form': submitCampaign,
-        }, jsonActions.events, leavingConfirmationHelper.events),
+        }, jsonActions.events, leavingConfirmationHelper.events, menuHelper.events),
       // urlRoot: serverUrl + Urls['campaign-list']() + '/perks',
       urlRoot: Urls['campaign-list']() + '/perks',
 
@@ -1041,6 +1042,7 @@ module.exports = {
                 label: 'If an Investor Invests Over',
                 placeholder: '$',
                 values: [],
+                inputType: 'number'
               },
             perk: {
                 type: 'string',
@@ -1061,7 +1063,7 @@ module.exports = {
         return this;
       },
 
-    }, leavingConfirmationHelper.methods, )),
+    }, leavingConfirmationHelper.methods, menuHelper.methods)),
 
   thankYou: Backbone.View.extend({
     el: '#content',
