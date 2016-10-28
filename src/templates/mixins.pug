@@ -360,7 +360,7 @@ mixin fieldDropzone(name, attr, type)
                 //- div(class='dropzone__' + name)
                 div
                     img(src=dropzoneHelpers.getDropzoneUrl(name, attr, values) alt=fields[name].label class="img-fluid m-x-auto img-" + name)
-                    .drop-image-title.text-xs-center 
+                    .drop-image-title.text-xs-center.p-l-1.p-r-1 
                         p Drop your profile photo here or click to upload
                         div
                             i.fa.fa-camera 
