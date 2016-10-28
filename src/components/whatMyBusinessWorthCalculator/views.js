@@ -6,6 +6,23 @@ import 'bootstrap-slider/dist/css/bootstrap-slider.css'
 
 let formatPrice = calculatorHelper.formatPrice;
 
+if (!app.cache.whatMyBusinessWorthCalculator) {
+    app.cache.whatMyBusinessWorthCalculator = {
+        'excessCash': '',
+        'ownCache': '',
+        'projectedRevenueYear': '',
+        'projectedRevenueTwoYears': '',
+        'grossMargin': '',
+        'monthlyOperatingYear': '',
+        'monthlyOperatingTwoYears': '',
+        'workingCapital': '',
+        'additionalOperating': '',
+        'capitalExpenditures': '',
+        'taxRate': '',
+        'annualInterest': ''
+    }
+}
+
 module.exports = {
     intro: Backbone.View.extend({
         el: '#content',
@@ -22,37 +39,7 @@ module.exports = {
         el: '#content',
 
         template: require('./templates/step1.pug'),
-
-        initialize() {
-            if (!app.cache.whatMyBusinessWorthCalculator) {
-                app.cache.whatMyBusinessWorthCalculator = {
-                    'excessCash': 75000,
-                    'ownCache': 25000,
-                    'projectedRevenueYear': 400000,
-                    'projectedRevenueTwoYears': 550000,
-                    'grossMargin': 55, // 55%
-                    'monthlyOperatingYear': 12000,
-                    'monthlyOperatingTwoYears': 14000,
-                    'workingCapital': 18, // 18%
-                    'additionalOperating': 7200,
-                    'capitalExpenditures': 27500,
-                    'taxRate': 22, // 22%
-                    'annualInterest': 2500
-                }
-            }
-        },
-
-        events: {
-            // remove useless zeros: 0055 => 55
-            'blur .js-field': 'cutZeros'
-        },
-
-        cutZeros(e) {
-            let elem = e.target;
-            elem.dataset.currentValue = parseFloat(elem.value.replace('$', '').replace(/,/g, '') || 0);
-            elem.value = formatPrice(elem.dataset.currentValue);
-        },
-
+        
         ui() {
             // get inputs by inputmask category
             this.inputPrice = this.$('[data-input-mask="price"]');
@@ -78,11 +65,20 @@ module.exports = {
             this.bootstrapSlider.each(function() {
                 $(this).bootstrapSlider ({
                     min: 0,
-                    max: 100
+                    max: 100,
+                    formatter: function(value) {
+                        return value + '%'
+                    }
                 }).on('slideStop', function(slider) {
                     let key = slider.target.dataset.modelValue;
                     app.cache.whatMyBusinessWorthCalculator[key] = +slider.value;
                 });
+            });
+
+            this.$('[data-toggle="tooltip"]').tooltip({
+                html: true,
+                offset: '4px 2px',
+                template: '<div class="tooltip tooltip-custom" role="tooltip"><i class="fa fa-info-circle"></i><div class="tooltip-arrow"></div><div class="tooltip-inner"></div></div>'
             });
             
             return this; 
@@ -97,9 +93,6 @@ module.exports = {
         events: {
             // calculate your income
             'submit .js-calc-form': 'doCalculation',
-
-            // remove useless zeros: 0055 => 55
-            'blur .js-field': 'cutZeros'
         },
         doCalculation(e) {
             e.preventDefault();
@@ -203,12 +196,6 @@ module.exports = {
             }
         },
 
-        cutZeros(e) {
-            let elem = e.target;
-            elem.dataset.currentValue = parseFloat(elem.value.replace('$', '').replace(/,/g, '') || 0);
-            elem.value = formatPrice(elem.dataset.currentValue);
-        },
-
         ui() {
             // get inputs by inputmask category
             this.inputPrice = this.$('[data-input-mask="price"]');
@@ -217,10 +204,10 @@ module.exports = {
 
         render: function () {
             // disable enter to the step 2 of capitalraise calculator without data entered on the first step
-            if (!this.isFirstStepFilled()) {
-                app.routers.navigate('/calculator/whatmybusinessworth/step-1', {trigger: true});
-                return false;
-            }
+            // if (!this.isFirstStepFilled()) {
+            //     app.routers.navigate('/calculator/whatmybusinessworth/step-1', {trigger: true});
+            //     return false;
+            // }
 
             this.$el.html(this.template({
                 data: app.cache.whatMyBusinessWorthCalculator,
@@ -239,11 +226,20 @@ module.exports = {
             this.bootstrapSlider.each(function() {
                 $(this).bootstrapSlider({
                     min: 0,
-                    max: 100
+                    max: 100,
+                    formatter: function(value) {
+                        return value + '%'
+                    }
                 }).on('slideStop', function(slider) {
                     let key = slider.target.dataset.modelValue;
                     app.cache.whatMyBusinessWorthCalculator[key] = +slider.value;
                 });
+            });
+
+            this.$('[data-toggle="tooltip"]').tooltip({
+                html: true,
+                offset: '4px 2px',
+                template: '<div class="tooltip tooltip-custom" role="tooltip"><i class="fa fa-info-circle"></i><div class="tooltip-arrow"></div><div class="tooltip-inner"></div></div>'
             });
 
             $('body').scrollTop(0);
