@@ -55,8 +55,6 @@ mixin fieldInput(name, attr)
           .row 
             section.form-section.clearfix 
               form(method="post" action="").form
-                input(type="hidden" name="city" values=values['city'])
-                input(type="hidden" name="state" value=values['state'])
                 .form-body.clearfix 
                   .col-xs-12
                     section.right-block
@@ -67,15 +65,21 @@ mixin fieldInput(name, attr)
                       .form-group.row
                         label.col-lg-3.text-lg-right.text-xs-left Country
                         .col-lg-8
-                          select.custom-select.w-100
-                            option United States
-                            option UA
-                            option Russia
+                          - user.country = 'us';
+                          select(name="country").custom-select.w-100.country-select
+                            option(value="us") United States
+                            option(value="ua") UA
+                            option(value='ru') Russia
                       +fieldBlock("street_address_1", user.street_address_1, {'class1': 'col-lg-3 ', 'class2': 'col-lg-8 ', 'type': 'text'})
                       +fieldBlock("street_address_2", user.street_address_2, {'class1': 'col-lg-3 ', 'class2': 'col-lg-8 ', 'type': 'text'})
-                      .row 
+                      .row.us-row(style="display:" + (user.country == 'us' ? 'block' : 'none'))
+                        input(type="hidden" name="city" values=values['city'] disabled=((user.country=='us') ? false : true))
+                        input(type="hidden" name="state" value=values['state'] disabled=((user.country=='us') ? false : true))
                         .col-md-12.col-lg-6
-                          +fieldBlock("zip_code", user.zip_code, {'class1': 'col-lg-6', 'class2': 'col-lg-6', 'type': 'text'})
+                          if user.country == 'us'
+                            +fieldBlock("zip_code", user.zip_code, {'class1': 'col-lg-6', 'class2': 'col-lg-6', 'type': 'text'})
+                          else
+                            +fieldBlock("zip_code", user.zip_code, {'class1': 'col-lg-6', 'class2': 'col-lg-6', 'type': 'text', disabled: true})
 
                         .col-lg-5.city_states.required
                           .row
@@ -85,19 +89,26 @@ mixin fieldInput(name, attr)
                                 span.input-value.js-city-state #{ values['city'] ? values['city'] : '(City)' }, #{ values['state'] ? values['state'] : '(State)' }
                                 i.fa.fa-pencil-square-o.link-1
 
+                      .row.foreign-country-row(style="display:" + (user.country == 'us' ? 'none' : 'block'))
+                        .col-lg-6
+                          if user.country == 'us'
+                            +fieldBlock("city", user.city, {'class1': 'col-lg-6 ', 'class2': 'col-lg-6 ', 'type': 'text', disabled: true})
+                          else
+                            +fieldBlock("city", user.city, {'class1': 'col-lg-6 ', 'class2': 'col-lg-6 ', 'type': 'text'})
+                        .col-lg-5
+                          .form-group.row.state.text
+                            label.text-lg-right.col-lg-5(for="state") State/Province/Region
+                            div.col-lg-7
+                              input.form-control(name='state' placeholder='State/Province/Region' type="text" value=user.state)
+                      .row.foreign-country-row(style="display:" + (user.country == 'us' ? 'none' : 'block'))
+                        .col-lg-6
+                          .form-group.row.zip_code.text
+                            label.text-lg-right.col-lg-6(for="zip_code") Postal Code
+                            div.col-lg-6
+                              input.form-control(name='zip_code' placeholder='Postal Code' type="text" value=user.zip_code)
                       .row 
                         .col-lg-6
                           +fieldBlock("phone", user.phone, {'class1': 'col-lg-6 ', 'class2': 'col-lg-6 ', 'type': 'text'})
-                      .row
-                        .col-lg-6
-                          +fieldBlock("city", user.city, {'class1': 'col-lg-6 ', 'class2': 'col-lg-6 ', 'type': 'text'})
-                        .col-lg-5
-                          +fieldBlock("state_province", user.state_province, {'class1': 'col-lg-5 ', 'class2': 'col-lg-7 ', 'type': 'text'})
-                      .row
-                        .col-lg-6
-                          +fieldBlock("postal_code", user.postal_code, {'class1': 'col-lg-6 ', 'class2': 'col-lg-6 ', 'type': 'text'})
-                        .col-lg-5
-                          +fieldBlock("phone", user.phone, {'class1': 'col-lg-5 ', 'class2': 'col-lg-7 ', 'type': 'text'})
 
                       .form-group.row.clearfix.m0 
                         .col-lg-11.mt30.text-xs-center
