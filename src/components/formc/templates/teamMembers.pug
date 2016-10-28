@@ -1,5 +1,6 @@
 - 'use strict';
 include ../../../templates/mixins.pug
+include ../../../templates/fields_mixins.pug
 //- include menu.pug
 include ../../../templates/menuRaiseFund.pug
 
@@ -16,8 +17,6 @@ section.create-company-team-add.container
     //START RIGHT BLOCK
     .col-lg-8
         h2.text-uppercase.text-lg-center.text-xs-center.dosis.m-t-0.mb50 team members
-        - console.log(values)
-        //div(style='display: ' + (values.members.length < 1 ? 'block' : 'none')).form-group.text-lg-center.notification
         .col-lg-12
             .warning-block.warning-team-add.text-lg-left
                 i.fa.fa-info-circle 
@@ -29,19 +28,19 @@ section.create-company-team-add.container
                     br
                     |  20% VOTING SHAREHOLDER means: no earlier than 120 days prior to the date of this offering, please list beneficial owners of 20% or more of issuer’s outstanding voting equity securities.
 
-        form(metod="post" action="").form-section
+        form(action="").form-section
             .col-lg-12.m-t-1.m-b-2
                 b How many emploees do you have?
-            .col-lg-6
-                +fieldBlock("full_time_employers", '', {
+            .col-lg-6.required
+                +fieldTextLabel("full_time_employers", _.extend({
                     class1: 'col-lg-4 col-md-12 text-md-left',
                     class2: 'col-lg-8 col-md-12',
-                })
-            .col-lg-6
-                +fieldBlock("part_time_employers", '', {
+                }, fields.full_time_employers))
+            .col-lg-6.required
+                +fieldTextLabel("part_time_employers", _.extend({
                     class1: 'col-lg-4 col-md-12 text-md-left',
                     class2: 'col-lg-8 col-md-12',
-                })
+                }, fields.part_time_employers))
             .col-lg-12.text-lg-center.text-md-center.text-sm-center.text-xs-center.m-t-2.m-b-2
                 a(href='/formc/' + values.id + '/team-members/director/new').btn.text-uppercase.m-r-3 
                     i.fa.fa-plus
@@ -56,7 +55,6 @@ section.create-company-team-add.container
             if values.team_members
                 - counter = 0
                 each v,k in values.team_members
-                  - console.log('member ', v, k);
                   .col-lg-3.m-t-2.p-r-0.p-l-0.m-l-2.m-r-2
                       .team-add-item.text-lg-center.text-xs-center
                         a(href="/formc/" + values.id + "/team-members/" + roles[v.role] + '/' + v.uuid).link-1
@@ -80,32 +78,15 @@ section.create-company-team-add.container
                             th.text-xs-center Full Name
                             th.text-xs-center Status
                     tbody
-                        - let officerTitles = {ceo: 'CEO/President', financial: 'Principal Financial Officer/Treasurer', controller: 'Controller/Principal Accounting Officer',};
-                        each title, key in officerTitles
-                            - //let officer = values.officers[key];
-                            - let officer = '';
+                        each v,k in values.team_members
                             tr
-                                //- td CEO/President
-                                td #{title}
-                                //- td.text-xs-center Kenneth Staut
-                                td.text-xs-center #{officer ? (officer.first_name + ' ' + officer.last_name) : ''}
-                                if officer
-                                    td.text-xs-center
-                                        i.fa.fa-check.color-green
-                                else
-                                    td.text-xs-center.color-red Please Identify
-
-                        //- tr
-                        //-     - let financial = values.officers.financial;
-                        //-     td Principal Financial Officer/Treasurer
-                        //-     td.text-xs-center Michael Jenkins
-                        //-     td.text-xs-center
-                        //-         i.fa.fa-check.color-green
-                        //- tr
-                        //-     td Controller/Principal Accounting Officer
-                        //-     td
-                        //-         hr(width="40%")
-                        //-     td.text-xs-center.color-red Please Identify
+                              td #{ roles[v.role] }
+                              td.text-xs-center #{ v.first_name + ' ' + v.last_name }
+                              if v.is_invited == true
+                                td.text-xs-center.color-greed Accepted
+                              else
+                                td.text-xs-center.color-red 
+                                  a(href="#" data-id=v.uuid).link-2 Invite Once Again
 
             div(style="display: " +  (values.team_members.length >= 1 ? 'block' : 'none')).col-lg-12.pull-lg-right.p-r-0.m-t-3
 

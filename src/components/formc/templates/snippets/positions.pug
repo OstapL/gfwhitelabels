@@ -37,7 +37,7 @@ mixin run()
     div(class=(attr.row == 0 ? '' : 'row ') + name + '_block' + (attr.required == true ? ' required ' : ' ') + ' nested')
       div(class=(attr.row == 0 ? '' : 'row ') + name + '_container' + (attr.required == true ? ' required ' : ' ') + ' nested')
 
-        if value == null || value.length == 0 || Object.keys(value) == 0
+        if value == null || value.length == 0
           +row({}, 0)
 
         else

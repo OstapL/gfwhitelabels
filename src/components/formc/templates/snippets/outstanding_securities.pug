@@ -21,20 +21,15 @@ mixin row(value, index)
                   - securityType = 'Other';
           | #{securityType}
           .collapse
-            +fieldNestedTextLabel(name, "security_type", value, index, {})
       td
           | #{value.amount_authroized}
           .collapse
-            +fieldNestedTextLabel(name, "amount_authoroized", value, index, {})
       td
           | #{value.amount_outstanding}
           .collapse
-            +fieldNestedTextLabel(name, "amount_outstanding", value, index, {})
       td
           | #{value.voting_right ? 'Yes' : 'No'}
           .collapse
-            +fieldNestedTextLabel(name, "voting_right", value, index, {})
-            +fieldNestedTextLabel(name, "terms_add_rights", value, index, {})
       td 
           .delete-section-container
               a(href="#" data-section="securities-table" data-index=index).delete-outstanding

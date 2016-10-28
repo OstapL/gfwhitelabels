@@ -108,8 +108,9 @@ module.exports = {
       }
     },
 
-    getSuccessUrl() {
-      this.$el.find('h2').scrollTo();
+    getSuccessUrl(data) {
+      window.location.reload();
+      return '/formc/' + this.model.id + '/team-members';
     },
 
     initialize(options) {
@@ -1038,8 +1039,8 @@ module.exports = {
     urlRoot: formcServer + '/:id' + '/outstanding-security',
     events: _.extend({
       'submit #security_model_form': 'addOutstanding',
-      'submit .form-section': 'submit',
       'change #security_type': 'outstandingSecurityUpdate',
+      'submit .form-section': 'submit',
       'click .delete-outstanding': 'deleteOutstanding',
     }, addSectionHelper.events, menuHelper.events, yesNoHelper.events),
 
@@ -1149,21 +1150,6 @@ module.exports = {
       }
     },
 
-    submit(e) {
-      let $target = $(e.target);
-      let data = $target.serializeJSON({useIntKeysAsArrayIndex: true});
-      if (data.business_loans_or_debt_choice == 0) {
-        data.business_loans_or_debt = [];
-      }
-      if (data.exempt_offering_choice == 0) {
-        data.exempt_offering = [];
-      }
-      if (!data.outstanding_securities) {
-        data.outstanding_securities = [];
-      }
-      api.submitAction.call(this, e, data);
-    },
-
     addOutstanding(e) {
       e.preventDefault();
       const data = $(e.target).serializeJSON({ useIntKeysAsArrayIndex: true });
@@ -1181,7 +1167,9 @@ module.exports = {
           index: this[sectionName + 'Index']
         })
       );
+      debugger;
       this.model[sectionName].push(data);
+      /*
       api.makeRequest(
         this.urlRoot.replace(':id', this.model.id), 
         'PATCH', 
@@ -1189,6 +1177,7 @@ module.exports = {
           'outstanding_securities': this.model[sectionName]
         }
       );
+      */
       $('#security_modal').modal('hide');
 
       e.target.querySelectorAll('input').forEach(function(el, i) { 
@@ -1212,6 +1201,20 @@ module.exports = {
 
     getSuccessUrl() {
       return  '/formc/' + this.model.id + '/background-check';
+    },
+
+    submit(e) {
+      e.preventDefault();
+      let data = $(e.target).serializeJSON({ useIntKeysAsArrayIndex: true });
+
+      if(data.exempt_offering_choice == false) {
+        data.exempt_offering = this.model.exempt_offering;
+      }
+      if(data.business_loans_or_debt_choice == false) {
+        data.business_loans_or_debt = this.model.business_loans_or_debt;
+      }
+
+      api.submitAction.call(this, e, data);
     },
 
     render() {

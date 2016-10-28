@@ -22,7 +22,6 @@ mixin run()
     div(class=(attr.row == 0 ? '' : 'row ') + name + '_block' + (attr.required == true ? ' required ' : ' ') + ' nested')
       div(class=(attr.row == 0 ? '' : 'row ') + name + '_container' + (attr.required == true ? ' required ' : ' ') + ' nested')
 
-        - console.log('gg', values, Object.keys(values));
         if values == null || values.length == 0
           +row({}, 0)
 
