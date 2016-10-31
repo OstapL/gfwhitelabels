@@ -64,24 +64,24 @@ module.exports = {
     submit(e) {
       var validation = require('components/validation/validation.js');
 
-      const validateCard = ($form, selectors) => {
-        let $number = $form.find('#' + selectors.number),
-            $expMonth = $form.find('#' + selectors.expMonth),
-            $expYear = $form.find('#' + selectors.expYear),
-            $cvc = $form.find('#' + selectors.cvc);
+      function validateCard(form, selectors) {
+        let number = form.elements[selectors.number],
+            expMonth = form.elements[selectors.expMonth],
+            expYear = form.elements[selectors.expYear],
+            cvc = form.elements[selectors.cvc];
 
 
-        if (!Stripe.card.validateCardNumber($number.val())) {
+        if (!Stripe.card.validateCardNumber(number.value)) {
           validation.invalidMsg({'$': $}, selectors.number, ['Please, check card number.']);
           return false;
         }
 
-        if (!Stripe.card.validateExpiry($expMonth.val(), $expYear.val())) {
+        if (!Stripe.card.validateExpiry(expMonth.value, expYear.value)) {
           validation.invalidMsg({'$': $}, selectors.expMonth, ['Please, check expiration date.']);
           validation.invalidMsg({'$': $}, selectors.expYear, []);
           return false;
         }
-        if (!Stripe.card.validateCVC($cvc.val())) {
+        if (!Stripe.card.validateCVC(cvc.value)) {
           validation.invalidMsg({'$': $}, selectors.cvc, ['Please, check CVC.']);
           return false;
         }
@@ -106,7 +106,7 @@ module.exports = {
 
       var _this = this;
 
-      if (!validateCard($target, { number: 'card_number', expMonth: 'card_exp_month', expYear: 'card_exp_year', cvc: 'card_cvc' })) {
+      if (!validateCard(e.target, { number: 'card_number', expMonth: 'card_exp_month', expYear: 'card_exp_year', cvc: 'card_cvc' })) {
         $submitBtn.prop('disabled', false);
         return;
       }
