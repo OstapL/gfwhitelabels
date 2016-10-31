@@ -17,8 +17,8 @@ module.exports = Backbone.Router.extend({
 
       // ToDo
       // Rebuild this
-      var a1 = app.makeCacheRequest(Urls['company-list'](), 'OPTIONS');
-      var a2 = app.makeCacheRequest(Urls['company-list']());
+      var a1 = app.makeCacheRequest(raiseCapitalUrl + '/company', 'OPTIONS');
+      var a2 = app.makeCacheRequest(raiseCapitalUrl + '/company');
 
       $.when(a1, a2).done((meta, model) => {
         app.makeRequest(Urls['campaign-list']() + '/general_information')

@@ -31,33 +31,28 @@ section.formc-team-members-director.container.m-b-85
     h2.text-uppercase.text-lg-center.text-xs-center.m-t-0.dosis.mb50 Team members (director)
     - console.log(values, fields);
     form(metod="post" action="").form-section
-      +fieldBlock("first_name", '', {
-        class1: 'col-lg-3 col-md-12 text-md-left',
+      +fieldTextLabel("first_name", _.extend({
+        class1: 'col-lg-3 col-md-12 text-md-left text-lg-right ',
         class2: 'col-lg-9 col-md-12',
-        type: 'text',
-        label: 'First name',
-        placeholder: 'First Name',
-        })
-      +fieldBlock("last_name", '', {
-        class1: 'col-lg-3 col-md-12 text-md-left',
+        }, fields.first_name))
+      +fieldTextLabel("last_name", _.extend({
+        class1: 'col-lg-3 col-md-12 text-md-left text-lg-right ',
         class2: 'col-lg-9 col-md-12',
-        type: 'text',
         label: 'Last name',
         placeholder: 'Last Name',
-        })
-      +fieldBlock("email", '', {
-        class1: 'col-lg-3 col-md-12 text-md-left',
+        }, fields.last_name))
+      +fieldTextLabel("email", _.extend({
+        class1: 'col-lg-3 col-md-12 text-md-left text-lg-right ',
         class2: 'col-lg-9 col-md-12',
-        type: 'text',
         label: 'Email Address',
         placeholder: 'Email Address',
-        })
-      +fieldBlock("dob", '', {
-        class1: 'col-lg-3 col-md-12 text-md-left',
+        }, fields.email))
+      +fieldTextLabel("dob", _.extend({
+        class1: 'col-lg-3 col-md-12 text-md-left text-lg-right ',
         class2: 'col-lg-9 col-md-12',
         type: 'date',
         label: 'Date of birth',
-        })
+        }, fields.dob))
 
       .row.form-group
         .col-lg-6.col-md-12
@@ -70,14 +65,12 @@ section.formc-team-members-director.container.m-b-85
                 placeholder: 'MM',
                 name: 'board_service_start_date',
                 label: 'Board Service Start Date',
-                value: values.board_service_start_date,
               }, fields.board_service_start_date))
               +fieldDateYear("board_service_start_date", _.extend({
                 class: 'col-lg-6 p-r-0',
                 placeholder: 'YYYY',
                 name: 'board_service_start_date',
                 label: 'Board Service Start Date',
-                value: values.board_service_start_date,
               }, fields.board_service_start_date))
         .col-lg-6.col-md-12
           .col-lg-6.text-lg-right.text-md-left.p-t-0
@@ -89,30 +82,26 @@ section.formc-team-members-director.container.m-b-85
                 placeholder: 'MM',
                 name: 'board_service_end_date',
                 label: 'Board Service End Date',
-                value: values.board_service_end_date,
               }, fields.board_service_end_date))
               +fieldDateYear("board_service_end_date", _.extend({
                 class: 'col-lg-6 p-r-0',
                 placeholder: 'YYYY',
                 name: 'board_service_end_date',
                 label: 'Board Service End Date',
-                value: values.board_service_end_date,
               }, fields.board_service_end_date))
 
 
-      +fieldBlock("principal_occupation", '', {
-        class1: 'col-lg-3 col-md-12 text-md-left ',
+      +fieldTextLabel("principal_occupation", _.extend({
+        class1: 'col-lg-3 col-md-12 text-md-left text-lg-right',
         class2: 'col-lg-9 col-md-12',
-        label: 'Principal Occupation',
         placeholder: 'Principal Occupation',
-        })
+        }, fields.principal_occupation))
 
-      +fieldBlock("employer_principal_businesss", '', {
-        class1: 'col-lg-3 col-md-12 text-md-left p-t-0 m-b-0',
+      +fieldTextLabel("employer_principal_businesss", _.extend({
+        class1: 'col-lg-3 col-md-12 text-md-left p-t-0 m-b-0 text-lg-right',
         class2: 'col-lg-9 col-md-12',
-        label: 'Employer and Principal Business',
         placeholder: 'Employer and Principal Business',
-        })
+        }, fields.employer_principal_businesss))
 
       .row
         .col-lg-6.col-md-12.required

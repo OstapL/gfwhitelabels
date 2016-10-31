@@ -64,11 +64,21 @@ mixin fieldNestedDateYear(nestedName, name, value, index, myAttr)
   )
 
 
-mixin fieldTextLabel(name, attr)
+mixin prepareField(name, attr)
   - attr = attr ? attr : fields[name];
   - attr.value = attr.value ? attr.value : values ? values[name] : '';
-  div(class="form-group "  + (attr.row == 0 ? '' : 'row ') + attr.id || name + (attr.required == true ? ' required ' : ' ') + ' ' + attr.type)
-    label(class=attr.class1 for=attr.id)= attr.label
+
+  if attr.required == true
+    - attr.label += '<span class="color-red">*</span>'
+
+
+mixin fieldTextLabel(name, attr)
+  +prepareField(name, attr)
+  if attr.type == null
+    - attr.type = 'text'
+
+  div(class="form-group "  + (attr.row == 0 ? '' : 'row ') + (attr.id || name) + ' ' + (attr.required == true ? ' required ' : ' ') + ' ' + attr.type)
+    label(class=attr.class1 for=attr.id)!= attr.label
     div(class=attr.class2)
         input(
             id=attr.id || name
@@ -84,10 +94,12 @@ mixin fieldTextLabel(name, attr)
 
 
 mixin fieldTextareaLabel(name, attr)
-  - attr = attr ? attr : fields[name];
-  - attr.value = attr.value ? attr.value : values ? values[name] : '';
-  div(class="form-group "  + (attr.row == 0 ? '' : 'row ') + attr.id || name + (attr.required == true ? ' required ' : ' ') + ' ' + attr.type)
-    label(class=attr.class1 for=attr.id)= attr.label
+  +prepareField(name, attr)
+  if attr.type == null
+    - attr.type = 'textarea'
+
+  div(class="form-group "  + (attr.row == 0 ? '' : 'row ') + (attr.id || name) + (attr.required == true ? ' required ' : ' ') + ' ' + attr.type)
+    label(class=attr.class1 for=attr.id)!= attr.label
     div(class=attr.class2)
       textarea(
         id=attr.id || name
@@ -102,10 +114,12 @@ mixin fieldTextareaLabel(name, attr)
 
 
 mixin fieldChoiceLabel(name, attr)
-  - attr = attr ? attr : fields[name];
-  - attr.value = attr.value ? attr.value : values ? values[name] : '';
-  div(class="form-group "  + (attr.row == 0 ? '' : 'row ') + attr.id || name + (attr.required == true ? ' required ' : ' ') + ' ' + attr.type)
-    label(class=attr.class1 for=attr.id || name)= attr.label
+  +prepareField(name, attr)
+  if attr.type == null
+    - attr.type = 'select'
+
+  div(class="form-group "  + (attr.row == 0 ? '' : 'row ') + (attr.id || name) + (attr.required == true ? ' required ' : ' ') + ' ' + attr.type)
+    label(class=attr.class1 for=attr.id || name)!= attr.label
     div(class=attr.class2)
       select(
           id=attr.id || name
@@ -119,12 +133,14 @@ mixin fieldChoiceLabel(name, attr)
 
 
 mixin fieldRadioLabel(name, attr)
-  - attr = attr ? attr : fields[name];
-  - attr.value = attr.value ? attr.value : values ? values[name] : '';
+  +prepareField(name, attr)
+  if attr.type == null
+    - attr.type = 'radio'
+
   div(class=attr.class1)
     label= attr.label
   div(class=attr.class2)
-    div(class="form-group m-b-0 "  + (attr.row == 0 ? '' : 'row ') + attr.id | name + (attr.required == true ? ' required ' : ' ') + ' ' + attr.type)
+    div(class="form-group m-b-0 "  + (attr.row == 0 ? '' : 'row ') + (attr.id || name) + (attr.required == true ? ' required ' : ' ') + ' ' + attr.type)
       div(class=attr.class2).radio-input
         each v in attr.choices
           label
@@ -139,7 +155,11 @@ mixin fieldRadioLabel(name, attr)
 
 
 mixin fieldDateMonth(name, attr)
-  div(class=attr.class + ' ' + attr.id || name + (attr.required == true ? ' required ' : ' ') + ' ' + attr.type).date-input
+  +prepareField(name, attr)
+  if attr.type == null
+    - attr.type = 'datemonth'
+
+  div(class=attr.class + ' ' + (attr.id || name) + (attr.required == true ? ' required ' : ' ') + ' ' + attr.type).date-input
     - var value = attr.value ? attr.value.split('-') : values && values[name] ? values[name].split('-') : []
     input(
         id=attr.id || name + '__month'
@@ -152,7 +172,11 @@ mixin fieldDateMonth(name, attr)
 
 
 mixin fieldDateYear(name, attr)
-  div(class=attr.class + ' ' + attr.id || name + (attr.required == true ? ' required ' : ' ') + ' ' + attr.type).date-input
+  +prepareField(name, attr)
+  if attr.type == null
+    - attr.type = 'dateyear'
+    
+  div(class=attr.class + ' ' + (attr.id || name) + (attr.required == true ? ' required ' : ' ') + ' ' + attr.type).date-input
     - var value = attr.value ? attr.value.split('-') : values && values[name] ? values[name].split('-') : []
     input(
         id=attr.id || name + '__year'

@@ -177,6 +177,12 @@ module.exports = {
       this.role = options.role;
 
       this.labels = {
+        first_name: 'First name',
+        last_name: 'Last name',
+        email: 'Email',
+        dob: 'Date of birth',
+        principal_occupation: 'Principal Occupation',
+        employer_principal_businesss: 'Employer and Principal Business',
         experiences: {
           employer: 'Employer',
           employer_principal: 'Employer Principal',
