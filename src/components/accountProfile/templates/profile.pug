@@ -98,7 +98,7 @@ mixin fieldInput(name, attr)
                             +fieldBlock("city", user.city, {'class1': 'col-lg-6 ', 'class2': 'col-lg-6 ', 'type': 'text'})
                         .col-lg-5
                           .form-group.row.state.text
-                            label.text-lg-right.col-lg-5(for="state") State/Province/Region
+                            label.text-lg-right.col-lg-5(for="state").p-t-0.m-b-0 State/Province/ Region
                             div.col-lg-7
                               input.form-control(name='state' placeholder='State/Province/Region' type="text" value=user.state)
                       .row.foreign-country-row(style="display:" + (user.country == 'us' ? 'none' : 'block'))
@@ -106,10 +106,9 @@ mixin fieldInput(name, attr)
                           .form-group.row.zip_code.text
                             label.text-lg-right.col-lg-6(for="zip_code") Postal Code
                             div.col-lg-6
-                              input.form-control(name='zip_code' placeholder='Postal Code' type="text" value=user.zip_code)
-                      .row 
-                        .col-lg-6
-                          +fieldBlock("phone", user.phone, {'class1': 'col-lg-6 ', 'class2': 'col-lg-6 ', 'type': 'text'})
+                              input.form-control(name='zip_code' placeholder='Postal Code' type="text" value=user.zip_code) 
+                        .col-lg-5
+                          +fieldBlock("phone", user.phone, {'class1': 'col-lg-5 ', 'class2': 'col-lg-7 ', 'type': 'text'})
 
                       .form-group.row.clearfix.m0 
                         .col-lg-11.mt30.text-xs-center
