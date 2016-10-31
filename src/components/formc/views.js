@@ -104,8 +104,6 @@ module.exports = {
         data.failed_to_comply = 'Please explain.';
       }
 
-      var _this = this;
-
       if (!validateCard(e.target, { number: 'card_number', expMonth: 'card_exp_month', expYear: 'card_exp_year', cvc: 'card_cvc' })) {
         $submitBtn.prop('disabled', false);
         return;
@@ -121,7 +119,7 @@ module.exports = {
         // Token was created!
         // Insert the token ID into the form so it gets submitted to the server:
         data.stripeToken = response.id;
-        api.submitAction.call(_this, e, data);
+        api.submitAction.call(this, e, data);
       });
 
       return false;
