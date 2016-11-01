@@ -990,8 +990,10 @@ module.exports = {
 
       onSubmit(e) {
         e.preventDefault();
-        let url = this.urlRoot;
+
         let data = $(e.target).serializeJSON({ useIntKeysAsArrayIndex: true });
+        let url = this.urlRoot;
+        
         if(this.hasOwnProperty('model')) {
           _.extend(this.model, data);
           data = _.extend({}, this.model)
