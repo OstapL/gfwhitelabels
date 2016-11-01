@@ -985,8 +985,24 @@ module.exports = {
 
       onSubmit(e) {
         e.preventDefault();
-        let url = this.urlRoot;
+
         let data = $(e.target).serializeJSON({ useIntKeysAsArrayIndex: true });
+        
+        // Make sure the amounts of perks are in an ascendant order
+        /*let lastPerk = 0;
+        for (let i = 0; i < data.perks.length; i++) {
+          let elem = data.perks[i];
+          if (!elem) continue;
+          let amount = Number(elem.amount);
+          if (amount <= lastPerk) {
+            alert('Perks are not in ascending order!');
+            return;
+          } else {
+            lastPerk = amount;
+          }
+        }*/
+
+        let url = this.urlRoot;
         if(this.hasOwnProperty('model')) {
           _.extend(this.model, data);
           data = _.extend({}, this.model)
