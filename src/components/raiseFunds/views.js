@@ -498,6 +498,17 @@ module.exports = {
           },
           );
         $('.delete-image').click(this.deleteImage.bind(this));
+
+        if(app.getParams().check == '1') {
+          var data = this.$el.find('form').serializeJSON();
+          if (!validation.validate(this.fields, data, this)) {
+            _(validation.errors).each((errors, key) => {
+              validation.invalidMsg(this, key, errors);
+            });
+            this.$('.help-block').prev().scrollTo(5);
+          }
+        }
+
         return this;
       },
 
