@@ -20,6 +20,19 @@ module.exports = {
   },
 
   invalidMsg: function (view, attr, error, selector) {
+
+    // If we have error for json/nested fieds
+    // we need get all keys and show error for each key
+    // individually
+    if(Array.isArray(error) !== true && typeof error == 'object') {
+      _(error).forEach((el, k) => {
+        _(el).forEach((errors, key) => {
+          this.invalidMsg(view, attr + '__' + k + '__' + key, errors, selector);
+        })
+      });
+      return false;
+    }
+
     let $el = null;
     let $group = null;
 

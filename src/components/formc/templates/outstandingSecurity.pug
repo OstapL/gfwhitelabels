@@ -17,84 +17,75 @@ section.formc-team-members-director.container.m-b-85
   //START RIGHT BLOCK
   .col-lg-8
     h2.text-uppercase.text-lg-center.text-xs-center.m-t-0.dosis.mb45 outstanding security
+    #security_modal.modal.fade(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")
+      .modal-dialog(role="document")
+        .modal-content
+            .modal-header
+              button(type="button" class="close" data-dismiss="modal" aria-label="Close")
+                span(aria-hidden="true")
+                  i.fa.fa-times
+
+            .modal-body.p-t-0
+              form(data-section='outstanding_securities')#security_model_form.modal-form
+                .form-section    
+                  +fieldChoiceLabel("security_type", _.extend({
+                    class1: 'col-lg-12',
+                    class2: 'col-lg-12',
+                  }, fields.outstanding_securities.schema.security_type))
+                  +fieldTextLabel("custom_security_type", _.extend({
+                    class1: 'col-lg-12',
+                    class2: 'col-lg-12',
+                  }, fields.outstanding_securities.schema.custom_security_type))
+                  +fieldTextareaLabel("terms_and_rights", _.extend({
+                    class1: 'col-lg-12',
+                    class2: 'col-lg-12 big-textarea',
+                    placeholder: 'Description'
+                  }, fields.outstanding_securities.schema.terms_and_rights))
+                  .row
+                    .col-lg-6
+                      +fieldTextLabel("amount_authroized", _.extend({
+                        class1: 'col-lg-12',
+                        class2: 'col-lg-12',
+                        label: 'Amount Authorized',
+                      }, fields.outstanding_securities.schema.amount_authroized))
+                    .col-lg-6
+                      +fieldTextLabel("amount_outstanding", _.extend({
+                        class1: 'col-lg-12',
+                        class2: 'col-lg-12',
+                        label: 'Amount Outstanding',
+                      }, fields.outstanding_securities.schema.amount_outstanding))
+                  .row.form-group.m-b-0
+                    +fieldRadioLabel("voting_right", _.extend({
+                      class1: 'col-lg-3',
+                      class2: 'col-lg-9',
+                    }, fields.outstanding_securities.schema.voting_right))
+
+                  .row.m-b-2
+                      .col-lg-12.text-lg-center.text-md-center.text-xs-center
+                          button(type="submit").update-location.btn.btn-primary.text-uppercase.pull-lg-right.add-outstanding save
+            .modal-footer
     form(metod="post" action="").form-section
       input(name="outstanding_securities_choice" type="hidden" value="false")
       .col-lg-12
-        b Do you have any business loans or debt?
-        .form-group.form-section.m-t-2.m-b-0
-          .radio-input.m-b-1
-            label 
-              input(type="radio" name="have_loans_debt" value="true" checked=(values['have_loans_debt']) target=".have-loans-debt")
-              |  Yes
-            label 
-              input(type="radio" name="have_loans_debt" value="false" checked=(!values['have_loans_debt']) target=".have-loans-debt")
-              |  No
-        .have-loans-debt.shown-yes(style="display:" + (values['have_loans_debt'] ? 'block' : 'none') + ";")
+        +fieldRadioLabel("business_loans_or_debt_choice", _.extend({
+          class1: 'bold',
+          class2: 'form-section m-t-2 yesno',
+          class3: 'm-b-1',
+        }, fields.business_loans_or_debt_choice))
+        .business_loans_or_debt_choice.shown-yes(style="display:" + (values['business_loans_or_debt_choice'] ? 'block' : 'none') + ";")
           |!{ templates.business_loans_or_debt }
 
         .col-lg-12.m-t-3
             .row
-                b An "exempt offering" is any offering of securities which is exempted from the registration requirements of the Securities Act.Have you conducted any exempt offerings in the past three years?
-                .form-group.form-section.m-t-2.m-b-0
-                  .radio-input.m-b-1
-                    label 
-                      input(type="radio" name="conduct_exempt_offerings" value="true" checked=(values['conduct_exempt_offerings']) target=".conduct-exempt-offerings-container")
-                      |  Yes
-                    label 
-                      input(type="radio" name="conduct_exempt_offerings" value="false" checked=(!values['conduct_exempt_offerings']) target=".conduct-exempt-offerings-container")
-                      |  No
-        .conduct-exempt-offerings-container.shown-yes(style="display:" + (values['conduct_exempt_offerings'] ? 'block' : 'none') + ";")
+              +fieldRadioLabel("exempt_offering_choice", _.extend({
+                class1: 'bold',
+                class2: 'form-section m-t-2 yesno',
+                class3: 'm-b-1',
+              }, fields.exempt_offering_choice))
+        .exempt_offering_choice.shown-yes(style="display:" + (values['exempt_offering_choice'] ? 'block' : 'none') + ";")
             |!{ templates.exempt_offering }
 
-        .border-bottom.m-t-3.m-b-3
-        h3.text-xs-center Outstanding Securities
-        p What other securities are outstanding? Describe the material terms of any other outstanding securies.
-        a(data-toggle="modal" data-target="#security_modal" href="#security_modal").btn.text-uppercase.m-t-2.m-b-2
-            i.fa.fa-plus
-            |  add outstanding securities
-        .table-responsive
-            table.table.table-bordered.table-striped.text-xs-center.table-outstanding.m-b-0.securities-table
-                thead
-                    tr
-                        th(width="22%").text-xs-center Security Type
-                        th(width="21%").text-xs-center Amount Authorized
-                        th(width="21%").text-xs-center Amount Outstanding
-                        th(width="20%").text-xs-center Voting Rights
-                        th(width="6%")
-                tbody
-                    each v, k in values.outstanding_securities
-                        tr(class="index_" + k)
-                            td
-                                - let securityType;
-                                case v.security_type
-                                    when 0
-                                        - securityType = 'Preferred Stock';
-                                    when 1
-                                        - securityType = 'Common Stock';
-                                    when 2
-                                        - securityType = 'Debt';
-                                    when 3
-                                        - securityType = 'Warrants';
-                                    when 4
-                                        - securityType = 'Options';
-                                    default
-                                        - securityType = 'Other';
-                                | #{securityType}
-                                input(type="hidden" name="outstanding_securities[" + k + "][security_type]" value=v.security_type)
-                            td
-                                | #{v.amount_authroized}
-                                input(type="hidden" name="outstanding_securities[" + k + "][amount_authroized]" value=v.amount_authroized)
-                            td
-                                | #{v.amount_outstanding}
-                                input(type="hidden" name="outstanding_securities[" + k + "][amount_outstanding]" value=v.amount_outstanding)
-                            td
-                                | #{v.voting_right ? 'Yes' : 'No'}
-                                input(type="hidden" name="outstanding_securities[" + k + "][voting_right]" value=v.voting_right.toString())
-                                input(type="hidden" name="outstanding_securities[" + k + "][terms_and_rights]" value=v.terms_and_rights)
-                            td 
-                                .delete-section-container
-                                    a(href="#" data-section="securities-table" data-index=k).delete-outstanding
-                                        i.fa.fa-times
+        |!{ templates.outstanding_securities }
         .border-bottom.m-t-3.m-b-3 
         +fieldTextareaLabel("rights_of_securities", _.extend({
           class1: 'col-lg-12 col-md-12  text-md-left  text-xl-left',
@@ -133,5 +124,3 @@ section.formc-team-members-director.container.m-b-85
             .row
                 .text-md-center.text-sm-center-text-xs-center
                     button.btn.btn-primary.text-uppercase.pull-lg-right Save
-
-|!{ templates.outstanding_securities }

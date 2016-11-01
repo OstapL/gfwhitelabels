@@ -8,11 +8,12 @@ mixin row(value, index)
       a(href="#" data-section=name data-index=index).delete-sectionnew
         i.fa.fa-times
 
+    - console.log(name, value);
     +fieldNestedTextLabel(name, "creditor", value, index, {})
+    +fieldNestedTextLabel(name, "outstanding_amount", value, index, {})
     +fieldNestedTextLabel(name, "interest_rate", value, index, {})
     +fieldNestedTextLabel(name, "maturity_date", value, index, {})
     +fieldNestedTextLabel(name, "other_material_terms", value, index, {})
-    +fieldNestedTextLabel(name, "outstanding_amount", value, index, {})
 
 
 mixin run()
@@ -21,11 +22,12 @@ mixin run()
     div(class=(attr.row == 0 ? '' : 'row ') + name + '_block' + (attr.required == true ? ' required ' : ' ') + ' nested')
       div(class=(attr.row == 0 ? '' : 'row ') + name + '_container' + (attr.required == true ? ' required ' : ' ') + ' nested')
 
-        if value == null || value.length == 0 || Object.keys(value) == 0
+        if values == null || values.length == 0
           +row({}, 0)
 
         else
           each value, index in values
+            - console.log(values, value, index);
             +row(value, index)
 
       .row.add-link

@@ -1,12 +1,6 @@
 include ../../../templates/mixins.pug
-//- include menu.pug
+include ../../../templates/fields_mixins.pug
 include ../../../templates/menuRaiseFund.pug
-
-- 'use strict'
-// - var fields = { explain: { label: 'If Yes, Explain'} };
-// - var fields = { describe: { label: 'Describe Your Risk'} };
-// - var fields = { material_informatione: { label: '1) Such further material information, if any, as may be necessary to make the required statements, in the light of the circumstances under which they are made, not misleading.'} };
-// - var fields = { provided_informatione: { label: '2) If youve provided any inforatmion in a format, media or other means not able to be reflected in text or pdf, please include here: (a) a description of the material content of such information; (b) a description of the format in which such disclosure is presented; and (c) in the case of disclosure in video, audio or other dynamic media or format, a transcript or description of such disclosure.'} };
 
 +breadcrumbs('form c', '', 
     [
@@ -18,9 +12,6 @@ include ../../../templates/menuRaiseFund.pug
 
 section.formc-team-members-director.container.m-b-85
   +menu('formc', 'background-check')
-
-
-
 
   //START RIGHT BLOCK
   .col-lg-8
@@ -36,36 +27,31 @@ section.formc-team-members-director.container.m-b-85
         li.pb10.font-weight-bold Suspended or expelled from membership in, or barred from association with a member of a registered national securities exchange or association for conduct inconsistent with just and equitable principles of trade?
         li.pb10.font-weight-bold Subject to a refusal order, stop order or suspended exemption within 5 years prior to this offering, with regards to a Regulation A offering statement, or was any such person, at the time of filing, the subject of an investigation or proceeding to determine whether a stop order or suspension should be issued?
         li.font-weight-bold Subject to a United States Postal Service false representation order within 5 years prior to this offering, or is such person subject to a temporary restraining order or preliminary injunction with respect to conduct alleged by the United States Postal Service to constitute a scheme or device for obtaining money or property through the mail by means of false representations?
-      form(metod="post" action="").form-section
+      form(action="").form-section
         .form-group.form-section.m-t-1.m-b-0
-          .radio-input.m-b-1
+          .radio-input.m-b-1.yesno
             label 
               input(type="radio" name="company_or_director_subjected_to_choice" value="true" checked=(values['company_or_director_subjected_to_choice']) target=".transactions-past-year-container")
               |  Yes
             label 
               input(type="radio" name="company_or_director_subjected_to_choice" value="false" checked=(!values['company_or_director_subjected_to_choice']) target=".transactions-past-year-container")
               |  No
-        .m-b-3.transactions-past-year-container.shown-yes(style="display:" + (values['company_or_director_subjected_to'] ? 'block' : 'none'))
-          +fieldBlock("company_or_director_subjected_to", '', {
+        .m-b-3.company_or_director_subjected_to_choice.shown-yes(style="display:" + (values['company_or_director_subjected_to_choice'] ? 'block' : 'none'))
+          +fieldTextareaLabel("company_or_director_subjected_to", _.extend({
             class1: 'col-lg-3 col-md-12 text-md-left text-xl-right',
             class2: 'col-lg-9 col-md-12',
-            type: 'textarea',
             placeholder: 'Explain',
-          })
+          }, fields.company_or_director_subjected_to))
         .row.pb10
           b.col-lg-12 In addition to the information expressly required to be included in this Form, include:
-        +fieldBlock("material_information", '', {
+        +fieldTextareaLabel("material_information", _.extend({
           class1: 'col-lg-12 col-md-12 text-md-left text-xl-left',
           class2: 'col-lg-12 col-md-12 big-textarea',
-          type: 'textarea',
-          placeholder: 'Description',
-        })
-        +fieldBlock("descrption_material_information", '', {
+        }, fields.material_information))
+        +fieldTextareaLabel("descrption_material_information", _.extend({
           class1: 'col-lg-12 col-md-12 text-md-left text-xl-left',
           class2: 'col-lg-12 col-md-12 big-textarea',
-          type: 'textarea',
-          placeholder: 'Description',
-        })
+        }, fields.descrption_material_information))
         .border-bottom.m-t-3.m-b-3
         h3.pb10.m-b-0 The issuer must continue to comply with the ongoing reporting requirements until:
         ol
@@ -76,5 +62,4 @@ section.formc-team-members-director.container.m-b-85
           li.pb10 the issuer liquidates or dissolves its business in accordance with state law.
         .row.m-t-3
           .col-lg-12.text-md-center.text-sm-center-text-xs-center
-            //- a(href="#").btn.btn-primary.text-uppercase.pull-lg-right Save
             button.btn.btn-primary.text-uppercase.pull-lg-right Save

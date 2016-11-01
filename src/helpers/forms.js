@@ -180,7 +180,6 @@ module.exports = {
   fixDateFields(data) {
     _(this.fields).each((el, key) => {
       if(el.type == 'date') {
-        debugger;
         var key_year = key + '__year';
         var key_month = key + '__month';
         data[key] = data[key_year] && data[key_month]

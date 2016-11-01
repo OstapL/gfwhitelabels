@@ -3,75 +3,63 @@ include ../../../../templates/fields_mixins.pug
 mixin row(value, index)
   - var index = index;
 
-  div(data-index=index class=name + ' addSectionBlock')
-    .delete-section-container
-      a(href="#" data-section=name data-index=index).delete-sectionnew
-        i.fa.fa-times
+  tr(class="index_" + k)
+      td
+          - let securityType;
+          case parseInt(value.security_type)
+              when 0
+                  - securityType = 'Preferred Stock';
+              when 1
+                  - securityType = 'Common Stock';
+              when 2
+                  - securityType = 'Debt';
+              when 3
+                  - securityType = 'Warrants';
+              when 4
+                  - securityType = 'Options';
+              default
+                  - securityType = 'Other';
+          | #{securityType}
+          .collapse
+      td
+          | #{value.amount_authroized}
+          .collapse
+      td
+          | #{value.amount_outstanding}
+          .collapse
+      td
+          | #{value.voting_right ? 'Yes' : 'No'}
+          .collapse
+      td 
+          .delete-section-container
+              a(href="#" data-section="securities-table" data-index=index).delete-outstanding
+                  i.fa.fa-times
 
 
 mixin run()
 
   if first_run
-    div(class=(attr.row == 0 ? '' : 'row ') + name + '_block' + (attr.required == true ? ' required ' : ' ') + ' nested')
-      div(class=(attr.row == 0 ? '' : 'row ') + name + '_container' + (attr.required == true ? ' required ' : ' ') + ' nested')
+    .border-bottom.m-t-3.m-b-3
+    h3.text-xs-center Outstanding Securities
+    p What other securities are outstanding? Describe the material terms of any other outstanding securies.
+    a(data-toggle="modal" data-target="#security_modal" href="#security_modal").btn.text-uppercase.m-t-2.m-b-2
+        i.fa.fa-plus
+        |  add outstanding securities
+    div(class=(attr.row == 0 ? '' : 'row ') + name + '_block' + (attr.required == true ? ' required ' : ' ') + ' nested').table-responsive
+        table.table.table-bordered.table-striped.text-xs-center.table-outstanding.m-b-0.securities-table
+            thead
+                tr
+                    th(width="22%").text-xs-center Security Type
+                    th(width="21%").text-xs-center Amount Authorized
+                    th(width="21%").text-xs-center Amount Outstanding
+                    th(width="20%").text-xs-center Voting Rights
+                    th(width="6%")
+            tbody(class=(attr.row == 0 ? '' : 'row ') + name + '_container' + (attr.required == true ? ' required ' : ' ') + ' nested')
+                each value, index in values
+                  +row(value, index)
 
-        #security_modal.modal.fade(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")
-          .modal-dialog(role="document")
-            .modal-content
-                .modal-header
-                  button(type="button" class="close" data-dismiss="modal" aria-label="Close")
-                    span(aria-hidden="true")
-                      i.fa.fa-times
-
-                .modal-body.p-t-0
-                  form.modal-form
-                    .form-section    
-                      +fieldNestedChoiceLabel(name, "security_type", "", index, {
-                        class1: 'col-lg-12',
-                        class2: 'col-lg-12',
-                      })
-                      +fieldNestedTextLabel(name, "custom_security_type", "", index, {
-                        class1: 'col-lg-12',
-                        class2: 'col-lg-12',
-                      })
-                      +fieldNestedTextareaLabel(name, "terms_and_rights", "", index, {
-                        class1: 'col-lg-12',
-                        class2: 'col-lg-12 big-textarea',
-                        placeholder: 'Description'
-                      })
-                      .row
-                        .col-lg-6
-                          +fieldNestedTextLabel(name, "amount_authroized", "", index, {
-                            class1: 'col-lg-12',
-                            class2: 'col-lg-12',
-                            label: 'Amount Authorized',
-                          })
-                        .col-lg-6
-                          +fieldNestedTextLabel(name, "amount_outstanding", "", index, {
-                            class1: 'col-lg-12',
-                            class2: 'col-lg-12',
-                            label: 'Amount Outstanding',
-                          })
-                      .row.form-group.m-b-0
-                        +fieldNestedRadioLabel(name, "voting_right", "", index, {
-                          class1: 'col-lg-3',
-                          class2: 'col-lg-9',
-                        })
-
-                      .row.m-b-2
-                          .col-lg-12.text-lg-center.text-md-center.text-xs-center
-                              button(data-dismiss="modal").update-location.btn.btn-primary.text-uppercase.pull-lg-right.add-outstanding save
-                .modal-footer
-
-        if value == null || value.length == 0 || Object.keys(value) == 0
-          +row({}, 0)
-
-        else
-          each value, index in values
-            +row(value, index)
 
   else
-    +row({}, index)
-
+    +row(value || {}, index)
 
 +run()

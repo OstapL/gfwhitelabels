@@ -24,14 +24,14 @@ section.formc-team-members-director.container.m-b-85
       b Have you had any transactions with related parties in the past 12 months?
     form(metod="post" action="").form-section
       .col-lg-12.form-group.form-section.m-t-2.m-b-2
-        .radio-input.m-b-2
+        .radio-input.m-b-2.yesno
           label 
-            input(type="radio" name="transaction_with_related_parties_choice" value="true" checked=values['transaction_with_related_parties_choice'] target=".transactions-container")
+            input(type="radio" name="transaction_with_related_parties_choice" value="true" checked=values['transaction_with_related_parties_choice'])
             |  Yes
           label 
-            input(type="radio" name="transaction_with_related_parties_choice" value="false" checked=!values['transaction_with_related_parties_choice'] target=".transactions-container")
+            input(type="radio" name="transaction_with_related_parties_choice" value="false" checked=!values['transaction_with_related_parties_choice'])
             |  No
-      .transactions-container.shown-yes(style="display:" + (values['transaction_with_related_parties_choice'] ? 'block' : 'none'))
+      .transaction_with_related_parties_choice.shown-yes.required(style="display:" + (values['transaction_with_related_parties_choice'] ? 'block' : 'none'))
         |!{ templates.transaction_with_related_parties }
 
       .row.m-t-3
