@@ -14,4 +14,5 @@ global.teamTitle = "Meet The Team";
 global.facebookClientId = "191471871275050";
 global.googleClientId = "488593151885-87nqfd8gl444a1me0n149otrf37dbahq.apps.googleusercontent.com";
 global.linkedinClientId = "77wzj6tz0yyr33";
-global.googleMapKey = "AIzaSyBpCl9-7bkVISZ0o-AaFCsKzZwGAxalkZU"
+global.googleMapKey = "AIzaSyBpCl9-7bkVISZ0o-AaFCsKzZwGAxalkZU";
+global.stripeKey = "pk_test_Z7YAhlyPtnW7bpd8LJUHTSou";

@@ -48,8 +48,7 @@ module.exports = {
     events: _.extend({
       'submit form': 'submit',
     }, menuHelper.events, yesNoHelper.events),
-
-
+    
     preinitialize() {
       // ToDo
       // Hack for undelegate previous events
@@ -63,14 +62,65 @@ module.exports = {
     },
 
     submit(e) {
+      var validation = require('components/validation/validation.js');
+
+      function validateCard(form, selectors) {
+        let number = form.elements[selectors.number],
+            expMonth = form.elements[selectors.expMonth],
+            expYear = form.elements[selectors.expYear],
+            cvc = form.elements[selectors.cvc];
+
+
+        if (!Stripe.card.validateCardNumber(number.value)) {
+          validation.invalidMsg({'$': $}, selectors.number, ['Please, check card number.']);
+          return false;
+        }
+
+        if (!Stripe.card.validateExpiry(expMonth.value, expYear.value)) {
+          validation.invalidMsg({'$': $}, selectors.expDate, ['Please, check expiration date.']);
+          return false;
+        }
+        if (!Stripe.card.validateCVC(cvc.value)) {
+          validation.invalidMsg({'$': $}, selectors.cvc, ['Please, check CVC.']);
+          return false;
+        }
+        return true;
+      };
+
+      e.preventDefault();
+
+      Stripe.setPublishableKey(stripeKey);
+
       var $target = $(e.target);
+      var $submitBtn = $target.find('#pay-btn');
+      $submitBtn.prop('disabled', true);
+
       var data = $target.serializeJSON();
       // ToDo
       // Fix this
       if (data.failed_to_comply_choice == false) {
         data.failed_to_comply = 'Please explain.';
       }
-      api.submitAction.call(this, e, data);
+
+      if (!validateCard(e.target, { number: 'card_number', expDate: 'card_exp_date_year', expMonth: 'card_exp_month', expYear: 'card_exp_year', cvc: 'card_cvc' })) {
+        $submitBtn.prop('disabled', false);
+        return;
+      }
+
+      Stripe.card.createToken($target, (status, response)=>{
+        if (response.error) {
+          validation.invalidMsg({'$': $}, 'form-section', [response.error.message]);
+          $submitBtn.prop('disabled', false); // Re-enable submission
+          return;
+        }
+
+        // Token was created!
+        // Insert the token ID into the form so it gets submitted to the server:
+        data.stripeToken = response.id;
+        api.submitAction.call(this, e, data);
+      });
+
+      return false;
     },
 
     initialize(options) {
@@ -85,7 +135,7 @@ module.exports = {
           serverUrl: serverUrl,
           Urls: Urls,
           fields: this.fields,
-          values: this.model,
+          values: this.model
         })
       );
       return this;
