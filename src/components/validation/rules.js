@@ -57,7 +57,7 @@ module.exports = {
 
   // Function validator
   // Lets you implement a custom function used for validation
-  fn: function (value, attr, fn, model, computed) {
+  fn: function (value, fn, attr, model, computed) {
     if (_.isString(fn)) {
       fn = model[fn];
     }
