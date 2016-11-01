@@ -4,7 +4,7 @@
 module.exports = {
   patterns: {
     // Matches any digit(s) (i.e. 0-9)
-    number: /^\d+$/,
+    number: /^\d+(\.\d+)?$/,
 
     // Matches any number (e.g. 100.000)
     money: /^-?(?:\d+|\d{1,3}(?:,\d{3})+)(?:\.\d+)?$/,
@@ -67,7 +67,7 @@ module.exports = {
 
   toNumber: function(value) {
     if (value && value.replace) value = value.replace(',', '');
-    return (_.isNumber(value) || (_.isString(value) && value.match(this.patterns.number))) ? value : false;
+    return (_.isNumber(value) || (_.isString(value) && value.match(this.patterns.number))) ? Number(value) : false;
   },
 
   // Required validator
@@ -98,7 +98,7 @@ module.exports = {
   // the min value specified
   min: function (name, rule, attr, data) {
     let value = this.toNumber(data[name]);
-    if (!value || value < rule) {
+    if (value === false || value < rule) {
       throw this.format(this.messages.min, attr.label, rule);
     }
   },
@@ -112,7 +112,7 @@ module.exports = {
   // the max value specified
   max: function (name, rule, attr, data) {
     let value = this.toNumber(data[name]);
-    if (!value || value > rule) {
+    if (value === false || value > rule) {
       throw this.format(this.messages.max, attr.label, rule);
     }
   },
