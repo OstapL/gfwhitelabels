@@ -66,7 +66,7 @@ module.exports = {
   },
 
   toNumber: function(value) {
-    if (value && value.replace) value = value.replace(',', '');
+    if (value && value.replace) value = value.replace(/\,/g, '');
     return (_.isNumber(value) || (_.isString(value) && value.match(this.patterns.number))) ? Number(value) : false;
   },
 
@@ -98,6 +98,7 @@ module.exports = {
   // the min value specified
   min: function (name, rule, attr, data) {
     let value = this.toNumber(data[name]);
+    debugger
     if (value === false || value < rule) {
       throw this.format(this.messages.min, attr.label, rule);
     }
