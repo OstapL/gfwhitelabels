@@ -4,7 +4,7 @@
 module.exports = {
   patterns: {
     // Matches any digit(s) (i.e. 0-9)
-    number: /^\d+$/,
+    number: /^\d+(\.\d+)?$/,
 
     // Matches any number (e.g. 100.000)
     money: /^-?(?:\d+|\d{1,3}(?:,\d{3})+)(?:\.\d+)?$/,
@@ -65,6 +65,11 @@ module.exports = {
     return fn.call(model, value, attr, computed);
   },
 
+  toNumber: function(value) {
+    if (value && value.replace) value = value.replace(/\,/g, '');
+    return (_.isNumber(value) || (_.isString(value) && value.match(this.patterns.number))) ? Number(value) : false;
+  },
+
   // Required validator
   // Validates if the attribute is required or not
   // This can be specified as either a boolean value or a function that returns a boolean value
@@ -92,8 +97,9 @@ module.exports = {
   // Validates that the value has to be a number and equal to or greater than
   // the min value specified
   min: function (name, rule, attr, data) {
-    let value = data[attr];
-    if (!this.isNumber(value) || value < rule) {
+    let value = this.toNumber(data[name]);
+    debugger
+    if (value === false || value < rule) {
       throw this.format(this.messages.min, attr.label, rule);
     }
   },
@@ -106,8 +112,8 @@ module.exports = {
   // Validates that the value has to be a number and equal to or less than
   // the max value specified
   max: function (name, rule, attr, data) {
-    let value = data[name];
-    if (!this.isNumber(value) || value > rule) {
+    let value = this.toNumber(data[name]);
+    if (value === false || value > rule) {
       throw this.format(this.messages.max, attr.label, rule);
     }
   },
