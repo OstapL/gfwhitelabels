@@ -92,7 +92,8 @@ module.exports = {
   // Validates that the value has to be a number and equal to or greater than
   // the min value specified
   min: function (name, rule, attr, data) {
-    let value = data[attr];
+    let value = data[name];
+    if (value && value.replace) value = value.replace(',', '');
     if (!this.isNumber(value) || value < rule) {
       throw this.format(this.messages.min, attr.label, rule);
     }
@@ -107,6 +108,7 @@ module.exports = {
   // the max value specified
   max: function (name, rule, attr, data) {
     let value = data[name];
+    if (value && value.replace) value = value.replace(',', '');
     if (!this.isNumber(value) || value > rule) {
       throw this.format(this.messages.max, attr.label, rule);
     }
