@@ -16,8 +16,24 @@ module.exports = {
       'change .js-state': 'changeAddressManually',
       dragover: 'globalDragover',
       dragleave: 'globalDragleave',
+      'change .country-select': 'changeCountry',
     }, phoneHelper.events),
 
+    changeCountry(e) {
+      let $target = $(e.target);
+      let country = $target.val();
+      if (country == 'us') {
+        $('.foreign-country-row').hide();
+        $('.foreign-country-row input').prop('disabled', true);
+        $('.us-row').show();
+        $('.us-row input').prop('disabled', false);
+      } else {
+        $('.foreign-country-row').show();
+        $('.foreign-country-row input').prop('disabled', false);
+        $('.us-row').hide();
+        $('.us-row input').prop('disabled', true);
+      }
+    },
 
     globalDragover() {
       // this.$('.dropzone').css({ border: 'dashed 1px lightgray' });

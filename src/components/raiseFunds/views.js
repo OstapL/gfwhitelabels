@@ -498,6 +498,17 @@ module.exports = {
           },
           );
         $('.delete-image').click(this.deleteImage.bind(this));
+
+        if(app.getParams().check == '1') {
+          var data = this.$el.find('form').serializeJSON();
+          if (!validation.validate(this.fields, data, this)) {
+            _(validation.errors).each((errors, key) => {
+              validation.invalidMsg(this, key, errors);
+            });
+            this.$('.help-block').prev().scrollTo(5);
+          }
+        }
+
         return this;
       },
 
@@ -826,7 +837,7 @@ module.exports = {
         let max = this.$('input[name=maximum_raise]').val();
         min = parseInt(min.replace(/,/g, ''));
         max = parseInt(max.replace(/,/g, ''));
-        if (!(min && max) || !(min < max)) {
+        if ((min && max) && !(min < max)) {
           alert("Maximum Raise must be larger than Minimum Raise!");
           e.preventDefault();
         }

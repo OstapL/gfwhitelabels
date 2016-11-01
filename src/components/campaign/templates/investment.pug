@@ -8,22 +8,49 @@ include ../../../templates/mixins.pug
     ['Invest in ' + campaign.company.name, '']
   ]
 )
+mixin fieldInput(name, attr)
+  - attr = attr ? attr : fields[name];
+  - attr.value = attr.value ? attr.value : values ? values[name] : '';
+  div(class=attr.class)
+    input(
+            id=attr.id || name
+            name=attr.name || name
+            placeholder=attr.placeholder ? attr.placeholder :attr.label
+            type=attr.type ? attr.type : 'text'
+            class=(attr.help_text ? 'showPopover' : '') 
+            data-content=(attr.help_text ?attr.help_text : '')
+            value=attr.value
+            maxlength = attr.maxlength ? attr.maxlength : false
+            disabled=(attr.disabled ? attr.disabled : false)).form-control
 
 .container.investment
   //START LEFT BLOCK
   .row
-    .col-lg-7
+    .col-lg-8
       h2.text-uppercase.dosis.m-t-0.text-md-center.text-sm-center.text-xs-center.text-lg-left Investment
       .form-section.clearfix
         form(metod="post" action="").invest_form.clearfix
-          +fieldBlock("amount", '', {
-              class1: 'col-lg-3 col-md-12',
-              class2: 'col-lg-9 col-md-12',
-              type: 'text',
-              placeholder: '$2,500',
-              text: "$10 of payment processing fee. Your money will be returned to you if the campaign doesn't reach the target goal ($500,000)."
-              })
-
+          .row
+            .col-xl-12
+              +fieldBlock("amount", '', {
+                  class1: 'col-lg-3 col-md-12',
+                  class2: 'col-lg-4 col-md-12',
+                  type: 'text',
+                  placeholder: '$2,500',
+                  text: "$10 of payment processing fee. Your money will be returned to you if the campaign doesn't reach the target goal ($500,000)."
+                  })
+          .row
+            .col-xl-12
+              +fieldBlock("fee", '', {
+                  class1: 'col-lg-3 col-md-12',
+                  class2: 'col-lg-4 col-md-12 input-border-bottom',
+                  type: 'text',
+                  placeholder: '+ $10'
+                  })
+          .row
+            label.col-lg-3.text-lg-right.p-t-0.total-investment-label Total
+            .col-lg-4
+              span.p-l-1 $10
           // popover content for amount field
           div.popover-content-amount-campaign
             i.fa.fa-info-circle
@@ -36,16 +63,18 @@ include ../../../templates/mixins.pug
           section.personal_information
             h2.text-uppercase.dosis.text-md-center.text-sm-center.text-xs-center.text-lg-left Personal Information
               span.small-text.open-sans Required by United States banking laws. This information is transmitted securely and will never be used for any purpose beyond executing your investment. You only have to do this once.
-            +fieldBlock("name", '', {
-              class1: 'col-lg-3 col-md-12',
-              class2: 'col-lg-9 col-md-12',
-              type: 'text',
-              })
-            +fieldBlock("phone", '', {
-              class1: 'col-lg-3 col-md-12',
-              class2: 'col-lg-9 col-md-12',
-              type: 'text',
-              })
+            .form-group.row
+              label.col-lg-3.col-md-12.text-lg-right.text-xs-left.pull-xs-left Legal Name
+              +fieldInput("first_name", {'class': 'col-lg-4-5 m-b-md-25 col-md-12','placeholder':'First Name' })
+              +fieldInput("last_name", {'class': 'col-lg-4-5 col-md-12 ','placeholder':'Last Name' })
+            .form-group.row
+              label.col-lg-3.text-lg-right.text-xs-left Country
+              .col-lg-9
+                - user.country = 'us';
+                select(name="country").custom-select.w-100.country-select
+                  option(value="us") United States
+                  option(value="ua") UA
+                  option(value='ru') Russia
             +fieldBlock("street_address_1", '', {
               class1: 'col-lg-3 col-md-12',
               class2: 'col-lg-9 col-md-12',
@@ -56,6 +85,7 @@ include ../../../templates/mixins.pug
               class2: 'col-lg-9 col-md-12',
               type: 'text',
               }).street_address_2
+            // IF USA
             .row
               .col-lg-7.p-l-2.col-md-12
                 +fieldBlock("zip_code", '', {
@@ -67,23 +97,46 @@ include ../../../templates/mixins.pug
                 .col-lg-7.col-md-6.col-sm-6.col-xs-6
                   span(data-toggle="modal" data-target="#city_state_modal" href="#city_state_modal").change_state_city
                     span.input-value.js-city-state New York, NY
-                    i.fa.fa-pencil-square-o
+                      i.fa.fa-pencil-square-o
+            // IF OTHER COUNTRY
             .row
-              .col-lg-7.no-margin-bottom.p-l-2
-                +fieldBlock("dob", '', {
-                  class1: 'col-lg-5',
-                  class2: 'col-lg-7',
-                  type: 'date',
-                  })
-              .col-lg-5.no-margin-bottom
-                +fieldBlock("ssn", '', {
-                  class1: 'col-lg-5 col-md-3', 
-                  class2: 'col-lg-7 col-md-8', 
-                  type: 'text',
-                  placeholder: 'ХХХ-ХХ-XXXX',
-                  })
+              .col-lg-6.p-l-0.p-r-0
+                +fieldBlock("city", user.city, {'class1': 'col-lg-6 ', 'class2': 'col-lg-6 p-r-0', 'type': 'text'})
+              .col-lg-6
+                .form-group.row.state.text
+                  label.text-lg-right.col-lg-5(for="state").p-t-0.m-b-0 State/Province/ Region
+                  div.col-lg-7
+                    input.form-control(name='state' placeholder='State/Province/Region' type="text" value=user.state)
+            .row
+              .col-lg-6.p-l-0.p-r-0
+                .form-group.row.zip_code.text
+                  label.text-lg-right.col-lg-6(for="zip_code") Postal Code
+                  div.col-lg-6.p-r-0
+                    input.form-control(name='zip_code' placeholder='Postal Code' type="text" value=user.zip_code)
+              .col-lg-6
+                +fieldBlock("phone", user.phone, {'class1': 'col-lg-5 ', 'class2': 'col-lg-7 ', 'type': 'text'})
+
           section.payment-information.border-bottom
             h2.text-uppercase.dosis.text-md-center.text-sm-center.text-xs-center.text-lg-left Payment information
+            .form-group.row
+              label.col-lg-3.text-lg-right.text-xs-left I Want to Pay Using
+              .col-lg-9
+                select(name="").custom-select.w-100.country-select
+                  option(value="echeck") Echeck (ACH)
+                  option(value="check") Check
+            //IF ECHECK
+            +fieldBlock("name_on_bank_account", user.name_on_bank_account, {'class1': 'col-lg-3', 'class2': 'col-lg-9', 'type': 'text'})
+            +fieldBlock("account_number", '', {
+              class1: 'col-lg-3 col-md-3',
+              class2: 'col-lg-9 col-md-9',
+              type: 'text',
+              })
+            +fieldBlock("account_number_re", user.account_number_rc, {'class1': 'col-lg-3 ', 'class2': 'col-lg-9', 'type': 'text'})
+            +fieldBlock("route_number", '', {
+              class1: 'col-lg-3 col-md-3',
+              class2: 'col-lg-9 col-md-9',
+              type: 'text',
+              })
             .form-group.row.radio
               label.text-md-right.col-lg-3 Account Type
               .col-lg-9.radio-input
@@ -93,19 +146,39 @@ include ../../../templates/mixins.pug
                 label 
                   input(type="radio")
                   |  Savings
-
-            +fieldBlock("route_number", '', {
-              class1: 'col-lg-3 col-md-3',
-              class2: 'col-lg-9 col-md-9',
-              type: 'text',
-              })
-            +fieldBlock("account_number", '', {
-              class1: 'col-lg-3 col-md-3',
-              class2: 'col-lg-9 col-md-9',
-              type: 'text',
-              })
-              
-            .col-md-12
+            // IF CHECK
+            .row
+              .col-lg-12
+                .row
+                  .col-lg-9.offset-lg-3
+                    .row
+                      .col-lg-6
+                        span Please Pay to the Order of:
+                      .col-lg-6
+                        span.font-weight-bold GrowthFountain Capital LLC
+                    .row
+                      .col-lg-6
+                        span In the Amount of: 
+                      .col-lg-6
+                        span.font-weight-bold $1100
+                    .row.m-b-2
+                      .col-lg-6
+                        span Memo:
+                      .col-lg-6
+                        span.font-weight-bold Invest in Netflix 
+                        span.help-block (as indicated above)
+                    .row.m-b-2
+                      .col-lg-6
+                        span And mail the check to: 
+                      .col-lg-6
+                        span.font-weight-bold GrowthFountain 
+                          br
+                          |  C/O Boston Private Bank 
+                          br
+                          |  60 South Market Suite 100 
+                          br
+                          |  San Jose, CA 95113
+            //.col-md-12
               span.help-block GrowthFountain does not store your bank login credentials
 
           section.varification
@@ -158,10 +231,12 @@ include ../../../templates/mixins.pug
                     
               .col-lg-10
                 label I understand that investing in start-ups and small businesses listed on GrowthFountain is very risky, and that I should not invest any funds unless I can afford to lose my entire investment.
-            h2.text-uppercase.dosis.m-t-3.text-md-center.text-sm-center.text-xs-center.text-lg-left EXECUTION OF SUBSCRIPTION AGREEMENT
-            .col-lg-12
+            .col-lg-12.m-t-2
               .row
-                a(href="#").link-2 Click Here to View the Subscription Agreement
+                span By Signing You Acknowledge and Agree to the 
+                  a(href="#").link-2 Subscription Agreement
+                  |  and 
+                  a(href="#").link-2 Participation Agreement
             .col-lg-12.m-t-2
               .row
                 .form-group.row
