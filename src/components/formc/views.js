@@ -77,8 +77,7 @@ module.exports = {
         }
 
         if (!Stripe.card.validateExpiry(expMonth.value, expYear.value)) {
-          validation.invalidMsg({'$': $}, selectors.expMonth, ['Please, check expiration date.']);
-          validation.invalidMsg({'$': $}, selectors.expYear, []);
+          validation.invalidMsg({'$': $}, selectors.expDate, ['Please, check expiration date.']);
           return false;
         }
         if (!Stripe.card.validateCVC(cvc.value)) {
@@ -90,7 +89,6 @@ module.exports = {
 
       e.preventDefault();
 
-      ///!!! move this from here
       Stripe.setPublishableKey(stripeKey);
 
       var $target = $(e.target);
@@ -104,7 +102,7 @@ module.exports = {
         data.failed_to_comply = 'Please explain.';
       }
 
-      if (!validateCard(e.target, { number: 'card_number', expMonth: 'card_exp_month', expYear: 'card_exp_year', cvc: 'card_cvc' })) {
+      if (!validateCard(e.target, { number: 'card_number', expDate: 'card_exp_date_year', expMonth: 'card_exp_month', expYear: 'card_exp_year', cvc: 'card_cvc' })) {
         $submitBtn.prop('disabled', false);
         return;
       }
@@ -133,13 +131,14 @@ module.exports = {
       let template = require('components/formc/templates/introduction.pug');
 
       this.$el.html(
-        template({
-          serverUrl: serverUrl,
-          Urls: Urls,
-          fields: this.fields,
-          values: this.model,
-        })
-      );
+            template({
+              serverUrl: serverUrl,
+              Urls: Urls,
+              fields: this.fields,
+              values: this.model
+            })
+        );
+
       return this;
     },
 
