@@ -430,7 +430,7 @@ module.exports = {
     urlRoot: formcServer + '/:id' + '/related-parties',
 
     events: _.extend({
-      'submit form': 'submit',
+      'submit form': api.submitAction,
     }, addSectionHelper.events, menuHelper.events, yesNoHelper.events),
 
     initialize(options) {
@@ -448,18 +448,6 @@ module.exports = {
 
       this.createIndexes();
       this.buildJsonTemplates('formc');
-
-    },
-
-    // submit: api.submitAction,
-    submit(e) {
-      var $target = $(e.target);
-      var data = $target.serializeJSON({useIntKeysAsArrayIndex: true});
-
-      if (data.had_transactions == 'false') {
-        data.transaction_with_related_parties = [];
-      }
-      api.submitAction.call(this, e, data);
     },
 
     getSuccessUrl(data) {
@@ -1086,7 +1074,7 @@ module.exports = {
           templates: this.jsonTemplates,
         })
       );
-      this.createDropzones();
+      //this.createDropzones();
       return this;
     },
   }, menuHelper.methods, yesNoHelper.methods, addSectionHelper.methods, dropzoneHelpers.methods)),
@@ -1223,7 +1211,6 @@ module.exports = {
           index: this[sectionName + 'Index']
         })
       );
-      debugger;
       this.model[sectionName].push(data);
       /*
       api.makeRequest(
@@ -1309,18 +1296,15 @@ module.exports = {
     },
 
     getSuccessUrl() {
-      // return  '/formc/' + this.model.id + '/background-check';
-      return  '/formc/' + this.model.id + '/outstanding-security';
+      return  '/formc/' + this.model.id + '/review';
     },
 
     events: _.extend({
-      'submit form': 'submit',
+      'submit form': api.submitAction,
     }, menuHelper.events, yesNoHelper.events),
 
-    submit: api.submitAction,
-
     render() {
-      let template = require('components/formc/templates/backgroundCheck.pug');
+      let template = require('./templates/backgroundCheck.pug');
       this.$el.html(
         template({
           serverUrl: serverUrl,
