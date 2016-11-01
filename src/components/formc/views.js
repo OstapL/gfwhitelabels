@@ -107,17 +107,24 @@ module.exports = {
         return;
       }
 
-      Stripe.card.createToken($target, (status, response)=>{
-        if (response.error) {
-          validation.invalidMsg({'$': $}, 'form-section', [response.error.message]);
+      Stripe.card.createToken($target, (status, stripeResponse)=>{
+        if (stripeResponse.error) {
+          validation.invalidMsg({'$': $}, 'form-section', [stripeResponse.error.message]);
           $submitBtn.prop('disabled', false); // Re-enable submission
           return;
         }
 
-        // Token was created!
-        // Insert the token ID into the form so it gets submitted to the server:
-        data.stripeToken = response.id;
-        api.submitAction.call(this, e, data);
+        api.makeRequest(formcServer + '/stripe', "OPTIONS", { stripeToken: stripeResponse.id}).done((formcResponse, statusText, xhr)=>{
+          if (xhr.status !== 200) {
+            validation.invalidMsg({'$': $}, "expiration-block", [formcResponse.description || 'Some error message should be here']);
+            $submitBtn.prop('disabled', false);
+            return;
+          }
+          api.submitAction.call(this, e, data);
+        }).fail((xhr, ajaxOptions, err)=>{
+          validation.invalidMsg({'$': $}, "expiration-block", [err || "An error occurred, please, try again later."]);
+          $submitBtn.prop('disabled', false);
+        });
       });
 
       return false;

@@ -61,7 +61,7 @@ section.formc.introduction.create-company-media.container
                   img(src="/img/amex_512.png", alt="")
                   img(src="/img/Discover-Logo.png", alt="")
             
-            .expiration
+            div(id="expiration-block").expiration
               .form-group.row.m-b-0
                 .col-lg-3.text-lg-right
                   label Expiration
@@ -69,7 +69,7 @@ section.formc.introduction.create-company-media.container
                   .col-lg-6.p-l-0
                     input(type="text" placeholder="MM" data-stripe="exp_month" id="card_exp_month").form-control
                   div(id="card_exp_date_year").col-lg-6.p-r-0
-                    input(type="text" placeholder="YYY" data-stripe="exp_year" id="card_exp_year").form-control
+                    input(type="text" placeholder="YYYY" data-stripe="exp_year" id="card_exp_year").form-control
                 .col-lg-2
                   label CVV Code
                 .col-lg-3.p-l-0
