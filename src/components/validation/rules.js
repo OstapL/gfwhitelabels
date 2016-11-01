@@ -65,6 +65,11 @@ module.exports = {
     return fn.call(model, value, attr, computed);
   },
 
+  toNumber: function(value) {
+    if (value && value.replace) value = value.replace(',', '');
+    return (_.isNumber(value) || (_.isString(value) && value.match(this.patterns.number))) ? value : false;
+  },
+
   // Required validator
   // Validates if the attribute is required or not
   // This can be specified as either a boolean value or a function that returns a boolean value
@@ -92,9 +97,9 @@ module.exports = {
   // Validates that the value has to be a number and equal to or greater than
   // the min value specified
   min: function (name, rule, attr, data) {
-    let value = data[name];
-    if (value && value.replace) value = value.replace(',', '');
-    if (!this.isNumber(value) || value < rule) {
+    let value = this.toNumber(data[name]);
+    if (!value || value < rule) {
+      debugger
       throw this.format(this.messages.min, attr.label, rule);
     }
   },
@@ -107,9 +112,8 @@ module.exports = {
   // Validates that the value has to be a number and equal to or less than
   // the max value specified
   max: function (name, rule, attr, data) {
-    let value = data[name];
-    if (value && value.replace) value = value.replace(',', '');
-    if (!this.isNumber(value) || value > rule) {
+    let value = this.toNumber(data[name]);
+    if (!value || value > rule) {
       throw this.format(this.messages.max, attr.label, rule);
     }
   },
