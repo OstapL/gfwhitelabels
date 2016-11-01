@@ -1296,7 +1296,7 @@ module.exports = {
     },
 
     getSuccessUrl() {
-      return  '/formc/' + this.model.id + '/review';
+      return  '/formc/' + this.model.id + '/final-review';
     },
 
     events: _.extend({
@@ -1316,4 +1316,31 @@ module.exports = {
       return this;
     },
   }, menuHelper.methods, yesNoHelper.methods, addSectionHelper.methods)),
+
+  finalReview: Backbone.View.extend({
+    urlRoot: formcServer + '/:id' + '/final-review',
+    initialize(options) {
+      this.fields = options.fields;
+    },
+
+    getSuccessUrl() {
+      return  '/formc/' + this.model.id + '/review';
+    },
+
+    events: {
+    }, 
+
+    render() {
+      let template = require('./templates/finalReview.pug');
+      this.$el.html(
+        template({
+          serverUrl: serverUrl,
+          Urls: Urls,
+          fields: this.fields,
+          values: this.model,
+        })
+      );
+      return this;
+    },
+  }),
 };

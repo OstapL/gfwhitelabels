@@ -16,6 +16,7 @@ module.exports = Backbone.Router.extend({
     'formc/:id/financial-condition': 'financialCondition',
     'formc/:id/outstanding-security': 'outstandingSecurity',
     'formc/:id/background-check': 'backgroundCheck',
+    'formc/:id/final-review': 'finalReview',
   },
 
   execute: function (callback, args, name) {
@@ -334,6 +335,24 @@ module.exports = Backbone.Router.extend({
     $.when(fieldsR, dataR).done((fields, data) => {
       data[0].id = id;
       const i = new View.backgroundCheck({
+        el: '#content',
+        model: data[0],
+        fields: fields[0].fields,
+      });
+      i.render();
+      app.hideLoading();
+    });
+  },
+
+  finalReview(id) {
+    const View = require('components/formc/views.js');
+
+    let fieldsR = api.makeCacheRequest(formcServer + '/' + id + '/final-review', 'OPTIONS');
+    let dataR = api.makeCacheRequest(formcServer + '/' + id + '/final-review');
+
+    $.when(fieldsR, dataR).done((fields, data) => {
+      data[0].id = id;
+      const i = new View.finalReview({
         el: '#content',
         model: data[0],
         fields: fields[0].fields,
