@@ -837,7 +837,7 @@ module.exports = {
         let max = this.$('input[name=maximum_raise]').val();
         min = parseInt(min.replace(/,/g, ''));
         max = parseInt(max.replace(/,/g, ''));
-        if (!(min && max) || !(min < max)) {
+        if ((min && max) && !(min < max)) {
           alert("Maximum Raise must be larger than Minimum Raise!");
           e.preventDefault();
         }
