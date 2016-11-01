@@ -46,7 +46,7 @@ module.exports = {
 
   // Determines whether or not a value is a number
   isNumber: function (value) {
-    return _.isNumber(value) || (_.isString(value) && value.match(defaultPatterns.number));
+    return _.isNumber(value) || (_.isString(value) && value.match(this.patterns.number));
   },
 
   // Determines whether or not a value is empty
@@ -93,13 +93,13 @@ module.exports = {
   // the min value specified
   min: function (name, rule, attr, data) {
     let value = data[attr];
-    if (!isNumber(value) || value < rule) {
+    if (!this.isNumber(value) || value < rule) {
       throw this.format(this.messages.min, attr.label, rule);
     }
   },
 
   min_value: function (name, rule, attr, data) {
-    this.min(nam, rule, attr, data);
+    this.min(name, rule, attr, data);
   },
 
   // Max validator
@@ -107,13 +107,13 @@ module.exports = {
   // the max value specified
   max: function (name, rule, attr, data) {
     let value = data[name];
-    if (!isNumber(value) || value > rule) {
+    if (!this.isNumber(value) || value > rule) {
       throw this.format(this.messages.max, attr.label, rule);
     }
   },
 
   max_value: function (name, rule, attr, data) {
-    this.max(nam, rule, attr, data);
+    this.max(name, rule, attr, data);
   },
 
   // Range validator
@@ -121,7 +121,7 @@ module.exports = {
   // the two numbers specified
   range: function (name, rule, attr, data) {
     let value = data[name];
-    if (!isNumber(value) || value < rule[0] || value > rule[1]) {
+    if (!this.isNumber(value) || value < rule[0] || value > rule[1]) {
       throw this.format(this.messages.range, attr.label, rule[0], rule[1]);
     }
   },
