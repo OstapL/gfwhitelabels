@@ -57,8 +57,11 @@ mixin fieldBlock(name, data, attr)
                                 value=v.value)
                             | #{v.display_name}
         else if attr.type == 'choice' 
-                label(class= attr.text_align ? 'text-md-' + attr.text_align + ' ' + attr.class1 : ' text-lg-right ' + attr.class1 for=name)= fields[name].label
-                div(class=attr.class2)
+                label(class=attr.text_align ? 'text-md-' + attr.text_align + ' ' + attr.class1 : ' text-lg-right ' + attr.class1 for=name)= fields[name].label
+                div(
+                  class=attr.class2 + (attr.help_text ? ' showPopover' : '') 
+                  data-content=(attr.help_text ? attr.help_text : '')
+                )
                     select(
                         id=name
                         name=name
@@ -317,10 +320,7 @@ mixin fieldDropzone(name, attr, type)
 
 
     else if type == 2
-        div(
-            class='col-lg-3  media-item' + (fields[name].help_text ? ' showPopover' : '')
-            data-content=(fields[name].help_text ? fields[name].help_text : '')
-        )
+        div.col-lg-3.media-item
             //- div(class=attr.class1)
             div(class='text-sm-center col-md-12  p-r-0 text-lg-right text-xs-center')
                 span.pull-right.pull-xs-none.font-weight-bold #{fields[name].label}
@@ -330,8 +330,13 @@ mixin fieldDropzone(name, attr, type)
             //-         i(class='fa fa-' + attr.icon)
         //- .col-lg-5.p-l-1.p-r-3.p-sm-0.col-md-12.col-xs-12
         //- div(class='col-lg-5 p-l-1 p-r-3 p-sm-0 col-md-12 col-xs-12' style="border:solid 1px red;")
-        div(class='dropzone__' + name + ' col-lg-9 p-l-1 p-sm-0 col-md-12 col-xs-12')
+        div(
+          class='dropzone__' + name + ' col-lg-9 p-l-1 p-sm-0 col-md-12 col-xs-12'+ (fields[name].help_text ? ' showPopover' : '')
+          data-content=(fields[name].help_text ? fields[name].help_text : '')
+        )
             div(class="border-dropzone col-lg-12 p-r-0 gallery")
+                div(class="uploading" style="line-height:115px;text-align:center;position:absolute;width:100%;height:100%;left:0;right:0;top:0;bottom:0;z-index:1;display:none;background-color:rgba(255,255,255,0.8);")
+                    img(alt="activity indicator" src="/img/ajax-loader.gif" style="position:absolute;margin:auto;top:0;left:0;right:0;bottom:0;")
                 span
                     div(class=attr.class1 + ' text-lg-center text-xs-center text-md-center media-item')
                         p(href="#").link-1
