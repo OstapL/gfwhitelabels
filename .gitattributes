@@ -53,3 +53,4 @@ src/templates/mainPage.pug merge=ours
 src/templates/contact.pug merge=ours
 src/templates/careers.pug merge=ours
 src/templates/partners.pug merge=ours
+src/img/favicon.ico merge=ours
