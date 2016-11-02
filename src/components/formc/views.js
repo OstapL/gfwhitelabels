@@ -113,6 +113,7 @@ module.exports = {
           $submitBtn.prop('disabled', false); // Re-enable submission
           return;
         }
+        debugger;
 
         api.makeRequest(formcServer + '/stripe', "POST", { 
           id: this.model.id,

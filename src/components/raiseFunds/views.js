@@ -120,7 +120,7 @@ module.exports = {
   })),
 
   generalInformation: Backbone.View.extend(_.extend(addSectionHelper.methods, menuHelper.methods, leavingConfirmationHelper.methods, {
-    urlRoot: Urls['campaign-list']() + '/general_information',
+    urlRoot: raiseCapitalUrl + '/campaign/:id/general_information',
     template: require('./templates/generalInformation.pug'),
     events: _.extend({
       'submit form': api.submitAction,
@@ -136,14 +136,27 @@ module.exports = {
       }
     },
 
-    // addSection: jsonActions.addSection,
-    // deleteSection: jsonActions.deleteSection,
     getSuccessUrl(data) {
       return '/campaign/media/' + data.id;
     },
 
     initialize(options) {
       this.fields = options.fields;
+      
+      this.labels = {
+        pitch: 'Why Should People Invest?',
+        intended_use_of_proceeds: 'How We Intend To Make Money',
+        business_model: 'Why We Are Raising Capital?',
+        additional_info: 'Optional Additional Section',
+        faq: ''
+      };
+      this.fields.pitch.help_text = 'What is your edge? Do you have a competitive advantage? Why should investors want to invest in your company?';
+      this.fields.intended_use_of_proceeds.help_text = 'How do you make money?';
+      this.fields.business_model.help_text = 'Why are you raising capital, and what do you intend to do with it?';
+      this.fields.additional_info.help_text = 'Is there anything else you want to tell your potential investors? Received any accolades? Patents? Major contracts? Distributors, etc?';
+      this.fields.faq.help_text = 'We need help text here too';
+      this.assignLabels();
+
       this.faqIndex = 1;
       this.additional_infoIndex = 1;
       this.$el.on('keypress', ':input:not(textarea)', function (event) {

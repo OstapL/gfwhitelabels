@@ -1,6 +1,6 @@
 - 'use strict';
 include ../../../templates/mixins.pug
-//- include menu.pug
+include ../../../templates/fields_mixins.pug
 include ../../../templates/menuRaiseFund.pug
 
 +breadcrumbs('Create Company', '', 
@@ -17,36 +17,26 @@ section.create-company-general.container.m-b-85
 
   .col-lg-8
     h2.text-uppercase.text-lg-center.text-xs-center.dosis.m-t-0 GENERAL INFORMATION
-    form(metod="post" action="").form-section
-      if values.id && values.id != ''
-          input(type='hidden' name='id' value=values.id id='id')
-      .form-group.row.clearfix.required
-      +fieldBlock("pitch", '', {
+    form.form-section
+      +fieldTextareaLabel("pitch", _.extend({
         class1: 'col-lg-3 col-md-12 text-md-left',
         class2: 'col-lg-9 col-md-12',
-        placeholder: "What's your pitch?",
-        type: 'textarea',
-        })
-      +fieldBlock("intended_use_of_proceeds", '', {
+        }, fields.pitch))
+      +fieldTextareaLabel("intended_use_of_proceeds", _.extend({
         class1: 'col-lg-3 col-md-12 text-md-left',
         class2: 'col-lg-9 col-md-12',
-        type: 'textarea',
-        placeholder: "What's your business model?",
-        })
-      +fieldBlock("business_model", '', {
+        }, fields.intended_use_of_proceeds))
+      +fieldTextareaLabel("business_model", _.extend({
         class1: 'col-lg-3 col-md-12 text-md-left',
         class2: 'col-lg-9 col-md-12',
-        type: 'textarea',
-        placeholder: 'How are you going to use the money you raise?',
-        })
+        }, fields.business_model))
       .row
         .col-lg-12.m-b-1.text-lg-center.text-md-center.text-xs-center
           h3.d-inline-block.m-b-0.m-t-0 Additional Information 
-      +fieldBlock("additional_info", '', {
+      +fieldTextareaLabel("additional_info", _.extend({
         class1: 'col-lg-3 col-md-3',
         class2: 'col-lg-9 col-md-9',
-        type: 'json',
-        })
+        }, fields.additional_info))
       .row.add-link
         .col-lg-9.offset-1.pull-right
           a(href="#" data-section="additional_info").link-2.add-section
@@ -57,11 +47,10 @@ section.create-company-general.container.m-b-85
         .col-lg-12.text-lg-center.text-md-center.text-xs-center
           h3.d-inline-block.m-t-0.mb25 FAQs
       .faq-form-group-m-b-0
-        +fieldBlock("faq", '', {
+        +fieldTextareaLabel("faq", _.extend({
           class1: 'col-lg-3 col-md-12 text-md-left',
           class2: 'col-lg-9 col-md-12',
-          type: 'json',
-          })
+          }, fields.faq))
       .row.m-t-0
         .col-lg-9.offset-1.pull-right
           a(href="#" data-section="faq").link-2.add-section 

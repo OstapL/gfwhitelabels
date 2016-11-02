@@ -1,13 +1,13 @@
 module.exports = Backbone.Router.extend({
   routes: {
     'company/create': 'company',
-    'campaign/general_information/:id': 'generalInformation',
-    'campaign/media/:id': 'media',
-    'campaign/team-members/:id/add/:type/:index': 'teamMembersAdd',
-    'campaign/team-members/:id': 'teamMembers',
-    'campaign/specifics/:id': 'specifics',
-    'campaign/perks/:id': 'perks',
-    'campaign/thankyou/:id': 'thankyou',
+    'campaign/:id/general_information': 'generalInformation',
+    'campaign/:id/media': 'media',
+    'campaign/:id/team-members/add/:type/:index': 'teamMembersAdd',
+    'campaign/:id/team-members': 'teamMembers',
+    'campaign/:id/specifics': 'specifics',
+    'campaign/:id/perks': 'perks',
+    'campaign/:id/thankyou': 'thankyou',
   },
 
   company() {
@@ -61,21 +61,20 @@ module.exports = Backbone.Router.extend({
         console.log('not goinng anywhere');
         return;
       }
-      $('body').scrollTo(); 
+      $('#content').scrollTo(); 
 
-      var a1 = app.makeCacheRequest(Urls['campaign-list']() + '/general_information/' + id, 'OPTIONS');
-      var a2 = app.makeCacheRequest(Urls['campaign-list']() + '/general_information/' + id);
+      var a1 = app.makeCacheRequest(raiseCapitalUrl + '/campaign/' + id + '/general_information', 'OPTIONS');
+      var a2 = app.makeCacheRequest(raiseCapitalUrl + '/campaign/' + id + '/general_information');
 
       $.when(a1, a2).done((meta, model) => {
+        model[0].id = id;
         var i = new View.generalInformation({
           el: '#content',
-            fields: meta[0].actions.PUT,
-            // model: new Model.model(model[0])
-            model: model[0]
+          fields: meta[0].fields,
+          model: model[0]
         });
 
         i.render();
-        //app.views.campaign[id].render();
         //app.cache[window.location.pathname] = i.$el.html();
 
         app.hideLoading();
@@ -91,7 +90,7 @@ module.exports = Backbone.Router.extend({
 
   media(id) {
     if (!app.user.is_anonymous()) {
-      $('body').scrollTo(); 
+      $('#content').scrollTo(); 
       const Model = require('components/campaign/models.js');
       const View = require('components/raiseFunds/views.js');
 
