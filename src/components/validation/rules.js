@@ -4,7 +4,7 @@
 module.exports = {
   patterns: {
     // Matches any digit(s) (i.e. 0-9)
-    number: /^\d+$/,
+    number: /^\d+(\.\d+)?$/,
 
     // Matches any number (e.g. 100.000)
     money: /^-?(?:\d+|\d{1,3}(?:,\d{3})+)(?:\.\d+)?$/,
@@ -57,12 +57,17 @@ module.exports = {
 
   // Function validator
   // Lets you implement a custom function used for validation
-  fn: function (value, attr, fn, model, computed) {
+  fn: function (value, fn, attr, model, computed) {
     if (_.isString(fn)) {
       fn = model[fn];
     }
 
     return fn.call(model, value, attr, computed);
+  },
+
+  toNumber: function(value) {
+    if (value && value.replace) value = value.replace(/\,/g, '');
+    return (_.isNumber(value) || (_.isString(value) && value.match(this.patterns.number))) ? Number(value) : false;
   },
 
   // Required validator
@@ -92,8 +97,9 @@ module.exports = {
   // Validates that the value has to be a number and equal to or greater than
   // the min value specified
   min: function (name, rule, attr, data) {
-    let value = data[attr];
-    if (!this.isNumber(value) || value < rule) {
+    let value = this.toNumber(data[name]);
+    debugger
+    if (value === false || value < rule) {
       throw this.format(this.messages.min, attr.label, rule);
     }
   },
@@ -106,8 +112,8 @@ module.exports = {
   // Validates that the value has to be a number and equal to or less than
   // the max value specified
   max: function (name, rule, attr, data) {
-    let value = data[name];
-    if (!this.isNumber(value) || value > rule) {
+    let value = this.toNumber(data[name]);
+    if (value === false || value > rule) {
       throw this.format(this.messages.max, attr.label, rule);
     }
   },
