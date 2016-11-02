@@ -7,6 +7,34 @@ include ../../../templates/mixins.pug
     ]
 )
 
+- var names = {}
+- names.issuer_short_name = 'company.name';
+- names.issuer_legal_name = 'company.name';
+- names.jurisdiction_of_organization = 'company.founding_state';
+- names.website = 'company.website'
+- names.maximum_raise = 'campaign.maximum_raise'
+- names.minimum_raise = 'campaign.minimum_raise'
+- names.price_per_share = 'campaign.price_per_share'
+- names.price_per_share = 'campaign.price_per_share'
+- names.security_type = 'campaign.security_type'
+- names.minimum_incriment = 'campaign.minimum_increment'
+- names.founding_date = 'company.founding_date'
+- names.address_1 = 'company.address_1'
+- names.address_2 = 'company.address_2'
+- names.city = 'company.city'
+- names.zip_code = 'company.zip_code'
+- function  getData(name) {
+-     if(name == null) alert('name not found')
+-    if(name.indexOf('.') == -1) {
+-      return values[name];                                                           
+-    } else {                                                                       
+-      return name.split('.').reduce((o,i)=>o[i], values);                            
+-    }                                                                              
+-  }
+
+mixin editText(currentName)
+  a(href="#" class="show-input" data-name=currentName).link-1 #{getData(names[currentName])}
+
 section.formc-review
   .container
     .col-lg-3.sticky-side-menu
@@ -52,33 +80,32 @@ section.formc-review
         .top-intro
           p.small.text-xs-left.font-weight-bold FORM C Offering Material for
           p.small
-            a(href="#" class="show-input" data-name="issuer_short_name").link-1 issuer_short_name
+            +editText('issuer_short_name')
             |  as Issuer
         
         h3.text-xs-center
-          a(href="#" class="show-input" data-name="issuer_legal_name").link-1 issuer_legal_name
-        h3.text-xs-center.m-b-0.m-t-0.pb10 A 
-          a(href="#" class="show-input" data-name="jurisdiction_of_organization").link-1 jurisdiction_of_organization
+          +editText('issuer_legal_name')
+        h3.text-xs-center.m-b-0.m-t-0.pb10 A
+          +editText('jurisdiction_of_organization')
           | !{' '}
-          a(href="#" class="show-input" data-name="corporate_structure").link-1  Corporate_Structure
+          a(href="#" class="show-input" data-name="corporate_structure").link-1  #{values.company.corporate_structure}
         p.text-xs-center.m-b-1
-          a(href="#" class="show-input" data-name="website").link-1 website
+          +editText('website')
         
         p.text-xs-center.font-weight-bold $
-          a(href="#" class="show-input" data-name="maximum_raise").link-1 maximum_raise
+          +editText('maximum_raise')
           |   MAXIMUM OFFERING
         p.text-xs-center.font-weight-bold.m-b-3 $
-          a(href="#" class="show-input" data-name="minimum_raise").link-1 minimum_raise
+          +editText('minimum_raise')
           |   MINIMUM OFFERING
-
         p.text-xs-center.font-weight-bold OFFERING PRICE: $
-          a(href="#" class="show-input" data-name="price_per_share").link-1 price_per_share
+          +editText('price_per_share')
           |  per Share
         p.text-xs-center.font-weight-bold
-          a(href="#" class="show-input" data-name="security_type").link-1 security_type
+          +editText('security_type')
           |  Offered
         p.text-xs-center.font-weight-bold $
-          a(href="#" class="show-input" data-name="minimum_incriment").link-1 minimum_incriment
+          +editText('minimum_incriment')
           |  MINIMUM INVESTMENT
 
         p.text-uppercase.text-xs-center.m-t-3.m-b-2 
@@ -88,13 +115,13 @@ section.formc-review
         p.pb10.text-indent GrowthFountain Capital LLC is acting as the funding portal in this offering of securities in reliance on section 4(a)(6) of the Securities Act of 1933 (15 U.S.C. 77d(a)(6)).  To participate in this offering, you must open an account at www.GrowthFountain.com.
         p.pb10.text-indent A crowdfunding investment involves risk. You should not invest any funds in this offering unless you can afford to lose your entire investment. In making an investment decision, investors must rely on their own examination of the issuer and the terms of the offering, including the merits and risks involved. These securities have not been recommended or approved by any federal or state securities commission or regulatory authority. Furthermore, these authorities have not passed upon the accuracy or adequacy of this document, or the completeness of any information contained herein or listed with the funding portal.  These securities are being offered under an exemption from registration; however, the U.S. Securities and Exchange Commission has not made an independent determination that these securities are exempt from registration.  GrowthFountain Capital LLC and its affiliates are not making any investment recommendation in connection with making this offering material available to you.
         p The date of this offering material being listed on the funding portal at www.GrowthFountain.com is
-          a(href="#" class="show-input" data-name="live.date").link-1  live.date
+          a(href="#" class="show-input" data-name="live.date").link-1  #{values.company.founding_date}
       //page 2
       section.page-formc-review.m-t-1
         .top-intro
           p.small.text-xs-left.font-weight-bold FORM C Offering Material for
           p.small
-            a(href="#" class="show-input" data-name="issuer_short_name").link-1 issuer_short_name 
+            +editText('issuer_short_name')
             |  as Issuer
         h2.text-uppercase.text-xs-center.font-weight-bold#overview_information.letter-spacing-normal OVERVIEW INFORMATION
         .one-block.m-b-3
@@ -104,38 +131,38 @@ section.formc-review
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
               p.font-weight-bold Name of issuer:
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
-              a(href="#" class="show-input" data-name="issuer_legal_name").link-1 issuer_legal_name
+              +editText('issuer_legal_name')
           .row
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
               p.font-weight-bold Entity Form:
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
-              a(href="#" class="show-input" data-name="corporate_structure").link-1 corporate_structure
+              a(href="#" class="show-input" data-name="corporate_structure").link-1 #{values.company.corporate_structure}
           .row
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
               p.font-weight-bold Jurisdiction of Organization:
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
-              a(href="#" class="show-input" data-name="jurisdiction_of_organization").link-1 jurisdiction_of_organization
+              a(href="#" class="show-input" data-name="jurisdiction_of_organization").link-1 #{values.company.founding_state}
           .row
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
               p.font-weight-bold Date of Organization:
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
-              a(href="#" class="show-input" data-name="founding_date").link-1 founding_date
+              +editText('founding_date')
           .row
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
               p.font-weight-bold Physical address:
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
-              a(href="#" class="show-input" data-name="address_1").link-1 address_1
+              +editText('address_1')
               | !{' '}
-              a(href="#" class="show-input" data-name="address_2").link-1 address_2
+              +editText('address_2')
               | !{' '}
-              a(href="#" class="show-input" data-name="city").link-1 City
+              +editText('city')
               | !{' '}
-              a(href="#" class="show-input" data-name="zip_code").link-1 zip_code
+              +editText('zip_code')
           .row
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
               p.font-weight-bold Website address:
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
-              a(href="#" class="show-input" data-name="website").link-1 website
+              +editText('website')
         .one-block.m-b-3
           p.text-uppercase.m-t-0.m-b-0.pb10 
             u Intermediary Information
@@ -181,7 +208,7 @@ section.formc-review
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
               p.font-weight-bold Type of security offered:
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
-              a(href="#" class="show-input" data-name="security_type").link-1 security_type
+              a(href="#" class="show-input" data-name="security_type").link-1 #{values.campaign.security_type}
           .row
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
               p.font-weight-bold Voting rights:
@@ -191,17 +218,17 @@ section.formc-review
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
               p.font-weight-bold Minimum target number of securities being offered:
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
-              a(href="#" class="show-input" data-name="min_number_of_shares").link-1 min_number_of_shares
+              a(href="#" class="show-input" data-name="min_number_of_shares").link-1 #{values.campaign.min_number_of_shares}
           .row
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
               p.font-weight-bold Price of security:
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
-              a(href="#" class="show-input" data-name="price_per_share").link-1 price_per_share
+              a(href="#" class="show-input" data-name="price_per_share").link-1 #{values.campaign.price_per_share}
           .row
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
               p.font-weight-bold Minimum target amount of offering:
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
-              a(href="#" class="show-input" data-name="minimum_raise").link-1 minimum_raise
+              a(href="#" class="show-input" data-name="minimum_raise").link-1 #{values.campaign.minimum_raise}
           .row
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
               p.font-weight-bold Oversubscription allowed:
@@ -221,7 +248,7 @@ section.formc-review
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
               p.font-weight-bold Maximum amount of offering:
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
-              a(href="#" class="show-input" data-name="maximum_raise").link-1 maximum_raise
+              a(href="#" class="show-input" data-name="maximum_raise").link-1 #{values.campaign.maximum_raise}
           .row
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
               p.font-weight-bold Deadline to reach target amount:
@@ -233,7 +260,7 @@ section.formc-review
         .top-intro
           p.small.text-xs-left.wont-weight-bold FORM C Offering Material for
           p.small
-            a(href="#" class="show-input" data-name="issuer_short_name").link-1 issuer_short_name
+            a(href="#" class="show-input" data-name="issuer_short_name").link-1 #{values.company.name}
             |  as Issuer
         h2.text-uppercase.text-xs-center.font-weight-bold#introductory_notices.letter-spacing-normal INTRODUCTORY NOTICES
         p.text-uppercase.m-t-0.m-b-0.pb10 
