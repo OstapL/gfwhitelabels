@@ -2,43 +2,52 @@
 include ../../../templates/mixins.pug
 
 +breadcrumbs('Established Business Valuation Calculator', 'Finish',
-    [
-        ['Home', '/'],
-        ["What's My Business Worth?", '/calculator/selectYourBusiness'],
-        ["Established Business Valuation Calculator", '']
-    ]
+  [
+    ['Home', '/'],
+    ["What's My Business Worth?", '/calculator/selectYourBusiness'],
+    ["Established Business Valuation Calculator", '']
+  ]
 )
 
 .container.calculator-container
-    .row
-        .offset-lg-1.col-lg-10
-            ul.list-inline.top-breadcrambs.mb45.established-business
-                li
-                    a(href="/calculator/establishedBusiness/intro").btn.text-uppercase Intro
-                li
-                    a(href="/calculator/establishedBusiness/step-1").btn.text-uppercase step 1
-                li
-                    a(href="/calculator/establishedBusiness/step-2").btn.text-uppercase step 2
-                li
-                    a(href="/calculator/establishedBusiness/step-3").btn.text-uppercase step 3
-                li
-                    a(href="/calculator/establishedBusiness/finish").current.btn.text-uppercase Finish
-
-
-
+  .row
+    .offset-lg-1.col-lg-10
+      ul.list-inline.top-breadcrambs.mb45.established-business
+        li
+          a(href="/calculator/establishedBusiness/intro").btn.text-uppercase Intro
+        li
+          a(href="/calculator/establishedBusiness/step-1").btn.text-uppercase step 1
+        li
+          a(href="/calculator/establishedBusiness/step-2").btn.text-uppercase step 2
+        li
+          a(href="/calculator/establishedBusiness/step-3").btn.text-uppercase step 3
+        li
+          a(href="/calculator/establishedBusiness/finish").current.btn.text-uppercase Finish
 
     .row
-        .col-lg-12
-            #chart
+      .offset-lg-1.col-xs-10.text-sm-center.mb15
+        h2.dosis.m0.text-uppercase BUSINESS VALUATION
+  .row
+    .col-lg-12
+      #chart
+  .row
+    .offset-md-3.col-md-6.text-sm-center
+      hr.mt50.mb50
 
+  .row
+    .offset-md-3.col-md-6.text-sm-left
+      p Based upon the information you submitted, GrowthFountain estimates your business to be worth&nbsp;
+        span.font-weight-bold #{ estimate }
+  .row
+    .offset-md-3.col-md-6.text-sm-left
+      p.mt15 You are looking to raise &nbsp;
+        span.font-weight-bold #{ raise }
+  .row
+    .offset-md-3.col-md-6.text-sm-left
+      p.mt15 Based upon this amount, GrowthFountain estimates you will need to offer&nbsp;
+        span.font-weight-bold #{ offer }%&nbsp;
+        | of your business's equity
 
-    .row
-        .offset-md-3.col-md-6.text-sm-center
-            hr.mt50.mb50
-
-    .row
-        .offset-lg-3.col-lg-6.text-xs-center
-            a(
-                href="/calculator/establishedBusiness/step-3"
-            ).btn.btn-primary.text-uppercase back
-
+  .row
+    .offset-lg-3.col-lg-6.text-xs-center.mt15
+      a(href="/calculator/establishedBusiness/step-3").btn.btn-primary.text-uppercase back

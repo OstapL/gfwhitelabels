@@ -1,32 +1,41 @@
 include ../../../templates/mixins.pug
 
 +breadcrumbs('Congratulations!', '', 
-    [
-        ['Home', '/'],
-        ['Explore', Urls['campaign-list']],
-        ['Smartbe', Urls['campaign-detail'](campaign.id)],
-        ['Invest in ' + campaign.company.name, '']
-    ]
+  [
+    ['Home', '/'],
+    ['Explore', Urls['campaign-list']],
+    ['Smartbe', Urls['campaign-detail'](campaign.id)],
+    ['Invest in ' + campaign.company.name, '']
+  ]
 )
 
 .container
-    .row
-        .col-sm-8.offset-sm-2
-            h2.text-xs-center.thankyou-title.m0 #[i(aria-hidden="true").fa.fa-thumbs-o-up] You have invested $#{ investment.amount } in #{ campaign.company.name }
+  .row
+    .col-sm-8.offset-sm-2
+      h2.text-xs-center.thankyou-title.m0 
+        i(aria-hidden="true").fa.fa-thumbs-o-up You have invested $#{ investment.amount } in #{ campaign.company.name }
 
-    .row
-        .col-sm-8.offset-sm-2.mb50.mt50
-            hr
-    
-    .row
-        .col-sm-12
-            .result-info-block.m-x-auto
-                ul.info-text-block.list-unstyled
-                    li #[span Transaction ID:] #[strong #{ investment.transaction_id }]
-                    li #[span Amount of Shares:] #[strong #{ investment.amount_of_shares }]
-                    li #[span Perks:] #[strong #{ investment.perk }]
-                    li #[span Investment Terms:] #[strong #{ investment.security }]
+  .row
+    .col-sm-8.offset-sm-2.mb50.mt50
+      hr
+  
+  .row
+    .col-sm-12
+      .result-info-block.m-x-auto
+        ul.info-text-block.list-unstyled
+          li 
+            span Transaction ID:
+            strong #{ investment.transaction_id }
+          li 
+            span Amount of Shares:
+            strong #{ investment.amount_of_shares }
+          li 
+            span Perks:
+            strong #{ investment.perk }
+          li 
+            span Investment Terms:
+            strong #{ investment.security }
 
-                .info-btn-block.pt50
-                    a(href="/user/issuer_dashboard/").btn.btn-secondary INVESTOR DASHBOARD &nbsp;
-                        i.fa.fa-angle-down
+        .info-btn-block.pt50
+          a(href="/user/issuer_dashboard/").btn.btn-secondary INVESTOR DASHBOARD &nbsp;
+            i.fa.fa-angle-down

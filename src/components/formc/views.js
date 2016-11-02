@@ -1134,7 +1134,7 @@ module.exports = {
           creditor: "Creditor"
         },
         business_loans_or_debt_choice: 'Do you have any business loans or debt?',
-        exempt_offering_choice: 'An "exempt offering" is any offering of securities which is exempted from the registration requirements of the Securities Act.^CHave you conducted any exempt offerings in the past three years?',
+        exempt_offering_choice: 'An "exempt offering" is any offering of securities which is exempted from the registration requirements of the Securities Act. Have you conducted any exempt offerings in the past three years?',
         exercise_of_rights: 'How could the exercise of rights held by the principal shareholders affect the purchasers of the securities being offered?',
         risks_to_purchasers: '',
         terms_of_securities: 'How may the terms of the securities being offered be modified?',

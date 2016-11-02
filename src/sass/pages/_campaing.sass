@@ -18,11 +18,15 @@
 							margin-right: 0!important
 		.btn
 			padding: rem(3) rem(27) rem(3) rem(10)
+			
 			background: #fff
 			border-color: #cccccc
+			border: solid 1px #cccccc
+			border-radius: $one_drop_border_radius
+
 			color: $black_text
 			font-size: rem(12)
-			border: solid 1px #cccccc
+			font-weight: $one_drop_font_weight
 
 			&:hover
 				background: #cccccc
@@ -235,7 +239,7 @@
 			line-height: rem(29)
 			text-align: left
 			text-transform: capitalize
-			margin-bottom: rem(10)
+			margin-bottom: rem(5)
 
 			i
 				margin-right: rem(5)
@@ -315,12 +319,24 @@
 	.create-alert-block
 		.pull-right
 			float: left
-@media only screen and (max-width : 360px)
-	.campaing-list
-		.one_block
-			.title
-				h3
-					max-width: 160px
+	.one_block
+		.description
+			height: 50px
+	
+@media only screen and (max-width : 545px)
+	.create-alert-block
+		.mr30
+			margin-right: 0
+			margin-bottom: 10px
+			float: none
+		.custom-select
+			text-align: center
+			float: none!important
+			margin-left: 0!important
+	.one_block
+		.description
+			height: 47px
+
 @media only screen and (max-width : 320px)
 	.campaing-list
 		.one_block

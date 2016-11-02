@@ -70,8 +70,11 @@ mixin fieldBlock(name, data, attr)
                                 value=v.value)
                             | #{v.display_name}
         else if attr.type == 'choice' 
-                label(class= attr.text_align ? 'text-md-' + attr.text_align + ' ' + attr.class1 : ' text-lg-right ' + attr.class1 for=name)= (attr.label ? attr.label : fields[name].label)
-                div(class=attr.class2)
+                label(class=attr.text_align ? 'text-md-' + attr.text_align + ' ' + attr.class1 : ' text-lg-right ' + attr.class1 for=name)= (attr.label ? attr.label : fields[name].label)
+                div(
+                  class=attr.class2 + (attr.help_text ? ' showPopover' : '') 
+                  data-content=(attr.help_text ? attr.help_text : '')
+                )
                     select(
                         id=name
                         name=name
@@ -133,7 +136,10 @@ mixin fieldBlock(name, data, attr)
                     each k,v in fields[name].schema
                         div(class='form-group clearfix index_' + indexCounter + ' ' + (k.required == true ? ' required ' : ' '))
                             label.col-lg-3.text-lg-right.p-t-0.p-l-3.p-sm-0.m-b-0 #{k.label}
-                            .col-lg-9
+                            div(
+                              class=(fields[name].help_text && v == 'title' ? ' showPopover' : '') 
+                              data-content=(fields[name].help_text  && v == 'title'?  fields[name].help_text: 'disabled')
+                            ).col-lg-9.col-md-12.p-sm-0
                                 if k.type == 'text' 
                                     textarea(
                                         id=name + '_' + indexCounter + '_' + v
@@ -159,16 +165,21 @@ mixin fieldBlock(name, data, attr)
                     - indexCounter = attr.index || 0
                     - var kkeys = Object.keys(values[name])
                     each el in values[name]
-                        .delete-section-container
-                            a(href="#" data-section=name data-index=indexCounter).delete-section
-                                i.fa.fa-times
-                        each k1,v in fields[name].schema
-                          if values[name][kkeys[counter]]
+                        if values[name][kkeys[counter]]
+                          .delete-section-container.col-lg-12
+                              a(href="#" data-section=name data-index=indexCounter).delete-section
+                                  i.fa.fa-times
+
+                          each k1,v in fields[name].schema
                             - var k = values[name][kkeys[counter]][v]
                             - var t = fields[name].schema[v]
+
                             div(class='form-group clearfix index_' + indexCounter + ' ' + (k.required == true ? ' required ' : ' '))
                                 label.col-lg-3.col-md-12.text-lg-right.p-l-3.p-sm-0.m-b-0.p-t-0 #{t.label}
-                                .col-lg-9.col-md-12.p-sm-0
+                                div(
+                                  class=(fields[name].help_text && v == 'title' ? ' showPopover' : '') 
+                                  data-content=(fields[name].help_text  && v == 'title'?  fields[name].help_text: 'disabled')
+                                ).col-lg-9.col-md-12.p-sm-0
                                     if t.type == 'text' 
                                         textarea(
                                             id=name + '_' + indexCounter + '_' + v
@@ -211,7 +222,7 @@ mixin fieldBlock(name, data, attr)
                                             class=name + '_' + indexCounter + '_' + v + ' form-control'
                                             data-index=indexCounter
                                         )
-                        .col-lg-5.p-l-1.p-r-3.col-md-12.col-xs-12.p-sm-0 
+                        .col-lg-5.p-l-1.col-md-12.col-xs-12.p-sm-0 
                             .embed-responsive.embed-responsive-16by9 
                                 iframe.embed-responsive-item(src="//www.youtube.com/embed/?rel=0" allowfullscreen="true")
                 else
@@ -219,32 +230,38 @@ mixin fieldBlock(name, data, attr)
                     - indexCounter = attr.index || 0
                     - var kkeys = Object.keys(values[name])
                     each el in values[name]
-                        div(class='form-group clearfix index_' + indexCounter)
-                            .delete-section-container
-                                a(href="#" data-section=name data-index=indexCounter).delete-section
-                                    i.fa.fa-times
-                            .col-lg-7.videoInteractive.p-sm-0.p-r-0
-                                each k1,v in fields[name].schema
-                                    if values[name][kkeys[counter]]
-                                      - var k = values[name][kkeys[counter]][v]
-                                      - var t = fields[name].schema[v]
-                                      .form-group.clearfix
-                                          label.col-lg-5.col-md-12.col-xs-12.text-lg-right.font-weight-bold.p-sm-0 #{t.label}
-                                          .col-lg-7.col-md-12.col-xs-12.p-sm-0
-                                              input(
-                                                  id=name + '_' + indexCounter + '_' + v
-                                                  name=name + '[' + indexCounter + '][' + v + ']'
-                                                  placeholder=t.placeholder ? t.placeholder : t.label
-                                                  type=t.type
-                                                  value=k
-                                                  class=name + '_' + indexCounter + '_' + v + ' form-control'
-                                                  data-index=indexCounter
-                                              )
-                            if values[name][kkeys[counter]]
-                              .col-lg-5.p-l-1.p-r-3.col-md-12.col-xs-12.p-sm-0  
-                                  .embed-responsive.embed-responsive-16by9 
-                                      - var link = app.getVideoId(values[name][kkeys[counter]].link)
-                                      iframe.embed-responsive-item(src="//www.youtube.com/embed/" + link + "?rel=0" allowfullscreen="true")
+                        if values[name][kkeys[counter]]
+                            div(class='form-group col-lg-12 clearfix index_' + indexCounter)
+                                .delete-section-container
+                                    a(href="#" data-section=name data-index=indexCounter).delete-section
+                                        i.fa.fa-times
+                                .col-lg-7.videoInteractive.p-sm-0.p-r-0
+                                    each k1,v in fields[name].schema
+                                        if values[name][kkeys[counter]]
+                                          - var k = values[name][kkeys[counter]][v]
+                                          - var t = fields[name].schema[v]
+                                          .form-group.clearfix
+                                              label.col-lg-5.col-md-12.col-xs-12.text-lg-right.font-weight-bold.p-sm-0 #{t.label}
+                                              .col-lg-7.col-md-12.col-xs-12.p-sm-0
+                                                  input(
+                                                      id=name + '_' + v
+                                                      name=name + '[' + indexCounter + '][' + v + ']'
+                                                      placeholder=t.placeholder ? t.placeholder : t.label
+                                                      type=t.type
+                                                      value=k
+                                                      class=name + '_' + v + ' form-control'
+                                                      data-index=indexCounter
+                                                  )
+                                if values[name][kkeys[counter]]
+                                  .col-lg-5.p-l-1.col-md-12.col-xs-12.p-sm-0.p-r-0  
+                                      .embed-responsive.embed-responsive-16by9 
+                                          - let additionalVideo = app.getVideoId(values[name][kkeys[counter]].link);
+                                          if additionalVideo && additionalVideo.provider == 'youtube'
+                                            iframe.embed-responsive-item(src="//www.youtube.com/embed/" + additionalVideo.id + "?rel=0" allowfullscreen="true")
+                                          else if additionalVideo && additionalVideo.provider == 'vimeo'
+                                            iframe.embed-responsive-item(src="//player.vimeo.com/video/" + additionalVideo.id allowfullscreen="true")
+                                          else
+                                            iframe.embed-responsive-item(src="//www.youtube.com/embed/?rel=0" allowfullscreen="true")
                         - counter ++
                         - indexCounter ++
         else
@@ -260,6 +277,7 @@ mixin fieldBlock(name, data, attr)
                         value=values[name]
                         maxlength = attr.maxlength ? attr.maxlength : false
                         disabled=(attr.disabled ? attr.disabled : false)
+                        readonly=(attr.readonly ? attr.readonly : false)
                       ).form-control
 
 mixin fieldBlock2(name, data, attr, nameForForm, label)
@@ -360,7 +378,7 @@ mixin fieldDropzone(name, attr, type)
               span.pull-right.pull-xs-none.font-weight-bold #{fields[name].label}
 
             div(class=(attr.class2 + ' dropzone__' + name))
-                div(class="border-dropzone")
+                div.col-lg-12.border-dropzone.p-r-0
                     div(class="uploading" style="line-height:115px;text-align:center;position:absolute;width:100%;height:100%;left:0;right:0;top:0;bottom:0;z-index:1;display:none;background-color:rgba(255,255,255,0.8);")
                         img(alt="activity indicator" src="/img/ajax-loader.gif" style="position:absolute;margin:auto;top:0;left:0;right:0;bottom:0;")
                     span
@@ -374,14 +392,17 @@ mixin fieldDropzone(name, attr, type)
 
 
     else if type == 2
-        div(
-            class='col-lg-3  media-item' + (fields[name].help_text ? ' showPopover' : '')
-            data-content=(fields[name].help_text ? fields[name].help_text : '')
-        )
+        div.col-lg-3.media-item
+            //- div(class=attr.class1)
             div(class='text-sm-center col-md-12  p-r-0 text-lg-right text-xs-center')
                 span.pull-right.pull-xs-none.font-weight-bold #{fields[name].label}
-        div(class='dropzone__' + name + ' col-lg-9 p-l-1 p-r-3 p-sm-0 col-md-12 col-xs-12')
-            div(class="border-dropzone")
+        div(
+          class='dropzone__' + name + ' col-lg-9 p-l-1 p-sm-0 col-md-12 col-xs-12'+ (fields[name].help_text ? ' showPopover' : '')
+          data-content=(fields[name].help_text ? fields[name].help_text : '')
+        )
+            div(class="border-dropzone col-lg-12 p-r-0 gallery")
+                div(class="uploading" style="line-height:115px;text-align:center;position:absolute;width:100%;height:100%;left:0;right:0;top:0;bottom:0;z-index:1;display:none;background-color:rgba(255,255,255,0.8);")
+                    img(alt="activity indicator" src="/img/ajax-loader.gif" style="position:absolute;margin:auto;top:0;left:0;right:0;bottom:0;")
                 span
                     div(class=attr.class1 + ' text-lg-center text-xs-center text-md-center media-item')
                         p(href="#").link-1
@@ -399,7 +420,6 @@ mixin fieldDropzone(name, attr, type)
                                         img(src=v.url).pull-left.img-file
     else if type == 3
       div(class="drop-photo-block dropzone__" + name)
-        h3.widget-title.font-alt #{ attr.title }
         div.border-dropzone
             div(class="uploading" style="line-height:115px;text-align:center;position:absolute;width:100%;height:100%;left:0;right:0;top:0;bottom:0;z-index:1;display:none;background-color:rgba(255,255,255,0.8);")
                 img(alt="activity indicator" src="/img/ajax-loader.gif" style="position:absolute;margin:auto;top:0;left:0;right:0;bottom:0;")
@@ -407,8 +427,8 @@ mixin fieldDropzone(name, attr, type)
                 
                 //- div(class='dropzone__' + name)
                 div
-                    img(src=dropzoneHelpers.getDropzoneUrl(name, attr, values) alt=fields[name].label class="img-file m-x-auto img-" + name)
-                    .drop-image-title.text-xs-center 
+                    img(src=dropzoneHelpers.getDropzoneUrl(name, attr, values) alt=fields[name].label class="img-fluid m-x-auto img-" + name)
+                    .drop-image-title.text-xs-center.p-l-1.p-r-1 
                         p Drop your profile photo here or click to upload
                         div
                             i.fa.fa-camera 
@@ -428,9 +448,9 @@ mixin fieldFileDropzone(name, attr, type)
           span.pull-right.pull-xs-none.font-weight-bold #{fields[name].label}
 
         div(class=(attr.class2 + ' dropzone__' + name))
-            div(class="border-dropzone")
+            div(class="border-dropzone col-lg-12 gallery")
                 div(class="uploading" style="line-height:115px;text-align:center;position:absolute;width:100%;height:100%;left:0;right:0;top:0;bottom:0;z-index:1;display:none;background-color: rgba(255,255,255,0.8);")
-                    img(alt="activity indicator" src="/img/ajax-loader.gif")
+                    img(alt="activity indicator" src="/img/ajax-loader.gif" style="position:absolute;margin:auto;top:0;left:0;right:0;bottom:0;")
                 span
                     div.col-lg-5.col-md-5.col-sm-5.col-xs-5.text-xs-center.text-md-center.text-lg-center.p-dropzone
                         p(class='link-1' href="#")

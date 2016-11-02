@@ -11,15 +11,13 @@ include ../../../templates/menuRaiseFund.pug
     ]
 )
 
-
 section.create-company-general.container.m-b-85
-  +menu('campaign', 'general_information')
-
-  .col-lg-8
+  
+  .col-lg-10.offset-lg-1.col-xl-8.offset-xl-0.push-xl-3
     h2.text-uppercase.text-lg-center.text-xs-center.dosis.m-t-0 GENERAL INFORMATION
-    form(metod="post" action="").form-section
+    form(data-method="PATCH" action="").form-section
       if values.id && values.id != ''
-          input(type='hidden' name='id' value=values.id id='id')
+        input(type='hidden' name='id' value=values.id)#id
       .form-group.row.clearfix.required
       +fieldBlock("pitch", '', {
         class1: 'col-lg-3 col-md-12 text-md-left',
@@ -67,9 +65,9 @@ section.create-company-general.container.m-b-85
           a(href="#" data-section="faq").link-2.add-section 
             i.fa.fa-plus
             |  Add Another FAQ
-      .border-bottom.border-bottom-faq
-      .col-lg-12.pull-lg-right.p-r-0.text-lg-right.text-md-center.text-sm-center.text-xs-center
-        // button(type="submit" data-href="/api/campaign/" + values.id).btn.btn-secondary.text-uppercase.m-r-3.m-t-0.onPreview preview
-        button(type="submit").btn.btn-primary.text-uppercase.m-t-0 save and continue
+      
+      .col-lg-12.m-t-3.pull-lg-right.p-r-0.text-lg-right.text-md-center.text-sm-center.text-xs-center
+        // button(type="submit").btn.btn-secondary.text-uppercase.m-r-3.m-t-0 Fields Review
+        button(type="submit" data-method="PATCH").btn.btn-primary.text-uppercase.m-t-0 save and continue
           i.fa.fa-angle-right
-
+  +menu('general_information')

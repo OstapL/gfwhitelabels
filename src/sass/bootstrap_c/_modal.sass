@@ -1,14 +1,11 @@
 .modal-lg
-	min-width: rem(900)
+	width: 100%
 .modal-dialog
 	max-width: rem(540)
 	.modal-content
 		border: none
 		border-radius: 0px
-		a
-			color: $puerto_rico
-			&:hover
-				text-decoration: underline
+		
 	.modal-header
 		border-bottom: none
 		h2
@@ -60,34 +57,30 @@
 					color: $small-text
 					font-size: rem(14)
 
+
 	.modal-footer
 		border: none
 		margin: 0
 		padding: 0
-
- 
+@media only screen and (max-width : 768px)
+	.modal-dialog	
+		.modal-body
+			padding: rem(10) rem(0)
+	[id^="videoModal"]
+		.modal-dialog
+			margin: auto
+			width: 100%
+			.close
+				right: 0!important
+				top: 0!important
 [id^="videoModal"]
-	.modal-dialog 
-		position: absolute
-		top: 50% !important
-		left: 50%!important
-		transform: translate(-50%, -55%) !important
-		-ms-transform: translate(-50%, -55%) !important
-		-webkit-transform: translate(-50%, -55%) !important
-		min-height: 506px
-		
-		.modal-content 
-			min-height: 100%
-			position: absolute
-			top: 0
-			bottom: 0
-			left: 0
-			right: 0
-
+	top: 10%
+	.modal-dialog
+		max-width: rem(700)
 		.close
 		    position: absolute
-		    right: rem(-37)
-		    top: rem(-34)
-
+		    right: -40px
+		    top: -40px
+		    z-index: 999
 		    color: $white
 		    font-size: rem(33)
