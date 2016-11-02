@@ -114,7 +114,10 @@ module.exports = {
           return;
         }
 
-        api.makeRequest(formcServer + '/stripe', "OPTIONS", { stripeToken: stripeResponse.id}).done((formcResponse, statusText, xhr)=>{
+        api.makeRequest(formcServer + '/stripe', "POST", { 
+          id: this.model.id,
+          stripeToken: stripeResponse.id
+        }).done((formcResponse, statusText, xhr)=>{
           if (xhr.status !== 200) {
             validation.invalidMsg({'$': $}, "expiration-block", [formcResponse.description || 'Some error message should be here']);
             $submitBtn.prop('disabled', false);
@@ -122,7 +125,8 @@ module.exports = {
           }
           api.submitAction.call(this, e, data);
         }).fail((xhr, ajaxOptions, err)=>{
-          validation.invalidMsg({'$': $}, "expiration-block", [err || "An error occurred, please, try again later."]);
+          //debugger;
+          validation.invalidMsg({'$': $}, "expiration-block", [xhr.responseJSON.non_field_errors || "An error occurred, please, try again later."]);
           $submitBtn.prop('disabled', false);
         });
       });
