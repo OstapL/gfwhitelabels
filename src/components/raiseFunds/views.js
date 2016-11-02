@@ -395,6 +395,11 @@ module.exports = {
 
       initialize(options) {
         this.fields = options.fields;
+        this.fields.gallery.fn = function checkNotEmpty(value, attr, fn, model, computed) {
+          if(document.querySelectorAll('.dropzone__gallery .img-fluid').length === 0) {
+            throw 'Please upload at least 1 image';
+          }
+        };
         this.pressIndex = 1;
         this.additional_videoIndex = 1;
         this.$el.on('keypress', ':input:not(textarea)', function (event) {
@@ -509,6 +514,17 @@ module.exports = {
           },
           );
         $('.delete-image').click(this.deleteImage.bind(this));
+
+        if(app.getParams().check == '1') {
+          var data = this.$el.find('form').serializeJSON();
+          if (!validation.validate(this.fields, data, this)) {
+            _(validation.errors).each((errors, key) => {
+              validation.invalidMsg(this, key, errors);
+            });
+            this.$('.help-block').prev().scrollTo(5);
+          }
+        }
+
         return this;
       },
 
@@ -838,7 +854,7 @@ module.exports = {
         let max = this.$('input[name=maximum_raise]').val();
         min = parseInt(min.replace(/,/g, ''));
         max = parseInt(max.replace(/,/g, ''));
-        if (!(min && max) || !(min < max)) {
+        if ((min && max) && !(min < max)) {
           alert("Maximum Raise must be larger than Minimum Raise!");
           e.preventDefault();
         }
@@ -986,8 +1002,10 @@ module.exports = {
 
       onSubmit(e) {
         e.preventDefault();
-        let url = this.urlRoot;
+
         let data = $(e.target).serializeJSON({ useIntKeysAsArrayIndex: true });
+        let url = this.urlRoot;
+        
         if(this.hasOwnProperty('model')) {
           _.extend(this.model, data);
           data = _.extend({}, this.model)

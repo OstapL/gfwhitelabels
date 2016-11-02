@@ -14,35 +14,12 @@
 
     <link rel="stylesheet" href="/css/main2.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
-
-    <script>
-    if (!Array.prototype.find) {
-      Array.prototype.find = function(predicate) {
-        if (this === null) {
-          throw new TypeError('Array.prototype.find called on null or undefined');
-        }
-        if (typeof predicate !== 'function') {
-          throw new TypeError('predicate must be a function');
-        }
-        var list = Object(this);
-        var length = list.length >>> 0;
-        var thisArg = arguments[1];
-        var value;
-
-        for (var i = 0; i < length; i++) {
-          value = list[i];
-          if (predicate.call(thisArg, value, i, list)) {
-            return value;
-          }
-        }
-        return undefined;
-      };
-    }
-    </script>
     
     <!--[if lt IE 9]>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
+    <script type="text/javascript" src="https://raw.githubusercontent.com/es-shims/es5-shim/master/es5-shim.js"></script>
     <![endif]-->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/es6-shim/0.35.1/es6-shim.min.js"></script>
 
   </head>
 
@@ -70,12 +47,10 @@
             </ul>
         </div>
 
-        <div class="wrap-toggle-menu">
-          <button class=" navbar-toggler hidden-lg-up" type="button" data-toggle="collapse" id="toggle_mobile_menu">
-            <!-- <i class="fa fa-bars"></i> -->
-            <span></span>
-          </button>
-        </div>
+        <button class=" navbar-toggler hidden-lg-up" type="button" data-toggle="collapse" id="toggle_mobile_menu">
+          <!-- <i class="fa fa-bars"></i> -->
+          <span></span>
+        </button>
 
         <div class="mobile-menu full-height" id="">
           <ul class="nav navbar-nav pull-left" id="menuList">
@@ -99,7 +74,6 @@
 
       </footer>
       <div class="hidden"></div>
-
 
     </body>
 </html>
