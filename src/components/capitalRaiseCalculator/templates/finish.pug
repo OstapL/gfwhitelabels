@@ -23,13 +23,12 @@ include ../../../templates/mixins.pug
     .offset-lg-3.col-lg-6.text-xs-center.p-l-0.p-r-0
       h2.opensans.m0.letter-spacing-2.finish-calc
         i(aria-hidden="true").fa.fa-diamond.finish-icon
-        | &nbsp;Our calculator estimates your Pre-Money
-        p Valuation could be approximately
-          b #{formatPrice(data.PreMoneyValuation)}
+        | &nbsp;Based on your inputs, you may want to consider a valuation of
+        b &nbsp;#{formatPrice(Math.round(data.PreMoneyValuation / 1000) * 1000)}
 
   .row
     .offset-lg-3.col-lg-6.mt45
-      p Please note, valuing a pre-revenue company is really more of an art than a science and can vary across a wide band, so if you derive a different valuation, that's ok because this is merely a tool and you have final say on your valuation since we are not providing any tax or financial advice.  Just remember, valuation matters to potential investors, so if you want to increase the probability of success, try to ensure the value proposition is fair to everybody involved.
+      p.text-justify  Please note, valuing a pre-revenue company is really more of an art than a science and can vary across a wide band, so if you derive a different valuation, that's ok. Just remember, valuation matters to potential investors, so if you want to increase the probability of success, try to ensure the value proposition is fair to everybody involved.
 
   .row
     .offset-lg-3.col-lg-6

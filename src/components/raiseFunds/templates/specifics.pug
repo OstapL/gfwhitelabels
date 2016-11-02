@@ -113,7 +113,7 @@ section.campaign-specifics.container.m-b-85
               class2: 'col-lg-6 col-md-12', 
               type: 'text',
               placeholder: '$',
-              disabled: true,
+              readonly: true,
               })
 
           .col-lg-6.col-l-65
@@ -122,7 +122,7 @@ section.campaign-specifics.container.m-b-85
               class2: 'col-lg-7 col-md-12', 
               type: 'text',
               placeholder: '$',
-              disabled: true,
+              readonly: true,
               })
 
         .row.m-t-2.form-group-m-b-15
@@ -130,13 +130,13 @@ section.campaign-specifics.container.m-b-85
             .form-group.row.min_equity_offered.required
               label(for="min_equity_offered").text-lg-right.col-lg-6.p-l-2.col-md-12 Minimum Equity Offered
               .col-lg-6.col-md-12
-                input(name="min_equity_offered" placeholder="$" type="text" value="0" disabled).form-control#min_equity_offered
+                input(name="min_equity_offered" placeholder="$" type="text" value="0" readonly).form-control#min_equity_offered
 
           .col-lg-6.col-l-65
             .form-group.row.max_equity_offered.required
               label(for="max_equity_offered").text-lg-right.col-lg-5.col-md-12 Maximum Equity Offered
               .col-lg-6.col-md-12
-                input(name="max_equity_offered" placeholder="$" type="text" value="0" disabled).form-control#max_equity_offered
+                input(name="max_equity_offered" placeholder="$" type="text" value="0" readonly).form-control#max_equity_offered
 
         //- .row.m-t-2.form-group-m-b-15
         //-   .col-lg-6.col-l-65

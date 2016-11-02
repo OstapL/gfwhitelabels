@@ -106,6 +106,7 @@ module.exports = {
 
     render(next) {
       const template = require('./templates/popupLogin.pug');
+      $('#content').scrollTo();
       this.next = next;
       this.$el.html(
         template()
@@ -132,6 +133,7 @@ module.exports = {
 
     render() {
       this.model.urlRoot = serverUrl + Urls['rest_login']();
+      $('#content').scrollTo();
       let template = require('./templates/login.pug');
       this.$el.html(
         template({
