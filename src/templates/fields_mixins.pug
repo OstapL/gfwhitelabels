@@ -186,3 +186,36 @@ mixin fieldDateYear(name, attr)
         maxlength=4
         value=value[0]
       ).form-control
+
+
+mixin fieldFileDropzone(name, attr)
+    - var icon = attr.type
+    if attr.mimetype
+      - mimetypeIcons = require('helpers/mimetypeIcons.js');
+      - var icon = mimetypeIcons[attr.mimetype];
+
+    div(
+      class='row media-item ' + attr.class + ' ' + (attr.id || name) + 
+        (attr.required == true ? ' required ' : ' ') + ' fileDropzone' +
+        (attr.help_text ? ' showPopover' : '')
+      data-content=(attr.help_text ? attr.help_text : '')
+    )
+      div(class=attr.class1 + ' ' + (attr.required == true ? ' required ' : ' ') )
+        span.pull-right.pull-xs-none.font-weight-bold #{attr.label}
+
+      div(class=(attr.class2 + ' dropzone__' + name))
+        div(class="border-dropzone")
+          div(class="uploading collapsed")
+            img(alt="activity indicator" src="/img/ajax-loader.gif")
+          span
+            div.col-lg-5.col-md-5.col-sm-5.col-xs-5.text-xs-center.text-md-center.text-lg-center.p-dropzone
+              p(class='link-1' href="#")
+                p.drop-photo #{attr.text}
+                i(class="fa fa-" + attr.icon)
+            div.col-lg-7.col-md-7.col-sm-7.col-xs-7.p-r-0.p-l-0.p-dropzone.img-dropzone.text-lg-center
+              input(name=name id=(id || name) value=attr.value type="hidden")
+              img(src='/img/icons/' + icon + '.png' alt=attr.label class="img-file img-" + name)
+              if attr.data
+                a(class=("a-" + name) href=attr.data.url) #{ fileName }
+              else
+                a(class=("a-" + name)  href="")

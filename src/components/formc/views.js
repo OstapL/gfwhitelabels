@@ -1086,7 +1086,7 @@ module.exports = {
           templates: this.jsonTemplates,
         })
       );
-      //this.createDropzones();
+      this.createDropzones();
       return this;
     },
   }, menuHelper.methods, yesNoHelper.methods, addSectionHelper.methods, dropzoneHelpers.methods)),

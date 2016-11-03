@@ -35,14 +35,14 @@ module.exports = {
         clickable: '.dropzone__' + name + ' span',
         thumbnail: function (file, dataUrl) {
             console.log('preview', file, file.xhr, file.xhr.response, file.xhr.responseText);
-          },
+        },
 
         previewTemplate: `<div class="dz-details">
           </div>
           <div class="dz-progress"><span class="dz-upload" data-dz-uploadprogress></span></div>
           <div class="dz-error-message"><span data-dz-errormessage></span></div>`,
         headers: {
-          Authorization:  'Token ' + localStorage.getItem('token'),
+          Authorization:  'Bearer ' + localStorage.getItem('token'),
           'Cache-Control': null,
           'X-Requested-With': null,
         },
@@ -55,19 +55,16 @@ module.exports = {
         },
 
         dragover: function (e) {
-          // $('.dropzone').css({ border: 'dashed 1px lightgray' });
           $('.border-dropzone').addClass('active-border');
           $(this.element).find('.border-dropzone').addClass('dragging-over');
         },
 
         dragleave: function (e) {
-          // $('.dropzone').css({ border: 'none' });
           $('.border-dropzone').removeClass('active-border');
           $(this.element).find('.border-dropzone').removeClass('dragging-over');
         },
 
         dragend: function (e) {
-          // $('.dropzone').css({ border: 'none' });
           $('.border-dropzone').removeClass('active-border');
           $(this.element).find('.border-dropzone').removeClass('dragging-over');
         },
@@ -75,7 +72,6 @@ module.exports = {
         drop: function (e) {
           $(this.element).find('.uploading').show();
 
-          // $('.dropzone').css({ border: 'none' });
           $('.border-dropzone').removeClass('active-border');
           $(this.element).find('.border-dropzone').removeClass('dragging-over');
         },
@@ -116,7 +112,7 @@ module.exports = {
       }
 
       let dropbox = new Dropzone('.dropzone__' + name, {
-        url: serverUrl + Urls['image2-list'](),
+        url: filerUrl + '/upload',
         paramName: name,
         params: params,
         createImageThumbnails: false,
@@ -130,7 +126,7 @@ module.exports = {
           <div class="dz-progress"><span class="dz-upload" data-dz-uploadprogress></span></div>
           <div class="dz-error-message"><span data-dz-errormessage></span></div>`,
         headers: {
-          Authorization:  'Token ' + localStorage.getItem('token'),
+          Authorization:  'Bearer ' + localStorage.getItem('token'),
           'Cache-Control': null,
           'X-Requested-With': null,
         },
@@ -143,19 +139,16 @@ module.exports = {
         },
 
         dragover: function (e) {
-          // $('.dropzone').css({ border: 'dashed 1px lightgray' });
           $('.border-dropzone').addClass('active-border');
           $(this.element).find('.border-dropzone').addClass('dragging-over');
         },
 
         dragleave: function (e) {
-          // $('.dropzone').css({ border: 'none' });
           $('.border-dropzone').removeClass('active-border');
           $(this.element).find('.border-dropzone').removeClass('dragging-over');
         },
 
         dragend: function (e) {
-          // $('.dropzone').css({ border: 'none' });
           $('.border-dropzone').removeClass('active-border');
           $(this.element).find('.border-dropzone').removeClass('dragging-over');
         },
@@ -163,7 +156,6 @@ module.exports = {
         drop: function (e) {
           $(this.element).find('.uploading').show();
 
-          // $('.dropzone').css({ border: 'none' });
           $('.border-dropzone').removeClass('active-border');
           $(this.element).find('.border-dropzone').removeClass('dragging-over');
         },
@@ -207,10 +199,10 @@ module.exports = {
         return app.getThumbnail(
           attr.thumbSize,
           thumbnails,
-          attr.default || '/img/default/default.png'
+          attr.default || '/img/icons/file.png'
         );
       } else {
-        return attr.default || '/img/default/default.png';
+        return attr.default || '/img/icons/file.png';
       }
     },
 
