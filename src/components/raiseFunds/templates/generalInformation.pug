@@ -38,36 +38,9 @@ section.create-company-general.container.m-b-85
         type: 'textarea',
         placeholder: 'How are you going to use the money you raise?',
         })
-      //- .row
-      //-   .col-lg-12.m-b-1.text-lg-center.text-md-center.text-xs-center
-      //-     h3.d-inline-block.m-b-0.m-t-0 Additional Information 
-      //- +fieldBlock("additional_info", '', {
-      //-   class1: 'col-lg-3 col-md-3',
-      //-   class2: 'col-lg-9 col-md-9',
-      //-   type: 'json',
-      //-   })
-      //- .row.add-link
-      //-   .col-lg-9.offset-1.pull-right
-      //-     a(href="#" data-section="additional_info").link-2.add-section
-      //-       i.fa.fa-plus
-      //-       |  Add Another Section
       |!{ templates.additional_info }
       .border-bottom
       |!{ templates.faq }
-      //- .row
-      //-   .col-lg-12.text-lg-center.text-md-center.text-xs-center
-      //-     h3.d-inline-block.m-t-0.mb25 FAQs
-      //- .faq-form-group-m-b-0
-      //-   +fieldBlock("faq", '', {
-      //-     class1: 'col-lg-3 col-md-12 text-md-left',
-      //-     class2: 'col-lg-9 col-md-12',
-      //-     type: 'json',
-      //-     })
-      //- .row.m-t-0
-      //-   .col-lg-9.offset-1.pull-right
-      //-     a(href="#" data-section="faq").link-2.add-section 
-      //-       i.fa.fa-plus
-      //-       |  Add Another FAQ
       
       .col-lg-12.m-t-3.pull-lg-right.p-r-0.text-lg-right.text-md-center.text-sm-center.text-xs-center
         // button(type="submit").btn.btn-secondary.text-uppercase.m-r-3.m-t-0 Fields Review
