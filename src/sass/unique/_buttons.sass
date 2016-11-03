@@ -5,7 +5,7 @@ $btn-hover-bg: #50c878
 $btn-hover-color: #fff
 
 $btn-primary-bg-bottom: #4abb72
-$btn-primary-bg-top: #4fc677
+$btn-primary-bg-top: #50c878
 $btn-primary-hover-bg: #6ade91
 $btn-primary-color: $white
 
@@ -44,7 +44,7 @@ $btn-google-hover-bg: rgba(212,67,48, .6)
 	border-color: $btn-border
 	color: $btn-color
 	font-size: rem(16)
-	border-radius: 2px
+	border-radius: 4px
 	font-weight: 600
 	text-transform: capitalize
 	+mt(.2s)
@@ -56,7 +56,8 @@ $btn-google-hover-bg: rgba(212,67,48, .6)
 		+mt(.2s)
 	.fa-angle-right
 		padding-left: 5px
-
+.btn.text-uppercase
+	text-transform: capitalize!important
 .btn-primary
 	background: $btn-primary-bg-top
 	background-image: -webkit-linear-gradient(top, $btn-primary-bg-top,  $btn-primary-bg-bottom)
@@ -160,7 +161,7 @@ $btn-google-hover-bg: rgba(212,67,48, .6)
 
 //Dropdown button
 .btn-dropdown
-	color: $btn-color
+	color: $black
 	background: transparent
 	border-radius: rem(2) 0 0 rem(2)
 	border: 1px solid $light_grey
@@ -183,7 +184,7 @@ $btn-google-hover-bg: rgba(212,67,48, .6)
 	border: 1px solid $light_grey
 	background: transparent
 	padding: rem(8)
-	color: $btn-color
+	color: $black
 	width: 14%
 	height: rem(35)
 	.dropdown-toggle
