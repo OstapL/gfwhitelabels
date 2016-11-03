@@ -2,6 +2,7 @@ module.exports = Backbone.Router.extend({
   routes: {
     'company/create': 'company',
     'campaign/general_information/:id': 'generalInformation',
+    'campaign/:id/general_information': 'generalInformation',
     'campaign/media/:id': 'media',
     'campaign/team-members/:id/add/:type/:index': 'teamMembersAdd',
     'campaign/team-members/:id': 'teamMembers',
@@ -76,13 +77,17 @@ module.exports = Backbone.Router.extend({
       }
       $('body').scrollTo(); 
 
-      var a1 = app.makeCacheRequest(Urls['campaign-list']() + '/general_information/' + id, 'OPTIONS');
-      var a2 = app.makeCacheRequest(Urls['campaign-list']() + '/general_information/' + id);
+      // var a1 = app.makeCacheRequest(Urls['campaign-list']() + '/' + id + '/general_information/', 'OPTIONS');
+      // var a2 = app.makeCacheRequest(Urls['campaign-list']() + '/' + id + '/general_information/');
+      var a1 = app.makeCacheRequest(raiseCapitalUrl + 'campaign/' + id + '/general_information', 'OPTIONS');
+      var a2 = app.makeCacheRequest(raiseCapitalUrl + 'campaign/' + id + '/general_information');
 
       $.when(a1, a2).done((meta, model) => {
+        model[0].id = id;
         var i = new View.generalInformation({
           el: '#content',
-            fields: meta[0].actions.PUT,
+            // fields: meta[0].actions.PUT,
+            fields: meta[0].fields,
             // model: new Model.model(model[0])
             model: model[0]
         });

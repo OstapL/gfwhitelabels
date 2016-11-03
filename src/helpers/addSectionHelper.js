@@ -111,6 +111,8 @@ module.exports = {
               this[key + 'Index'] = 0;
             }
           }
+          console.log(key+'Index');
+          console.log(this[key+'Index']);
         }
       });
     },

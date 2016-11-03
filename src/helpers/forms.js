@@ -74,7 +74,6 @@ module.exports = {
        };
        this.model.validation = newValidators;
     */
-
     this.$('.help-block').remove();
     if (e.target.dataset.method != 'PATCH' && !validation.validate(this.fields, data, this)) {
       _(validation.errors).each((errors, key) => {

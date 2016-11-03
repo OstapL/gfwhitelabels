@@ -1,4 +1,5 @@
 'use strict';
+let addSectionHelper = require('helpers/addSectionHelper.js');
 
 import formatHelper from '../../helpers/formatHelper';
 const appendHttpIfNecessary = formatHelper.appendHttpIfNecessary;
@@ -213,17 +214,17 @@ module.exports = {
       this.getCityStateByZipCode = require('helpers/getSityStateByZipCode');
       this.usaStates = require('helpers/usa-states');
       this.$el.html(
-          this.template({
-            serverUrl: serverUrl,
-            Urls: Urls,
-            fields: this.fields,
-            // values: this.model.toJSON(),
-            values: this.model,
-            user: app.user.toJSON(),
-            campaign: this.campaign,
-            states: this.usaStates,
-          })
-          );
+        this.template({
+          serverUrl: serverUrl,
+          Urls: Urls,
+          fields: this.fields,
+          // values: this.model.toJSON(),
+          values: this.model,
+          user: app.user.toJSON(),
+          campaign: this.campaign,
+          states: this.usaStates,
+        })
+      );
       return this;
     },
 
@@ -242,8 +243,7 @@ module.exports = {
   }, leavingConfirmationHelper.methods, phoneHelper.methods, menuHelper.methods)),
 
   generalInformation: Backbone.View.extend(_.extend({
-      // urlRoot: serverUrl + Urls['campaign-list']() + '/general_information',
-      urlRoot: Urls['campaign-list']() + '/general_information',
+      urlRoot: raiseCapitalUrl + 'campaign/:id/general_information',
       template: require('./templates/generalInformation.pug'),
       events: _.extend({
           'submit form': api.submitAction,
@@ -260,8 +260,6 @@ module.exports = {
         }
       },
 
-      addSection: jsonActions.addSection,
-      deleteSection: jsonActions.deleteSection,
       getSuccessUrl(data) {
         return '/campaign/media/' + data.id;
       },
@@ -276,49 +274,25 @@ module.exports = {
             return false;
           }
         });
+        this.labels = {
+          pitch: 'Why Should People Invest?',
+          business_model: 'Why We Are Raising Capital?',
+          intended_use_of_proceeds: 'How We Intend To Make Money?',
+          faq: {
+            question: 'Question',
+            answer: 'Answer',
+          },
+          additional_info: {
+            title: 'Title',
+            body: 'Description',
+          },
+        };
+        this.assignLabels();
+        this.createIndexes();
+        this.buildJsonTemplates('raiseFunds');
       },
 
       render() {
-        this.fields.faq.type = 'json';
-        this.fields.faq.schema = {
-          question: {
-            type: 'string',
-            label: 'Question',
-          },
-          answer: {
-            type: 'text',
-            label: 'Answer',
-          },
-        };
-        this.fields.additional_info.type = 'json';
-        this.fields.additional_info.help_text = 'Is there anything else you want to tell your potential investors? Received any accolades? Patents? Major contracts? Distributors, etc?';
-        this.fields.additional_info.schema = {
-          title: {
-            type: 'string',
-            label: 'Optional Additional Section',
-            placeholder: 'Section Title',
-          },
-          body: {
-            type: 'text',
-            label: '',
-            placeholder: 'Description',
-          },
-        };
-
-        // if (this.model.get('faq')) {
-        if (this.model.faq) {
-          // this.faqIndex = Object.keys(this.model.get('faq')).length;
-          this.faqIndex = Object.keys(this.model.faq).length;
-        } else {
-          this.faqIndex = 0;
-        }
-
-        if (this.model.additional_info) {
-          this.additional_infoIndex = Object.keys(this.model.additional_info).length;
-        } else {
-          this.additional_infoIndex = 0;
-        }
-
         this.$el.html(
             this.template({
               serverUrl: serverUrl,
@@ -326,6 +300,7 @@ module.exports = {
               fields: this.fields,
               // values: this.model.toJSON(),
               values: this.model,
+              templates: this.jsonTemplates,
             })
         );
 
@@ -340,7 +315,7 @@ module.exports = {
         }
         return this;
       },
-    }, leavingConfirmationHelper.methods, menuHelper.methods)),
+    }, leavingConfirmationHelper.methods, menuHelper.methods, addSectionHelper.methods)),
 
   media: Backbone.View.extend(_.extend({
       events: _.extend({
