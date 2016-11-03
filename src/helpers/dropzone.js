@@ -2,6 +2,8 @@ const Dropzone = require('dropzone');
 
 module.exports = {
 
+  Dropzone: Dropzone,
+
   events: {
     dragover: 'globalDragover',
     dragleave: 'globalDragleave',
@@ -28,7 +30,7 @@ module.exports = {
       }
 
       let dropbox = new Dropzone('.dropzone__' + name, {
-        url: serverUrl + Urls['image2-list'](),
+        url: filerUrl + '/upload',
         paramName: name,
         params: params,
         createImageThumbnails: false,
@@ -103,7 +105,6 @@ module.exports = {
     createFileDropzone(name, folderName, renameTo, onSuccess) {
 
       let params = {
-        folder: folderName,
         file_name: name,
       };
 
@@ -113,7 +114,7 @@ module.exports = {
 
       let dropbox = new Dropzone('.dropzone__' + name, {
         url: filerUrl + '/upload',
-        paramName: name,
+        paramName: 'file',
         params: params,
         createImageThumbnails: false,
         clickable: '.dropzone__' + name + ' span',

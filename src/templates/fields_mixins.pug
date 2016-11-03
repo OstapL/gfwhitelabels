@@ -188,7 +188,7 @@ mixin fieldDateYear(name, attr)
       ).form-control
 
 
-mixin fieldFileDropzone(name, attr)
+mixin fileDropzone(name, attr)
     - var icon = attr.type
     if attr.mimetype
       - mimetypeIcons = require('helpers/mimetypeIcons.js');

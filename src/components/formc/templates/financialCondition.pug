@@ -1,13 +1,14 @@
+include ../../../templates/mixins.pug
 include ../../../templates/fields_mixins.pug
 include ../../../templates/menuRaiseFund.pug
 
-//+breadcrumbs('form c', '', 
++breadcrumbs('form c', '', 
     [
         ['Home', '/'],
         ['FORM C', ''],
         ['team members (director)', ''],
     ]
-//)
+)
 
 section.formc-team-members-director.container.m-b-85
   +menu('formc', 'financial-condition')
@@ -88,7 +89,7 @@ section.formc-team-members-director.container.m-b-85
             class2: 'col-lg-12 col-md-12',
             }, fields.sold_securities_amount))
         .text-lg-right.img-ppt
-          +fieldFileDropzone("fiscal_recent_file_id", _.extend({
+          +fileDropzone("fiscal_recent_file_id", _.extend({
             class1: 'col-lg-3',
             class2: 'col-lg-9 p-l-1 p-r-1',
             text: 'Drop your PDF or DOC here or click to upload',
@@ -97,7 +98,7 @@ section.formc-team-members-director.container.m-b-85
           }, fields.fiscal_recent_file_id))
 
         .text-lg-right.img-ppt
-          +fieldFileDropzone("fiscal_prior_file_id", _.extend({
+          +fileDropzone("fiscal_prior_file_id", _.extend({
             class1: 'col-lg-3',
             class2: 'col-lg-9 p-l-1 p-r-1',
             text: 'Drop your PDF or DOC here or click to upload',

@@ -735,7 +735,6 @@ module.exports = {
 
     render() {
       let template = require('components/formc/templates/riskFactorsFinancial.pug');
-      console.log(this.fields);
       this.$el.html(
         template({
           serverUrl: serverUrl,
@@ -1086,7 +1085,7 @@ module.exports = {
           templates: this.jsonTemplates,
         })
       );
-      this.createDropzones();
+      setTimeout(() => { this.createDropzones() } , 1000);
       return this;
     },
   }, menuHelper.methods, yesNoHelper.methods, addSectionHelper.methods, dropzoneHelpers.methods)),

@@ -8,7 +8,6 @@ mixin row(value, index)
       a(href="#" data-section=name data-index=index).delete-sectionnew
         i.fa.fa-times
 
-    - console.log(name, value);
     +fieldNestedTextLabel(name, "creditor", value, index, {})
     +fieldNestedTextLabel(name, "outstanding_amount", value, index, {})
     +fieldNestedTextLabel(name, "interest_rate", value, index, {})
