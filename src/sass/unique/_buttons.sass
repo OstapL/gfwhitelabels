@@ -6,7 +6,7 @@ $btn-hover-color: #fff
 
 $btn-primary-bg-bottom: #4abb72
 $btn-primary-bg-top: #4fc677
-$btn-primary-hover-bg: rgba(80,199,119,.6)
+$btn-primary-hover-bg: #6ade91
 $btn-primary-color: $white
 
 $btn-secondary-hover-color: $black
@@ -83,7 +83,10 @@ $btn-google-hover-bg: rgba(212,67,48, .6)
 	background-image: -o-linear-gradient(top, $btn-secondary-bg-top,  $btn-secondary-bg-bottom)
 	background-image: linear-gradient(to bottom, $btn-secondary-bg-top,  $btn-secondary-bg-bottom)
 	color: $btn-secondary-color
-	border-color: $btn-secondary-bg-bottom
+	-moz-border-image: -moz-linear-gradient(top, $btn-secondary-bg-top 0%, $btn-secondary-bg-bottom 100%)
+	-webkit-border-image: -webkit-linear-gradient(top, $btn-secondary-bg-top 0%, $btn-secondary-bg-bottom 100%)
+	border-image: linear-gradient(to bottom, $btn-secondary-bg-top 0%, $btn-secondary-bg-bottom 100%)
+	border-image-slice: 1
 
 	&:hover
 		background: $btn-secondary-hover-bg
