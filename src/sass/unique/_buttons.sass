@@ -40,7 +40,8 @@ $btn-google-hover-bg: rgba(212,67,48, .6)
 .btn
 	background: $btn-bg
 	letter-spacing: .42px
-	border: 3px solid $btn-border
+	border: 3px solid
+	border-color: $btn-border
 	color: $btn-color
 	font-size: rem(16)
 	border-radius: 2px
@@ -64,17 +65,29 @@ $btn-google-hover-bg: rgba(212,67,48, .6)
 	background-image: -o-linear-gradient(top, $btn-primary-bg-top,  $btn-primary-bg-bottom)
 	background-image: linear-gradient(to bottom, $btn-primary-bg-top,  $btn-primary-bg-bottom)
 	color: $btn-primary-color
-	border: none
-	padding: rem(13) rem(33)
-
+	-moz-border-image: -moz-linear-gradient(top, $btn-primary-bg-top 0%, $btn-primary-bg-bottom 100%)
+	-webkit-border-image: -webkit-linear-gradient(top, $btn-primary-bg-top 0%, $btn-primary-bg-bottom 100%)
+	border-image: linear-gradient(to bottom, $btn-primary-bg-top 0%, $btn-primary-bg-bottom 100%)
+	border-image-slice: 1
 	&:hover
 		background: $btn-primary-hover-bg
+		border-color: $btn-primary-hover-bg
+		border-image-slice: 0
+		border-image: none
+
+
 	&:active,
 	&:focus
 		background: $btn-primary-hover-bg
+		border-color: $btn-primary-hover-bg
+		border-image-slice: 0
+		border-image: none
 		&:focus,
 		&:hover
 			background: $btn-primary-hover-bg
+			border-color: $btn-primary-hover-bg
+			border-image-slice: 0
+			border-image: none
 .btn-secondary
 	background: $btn-secondary-bg-top
 	background-image: -webkit-linear-gradient(top, $btn-secondary-bg-top,  $btn-secondary-bg-bottom)
