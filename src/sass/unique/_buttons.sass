@@ -1,18 +1,18 @@
-$btn-color: #006b96
-$btn-border: #006b96
+$btn-color: #50c878
+$btn-border: #50c878
 $btn-bg: transparent
-$btn-hover-bg: #006b96
+$btn-hover-bg: #50c878
 $btn-hover-color: #fff
 
-$btn-primary-bg: #006b96
-$btn-primary-hover-bg: #3389ab
-$btn-primary-border: #006b96
-$btn-primary-hover-border: #3389ab
+$btn-primary-bg-bottom: #4abb72
+$btn-primary-bg-top: #4fc677
+$btn-primary-hover-bg: rgba(80,199,119,.6)
 $btn-primary-color: $white
 
 $btn-secondary-hover-color: $black
-$btn-secondary-border: #efefef
-$btn-secondary-bg: #ebebeb
+$btn-secondary-border: #e2e2e2
+$btn-secondary-bg-top: #ebebeb
+$btn-secondary-bg-bottom: #e2e2e2
 $btn-secondary-hover-bg: transparent
 
 $btn-success-bg: #5cb85c
@@ -39,14 +39,13 @@ $btn-google-hover-bg: rgba(212,67,48, .6)
 
 .btn
 	background: $btn-bg
+	letter-spacing: .42px
+	border: 3px solid $btn-border
 	color: $btn-color
-	border-color: $btn-border
-	letter-spacing: 1.8px
-	border: 2px solid $btn-border
-	font-size: rem(12)
-	border-radius: 50px
-	text-transform: uppercase
+	font-size: rem(16)
+	border-radius: 2px
 	font-weight: 600
+	text-transform: capitalize
 	+mt(.2s)
 	
 	&:hover
@@ -58,33 +57,48 @@ $btn-google-hover-bg: rgba(212,67,48, .6)
 		padding-left: 5px
 
 .btn-primary
-	background: $btn-primary-bg
+	background: $btn-primary-bg-top
+	background-image: -webkit-linear-gradient(top, $btn-primary-bg-top,  $btn-primary-bg-bottom)
+	background-image: -moz-linear-gradient(top, $btn-primary-bg-top,  $btn-primary-bg-bottom)
+	background-image: -ms-linear-gradient(top, $btn-primary-bg-top,  $btn-primary-bg-bottom)
+	background-image: -o-linear-gradient(top, $btn-primary-bg-top,  $btn-primary-bg-bottom)
+	background-image: linear-gradient(to bottom, $btn-primary-bg-top,  $btn-primary-bg-bottom)
 	color: $btn-primary-color
-	border-color: $btn-primary-border
+	border: none
+	padding: rem(13) rem(33)
 
 	&:hover
 		background: $btn-primary-hover-bg
-		border-color: $btn-primary-hover-border
-
+	&:active,
+	&:focus
+		background: $btn-primary-hover-bg
+		&:focus,
+		&:hover
+			background: $btn-primary-hover-bg
 .btn-secondary
-	background: $btn-secondary-bg
+	background: $btn-secondary-bg-top
+	background-image: -webkit-linear-gradient(top, $btn-secondary-bg-top,  $btn-secondary-bg-bottom)
+	background-image: -moz-linear-gradient(top, $btn-secondary-bg-top,  $btn-secondary-bg-bottom)
+	background-image: -ms-linear-gradient(top, $btn-secondary-bg-top,  $btn-secondary-bg-bottom)
+	background-image: -o-linear-gradient(top, $btn-secondary-bg-top,  $btn-secondary-bg-bottom)
+	background-image: linear-gradient(to bottom, $btn-secondary-bg-top,  $btn-secondary-bg-bottom)
 	color: $btn-secondary-color
-	border-color: $btn-secondary-border
+	border-color: $btn-secondary-bg-bottom
 
 	&:hover
 		background: $btn-secondary-hover-bg
 		color: $btn-secondary-hover-color
-		border-color: $btn-secondary-border
+		border-color: $btn-secondary-bg-bottom
 
 	&.inverse
 		background: $btn-secondary-hover-bg
 		color: $btn-secondary-hover-color
-		border-color: $btn-secondary-border
+		border-color: $btn-secondary-bg-bottom
 
 		&:hover
 			background: $btn-secondary-bg
 			color: $btn-secondary-color
-			border-color: $btn-secondary-border
+			border-color: $btn-secondary-bg-bottom
 
 .btn-success
 	background: $btn-success-bg
@@ -108,7 +122,7 @@ $btn-google-hover-bg: rgba(212,67,48, .6)
 	background: $btn-facebook-bg
 	border: none
 	color: $white
-	border-radius: 50px
+	border-radius: 2px
 	&:hover
 		background: $btn-facebook-hover-bg
 
@@ -116,7 +130,7 @@ $btn-google-hover-bg: rgba(212,67,48, .6)
 	background: $btn-linkedin-bg
 	border: none
 	color: $white
-	border-radius: 50px
+	border-radius: 2px
 	&:hover
 		background: $btn-linkedin-hover-bg
 
@@ -124,7 +138,7 @@ $btn-google-hover-bg: rgba(212,67,48, .6)
 	background: $btn-google-bg
 	border: none
 	color: $white
-	border-radius: 50px
+	border-radius: 2px
 	&:hover
 		background: $btn-google-hover-bg
 
