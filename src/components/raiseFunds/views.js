@@ -386,6 +386,11 @@ module.exports = {
 
       initialize(options) {
         this.fields = options.fields;
+        this.fields.gallery.fn = function checkNotEmpty(value, attr, fn, model, computed) {
+          if(document.querySelectorAll('.dropzone__gallery .img-fluid').length === 0) {
+            throw 'Please upload at least 1 image';
+          }
+        };
         this.pressIndex = 1;
         this.additional_videoIndex = 1;
         this.$el.on('keypress', ':input:not(textarea)', function (event) {
@@ -985,8 +990,10 @@ module.exports = {
 
       onSubmit(e) {
         e.preventDefault();
-        let url = this.urlRoot;
+
         let data = $(e.target).serializeJSON({ useIntKeysAsArrayIndex: true });
+        let url = this.urlRoot;
+        
         if(this.hasOwnProperty('model')) {
           _.extend(this.model, data);
           data = _.extend({}, this.model)
