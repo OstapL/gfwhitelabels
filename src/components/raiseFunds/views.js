@@ -287,6 +287,11 @@ module.exports = {
             body: 'Description',
           },
         };
+        this.fields.pitch.help_text = 'What is your edge? Do you have a competitive advantage? Why should investors want to invest in your company?';
+        this.fields.intended_use_of_proceeds.help_text = 'How do you make money?';
+        this.fields.business_model.help_text = 'Why are you raising capital, and what do you intend to do with it?';
+        this.fields.additional_info.help_text = 'Is there anything else you want to tell your potential investors? Received any accolades? Patents? Major contracts? Distributors, etc?';
+        this.fields.faq.help_text = 'We need help text here too';
         this.assignLabels();
         this.createIndexes();
         this.buildJsonTemplates('raiseFunds');

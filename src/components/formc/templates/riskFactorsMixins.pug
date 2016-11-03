@@ -11,6 +11,9 @@ mixin showRisk(name, index, title, risk)
       button(style="display:" + (values[name].hasOwnProperty(index) ? 'none' : 'inline-block') + ";" data-index=index).btn.btn-secondary.btn-sm.m-t-1.edit-risk.risk-button.unadded-state Edit Risk
 
 mixin showRiskForm(v, k, field)
+  if values.hasOwnProperty(field) === false
+  - values[field] = {};
+
   .panel.panel-default.risk-panel(index=k)
     .panel-heading(role="tab" id=("heading-" + k))
       a(data-toggle="collapsing"

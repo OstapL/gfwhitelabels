@@ -89,22 +89,22 @@ section.formc-team-members-director.container.m-b-85
             class2: 'col-lg-12 col-md-12',
             }, fields.sold_securities_amount))
         .text-lg-right.img-ppt
-          +fieldFileDropzone("financials_for_most_recent_fiscal_year_id", {
+          +fileDropzone("fiscal_recent_file_id", _.extend({
             class1: 'col-lg-3',
             class2: 'col-lg-9 p-l-1 p-r-1',
             text: 'Drop your PDF or DOC here or click to upload',
             icon: 'file',
-            default: '/img/default' + suffix + '.png',
-          })
+            default: '/img/icons/file.png',
+          }, fields.fiscal_recent_file_id))
 
         .text-lg-right.img-ppt
-          +fieldFileDropzone("financials_for_prior_fiscal_year_id", {
+          +fileDropzone("fiscal_prior_file_id", _.extend({
             class1: 'col-lg-3',
             class2: 'col-lg-9 p-l-1 p-r-1',
             text: 'Drop your PDF or DOC here or click to upload',
             icon: 'file',
-            default: '/img/default' + suffix + '.png',
-          })
+            default: '/img/icons/file.png',
+          }, fields.fiscal_prior_file_id))
 
       |!{ templates.sold_securities_data }
       .col-lg-12.m-t-2

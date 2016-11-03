@@ -1,6 +1,5 @@
 include ../../../../templates/fields_mixins.pug
 
-- console.log(values);
 .col-lg-6.col-md-12
   h3.text-xs-center Most Recent Fiscal Year
   +fieldNestedTextLabel('sold_securities_data', "total_assets", values[0] ? values[0].total_assets : '', 0, {class1: ' text-lg-right col-lg-12 col-md-12 text-md-left text-xl-left', class2: 'col-lg-12 col-md-12'})

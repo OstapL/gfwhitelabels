@@ -1,6 +1,6 @@
 - 'use strict';
 include ../../../templates/mixins.pug
-//- include menu.pug
+include ../../../templates/fields_mixins.pug
 include ../../../templates/menuRaiseFund.pug
 
 +breadcrumbs('Create Company', '', 
@@ -16,31 +16,23 @@ section.create-company-general.container.m-b-85
   
   .col-lg-10.offset-lg-1.col-xl-8.offset-xl-0.push-xl-3
     h2.text-uppercase.text-lg-center.text-xs-center.dosis.m-t-0 GENERAL INFORMATION
-    form(data-method="PATCH" action="").form-section
-      if values.id && values.id != ''
-        input(type='hidden' name='id' value=values.id)#id
-      .form-group.row.clearfix.required
-      +fieldBlock("pitch", '', {
+    form.form-section
+      +fieldTextareaLabel("pitch", _.extend({
         class1: 'col-lg-3 col-md-12 text-md-left',
         class2: 'col-lg-9 col-md-12',
-        placeholder: "What's your pitch?",
-        type: 'textarea',
-        })
-      +fieldBlock("intended_use_of_proceeds", '', {
+        }, fields.pitch))
+      +fieldTextareaLabel("intended_use_of_proceeds", _.extend({
         class1: 'col-lg-3 col-md-12 text-md-left',
         class2: 'col-lg-9 col-md-12',
-        type: 'textarea',
-        placeholder: "What's your business model?",
-        })
-      +fieldBlock("business_model", '', {
+        }, fields.intended_use_of_proceeds))
+      +fieldTextareaLabel("business_model", _.extend({
         class1: 'col-lg-3 col-md-12 text-md-left',
         class2: 'col-lg-9 col-md-12',
-        type: 'textarea',
-        placeholder: 'How are you going to use the money you raise?',
-        })
+        }, fields.business_model))
       |!{ templates.additional_info }
       .border-bottom
       |!{ templates.faq }
+      .border-bottom.border-bottom-faq
       
       .col-lg-12.m-t-3.pull-lg-right.p-r-0.text-lg-right.text-md-center.text-sm-center.text-xs-center
         // button(type="submit").btn.btn-secondary.text-uppercase.m-r-3.m-t-0 Fields Review

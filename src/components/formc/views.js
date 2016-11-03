@@ -48,8 +48,7 @@ module.exports = {
     events: _.extend({
       'submit form': 'submit',
     }, menuHelper.events, yesNoHelper.events),
-
-
+    
     preinitialize() {
       // ToDo
       // Hack for undelegate previous events
@@ -63,14 +62,77 @@ module.exports = {
     },
 
     submit(e) {
+      var validation = require('components/validation/validation.js');
+
+      function validateCard(form, selectors) {
+        let number = form.elements[selectors.number],
+            expMonth = form.elements[selectors.expMonth],
+            expYear = form.elements[selectors.expYear],
+            cvc = form.elements[selectors.cvc];
+
+
+        if (!Stripe.card.validateCardNumber(number.value)) {
+          validation.invalidMsg({'$': $}, selectors.number, ['Please, check card number.']);
+          return false;
+        }
+
+        if (!Stripe.card.validateExpiry(expMonth.value, expYear.value)) {
+          validation.invalidMsg({'$': $}, selectors.expDate, ['Please, check expiration date.']);
+          return false;
+        }
+        if (!Stripe.card.validateCVC(cvc.value)) {
+          validation.invalidMsg({'$': $}, selectors.cvc, ['Please, check CVC.']);
+          return false;
+        }
+        return true;
+      };
+
+      e.preventDefault();
+
+      Stripe.setPublishableKey(stripeKey);
+
       var $target = $(e.target);
+      var $submitBtn = $target.find('#pay-btn');
+      $submitBtn.prop('disabled', true);
+
       var data = $target.serializeJSON();
       // ToDo
       // Fix this
       if (data.failed_to_comply_choice == false) {
         data.failed_to_comply = 'Please explain.';
       }
-      api.submitAction.call(this, e, data);
+
+      if (!validateCard(e.target, { number: 'card_number', expDate: 'card_exp_date_year', expMonth: 'card_exp_month', expYear: 'card_exp_year', cvc: 'card_cvc' })) {
+        $submitBtn.prop('disabled', false);
+        return;
+      }
+
+      Stripe.card.createToken($target, (status, stripeResponse)=>{
+        if (stripeResponse.error) {
+          validation.invalidMsg({'$': $}, 'form-section', [stripeResponse.error.message]);
+          $submitBtn.prop('disabled', false); // Re-enable submission
+          return;
+        }
+        debugger;
+
+        api.makeRequest(formcServer + '/stripe', "POST", { 
+          id: this.model.id,
+          stripeToken: stripeResponse.id
+        }).done((formcResponse, statusText, xhr)=>{
+          if (xhr.status !== 200) {
+            validation.invalidMsg({'$': $}, "expiration-block", [formcResponse.description || 'Some error message should be here']);
+            $submitBtn.prop('disabled', false);
+            return;
+          }
+          api.submitAction.call(this, e, data);
+        }).fail((xhr, ajaxOptions, err)=>{
+          //debugger;
+          validation.invalidMsg({'$': $}, "expiration-block", [xhr.responseJSON.non_field_errors || "An error occurred, please, try again later."]);
+          $submitBtn.prop('disabled', false);
+        });
+      });
+
+      return false;
     },
 
     initialize(options) {
@@ -85,7 +147,7 @@ module.exports = {
           serverUrl: serverUrl,
           Urls: Urls,
           fields: this.fields,
-          values: this.model,
+          values: this.model
         })
       );
       return this;
@@ -380,7 +442,7 @@ module.exports = {
     urlRoot: formcServer + '/:id' + '/related-parties',
 
     events: _.extend({
-      'submit form': 'submit',
+      'submit form': api.submitAction,
     }, addSectionHelper.events, menuHelper.events, yesNoHelper.events),
 
     initialize(options) {
@@ -398,18 +460,6 @@ module.exports = {
 
       this.createIndexes();
       this.buildJsonTemplates('formc');
-
-    },
-
-    // submit: api.submitAction,
-    submit(e) {
-      var $target = $(e.target);
-      var data = $target.serializeJSON({useIntKeysAsArrayIndex: true});
-
-      if (data.had_transactions == 'false') {
-        data.transaction_with_related_parties = [];
-      }
-      api.submitAction.call(this, e, data);
     },
 
     getSuccessUrl(data) {
@@ -685,7 +735,6 @@ module.exports = {
 
     render() {
       let template = require('components/formc/templates/riskFactorsFinancial.pug');
-      console.log(this.fields);
       this.$el.html(
         template({
           serverUrl: serverUrl,
@@ -1036,7 +1085,7 @@ module.exports = {
           templates: this.jsonTemplates,
         })
       );
-      this.createDropzones();
+      setTimeout(() => { this.createDropzones() } , 1000);
       return this;
     },
   }, menuHelper.methods, yesNoHelper.methods, addSectionHelper.methods, dropzoneHelpers.methods)),
@@ -1173,7 +1222,6 @@ module.exports = {
           index: this[sectionName + 'Index']
         })
       );
-      debugger;
       this.model[sectionName].push(data);
       /*
       api.makeRequest(
@@ -1259,18 +1307,15 @@ module.exports = {
     },
 
     getSuccessUrl() {
-      // return  '/formc/' + this.model.id + '/background-check';
-      return  '/formc/' + this.model.id + '/outstanding-security';
+      return  '/formc/' + this.model.id + '/final-review';
     },
 
     events: _.extend({
-      'submit form': 'submit',
+      'submit form': api.submitAction,
     }, menuHelper.events, yesNoHelper.events),
 
-    submit: api.submitAction,
-
     render() {
-      let template = require('components/formc/templates/backgroundCheck.pug');
+      let template = require('./templates/backgroundCheck.pug');
       this.$el.html(
         template({
           serverUrl: serverUrl,
@@ -1282,4 +1327,31 @@ module.exports = {
       return this;
     },
   }, menuHelper.methods, yesNoHelper.methods, addSectionHelper.methods)),
+
+  finalReview: Backbone.View.extend({
+    urlRoot: formcServer + '/:id' + '/final-review',
+    initialize(options) {
+      this.fields = options.fields;
+    },
+
+    getSuccessUrl() {
+      return  '/formc/' + this.model.id + '/review';
+    },
+
+    events: {
+    }, 
+
+    render() {
+      let template = require('./templates/finalReview.pug');
+      this.$el.html(
+        template({
+          serverUrl: serverUrl,
+          Urls: Urls,
+          fields: this.fields,
+          values: this.model,
+        })
+      );
+      return this;
+    },
+  }),
 };
