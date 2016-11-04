@@ -9,3 +9,4 @@ global.googleClientId = "488593151885-87nqfd8gl444a1me0n149otrf37dbahq.apps.goog
 global.linkedinClientId = "77wzj6tz0yyr33";
 global.googleMapKey = "AIzaSyBpCl9-7bkVISZ0o-AaFCsKzZwGAxalkZU"
 
+global.pageTitle ="Crowdfunding | Jeanne D'Arc CU";
