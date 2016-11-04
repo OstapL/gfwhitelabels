@@ -333,7 +333,7 @@ module.exports = {
         'change .press_link': 'appendHttpIfNecessary',
         'click .submit_form': submitCampaign,
         'click .onPreview': onPreviewAction,
-      }, jsonActions.events, leavingConfirmationHelper.events, menuHelper.events),
+      }, jsonActions.events, leavingConfirmationHelper.events, menuHelper.events, addSectionHelper.events),
       urlRoot: Urls['campaign-list']() + '/media',
 
       appendHttpsIfNecessary(e) {
@@ -374,6 +374,27 @@ module.exports = {
             return false;
           }
         });
+        this.labels = {
+          gallery_data: {
+            url: 'Gallery',
+          },
+          press: {
+            headline: 'Headline',
+            link: 'Article Link',
+          },
+          additional_video: {
+            link: 'Link',
+          },
+          list_image_data: {
+            urls: 'Thumbnail Picture',
+          },
+          header_image_data: {
+            urls: 'Header Image',
+          },
+        };
+        this.assignLabels();
+        this.createIndexes();
+        this.buildJsonTemplates('raiseFunds');
       },
 
       render() {
@@ -405,12 +426,6 @@ module.exports = {
             placeholder: 'https://',
           },
         };
-        // if (this.model.get('press')) {
-        if (this.model.press) {
-          this.pressIndex = Object.keys(this.model.press).length;
-        } else {
-          this.pressIndex = 0;
-        }
 
         if (this.model.additional_video) {
           this.additional_videoIndex = Object.keys(this.model.additional_video).length;
@@ -426,6 +441,7 @@ module.exports = {
               // values: this.model.toJSON(),
               values: this.model,
               dropzoneHelpers: dropzoneHelpers.methods,
+              templates: this.jsonTemplates,
             })
         );
 
@@ -555,7 +571,7 @@ module.exports = {
           //e.target.value = id;
         }
       }
-  }, leavingConfirmationHelper.methods, menuHelper.methods, dropzoneHelpers.methods)),
+  }, leavingConfirmationHelper.methods, menuHelper.methods, dropzoneHelpers.methods, addSectionHelper.methods)),
 
   teamMemberAdd: Backbone.View.extend(_.extend({
       events: _.extend({
