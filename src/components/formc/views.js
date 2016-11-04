@@ -115,8 +115,7 @@ module.exports = {
         }
         debugger;
 
-        api.makeRequest(formcServer + '/stripe', "POST", { 
-          id: this.model.id,
+        api.makeRequest(formcServer + '/' + this.model.id + '/stripe', "PUT", { 
           stripeToken: stripeResponse.id
         }).done((formcResponse, statusText, xhr)=>{
           if (xhr.status !== 200) {
