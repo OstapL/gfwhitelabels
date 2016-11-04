@@ -1,6 +1,6 @@
 .home-section.hidden-sm-down
   section.main-page-slider
-    div(data-ride="carousel" data-interval="30000")#carousel-main.carousel.carousel-main
+    div(data-ride="carousel" data-interval="4000")#carousel-main.carousel.carousel-main
       ol.carousel-indicators
         li(data-target="#carousel-main" data-slide-to="0").active
         li(data-target="#carousel-main" data-slide-to="1")
@@ -14,7 +14,7 @@
                 .col-lg-12
                   h1.text-uppercase.font-weight-bold.m-b-2 YOUR SUCCESS IS OUR SUCCESS
                 .col-lg-12.m-b-2.m-t-0
-                  h2.m-t-0.m-b-0.small-text.text-uppercase start investing locally
+                  h2.m-t-0.m-b-1.small-text start investing locally
                   a(href="/pg/education").link-2 Understand the Risks
                 .col-lg-12
                   a(href=Urls['campaign-list']()).btn.btn-lg.btn-primary.m-r-3 invest
@@ -28,7 +28,7 @@
                 .col-lg-12
                   h1.text-uppercase.text-lg-right.font-weight-bold.m-b-2.color-black_pearl YOUR SUCCESS IS OUR SUCCESS
                 .col-lg-12.m-b-2.m-t-0
-                  h2.m-t-0.m-b-0.small-text.text-uppercase start investing locally
+                  h2.m-t-0.m-b-1.small-text start investing locally
                   a(href="/pg/education").link-2 Understand the Risks
                 .col-lg-12.text-lg-right
                   a(href=Urls['campaign-list']()).btn.btn-lg.btn-primary.m-r-3 invest
@@ -71,7 +71,7 @@ section.home-wrap-text-block.top-block.m-t-0
 section.campaing-list.m-t-85
   .container#campaignList
     .col-lg-12
-      h2.dosis.text-uppercase.text-xs-center.m-t-0.mb50 What's Popular
+      h2.dosis.text-uppercase.text-xs-center.m-t-0.mb50.font-weight-bold TRENDING
 
     include ../components/campaign/templates/_list.pug
 
