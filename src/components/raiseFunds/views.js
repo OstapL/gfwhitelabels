@@ -358,8 +358,8 @@ module.exports = {
         }
       },
 
-      addSection: jsonActions.addSection,
-      deleteSection: jsonActions.deleteSection,
+      // addSection: jsonActions.addSection,
+      // deleteSection: jsonActions.deleteSection,
       getSuccessUrl(data) {
         return '/campaign/team-members/' + data.id;
       },
@@ -383,7 +383,8 @@ module.exports = {
             link: 'Article Link',
           },
           additional_video: {
-            link: 'Link',
+            link: 'Youtube or Vimeo Link',
+            headline: 'Title',
           },
           list_image_data: {
             urls: 'Thumbnail Picture',
@@ -391,6 +392,7 @@ module.exports = {
           header_image_data: {
             urls: 'Header Image',
           },
+          video: 'Main Video for Campaign'
         };
         this.assignLabels();
         this.createIndexes();
@@ -1067,7 +1069,6 @@ module.exports = {
     template: require('./templates/thankyou.pug'),
 
     render() {
-      console.log(this.model);
       this.$el.html(
         this.template({
           values: this.model,

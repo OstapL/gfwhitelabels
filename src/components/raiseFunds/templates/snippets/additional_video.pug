@@ -7,9 +7,18 @@ mixin row(value, index)
     .delete-section-container
       a(href="#" data-section=name data-index=index).delete-sectionnew
         i.fa.fa-times
-
-    +fieldNestedTextLabel(name, 'question', value, index, {})
-    +fieldNestedTextareaLabel(name, 'answer', value, index, {})
+    .col-lg-7.videoInteractive.p-sm-0.p-r-0
+      +fieldNestedTextLabel(name, 'headline', value, index, {})
+      +fieldNestedTextLabel(name, 'link', value, index, {})
+    .col-lg-5.p-l-1.col-md-12.col-xs-12.p-sm-0.p-r-0  
+        .embed-responsive.embed-responsive-16by9 
+            - let additionalVideo = app.getVideoId(values ? values[index].link : null);
+            if additionalVideo && additionalVideo.provider == 'youtube'
+              iframe.embed-responsive-item(src="//www.youtube.com/embed/" + additionalVideo.id + "?rel=0" allowfullscreen="true")
+            else if additionalVideo && additionalVideo.provider == 'vimeo'
+              iframe.embed-responsive-item(src="//player.vimeo.com/video/" + additionalVideo.id allowfullscreen="true")
+            else
+              iframe.embed-responsive-item(src="//www.youtube.com/embed/?rel=0" allowfullscreen="true")
 
 mixin run()
 

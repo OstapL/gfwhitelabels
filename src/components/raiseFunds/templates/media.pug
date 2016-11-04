@@ -1,5 +1,6 @@
 - 'use strict';
 include ../../../templates/mixins.pug
+include ../../../templates/fields_mixins.pug
 include menu.pug
 //- include ../../../templates/menuRaiseFund.pug
 
@@ -48,12 +49,16 @@ section.create-company-media.container.media-container
       .row.m-b-2.recommended.p-sm-0.main-video-block
         .col-lg-12.p-sm-0
           .col-lg-7
-            +fieldBlock("video", '', {
+            //- +fieldBlock("video", '', {
+            //-   class1: 'col-lg-5 col-md-5 col-md-12 p-sm-0',
+            //-   class2: 'col-lg-7 col-md-7 col-md-12 p-sm-0',
+            //-   type: 'text',
+            //-   placeholder: 'https://www.youtube.com/'
+            //-   })
+            +fieldTextLabel("video", _.extend({
               class1: 'col-lg-5 col-md-5 col-md-12 p-sm-0',
               class2: 'col-lg-7 col-md-7 col-md-12 p-sm-0',
-              type: 'text',
-              placeholder: 'https://www.youtube.com/'
-              })
+              }, fields.video))
           
           #video_source.col-lg-5.p-sm-0.p-r-0
             .embed-responsive.embed-responsive-16by9
@@ -66,18 +71,18 @@ section.create-company-media.container.media-container
                 iframe(src="//www.youtube.com/embed/?rel=0" allowfullscreen="true").embed-responsive-item
 
       .row.m-b-0.additional-video-block
-        .col-lg-12.p-sm-0
-          +fieldBlock("additional_video", '', {
-            class1: 'col-lg-3 col-md-4 col-md-12 p-sm-0',
-            class2: 'col-lg-9 col-md-8 col-md-12 p-sm-0',
-            type: 'jsonVideo',
-            })
-          .row.m-t-0.addition-position
-            .col-lg-9.offset-1.pull-right
-              a(href="#" data-section="additional_video").link-2.add-section
-                i.fa.fa-plus
-                |  Add Another Video
-        //- |!{ templates.additional_video }
+        //- .col-lg-12.p-sm-0
+        //-   +fieldBlock("additional_video", '', {
+        //-     class1: 'col-lg-3 col-md-4 col-md-12 p-sm-0',
+        //-     class2: 'col-lg-9 col-md-8 col-md-12 p-sm-0',
+        //-     type: 'jsonVideo',
+        //-     })
+        //-   .row.m-t-0.addition-position
+        //-     .col-lg-9.offset-1.pull-right
+        //-       a(href="#" data-section="additional_video").link-2.add-section
+        //-         i.fa.fa-plus
+        //-         |  Add Another Video
+        |!{ templates.additional_video }
         // 
             adsf
             .col-lg-7
