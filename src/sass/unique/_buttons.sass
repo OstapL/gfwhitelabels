@@ -9,10 +9,10 @@ $btn-primary-bg-top: #50c878
 $btn-primary-hover-bg: #6ade91
 $btn-primary-color: $white
 
-$btn-secondary-hover-color: $black
+$btn-secondary-hover-color: #07152e
 $btn-secondary-border: #e2e2e2
 $btn-secondary-bg-top: #ebebeb
-$btn-secondary-bg-bottom: #e2e2e2
+$btn-secondary-bg-bottom: #e3e4e4
 $btn-secondary-hover-bg: transparent
 
 $btn-success-bg: #5cb85c
@@ -90,32 +90,26 @@ $btn-google-hover-bg: rgba(212,67,48, .6)
 			border-image-slice: 0
 			border-image: none
 .btn-secondary
-	background: $btn-secondary-bg-top
-	background-image: -webkit-linear-gradient(top, $btn-secondary-bg-top,  $btn-secondary-bg-bottom)
-	background-image: -moz-linear-gradient(top, $btn-secondary-bg-top,  $btn-secondary-bg-bottom)
-	background-image: -ms-linear-gradient(top, $btn-secondary-bg-top,  $btn-secondary-bg-bottom)
-	background-image: -o-linear-gradient(top, $btn-secondary-bg-top,  $btn-secondary-bg-bottom)
-	background-image: linear-gradient(to bottom, $btn-secondary-bg-top,  $btn-secondary-bg-bottom)
-	color: $btn-secondary-color
-	-moz-border-image: -moz-linear-gradient(top, $btn-secondary-bg-top 0%, $btn-secondary-bg-bottom 100%)
-	-webkit-border-image: -webkit-linear-gradient(top, $btn-secondary-bg-top 0%, $btn-secondary-bg-bottom 100%)
-	border-image: linear-gradient(to bottom, $btn-secondary-bg-top 0%, $btn-secondary-bg-bottom 100%)
-	border-image-slice: 1
-
+	background: $btn-secondary-bg-bottom
+	color: $btn-secondary-hover-color
+	border-color: $btn-secondary-bg-bottom
 	&:hover
-		background: $btn-secondary-hover-bg
-		color: $btn-secondary-hover-color
+		background: transparent
 		border-color: $btn-secondary-bg-bottom
-
+		color: $btn-secondary-hover-color
+	&:active,
+	&:focus
+		background: transparent
+		border-color: $btn-secondary-bg-bottom
+		color: $btn-secondary-hover-color
 	&.inverse
-		background: $btn-secondary-hover-bg
-		color: $btn-secondary-hover-color
+		background: transparent
 		border-color: $btn-secondary-bg-bottom
-
+		color: $btn-secondary-hover-color
 		&:hover
-			background: $btn-secondary-bg
-			color: $btn-secondary-color
+			background: transparent
 			border-color: $btn-secondary-bg-bottom
+			color: $btn-secondary-hover-color
 
 .btn-success
 	background: $btn-success-bg
