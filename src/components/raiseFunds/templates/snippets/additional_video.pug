@@ -8,8 +8,14 @@ mixin row(value, index)
       a(href="#" data-section=name data-index=index).delete-sectionnew
         i.fa.fa-times
     .col-lg-7.videoInteractive.p-sm-0.p-r-0
-      +fieldNestedTextLabel(name, 'headline', value, index, {})
-      +fieldNestedTextLabel(name, 'link', value, index, {})
+      +fieldNestedTextLabel(name, 'headline', value, index, {
+              class1: 'col-lg-5 col-md-5 col-md-12 p-sm-0',
+              class2: 'col-lg-7 col-md-7 col-md-12 p-sm-0',
+              })
+      +fieldNestedTextLabel(name, 'link', value, index, {
+              class1: 'col-lg-5 col-md-5 col-md-12 p-sm-0',
+              class2: 'col-lg-7 col-md-7 col-md-12 p-sm-0',
+              })
     .col-lg-5.p-l-1.col-md-12.col-xs-12.p-sm-0.p-r-0  
         .embed-responsive.embed-responsive-16by9 
             - let additionalVideo = app.getVideoId(values ? values[index].link : null);
