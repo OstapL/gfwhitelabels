@@ -49,12 +49,6 @@ section.create-company-media.container.media-container
       .row.m-b-2.recommended.p-sm-0.main-video-block
         .col-lg-12.p-sm-0
           .col-lg-7
-            //- +fieldBlock("video", '', {
-            //-   class1: 'col-lg-5 col-md-5 col-md-12 p-sm-0',
-            //-   class2: 'col-lg-7 col-md-7 col-md-12 p-sm-0',
-            //-   type: 'text',
-            //-   placeholder: 'https://www.youtube.com/'
-            //-   })
             +fieldTextLabel("video", _.extend({
               class1: 'col-lg-5 col-md-5 col-md-12 p-sm-0',
               class2: 'col-lg-7 col-md-7 col-md-12 p-sm-0',
@@ -71,32 +65,7 @@ section.create-company-media.container.media-container
                 iframe(src="//www.youtube.com/embed/?rel=0" allowfullscreen="true").embed-responsive-item
 
       .row.m-b-0.additional-video-block
-        //- .col-lg-12.p-sm-0
-        //-   +fieldBlock("additional_video", '', {
-        //-     class1: 'col-lg-3 col-md-4 col-md-12 p-sm-0',
-        //-     class2: 'col-lg-9 col-md-8 col-md-12 p-sm-0',
-        //-     type: 'jsonVideo',
-        //-     })
-        //-   .row.m-t-0.addition-position
-        //-     .col-lg-9.offset-1.pull-right
-        //-       a(href="#" data-section="additional_video").link-2.add-section
-        //-         i.fa.fa-plus
-        //-         |  Add Another Video
         |!{ templates.additional_video }
-        // 
-            adsf
-            .col-lg-7
-              .form-group.row.required
-                .col-lg-5.recommended
-                  label.text-lg-right.font-weight-bold Optional Video for Campaign
-                .col-lg-7
-                  input(type="text" placeholder="Title").form-control.m-b-2
-                  input(type="text" placeholder="http://www.").form-control.m-b-1
-                  .add-link
-                    a(href="").link-2 Add Another Video
-            .col-lg-5.p-l-1.p-r-3
-              .embed-responsive.embed-responsive-16by9
-                iframe.embed-responsive-item(src="//www.youtube.com/embed/zpOULjyy-n8?rel=0" allowfullscreen="true")
       .border-bottom.m-t-0.m-b-3.col-lg-12
       |!{ templates.press}
       .col-lg-12.pull-lg-right.p-r-0.text-lg-right.text-sm-center.text-md-center.text-xs-center.p-sm-0
