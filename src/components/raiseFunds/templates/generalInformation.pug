@@ -16,7 +16,7 @@ section.create-company-general.container.m-b-85
   
   .col-lg-10.offset-lg-1.col-xl-8.offset-xl-0.push-xl-3
     h2.text-uppercase.text-lg-center.text-xs-center.dosis.m-t-0 GENERAL INFORMATION
-    form.form-section
+    form(data-method="PATCH" action="").form-section
       +fieldTextareaLabel("pitch", _.extend({
         class1: 'col-lg-3 col-md-12 text-md-left',
         class2: 'col-lg-9 col-md-12',

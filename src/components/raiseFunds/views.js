@@ -425,14 +425,14 @@ module.exports = {
               fields: this.fields,
               // values: this.model.toJSON(),
               values: this.model,
-              dropzoneHelpers: dropzoneHelpers,
+              dropzoneHelpers: dropzoneHelpers.methods,
             })
         );
 
         const Model = require('components/campaign/models.js');
 
-        dropzoneHelpers.createImageDropzone(
-          dropzone,
+        this.createImageDropzone(
+          // dropzone,
           'header_image',
           'campaign_headers', '',
           (data) => {
@@ -449,16 +449,16 @@ module.exports = {
             });
           }
         );
-        dropzoneHelpers.createImageDropzone(
-          dropzone,
+        this.createImageDropzone(
+          // dropzone,
           'list_image',
           'campaign_lists', '',
           (data) => {
             app.makeRequest(this.urlRoot +'/' + this.model.id, {list_image: data.file_id, type: 'PATCH'})
           }
         );
-        dropzoneHelpers.createImageDropzone(
-          dropzone,
+        this.createImageDropzone(
+          // dropzone,
           'gallery',
           'galleries/' + this.model.id, '',
           (data) => {
@@ -555,7 +555,7 @@ module.exports = {
           //e.target.value = id;
         }
       }
-  }, leavingConfirmationHelper.methods, menuHelper.methods)),
+  }, leavingConfirmationHelper.methods, menuHelper.methods, dropzoneHelpers.methods)),
 
   teamMemberAdd: Backbone.View.extend(_.extend({
       events: _.extend({

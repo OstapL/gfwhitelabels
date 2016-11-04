@@ -411,7 +411,7 @@ mixin fieldDropzone(name, attr, type)
                     .all-gallery(class=attr.class2 )
                         input(name=name id=name value=values[name] type="hidden" data-value-type="null")
                         .photo-scroll(style="min-height:5rem;")
-                            if values[name + '_data']
+                            if values[name + '_data'] && !$.isEmptyObject(values[name + '_data'])
                                 each v,k in values[name+'_data'].all_files
                                     .thumb-image-container(style="float: left; overflow: hidden; position: relative;")
                                         .delete-image-container(style="position: absolute;")
