@@ -10,6 +10,19 @@ module.exports = Backbone.Router.extend({
     'campaign/:id/thankyou': 'thankyou',
   },
 
+  execute: function (callback, args, name) {
+    if (app.user.is_anonymous()) {
+      const pView = require('components/anonymousAccount/views.js');
+      require.ensure([], function() {
+        new pView.popupLogin().render(window.location.pathname);
+        app.hideLoading();
+        $('#sign_up').modal();
+      });
+      return false;
+    }
+    if (callback) callback.apply(this, args);
+  },
+
   company() {
     if (!app.user.is_anonymous()) {
       const Model = require('components/company/models.js');
@@ -94,13 +107,17 @@ module.exports = Backbone.Router.extend({
       const Model = require('components/campaign/models.js');
       const View = require('components/raiseFunds/views.js');
 
-      var a1 = app.makeCacheRequest(Urls['campaign-list']() + '/media/' + id, 'OPTIONS');
-      var a2 = app.makeCacheRequest(Urls['campaign-list']() + '/media/' + id);
+      var a1 = app.makeCacheRequest(raiseCapitalUrl + '/campaign/' + id + '/media', 'OPTIONS');
+      var a2 = app.makeCacheRequest(raiseCapitalUrl + '/campaign/' + id + '/media');
+
+      // var a1 = app.makeCacheRequest(Urls['campaign-list']() + '/media/' + id, 'OPTIONS');
+      // var a2 = app.makeCacheRequest(Urls['campaign-list']() + '/media/' + id);
 
       $.when(a1, a2).done((meta, model) => {
+        model[0].id = id;
         var i = new View.media({
           el: '#content',
-            fields: meta[0].actions.PUT,
+            fields: meta[0].fields,
             // model: new Model.model(model[0])
             model: model[0],
         });
@@ -233,6 +250,7 @@ module.exports = Backbone.Router.extend({
 
   thankyou(id) {
     if (!app.user.is_anonymous()) {
+      app.showLoading();
       $('body').scrollTo(); 
       const Model = require('components/campaign/models.js');
       const View = require('components/raiseFunds/views.js');

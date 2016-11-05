@@ -1,3 +1,15 @@
+// mixin for centering elements in header
+=centered
+  -webkit-transform: translateY(-50%)
+  -moz-transform: translateY(-50%)
+  -ms-transform: translateY(-50%)
+  -o-transform: translateY(-50%)
+  transform: translateY(-50%)
+
+  position: relative
+  top: 50%;
+  left: 0;
+
 // show main menu list on mobile devaices
 html.show-menu
   overflow: hidden !important
@@ -5,7 +17,7 @@ html.show-menu
   overflow-y: scroll !important
 
   body
-    overflow: hidden !important
+    overflow: hidden !important 
     height: 100% !important
 
   header
@@ -114,16 +126,14 @@ header.no-overflow
       -o-transition: none
       transform: none
   
-      height: rem(144)
+      height: 144px
       opacity: 1
 
       background: rgba( $menu_backgound_from, .96)
       
       // show login signin button and set it diff height on mobile devaices
       &.not-log-in-user
-        height: rem(66)
-
-
+        height: 66px
 
 header
   .navbar-toggleable-md::after
@@ -133,7 +143,7 @@ header
   background: $menu_backgound_from $header_bg_image
 
   .navbar
-    padding-top: $navbar-header-padd-top
+    padding-top: 0
     padding-bottom: 0
     
     .login-sinup
@@ -148,20 +158,43 @@ header
           padding: rem(5) rem(15)
 
     .navbar-brand
+      position: relative
+
+      height: $navbar_height
       padding-bottom: 0
       padding-top: 0
-      margin-top: -3px
       width: 20%
+
+      img
+        +centered
+
+        position: absolute
+
+        max-width: 100%;
 
     .mobile-logo
       display: none
 
   .navbar-nav
     height: $navbar_height
-    padding: $padding_menu
+    padding: 0
+
+    @media screen and (min-width: 992px)
+      li.nav-item > a.nav-link,
+      li.login-sinup > a 
+        +centered
+
+      li.nav-item > a.nav-link,
+      li.login-sinup > a:not(.btn)
+        padding: 0
+
+      li.login-sinup
+        height: 100%
+        a
+          display: inline-block
 
     &#menuProfile
-      padding-top: $menu-profile-padd-top
+      padding-top: 0
 
     .nav-item
       height: 100%
@@ -179,8 +212,12 @@ header
         text-transform: uppercase
         color: $white
 
+
         &.user-info-name
-          padding-top: 10px
+          padding-top: 0px
+
+      &.user-info
+        margin-left: 0
 
       .list-container
         display: none
@@ -191,7 +228,7 @@ header
 
      
         &.user-info-drop
-          right: -16px!important
+          right: -11px!important
           left: auto!important
 
         .submenu
@@ -341,24 +378,34 @@ header
         min-width: 105px
 
         a.user-info-name
-          span
-            display: inline-block
-            margin-top: -16px
-            margin-right: 10px
-            height: 48px
-            vertical-align: text-top
-            width: 48px
+          @media screen and (min-width: 992px)
+            span
+              display: inline-block
+              // margin-top: -16px
+              margin-right: 10px
+              height: 48px
+              vertical-align: middle
+              width: 48px
 
-            background-color: rgba($menu_text_color, .09)
+              background-color: rgba($menu_text_color, .09)
 
-            border-radius: 50%
+              border-radius: 50%
 
-            text-align: center
+              text-align: center
 
-            i
-              font-size: 24px
-              line-height: 2
-              letter-spacing: 0
+              i
+                font-size: 24px
+                line-height: 2
+                letter-spacing: 0
+
+  @media screen and (min-width: 992px) and (max-width: 1100px)
+    .navbar-nav .nav-item a
+      font-size: 0.6875rem
+
+    .navbar-nav .login-sinup a
+      top: -55%
+
+      font-size: 0.6875rem
 
   @media screen and (min-width: 992px)
 
@@ -396,27 +443,11 @@ header
   @media screen and (max-width: 991px)
 
     .navbar-nav
-      padding: 14px 0 0 0
+      padding: 0px 0 0 0
 
-    .navbar-toggler
-      margin-top: 2px
-      color: rgba($menu_text_color, .5)
-
-      font-size: 26px
-      
-      &:focus
-        outline: none
-
-    .navbar .navbar-brand
-      display: inline-block
-
-      width: 180px
-    
     .nav-item
       text-align: left
 
-    .navbar-toggler
-      float: right
     .pseudo-block
       height: 50px
       width: 1px
@@ -424,13 +455,6 @@ header
 
     .logo
       display: none!important
-
-    .navbar-nav .nav-item.user-info a.user-info-name span
-      margin-top: -20px !important
-      height: auto
-      margin-right: auto
-      width: auto
-      background-color: transparent
 
   @media screen and (max-width: 991px)
     -webkit-transition: height 0.35s ease-in
@@ -454,6 +478,14 @@ header
     background-color: rgba($menu_backgound_from, .96)
     background: rgba($menu_backgound_from, .96) $header_bg_image
 
+    .navbar .navbar-brand
+      display: inline-block
+      height: $navbar_height_mobile
+      width: 180px
+
+    .navbar-nav
+      height: $navbar_height_mobile
+
     nav
       position: absolute
       top: 0
@@ -462,10 +494,13 @@ header
       height: 100%
       padding: 0
       overflow: hidden
-      // overflow-y: auto 
       width: 100%
 
       .list-container.user-info-drop.notification-container
+        -webkit-transform: scale(1.1) translateY(-10px)
+        -moz-transform: scale(1.1) translateY(-10px)
+        -ms-transform: scale(1.1) translateY(-10px)
+        -o-transform: scale(1.1) translateY(-10px)
         transform: scale(1.1) translateY(-10px)
 
         transition-delay: 200ms, 200ms
@@ -481,7 +516,7 @@ header
         transition: height 0.45s ease-out, opacity 0.25s ease-out, transform 0.25s ease-out, -webkit-transform 0.25s ease-out
         
         position: absolute
-        top: rem(43)
+        top: 100%
         
         display: block
         height: 0
@@ -496,8 +531,26 @@ header
         transition: right 0.35s ease-in 100ms
 
         position: absolute
-        right: rem(17)
+        right: 25px
         width: 21px
+        // padding-top: 25px!important
+
+        li.nav-item.user-info
+          margin-left: 0!important
+          min-width: 35px 
+
+          a.user-info-name
+            +centered
+
+            padding-bottom: 0
+
+            text-align: right
+            
+            i.fa
+              font-size: 24px
+
+              &.fa-angle-down
+                display: none
 
       #menuList
         -webkit-transition: visibility 0s linear 1s
@@ -590,51 +643,57 @@ header
       margin-right: 0
       margin-left: rem(-25)
 
-    button.navbar-toggler
-      display: block
-      height: rem(28)
+    .wrap-toggle-menu
+      position: relative
+
+      display: inline-block
       float: left
-      padding: rem(22) 0
+      height: $navbar_height_mobile
       width: rem(28)
-      margin-top: -7px;
 
-      span:after, span:before 
-        content: ""
+      .navbar-toggler
+        color: rgba($menu_text_color, .5)
+
+        font-size: 26px
         
-        position: absolute
-        left: 0
-        top: 8px
-
-      span:after
-        top: 16px
-
-      span 
-        position: relative
+        &:focus
+          outline: none
 
         display: block
+        height: rem(28)
+        // float: left
+        padding: 22px 0
+        width: rem(28)
 
-      span, span:after, span:before
-      
-        -webkit-transition: all 0.3s
-        -moz-transition: all 0.3s
-        -ms-transition: all 0.3s
-        -o-transition: all 0.3s
-        transition: all 0.3s
+        span:after, span:before 
+          content: ""
+          
+          position: absolute
+          left: 0
+          top: 8px
 
-        width: 100%
-        height: 2px
+        span:after
+          top: 16px
+
+        span 
+          position: relative
+
+          display: block
+
+        span, span:after, span:before
         
-        background-color: rgba($white, 0.75)
-        backface-visibility: hidden
-        border-radius: 2px
- 
-    .navbar-nav:first-of-type
-      li.nav-item.user-info
-        margin-left: 0!important
-        min-width: auto
+          -webkit-transition: all 0.3s
+          -moz-transition: all 0.3s
+          -ms-transition: all 0.3s
+          -o-transition: all 0.3s
+          transition: all 0.3s
 
-        a > i
-          display: none
+          width: 100%
+          height: 2px
+          
+          background-color: rgba($white, 0.75)
+          backface-visibility: hidden
+          border-radius: 2px
 
     form.form-inline
       -webkit-transition: scale(1.1) translateY(-20px)
@@ -705,12 +764,15 @@ header
     .list-container
       position: static
 
-
-
   @media screen and (max-width: 385px)
 
     .notification-container
       min-width: 100%
+    header.no-overflow
+      nav
+        .list-container.user-info-drop.notification-container
+          top: rem(35)
+
 
 @media screen and (max-width: 991px)
   // on mobile devaices main menu absolute positioned so we need set top padding for main content

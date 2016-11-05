@@ -1,67 +1,85 @@
 - const format = require('helpers/formatHelper.js');
 
 .row
-    for campaign in campaigns
+  for campaign in campaigns
 
-        .col-lg-4.col-xs-12.col-sm-12.col-md-12
-            a(href=Urls['campaign-detail'](campaign.id)).block_link
-            .one_block
-                .for_img
-                    img(
-                      src=app.getThumbnail('255x153', campaign.list_image_data ? campaign.list_image_data.thumbnails : [], '/img/default/255x153.png')
-                      alt=campaign.company.name
-                    )
+    .col-xl-4.col-lg-6.col-xs-12.col-sm-12.col-md-12
+      a(href=Urls['campaign-detail'](campaign.id)).block_link
+      .one_block
+        .for_img
+          img(
+            src=app.getThumbnail('255x153', campaign.list_image_data ? campaign.list_image_data.thumbnails : [], '/img/default/255x153.png')
+            alt=campaign.company.name)
 
-                    .more_inform
-                        .title.text-center
-                            if campaign.security_type == 0
-                                h3 Valuation: #{format.formatPrice(campaign.premoney_valuation)}
-                            else
-                                h3 Percentage Revenue: #{campaign.percentage_revenue}%
+          .more_inform
+            .title.text-center
+              if campaign.security_type == 0
+                h3 Valuation: #{format.formatPrice(campaign.premoney_valuation)}
+              else
+                h3 Percentage Revenue: #{campaign.percentage_revenue}%
 
-                        .small_text
-                            if campaign.company.tagline
-                                p #{campaign.company.tagline.substr(0, 120)}
+            .small_text
+              if campaign.company.tagline
+                p #{campaign.company.tagline.substr(0, 120)}
 
-                        .ico_cont
-                            a(href=Urls['campaign-detail'](campaign.id) + '#team').link-1
-                                i.fa.fa-users
-                            a(href=Urls['campaign-detail'](campaign.id) + '#overview').link-1
-                                i.fa.fa-list
+            .ico_cont
+              a(href=Urls['campaign-detail'](campaign.id) + '#team').link-1
+                i.fa.fa-users
+              a(href=Urls['campaign-detail'](campaign.id) + '#overview').link-1
+                i.fa.fa-list
 
-                        .bottom_pr
-                            if campaign.security_type == 0
-                                p Price per share: #{format.formatPrice(campaign.price_per_share)}
-                                p Number of shares: #{(Math.round(campaign.minimum_raise.replace(/,/g, '') / campaign.price_per_share)).toLocaleString('en-US')}
-                            else
-                                //- p % Revenue: #{campaign.percentage_revenue}%
-                                p Cap: #{campaign.cap}X
-                                p Percentage Revenue: #{campaign.percentage_revenue}%
+            .bottom_pr
+              if campaign.security_type == 0
+                p Price per share: #{format.formatPrice(campaign.price_per_share)}
+                p Number of shares: #{(Math.round(campaign.minimum_increment.replace(/,/g, '') / campaign.price_per_share)).toLocaleString('en-US')}
+              else
+                //- p % Revenue: #{campaign.percentage_revenue}%
+                p Cap: #{campaign.cap}X
+                p Percentage Revenue: #{campaign.percentage_revenue}%
 
+        .title.text-xs-center
+          h3.m-t-0.m-x-auto= campaign.company.name
+          span.place
+            i.fa.fa-map-marker
+            = campaign.company.city + ' ' + campaign.company.state
+          .clear
+        .description
+          if campaign.company.description
+            p= campaign.company.description.substr(0,250)
 
-                .title.text-xs-center
-                    h3.m-t-0.m-x-auto= campaign.company.name
-                    span.place
-                        i.fa.fa-map-marker
-                        = campaign.company.city + ' ' + campaign.company.state
-                    .clear
-                .description
-                    if campaign.company.description
-                        p= campaign.company.description.substr(0,250)
+        .progress_bar_container
+          span.left_text #{campaign.progress} % Funded
+          span.right_text 
+            b #{format.formatPrice(campaign.amount_raised)} 
+            | of #{format.formatPrice(campaign.minimum_raise)}
+          .clear
+            progress(value=campaign.progress max="100").progress #{campaign.progress} %
 
-                .progress_bar_container
-                    span.left_text #{campaign.progress} % Funded
-                    span.right_text 
-                        b #{format.formatPrice(campaign.amount_raised)} 
-                        | of #{format.formatPrice(campaign.minimum_raise)}
-                    .clear
-                        progress.progress(value=campaign.progress max="100") #{campaign.progress} %
-
-                .bottom_text
-                    span.left_desc
-                        b Security:
-                        | #{campaign.get_security_type_display}
-                    span.right_desc
-                        b Industry: 
-                        | Lorem ipsum
-                    .clear
+        .bottom_text
+          span.left_desc
+            b Security:
+            | #{campaign.get_security_type_display}
+          span.right_desc
+            b Industry: 
+            case campaign.company.industry
+              when 1
+                | Entertainment
+              when 2
+                | Food Service
+              when 3
+                | Technology
+              when 4
+                | Wellness
+              when 5
+                | Fashion
+              when 6
+                | Sports
+              when 7
+                | Environment
+              when 8
+                | Education
+              when 9
+                | Community
+              default
+                | Other 
+          .clear

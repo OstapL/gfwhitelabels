@@ -1,130 +1,142 @@
 - 'use strict';
 mixin getCompanyUrl(campaign, current, step, name)
-    if campaign.id || current == step
-        a(
-          href="/campaign/" + step + "/" + campaign.id 
-          class="list-group-item list-group-item-action " + (current == step ? 'active' : '')
-        ) #{ name }
-          if campaign.progress[step] == true
-            i.fa.fa-check
-    else
-        a(
-          href="#"
-          class="list-group-item list-group-item-action disabled" 
-        ) #{ name }
-        if campaign.progress[step] == true
-          i.fa.fa-check
+  if campaign.id || current == step
+    a(
+      href="/campaign/" + step + "/" + campaign.id 
+      class="list-group-item list-group-item-action " + (current == step ? 'active' : '')) #{ name }
+      if campaign.progress[step] == true || step == 'company'
+        .icon-check
+          i.fa.fa-check-circle-o
+  else
+    a(href="#").list-group-item.list-group-item-action.disabled #{ name }
 
-        
 mixin menu(current)
-    .col-lg-3.create_compaign
-      .jumbotron.jumbotron-fluid.row
-        .raise-funds
-          h4.font-weight-bold.text-uppercase.m-b-0 Raise funds
-            .small-text (10% Done)
-        #accordion(role="tablist" aria-multiselectable="true")
-          .panel.panel-default
-            .panel-heading(role="tab")
-              a(data-toggle="collapse"
-              data-parent="#accordion"
-              href="#company"
-              aria-expanded="true"
-              class="list-group-item" + (current == 'company' ? ' active ' : '')
-              )
-                i.fa.fa-briefcase
-                |  Company
-                span.pull-right
-                  i.fa.fa-angle-left
-            #company(role="tabpanel" class="panel-collapse collapse " + (current == 'company' ? 'in' : ''))
-              .list-group
-                a(href="/company/create" class="list-group-item list-group-item-action " + (current == 'company' ? 'active' : '')) Company Detail
-          .panel.panel-default
-            .panel-heading(role="tab")
-              a(data-toggle="collapse"
-              data-parent="#accordion"
-              href="#campaign"
-              aria-expanded="true"
-              class="list-group-item" + (current != 'company' ? ' active ' : '')
-              ).list-group-item
-                i.fa.fa-bar-chart
-                |  Campaign
-                span.pull-right
-                  i.fa.fa-angle-down
-            #campaign(role="tabpanel" class="panel-collapse collapse" + (current != 'company' ? ' in' : ''))
-                .list-group
-                    +getCompanyUrl(values, current, 'general_information', 'General Information')
-                    +getCompanyUrl(values, current, 'media', 'Media')
-                    +getCompanyUrl(values, current, 'team-members', 'Team Members')
-                    +getCompanyUrl(values, current, 'specifics', 'Specifics')
-                    +getCompanyUrl(values, current, 'perks', 'Perks')
-          .panel.panel-default
-            .panel-heading(role="tab")
-              a(data-toggle="collapse"
-              data-parent="#accordion"
-              href="#form_c"
-              aria-expanded="true"
-              ).list-group-item
-                i.fa.fa-university
-                |  form c
-                span.pull-right
-                  i.fa.fa-angle-left
-            #form_c(role="tabpanel").panel-collapse.collapse
-                .list-group
-                    a(href="/formc/introduction/1").list-group-item.list-group-item-action form c
-                .list-group
-                    a(href="formc/team-members/1").list-group-item.list-group-item-action Team Member
-                .list-group
-                    a(href="#").list-group-item.list-group-item-action Releated Parties
-                .list-group
-                    a(href="#").list-group-item.list-group-item-action Offering
-      .row
-        .col-lg-12.text-xs-center
+  .col-lg-6.offset-lg-3.col-xl-3.offset-xl-0.pull-xl-8.create_compaign
+    .jumbotron.jumbotron-fluid.row
+      .raise-funds
+        h4.font-weight-bold.text-uppercase.m-b-0 Raise funds
+          //- .small-text (10% Done)
+      div(role="tablist" aria-multiselectable="true")#accordion
+        .panel.panel-default
+          div(role="tab").panel-heading
+            a(data-toggle="collapse"
+            data-parent="#accordion"
+            href="#company"
+            aria-expanded="true"
+            class="list-group-item list-group-heading" + (current == 'company' ? ' active ' : ''))
+              i.fa.fa-briefcase
+              |  Company
+              span.pull-right
+                i.fa.fa-angle-left.arrow
+          div(role="tabpanel" class="panel-collapse collapse " + (current == 'company' ? 'in' : ''))#company
+            .list-group
+              a(href="/company/create" class="list-group-item list-group-item-action " + (current == 'company' ? 'active' : '')) Company Detail
+                .icon-check
+                  i.fa.fa-check-circle-o
+        .panel.panel-default
+          div(role="tab").panel-heading
+            a(data-toggle="collapse"
+            data-parent="#accordion"
+            href="#campaign"
+            aria-expanded="true"
+            class="list-group-item list-group-heading" + (current != 'company' ? ' active ' : ''))
+              i.fa.fa-bar-chart
+              |  Campaign
+              span.pull-right
+                i.fa.fa-angle-down.arrow
+          div(role="tabpanel" class="panel-collapse collapse" + (current != 'company' ? ' in' : ''))#campaign
+            .list-group
+              +getCompanyUrl(values, current, 'general_information', 'General Information')
+              +getCompanyUrl(values, current, 'media', 'Media')
+              +getCompanyUrl(values, current, 'team-members', 'Team Members')
+              +getCompanyUrl(values, current, 'specifics', 'Specifics')
+              +getCompanyUrl(values, current, 'perks', 'Perks')
+        .panel.panel-default
+          div(role="tab").panel-heading
+            a(data-toggle="collapse"
+            data-parent="#accordion"
+            href="#form_c"
+            aria-expanded="true").list-group-item.list-group-heading
+              i.fa.fa-university
+              |  form c
+              span.pull-right
+                i.fa.fa-angle-left.arrow
+          div(role="tabpanel")#form_c.panel-collapse.collapse
+            .list-group
+              a(href="/formc/introduction").list-group-item.list-group-item-action form c
+            .list-group
+              a(href="formc/team-members/1").list-group-item.list-group-item-action Team Member
+            .list-group
+              a(href="#").list-group-item.list-group-item-action Releated Parties
+            .list-group
+              a(href="#").list-group-item.list-group-item-action Offering
+    .row
+      .col-lg-12.text-xs-center
+        .row
           button(type="button" data-href=("#")).btn.btn-secondary.text-uppercase.m-t-2.onPreview preview
-          button(type="submit" data-toggle="modal" data-target="#compani_publish" href="#compani_publish").btn.btn-primary.text-uppercase.m-t-2 submit campaign
-      .row
-        .education-link-wrap
-          .jumbotron.jumbotron-fluid
-            h4.font-weight-bold.text-uppercase
-              i.fa.fa-book
-              |  education Links
-            .nav
-              li.nav-item
-                a(href="/pg/investor_tutorial" target="_blank").nav-link.link-3 Issuer Tutorial
-              li.nav-item
-                a(href="/pg/success_guide" target="_blank").nav-link.link-3 Success Guide
-              li.nav-item
-                a(href="/calculator/capitalraise/intro" target="_blank").nav-link.link-3 What's My Business Worth?
-              li.nav-item
-                a(href="/calculator/whatmybusinessworth/intro" target="_blank").nav-link.link-3 How Much Should I Raise?
-#compani_publish.modal.fade(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")
-  .modal-dialog(role="document")
-    .modal-content
-      .modal-header
-        button(type="button" class="close" data-dismiss="modal" aria-label="Close")
-          span(aria-hidden="true")
-            i.fa.fa-times
-        h2(class="modal-title").text-lg-center.text-uppercase.text-md-center.text-xs-center.line-height-1.dosis.m-t-1 COMPLETE THE FOLLOWING TO PUBLISH YOUR COMPANY
+        .row
+          button(type="button").btn.btn-primary.text-uppercase.m-t-2.submit_form submit campaign
+    .row
+      .education-link-wrap
+        .jumbotron.jumbotron-fluid
+          h4.font-weight-bold.text-uppercase
+            i.fa.fa-book
+            |  education Links
+          .nav
+            li.nav-item
+              a(href="/pg/investor_tutorial" target="_blank").nav-link.link-3 Business Tutorial
+            li.nav-item
+              a(href="/pg/success_guide" target="_blank").nav-link.link-3 Success Guide
+            li.nav-item
+              a(href="/calculator/selectYourBusiness" target="_blank").nav-link.link-3 What's My Business Worth?
+            li.nav-item
+              a(href="/calculator/whatmybusinessworth/intro" target="_blank").nav-link.link-3 How Much Should I Raise?
+    div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")#company_publish.modal.fade
+      div(role="document").modal-dialog
+        .modal-content
+          .modal-header
+            button(type="button" data-dismiss="modal" aria-label="Close").close
+              span(aria-hidden="true")
+                i.fa.fa-times
+            h2.text-lg-center.text-uppercase.text-md-center.text-xs-center.line-height-1.dosis.m-t-1.modal-title COMPLETE THE FOLLOWING TO SUBMIT YOUR CAMPAIGN
 
-      .modal-body.m-b-2
-        .form-section
-          .col-lg-6.pull-left.p-l-0
-            h3.m-b-0.m-t-0 General Information
-          .col-lg-6.text-xs-right.m-b-10.p-r-0
-            button(type="submit").btn.btn-sm.btn-secondary.text-uppercase.m-t-0 Edit
-          .col-lg-6.pull-left.p-l-0
-            h3.m-b-0.m-t-0 Media 
-          .col-lg-6.text-xs-right.m-b-10.p-r-0
-            button(type="submit").btn.btn-sm.btn-secondary.text-uppercase.m-t-0 Edit
-          .col-lg-6.pull-left.p-l-0
-            h3.m-b-0.m-t-0 Team Members 
-          .col-lg-6.text-xs-right.m-b-10.p-r-0
-            button(type="submit").btn.btn-sm.btn-secondary.text-uppercase.m-t-0 Edit
-          .col-lg-6.pull-left.p-l-0
-            h3.m-b-0.m-t-0 Specifics 
-          .col-lg-6.text-xs-right.m-b-10.p-r-0
-            button(type="submit").btn.btn-sm.btn-secondary.text-uppercase.m-t-0 Edit
-          .col-lg-6.pull-left.p-l-0
-            h3.m-b-0.m-t-0 Perks 
-          .col-lg-6.text-xs-right.mb30.p-r-0
-            button(type="submit").btn.btn-sm.btn-secondary.text-uppercase.m-t-0 Edit
-      .modal-footer
+          .modal-body.m-b-2
+            .form-section
+              .col-lg-6.pull-left.p-l-0.general_information.collapse
+                h3.m-b-0.m-t-0 General Information
+              .col-lg-6.text-xs-right.m-b-10.p-r-0.general_information.collapse
+                a(href="/campaign/general_information/" + values.id + "?check=1").btn.btn-sm.btn-secondary.text-uppercase.m-t-0 Edit
+              .col-lg-6.pull-left.p-l-0.media.collapse
+                h3.m-b-0.m-t-0 Media 
+              .col-lg-6.text-xs-right.m-b-10.p-r-0.media.collapse
+                a(href='/campaign/media/' + values.id + '?check=1').btn.btn-sm.btn-secondary.text-uppercase.m-t-0 Edit
+              .col-lg-6.pull-left.p-l-0.team-members.collapse
+                h3.m-b-0.m-t-0 Team Members 
+              .col-lg-6.text-xs-right.m-b-10.p-r-0.team-members.collapse
+                a(href='/campaign/team-members/' + values.id + '?check=1').btn.btn-sm.btn-secondary.text-uppercase.m-t-0 Edit
+              .col-lg-6.pull-left.p-l-0.specifics.collapse
+                h3.m-b-0.m-t-0 Specifics 
+              .col-lg-6.text-xs-right.m-b-10.p-r-0.specifics.collapse
+                a(href='/campaign/specifics/' + values.id + '?check=1').btn.btn-sm.btn-secondary.text-uppercase.m-t-0 Edit
+              .col-lg-6.pull-left.p-l-0.perks.collapse
+                h3.m-b-0.m-t-0 Perks 
+              .col-lg-6.text-xs-right.mb30.p-r-0.perks.collapse
+                a(href='/campaign/perks/' + values.id + '?check=1').btn.btn-sm.btn-secondary.text-uppercase.m-t-0 Edit
+          .modal-footer
+    div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")#company_publish_confirm.modal.fade
+      div(role="document").modal-dialog
+        .modal-content
+          .modal-header
+            button(type="button" data-dismiss="modal" aria-label="Close").close
+              span(aria-hidden="true")
+                i.fa.fa-times
+            h2.text-lg-center.text-uppercase.text-md-center.text-xs-center.line-height-1.dosis.m-t-1.modal-title Are you sure you want to submit ?
+
+          .modal-body.m-b-2
+            .col-sm-12
+              .result-info-block.m-x-auto.text-xs-center
+                |  Once you submit, you will no longer have the ability to edit your Campaign
+                .info-btn-block.mb30
+                  a(href="#" data-dismiss="modal").btn.m-t-2.m-r-1.btn-secondary Cancel
+                  a(href="/campaign/thankyou/" + values.id).btn.m-t-2.btn-primary.text-uppercase Yes
+          .modal-footer

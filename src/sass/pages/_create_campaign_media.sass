@@ -18,7 +18,7 @@
 		input
 			max-width: rem(568)
 		.delete-section-container
-			right: rem(20)
+			right: 0
 			top: rem(-5)	
 		.add-article
 			margin-left: rem(9)
@@ -43,7 +43,7 @@
 				top: rem(-95)
 				left: rem(25)
 		.delete-section-container
-			right: rem(50)
+			right: 0
 			top: rem(-5)	
 	.photo-scroll
 		margin: 0 auto
@@ -231,12 +231,15 @@
 			margin-top: rem(18)
 			line-height: rem(15)
 			letter-spacing: rem(2.8)
-			min-height: rem(30)
 		.small
 			margin-top: rem(5)
 			color: $small-text
 			font-size: rem(11)
 			margin-bottom: rem(2)
+	.edit-team-members
+		position: absolute
+		right: 5px
+		top: 1px
 .form-group-m-b-0
 	.form-group
 		margin-bottom: 0
@@ -283,6 +286,8 @@
 			.add-section
 				top: rem(-5)!important
 				left: rem(-15)!important
+		.border-dropzone
+			min-height: 210px
 	.team-members
 		.custom-select
 			min-width: 100%!important
@@ -294,7 +299,7 @@
 @media only screen and (max-width : 768px)
 	.create-company-media
 		.border-dropzone
-			min-height: rem(164)
+			min-height: rem(160)
 		.all-gallery
 			.thumb-image-container
 				width: rem(120)
@@ -310,6 +315,7 @@
 		.btn.m-r-3
 			margin-right: 0!important
 		.border-dropzone
+			min-height: 150px
 			a
 				font-size: rem(10)
 
@@ -320,7 +326,10 @@
 			i
 				font-size: 10px
 				margin-top: 5px
-
+@media only screen and (max-width : 320px)
+	.create-company-media
+		.border-dropzone
+			min-height: 100px
 @media only screen and (max-width : 992px)
 	.campaign-specifics
 		.premoney_valuation

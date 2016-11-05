@@ -195,7 +195,7 @@ module.exports = {
       // If we have data attribute for a file  - we will
       // try to find url that match our size
 
-      if (values[name + '_data'] && attr.thumbSize) {
+      if (values[name + '_data'] && !$.isEmptyObject(values[name + '_data']) && attr.thumbSize) {
         let thumbnails = values[name + '_data'].thumbnails;
         return app.getThumbnail(
           attr.thumbSize,

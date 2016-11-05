@@ -13,6 +13,20 @@ module.exports = {
     },
   }),
 
+  footer: Backbone.View.extend({
+    template: require('./templates/footer.pug'),
+    render: function () {
+      this.$el.html(
+        this.template({
+          serverUrl: serverUrl,
+          user: app.user.toJSON(),
+          Urls: Urls,
+        })
+      );
+      return this;
+    },
+  }),
+
   profile: Backbone.View.extend({
     template: require('./templates/profile.pug'),
     events: {

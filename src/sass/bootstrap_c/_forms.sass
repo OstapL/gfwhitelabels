@@ -57,25 +57,23 @@ select.form-control
 		i 
 	.border-dropzone
 		border: dashed 1px $small-text
-		min-height: 169px
 		max-height: 800px
+		cursor: pointer
 		+mt(.2s)
+		&.gallery
+			min-height: 155px
 	
 		.p-dropzone
 			position: relative
 			left: 20px
-			top: 35px
+			top: 30px
+			color: $small-text
 		.img-dropzone
 			img
 				width: 100%
-		.dz-clickable
-			&:hover
-				color: $link-1-hover	
 
 	.active-border
 		border: dashed 1px $link-1-hover
-		.dz-clickable
-			color: $link-1-hover
 
 	.dragging-over
 		border: dashed 1px $dragging-hover-border
@@ -183,7 +181,7 @@ select.form-control
 			.input-value
 				@include ellipsis()
 				display: inline-block
-				max-width: 150px
+				max-width: 120px
 				text-decoration: underline
 				text-transform: capitalize
 
@@ -216,6 +214,10 @@ select.form-control
 				left: 0
 				top: rem(12)
 				font: normal normal normal 11px/1 FontAwesome
+	.has-error.sity-state-error
+		.help-block
+			top: 20px
+			left: 15px
 .date
 	.help-block
 		margin-left: 46%
