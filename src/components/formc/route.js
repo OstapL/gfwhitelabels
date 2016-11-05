@@ -84,6 +84,7 @@ module.exports = Backbone.Router.extend({
 
     $('#content').scrollTo();
     $.when(fieldsR, dataR).done((fields, data) => {
+      console.log('data is ', data);
       if(data) {
         data = data[0].team_members.filter(function(el) { return el.uuid == uuid})[0]
         data.formc_id = id;

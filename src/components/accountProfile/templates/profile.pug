@@ -13,7 +13,7 @@ include ../../../templates/mixins.pug
             form(method="post" action="").form.form-section
                 - var values = user;
 
-                +fieldDropzone("image", {
+                //+fieldDropzone("image", {
                   thumbSize: '255x135',
                   default: '/img/default/255x153.png',
                   text: user.first_name + ' ' + user.last_name,

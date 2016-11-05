@@ -2,7 +2,6 @@ if user.token != ""
     li.nav-item.user-info
         a.nav-link.notification.user-info-name
             span
-              - console.log(user)
               if user.image
                 img#user-thumbnail(src=app.getThumbnail('55x55', user.image_data.thumbnails) class="img-fluid img-circle")
             v#user_name.hidden-md-down #{ user.first_name } #{user.last_name}&nbsp;

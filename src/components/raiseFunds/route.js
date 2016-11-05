@@ -17,33 +17,32 @@ module.exports = Backbone.Router.extend({
 
       // ToDo
       // Rebuild this
-      var a1 = app.makeCacheRequest(raiseCapitalUrl + '/company', 'OPTIONS');
-      var a2 = app.makeCacheRequest(raiseCapitalUrl + '/company');
+      var optionsR = app.makeCacheRequest(authServer + '/user/company', 'OPTIONS');
+      var companyR = app.makeCacheRequest(authServer + '/user/company');
+      var campaignR = app.makeCacheRequest(authServer + '/user/campaign');
 
-      $.when(a1, a2).done((meta, model) => {
-        app.makeRequest(Urls['campaign-list']() + '/general_information')
-        .then((campaignData) => {
-          //console.log('campaignis', metaData, modelData, campaignData[0]);
-          $('body').scrollTo(); 
-          var i = new View.company({
-            el: '#content',
-            fields: meta[0].actions.POST,
-            // model: new Model.model(model[0][0] || {}),
-            model: model[0][0] || {},
-            campaign: campaignData[0] || {},
-          });
-
-          // ToDo
-          // Check if campaign are exists already
-          app.hideLoading();
-          i.render();
-          //app.views.campaign[id].render();
-          //app.cache[window.location.pathname] = i.$el.html();
-
-        }).fail(function(xhr, response, error) {
-          api.errorAction.call(this, $('#content'), xhr, response, error);
+      $.when(optionsR, companyR, campaignR).done((options, company, campaign) => {
+        //console.log('campaignis', metaData, modelData, campaignData[0]);
+        $('body').scrollTo(); 
+        debugger;
+        var i = new View.company({
+          el: '#content',
+          fields: options.fields,
+          // model: new Model.model(model[0][0] || {}),
+          model: company[0] || {},
+          campaign: campaign[0] || {},
         });
-      })
+
+        // ToDo
+        // Check if campaign are exists already
+        app.hideLoading();
+        i.render();
+        //app.views.campaign[id].render();
+        //app.cache[window.location.pathname] = i.$el.html();
+
+      }).fail(function(xhr, response, error) {
+        api.errorAction.call(this, $('#content'), xhr, response, error);
+      });
     } else {
       app.routers.navigate(
           '/account/login', {trigger: true, replace: true}
