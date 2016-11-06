@@ -82,6 +82,8 @@ mixin fieldBlock(name, data, attr)
                         if attr.hasOwnProperty('empty')
                             option(value=attr.empty.value) #{attr.empty.display}
                           
+                        - console.log(fields);
+                        - console.log(name);
                         each v in fields[name].choices
                             option(value=v.value selected=(v.value == values[name] ? "selected" : undefined)) #{v.display_name}
         else if attr.type == 'date' 
