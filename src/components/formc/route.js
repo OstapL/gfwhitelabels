@@ -349,7 +349,7 @@ module.exports = Backbone.Router.extend({
     const View = require('components/formc/views.js');
 
     let companyR = api.makeCacheRequest(raiseCapitalUrl + '/company', 'OPTIONS');
-    let campaignR = api.makeCacheRequest(raiseCapitalUrl + '/campaign/1/general_information', 'OPTIONS');
+    let campaignR = api.makeCacheRequest(raiseCapitalUrl + '/campaign', 'OPTIONS');
     let formcR = api.makeCacheRequest(formcServer + '/' + id + '/final-review', 'OPTIONS');
     let dataR = api.makeCacheRequest(formcServer + '/' + id + '/final-review');
 

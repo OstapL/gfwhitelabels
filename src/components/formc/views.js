@@ -1374,7 +1374,6 @@ module.exports = {
 
 
     render() {
-      debugger;
       let template = require('./templates/finalReview.pug');
       this.$el.html(
         template({

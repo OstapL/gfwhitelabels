@@ -12,6 +12,7 @@ include ../../../templates/mixins.pug
 - names.issuer_legal_name = 'company.name';
 - names.jurisdiction_of_organization = 'company.founding_state';
 - names.website = 'company.website'
+- names.corporate_structure = 'company.corporate_structure'
 - names.maximum_raise = 'campaign.maximum_raise'
 - names.minimum_raise = 'campaign.minimum_raise'
 - names.price_per_share = 'campaign.price_per_share'
@@ -72,9 +73,21 @@ include ../../../templates/mixins.pug
 -      return name.split('.').reduce((o,i)=>o[i], values);                            
 -    }                                                                              
 -  }
+- function  getSelectData(name) {
+-   var data = getData(name);
+-    if(name.indexOf('.') == -1) {
+-      return fields[name].choices[data];                                                           
+-    } else {                                                                       
+-      var f = name.split('.').reduce((o,i)=>o[i], fields);                            
+-      return f.validate.choices[data];
+-    }                                                                              
+-  }
 
 mixin editText(currentName)
   a(href="#" class="show-input" data-name=currentName).link-1 #{getData(names[currentName])}
+
+mixin editSelect(currentName)
+  a(href="#" class="show-select" data-name=currentName).link-1 #{getSelectData(names[currentName])}
 
 section.formc-review
   .container
@@ -127,9 +140,9 @@ section.formc-review
         h3.text-xs-center
           +editText('issuer_legal_name')
         h3.text-xs-center.m-b-0.m-t-0.pb10 A
-          a(href="#" class="show-input" data-name="jurisdiction_of_organization").link-1  #{values.company.founding_state}
+          +editSelect('jurisdiction_of_organization')
           | !{' '}
-          a(href="#" class="show-input" data-name="corporate_structure").link-1  #{values.company.corporate_structure}
+          +editSelect('corporate_structure')
         p.text-xs-center.m-b-1
           +editText('website')
         
@@ -249,7 +262,7 @@ section.formc-review
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
               p.font-weight-bold Type of security offered:
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
-              a(href="#" class="show-input" data-name="security_type").link-1 #{values.campaign.security_type}
+              +editSelect('security_type')
           .row
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
               p.font-weight-bold Voting rights:
