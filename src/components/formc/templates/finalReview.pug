@@ -1353,162 +1353,66 @@ section.formc-review
         h2.text-uppercase.text-xs-center.font-weight-bold.letter-spacing-normal.m-b-3 EXHIBIT C: BIOGRAPHIES
         p.pb10.text-indent Employment information from previous employers over the last three years for each of the Company’s officers is as follows:
         p.pb10
-          a(href="#" class="show-input" data-name="officer.1.first_name_officer.1.last_name").link-1 officer.1.first_name_officer.1.last_name
-        .table-responsive.m-t-1
-          table.table.table-bordered
-            theader
-              tr.bg-grey
-                th.text-xs-center Employer
-                th.text-xs-center Principal Business
-                th.text-xs-center Title
-                th.text-xs-center Responsibilities
-                th.text-xs-center Start Date
-                th.text-xs-center End Date
-            tbody
-              tr
-                td
-                  a(href="#" class="show-input" data-name="officer.1.employer.1").link-1 Officer.1.employer.1
-                td
-                  a(href="#" class="show-input" data-name="officer.1.employer_biz.1").link-1 Officer.1.employer_biz.1
-                td
-                  a(href="#" class="show-input" data-name="officer.1.employer_title.1").link-1 Officer.1.employer_title.1
-                td
-                  a(href="#" class="show-input" data-name="officer.1.employer_responsibilitiees.1").link-1 Officer.1.employer_responsibilitiees.1
-                td
-                  a(href="#" class="show-input" data-name="officer.1.position_start.1").link-1 Officer.1.position_start.1
-                td
-                  a(href="#" class="show-input" data-name="officer.1.position_end.1").link-1 Officer.1.position_end.1
-              tr
-                td
-                  a(href="#" class="show-input" data-name="officer.1.employer.2").link-1 Officer.1.employer.2
-                td
-                  a(href="#" class="show-input" data-name="officer.1.employer_biz.2").link-1 Officer.1.employer_biz.2
-                td
-                  a(href="#" class="show-input" data-name="officer.1.employer_title.2").link-1 Officer.1.employer_title.2
-                td
-                  a(href="#" class="show-input" data-name="officer.1.employer_responsibilitiees.2").link-1 Officer.1.employer_responsibilitiees.2
-                td
-                  a(href="#" class="show-input" data-name="officer.1.position_start.2").link-1 Officer.1.position_start.2
-                td
-                  a(href="#" class="show-input" data-name="officer.1.position_end.2").link-1 Officer.1.position_end.2
-        p.pb10
-          a(href="#" class="show-input" data-name="officer.2.first_name_officer.2.last_name").link-1 officer.2.first_name_officer.2.last_name
-        .table-responsive.m-t-1
-          table.table.table-bordered
-            theader
-              tr.bg-grey
-                th.text-xs-center Employer
-                th.text-xs-center Principal Business
-                th.text-xs-center Title
-                th.text-xs-center Responsibilities
-                th.text-xs-center Start Date
-                th.text-xs-center End Date
-            tbody
-              tr
-                td
-                  a(href="#" class="show-input" data-name="officer.2.employer.1").link-1 Officer.2.employer.1
-                td
-                  a(href="#" class="show-input" data-name="officer.2.employer_biz.1").link-1 Officer.2.employer_biz.1
-                td
-                  a(href="#" class="show-input" data-name="officer.2.employer_title.1").link-1 Officer.2.employer_title.1
-                td
-                  a(href="#" class="show-input" data-name="officer.2.employer_responsibilitiees.1").link-1 Officer.2.employer_responsibilitiees.1
-                td
-                  a(href="#" class="show-input" data-name="officer.2.position_start.1").link-1 Officer.2.position_start.1
-                td
-                  a(href="#" class="show-input" data-name="officer.2.position_end.1").link-1 Officer.2.position_end.1
-              tr
-                td
-                  a(href="#" class="show-input" data-name="officer.2.employer.2").link-1 Officer.2.employer.2
-                td
-                  a(href="#" class="show-input" data-name="officer.2.employer_biz.2").link-1 Officer.2.employer_biz.2
-                td
-                  a(href="#" class="show-input" data-name="officer.2.employer_title.2").link-1 Officer.2.employer_title.2
-                td
-                  a(href="#" class="show-input" data-name="officer.2.employer_responsibilitiees.2").link-1 Officer.2.employer_responsibilitiees.2
-                td
-                  a(href="#" class="show-input" data-name="officer.2.position_start.2").link-1 Officer.2.position_start.2
-                td
-                  a(href="#" class="show-input" data-name="officer.2.position_end.2").link-1 Officer.2.position_end.2 
+          each v,k in values.formc.team_members
+            if v.role[0] == 2
+              a(href="#" class="show-input" data-name="director.1.first_name_director.1.last_name").link-1 #{v.first_name}
+              .table-responsive.m-t-1
+                table.table.table-bordered
+                  theader
+                    tr.bg-grey
+                      th.text-xs-center Employer
+                      th.text-xs-center Principal Business
+                      th.text-xs-center Title
+                      th.text-xs-center Responsibilities
+                      th.text-xs-center Start Date
+                      th.text-xs-center End Date
+                  tbody
+                    if v.experiences
+                      each v1,k1 in v.experiences
+                        tr
+                          td
+                            a(href="#" class="show-input" data-name="director.1.employer.1").link-1 #{v1.employer}
+                          td
+                            a(href="#" class="show-input" data-name="director.1.employer_biz.1").link-1 #{v1.employer_principal}
+                          td
+                            a(href="#" class="show-input" data-name="director.1.employer_title.1").link-1 #{v1.title}
+                          td
+                            a(href="#" class="show-input" data-name="director.1.employer_responsibilitiees.1").link-1 #{v1.responsibilities}
+                          td
+                            a(href="#" class="show-input" data-name="director.1.position_start.1").link-1 #{v1.start_date_of_service}
+                          td
+                            a(href="#" class="show-input" data-name="director.1.position_end.1").link-1 #{v1.end_date_of_service}
         p.pb10.text-indent Employment information from previous employers over the last three years for each of the Company’s directors is as follows:
         p.pb10
-          a(href="#" class="show-input" data-name="director.1.first_name_director.1.last_name").link-1 director.1.first_name_director.1.last_name
-        .table-responsive.m-t-1
-          table.table.table-bordered
-            theader
-              tr.bg-grey
-                th.text-xs-center Employer
-                th.text-xs-center Principal Business
-                th.text-xs-center Title
-                th.text-xs-center Responsibilities
-                th.text-xs-center Start Date
-                th.text-xs-center End Date
-            tbody
-              tr
-                td
-                  a(href="#" class="show-input" data-name="director.1.employer.1").link-1 Director.1.employer.1
-                td
-                  a(href="#" class="show-input" data-name="director.1.employer_biz.1").link-1 Director.1.employer_biz.1
-                td
-                  a(href="#" class="show-input" data-name="director.1.employer_title.1").link-1 Director.1.employer_title.1
-                td
-                  a(href="#" class="show-input" data-name="director.1.employer_responsibilitiees.1").link-1 Director.1.employer_responsibilitiees.1
-                td
-                  a(href="#" class="show-input" data-name="director.1.position_start.1").link-1 Director.1.position_start.1
-                td
-                  a(href="#" class="show-input" data-name="director.1.position_end.1").link-1 Director.1.position_end.1
-              tr
-                td
-                  a(href="#" class="show-input" data-name="director.1.employer.2").link-1 Director.1.employer.2
-                td
-                  a(href="#" class="show-input" data-name="director.1.employer_biz.2").link-1 Director.1.employer_biz.2
-                td
-                  a(href="#" class="show-input" data-name="director.1.employer_title.2").link-1 Director.1.employer_title.2
-                td
-                  a(href="#" class="show-input" data-name="director.1.employer_responsibilitiees.2").link-1 Director.1.employer_responsibilitiees.2
-                td
-                  a(href="#" class="show-input" data-name="director.1.position_start.2").link-1 Director.1.position_start.2
-                td
-                  a(href="#" class="show-input" data-name="director.1.position_end.2").link-1 Director.1.position_end.2
-        p.pb10
-          a(href="#" class="show-input" data-name="director.2.first_name_director.2.last_name").link-1 director.2.first_name_director.2.last_name
-        .table-responsive.m-t-1
-          table.table.table-bordered
-            theader
-              tr.bg-grey
-                th.text-xs-center Employer
-                th.text-xs-center Principal Business
-                th.text-xs-center Title
-                th.text-xs-center Responsibilities
-                th.text-xs-center Start Date
-                th.text-xs-center End Date
-            tbody
-              tr
-                td
-                  a(href="#" class="show-input" data-name="director.2.employer.1").link-1 Director.2.employer.1
-                td
-                  a(href="#" class="show-input" data-name="director.2.employer_biz.1").link-1 Director.2.employer_biz.1
-                td
-                  a(href="#" class="show-input" data-name="director.2.employer_title.1").link-1 Director.2.employer_title.1
-                td
-                  a(href="#" class="show-input" data-name="director.2.employer_responsibilitiees.1").link-1 Director.2.employer_responsibilitiees.1
-                td
-                  a(href="#" class="show-input" data-name="director.2.position_start.1").link-1 Director.2.position_start.1
-                td
-                  a(href="#" class="show-input" data-name="director.2.position_end.1").link-1 Director.2.position_end.1
-              tr
-                td
-                  a(href="#" class="show-input" data-name="director.2.employer.2").link-1 Director.2.employer.2
-                td
-                  a(href="#" class="show-input" data-name="director.2.employer_biz.2").link-1 Director.2.employer_biz.2
-                td
-                  a(href="#" class="show-input" data-name="director.2.employer_title.2").link-1 Director.2.employer_title.2
-                td
-                  a(href="#" class="show-input" data-name="director.2.employer_responsibilitiees.2").link-1 Director.2.employer_responsibilitiees.2
-                td
-                  a(href="#" class="show-input" data-name="director.2.position_start.2").link-1 Director.2.position_start.2
-                td
-                  a(href="#" class="show-input" data-name="director.2.position_end.2").link-1 Director.2.position_end.2 
+          each v,k in values.formc.team_members
+            if v.role[0] == 1
+              a(href="#" class="show-input" data-name="director.1.first_name_director.1.last_name").link-1 #{v.first_name}
+              .table-responsive.m-t-1
+                table.table.table-bordered
+                  theader
+                    tr.bg-grey
+                      th.text-xs-center Employer
+                      th.text-xs-center Principal Business
+                      th.text-xs-center Title
+                      th.text-xs-center Responsibilities
+                      th.text-xs-center Start Date
+                      th.text-xs-center End Date
+                  tbody
+                    if v.experiences
+                      each v1,k1 in v.experiences
+                        tr
+                          td
+                            a(href="#" class="show-input" data-name="director.1.employer.1").link-1 #{v1.employer}
+                          td
+                            a(href="#" class="show-input" data-name="director.1.employer_biz.1").link-1 #{v1.employer_principal}
+                          td
+                            a(href="#" class="show-input" data-name="director.1.employer_title.1").link-1 #{v1.title}
+                          td
+                            a(href="#" class="show-input" data-name="director.1.employer_responsibilitiees.1").link-1 #{v1.responsibilities}
+                          td
+                            a(href="#" class="show-input" data-name="director.1.position_start.1").link-1 #{v1.start_date_of_service}
+                          td
+                            a(href="#" class="show-input" data-name="director.1.position_end.1").link-1 #{v1.end_date_of_service}
 
       // page 34
       section.page-formc-review.m-t-1
