@@ -1,6 +1,5 @@
 - 'use strict';
 include ../../../templates/mixins.pug
-//- include menu.pug
 include ../../../templates/fields_mixins.pug
 include ../../../templates/menuRaiseFund.pug
 
@@ -61,8 +60,6 @@ section.campaign-specifics.container.m-b-85
             icon: 'file',
             default: '/img/default' + suffix + '.png',
         }, fields.investor_presentation))
-        //- default: fileName && (fileName.endsWith('.pdf') || fileName.endsWith('.pptx')) ? '/img/default' + suffix + '.png' : '/img/MS-PowerPoint.png',
-        //- default: '/img/MS-PowerPoint.png',
 
       .row.border-top
 
