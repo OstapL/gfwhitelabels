@@ -27,15 +27,16 @@ section.create-perks.container
         .col-lg-12
           .row
             .articles
-              +fieldBlock("perks", '', {
-                class1: 'col-lg-3 col-md-4',
-                class2: 'col-lg-9 col-md-8',
-                type: 'json',
-                })
-              .col-lg-8.offset-lg-3.p-l-0
-                a(href="#" data-section='perks').link-2.add-section
-                  i.fa.fa-plus
-                  |  Add Another Perks Level
+              //- +fieldBlock("perks", '', {
+              //-   class1: 'col-lg-3 col-md-4',
+              //-   class2: 'col-lg-9 col-md-8',
+              //-   type: 'json',
+              //-   })
+              //- .col-lg-8.offset-lg-3.p-l-0
+              //-   a(href="#" data-section='perks').link-2.add-section
+              //-     i.fa.fa-plus
+              //-     |  Add Another Perks Level
+              |!{ templates.perks }
         .col-lg-12.pull-lg-right.p-r-0.m-t-3.text-lg-right.text-md-center.text-sm-center.text-xs-center
           // button(type="submit" data-href="/api/campaign/" + values.id).btn.btn-secondary.text-uppercase.m-r-3.onPreview preview
           button(type="submit").btn.btn-primary.text-uppercase save

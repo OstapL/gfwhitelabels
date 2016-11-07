@@ -1019,7 +1019,7 @@ module.exports = {
           'submit form': 'onSubmit',
           'click .onPreview': onPreviewAction,
           'click .submit_form': submitCampaign,
-        }, jsonActions.events, leavingConfirmationHelper.events, menuHelper.events),
+        }, jsonActions.events, leavingConfirmationHelper.events, menuHelper.events, addSectionHelper.events),
       // urlRoot: serverUrl + Urls['campaign-list']() + '/perks',
       urlRoot: Urls['campaign-list']() + '/perks',
 
@@ -1065,7 +1065,16 @@ module.exports = {
 
       initialize(options) {
         this.fields = options.fields;
-        this.perksIndex = 1;
+        // this.perksIndex = 1;
+        this.labels = {
+          perks: {
+            amount: 'If an Investor Invests Over',
+            perk: 'Describe the Perk',
+          },
+        };
+        this.assignLabels();
+        this.createIndexes();
+        this.buildJsonTemplates('raiseFunds');
         this.$el.on('keypress', ':input:not(textarea)', function (event) {
           if (event.keyCode == 13) {
             event.preventDefault();
@@ -1099,12 +1108,13 @@ module.exports = {
                 fields: this.fields,
                 // values: this.model.toJSON(),
                 values: this.model,
+                templates: this.jsonTemplates,
               })
         );
         return this;
       },
 
-    }, leavingConfirmationHelper.methods, menuHelper.methods)),
+    }, leavingConfirmationHelper.methods, menuHelper.methods, addSectionHelper.methods)),
 
   thankYou: Backbone.View.extend({
     el: '#content',

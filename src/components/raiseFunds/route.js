@@ -215,13 +215,15 @@ module.exports = Backbone.Router.extend({
       const Model = require('components/campaign/models.js');
       const View = require('components/raiseFunds/views.js');
 
-      var a1 = app.makeCacheRequest(Urls['campaign-list']() + '/perks/' + id, 'OPTIONS');
-      var a2 = app.makeCacheRequest(Urls['campaign-list']() + '/perks/' + id);
+      // var a1 = app.makeCacheRequest(Urls['campaign-list']() + '/perks/' + id, 'OPTIONS');
+      // var a2 = app.makeCacheRequest(Urls['campaign-list']() + '/perks/' + id);
+      var a1 = app.makeCacheRequest(raiseCapitalUrl + '/campaign/' + id + '/perks', 'OPTIONS');
+      var a2 = app.makeCacheRequest(raiseCapitalUrl + '/campaign/' + id + '/perks');
 
       $.when(a1, a2).done((meta, model) => {
         var i = new View.perks({
           el: '#content',
-          fields: meta[0].actions.PUT,
+          fields: meta[0].fields,
           // model: new Model.model(model[0]),
           model: model[0],
         });
