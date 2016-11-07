@@ -1,7 +1,7 @@
 - 'use strict';
 include ../../../templates/mixins.pug
-include menu.pug
-//- include ../../../templates/menuRaiseFund.pug
+//- include menu.pug
+include ../../../templates/menuRaiseFund.pug
 
 +breadcrumbs('Create Company', '', 
     [
@@ -12,6 +12,7 @@ include menu.pug
 )
 
 section.campaign-specifics.container.m-b-85
+  +menu('raise_fund', 'specifics')
 
   //START RIGHT BLOCK
   .col-lg-10.offset-lg-1.col-xl-8.offset-xl-0.push-xl-3
@@ -232,4 +233,4 @@ section.campaign-specifics.container.m-b-85
         // button(type="submit").btn.btn-secondary.text-uppercase.m-r-3.m-t-0 Fields Review
         button(type="submit" data-method="PATCH").btn.btn-primary.text-uppercase.submit-specifics save and continue
           i.fa.fa-angle-right
-  +menu('specifics')
+  //- +menu('specifics')

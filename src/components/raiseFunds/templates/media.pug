@@ -1,8 +1,8 @@
 - 'use strict';
 include ../../../templates/mixins.pug
 include ../../../templates/fields_mixins.pug
-include menu.pug
-//- include ../../../templates/menuRaiseFund.pug
+//- include menu.pug
+include ../../../templates/menuRaiseFund.pug
 
 +breadcrumbs('Create Company', '', 
     [
@@ -12,6 +12,7 @@ include menu.pug
     ]
 )
 section.create-company-media.container.media-container
+  +menu('raise_fund', 'media')
   //START RIGHT BLOCK
   .col-lg-10.offset-lg-1.col-xl-8.offset-xl-0.push-xl-3
     h2.text-uppercase.dosis.text-lg-center.text-xs-center.dosis.m-t-0.m-b-3 Media
@@ -72,4 +73,4 @@ section.create-company-media.container.media-container
         // button(type="submit").btn.btn-secondary.text-uppercase.m-r-3.m-t-0 Fields Review
         button(type="submit" data-method="PATCH").btn.btn-primary.text-uppercase save and continue
           i.fa.fa-angle-right
-  +menu('media')
+  //- +menu('media')
