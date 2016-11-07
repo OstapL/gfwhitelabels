@@ -193,6 +193,7 @@ module.exports = Backbone.Router.extend({
       var a3 = app.makeCacheRequest(authServer + '/user/company');
 
       $.when(a1, a2, a3).done((meta, model, company) => {
+        model[0].id = id;
         model[0].company = company[0];
         var i = new View.specifics({
           el: '#content',
@@ -222,6 +223,7 @@ module.exports = Backbone.Router.extend({
       var a2 = app.makeCacheRequest(raiseCapitalUrl + '/campaign/' + id + '/perks');
 
       $.when(a1, a2).done((meta, model) => {
+        model[0].id = id;
         var i = new View.perks({
           el: '#content',
           fields: meta[0].fields,
