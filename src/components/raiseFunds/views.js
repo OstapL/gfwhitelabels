@@ -925,6 +925,18 @@ module.exports = {
 
       initialize(options) {
         this.fields = options.fields;
+        this.labels = {
+          investor_presentation_data: '',
+          minimum_raise: 'Our Minimum Total Raise is',
+          maximum_raise: 'Our Maximum Total Raise is',
+          minimum_increment: 'The Minimum investment is',
+          length_days: 'Length of the Campaign',
+          investor_presentation: 'Upload an Investor Presentation',
+        };
+        this.assignLabels();
+        this.createIndexes();
+        this.buildJsonTemplates('raiseFunds');
+
         this.$el.on('keypress', ':input:not(textarea)', function (event) {
           if (event.keyCode == 13) {
             event.preventDefault();
@@ -1000,7 +1012,7 @@ module.exports = {
 
         return this;
       },
-    }, leavingConfirmationHelper.methods, menuHelper.methods, dropzoneHelpers.methods)),
+    }, leavingConfirmationHelper.methods, menuHelper.methods, dropzoneHelpers.methods, addSectionHelper.methods)),
 
   perks: Backbone.View.extend(_.extend({
       events: _.extend({

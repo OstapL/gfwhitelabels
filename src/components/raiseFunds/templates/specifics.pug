@@ -26,41 +26,41 @@ section.campaign-specifics.container.m-b-85
 
       .row
         .col-lg-6.col-l-65
-          +fieldBlock("minimum_raise", '', {
+          +fieldTextLabel("minimum_raise", _.extend({
             class1: 'col-lg-6 col-md-12', 
             class2: 'col-lg-6 col-md-12', 
             type: 'text',
             placeholder: '$',
-            })
+            }, fields.minimum_raise))
         .col-lg-6.col-l-65
-          +fieldBlock("maximum_raise", '', {
+          +fieldTextLabel("maximum_raise", _.extend({
             class1: 'col-lg-5 col-md-12', 
             class2: 'col-lg-7 col-md-12', 
             type: 'text',
             placeholder: '$',
-            })
+            }, fields.maximum_raise))
       .row
         .col-lg-12
-          +fieldBlock("minimum_increment", '', {
+          +fieldTextLabel("minimum_increment", _.extend({
              class1: 'col-lg-3 col-md-12',
              class2: 'col-lg-9 col-md-12',
              type: 'text',
              placeholder: '$  People can invest this amount or more  ',
-             })
+             }, fields.minimum_increment))
       .row
         .col-lg-12
           +fieldChoiceLabel('length_days', _.extend({
             class1: 'col-lg-3 col-md-12 text-md-left',
             class2: 'col-lg-9 col-md-12',
           }, fields.length_days))
-
-      //.text-lg-right.img-ppt
+      .text-lg-right.img-ppt
+        +fileDropzone("investor_presentation", _.extend({
             class1: 'col-lg-3',
             class2: 'col-lg-9 p-l-1 p-r-1',
             text: 'Drop your PPT or PDF here or click to upload',
             icon: 'file',
             default: '/img/default' + suffix + '.png',
-        }, fields.investor_presentation))
+        }, fields.investor_presentation, { label: 'Upload an Investor Presentation'}))
 
       .row.border-top
 
