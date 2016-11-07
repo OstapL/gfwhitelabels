@@ -86,6 +86,7 @@ let app = {
   getVideoId(url) {
     try {
       var provider = url.match(/https:\/\/(:?www.)?(\w*)/)[2];
+      provider = provider.toLowerCase();
       var id;
 
       if (provider == 'youtube') {
@@ -96,7 +97,7 @@ let app = {
         console.log(url, 'Takes a YouTube or Vimeo URL');
       }
       
-      return id;
+      return {id: id, provider: provider};
     } catch (err) {
       console.log(url, 'Takes a YouTube or Vimeo URL');
     }
@@ -124,7 +125,6 @@ app.trigger('userReady');
 
 const popoverTemplate = '<div class="popover  divPopover"  role="tooltip"><span class="popover-arrow"></span> <h3 class="popover-title"></h3> <span class="icon-popover"><i class="fa fa-info-circle" aria-hidden="true"></i></span> <span class="popover-content"> XXX </span></div>';
 
-/*
 $('body').on('mouseover', 'div.showPopover', function () {
   var $el = $(this);
   if ($el.attr('aria-describedby') == null) {
@@ -132,12 +132,14 @@ $('body').on('mouseover', 'div.showPopover', function () {
       html: true,
       template: popoverTemplate,
       placement: 'top',
-      trigger: 'focus',
+      trigger: 'hover',
     });
     $(this).popover('show');
   }
 });
-*/
+$('body').on('mouseout', 'div.showPopover', function () {
+    //$(this).popover('hide');
+});
 
 $('body').on('focus', 'input.showPopover', function () {
   var $el = $(this);
@@ -146,7 +148,7 @@ $('body').on('focus', 'input.showPopover', function () {
       html: true,
       template: popoverTemplate.replace('divPopover', 'inputPopover'),
       placement: 'top',
-      trigger: 'focus',
+      trigger: 'hover',
     });
     $(this).popover('show');
   }
@@ -159,7 +161,7 @@ $('body').on('focus', 'textarea.showPopover', function () {
       html: true,
       template: popoverTemplate.replace('divPopover', 'textareaPopover'),
       placement: 'top',
-      trigger: 'focus',
+      trigger: 'hover',
     });
     $(this).popover('show');
   }
@@ -227,6 +229,7 @@ $('body').on('click', 'a', function (event) {
   } else if (href && href != '' && href.substr(0, 1) != '#' &&
     href.substr(0, 4) != 'http' &&
     href.substr(0, 3) != 'ftp' &&
+    href.substr(0, 7) != 'mailto:' &&
     href != 'javascript:void(0);' &&
     href != 'javascript:void(0)' &&
     event.currentTarget.getAttribute('target') == null) {
@@ -237,9 +240,14 @@ $('body').on('click', 'a', function (event) {
     // overise we will trigger app router function
     var url = href;
 
+    // Clear page
     $('#content').undelegate();
     $('form').undelegate();
     $('.popover').remove();
+
+    $('.modal-backdrop').remove();
+    $('.modal-open').removeClass('modal-open');
+
     if (app.cache.hasOwnProperty(url) == false) {
       app.routers.navigate(
           url, { trigger: true, replace: false }

@@ -107,7 +107,7 @@ module.exports = {
 
     _(schema).each((attr, name) => {
       if (attr.type == 'nested' && attr.required == true) {
-        _(attr.schema).each((attr, subname) => {
+        _(attr.schema.validate).each((attr, subname) => {
           if (fixedRegex.indexOf(attr.type) != -1) {
             _(data[name]).each((jsonFields, index) => {
               try {

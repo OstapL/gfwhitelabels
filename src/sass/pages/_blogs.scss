@@ -38,12 +38,13 @@ ul.list-blog {
 			}
 
 
-			h3 {
-				font-weight: 400;
-				margin-top: rem(0);
-				margin-bottom: rem(5);
-				letter-spacing: 2.2px;
-			}
+			h3.blog-item-title {
+                font-weight: $blog-item-title-weight;
+                font-size: $blog-item-title-f-size;
+                margin-top: rem(0);
+                margin-bottom: rem(5);
+                letter-spacing: $blog-item-title-let-space;
+            }
 
 			p {
 				padding-bottom: rem(18);
@@ -148,7 +149,7 @@ ul.list-blog {
   
 .single-blog {
 	.title-blog {
-		font-weight: 400;
+		font-weight: $blog-item-title-weight;
 	}
 	
 	.blog-img {

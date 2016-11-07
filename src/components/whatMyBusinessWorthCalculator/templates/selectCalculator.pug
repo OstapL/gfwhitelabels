@@ -1,45 +1,40 @@
 include ../../../templates/mixins.pug
 
 +breadcrumbs("What's My Business Worth?", 'New startup',
-    [
-        ['Home', '/'], 
-        ["What's My Business Worth?", '/calculator/selectYourBusiness'],
-        ["New Startup", '']
-    ]
+  [
+    ['Home', '/'], 
+    ["What's My Business Worth?", '/calculator/selectYourBusiness'],
+    ["New Startup", '']
+  ]
 )
 
 .container.calculator-container.select-business
-    .row
-        .offset-lg-3.col-lg-6
-            .warning-block.m0
-                i.fa.fa-exclamation-triangle
-                span.warning-text
-                    | There are two types of securities your business can issue on GrowthFountain:&nbsp;
-                    b Common Equity
-                    | &nbsp;or&nbsp;
-                    b PayBack Share.
+  .row
+    .offset-lg-3.col-lg-6
+      .warning-block.m0
+        i.fa.fa-exclamation-triangle
+        span.warning-text
+          | There are two types of securities your business can issue on GrowthFountain:&nbsp;
+          b Common Equity
+          | &nbsp;or&nbsp;
+          b Revenue Share.
 
-    .row
-        .offset-lg-3.col-lg-6.mt45
-            p
-                b Common Equity
-                |  represents an ownership share in your business. If your Company is not expecting to generate positive cash flow for the first 12-24 months, or if you expect to reinvest the cash your business generates for the first several years, then Common Equity might be the right security for your Company.
+  .row
+    .offset-lg-3.col-lg-6.mt45
+      p.text-justify
+        b Common Equity
+        |  represents an ownership share in your business. If your Company is not expecting to generate positive cash flow for the first 12-24 months, or if you expect to reinvest the cash your business generates for the first several years, then Common Equity might be the right security for your Company.
 
-    .row
-        .offset-lg-3.col-lg-6.text-xs-center.mt25
-            a(
-                href="/calculator/capitalraise/intro"
-            ).btn.btn-lg.btn-primary.text-uppercase.sm-font-xs Startup Business Valuation Calculator
+  .row
+    .offset-lg-3.col-lg-6.text-xs-center.mt25
+      a(href="/calculator/capitalraise/intro").btn.btn-lg.btn-primary.text-uppercase.sm-font-xs Startup Business Valuation Calculator
 
+  .row
+    .offset-lg-3.col-lg-6.mt45
+      p.text-justify
+        b Revenue Share &nbsp;
+        | is a GrowthFountain created revenue sharing security; it is a form of investment contract in which the Company shares 5% of its revenue annually with investors. If you expect your business to produce positive cash flow right out of the gate and don’t intend to reinvest in expansion, Revenue Share may be a good option for you.
 
-    .row
-        .offset-lg-3.col-lg-6.mt45
-            p
-                b PayBack Share &nbsp;
-                | is a GrowthFountain created revenue sharing security; it is a form of investment contract in which the Company shares 5% of its revenue annually with investors. If you expect your business to produce positive cash flow right out of the gate and don’t intend to reinvest in expansion, PayBack Share may be a good option for you.
-
-    .row
-        .offset-lg-3.col-lg-6.text-xs-center.mt25
-            a(
-                href="/calculator/paybackshare/step-1"
-            ).btn.btn-lg.btn-primary.text-uppercase payback share calculator
+  .row
+    .offset-lg-3.col-lg-6.text-xs-center.mt25
+      a(href="/calculator/paybackshare/step-1").btn.btn-lg.btn-primary.text-uppercase revenue share calculator

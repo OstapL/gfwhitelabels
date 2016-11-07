@@ -1,137 +1,109 @@
 include ../../../templates/mixins.pug
 
 +breadcrumbs('Capital Raise Calculator ', 'step 2',
-    [
-        ['Home', '/'],
-        ["Capital Raise Calculator", '']
-    ]
+  [
+    ['Home', '/'],
+    ["Capital Raise Calculator", '']
+  ]
 )
 
 .container.calculator-container
-    .row
-        .col-xs-12
-            ul.list-inline.top-breadcrambs.mb45.capitalraise
-                li
-                    a(href="/calculator/whatmybusinessworth/intro").btn.text-uppercase Intro
-                li
-                    a(href="/calculator/whatmybusinessworth/step-1").btn.text-uppercase step 1
-                li
-                    a(href="/calculator/whatmybusinessworth/step-2").current.btn.text-uppercase step 2
-                li
-                    a(href="/calculator/whatmybusinessworth/finish").btn.text-uppercase finish
+  .row
+    .col-xs-12
+      ul.list-inline.top-breadcrambs.mb45.capitalraise
+        li
+          a(href="/calculator/whatmybusinessworth/intro").btn.text-uppercase Intro
+        li
+          a(href="/calculator/whatmybusinessworth/step-1").btn.text-uppercase step 1
+        li
+          a(href="/calculator/whatmybusinessworth/step-2").current.btn.text-uppercase step 2
+        li
+          a(href="/calculator/whatmybusinessworth/finish").btn.text-uppercase finish
 
-    .row
-        .offset-lg-3.col-lg-6
-            form(method="post" action="").js-calc-form
-                .form-body.clearfix
+  .row
+    .offset-lg-3.col-lg-6
+      form(method="post" action="").js-calc-form
+        .form-body.clearfix
 
-                    .form-group.row
-                        label(for="monthlyOperatingTwoYears").col-lg-12 What do you expect your monthly operating expenses to average over the subsequent 12 months? (i.e. months 13 - 24) &nbsp;&nbsp;
-                            i(aria-hidden="true")#second_year_expenses.fa.fa-question-circle.text-muted
+          .form-group.row
+            label(for="monthlyOperatingTwoYears").col-lg-12 What do you expect your monthly operating expenses to average over the subsequent 12 months? (i.e. months 13 - 24) &nbsp;&nbsp;
+              i(aria-hidden="true",data-toggle="tooltip",data-original-title="<b>Operating Expense.</b> The sum of a business's operating expenses for a period of time, such as a month or year. In throughput accounting, the cost accounting aspect of the theory of constraints (TOC), operating expense is the money spent turning  nventory into throughput.").fa.fa-question-circle.text-muted
 
-                        .col-lg-12
-                            input#monthlyOperatingTwoYears.form-control.js-field(
-                                value= formatPrice(data.monthlyOperatingTwoYears),
-                                type='text',
-                                placeholder='Second Year Expenses',
-                                data-input-mask='price',
-                                data-model-value='monthlyOperatingTwoYears',
-                                data-current-value= data.monthlyOperatingTwoYears)
+            .col-lg-12
+              input(
+                value= formatPrice(data.monthlyOperatingTwoYears),
+                type='text',
+                placeholder='Second Year Expenses',
+                autocomplete='off'
+                data-input-mask='price',
+                data-model-value='monthlyOperatingTwoYears',
+                data-current-value= data.monthlyOperatingTwoYears)#monthlyOperatingTwoYears.form-control.js-field
 
-                    .form-group.row
-                        label(for="workingCapital").col-lg-12  How much working capital do you need to generate your projected revenue over the next 24 months?) &nbsp;&nbsp;
-                            i(aria-hidden="true")#generate_projected_revenue.fa.fa-question-circle.text-muted
+          .form-group.row
+            label(for="workingCapital").col-lg-12  How much working capital do you need to generate your projected revenue over the next 24 months?) &nbsp;&nbsp;
+              i(aria-hidden="true",data-toggle="tooltip",data-original-title="<b>Working Capital.</b> The amount of capital needed to carry on a business.  This represents the operating liquidity and is calculated as current assets minus current liabilities; accounts receivable plus inventory minus accounts payable.").fa.fa-question-circle.text-muted
 
-                        .col-lg-12.mb20
-                            input#workingCapital.form-control.js-bootstrap-slider(
-                                type='text',
-                                data-slider-value= data.workingCapital,
-                                data-model-value='workingCapital')
+            .col-lg-12.mb20
+              input(
+                type='text',
+                data-slider-value= data.workingCapital,
+                data-model-value='workingCapital')#workingCapital.form-control.js-bootstrap-slider
 
-                    .form-group.row
-                        label(for="additionalOperating").col-lg-12 If your revenue comes in 50% higher than you are currently projecting, how much in additional monthly operating expenses would you need? &nbsp;&nbsp;
-                            i(aria-hidden="true")#annual_expenses.fa.fa-question-circle.text-muted
+          .form-group.row
+            label(for="additionalOperating").col-lg-12 If your revenue comes in 50% higher than you are currently projecting, how much in additional monthly operating expenses would you need? &nbsp;&nbsp;
+              i(aria-hidden="true",data-toggle="tooltip",data-original-title="<b>Operating Expenses.</b> The sum of a business's operating expenses for a period of time, such as a month or year. In throughput accounting, the cost accounting aspect of the theory of constraints (TOC), operating expense is the money spent turning inventory into throughput.").fa.fa-question-circle.text-muted
 
-                        .col-lg-12
-                            input#additionalOperating.form-control.js-field(
-                                value= formatPrice(data.additionalOperating),
-                                type='text',
-                                placeholder='Annual Expenses',
-                                data-input-mask='price',
-                                data-model-value='additionalOperating',
-                                data-current-value= data.additionalOperating)
+            .col-lg-12
+              input(
+                value= formatPrice(data.additionalOperating),
+                type='text',
+                placeholder='Annual Expenses',
+                autocomplete='off'
+                data-input-mask='price',
+                data-model-value='additionalOperating',
+                data-current-value= data.additionalOperating)#additionalOperating.form-control.js-field
 
-                    .form-group.row
-                        label(for="capitalExpenditures").col-lg-12 Are you expecting any Capital Expenditures over the next 24 months? &nbsp;&nbsp;
-                            i(aria-hidden="true")#capital_expenditures.fa.fa-question-circle.text-muted
+          .form-group.row
+            label(for="capitalExpenditures").col-lg-12 Are you expecting any Capital Expenditures over the next 24 months? &nbsp;&nbsp;
+              i(aria-hidden="true",data-toggle="tooltip",data-original-title="<b>Capital Expenditures.</b> Money spent by a business or organization on acquiring or maintaining fixed assets, such as land, buildings, and equipment.").fa.fa-question-circle.text-muted
 
-                        .col-lg-12
-                            input#capitalExpenditures.form-control.js-field(
-                                value= formatPrice(data.capitalExpenditures),
-                                type='text',
-                                placeholder='Capital Expenditures',
-                                data-input-mask='price',
-                                data-model-value='capitalExpenditures',
-                                data-current-value= data.capitalExpenditures)
+            .col-lg-12
+              input(
+                value= formatPrice(data.capitalExpenditures),
+                type='text',
+                placeholder='Capital Expenditures',
+                autocomplete='off'
+                data-input-mask='price',
+                data-model-value='capitalExpenditures',
+                data-current-value= data.capitalExpenditures)#capitalExpenditures.form-control.js-field
 
-                    .form-group.row
-                        label(for="taxRate").col-lg-12 What Tax Rate do you expect to pay on your operating profit? (including federal, state, local, and any other taxes applicable to the operation of your business)
+          .form-group.row
+            label(for="taxRate").col-lg-12 What Tax Rate do you expect to pay on your operating profit? (including federal, state, local, and any other taxes applicable to the operation of your business)
 
-                        .col-lg-12.mb20
-                            input#taxRate.form-control.js-bootstrap-slider(
-                                type='text',
-                                data-slider-value= data.taxRate,
-                                data-model-value='taxRate')
+            .col-lg-12.mb20
+              input(
+                type='text',
+                data-slider-value= data.taxRate,
+                data-model-value='taxRate')#taxRate.form-control.js-bootstrap-slider
 
-                    .form-group.row
-                        label(for="annualInterest").col-lg-12 What do you expect your annual interest expense to be over the next 2 years?
+          .form-group.row
+            label(for="annualInterest").col-lg-12 What do you expect your annual interest expense to be over the next 2 years?
 
-                        .col-lg-12
-                            input#annualInterest.form-control.js-field(
-                                value= formatPrice(data.annualInterest),
-                                type='text',
-                                placeholder='Annual Interest Expense',
-                                data-input-mask='price',
-                                data-model-value='annualInterest',
-                                data-current-value= data.annualInterest)
+            .col-lg-12
+              input(
+                value= formatPrice(data.annualInterest),
+                type='text',
+                placeholder='Annual Interest Expense',
+                autocomplete='off'
+                data-input-mask='price',
+                data-model-value='annualInterest',
+                data-current-value= data.annualInterest)#annualInterest.form-control.js-field
 
-                    .form-group.row.clearfix.m0
-                        .col-xs-6.mt30
-                            a(href='/calculator/whatmybusinessworth/step-1').link-3 Go back
-                            p.text-muted Don&apos;t worry we saved this info
+          .form-group.row.clearfix.m0
+            .col-xs-6.mt30
+              a(href='/calculator/whatmybusinessworth/step-1').link-3 Go back
 
-                        .col-xs-6.mt30
-                            .controls
-                                button(type="submit").btn.btn-primary.pull-right.text-uppercase Next
-                                // add class .pointer-events-none to disable all events for this button
-
-    //START step-2 popovers content
-
-    // for #second_year_expenses
-    .popover-content-second-year-expenses
-        i.fa.fa-info-circle
-        span
-            b Operating Expense.
-            | The sum of a business's operating expenses for a period of time, such as a month or year. In throughput accounting, the cost accounting aspect of the theory of constraints (TOC), operating expense is the money spent turning  nventory into throughput.
-
-    // for #generate_projected_revenue
-    .popover-content-generate-projected-revenue
-        i.fa.fa-info-circle
-        span
-            b Working Capital.
-            | The amount of capital needed to carry on a business.  This represents the operating liquidity and is calculated as current assets minus current liabilities; accounts receivable plus inventory minus accounts payable.
-
-    // for #annual_expenses
-    .popover-content-annual-expenses
-        i.fa.fa-info-circle
-        span
-            b Operating Expenses.
-            | The sum of a business's operating expenses for a period of time, such as a month or year. In throughput accounting, the cost accounting aspect of the theory of constraints (TOC), operating expense is the money spent turning inventory into throughput.
-
-
-    // for #capital_expenditures
-    .popover-content-capital-expenditures
-        i.fa.fa-info-circle
-        span
-            b Capital Expenditures.
-            | Money spent by a business or organization on acquiring or maintaining fixed assets, such as land, buildings, and equipment.
+            .col-xs-6.mt30
+              .controls
+                button(type="submit").btn.btn-primary.pull-right.text-uppercase Next
+                // add class .pointer-events-none to disable all events for this button

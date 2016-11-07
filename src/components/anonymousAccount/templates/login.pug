@@ -1,42 +1,36 @@
 section.login
-    .container
+  .container
+    .col-lg-12
+      h2.dosis.text-uppercase.text-sm-center.text-xs-center.mt50 Log in
+        p.small-text New to GrowthFountain?
+          a(href="/account/signup").link-3  Sign up
+    
+    .col-xl-4.col-lg-6.col-sm-8.offset-sm-2.col-md-8.offset-md-2.offset-lg-3.offset-xl-4
+      form(action="" metod="post").form-section.login-form
         .col-lg-12
-            h2.dosis.text-uppercase.text-sm-center.text-xs-center.mt50 Log in
-                p.small-text New to GrowthFountain?
-                    a(href="/account/signup").link-3  Sign up
-        
-        .col-lg-4.offset-lg-4
-            form(action="" metod="post").form-section.login-form
-                .col-lg-12
-                    .form-group.row.clearfix.required
-                        input(type="email"
-                        placeholder="E-mail"
-                        name="email").form-control
-                    .form-group.row.clearfix.required
-                        input(type="password"
-                        placeholder="Password"
-                        name="password").form-control
-                .col-lg-12
-                    .row.forgot
-                        a(href="/account/reset").link-3 Forgot your password?
-                .col-lg-12
-                    .row.text-sm-center.text-xs-center
-                        button(type="submit").btn.btn-primary.text-uppercase Log in
-                .col-lg-12.border-bottom.or
-                    span or
-                .social-btn.col-lg-12
-                    a(data-original-title="facebook"
-                    href="#"
-                    ).btn.btn-block.btn-facebook.text-uppercase
-                        i.fa.fa-facebook
-                        |  Log In with Facebook
-                    a(data-original-title="Linkedin"
-                    href="#"
-                    ).btn.btn-block.btn-linkedin.text-uppercase
-                        i.fa.fa-linkedin
-                        |  Log In with linkedin
-                    a(data-original-title="Google Plus"
-                    href="#"
-                    ).btn.btn-block.btn-google.text-uppercase
-                        i.fa.fa-google-plus
-                        |  Log In with Google
+          .form-group.row.clearfix.required
+            input(type="email"
+            placeholder="E-mail"
+            name="email").form-control
+          .form-group.row.clearfix.required
+            input(type="password"
+            placeholder="Password"
+            name="password").form-control
+        .col-lg-12
+          .row.forgot
+            a(href="/account/reset").link-3 Forgot your password?
+        .col-lg-12
+          .row.text-sm-center.text-xs-center
+            button(type="submit").btn.btn-primary.text-uppercase Log in
+        .col-lg-12.border-bottom.or
+          span or
+        .social-btn.col-lg-12
+          a(data-original-title="facebook" href="#").btn.btn-block.btn-facebook.text-uppercase
+            i.fa.fa-facebook
+            |  Log In with Facebook
+          a(data-original-title="Linkedin" href="#").btn.btn-block.btn-linkedin.text-uppercase
+            i.fa.fa-linkedin
+            |  Log In with linkedin
+          a(data-original-title="Google Plus" href="#").btn.btn-block.btn-google.text-uppercase
+            i.fa.fa-google-plus
+            |  Log In with Google

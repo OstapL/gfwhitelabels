@@ -62,7 +62,7 @@ module.exports = {
     // if view already have some data - extend that info
     if(this.hasOwnProperty('model')) {
       _.extend(this.model, data);
-      data = Object.assign({}, this.model)
+      data = _.extend({}, this.model)
     }
 
     /*
@@ -74,7 +74,6 @@ module.exports = {
        };
        this.model.validation = newValidators;
     */
-
     this.$('.help-block').remove();
     if (e.target.dataset.method != 'PATCH' && !validation.validate(this.fields, data, this)) {
       _(validation.errors).each((errors, key) => {

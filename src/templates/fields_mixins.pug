@@ -68,6 +68,8 @@ mixin prepareField(name, attr)
   - attr = attr ? attr : fields[name];
   - attr.value = attr.value ? attr.value : values ? values[name] : '';
 
+  if attr.placeholder  == null
+    - attr.placeholder = attr.label
   if attr.required == true
     - attr.label += '<span class="color-red">*</span>'
 

@@ -1,7 +1,7 @@
 - 'use strict';
 include ../../../templates/mixins.pug
-//- include menu.pug
-include ../../../templates/menuRaiseFund.pug
+include menu.pug
+//- include ../../../templates/menuRaiseFund.pug
 
 +breadcrumbs('Create Company', '', 
     [
@@ -12,12 +12,11 @@ include ../../../templates/menuRaiseFund.pug
 )
 
 section.create-perks.container
-  +menu('campaign', 'perks')
 
   //START RIGHT BLOCK
-  .col-lg-8
+  .col-lg-10.offset-lg-1.col-xl-8.offset-xl-0.push-xl-3
     h2.text-uppercase.text-lg-center.text-xs-center.dosis.m-t-0 perks
-    form(metod="post" action="").form-section
+    form(data-method="PATCH" action="").form-section
       .form-group
         .col-sm-12.p-r-0
           .warning-block  
@@ -38,6 +37,7 @@ section.create-perks.container
                   i.fa.fa-plus
                   |  Add Another Perks Level
         .col-lg-12.pull-lg-right.p-r-0.m-t-3.text-lg-right.text-md-center.text-sm-center.text-xs-center
-              // button(type="submit" data-href="/api/campaign/" + values.id).btn.btn-secondary.text-uppercase.m-r-3.onPreview preview
-              button(type="submit").btn.btn-primary.text-uppercase save and continue
-                i.fa.fa-angle-right
+          // button(type="submit" data-href="/api/campaign/" + values.id).btn.btn-secondary.text-uppercase.m-r-3.onPreview preview
+          button(type="submit").btn.btn-primary.text-uppercase save
+            i.fa.fa-angle-right
+  +menu('perks')

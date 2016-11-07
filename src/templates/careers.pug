@@ -1,62 +1,48 @@
 include mixins.pug
 
 +breadcrumbs('Careers', '', 
-    [
-        ['Home', '/'],
-        ['Careers', ''],
-    ]
+  [
+    ['Home', '/'],
+    ['Careers', ''],
+  ]
 )
 
 section.text_block 
-    .container
+  .container
+    .row
+      .col-lg-3.hidden-md-down  
+        .page_title.border-bottom.mb25
+          h4.text-uppercase.dosis ABOUT US
+        ul.list-unstyled.custom
+          li
+            a(href='/pg/overview').d-inline-block.w-100.pb10 Overview
+          li
+            a(href='/pg/team').d-inline-block.w-100.pb10 #{teamName}
+          li.display-partners
+            a(href='/pg/partners').d-inline-block.w-100.pb10 Partners
+          li
+            a(href='/pg/contact').d-inline-block.w-100.pb10 Contact Us
+          li
+            a(href='/pg/careers').d-inline-block.w-100.pb10 Careers
+          li
+            a(href='/pg/news').d-inline-block.w-100.pb10 In the News
+          li
+            a(href='/pg/faq').d-inline-block.w-100.pb10 FAQ
+          //- li
+          //-     // у последнего елемента <a> клас pb10 отстутствует
+          //-     a.d-inline-block.w-100(href='/pg/blogs') Blog
+
+      .col-lg-9
         .row
-            .col-lg-3 
-                .page_title.border-bottom.mb25
-                    h4.text-uppercase.dosis ABOUT US
-                ul.list-unstyled.custom
-                    li
-                        a.d-inline-block.w-100.pb10(href='/pg/overview') Overview
-                    li
-                        a.d-inline-block.w-100.pb10(href='/pg/team') #{teamName}
-                    li.display-partners
-                        a.d-inline-block.w-100.pb10(href='/pg/partners') Partners
-                    li
-                        a.d-inline-block.w-100.pb10(href='/pg/contact') Contact Us
-                    li
-                        a.d-inline-block.w-100.pb10(href='') Careers
-                    li
-                        a.d-inline-block.w-100.pb10(href='/pg/faq') FAQ
-                    li
-                        a.d-inline-block.w-100.pb10(href='/pg/news') In the News
-                    li
-                        // у последнего елемента <a> клас pb10 отстутствует
-                        a.d-inline-block.w-100(href='/pg/blogs') Blog
-
-            .col-lg-9
-                .row
-                    .col-lg-12.text-xs-center
-                        h2.text-uppercase.dosis.m0 CAREERS
-                        
-                .row
-                    .col-lg-12.mt25
-                        p.text-xs-center We're always looking for additional team members who understand how revolutionary and transformative the crowfunding initiative is.  If you have great ideas on how to improve investors' experience and the quality of our business offerings, we want to hear from you!
-
-                .row
-                    .col-lg-12.mt45
-                        h4.opensans.letter-spacing-0.m0
-                            b Accounts Payable Manager
-                            .small-text.text-muted.pt3
-                                | New York, NY, Posted 10 March, 2015
-
-                .row
-                    .col-lg-12.mt15
-                        p Accounts Payable Manager $80,000 We seek an Accounts Payable Manager who has experience in an A/P for our F&A department in our Memphis headquarters, and is able to motivate a team of A/P specialists in a fast paced environment. We offer an excellent starting salary, and benefits including matching 401(k).
-
-                .row
-                    .col-lg-12.mt15
-                        .form-group.row.clearfix.m0 
-                            .col-lg-12
-                                .controls  
-                                    a(
-                                        href="mailto:info@growthfountain.com"
-                                    ).btn.btn-primary.text-uppercase apply today 
+          .col-lg-12.text-xs-center
+            h2.text-uppercase.dosis.m0 CAREERS
+            
+        .row
+          .col-lg-12.mt25
+            p.text-xs-center We're always looking for additional team members who understand how revolutionary and transformative crowdfunding is to investing and capital-raising.  If you have great ideas on how to improve investors' experience and the quality of our business offerings, we want to hear from you!
+        .row
+          .col-lg-12.m-t-3
+            .form-group.row.clearfix.m0 
+              .col-lg-12.text-xs-center
+                .controls  
+                  a(href="mailto:info@growthfountain.com").btn.btn-primary.text-uppercase apply today 
