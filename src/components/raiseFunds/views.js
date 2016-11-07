@@ -859,7 +859,7 @@ module.exports = {
         'click .onPreview': onPreviewAction,
         'click .submit_form': submitCampaign,
         'click .submit-specifics': 'checkMinMaxRaise',
-      }, leavingConfirmationHelper.events, menuHelper.events),
+      }, leavingConfirmationHelper.events, menuHelper.events, dropzoneHelpers.events),
 
       checkMinMaxRaise(e) {
         let min = this.$('input[name=minimum_raise]').val();
@@ -948,13 +948,12 @@ module.exports = {
                 fields: this.fields,
                 // values: this.model.toJSON(),
                 values: this.model,
-                dropzoneHelpers: dropzoneHelpers,
+                dropzoneHelpers: dropzoneHelpers.methods,
               })
         );
 
         const Model = require('components/campaign/models.js');
-        dropzoneHelpers.createFileDropzone(
-            dropzone,
+        dropzoneHelpers.methods.createFileDropzone(
             'investor_presentation',
             'investor_presentation', '',
             (data) => {
@@ -1001,7 +1000,7 @@ module.exports = {
 
         return this;
       },
-    }, leavingConfirmationHelper.methods, menuHelper.methods)),
+    }, leavingConfirmationHelper.methods, menuHelper.methods, dropzoneHelpers.methods)),
 
   perks: Backbone.View.extend(_.extend({
       events: _.extend({
