@@ -81,6 +81,7 @@ module.exports = {
       this.stateField = this.$('.js-state');
       this.zipCodeField = this.$('#zip_code');
 
+      /*
       dropzoneHelpers.createImageDropzone(
         dropzone,
         'image', 
@@ -100,6 +101,7 @@ module.exports = {
           });
         }
       );
+      */
       /*
          app.createFileDropzone(
          dropzone,

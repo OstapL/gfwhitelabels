@@ -28,34 +28,27 @@ module.exports = Backbone.Router.extend({
       const Model = require('components/company/models.js');
       const View = require('components/raiseFunds/views.js');
 
-      // ToDo
-      // Rebuild this
-      var a1 = app.makeCacheRequest(raiseCapitalUrl + '/company', 'OPTIONS');
-      var a2 = app.makeCacheRequest(raiseCapitalUrl + '/company');
+      const optionsR = app.makeCacheRequest(raiseCapitalUrl + '/company', 'OPTIONS');
+      const companyR = app.makeCacheRequest(authServer + '/user/company');
+      const campaignR = app.makeCacheRequest(authServer + '/user/campaign');
 
-      $.when(a1, a2).done((meta, model) => {
-        app.makeRequest(Urls['campaign-list']() + '/general_information')
-        .then((campaignData) => {
-          $('body').scrollTo(); 
-          var i = new View.company({
-            el: '#content',
-            fields: meta[0].actions.POST,
-            // model: new Model.model(model[0][0] || {}),
-            model: model[0][0] || {},
-            campaign: campaignData[0] || {},
-          });
-
-          // ToDo
-          // Check if campaign are exists already
-          app.hideLoading();
-          i.render();
-          //app.views.campaign[id].render();
-          //app.cache[window.location.pathname] = i.$el.html();
-
-        }).fail(function(xhr, response, error) {
-          api.errorAction.call(this, $('#content'), xhr, response, error);
+      $.when(optionsR, companyR, campaignR).done((options, company, campaign) => {
+        $('body').scrollTo(); 
+        var i = new View.company({
+          el: '#content',
+          fields: options[0].fields,
+          model: company[0] || {},
+          campaign: campaign[0] || {},
         });
-      })
+
+        app.hideLoading();
+        i.render();
+        //app.views.campaign[id].render();
+        //app.cache[window.location.pathname] = i.$el.html();
+
+      }).fail(function(xhr, response, error) {
+        api.errorAction.call(this, $('#content'), xhr, response, error);
+      });
     } else {
       app.routers.navigate(
           '/account/login', {trigger: true, replace: true}

@@ -142,6 +142,19 @@ const onPreviewAction = function(e) {
   }, 100);
 };
 
+Backbone.View.prototype.assignLabels = function() {
+  _(this.fields).each((el, key) => {
+    if(el.type == 'nested') {
+      _(el.schema).each((subel, subkey) => {
+        if(this.labels[key])
+          subel.label = this.labels[key][subkey];
+      });
+    } else {
+      el.label = this.labels[key];
+    }
+  });
+}
+
 module.exports = {
   company: Backbone.View.extend(_.extend({
     // urlRoot: serverUrl + Urls['company-list'](),
@@ -169,6 +182,25 @@ module.exports = {
           return false;
         }
       });
+      this.labels = {
+        name: 'Legal Name of Company',
+        industry: 'Industry',
+        founding_state: 'Jurisdiction of Incorporation / Organization',
+        tagline: 'Tagline',
+        description: 'About Us',
+        corporate_structure: 'Corporate Structure',
+        founding_date: 'Founding date',
+        address_1: 'Street Address',
+        address_2: 'Optional Address',
+        zip_code: 'Zip code',
+        phone: 'Phone',
+        website: 'Website',
+        twitter: 'Twitter',
+        facebook: 'Facebook',
+        instagram: 'Instagram',
+        linkedin: 'Linkedin',
+      };
+      this.assignLabels();
     },
 
     submit(e) {
@@ -218,7 +250,6 @@ module.exports = {
           serverUrl: serverUrl,
           Urls: Urls,
           fields: this.fields,
-          // values: this.model.toJSON(),
           values: this.model,
           user: app.user.toJSON(),
           campaign: this.campaign,

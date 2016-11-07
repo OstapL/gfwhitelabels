@@ -1,4 +1,5 @@
 include ../../../templates/mixins.pug
+include ../../../templates/fields_mixins.pug
 include ../../../templates/menuRaiseFund.pug
 
 
@@ -11,76 +12,75 @@ include ../../../templates/menuRaiseFund.pug
 )
 
 section.create-company.container.m-b-85
-  +menu('company', 'create')
 
   //START RIGHT BLOCK
   .col-lg-10.offset-lg-1.col-xl-8.offset-xl-0.push-xl-3
     h2.text-uppercase.text-lg-center.text-xs-center.m-t-0.dosis Company
     form(metod="post" action="").form-section
 
-      +fieldBlock("name", '', {
-        class1: 'col-lg-3 col-md-12 p-t-0 text-md-left',
+      +fieldTextLabel("name", _.extend({
+        class1: 'col-lg-3 col-md-12 p-t-0 text-md-left text-lg-right',
         class2: 'col-lg-9 col-md-12',
         type: 'text',
         placeholder: 'Company Legal Name',
-        })
-      +fieldBlock("industry", '', {
-        class1: 'col-lg-3 col-md-12 text-md-left',
+        }, fields.name))
+      +fieldTextLabel("industry", _.extend({
+        class1: 'col-lg-3 col-md-12 text-md-left text-lg-right',
         class2: 'col-lg-9 col-md-12',
         type: 'choice',
         empty: {display: 'Choose Industry', value: ''},
-        })
-      +fieldBlock("founding_state", '', {
-        class1: 'col-lg-3 col-md-12 big-label-text text-md-left',
+        }, fields.industry))
+      +fieldTextLabel("founding_state", _.extend({
+        class1: 'col-lg-3 col-md-12 big-label-text text-md-left text-lg-right',
         class2: 'col-lg-9 col-md-12',
         type: 'choice',
         empty: {display: 'Choose State', value: ''},
-        })
-      +fieldBlock("tagline", '', {
-        class1: 'col-lg-3 col-md-12 text-md-left',
+        }, fields.founding_state))
+      +fieldTextLabel("tagline", _.extend({
+        class1: 'col-lg-3 col-md-12 text-md-left text-lg-right',
         class2: 'col-lg-9 col-md-12',
         type: 'text',
         placeholder: 'Your Company Slogan',
         maxlength: 90,
-        })
-      +fieldBlock("description", '', {
-        class1: 'col-lg-3 col-md-12 text-md-left',
+        }, fields.tagline))
+      +fieldTextLabel("description", _.extend({
+        class1: 'col-lg-3 col-md-12 text-md-left text-lg-right',
         class2: 'col-lg-9 col-md-12',
         type: 'textarea',
         placeholder: 'Your Company Description',
-        })
+        }, fields.description))
       .row
         .col-lg-6.col-xs-12.castom-select-5.form-group-m-b-0
-          +fieldBlock("corporate_structure", '', {
+          +fieldTextLabel("corporate_structure", _.extend({
             class1: 'col-lg-6',
             class2: 'col-lg-6',
             type: 'choice',
             help_text: 'C-corps can choose to issue Common Equity or a Revenue Share. LLC’s can only issue a Revenue Share',
             empty: {display: 'Choose', value: ''},
-          })
+          }, fields.corporate_structure))
         .col-lg-6.col-xs-12.date-input.pull-right.required
           .col-date.form-group-m-b-0
-            +fieldBlock("founding_date", '', {
+            +fieldTextLabel("founding_date", _.extend({
               class1: 'col-lg-5 col-md-3 p-l-0 p-r-0',
               class2: 'col-lg-7 col-md-8 pull-md-right',
-            })
+            }, fields.founding_date))
       .border-bottom
-      +fieldBlock("address_1", '', {
-        class1: 'col-lg-3 col-md-12 text-md-left',
+      +fieldTextLabel("address_1", _.extend({
+        class1: 'col-lg-3 col-md-12 text-md-left text-lg-right',
         class2: 'col-lg-9 col-md-12',
         type: 'text',
-        })
-      +fieldBlock("address_2", '', {
-        class1: 'col-lg-3 col-md-12 text-md-left',
+        }, fields.address_1))
+      +fieldTextLabel("address_2", _.extend({
+        class1: 'col-lg-3 col-md-12 text-md-left text-lg-right',
         class2: 'col-lg-9 col-md-12',
         type: 'text',
-        })
+        }, fields.address_2))
       .row
         .col-lg-6.col-l-65
-          +fieldBlock("zip_code", '', {
-            class1: 'col-lg-6',
+          +fieldTextLabel("zip_code", _.extend({
+            class1: 'col-lg-6 text-lg-right',
             class2: 'col-lg-6',
-            })
+            }, fields.zip_code))
         .col-lg-5.city_states.required.sity-state-error
           input(type='hidden' name='state' value=values.state)#state
           input(type='hidden' name='city' value=values.city)#city
@@ -92,45 +92,45 @@ section.create-company.container.m-b-85
               i.fa.fa-pencil-square-o.link-1
       .row.m-b-0
         .col-lg-6.col-l-65
-          +fieldBlock("phone", '', {
-            class1: 'col-lg-6 col-md-12 text-md-left', 
+          +fieldTextLabel("phone", _.extend({
+            class1: 'col-lg-6 col-md-12 text-md-left text-lg-right',
             class2: 'col-lg-6 col-md-12', 
             type: 'text',
-            })
+            }, fields.phone))
         .col-lg-6.col-l-65
-          +fieldBlock("website", '', {
-            class1: 'col-lg-5 col-md-12 text-md-left', 
+          +fieldTextLabel("website", _.extend({
+            class1: 'col-lg-5 col-md-12 text-md-left text-lg-right',
             class2: 'col-lg-7 col-md-12', 
             type: 'text',
             placeholder: 'http://www.',
-            })
+            }, fields.website))
       .border-bottom.m-t-2
       .row.col-l-65.m-b-0
         .col-lg-6
-          +fieldBlock("twitter", '', {
-            class1: 'col-lg-6 col-md-12 text-md-left', 
+          +fieldTextLabel("twitter", _.extend({
+            class1: 'col-lg-6 col-md-12 text-md-left text-lg-right', 
             class2: 'col-lg-6 col-md-12', 
             type: 'text',
-            })
+            }, fields.twitter))
         .col-lg-6
-          +fieldBlock("facebook", '', {
-            class1: 'col-lg-5 col-md-12 text-md-left', 
+          +fieldTextLabel("facebook", _.extend({
+            class1: 'col-lg-5 col-md-12 text-md-left text-lg-right', 
             class2: 'col-lg-7 col-md-12', 
             type: 'text',
-            })
+            }, fields.facebook))
       .row.m-b-0.col-l-65
         .col-lg-6
-          +fieldBlock("instagram", '', {
-            class1: 'col-lg-6 col-md-12 text-md-left', 
+          +fieldTextLabel("instagram", _.extend({
+            class1: 'col-lg-6 col-md-12 text-md-left text-lg-right', 
             class2: 'col-lg-6 col-md-12', 
             type: 'text',
-            })
+            }, fields.instagram))
         .col-lg-6
-          +fieldBlock("linkedin", '', {
-            class1: 'col-lg-5 col-md-12 text-md-left', 
+          +fieldTextLabel("linkedin", _.extend({
+            class1: 'col-lg-5 col-md-12 text-md-left text-lg-right', 
             class2: 'col-lg-7 col-md-12', 
             type: 'text',
-            })
+            }, fields.linkedin))
       .row.m-t-2.pull-lg-right.text-md-center.text-sm-center.text-xs-center
         .col-lg-12
         if campaign.id

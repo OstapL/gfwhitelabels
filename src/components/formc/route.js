@@ -84,6 +84,7 @@ module.exports = Backbone.Router.extend({
 
     $('#content').scrollTo();
     $.when(fieldsR, dataR).done((fields, data) => {
+      console.log('data is ', data);
       if(data) {
         data = data[0].team_members.filter(function(el) { return el.uuid == uuid})[0]
         data.formc_id = id;
@@ -347,15 +348,22 @@ module.exports = Backbone.Router.extend({
   finalReview(id) {
     const View = require('components/formc/views.js');
 
-    let fieldsR = api.makeCacheRequest(formcServer + '/' + id + '/final-review', 'OPTIONS');
+    let companyR = api.makeCacheRequest(raiseCapitalUrl + '/company', 'OPTIONS');
+    let campaignR = api.makeCacheRequest(raiseCapitalUrl + '/campaign', 'OPTIONS');
+    let formcR = api.makeCacheRequest(formcServer + '/' + id + '/final-review', 'OPTIONS');
     let dataR = api.makeCacheRequest(formcServer + '/' + id + '/final-review');
 
-    $.when(fieldsR, dataR).done((fields, data) => {
+    $.when(companyR, campaignR, formcR, dataR).done((company, campaign, formc, data) => {
       data[0].id = id;
+      const fields = {
+        company: company[0].fields,
+        campaign: campaign[0].fields,
+        formc: formc[0].fields,
+      };
       const i = new View.finalReview({
         el: '#content',
         model: data[0],
-        fields: fields[0].fields,
+        fields: fields
       });
       i.render();
       app.hideLoading();
