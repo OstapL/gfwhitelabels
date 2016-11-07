@@ -215,8 +215,6 @@ module.exports = Backbone.Router.extend({
       const Model = require('components/campaign/models.js');
       const View = require('components/raiseFunds/views.js');
 
-      // var a1 = app.makeCacheRequest(Urls['campaign-list']() + '/perks/' + id, 'OPTIONS');
-      // var a2 = app.makeCacheRequest(Urls['campaign-list']() + '/perks/' + id);
       var a1 = app.makeCacheRequest(raiseCapitalUrl + '/campaign/' + id + '/perks', 'OPTIONS');
       var a2 = app.makeCacheRequest(raiseCapitalUrl + '/campaign/' + id + '/perks');
 
