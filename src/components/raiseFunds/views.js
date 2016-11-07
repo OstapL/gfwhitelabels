@@ -828,7 +828,7 @@ module.exports = {
         'click .onPreview': onPreviewAction,
         'click .submit_form': submitCampaign,
         'click .submit-specifics': 'checkMinMaxRaise',
-      }, leavingConfirmationHelper.events, menuHelper.events),
+      }, leavingConfirmationHelper.events, menuHelper.events, dropzoneHelpers.events),
 
       checkMinMaxRaise(e) {
         let min = this.$('input[name=minimum_raise]').val();
@@ -904,6 +904,7 @@ module.exports = {
 
       updateSecurityType(e) {
         let val = e.currentTarget.value;
+        console.log(val);
         $('.security_type_list').hide();
         $('.security_type_'  + val).show();
       },
@@ -917,13 +918,13 @@ module.exports = {
                 fields: this.fields,
                 // values: this.model.toJSON(),
                 values: this.model,
-                dropzoneHelpers: dropzoneHelpers,
+                dropzoneHelpers: dropzoneHelpers.methods,
               })
         );
 
         const Model = require('components/campaign/models.js');
-        dropzoneHelpers.createFileDropzone(
-            dropzone,
+        dropzoneHelpers.methods.createFileDropzone(
+            // dropzone,
             'investor_presentation',
             'investor_presentation', '',
             (data) => {
@@ -961,16 +962,16 @@ module.exports = {
           }
         }
 
-        if (this.model.company.corporate_structure == 2) {
-          this.$('input[type=radio][name=security_type][value=0]').prop('disabled', true);
-          this.$('input[type=radio][name=security_type][value=1]').attr('checked', true);
-          $('.security_type_list').hide();
-          $('.security_type_1').show();
-        }        
+        // if (this.model.company.corporate_structure == 2) {
+        //   this.$('input[type=radio][name=security_type][value=0]').prop('disabled', true);
+        //   this.$('input[type=radio][name=security_type][value=1]').attr('checked', true);
+        //   $('.security_type_list').hide();
+        //   $('.security_type_1').show();
+        // }        
 
         return this;
       },
-    }, leavingConfirmationHelper.methods, menuHelper.methods)),
+    }, leavingConfirmationHelper.methods, menuHelper.methods, dropzoneHelpers.methods)),
 
   perks: Backbone.View.extend(_.extend({
       events: _.extend({
