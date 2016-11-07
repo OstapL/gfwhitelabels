@@ -904,7 +904,6 @@ module.exports = {
 
       updateSecurityType(e) {
         let val = e.currentTarget.value;
-        console.log(val);
         $('.security_type_list').hide();
         $('.security_type_'  + val).show();
       },
