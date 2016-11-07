@@ -62,6 +62,8 @@ include ../../../templates/mixins.pug
 - names.material_information= 'formc.material_information'
 - names.descrption_material_information= 'formc.descrption_material_information'
 
+- names.use_of_net_proceeds_minimum= 'formc.use_of_net_proceeds_minimum'
+- names.use_of_net_proceeds_maximum= 'formc.use_of_net_proceeds_maximum'
 - function  getData(name) {
 -     if(name == null) alert('name not found')
 -    if(name.indexOf('.') == -1) {
@@ -867,13 +869,13 @@ section.formc-review
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u Assuming A Minimum Raise
         p
-          a(href="#" class="show-input" data-name="use_of_net_proceeds_minimum").link-1 use_of_net_proceeds_minimum
+          +editText('use_of_net_proceeds_minimum')
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u  Assuming A Maximum Raise
         p.pb10.logic [LOGIC: Exclude if no max raise]
         p.pb10.text-indent In the case that the Offering is oversubscribed and closes with the maximum amount achieved, the Company anticipates using the proceeds in the following manner: 
         p.pb10
-          a(href="#" class="show-input" data-name="use_of_net_proceeds_maximum").link-1 use_of_net_proceeds_maximum
+          +editText('use_of_net_proceeds_maximum')
         p.pb10.text-indent The following table reflects our anticipated estimated use of proceeds:
         .table-responsive.m-t-1
           table.table.table-bordered
