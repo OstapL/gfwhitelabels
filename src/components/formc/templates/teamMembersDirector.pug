@@ -103,25 +103,28 @@ section.formc-team-members-director.container.m-b-85
         }, fields.employer_principal_businesss))
 
       .row
-      .col-lg-6.col-md-12.required
-        .col-lg-6.text-lg-right.text-md-left.p-t-0
-          label.p-t-0.m-b-0 Employer Start Date
+      .row.required
+        .col-lg-3.text-lg-right.text-md-left.p-t-0
+          label.p-t-0.m-b-0.p-l-1 Employer Start Date
 
-        #employer_start_date.col-lg-6.p-r-0
+        #employer_start_date.col-lg-4.p-r-0
           .row
             +fieldDateMonth("employer_start_date", {
-              class: 'col-lg-6 p-r-0',
+              class: 'col-lg-4 p-r-0',
               placeholder: 'MM',
             })
             +fieldDateYear("employer_start_date", {
-              class: 'col-lg-6 p-r-0',
+              class: 'col-lg-4 p-r-0',
               placeholder: 'YYYY',
             })
-      .border-bottom.m-t-3.m-b-3
+      .row
+        .col-xl-12
+          .border-bottom.m-t-3.m-b-3
           
       |!{ templates.positions }
       |!{ templates.experiences }
 
       .row.m-t-3
-        .text-md-center.text-sm-center-text-xs-center
-          button(type='submit').btn.btn-primary.text-uppercase.pull-lg-right Save
+        .col-xl-12
+          .text-md-center.text-sm-center-text-xs-center
+            button(type='submit').btn.btn-primary.text-uppercase.pull-lg-right Save
