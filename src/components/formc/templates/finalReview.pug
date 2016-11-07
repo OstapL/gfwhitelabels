@@ -440,45 +440,21 @@ section.formc-review
                 th.text-xs-center.w-30 Tenure
                 th.text-xs-center.w-40 Title and Responsibilities
             tbody
-              tr
-                td.text-xs-center
-                  a(href="#" class="show-input" data-name="officer_first_name").link-1 Officer.1.last_name
-                  br
-                  a(href="#" class="show-input" data-name="officer_last_name").link-1 Officer.1.last_name
-                td.text-xs-center
-                  a(href="#" class="show-input" data-name="officer_start_date").link-1 officer.1.start_date
-                  br
-                  a(href="#" class="show-input" data-name="officer_end_date ").link-1 officer.1.end_date
-                td.text-xs-center
-                  a(href="#" class="show-input" data-name="officer_title").link-1 officer.1.title
-                  br
-                  a(href="#" class="show-input" data-name="officer_responsibilities").link-1 officer.1.responsibilities
-              tr
-                td.text-xs-center
-                  a(href="#" class="show-input" data-name="officer.2.first_name").link-1 Officer.2.first_name
-                  br
-                  a(href="#" class="show-input" data-name="officer.2.last_name").link-1 Officer.2.last_name
-                td.text-xs-center
-                  a(href="#" class="show-input" data-name="officer.2.start_date").link-1 officer.2.start_date
-                  br
-                  a(href="#" class="show-input" data-name="officer.2.end_date").link-1 officer.2.end_date
-                td.text-xs-center
-                  a(href="#" class="show-input" data-name="officer.2.title").link-1 officer.2.title
-                  br
-                  a(href="#" class="show-input" data-name="officer.2.responsibilities").link-1 officer.2.responsibilities
-              tr
-                td.text-xs-center
-                  a(href="#" class="show-input" data-name="officer.3.first_name ").link-1 Officer.3.first_name
-                  br
-                  a(href="#" class="show-input" data-name="officer.3.last_name").link-1 Officer.3.last_name
-                td.text-xs-center
-                  a(href="#" class="show-input" data-name="officer.3.start_date").link-1 officer.3.start_date
-                  br
-                  a(href="#" class="show-input" data-name="officer.3.end_date ").link-1 officer.3.end_date
-                td.text-xs-center
-                  a(href="#" class="show-input" data-name="officer.3.title").link-1 officer.3.title
-                  br
-                  a(href="#" class="show-input" data-name="officer.3.responsibilities").link-1 officer.3.responsibilities
+              each v,k in values.formc.team_members
+                if v.role[0] == 2
+                  tr
+                    td.text-xs-center
+                      a(href="#" class="show-input" data-name="officer_first_name").link-1 #{v.first_name}
+                      br
+                      a(href="#" class="show-input" data-name="officer_last_name").link-1 #{v.last_name}
+                    td.text-xs-center
+                      a(href="#" class="show-input" data-name="officer_start_date").link-1 #{v.board_service_start_date}
+                      br
+                      a(href="#" class="show-input" data-name="officer_end_date ").link-1 #{v.board_service_end_date}
+                    td.text-xs-center
+                      a(href="#" class="show-input" data-name="officer_title").link-1 #{v.title}
+                      br
+                      a(href="#" class="show-input" data-name="officer_responsibilities").link-1 #{v.responsibilities}
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u Board of Directors
         p.pb10.text-indent The following information has been provided by the Company as true and correct regarding each of the Company’s directors (and any person performing a similar function):
@@ -490,45 +466,25 @@ section.formc-review
                 th.text-xs-center.w-30 Dates of Board Service (Year Begin – Year End)
                 th.text-xs-center.w-40 Principal Occupation + Employer & Title
             tbody
-              tr
-                td.text-xs-center
-                  a(href="#" class="show-input" data-name="director.1.first_name").link-1 director.1.first_name
-                  br
-                  a(href="#" class="show-input" data-name="director.1.last_name").link-1 director.1.last_name
-                td.text-xs-center
-                  a(href="#" class="show-input" data-name="director.1.service_start ").link-1 Director.1.service_start
-                  br
-                  a(href="#" class="show-input" data-name="director.1.service_end").link-1 Director.1.service_end
-                td.text-xs-center
-                  a(href="#" class="show-input" data-name="director.1.occupation").link-1 Director.1.occupation
-                  br
-                  a(href="#" class="show-input" data-name="director.1.employer").link-1 director.1.employer, director.1.title
-              tr
-                td.text-xs-center
-                  a(href="#" class="show-input" data-name="director.2.first_name ").link-1 director.2.first_name
-                  br
-                  a(href="#" class="show-input" data-name="director.2.last_name").link-1 director.2.last_name
-                td.text-xs-center
-                  a(href="#" class="show-input" data-name="director.2.service_start ").link-1 Director.2.service_start
-                  br
-                  a(href="#" class="show-input" data-name="director.2.service_end").link-1 Director.2.service_end
-                td.text-xs-center
-                  a(href="#" class="show-input" data-name="director.2.occupation").link-1 Director.2.occupation,
-                  br
-                  a(href="#" class="show-input" data-name="director.2.employer").link-1 director.2.employer, director.1.title
-              tr
-                td.text-xs-center
-                  a(href="#" class="show-input" data-name="director.3.first_name ").link-1 director.3.first_name
-                  br
-                  a(href="#" class="show-input" data-name="director.3.last_name").link-1 director.3.last_name
-                td.text-xs-center
-                  a(href="#" class="show-input" data-name="director.3.service_start").link-1 Director.3.service_start
-                  br
-                  a(href="#" class="show-input" data-name="director.3.service_end").link-1 Director.3.service_end
-                td.text-xs-center
-                  a(href="#" class="show-input" data-name="director.3.occupation").link-1 Director.3.occupation,
-                  br
-                  a(href="#" class="show-input" data-name="director.3.employer").link-1 director.3.employer, director.1.title
+              each v,k in values.formc.team_members
+                if v.role[0] == 1
+                  tr
+                    td.text-xs-center
+                      a(href="#" class="show-input" data-name="director.1.first_name").link-1 #{v.first_name}
+                      br
+                      a(href="#" class="show-input" data-name="director.1.last_name").link-1 #{v.last_name}
+                    td.text-xs-center
+                      //each v,k in values.formc.team_members.business_experiences
+                      a(href="#" class="show-input" data-name="director.1.service_start ").link-1 #{v.start_date_of_service}
+                      br
+                      a(href="#" class="show-input" data-name="director.1.service_end").link-1 #{v.end_date_of_service}
+                    td.text-xs-center
+                      a(href="#" class="show-input" data-name="director.1.occupation").link-1 #{v.end_date_of_service}
+                      br
+                      a(href="#" class="show-input" data-name="director.1.employer").link-1 #{v.employer}
+                      br
+                      a(href="#" class="show-input" data-name="director.1.employer").link-1 #{v.title}
+            
 
       // page 7
       section.page-formc-review.m-t-1
@@ -549,28 +505,19 @@ section.formc-review
                 th.text-xs-center Number Held
                 th.text-xs-center % of Voting Power
             tbody
-              tr
-                td.text-xs-center
-                  a(href="#" class="show-input" data-name="holder.1.first_name").link-1 Holder.1.first_name
-                  br
-                  a(href="#" class="show-input" data-name="holder.1.last_name").link-1 Holder.1.last_name
-                td.text-xs-center
-                  a(href="#" class="show-input" data-name="holder.1.class_shares").link-1 Holder.1.class_shares
-                td.text-xs-center
-                  a(href="#" class="show-input" data-name="holder.1.number_shares").link-1 Holder.1.number_shares
-                td.text-xs-center
-                  a(href="#" class="show-input" data-name="holder.1.voting_power").link-1 Holder.1.voting_power
-              tr
-                td.text-xs-center
-                  a(href="#" class="show-input" data-name="holder.2.first_name").link-1 Holder.2.first_name
-                  br
-                  a(href="#" class="show-input" data-name="holder.2.last_name").link-1 Holder.2.last_name
-                td.text-xs-center
-                  a(href="#" class="show-input" data-name="holder.2.class_shares").link-1 Holder.2.class_shares
-                td.text-xs-center
-                  a(href="#" class="show-input" data-name="holder.2.number_shares").link-1 Holder.2.number_shares
-                td.text-xs-center
-                  a(href="#" class="show-input" data-name="holder.2.voting_power").link-1 Holder.2.voting_power
+              each v,k in values.formc.team_members
+                if v.role[0] == 0
+                  tr
+                    td.text-xs-center
+                      a(href="#" class="show-input" data-name="holder.1.first_name").link-1 #{v.first_name}
+                      br
+                      a(href="#" class="show-input" data-name="holder.1.last_name").link-1 #{v.last_name}
+                    td.text-xs-center
+                      a(href="#" class="show-input" data-name="holder.1.class_shares").link-1 #{v.class_of_securities}
+                    td.text-xs-center
+                      a(href="#" class="show-input" data-name="holder.1.number_shares").link-1 #{v.number_of_shares}
+                    td.text-xs-center
+                      a(href="#" class="show-input" data-name="holder.1.voting_power").link-1 #{v.voting_power_percent}
 
         p.text-indent The Company has confirmed that information above is accurate for the period spanning 120 days prior to the date of filing of this Material.   For any calculation above of total voting power, all securities are included for which the person directly or indirectly has or shares the voting power, which includes the power to vote or to direct the voting of such securities. If the person has the right to acquire voting power of such securities within 60 days, including through the exercise of any option, warrant or right, the conversion of a security, or other arrangement, or if securities are held by a member of the family, through corporations or partnerships, or otherwise in a manner that would allow a person to direct or control the voting of the securities (or share in such direction or control — as, for example, a co-trustee) they are included as being “beneficially owned.” For any calculation of outstanding voting equity securities, all outstanding options are assumed to be exercised and all outstanding convertible securities converted.
         p.text-uppercase.m-t-3.m-b-0.pb10 
