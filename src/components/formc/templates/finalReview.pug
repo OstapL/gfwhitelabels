@@ -1072,17 +1072,18 @@ section.formc-review
                 th.text-xs-center Maturity Date
                 th.text-xs-center Material Terms
             tbody
-              tr
-                td.text-xs-center
-                  a(href="#" class="show-input" data-name="creditor.#").link-1 creditor.#
-                td.text-xs-center
-                  a(href="#" class="show-input" data-name="creditor.#_amount").link-1 creditor.#_amount
-                td.text-xs-center
-                  a(href="#" class="show-input" data-name="creditor.#_rate").link-1 creditor.#_rate
-                td.text-xs-center
-                  a(href="#" class="show-input" data-name="creditor.#_date").link-1 creditor.#_date
-                td.text-xs-center
-                  a(href="#" class="show-input" data-name="creditor.#_terms").link-1 creditor.#_terms
+              each v,k in values.formc.business_loans_or_debt
+                tr
+                  td.text-xs-center
+                    a(href="#" class="show-input" data-name="creditor.#").link-1 #{v.creditor}
+                  td.text-xs-center
+                    a(href="#" class="show-input" data-name="creditor.#_amount").link-1 #{v.outstanding_amount}
+                  td.text-xs-center
+                    a(href="#" class="show-input" data-name="creditor.#_rate").link-1 #{v.interest_rate}
+                  td.text-xs-center
+                    a(href="#" class="show-input" data-name="creditor.#_date").link-1 #{v.maturity_date}
+                  td.text-xs-center
+                    a(href="#" class="show-input" data-name="creditor.#_terms").link-1 #{v.other_material_terms}
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u Previous Issuer Offerings
         p.pb10.logic LOGIC: if exempt_offering_toggle = no then:
@@ -1107,17 +1108,18 @@ section.formc-review
                 th.text-xs-center Amount Sold
                 th.text-xs-center Use of Proceeds
             tbody
-              tr
-                td.text-xs-center
-                  a(href="#" class="show-input" data-name="offering.#._date").link-1 offering.#._date
-                td.text-xs-center
-                  a(href="#" class="show-input" data-name="offering.#._exemption").link-1 offering.#._exemption
-                td.text-xs-center
-                  a(href="#" class="show-input" data-name="offering.#._type").link-1 offering.#._type
-                td.text-xs-center
-                  a(href="#" class="show-input" data-name="offering.#._amount").link-1 offering.#._amount
-                td.text-xs-center
-                  a(href="#" class="show-input" data-name="offering.#._use").link-1 offering.#._use
+              each v,k in values.formc.exempt_offering
+                tr
+                  td.text-xs-center
+                    a(href="#" class="show-input" data-name="offering.#._date").link-1 #{v.offering_date}
+                  td.text-xs-center
+                    a(href="#" class="show-input" data-name="offering.#._exemption").link-1 #{v.exemption_relied_upon}
+                  td.text-xs-center
+                    a(href="#" class="show-input" data-name="offering.#._type").link-1 #{v.securities_offered}
+                  td.text-xs-center
+                    a(href="#" class="show-input" data-name="offering.#._amount").link-1 #{v.amount_sold}
+                  td.text-xs-center
+                    a(href="#" class="show-input" data-name="offering.#._use").link-1 #{v.use_of_proceeds}
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u Financial Statements
         p.pb10.text-indent The issuer’s financial statements are attached as Exhibit B.  Based on the size of this offering and issuer’s previous activity, the issuer is required to provide 
