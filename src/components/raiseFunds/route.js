@@ -132,9 +132,11 @@ module.exports = Backbone.Router.extend({
       const Model = require('components/campaign/models.js');
       const View = require('components/raiseFunds/views.js');
 
-      var a2 = app.makeCacheRequest(Urls['campaign-list']() + '/team_members/' + id);
+      // var a2 = app.makeCacheRequest(Urls['campaign-list']() + '/team_members/' + id);
+      var a2 = app.makeCacheRequest(raiseCapitalUrl + '/campaign/' + id + '/team_members');
 
       $.when(a2).done((model) => {
+        model.id = id;
         var i = new View.teamMembers({
           el: '#content',
           // model: new Model.model(model),
@@ -159,7 +161,8 @@ module.exports = Backbone.Router.extend({
       const Model = require('components/campaign/models.js');
       const View = require('components/raiseFunds/views.js');
 
-      var a2 = app.makeCacheRequest(Urls['campaign-list']() + '/team_members/' + id);
+      // var a2 = app.makeCacheRequest(Urls['campaign-list']() + '/team_members/' + id);
+      var a2 = app.makeCacheRequest(raiseCapitalUrl + '/campaign/' + id + '/team_members');
       $.when(a2).done((model) => {
         const addForm = new View.teamMemberAdd({
           el: '#content',

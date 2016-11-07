@@ -1,7 +1,7 @@
 - 'use strict';
 include ../../../templates/mixins.pug
-include menu.pug
-//- include ../../../templates/menuRaiseFund.pug
+//- include menu.pug
+include ../../../templates/menuRaiseFund.pug
 
 +breadcrumbs('Create Company', '', 
     [
@@ -12,6 +12,7 @@ include menu.pug
 )
 
 section.create-perks.container
+  +menu('raise_fund', 'specifics')
 
   //START RIGHT BLOCK
   .col-lg-10.offset-lg-1.col-xl-8.offset-xl-0.push-xl-3
@@ -32,4 +33,4 @@ section.create-perks.container
           // button(type="submit" data-href="/api/campaign/" + values.id).btn.btn-secondary.text-uppercase.m-r-3.onPreview preview
           button(type="submit").btn.btn-primary.text-uppercase save
             i.fa.fa-angle-right
-  +menu('perks')
+  //- +menu('perks')
