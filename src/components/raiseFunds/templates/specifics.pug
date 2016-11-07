@@ -50,25 +50,11 @@ section.campaign-specifics.container.m-b-85
              })
       .row
         .col-lg-12
-          //- +fieldBlock("length_days", '', {
-          //-    class1: 'col-lg-3 col-md-12 text-md-left',
-          //-    class2: 'col-lg-9 col-md-12',
-          //-    type: 'choice',
-          //-    text: 'Length of the Campaign',
-          //-    })
           +fieldChoiceLabel('length_days', _.extend({
             class1: 'col-lg-3 col-md-12 text-md-left',
             class2: 'col-lg-9 col-md-12',
           }, fields.length_days))
       .text-lg-right.img-ppt
-        //- +fieldFileDropzone("investor_presentation", {
-        //-     class1: 'col-lg-3',
-        //-     class2: 'col-lg-9 p-l-1 p-r-1',
-        //-     text: 'Drop your PPT or PDF here or click to upload',
-        //-     icon: 'file',
-        //-     default: '/img/default' + suffix + '.png',
-        //- })
-        +fileDropzone("investor_presentation", _.extend({
             class1: 'col-lg-3',
             class2: 'col-lg-9 p-l-1 p-r-1',
             text: 'Drop your PPT or PDF here or click to upload',
@@ -85,11 +71,6 @@ section.campaign-specifics.container.m-b-85
         a(href="https://github.com/vladyslav2/gfwhitelabels/files/470205/growthfountain_security_description.pdf" target="_blank").link-2 Click here to see descriptions of Common Equity and Revenue Share
 
       .pre-money-terms
-        //- +fieldBlock("security_type", '', {
-        //-   class1: 'col-lg-3', 
-        //-   class2: 'col-lg-9', 
-        //-   type: 'radio',
-        //-   })
         +fieldRadioLabel("security_type", _.extend({
             class1: 'col-lg-3', 
             class2: 'col-lg-9',
