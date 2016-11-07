@@ -962,12 +962,13 @@ module.exports = {
           }
         }
 
-        // if (this.model.company.corporate_structure == 2) {
-        //   this.$('input[type=radio][name=security_type][value=0]').prop('disabled', true);
-        //   this.$('input[type=radio][name=security_type][value=1]').attr('checked', true);
-        //   $('.security_type_list').hide();
-        //   $('.security_type_1').show();
-        // }        
+        console.log(this.model.company.corporate_structure);
+        if (this.model.company.corporate_structure == 2) {
+          this.$('input[type=radio][name=security_type][value=0]').prop('disabled', true);
+          this.$('input[type=radio][name=security_type][value=1]').attr('checked', true);
+          $('.security_type_list').hide();
+          $('.security_type_1').show();
+        }        
 
         return this;
       },
