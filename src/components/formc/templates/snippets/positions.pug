@@ -2,37 +2,37 @@ include ../../../../templates/fields_mixins.pug
 
 mixin row(value, index)
   - var index = index;
+  .col-xl-12
+    .col-lg-12(data-index=index class=name + ' addSectionBlock')
+      .delete-section-container
+        a(href="#" data-section=name data-index=index).delete-sectionnew
+          i.fa.fa-times
 
-  div(data-index=index class=name + ' addSectionBlock')
-    .delete-section-container
-      a(href="#" data-section=name data-index=index).delete-sectionnew
-        i.fa.fa-times
+      +fieldNestedTextLabel(name, "position", value, index, {})
 
-    +fieldNestedTextLabel(name, "position", value, index, {})
-
-    .row.form-group
-      .col-lg-6.col-md-12
-        .col-lg-6.text-lg-right.text-md-left.p-t-0
-          label.p-t-0.m-b-0 Start Date of Service
-        .col-lg-6.p-t-0
-          div(id=name + '__' + index + '__' + 'start_date_of_service').row
-            +fieldNestedDateMonth(name, "start_date_of_service", value, index, {})
-            +fieldNestedDateYear(name, "start_date_of_service", value, index, {})
-            
-      .col-lg-6.col-md-12.p-l-0
-        .col-lg-6.text-lg-right.text-md-left.p-t-0
-          label.p-t-0.m-b-0 End Date of Service
-        .col-lg-6.p-t-0
-          div(id=name + '__' + index + '__' + 'end_date_of_service').row
-            +fieldNestedDateMonth(name, "end_date_of_service", value, index, {})
-            +fieldNestedDateYear(name, "end_date_of_service", value, index, {})
+      .row.form-group
+        .col-lg-6.col-md-12
+          .col-lg-6.text-lg-right.text-md-left.p-t-0
+            label.p-t-0.m-b-0.p-l-1 Start Date of Service
+          .col-lg-6.p-t-0
+            div(id=name + '__' + index + '__' + 'start_date_of_service').row
+              +fieldNestedDateMonth(name, "start_date_of_service", value, index, {})
+              +fieldNestedDateYear(name, "start_date_of_service", value, index, {})
+              
+        .col-lg-6.col-md-12.p-l-0
+          .col-lg-6.text-lg-right.text-md-left.p-t-0
+            label.p-t-0.m-b-0.p-l-2 End Date of Service
+          .col-lg-6.p-t-0
+            div(id=name + '__' + index + '__' + 'end_date_of_service').row
+              +fieldNestedDateMonth(name, "end_date_of_service", value, index, {})
+              +fieldNestedDateYear(name, "end_date_of_service", value, index, {})
 
 
 mixin run()
 
   if first_run
     h3.text-lg-center.text-xs-center.m-t-0 We Need Information for Last 3 Years
-    b.col-lg-12.m-b-3 Changed roles within the Company? Please list  all positions and offices with the Company held and the period of time in which you served in the position or office.
+    b.col-lg-12.m-b-1 Changed roles within the Company? Please list  all positions and offices with the Company held and the period of time in which you served in the position or office.
 
     div(class=(attr.row == 0 ? '' : 'row ') + name + '_block' + (attr.required == true ? ' required ' : ' ') + ' nested')
       div(class=(attr.row == 0 ? '' : 'row ') + name + '_container' + (attr.required == true ? ' required ' : ' ') + ' nested')
