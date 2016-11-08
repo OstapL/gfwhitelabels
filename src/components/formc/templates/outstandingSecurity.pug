@@ -80,7 +80,7 @@ section.formc-team-members-director.container.m-b-85
 #security_modal.modal.fade(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")
   .modal-dialog(role="document")
     .modal-content
-      .modal-header
+      .modal-header.p-b-0
         button(type="button" class="close" data-dismiss="modal" aria-label="Close")
           span(aria-hidden="true")
             i.fa.fa-times
@@ -89,7 +89,7 @@ section.formc-team-members-director.container.m-b-85
         form(data-section='outstanding_securities')#security_model_form.modal-form
           .form-section    
             +fieldChoiceLabel("security_type", _.extend({
-              class1: 'col-lg-12',
+              class1: 'col-lg-12 p-t-0',
               class2: 'col-lg-12',
             }, fields.outstanding_securities.schema.security_type))
             +fieldTextLabel("custom_security_type", _.extend({
@@ -119,7 +119,7 @@ section.formc-team-members-director.container.m-b-85
                 class1: 'col-lg-3',
                 class2: 'col-lg-9',
               }, fields.outstanding_securities.schema.voting_right))
-            .row.m-b-2
+            .row.m-b-0
               .col-lg-12.text-lg-center.text-md-center.text-xs-center
                 button(type="submit").update-location.btn.btn-primary.text-uppercase.pull-lg-right.add-outstanding save
       .modal-footer
