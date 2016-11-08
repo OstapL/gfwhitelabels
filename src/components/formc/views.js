@@ -1,5 +1,7 @@
 "use strict";
 
+import formatHelper from '../../helpers/formatHelper';
+
 const menuHelper = require('helpers/menuHelper.js');
 const addSectionHelper = require('helpers/addSectionHelper.js');
 const yesNoHelper = require('helpers/yesNoHelper.js');
@@ -475,12 +477,19 @@ module.exports = {
     },
 
     _getSum(selector) {
-        let values = this.$(selector).map(function (e) { return parseInt($(this).val() ? $(this).val() : 0); }).toArray();
+        let values = this.$(selector).map(function (e) {
+          let result = parseInt($(this).val() ? $(this).val().replace(/,/g, '') : 0);
+          return result ? result : 0;
+        }).toArray();
         if (values.length == 0) values.push(0);
         return values.reduce(function (total, num) { return total + num; });
     },
 
     calculate(e) {
+      // if (e) {
+      //   let $target = $(e.target);
+      //   $target.val(formatHelper.formatNumber($target.val()));
+      // }
       let minRaise = this.campaign.minimum_raise;
       let maxRaise = this.campaign.maximum_raise;
 
@@ -559,8 +568,9 @@ module.exports = {
           Urls: Urls,
           fields: this.fields,
           values: this.model,
-          campaign: this.campaign,
           templates: this.jsonTemplates,
+          maxRaise: this.campaign.maximum_raise,
+          minRaise: this.campaign.minimum_raise,
         })
       );
       this.$('.max-total-use').popover({
