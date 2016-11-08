@@ -132,9 +132,11 @@ module.exports = Backbone.Router.extend({
       const Model = require('components/campaign/models.js');
       const View = require('components/raiseFunds/views.js');
 
-      var a2 = app.makeCacheRequest(Urls['campaign-list']() + '/team_members/' + id);
+      // var a2 = app.makeCacheRequest(Urls['campaign-list']() + '/team_members/' + id);
+      var a2 = app.makeCacheRequest(raiseCapitalUrl + '/campaign/' + id + '/team_members');
 
       $.when(a2).done((model) => {
+        model.id = id;
         var i = new View.teamMembers({
           el: '#content',
           // model: new Model.model(model),
@@ -159,7 +161,8 @@ module.exports = Backbone.Router.extend({
       const Model = require('components/campaign/models.js');
       const View = require('components/raiseFunds/views.js');
 
-      var a2 = app.makeCacheRequest(Urls['campaign-list']() + '/team_members/' + id);
+      // var a2 = app.makeCacheRequest(Urls['campaign-list']() + '/team_members/' + id);
+      var a2 = app.makeCacheRequest(raiseCapitalUrl + '/campaign/' + id + '/team_members');
       $.when(a2).done((model) => {
         const addForm = new View.teamMemberAdd({
           el: '#content',
@@ -190,6 +193,7 @@ module.exports = Backbone.Router.extend({
       var a3 = app.makeCacheRequest(authServer + '/user/company');
 
       $.when(a1, a2, a3).done((meta, model, company) => {
+        model[0].id = id;
         model[0].company = company[0];
         var i = new View.specifics({
           el: '#content',
@@ -215,13 +219,14 @@ module.exports = Backbone.Router.extend({
       const Model = require('components/campaign/models.js');
       const View = require('components/raiseFunds/views.js');
 
-      var a1 = app.makeCacheRequest(Urls['campaign-list']() + '/perks/' + id, 'OPTIONS');
-      var a2 = app.makeCacheRequest(Urls['campaign-list']() + '/perks/' + id);
+      var a1 = app.makeCacheRequest(raiseCapitalUrl + '/campaign/' + id + '/perks', 'OPTIONS');
+      var a2 = app.makeCacheRequest(raiseCapitalUrl + '/campaign/' + id + '/perks');
 
       $.when(a1, a2).done((meta, model) => {
+        model[0].id = id;
         var i = new View.perks({
           el: '#content',
-          fields: meta[0].actions.PUT,
+          fields: meta[0].fields,
           // model: new Model.model(model[0]),
           model: model[0],
         });

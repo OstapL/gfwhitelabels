@@ -12,6 +12,7 @@ include ../../../templates/menuRaiseFund.pug
 )
 
 section.create-company.container.m-b-85
+  +menu('company', 'create')
 
   //START RIGHT BLOCK
   .col-lg-10.offset-lg-1.col-xl-8.offset-xl-0.push-xl-3
@@ -138,7 +139,7 @@ section.create-company.container.m-b-85
         button(type="submit").btn.btn-primary.text-uppercase save and continue
           i.fa.fa-angle-right
   //START LEFT BLOCK
-  .col-lg-6.offset-lg-3.col-xl-3.offset-xl-0.pull-xl-8.create_compaign
+  //- .col-lg-6.offset-lg-3.col-xl-3.offset-xl-0.pull-xl-8.create_compaign
     .jumbotron.jumbotron-fluid.row
       .raise-funds
         h4.font-weight-bold.text-uppercase.m-b-0 Raise funds
