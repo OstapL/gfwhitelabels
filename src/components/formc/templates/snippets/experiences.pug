@@ -18,16 +18,16 @@ mixin row(value, index)
             label.p-t-0.m-b-0.p-l-1 Start Date of Service
           .col-lg-6.p-t-0
             div(id=name + '__' + index + '__' + 'start_date_of_service').row
-              +fieldNestedDateMonth(name, "start_date_of_service", value, index, {})
-              +fieldNestedDateYear(name, "start_date_of_service", value, index, {})
+              +fieldNestedDateMonth(name, "start_date_of_service", value, index, {placeholder: 'MM'})
+              +fieldNestedDateYear(name, "start_date_of_service", value, index, {placeholder: 'YYYY'})
               
         .col-lg-6.col-md-12.p-l-0
           .col-lg-6.text-lg-right.text-md-left.p-t-0
             label.p-t-0.m-b-0.p-l-2 End Date of Service
           .col-lg-6.p-t-0
             div(id=name + '__' + index + '__' + 'end_date_of_service').row
-              +fieldNestedDateMonth(name, "end_date_of_service", value, index, {})
-              +fieldNestedDateYear(name, "end_date_of_service", value, index, {})
+              +fieldNestedDateMonth(name, "end_date_of_service", value, index, {placeholder: 'MM'})
+              +fieldNestedDateYear(name, "end_date_of_service", value, index, {placeholder: 'YYYY'})
 
 mixin run()
 
