@@ -1019,6 +1019,8 @@ module.exports = {
           revenues_sales: "Revenues Sales",
         },
         sold_securities_amount: "How much have you sold within the preceeding 12-month period?",
+        fiscal_recent_file_id: "Upload financials for most recent fiscal year",
+        fiscal_prior_file_id: "Upload financials for prior fiscal year"
       };
       this.assignLabels();
 
@@ -1128,6 +1130,7 @@ module.exports = {
           amount_authroized: "Amount Authorized",
           amount_outstanding: "Amount Outstanding",
           voting_right: "Voting right",
+          terms_and_rights: "Describe all material terms and rights",
         },
         exempt_offering: {
           exemption_relied_upon: "Exemption Relied upon",

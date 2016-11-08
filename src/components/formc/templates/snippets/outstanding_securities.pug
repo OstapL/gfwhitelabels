@@ -43,20 +43,22 @@ mixin run()
     h3.text-xs-center Outstanding Securities
     p What other securities are outstanding? Describe the material terms of any other outstanding securies.
     a(data-toggle="modal" data-target="#security_modal" href="#security_modal").btn.text-uppercase.m-t-2.m-b-2
-        i.fa.fa-plus
-        |  add outstanding securities
-    div(class=(attr.row == 0 ? '' : 'row ') + name + '_block' + (attr.required == true ? ' required ' : ' ') + ' nested').table-responsive
+      i.fa.fa-plus
+      |  add outstanding securities
+
+    div(class=(attr.row == 0 ? '' : 'row ') + name + '_block' + (attr.required == true ? ' required ' : ' ') + ' nested')
+      .table-responsive.col-lg-12
         table.table.table-bordered.table-striped.text-xs-center.table-outstanding.m-b-0.securities-table
-            thead
-                tr
-                    th(width="22%").text-xs-center Security Type
-                    th(width="21%").text-xs-center Amount Authorized
-                    th(width="21%").text-xs-center Amount Outstanding
-                    th(width="20%").text-xs-center Voting Rights
-                    th(width="6%")
-            tbody(class=(attr.row == 0 ? '' : 'row ') + name + '_container' + (attr.required == true ? ' required ' : ' ') + ' nested')
-                each value, index in values
-                  +row(value, index)
+          thead
+            tr
+              th(width="22%").text-xs-center Security Type
+              th(width="21%").text-xs-center Amount Authorized
+              th(width="21%").text-xs-center Amount Outstanding
+              th(width="20%").text-xs-center Voting Rights
+              th(width="6%")
+          tbody(class=(attr.row == 0 ? '' : 'row ') + name + '_container' + (attr.required == true ? ' required ' : ' ') + ' nested')
+            each value, index in values
+              +row(value, index)
 
 
   else
