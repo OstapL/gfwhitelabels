@@ -517,31 +517,6 @@ module.exports = {
       return result;
     },
 
-    // addProceed(e) {
-    //   e.preventDefault();
-    //   let $target = $(e.target);
-    //   let template = require('./templates/proceed.pug');
-    //   let type = $target.data('type');
-    //   let dataType;
-    //   if (type == 'use') dataType = 'use_of_net_proceeds';
-    //   else if (type == 'expense') dataType = 'less_offering_express';
-    //   $('.' + type + '-table tbody').append(template({
-    //     type: type,
-    //     dataType: dataType,
-    //     index: this[dataType + 'Index']++,
-    //   }));
-    //   this.calculate(null);
-    // },
-
-    // deleteProceed(e) {
-    //   e.preventDefault();
-    //   let $target = $(e.currentTarget);
-    //   let type = $target.data('type');
-    //   let index = $target.data('index');
-    //   $('.' + type + '-table tr.index_' + index).remove();
-    //   this.calculate(null);
-    // },
-
     changeDocType(e) {
       if (e.target.value == 'describe') {
         this.$('.describe').show();
