@@ -215,7 +215,7 @@ mixin fileDropzone(name, attr)
                 p.drop-photo #{attr.text}
                 i(class="fa fa-" + attr.icon)
             div.col-lg-7.col-md-7.col-sm-7.col-xs-7.p-r-0.p-l-0.p-dropzone.img-dropzone.text-lg-center
-              input(name=name id=(id || name) value=attr.value type="hidden")
+              input(name=name id=(attr.id || name) value=attr.value type="hidden")
               img(src='/img/icons/' + icon + '.png' alt=attr.label class="img-file img-" + name)
               if attr.data
                 a(class=("a-" + name) href=attr.data.url) #{ fileName }

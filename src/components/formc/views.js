@@ -531,11 +531,6 @@ module.exports = {
     },
 
     submit(e) {
-      if (!this.calculate(null)) {
-        e.preventDefault();
-        alert('Total Use of Net Proceeds must equal Net Proceeds!');
-        return;
-      }
       var $target = $(e.target);
       var data = $target.serializeJSON({useIntKeysAsArrayIndex: true});
       api.submitAction.call(this, e, data);
@@ -567,7 +562,7 @@ module.exports = {
       setTimeout(() => { this.createDropzones() } , 1000);
       return this;
     }, 
-  }, addSectionHelper.methods, menuHelper.methods, dropzoneHelpers.methods)),
+  }, menuHelper.methods, dropzoneHelpers.methods)),
 
   riskFactorsInstruction: Backbone.View.extend(_.extend({
     initialize(options) {},
