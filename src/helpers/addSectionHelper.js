@@ -147,7 +147,8 @@ module.exports = {
       _(this.fields).each((el, key) => {
         if(el.type == 'nested') {
           _(el.schema).each((subel, subkey) => {
-            subel.label = this.labels[key][subkey];
+            if(this.labels[key])
+              subel.label = this.labels[key][subkey];
           });
         } else {
           el.label = this.labels[key];

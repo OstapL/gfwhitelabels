@@ -181,8 +181,8 @@ module.exports = {
       });
 
       dropbox.on('success', (file, data) => {
-        $('.img-' + name).attr('src', '/img/icons/' + data[0].mimetype.split('/')[1] + '.png');
-        $('.a-' + name).attr('href', data[0].urls[0]).html(data[0].filename);
+        $('.img-' + name).attr('src', '/img/icons/' + data[0].mime.split('/')[1] + '.png');
+        $('.a-' + name).attr('href', data[0].urls[0]).html(data[0].name);
         $('#' + name).val(data[0].id);
         this.model[name.replace('_id', '_data')] = data;
         if (typeof onSuccess != 'undefined') {

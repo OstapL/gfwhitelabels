@@ -17,7 +17,7 @@ include ../../../templates/mixins.pug
 - names.minimum_raise = 'campaign.minimum_raise'
 - names.price_per_share = 'campaign.price_per_share'
 - names.security_type = 'campaign.security_type'
-- names.minimum_incriment = 'campaign.minimum_increment'
+- names.minimum_increment = 'campaign.minimum_increment'
 - names.founding_date = 'company.founding_date'
 - names.address_1 = 'company.address_1'
 - names.address_2 = 'company.address_2'
@@ -159,7 +159,7 @@ section.formc-review
           +editText('security_type')
           |  Offered
         p.text-xs-center.font-weight-bold $
-          +editText('minimum_incriment')
+          +editText('minimum_increment')
           |  MINIMUM INVESTMENT
 
         p.text-uppercase.text-xs-center.m-t-3.m-b-2 
@@ -347,7 +347,7 @@ section.formc-review
           u “Offering”
           |  ).  If the sum of the investment commitments does not equal or exceed this minimum target amount at the Offering deadline, no securities will be sold in the Offering, investment commitments will be cancelled and committed funds will be returned. There can be no assurance that the minimum number of the Shares offered will be subscribed for and therefore these if no guarantee that this Offering will be completed.
         p.text-indent The minimum subscription by an investor is a $
-          +editText('minimum_incriment')
+          +editText('minimum_increment')
           |  investment.  Each investor interested in participating in this Offering must register at 
           a(href="www.GrowthFountain.com").link-1 www.GrowthFountain.com.
           |  The website GrowthFountain.com (the 
@@ -536,8 +536,8 @@ section.formc-review
         p.text-indent The Company has confirmed that information above is accurate for the period spanning 120 days prior to the date of filing of this Material.   For any calculation above of total voting power, all securities are included for which the person directly or indirectly has or shares the voting power, which includes the power to vote or to direct the voting of such securities. If the person has the right to acquire voting power of such securities within 60 days, including through the exercise of any option, warrant or right, the conversion of a security, or other arrangement, or if securities are held by a member of the family, through corporations or partnerships, or otherwise in a manner that would allow a person to direct or control the voting of the securities (or share in such direction or control — as, for example, a co-trustee) they are included as being “beneficially owned.” For any calculation of outstanding voting equity securities, all outstanding options are assumed to be exercised and all outstanding convertible securities converted.
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u Related Party Transactions
-        p.pb10.logic LOGIC: if related.answer_toggle = no then:
-        p.pb10.text-indent The Company has confirmed that there are no related party transactions.  This representation covers all the proposed transactions occurring in the Company’s last fiscal year.  As used here, the term “related party” includes: (1) any director or officer of the Company; (2) any person who is, as of the most recent practicable date, the beneficial owner of twenty percent (20%) or more of the Company’s outstanding voting equity securities, calculated on the basis of voting power; (3) if the Company was incorporated or organized within the past three years, any promoter of the Company; or (4) any immediate family member of any of the foregoing persons.   As used here, the term “transaction” includes, but is not limited to, any financial transaction, arrangement or relationship (including any indebtedness or guarantee of indebtedness) or any series of similar transactions, arrangements or relationships.
+        if values.formc.transaction_with_related_parties_choice == 0
+          p.pb10.text-indent The Company has confirmed that there are no related party transactions.  This representation covers all the proposed transactions occurring in the Company’s last fiscal year.  As used here, the term “related party” includes: (1) any director or officer of the Company; (2) any person who is, as of the most recent practicable date, the beneficial owner of twenty percent (20%) or more of the Company’s outstanding voting equity securities, calculated on the basis of voting power; (3) if the Company was incorporated or organized within the past three years, any promoter of the Company; or (4) any immediate family member of any of the foregoing persons.   As used here, the term “transaction” includes, but is not limited to, any financial transaction, arrangement or relationship (including any indebtedness or guarantee of indebtedness) or any series of similar transactions, arrangements or relationships.
 
       // page 8
       section.page-formc-review.m-t-1
@@ -546,28 +546,25 @@ section.formc-review
           p.small.pb10
             +editText('issuer_short_name')
             |  as Issuer
-        p.pb10.logic LOGIC: if related.answer_toggle = yes then:
-        p.pb10.text-indent The Company is disclosing certain related party transactions below arising from any of the transactions occurring in the Company’s last fiscal year.  As used here, the term “related party” includes: (1) any director or officer of the Company; (2) any person who is, as of the most recent practicable date, the beneficial owner of twenty percent (20%) or more of the Company’s outstanding voting equity securities, calculated on the basis of voting power; (3) if the Company was incorporated or organized within the past three years, any promoter of the Company; or (4) any immediate family member of any of the foregoing persons.  Only those transactions are listed in which the related party had or is expected to have a direct or indirect material interest in such transaction, and the list includes transactions with entities under common control with the issuer.  As used here, the term “transaction” includes, but is not limited to, any financial transaction, arrangement or relationship (including any indebtedness or guarantee of indebtedness) or any series of similar transactions, arrangements or relationships.  Where it is not practicable to state the approximate amount of the interest, the amount involved in the transaction has been approximated.
-        p.pb10 Those transactions with a related party having a direct or indirect material interest:
-        .table-responsive.m-t-1
-          table.table.table-bordered
-            theader
-              tr.bg-grey
-                th.text-xs-center Specified Person
-                th.text-xs-center Relationship To Issuer
-                th.text-xs-center Nature of Transaction
-                th.text-xs-center Amount of Interest
-            tbody
-              tr
-                td.text-xs-center
-                  +editText('specified_person')
-                td.text-xs-center
-                  +editText('relationship_to_issuer')
-                td.text-xs-center
-                  +editText('nature_of_interest')
-                td.text-xs-center
-                  +editText('amount_of_interest')
-        p.pb10.text-indent The term “immediate family member” includes any child, stepchild, grandchild, parent, stepparent, grandparent, spouse or spousal equivalent, sibling, mother-in-law, father-in-law, son-in-law, daughter-in-law, brother-in-law, or sister-in-law of the person, and includes adoptive relationships. The term “spousal equivalent” means a co-habitant occupying a relationship generally equivalent to that of a spouse.
+        if values.formc.transaction_with_related_parties_choice == 1
+          p.pb10.text-indent The Company is disclosing certain related party transactions below arising from any of the transactions occurring in the Company’s last fiscal year.  As used here, the term “related party” includes: (1) any director or officer of the Company; (2) any person who is, as of the most recent practicable date, the beneficial owner of twenty percent (20%) or more of the Company’s outstanding voting equity securities, calculated on the basis of voting power; (3) if the Company was incorporated or organized within the past three years, any promoter of the Company; or (4) any immediate family member of any of the foregoing persons.  Only those transactions are listed in which the related party had or is expected to have a direct or indirect material interest in such transaction, and the list includes transactions with entities under common control with the issuer.  As used here, the term “transaction” includes, but is not limited to, any financial transaction, arrangement or relationship (including any indebtedness or guarantee of indebtedness) or any series of similar transactions, arrangements or relationships.  Where it is not practicable to state the approximate amount of the interest, the amount involved in the transaction has been approximated.
+          p.pb10 Those transactions with a related party having a direct or indirect material interest:
+          .table-responsive.m-t-1
+            table.table.table-bordered
+              theader
+                tr.bg-grey
+                  th.text-xs-center Specified Person
+                  th.text-xs-center Relationship To Issuer
+                  th.text-xs-center Nature of Transaction
+                  th.text-xs-center Amount of Interest
+              tbody
+                for v in values.formc.transaction_with_related_parties
+                  tr
+                    td.text-xs-center #{ v.specified_person }
+                    td.text-xs-center #{ v.relationship_to_issuer }
+                    td.text-xs-center #{ v.nature_of_interest }
+                    td.text-xs-center #{ v.amount_of_interest }
+          p.pb10.text-indent The term “immediate family member” includes any child, stepchild, grandchild, parent, stepparent, grandparent, spouse or spousal equivalent, sibling, mother-in-law, father-in-law, son-in-law, daughter-in-law, brother-in-law, or sister-in-law of the person, and includes adoptive relationships. The term “spousal equivalent” means a co-habitant occupying a relationship generally equivalent to that of a spouse.
 
       // page 9
       section.page-formc-review.m-t-1
@@ -580,7 +577,7 @@ section.formc-review
         p.text-uppercase.m-t-0.m-b-0.pb10 
           u Minimum Commitment and Closing Date
         p.text-indent To participate in this Offering, each investor must purchase securities in a minimum dollar amount equal to $
-          +editText('minimum_incriment')
+          +editText('minimum_increment')
           | .
           |   The securities are being offered until [close.date], unless notice is provided to investors at least five (5) business days prior to any change in such date.  The Company reserves the right to change the closing date with such notice and with a minimum twenty-one (21) day period in which to carry out the offering.
         p.text-uppercase.m-t-3.m-b-0.pb10 
@@ -677,20 +674,9 @@ section.formc-review
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u Description of Securities, Material Terms and Other Rights:
         p.pb10.logic LOGIC: The description for each separate security that is listed above appears below
-        p.pb10
-          a(href="#" class="show-input" data-name="cap_type_common_description").link-1 cap_type_common_description
-        p.pb10
-          a(href="#" class="show-input" data-name="cap_type_perferred_description").link-1 cap_type_perferred_description
-        p.pb10
-          a(href="#" class="show-input" data-name="cap_type_debt_description").link-1 cap_type_debt_description
-        p.pb10 
-          a(href="#" class="show-input" data-name="cap_type_warrants_description").link-1 cap_type_warrants_description
-        p.pb10 
-          a(href="#" class="show-input" data-name="cap_type_options_description").link-1 cap_type_options_description
-        p.pb10 
-          a(href="#" class="show-input" data-name="cap_type_other.1_description").link-1  cap_type_other.1_description 
-        p.pb10
-          a(href="#" class="show-input" data-name="cap_type_other.2_description").link-1 cap_type_other.2_description
+        each v,k in values.formc.outstanding_securities
+          p.pb10 #{ v.security_type }
+            a(href="#" class="show-input" data-name="cap_type_common_description").link-1 #{ v.terms_and_rights }
 
       // page 14
       section.page-formc-review.m-t-1
