@@ -195,7 +195,7 @@ mixin fileDropzone(name, attr)
     if attr.mime
       - mimetypeIcons = require('helpers/mimetypeIcons.js');
       - var icon = mimetypeIcons[attr.mime];
-    if attr.data.hasOwnProperty('urls') == false
+    if attr.data && attr.data.hasOwnProperty('urls') == false
       - attr.data.urls = [];
 
     div(
