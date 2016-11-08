@@ -997,23 +997,12 @@ module.exports = {
     urlRoot: formcServer + '/:id/financial-condition',
 
     events: _.extend({
-      'submit #security_model_form': 'newOutstanding',
       'submit form': api.submitAction,
     }, menuHelper.events, yesNoHelper.events, addSectionHelper.events, dropzoneHelpers.events),
 
     initialize(options) {
       this.fields = options.fields;
       
-      // TODO
-      // Fix for default file values
-      if(this.model.financials_for_most_recent_fiscal_year_id == null) {
-        this.model.financials_for_most_recent_fiscal_year_id = 'null';
-      }
-
-      if(this.model.financials_for_prior_fiscal_year_id == null) {
-        this.model.financials_for_prior_fiscal_year_id = 'null';
-      }
-
       this.labels = {
         sold_securities_data: {
           taxable_income: "Taxable Income",
