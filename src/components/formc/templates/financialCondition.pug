@@ -17,7 +17,7 @@ section.formc-team-members-director.container.m-b-85
   //START RIGHT BLOCK
   .col-lg-8
     h2.text-uppercase.text-lg-center.text-xs-center.m-t-0.dosis.mb45 financial condition
-    form(metod="post" action="").form-section
+    form(action="").form-section
       input(type="hidden" name="financials_condition_choice" value="true")
       .col-lg-12
         b Does the issuer have an operating history?
@@ -84,7 +84,7 @@ section.formc-team-members-director.container.m-b-85
               input(type="radio" name="sold_securities_choice" value="false" checked=(!values['sold_securities_choice']) target=".previous-security-container")
               |  No
         .sold_securities_choice.shown-yes(style="display:" + (values['sold_securities_choice'] ? 'block' : 'none'))
-            +fieldTextLabel("sold_securities_amount", '', _.extend({
+            +fieldTextLabel("sold_securities_amount", _.extend({
             class1: 'col-lg-12 col-md-12 text-md-left text-xl-left',
             class2: 'col-lg-12 col-md-12',
             }, fields.sold_securities_amount))
