@@ -1171,6 +1171,7 @@ module.exports = {
           amount_authroized: "Amount Authorized",
           amount_outstanding: "Amount Outstanding",
           voting_right: "Voting right",
+          terms_and_rights: "Describe all material terms and rights",
         },
         exempt_offering: {
           exemption_relied_upon: "Exemption Relied upon",
