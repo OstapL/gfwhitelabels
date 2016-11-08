@@ -1,0 +1,39 @@
+mixin row(value, index)
+  - var index = index;
+  tr(class="border-b-t-none p-t-b-5 addSectionBlock " + name data-index=index)
+    td.border-t-n.d-block.input-w-80
+      .d-inline-block.pull-left.p-r-1
+      input(type="text" value=value.description name="use_of_net_proceeds[" + index + "][description]").input-border-bottom.form-control.font-size-12.pull-left
+      .d-inline-block.pull-right
+        .delete-section-container
+          a(href="#" data-index=index data-section=name).delete-sectionnew
+            i.fa.fa-times
+    td.border-b-t-none.w-25.font-size-12
+      .form-section
+        input(type="text" value=value.min name="use_of_net_proceeds[" + index + "][min]").input-border-bottom.form-control.text-xs-center.min-use
+    td.border-b-t-none.w-25.font-size-12
+      .form-section
+        input(type="text" value=value.max name="use_of_net_proceeds[" + index + "][max]").input-border-bottom.form-control.text-xs-center.max-use
+
+mixin run()
+  if first_run
+    tbody(class=name + '_container')
+      tr
+        td.border-t-n.p-l-r-20
+          .pull-left Use of Net Proceeds
+          .pull-right
+            a(href="#" data-section=name data-comp="formc" data-template="use_of_net_proceeds").link-2.add-sectionnew
+              i.fa.fa-plus
+              |  Add Another
+        td.border-b-t-none
+        td.border-b-t-none
+
+      if values == null || values.length == 0
+        +row({}, 0)
+      else
+        each value, index in values
+          +row(value, index)
+  else
+    +row({}, index)
+
++run()

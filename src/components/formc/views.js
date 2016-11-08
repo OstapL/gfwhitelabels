@@ -453,15 +453,24 @@ module.exports = {
         use_of_net_proceeds: {},
       };
       this.assignLabels();
+      this.createIndexes();
+      this.buildJsonTemplates('formc');
     },
 
     events: _.extend({
       'submit form': 'submit',
       'change input[type=radio][name=doc_type]': 'changeDocType',
-      'click .add-proceed': 'addProceed',
-      'click .delete-proceed': 'deleteProceed',
+      // 'click .add-proceed': 'addProceed',
+      // 'click .delete-proceed': 'deleteProceed',
       'change .min-expense,.max-expense,.min-use,.max-use': 'calculate',
-    }, addSectionHelper.events, menuHelper.events, dropzoneHelpers.events),
+      'click .add-sectionnew': 'addSectionNew',
+      'click .delete-sectionnew': 'deleteRow',
+    }, menuHelper.events, dropzoneHelpers.events),
+
+    deleteRow(e) {
+      this.deleteSectionNew(e);
+      this.calculate(null);
+    },
 
     getSuccessUrl() {
       return  '/formc/' + this.model.id + '/risk-factors-instruction';
@@ -505,33 +514,35 @@ module.exports = {
       } else {
         $('.max-net-proceeds,.max-total-use').addClass('red');
       }
-      return (minNetProceeds == minTotalUse) && (maxNetProceeds == maxTotalUse);
+      let result = (minNetProceeds == minTotalUse) && (maxNetProceeds == maxTotalUse);
+      this.$('.max-total-use').popover(result ? 'hide' : 'show');
+      return result;
     },
 
-    addProceed(e) {
-      e.preventDefault();
-      let $target = $(e.target);
-      let template = require('./templates/proceed.pug');
-      let type = $target.data('type');
-      let dataType;
-      if (type == 'use') dataType = 'use_of_net_proceeds';
-      else if (type == 'expense') dataType = 'less_offering_express';
-      $('.' + type + '-table tbody').append(template({
-        type: type,
-        dataType: dataType,
-        index: this[dataType + 'Index']++,
-      }));
-      this.calculate(null);
-    },
+    // addProceed(e) {
+    //   e.preventDefault();
+    //   let $target = $(e.target);
+    //   let template = require('./templates/proceed.pug');
+    //   let type = $target.data('type');
+    //   let dataType;
+    //   if (type == 'use') dataType = 'use_of_net_proceeds';
+    //   else if (type == 'expense') dataType = 'less_offering_express';
+    //   $('.' + type + '-table tbody').append(template({
+    //     type: type,
+    //     dataType: dataType,
+    //     index: this[dataType + 'Index']++,
+    //   }));
+    //   this.calculate(null);
+    // },
 
-    deleteProceed(e) {
-      e.preventDefault();
-      let $target = $(e.currentTarget);
-      let type = $target.data('type');
-      let index = $target.data('index');
-      $('.' + type + '-table tr.index_' + index).remove();
-      this.calculate(null);
-    },
+    // deleteProceed(e) {
+    //   e.preventDefault();
+    //   let $target = $(e.currentTarget);
+    //   let type = $target.data('type');
+    //   let index = $target.data('index');
+    //   $('.' + type + '-table tr.index_' + index).remove();
+    //   this.calculate(null);
+    // },
 
     changeDocType(e) {
       if (e.target.value == 'describe') {
@@ -546,7 +557,7 @@ module.exports = {
     submit(e) {
       if (!this.calculate(null)) {
         e.preventDefault();
-        alert("Calculation not satisfied!");
+        alert("Total Use of Net Proceeds must be equal to Net Proceeds.");
         return;
       }
       var $target = $(e.target);
@@ -568,6 +579,7 @@ module.exports = {
         this.use_of_net_proceedsIndex = 0;
       }
 
+
       this.$el.html(
         template({
           serverUrl: serverUrl,
@@ -575,13 +587,18 @@ module.exports = {
           fields: this.fields,
           values: this.model,
           campaign: this.campaign,
+          templates: this.jsonTemplates,
         })
       );
+      this.$('.max-total-use').popover({
+        html: true,
+        template: '<div class="popover" role="tooltip" style="border-color:red;"><div class="popover-arrow" style="border-right-color:red;"></div><h3 class="popover-title"></h3><div class="popover-content" style="color:red;"></div></div>'
+      });
       this.calculate(null);
       setTimeout(() => { this.createDropzones() } , 1000);
       return this;
     }, 
-  }, menuHelper.methods, dropzoneHelpers.methods)),
+  }, menuHelper.methods, dropzoneHelpers.methods, addSectionHelper.methods)),
 
   riskFactorsInstruction: Backbone.View.extend(_.extend({
     initialize(options) {},
