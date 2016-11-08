@@ -1062,6 +1062,8 @@ module.exports = {
           revenues_sales: "Revenues Sales",
         },
         sold_securities_amount: "How much have you sold within the preceeding 12-month period?",
+        fiscal_recent_file_id: "Upload financials for most recent fiscal year",
+        fiscal_prior_file_id: "Upload financials for prior fiscal year"
       };
       this.assignLabels();
 

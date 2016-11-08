@@ -87,11 +87,10 @@ section.formc-team-members-director.container.m-b-85
               input(type="radio" name="sold_securities_choice" value="false" checked=(!values['sold_securities_choice']) target=".previous-security-container")
               |  No
         .sold_securities_choice.shown-yes(style="display:" + (values['sold_securities_choice'] ? 'block' : 'none'))
-          .col-lg-12
-            +fieldTextLabel("sold_securities_amount", _.extend({
-              class1: 'col-lg-12 col-md-12 text-md-left text-xl-left',
-              class2: 'col-lg-12 col-md-12',
-            }, fields.sold_securities_amount))
+          +fieldTextLabel("sold_securities_amount", _.extend({
+            class1: 'col-lg-12 col-md-12 text-md-left text-xl-left',
+            class2: 'col-lg-12 col-md-12',
+          }, fields.sold_securities_amount))
         .text-lg-right.img-ppt
           +fileDropzone("fiscal_recent_file_id", _.extend({
             class1: 'col-lg-3',
