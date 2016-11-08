@@ -395,47 +395,6 @@ module.exports = {
 
   }, addSectionHelper.methods, menuHelper.methods)),
 
-  /*useOfProceeds: Backbone.View.extend({
-    events: _.extend({
-      'submit form': 'submit',
-    }, jsonActions.events),
-
-    preinitialize() {
-      // ToDo
-      // Hack for undelegate previous events
-      for(let k in this.events) {
-        $('#content ' + k.split(' ')[1]).undelegate(); 
-        $('#content ' + k.split(' ')[1]).undelegate(); 
-      }
-    },
-
-    addSection: jsonActions.addSection,
-    deleteSection: jsonActions.deleteSection,
-    getSuccessUrl() {
-      return  '/formc/team-members/' + this.model.get('id');
-    },
-    // submit: app.defaultSaveActions.submit,
-    submit: api.submitAction,
-
-    initialize(options) {
-      this.fields = options.fields;
-    },
-
-    render() {
-      let template = require('templates/formc/useofproceeds.pug');
-
-      this.$el.html(
-        template({
-          serverUrl: serverUrl,
-          Urls: Urls,
-          fields: this.fields,
-          values: this.model.toJSON(),
-        })
-      );
-      return this;
-    },
-  }),*/
-
   relatedParties: Backbone.View.extend(_.extend({
     el: '#content',
     urlRoot: formcServer + '/:id' + '/related-parties',
@@ -482,10 +441,17 @@ module.exports = {
   }, addSectionHelper.methods, menuHelper.methods, yesNoHelper.methods)),
 
   useOfProceeds: Backbone.View.extend(_.extend({
-    urlRoot: 'https://api-formc.growthfountain.com/' + ':id' + '/use-of-proceeds',
+    urlRoot: formcServer + '/:id/use-of-proceeds',
 
     initialize(options) {
       this.fields = options.fields;
+      this.labels = {
+        describe: 'Describe your business plan',
+        business_plan: 'Please upload your business plan',
+        less_offering_express: {},
+        use_of_net_proceeds: {},
+      };
+      this.assignLabels();
     },
 
     events: _.extend({
@@ -494,8 +460,7 @@ module.exports = {
       'click .add-proceed': 'addProceed',
       'click .delete-proceed': 'deleteProceed',
       'change .min-expense,.max-expense,.min-use,.max-use': 'calculate',
-    }, addSectionHelper.events, menuHelper.events),
-    // }, menuHelper.events),
+    }, addSectionHelper.events, menuHelper.events, dropzoneHelpers.events),
 
     getSuccessUrl() {
       return  '/formc/' + this.model.id + '/risk-factors-instruction';
@@ -565,8 +530,6 @@ module.exports = {
       }
     },
 
-    // submit: api.submitAction,
-
     submit(e) {
       if (!this.calculate(null)) {
         e.preventDefault();
@@ -579,8 +542,7 @@ module.exports = {
     },
 
     render() {
-      let template = require('components/formc/templates/useOfProceeds.pug');
-    // this.fields['offering-expense'].type = 'row';
+      let template = require('./templates/useOfProceeds.pug');
       if (this.model.less_offering_express) {
         this.less_offering_expressIndex = Object.keys(this.model.less_offering_express).length;
       } else {
@@ -598,14 +560,14 @@ module.exports = {
           serverUrl: serverUrl,
           Urls: Urls,
           fields: this.fields,
-          // values: this.model.toJSON(),
           values: this.model,
         })
       );
       this.calculate(null);
+      setTimeout(() => { this.createDropzones() } , 1000);
       return this;
     }, 
-  }, addSectionHelper.methods, menuHelper.methods)),
+  }, addSectionHelper.methods, menuHelper.methods, dropzoneHelpers.methods)),
 
   riskFactorsInstruction: Backbone.View.extend(_.extend({
     initialize(options) {},

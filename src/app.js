@@ -42,6 +42,19 @@ Backbone.sync = function (method, model, options) {
   return oldSync(method, model, options);
 };
 
+Backbone.View.prototype.assignLabels = function() {
+  _(this.fields).each((el, key) => {
+    if(el.type == 'nested') {
+      _(el.schema).each((subel, subkey) => {
+        if(this.labels[key])
+          subel.label = this.labels[key][subkey];
+      });
+    } else {
+      el.label = this.labels[key];
+    }
+  });
+}
+
 let app = {
   $: jQuery,
 
