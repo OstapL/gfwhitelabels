@@ -115,7 +115,6 @@ module.exports = {
           $submitBtn.prop('disabled', false); // Re-enable submission
           return;
         }
-        debugger;
 
         api.makeRequest(formcServer + '/' + this.model.id + '/stripe', "PUT", { 
           stripeToken: stripeResponse.id
@@ -127,7 +126,6 @@ module.exports = {
           }
           api.submitAction.call(this, e, data);
         }).fail((xhr, ajaxOptions, err)=>{
-          //debugger;
           validation.invalidMsg({'$': $}, "expiration-block", [xhr.responseJSON.non_field_errors || "An error occurred, please, try again later."]);
           $submitBtn.prop('disabled', false);
         });
