@@ -192,9 +192,11 @@ mixin fieldDateYear(name, attr)
 
 mixin fileDropzone(name, attr)
     - var icon = attr.type
-    if attr.mimetype
+    if attr.mime
       - mimetypeIcons = require('helpers/mimetypeIcons.js');
-      - var icon = mimetypeIcons[attr.mimetype];
+      - var icon = mimetypeIcons[attr.mime];
+    if attr.data.hasOwnProperty('urls') == false
+      - attr.data.urls = [];
 
     div(
       class='row media-item ' + attr.class + ' ' + (attr.id || name) + 
@@ -217,7 +219,4 @@ mixin fileDropzone(name, attr)
             div.col-lg-7.col-md-7.col-sm-7.col-xs-7.p-r-0.p-l-0.p-dropzone.img-dropzone.text-lg-center
               input(name=name id=(attr.id || name) value=attr.value type="hidden")
               img(src='/img/icons/' + icon + '.png' alt=attr.label class="img-file img-" + name)
-              if attr.data
-                a(class=("a-" + name) href=attr.data.url) #{ fileName }
-              else
-                a(class=("a-" + name)  href="")
+              a(class=("a-" + name) href=attr.data.urls[0]) #{ attr.data.name }
