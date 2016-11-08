@@ -556,6 +556,7 @@ module.exports = {
           Urls: Urls,
           fields: this.fields,
           values: this.model,
+          campaign: this.campaign,
         })
       );
       this.calculate(null);

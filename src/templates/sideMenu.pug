@@ -1,35 +1,6 @@
 - 'use strict';
-//- mixin getCompanyUrl(campaign, currentStep, step, name)
-//-     if campaign.id || currentStep == step
-//-         a(
-//-           href="/campaign/" + step + "/" + campaign.id 
-//-           class="list-group-item list-group-item-action " + (currentStep == step ? 'active' : '')
-//-         ) #{ name }
-//-             if currentStep == step
-//-                 i.fa.fa-check
-//-     else
-//-         a(
-//-           href="#"
-//-           class="list-group-item list-group-item-action disabled" 
-//-         ) #{ name }
-
-//- mixin getFormcUrl(campaign, currentStep, step, name)
-//-     if campaign.id || currentStep == step
-//-         a(
-//-           href="/formc/" + step + "/" + campaign.id 
-//-           class="list-group-item list-group-item-action " + (currentStep == step ? 'active' : '')
-//-         ) #{ name }
-//-             if currentStep == step
-//-                 i.fa.fa-check
-//-     else
-//-         a(
-//-           href="#"
-//-           class="list-group-item list-group-item-action disabled" 
-//-         ) #{ name }
-          //- href=(section == 'formc' ? ('/' + section + '/' + campaign.id + '/' + step ) : ('/' + section + '/' + step + '/' + campaign.id))
 mixin getCompanyUrl(campaign, section, currentStep, step, name)
     - let prefix = '/' + section + '/';
-          //- href=prefix + step + "/" + campaign.id 
     if campaign.id || currentStep == step
         a(
           href='/' + section + '/' + campaign.id + '/' + step
@@ -76,14 +47,12 @@ mixin menu(currentSection, currentStep)
                 i.fa.fa-briefcase
                 |  Company
                 span.pull-right
-                  //- i.fa.fa-angle-left
                   i(class="arrow fa " + (currentSection == 'company' ? 'fa-angle-down' : 'fa-angle-left'))
             #company(role="tabpanel" class="panel-collapse collapse " + (currentSection == 'company' ? 'in' : ''))
               .list-group
                 a(href="/company/create" class="list-group-item list-group-item-action" + (currentSection == 'company' && currentStep == 'company' ? ' active' : '')) Company Detail
                   if currentSection == 'company' && currentStep == 'create'
                     i.fa.fa-check
-                //- +getCompanyUrl(campaign || values, 'company', currentStep, 'create', 'Company')
           .panel.panel-default
             .panel-heading(role="tab")
               a(data-toggle="collapse"
@@ -97,7 +66,6 @@ mixin menu(currentSection, currentStep)
                 span.pull-right
                   //- i.fa.fa-angle-down
                   i(class="arrow fa " + (currentSection == 'campaign' ? 'fa-angle-down' : 'fa-angle-left'))
-            //- #campaign(role="tabpanel" class="panel-collapse collapse" + (currentStep != 'company' ? ' in' : ''))
             #campaign-steps(role="tabpanel" class="panel-collapse collapse" + (currentSection == 'campaign' ? ' in' : ''))
                 .list-group
                     +getCompanyUrl(campaign || values, 'campaign', currentStep, 'general_information', 'General Information')
@@ -121,12 +89,6 @@ mixin menu(currentSection, currentStep)
             //- #form_c(role="tabpanel").panel-collapse.collapse
             #form_c(role="tabpanel" class="panel-collapse collapse" + (currentSection == 'formc' ? ' in' : ''))
                 .list-group
-                    //- a(href="/formc/introduction").list-group-item.list-group-item-action form c
-                    //- a(href="/formc/team-members/1").list-group-item.list-group-item-action Team Member
-                    //- a(href="/formc/related-parties/1").list-group-item.list-group-item-action Related Parties
-                    //- a(href="/formc/use-of-proceeds/1").list-group-item.list-group-item-action Use of Proceeds
-                    //- a(href="/formc/risk-factors/1").list-group-item.list-group-item-action Risk Factors
-                    //- a(href="#").list-group-item.list-group-item-action Offering
                     +getCompanyUrl(campaign || values, 'formc', currentStep, 'introduction', 'Introduction')
                     +getCompanyUrl(campaign || values, 'formc', currentStep, 'team-members', 'Team Members')
                     +getCompanyUrl(campaign || values, 'formc', currentStep, 'related-parties', 'Related Parties')
@@ -156,7 +118,6 @@ mixin menu(currentSection, currentStep)
                     +getCompanyUrl(campaign || values, 'formc', currentStep, 'financial-condition', 'Financial Condition')
                     +getCompanyUrl(campaign || values, 'formc', currentStep, 'outstanding-security', 'Outstanding Security')
                     +getCompanyUrl(campaign || values, 'formc', currentStep, 'background-check', 'Background Check')
-                    //- +getCompanyUrl(campaign || values, 'formc', currentStep, 'offering', 'Offering')
 
       .row
         .education-link-wrap
