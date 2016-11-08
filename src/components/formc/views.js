@@ -1,6 +1,6 @@
 "use strict";
 
-import formatHelper from '../../helpers/formatHelper';
+const formatHelper = require('../../helpers/formatHelper');
 
 const menuHelper = require('helpers/menuHelper.js');
 const addSectionHelper = require('helpers/addSectionHelper.js');
@@ -486,29 +486,25 @@ module.exports = {
     },
 
     calculate(e) {
-      // if (e) {
-      //   let $target = $(e.target);
-      //   $target.val(formatHelper.formatNumber($target.val()));
-      // }
+      if (e) {
+        let $target = $(e.target);
+        $target.val(formatHelper.formatNumber($target.val()));
+      }
       let minRaise = this.campaign.minimum_raise;
       let maxRaise = this.campaign.maximum_raise;
 
-      // let minNetProceeds = this.$('.min-expense').map(function (e) { return parseInt($(this).val()); }).toArray().reduce(function (total, num) { return total + num; });
-      // let maxNetProceeds = this.$('.max-expense').map(function (e) { return parseInt($(this).val()); }).toArray().reduce(function (total, num) { return total + num; });
       let minNetProceeds = minRaise - this._getSum('.min-expense');
       let maxNetProceeds = maxRaise - this._getSum('.max-expense');
       
-      this.$('.min-net-proceeds').text(minNetProceeds);
-      this.$('.max-net-proceeds').text(maxNetProceeds);
+      this.$('.min-net-proceeds').text('$' + formatHelper.formatNumber(minNetProceeds));
+      this.$('.max-net-proceeds').text('$' + formatHelper.formatNumber(maxNetProceeds));
 
-      // let minTotalUse = this.$('.min-use').map(function (e) { return parseInt($(this).val()); }).toArray().reduce(function (total, num) { return total + num; });
-      // let maxTotalUse = this.$('.max-use').map(function (e) { return parseInt($(this).val()); }).toArray().reduce(function (total, num) { return total + num; });
       let minTotalUse = this._getSum('.min-use');
       let maxTotalUse = this._getSum('.max-use');
 
-      this.$('.min-total-use').text(minTotalUse);
-      this.$('.max-total-use').text(maxTotalUse);
-      // this.$('.min-total-proceeds').text();
+      this.$('.min-total-use').text('$' + formatHelper.formatNumber(minTotalUse));
+      this.$('.max-total-use').text('$' + formatHelper.formatNumber(maxTotalUse));
+
       // return true if the table is valid in terms of the calculation, else return false
       if (minNetProceeds == minTotalUse) {
         $('.min-net-proceeds,.min-total-use').removeClass('red');
@@ -549,18 +545,6 @@ module.exports = {
 
     render() {
       let template = require('./templates/useOfProceeds.pug');
-      if (this.model.less_offering_express) {
-        this.less_offering_expressIndex = Object.keys(this.model.less_offering_express).length;
-      } else {
-        this.less_offering_expressIndex = 0;
-      }
-
-      if (this.model.use_of_net_proceeds) {
-        this.use_of_net_proceedsIndex = Object.keys(this.model.use_of_net_proceeds).length;
-      } else {
-        this.use_of_net_proceedsIndex = 0;
-      }
-
 
       this.$el.html(
         template({
@@ -571,12 +555,20 @@ module.exports = {
           templates: this.jsonTemplates,
           maxRaise: this.campaign.maximum_raise,
           minRaise: this.campaign.minimum_raise,
+          formatHelper: formatHelper,
         })
       );
       this.$('.max-total-use').popover({
         html: true,
         template: '<div class="popover" role="tooltip" style="border-color:red;"><div class="popover-arrow" style="border-right-color:red;"></div><h3 class="popover-title"></h3><div class="popover-content" style="color:red;"></div></div>'
       });
+
+      this.$('.min-expense,.max-expense,.min-use,.max-use').each(function (e) {
+        let $this = $(this);
+        $this.val(formatHelper.formatNumber($this.val()));
+      });
+
+
       this.calculate(null);
       setTimeout(() => { this.createDropzones() } , 1000);
       return this;
