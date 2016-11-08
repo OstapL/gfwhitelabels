@@ -494,6 +494,17 @@ module.exports = {
       this.$('.max-total-use').text(maxTotalUse);
       // this.$('.min-total-proceeds').text();
       // return true if the table is valid in terms of the calculation, else return false
+      if (minNetProceeds == minTotalUse) {
+        $('.min-net-proceeds,.min-total-use').removeClass('red');
+      } else {
+        $('.min-net-proceeds,.min-total-use').addClass('red');
+      }
+
+      if (maxNetProceeds == maxTotalUse) {
+        $('.max-net-proceeds,.max-total-use').removeClass('red');
+      } else {
+        $('.max-net-proceeds,.max-total-use').addClass('red');
+      }
       return (minNetProceeds == minTotalUse) && (maxNetProceeds == maxTotalUse);
     },
 
@@ -510,6 +521,7 @@ module.exports = {
         dataType: dataType,
         index: this[dataType + 'Index']++,
       }));
+      this.calculate(null);
     },
 
     deleteProceed(e) {
@@ -518,6 +530,7 @@ module.exports = {
       let type = $target.data('type');
       let index = $target.data('index');
       $('.' + type + '-table tr.index_' + index).remove();
+      this.calculate(null);
     },
 
     changeDocType(e) {
