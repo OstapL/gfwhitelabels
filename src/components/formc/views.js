@@ -460,8 +460,6 @@ module.exports = {
     events: _.extend({
       'submit form': 'submit',
       'change input[type=radio][name=doc_type]': 'changeDocType',
-      // 'click .add-proceed': 'addProceed',
-      // 'click .delete-proceed': 'deleteProceed',
       'change .min-expense,.max-expense,.min-use,.max-use': 'calculate',
       'click .add-sectionnew': 'addSectionNew',
       'click .delete-sectionnew': 'deleteRow',
