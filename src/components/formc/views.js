@@ -1100,7 +1100,8 @@ module.exports = {
 
     initialize(options) {
       this.fields = options.fields;
-      this.fields.business_loans_or_debt_choice.choices = [
+      this.fields.business_loans_or_debt_choice.validate = {};
+      this.fields.business_loans_or_debt_choice.validate.choices = [
         {
           value: 1,
           display_name: 'Yes',
@@ -1110,7 +1111,8 @@ module.exports = {
           display_name: 'No',
         },
       ]
-      this.fields.exempt_offering_choice.choices = [
+      this.fields.exempt_offering_choice.validate = {};
+      this.fields.exempt_offering_choice.validate.choices = [
         {
           value: 1,
           display_name: 'Yes',
@@ -1121,7 +1123,8 @@ module.exports = {
         },
       ]
       this.fields.outstanding_securities.schema.security_type.type = 'choice';
-      this.fields.outstanding_securities.schema.security_type.choices = [
+      this.fields.outstanding_securities.schema.security_type.validate = {};
+      this.fields.outstanding_securities.schema.security_type.validate.choices = [
         {
           value: 0,
           display_name: 'Preferred Stock',
@@ -1148,7 +1151,8 @@ module.exports = {
         },
       ];
       this.fields.outstanding_securities.schema.voting_right.type = 'radio';
-      this.fields.outstanding_securities.schema.voting_right.choices = [
+      this.fields.outstanding_securities.schema.voting_right.validate = {};
+      this.fields.outstanding_securities.schema.voting_right.validate.choices = [
         {
           value: 1,
           display_name: 'Yes',

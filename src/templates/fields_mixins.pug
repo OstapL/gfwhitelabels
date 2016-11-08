@@ -68,7 +68,7 @@ mixin prepareField(name, attr)
   - attr = attr ? attr : fields[name];
   - attr.value = attr.value ? attr.value : values ? values[name] : '';
 
-  if attr.placeholder  == null
+  if attr.placeholder == null || attr.placeholder == ''
     - attr.placeholder = attr.label
   if attr.required == true
     - attr.label += '<span class="color-red">*</span>'
@@ -130,7 +130,7 @@ mixin fieldChoiceLabel(name, attr)
           if attr.hasOwnProperty('empty')
               option(value=attr.empty.value) #{attr.empty.display}
             
-          each v in attr.choices
+          each v in attr.validate.choices
               option(value=v.value selected=(v.value == attr.value ? "selected" : undefined)) #{v.display_name}
 
 
@@ -139,12 +139,12 @@ mixin fieldRadioLabel(name, attr)
   if attr.type == null
     - attr.type = 'radio'
 
-  div(class=attr.class1)
-    label= attr.label
+  div(class=attr.class1 + (attr.required == true ? ' required ' : ' '))
+    label!= attr.label
   div(class=attr.class2)
-    div(class="form-group m-b-0 "  + (attr.row == 0 ? '' : 'row ') + (attr.id || name) + (attr.required == true ? ' required ' : ' ') + ' ' + attr.type)
+    div(class="form-group m-b-0 "  + (attr.row == 0 ? '' : 'row ') + (attr.id || name)  + ' ' + attr.type)
       div(class=attr.class2).radio-input
-        each v in attr.choices
+        each v in attr.validate.choices
           label
             input(
               type="radio" 

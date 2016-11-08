@@ -57,13 +57,13 @@ section.create-company-team-add.container
                 each v,k in values.team_members
                   .col-lg-3.m-t-2.p-r-0.p-l-0.m-l-2.m-r-2
                       .team-add-item.text-lg-center.text-xs-center
-                        a(href="/formc/" + values.id + "/team-members/" + roles[v.role] + '/' + v.uuid).link-1
+                        a(href="/formc/" + values.id + "/team-members/" + roles[v.role] + '/' + v.user_id).link-1
                           img(src=v.photo alt=v.first_name).img-circle
                         //a(href="#" data-id=v.uuid data-role=roles[v.role] style="position: absolute").link-1.delete-member.pull-right
                           i.fa.fa-times
                         p.name.text-uppercase #{v.first_name} #{v.last_name}
                         p.small #{ roles[v.role] }
-                        a(href="/formc/" + values.id + "/team-members/" + roles[v.role] + '/' + v.uuid).link-1
+                        a(href="/formc/" + values.id + "/team-members/" + roles[v.role] + '/' + v.user_id).link-1
                           i.fa.fa-pencil-square-o
                   - counter ++
             .col-lg-12
@@ -86,7 +86,7 @@ section.create-company-team-add.container
                                 td.text-xs-center.color-greed Accepted
                               else
                                 td.text-xs-center.color-red 
-                                  a(href="#" data-id=v.uuid).link-2 Invite Once Again
+                                  a(href="#" data-id=v.user_id).link-2 Invite Once Again
 
             div(style="display: " +  (values.team_members.length >= 1 ? 'block' : 'none')).col-lg-12.pull-lg-right.p-r-0.m-t-3
 
