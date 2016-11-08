@@ -126,7 +126,7 @@ mixin fieldChoiceLabel(name, attr)
       select(
           id=attr.id || name
           name=name
-      ).custom-select
+      ).custom-select.w-100
           if attr.hasOwnProperty('empty')
               option(value=attr.empty.value) #{attr.empty.display}
             
@@ -143,7 +143,7 @@ mixin fieldRadioLabel(name, attr)
     label!= attr.label
   div(class=attr.class2)
     div(class="form-group m-b-0 "  + (attr.row == 0 ? '' : 'row ') + (attr.id || name)  + ' ' + attr.type)
-      div(class=attr.class2).radio-input
+      div(class=attr.class3).radio-input
         each v in attr.validate.choices
           label
             input(

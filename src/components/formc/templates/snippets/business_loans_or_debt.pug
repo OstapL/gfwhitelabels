@@ -2,17 +2,17 @@ include ../../../../templates/fields_mixins.pug
 
 mixin row(value, index)
   - var index = index;
+  .col-lg-12
+    .col-lg-12(data-index=index class=name + ' addSectionBlock')
+      .delete-section-container
+        a(href="#" data-section=name data-index=index).delete-sectionnew
+          i.fa.fa-times
 
-  div(data-index=index class=name + ' addSectionBlock')
-    .delete-section-container
-      a(href="#" data-section=name data-index=index).delete-sectionnew
-        i.fa.fa-times
-
-    +fieldNestedTextLabel(name, "creditor", value, index, {})
-    +fieldNestedTextLabel(name, "outstanding_amount", value, index, {})
-    +fieldNestedTextLabel(name, "interest_rate", value, index, {})
-    +fieldNestedTextLabel(name, "maturity_date", value, index, {})
-    +fieldNestedTextLabel(name, "other_material_terms", value, index, {})
+      +fieldNestedTextLabel(name, "creditor", value, index, {})
+      +fieldNestedTextLabel(name, "outstanding_amount", value, index, {class1: 'text-lg-right col-lg-3 col-md-12 text-md-left m-b-0 p-t-0'})
+      +fieldNestedTextLabel(name, "interest_rate", value, index, {})
+      +fieldNestedTextLabel(name, "maturity_date", value, index, {})
+      +fieldNestedTextLabel(name, "other_material_terms", value, index, {class1: 'text-lg-right col-lg-3 col-md-12 text-md-left m-b-0 p-t-0'})
 
 
 mixin run()
@@ -27,12 +27,12 @@ mixin run()
         else
           each value, index in values
             +row(value, index)
-
-      .row.add-link
-        .col-lg-9.offset-1.pull-right
-          a(href="#" data-section=name data-comp='formc' data-template='business_loans_or_debt').link-2.add-sectionnew
-            i.fa.fa-plus
-            |  Add position
+      .col-lg-12.m-b-2
+        .row.add-link
+          .col-lg-9.offset-1.pull-right
+            a(href="#" data-section=name data-comp='formc' data-template='business_loans_or_debt').link-2.add-sectionnew
+              i.fa.fa-plus
+              |  Add position
   else
     +row({}, index)
 
