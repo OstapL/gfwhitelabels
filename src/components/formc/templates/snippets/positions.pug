@@ -43,12 +43,12 @@ mixin run()
         else
           each value, index in values
             +row(value, index)
-
-      .row.add-link
-        .col-lg-9.offset-1.pull-right
-          a(href="#" data-section=name data-comp='formc' data-template='positions').link-2.add-sectionnew
-            i.fa.fa-plus
-            |  Add position
+      .col-lg-12
+        .row.add-link
+          .col-lg-9.offset-1.pull-right
+            a(href="#" data-section=name data-comp='formc' data-template='positions').link-2.add-sectionnew
+              i.fa.fa-plus
+              |  Add position
   else
     +row({}, index)
 
