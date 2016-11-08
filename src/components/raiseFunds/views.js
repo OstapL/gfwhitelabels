@@ -859,7 +859,7 @@ module.exports = {
         'click .onPreview': onPreviewAction,
         'click .submit_form': submitCampaign,
         'click .submit-specifics': 'checkMinMaxRaise',
-      }, leavingConfirmationHelper.events, menuHelper.events),
+      }, leavingConfirmationHelper.events, menuHelper.events, dropzoneHelpers.events),
 
       checkMinMaxRaise(e) {
         let min = this.$('input[name=minimum_raise]').val();
@@ -925,6 +925,18 @@ module.exports = {
 
       initialize(options) {
         this.fields = options.fields;
+        this.labels = {
+          investor_presentation_data: '',
+          minimum_raise: 'Our Minimum Total Raise is',
+          maximum_raise: 'Our Maximum Total Raise is',
+          minimum_increment: 'The Minimum investment is',
+          length_days: 'Length of the Campaign',
+          investor_presentation: 'Upload an Investor Presentation',
+        };
+        this.assignLabels();
+        this.createIndexes();
+        this.buildJsonTemplates('raiseFunds');
+
         this.$el.on('keypress', ':input:not(textarea)', function (event) {
           if (event.keyCode == 13) {
             event.preventDefault();
@@ -948,13 +960,12 @@ module.exports = {
                 fields: this.fields,
                 // values: this.model.toJSON(),
                 values: this.model,
-                dropzoneHelpers: dropzoneHelpers,
+                dropzoneHelpers: dropzoneHelpers.methods,
               })
         );
 
         const Model = require('components/campaign/models.js');
-        dropzoneHelpers.createFileDropzone(
-            dropzone,
+        dropzoneHelpers.methods.createFileDropzone(
             'investor_presentation',
             'investor_presentation', '',
             (data) => {
@@ -1001,7 +1012,7 @@ module.exports = {
 
         return this;
       },
-    }, leavingConfirmationHelper.methods, menuHelper.methods)),
+    }, leavingConfirmationHelper.methods, menuHelper.methods, dropzoneHelpers.methods, addSectionHelper.methods)),
 
   perks: Backbone.View.extend(_.extend({
       events: _.extend({

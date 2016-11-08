@@ -185,22 +185,18 @@ module.exports = Backbone.Router.extend({
       const Model = require('components/campaign/models.js');
       const View = require('components/raiseFunds/views.js');
 
-      // var a1 = app.makeCacheRequest(Urls['campaign-list']() + '/specifics/' + id, 'OPTIONS');
-      // var a2 = app.makeCacheRequest(Urls['campaign-list']() + '/specifics/' + id);
       var a1 = app.makeCacheRequest(raiseCapitalUrl + '/campaign/' + id + '/specifics', 'OPTIONS');
       var a2 = app.makeCacheRequest(raiseCapitalUrl + '/campaign/' + id + '/specifics');
+      var a3 = app.makeCacheRequest(authServer + '/user/company');
 
-      $.when(a1, a2).done((meta, model) => {
+      $.when(a1, a2, a3).done((meta, model, company) => {
+        model[0].company = company[0];
         var i = new View.specifics({
           el: '#content',
           fields: meta[0].fields,
-          // model: new Model.model(model[0]),
           model: model[0],
         });
         i.render();
-        //app.views.campaign[id].render();
-        //app.cache[window.location.pathname] = i.$el.html();
-
         app.hideLoading();
       }).fail((xhr, error) =>  {
         app.defaultSaveActions.error.error($('#content'), error);

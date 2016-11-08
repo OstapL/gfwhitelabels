@@ -22,8 +22,8 @@ section.formc.use_of_proceeds.create-company-media.container
         .col-lg-12
           textarea(rows="3" placeholder="Intended Use of Proceeds" name="intended_use_of_proceeds").form-control= values.intended_use_of_proceeds
       .table.table-responsive
-        .col-lg-12
-          table.table.table-bordered.use-of-proceeds-table.expense-table
+        .col-lg-12.table-responsive
+          table.table.table-bordered.use-of-proceeds-table.expense-table.m-b-0
             thead
               tr
                 th.w-50
@@ -59,12 +59,12 @@ section.formc.use_of_proceeds.create-company-media.container
                     .form-section
                       input(type="text" value=v.max name="less_offering_express[" + k + "][max]").input-border-bottom.form-control.text-xs-center.max-expense
 
-          table.table.table-bordered.use-of-proceeds-table.use-table
+          table.table.table-bordered.use-of-proceeds-table.use-table.m-b-0.m-t-0
             thead
               tr.color-grey
                 td.w-50.p-l-r-20 Net Proceeds
                   .pull-right.icon
-                    i.fa.fa-question-circle
+                    i.fa.fa-question-circle.m-r-0
                 td.w-25.text-lg-center.font-size-12.min-net-proceeds $100k
                 td.w-25.text-lg-center.font-size-12.max-net-proceeds
             tbody
@@ -92,7 +92,7 @@ section.formc.use_of_proceeds.create-company-media.container
                   td.border-b-t-none.w-25.font-size-12
                     .form-section
                       input(type="text" value=v.max name="use_of_net_proceeds[" + k + "][max]").input-border-bottom.form-control.text-xs-center.max-use
-          table.table.table-bordered
+          table.table.table-bordered.m-t-0
             tbody
               tr.row-gray
                 td.w-50.p-l-25 Total Use of Net Proceeds

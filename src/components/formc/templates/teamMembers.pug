@@ -33,12 +33,12 @@ section.create-company-team-add.container
                 b How many emploees do you have?
             .col-lg-6.required
                 +fieldTextLabel("full_time_employers", _.extend({
-                    class1: 'col-lg-4 col-md-12 text-md-left',
+                    class1: 'col-lg-4 col-md-12 text-md-left text-xl-right p-t-0 m-b-0',
                     class2: 'col-lg-8 col-md-12',
                 }, fields.full_time_employers))
             .col-lg-6.required
                 +fieldTextLabel("part_time_employers", _.extend({
-                    class1: 'col-lg-4 col-md-12 text-md-left',
+                    class1: 'col-lg-4 col-md-12 text-md-left text-xl-right p-t-0 m-b-0',
                     class2: 'col-lg-8 col-md-12',
                 }, fields.part_time_employers))
             .col-lg-12.text-lg-center.text-md-center.text-sm-center.text-xs-center.m-t-2.m-b-2
@@ -71,7 +71,7 @@ section.create-company-team-add.container
             .col-lg-12.m-b-1
                 p Please identify the Officers in your company responsible for the following roles. Please note that, if necessary, the same person may be identified with multiple titles
             .col-lg-12.table-responsive
-                table.table.table-bordered.mb50
+                table.table.table-bordered.m-b-0
                     thead
                         tr.color-grey
                             th.text-xs-center Title
