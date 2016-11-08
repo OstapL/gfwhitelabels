@@ -1,7 +1,6 @@
 - 'use strict';
 include ../../../templates/mixins.pug
 include menu.pug
-//- include ../../../templates/menuRaiseFund.pug
 
 +breadcrumbs('Create Company', '', 
     [
@@ -12,6 +11,7 @@ include menu.pug
 )
 
 section.team-members.container.m-b-85
+  +menu('campaign', 'team-members')
 
   //START RIGHT BLOCK
   .col-lg-10.offset-lg-1.col-xl-8.offset-xl-0.push-xl-3
@@ -126,4 +126,3 @@ section.team-members.container.m-b-85
                 .dropdown-menu(aria-labelledby="dropdownMenuButton")
                   a(href="").dropdown-item Add Advisor
                   a(href="").dropdown-item Add Team Member
-  +menu('team-members')

@@ -1,7 +1,7 @@
 - 'use strict'
 include ../../../templates/mixins.pug
 include ../../../templates/fields_mixins.pug
-include ../../../templates/menuRaiseFund.pug
+include ../../raiseFunds/templates/menu.pug
 
 +breadcrumbs('Create Formc', '', [['home', '/',], [ 'current', page.get_absolute_url]])
 
@@ -27,8 +27,8 @@ section.formc.use_of_proceeds.create-company-media.container
             tbody
               tr.color-grey.row-gray
                 td.w-50.p-l-r-20.p-t-b-5 Total Proceeds
-                td.w-25.text-lg-center.font-size-12.p-t-b-5 200
-                td.w-25.text-lg-center.font-size-12.p-t-b-5 200
+                td.w-25.text-lg-center.font-size-12.p-t-b-5 #{ campaign.minimum_raise }
+                td.w-25.text-lg-center.font-size-12.p-t-b-5 #{ campaign.maximum_raise }
               tr
                 td.border-t-n.p-l-r-20
                   .pull-left Less: Offering Expenses

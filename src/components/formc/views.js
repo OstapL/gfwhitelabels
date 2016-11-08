@@ -445,6 +445,7 @@ module.exports = {
 
     initialize(options) {
       this.fields = options.fields;
+      this.campaign = options.campaign;
       this.labels = {
         describe: 'Describe your business plan',
         business_plan: 'Please upload your business plan',
@@ -473,9 +474,8 @@ module.exports = {
     },
 
     calculate(e) {
-      // Add all min-expense
-      let minRaise = 100000;
-      let maxRaise = 200000;
+      let minRaise = this.campaign.minimum_raise;
+      let maxRaise = this.campaign.maximum_raise;
 
       // let minNetProceeds = this.$('.min-expense').map(function (e) { return parseInt($(this).val()); }).toArray().reduce(function (total, num) { return total + num; });
       // let maxNetProceeds = this.$('.max-expense').map(function (e) { return parseInt($(this).val()); }).toArray().reduce(function (total, num) { return total + num; });
@@ -531,6 +531,11 @@ module.exports = {
     },
 
     submit(e) {
+      if (!this.calculate(null)) {
+        e.preventDefault();
+        alert("Calculation not satisfied!");
+        return;
+      }
       var $target = $(e.target);
       var data = $target.serializeJSON({useIntKeysAsArrayIndex: true});
       api.submitAction.call(this, e, data);
@@ -556,6 +561,7 @@ module.exports = {
           Urls: Urls,
           fields: this.fields,
           values: this.model,
+          campaign: this.campaign,
         })
       );
       this.calculate(null);

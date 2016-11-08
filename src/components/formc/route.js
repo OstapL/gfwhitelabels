@@ -131,14 +131,16 @@ module.exports = Backbone.Router.extend({
 
     let fieldsR = api.makeCacheRequest(formcServer + '/' + id + '/use-of-proceeds', 'OPTIONS');
     let dataR = api.makeCacheRequest(formcServer + '/' + id + '/use-of-proceeds');
+    let campaignR = api.makeCacheRequest(authServer + '/user/campaign');
 
     $('#content').scrollTo();
-    $.when(fieldsR, dataR).done((fields, data) => {
+    $.when(fieldsR, dataR, campaignR).done((fields, data, campaign) => {
       data[0].id = id;
       const i = new View.useOfProceeds({
         el: '#content',
         model: data[0],
         fields: fields[0].fields,
+        campaign: campaign[0],
       });
       i.render();
       app.hideLoading();
