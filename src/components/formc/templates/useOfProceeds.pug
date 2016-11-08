@@ -3,6 +3,11 @@ include ../../../templates/mixins.pug
 include ../../../templates/fields_mixins.pug
 include ../../raiseFunds/templates/menu.pug
 
+style.
+  .red {
+    color: red;
+  }
+
 +breadcrumbs('Create Formc', '', [['home', '/',], [ 'current', page.get_absolute_url]])
 
 section.formc.use_of_proceeds.create-company-media.container
