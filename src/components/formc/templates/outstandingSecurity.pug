@@ -1,6 +1,6 @@
 include ../../../templates/mixins.pug
 include ../../../templates/fields_mixins.pug
-include ../../../templates/menuRaiseFund.pug
+include ../../raiseFunds/templates/menu.pug
 
 +breadcrumbs('form c', '', 
     [
@@ -33,13 +33,15 @@ section.formc-team-members-director.container.m-b-85
           +fieldRadioLabel("exempt_offering_choice", _.extend({
             class1: 'bold',
             class2: 'form-section col-lg-12 yesno',
-            class3: 'm-b-1',
+            class3: '',
           }, fields.exempt_offering_choice))
         .exempt_offering_choice.shown-yes(style="display:" + (values['exempt_offering_choice'] ? 'block' : 'none') + ";")
           | !{ templates.exempt_offering }
 
         |!{ templates.outstanding_securities }
-        .border-bottom.m-t-3.m-b-3 
+        .row
+          .col-lg-12
+            .border-bottom.m-t-3.m-b-3 
         +fieldTextareaLabel("rights_of_securities", _.extend({
           class1: 'col-lg-12 col-md-12  text-md-left  text-xl-left',
           class2: 'col-lg-12 col-md-12 big-textarea',

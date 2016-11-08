@@ -2,7 +2,7 @@ include ../../../../templates/fields_mixins.pug
 
 mixin row(value, index)
   - var index = index;
-  .col-lg-12
+  .col-lg-12.m-t-1
     .col-lg-12(data-index=index class=name + ' addSectionBlock')
       .delete-section-container
         a(href="#" data-section=name data-index=index).delete-sectionnew

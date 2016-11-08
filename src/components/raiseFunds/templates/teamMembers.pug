@@ -1,7 +1,6 @@
 - 'use strict';
 include ../../../templates/mixins.pug
 include menu.pug
-//- include ../../../templates/menuRaiseFund.pug
 
 +breadcrumbs('Create Company', '', 
   [
@@ -11,6 +10,7 @@ include menu.pug
   ]
 )
 section.create-company-team-add.container
+  +menu('campaign', 'team-members')
 
   //START RIGHT BLOCK
   .col-lg-10.offset-lg-1.col-xl-8.offset-xl-0.push-xl-3
@@ -48,4 +48,3 @@ section.create-company-team-add.container
       .col-lg-12.pull-lg-right.p-r-0.m-t-3.text-lg-right.text-md-center.text-sm-center.text-xs-center.buttons-row
         a(href="/campaign/specifics/" + values.id).btn.btn-primary.text-uppercase save and continue
           i.fa.fa-angle-right
-  +menu('team-members')

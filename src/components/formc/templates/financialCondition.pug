@@ -1,6 +1,6 @@
 include ../../../templates/mixins.pug
 include ../../../templates/fields_mixins.pug
-include ../../../templates/menuRaiseFund.pug
+include ../../raiseFunds/templates/menu.pug
 
 +breadcrumbs('form c', '', 
     [
@@ -32,18 +32,16 @@ section.formc-team-members-director.container.m-b-85
         .financials_condition_choice.shown-yes(style="display:" + (values['financials_condition_choice'] ? 'block' : 'none') + ";")
           .col-lg-12
             +fieldTextareaLabel("financials_condition_yes", _.extend({
-              class1: 'col-lg-12',
+              class1: '',
               class2: 'big-textarea',
-              label: 'Please discuss your historical results for each period for which you provide financial statements.  The discussion should focus on financial milestones and operational, liquidity and other challenges.  Please also discuss whether historical results and cash flows are representative of what investors should expect in the future. Take into account the proceeds of the offering and any other known sources of capital. Please discuss how the proceeds from the offering will affect your liquidity, whether these funds are necessary to the viability of the business, and how quickly you anticipate using your available cash.  Please also discuss other available sources of capital, such as lines of credit or required contributions by shareholders, for example.',
               placeholder: "Describe your historical results",
             }, fields.financials_condition_yes))
 
         .financials_condition_choice.shown-no(style="display:" + (values['financials_condition_choice'] ? 'none' : 'block') + ";")
           .col-lg-12
             +fieldTextareaLabel("financials_condition_no", _.extend({
-              class1: 'col-lg-12',
+              class1: '',
               class2: 'big-textarea',
-              label: 'Please discuss financial milestones and operational, liquidity and other challenges. Please discuss how the proceeds from the offering will affect your liquidity, whether these funds are necessary to the viability of the business, and how quickly you anticipate using your available cash.  Please also discuss other available sources of capital, such as lines of credit or required contributions by shareholders, for example.',
               placeholder: "Describe your financial condition",
             }, fields.financials_condition_no))
       .col-lg-12

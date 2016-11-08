@@ -445,6 +445,7 @@ module.exports = {
 
     initialize(options) {
       this.fields = options.fields;
+      this.campaign = options.campaign;
       this.labels = {
         describe: 'Describe your business plan',
         business_plan: 'Please upload your business plan',
@@ -473,9 +474,8 @@ module.exports = {
     },
 
     calculate(e) {
-      // Add all min-expense
-      let minRaise = 100000;
-      let maxRaise = 200000;
+      let minRaise = this.campaign.minimum_raise;
+      let maxRaise = this.campaign.maximum_raise;
 
       // let minNetProceeds = this.$('.min-expense').map(function (e) { return parseInt($(this).val()); }).toArray().reduce(function (total, num) { return total + num; });
       // let maxNetProceeds = this.$('.max-expense').map(function (e) { return parseInt($(this).val()); }).toArray().reduce(function (total, num) { return total + num; });
@@ -531,6 +531,11 @@ module.exports = {
     },
 
     submit(e) {
+      if (!this.calculate(null)) {
+        e.preventDefault();
+        alert("Calculation not satisfied!");
+        return;
+      }
       var $target = $(e.target);
       var data = $target.serializeJSON({useIntKeysAsArrayIndex: true});
       api.submitAction.call(this, e, data);
@@ -556,6 +561,7 @@ module.exports = {
           Urls: Urls,
           fields: this.fields,
           values: this.model,
+          campaign: this.campaign,
         })
       );
       this.calculate(null);
@@ -1020,7 +1026,9 @@ module.exports = {
         },
         sold_securities_amount: "How much have you sold within the preceeding 12-month period?",
         fiscal_recent_file_id: "Upload financials for most recent fiscal year",
-        fiscal_prior_file_id: "Upload financials for prior fiscal year"
+        fiscal_prior_file_id: "Upload financials for prior fiscal year",
+        financials_condition_no: "Please discuss financial milestones and operational, liquidity and other challenges.  Please discuss how the proceeds from the offering will affect your liquidity, whether these funds are necessary to the viability of the business, and how quickly you anticipate using your available cash. Please also discuss other available sources of capital, such as lines of credit or required contributions by shareholders, for example.",
+        financials_condition_yes: "Please discuss your historical results for each period for which you provide financial statements.  The discussion should focus on financial milestones and operational, liquidity and other challenges.  Please also discuss whether historical results and cash flows are representative of what investors should expect in the future. Take into account the proceeds of the offering and any other known sources of capital. Please discuss how the proceeds from the offering will affect your liquidity, whether these funds are necessary to the viability of the business, and how quickly you anticipate using your available cash.  Please also discuss other available sources of capital, such as lines of credit or required contributions by shareholders, for example. ",
       };
       this.assignLabels();
 
