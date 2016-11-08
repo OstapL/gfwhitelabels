@@ -39,7 +39,9 @@ mixin row(value, index)
 mixin run()
 
   if first_run
-    .border-bottom.m-t-3.m-b-3
+    .row
+      .col-lg-12
+        .border-bottom.m-t-3.m-b-0
     h3.text-xs-center Outstanding Securities
     p What other securities are outstanding? Describe the material terms of any other outstanding securies.
     a(data-toggle="modal" data-target="#security_modal" href="#security_modal").btn.text-uppercase.m-t-2.m-b-2
