@@ -1060,7 +1060,8 @@ module.exports = {
           account_receivable: "Account Receivable",
           cash_and_equivalents: "Cash Equivalents",
           revenues_sales: "Revenues Sales",
-        }
+        },
+        sold_securities_amount: "How much have you sold within the preceeding 12-month period?",
       };
       this.assignLabels();
 
