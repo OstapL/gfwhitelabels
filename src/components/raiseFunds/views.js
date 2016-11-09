@@ -4,8 +4,7 @@ let addSectionHelper = require('helpers/addSectionHelper.js');
 import formatHelper from '../../helpers/formatHelper';
 const appendHttpIfNecessary = formatHelper.appendHttpIfNecessary;
 
-const dropzone = require('dropzone');
-const dropzoneHelpers = require('helpers/dropzone.js');
+const dropzoneHelpers = require('helpers/dropzoneHelpers.js');
 const leavingConfirmationHelper = require('helpers/leavingConfirmationHelper.js');
 const phoneHelper = require('helpers/phoneHelper.js');
 const validation = require('components/validation/validation.js');

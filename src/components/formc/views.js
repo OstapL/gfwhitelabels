@@ -6,8 +6,7 @@ const menuHelper = require('helpers/menuHelper.js');
 const addSectionHelper = require('helpers/addSectionHelper.js');
 const yesNoHelper = require('helpers/yesNoHelper.js');
 
-const dropzone = require('dropzone');
-const dropzoneHelpers = require('helpers/dropzone.js');
+const dropzoneHelpers = require('helpers/dropzoneHelpers.js');
 const riskFactorsHelper = require('helpers/riskFactorsHelper.js');
 
 const labels = {
