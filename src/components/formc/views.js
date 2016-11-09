@@ -1172,12 +1172,9 @@ module.exports = {
       e.preventDefault();
       if (!confirm('Are you sure?')) return;
       let sectionName = e.currentTarget.dataset.section;
-      // $('.' + sectionName + ' .index_' + e.currentTarget.dataset.index).remove();
-      // this.$('.' + sectionName + '_container' + ' .index_' + e.currentTarget.dataset.index).remove();
       let index = e.currentTarget.dataset.index;
       this.$('.' + sectionName + '_container tr[data-index=' + index + ']').remove();
       this.model[sectionName].splice(index, 1);
-      // e.currentTarget.offsetParent.remove();
 
       // Reorganize indice
       this.$('.' + sectionName + '_container tr').each(function (idx, elem) {
