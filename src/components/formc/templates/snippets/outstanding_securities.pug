@@ -3,7 +3,7 @@ include ../../../../templates/fields_mixins.pug
 mixin row(value, index)
   - var index = index;
 
-  tr(class="index_" + k)
+  tr(class="index_" + index)
       td
           - let securityType;
           case parseInt(value.security_type)
@@ -59,6 +59,7 @@ mixin run()
               th(width="20%").text-xs-center Voting Rights
               th(width="6%")
           tbody(class=(attr.row == 0 ? '' : 'row ') + name + '_container' + (attr.required == true ? ' required ' : ' ') + ' nested')
+            - console.log(values);
             each value, index in values
               +row(value, index)
 
