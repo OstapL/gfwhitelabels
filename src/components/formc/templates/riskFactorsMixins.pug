@@ -12,7 +12,7 @@ mixin showRisk(name, index, title, risk)
 
 mixin showRiskForm(v, k, field)
   if values.hasOwnProperty(field) === false
-  - values[field] = {};
+    - values[field] = {};
 
   .panel.panel-default.risk-panel(index=k)
     .panel-heading(role="tab" id=("heading-" + k))
