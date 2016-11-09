@@ -1060,67 +1060,31 @@ module.exports = {
     initialize(options) {
       this.fields = options.fields;
       this.fields.business_loans_or_debt_choice.validate = {};
-      this.fields.business_loans_or_debt_choice.validate.choices = [
-        {
-          value: 1,
-          display_name: 'Yes',
-        },
-        {
-          value: 0,
-          display_name: 'No',
-        },
-      ]
+      this.fields.business_loans_or_debt_choice.validate.choices = {
+        0: 'No',
+        1: 'Yes',
+      };
       this.fields.exempt_offering_choice.validate = {};
-      this.fields.exempt_offering_choice.validate.choices = [
-        {
-          value: 1,
-          display_name: 'Yes',
-        },
-        {
-          value: 0,
-          display_name: 'No',
-        },
-      ]
+      this.fields.exempt_offering_choice.validate.choices = {
+        0: 'No',
+        1: 'Yes',
+      };
       this.fields.outstanding_securities.schema.security_type.type = 'choice';
       this.fields.outstanding_securities.schema.security_type.validate = {};
-      this.fields.outstanding_securities.schema.security_type.validate.choices = [
-        {
-          value: 0,
-          display_name: 'Preferred Stock',
-        },
-        {
-          value: 1,
-          display_name: 'Common Stock',
-        },
-        {
-          value: 2,
-          display_name: 'Debt',
-        },
-        {
-          value: 3,
-          display_name: 'Warrants',
-        },
-        {
-          value: 4,
-          display_name: 'Options',
-        },
-        {
-          value: 5,
-          display_name: 'Other',
-        },
-      ];
+      this.fields.outstanding_securities.schema.security_type.validate.choices = {
+        0: 'Preferred Stock',
+        1: 'Common Stock',
+        2: 'Debt',
+        3: 'Warrants',
+        4: 'Options',
+        5: 'Other',
+      };
       this.fields.outstanding_securities.schema.voting_right.type = 'radio';
       this.fields.outstanding_securities.schema.voting_right.validate = {};
-      this.fields.outstanding_securities.schema.voting_right.validate.choices = [
-        {
-          value: 1,
-          display_name: 'Yes',
-        },
-        {
-          value: 0,
-          display_name: 'No',
-        },
-      ]
+      this.fields.outstanding_securities.schema.voting_right.validate.choices = {
+        0: 'No',
+        1: 'Yes',
+      };
       this.labels = {
         outstanding_securities: {
           security_type: "Security Type",
