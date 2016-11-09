@@ -13,20 +13,21 @@ include menu.pug
 section.create-company-media.container.media-container
   +menu('campaign', 'media')
   //START RIGHT BLOCK
-  .col-lg-10.offset-lg-1.col-xl-8.offset-xl-0.push-xl-3
+  .col-xl-8.col-lg-8.col-md-12
     h2.text-uppercase.dosis.text-lg-center.text-xs-center.dosis.m-t-0.m-b-3 Media
     form(data-method="PATCH" action="").form-section
+
       +fieldDropzone("header_image", {
-        class1: 'col-lg-3 col-xs-12 col-md-12 text-xs-center text-lg-right',
-        class2: 'col-lg-9 col-xs-12 col-md-12 text-sm-center p-sm-0',
+        class1: 'col-xl-3 col-lg-12 text-xs-center text-xl-right',
+        class2: 'col-xl-9 col-lg-12 text-xs-center p-sm-0',
         thumbSize: '255x153',
         default: '/img/default/255x153.png',
         text: 'Drop your photo here or click to upload',
         icon: 'file-image-o'
         })
       +fieldDropzone("list_image", {
-        class1: 'col-lg-3 col-xs-12 col-md-12 text-xs-center text-lg-right',
-        class2: 'col-lg-9 col-xs-12 col-md-12 text-sm-center p-sm-0 p-l-1',
+        class1: 'col-xl-3 col-xs-12 text-xs-center text-xl-right',
+        class2: 'col-xl-9 col-xs-12 text-xs-center p-sm-0 p-l-1',
         thumbSize: '255x153',
         default: '/img/default/255x153.png',
         text: 'Drop your photo here or click to upload',
@@ -40,7 +41,7 @@ section.create-company-media.container.media-container
             text: 'Drop your photo here or click to upload',
             icon: 'file-image-o',
             viewType: 2
-        })
+          })
       .col-lg-12.p-r-0.m-t-2.m-b-3
         hr
       .col-lg-12
@@ -50,10 +51,10 @@ section.create-company-media.container.media-container
         .col-lg-12.p-sm-0
           .col-lg-7
             +fieldTextLabel("video", _.extend({
-              class1: 'col-lg-5 col-md-5 col-md-12 p-sm-0',
-              class2: 'col-lg-7 col-md-7 col-md-12 p-sm-0',
+              class1: 'col-xl-5 col-lg-12 p-sm-0 text-xl-right text-lg-left',
+              class2: 'col-xl-7 col-lg-12 p-sm-0',
               }, fields.video))
-          
+            
           #video_source.col-lg-5.p-sm-0.p-r-0
             .embed-responsive.embed-responsive-16by9
               - let mainVideo = app.getVideoId(values.video);
@@ -64,12 +65,12 @@ section.create-company-media.container.media-container
               else
                 iframe(src="//www.youtube.com/embed/?rel=0" allowfullscreen="true").embed-responsive-item
 
-      .row.m-b-0.additional-video-block
-        |!{ templates.additional_video }
-      .border-bottom.m-t-0.m-b-3.col-lg-12
-      |!{ templates.press}
-      .col-lg-12.pull-lg-right.p-r-0.text-lg-right.text-sm-center.text-md-center.text-xs-center.p-sm-0
-        // button(type="submit").btn.btn-secondary.text-uppercase.m-r-3.m-t-0 Fields Review
-        button(type="submit" data-method="PATCH").btn.btn-primary.text-uppercase save and continue
-          i.fa.fa-angle-right
+        .row.m-b-0.additional-video-block
+          |!{ templates.additional_video }
+        .col-xl-12
+          .border-bottom.m-t-3.m-b-3
+        |!{ templates.press}
+        .col-xl-12.pull-lg-right.text-lg-right.text-sm-center.text-md-center.text-xs-center.m-t-3
+          button(type="submit" data-method="PATCH").btn.btn-primary.text-uppercase save and continue
+            i.fa.fa-angle-right
   //- +menu('media')
