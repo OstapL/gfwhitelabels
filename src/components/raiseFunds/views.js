@@ -80,7 +80,6 @@ const submitCampaign = function submitCampaign(e) {
     this.$('.help-block').scrollTo(45);
     return;
   } else {
-    // let url = this.urlRoot + '/' + data.id;
     let url = this.urlRoot.replace(/:id/, data.id);
     let type = 'PUT';
     delete data.id;
