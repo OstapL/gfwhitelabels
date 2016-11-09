@@ -5,7 +5,7 @@ mixin row(value, index)
 
   tr(class="index_" + index)
       td
-          - let securityType;
+          - var securityType;
           case parseInt(value.security_type)
               when 0
                   - securityType = 'Preferred Stock';
