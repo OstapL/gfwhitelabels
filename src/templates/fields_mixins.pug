@@ -127,7 +127,6 @@ mixin fieldChoiceLabel(name, attr)
           id=attr.id || name
           name=name
       ).custom-select.w-100
-          - console.log(attr.validate.choices);
           if attr.hasOwnProperty('empty')
             option(value=attr.empty.value) #{attr.empty['']}
             
