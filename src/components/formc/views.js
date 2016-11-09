@@ -267,9 +267,9 @@ module.exports = {
     render() {
       let template = null;
 
-      if(this.model.hasOwnProperty('uuid')  && this.model.uuid != '') {
+      if(this.model.hasOwnProperty('user_id')  && this.model.uuid != '') {
         this.model.id = this.model.formc_id;
-        this.urlRoot += '/' + this.role + '/' + this.model.uuid;
+        this.urlRoot += '/' + this.role + '/' + this.model.user_id;
       } else {
         this.urlRoot = this.urlRoot.replace(':id', this.model.formc_id);
         this.urlRoot += '/' + this.role;

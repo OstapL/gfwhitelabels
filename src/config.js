@@ -1,9 +1,8 @@
 global.serverUrl = "https://django-api.growthfountain.com";
 global.raiseCapitalUrl = "https://api-raisecapital.growthfountain.com";
 //global.raiseCapitalUrl = "http://localhost:8003";
-//global.authServer = "http://localhost:8001";
 global.authServer = "https://api-auth.growthfountain.com";
-//global.authServer = "http://localhost:8001";
+//global.authServer = "http://localhost:8002";
 global.formcServer = "https://api-formc.growthfountain.com";
 //global.formcServer = "http://localhost:8001";
 global.filerUrl = "https://api-filer.growthfountain.com";
