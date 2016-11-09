@@ -2,8 +2,7 @@ include ../../../../templates/fields_mixins.pug
 
 mixin row(value, index)
   - var index = index;
-
-  tr(class="index_" + index)
+  tr(data-index=index)
       td
           - var securityType;
           case parseInt(value.security_type)
@@ -28,11 +27,11 @@ mixin row(value, index)
           | #{value.amount_outstanding}
           .collapse
       td
-          | #{value.voting_right ? 'Yes' : 'No'}
+          | #{Number(value.voting_right) ? 'Yes' : 'No'}
           .collapse
       td 
           .delete-section-container
-              a(href="#" data-section="securities-table" data-index=index).delete-outstanding
+              a(href="#" data-section="outstanding_securities" data-index=index).delete-outstanding
                   i.fa.fa-times
 
 

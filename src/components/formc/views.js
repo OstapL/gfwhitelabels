@@ -560,7 +560,7 @@ module.exports = {
         template: '<div class="popover" role="tooltip" style="border-color:red;"><div class="popover-arrow" style="border-right-color:red;"></div><h3 class="popover-title"></h3><div class="popover-content" style="color:red;"></div></div>'
       });
 
-      this.$('.min-expense,.max-expense,.min-use,.max-use').each(function (e) {
+      this.$('.min-expense,.max-expense,.min-use,.max-use').each(function (idx, elem) {
         let $this = $(this);
         $this.val(formatHelper.formatNumber($this.val()));
       });
@@ -1138,7 +1138,6 @@ module.exports = {
 
       const sectionName = e.target.dataset.section;
       const template = require('./templates/snippets/outstanding_securities.pug');
-      this[sectionName + 'Index']++;
 
       $('.' + sectionName + '_container').append(
         template({
@@ -1150,6 +1149,7 @@ module.exports = {
         })
       );
       this.model[sectionName].push(data);
+      this[sectionName + 'Index']++;
       /*
       api.makeRequest(
         this.urlRoot.replace(':id', this.model.id), 
@@ -1161,24 +1161,34 @@ module.exports = {
       */
       $('#security_modal').modal('hide');
 
-      e.target.querySelectorAll('input').forEach(function(el, i) { 
-        el.value = '';
+      e.target.querySelectorAll('input').forEach(function(el, i) {
+        if (el.type == "radio") el.checked = false; 
+        else el.value = '';
       });
       e.target.querySelector('textarea').value = "";
     },
 
     deleteOutstanding(e) {
       e.preventDefault();
-      if(confirm('Are you sure?')) {
-        let sectionName = e.currentTarget.dataset.section;
-        $('.' + sectionName + ' .index_' + e.currentTarget.dataset.index).remove();
-        this.model['outstanding_securities'].splice(e.currentTarget.dataset.index, 1);
-        // e.currentTarget.offsetParent.remove();
-      }
+      if (!confirm('Are you sure?')) return;
+      let sectionName = e.currentTarget.dataset.section;
+      // $('.' + sectionName + ' .index_' + e.currentTarget.dataset.index).remove();
+      // this.$('.' + sectionName + '_container' + ' .index_' + e.currentTarget.dataset.index).remove();
+      let index = e.currentTarget.dataset.index;
+      this.$('.' + sectionName + '_container tr[data-index=' + index + ']').remove();
+      this.model[sectionName].splice(index, 1);
+      // e.currentTarget.offsetParent.remove();
+
+      // Reorganize indice
+      this.$('.' + sectionName + '_container tr').each(function (idx, elem) {
+        $(this).attr('data-index', idx);
+        $(this).find('a').attr('data-index', idx);
+      });
 
       // ToDo
       // Fix index counter
-      // this[sectionName + 'Index'] --;
+      this[sectionName + 'Index']--;
+      this.$('.' + sectionName + '_container tr')
     },
 
     getSuccessUrl() {
