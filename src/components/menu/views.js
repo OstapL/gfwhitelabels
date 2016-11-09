@@ -12,6 +12,32 @@ module.exports = {
       return this;
     },
   }),
+  
+  profile: Backbone.View.extend({
+    template: require('./templates/profile.pug'),
+    events: {
+      'click .logout': 'logout',
+    },
+
+    logout: function (event) {
+      app.routers.navigate(
+        event.target.pathname,
+        { trigger: true, replace: false }
+      );
+    },
+
+    render: function () {
+
+      this.$el.html(
+        this.template({
+          serverUrl: serverUrl,
+          user: app.user.toJSON(),
+          Urls: Urls,
+        })
+      );
+      return this;
+    },
+  }),
 
   footer: Backbone.View.extend({
     template: require('./templates/footer.pug'),
