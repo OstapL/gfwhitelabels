@@ -127,11 +127,12 @@ mixin fieldChoiceLabel(name, attr)
           id=attr.id || name
           name=name
       ).custom-select.w-100
+          - console.log(attr.validate.choices);
           if attr.hasOwnProperty('empty')
             option(value=attr.empty.value) #{attr.empty['']}
             
           each v,k in attr.validate.choices
-            option(value=k selected=(v.value == attr.value ? "selected" : undefined)) #{ v }
+            option(value=(v.value || k) selected=((v.value || k) == attr.value ? "selected" : undefined)) #{ v.display_name || v }
 
 
 mixin fieldRadioLabel(name, attr)
