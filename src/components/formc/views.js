@@ -1208,6 +1208,7 @@ module.exports = {
       if(confirm('Are you sure?')) {
         let sectionName = e.currentTarget.dataset.section;
         $('.' + sectionName + ' .index_' + e.currentTarget.dataset.index).remove();
+        this.model['outstanding_securities'].splice(e.currentTarget.dataset.index, 1);
         // e.currentTarget.offsetParent.remove();
       }
 
