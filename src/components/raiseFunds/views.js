@@ -32,7 +32,7 @@ const submitCampaign = function submitCampaign(e) {
     this.$('.help-block').scrollTo(45);
     return;
   } else {
-    let url = this.urlRoot + '/' + data.id;
+    let url = this.urlRoot.replace(/:id/, data.id);
     let type = 'PUT';
     delete data.id;
 
@@ -199,7 +199,7 @@ module.exports = {
   }, leavingConfirmationHelper.methods, phoneHelper.methods, menuHelper.methods)),
 
   generalInformation: Backbone.View.extend(_.extend({
-      urlRoot: raiseCapitalUrl + 'campaign/:id/general_information',
+      urlRoot: raiseCapitalUrl + '/campaign/:id/general_information',
       template: require('./templates/generalInformation.pug'),
       events: _.extend({
           'submit form': api.submitAction,
