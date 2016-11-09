@@ -14,27 +14,27 @@ include menu.pug
 section.create-company-general.container.m-b-85
   +menu('campaign', 'general_information')
   
-  .col-lg-10.offset-lg-1.col-xl-8.offset-xl-0.push-xl-3
-    h2.text-uppercase.text-lg-center.text-xs-center.dosis.m-t-0 GENERAL INFORMATION
+  .col-xl-8.col-lg-8.col-md-12
+    h2.text-uppercase.text-lg-center.text-xs-center.dosis.m-t-0.m-b-3 GENERAL INFORMATION
     form(data-method="PATCH" action="").form-section
-      +fieldTextareaLabel("pitch", _.extend({
-        class1: 'col-lg-3 col-md-12 text-md-left',
-        class2: 'col-lg-9 col-md-12',
-        }, fields.pitch))
-      +fieldTextareaLabel("intended_use_of_proceeds", _.extend({
-        class1: 'col-lg-3 col-md-12 text-md-left',
-        class2: 'col-lg-9 col-md-12',
-        }, fields.intended_use_of_proceeds))
-      +fieldTextareaLabel("business_model", _.extend({
-        class1: 'col-lg-3 col-md-12 text-md-left',
-        class2: 'col-lg-9 col-md-12',
-        }, fields.business_model))
-      |!{ templates.additional_info }
-      .border-bottom
-      |!{ templates.faq }
-      .border-bottom.border-bottom-faq
-      
-      .col-lg-12.m-t-3.pull-lg-right.p-r-0.text-lg-right.text-md-center.text-sm-center.text-xs-center
-        // button(type="submit").btn.btn-secondary.text-uppercase.m-r-3.m-t-0 Fields Review
-        button(type="submit" data-method="PATCH").btn.btn-primary.text-uppercase.m-t-0 save and continue
-          i.fa.fa-angle-right
+      .col-xl-12
+        +fieldTextareaLabel("pitch", _.extend({
+          class1: 'col-xl-3 col-lg-12 text-lg-left text-xl-right',
+          class2: 'col-xl-9 col-lg-12',
+          }, fields.pitch))
+        +fieldTextareaLabel("intended_use_of_proceeds", _.extend({
+          class1: 'col-xl-3 col-lg-12 text-lg-left text-xl-right',
+          class2: 'col-xl-9 col-lg-12',
+          }, fields.intended_use_of_proceeds))
+        +fieldTextareaLabel("business_model", _.extend({
+          class1: 'col-xl-3 col-lg-12 text-lg-left text-xl-right',
+          class2: 'col-xl-9 col-lg-12',
+          }, fields.business_model))
+        |!{ templates.additional_info }
+        .border-bottom
+        |!{ templates.faq }
+        
+        .col-lg-12.m-t-3.pull-lg-right.p-r-0.text-lg-right.text-md-center.text-sm-center.text-xs-center
+          // button(type="submit").btn.btn-secondary.text-uppercase.m-r-3.m-t-0 Fields Review
+          button(type="submit" data-method="PATCH").btn.btn-primary.text-uppercase.m-t-0 save and continue
+            i.fa.fa-angle-right
