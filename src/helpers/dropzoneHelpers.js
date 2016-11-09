@@ -2,8 +2,6 @@ const Dropzone = require('dropzone');
 
 module.exports = {
 
-  Dropzone: Dropzone,
-
   events: {
     dragover: 'globalDragover',
     dragleave: 'globalDragleave',

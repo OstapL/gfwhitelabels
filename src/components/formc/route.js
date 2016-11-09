@@ -72,13 +72,13 @@ module.exports = Backbone.Router.extend({
     });
   },
 
-  teamMemberAdd(id, role, uuid) {
+  teamMemberAdd(id, role, user_id) {
     const View = require('components/formc/views.js');
 
     let fieldsR = api.makeCacheRequest(formcServer + '/' + id + '/team-members/' + role, 'OPTIONS');
 
     let dataR = null;
-    if(uuid != 'new') {
+    if(user_id != 'new') {
       dataR = api.makeCacheRequest(formcServer + '/' + id + '/team-members', 'GET');
     }
 
@@ -86,7 +86,7 @@ module.exports = Backbone.Router.extend({
     $.when(fieldsR, dataR).done((fields, data) => {
       console.log('data is ', data);
       if(data) {
-        data = data[0].team_members.filter(function(el) { return el.uuid == uuid})[0]
+        data = data[0].team_members.filter(function(el) { return el.user_id == user_id})[0]
         data.formc_id = id;
       } else {
         data = {formc_id: id};
@@ -95,7 +95,7 @@ module.exports = Backbone.Router.extend({
         el: '#content',
         model: data,
         role: role,
-        uuid: uuid,
+        user_id: user_id,
         fields: fields[0].fields,
       });
       addForm.render();

@@ -6,8 +6,7 @@ const menuHelper = require('helpers/menuHelper.js');
 const addSectionHelper = require('helpers/addSectionHelper.js');
 const yesNoHelper = require('helpers/yesNoHelper.js');
 
-const dropzone = require('dropzone');
-const dropzoneHelpers = require('helpers/dropzone.js');
+const dropzoneHelpers = require('helpers/dropzoneHelpers.js');
 const riskFactorsHelper = require('helpers/riskFactorsHelper.js');
 
 const labels = {
@@ -267,9 +266,9 @@ module.exports = {
     render() {
       let template = null;
 
-      if(this.model.hasOwnProperty('uuid')  && this.model.uuid != '') {
+      if(this.model.hasOwnProperty('user_id')  && this.model.uuid != '') {
         this.model.id = this.model.formc_id;
-        this.urlRoot += '/' + this.role + '/' + this.model.uuid;
+        this.urlRoot += '/' + this.role + '/' + this.model.user_id;
       } else {
         this.urlRoot = this.urlRoot.replace(':id', this.model.formc_id);
         this.urlRoot += '/' + this.role;

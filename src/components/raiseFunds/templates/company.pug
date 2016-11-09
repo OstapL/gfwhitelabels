@@ -15,129 +15,132 @@ section.create-company.container.m-b-85
   +menu('company', 'create')
 
   //START RIGHT BLOCK
-  .col-lg-10.offset-lg-1.col-xl-8.offset-xl-0.push-xl-3
+  .col-xl-8.col-lg-8.col-md-12
     h2.text-uppercase.text-lg-center.text-xs-center.m-t-0.dosis Company
     form(metod="post" action="").form-section
+      .col-xl-12
+        +fieldTextLabel("name", _.extend({
+          class1: 'col-xl-3 col-lg-12 p-t-0 text-lg-left text-xl-right',
+          class2: 'col-xl-9 col-lg-12',
+          type: 'text',
+          placeholder: 'Company Legal Name',
+          }, fields.name))
+        +fieldChoiceLabel("industry", _.extend({
+          class1: 'col-xl-3 col-lg-12 text-lg-left text-xl-right',
+          class2: 'col-xl-9 col-lg-12',
+          empty: {'': 'Choose Industry'},
+          }, fields.industry))
+        +fieldChoiceLabel("founding_state", _.extend({
+          class1: 'col-xl-3 col-lg-12 p-t-0 m-b-0 big-label-text text-lg-left text-xl-right',
+          class2: 'col-xl-9 col-lg-12',
+          empty: {'': 'Choose State'},
+          }, fields.founding_state))
+        +fieldTextLabel("tagline", _.extend({
+          class1: 'col-xl-3 col-lg-12 text-lg-left text-xl-right',
+          class2: 'col-xl-9 col-lg-12',
+          type: 'text',
+          placeholder: 'Your Company Slogan',
+          maxlength: 90,
+          }, fields.tagline))
+        +fieldTextLabel("description", _.extend({
+          class1: 'col-xl-3 col-lg-12 text-lg-left text-xl-right',
+          class2: 'col-xl-9 col-lg-12',
+          type: 'textarea',
+          placeholder: 'Your Company Description',
+          }, fields.description))
+        .row
+          .col-lg-6.col-xs-12.castom-select-5
+            +fieldChoiceLabel("corporate_structure", _.extend({
+              class1: 'col-xl-6 col-lg-12 text-xl-right text-lg-left p-t-0 m-b-0',
+              class2: 'col-xl-6 col-lg-12',
+              help_text: 'C-corps can choose to issue Common Equity or a Revenue Share. LLC’s can only issue a Revenue Share',
+              empty: {'': 'Choose'},
+            }, fields.corporate_structure))
+          .col-lg-6.col-xs-12.date-input.pull-right.required
+            .col-date
+              label.col-lg-5 Founding date
+              .col-lg-7
+                +fieldDateDay("founding_date", _.extend({
+                  class: 'col-lg-4 col-md-4 no-gutter p-l-0 p-r-0',
+                }, fields.founding_date))
+                +fieldDateMonth("founding_date", _.extend({
+                  class: 'col-lg-4 col-md-4 no-gutter p-l-0 p-r-0',
+                }, fields.founding_date))
+                +fieldDateYear("founding_date", _.extend({
+                  class: 'col-lg-4 col-md-4 no-gutter p-l-0 p-r-0',
+                }, fields.founding_date))
+        .border-bottom
+        +fieldTextLabel("address_1", _.extend({
+          class1: 'col-xl-3 col-lg-12 text-lg-left text-xl-right',
+          class2: 'col-xl-9 col-lg-12',
+          type: 'text',
+          }, fields.address_1))
+        +fieldTextLabel("address_2", _.extend({
+          class1: 'col-xl-3 col-lg-12 text-lg-left text-xl-right',
+          class2: 'col-xl-9 col-lg-12',
+          type: 'text',
+          }, fields.address_2))
+        .row
+          .col-xl-6.col-lg-6.col-l-65
+            +fieldTextLabel("zip_code", _.extend({
+              class1: 'col-xl-6 col-lg-12 text-xl-right text-lg-left',
+              class2: 'col-xl-6 col-lg-12',
+              }, fields.zip_code))
+          .col-xl-5.col-lg-6.col-sm-12.city_states.required.sity-state-error
+            input(type='hidden' name='state' value=values.state)#state
+            input(type='hidden' name='city' value=values.city)#city
 
-      +fieldTextLabel("name", _.extend({
-        class1: 'col-lg-3 col-md-12 p-t-0 text-md-left text-lg-right',
-        class2: 'col-lg-9 col-md-12',
-        type: 'text',
-        placeholder: 'Company Legal Name',
-        }, fields.name))
-      +fieldTextLabel("industry", _.extend({
-        class1: 'col-lg-3 col-md-12 text-md-left text-lg-right',
-        class2: 'col-lg-9 col-md-12',
-        type: 'choice',
-        empty: {display: 'Choose Industry', value: ''},
-        }, fields.industry))
-      +fieldTextLabel("founding_state", _.extend({
-        class1: 'col-lg-3 col-md-12 big-label-text text-md-left text-lg-right',
-        class2: 'col-lg-9 col-md-12',
-        type: 'choice',
-        empty: {display: 'Choose State', value: ''},
-        }, fields.founding_state))
-      +fieldTextLabel("tagline", _.extend({
-        class1: 'col-lg-3 col-md-12 text-md-left text-lg-right',
-        class2: 'col-lg-9 col-md-12',
-        type: 'text',
-        placeholder: 'Your Company Slogan',
-        maxlength: 90,
-        }, fields.tagline))
-      +fieldTextLabel("description", _.extend({
-        class1: 'col-lg-3 col-md-12 text-md-left text-lg-right',
-        class2: 'col-lg-9 col-md-12',
-        type: 'textarea',
-        placeholder: 'Your Company Description',
-        }, fields.description))
-      .row
-        .col-lg-6.col-xs-12.castom-select-5.form-group-m-b-0
-          +fieldTextLabel("corporate_structure", _.extend({
-            class1: 'col-lg-6',
-            class2: 'col-lg-6',
-            type: 'choice',
-            help_text: 'C-corps can choose to issue Common Equity or a Revenue Share. LLC’s can only issue a Revenue Share',
-            empty: {display: 'Choose', value: ''},
-          }, fields.corporate_structure))
-        .col-lg-6.col-xs-12.date-input.pull-right.required
-          .col-date.form-group-m-b-0
-            +fieldTextLabel("founding_date", _.extend({
-              class1: 'col-lg-5 col-md-3 p-l-0 p-r-0',
-              class2: 'col-lg-7 col-md-8 pull-md-right',
-            }, fields.founding_date))
-      .border-bottom
-      +fieldTextLabel("address_1", _.extend({
-        class1: 'col-lg-3 col-md-12 text-md-left text-lg-right',
-        class2: 'col-lg-9 col-md-12',
-        type: 'text',
-        }, fields.address_1))
-      +fieldTextLabel("address_2", _.extend({
-        class1: 'col-lg-3 col-md-12 text-md-left text-lg-right',
-        class2: 'col-lg-9 col-md-12',
-        type: 'text',
-        }, fields.address_2))
-      .row
-        .col-lg-6.col-l-65
-          +fieldTextLabel("zip_code", _.extend({
-            class1: 'col-lg-6 text-lg-right',
-            class2: 'col-lg-6',
-            }, fields.zip_code))
-        .col-lg-5.city_states.required.sity-state-error
-          input(type='hidden' name='state' value=values.state)#state
-          input(type='hidden' name='city' value=values.city)#city
-
-          label.col-lg-6.col-xs-6.text-lg-right.text-xs-left City/State
-          .col-lg-6.col-xs-6
-            a(data-toggle="modal" data-target="#city_state_modal" href="#city_state_modal").change_state_city
-              span.input-value.js-city-state= (values.city ? values.city : "(city)") + ", " + (values.state ? values.state : "(state)") 
-              i.fa.fa-pencil-square-o.link-1
-      .row.m-b-0
-        .col-lg-6.col-l-65
-          +fieldTextLabel("phone", _.extend({
-            class1: 'col-lg-6 col-md-12 text-md-left text-lg-right',
-            class2: 'col-lg-6 col-md-12', 
-            type: 'text',
-            }, fields.phone))
-        .col-lg-6.col-l-65
-          +fieldTextLabel("website", _.extend({
-            class1: 'col-lg-5 col-md-12 text-md-left text-lg-right',
-            class2: 'col-lg-7 col-md-12', 
-            type: 'text',
-            placeholder: 'http://www.',
-            }, fields.website))
-      .border-bottom.m-t-2
-      .row.col-l-65.m-b-0
-        .col-lg-6
-          +fieldTextLabel("twitter", _.extend({
-            class1: 'col-lg-6 col-md-12 text-md-left text-lg-right', 
-            class2: 'col-lg-6 col-md-12', 
-            type: 'text',
-            }, fields.twitter))
-        .col-lg-6
-          +fieldTextLabel("facebook", _.extend({
-            class1: 'col-lg-5 col-md-12 text-md-left text-lg-right', 
-            class2: 'col-lg-7 col-md-12', 
-            type: 'text',
-            }, fields.facebook))
-      .row.m-b-0.col-l-65
-        .col-lg-6
-          +fieldTextLabel("instagram", _.extend({
-            class1: 'col-lg-6 col-md-12 text-md-left text-lg-right', 
-            class2: 'col-lg-6 col-md-12', 
-            type: 'text',
-            }, fields.instagram))
-        .col-lg-6
-          +fieldTextLabel("linkedin", _.extend({
-            class1: 'col-lg-5 col-md-12 text-md-left text-lg-right', 
-            class2: 'col-lg-7 col-md-12', 
-            type: 'text',
-            }, fields.linkedin))
-      .row.m-t-2.pull-lg-right.text-md-center.text-sm-center.text-xs-center
-        .col-lg-12
-        if campaign.id
-          // button(type="button" data-href=("/api/campaign/" + campaign.id)).btn.btn-secondary.text-uppercase.onPreview.m-r-3 preview
-        button(type="submit").btn.btn-primary.text-uppercase save and continue
-          i.fa.fa-angle-right
+            label.col-xl-6.col-lg-12.col-sm-6.text-xl-right.text-lg-left City/State
+            .col-xl-6.col-lg-12.col-sm-6
+              a(data-toggle="modal" data-target="#city_state_modal" href="#city_state_modal").change_state_city
+                span.input-value.js-city-state= (values.city ? values.city : "(city)") + ", " + (values.state ? values.state : "(state)") 
+                i.fa.fa-pencil-square-o.link-1
+        .row.m-b-0
+          .col-xl-6.col-lg-6.col-l-65
+            +fieldTextLabel("phone", _.extend({
+              class1: 'col-xl-6 col-lg-12 text-lg-left text-xl-right',
+              class2: 'col-xl-6 col-lg-12', 
+              type: 'text',
+              }, fields.phone))
+          .col-xl-6.col-lg-6
+            +fieldTextLabel("website", _.extend({
+              class1: 'col-xl-5 col-lg-12 text-lg-left text-xl-right',
+              class2: 'col-xl-7 col-lg-12', 
+              type: 'text',
+              placeholder: 'http://www.',
+              }, fields.website))
+        .border-bottom.m-t-2
+        .row.m-b-0
+          .col-xl-6.col-lg-6.col-l-65
+            +fieldTextLabel("twitter", _.extend({
+              class1: 'col-xl-6 col-lg-12 text-lg-left text-xl-right', 
+              class2: 'col-xl-6 col-lg-12', 
+              type: 'text',
+              }, fields.twitter))
+          .col-xl-6.col-lg-6
+            +fieldTextLabel("facebook", _.extend({
+              class1: 'col-xl-5 col-lg-12 text-lg-left text-xl-right', 
+              class2: 'col-xl-7 col-lg-12', 
+              type: 'text',
+              }, fields.facebook))
+        .row.m-b-0
+          .col-lg-6.col-l-65
+            +fieldTextLabel("instagram", _.extend({
+              class1: 'col-xl-6 col-lg-12 text-lg-left text-xl-right', 
+              class2: 'col-xl-6 col-lg-12', 
+              type: 'text',
+              }, fields.instagram))
+          .col-lg-6
+            +fieldTextLabel("linkedin", _.extend({
+              class1: 'col-xl-5 col-lg-12 text-lg-left text-xl-right', 
+              class2: 'col-xl-7 col-lg-12', 
+              type: 'text',
+              }, fields.linkedin))
+        .row.m-t-2.pull-lg-right.text-md-center.text-sm-center.text-xs-center
+          if campaign.id
+          .col-xl-12
+            button(type="submit").btn.btn-primary.text-uppercase save and continue
+              i.fa.fa-angle-right
   //START LEFT BLOCK
   //- .col-lg-6.offset-lg-3.col-xl-3.offset-xl-0.pull-xl-8.create_compaign
     .jumbotron.jumbotron-fluid.row

@@ -4,59 +4,11 @@ let addSectionHelper = require('helpers/addSectionHelper.js');
 import formatHelper from '../../helpers/formatHelper';
 const appendHttpIfNecessary = formatHelper.appendHttpIfNecessary;
 
-const dropzone = require('dropzone');
-const dropzoneHelpers = require('helpers/dropzone.js');
+const dropzoneHelpers = require('helpers/dropzoneHelpers.js');
 const leavingConfirmationHelper = require('helpers/leavingConfirmationHelper.js');
 const phoneHelper = require('helpers/phoneHelper.js');
 const validation = require('components/validation/validation.js');
 const menuHelper = require('helpers/menuHelper.js');
-
-const jsonActions = {
-  events: {
-    'click .add-section': 'addSection',
-    'click .delete-section': 'deleteSection',
-  },
-
-  addSection(e) {
-    e.preventDefault();
-    let sectionName = e.target.dataset.section;
-    let template = require('templates/section.pug');
-    this[sectionName + 'Index']++;
-    $('.' + sectionName).append(
-        template({
-          fields: this.fields,
-          name: sectionName,
-          attr: {
-            class1: '',
-            class2: '',
-            app: app,
-            type: this.fields[sectionName].type,
-            index: this[sectionName + 'Index'],
-          },
-          // values: this.model.toJSON(),
-          values: this.model,
-        })
-    );
-  },
-
-  deleteSection(e) {
-    e.preventDefault();
-    if(confirm('Are you sure?')) {
-      let sectionName = e.currentTarget.dataset.section;
-      if($('.' + sectionName + ' .delete-section-container').length > 1) {
-        $('.' + sectionName + ' .index_' + e.currentTarget.dataset.index).remove();
-        e.currentTarget.offsetParent.remove();
-      } else {
-        $('.' + sectionName + ' .index_' + e.currentTarget.dataset.index + ' input').val('');
-        $('.' + sectionName + ' .index_' + e.currentTarget.dataset.index + ' textarea').val('');
-      }
-    }
-
-    // ToDo
-    // Fix index counter
-    // this[sectionName + 'Index'] --;
-  },
-};
 
 const submitCampaign = function submitCampaign(e) {
   e.preventDefault();
@@ -153,7 +105,7 @@ module.exports = {
       'keyup #zip_code': 'changeZipCode',
       'click .update-location': 'updateLocation',
       'click .onPreview': onPreviewAction,
-      'click .submit_form': submitCampaign,
+      'click .submit_form': api.submitAction,
       'change #website,#twitter,#facebook,#instagram,#linkedin': 'appendHttpsIfNecessary',
     }, leavingConfirmationHelper.events, phoneHelper.events, menuHelper.events),
 
@@ -191,18 +143,6 @@ module.exports = {
       this.assignLabels();
     },
 
-    submit(e) {
-      var data = $(e.target).serializeJSON();
-
-      data['founding_date'] = data.founding_date__year && data.founding_date__month && data.founding_date__day
-        ? data.founding_date__year + '-' + data.founding_date__month + '-' + data.founding_date__day
-        : '';
-      delete data.founding_date__day;
-      delete data.founding_date__month;
-      delete data.founding_date__year;
-      api.submitAction.call(this, e, data);
-    },
-
     updateLocation(e) {
       this.$('.js-city-state').text(this.$('.js-city').val() + ', ' + this.$('.js-state').val());
       $('form input[name=city]').val(this.$('.js-city').val());
@@ -214,13 +154,10 @@ module.exports = {
       if (e.target.value.length < 5) return;
       if (!e.target.value.match(/\d{5}/)) return;
       this.getCityStateByZipCode(e.target.value, ({ success=false, city='', state='' }) => {
-        // this.zipCodeField.closest('div').find('.help-block').remove();
         if (success) {
           this.$('.js-city-state').text(`${city}, ${state}`);
-          // this.$('#city').val(city);
           this.$('.js-city').val(city);
           $('form input[name=city]').val(city);
-          // this.$('#state').val(city);
           this.$('.js-state').val(state);
           $('form input[name=state]').val(state);
 
@@ -255,7 +192,7 @@ module.exports = {
       }
 
       app.routers.navigate(
-        '/campaign/general_information/' + this.campaign.id,
+        '/campaign/' + this.campaign.id + '/general_information',
         { trigger: true, replace: false }
       );
     },
@@ -280,7 +217,7 @@ module.exports = {
       },
 
       getSuccessUrl(data) {
-        return '/campaign/media/' + data.id;
+        return '/campaign/' + data.id + '/media';
       },
 
       initialize(options) {
@@ -352,7 +289,7 @@ module.exports = {
         'change .press_link': 'appendHttpIfNecessary',
         'click .submit_form': submitCampaign,
         'click .onPreview': onPreviewAction,
-      }, jsonActions.events, leavingConfirmationHelper.events, menuHelper.events, addSectionHelper.events),
+      }, leavingConfirmationHelper.events, menuHelper.events, addSectionHelper.events),
       urlRoot: Urls['campaign-list']() + '/media',
 
       appendHttpsIfNecessary(e) {
@@ -377,8 +314,6 @@ module.exports = {
         }
       },
 
-      // addSection: jsonActions.addSection,
-      // deleteSection: jsonActions.deleteSection,
       getSuccessUrl(data) {
         return '/campaign/team-members/' + data.id;
       },
@@ -905,8 +840,6 @@ module.exports = {
         this.$('#max_equity_offered').val(Math.round(100 * maxRaise / (maxRaise + premoneyVal)) + '%');
       },
 
-      addSection: jsonActions.addSection,
-      deleteSection: jsonActions.deleteSection,
       getSuccessUrl(data) {
         return '/campaign/perks/' + data.id;
       },
@@ -920,6 +853,12 @@ module.exports = {
           minimum_increment: 'The Minimum investment is',
           length_days: 'Length of the Campaign',
           investor_presentation: 'Upload an Investor Presentation',
+          premoney_valuation: 'Pre-Money Valuation',
+          price_per_share: 'Price Per Share',
+          min_number_of_shares: 'Minimum № of Shares',
+          max_number_of_shares: 'Maximum № of Shares',
+          min_equity_offered: 'Minimum Equity Offered',
+          max_equity_offered: 'Maximum Equity Offered',
         };
         this.assignLabels();
         this.createIndexes();
@@ -1003,106 +942,100 @@ module.exports = {
     }, leavingConfirmationHelper.methods, menuHelper.methods, dropzoneHelpers.methods, addSectionHelper.methods)),
 
   perks: Backbone.View.extend(_.extend({
-      events: _.extend({
-          'submit form': 'onSubmit',
-          'click .onPreview': onPreviewAction,
-          'click .submit_form': submitCampaign,
-        }, jsonActions.events, leavingConfirmationHelper.events, menuHelper.events, addSectionHelper.events),
-      // urlRoot: serverUrl + Urls['campaign-list']() + '/perks',
-      urlRoot: Urls['campaign-list']() + '/perks',
+    events: _.extend({
+        'submit form': 'onSubmit',
+        'click .onPreview': onPreviewAction,
+        'click .submit_form': submitCampaign,
+    }, leavingConfirmationHelper.events, menuHelper.events, addSectionHelper.events),
+    urlRoot: Urls['campaign-list']() + '/perks',
 
-      onSubmit(e) {
-        e.preventDefault();
+    onSubmit(e) {
+      e.preventDefault();
 
-        let data = $(e.target).serializeJSON({ useIntKeysAsArrayIndex: true });
-        let url = this.urlRoot;
-        
-        if(this.hasOwnProperty('model')) {
-          _.extend(this.model, data);
-          data = _.extend({}, this.model)
+      let data = $(e.target).serializeJSON({ useIntKeysAsArrayIndex: true });
+      let url = this.urlRoot;
+      
+      if(this.hasOwnProperty('model')) {
+        _.extend(this.model, data);
+        data = _.extend({}, this.model)
+      }
+      let type = 'POST';
+      if(data.hasOwnProperty('id')) {
+        url += '/' + data.id;
+        delete data.id;
+        type = e.target.dataset.method;
+      }
+
+      app.showLoading();
+      api.makeRequest(url, type, data).then((data) => {
+        this.model = data;
+        app.hideLoading();
+        $('button.submit_form').click();
+      }).
+      fail((xhr, status, text) => {
+        api.errorAction(this, xhr, status, text, this.fields);
+        app.hideLoading();
+      });
+    },
+
+    preinitialize() {
+      // ToDo
+      // Hack for undelegate previous events
+      for (let k in this.events) {
+        $('#content ' + k.split(' ')[1]).undelegate();
+      }
+    },
+
+    initialize(options) {
+      this.fields = options.fields;
+      this.labels = {
+        perks: {
+          amount: 'If an Investor Invests Over',
+          perk: 'Describe the Perk',
+        },
+      };
+      this.assignLabels();
+      this.createIndexes();
+      this.buildJsonTemplates('raiseFunds');
+      this.$el.on('keypress', ':input:not(textarea)', function (event) {
+        if (event.keyCode == 13) {
+          event.preventDefault();
+          return false;
         }
-        let type = 'POST';
-        if(data.hasOwnProperty('id')) {
-          url += '/' + data.id;
-          delete data.id;
-          type = e.target.dataset.method;
-        }
+      });
+    },
 
-        app.showLoading();
-        api.makeRequest(url, type, data).then((data) => {
-          this.model = data;
-          app.hideLoading();
-          $('button.submit_form').click();
-        }).
-        fail((xhr, status, text) => {
-          api.errorAction(this, xhr, status, text, this.fields);
-          app.hideLoading();
-        });
-      },
+    render() {
+      let template = require('./templates/perks.pug');
+      this.fields.perks.type = 'json';
+      this.fields.perks.schema = {
+          amount: {
+              type: 'number',
+              label: 'If an Investor Invests Over',
+              placeholder: '$',
+              values: [],
+              inputType: 'number'
+            },
+          perk: {
+              type: 'string',
+              label: 'Describe the Perk',
+              placholder: 'Description',
+              values: [],
+            },
+      };
+      this.$el.html(
+        template({
+            serverUrl: serverUrl,
+            Urls: Urls,
+            fields: this.fields,
+            values: this.model,
+            templates: this.jsonTemplates,
+        })
+      );
+      return this;
+    },
 
-      preinitialize() {
-        // ToDo
-        // Hack for undelegate previous events
-        for (let k in this.events) {
-          $('#content ' + k.split(' ')[1]).undelegate();
-        }
-      },
-
-      addSection: jsonActions.addSection,
-      deleteSection: jsonActions.deleteSection,
-
-      initialize(options) {
-        this.fields = options.fields;
-        // this.perksIndex = 1;
-        this.labels = {
-          perks: {
-            amount: 'If an Investor Invests Over',
-            perk: 'Describe the Perk',
-          },
-        };
-        this.assignLabels();
-        this.createIndexes();
-        this.buildJsonTemplates('raiseFunds');
-        this.$el.on('keypress', ':input:not(textarea)', function (event) {
-          if (event.keyCode == 13) {
-            event.preventDefault();
-            return false;
-          }
-        });
-      },
-
-      render() {
-        let template = require('./templates/perks.pug');
-        this.fields.perks.type = 'json';
-        this.fields.perks.schema = {
-            amount: {
-                type: 'number',
-                label: 'If an Investor Invests Over',
-                placeholder: '$',
-                values: [],
-                inputType: 'number'
-              },
-            perk: {
-                type: 'string',
-                label: 'Describe the Perk',
-                placholder: 'Description',
-                values: [],
-              },
-          };
-        this.$el.html(
-            template({
-                serverUrl: serverUrl,
-                Urls: Urls,
-                fields: this.fields,
-                // values: this.model.toJSON(),
-                values: this.model,
-                templates: this.jsonTemplates,
-              })
-        );
-        return this;
-      },
-
-    }, leavingConfirmationHelper.methods, menuHelper.methods, addSectionHelper.methods)),
+  }, leavingConfirmationHelper.methods, menuHelper.methods, addSectionHelper.methods)),
 
   thankYou: Backbone.View.extend({
     el: '#content',
