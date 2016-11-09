@@ -128,10 +128,10 @@ mixin fieldChoiceLabel(name, attr)
           name=name
       ).custom-select.w-100
           if attr.hasOwnProperty('empty')
-              option(value=attr.empty.value) #{attr.empty.display}
+            option(value=attr.empty.value) #{attr.empty['']}
             
-          each v in attr.validate.choices
-              option(value=v.value selected=(v.value == attr.value ? "selected" : undefined)) #{v.display_name}
+          each v,k in attr.validate.choices
+            option(value=k selected=(v.value == attr.value ? "selected" : undefined)) #{ v }
 
 
 mixin fieldRadioLabel(name, attr)
@@ -154,6 +154,23 @@ mixin fieldRadioLabel(name, attr)
               checked=(v.value == attr.value ? "checked" : undefined)
               value=v.value)
             | #{v.display_name}
+
+
+mixin fieldDateDay(name, attr)
+  +prepareField(name, attr)
+  if attr.type == null
+    - attr.type = 'dateday'
+
+  div(class=attr.class + ' ' + (attr.id || name) + (attr.required == true ? ' required ' : ' ') + ' ' + attr.type).date-input
+    - var value = attr.value ? attr.value.split('-') : values && values[name] ? values[name].split('-') : []
+    input(
+        id=attr.id || name + '__day'
+        name=(attr.name || name) + '__day'
+        placeholder=(attr.placeholder ? attr.placeholder : "DD")
+        type='number'
+        maxlength=2
+        value=value[1]
+      ).form-control
 
 
 mixin fieldDateMonth(name, attr)
