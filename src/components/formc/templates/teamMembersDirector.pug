@@ -26,7 +26,7 @@ section.formc-team-members-director.container.m-b-85
   +menu('formc', 'team-members-director')
 
   //START RIGHT BLOCK
-  .col-lg-8.team-member-formc
+  .col-xl-8.col-lg-8.col-md-12.team-member-formc
     h2.text-uppercase.text-lg-center.text-xs-center.m-t-0.dosis.mb50 Team members (director)
     form(metod="post" action="").form-section
       .col-xl-12
@@ -101,7 +101,7 @@ section.formc-team-members-director.container.m-b-85
 
 
         +fieldTextLabel("principal_occupation", _.extend({
-          class1: 'col-xl-3 col-lg-12 text-lg-left text-xl-right',
+          class1: 'col-xl-3 col-lg-12 text-lg-left text-xl-right p-t-0 m-b-0',
           class2: 'col-xl-9 col-lg-12',
           placeholder: 'Principal Occupation',
           }, fields.principal_occupation))
