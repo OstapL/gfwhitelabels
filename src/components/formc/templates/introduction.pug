@@ -2,6 +2,7 @@
 - 'use strict'
 include ../../../templates/mixins.pug
 include ../../raiseFunds/templates/menu.pug
+include ../../../templates/fields_mixins.pug
 
 +breadcrumbs('Create Formc', '', [['home', '/'], [ 'Create Formc', page.get_absolute_url], ['Introduction']])
 
@@ -86,13 +87,9 @@ section.formc.introduction.create-company-media.container
               .col-lg-8
                 h3.m-t-0.text-lg-center.m-b-2 Electronically Sign
               .row
-                .col-lg-8.form-group
-                  input(type="text" placeholder="Company Name" class="company-name").form-control
-                  .help-block Company Name (pre-populated)
+                +fieldText('company_name', _.extend({ 'id': 'company-name', 'placeholder': 'Company name', 'class': 'col-lg-8 form-group' }, fields.company_name))
               .form-group.row
-                .col-lg-4
-                  input(type="text" placeholder="Type Your Name" class="user-name showPopover" data-content="Type name (it signs on right)").form-control
-                  .help-block Type your name here
+                +fieldText('full_name', _.extend({ 'id': 'full-name', 'placeholder': 'Type your name', 'class': 'col-lg-4', 'help_text': 'Type name (it signs on right)'}, fields.full_name))
                 .col-lg-4
                   .electronically
                     span.by By:
