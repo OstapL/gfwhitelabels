@@ -1370,8 +1370,8 @@ module.exports = {
           revenues_sales: "Revenues Sales",
         },
         sold_securities_amount: "How much have you sold within the preceeding 12-month period?",
-        fiscal_recent_file_id: "Upload financials for most recent fiscal year",
-        fiscal_prior_file_id: "Upload financials for prior fiscal year",
+        fiscal_recent_file_data: "Upload financials for most recent fiscal year",
+        fiscal_prior_file_data: "Upload financials for prior fiscal year",
         financials_condition_no: "Please discuss financial milestones and operational, liquidity and other challenges.  Please discuss how the proceeds from the offering will affect your liquidity, whether these funds are necessary to the viability of the business, and how quickly you anticipate using your available cash. Please also discuss other available sources of capital, such as lines of credit or required contributions by shareholders, for example.",
         financials_condition_yes: "Please discuss your historical results for each period for which you provide financial statements.  The discussion should focus on financial milestones and operational, liquidity and other challenges.  Please also discuss whether historical results and cash flows are representative of what investors should expect in the future. Take into account the proceeds of the offering and any other known sources of capital. Please discuss how the proceeds from the offering will affect your liquidity, whether these funds are necessary to the viability of the business, and how quickly you anticipate using your available cash.  Please also discuss other available sources of capital, such as lines of credit or required contributions by shareholders, for example. ",
       };
