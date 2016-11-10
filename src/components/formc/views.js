@@ -44,7 +44,7 @@ const labels = {
 
 module.exports = {
   introduction: Backbone.View.extend(_.extend({
-    urlRoot: formcServer + '/:id' + '/introduction',
+    urlRoot: formcServer + '/:id/introduction',
 
     events: _.extend({
       'submit form': 'submit',

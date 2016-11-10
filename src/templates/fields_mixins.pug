@@ -131,7 +131,7 @@ mixin fieldChoiceLabel(name, attr)
             option(value=attr.empty.value) #{attr.empty['']}
             
           each v,k in attr.validate.choices
-            option(value=k selected=(v.value == attr.value ? "selected" : undefined)) #{ v }
+            option(value=k selected=(k == attr.value ? "selected" : undefined)) #{ v }
 
 
 mixin fieldRadioLabel(name, attr)

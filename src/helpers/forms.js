@@ -179,14 +179,15 @@ module.exports = {
   fixDateFields(data) {
     _(this.fields).each((el, key) => {
       if(el.type == 'date') {
-        debugger;
         var key_year = key + '__year';
         var key_month = key + '__month';
-        data[key] = data[key_year] && data[key_month]
-          ? data[key_year] + '-' + data[key_month] + '-' + '01'
+        var key_day = key + '__day';
+        data[key] = data[key_year]
+          ? data[key_year] + '-' + (data[key_month] || '01') + '-' + (data[key_day] || '01') 
           : '';
         delete data[key_year];
         delete data[key_month];
+        delete data[key_day];
       }
     });
   },

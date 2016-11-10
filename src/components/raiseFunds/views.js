@@ -89,7 +89,6 @@ const onPreviewAction = function(e) {
   app.showLoading();
   let that = this;
   setTimeout(function() {
-    // window.location = e.target.dataset.href + '?preview=1'
     window.location = '/api/campaign/' + (that.campaign ? that.campaign.id : that.model.id) + '?preview=1&previous=' + pathname;
   }, 100);
 };
@@ -97,11 +96,10 @@ const onPreviewAction = function(e) {
 
 module.exports = {
   company: Backbone.View.extend(_.extend({
-    // urlRoot: serverUrl + Urls['company-list'](),
-    urlRoot: Urls.company_list(),
+    urlRoot: raiseCapitalUrl + '/company',
     template: require('./templates/company.pug'),
     events: _.extend({
-      'submit form': 'submit',
+      'submit form': api.submitAction,
       'keyup #zip_code': 'changeZipCode',
       'click .update-location': 'updateLocation',
       'click .onPreview': onPreviewAction,
