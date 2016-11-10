@@ -4,9 +4,9 @@ module.exports = {
   // TODO
   // To do refactoring
   popupLogin: Backbone.View.extend({
-    urlRoot: Urls.rest_login(),
+    urlRoot: authServer + '/rest-auth/login',
     events: {
-      'submit .login-form': 'loginSubmit',
+      'submit .login-form': api.submitAction,
       'submit .signup-form': 'signupSubmit',
       'click .btn-google': 'loginGoogle',
       'click .btn-linkedin': 'loginLinkedin',
@@ -22,16 +22,6 @@ module.exports = {
       } else {
         alert('Server return no authentication data');
       }
-    },
-
-    loginSubmit(e) {
-      this.urlRoot = Urls.rest_login();
-      api.submitAction.call(this, e); 
-    },
-
-    signupSubmit(e) {
-      this.urlRoot = Urls.rest_register();
-      api.submitAction.call(this, e); 
     },
 
     loginGoogle() {
@@ -132,7 +122,6 @@ module.exports = {
     },
 
     render() {
-      this.model.urlRoot = serverUrl + Urls['rest_login']();
       $('#content').scrollTo();
       let template = require('./templates/login.pug');
       this.$el.html(
@@ -364,7 +353,7 @@ module.exports = {
       e.preventDefault();
 
       let email = $(e.currentTarget).find('#email').val();
-      api.makeRequest(Urls.rest_password_reset(), {
+      api.makeRequest(authServer + '/rest-auth/reset', {
         email: email,
         type: 'POST',
       }).then((data) => {

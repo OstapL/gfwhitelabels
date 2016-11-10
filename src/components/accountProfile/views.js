@@ -5,7 +5,7 @@ const phoneHelper = require('helpers/phoneHelper.js');
 module.exports = {
   profile: Backbone.View.extend(_.extend({
     template: require('./templates/profile.pug'),
-    urlRoot: serverUrl + Urls.rest_user_details(),
+    urlRoot: authServer + '/rest-auth/data',
     events: _.extend({
       'submit form': 'submit',
       'focus #ssn' : 'showSSNPopover',
