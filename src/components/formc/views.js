@@ -8,6 +8,7 @@ const yesNoHelper = require('helpers/yesNoHelper.js');
 
 const dropzoneHelpers = require('helpers/dropzoneHelpers.js');
 const riskFactorsHelper = require('helpers/riskFactorsHelper.js');
+const validation = require('components/validation/validation.js');
 
 const labels = {
   title: 'Title for Risk',
@@ -48,6 +49,8 @@ module.exports = {
 
     events: _.extend({
       'submit form': 'submit',
+      'keyup .electronically-sign .user-name': 'changeSign',
+      'click #pay-btn': 'stripeSubmit',
     }, menuHelper.events, yesNoHelper.events),
     preinitialize() {
       // ToDo
@@ -61,33 +64,96 @@ module.exports = {
       return '/formc/' + this.model.id + '/team-members';
     },
 
-    submit(e) {
-      var validation = require('components/validation/validation.js');
+    stripeSubmit(e) {
+      e.preventDefault();
+
+      let $stripeForm = $('.expiration-block');
 
       function validateCard(form, selectors) {
-        let number = form.elements[selectors.number];
-        let expMonth = form.elements[selectors.expMonth];
-        let expYear = form.elements[selectors.expYear];
-        let cvc = form.elements[selectors.cvc];
 
-        if (!Stripe.card.validateCardNumber(number.value)) {
+        let number = form.find('#' + selectors.number);
+        let expMonth = form.find('#' + selectors.expMonth);
+        let expYear = form.find('#' + selectors.expYear);
+        let cvc = form.find('#' + selectors.cvc);
+
+        if (!Stripe.card.validateCardNumber(number.val())) {
           validation.invalidMsg({ $: $ }, selectors.number, ['Please, check card number.']);
-          return false;
+          return null;
         }
 
-        if (!Stripe.card.validateExpiry(expMonth.value, expYear.value)) {
+        if (!Stripe.card.validateExpiry(expMonth.val(), expYear.val())) {
           validation.invalidMsg({ $: $ }, selectors.expDate, ['Please, check expiration date.']);
-          return false;
+          return null;
         }
 
-        if (!Stripe.card.validateCVC(cvc.value)) {
+        if (!Stripe.card.validateCVC(cvc.val())) {
           validation.invalidMsg({ $: $ }, selectors.cvc, ['Please, check CVC.']);
-          return false;
+          return null;
         }
 
-        return true;
+        return {
+          number: number.val(),
+          cvc: cvc.val(),
+          exp_month: expMonth.val(),
+          exp_year: expYear.val(),
+        };
       };
 
+      let $payBtn = $(e.target);
+      $payBtn.prop('disabled', true);
+
+      var card = validateCard($stripeForm,
+        { number: 'card_number',
+          expDate: 'card_exp_date_year',
+          expMonth: 'card_exp_month',
+          expYear: 'card_exp_year',
+          cvc: 'card_cvc',
+        });
+
+      if (!card) {
+        $payBtn.prop('disabled', false);
+        return;
+      }
+
+      Stripe.setPublishableKey(stripeKey);
+
+      Stripe.card.createToken(card, (status, stripeResponse) => {
+        if (stripeResponse.error) {
+          validation.invalidMsg({ $: $ }, 'form-section', [stripeResponse.error.message]);
+          $payBtn.prop('disabled', false); // Re-enable submission
+          return;
+        }
+
+        api.makeRequest(formcServer + '/' + this.model.id + '/stripe', "PUT", {
+          stripeToken: stripeResponse.id
+        }).done((formcResponse, statusText, xhr)=>{
+          if (xhr.status !== 200) {
+            validation.invalidMsg({'$': $}, "expiration-block", [formcResponse.description || 'Some error message should be here']);
+            $payBtn.prop('disabled', false);
+            return;
+          }
+
+          api.makeRequest(authServer + '/user/company').done((company) => {
+            $stripeForm.remove();
+
+            this.eSignCompanyName.val(company.name || '');
+
+            this.eSignUserName.val('Maria Kravchuk');
+            this.eSignPreview.text('Maria Kravchuk');
+
+            this.eSignForm.removeClass('collapse');
+          });
+
+        }).fail((xhr, ajaxOptions, err)=>{
+          validation.invalidMsg({'$': $}, "expiration-block", [xhr.responseJSON.non_field_errors || "An error occurred, please, try again later."]);
+          $payBtn.prop('disabled', false);
+        });
+
+        return false;
+      });
+    },
+
+    submit(e) {
       e.preventDefault();
 
       let $target = $(e.target);
@@ -102,43 +168,13 @@ module.exports = {
         data.failed_to_comply = 'Please explain.';
       }
 
-      if (!validateCard(e.target,
-              { number: 'card_number',
-                expDate: 'card_exp_date_year',
-                expMonth: 'card_exp_month',
-                expYear: 'card_exp_year',
-                cvc: 'card_cvc',
-              })
-      ) {
-        $submitBtn.prop('disabled', false);
-        return;
-      }
-
-      Stripe.setPublishableKey(stripeKey);
-
-      Stripe.card.createToken($target, (status, stripeResponse) => {
-        if (stripeResponse.error) {
-          validation.invalidMsg({ $: $ }, 'form-section', [stripeResponse.error.message]);
-          $submitBtn.prop('disabled', false); // Re-enable submission
-          return;
-        }
-
-        api.makeRequest(formcServer + '/' + this.model.id + '/stripe', "PUT", { 
-          stripeToken: stripeResponse.id
-        }).done((formcResponse, statusText, xhr)=>{
-          if (xhr.status !== 200) {
-            validation.invalidMsg({'$': $}, "expiration-block", [formcResponse.description || 'Some error message should be here']);
-            $submitBtn.prop('disabled', false);
-            return;
-          }
-          api.submitAction.call(this, e, data);
-        }).fail((xhr, ajaxOptions, err)=>{
-          validation.invalidMsg({'$': $}, "expiration-block", [xhr.responseJSON.non_field_errors || "An error occurred, please, try again later."]);
-          $submitBtn.prop('disabled', false);
-        });
-      });
+      api.submitAction.call(this, e, data);
 
       return false;
+    },
+
+    changeSign(e) {
+      this.eSignPreview.text(this.eSignUserName.val());
     },
 
     initialize(options) {
@@ -156,6 +192,12 @@ module.exports = {
           values: this.model,
         })
       );
+
+      this.eSignForm = $('.electronically-sign');
+      this.eSignCompanyName = this.eSignForm.find('.company-name');
+      this.eSignUserName = this.eSignForm.find('.user-name');
+      this.eSignPreview = this.eSignForm.find('.electronically .name');
+
       return this;
     },
 
