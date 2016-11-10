@@ -4,7 +4,7 @@
 module.exports = {
   patterns: {
     // Matches any digit(s) (i.e. 0-9)
-    number: /^\d+$/,
+    number: /^\d+(\.\d+)?$/,
 
     // Matches any number (e.g. 100.000)
     money: /^-?(?:\d+|\d{1,3}(?:,\d{3})+)(?:\.\d+)?$/,
@@ -57,7 +57,7 @@ module.exports = {
 
   // Determines whether or not a value is a number
   isNumber: function (value) {
-    return _.isNumber(value) || (_.isString(value) && value.match(defaultPatterns.number));
+    return _.isNumber(value) || (_.isString(value) && value.match(this.patterns.number));
   },
 
   // Determines whether or not a value is empty
@@ -68,12 +68,17 @@ module.exports = {
 
   // Function validator
   // Lets you implement a custom function used for validation
-  fn: function (value, attr, fn, model, computed) {
+  fn: function (value, fn, attr, model, computed) {
     if (_.isString(fn)) {
       fn = model[fn];
     }
 
     return fn.call(model, value, attr, computed);
+  },
+
+  toNumber: function(value) {
+    if (value && value.replace) value = value.replace(/\,/g, '');
+    return (_.isNumber(value) || (_.isString(value) && value.match(this.patterns.number))) ? Number(value) : false;
   },
 
   // Required validator
@@ -103,36 +108,37 @@ module.exports = {
   // Validates that the value has to be a number and equal to or greater than
   // the min value specified
   min: function (name, rule, attr, data) {
-    let value = data[attr];
-    if (!isNumber(value) || value < rule) {
+    let value = this.toNumber(data[name]);
+    debugger
+    if (value === false || value < rule) {
       throw this.format(this.messages.min, attr.label, rule);
     }
   },
 
   min_value: function (name, rule, attr, data) {
-    this.min(nam, rule, attr, data);
+    this.min(name, rule, attr, data);
   },
 
   // Max validator
   // Validates that the value has to be a number and equal to or less than
   // the max value specified
   max: function (name, rule, attr, data) {
-    let value = this.getData(data, name);
-    if (!isNumber(value) || value > rule) {
+    let value = this.toNumber(data[name]);
+    if (value === false || value > rule) {
       throw this.format(this.messages.max, attr.label, rule);
     }
   },
 
   max_value: function (name, rule, attr, data) {
-    this.max(nam, rule, attr, data);
+    this.max(name, rule, attr, data);
   },
 
   // Range validator
   // Validates that the value has to be a number and equal to or between
   // the two numbers specified
   range: function (name, rule, attr, data) {
-    let value = this.getData(data, name);
-    if (!isNumber(value) || value < rule[0] || value > rule[1]) {
+    let value = data[name];
+    if (!this.isNumber(value) || value < rule[0] || value > rule[1]) {
       throw this.format(this.messages.range, attr.label, rule[0], rule[1]);
     }
   },
