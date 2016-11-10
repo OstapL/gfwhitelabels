@@ -513,6 +513,7 @@ module.exports = {
       this.labels = {
         describe: 'Describe your business plan',
         business_plan: 'Please upload your business plan',
+        business_plan_file_id: 'Please upload your business plan',
         less_offering_express: {},
         use_of_net_proceeds: {},
       };

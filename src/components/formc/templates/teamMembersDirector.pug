@@ -29,102 +29,113 @@ section.formc-team-members-director.container.m-b-85
   .col-lg-8.team-member-formc
     h2.text-uppercase.text-lg-center.text-xs-center.m-t-0.dosis.mb50 Team members (director)
     form(metod="post" action="").form-section
-      +fieldTextLabel("first_name", _.extend({
-        class1: 'col-lg-3 col-md-12 text-md-left text-lg-right ',
-        class2: 'col-lg-9 col-md-12',
-        }, fields.first_name))
-      +fieldTextLabel("last_name", _.extend({
-        class1: 'col-lg-3 col-md-12 text-md-left text-lg-right ',
-        class2: 'col-lg-9 col-md-12',
-        label: 'Last name',
-        placeholder: 'Last Name',
-        }, fields.last_name))
-      +fieldTextLabel("email", _.extend({
-        class1: 'col-lg-3 col-md-12 text-md-left text-lg-right ',
-        class2: 'col-lg-9 col-md-12',
-        label: 'Email Address',
-        placeholder: 'Email Address',
-        }, fields.email))
-      +fieldTextLabel("dob", _.extend({
-        class1: 'col-lg-3 col-md-12 text-md-left text-lg-right ',
-        class2: 'col-lg-9 col-md-12',
-        type: 'date',
-        label: 'Date of birth',
-        }, fields.dob))
+      .col-xl-12
+        +fieldTextLabel("first_name", _.extend({
+          class1: 'col-xl-3 col-lg-12 text-lg-left text-xl-right ',
+          class2: 'col-xl-9 col-lg-12',
+          }, fields.first_name))
+        +fieldTextLabel("last_name", _.extend({
+          class1: 'col-xl-3 col-lg-12 text-lg-left text-xl-right ',
+          class2: 'col-xl-9 col-lg-12',
+          label: 'Last name',
+          placeholder: 'Last Name',
+          }, fields.last_name))
 
-      .row.form-group
-        .col-lg-6.col-md-12
-          .col-lg-6.text-lg-right.text-md-left.p-t-0
-            label.p-t-0.m-b-0 Board Service Start Date
-          #board_service_start_date.col-lg-6.p-t-0
-            .row
-              +fieldDateMonth("board_service_start_date", _.extend({
-                class: 'col-lg-6 p-r-0',
+        .row.form-group
+          .col-date
+            label.col-xl-3.col-lg-12.text-xl-right.textlg-left Date of birth
+            .col-xl-4.col-lg-6.p-r-0
+              +fieldDateDay("dob", _.extend({
+                class: 'col-xl-4 col-lg-4 col-xs-4 no-gutter p-l-0',
                 placeholder: 'MM',
-                name: 'board_service_start_date',
-                label: 'Board Service Start Date',
-              }, fields.board_service_start_date))
-              +fieldDateYear("board_service_start_date", _.extend({
-                class: 'col-lg-6 p-r-0',
+              }, fields.dob))
+              +fieldDateMonth("dob", _.extend({
+                class: 'col-xl-4 col-lg-4 col-xs-4 no-gutter p-l-0',
+                placeholder: 'DD',
+              }, fields.dob))
+              +fieldDateYear("dob", _.extend({
+                class: 'col-xl-4 col-lg-4 col-xs-4 no-gutter p-l-0 p-r-0',
                 placeholder: 'YYYY',
-                name: 'board_service_start_date',
-                label: 'Board Service Start Date',
-              }, fields.board_service_start_date))
-        .col-lg-6.col-md-12
-          .col-lg-6.text-lg-right.text-md-left.p-t-0
-            label.p-t-0.m-b-0 Board Service End Date
-          #board_service_end_date.col-lg-6.p-t-0
+              }, fields.dob))
+        +fieldTextLabel("email", _.extend({
+          class1: 'col-xl-3 col-lg-12 text-lg-left text-xl-right ',
+          class2: 'col-xl-9 col-lg-12',
+          label: 'Email Address',
+          placeholder: 'Email Address',
+          }, fields.email))
+        .row.form-group
+          .col-xl-6.col-lg-6
             .row
-              +fieldDateMonth("board_service_end_date", _.extend({
-                class: 'col-lg-6 p-r-0',
+              .col-xl-6.col-lg-12.text-xl-right.text-lg-left.p-t-0
+                label.p-t-0.m-b-0 Board Service Start Date
+              #board_service_start_date.col-xl-6.col-lg-12.p-t-0
+                +fieldDateMonth("board_service_start_date", _.extend({
+                  class: 'col-lg-6 p-r-0',
+                  placeholder: 'MM',
+                  name: 'board_service_start_date',
+                  label: 'Board Service Start Date',
+                }, fields.board_service_start_date))
+                +fieldDateYear("board_service_start_date", _.extend({
+                  class: 'col-lg-6 p-r-0',
+                  placeholder: 'YYYY',
+                  name: 'board_service_start_date',
+                  label: 'Board Service Start Date',
+                }, fields.board_service_start_date))
+          .col-xl-6.col-lg-6
+            .col-xl-6.col-lg-12.text-xl-right.text-lg-left.p-t-0
+              label.p-t-0.m-b-0 Board Service End Date
+            #board_service_end_date.col-xl-6.col-lg-12.p-t-0
+              .row
+                +fieldDateMonth("board_service_end_date", _.extend({
+                  class: 'col-lg-6 p-r-0',
+                  placeholder: 'MM',
+                  name: 'board_service_end_date',
+                  label: 'Board Service End Date',
+                }, fields.board_service_end_date))
+                +fieldDateYear("board_service_end_date", _.extend({
+                  class: 'col-lg-6 p-r-0',
+                  placeholder: 'YYYY',
+                  name: 'board_service_end_date',
+                  label: 'Board Service End Date',
+                  help_text: 'If your board service has a term, please input the end ate. Otherwise leave blank',
+                }, fields.board_service_end_date))
+
+
+        +fieldTextLabel("principal_occupation", _.extend({
+          class1: 'col-xl-3 col-lg-12 text-lg-left text-xl-right',
+          class2: 'col-xl-9 col-lg-12',
+          placeholder: 'Principal Occupation',
+          }, fields.principal_occupation))
+
+        +fieldTextLabel("employer_principal_businesss", _.extend({
+          class1: 'col-xl-3 col-lg-12 text-lg-left p-t-0 m-b-0 text-xl-right',
+          class2: 'col-xl-9 col-lg-12',
+          placeholder: 'Employer and Principal Business',
+          }, fields.employer_principal_businesss))
+
+        .row
+        .row.required
+          .col-lg-3.text-lg-right.text-md-left.p-t-0
+            label.p-t-0.m-b-0.p-l-1 Employer Start Date
+
+          #employer_start_date.col-lg-4.p-r-0
+            .row
+              +fieldDateMonth("employer_start_date", {
+                class: 'col-lg-4 p-r-0',
                 placeholder: 'MM',
-                name: 'board_service_end_date',
-                label: 'Board Service End Date',
-              }, fields.board_service_end_date))
-              +fieldDateYear("board_service_end_date", _.extend({
-                class: 'col-lg-6 p-r-0',
+              })
+              +fieldDateYear("employer_start_date", {
+                class: 'col-lg-4 p-r-0',
                 placeholder: 'YYYY',
-                name: 'board_service_end_date',
-                label: 'Board Service End Date',
-                help_text: 'If your board service has a term, please input the end ate. Otherwise leave blank',
-              }, fields.board_service_end_date))
+              })
+        .row
+          .col-xl-12
+            .border-bottom.m-t-3.m-b-3
+            
+        |!{ templates.positions }
+        |!{ templates.experiences }
 
-
-      +fieldTextLabel("principal_occupation", _.extend({
-        class1: 'col-lg-3 col-md-12 text-md-left text-lg-right',
-        class2: 'col-lg-9 col-md-12',
-        placeholder: 'Principal Occupation',
-        }, fields.principal_occupation))
-
-      +fieldTextLabel("employer_principal_businesss", _.extend({
-        class1: 'col-lg-3 col-md-12 text-md-left p-t-0 m-b-0 text-lg-right',
-        class2: 'col-lg-9 col-md-12',
-        placeholder: 'Employer and Principal Business',
-        }, fields.employer_principal_businesss))
-
-      .row
-      .row.required
-        .col-lg-3.text-lg-right.text-md-left.p-t-0
-          label.p-t-0.m-b-0.p-l-1 Employer Start Date
-
-        #employer_start_date.col-lg-4.p-r-0
-          .row
-            +fieldDateMonth("employer_start_date", {
-              class: 'col-lg-4 p-r-0',
-              placeholder: 'MM',
-            })
-            +fieldDateYear("employer_start_date", {
-              class: 'col-lg-4 p-r-0',
-              placeholder: 'YYYY',
-            })
-      .row
-        .col-xl-12
-          .border-bottom.m-t-3.m-b-3
-          
-      |!{ templates.positions }
-      |!{ templates.experiences }
-
-      .row.m-t-3
-        .col-xl-12
-          .text-md-center.text-sm-center-text-xs-center
-            button(type='submit').btn.btn-primary.text-uppercase.pull-lg-right Save
+        .row.m-t-3
+          .col-xl-12
+            .text-md-center.text-sm-center-text-xs-center
+              button(type='submit').btn.btn-primary.text-uppercase.pull-lg-right Save
