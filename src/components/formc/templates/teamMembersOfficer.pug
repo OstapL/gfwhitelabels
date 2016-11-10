@@ -1,4 +1,5 @@
 include ../../../templates/mixins.pug
+include ../../../templates/fields_mixins.pug
 include ../../raiseFunds/templates/menu.pug
 
 +breadcrumbs('form c', '', 
@@ -16,64 +17,74 @@ section.formc-team-members-director.container.m-b-85
   .col-lg-8.team-member-formc
     h2.text-uppercase.text-lg-center.text-xs-center.m-t-0.dosis.mb50 Team members (officer)
     form(metod="post" action="").form-section
-      +fieldBlock("first_name", '', {
-        class1: 'col-lg-3 col-md-12 text-md-left',
-        class2: 'col-lg-9 col-md-12',
-        type: 'text',
-        label: 'First Name',
-        })
-      +fieldBlock("last_name", '', {
-        class1: 'col-lg-3 col-md-12 text-md-left',
-        class2: 'col-lg-9 col-md-12',
-        type: 'text',
-        label: 'Last Name',
-        })
-      +fieldBlock("email", '', {
-        class1: 'col-lg-3 col-md-12 text-md-left',
-        class2: 'col-lg-9 col-md-12',
-        type: 'text',
-        label: 'Email Address',
-        })
-      +fieldBlock("dob", '', {
-        class1: 'col-lg-3 col-md-12 text-md-left',
-        class2: 'col-lg-9 col-md-12',
-        type: 'date',
-        label: 'Date of birth',
-        })
-
-      +fieldBlock("responsibilities", '', {
-         class1: 'col-lg-3 col-md-12 text-md-left  m-b-0',
-         class2: 'col-lg-9 col-md-12',
-         type: 'text',
-         label: 'Responsibilities',
-      })
-      .filter.p-b-0.p-t-0
-        .one_drop.m-t-2.m-b-2
-          .row.form-group
-            label.col-lg-3.col-md-12.text-md-left.text-lg-right Title
-            .col-lg-9.col-md-12
-              select( multiple="true" title="Title").form-control.selectpicker.w-100.team-select
-                option(selected) CEO/President
-                option Principal Financial Officer/Treasurer
-                option Vice President
-                option Secretary
-                option Controller/Principal Accounting Officer 
-      .row
-        .col-lg-6.col-md-12
-          .col-lg-6.text-lg-right.text-md-left.p-t-0
-            label.m-b-0 Start Date
-
-          .col-lg-6.p-r-0
+      .col-xl-12
+        +fieldTextLabel("first_name", _.extend({
+          class1: 'col-xl-3 col-lg-12 text-lg-left text-xl-right ',
+          class2: 'col-xl-9 col-lg-12',
+          }, fields.first_name))
+        +fieldTextLabel("last_name", _.extend({
+          class1: 'col-xl-3 col-lg-12 text-lg-left text-xl-right ',
+          class2: 'col-xl-9 col-lg-12',
+          }, fields.last_name))
+        +fieldTextLabel("last_name", _.extend({
+          class1: 'col-xl-3 col-lg-12 text-lg-left text-xl-right ',
+          class2: 'col-xl-9 col-lg-12',
+          }, fields.email))
+        .row.form-group
+          .col-date
+            label.col-xl-3.col-lg-12.text-xl-right.textlg-left Date of birth
+            .col-xl-4.col-lg-6.p-r-0
+              +fieldDateDay("dob", _.extend({
+                class: 'col-xl-4 col-lg-4 col-xs-4 no-gutter p-l-0',
+                placeholder: 'MM',
+              }, fields.dob))
+              +fieldDateMonth("dob", _.extend({
+                class: 'col-xl-4 col-lg-4 col-xs-4 no-gutter p-l-0',
+                placeholder: 'DD',
+              }, fields.dob))
+              +fieldDateYear("dob", _.extend({
+                class: 'col-xl-4 col-lg-4 col-xs-4 no-gutter p-l-0',
+                placeholder: 'YYYY',
+              }, fields.dob))
+        +fieldTextLabel("responsibilities", _.extend({
+          class1: 'col-xl-3 col-lg-12 text-lg-left text-xl-right ',
+          class2: 'col-xl-9 col-lg-12',
+          label: 'Responsibilities',
+          }, fields))
+        .filter.p-t-0.p-b-0.m-b-2
+          .one_drop.m-t-2
+            .row.form-group
+              label.col-xl-3.col-lg-12.text-lg-left.text-xl-right Title
+              .col-xl-9.col-lg-12
+                select( multiple="true" title="Title").form-control.selectpicker.w-100.team-select
+                  option(selected) CEO/President
+                  option Principal Financial Officer/Treasurer
+                  option Vice President
+                  option Secretary
+                  option Controller/Principal Accounting Officer
+        .row
+          .col-xl-6.col-lg-6
             .row
-              .col-lg-6.p-r-0
-                input(type="number"  placeholder="MM").form-control
-              .col-lg-6.p-r-0
-                input(type="number"  placeholder="YYYY").form-control
-      
-      .border-bottom.m-t-3.m-b-3
-      |!{ templates.positions }
-      |!{ templates.experiences }
+              label.col-xl-6.col-lg-12.text-xl-right.text-lg-left Start Date
+              #board_service_start_date.col-xl-6.col-lg-12
+                .row
+                  +fieldDateMonth("employer_start_date", _.extend({
+                    class: 'col-xl-6 col-lg-6 col-sm-6 col-xs-6 m-d-p-r-5',
+                    placeholder: 'MM',
+                    name: 'employer_start_date',
+                    label: 'Employer Start Date',
+                  }, fields.board_service_start_date))
+                  +fieldDateYear("board_service_start_date", _.extend({
+                    class: 'col-xl-6 col-lg-6 col-sm-6 col-xs-6 m-d-p-l-5',
+                    placeholder: 'YYYY',
+                    name: 'employer_start_date',
+                    label: 'Employer Start Date',
+                  }, fields.board_service_start_date)) 
+        
+        .border-bottom.m-t-3.m-b-3
+        |!{ templates.positions }
+        |!{ templates.experiences }
 
-      .row.m-t-3
-        .col-lg-12.text-md-center.text-sm-center-text-xs-center
-          button.btn.btn-primary.text-uppercase.pull-lg-right Save
+        .row.m-t-3
+          .col-lg-12.text-md-center.text-sm-center.text-xs-center
+            button.btn.btn-primary.text-uppercase.pull-lg-right Save
