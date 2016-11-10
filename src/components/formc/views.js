@@ -1354,6 +1354,7 @@ module.exports = {
 
     initialize(options) {
       this.fields = options.fields;
+      this.campaign = options.campaign;
       this.labels = {
         sold_securities_data: {
           taxable_income: "Taxable Income",
@@ -1376,7 +1377,7 @@ module.exports = {
       this.assignLabels();
 
       this.createIndexes();
-      this.buildJsonTemplates('formc');
+      this.buildJsonTemplates('formc', {campaign: this.campaign});
     },
 
     getSuccessUrl() {
