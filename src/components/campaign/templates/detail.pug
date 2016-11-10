@@ -604,10 +604,8 @@ section
               //-       h2.font-weight-bold #{ values.days_to_go } days
 
   section#perks.perks
-    //- if values.perks && Object.keys(values.perks).length > 0 && values.perks[0].perk != ''
     - values.perks = values.perks.filter(function(value) { return value && value.perk; });
     - values.perks.sort(function (a, b) { return Number(a.amount) - Number(b.amount); });
-    //- h3.col-lg-12.text-lg-center Perks
     .container
       h3.text-lg-center.text-xs-center.campaign-subheading Perks
       .row
