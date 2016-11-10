@@ -20,7 +20,7 @@ section.formc.introduction.create-company-media.container
           .certify-checkbox
             .form-group.required
               label
-                input(type="checkbox" name="certify" value="1" checked=(values['certify']))
+                input(type="checkbox" name="certify" value="1" checked=(values['certify1']))
                 | Check this box to certify that all the following statements are true:
           .list
             ul
@@ -30,7 +30,7 @@ section.formc.introduction.create-company-media.container
               li Not ineligible to rely on this exemption under Section 4(a)(6) of the Securities Act as a result of a disqualification specified in Rule 503(a) of Regulation Crowdfunding. (This question refers to questions around any securities related violations you might have, which you'll come to later in this Form).
               li Has filed with the Commission and provided to investors, to the extent required, the ongoing annual reports required by Regulation Crowdfunding during the two years immediately preceding the filing of this offering statement (or for such shorter period that the issuer was required to file such reports).
               li Not a development stage company that (a) has no specific business plan or (b) has indicated that its business plan is to engage in a merger or acquisition with an unidentified company or companies.
-          .yes-no
+          .yesno.yes-no
             p.font-weight-bold Has the issuer or any of its predecessors previously failed to comply with the ongoing reporting requirements of Rule 202 Regulation Crowdfunding?
             .form-group
               label
@@ -39,7 +39,7 @@ section.formc.introduction.create-company-media.container
               label
                 input(type="radio" name="failed_to_comply_choice" value="false" checked=!values['failed_to_comply_choice'] target=".explain")
                 | No
-          div(style='display:' + (values['failed_to_comply_choice'] ? 'block' : 'none') + ';').explain.shown-yes
+          div(style='display:' + (values['failed_to_comply_choice'] ? 'block' : 'none') + ';').failed_to_comply_choice.explain.shown-yes
             .form-group.row
               .col-lg-3.text-lg-right
                 label If Yes, Explain
@@ -81,22 +81,22 @@ section.formc.introduction.create-company-media.container
             .row.btn-pay
               .col-lg-12
                 button#pay-btn.btn.btn-primary.text-uppercase pay
-            .row.collapse
-              .col-lg-9.offset-lg-3.m-t-2.investment
-                .col-lg-8
-                  h3.m-t-0.text-lg-center.m-b-2 Electronically Sign
-                .row
-                  .col-lg-8.form-group
-                    input(type="text" placeholder="Company Name").form-control
-                    .help-block Company Name (pre-populated)
-                .form-group.row
-                  .col-lg-4
-                    input(type="text" placeholder="Type Your Name").form-control
-                    .help-block Type your name here
-                  .col-lg-4
-                    .electronically
-                      span.by By:
-                      span.name Maria Kravchuk
-              .col-lg-12
-                .btn-save.text-lg-right
-                  a(href="#").btn.btn-primary.text-uppercase save
+          .electronically-sign.collapse
+            .col-lg-9.offset-lg-3.m-t-2.investment
+              .col-lg-8
+                h3.m-t-0.text-lg-center.m-b-2 Electronically Sign
+              .row
+                .col-lg-8.form-group
+                  input(type="text" placeholder="Company Name" class="company-name").form-control
+                  .help-block Company Name (pre-populated)
+              .form-group.row
+                .col-lg-4
+                  input(type="text" placeholder="Type Your Name" class="user-name showPopover" data-content="Type name (it signs on right)").form-control
+                  .help-block Type your name here
+                .col-lg-4
+                  .electronically
+                    span.by By:
+                    span.name
+            .col-lg-12
+              .btn-save.text-lg-right
+                button(type='submit').btn.btn-primary.text-uppercase save

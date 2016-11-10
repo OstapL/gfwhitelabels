@@ -131,7 +131,7 @@ mixin fieldChoiceLabel(name, attr)
             option(value=attr.empty.value) #{attr.empty['']}
             
           each v,k in attr.validate.choices
-            option(value=k selected=(v.value == attr.value ? "selected" : undefined)) #{ v }
+            option(value=k selected=(k == attr.value ? "selected" : undefined)) #{ v }
 
 
 mixin fieldRadioLabel(name, attr)
@@ -167,7 +167,7 @@ mixin fieldDateDay(name, attr)
         id=attr.id || name + '__day'
         name=(attr.name || name) + '__day'
         placeholder=(attr.placeholder ? attr.placeholder : "DD")
-        type='number'
+        type='text'
         maxlength=2
         value=value[1]
       ).form-control
@@ -184,7 +184,7 @@ mixin fieldDateMonth(name, attr)
         id=attr.id || name + '__month'
         name=(attr.name || name) + '__month'
         placeholder=(attr.placeholder ? attr.placeholder : "MM")
-        type='number'
+        type='text'
         maxlength=2
         value=value[1]
       ).form-control
@@ -201,7 +201,9 @@ mixin fieldDateYear(name, attr)
         id=attr.id || name + '__year'
         name=(attr.name || name) + '__year'
         placeholder=(attr.placeholder ? attr.placeholder : "YYYY")
-        type='number'
+        class=(attr.help_text ? 'showPopover' : '') 
+        data-content=(attr.help_text ?attr.help_text : '')
+        type='text'
         maxlength=4
         value=value[0]
       ).form-control

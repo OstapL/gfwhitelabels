@@ -67,7 +67,7 @@ section.formc-team-members-director.container.m-b-85
           .col-xl-6.col-lg-6
             .row
               .col-xl-6.col-lg-12.text-xl-right.text-lg-left.p-t-0
-                label.p-t-0.m-b-0 Board Date Start Date
+                label.p-t-0.m-b-0 Board Service Start Date
               #board_service_start_date.col-xl-6.col-lg-12.p-t-0
                 +fieldDateMonth("board_service_start_date", _.extend({
                   class: 'col-lg-6 p-r-0',
@@ -83,7 +83,7 @@ section.formc-team-members-director.container.m-b-85
                 }, fields.board_service_start_date))
           .col-xl-6.col-lg-6
             .col-xl-6.col-lg-12.text-xl-right.text-lg-left.p-t-0
-              label.p-t-0.m-b-0 Board Date End Date
+              label.p-t-0.m-b-0 Board Service End Date
             #board_service_end_date.col-xl-6.col-lg-12.p-t-0
               .row
                 +fieldDateMonth("board_service_end_date", _.extend({
@@ -97,6 +97,7 @@ section.formc-team-members-director.container.m-b-85
                   placeholder: 'YYYY',
                   name: 'board_service_end_date',
                   label: 'Board Service End Date',
+                  help_text: 'If your board service has a term, please input the end ate. Otherwise leave blank',
                 }, fields.board_service_end_date))
 
 
