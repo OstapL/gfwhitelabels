@@ -124,7 +124,7 @@ module.exports = {
        */
 
       _(this.fields).each((el, key) => {
-        if(el.type == 'nested' &&  !key.endsWith('_data')) {
+        if(el.type == 'nested' &&  !el.schema.hasOwnProperty('urls')) {
           this.jsonTemplates[key] = require('components/' + component + '/templates/snippets/' + key + '.pug')({
             attr: _.extend(
               {}, this.fields[key]
