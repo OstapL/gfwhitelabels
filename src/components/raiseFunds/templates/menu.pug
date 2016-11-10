@@ -1,9 +1,9 @@
 - 'use strict';
-mixin getCompanyUrl(campaign, section, currentStep, step, name)
+mixin getCompanyUrl(id, section, currentStep, step, name)
     - let prefix = '/' + section + '/';
-    if campaign.id || currentStep == step
+    if id || currentStep == step
         a(
-          href='/' + section + '/' + campaign.id + '/' + step
+          href='/' + section + '/' + id + '/' + step
           class="list-group-item list-group-item-action " + (currentStep == step ? 'active' : '')
         ) #{ name }
             if currentStep == step
@@ -15,11 +15,11 @@ mixin getCompanyUrl(campaign, section, currentStep, step, name)
           class="list-group-item list-group-item-action disabled" 
         ) #{ name }
 
-mixin getRiskFactorsItem(campaign, section, currentStep, step, name)
+mixin getRiskFactorsItem(id, section, currentStep, step, name)
   - let prefix = '/' + section + '/';
-  if campaign.id || currentStep == step
+  if id || currentStep == step
       a(
-        href=prefix + campaign.id + "/" + step
+        href=prefix + id + "/" + step
         class="list-group-item list-group-item-action " + (currentStep == step ? 'active' : '')
       ) #{ name }
           if currentStep == step
@@ -70,11 +70,11 @@ mixin menu(currentSection, currentStep)
                   i(class="arrow fa " + (currentSection == 'campaign' ? 'fa-angle-down' : 'fa-angle-left'))
             #campaign-steps(role="tabpanel" class="panel-collapse collapse" + (currentSection == 'campaign' ? ' in' : ''))
                 .list-group
-                    +getCompanyUrl(campaign || values, 'campaign', currentStep, 'general_information', 'General Information')
-                    +getCompanyUrl(campaign || values, 'campaign', currentStep, 'media', 'Media')
-                    +getCompanyUrl(campaign || values, 'campaign', currentStep, 'team-members', 'Team Members')
-                    +getCompanyUrl(campaign || values, 'campaign', currentStep, 'specifics', 'Specifics')
-                    +getCompanyUrl(campaign || values, 'campaign', currentStep, 'perks', 'Perks')
+                    +getCompanyUrl(campaignId || values.id, 'campaign', currentStep, 'general_information', 'General Information')
+                    +getCompanyUrl(campaignId || values.id, 'campaign', currentStep, 'media', 'Media')
+                    +getCompanyUrl(campaignId || values.id, 'campaign', currentStep, 'team-members', 'Team Members')
+                    +getCompanyUrl(campaignId || values.id, 'campaign', currentStep, 'specifics', 'Specifics')
+                    +getCompanyUrl(campaignId || values.id, 'campaign', currentStep, 'perks', 'Perks')
           .panel.panel-default
             .panel-heading(role="tab")
               a(data-toggle="collapse"
@@ -91,11 +91,11 @@ mixin menu(currentSection, currentStep)
             //- #form_c(role="tabpanel").panel-collapse.collapse
             #form_c(role="tabpanel" class="panel-collapse collapse" + (currentSection == 'formc' ? ' in' : ''))
                 .list-group
-                    +getCompanyUrl(campaign || values, 'formc', currentStep, 'introduction', 'Introduction')
-                    +getCompanyUrl(campaign || values, 'formc', currentStep, 'team-members', 'Team Members')
-                    +getCompanyUrl(campaign || values, 'formc', currentStep, 'related-parties', 'Related Parties')
-                    +getCompanyUrl(campaign || values, 'formc', currentStep, 'use-of-proceeds', 'Use of Proceeds')
-                    //- +getCompanyUrl(campaign || values, 'formc', currentStep, 'risk-factors-instruction', 'Risk Factors')
+                    +getCompanyUrl(formcId || values.id, 'formc', currentStep, 'introduction', 'Introduction')
+                    +getCompanyUrl(formcId || values.id, 'formc', currentStep, 'team-members', 'Team Members')
+                    +getCompanyUrl(formcId || values.id, 'formc', currentStep, 'related-parties', 'Related Parties')
+                    +getCompanyUrl(formcId || values.id, 'formc', currentStep, 'use-of-proceeds', 'Use of Proceeds')
+                    //- +getCompanyUrl(formcId || values.id, 'formc', currentStep, 'risk-factors-instruction', 'Risk Factors')
                     .panel.panel-default.sub-menu
                       - let inRiskFactors = currentStep.startsWith('risk-factors');
                       a(data-toggle="collapse"
@@ -109,17 +109,17 @@ mixin menu(currentSection, currentStep)
                           i(class="arrow fa " + (inRiskFactors ? 'fa-angle-down' : 'fa-angle-left'))
                       #risk_factors(role="tabpanel" class="panel-collapse collapse" + (inRiskFactors ? ' in' : ''))
                         .list-group
-                          +getRiskFactorsItem(campaign || values, 'formc', currentStep, 'risk-factors-instruction', 'Introduction')
-                          +getRiskFactorsItem(campaign || values, 'formc', currentStep, 'risk-factors-market', 'Market and Customer')
-                          +getRiskFactorsItem(campaign || values, 'formc', currentStep, 'risk-factors-financial', 'Financial')
-                          +getRiskFactorsItem(campaign || values, 'formc', currentStep, 'risk-factors-operational', 'Operational')
-                          +getRiskFactorsItem(campaign || values, 'formc', currentStep, 'risk-factors-competitive', 'Competitive')
-                          +getRiskFactorsItem(campaign || values, 'formc', currentStep, 'risk-factors-personnel', 'Personnel and Third Party')
-                          +getRiskFactorsItem(campaign || values, 'formc', currentStep, 'risk-factors-legal', 'Legal and Regulatory')
-                          +getRiskFactorsItem(campaign || values, 'formc', currentStep, 'risk-factors-misc', 'Miscellaneous')
-                    +getCompanyUrl(campaign || values, 'formc', currentStep, 'financial-condition', 'Financial Condition')
-                    +getCompanyUrl(campaign || values, 'formc', currentStep, 'outstanding-security', 'Outstanding Security')
-                    +getCompanyUrl(campaign || values, 'formc', currentStep, 'background-check', 'Background Check')
+                          +getRiskFactorsItem(formcId || values.id, 'formc', currentStep, 'risk-factors-instruction', 'Introduction')
+                          +getRiskFactorsItem(formcId || values.id, 'formc', currentStep, 'risk-factors-market', 'Market and Customer')
+                          +getRiskFactorsItem(formcId || values.id, 'formc', currentStep, 'risk-factors-financial', 'Financial')
+                          +getRiskFactorsItem(formcId || values.id, 'formc', currentStep, 'risk-factors-operational', 'Operational')
+                          +getRiskFactorsItem(formcId || values.id, 'formc', currentStep, 'risk-factors-competitive', 'Competitive')
+                          +getRiskFactorsItem(formcId || values.id, 'formc', currentStep, 'risk-factors-personnel', 'Personnel and Third Party')
+                          +getRiskFactorsItem(formcId || values.id, 'formc', currentStep, 'risk-factors-legal', 'Legal and Regulatory')
+                          +getRiskFactorsItem(formcId || values.id, 'formc', currentStep, 'risk-factors-misc', 'Miscellaneous')
+                    +getCompanyUrl(formcId || values.id, 'formc', currentStep, 'financial-condition', 'Financial Condition')
+                    +getCompanyUrl(formcId || values.id, 'formc', currentStep, 'outstanding-security', 'Outstanding Security')
+                    +getCompanyUrl(formcId || values.id, 'formc', currentStep, 'background-check', 'Background Check')
       if currentSection == 'formc'
         .row
           .col-lg-12.text-xs-center

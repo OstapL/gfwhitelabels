@@ -38,14 +38,17 @@ module.exports = Backbone.Router.extend({
 
     let fieldsR = api.makeCacheRequest(formcServer + '/' + id + '/introduction', 'OPTIONS');
     let dataR = api.makeCacheRequest(formcServer + '/' + id + '/introduction');
+    let campaignR = api.makeCacheRequest(authServer + '/user/campaign');
+
 
     $('#content').scrollTo();
-    $.when(fieldsR, dataR).done((fields, data) => {
+    $.when(fieldsR, dataR, campaignR).done((fields, data, campaign) => {
       data[0].id = id;
       const i = new View.introduction({
         el: '#content',
         fields: fields[0].fields, 
         model: data[0], 
+        campaign: campaign[0],
       });
       app.hideLoading();
       i.render();
@@ -57,14 +60,16 @@ module.exports = Backbone.Router.extend({
     // var i = new View.memberDirector({
     let fieldsR = api.makeCacheRequest(formcServer + '/' + id + '/team-members', 'OPTIONS');
     let dataR = api.makeCacheRequest(formcServer + '/' + id + '/team-members', 'GET');
+    let campaignR = api.makeCacheRequest(authServer + '/user/campaign');
 
     $('#content').scrollTo();
-    $.when(fieldsR, dataR).done((fields, data) => {
+    $.when(fieldsR, dataR, campaignR).done((fields, data, campaign) => {
       data[0].id = id;
       const i = new View.teamMembers({
         el: '#content',
         fields: fields[0].fields,
-        model: data[0]
+        model: data[0],
+        campaign: campaign[0],
       });
       i.render();
       app.hideLoading();
@@ -82,8 +87,10 @@ module.exports = Backbone.Router.extend({
       dataR = api.makeCacheRequest(formcServer + '/' + id + '/team-members', 'GET');
     }
 
+    let campaignR = api.makeCacheRequest(authServer + '/user/campaign');
+
     $('#content').scrollTo();
-    $.when(fieldsR, dataR).done((fields, data) => {
+    $.when(fieldsR, dataR, campaignR).done((fields, data, campaign) => {
       console.log('data is ', data);
       if(data) {
         data = data[0].team_members.filter(function(el) { return el.user_id == user_id})[0]
@@ -97,6 +104,7 @@ module.exports = Backbone.Router.extend({
         role: role,
         user_id: user_id,
         fields: fields[0].fields,
+        campaign: campaign[0]
       });
       addForm.render();
       app.hideLoading();
@@ -113,13 +121,15 @@ module.exports = Backbone.Router.extend({
     let dataR = api.makeCacheRequest(
       formcServer + '/' + id + '/related-parties'
     );
+    let campaignR = api.makeCacheRequest(authServer + '/user/campaign');
 
     $('#content').scrollTo();
-    $.when(fieldsR, dataR).done((fields, data) => {
+    $.when(fieldsR, dataR, campaignR).done((fields, data, campaign) => {
       data[0].id = id;
       const i = new View.relatedParties({
         fields: fields[0].fields,
         model: data[0],
+        campaign: campaign[0],
       });
       i.render();
       app.hideLoading();
@@ -149,15 +159,20 @@ module.exports = Backbone.Router.extend({
 
   riskFactorsInstruction(id) {
     const View = require('components/formc/views.js');
-    const i = new View.riskFactorsInstruction({
-      el: '#content',
-      model: {
-        id: id,
-      },
-      // fields: {},
+    let campaignR = api.makeCacheRequest(authServer + '/user/campaign');
 
+    $.when(campaignR).done((campaign) => {
+      const i = new View.riskFactorsInstruction({
+        el: '#content',
+        model: {
+          id: id,
+        },
+        campaign: campaign,
+        // fields: {},
+
+      });
+      i.render();
     });
-    i.render();
     app.hideLoading();
   },
 
@@ -166,14 +181,16 @@ module.exports = Backbone.Router.extend({
 
     let fieldsR = api.makeCacheRequest(formcServer + '/' + id + '/risk-factors-market', 'OPTIONS');
     let dataR = api.makeCacheRequest(formcServer + '/' + id + '/risk-factors-market');
+    let campaignR = api.makeCacheRequest(authServer + '/user/campaign');
 
     $('#content').scrollTo();
-    $.when(fieldsR, dataR).done((fields, data) => {
+    $.when(fieldsR, dataR, campaignR).done((fields, data, campaign) => {
       data[0].id = id;
       const i = new View.riskFactorsMarket({
         el: '#content',
         model: data[0], 
         fields: fields[0].fields,
+        campaign: campaign[0],
       });
       i.render();
       app.hideLoading();
@@ -185,13 +202,15 @@ module.exports = Backbone.Router.extend({
 
     let fieldsR = api.makeCacheRequest(formcServer + '/' + id + '/risk-factors-financial', 'OPTIONS');
     let dataR = api.makeCacheRequest(formcServer + '/' + id + '/risk-factors-financial');
+    let campaignR = api.makeCacheRequest(authServer + '/user/campaign');
 
-    $.when(fieldsR, dataR).done((fields, data) => {
+    $.when(fieldsR, dataR, campaignR).done((fields, data, campaign) => {
       data[0].id = id;
       const i = new View.riskFactorsFinancial({
         el: '#content',
         model: data[0], 
         fields: fields[0].fields,
+        campaign: campaign[0],
       });
       i.render();
       app.hideLoading();
@@ -203,13 +222,15 @@ module.exports = Backbone.Router.extend({
 
     let fieldsR = api.makeCacheRequest(formcServer + '/' + id + '/risk-factors-operational', 'OPTIONS');
     let dataR = api.makeCacheRequest(formcServer + '/' + id + '/risk-factors-operational');
+    let campaignR = api.makeCacheRequest(authServer + '/user/campaign');
 
-    $.when(fieldsR, dataR).done((fields, data) => {
+    $.when(fieldsR, dataR, campaignR).done((fields, data, campaign) => {
       data[0].id = id;
       const i = new View.riskFactorsOperational({
         el: '#content',
         model: data[0], 
         fields: fields[0].fields,
+        campaign: campaign[0],
       });
       i.render();
       app.hideLoading();
@@ -221,13 +242,15 @@ module.exports = Backbone.Router.extend({
 
     let fieldsR = api.makeCacheRequest(formcServer + '/' + id + '/risk-factors-competitive', 'OPTIONS');
     let dataR = api.makeCacheRequest(formcServer + '/' + id + '/risk-factors-competitive');
+    let campaignR = api.makeCacheRequest(authServer + '/user/campaign');
 
-    $.when(fieldsR, dataR).done((fields, data) => {
+    $.when(fieldsR, dataR, campaignR).done((fields, data, campaign) => {
       data[0].id = id;
       const i = new View.riskFactorsCompetitive({
         el: '#content',
         model: data[0], 
         fields: fields[0].fields,
+        campaign: campaign[0],
       });
       i.render();
       app.hideLoading();
@@ -239,13 +262,15 @@ module.exports = Backbone.Router.extend({
 
     let fieldsR = api.makeCacheRequest(formcServer + '/' + id + '/risk-factors-personnel', 'OPTIONS');
     let dataR = api.makeCacheRequest(formcServer + '/' + id + '/risk-factors-personnel');
+    let campaignR = api.makeCacheRequest(authServer + '/user/campaign');
 
-    $.when(fieldsR, dataR).done((fields, data) => {
+    $.when(fieldsR, dataR, campaignR).done((fields, data, campaign) => {
       data[0].id = id;
       const i = new View.riskFactorsPersonnel({
         el: '#content',
         model: data[0], 
         fields: fields[0].fields,
+        campaign: campaign[0],
       });
       i.render();
       app.hideLoading();
@@ -257,13 +282,15 @@ module.exports = Backbone.Router.extend({
 
     let fieldsR = api.makeCacheRequest(formcServer + '/' + id + '/risk-factors-legal', 'OPTIONS');
     let dataR = api.makeCacheRequest(formcServer + '/' + id + '/risk-factors-legal');
+    let campaignR = api.makeCacheRequest(authServer + '/user/campaign');
 
-    $.when(fieldsR, dataR).done((fields, data) => {
+    $.when(fieldsR, dataR, campaignR).done((fields, data, campaign) => {
       data[0].id = id;
       const i = new View.riskFactorsLegal({
         el: '#content',
         model: data[0], 
         fields: fields[0].fields,
+        campaign: campaign[0],
       });
       i.render();
       app.hideLoading();
@@ -275,13 +302,15 @@ module.exports = Backbone.Router.extend({
 
     let fieldsR = api.makeCacheRequest(formcServer + '/' + id + '/risk-factors-misc', 'OPTIONS');
     let dataR = api.makeCacheRequest(formcServer + '/' + id + '/risk-factors-misc');
+    let campaignR = api.makeCacheRequest(authServer + '/user/campaign');
 
-    $.when(fieldsR, dataR).done((fields, data) => {
+    $.when(fieldsR, dataR, campaignR).done((fields, data, campaign) => {
       data[0].id = id;
       const i = new View.riskFactorsMisc({
         el: '#content',
         model: data[0], 
         fields: fields[0].fields,
+        campaign: campaign[0],
       });
       i.render();
       app.hideLoading();
@@ -319,13 +348,15 @@ module.exports = Backbone.Router.extend({
 
     let fieldsR = api.makeCacheRequest(formcServer + '/' + id + '/outstanding-security', 'OPTIONS');
     let dataR = api.makeCacheRequest(formcServer + '/' + id + '/outstanding-security');
+    let campaignR = api.makeCacheRequest(authServer + '/user/campaign');
 
-    $.when(fieldsR, dataR).done((fields, data) => {
+    $.when(fieldsR, dataR, campaignR).done((fields, data, campaign) => {
       data[0].id = id;
       const i = new View.outstandingSecurity({
         el: '#content',
         model: data[0],
-        fields: fields[0].fields 
+        fields: fields[0].fields,
+        campaign: campaign[0],
       });
       i.render();
       app.hideLoading();
@@ -337,13 +368,15 @@ module.exports = Backbone.Router.extend({
 
     let fieldsR = api.makeCacheRequest(formcServer + '/' + id + '/background-check', 'OPTIONS');
     let dataR = api.makeCacheRequest(formcServer + '/' + id + '/background-check');
+    let campaignR = api.makeCacheRequest(authServer + '/user/campaign');
 
-    $.when(fieldsR, dataR).done((fields, data) => {
+    $.when(fieldsR, dataR, campaignR).done((fields, data, campaign) => {
       data[0].id = id;
       const i = new View.backgroundCheck({
         el: '#content',
         model: data[0],
         fields: fields[0].fields,
+        campaign: campaign[0],
       });
       i.render();
       app.hideLoading();

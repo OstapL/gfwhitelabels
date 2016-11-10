@@ -220,6 +220,7 @@ module.exports = {
 
       initialize(options) {
         this.fields = options.fields;
+        // this.formc = options.formc;
         this.faqIndex = 1;
         this.additional_infoIndex = 1;
         this.$el.on('keypress', ':input:not(textarea)', function (event) {
@@ -260,6 +261,7 @@ module.exports = {
               // values: this.model.toJSON(),
               values: this.model,
               templates: this.jsonTemplates,
+              // formc: this.formc.id,
             })
         );
 
