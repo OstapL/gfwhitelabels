@@ -290,21 +290,24 @@ module.exports = Backbone.Router.extend({
 
   financialCondition(id) {
     const View = require('components/formc/views.js');
-
-    let fieldsR = api.makeRequest(
+    const fieldsR = api.makeRequest(
       formcServer + '/' + id + '/financial-condition', 
       'OPTIONS'
     );
-    let dataR = api.makeRequest(
+    const dataR = api.makeRequest(
       formcServer + '/' + id + '/financial-condition'
     );
+    const campaignR = api.makeRequest(
+      authServer + '/user/campaign'
+    );
 
-    $.when(fieldsR, dataR).done((fields, data) => {
+    $.when(fieldsR, dataR, campaignR).done((fields, data, campaign) => {
       data[0].id = id;
       const i = new View.financialCondition({
         el: '#content',
         fields: fields[0].fields,
         model: data[0],
+        campaign: campaign[0],
       });
       i.render();
       app.hideLoading();

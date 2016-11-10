@@ -9,9 +9,10 @@ include ../../../../templates/fields_mixins.pug
   +fieldNestedTextLabel('sold_securities_data', "long_term_debt", values[0] ? values[0] : '', 0, {class1: ' text-lg-right col-lg-12 col-md-12 text-md-left text-xl-left', class2: 'col-lg-12 col-md-12'})
   +fieldNestedTextLabel('sold_securities_data', "revenues_sales", values[0] ? values[0] : '', 0, {class1: ' text-lg-right col-lg-12 col-md-12 text-md-left text-xl-left', class2: 'col-lg-12 col-md-12'})
   +fieldNestedTextLabel('sold_securities_data', "cost_of_goods_sold", values[0] ? values[0] : '', 0, {class1: ' text-lg-right col-lg-12 col-md-12 text-md-left text-xl-left', class2: 'col-lg-12 col-md-12'})
-  +fieldNestedTextLabel('sold_securities_data', "total_income", values[0] ? values[0] : '', 0, {class1: ' text-lg-right col-lg-12 col-md-12 text-md-left text-xl-left', class2: 'col-lg-12 col-md-12'})
-  +fieldNestedTextLabel('sold_securities_data', "taxable_income", values[0] ? values[0] : '', 0, {class1: ' text-lg-right col-lg-12 col-md-12 text-md-left text-xl-left', class2: 'col-lg-12 col-md-12'})
-  +fieldNestedTextLabel('sold_securities_data', "total_tax", values[0] ? values[0] : '', 0, {class1: ' text-lg-right col-lg-12 col-md-12 text-md-left text-xl-left', class2: 'col-lg-12 col-md-12'})
+  if campaign.minimum_raise < 100000
+    +fieldNestedTextLabel('sold_securities_data', "total_income", values[0] ? values[0] : '', 0, {class1: ' text-lg-right col-lg-12 col-md-12 text-md-left text-xl-left', class2: 'col-lg-12 col-md-12'})
+    +fieldNestedTextLabel('sold_securities_data', "taxable_income", values[0] ? values[0] : '', 0, {class1: ' text-lg-right col-lg-12 col-md-12 text-md-left text-xl-left', class2: 'col-lg-12 col-md-12'})
+    +fieldNestedTextLabel('sold_securities_data', "total_tax", values[0] ? values[0] : '', 0, {class1: ' text-lg-right col-lg-12 col-md-12 text-md-left text-xl-left', class2: 'col-lg-12 col-md-12'})
 .col-lg-6.col-md-12
   h3.text-xs-center Prior Fiscal Year
   +fieldNestedTextLabel('sold_securities_data', "total_assets", values[1] ? values[1] : '', 1, {class1: ' text-lg-right col-lg-12 col-md-12 text-md-left text-xl-left', class2: 'col-lg-12 col-md-12'})
@@ -21,6 +22,8 @@ include ../../../../templates/fields_mixins.pug
   +fieldNestedTextLabel('sold_securities_data', "long_term_debt", values[1] ? values[1] : '', 1, {class1: ' text-lg-right col-lg-12 col-md-12 text-md-left text-xl-left', class2: 'col-lg-12 col-md-12'})
   +fieldNestedTextLabel('sold_securities_data', "revenues_sales", values[1] ? values[1] : '', 1, {class1: ' text-lg-right col-lg-12 col-md-12 text-md-left text-xl-left', class2: 'col-lg-12 col-md-12'})
   +fieldNestedTextLabel('sold_securities_data', "cost_of_goods_sold", values[1] ? values[1] : '', 1, {class1: ' text-lg-right col-lg-12 col-md-12 text-md-left text-xl-left', class2: 'col-lg-12 col-md-12'})
-  +fieldNestedTextLabel('sold_securities_data', "total_income", values[1] ? values[1] : '', 1, {class1: ' text-lg-right col-lg-12 col-md-12 text-md-left text-xl-left', class2: 'col-lg-12 col-md-12'})
-  +fieldNestedTextLabel('sold_securities_data', "taxable_income", values[1] ? values[1] : '', 1, {class1: ' text-lg-right col-lg-12 col-md-12 text-md-left text-xl-left', class2: 'col-lg-12 col-md-12'})
-  +fieldNestedTextLabel('sold_securities_data', "total_tax", values[1] ? values[1] : '', 1, {class1: ' text-lg-right col-lg-12 col-md-12 text-md-left text-xl-left', class2: 'col-lg-12 col-md-12'})
+  if campaign.minimum_raise < 100000
+    +fieldNestedTextLabel('sold_securities_data', "total_income", values[1] ? values[1] : '', 1, {class1: ' text-lg-right col-lg-12 col-md-12 text-md-left text-xl-left', class2: 'col-lg-12 col-md-12'})
+    +fieldNestedTextLabel('sold_securities_data', "taxable_income", values[1] ? values[1] : '', 1, {class1: ' text-lg-right col-lg-12 col-md-12 text-md-left text-xl-left', class2: 'col-lg-12 col-md-12'})
+    +fieldNestedTextLabel('sold_securities_data', "total_tax", values[1] ? values[1] : '', 1, {class1: ' text-lg-right col-lg-12 col-md-12 text-md-left text-xl-left', class2: 'col-lg-12 col-md-12'})
+

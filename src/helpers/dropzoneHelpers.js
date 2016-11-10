@@ -179,7 +179,9 @@ module.exports = {
       });
 
       dropbox.on('success', (file, data) => {
-        $('.img-' + name).attr('src', '/img/icons/' + data[0].mime.split('/')[1] + '.png');
+        let mimetypeIcons = require('helpers/mimetypeIcons.js');
+        let icon = mimetypeIcons[data[0].mime.split('/')[1]];
+        $('.img-' + name).attr('src', '/img/icons/' + icon + '.png');
         $('.a-' + name).attr('href', data[0].urls[0]).html(data[0].name);
         $('#' + name).val(data[0].id);
         this.model[name.replace('_id', '_data')] = data;

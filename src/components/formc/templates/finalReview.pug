@@ -69,8 +69,12 @@ include ../../../templates/mixins.pug
 -     if(name == null) alert('name not found')
 -    if(name.indexOf('.') == -1) {
 -      return values[name];                                                           
--    } else {                                                                       
--      return name.split('.').reduce((o,i)=>o[i], values);                            
+-    } else {
+-       try {
+-           return name.split('.').reduce((o,i)=>o[i], values);                            
+-       } catch(e) { 
+-          return ''; 
+-       }
 -    }                                                                              
 -  }
 - function  getSelectData(name) {
