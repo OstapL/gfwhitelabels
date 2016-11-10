@@ -627,7 +627,7 @@ module.exports = {
         template: '<div class="popover" role="tooltip" style="border-color:red;"><div class="popover-arrow" style="border-right-color:red;"></div><h3 class="popover-title"></h3><div class="popover-content" style="color:red;"></div></div>'
       });
 
-      this.$('.min-expense,.max-expense,.min-use,.max-use').each(function (e) {
+      this.$('.min-expense,.max-expense,.min-use,.max-use').each(function (idx, elem) {
         let $this = $(this);
         $this.val(formatHelper.formatNumber($this.val()));
       });
@@ -1414,67 +1414,31 @@ module.exports = {
     initialize(options) {
       this.fields = options.fields;
       this.fields.business_loans_or_debt_choice.validate = {};
-      this.fields.business_loans_or_debt_choice.validate.choices = [
-        {
-          value: 1,
-          display_name: 'Yes',
-        },
-        {
-          value: 0,
-          display_name: 'No',
-        },
-      ]
+      this.fields.business_loans_or_debt_choice.validate.choices = {
+        1: 'Yes',
+        0: 'No',
+      };
       this.fields.exempt_offering_choice.validate = {};
-      this.fields.exempt_offering_choice.validate.choices = [
-        {
-          value: 1,
-          display_name: 'Yes',
-        },
-        {
-          value: 0,
-          display_name: 'No',
-        },
-      ];
+      this.fields.exempt_offering_choice.validate.choices = {
+        1: 'Yes',
+        0: 'No',
+      };
       this.fields.outstanding_securities.schema.security_type.type = 'choice';
       this.fields.outstanding_securities.schema.security_type.validate = {};
-      this.fields.outstanding_securities.schema.security_type.validate.choices = [
-        {
-          value: 0,
-          display_name: 'Preferred Stock',
-        },
-        {
-          value: 1,
-          display_name: 'Common Stock',
-        },
-        {
-          value: 2,
-          display_name: 'Debt',
-        },
-        {
-          value: 3,
-          display_name: 'Warrants',
-        },
-        {
-          value: 4,
-          display_name: 'Options',
-        },
-        {
-          value: 5,
-          display_name: 'Other',
-        },
-      ];
+      this.fields.outstanding_securities.schema.security_type.validate.choices = {
+        0: 'Preferred Stock',
+        1: 'Common Stock',
+        2: 'Debt',
+        3: 'Warrants',
+        4: 'Options',
+        5: 'Other',
+      };
       this.fields.outstanding_securities.schema.voting_right.type = 'radio';
       this.fields.outstanding_securities.schema.voting_right.validate = {};
-      this.fields.outstanding_securities.schema.voting_right.validate.choices = [
-        {
-          value: 1,
-          display_name: 'Yes',
-        },
-        {
-          value: 0,
-          display_name: 'No',
-        },
-      ];
+      this.fields.outstanding_securities.schema.voting_right.validate.choices = {
+        1: 'Yes',
+        0: 'No',
+      };
       this.labels = {
         outstanding_securities: {
           security_type: "Security Type",
@@ -1532,7 +1496,6 @@ module.exports = {
 
       const sectionName = e.target.dataset.section;
       const template = require('./templates/snippets/outstanding_securities.pug');
-      this[sectionName + 'Index']++;
 
       $('.' + sectionName + '_container').append(
         template({
@@ -1545,10 +1508,13 @@ module.exports = {
       );
 
       this.model[sectionName].push(data);
+      this[sectionName + 'Index']++;
+
       $('#security_modal').modal('hide');
 
-      e.target.querySelectorAll('input').forEach(function (el, i) {
-        el.value = '';
+      e.target.querySelectorAll('input').forEach(function(el, i) {
+        if (el.type == "radio") el.checked = false; 
+        else el.value = '';
       });
 
       e.target.querySelector('textarea').value = '';
@@ -1556,14 +1522,22 @@ module.exports = {
 
     deleteOutstanding(e) {
       e.preventDefault();
-      if (confirm('Are you sure?')) {
-        let sectionName = e.currentTarget.dataset.section;
-        $('.' + sectionName + ' .index_' + e.currentTarget.dataset.index).remove();
-      }
+      if (!confirm('Are you sure?')) return;
+      let sectionName = e.currentTarget.dataset.section;
+      let index = e.currentTarget.dataset.index;
+      this.$('.' + sectionName + '_container tr[data-index=' + index + ']').remove();
+      this.model[sectionName].splice(index, 1);
+
+      // Reorganize indice
+      this.$('.' + sectionName + '_container tr').each(function (idx, elem) {
+        $(this).attr('data-index', idx);
+        $(this).find('a').attr('data-index', idx);
+      });
 
       // ToDo
       // Fix index counter
-      // this[sectionName + 'Index'] --;
+      this[sectionName + 'Index']--;
+      this.$('.' + sectionName + '_container tr')
     },
 
     getSuccessUrl() {
