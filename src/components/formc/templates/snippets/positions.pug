@@ -8,31 +8,32 @@ mixin row(value, index)
         a(href="#" data-section=name data-index=index).delete-sectionnew
           i.fa.fa-times
 
-      +fieldNestedTextLabel(name, "position", value, index, {})
+      +fieldNestedTextLabel(name, "position", value, index, {class1:'col-xl-3 col-lg-12 text-lg-left text-xl-right', class2: 'col-xl-9 col-lg-12'})
 
-      .row.form-group
-        .col-lg-6.col-md-12
-          .col-lg-6.text-lg-right.text-md-left.p-t-0
-            label.p-t-0.m-b-0.p-l-1 Start Date of Service
-          .col-lg-6.p-t-0
-            div(id=name + '__' + index + '__' + 'start_date_of_service').row
-              +fieldNestedDateMonth(name, "start_date_of_service", value, index, {placeholder: 'MM'})
-              +fieldNestedDateYear(name, "start_date_of_service", value, index, {placeholder: 'YYYY'})
+      .row
+        .col-xl-6.col-lg-6.form-group
+          .row
+            label.col-xl-6.col-lg-12.text-xl-right.text-lg-left Start Date of Service
+            .col-xl-6.col-lg-12
+              div(id=name + '__' + index + '__' + 'start_date_of_service').row
+                +fieldNestedDateMonth(name, "start_date_of_service", value, index, {placeholder: 'MM', class: 'col-xl-6 col-lg-6 col-sm-6 col-xs-6 m-d-p-r-5'})
+                +fieldNestedDateYear(name, "start_date_of_service", value, index, {placeholder: 'YYYY', class: 'col-xl-6 col-lg-6 col-sm-6 col-xs-6 m-d-p-l-5'})
               
-        .col-lg-6.col-md-12.p-l-0
-          .col-lg-6.text-lg-right.text-md-left.p-t-0
-            label.p-t-0.m-b-0.p-l-2 End Date of Service
-          .col-lg-6.p-t-0
-            div(id=name + '__' + index + '__' + 'end_date_of_service').row
-              +fieldNestedDateMonth(name, "end_date_of_service", value, index, {placeholder: 'MM'})
-              +fieldNestedDateYear(name, "end_date_of_service", value, index, {placeholder: 'YYYY'})
+        .col-xl-6.col-lg-6.form-group
+          .row
+            label.col-xl-6.col-lg-12.text-xl-right.text-lg-left End Date of Service
+            .col-xl-6.col-lg-12
+              div(id=name + '__' + index + '__' + 'end_date_of_service').row
+                +fieldNestedDateMonth(name, "end_date_of_service", value, index, {placeholder: 'MM', class: 'col-xl-6 col-lg-6 col-sm-6 col-xs-6 m-d-p-r-5'})
+                +fieldNestedDateYear(name, "end_date_of_service", value, index, {placeholder: 'YYYY', class: 'col-xl-6 col-lg-6 col-sm-6 col-xs-6 m-d-p-l-5'})
 
 
 mixin run()
 
   if first_run
     h3.text-lg-center.text-xs-center.m-t-0 We Need Information for Last 3 Years
-    b.col-lg-12.m-b-1 Changed roles within the Company? Please list  all positions and offices with the Company held and the period of time in which you served in the position or office.
+    .row
+      b.col-lg-12.m-b-1 Changed roles within the Company? Please list  all positions and offices with the Company held and the period of time in which you served in the position or office.
 
     div(class=(attr.row == 0 ? '' : 'row ') + name + '_block' + (attr.required == true ? ' required ' : ' ') + ' nested')
       div(class=(attr.row == 0 ? '' : 'row ') + name + '_container' + (attr.required == true ? ' required ' : ' ') + ' nested')
@@ -43,9 +44,9 @@ mixin run()
         else
           each value, index in values
             +row(value, index)
-      .col-lg-12
+      .col-xl-12
         .row.add-link
-          .col-lg-9.offset-1.pull-right
+          .col-xl-9.offset-xl-3
             a(href="#" data-section=name data-comp='formc' data-template='positions').link-2.add-sectionnew
               i.fa.fa-plus
               |  Add position
