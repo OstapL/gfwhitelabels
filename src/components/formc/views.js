@@ -137,9 +137,9 @@ module.exports = {
             $stripeForm.remove();
 
             this.eSignCompanyName.val(company.name || '');
-
-            this.eSignUserName.val('Maria Kravchuk');
-            this.eSignPreview.text('Maria Kravchuk');
+            let fullName = app.user.get('first_name') + app.user.get('first_name');
+            this.eSignUserName.val(fullName);
+            this.eSignPreview.text(fullName);
 
             this.eSignForm.removeClass('collapse');
           });
@@ -179,6 +179,8 @@ module.exports = {
 
     initialize(options) {
       this.fields = options.fields;
+      this.fields.company_name = { required: true };
+      this.fields.user_name = { required: true };
     },
 
     render() {
