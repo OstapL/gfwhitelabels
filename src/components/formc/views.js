@@ -1509,15 +1509,7 @@ module.exports = {
 
       this.model[sectionName].push(data);
       this[sectionName + 'Index']++;
-      /*
-      api.makeRequest(
-        this.urlRoot.replace(':id', this.model.id), 
-        'PATCH', 
-        {
-          'outstanding_securities': this.model[sectionName]
-        }
-      );
-      */
+
       $('#security_modal').modal('hide');
 
       e.target.querySelectorAll('input').forEach(function(el, i) {
