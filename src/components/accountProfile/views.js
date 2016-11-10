@@ -1,11 +1,14 @@
+const dropzone = require('dropzone');
 const dropzoneHelpers = require('helpers/dropzoneHelpers.js');
 const validation = require('components/validation/validation.js');
 const phoneHelper = require('helpers/phoneHelper.js');
+let countries = require('helpers/countries.js');
+countries = _.map(countries, (country) => { return { value: country.code, display_name: country.name } });
 
 module.exports = {
   profile: Backbone.View.extend(_.extend({
     template: require('./templates/profile.pug'),
-    urlRoot: serverUrl + Urls.rest_user_details(),
+    urlRoot: authServer + '/rest-auth/data',
     events: _.extend({
       'submit form': 'submit',
       'focus #ssn' : 'showSSNPopover',
@@ -13,10 +16,10 @@ module.exports = {
       'keyup #zip_code': 'changeZipCode',
       'change .js-city': 'changeAddressManually',
       'change .js-state': 'changeAddressManually',
-      dragover: 'globalDragover',
-      dragleave: 'globalDragleave',
+      // dragover: 'globalDragover',
+      // dragleave: 'globalDragleave',
       'change .country-select': 'changeCountry',
-    }, phoneHelper.events),
+    }, phoneHelper.events, dropzoneHelpers.events),
 
     changeCountry(e) {
       let $target = $(e.target);
@@ -34,18 +37,29 @@ module.exports = {
       }
     },
 
-    globalDragover() {
-      // this.$('.dropzone').css({ border: 'dashed 1px lightgray' });
-      this.$('.border-dropzone').addClass('active-border');
-    },
-
-    globalDragleave() {
-      // this.$('.dropzone').css({ border: 'none' });
-      this.$('.border-dropzone').removeClass('active-border');
-    },
+    // globalDragover() {
+    //   // this.$('.dropzone').css({ border: 'dashed 1px lightgray' });
+    //   this.$('.border-dropzone').addClass('active-border');
+    // },
+    //
+    // globalDragleave() {
+    //   // this.$('.dropzone').css({ border: 'none' });
+    //   this.$('.border-dropzone').removeClass('active-border');
+    // },
 
     initialize(options) {
       this.fields = options.fields;
+      this.fields.image = { type: 'file'};
+
+      this.fields.phone.required = true;
+      this.fields.first_name.required = true;
+      this.fields.last_name.required  = true;
+      this.fields.country = { required: true, value: 'US' , label: 'Country'};
+      this.fields.country.validate = {};
+      this.fields.country.validate.choices = countries;
+      this.fields.street_address_1 = { label: 'Street address 1', required: true };
+      this.fields.street_address_2 = { label: 'Street address 2'};
+      this.fields.zip_code.label = 'Zip code';
 
       // define ui elements
       this.cityStateArea = null;
@@ -63,17 +77,18 @@ module.exports = {
 
     render() {
       this.getCityStateByZipCode = require("helpers/getSityStateByZipCode");
-      this.usaStates = require("helpers/usa-states");
-      let dropzone = require('dropzone');
+      this.usaStates = require("helpers/usa-states.js");
+
       this.$el.html(
         this.template({
           serverUrl: serverUrl,
           user: this.model,
           fields: this.fields,
           states: this.usaStates,
-          dropzoneHelpers: dropzoneHelpers
+          countries: countries,
         })
       );
+      setTimeout(() => { this.createDropzones() } , 1000);
 
       this.cityStateArea = this.$('.js-city-state');
       this.cityField = this.$('.js-city');
@@ -209,7 +224,7 @@ module.exports = {
     changeAddressManually() {
       this.cityStateArea.text(`${this.cityField.val()}/${this.stateField.val()}`);
     }
-  }, phoneHelper.methods)),
+  }, phoneHelper.methods, dropzoneHelpers.methods)),
 
   changePassword: Backbone.View.extend({
     urlRoot: serverUrl + Urls.rest_password_change(),

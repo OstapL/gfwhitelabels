@@ -40,18 +40,13 @@ section.formc-team-members-director.container.m-b-85
         type: 'date',
         label: 'Date of birth',
         })
-      // select-custom in this look in list page
-      //.row.form-group
-        label.col-lg-3.col-md-12.text-md-left.text-lg-right Title
-        .col-lg-9.col-md-12
-          select( style="width:100%" ).custom-select
-            //- option(selected) CEO/President, Controller/Principal Accounting Officer
-            //- option CEO/President   
-            option CEO/President(selected)
-            option Principal Financial Officer/Treasurer
-            option Vice President
-            option Secretary
-            option Controller/Principal Accounting Officer 
+
+      +fieldBlock("responsibilities", '', {
+         class1: 'col-lg-3 col-md-12 text-md-left  m-b-0',
+         class2: 'col-lg-9 col-md-12',
+         type: 'text',
+         label: 'Responsibilities',
+      })
       .filter.p-b-0.p-t-0
         .one_drop.m-t-2.m-b-2
           .row.form-group
@@ -63,13 +58,6 @@ section.formc-team-members-director.container.m-b-85
                 option Vice President
                 option Secretary
                 option Controller/Principal Accounting Officer 
-
-      +fieldBlock("responsibilities", '', {
-         class1: 'col-lg-3 col-md-12 text-md-left  m-b-0',
-         class2: 'col-lg-9 col-md-12',
-         type: 'text',
-         label: 'Responsibilities',
-      })
       .row
         .col-lg-6.col-md-12
           .col-lg-6.text-lg-right.text-md-left.p-t-0
@@ -84,7 +72,7 @@ section.formc-team-members-director.container.m-b-85
       
       .border-bottom.m-t-3.m-b-3
       |!{ templates.positions }
-      |!{ templates.businessExperiences }
+      |!{ templates.experiences }
 
       .row.m-t-3
         .col-lg-12.text-md-center.text-sm-center-text-xs-center

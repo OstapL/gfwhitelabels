@@ -33,7 +33,7 @@ module.exports = Backbone.Router.extend({
           const i = new View.profile({
             el: '#content',
             model: data[0],
-            fields: fields[0]
+            fields: fields[0].fields
           });
           i.render();
           app.hideLoading();

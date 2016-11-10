@@ -1,11 +1,12 @@
 include ../../../templates/mixins.pug
+include ../../../templates/fields_mixins.pug
 
 +breadcrumbs('Profile', '', 
   [
     ['Home', '/'],
     ['Profile', '']
   ]
-) 
+)
 
 mixin fieldInput(name, attr)
   - attr = attr ? attr : fields[name];
@@ -16,7 +17,7 @@ mixin fieldInput(name, attr)
             name=attr.name || name
             placeholder=attr.placeholder ? attr.placeholder :attr.label
             type=attr.type ? attr.type : 'text'
-            class=(attr.help_text ? 'showPopover' : '') 
+            class=(attr.help_text ? 'showPopover' : '')
             data-content=(attr.help_text ?attr.help_text : '')
             value=attr.value
             maxlength = attr.maxlength ? attr.maxlength : false
@@ -28,12 +29,11 @@ mixin fieldInput(name, attr)
       form(method="post" action="").form.form-section
         - var values = user;
         h3.m-t-0.m-b-1.profile-user-name.text-xl-left.text-xs-center #{user.first_name + ' ' + user.last_name}
-        +fieldDropzone("image", {
+        +userprofileDropzone("image", {
           thumbSize: '255x135',
           default: '/img/default/255x153.png',
-          text: user.first_name + ' ' + user.last_name,
-          icon: 'file-image-o',
-          viewType: 3
+          icon: 'camera',
+          text: 'Drop your profile photo here or click to upload',
           })
       .row.m-t-2
         .col-lg-12.text-xs-center
@@ -59,26 +59,29 @@ mixin fieldInput(name, attr)
                 .form-body.clearfix 
                   .col-xs-12
                     section.right-block
-                      .form-group.row
+                      .form-group.row.required
                         label.col-lg-3.text-lg-right.text-xs-left Legal Name
+                          span.color-red *
                         +fieldInput("first_name", {'class': 'col-lg-4 m-b-md-25','placeholder':'First Name' })
                         +fieldInput("last_name", {'class': 'col-lg-4','placeholder':'Last Name' })
-                      .form-group.row
+                      .form-group.row.required
                         label.col-lg-3.text-lg-right.text-xs-left Country
+                          span.color-red *
                         .col-lg-8
                           - user.country = 'us';
                           select(name="country").custom-select.w-100.country-select
                             option(value="us") United States
                             option(value="ua") UA
                             option(value='ru') Russia
-                      +fieldBlock("street_address_1", user.street_address_1, {'class1': 'col-lg-3 ', 'class2': 'col-lg-8 ', 'type': 'text'})
-                      +fieldBlock("street_address_2", user.street_address_2, {'class1': 'col-lg-3 ', 'class2': 'col-lg-8 ', 'type': 'text'})
+                      +fieldTextLabel("street_address_1", _.extend({'class1': 'col-lg-3 text-lg-right text-xs-left', 'class2': 'col-lg-8 ', 'type': 'text'}, fields.street_address_1))
+                      +fieldTextLabel("street_address_2", _.extend({'class1': 'col-lg-3 text-lg-right text-xs-left', 'class2': 'col-lg-8 ', 'type': 'text'}, fields.street_address_2))
                       .row.us-row(style="display:" + (user.country == 'us' ? 'block' : 'none'))
                         input(type="hidden" name="city" values=values['city'] disabled=((user.country=='us') ? false : true))
                         input(type="hidden" name="state" value=values['state'] disabled=((user.country=='us') ? false : true))
                         .col-md-12.col-lg-6
                           if user.country == 'us'
-                            +fieldBlock("zip_code", user.zip_code, {'class1': 'col-lg-6', 'class2': 'col-lg-6', 'type': 'text'})
+                            +fieldTextLabel('zip_code', _.extend({'class1': 'col-lg-6 text-lg-right text-xs-left', 'class2': 'col-lg-6', 'type': 'text'}, fields.zip_code))
+                            //+fieldBlock("zip_code", user.zip_code, {'class1': 'col-lg-6', 'class2': 'col-lg-6', 'type': 'text'})
                           else
                             +fieldBlock("zip_code", user.zip_code, {'class1': 'col-lg-6', 'class2': 'col-lg-6', 'type': 'text', disabled: true})
 

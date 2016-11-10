@@ -57,17 +57,17 @@ section.create-company.container.m-b-85
               empty: {'': 'Choose'},
             }, fields.corporate_structure))
           .col-lg-6.col-xs-12.date-input.pull-right.required
-            .col-date
-              label.col-lg-5 Founding date
-              .col-lg-7
+            .col-date#founding_date
+              label.col-xl-4.col-lg-12.p-t-0.p-l-0.m-b-0.text-xl-right.textlg-left Founding date
+              .col-xl-8.col-lg-12.p-r-0.p-l-0
                 +fieldDateDay("founding_date", _.extend({
-                  class: 'col-lg-4 col-md-4 no-gutter p-l-0 p-r-0',
+                  class: 'col-xl-4 col-lg-4 col-xs-4 no-gutter p-l-0 p-r-0',
                 }, fields.founding_date))
                 +fieldDateMonth("founding_date", _.extend({
-                  class: 'col-lg-4 col-md-4 no-gutter p-l-0 p-r-0',
+                  class: 'col-xl-4 col-lg-4 col-xs-4 no-gutter p-l-0 p-r-0',
                 }, fields.founding_date))
                 +fieldDateYear("founding_date", _.extend({
-                  class: 'col-lg-4 col-md-4 no-gutter p-l-0 p-r-0',
+                  class: 'col-xl-4 col-lg-4 col-xs-4 no-gutter p-l-0 p-r-0',
                 }, fields.founding_date))
         .border-bottom
         +fieldTextLabel("address_1", _.extend({
