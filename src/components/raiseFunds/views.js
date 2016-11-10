@@ -50,6 +50,8 @@ const submitCampaign = function submitCampaign(e) {
         }
 
         doCampaignValidation(e, data);
+    }, (error) => {
+      doCampaignValidation(null, this.model);
     });
   }
 };
