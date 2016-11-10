@@ -239,3 +239,30 @@ mixin fileDropzone(name, attr)
               input(name=name id=(attr.id || name) value=attr.value type="hidden")
               img(src='/img/icons/' + icon + '.png' alt=attr.label class="img-file img-" + name)
               a(class=("a-" + name) href=attr.data.urls[0]) #{ attr.data.name }
+
+mixin userprofileDropzone(name, attr)
+    - var icon = attr.type
+    if attr.mime
+      - mimetypeIcons = require('helpers/mimetypeIcons.js');
+      - var icon = mimetypeIcons[attr.mime];
+    if attr.hasOwnProperty('data') == false
+      - attr.data = {};
+    if attr.data.hasOwnProperty('urls') == false
+      - attr.data.urls = [];
+
+    div(
+      class='row media-item ' + attr.class + ' ' + (attr.id || name) + 
+        (attr.required == true ? ' required ' : ' ') + ' fileDropzone' +
+        (attr.help_text ? ' showPopover' : '')
+      data-content=(attr.help_text ? attr.help_text : '')
+    )
+
+      div(class=(attr.class + ' dropzone__' + name))
+        div(class=" col-lg-12 border-dropzone")
+          div(class="uploading collapse")
+            img(alt="activity indicator" src="/img/ajax-loader.gif")
+          .row
+            img(src="/img/default/255x153.png" class="w-100")
+          .drop-image-title.text-xs-center.p-l-1.p-r-1.p-t-2.p-b-2 
+            p.drop-photo #{attr.text}
+            i(class="fa fa-" + attr.icon)
