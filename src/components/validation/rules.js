@@ -80,8 +80,12 @@ module.exports = {
   // Validates if the attribute is required or not
   // This can be specified as either a boolean value or a function that returns a boolean value
   required: function (name, rule, attr, data) {
-    if (rule && this.hasValue(this.getData(data, name)) == false) {
-      throw this.format(this.messages.required);
+    console.log(rule, attr, data);
+    if (rule && this.hasValue(data[name]) == false) {
+      throw this.format(
+        attr.messageRequired || this.messages.required,
+        attr.label
+      );
     }
   },
 
@@ -105,6 +109,10 @@ module.exports = {
     }
   },
 
+  min_value: function (name, rule, attr, data) {
+    this.min(nam, rule, attr, data);
+  },
+
   // Max validator
   // Validates that the value has to be a number and equal to or less than
   // the max value specified
@@ -113,6 +121,10 @@ module.exports = {
     if (!isNumber(value) || value > rule) {
       throw this.format(this.messages.max, attr.label, rule);
     }
+  },
+
+  max_value: function (name, rule, attr, data) {
+    this.max(nam, rule, attr, data);
   },
 
   // Range validator

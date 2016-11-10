@@ -68,6 +68,8 @@ mixin prepareField(name, attr)
   - attr = attr ? attr : fields[name];
   - attr.value = attr.value ? attr.value : values ? values[name] : '';
 
+  if attr.placeholder == null || attr.placeholder == ''
+    - attr.placeholder = attr.label
   if attr.required == true
     - attr.label += '<span class="color-red">*</span>'
 
@@ -124,12 +126,12 @@ mixin fieldChoiceLabel(name, attr)
       select(
           id=attr.id || name
           name=name
-      ).custom-select
+      ).custom-select.w-100
           if attr.hasOwnProperty('empty')
-              option(value=attr.empty.value) #{attr.empty.display}
+            option(value=attr.empty.value) #{attr.empty['']}
             
-          each v in attr.choices
-              option(value=v.value selected=(v.value == attr.value ? "selected" : undefined)) #{v.display_name}
+          each v,k in attr.validate.choices
+            option(value=k selected=(v.value == attr.value ? "selected" : undefined)) #{ v }
 
 
 mixin fieldRadioLabel(name, attr)
@@ -137,12 +139,12 @@ mixin fieldRadioLabel(name, attr)
   if attr.type == null
     - attr.type = 'radio'
 
-  div(class=attr.class1)
-    label= attr.label
+  div(class=attr.class1 + (attr.required == true ? ' required ' : ' '))
+    label!= attr.label
   div(class=attr.class2)
-    div(class="form-group m-b-0 "  + (attr.row == 0 ? '' : 'row ') + (attr.id || name) + (attr.required == true ? ' required ' : ' ') + ' ' + attr.type)
-      div(class=attr.class2).radio-input
-        each v in attr.choices
+    div(class="form-group m-b-0 "  + (attr.row == 0 ? '' : 'row ') + (attr.id || name)  + ' ' + attr.type)
+      div(class=attr.class3).radio-input
+        each v in attr.validate.choices
           label
             input(
               type="radio" 
@@ -152,6 +154,23 @@ mixin fieldRadioLabel(name, attr)
               checked=(v.value == attr.value ? "checked" : undefined)
               value=v.value)
             | #{v.display_name}
+
+
+mixin fieldDateDay(name, attr)
+  +prepareField(name, attr)
+  if attr.type == null
+    - attr.type = 'dateday'
+
+  div(class=attr.class + ' ' + (attr.id || name) + (attr.required == true ? ' required ' : ' ') + ' ' + attr.type).date-input
+    - var value = attr.value ? attr.value.split('-') : values && values[name] ? values[name].split('-') : []
+    input(
+        id=attr.id || name + '__day'
+        name=(attr.name || name) + '__day'
+        placeholder=(attr.placeholder ? attr.placeholder : "DD")
+        type='number'
+        maxlength=2
+        value=value[1]
+      ).form-control
 
 
 mixin fieldDateMonth(name, attr)
@@ -186,3 +205,64 @@ mixin fieldDateYear(name, attr)
         maxlength=4
         value=value[0]
       ).form-control
+
+
+mixin fileDropzone(name, attr)
+    - var icon = attr.type
+    if attr.mime
+      - mimetypeIcons = require('helpers/mimetypeIcons.js');
+      - var icon = mimetypeIcons[attr.mime];
+    if attr.hasOwnProperty('data') == false
+      - attr.data = {};
+    if attr.data.hasOwnProperty('urls') == false
+      - attr.data.urls = [];
+
+    div(
+      class='row media-item ' + attr.class + ' ' + (attr.id || name) + 
+        (attr.required == true ? ' required ' : ' ') + ' fileDropzone' +
+        (attr.help_text ? ' showPopover' : '')
+      data-content=(attr.help_text ? attr.help_text : '')
+    )
+      div(class=attr.class1 + ' ' + (attr.required == true ? ' required ' : ' ') )
+        span.pull-right.pull-xs-none.font-weight-bold #{attr.label}
+
+      div(class=(attr.class2 + ' dropzone__' + name))
+        div(class=" col-lg-12 border-dropzone")
+          div(class="uploading collapse")
+            img(alt="activity indicator" src="/img/ajax-loader.gif")
+          span
+            div.col-lg-5.col-md-5.col-sm-5.col-xs-5.text-xs-center.text-md-center.text-lg-center.p-dropzone
+              p(class='link-1' href="#")
+                p.drop-photo #{attr.text}
+                i(class="fa fa-" + attr.icon)
+            div.col-lg-7.col-md-7.col-sm-7.col-xs-7.p-r-0.p-l-0.p-dropzone.img-dropzone.text-lg-center
+              input(name=name id=(attr.id || name) value=attr.value type="hidden")
+              img(src='/img/icons/' + icon + '.png' alt=attr.label class="img-file img-" + name)
+              a(class=("a-" + name) href=attr.data.urls[0]) #{ attr.data.name }
+
+mixin userprofileDropzone(name, attr)
+    - var icon = attr.type
+    if attr.mime
+      - mimetypeIcons = require('helpers/mimetypeIcons.js');
+      - var icon = mimetypeIcons[attr.mime];
+    if attr.hasOwnProperty('data') == false
+      - attr.data = {};
+    if attr.data.hasOwnProperty('urls') == false
+      - attr.data.urls = [];
+
+    div(
+      class='row media-item ' + attr.class + ' ' + (attr.id || name) + 
+        (attr.required == true ? ' required ' : ' ') + ' fileDropzone' +
+        (attr.help_text ? ' showPopover' : '')
+      data-content=(attr.help_text ? attr.help_text : '')
+    )
+
+      div(class=(attr.class + ' dropzone__' + name))
+        div(class=" col-lg-12 border-dropzone")
+          div(class="uploading collapse")
+            img(alt="activity indicator" src="/img/ajax-loader.gif")
+          .row
+            img(src="/img/default/255x153.png" class="w-100")
+          .drop-image-title.text-xs-center.p-l-1.p-r-1.p-t-2.p-b-2 
+            p.drop-photo #{attr.text}
+            i(class="fa fa-" + attr.icon)

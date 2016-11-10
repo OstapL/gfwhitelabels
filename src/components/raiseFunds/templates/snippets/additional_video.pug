@@ -1,0 +1,54 @@
+include ../../../../templates/fields_mixins.pug
+
+mixin row(value, index)
+  - var index = index;
+  .col-xl-12
+    col-xl-12(data-index=index class=name + ' addSectionBlock')
+      .delete-section-container.col-xl-12
+        a(href="#" data-section=name data-index=index).delete-sectionnew
+          i.fa.fa-times
+      .col-lg-7.videoInteractive.text-xl-right.text-lg-left
+        +fieldNestedTextLabel(name, 'headline', value, index, {
+                class1: 'col-xl-5 col-lg-12',
+                class2: 'col-xl-7 col-lg-12',
+                })
+        +fieldNestedTextLabel(name, 'link', value, index, {
+                class1: 'col-xl-5 col-lg-12',
+                class2: 'col-xl-7 col-lg-12',
+                })
+        
+        if (first_run && value == {}) || (Array.isArray(values) && index == values.length-1) || (index == Object.keys(values).length-1)
+          .row.add-link
+            .col-xl-10.text-xl-right
+              a(href="#" data-section=name data-comp="raiseFunds" data-template="additional_video").link-2.add-sectionnew
+                i.fa.fa-plus
+                |  Add Another Video
+
+      .col-lg-5.p-l-1.col-md-12.col-xs-12
+        .embed-responsive.embed-responsive-16by9 
+          - let additionalVideo = app.getVideoId(values ? values[index].link : null);
+          if additionalVideo && additionalVideo.provider == 'youtube'
+            iframe.embed-responsive-item(src="//www.youtube.com/embed/" + additionalVideo.id + "?rel=0" allowfullscreen="true")
+          else if additionalVideo && additionalVideo.provider == 'vimeo'
+            iframe.embed-responsive-item(src="//player.vimeo.com/video/" + additionalVideo.id allowfullscreen="true")
+          else
+            iframe.embed-responsive-item(src="//www.youtube.com/embed/?rel=0" allowfullscreen="true")
+
+mixin run()
+
+  if first_run
+    .row
+      .col-lg-12.text-lg-center.text-md-center.text-xs-center
+        h3.d-inline-block.m-t-3.mb25 Additional Videos
+    div(class=(attr.row == 0 ? '' : '') + name + '_block' + (attr.required == true ? ' required ' : ' ') + ' nested')
+      div(class=(attr.row == 0 ? '' : '') + name + '_container' + (attr.required == true ? ' required ' : ' ') + ' nested')
+        if values == null || values.length == 0
+          +row({}, 0)
+        else
+          each value, index in values
+            +row(value, index)
+
+  else
+    +row({}, index)
+
++run()

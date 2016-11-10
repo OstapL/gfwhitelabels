@@ -32,19 +32,22 @@ module.exports = {
     template: require('./templates/detail.pug'),
     events: {
       'click .tabs-scroll .nav .nav-link': 'smoothScroll',
-      // 'click .list-group-item-action': 'toggleActiveAccordionTab',
       'hide.bs.collapse .panel': 'onCollapse',
       'show.bs.collapse .panel': 'onCollapse',
+      'click .email-share': 'sharWithEmail',
       'click .linkedin-share': 'shareOnLinkedin',
       'click .facebook-share': 'shareOnFacebook',
       'click .twitter-share': 'shareOnTwitter',
       'click .see-all-risks': 'seeAllRisks',
       'click .see-all-faq': 'seeAllFaq',
       'click .linkresponse': 'checkResponse',
+      'click .show-more-members': 'readMore',
       // 'click .see-all-article-press': 'seeAllArticlePress',
+      'click .more-less': 'showMore',
       'hidden.bs.collapse #hidden-article-press' :'onArticlePressCollapse',
       'shown.bs.collapse #hidden-article-press' :'onArticlePressCollapse',
       'submit .comment-form': 'submitComment',
+      'click .submit_form': 'submitCampaign',
     },
 
     onCollapse (e) {
@@ -63,6 +66,53 @@ module.exports = {
     initialize(options) {
       $(document).off("scroll", this.onScrollListener);
       $(document).on("scroll", this.onScrollListener);
+      let params = app.getParams();
+      this.edit = false;
+      if (params.preview == '1' && this.model.owner == app.user.get('id')) {
+        // see if owner match current user
+        this.edit = true;
+        this.previous = params.previous;
+      }
+      this.preview = params.preview ? true : false;
+    },
+
+    submitCampaign(e) {
+
+      api.makeRequest(
+        serverUrl + '/api/campaign/general_information/' + this.model.id,
+        'GET'
+      ).then(function(data) {
+        if(
+            data.progress.general_information == true &&
+            data.progress.media == true &&
+            data.progress.specifics == true &&
+            data.progress['team-members'] == true
+        ) {
+          $('#company_publish_confirm').modal('show');
+        } else {
+          var errors = {};
+          _(data.progress).each((d, k) => {
+            if(k != 'perks') {
+              if(d == false)  {
+                $('#company_publish .'+k).removeClass('collapse');
+              } else {
+                $('#company_publish .'+k).addClass('collapse');
+              }
+            }
+          });
+          $('#company_publish').modal('toggle');
+        }
+      });
+    },
+
+    showMore(e) {
+      e.preventDefault();
+      let $a = $(e.target);
+      let k = $a.data('index');
+      let $p = this.$('.member-bio[index=' + k + ']');
+      $p.text($p.data('full-text'));
+      $p.css({ height: 'auto' });
+      $a.hide();
     },
 
     // seeAllArticlePress(e) {
@@ -110,21 +160,6 @@ module.exports = {
       });
     },
 
-/*    toggleActiveAccordionTab(e) {
-      let $elem = $(e.target);
-      let $icon = $elem.find('.fa');
-
-      if ($elem.is('.active')) {
-        $icon.removeClass('fa-angle-up').addClass('fa-angle-down');
-      } else {
-        // remove active state of all other panels
-        $elem.closest('.custom-accordion').find('.list-group-item-action').removeClass('active')
-          .find('.fa').removeClass('fa-angle-up').addClass('fa-angle-down');
-          $icon.removeClass('fa-angle-down').addClass('fa-angle-up');
-      }
-      $elem.toggleClass('active');
-    },*/
-
     onScrollListener() {
       var scrollPos = $(window).scrollTop(),
       $navBar = $('.navbar.navbar-default'),
@@ -142,13 +177,21 @@ module.exports = {
       });
     },
 
+    sharWithEmail (e) {
+      event.preventDefault();
+      // Check out COMPANY NAME's fundraise on GrowthFountain
+      let companyName = this.model.company.name;
+      let text = "Check out " + companyName + "'s fundraise on GrowthFountain";
+      window.open("mailto:?subject=" + text + "&body=" + text + "%0D%0A" + window.location.href);
+    },
+
     shareOnFacebook(event) {
       event.preventDefault();
       FB.ui({
         method: 'share',
         href: window.location.href,
         caption: this.model.company.tagline,
-        description: this.model.pitch,
+        description: this.model.company.description,
         title: this.model.company.name,
         picture: (this.model.header_image_data ? this.model.header_image_data.url : null),
       }, function(response){});
@@ -158,7 +201,7 @@ module.exports = {
       event.preventDefault();
       window.open(encodeURI('https://www.linkedin.com/shareArticle?mini=true&url=' + window.location.href +
             '&title=' + this.model.company.name +
-            '&summary=' + this.model.pitch +
+            '&summary=' + this.model.company.description +
             '&source=Growth Fountain'),'Growth Fountain Campaingn','width=605,height=545');
     },
 
@@ -181,6 +224,9 @@ module.exports = {
           Urls: Urls,
           values: this.model,
           formatHelper: formatHelper,
+          edit: this.edit,
+          previous: this.previous,
+          preview: this.preview,
         })
       );
 
@@ -256,20 +302,44 @@ module.exports = {
             }).render();
           });
       }, 100);
-      this.$el.find('.perks .col-lg-4 p').equalHeights();
+      this.$el.find('.perks .col-xl-4 p').equalHeights();
       this.$el.find('.team .auto-height').equalHeights();
       this.$el.find('.card-inverse p').equalHeights();
       this.$el.find('.modal').on('hidden.bs.modal', function(event) {
         $(event.currentTarget).find('iframe').attr('src', $(event.currentTarget).find('iframe').attr('src'));
       });
 
+      //this.$('body').on('.click', '.show-more-members', function() {
+      //  $('.hide-more-detail').addClass('.show-more-detail');
+      // });
       // $('*[data-toggle="lightbox"]').fancybox({
       $('.fancybox').fancybox({
         openEffect  : 'none',
         closeEffect : 'none'
       });
 
+      // fetch vimeo
+      $('.vimeo-thumbnail').each(function(elem, idx) {
+        let id = $(this).data('vimeo-id');
+        let url = window.location.protocol + '//vimeo.com/api/v2/video/' + id + '.xml';
+        $.ajax({
+          method: 'GET',
+          url: url,
+          success: function(data) {
+            let $xml = $(data);
+            let thumbnailUrl = $xml.find('thumbnail_medium').text();
+            let id = $xml.find('id').text();
+            $('.vimeo-thumbnail[data-vimeo-id=' + id + ']').attr('src', thumbnailUrl);
+          },
+        });
+      });
+
       return this;
+    },
+
+    readMore(e) {
+      e.preventDefault();
+      $(e.target).parent().addClass('show-more-detail');
     },
 
     _commentSuccess(data) {

@@ -1,0 +1,1429 @@
+include ../../../templates/mixins.pug
+
++breadcrumbs('Form C Review', '', 
+    [
+        ['Home', '/'],
+        ['Form C Review', ''],
+    ]
+)
+
+- var names = {}
+- names.issuer_short_name = 'company.name';
+- names.issuer_legal_name = 'company.name';
+- names.jurisdiction_of_organization = 'company.founding_state';
+- names.website = 'company.website'
+- names.corporate_structure = 'company.corporate_structure'
+- names.maximum_raise = 'campaign.maximum_raise'
+- names.minimum_raise = 'campaign.minimum_raise'
+- names.price_per_share = 'campaign.price_per_share'
+- names.security_type = 'campaign.security_type'
+- names.minimum_increment = 'campaign.minimum_increment'
+- names.founding_date = 'company.founding_date'
+- names.address_1 = 'company.address_1'
+- names.address_2 = 'company.address_2'
+- names.city = 'company.city'
+- names.state = 'company.state'
+- names.zip_code = 'company.zip_code'
+- names.min_number_of_shares = 'campaign.min_number_of_shares'
+- names.max_number_of_shares = 'campaign.max_number_of_shares'
+- names.close_date = 'campaign.expiration_date'
+- names.pitch = 'campaign.pitch'
+- names.business_model = 'campaign.business_model'
+- names.description = 'company.description'
+- names.full_time_employee = 'formc.full_time_employers'
+- names.part_time_employee = 'formc.part_time_employers'
+
+- names.specified_person = 'formc.transaction_with_related_parties.0.specified_person'
+- names.relationship_to_issuer = 'formc.transaction_with_related_parties.0.relationship_to_issuer'
+- names.nature_of_interest = 'formc.transaction_with_related_parties.0.nature_of_interest'
+- names.amount_of_interest = 'formc.transaction_with_related_parties.0.amount_of_interest'
+
+- names.security_differences = 'formc.security_differences'
+- names.rights_of_securities_being = 'formc.rights_of_securities'
+- names.principal_shareholders_affect = 'formc.exercise_of_rights'
+
+- names.intended_use_of_proceeds = 'formc.intended_use_of_proceeds'
+
+- names.mac_risk_title = 'formc.market_and_customer_risk.0.title'
+- names.mac_risk = 'formc.market_and_customer_risk.0.risk'
+
+- names.mac_risk_title = 'formc.market_and_customer_risk.0.title'
+- names.mac_risk = 'formc.market_and_customer_risk.0.risk'
+- names.fin_risk_title = 'formc.financial_risk.0.title'
+- names.fin_risk = 'formc.financial_risk.0.risk'
+- names.ops_risk_title = 'formc.operational_risk.0.title'
+- names.ops_risk = 'formc.operational_risk.0.risk'
+- names.com_risk_title = 'formc.competitive_risk.0.title'
+- names.com_risk = 'formc.competitive_risk.0.risk'
+- names.pat_risk_title = 'formc.personnel_and_third_parties_risk.0.title'
+- names.pat_risk = 'formc.personnel_and_third_parties_risk.0.risk'
+- names.lar_risk_title = 'formc.legal_and_regulatory_risk.0.title'
+- names.lar_risk = 'formc.legal_and_regulatory_risk.0.risk'
+
+- names.material_information= 'formc.material_information'
+- names.descrption_material_information= 'formc.descrption_material_information'
+
+- names.use_of_net_proceeds_minimum= 'formc.use_of_net_proceeds_minimum'
+- names.use_of_net_proceeds_maximum= 'formc.use_of_net_proceeds_maximum'
+- function  getData(name) {
+-     if(name == null) alert('name not found')
+-    if(name.indexOf('.') == -1) {
+-      return values[name];                                                           
+-    } else {                                                                       
+-      return name.split('.').reduce((o,i)=>o[i], values);                            
+-    }                                                                              
+-  }
+- function  getSelectData(name) {
+-   var data = getData(name);
+-    if(name.indexOf('.') == -1) {
+-      return fields[name].choices[data];                                                           
+-    } else {                                                                       
+-      var f = name.split('.').reduce((o,i)=>o[i], fields);                            
+-      return f.validate.choices[data];
+-    }                                                                              
+-  }
+
+mixin editText(currentName)
+  a(href="#" class="show-input" data-name=currentName).link-1 #{getData(names[currentName])}
+
+mixin editSelect(currentName)
+  a(href="#" class="show-select" data-name=currentName).link-1 #{getSelectData(names[currentName])}
+
+section.formc-review
+  .container
+    .col-lg-3.sticky-side-menu
+      .page_title.border-bottom.mb25
+        h4.text-uppercase.dosis TABLE OF CONTENTS
+      ul.list-unstyled.m-b-1.custom
+        li
+          a(href='#overview_information').d-inline-block.w-100.pb10 Overview Information
+        li
+          a(href='#introductory_notices').d-inline-block.w-100.pb10 Introductory Notices
+        li.display-partners
+          a(href='#description_business').d-inline-block.w-100.pb10 Description of the Issuer’s Business
+        li
+          a(href='#management_material_persons').d-inline-block.w-100.pb10 Management & Material Persons
+        li
+          a(href='#procedure_purchasing_securities').d-inline-block.w-100.pb10 Procedure for Purchasing Securities
+        li
+          a(href='#capital_structure').d-inline-block.w-100.pb10 Capital Structure of the Issuer
+        li
+          a(href='#description_securities').d-inline-block.w-100.pb10 Description of Securities Offered
+        li
+          a(href='#use_of_proceeds').d-inline-block.w-100.pb10 Use of Proceeds
+        li
+          a(href='#financial_condition').d-inline-block.w-100.pb10 Financial Condition
+        li
+          a(href='#risk_factors').d-inline-block.w-100.pb10 Risk Factors
+        li
+          // у последнего елемента <a> клас pb10 отстутствует
+          a(href='#eligibility_information').d-inline-block.w-100 Eligibility Information
+      .col-lg-12.text-xs-center
+        a(data-toggle="modal" data-target="#formc_review_popup" href="#formc_review_popup").btn.btn-primary submit Form C
+
+    .col-xl-9
+      section.warning-formc-review.m-b-3
+        .warning-block
+          i.fa.fa-exclamation-triangle 
+          span.warning-text Thank you for your time and effort – we are in the home stretch!  Based on your answers, we have produced a draft of the Form C below. Before finalizing and submitting it to the SEC, we ask that you please review the Form C to make sure it accurately reflects all material disclosures relating to your company. You can make edits to the draft below prior to your final submission.
+
+            p.p-b-1.p-t-1 Please be very careful to ensure that all your responses in the Form C are complete, are not misleading and do not omit any material facts. Do not discuss future performance unless you have a reasonable basis to believe that it is likely to occur. If any statement that you provide turns out to be materially inaccurate, incomplete or misleading, the Company and its officers risk violating the Securities Act and also risk potential claims from investors. We strongly recommend that you have your attorney review your Form C prior to your final submission.
+      
+            |  Please note that prior to submitting your Form C to the SEC, we are required to run certain background checks. Once completed, we will confirm our ability to make the Form C filing and notify you by email that we are prepared to make your campaign live on our website.
+      section.page-formc-review
+        .top-intro
+          p.small.text-xs-left.font-weight-bold FORM C Offering Material for
+          p.small
+            +editText('issuer_short_name')
+            |  as Issuer
+        
+        h3.text-xs-center
+          +editText('issuer_legal_name')
+        h3.text-xs-center.m-b-0.m-t-0.pb10 A
+          +editSelect('jurisdiction_of_organization')
+          | !{' '}
+          +editSelect('corporate_structure')
+        p.text-xs-center.m-b-1
+          +editText('website')
+        
+        p.text-xs-center.font-weight-bold $
+          +editText('maximum_raise')
+          |   MAXIMUM OFFERING
+        p.text-xs-center.font-weight-bold.m-b-3 $
+          +editText('minimum_raise')
+          |   MINIMUM OFFERING
+        p.text-xs-center.font-weight-bold OFFERING PRICE: $
+          +editText('price_per_share')
+          |  per Share
+        p.text-xs-center.font-weight-bold
+          +editText('security_type')
+          |  Offered
+        p.text-xs-center.font-weight-bold $
+          +editText('minimum_increment')
+          |  MINIMUM INVESTMENT
+
+        p.text-uppercase.text-xs-center.m-t-3.m-b-2 
+          u REGULATION CROWDFUNDING OFFERING
+
+        p.text-uppercase.font-weight-bold.pb10 THESE ARE SPECULATIVE SECURITIES AND INVOLVE A HIGH DEGREE OF RISK. PLEASE REVIEW ALL RISK FACTORS CONTAINED IN THIS OFFERING MATERIAL.
+        p.pb10.text-indent GrowthFountain Capital LLC is acting as the funding portal in this offering of securities in reliance on section 4(a)(6) of the Securities Act of 1933 (15 U.S.C. 77d(a)(6)).  To participate in this offering, you must open an account at www.GrowthFountain.com.
+        p.pb10.text-indent A crowdfunding investment involves risk. You should not invest any funds in this offering unless you can afford to lose your entire investment. In making an investment decision, investors must rely on their own examination of the issuer and the terms of the offering, including the merits and risks involved. These securities have not been recommended or approved by any federal or state securities commission or regulatory authority. Furthermore, these authorities have not passed upon the accuracy or adequacy of this document, or the completeness of any information contained herein or listed with the funding portal.  These securities are being offered under an exemption from registration; however, the U.S. Securities and Exchange Commission has not made an independent determination that these securities are exempt from registration.  GrowthFountain Capital LLC and its affiliates are not making any investment recommendation in connection with making this offering material available to you.
+        p The date of this offering material being listed on the funding portal at www.GrowthFountain.com is
+          a(href="#" class="show-input" data-name="live.date").link-1  #{values.company.founding_date}
+      //page 2
+      section.page-formc-review.m-t-1
+        .top-intro
+          p.small.text-xs-left.font-weight-bold FORM C Offering Material for
+          p.small
+            +editText('issuer_short_name')
+            |  as Issuer
+        h2.text-uppercase.text-xs-center.font-weight-bold#overview_information.letter-spacing-normal OVERVIEW INFORMATION
+        .one-block.m-b-3
+          p.text-uppercase.m-t-0.m-b-0.pb10 
+            u Issuer Information
+          .row
+            .col-lg-6.col-md-6.col-sm-6.col-xs-12
+              p.font-weight-bold Name of issuer:
+            .col-lg-6.col-md-6.col-sm-6.col-xs-12
+              +editText('issuer_legal_name')
+          .row
+            .col-lg-6.col-md-6.col-sm-6.col-xs-12
+              p.font-weight-bold Entity Form:
+            .col-lg-6.col-md-6.col-sm-6.col-xs-12
+              +editSelect('corporate_structure')
+          .row
+            .col-lg-6.col-md-6.col-sm-6.col-xs-12
+              p.font-weight-bold Jurisdiction of Organization:
+            .col-lg-6.col-md-6.col-sm-6.col-xs-12
+              +editSelect('jurisdiction_of_organization')
+          .row
+            .col-lg-6.col-md-6.col-sm-6.col-xs-12
+              p.font-weight-bold Date of Organization:
+            .col-lg-6.col-md-6.col-sm-6.col-xs-12
+              +editText('founding_date')
+          .row
+            .col-lg-6.col-md-6.col-sm-6.col-xs-12
+              p.font-weight-bold Physical address:
+            .col-lg-6.col-md-6.col-sm-6.col-xs-12
+              +editText('address_1')
+              | !{' '}
+              +editText('address_2')
+              | !{' '}
+              +editText('city')
+              | !{' '}
+              +editText('zip_code')
+          .row
+            .col-lg-6.col-md-6.col-sm-6.col-xs-12
+              p.font-weight-bold Website address:
+            .col-lg-6.col-md-6.col-sm-6.col-xs-12
+              +editText('website')
+        .one-block.m-b-3
+          p.text-uppercase.m-t-0.m-b-0.pb10 
+            u Intermediary Information
+          .row
+            .col-lg-6.col-md-6.col-sm-6.col-xs-12
+              p.font-weight-bold Intermediary:
+            .col-lg-6.col-md-6.col-sm-6.col-xs-12
+              p GrowthFountain Capital, LLC
+          .row
+            .col-lg-6.col-md-6.col-sm-6.col-xs-12
+              p.font-weight-bold CIK Number:
+            .col-lg-6.col-md-6.col-sm-6.col-xs-12
+              p 0001668506
+          .row
+            .col-lg-6.col-md-6.col-sm-6.col-xs-12
+              p.font-weight-bold SEC File Number:
+            .col-lg-6.col-md-6.col-sm-6.col-xs-12
+              p 007-00028
+          .row
+            .col-lg-6.col-md-6.col-sm-6.col-xs-12
+              p.font-weight-bold CRD Number:
+            .col-lg-6.col-md-6.col-sm-6.col-xs-12
+              p 283380
+          .row
+            .col-lg-6.col-md-6.col-sm-6.col-xs-12
+              p.font-weight-bold Funding Portal Address:
+            .col-lg-6.col-md-6.col-sm-6.col-xs-12
+              p www.GrowthFountain.com
+          .row
+            .col-lg-6.col-md-6.col-sm-6.col-xs-12
+              p.font-weight-bold Compensation to Intermediary:
+            .col-lg-6.col-md-6.col-sm-6.col-xs-12
+              p 5% of the closing amount raised + pass-through and registration fees
+          .row
+            .col-lg-6.col-md-6.col-sm-6.col-xs-12
+              p.font-weight-bold Ownership interest by Intermediary:
+            .col-lg-6.col-md-6.col-sm-6.col-xs-12
+              p None
+        .one-block.m-b-1
+          p.text-uppercase.m-t-0.m-b-0.pb10 
+            u The Security Offering
+          .row
+            .col-lg-6.col-md-6.col-sm-6.col-xs-12
+              p.font-weight-bold Type of security offered:
+            .col-lg-6.col-md-6.col-sm-6.col-xs-12
+              +editSelect('security_type')
+          .row
+            .col-lg-6.col-md-6.col-sm-6.col-xs-12
+              p.font-weight-bold Voting rights:
+            .col-lg-6.col-md-6.col-sm-6.col-xs-12
+              p No
+          .row
+            .col-lg-6.col-md-6.col-sm-6.col-xs-12
+              p.font-weight-bold Minimum target number of securities being offered:
+            .col-lg-6.col-md-6.col-sm-6.col-xs-12
+              +editText('min_number_of_shares')
+          .row
+            .col-lg-6.col-md-6.col-sm-6.col-xs-12
+              p.font-weight-bold Price of security:
+            .col-lg-6.col-md-6.col-sm-6.col-xs-12
+              +editText('price_per_share')
+          .row
+            .col-lg-6.col-md-6.col-sm-6.col-xs-12
+              p.font-weight-bold Minimum target amount of offering:
+            .col-lg-6.col-md-6.col-sm-6.col-xs-12
+              +editText('minimum_raise')
+          .row
+            .col-lg-6.col-md-6.col-sm-6.col-xs-12
+              p.font-weight-bold Oversubscription allowed:
+            .col-lg-6.col-md-6.col-sm-6.col-xs-12
+              a(href="#" class="show-input" data-name="oversubscription").link-1 Yes
+          .row
+            .col-lg-6.col-md-6.col-sm-6.col-xs-12
+              p.font-weight-bold Allocation method of oversubscription:
+            .col-lg-6.col-md-6.col-sm-6.col-xs-12
+              a(href="#" class="show-input" data-name="allocation_method").link-1 Yes
+          .row
+            .col-lg-6.col-md-6.col-sm-6.col-xs-12
+              p.font-weight-bold Oversubscription allowed:
+            .col-lg-6.col-md-6.col-sm-6.col-xs-12
+              a(href="#" class="show-input" data-name="first_come_first_served").link-1 First Come First Served
+          .row
+            .col-lg-6.col-md-6.col-sm-6.col-xs-12
+              p.font-weight-bold Maximum amount of offering:
+            .col-lg-6.col-md-6.col-sm-6.col-xs-12
+              +editText('maximum_raise')
+          .row
+            .col-lg-6.col-md-6.col-sm-6.col-xs-12
+              p.font-weight-bold Deadline to reach target amount:
+            .col-lg-6.col-md-6.col-sm-6.col-xs-12
+              +editText('close_date')
+
+      // page 3
+      section.page-formc-review.m-t-1
+        .top-intro
+          p.small.text-xs-left.wont-weight-bold FORM C Offering Material for
+          p.small
+            +editText('issuer_short_name')
+            |  as Issuer
+        h2.text-uppercase.text-xs-center.font-weight-bold#introductory_notices.letter-spacing-normal INTRODUCTORY NOTICES
+        p.text-uppercase.m-t-0.m-b-0.pb10 
+          u Offering Made Pursuant To Regulation Crowdfunding
+        p.pb10.text-indent This offering material, including all the exhibits attached hereto (collectively, the 
+          u “Material”
+          |  ) describes the terms relating to an offer and sale of securities to qualified investors consistent with the rules and regulations of Regulation Crowdfunding (17 CFR §227). 
+          +editText('issuer_legal_name')
+          |  , a 
+          +editSelect('jurisdiction_of_organization')
+          | !{' '}
+          +editSelect('corporate_structure')
+          |  (the “Company”), is offering up to 
+          +editText('max_number_of_shares')
+          |   shares of 
+          a(href="#" class="show-input" data-name="security_type").link-1 #{values.campaign.security_type}
+          |  (the 
+          u “Shares”)
+          |  at an offering price of $
+          +editText('price_per_share')
+          |  per Share for a maximum aggregate offering price of $
+          +editText('minimum_raise').
+        p.pb10.text-indent The Company has established a minimum offering of at least 
+          +editText('min_number_of_shares')
+          |  Shares for a minimum aggregate offering price of $
+          +editText('minimum_raise')
+          |  prior to 
+          +editText('close_date')
+          |  (the 
+          u “Offering”
+          |  ).  If the sum of the investment commitments does not equal or exceed this minimum target amount at the Offering deadline, no securities will be sold in the Offering, investment commitments will be cancelled and committed funds will be returned. There can be no assurance that the minimum number of the Shares offered will be subscribed for and therefore these if no guarantee that this Offering will be completed.
+        p.text-indent The minimum subscription by an investor is a $
+          +editText('minimum_increment')
+          |  investment.  Each investor interested in participating in this Offering must register at 
+          a(href="www.GrowthFountain.com").link-1 www.GrowthFountain.com.
+          |  The website GrowthFountain.com (the 
+          u “Platform”
+          | ) is operated by GrowthFountain Capital LLC (the 
+          u “Intermediary”
+          | ) which is registered with the U.S. Securities Exchange Commission (the 
+          u “SEC”
+          | ) as a funding portal and is also a member of the Financial Industry Regulatory Authority (
+          u “FINRA”
+          | ).  The Intermediary is the exclusive listing agent and funding portal for this Offering and is acting in reliance on section 4(a)(6) of the Securities Act of 1933 (15 U.S.C. 77d(a)(6)). 
+        p.text-uppercase.m-t-3.m-b-0.pb10 
+          u Crowdfunding Investments Are Risky
+        p.pb10.text-indent A crowdfunding investment involves risk. You should not invest any funds in this offering unless you can afford to lose your entire investment. In making an investment decision, investors must rely on their own examination of the issuer and the terms of the offering, including the merits and risks involved. The securities being offered in this Offering are not insured by the Federal Deposit Insurance Corporation, are not guaranteed by any bank and may lose their entire value.  The securities being offered will have transfer restrictions during the one-year period beginning when the Shares are issued. In addition, there is no ready market for the sale of the Shares and it may be difficult or impossible for an investor to sell or otherwise
+
+      // page 4
+      section.page-formc-review.m-t-1
+        .top-intro
+          p.small.text-xs-left.font-weight-bold FORM C Offering Material for
+          p.small.pb10
+            +editText('issuer_short_name')
+            |  as Issuer
+        p.pb10 dispose of the Shares.  This Material contains significant additional disclosure of investment risks to be reviewed by each potential investor.  Each investor should review all pf the risks related to this Offering prior to making a commitment to invest in the Shares.
+        p.text-uppercase.m-t-3.m-b-0.pb10 
+          u No Investment Advice is Being Provided
+        p.pb10.text-indent This Material contains statements by the Company which have not been independently verified.  The Intermediary has not performed an independent assessment of any of these statements and the Intermediary is not providing any investment advice in connection with making this Material available on its Platform.
+        p.pb10.text-indent Some of the Company’s statements in this Material may be forward-looking.  Projections relating to the Company’s future performance are subject to a high degree of uncertainty.  Actual results can be expected to vary from the results projected and such variances may be material. Prospective investors must not to construe the contents of this Material as legal, business, tax or investment advice. Each investor in any securities should consult their own attorney, business advisor and tax advisor as to the legal, business, tax and related matters concerning this Offering.  
+        p.pb10.text-indent These securities have not been recommended or reviewed by any federal or state securities commission or regulatory authority and these authorities have not passed upon the accuracy or adequacy of this Material. FINRA and the SEC do not pass upon the merits of any securities offered and they are not providing any endorsement or investment advice related to this Offering.  The Shares are being offered under an exemption from registration; however, the SEC has not made an independent determination that these securities are exempt from registration.  There may be a risk that the Shares will fail to qualify for this exemption due to actions taken by the Company that are not properly disclosed.  The Intermediary has not investigated or verified the information provided by the Company and neither has any regulatory authority, so each investor must perform their own assessment of the information contained in the Material prior to relying on the Company for its completeness and accuracy.
+        p.text-uppercase.m-t-3.m-b-0.pb10 
+          u Changes Are Possible In Certain Circumstances
+        p.pb10.text-indent The Company reserves the right to modify any of the terms of the Offering at any time before the Offering closes. However, if any material changes are made, each investor will be notified and will be required to reconfirm their investment commitment within 5 days of such notice or their entire investment commitment shall be cancelled. Investors are also given the right to terminate an investment at any time prior to 48 hours from a notified closing date.  Additional details on the procedures involved with this Offering are contained later in this Material.  Additional information relating to this Offering, including communication channels allowing investors to pose questions and receive answers, is available through the Intermediary on the Platform at GrowthFountain.com/
+          a(href="#" class="show-input" data-name="campaign_link").link-1 campaign.link
+
+      // page 5
+      section.page-formc-review.m-t-1
+        .top-intro
+          p.small.text-xs-left.font-weight-bold FORM C Offering Material for
+          p.small.pb10
+            +editText('issuer_short_name')
+            |  as Issuer
+        h2.text-uppercase.text-xs-center.font-weight-bold#description_business.letter-spacing-normal.m-b-3 DESCRIPTION OF THE ISSUER’S BUSINESS
+        p.text-uppercase.m-t-0.m-b-0.pb10 
+          u The Company
+        p.text-indent
+          +editText('issuer_legal_name')
+          | , was organized on 
+          +editText('founding_date')
+          | , as a 
+          +editSelect('jurisdiction_of_organization')
+          | !{' '}
+          +editSelect('corporate_structure')
+          |  The Company’s headquarters is located 
+          +editText('address_1')
+          | !{' '}
+          +editText('address_2')
+          | !{' '}
+          +editText('city')
+          | !{' '}
+          +editText('state')
+          | !{' '}
+          +editText('zip_code')
+          |  The Company’s website is 
+          +editText('website')
+          | .
+        p.text-uppercase.m-t-3.m-b-0.pb10 
+          u Business Overview
+        p.p-l-2.pb10 
+          +editText('pitch')
+          | .
+        p.p-l-2
+          +editText('business_model')
+          | .
+        p.text-uppercase.m-t-3.m-b-0.pb10 
+          u Business Plan
+        p.pb10.text-indent Please refer to the copy of the Company’s business plan which is attached as Exhibit A hereto.
+        p.p-l-2.pb10
+          +editText('description')
+          | .
+
+      // page 6
+      section.page-formc-review.m-t-1
+        .top-intro
+          p.small.text-xs-left.font-weight-bold FORM C Offering Material for
+          p.small.pb10
+            +editText('issuer_short_name')
+            |  as Issuer
+        h2.text-uppercase.text-xs-center.font-weight-bold#management_material_persons.letter-spacing-normal.m-b-3 MANAGEMENT & MATERIAL PERSONS
+        p.text-indent Specific biographical information on each of the Company’s officers and members of its Board of Directors of is attached as Exhibit D.  Exhibit D contains information on the last three years of employment and supplements the information summarized below.  The Company has confirmed that no officer, director or 20% shareholder would cause a violation of Rule 503(a) of the Crowdfunding Regulations (17 CFR §227.503).
+        p.text-uppercase.m-t-3.m-b-0.pb10 
+          u Number of Total Employees
+        p.p-l-2 Full time employees: 
+          +editText('full_time_employee')
+        p.p-l-2 Part time employees: 
+          +editText('part_time_employee')
+        p.text-uppercase.m-t-3.m-b-0.pb10 
+          u Officers
+        p.pb10.text-indent The following information has been provided by the Company as true and correct regarding each of the Company’s officers.  For purposes of this Form C, the term “officer” means a president, vice president, secretary, treasurer or principal financial officer, comptroller or principal accounting officer, and any person routinely performing similar functions.
+        .table-responsive.m-t-1.m-b-0
+          table.table.table-bordered
+            theader
+              tr.bg-grey
+                th.text-xs-center.w-30 Officer Name
+                th.text-xs-center.w-30 Tenure
+                th.text-xs-center.w-40 Title and Responsibilities
+            tbody
+              each v,k in values.formc.team_members
+                if v.role[0] == 2
+                  tr
+                    td.text-xs-center
+                      a(href="#" class="show-input" data-name="officer_first_name").link-1 #{v.first_name}
+                      br
+                      a(href="#" class="show-input" data-name="officer_last_name").link-1 #{v.last_name}
+                    td.text-xs-center
+                      a(href="#" class="show-input" data-name="officer_start_date").link-1 #{v.board_service_start_date}
+                      br
+                      a(href="#" class="show-input" data-name="officer_end_date ").link-1 #{v.board_service_end_date}
+                    td.text-xs-center
+                      a(href="#" class="show-input" data-name="officer_title").link-1 #{v.title}
+                      br
+                      a(href="#" class="show-input" data-name="officer_responsibilities").link-1 #{v.responsibilities}
+        p.text-uppercase.m-t-3.m-b-0.pb10 
+          u Board of Directors
+        p.pb10.text-indent The following information has been provided by the Company as true and correct regarding each of the Company’s directors (and any person performing a similar function):
+        .table-responsive.m-t-1
+          table.table.table-bordered
+            theader
+              tr.bg-grey
+                th.text-xs-center.w-30 Director Name
+                th.text-xs-center.w-30 Dates of Board Service (Year Begin – Year End)
+                th.text-xs-center.w-40 Principal Occupation + Employer & Title
+            tbody
+              each v,k in values.formc.team_members
+                if v.role[0] == 1
+                  tr
+                    td.text-xs-center
+                      a(href="#" class="show-input" data-name="director.1.first_name").link-1 #{v.first_name}
+                      br
+                      a(href="#" class="show-input" data-name="director.1.last_name").link-1 #{v.last_name}
+                    if v.business_experiences
+                      each v1,k1 in v.business_experiences
+                        td.text-xs-center
+                          a(href="#" class="show-input" data-name="director.1.service_start ").link-1 #{v1.start_date_of_service}
+                          br
+                          a(href="#" class="show-input" data-name="director.1.service_end").link-1 #{v1.end_date_of_service}
+                        td.text-xs-center
+                          a(href="#" class="show-input" data-name="director.1.occupation").link-1 #{v1.principal_occupation}
+                          br
+                          a(href="#" class="show-input" data-name="director.1.employer").link-1 #{v1.employer}
+                          br
+                          a(href="#" class="show-input" data-name="director.1.employer").link-1 #{v1.title}
+            
+
+      // page 7
+      section.page-formc-review.m-t-1
+        .top-intro
+          p.small.text-xs-left.font-weight-bold FORM C Offering Material for
+          p.small
+            +editText('issuer_short_name')
+            |  as Issuer
+        p.text-uppercase.m-t-3.m-b-0.pb10 
+          u 20% Holders
+        p.pb10.text-indent The following information has been provided by the Company as true and correct regarding each person who owns twenty percent (20%) or more of the Company’s outstanding voting equity securities calculated on the basis of voting power.
+        .table-responsive.m-t-1
+          table.table.table-bordered
+            theader
+              tr.bg-grey
+                th.text-xs-center Name of Holder
+                th.text-xs-center Class of Securities
+                th.text-xs-center Number Held
+                th.text-xs-center % of Voting Power
+            tbody
+              each v,k in values.formc.team_members
+                if v.role[0] == 0
+                  tr
+                    td.text-xs-center
+                      a(href="#" class="show-input" data-name="holder.1.first_name").link-1 #{v.first_name}
+                      br
+                      a(href="#" class="show-input" data-name="holder.1.last_name").link-1 #{v.last_name}
+                    td.text-xs-center
+                      a(href="#" class="show-input" data-name="holder.1.class_shares").link-1 #{v.class_of_securities}
+                    td.text-xs-center
+                      a(href="#" class="show-input" data-name="holder.1.number_shares").link-1 #{v.number_of_shares}
+                    td.text-xs-center
+                      a(href="#" class="show-input" data-name="holder.1.voting_power").link-1 #{v.voting_power_percent}
+
+        p.text-indent The Company has confirmed that information above is accurate for the period spanning 120 days prior to the date of filing of this Material.   For any calculation above of total voting power, all securities are included for which the person directly or indirectly has or shares the voting power, which includes the power to vote or to direct the voting of such securities. If the person has the right to acquire voting power of such securities within 60 days, including through the exercise of any option, warrant or right, the conversion of a security, or other arrangement, or if securities are held by a member of the family, through corporations or partnerships, or otherwise in a manner that would allow a person to direct or control the voting of the securities (or share in such direction or control — as, for example, a co-trustee) they are included as being “beneficially owned.” For any calculation of outstanding voting equity securities, all outstanding options are assumed to be exercised and all outstanding convertible securities converted.
+        p.text-uppercase.m-t-3.m-b-0.pb10 
+          u Related Party Transactions
+        if values.formc.transaction_with_related_parties_choice == 0
+          p.pb10.text-indent The Company has confirmed that there are no related party transactions.  This representation covers all the proposed transactions occurring in the Company’s last fiscal year.  As used here, the term “related party” includes: (1) any director or officer of the Company; (2) any person who is, as of the most recent practicable date, the beneficial owner of twenty percent (20%) or more of the Company’s outstanding voting equity securities, calculated on the basis of voting power; (3) if the Company was incorporated or organized within the past three years, any promoter of the Company; or (4) any immediate family member of any of the foregoing persons.   As used here, the term “transaction” includes, but is not limited to, any financial transaction, arrangement or relationship (including any indebtedness or guarantee of indebtedness) or any series of similar transactions, arrangements or relationships.
+
+      // page 8
+      section.page-formc-review.m-t-1
+        .top-intro
+          p.small.text-xs-left.font-weight-bold FORM C Offering Material for
+          p.small.pb10
+            +editText('issuer_short_name')
+            |  as Issuer
+        if values.formc.transaction_with_related_parties_choice == 1
+          p.pb10.text-indent The Company is disclosing certain related party transactions below arising from any of the transactions occurring in the Company’s last fiscal year.  As used here, the term “related party” includes: (1) any director or officer of the Company; (2) any person who is, as of the most recent practicable date, the beneficial owner of twenty percent (20%) or more of the Company’s outstanding voting equity securities, calculated on the basis of voting power; (3) if the Company was incorporated or organized within the past three years, any promoter of the Company; or (4) any immediate family member of any of the foregoing persons.  Only those transactions are listed in which the related party had or is expected to have a direct or indirect material interest in such transaction, and the list includes transactions with entities under common control with the issuer.  As used here, the term “transaction” includes, but is not limited to, any financial transaction, arrangement or relationship (including any indebtedness or guarantee of indebtedness) or any series of similar transactions, arrangements or relationships.  Where it is not practicable to state the approximate amount of the interest, the amount involved in the transaction has been approximated.
+          p.pb10 Those transactions with a related party having a direct or indirect material interest:
+          .table-responsive.m-t-1
+            table.table.table-bordered
+              theader
+                tr.bg-grey
+                  th.text-xs-center Specified Person
+                  th.text-xs-center Relationship To Issuer
+                  th.text-xs-center Nature of Transaction
+                  th.text-xs-center Amount of Interest
+              tbody
+                for v in values.formc.transaction_with_related_parties
+                  tr
+                    td.text-xs-center #{ v.specified_person }
+                    td.text-xs-center #{ v.relationship_to_issuer }
+                    td.text-xs-center #{ v.nature_of_interest }
+                    td.text-xs-center #{ v.amount_of_interest }
+          p.pb10.text-indent The term “immediate family member” includes any child, stepchild, grandchild, parent, stepparent, grandparent, spouse or spousal equivalent, sibling, mother-in-law, father-in-law, son-in-law, daughter-in-law, brother-in-law, or sister-in-law of the person, and includes adoptive relationships. The term “spousal equivalent” means a co-habitant occupying a relationship generally equivalent to that of a spouse.
+
+      // page 9
+      section.page-formc-review.m-t-1
+        .top-intro
+          p.small.text-xs-left.font-weight-bold FORM C Offering Material for
+          p.small.pb10
+            +editText('issuer_short_name')
+            |  as Issuer
+        h2.text-uppercase.text-xs-center.font-weight-bold#procedure_purchasing_securities.letter-spacing-normal.m-b-3 PROCEDURE FOR PURCHASING SECURITIES
+        p.text-uppercase.m-t-0.m-b-0.pb10 
+          u Minimum Commitment and Closing Date
+        p.text-indent To participate in this Offering, each investor must purchase securities in a minimum dollar amount equal to $
+          +editText('minimum_increment')
+          | .
+          |   The securities are being offered until [close.date], unless notice is provided to investors at least five (5) business days prior to any change in such date.  The Company reserves the right to change the closing date with such notice and with a minimum twenty-one (21) day period in which to carry out the offering.
+        p.text-uppercase.m-t-3.m-b-0.pb10 
+          u Account Opening Requirement
+        p.text-indent If a potential investor is interested in participating in the Offering, such investor must first open an account with the Intermediary by registering at www.GrowthFountain.com.  During such registration process, the Intermediary may request financial information to determine investor’s eligibility and may require the acceptance of certain terms and conditions applicable to investor’s use of the Platform. In addition, prior to communicating any investment commitment, each investor must (a) consent to electronic delivery of materials, (b) provide a representation that such investor has reviewed the educational material available from the Intermediary delivered pursuant to Rule 302 of Regulation Crowdfunding, (c) provide a representation that such investor understands that the entire investment amount may be lost and that such investor could bear such loss, (d) complete a questionnaire demonstrating such investor’s understanding that there are limitations on cancelling an investment commitment and that it may be difficult to resell securities acquired in this Offering.  Each potential investor is subject to investment limitations established by the Securities Act (15 USC 77d(a)(6)(B)) and Regulation Crowdfunding (17 CFR 227.100(a)(2)).
+        p.text-uppercase.m-t-3.m-b-0.pb10 
+          u Offering Process After Registration
+        p.text-indent Each Offering is listed on the Platform for a minimum of twenty-one (21) days and the Offering period may extend beyond such twenty-one days if set forth in the Material or each investor is properly notified.  During that period (or later if the investor is notified of a change), the Company must aggregate investor commitments that are equal to or greater than the Offering minimum target amount.  The process generally involves the following steps: (1) an investor registered on the Platform identifies a desired offering and communicates an investment commitment to purchase securities in such offering by completing a subscription agreement; (2) the Intermediary confirms the investor’s eligibility to participate in the Offering and then has the subscription agreement countersigned by the issuer; (3) the investor transfers the funds required to purchase the offered securities to the Intermediary’s designated escrow agent; (4) once the targeted minimum offering amount is achieved or exceeded through investor
+
+      // page 10
+      section.page-formc-review.m-t-1
+        .top-intro
+          p.small.text-xs-left.font-weight-bold FORM C Offering Material for
+          p.small.pb10
+            +editText('issuer_short_name')
+            |  as Issuer
+        p commitments collectively, the issuer would be able to close the transaction on the original target closing date or an earlier date with at least five business days prior notice to the investors; and (5) the funds would be released by the escrow agent to the issuer, less any required fees sent to the Intermediary, and the issuer would issue the securities to the investor.
+        p.text-uppercase.m-t-3.m-b-0.pb10 
+          u Method for Investor Cancellation of a Commitment 
+        p.text-indent Investors may cancel an investment commitment at any time up until forty-eight (48) hours prior to the applicable closing date.  The process for any such cancellation is for the investor to log onto the Platform and indicate a cancellation by selecting such option in connection with the applicable offering once they have logged into their account and accessed their investor dashboard.  With respect to specific scenarios: (1) if the target minimum offering amount is not met prior to the target closing date, then the Intermediary will automatically cancel all investment commitments and notify each investor of the return of their respective funds, (2) if the issuer reaches the target minimum offering amount prior to the deadline identified in the offering materials, then it may close the offering early (if it provides notice about the new offering deadline at least five business days prior to such new offering deadline) provided that the investor would be able to cancel the investment commitment before the 48-hour period prior to the new offering deadline, (3) if the issuer notifies the investor of a material change to an offering, then the investor must reconfirm their investment commitment after the material change is made to the offering, or such investor’s investment commitment will be cancelled and the committed funds will be returned.
+        p.text-uppercase.m-t-3.m-b-0.pb10 
+          u Method for Delivering the Securities
+        p.pb10.logic LOGIC: if transfer_method = self-manage then:
+        p.pb10.text-indent The issuer will record all investments in book entry form so that no certificates would be delivered.  The fully executed Subscription Agreement relating to the Offering will serve as a written record of the transaction and will be available on the Platform via the investor dashboard.  The investor will also receive email confirmation of the successful closing of the Offering, which will confirm the number of securities purchased and the amount paid. 
+        p.pb10.logic LOGIC: if transfer_method = use of Solo then:
+        p.pb10.text-indent The issuer will use a third-party software-as-a-service transfer agent provided by Transfer Online.  Consequently, the issuer will serve as its own transfer agent and will have the choice whether to deliver certificates or to keep all investments in book entry form.  Regardless, the fully executed Subscription Agreement relating to the Offering will serve as a written record of the transaction and will be available on the Platform via the investor dashboard.  The investor will also receive email confirmation of the successful closing of the Offering which will confirm the number of securities purchased and the amount paid.
+
+      // page 11
+      section.page-formc-review.m-t-1
+        .top-intro
+          p.small.text-xs-left.font-weight-bold FORM C Offering Material for
+          p.small.pb10
+            +editText('issuer_short_name')
+            |  as Issuer
+        p.pb10.logic LOGIC: if transfer_method = full service then:
+        p.text-indent The issuer will use a full-service third-party transfer agent to handle the delivery of all certificates.  In addition, the fully executed Subscription Agreement relating to the Offering will serve as a written record of the transaction and will be available on the Platform via the investor dashboard.  The investor will also receive email confirmation of the successful closing of the Offering which will confirm the number of securities purchased and the amount paid.
+        p.text-uppercase.m-t-3.m-b-0.pb10 
+          u Use of Third Party Services
+        p.text-indent Each investor commitment made in connection with the completion of a Subscription Agreement will be held in a depository account maintained for the benefit of investors.  The Intermediary will not hold any investor funds or issuer securities in connection with this Offering.
+        p.text-uppercase.m-t-3.m-b-0.pb10 
+          u Use of Communication Channel
+        p.text-indent The Intermediary makes available on the Platform certain communication channels by which registered users can communicate with representatives of the Company.  While any person can view the postings made within the communication channel, only registered users can post questions or comments.  Investors have the opportunity to use the communication channels in connection with their evaluation of the securities in this Offering to support their diligence effort and to clarify any information provided in the Material.  The Intermediary is not serving as an agent or representative of the Company in connection with the operation of the communication channels and is not providing any investment advice through the communication channels.  All promoters and representatives of the Company participating in the communication channels on the Platform are required to disclose their relationship with the Company.
+        p.text-uppercase.m-t-3.m-b-0.pb10 
+          u Intermediary Compensation
+        p.text-indent The Intermediary will be compensated a dollar amount equal to 5% of the total Offering amount if the Offering is successfully completed and closed.  Such compensation is paid only if the Company’s total Offering proceeds meets or exceeds the target minimum offering amount indicated in this Material. Additionally, the Company reimburses the Intermediary for certain fees that the Intermediary passes through to the Company, such as the costs related to performing background checks and establishing an escrow account.  These fees are one-time fees and are not dependent on the success of the Offering.
+        p.text-uppercase.m-t-3.m-b-0.pb10 
+          u Conditional Commitment
+        p.pb10.text-indent Purchase of the securities offered in this Offering shall be made pursuant to the 
+
+      // page 12
+      section.page-formc-review.m-t-1
+        .top-intro
+          p.small.text-xs-left.font-weight-bold FORM C Offering Material for
+          p.small.pb10
+            +editText('issuer_short_name')
+            |  as Issuer
+        p execution of a Subscription Agreement available on the Platform, which contains, among other things, certain representations, warranties and covenants.  The Company must secure investor commitments that equal or exceed the minimum target amount for the Offering prior to the applicable closing date, or the Offering will be canceled and investor funds committed in connection with the Offering will be returned.  An investor commitment is conditional after being made, but only up until the time that is 48 hours before the applicable closing date.  For the 48-hour period prior to the applicable closing date, investor commitments may not be cancelled by the investor but in certain circumstances may still be returned (e.g. if the target minimum amount is not met).   As a reminder, investors are required to reconfirm their investment commitment after receiving notice of a material change to the Offering.  If an investor takes no action to reconfirm the investment commitment after the Company notifies the investor of a material change, the commitment will be cancelled and funds relating to that Offering returned. 
+        p.text-uppercase.m-t-3.m-b-0.pb10 
+          u Jurisdictional Coverage
+        p.text-indent Jurisdictions in which the issuer intends to offer the securities include the following: AL, AK, AZ, AR, CA, CO, CT, DE, DC, FL, GA, HI, ID, IL, IN, IA, KS, KY, LA, ME, MD, MA, MI, MN, MS, MO, MT, NE, NV, NH, NJ, NY, NC, ND, OH, OK, OR, PA, RI, SC, SD, TN, TX, UT, VT, WA, WV, WI, WY, WY, PR, GU, VI, NMI, AS
+        p Canadian Jurisdictions: AB, BC, MB, NB, NL, NS, ON, PE, QC, SK, YT, Canada [Federal Level]
+
+      // page 13
+      section.page-formc-review.m-t-1
+        .top-intro
+          p.small.text-xs-left.font-weight-bold FORM C Offering Material for
+          p.small.pb10
+            +editText('issuer_short_name')
+            |  as Issuer
+        h2.text-uppercase.text-xs-center.font-weight-bold#capital_structure.letter-spacing-normal.m-b-3 CAPITAL STRUCTURE OF THE ISSUER
+        p.text-uppercase.m-t-0.m-b-0.pb10 
+          u Description of the Issuer’s Existing Securities
+        p.pb10.text-indent The outstanding and authorized amounts of the Company’s existing securities are identified in the table below.  Please note that the Company has indicated that this table includes (a) all instruments that could convert into securities such as convertible debt, (b) securities that are reserved for issuance upon exercise or conversion such as an option plan and (c) any other instruments that could be expected to impact the capitalization of the Company.
+        .table-responsive.m-t-1
+          table.table.table-bordered
+            theader
+              tr.bg-grey
+                th.text-xs-center Class of Security
+                th.text-xs-center # Authorized
+                th.text-xs-center # Outstanding
+                th.text-xs-center Voting Rights
+            tbody
+              each v,k in values.formc.outstanding_securities
+                tr
+                  td
+                    a(href="#" class="show-input" data-name="cap_type").link-1 #{v.security_type}
+                  td
+                    a(href="#" class="show-input" data-name="cap_type_XXX_outstanding_1").link-1 #{v.amount_authroized}
+                  td
+                    a(href="#" class="show-input" data-name="cap_type_XXX_outstanding_1-2").link-1 #{v.amount_outstanding}
+                  td
+                    a(href="#" class="show-input" data-name="cap_type_XXX_voting_1").link-1 #{v.voting_right}
+              
+        p.text-uppercase.m-t-3.m-b-0.pb10 
+          u Description of Securities, Material Terms and Other Rights:
+        p.pb10.logic LOGIC: The description for each separate security that is listed above appears below
+        each v,k in values.formc.outstanding_securities
+          p.pb10 #{ v.security_type }
+            a(href="#" class="show-input" data-name="cap_type_common_description").link-1 #{ v.terms_and_rights }
+
+      // page 14
+      section.page-formc-review.m-t-1
+        .top-intro
+          p.small.text-xs-left.font-weight-bold FORM C Offering Material for
+          p.small.pb10
+            +editText('issuer_short_name')
+            |  as Issuer
+        h2.text-uppercase.text-xs-center.font-weight-bold#description_securities.letter-spacing-normal.m-b-3 DESCRIPTION OF SECURITIES OFFERED
+        p.text-uppercase.m-t-0.m-b-0.pb10 
+          u General Terms
+        p.text-indent The type of security being offered is non-voting shares of our common stock.  This means purchasers of the Shares will have no voting rights whatsoever.  Potential investors should reference the actual terms and provisions of the capital stock contained in the Company's [Certificate of Incorporation and the Company’s bylaws] attached as Exhibit C as well as the Subscription Agreement for the Shares. Each investor is responsible for reviewing and understanding such documents and can use the communication channels on the Platform to request clarification or additional information.
+        p.text-uppercase.m-t-3.m-b-0.pb10 
+          u Common Stock
+        p.text-indent The voting, dividend and liquidation rights of the holders of the Common Stock are subject to and qualified by the rights, powers, and preferences of the holders of the Common Stock set forth in the Company’s charter documents as well as the terms of the Subscription Agreement. The securities in this Offering are non-voting common stock. Dividends upon the capital stock of the Company, if any, subject to the provisions of the Certificate of Incorporation, may be declared by the Board of Directors at any regular or special meeting, pursuant to law. The Company does not anticipate issuing any dividends in the near term.
+        p.text-uppercase.m-t-3.m-b-0.pb10 
+          u Voting Rights and Limitations
+        p.text-indent The Shares have no voting rights and will be excluded from all voting.  Additionally, the Shares have no liquidation or preference rights. 
+          a(href="#" class="show-input" data-name="modify_method").link-1 modify_method
+        p.text-uppercase.m-t-3.m-b-0.pb10 
+          u Restrictions on Transfer of Shares
+        p.pb10.text-indent Consistent with Subpart E of Regulation Crowdfunding (17 CFR 501), securities issued in this Offering pursuant to section 4(a)(6) of the Securities Act (15 U.S.C. 77d(a)(6)) may not be transferred by any purchaser of such securities during the one-year period beginning when the securities were issued, unless such securities are transferred to a limited group including (a) to the Company, (b) to an accredited investor, (c) as part of an offering registered with the SEC, or (d) to a family member, trust or equivalent.  In connection with any participation in this Offering, each potential investor may be required to agree not to dispose of or otherwise sell or transfer any of the Shares, until there is in effect a registration statement under the Securities Act covering such proposed disposition or if such disposition will not require registration under the Securities Act.
+
+      // page 15
+      section.page-formc-review.m-t-1
+        .top-intro
+          p.small.text-xs-left.font-weight-bold FORM C Offering Material for
+          p.small
+            +editText('issuer_short_name')
+            |  as Issuer
+        p.text-uppercase.m-t-3.m-b-0.pb10 
+          u Distinguishing the Securities
+        p.pb10.text-indent Differences between the securities being offered and the other classes of securities:
+        p.p-l-2.pb10
+          +editText('security_differences')
+        p.pb10.text-indent Ability of one class of security to materially limit, dilute or qualify the rights of another class:
+        p.p-l-2.pb10
+          +editText('rights_of_securities_being')
+        p.pb10.text-indent Ability of any principal shareholders to affect the purchasers of the securities being offered:
+        p.p-l-2
+          +editText('principal_shareholders_affect')
+        p.text-uppercase.m-t-3.m-b-0.pb10 
+          u Valuation of the Securities
+        p.pb10.text-indent The offering price of the securities in this Offering has been established by the Company and does not necessarily bear any specific relation to the assets, book value or potential earnings of the Company or any other recognized criteria of value. The Shares have not been registered under the Securities Exchange Act of 1934 and have not been traded or quoted on any exchange or quotation system. There is no public market in which shareholders may sell their Shares, and there can be no assurance given that such a market will ever develop. The securities offered hereby are restricted by law and the ability to transfer and interests in the Shares is severely limited.
+        p.pb10.text-indent Method by which the offered securities are valued:
+        p.p-l-2.pb10
+          a(href="#" class="show-input" data-name="valuation_determine").link-1 valuation_determine
+        p.p-l-2.pb10
+          a(href="#" class="show-input" data-name="valuation_determine_describe").link-1 valuation_determine_describe
+        p.pb10.text-indent The price of each Share was determined by the Company in good faith based on its own assessment of its current position and the possibility of future growth.  The Company has taken into account its own internal calculation of potential future revenue and based on such forward looking estimates has created a valuation that reflects the multiple or premium determined by the Company to be appropriate in this situation.  The Company acknowledges that the valuation bears no relationship to established value criteria such as net tangible assets or a multiple of earnings per share.  The Company accepts that some investors may conclude that the current valuation is not an indication of the actual value of the Company.
+        p.logic LOGIC: if valuation_determine = use_BIZcalculator then:
+
+      // page 16
+      section.page-formc-review.m-t-1
+        .top-intro
+          p.small.text-xs-left.font-weight-bold FORM C Offering Material for
+          p.small.pb10
+            +editText('issuer_short_name')
+            |  as Issuer
+        p.pb10.text-indent The price of each Share was determined by the Company in good faith based on its own assessment of its current position and the benchmarking reference range determined by the use of certain business calculators provided by the Intermediary.  Such calculators use the data provided by the Company and do not reflect any advice or recommendation on the part of the Intermediary.  In working with the calculators, the Company considered its current capital structure, including current debt and cash, and assembled an income statement from the last twelve months including an estimate of net income and EBITDA.  The Company also made projections for the next twelve months along with a similar estimate of net income and EBITDA.
+        p.pb10.text-indent The Company then looked at potential peers that trade in public markets and considered a variety of metrics, including but not limited to Price/Sales, Enterprise Value/EBITDA and Price/Equity.  The Company applied a 20% liquidity discount to publically traded peers and utilized an average of different valuation metrics to derive a benchmarking range for the Company’s ultimate value.
+        p.pb10.logic LOGIC: if valuation_determine = use_SUcalculator then:
+        p.pb10.text-indent The price of each Share was determined by the Company in good faith based on its own assessment of its current position and by taking a variety of quantitative and qualitative considerations into account.  Quantitatively, the Company considered revenue and operating profit, both one year from now and five years from now along with an analysis of the Company’s existing capital structure and available cash.  The Company then assessed where publicly traded peer were being valued in the markets.  After considering several different valuation metrics, including Price/Sales and Enterprise Value/EBIT, the Company discounted its valuation by its cost of capital.  The, for qualitative factors, the Company considered the type of industry that it is in and applied a discount rate appropriate for such industry.  Finally, the Company applied a liquidity discount which resulted in a post-money valuation which takes into consideration the money projected to be raised in order to derive the valuation contained in this Material.
+
+      // page 17
+      section.page-formc-review.m-t-1
+        .top-intro
+          p.small.text-xs-left.font-weight-bold FORM C Offering Material for
+          p.small.pb10
+            +editText('issuer_short_name')
+            |  as Issuer
+        h2.text-uppercase.text-xs-center.font-weight-bold#use_of_proceeds.letter-spacing-normal.m-b-3 USE OF PROCEEDS
+        p.pb10.text-indent The Company intends to apply the proceeds of this Offering substantially as set forth herein, subject to reallocation by management as it deems in the best interests of the Company. The actual use of proceeds of this Offering is subject to the discretion of management and the board of directors, and may include general corporate purposes.
+        p
+          +editText('intended_use_of_proceeds')
+        p.text-uppercase.m-t-3.m-b-0.pb10 
+          u Assuming A Minimum Raise
+        p
+          +editText('use_of_net_proceeds_minimum')
+        p.text-uppercase.m-t-3.m-b-0.pb10 
+          u  Assuming A Maximum Raise
+        p.pb10.logic [LOGIC: Exclude if no max raise]
+        p.pb10.text-indent In the case that the Offering is oversubscribed and closes with the maximum amount achieved, the Company anticipates using the proceeds in the following manner: 
+        p.pb10
+          +editText('use_of_net_proceeds_maximum')
+        p.pb10.text-indent The following table reflects our anticipated estimated use of proceeds:
+        .table-responsive.m-t-1
+          table.table.table-bordered
+            theader
+              tr.bg-grey
+                th.text-xs-center 
+                th(colspan="2").text-xs-center MINIMUM RAISE ACHIEVED
+                th.text-xs-center(colspan="2") MAXIMUM RAISE ACHIEVED
+              tr
+                th.text-xs-center  Category
+                th.text-xs-center Estimated Dollar
+                  br
+                  |  Amount
+                th.text-xs-center Percentage of
+                  br
+                  |  Proceeds
+                th.text-xs-center Estimated Dollar
+                  br
+                  |  Amount
+                th.text-xs-center Percentage of
+                  br
+                  |  Proceeds
+            tbody
+              tr
+                td Commissions and 
+                  br
+                  |  Broker Expenses
+                td.text-xs-center
+                  a(href="#" class="show-input" data-name="amount_1").link-1 $28,000
+                td.text-xs-center
+                  a(href="#" class="show-input" data-name="proceeds_1").link-1 7.00%
+                td.text-xs-center
+                  a(href="#" class="show-input" data-name="amount_2").link-1 $70,000
+                td.text-xs-center
+                  a(href="#" class="show-input" data-name="proceeds_2").link-1 7.00%
+              tr
+                td Misc. Offering Costs 
+                  br
+                  | (Legal)
+                td.text-xs-center
+                  a(href="#" class="show-input" data-name="amount_1_1").link-1 $4,500
+                td.text-xs-center
+                  a(href="#" class="show-input" data-name="proceeds_1_1").link-1 1.13%
+                td.text-xs-center
+                  a(href="#" class="show-input" data-name="amount_2_1").link-1 $4,500
+                td.text-xs-center
+                  a(href="#" class="show-input" data-name="proceeds_2_1").link-1 0.45%
+              tr
+                td Misc. Offering Costs 
+                  br
+                  | (Marketing)
+                td.text-xs-center
+                  a(href="#" class="show-input" data-name="amount_1_2").link-1 $12,000
+                td.text-xs-center
+                  a(href="#" class="show-input" data-name="proceeds_1_2").link-1 3.75%
+                td.text-xs-center
+                  a(href="#" class="show-input" data-name="amount_2_2").link-1 $12,000
+                td.text-xs-center
+                  a(href="#" class="show-input" data-name="proceeds_2_2").link-1 1.50%
+              tr
+                td Misc. Offering Costs 
+                  br
+                  | (Admin)
+                td.text-xs-center
+                  a(href="#" class="show-input" data-name="amount_1_3").link-1 $17,000
+                td.text-xs-center
+                  a(href="#" class="show-input" data-name="proceeds_1_3").link-1 4.25%
+                td.text-xs-center
+                  a(href="#" class="show-input" data-name="amount_2_3").link-1 $20,000
+                td.text-xs-center
+                  a(href="#" class="show-input" data-name="proceeds_2_3").link-1 2.00%
+              tr
+                td Salaries, Benefits and
+                  br
+                  | Wages
+                td.text-xs-center
+                  a(href="#" class="show-input" data-name="amount_1_4").link-1 $100,500
+                td.text-xs-center
+                  a(href="#" class="show-input" data-name="proceeds_1_4").link-1 25.13%
+                td.text-xs-center
+                  a(href="#" class="show-input" data-name="amount_2_4").link-1 $335,500
+                td.text-xs-center
+                  a(href="#" class="show-input" data-name="proceeds_2_4").link-1 33.55%
+              tr
+                td Product Development
+                td.text-xs-center
+                  a(href="#" class="show-input" data-name="amount_1_5").link-1 $125,000
+                td.text-xs-center
+                  a(href="#" class="show-input" data-name="proceeds_1_5").link-1 31.25%
+                td.text-xs-center
+                  a(href="#" class="show-input" data-name="amount_2_5").link-1 $250,000
+                td.text-xs-center
+                  a(href="#" class="show-input" data-name="proceeds_2_5").link-1 25.00%
+              tr
+                td Marketing
+                td.text-xs-center
+                  a(href="#" class="show-input" data-name="amount_1_6").link-1 $75,000
+                td.text-xs-center
+                  a(href="#" class="show-input" data-name="proceeds_1_6").link-1 18.75%
+                td.text-xs-center
+                  a(href="#" class="show-input" data-name="amount_2_6").link-1 $200,000
+                td.text-xs-center
+                  a(href="#" class="show-input" data-name="proceeds_2_6").link-1 20.00%
+              tr
+                td Operations (Data,
+                  br
+                  | Hosting, Fees)
+                td.text-xs-center
+                  a(href="#" class="show-input" data-name="amount_1_7").link-1 $25,000
+                td.text-xs-center
+                  a(href="#" class="show-input" data-name="proceeds_1_7").link-1 6.25%
+                td.text-xs-center
+                  a(href="#" class="show-input" data-name="amount_2_7").link-1 $75,000
+                td.text-xs-center
+                  a(href="#" class="show-input" data-name="proceeds_2_7").link-1 7.50%
+              tr
+                td Travel, Conferences
+                  br
+                  | and Events
+                td.text-xs-center
+                  a(href="#" class="show-input" data-name="amount_1_8").link-1 $10,000
+                td.text-xs-center
+                  a(href="#" class="show-input" data-name="proceeds_1_8").link-1 2.50%
+                td.text-xs-center
+                  a(href="#" class="show-input" data-name="amount_2_8").link-1 $30,000
+                td.text-xs-center
+                  a(href="#" class="show-input" data-name="proceeds_2_8").link-1 3.00%
+              tr.bg-grey.font-weight-bold
+                td.text-xs-center.text-uppercase Total
+                td.text-xs-center
+                  a(href="#" class="show-input" data-name="total-amount_1").link-1 $400,000
+                td.text-xs-center
+                  a(href="#" class="show-input" data-name="total_proceeds_1").link-1 100.00%
+                td.text-xs-center
+                  a(href="#" class="show-input" data-name="total-amount_2").link-1 $1,000,000
+                td.text-xs-center
+                  a(href="#" class="show-input" data-name="total_proceeds_2").link-1 100.00%
+
+      // page 18
+      section.page-formc-review.m-t-1
+        .top-intro
+          p.small.text-xs-left.font-weight-bold FORM C Offering Material for
+          p.small.pb10
+            +editText('issuer_short_name')
+            |  as Issuer
+        h2.text-uppercase.text-xs-center.font-weight-bold#financial_condition.letter-spacing-normal.m-b-3 FINANCIAL CONDITION
+        p.text-indent References to the future financial condition of the Company may contain forward-looking statements. Such forward-looking statements are not guarantees of future performance and involve uncertainties and other factors which may cause the Company’s actual results, performance or achievements to be materially different from any future results, performance or achievements expressed or implied by such forward-looking statements. Actual operating results may be affected by various factors including, without limitation, changes in national economic conditions, competitive market conditions, uncertainties related to government regulation, and actual versus projected timing of events, all of which may cause such actual results to differ materially from what is expressed or forecast in this Material.  For purposes of this section, any reference to the Company includes its predecessors, if any.  The Company's actual results may differ materially from those discussed herein.
+        p.text-uppercase.m-t-3.m-b-0.pb10 
+          u Prior Operating History
+        p.pb10.logic LOGIC: if history_toggle = yes then:
+        p.pb10.text-indent The following describes the operating history of the issuer with a focus on whether historical results and cash flows are representative of what investors should expect in the future. 
+          a(href="#" class="show-input" data-name="operating_history").link-1 operating_history
+        p.pb10.logic LOGIC: if history_toggle = no then:
+        p.pb10.text-indent Because the issuer has no operating history, the following provides information on the issuer’s financial milestones and operational, liquidity and other challenges. 
+          a(href="#" class="show-input" data-name="operating_history").link-1 operating_history
+        .table-responsive.m-t-1
+          table.table.table-bordered
+            theader
+              tr.bg-grey
+                th.text-xs-center
+                th.text-xs-center Most Recent Fiscal Year End
+                th.text-xs-center Prior Fiscal Year End
+            tbody
+              tr
+                td Total Assets
+                td.text-xs-center
+                  a(href="#" class="show-input" data-name="recent_total_assets").link-1 recent_total_assets
+                td.text-xs-center
+                  a(href="#" class="show-input" data-name="prior_total_assets").link-1 prior_total_assets
+              tr
+                td Cash & Cash Equivalents
+                td.text-xs-center
+                  a(href="#" class="show-input" data-name="recent_cash_and_equivalents").link-1 recent_cash_and_equivalents
+                td.text-xs-center
+                  a(href="#" class="show-input" data-name="prior_cash_and_equivalents").link-1 prior_cash_and_equivalents
+              tr
+                td Accounts Receivable
+                td.text-xs-center
+                  a(href="#" class="show-input" data-name="recent_account_receivable").link-1 recent_account_receivable
+                td.text-xs-center
+                  a(href="#" class="show-input" data-name="prior_account_receivable").link-1 prior_account_receivable
+              tr
+                td Short-term Debt
+                td.text-xs-center
+                  a(href="#" class="show-input" data-name="recent_short_term_debt").link-1 recent_short_term_debt
+                td.text-xs-center
+                  a(href="#" class="show-input" data-name="prior_short_term_debt").link-1 prior_short_term_debt
+              tr
+                td Long-term Debt
+                td.text-xs-center
+                  a(href="#" class="show-input" data-name="recent_long_term_debt").link-1 recent_long_term_debt
+                td.text-xs-center
+                  a(href="#" class="show-input" data-name="prior_long_term_debt").link-1 prior_long_term_debt
+              tr
+                td Revenues/Sales
+                td.text-xs-center
+                  a(href="#" class="show-input" data-name="recent_revenues_sales").link-1 recent_revenues_sales
+                td.text-xs-center
+                  a(href="#" class="show-input" data-name="prior_revenues_sales").link-1 prior_revenues_sales
+              tr
+                td Cost of Goods Sold
+                td.text-xs-center
+                  a(href="#" class="show-input" data-name="recent_cost_of_goods_sold").link-1 recent_cost_of_goods_sold
+                td.text-xs-center
+                  a(href="#" class="show-input" data-name="prior_cost_of_goods_sold").link-1 prior_cost_of_goods_sold
+              tr
+                td Taxes Paid
+                td.text-xs-center
+                  a(href="#" class="show-input" data-name="recent_Taxes_paid").link-1 recent_Taxes_paid   
+                td.text-xs-center
+                  a(href="#" class="show-input" data-name="prior_Taxes_paid") prior_Taxes_paid
+              tr
+                td Net Income
+                td.text-xs-center
+                  a(href="#" class="show-input" data-name="recent_Net_income").link-1 recent_Net_income
+                td.text-xs-center
+                  a(href="#" class="show-input" data-name="prior_Net_income").link-1 prior_Net_income
+
+      // page 19
+      section.page-formc-review.m-t-1
+        .top-intro
+          p.small.text-xs-left.font-weight-bold FORM C Offering Material for
+          p.small
+            +editText('issuer_short_name')
+            |  as Issuer
+        p.text-uppercase.m-t-3.m-b-0.pb10 
+          u Results of Operations
+        p.pb10.text-indent The following is a description of the financial condition of the Company, including any items that have had a material impact on the Company, for each year when financial statements are provided.  This discussion also includes an identification of any known material changes or trends in the financial condition and results of operations of the Company during any time period subsequent to the period for which financial statements are provided.
+        p.pb10.p-l-2
+          a(href="#" class="show-input" data-name="financial_condition").link-1 financial_condition
+        p.pb10.text-indent The following discusses whether additional funds are necessary to the viability of the business, how quickly the Company anticipates using its available cash and whether other sources of capital are anticipated to be available to the Company.
+        p.p-l-2
+          a(href="#" class="show-input" data-name="future_capital").link-1 future_capital
+        p.text-uppercase.m-t-3.m-b-0.pb10 
+          u Material Indebtedness
+        p.pb10.logic LOGIC: if debt_toggle = no then:
+        p.pb10.text-indent The Company has indicated that it has no outstanding material indebtedness.
+        p.pb10.logic LOGIC: if debt_toggle = yes then:
+        p.pb10.text-indent The Company has indicated that it currently has outstanding material indebtedness.  The general terms of the Company’s current and outstanding indebtedness are reflected of the following table:
+        .table-responsive.m-t-1.m-b-0
+          table.table.table-bordered
+            theader
+              tr.bg-grey
+                th.text-xs-center Creditor
+                th.text-xs-center Amount Outstanding
+                th.text-xs-center Interest Rate
+                th.text-xs-center Maturity Date
+                th.text-xs-center Material Terms
+            tbody
+              each v,k in values.formc.business_loans_or_debt
+                tr
+                  td.text-xs-center
+                    a(href="#" class="show-input" data-name="creditor.#").link-1 #{v.creditor}
+                  td.text-xs-center
+                    a(href="#" class="show-input" data-name="creditor.#_amount").link-1 #{v.outstanding_amount}
+                  td.text-xs-center
+                    a(href="#" class="show-input" data-name="creditor.#_rate").link-1 #{v.interest_rate}
+                  td.text-xs-center
+                    a(href="#" class="show-input" data-name="creditor.#_date").link-1 #{v.maturity_date}
+                  td.text-xs-center
+                    a(href="#" class="show-input" data-name="creditor.#_terms").link-1 #{v.other_material_terms}
+        p.text-uppercase.m-t-3.m-b-0.pb10 
+          u Previous Issuer Offerings
+        p.pb10.logic LOGIC: if exempt_offering_toggle = no then:
+        p.pb10.text-indent The Company has indicated that it has not conducted any prior exempt offerings in the past three years.
+        p.pb10.logic LOGIC: if exempt_offering_toggle = yes then:
+
+      // page 20
+      section.page-formc-review.m-t-1
+        .top-intro
+          p.small.text-xs-left.font-weight-bold FORM C Offering Material for
+          p.small.pb10
+            +editText('issuer_short_name')
+            |  as Issuer
+        p.pb10.text-indent The Company has provided the following list of exempt offerings conducted over the past 3 years:
+        .table-responsive.m-t-1.m-b-0
+          table.table.table-bordered
+            theader
+              tr.bg-grey
+                th.text-xs-center Date of Offering
+                th.text-xs-center Exemption Relied Upon
+                th.text-xs-center Securities Offered
+                th.text-xs-center Amount Sold
+                th.text-xs-center Use of Proceeds
+            tbody
+              each v,k in values.formc.exempt_offering
+                tr
+                  td.text-xs-center
+                    a(href="#" class="show-input" data-name="offering.#._date").link-1 #{v.offering_date}
+                  td.text-xs-center
+                    a(href="#" class="show-input" data-name="offering.#._exemption").link-1 #{v.exemption_relied_upon}
+                  td.text-xs-center
+                    a(href="#" class="show-input" data-name="offering.#._type").link-1 #{v.securities_offered}
+                  td.text-xs-center
+                    a(href="#" class="show-input" data-name="offering.#._amount").link-1 #{v.amount_sold}
+                  td.text-xs-center
+                    a(href="#" class="show-input" data-name="offering.#._use").link-1 #{v.use_of_proceeds}
+        p.text-uppercase.m-t-3.m-b-0.pb10 
+          u Financial Statements
+        p.pb10.text-indent The issuer’s financial statements are attached as Exhibit B.  Based on the size of this offering and issuer’s previous activity, the issuer is required to provide 
+          span.logic < insert > 
+          span.logic SEE LOGIC
+        p.pb10.logic LOGIC:
+        p OPTION 1: The following information or their equivalent line items as reported on the federal income tax return filed by the Company for the most recently completed year (if any): (1) Total income, (2) Taxable income; and (3) Total tax.    Financial statements of the Company and its predecessors, if any, in each case as certified by the principal executive officer of the Company to reflect accurately the information reported on the Company’s federal income tax returns.
+        p OPTION 2: Financial statements of the Company and its predecessors, if any, reviewed by a public accountant that is independent of the Company and must include a signed review report.
+        p OPTION 3: Financial statements of the Company and its predecessors, if any, audited by a public accountant that is independent of the Company and must include a signed review report.
+        p.pb10.text-indent The attached financial statements have been prepared in accordance with U.S. generally accepted accounting principles and include balance sheets, statements of comprehensive income, statements of cash flows, statements of changes in stockholders’ equity and notes to the financial statements.  If the financial statements are not audited, they are labeled as “unaudited.”
+        p.pb10.text-indent For an offering conducted in the first 120 days of a fiscal year, the financial statements provided may be for the two fiscal years prior to the issuer’s most recently completed fiscal year; however, financial statements for the two most recently completed fiscal years must be provided if they are otherwise available. If more than 120 days have passed since the end of the issuer’s most recently completed fiscal year, the financial statements provided must be for the issuer’s two most recently completed fiscal years.
+
+      // page 21
+      section.page-formc-review.m-t-1
+        .top-intro
+          p.small.text-xs-left.font-weight-bold FORM C Offering Material for
+          p.small.pb10
+            +editText('issuer_short_name')
+            |  as Issuer
+        h2.text-uppercase.text-xs-center.font-weight-bold#risk_factors.letter-spacing-normal.m-b-3 CROWDFUNDING RISK FACTORS
+        p.text-indent An investment in the Company’s securities involves substantial risk.  Prospective investors should carefully consider the risk factors referred to in this Material. An investor should not invest any funds in the Offering unless he or she can afford to lose his or her entire investment.  In making an investment decision, investors must rely on their own examination of the Company and the terms of the Offering, including the merits and risks involved.  The Shares have not been recommended or reviewed by any federal or state securities commission or regulatory authority.  There is no ready market for the sale of the Shares and it may be difficult or impossible for an investor to sell or otherwise dispose of the Shares.
+        p.text-uppercase.m-t-3.m-b-0.pb10 
+          u Risks from Relying on Issuer Supplied Information
+        p.text-indent There is the risk that some of the information supplied by the Company may be inaccurate.  The management of the Company has provided all of the information stated in this Material without any third party verifying or investigating such information. The Company makes no express or implied representation or warranty as to the completeness of this information or, in the case of projections, estimates, future plans, or forward looking assumptions or statements, as to their attainability or the accuracy and completeness of the assumptions from which they are derived.  It is expected that each prospective investor will pursue their own independent investigation.  Forward-looking statements are subject to certain risks, trends and uncertainties that could cause actual results to differ materially from those projected.
+        p.text-uppercase.m-t-3.m-b-0.pb10 
+          u Risks as a Minority Holder
+        p.pb10.text-indent Purchasers of a minority ownership have risks relating to limited control, limited information and limited rights.  Minority owners have no control over the marketability and value of their purchased securities and they may be required to hold onto their minority ownership position for an indefinite period.  Additionally, minority owners must address the following risks:
+        ul
+          li.pb10 Minority owners have no right to participate in any management decisions of the Company or the day-to-day operations. There is the risk that the majority owners make decisions or take actions that a minority owner thinks is bad for the Company.   A minority owner has limited ability to influence the governance and operations of a Company.
+          li.pb10 Minority owners have limited rights to information beyond those filings that are required by law to be made available.  There is the risk that minority owners may be denied immediate information about the Company’s performance or corporate affairs.
+          li.pb10 Minority owners have limited rights, if any, to demand current distributions from an operating business. Majority owners likely have the right and power to avoid making any distributions of profits at their discretion.  There is also the risk that the management of the Company pursues a spending plan that causes the Company not to generate any profits to be distributed.
+
+      // page 22
+      section.page-formc-review.m-t-1
+        .top-intro
+          p.small.text-xs-left.font-weight-bold FORM C Offering Material for
+          p.small.pb10
+            +editText('issuer_short_name')
+            |  as Issuer
+        ul
+          li.pb10 Minority owners have limited rights, if any, to have their interest bought out. There is the risk that a minority owner will want to sell their interest and they will have no right to force the Company to buy them out.  There will also be liquidity risk if there is no secondary market for the Company’s securities.
+          li.pb10 Minority owners have limited input into fundamental corporate changes such as sale of the Company.  There is a risk that a sale could be structured in a way to avoid certain payouts to minority owners, such as a sale of assets over time with the proceeds reinvested in another business.
+          li Minority owners may have interests that are different than shareholder-officers or shareholders that are part of the management team of the Company.  There is the risk that minority owners perceive a conflict of interest if, for example, the managers that are shareholders receive a significant raise.  Additionally, there is the risk that a minority owner will want to remove a manager or board member but have no independent power to do so.
+        p.text-uppercase.m-t-3.m-b-0.pb10 
+          u Risks Regarding Corporate Actions
+        p.pb10 The Company may take certain corporate actions that could impact investors that purchase the Shares.
+        ul
+          li.pb10 Regarding the additional issuances of securities, there is the risk that an investor has their ownership percentage diluted if, for example, the Company decides to raise additional amounts in the future.  There is also the risk that an investor is excluded from the opportunity to participate in future fund-raising so that they are unable to maintain their ownership percentage.
+          li.pb10 Regarding the authorization of new securities with different rights, there is the risk that a future investor is able to obtain rights that are superior to the rights afforded to the purchasers of the security available in this offering.
+          li.pb10 To the extent that there is ever an offer to repurchase the Shares by the Company, there is the risk that investors may feel pressured to sell their Shares to the Company without fully participating in or capturing the potential increase in value of such Shares.
+          li.pb10 Regarding a sale of the Company or of assets of the Company, there is the risk that any such transaction fails to maximize the value of the Company’s securities.  The investor will be required to rely on the business judgement of the management team and the Board of Directors of the Company so there can be no guarantee that the investor will receive the full market value of their Shares
+          li Regarding transactions with related parties, there is the risk that the Company is placed in a position that creates the possibility of a conflict of interest.  The Company may choose to participate in transactions with affiliates and related persons, with limited disclosure required to investors.
+        p.text-uppercase.m-t-3.m-b-0.pb10 
+          u Risks from an Investment in Securities
+        p.pb10.text-indent This Offering is being made on a conditional basis with no minimum number of Shares guaranteed to be sold. The Company has not engaged the services of an underwriter with respect to the Offering, and there is no guarantee that the minimum required amount of proceeds will be realized by the Company.
+
+      // page 23
+      section.page-formc-review.m-t-1
+        .top-intro
+          p.small.text-xs-left.font-weight-bold FORM C Offering Material for
+          p.small.pb10
+            +editText('issuer_short_name')
+            |  as Issuer
+        p.pb10.text-indent The Shares are not guaranteed or insured by any government agency or by any private party. The amount of earnings is not guaranteed and can vary with market conditions. The return of all or any portion of capital invested in the Shares is not guaranteed, and the Shares could become worthless.
+        p.text-indent Investors should be aware of the potentially long-term nature of their investment. Each purchaser of Shares will be required to represent that it is purchasing such securities for its own account for investment purposes and not with an intention to resell or distribute. Purchasers may be required to bear the economic risks of the investment for an indefinite period of time. There is currently no public market for the Company’s securities.  Ultimately, each investor’s risk with respect to this Offering includes the potential for a complete loss of their investment.
+        p.text-uppercase.m-t-3.m-b-0.pb10 
+          u Risks from Uncertain Capital Needs
+        p.text-indent The Company believes that the net proceeds of the Offering will be sufficient to fund the implementation of the Company’s business plan, operations and growth for the foreseeable future. Nevertheless, in the event that additional capital is required, no assurance can be given that additional financing will be available at all or on terms favorable to the Company. If adequate funds were not available to satisfy either short or long-term capital requirements, the Company may be unable to continue in business, with a resulting loss of all or part of investments made by the Company’s investors. Moreover, if additional equity securities are issued in connection with future financings, the ownership percentages of then shareholders could be diluted. Dilution of ownership percentages may also occur as a result of equity securities issued pursuant to possible sales or grants to existing shareholders, officers, managers, consultants, advisors, and/or employees.
+        p.text-uppercase.m-t-3.m-b-0.pb10 
+          u Risks from Relying on an Exemption from Registration
+        p.pb10.text-indent The Shares are being offered for sale in reliance upon certain exemptions from the registration requirements of the Securities Act and applicable state securities laws. If the sale of the Shares were to fail to qualify for these exemptions, purchasers may seek rescission of their purchases of the Shares. If a number of purchasers were to obtain rescission, the Company would face significant financial demands, which could adversely affect the Company as a whole, as well as any non-rescinding purchasers.
+
+      // page 24
+      section.page-formc-review.m-t-1
+        .top-intro
+          p.small.text-xs-left.font-weight-bold FORM C Offering Material for
+          p.small.pb10
+            +editText('issuer_short_name')
+            |  as Issuer
+        h2.text-uppercase.text-xs-center.font-weight-bold.letter-spacing-normal.m-b-3 ISSUER-SPECIFIC RISK FACTORS
+        p.text-uppercase.m-t-0.m-b-0.pb10 
+          u MARKET AND CUSTOMER RISK FACTORS
+        h3
+          +editText('mac_risk_title')
+        p
+          +editText('mac_risk')
+        p.text-uppercase.m-t-3.m-b-0.pb10 
+          u FINANCIAL RISK FACTORS
+        h3
+          //+editText('fin_risk_title')
+        p
+          //+editText('fin_risk')
+        p.text-uppercase.m-t-3.m-b-0.pb10 
+          u OPERATIONAL RISK FACTORS
+        h3
+          //+editText('ops_risk_title')
+        p
+          //+editText('ops_risk')
+        p.text-uppercase.m-t-3.m-b-0.pb10 
+          u COMPETITIVE RISK FACTORS
+        h3
+          //+editText('com_risk_title')
+        p
+          //+editText('com_risk')
+        p.text-uppercase.m-t-3.m-b-0.pb10 
+          u PERSONNEL AND THIRD PARTY RISK FACTORS
+        h3
+          //+editText('pat_risk_title')
+        p
+          //+editText('pat_risk')
+        p.text-uppercase.m-t-3.m-b-0.pb10 
+          u LEGAL AND REGULATORY RISK FACTORS
+        h3
+          +editText('lar_risk_title')
+        p
+          +editText('lar_risk')
+
+      // page 25
+      section.page-formc-review.m-t-1
+        .top-intro
+          p.small.text-xs-left.font-weight-bold FORM C Offering Material for
+          p.small.pb10
+            +editText('issuer_short_name')
+            |  as Issuer
+        h2.text-uppercase.text-xs-center.font-weight-bold#eligibility_information.letter-spacing-normal.m-b-3 ELIGIBILITY INFORMATION
+        p.text-uppercase.m-t-0.m-b-0.pb10 
+          u General Eligibility
+        p.pb10.text-indent The Company has certified that all of the following statements are TRUE for the Company in connection with this Offering.
+        ul
+          li.pb10 The issuer is organized under, and subject to, the laws of a State or territory of the United States or the District of Columbia.
+          li.pb10 The issuer has filed with the SEC and provided to investors, to the extent required, the ongoing annual reports required by Regulation Crowdfunding during the two years immediately preceding the filing of this offering statement (or for such shorter period that the issuer was required).
+          li.pb10 The issuer is 
+            u.font-italic not
+            |   ineligible to rely on this exemption under Section 4(a)(6) of the Securities Act as a result of a disqualification specified in Rule 503(a) of Regulation Crowdfunding.   
+          li.pb10 The issuer is 
+            u.font-italic not
+            |   subject to the requirement to file reports pursuant to Section 13 or Section 15(d) of the Securities Exchange Act of 1934.
+          li.pb10 The issuer is 
+            u.font-italic not
+            |   an investment company registered or required to be registered under the Investment Company Act of 1940 
+          li The issuer is 
+            u.font-italic not
+            |   a development stage company that (a) has no specific business plan or (b) has indicated that its business plan is to engage in a merger or acquisition with an unidentified company or companies.
+        p.text-uppercase.m-t-3.m-b-0.pb10 
+          u Filing Eligibility
+        p.pb10.text-indent The Company has certified that neither the Company nor any of its predecessors have previously failed to comply with the ongoing reporting requirements of Rule 202 of Regulation Crowdfunding.
+
+      // page 26
+      section.page-formc-review.m-t-1
+        .top-intro
+          p.small.text-xs-left.font-weight-bold FORM C Offering Material for
+          p.small
+            +editText('issuer_short_name')
+            |  as Issuer
+        p.text-uppercase.m-t-3.m-b-0.pb10 
+          u No Disqualifications
+        p.pb10.text-indent The Company has reviewed the statements below relating to Rule 503(a) of Regulation Crowdfunding.
+          b The Company understands that if any of these statements are NOT true, then the Company is NOT eligible to rely on this exemption under Section 4(a)(6) of the Securities Act.
+        p.pb10.text-indent When reviewing the statements below, the Company has evaluated whether these statements are applicable to the Company and has also evaluated whether the statements apply to: any predecessor of the issuer; any affiliated issuer; any director, officer, general partner or managing member of the issuer; any beneficial owner of 20 percent or more of the issuer's outstanding voting equity securities, calculated on the basis of voting power; any promoter connected with the issuer in any capacity at the time of such sale; any person that has been or will be paid (directly or indirectly) remuneration for solicitation of purchasers in connection with such sale of securities; or any general partner, director, officer or managing member of any such solicitor (collectively, each of the aforementioned are referred to as an “
+          u Covered Person
+          | ”).
+        p.pb10 (1) The Company has confirmed that no Covered Person has been convicted, within 10 years (or five years, in the case of issuers, their predecessors and affiliated issuers) before the filing of this offering statement, of any felony or misdemeanor:
+        ol(type="I")
+          li.pb10 in connection with the purchase or sale of any security;
+          li.pb10 involving the making of any false filing with the Commission; or 
+          li arising out of the conduct of the business of an underwriter, broker, dealer, municipal securities dealer, investment adviser, funding portal or paid solicitor of purchasers of securities.
+        p.pb10 (2) The Company has confirmed that no Covered Person is subject to any order, judgment or decree of any court of competent jurisdiction, entered within five years before the filing of the information required by Section 4A(b) of the Securities Act that, at the time of filing of this offering statement, restrains or enjoins such Covered Person from engaging or continuing to engage in any conduct or practice:
+        ol(type="I")
+          li.pb10 in connection with the purchase or sale of any security;
+          li.pb10 involving the making of any false filing with the Commission; or
+          li arising out of the conduct of the business of an underwriter, broker, dealer, municipal securities dealer, investment adviser, funding portal or paid solicitor of purchasers of securities.
+        p.pb10 (3) The Company has confirmed that no Covered Person is subject to a final order of a state securities commission (or an agency or officer of a state performing like functions); a state authority that supervises or examines banks, savings associations or credit unions; a state insurance commission (or an agency or officer of a state performing like functions); an
+
+      // page 27
+      section.page-formc-review.m-t-1
+        .top-intro
+          p.small.text-xs-left.font-weight-bold FORM C Offering Material for
+          p.small.pb10
+            +editText('issuer_short_name')
+            |  as Issuer
+        p.pb10 appropriate federal banking agency; the U.S. Commodity Futures Trading Commission; or the National Credit Union Administration that:
+        ol(type="I")
+          li.pb10 at the time of the filing of this offering statement bars the person from association with an entity regulated by such commission, authority, agency or officer;
+          li.pb10 at the time of the filing of this offering statement bars the person from engaging in the business of securities, insurance or banking; or
+          li.pb10 at the time of the filing of this offering statement bars the person from engaging in savings association or credit union activities; or
+          li constitutes a final order based on a violation of any law or regulation that prohibits fraudulent, manipulative or deceptive conduct and for which the order was entered within the 10-year period ending on the date of the filing of this offering statement.
+        p.pb10.text-indent For purposes of the statement above, the term “final order” means a written directive or declaratory statement issued by a federal or state agency, described in Rule 503(a)(3) of Regulation Crowdfunding, under applicable statutory authority that provides for notice and an opportunity for hearing, which constitutes a final disposition or action by that federal or state agency.
+        p.pb10 (4) The Company has confirmed that no Covered Person is subject to an order of the SEC entered pursuant to Section 15(b) or 15B(c) of the Exchange Act or Section 203(e) or (f) of the Investment Advisers Act of 1940 that, at the time of the filing of this offering statement:
+        ol(type="I")
+          li.pb10 suspends or revokes such person’s registration as a broker, dealer, municipal securities dealer, investment adviser or funding portal;
+          li.pb10 places limitations on the activities, functions or operations of such person; or
+          li bars such person from being associated with any entity or from participating in the offering of any penny stock.
+        p.pb10 (5) The Company has confirmed that no Covered Person is subject to any order of the Commission entered within five years before the filing of this offering statement that, at the time of the filing of this offering statement, orders the person to cease and desist from committing or causing a violation or future violation of:
+        ol(type="I")
+          li.pb10 any scienter-based anti-fraud provision of the federal securities laws, including without limitation Section 17(a)(1) of the Securities Act, Section 10(b) of the Exchange Act, Section 15(c)(1) of the Exchange Act and Section 206(1) of the Investment Advisers Act of 1940 or any other rule or regulation thereunder; or
+          li Section 5 of the Securities Act.
+        p.pb10 (6)  The Company has confirmed that no Covered Person is or has been suspended or expelled from membership in, or suspended or barred from association with a member of, a registered national securities exchange or a registered national or affiliated securities association for any act or omission to act constituting conduct inconsistent with just and equitable principles of trade.
+
+      // page 28
+      section.page-formc-review.m-t-1
+        .top-intro
+          p.small.text-xs-left.font-weight-bold FORM C Offering Material for
+          p.small.pb10
+            +editText('issuer_short_name')
+            |  as Issuer  
+        p.pb10 (7)  The Company has confirmed that no Covered Person filed, or was any such person named as an underwriter in, any registration statement or Regulation A offering statement filed with the SEC that, within five years before the filing of this offering statement, was the subject of a refusal order, stop order, or order suspending the Regulation A exemption, or is any such person, at the time of such filing, the subject of an investigation or proceeding to determine whether a stop order or suspension order should be issued.
+        p.pb10 (8)  The Company has confirmed that no Covered Person is subject to a United States Postal Service false representation order entered within five years before the filing of the information required by Section 4A(b) of the Securities Act, or is any such person, at the time of filing of this offering statement, subject to a temporary restraining order or preliminary injunction with respect to conduct alleged by the United States Postal Service to constitute a scheme or device for obtaining money or property through the mail by means of false representations
+
+      // page 29
+      section.page-formc-review.m-t-1
+        .top-intro
+          p.small.text-xs-left.font-weight-bold FORM C Offering Material for
+          p.small.pb10
+            +editText('issuer_short_name')
+            |  as Issuer
+        h2.text-uppercase.text-xs-center.font-weight-bold.letter-spacing-normal.m-b-3 OTHER MATTERS
+        p.text-uppercase.m-t-0.m-b-0.pb10 
+          u Additional Material Disclosure
+        p.pb10.text-indent The issuer has opted to include the following information that may be deemed material to investors in connection with this offering. The issuer is also providing the following information to reduce the possibility that any of the required statements are misleading, in light of the circumstances under which they are made. 
+        p.pb10.p-l-2
+          +editText('material_information')
+        p.pb10.text-indent To the extent the issuer has made certain information available to investors in a format, media or other means not able to be reflected in text or portable document format, a description of such material is provided as follows:
+        p.pb10.p-l-2
+          +editText('descrption_material_information')
+
+      // page 30
+      section.page-formc-review.m-t-1
+        .top-intro
+          p.small.text-xs-left.font-weight-bold FORM C Offering Material for
+          p.small.pb10
+            +editText('issuer_short_name')
+            |  as Issuer
+        h2.text-uppercase.text-xs-center.font-weight-bold.letter-spacing-normal.m-b-3 REPORTING OBLIGATIONS
+        p.text-uppercase.m-t-0.m-b-0.pb10 
+          u End of Reporting Requirement
+        p.pb10.text-indent The issuer may terminate its reporting obligations in the future in accordance with Rule 202(b) of Regulation Crowdfunding (§ 227.202(b)). The issuer must continue to comply with the ongoing reporting requirements until one of the following conditions is met:
+        ul
+          li.pb10 the issuer is required to file reports under Section 13(a) or Section 15(d) of the Exchange Act;
+          li.pb10 the issuer has filed at least one annual report pursuant to Regulation Crowdfunding and has fewer than 300 holders of record and has total assets that do not exceed $10,000,000;
+          li.pb10 the issuer has filed at least three annual reports pursuant to Regulation Crowdfunding;
+          li the issuer or another party repurchases all of the securities issued in reliance on Section 4(a)(6) of the Securities Act, including any payment in full of debt securities or any complete redemption of redeemable securities; or the issuer liquidates or dissolves its business in accordance with state law.
+        p.text-uppercase.m-t-3.m-b-0.pb10 
+          u Location of Annual Report
+        p.pb10.text-indent The issuer will file a report electronically with the Securities & Exchange Commission annually and post the report on its website, no later than 120 days after the end of each fiscal year covered by the report.
+        p.pb10.text-indent Once posted, the annual report may be found on the issuer's website at: 
+          +editText('website')
+          | This will remain the location for future annual reports by the issuer unless an investor is notified otherwise.
+
+      // page 31
+      section.page-formc-review.m-t-1
+        .top-intro
+          p.small.text-xs-left.font-weight-bold FORM C Offering Material for
+          p.small.pb10
+            +editText('issuer_short_name')
+            |  as Issuer
+        h2.text-uppercase.text-xs-center.font-weight-bold.letter-spacing-normal.m-b-3 EXHIBIT A: BUSINESS PLAN
+        p See Attached
+        p
+          a(href="#" class="show-input" data-name="Business_plan_file").link-1 Business_plan_file
+
+      // page 32
+      section.page-formc-review.m-t-1
+        .top-intro
+          p.small.text-xs-left.font-weight-bold FORM C Offering Material for
+          p.small.pb10
+            +editText('issuer_short_name')
+            |  as Issuer
+        h2.text-uppercase.text-xs-center.font-weight-bold.letter-spacing-normal.m-b-3 EXHIBIT B: FINANCIAL STATEMENTS
+        p See Attached
+
+      // page 33
+      section.page-formc-review.m-t-1
+        .top-intro
+          p.small.text-xs-left.font-weight-bold FORM C Offering Material for
+          p.small.pb10
+            +editText('issuer_short_name')
+            |  as Issuer
+        h2.text-uppercase.text-xs-center.font-weight-bold.letter-spacing-normal.m-b-3 EXHIBIT C: BIOGRAPHIES
+        p.pb10.text-indent Employment information from previous employers over the last three years for each of the Company’s officers is as follows:
+        p.pb10
+          each v,k in values.formc.team_members
+            if v.role[0] == 2
+              a(href="#" class="show-input" data-name="director.1.first_name_director.1.last_name").link-1 #{v.first_name}
+              .table-responsive.m-t-1
+                table.table.table-bordered
+                  theader
+                    tr.bg-grey
+                      th.text-xs-center Employer
+                      th.text-xs-center Principal Business
+                      th.text-xs-center Title
+                      th.text-xs-center Responsibilities
+                      th.text-xs-center Start Date
+                      th.text-xs-center End Date
+                  tbody
+                    if v.experiences
+                      each v1,k1 in v.experiences
+                        tr
+                          td
+                            a(href="#" class="show-input" data-name="director.1.employer.1").link-1 #{v1.employer}
+                          td
+                            a(href="#" class="show-input" data-name="director.1.employer_biz.1").link-1 #{v1.employer_principal}
+                          td
+                            a(href="#" class="show-input" data-name="director.1.employer_title.1").link-1 #{v1.title}
+                          td
+                            a(href="#" class="show-input" data-name="director.1.employer_responsibilitiees.1").link-1 #{v1.responsibilities}
+                          td
+                            a(href="#" class="show-input" data-name="director.1.position_start.1").link-1 #{v1.start_date_of_service}
+                          td
+                            a(href="#" class="show-input" data-name="director.1.position_end.1").link-1 #{v1.end_date_of_service}
+        p.pb10.text-indent Employment information from previous employers over the last three years for each of the Company’s directors is as follows:
+        p.pb10
+          each v,k in values.formc.team_members
+            if v.role[0] == 1
+              a(href="#" class="show-input" data-name="director.1.first_name_director.1.last_name").link-1 #{v.first_name}
+              .table-responsive.m-t-1
+                table.table.table-bordered
+                  theader
+                    tr.bg-grey
+                      th.text-xs-center Employer
+                      th.text-xs-center Principal Business
+                      th.text-xs-center Title
+                      th.text-xs-center Responsibilities
+                      th.text-xs-center Start Date
+                      th.text-xs-center End Date
+                  tbody
+                    if v.experiences
+                      each v1,k1 in v.experiences
+                        tr
+                          td
+                            a(href="#" class="show-input" data-name="director.1.employer.1").link-1 #{v1.employer}
+                          td
+                            a(href="#" class="show-input" data-name="director.1.employer_biz.1").link-1 #{v1.employer_principal}
+                          td
+                            a(href="#" class="show-input" data-name="director.1.employer_title.1").link-1 #{v1.title}
+                          td
+                            a(href="#" class="show-input" data-name="director.1.employer_responsibilitiees.1").link-1 #{v1.responsibilities}
+                          td
+                            a(href="#" class="show-input" data-name="director.1.position_start.1").link-1 #{v1.start_date_of_service}
+                          td
+                            a(href="#" class="show-input" data-name="director.1.position_end.1").link-1 #{v1.end_date_of_service}
+
+      // page 34
+      section.page-formc-review.m-t-1
+        .top-intro
+          p.small.text-xs-left.font-weight-bold FORM C Offering Material for
+          p.small.pb10
+            +editText('issuer_short_name')
+            |  as Issuer
+        h2.text-uppercase.text-xs-center.font-weight-bold.letter-spacing-normal.m-b-3 EXHIBIT D: EXCERPTS
+        p See Attached
+  
+
+//MODAL
+#formc_review_popup.modal.fade(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")
+  .modal-dialog(role="document")
+    .modal-content
+      .modal-header.p-b-0
+        button(type="button" class="close" data-dismiss="modal" aria-label="Close")
+          span(aria-hidden="true")
+            i.fa.fa-times
+      .modal-body.p-t-0
+        .container.form-section
+          h3.m-t-0.text-xs-center.letter-spacing-normal.m-b-1 Once you submit, you will no longer have the ability to edit your Form C.
+          h3.m-t-0.text-xs-center.letter-spacing-normal.m-b-2 Are you sure you want to submit?
+          .col-lg-12.text-lg-center.m-b-2
+            a(href="/pg/formc_review_congratulations").btn.btn-primary.btn-sm.m-r-2 Yes
+            button(type="button" data-dismiss="modal" aria-label="Close").btn.btn-secondary.btn-sm cancel
+                .modal-footer

@@ -1,73 +1,68 @@
 include mixins.pug
 
 +breadcrumbs('Overview', '', 
-    [
-        ['Home', '/'],
-        ['Overview', '']
-    ]
+  [
+    ['Home', '/'],
+    ['Overview', '']
+  ]
 )
 
 section.text_block 
-    .container
+  .container
+    .row
+      .col-lg-3.hidden-md-down 
+        .page_title.border-bottom.mb25
+          h4.text-uppercase.dosis ABOUT US
+        ul.list-unstyled.custom
+          li
+            a(href='/pg/overview').d-inline-block.w-100.pb10 Overview
+          li
+            a(href='/pg/team').d-inline-block.w-100.pb10 #{teamName}
+          li.display-partners
+            a(href='/pg/partners').d-inline-block.w-100.pb10 Partners
+          li
+            a(href='/pg/contact').d-inline-block.w-100.pb10 Contact Us
+          li
+            a(href='/pg/careers').d-inline-block.w-100.pb10 Careers
+          li
+            a(href='/pg/news').d-inline-block.w-100.pb10 In the News
+          li
+            a(href='/pg/faq').d-inline-block.w-100.pb10 FAQ
+          //- li
+          //-     // у последнего елемента <a> клас pb10 отстутствует
+          //-     a.d-inline-block.w-100(href='/pg/blogs') Blog
+
+      .col-lg-9
         .row
-            .col-lg-3 
-                .page_title.border-bottom.mb25
-                    h4.text-uppercase.dosis ABOUT US
-                ul.list-unstyled.mb50.custom
-                    li
-                        a.d-inline-block.w-100.pb10(href='/pg/overview') Overview
-                    li
-                        a.d-inline-block.w-100.pb10(href='/pg/team') #{teamName}
-                    li.display-partners
-                        a.d-inline-block.w-100.pb10(href='/pg/partners') Partners
-                    li
-                        a.d-inline-block.w-100.pb10(href='/pg/contact') Contact Us
-                    li
-                        a.d-inline-block.w-100.pb10(href='/pg/careers') Careers
-                    li
-                        a.d-inline-block.w-100.pb10(href='/pg/faq') FAQ
-                    li
-                        a.d-inline-block.w-100.pb10(href='/pg/news') In the News
-                    li
-                        // у последнего елемента <a> клас pb10 отстутствует
-                        a.d-inline-block.w-100(href='/pg/blogs') Blog
+          .col-lg-12.text-xs-center
+            h2.text-uppercase.dosis.m0 Overview
+            
+        .row
+          .col-lg-12.mt45
+            p.pb10.text-justify We banded together with a simple mission – to connect small businesses to the tools they need to succeed – including financial, human and social capital. Our goal is to level the playing field and make things easy for entrepreneurs to focus on what matters – their product or service! Please feel free to take advantage of all of the tools, tutorials and calculators we have available on our platform, including:
 
-            .col-lg-9
-                .row
-                    .col-lg-12.text-xs-center
-                        h2.text-uppercase.dosis.m0 Overview
-                        
-                .row
-                    .col-lg-12.mt45
-                        p.pb10.text-justify We banded together with a simple mission – to connect small businesses to all the tools they need to succeed – including financial, human and social capital. Our goal is to level the playing field and make things easy for entrepreneurs to focus on what matters – their product or service! Please feel free to take advantage of all of the tools, tutorials and calculators we have available on our platform, including:
-
-                        ul.simple-list
-                            li.pb10.text-justify 
-                                b Raise Capital:  
-                                | Access our investor network to raise financial capital for your company
-                            li.pb10.text-justify
-                                b Advisor Network:  
-                                | We intend to help companies connect with individuals who have been there, done that and who might be able to give the right advice
-                            li.pb10.text-justify 
-                                b Education Material:  
-                                | How does investing in Regulation Crowdfunding offerings actually work?
-                            li.pb10.text-justify
-                                b Success Guide:  
-                                | This tool can help your company prepare your fundraising campaign
-                            li.pb10.text-justify
-                                b Investor and Business Tutorials:  
-                                | Delve deeper into the rules and obligations of Regulation Crowdfunding
-                            li.pb10.text-justify
-                                b Capital Raise Calculator:  
-                                | This tool helps you understand how much money you might need to raise to accomplish your goals
-                            li.pb10.text-justify 
-                                b What’s my Business Worth?:  
-                                | This tool helps you benchmark valuations for similar companies
-                            li.pb10.text-justify
-                                b Blog:  
-                                | Read and contribute to GrowthFountain’s Blog!
-                            li.pb10.text-justify
-                                b FAQ:  
-                                | Scroll through our Frequently Asked Questions to gain additional insight into how it all works Together, we can help support entrepreneurs and grow businesses that otherwise might not have had this opportunity.
-
-                        
+            ul.simple-list
+              li.pb10.text-justify 
+                b Raise Capital:  
+                | Access our investor network to raise financial capital for your company
+              li.pb10.text-justify 
+                b Education Material:  
+                | How does investing in Regulation Crowdfunding offerings actually work?
+              li.pb10.text-justify
+                b Success Guide:  
+                | This tool can help your company prepare your fundraising campaign
+              li.pb10.text-justify
+                b Investor and Business Tutorials:  
+                | Delve deeper into the rules and obligations of Regulation Crowdfunding
+              li.pb10.text-justify
+                b Capital Raise Calculator:  
+                | This tool helps you understand how much money you might need to raise to accomplish your goals
+              li.pb10.text-justify 
+                b What’s my Business Worth?:  
+                | This tool helps you benchmark valuations for similar companies
+              //- li.pb10.text-justify
+              //-     b Blog:  
+              //-     | Read and contribute to GrowthFountain’s Blog!
+              li.pb10.text-justify
+                b FAQ:  
+                | Scroll through our Frequently Asked Questions to gain additional insight into how it all works Together, we can help support entrepreneurs and grow businesses that otherwise might not have had this opportunity.

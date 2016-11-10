@@ -57,12 +57,12 @@ module.exports = {
     e.preventDefault();
 
     data = data || $(e.target).serializeJSON({ useIntKeysAsArrayIndex: true });
-    api.fixDateFields(data);
+    api.fixDateFields.call(this, data);
 
     // if view already have some data - extend that info
     if(this.hasOwnProperty('model')) {
       _.extend(this.model, data);
-      data = Object.assign({}, this.model)
+      data = _.extend({}, this.model)
     }
 
     /*
@@ -74,7 +74,6 @@ module.exports = {
        };
        this.model.validation = newValidators;
     */
-
     this.$('.help-block').remove();
     if (e.target.dataset.method != 'PATCH' && !validation.validate(this.fields, data, this)) {
       _(validation.errors).each((errors, key) => {
@@ -180,6 +179,7 @@ module.exports = {
   fixDateFields(data) {
     _(this.fields).each((el, key) => {
       if(el.type == 'date') {
+        debugger;
         var key_year = key + '__year';
         var key_month = key + '__month';
         data[key] = data[key_year] && data[key_month]

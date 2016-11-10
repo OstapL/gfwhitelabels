@@ -1,13 +1,26 @@
 module.exports = Backbone.Router.extend({
   routes: {
     'company/create': 'company',
-    'campaign/general_information/:id': 'generalInformation',
-    'campaign/media/:id': 'media',
-    'campaign/team-members/:id/add/:type/:index': 'teamMembersAdd',
-    'campaign/team-members/:id': 'teamMembers',
-    'campaign/specifics/:id': 'specifics',
-    'campaign/perks/:id': 'perks',
-    'campaign/thankyou/:id': 'thankyou',
+    'campaign/:id/general_information': 'generalInformation',
+    'campaign/:id/media': 'media',
+    'campaign/:id/team-members/add/:type/:index': 'teamMembersAdd',
+    'campaign/:id/team-members': 'teamMembers',
+    'campaign/:id/specifics': 'specifics',
+    'campaign/:id/perks': 'perks',
+    'campaign/:id/thankyou': 'thankyou',
+  },
+
+  execute: function (callback, args, name) {
+    if (app.user.is_anonymous()) {
+      const pView = require('components/anonymousAccount/views.js');
+      require.ensure([], function() {
+        new pView.popupLogin().render(window.location.pathname);
+        app.hideLoading();
+        $('#sign_up').modal();
+      });
+      return false;
+    }
+    if (callback) callback.apply(this, args);
   },
 
   company() {
@@ -15,35 +28,27 @@ module.exports = Backbone.Router.extend({
       const Model = require('components/company/models.js');
       const View = require('components/raiseFunds/views.js');
 
-      // ToDo
-      // Rebuild this
-      var a1 = app.makeCacheRequest(raiseCapitalUrl + '/company', 'OPTIONS');
-      var a2 = app.makeCacheRequest(raiseCapitalUrl + '/company');
+      const optionsR = app.makeCacheRequest(raiseCapitalUrl + '/company', 'OPTIONS');
+      const companyR = app.makeCacheRequest(authServer + '/user/company');
+      const campaignR = app.makeCacheRequest(authServer + '/user/campaign');
 
-      $.when(a1, a2).done((meta, model) => {
-        app.makeRequest(Urls['campaign-list']() + '/general_information')
-        .then((campaignData) => {
-          //console.log('campaignis', metaData, modelData, campaignData[0]);
-          $('body').scrollTo(); 
-          var i = new View.company({
-            el: '#content',
-            fields: meta[0].actions.POST,
-            // model: new Model.model(model[0][0] || {}),
-            model: model[0][0] || {},
-            campaign: campaignData[0] || {},
-          });
-
-          // ToDo
-          // Check if campaign are exists already
-          app.hideLoading();
-          i.render();
-          //app.views.campaign[id].render();
-          //app.cache[window.location.pathname] = i.$el.html();
-
-        }).fail(function(xhr, response, error) {
-          api.errorAction.call(this, $('#content'), xhr, response, error);
+      $.when(optionsR, companyR, campaignR).done((options, company, campaign) => {
+        $('body').scrollTo(); 
+        var i = new View.company({
+          el: '#content',
+          fields: options[0].fields,
+          model: company[0] || {},
+          campaign: campaign[0] || {},
         });
-      })
+
+        app.hideLoading();
+        i.render();
+        //app.views.campaign[id].render();
+        //app.cache[window.location.pathname] = i.$el.html();
+
+      }).fail(function(xhr, response, error) {
+        api.errorAction.call(this, $('#content'), xhr, response, error);
+      });
     } else {
       app.routers.navigate(
           '/account/login', {trigger: true, replace: true}
@@ -61,21 +66,20 @@ module.exports = Backbone.Router.extend({
         console.log('not goinng anywhere');
         return;
       }
-      $('body').scrollTo(); 
+      $('#content').scrollTo(); 
 
-      var a1 = app.makeCacheRequest(Urls['campaign-list']() + '/general_information/' + id, 'OPTIONS');
-      var a2 = app.makeCacheRequest(Urls['campaign-list']() + '/general_information/' + id);
+      var a1 = app.makeCacheRequest(raiseCapitalUrl + '/campaign/' + id + '/general_information', 'OPTIONS');
+      var a2 = app.makeCacheRequest(raiseCapitalUrl + '/campaign/' + id + '/general_information');
 
       $.when(a1, a2).done((meta, model) => {
+        model[0].id = id;
         var i = new View.generalInformation({
           el: '#content',
-            fields: meta[0].actions.PUT,
-            // model: new Model.model(model[0])
-            model: model[0]
+          fields: meta[0].fields,
+          model: model[0]
         });
 
         i.render();
-        //app.views.campaign[id].render();
         //app.cache[window.location.pathname] = i.$el.html();
 
         app.hideLoading();
@@ -91,17 +95,21 @@ module.exports = Backbone.Router.extend({
 
   media(id) {
     if (!app.user.is_anonymous()) {
-      $('body').scrollTo(); 
+      $('#content').scrollTo(); 
       const Model = require('components/campaign/models.js');
       const View = require('components/raiseFunds/views.js');
 
-      var a1 = app.makeCacheRequest(Urls['campaign-list']() + '/media/' + id, 'OPTIONS');
-      var a2 = app.makeCacheRequest(Urls['campaign-list']() + '/media/' + id);
+      var a1 = app.makeCacheRequest(raiseCapitalUrl + '/campaign/' + id + '/media', 'OPTIONS');
+      var a2 = app.makeCacheRequest(raiseCapitalUrl + '/campaign/' + id + '/media');
+
+      // var a1 = app.makeCacheRequest(Urls['campaign-list']() + '/media/' + id, 'OPTIONS');
+      // var a2 = app.makeCacheRequest(Urls['campaign-list']() + '/media/' + id);
 
       $.when(a1, a2).done((meta, model) => {
+        model[0].id = id;
         var i = new View.media({
           el: '#content',
-            fields: meta[0].actions.PUT,
+            fields: meta[0].fields,
             // model: new Model.model(model[0])
             model: model[0],
         });
@@ -124,9 +132,11 @@ module.exports = Backbone.Router.extend({
       const Model = require('components/campaign/models.js');
       const View = require('components/raiseFunds/views.js');
 
-      var a2 = app.makeCacheRequest(Urls['campaign-list']() + '/team_members/' + id);
+      // var a2 = app.makeCacheRequest(Urls['campaign-list']() + '/team_members/' + id);
+      var a2 = app.makeCacheRequest(raiseCapitalUrl + '/campaign/' + id + '/team_members');
 
       $.when(a2).done((model) => {
+        model.id = id;
         var i = new View.teamMembers({
           el: '#content',
           // model: new Model.model(model),
@@ -151,7 +161,8 @@ module.exports = Backbone.Router.extend({
       const Model = require('components/campaign/models.js');
       const View = require('components/raiseFunds/views.js');
 
-      var a2 = app.makeCacheRequest(Urls['campaign-list']() + '/team_members/' + id);
+      // var a2 = app.makeCacheRequest(Urls['campaign-list']() + '/team_members/' + id);
+      var a2 = app.makeCacheRequest(raiseCapitalUrl + '/campaign/' + id + '/team_members');
       $.when(a2).done((model) => {
         const addForm = new View.teamMemberAdd({
           el: '#content',
@@ -177,20 +188,19 @@ module.exports = Backbone.Router.extend({
       const Model = require('components/campaign/models.js');
       const View = require('components/raiseFunds/views.js');
 
-      var a1 = app.makeCacheRequest(Urls['campaign-list']() + '/specifics/' + id, 'OPTIONS');
-      var a2 = app.makeCacheRequest(Urls['campaign-list']() + '/specifics/' + id);
+      var a1 = app.makeCacheRequest(raiseCapitalUrl + '/campaign/' + id + '/specifics', 'OPTIONS');
+      var a2 = app.makeCacheRequest(raiseCapitalUrl + '/campaign/' + id + '/specifics');
+      var a3 = app.makeCacheRequest(authServer + '/user/company');
 
-      $.when(a1, a2).done((meta, model) => {
+      $.when(a1, a2, a3).done((meta, model, company) => {
+        model[0].id = id;
+        model[0].company = company[0];
         var i = new View.specifics({
           el: '#content',
-          fields: meta[0].actions.PUT,
-          // model: new Model.model(model[0]),
+          fields: meta[0].fields,
           model: model[0],
         });
         i.render();
-        //app.views.campaign[id].render();
-        //app.cache[window.location.pathname] = i.$el.html();
-
         app.hideLoading();
       }).fail((xhr, error) =>  {
         app.defaultSaveActions.error.error($('#content'), error);
@@ -209,13 +219,14 @@ module.exports = Backbone.Router.extend({
       const Model = require('components/campaign/models.js');
       const View = require('components/raiseFunds/views.js');
 
-      var a1 = app.makeCacheRequest(Urls['campaign-list']() + '/perks/' + id, 'OPTIONS');
-      var a2 = app.makeCacheRequest(Urls['campaign-list']() + '/perks/' + id);
+      var a1 = app.makeCacheRequest(raiseCapitalUrl + '/campaign/' + id + '/perks', 'OPTIONS');
+      var a2 = app.makeCacheRequest(raiseCapitalUrl + '/campaign/' + id + '/perks');
 
       $.when(a1, a2).done((meta, model) => {
+        model[0].id = id;
         var i = new View.perks({
           el: '#content',
-          fields: meta[0].actions.PUT,
+          fields: meta[0].fields,
           // model: new Model.model(model[0]),
           model: model[0],
         });
@@ -234,6 +245,7 @@ module.exports = Backbone.Router.extend({
 
   thankyou(id) {
     if (!app.user.is_anonymous()) {
+      app.showLoading();
       $('body').scrollTo(); 
       const Model = require('components/campaign/models.js');
       const View = require('components/raiseFunds/views.js');

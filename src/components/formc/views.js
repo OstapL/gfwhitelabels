@@ -1,11 +1,12 @@
 'use strict';
 
+const formatHelper = require('../../helpers/formatHelper');
+
 const menuHelper = require('helpers/menuHelper.js');
 const addSectionHelper = require('helpers/addSectionHelper.js');
 const yesNoHelper = require('helpers/yesNoHelper.js');
 
-const dropzone = require('dropzone');
-const dropzoneHelpers = require('helpers/dropzone.js');
+const dropzoneHelpers = require('helpers/dropzoneHelpers.js');
 const riskFactorsHelper = require('helpers/riskFactorsHelper.js');
 
 const labels = {
@@ -122,22 +123,19 @@ module.exports = {
           return;
         }
 
-        api.makeRequest(formcServer + '/stripe', 'POST', { stripeToken: stripeResponse.id })
-            .done((formcResponse, statusText, xhr) => {
-              if (xhr.status !== 200) {
-                validation.invalidMsg({ $: $ }, 'expiration-block',
-                    [formcResponse.description || 'An error occurred, please, try again later.']);
-                $submitBtn.prop('disabled', false);
-                return;
-              }
-
-              data.stripeToken = stripeResponse.id;
-              api.submitAction.call(this, e, data);
-            }).fail((xhr, status, err) => {
-              validation.invalidMsg({ $: $ }, 'expiration-block',
-                  [err || 'An error occurred, please, try again later.']);
-              $submitBtn.prop('disabled', false);
-            });
+        api.makeRequest(formcServer + '/' + this.model.id + '/stripe', "PUT", { 
+          stripeToken: stripeResponse.id
+        }).done((formcResponse, statusText, xhr)=>{
+          if (xhr.status !== 200) {
+            validation.invalidMsg({'$': $}, "expiration-block", [formcResponse.description || 'Some error message should be here']);
+            $submitBtn.prop('disabled', false);
+            return;
+          }
+          api.submitAction.call(this, e, data);
+        }).fail((xhr, ajaxOptions, err)=>{
+          validation.invalidMsg({'$': $}, "expiration-block", [xhr.responseJSON.non_field_errors || "An error occurred, please, try again later."]);
+          $submitBtn.prop('disabled', false);
+        });
       });
 
       return false;
@@ -276,9 +274,9 @@ module.exports = {
     render() {
       let template = null;
 
-      if (this.model.hasOwnProperty('uuid')  && this.model.uuid != '') {
+      if(this.model.hasOwnProperty('user_id')  && this.model.uuid != '') {
         this.model.id = this.model.formc_id;
-        this.urlRoot += '/' + this.role + '/' + this.model.uuid;
+        this.urlRoot += '/' + this.role + '/' + this.model.user_id;
       } else {
         this.urlRoot = this.urlRoot.replace(':id', this.model.formc_id);
         this.urlRoot += '/' + this.role;
@@ -424,7 +422,7 @@ module.exports = {
     urlRoot: formcServer + '/:id' + '/related-parties',
 
     events: _.extend({
-      'submit form': 'submit',
+      'submit form': api.submitAction,
     }, addSectionHelper.events, menuHelper.events, yesNoHelper.events),
 
     initialize(options) {
@@ -442,18 +440,6 @@ module.exports = {
 
       this.createIndexes();
       this.buildJsonTemplates('formc');
-
-    },
-
-    submit(e) {
-      var $target = $(e.target);
-      var data = $target.serializeJSON({ useIntKeysAsArrayIndex: true });
-
-      if (data.had_transactions == 'false') {
-        data.transaction_with_related_parties = [];
-      }
-
-      api.submitAction.call(this, e, data);
     },
 
     getSuccessUrl(data) {
@@ -477,74 +463,83 @@ module.exports = {
   }, addSectionHelper.methods, menuHelper.methods, yesNoHelper.methods)),
 
   useOfProceeds: Backbone.View.extend(_.extend({
-    urlRoot: 'https://api-formc.growthfountain.com/' + ':id' + '/use-of-proceeds',
+    urlRoot: formcServer + '/:id/use-of-proceeds',
 
     initialize(options) {
       this.fields = options.fields;
+      this.campaign = options.campaign;
+      this.labels = {
+        describe: 'Describe your business plan',
+        business_plan: 'Please upload your business plan',
+        less_offering_express: {},
+        use_of_net_proceeds: {},
+      };
+      this.assignLabels();
+      this.createIndexes();
+      this.buildJsonTemplates('formc');
     },
 
     events: _.extend({
       'submit form': 'submit',
       'change input[type=radio][name=doc_type]': 'changeDocType',
-      'click .add-proceed': 'addProceed',
-      'click .delete-proceed': 'deleteProceed',
       'change .min-expense,.max-expense,.min-use,.max-use': 'calculate',
-    }, addSectionHelper.events, menuHelper.events),
+      'click .add-sectionnew': 'addSectionNew',
+      'click .delete-sectionnew': 'deleteRow',
+    }, menuHelper.events, dropzoneHelpers.events),
+
+    deleteRow(e) {
+      this.deleteSectionNew(e);
+      this.calculate(null);
+    },
 
     getSuccessUrl() {
       return '/formc/' + this.model.id + '/risk-factors-instruction';
     },
 
     _getSum(selector) {
-      let values = this.$(selector).map(function (e) {
-        let val = $(this).val();
-        return parseInt(val ? val : 0);
-      }).toArray();
-      if (values.length == 0) values.push(0);
-      return values.reduce(function (total, num) { return total + num; });
+        let values = this.$(selector).map(function (e) {
+          let result = parseInt($(this).val() ? $(this).val().replace(/,/g, '') : 0);
+          return result ? result : 0;
+        }).toArray();
+        if (values.length == 0) values.push(0);
+        return values.reduce(function (total, num) { return total + num; });
     },
 
     calculate(e) {
-      // Add all min-expense
-      let minRaise = 100000;
-      let maxRaise = 200000;
+      if (e) {
+        let $target = $(e.target);
+        $target.val(formatHelper.formatNumber($target.val()));
+      }
+      let minRaise = this.campaign.minimum_raise;
+      let maxRaise = this.campaign.maximum_raise;
 
       let minNetProceeds = minRaise - this._getSum('.min-expense');
       let maxNetProceeds = maxRaise - this._getSum('.max-expense');
 
-      this.$('.min-net-proceeds').text(minNetProceeds);
-      this.$('.max-net-proceeds').text(maxNetProceeds);
+      this.$('.min-net-proceeds').text('$' + formatHelper.formatNumber(minNetProceeds));
+      this.$('.max-net-proceeds').text('$' + formatHelper.formatNumber(maxNetProceeds));
 
       let minTotalUse = this._getSum('.min-use');
       let maxTotalUse = this._getSum('.max-use');
 
-      this.$('.min-total-use').text(minTotalUse);
-      this.$('.max-total-use').text(maxTotalUse);
+      this.$('.min-total-use').text('$' + formatHelper.formatNumber(minTotalUse));
+      this.$('.max-total-use').text('$' + formatHelper.formatNumber(maxTotalUse));
 
-      return (minNetProceeds == minTotalUse) && (maxNetProceeds == maxTotalUse);
-    },
+      // return true if the table is valid in terms of the calculation, else return false
+      if (minNetProceeds == minTotalUse) {
+        $('.min-net-proceeds,.min-total-use').removeClass('red');
+      } else {
+        $('.min-net-proceeds,.min-total-use').addClass('red');
+      }
 
-    addProceed(e) {
-      e.preventDefault();
-      let $target = $(e.target);
-      let template = require('./templates/proceed.pug');
-      let type = $target.data('type');
-      let dataType;
-      if (type == 'use') dataType = 'use_of_net_proceeds';
-      else if (type == 'expense') dataType = 'less_offering_express';
-      $('.' + type + '-table tbody').append(template({
-        type: type,
-        dataType: dataType,
-        index: this[dataType + 'Index']++,
-      }));
-    },
-
-    deleteProceed(e) {
-      e.preventDefault();
-      let $target = $(e.currentTarget);
-      let type = $target.data('type');
-      let index = $target.data('index');
-      $('.' + type + '-table tr.index_' + index).remove();
+      if (maxNetProceeds == maxTotalUse) {
+        $('.max-net-proceeds,.max-total-use').removeClass('red');
+      } else {
+        $('.max-net-proceeds,.max-total-use').addClass('red');
+      }
+      let result = (minNetProceeds == minTotalUse) && (maxNetProceeds == maxTotalUse);
+      this.$('.max-total-use').popover(result ? 'hide' : 'show');
+      return result;
     },
 
     changeDocType(e) {
@@ -560,7 +555,7 @@ module.exports = {
     submit(e) {
       if (!this.calculate(null)) {
         e.preventDefault();
-        alert('Total Use of Net Proceeds must equal Net Proceeds!');
+        alert("Total Use of Net Proceeds must be equal to Net Proceeds.");
         return;
       }
 
@@ -570,18 +565,7 @@ module.exports = {
     },
 
     render() {
-      let template = require('components/formc/templates/useOfProceeds.pug');
-      if (this.model.less_offering_express) {
-        this.less_offering_expressIndex = Object.keys(this.model.less_offering_express).length;
-      } else {
-        this.less_offering_expressIndex = 0;
-      }
-
-      if (this.model.use_of_net_proceeds) {
-        this.use_of_net_proceedsIndex = Object.keys(this.model.use_of_net_proceeds).length;
-      } else {
-        this.use_of_net_proceedsIndex = 0;
-      }
+      let template = require('./templates/useOfProceeds.pug');
 
       this.$el.html(
         template({
@@ -589,12 +573,28 @@ module.exports = {
           Urls: Urls,
           fields: this.fields,
           values: this.model,
+          templates: this.jsonTemplates,
+          maxRaise: this.campaign.maximum_raise,
+          minRaise: this.campaign.minimum_raise,
+          formatHelper: formatHelper,
         })
       );
+      this.$('.max-total-use').popover({
+        html: true,
+        template: '<div class="popover" role="tooltip" style="border-color:red;"><div class="popover-arrow" style="border-right-color:red;"></div><h3 class="popover-title"></h3><div class="popover-content" style="color:red;"></div></div>'
+      });
+
+      this.$('.min-expense,.max-expense,.min-use,.max-use').each(function (e) {
+        let $this = $(this);
+        $this.val(formatHelper.formatNumber($this.val()));
+      });
+
+
       this.calculate(null);
+      setTimeout(() => { this.createDropzones() } , 1000);
       return this;
-    },
-  }, addSectionHelper.methods, menuHelper.methods)),
+    }, 
+  }, menuHelper.methods, dropzoneHelpers.methods, addSectionHelper.methods)),
 
   riskFactorsInstruction: Backbone.View.extend(_.extend({
     initialize(options) {},
@@ -811,7 +811,6 @@ module.exports = {
 
     render() {
       let template = require('components/formc/templates/riskFactorsFinancial.pug');
-      console.log(this.fields);
       this.$el.html(
         template({
           serverUrl: serverUrl,
@@ -1308,36 +1307,29 @@ module.exports = {
     urlRoot: formcServer + '/:id/financial-condition',
 
     events: _.extend({
-      'submit #security_model_form': 'newOutstanding',
       'submit form': api.submitAction,
     }, menuHelper.events, yesNoHelper.events, addSectionHelper.events, dropzoneHelpers.events),
 
     initialize(options) {
       this.fields = options.fields;
-
-      // TODO
-      // Fix for default file values
-      if (this.model.financials_for_most_recent_fiscal_year_id == null) {
-        this.model.financials_for_most_recent_fiscal_year_id = 'null';
-      }
-
-      if (this.model.financials_for_prior_fiscal_year_id == null) {
-        this.model.financials_for_prior_fiscal_year_id = 'null';
-      }
-
       this.labels = {
         sold_securities_data: {
-          taxable_income: 'Taxable Income',
-          total_income: 'Total Income',
-          total_tax: 'Total Tax',
-          total_assets: 'Total Assets',
-          long_term_debt: 'Long Term Debt',
-          short_term_debt: 'Short Term Debt',
-          cost_of_goods_sold: 'Cost of Goods Sold',
-          account_receivable: 'Account Receivable',
-          cash_and_equivalents: 'Cash Equivalents',
-          revenues_sales: 'Revenues Sales',
+          taxable_income: "Taxable Income",
+          total_income: "Total Income",
+          total_tax: "Total Tax",
+          total_assets: "Total Assets",
+          long_term_debt: "Long Term Debt",
+          short_term_debt: "Short Term Debt",
+          cost_of_goods_sold: "Cost of Goods Sold",
+          account_receivable: "Account Receivable",
+          cash_and_equivalents: "Cash Equivalents",
+          revenues_sales: "Revenues Sales",
         },
+        sold_securities_amount: "How much have you sold within the preceeding 12-month period?",
+        fiscal_recent_file_id: "Upload financials for most recent fiscal year",
+        fiscal_prior_file_id: "Upload financials for prior fiscal year",
+        financials_condition_no: "Please discuss financial milestones and operational, liquidity and other challenges.  Please discuss how the proceeds from the offering will affect your liquidity, whether these funds are necessary to the viability of the business, and how quickly you anticipate using your available cash. Please also discuss other available sources of capital, such as lines of credit or required contributions by shareholders, for example.",
+        financials_condition_yes: "Please discuss your historical results for each period for which you provide financial statements.  The discussion should focus on financial milestones and operational, liquidity and other challenges.  Please also discuss whether historical results and cash flows are representative of what investors should expect in the future. Take into account the proceeds of the offering and any other known sources of capital. Please discuss how the proceeds from the offering will affect your liquidity, whether these funds are necessary to the viability of the business, and how quickly you anticipate using your available cash.  Please also discuss other available sources of capital, such as lines of credit or required contributions by shareholders, for example. ",
       };
       this.assignLabels();
 
@@ -1361,7 +1353,7 @@ module.exports = {
           templates: this.jsonTemplates,
         })
       );
-      this.createDropzones();
+      setTimeout(() => { this.createDropzones() } , 1000);
       return this;
     },
   }, menuHelper.methods, yesNoHelper.methods, addSectionHelper.methods, dropzoneHelpers.methods)),
@@ -1377,7 +1369,8 @@ module.exports = {
 
     initialize(options) {
       this.fields = options.fields;
-      this.fields.business_loans_or_debt_choice.choices = [
+      this.fields.business_loans_or_debt_choice.validate = {};
+      this.fields.business_loans_or_debt_choice.validate.choices = [
         {
           value: 1,
           display_name: 'Yes',
@@ -1386,8 +1379,9 @@ module.exports = {
           value: 0,
           display_name: 'No',
         },
-      ];
-      this.fields.exempt_offering_choice.choices = [
+      ]
+      this.fields.exempt_offering_choice.validate = {};
+      this.fields.exempt_offering_choice.validate.choices = [
         {
           value: 1,
           display_name: 'Yes',
@@ -1398,7 +1392,8 @@ module.exports = {
         },
       ];
       this.fields.outstanding_securities.schema.security_type.type = 'choice';
-      this.fields.outstanding_securities.schema.security_type.choices = [
+      this.fields.outstanding_securities.schema.security_type.validate = {};
+      this.fields.outstanding_securities.schema.security_type.validate.choices = [
         {
           value: 0,
           display_name: 'Preferred Stock',
@@ -1425,7 +1420,8 @@ module.exports = {
         },
       ];
       this.fields.outstanding_securities.schema.voting_right.type = 'radio';
-      this.fields.outstanding_securities.schema.voting_right.choices = [
+      this.fields.outstanding_securities.schema.voting_right.validate = {};
+      this.fields.outstanding_securities.schema.voting_right.validate.choices = [
         {
           value: 1,
           display_name: 'Yes',
@@ -1437,12 +1433,13 @@ module.exports = {
       ];
       this.labels = {
         outstanding_securities: {
-          security_type: 'Security Type',
-          custom_security_type: 'Custom Security Type',
-          other_rights: 'Other Rights',
-          amount_authroized: 'Amount Authorized',
-          amount_outstanding: 'Amount Outstanding',
-          voting_right: 'Voting right',
+          security_type: "Security Type",
+          custom_security_type: "Custom Security Type",
+          other_rights: "Other Rights",
+          amount_authroized: "Amount Authorized",
+          amount_outstanding: "Amount Outstanding",
+          voting_right: "Voting right",
+          terms_and_rights: "Describe all material terms and rights",
         },
         exempt_offering: {
           exemption_relied_upon: 'Exemption Relied upon',
@@ -1459,12 +1456,8 @@ module.exports = {
           creditor: 'Creditor',
         },
         business_loans_or_debt_choice: 'Do you have any business loans or debt?',
-        exempt_offering_choice: 'An \'exempt offering\' is any offering of securities which is ' +
-                                'exempted from the registration requirements of the ' +
-                                'Securities Act.^CHave you conducted any exempt offerings in the ' +
-                                'past three years?',
-        exercise_of_rights: 'How could the exercise of rights held by the principal shareholders ' +
-                            'affect the purchasers of the securities being offered?',
+        exempt_offering_choice: 'An "exempt offering" is any offering of securities which is exempted from the registration requirements of the Securities Act. Have you conducted any exempt offerings in the past three years?',
+        exercise_of_rights: 'How could the exercise of rights held by the principal shareholders affect the purchasers of the securities being offered?',
         risks_to_purchasers: '',
         terms_of_securities: 'How may the terms of the securities being offered be modified?',
         security_differences: 'Are there any differences not reflected above between the ' +
@@ -1591,17 +1584,15 @@ module.exports = {
     },
 
     getSuccessUrl() {
-      return '/formc/' + this.model.id + '/outstanding-security';
+      return  '/formc/' + this.model.id + '/final-review';
     },
 
     events: _.extend({
-      'submit form': 'submit',
+      'submit form': api.submitAction,
     }, menuHelper.events, yesNoHelper.events),
 
-    submit: api.submitAction,
-
     render() {
-      let template = require('components/formc/templates/backgroundCheck.pug');
+      let template = require('./templates/backgroundCheck.pug');
       this.$el.html(
         template({
           serverUrl: serverUrl,
@@ -1613,4 +1604,64 @@ module.exports = {
       return this;
     },
   }, menuHelper.methods, yesNoHelper.methods, addSectionHelper.methods)),
+
+  finalReview: Backbone.View.extend({
+    urlRoot: formcServer + '/:id' + '/final-review',
+    initialize(options) {
+      this.fields = options.fields;
+    },
+
+    getSuccessUrl() {
+      return  '/formc/' + this.model.id + '/review';
+    },
+
+    events: {
+      'click .show-input': 'showInput'
+    }, 
+    showInput: function (event) {
+      event.preventDefault();
+      if ($(event.target).hasClass('noactive')) {
+          return false;
+      }
+      var $this = $(event.target),
+          inputId = $this.data('name'),
+          $input = $('input' + '#' + inputId);
+
+      $this.hide();
+
+      if ($input.length == 0) {
+        $input = $('<input type="text" id="' + inputId + '" name="' + inputId + '" class="text-input"/>');
+        $this.after($input);
+      }
+
+      $input.fadeIn().focus();
+
+      $('body').on('focusout', '.text-input', function(event) {
+      var $this = $(event.target),
+          value = $this.val(),
+          inputId = $this.attr('id'),
+          $span = $('[data-name="' + inputId + '"]');
+      if (value !== '') {
+          $span.text(value);
+      }
+
+      $this.hide();
+      $span.fadeIn();
+      });
+    },
+
+
+    render() {
+      let template = require('./templates/finalReview.pug');
+      this.$el.html(
+        template({
+          serverUrl: serverUrl,
+          Urls: Urls,
+          fields: this.fields,
+          values: this.model,
+        })
+      );
+      return this;
+    },
+  }),
 };

@@ -2,18 +2,17 @@ include ../../../../templates/fields_mixins.pug
 
 mixin row(value, index)
   - var index = index;
+  .col-lg-12.m-t-1
+    .col-lg-12(data-index=index class=name + ' addSectionBlock')
+      .delete-section-container
+        a(href="#" data-section=name data-index=index).delete-sectionnew
+          i.fa.fa-times
 
-  div(data-index=index class=name + ' addSectionBlock')
-    .delete-section-container
-      a(href="#" data-section=name data-index=index).delete-sectionnew
-        i.fa.fa-times
-
-    +fieldNestedTextLabel(name, "amount_sold", value, index, {})
-    +fieldNestedTextLabel(name, "exemption_relied_upon", value, index, {})
-    +fieldNestedTextLabel(name, "offering_date", value, index, {})
-    +fieldNestedTextLabel(name, "securities_offered", value, index, {})
-    +fieldNestedTextLabel(name, "use_of_proceeds", value, index, {})
-
+      +fieldNestedTextLabel(name, "amount_sold", value, index, {})
+      +fieldNestedTextLabel(name, "exemption_relied_upon", value, index, {class1: 'text-lg-right col-lg-3 col-md-12 text-md-left m-b-0 p-t-0'})
+      +fieldNestedTextLabel(name, "offering_date", value, index, {class1: 'text-lg-right col-lg-3 col-md-12 text-md-left m-b-0 p-t-0'})
+      +fieldNestedTextLabel(name, "securities_offered", value, index, {})
+      +fieldNestedTextLabel(name, "use_of_proceeds", value, index, {})
 
 mixin run()
 
@@ -25,15 +24,15 @@ mixin run()
           .date-input.required.col-lg-12
             .col-date.form-group.m-b-0
 
-              if value == null || value.length == 0
+              if values == null || values.length == 0
                 +row({}, 0)
 
               else
                 each value, index in values
                   +row(value, index)
-
+      .col-lg-12
         .row.add-link
-          .col-lg-9.offset-1.pull-right
+          .col-lg-9.offset-lg-3
             a(href="#" data-section=name data-comp='formc' data-template='exempt_offering').link-2.add-sectionnew
               i.fa.fa-plus
               |  Add Another Exemption Offering

@@ -12,7 +12,7 @@ module.exports = {
       return this;
     },
   }),
-
+  
   profile: Backbone.View.extend({
     template: require('./templates/profile.pug'),
     events: {
@@ -28,13 +28,25 @@ module.exports = {
 
     render: function () {
 
-      const dropzoneHelpers = require('helpers/dropzone.js');
       this.$el.html(
         this.template({
           serverUrl: serverUrl,
           user: app.user.toJSON(),
           Urls: Urls,
-          dropzoneHelpers: dropzoneHelpers,
+        })
+      );
+      return this;
+    },
+  }),
+
+  footer: Backbone.View.extend({
+    template: require('./templates/footer.pug'),
+    render: function () {
+      this.$el.html(
+        this.template({
+          serverUrl: serverUrl,
+          user: app.user.toJSON(),
+          Urls: Urls,
         })
       );
       return this;

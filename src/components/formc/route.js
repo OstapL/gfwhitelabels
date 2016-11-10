@@ -16,6 +16,7 @@ module.exports = Backbone.Router.extend({
     'formc/:id/financial-condition': 'financialCondition',
     'formc/:id/outstanding-security': 'outstandingSecurity',
     'formc/:id/background-check': 'backgroundCheck',
+    'formc/:id/final-review': 'finalReview',
   },
 
   execute: function (callback, args, name) {
@@ -71,20 +72,21 @@ module.exports = Backbone.Router.extend({
     });
   },
 
-  teamMemberAdd(id, role, uuid) {
+  teamMemberAdd(id, role, user_id) {
     const View = require('components/formc/views.js');
 
     let fieldsR = api.makeCacheRequest(formcServer + '/' + id + '/team-members/' + role, 'OPTIONS');
 
     let dataR = null;
-    if(uuid != 'new') {
+    if(user_id != 'new') {
       dataR = api.makeCacheRequest(formcServer + '/' + id + '/team-members', 'GET');
     }
 
     $('#content').scrollTo();
     $.when(fieldsR, dataR).done((fields, data) => {
+      console.log('data is ', data);
       if(data) {
-        data = data[0].team_members.filter(function(el) { return el.uuid == uuid})[0]
+        data = data[0].team_members.filter(function(el) { return el.user_id == user_id})[0]
         data.formc_id = id;
       } else {
         data = {formc_id: id};
@@ -93,7 +95,7 @@ module.exports = Backbone.Router.extend({
         el: '#content',
         model: data,
         role: role,
-        uuid: uuid,
+        user_id: user_id,
         fields: fields[0].fields,
       });
       addForm.render();
@@ -129,14 +131,16 @@ module.exports = Backbone.Router.extend({
 
     let fieldsR = api.makeCacheRequest(formcServer + '/' + id + '/use-of-proceeds', 'OPTIONS');
     let dataR = api.makeCacheRequest(formcServer + '/' + id + '/use-of-proceeds');
+    let campaignR = api.makeCacheRequest(authServer + '/user/campaign');
 
     $('#content').scrollTo();
-    $.when(fieldsR, dataR).done((fields, data) => {
+    $.when(fieldsR, dataR, campaignR).done((fields, data, campaign) => {
       data[0].id = id;
       const i = new View.useOfProceeds({
         el: '#content',
         model: data[0],
         fields: fields[0].fields,
+        campaign: campaign[0],
       });
       i.render();
       app.hideLoading();
@@ -337,6 +341,31 @@ module.exports = Backbone.Router.extend({
         el: '#content',
         model: data[0],
         fields: fields[0].fields,
+      });
+      i.render();
+      app.hideLoading();
+    });
+  },
+
+  finalReview(id) {
+    const View = require('components/formc/views.js');
+
+    let companyR = api.makeCacheRequest(raiseCapitalUrl + '/company', 'OPTIONS');
+    let campaignR = api.makeCacheRequest(raiseCapitalUrl + '/campaign', 'OPTIONS');
+    let formcR = api.makeCacheRequest(formcServer + '/' + id + '/final-review', 'OPTIONS');
+    let dataR = api.makeCacheRequest(formcServer + '/' + id + '/final-review');
+
+    $.when(companyR, campaignR, formcR, dataR).done((company, campaign, formc, data) => {
+      data[0].id = id;
+      const fields = {
+        company: company[0].fields,
+        campaign: campaign[0].fields,
+        formc: formc[0].fields,
+      };
+      const i = new View.finalReview({
+        el: '#content',
+        model: data[0],
+        fields: fields
       });
       i.render();
       app.hideLoading();

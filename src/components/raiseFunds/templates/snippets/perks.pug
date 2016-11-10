@@ -1,0 +1,32 @@
+include ../../../../templates/fields_mixins.pug
+
+mixin row(value, index)
+  - var index = index;
+
+  div(data-index=index class=name + ' addSectionBlock')
+    .delete-section-container
+      a(href="#" data-section=name data-index=index).delete-sectionnew
+        i.fa.fa-times
+
+    +fieldNestedTextLabel(name, 'amount', value, index, {class1:'col-xl-3 col-lg-12 text-lg-left text-xl-right m-b-0 p-t-0', class2: 'col-xl-9 col-lg-12'})
+    +fieldNestedTextLabel(name, 'perk', value, index, {class1:'col-xl-3 col-lg-12 text-lg-left text-xl-right', class2: 'col-xl-9 col-lg-12'})
+
+mixin run()
+
+  if first_run
+    div(class=(attr.row == 0 ? '' : '') + name + '_block' + (attr.required == true ? ' required ' : ' ') + ' nested')
+      div(class=(attr.row == 0 ? '' : '') + name + '_container' + (attr.required == true ? ' required ' : ' ') + ' nested')
+        if values == null || values.length == 0
+          +row({}, 0)
+        else
+          each value, index in values
+            +row(value, index)
+    .row.add-link
+      .col-xl-9.offset-xl-3
+        a(href="#" data-section=name data-comp="raiseFunds" data-template="perks").link-2.add-sectionnew
+          i.fa.fa-plus
+          |  Add Another Perk
+  else
+    +row({}, index)
+
++run()

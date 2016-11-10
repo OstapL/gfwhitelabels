@@ -278,7 +278,7 @@
                 }
             ]
         },
-        "get_security_type_display": "Payback Share",
+        "get_security_type_display": "Revenue Share",
         "get_absolute_url": "/campaign/68",
         "company": {
             "id": 60,

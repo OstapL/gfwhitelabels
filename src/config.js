@@ -1,15 +1,16 @@
 global.serverUrl = "https://django-api.growthfountain.com";
-global.raiseCapitalUrl = "https://django-api.growthfountain.com";
+global.raiseCapitalUrl = "https://api-raisecapital.growthfountain.com";
 //global.raiseCapitalUrl = "http://localhost:8003";
-//global.authServer = "http://localhost:8001";
 global.authServer = "https://api-auth.growthfountain.com";
-//global.authServer = "http://localhost:8001";
+//global.authServer = "http://localhost:8002";
 global.formcServer = "https://api-formc.growthfountain.com";
-//global.formcServer = "http://localhost:8002";
+//global.formcServer = "http://localhost:8001";
+global.filerUrl = "https://api-filer.growthfountain.com";
 global.teamName = 'Team';
 global.teamTitle = "Meet The Team";
 //global.serverUrl = "http://192.168.99.100:8000";
 //global.serverUrl = "http://gfauth.com:8000";
+
 
 global.facebookClientId = "191471871275050";
 global.googleClientId = "488593151885-87nqfd8gl444a1me0n149otrf37dbahq.apps.googleusercontent.com";

@@ -1,75 +1,40 @@
 - 'use strict';
 include ../../../templates/mixins.pug
-//- include menu.pug
-include ../../../templates/menuRaiseFund.pug
+include ../../../templates/fields_mixins.pug
+include menu.pug
 
 +breadcrumbs('Create Company', '', 
     [
         ['Home', '/'],
-        ['Create campaign', ''],
+        ['Create campaign', '/campaign/' + values.id + '/general_information'],
         ['GENERAL INFORMATION', ''],
     ]
 )
 
-
 section.create-company-general.container.m-b-85
   +menu('campaign', 'general_information')
-
-  .col-lg-8
-    h2.text-uppercase.text-lg-center.text-xs-center.dosis.m-t-0 GENERAL INFORMATION
-    form(metod="post" action="").form-section
-      if values.id && values.id != ''
-          input(type='hidden' name='id' value=values.id id='id')
-      .form-group.row.clearfix.required
-      +fieldBlock("pitch", '', {
-        class1: 'col-lg-3 col-md-12 text-md-left',
-        class2: 'col-lg-9 col-md-12',
-        placeholder: "What's your pitch?",
-        type: 'textarea',
-        })
-      +fieldBlock("intended_use_of_proceeds", '', {
-        class1: 'col-lg-3 col-md-12 text-md-left',
-        class2: 'col-lg-9 col-md-12',
-        type: 'textarea',
-        placeholder: "What's your business model?",
-        })
-      +fieldBlock("business_model", '', {
-        class1: 'col-lg-3 col-md-12 text-md-left',
-        class2: 'col-lg-9 col-md-12',
-        type: 'textarea',
-        placeholder: 'How are you going to use the money you raise?',
-        })
-      .row
-        .col-lg-12.m-b-1.text-lg-center.text-md-center.text-xs-center
-          h3.d-inline-block.m-b-0.m-t-0 Additional Information 
-      +fieldBlock("additional_info", '', {
-        class1: 'col-lg-3 col-md-3',
-        class2: 'col-lg-9 col-md-9',
-        type: 'json',
-        })
-      .row.add-link
-        .col-lg-9.offset-1.pull-right
-          a(href="#" data-section="additional_info").link-2.add-section
-            i.fa.fa-plus
-            |  Add Another Section
-      .border-bottom
-      .row
-        .col-lg-12.text-lg-center.text-md-center.text-xs-center
-          h3.d-inline-block.m-t-0.mb25 FAQs
-      .faq-form-group-m-b-0
-        +fieldBlock("faq", '', {
-          class1: 'col-lg-3 col-md-12 text-md-left',
-          class2: 'col-lg-9 col-md-12',
-          type: 'json',
-          })
-      .row.m-t-0
-        .col-lg-9.offset-1.pull-right
-          a(href="#" data-section="faq").link-2.add-section 
-            i.fa.fa-plus
-            |  Add Another FAQ
-      .border-bottom.border-bottom-faq
-      .col-lg-12.pull-lg-right.p-r-0.text-lg-right.text-md-center.text-sm-center.text-xs-center
-        // button(type="submit" data-href="/api/campaign/" + values.id).btn.btn-secondary.text-uppercase.m-r-3.m-t-0.onPreview preview
-        button(type="submit").btn.btn-primary.text-uppercase.m-t-0 save and continue
-          i.fa.fa-angle-right
-
+  
+  .col-xl-8.col-lg-8.col-md-12
+    h2.text-uppercase.text-lg-center.text-xs-center.dosis.m-t-0.m-b-3 GENERAL INFORMATION
+    form(data-method="PATCH" action="").form-section
+      .col-xl-12
+        +fieldTextareaLabel("pitch", _.extend({
+          class1: 'col-xl-3 col-lg-12 text-lg-left text-xl-right',
+          class2: 'col-xl-9 col-lg-12',
+          }, fields.pitch))
+        +fieldTextareaLabel("intended_use_of_proceeds", _.extend({
+          class1: 'col-xl-3 col-lg-12 text-lg-left text-xl-right',
+          class2: 'col-xl-9 col-lg-12',
+          }, fields.intended_use_of_proceeds))
+        +fieldTextareaLabel("business_model", _.extend({
+          class1: 'col-xl-3 col-lg-12 text-lg-left text-xl-right',
+          class2: 'col-xl-9 col-lg-12',
+          }, fields.business_model))
+        |!{ templates.additional_info }
+        .border-bottom
+        |!{ templates.faq }
+        
+        .col-lg-12.m-t-3.pull-lg-right.p-r-0.text-lg-right.text-md-center.text-sm-center.text-xs-center
+          // button(type="submit").btn.btn-secondary.text-uppercase.m-r-3.m-t-0 Fields Review
+          button(type="submit" data-method="PATCH").btn.btn-primary.text-uppercase.m-t-0 save and continue
+            i.fa.fa-angle-right

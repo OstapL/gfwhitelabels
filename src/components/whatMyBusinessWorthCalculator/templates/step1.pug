@@ -1,134 +1,112 @@
 include ../../../templates/mixins.pug
 
 +breadcrumbs('Capital Raise Calculator ', 'step 1',
-    [
-        ['Home', '/'],
-        ["Capital Raise Calculator", '']
-    ]
+  [
+    ['Home', '/'],
+    ["Capital Raise Calculator", '']
+  ]
 )
 
 .container.calculator-container
-    .row
-        .col-xs-12
-            ul.list-inline.top-breadcrambs.mb45.capitalraise
-                li
-                    a(href="/calculator/whatmybusinessworth/intro").btn.text-uppercase Intro
-                li
-                    a(href="/calculator/whatmybusinessworth/step-1").current.btn.text-uppercase step 1
-                li
-                    a(href="/calculator/whatmybusinessworth/step-2").btn.text-uppercase step 2
-                li
-                    a(href="/calculator/whatmybusinessworth/finish").btn.text-uppercase finish
+  .row
+    .col-xs-12
+      ul.list-inline.top-breadcrambs.mb45.capitalraise
+        li
+          a(href="/calculator/whatmybusinessworth/intro").btn.text-uppercase Intro
+        li
+          a(href="/calculator/whatmybusinessworth/step-1").current.btn.text-uppercase step 1
+        li
+          a(href="/calculator/whatmybusinessworth/step-2").btn.text-uppercase step 2
+        li
+          a(href="/calculator/whatmybusinessworth/finish").btn.text-uppercase finish
 
-    .row
-        .offset-lg-3.col-lg-6
-            form(method="post" action="")
-                .form-body.clearfix
+  .row
+    .offset-lg-3.col-lg-6
+      form(method="post" action="")
+        .form-body.clearfix
 
-                    .form-group.row
-                        label(for="excessCash").col-lg-12 How much excess cash  does your business need to maintain as a buffer against the unexpected?&nbsp;&nbsp;
-                            i(aria-hidden="true")#excess_cash.fa.fa-question-circle.text-muted
+          .form-group.row
+            label(for="excessCash").col-lg-12 How much excess cash  does your business need to maintain as a buffer against the unexpected?&nbsp;&nbsp;
+              i(aria-hidden="true",data-toggle="tooltip",data-original-title="All entrepreneurs know to «Expect  the Unexpected» timing issues, liquidity crunches and other unexpected issues require a business to maintain excess cash on hand.").fa.fa-question-circle.text-muted
 
-                        .col-lg-12
-                            input#excessCash.form-control.js-field(
-                                value= formatPrice(data.excessCash),
-                                type='text',
-                                placeholder='Excess Cash',
-                                data-input-mask='price',
-                                data-model-value='excessCash',
-                                data-current-value= data.excessCash)
+            .col-lg-12
+              input(
+                value= formatPrice(data.excessCash),
+                type='text',
+                placeholder='Excess Cash',
+                data-input-mask='price',
+                autocomplete='off'
+                data-model-value='excessCash',
+                data-current-value= data.excessCash)#excessCash.form-control.js-field
 
-                    .form-group.row
-                        label(for="ownCache").col-lg-12 How much cash does your business currently have?
+          .form-group.row
+            label(for="ownCache").col-lg-12 How much cash does your business currently have?
 
-                        .col-lg-12
-                            input#ownCache.form-control.js-field(
-                                value= formatPrice(data.ownCache),
-                                type='text',
-                                placeholder='Cash on Hands',
-                                data-input-mask='price',
-                                data-model-value='ownCache',
-                                data-current-value= data.ownCache)
+            .col-lg-12
+              input(
+                value= formatPrice(data.ownCache),
+                type='text',
+                placeholder='Cash on Hands',
+                autocomplete='off'
+                data-input-mask='price',
+                data-model-value='ownCache',
+                data-current-value= data.ownCache)#ownCache.form-control.js-field
 
-                    .form-group.row
-                        label(for="projectedRevenueYear").col-lg-12 What is your business’s projected revenue for the next 12 months?
+          .form-group.row
+            label(for="projectedRevenueYear").col-lg-12 What is your business’s projected revenue for the next 12 months?
 
-                        .col-lg-12
-                            input#projectedRevenueYear.form-control.js-field(
-                                value= formatPrice(data.projectedRevenueYear),
-                                type='text',
-                                placeholder='Year One Projected Revenue',
-                                data-input-mask='price',
-                                data-model-value='projectedRevenueYear',
-                                data-current-value= data.projectedRevenueYear)
+            .col-lg-12
+              input(
+                value= formatPrice(data.projectedRevenueYear),
+                type='text',
+                placeholder='Year One Projected Revenue',
+                autocomplete='off'
+                data-input-mask='price',
+                data-model-value='projectedRevenueYear',
+                data-current-value= data.projectedRevenueYear)#projectedRevenueYear.form-control.js-field
 
-                    .form-group.row
-                        label(for="projectedRevenueTwoYears").col-lg-12 What is your business’s projected revenue for the subsequent 12 months? (i.e. months 13 - 24)
+          .form-group.row
+            label(for="projectedRevenueTwoYears").col-lg-12 What is your business’s projected revenue for the subsequent 12 months? (i.e. months 13 - 24)
 
-                        .col-lg-12
-                            input#projectedRevenueTwoYears.form-control.js-field(
-                                value= formatPrice(data.projectedRevenueTwoYears),
-                                type='text',
-                                placeholder='Year Two Projected Revenue',
-                                data-input-mask='price',
-                                data-model-value='projectedRevenueTwoYears',
-                                data-current-value= data.projectedRevenueTwoYears)
+            .col-lg-12
+              input(
+                value= formatPrice(data.projectedRevenueTwoYears),
+                type='text',
+                placeholder='Year Two Projected Revenue',
+                autocomplete='off'
+                data-input-mask='price',
+                data-model-value='projectedRevenueTwoYears',
+                data-current-value= data.projectedRevenueTwoYears)#projectedRevenueTwoYears.form-control.js-field
 
-                    .form-group.row
-                        label(for="grossMargin").col-lg-12 Let's focus on Cost of Goods Sold, or COGS: What gross margin  do you expect to earn on your business’s sales over the next 2 years?&nbsp;&nbsp;
-                            i(aria-hidden="true")#gross_margin.fa.fa-question-circle.text-muted
+          .form-group.row
+            label(for="grossMargin").col-lg-12 Let's focus on Cost of Goods Sold, or COGS: What gross margin  do you expect to earn on your business’s sales over the next 2 years?&nbsp;&nbsp;
+              i(aria-hidden="true",data-toggle="tooltip",data-original-title="<div class=\"large\"><span class=\"formula\">Gross Margin (:%) = Revenue -</span> <span class=\"fraction\"><span class=\"top\">Cost of Goods Sold</span><span class=\"bottom\">Revenue</span></span></div>").fa.fa-question-circle.text-muted
 
-                        .col-lg-12.mb20
-                            input#grossMargin.form-control.js-bootstrap-slider(
-                                type='text',
-                                data-slider-value= data.grossMargin
-                                data-model-value='grossMargin')
+            .col-lg-12.mb20
+              input(
+                type='text',
+                data-slider-value= data.grossMargin
+                data-model-value='grossMargin')#grossMargin.form-control.js-bootstrap-slider
 
-                    .form-group.row
-                        label(for="monthlyOperatingYear").col-lg-12 What do you expect your monthly operating expenses to average over the next 12 months?&nbsp;&nbsp;
-                            i(aria-hidden="true")#profit_year_five.fa.fa-question-circle.text-muted
+          .form-group.row
+            label(for="monthlyOperatingYear").col-lg-12 What do you expect your monthly operating expenses to average over the next 12 months?&nbsp;&nbsp;
+              i(aria-hidden="true",data-toggle="tooltip",data-original-title="The expenses a company incurs as a result of its normal business operations").fa.fa-question-circle.text-muted
 
-                        .col-lg-12
-                            input#monthlyOperatingYear.form-control.js-field(
-                                value= formatPrice(data.monthlyOperatingYear),
-                                type='text',
-                                placeholder='Profit Year Five',
-                                data-input-mask='price',
-                                data-model-value='monthlyOperatingYear',
-                                data-current-value= data.monthlyOperatingYear)
+            .col-lg-12
+              input(
+                value= formatPrice(data.monthlyOperatingYear),
+                type='text',
+                placeholder='Profit Year Five',
+                autocomplete='off'
+                data-input-mask='price',
+                data-model-value='monthlyOperatingYear',
+                data-current-value= data.monthlyOperatingYear)#monthlyOperatingYear.form-control.js-field
 
-                    .form-group.row.clearfix.m0
-                        .col-xs-6.mt30
-                            a(href='/calculator/whatmybusinessworth/intro').link-3 Go back
-                            p.text-muted Don&apos;t worry we saved this info
+          .form-group.row.clearfix.m0
+            .col-xs-6.mt30
+              a(href='/calculator/whatmybusinessworth/intro').link-3 Go back
 
-                        .col-xs-6.mt30
-                            .controls
-                                a(
-                                    href="/calculator/whatmybusinessworth/step-2"
-                                ).btn.btn-primary.pull-right.text-uppercase Next
-                                // add class .pointer-events-none to disable all events for this button
-
-    // TODO set up script for popovers
-
-    // popovers content
-
-    // for #excess_cash
-    .popover-content-excess-cash
-        i.fa.fa-info-circle
-        span All entrepreneurs know to «Expect  the Unexpected» timing issues, liquidity crunches and other unexpected issues require a business to maintain excess cash on hand.
-
-    // for #gross_margin
-    .popover-content-gros-margin
-        i.fa.fa-info-circle
-        span Gross Margin (:%) = Revenue - Cost of Goods Sold/Revenue
-
-    // for #profit_year_five
-    .popover-content-profit-year-five
-        i.fa.fa-info-circle
-        span The expenses a company incurs as a result of its normal business operations
-
-
-   
-
-
+            .col-xs-6.mt30
+              .controls
+                a(href="/calculator/whatmybusinessworth/step-2").btn.btn-primary.pull-right.text-uppercase Next
+                // add class .pointer-events-none to disable all events for this button

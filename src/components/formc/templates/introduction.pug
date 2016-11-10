@@ -1,8 +1,7 @@
 
 - 'use strict'
 include ../../../templates/mixins.pug
-include ../../../templates/menuRaiseFund.pug
-//- include menu.pug
+include ../../raiseFunds/templates/menu.pug
 
 +breadcrumbs('Create Formc', '', [['home', '/'], [ 'Create Formc', page.get_absolute_url], ['Introduction']])
 
@@ -82,7 +81,22 @@ section.formc.introduction.create-company-media.container
             .row.btn-pay
               .col-lg-12
                 button#pay-btn.btn.btn-primary.text-uppercase pay
-
-
-
-
+            .row.collapse
+              .col-lg-9.offset-lg-3.m-t-2.investment
+                .col-lg-8
+                  h3.m-t-0.text-lg-center.m-b-2 Electronically Sign
+                .row
+                  .col-lg-8.form-group
+                    input(type="text" placeholder="Company Name").form-control
+                    .help-block Company Name (pre-populated)
+                .form-group.row
+                  .col-lg-4
+                    input(type="text" placeholder="Type Your Name").form-control
+                    .help-block Type your name here
+                  .col-lg-4
+                    .electronically
+                      span.by By:
+                      span.name Maria Kravchuk
+              .col-lg-12
+                .btn-save.text-lg-right
+                  a(href="#").btn.btn-primary.text-uppercase save

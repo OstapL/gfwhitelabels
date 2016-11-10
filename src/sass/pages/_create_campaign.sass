@@ -25,7 +25,6 @@
 	.border-bottom
 		margin-top: rem(40)
 		margin-bottom: rem(50)
-		margin-left: rem(15)
 	.form-group-m-b-0
 		.form-group
 			margin-bottom: 0
@@ -75,10 +74,12 @@
 					&:hover
 						background-color: $gallery
 						color: $black
-					.fa-check
+					.icon-check
 						color: $puerto_rico
 						float: right
-						margin-right: rem(5)
+						margin-right: rem(10)
+						font-size: rem(14)
+						line-height: 18px
 			.panel
 				.in
 					.list-group-item.active
@@ -127,6 +128,9 @@
 		margin-bottom: rem(25)
 	.link-2
 		line-height: 1
+@media only screen and (max-width : 1200px)
+	.create_compaign
+		margin-top: 50px
 
 @media only screen and (max-width : 992px)
 	.create-company
@@ -134,15 +138,11 @@
 			textarea
 				max-width: 100%
 		.date-input
-			label
-				margin-left: rem(15)
 			.col-lg-6
 				padding-right: 0
 				padding-left: 0
 				input
 					margin-bottom: rem(15)
-			.founding_date
-				margin-top: rem(25)
 		.border-bottom
 			margin-left: 0
 		h2
@@ -150,7 +150,6 @@
 		.city_states
 			label
 				padding-left: 0
-			.change_state_city
-				text-align: right
+	
 
 		

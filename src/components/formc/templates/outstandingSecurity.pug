@@ -1,6 +1,6 @@
 include ../../../templates/mixins.pug
 include ../../../templates/fields_mixins.pug
-include ../../../templates/menuRaiseFund.pug
+include ../../raiseFunds/templates/menu.pug
 
 +breadcrumbs('form c', '', 
     [
@@ -17,76 +17,31 @@ section.formc-team-members-director.container.m-b-85
   //START RIGHT BLOCK
   .col-lg-8
     h2.text-uppercase.text-lg-center.text-xs-center.m-t-0.dosis.mb45 outstanding security
-    #security_modal.modal.fade(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")
-      .modal-dialog(role="document")
-        .modal-content
-            .modal-header
-              button(type="button" class="close" data-dismiss="modal" aria-label="Close")
-                span(aria-hidden="true")
-                  i.fa.fa-times
 
-            .modal-body.p-t-0
-              form(data-section='outstanding_securities')#security_model_form.modal-form
-                .form-section    
-                  +fieldChoiceLabel("security_type", _.extend({
-                    class1: 'col-lg-12',
-                    class2: 'col-lg-12',
-                  }, fields.outstanding_securities.schema.security_type))
-                  +fieldTextLabel("custom_security_type", _.extend({
-                    class1: 'col-lg-12',
-                    class2: 'col-lg-12',
-                  }, fields.outstanding_securities.schema.custom_security_type))
-                  +fieldTextareaLabel("terms_and_rights", _.extend({
-                    class1: 'col-lg-12',
-                    class2: 'col-lg-12 big-textarea',
-                    placeholder: 'Description'
-                  }, fields.outstanding_securities.schema.terms_and_rights))
-                  .row
-                    .col-lg-6
-                      +fieldTextLabel("amount_authroized", _.extend({
-                        class1: 'col-lg-12',
-                        class2: 'col-lg-12',
-                        label: 'Amount Authorized',
-                      }, fields.outstanding_securities.schema.amount_authroized))
-                    .col-lg-6
-                      +fieldTextLabel("amount_outstanding", _.extend({
-                        class1: 'col-lg-12',
-                        class2: 'col-lg-12',
-                        label: 'Amount Outstanding',
-                      }, fields.outstanding_securities.schema.amount_outstanding))
-                  .row.form-group.m-b-0
-                    +fieldRadioLabel("voting_right", _.extend({
-                      class1: 'col-lg-3',
-                      class2: 'col-lg-9',
-                    }, fields.outstanding_securities.schema.voting_right))
-
-                  .row.m-b-2
-                      .col-lg-12.text-lg-center.text-md-center.text-xs-center
-                          button(type="submit").update-location.btn.btn-primary.text-uppercase.pull-lg-right.add-outstanding save
-            .modal-footer
     form(metod="post" action="").form-section
       input(name="outstanding_securities_choice" type="hidden" value="false")
       .col-lg-12
         +fieldRadioLabel("business_loans_or_debt_choice", _.extend({
           class1: 'bold',
-          class2: 'form-section m-t-2 yesno',
+          class2: 'form-section col-lg-12 yesno',
           class3: 'm-b-1',
         }, fields.business_loans_or_debt_choice))
         .business_loans_or_debt_choice.shown-yes(style="display:" + (values['business_loans_or_debt_choice'] ? 'block' : 'none') + ";")
           |!{ templates.business_loans_or_debt }
 
-        .col-lg-12.m-t-3
-            .row
-              +fieldRadioLabel("exempt_offering_choice", _.extend({
-                class1: 'bold',
-                class2: 'form-section m-t-2 yesno',
-                class3: 'm-b-1',
-              }, fields.exempt_offering_choice))
+        .m-t-0
+          +fieldRadioLabel("exempt_offering_choice", _.extend({
+            class1: 'bold',
+            class2: 'form-section col-lg-12 yesno',
+            class3: '',
+          }, fields.exempt_offering_choice))
         .exempt_offering_choice.shown-yes(style="display:" + (values['exempt_offering_choice'] ? 'block' : 'none') + ";")
-            |!{ templates.exempt_offering }
+          | !{ templates.exempt_offering }
 
         |!{ templates.outstanding_securities }
-        .border-bottom.m-t-3.m-b-3 
+        .row
+          .col-lg-12
+            .border-bottom.m-t-3.m-b-3 
         +fieldTextareaLabel("rights_of_securities", _.extend({
           class1: 'col-lg-12 col-md-12  text-md-left  text-xl-left',
           class2: 'col-lg-12 col-md-12 big-textarea',
@@ -106,21 +61,67 @@ section.formc-team-members-director.container.m-b-85
         }, fields.exercise_of_rights))
         
         .row.form-group.form-section.required
-            .col-lg-12
-                label Please discuss risks to purchasers of securities relating to:
-                    br
-                    | - minority ownership
-                    br
-                    | - additional issuances of securities
-                    br
-                    | - company repurchases of securities
-                    br
-                    | - a sale of the company or company assets
-                    br
-                    | - transactions with related parties 
-            .col-lg-12.big-textarea
-                 textarea(placeholder="Description" id="risks_to_purchasers" name="risks_to_purchasers").form-control= values['risks_to_purchasers']
+          .col-lg-12
+            label Please discuss risks to purchasers of securities relating to:
+              br
+              | - minority ownership
+              br
+              | - additional issuances of securities
+              br
+              | - company repurchases of securities
+              br
+              | - a sale of the company or company assets
+              br
+              | - transactions with related parties 
+          .col-lg-12.big-textarea
+            textarea(placeholder="Description" id="risks_to_purchasers" name="risks_to_purchasers").form-control= values['risks_to_purchasers']
         .col-lg-12.m-t-2
+          .row
+            .text-md-center.text-sm-center-text-xs-center
+              button.btn.btn-primary.text-uppercase.pull-lg-right Save
+#security_modal.modal.fade(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")
+  .modal-dialog(role="document")
+    .modal-content
+      .modal-header.p-b-0
+        button(type="button" class="close" data-dismiss="modal" aria-label="Close")
+          span(aria-hidden="true")
+            i.fa.fa-times
+
+      .modal-body.p-t-0
+        form(data-section='outstanding_securities')#security_model_form.modal-form
+          .form-section    
+            +fieldChoiceLabel("security_type", _.extend({
+              class1: 'col-lg-12 p-t-0',
+              class2: 'col-lg-12',
+            }, fields.outstanding_securities.schema.security_type))
+            +fieldTextLabel("custom_security_type", _.extend({
+              class1: 'col-lg-12',
+              class2: 'col-lg-12',
+            }, fields.outstanding_securities.schema.custom_security_type))
+            +fieldTextareaLabel("terms_and_rights", _.extend({
+              class1: 'col-lg-12',
+              class2: 'col-lg-12 big-textarea',
+              placeholder: 'Description'
+            }, fields.outstanding_securities.schema.terms_and_rights))
             .row
-                .text-md-center.text-sm-center-text-xs-center
-                    button.btn.btn-primary.text-uppercase.pull-lg-right Save
+              .col-lg-6
+                +fieldTextLabel("amount_authroized", _.extend({
+                  class1: 'col-lg-12',
+                  class2: 'col-lg-12',
+                  label: 'Amount Authorized',
+                  }, fields.outstanding_securities.schema.amount_authroized))
+              .col-lg-6
+                +fieldTextLabel("amount_outstanding", _.extend({
+                  class1: 'col-lg-12',
+                  class2: 'col-lg-12',
+                  label: 'Amount Outstanding',
+                  }, fields.outstanding_securities.schema.amount_outstanding))
+            .row.form-group.m-b-0
+              +fieldRadioLabel("voting_right", _.extend({
+                class1: 'col-lg-3',
+                class2: 'col-lg-9',
+              }, fields.outstanding_securities.schema.voting_right))
+            .row.m-b-0
+              .col-lg-12.text-lg-center.text-md-center.text-xs-center
+                button(type="submit").update-location.btn.btn-primary.text-uppercase.pull-lg-right.add-outstanding save
+      .modal-footer

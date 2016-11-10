@@ -1,10 +1,9 @@
-const dropzone = require('dropzone');
-const dropzoneHelpers = require('helpers/dropzone.js');
+const dropzoneHelpers = require('helpers/dropzoneHelpers.js');
 const validation = require('components/validation/validation.js');
 const phoneHelper = require('helpers/phoneHelper.js');
 
 module.exports = {
-  profile: Backbone.View.extend(_.extend(phoneHelper.methods, {
+  profile: Backbone.View.extend(_.extend({
     template: require('./templates/profile.pug'),
     urlRoot: serverUrl + Urls.rest_user_details(),
     events: _.extend({
@@ -16,8 +15,24 @@ module.exports = {
       'change .js-state': 'changeAddressManually',
       dragover: 'globalDragover',
       dragleave: 'globalDragleave',
+      'change .country-select': 'changeCountry',
     }, phoneHelper.events),
 
+    changeCountry(e) {
+      let $target = $(e.target);
+      let country = $target.val();
+      if (country == 'us') {
+        $('.foreign-country-row').hide();
+        $('.foreign-country-row input').prop('disabled', true);
+        $('.us-row').show();
+        $('.us-row input').prop('disabled', false);
+      } else {
+        $('.foreign-country-row').show();
+        $('.foreign-country-row input').prop('disabled', false);
+        $('.us-row').hide();
+        $('.us-row input').prop('disabled', true);
+      }
+    },
 
     globalDragover() {
       // this.$('.dropzone').css({ border: 'dashed 1px lightgray' });
@@ -65,6 +80,7 @@ module.exports = {
       this.stateField = this.$('.js-state');
       this.zipCodeField = this.$('#zip_code');
 
+      /*
       dropzoneHelpers.createImageDropzone(
         dropzone,
         'image', 
@@ -84,6 +100,7 @@ module.exports = {
           });
         }
       );
+      */
       /*
          app.createFileDropzone(
          dropzone,
@@ -192,7 +209,7 @@ module.exports = {
     changeAddressManually() {
       this.cityStateArea.text(`${this.cityField.val()}/${this.stateField.val()}`);
     }
-  })),
+  }, phoneHelper.methods)),
 
   changePassword: Backbone.View.extend({
     urlRoot: serverUrl + Urls.rest_password_change(),

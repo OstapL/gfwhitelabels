@@ -8,21 +8,36 @@ module.exports = Backbone.Router.extend({
     'dashboard/issue-dashboard': 'issueDashboard',
   },
 
+  execute: function (callback, args, name) {
+    if (app.user.is_anonymous() && name !== 'logout') {
+      const pView = require('components/anonymousAccount/views.js');
+      require.ensure([], function() {
+        new pView.popupLogin().render(window.location.pathname);
+        app.hideLoading();
+        $('#sign_up').modal();
+      });
+      return false;
+    }
+    if (callback) callback.apply(this, args);
+  },  
+
   accountProfile() {
     if(!app.user.is_anonymous()) {
       require.ensure([], function() {
         const View = require('components/accountProfile/views.js');
 
-        api.makeCacheRequest(Urls.rest_user_details(), 'OPTIONS')
-          .then((response) => {
-            var i = new View.profile({
-              el: '#content',
-              model: app.user.toJSON(),
-              fields: response.actions.PUT
-            });
-            i.render();
-            app.hideLoading();
-        });
+        const fieldsR = app.makeCacheRequest(authServer + '/rest-auth/data', 'OPTIONS');
+        const dataR = app.makeCacheRequest(authServer + '/rest-auth/data');
+
+        $.when(fieldsR, dataR).done((fields, data) => {
+          const i = new View.profile({
+            el: '#content',
+            model: data[0],
+            fields: fields[0]
+          });
+          i.render();
+          app.hideLoading();
+        })
       });
     } else {
       app.routers.navigate(

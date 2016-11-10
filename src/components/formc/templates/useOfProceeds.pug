@@ -1,11 +1,12 @@
 - 'use strict'
 include ../../../templates/mixins.pug
-//- include menu.pug
-include ../../../templates/menuRaiseFund.pug
+include ../../../templates/fields_mixins.pug
+include ../../raiseFunds/templates/menu.pug
 
-// - var values = {}
-- var fields = { describe: { label: 'Describe your business plan'} };
-- var fields = { business_plan: { label: 'Please upload your business plan'} };
+style.
+  .red {
+    color: red;
+  }
 
 +breadcrumbs('Create Formc', '', [['home', '/',], [ 'current', page.get_absolute_url]])
 
@@ -16,103 +17,55 @@ section.formc.use_of_proceeds.create-company-media.container
     h2.text-uppercase.text-lg-center.text-xs-center.dosis.m-t-0.mb-50 use of proceeds
     .col-lg-12
       b Please provide a detailed description of the intended use of proceeds of this offering.  If you provide a range of possible uses, you should identify and describe each probably use and the factors you might consider in allocating proceeds.  If you will accept proceeds in excess of the target offering amount, you must describe the purpose and method for allocating excess proceeds with similar specificity.
-    form(metod="post" action="").form-section
-      input(type="hidden" value=values.business_plan_file_id name="business_plan_file_id")
+    form(action="").form-section
       .form-group.intended
         .col-lg-12
           textarea(rows="3" placeholder="Intended Use of Proceeds" name="intended_use_of_proceeds").form-control= values.intended_use_of_proceeds
       .table.table-responsive
-        .col-lg-12
-          table.table.table-bordered.use-of-proceeds-table.expense-table
+        .col-lg-12.table-responsive
+          table.table.table-bordered.use-of-proceeds-table.expense-table.m-b-0
             thead
               tr
                 th.w-50
                 th.w-25.text-lg-center.font-size-12 If target offering amount sold
                 th.w-25.text-lg-center.font-size-12 If maximum amount sold
-            tbody
-              tr.color-grey
+              tr.color-grey.row-gray
                 td.w-50.p-l-r-20.p-t-b-5 Total Proceeds
-                td.w-25.text-lg-center.font-size-12.p-t-b-5 Minimum Raise<br>100,000
-                td.w-25.text-lg-center.font-size-12.p-t-b-5 Maximum Raise<br>200,000
-              tr
-                td.border-t-n.p-l-r-20
-                  .pull-left Less: Offering Expenses
-                  .pull-right
-                    a(href="#" data-type='expense').link-2.add-proceed
-                      i.fa.fa-plus
-                      |  Add Another
-                td.border-b-t-none
-                td.border-b-t-none
-              each v, k in values.less_offering_express
-                tr(class="border-b-t-none p-t-b-5 index_" + k)
-                  td.border-t-n.d-block.input-w-80
-                    .d-inline-block.pull-left.p-r-1 (A)
-                    input(type="text" value=v.description name="less_offering_express[" + k + "][description]").input-border-bottom.form-control.font-size-12.pull-left
-                    .d-inline-block.pull-right
-                      .delete-section-container
-                        a(href="#" data-index=(k) data-type="expense").delete-proceed
-                          i.fa.fa-times
-                  td.border-b-t-none.w-25.font-size-12
-                    .form-section
-                      input(type="text" value=v.min name="less_offering_express[" + k + "][min]").input-border-bottom.form-control.text-xs-center.min-expense
-                  td.border-b-t-none.w-25.font-size-12
-                    .form-section
-                      input(type="text" value=v.max name="less_offering_express[" + k + "][max]").input-border-bottom.form-control.text-xs-center.max-expense
+                td.w-25.text-lg-center.font-size-12.p-t-b-5 $#{ formatHelper.formatNumber(minRaise) }
+                td.w-25.text-lg-center.font-size-12.p-t-b-5 $#{ formatHelper.formatNumber(maxRaise) }
+              |!{ templates.less_offering_express }
 
-          table.table.table-bordered.use-of-proceeds-table.use-table
+          table.table.table-bordered.use-of-proceeds-table.use-table.m-b-0.m-t-0
             thead
-              tr.color-grey
+              tr.color-grey.row-gray
                 td.w-50.p-l-r-20 Net Proceeds
                   .pull-right.icon
-                    i.fa.fa-question-circle
-                td.w-25.text-lg-center.font-size-12.min-net-proceeds $100k
+                    i.fa.fa-question-circle.m-r-0
+                td.w-25.text-lg-center.font-size-12.min-net-proceeds
                 td.w-25.text-lg-center.font-size-12.max-net-proceeds
-            tbody
-              tr
-                td.border-t-n.p-l-r-20
-                  .pull-left Use of Net Proceeds
-                  .pull-right
-                    a(href="#" data-type='use').link-2.add-proceed
-                      i.fa.fa-plus
-                      |  Add Another
-                td.border-b-t-none
-                td.border-b-t-none
-              each v, k in values.use_of_net_proceeds
-                tr(class="border-b-t-none p-t-b-5 index_" + k)
-                  td.border-t-n.d-block.input-w-80
-                    .d-inline-block.pull-left.p-r-1 (A)
-                    input(type="text" value=v.description name="use_of_net_proceeds[" + k + "][description]").input-border-bottom.form-control.font-size-12.pull-left
-                    .d-inline-block.pull-right
-                      .delete-section-container
-                        a(href="#" data-index=(k) data-type="use").delete-proceed
-                          i.fa.fa-times
-                  td.border-b-t-none.w-25.font-size-12
-                    .form-section
-                      input(type="text" value=v.min name="use_of_net_proceeds[" + k + "][min]").input-border-bottom.form-control.text-xs-center.min-use
-                  td.border-b-t-none.w-25.font-size-12
-                    .form-section
-                      input(type="text" value=v.max name="use_of_net_proceeds[" + k + "][max]").input-border-bottom.form-control.text-xs-center.max-use
-          table.table.table-bordered
+            |!{ templates.use_of_net_proceeds }
+          table.table.table-bordered.m-t-0
             tbody
               tr.row-gray
-                td.w-50.p-l-25 Total Use of Net Proceeds
+                td.w-50 Total Use of Net Proceeds
                   .pull-right.icon
                     i.fa.fa-question-circle
-                td.w-25.text-lg-center.color-red.font-size-12.min-total-use $150k
-                td.w-25.text-lg-center.color-red.font-size-12.max-total-use
+                td.w-25.text-lg-center.font-size-12.min-total-use
+                td.w-25.text-lg-center.font-size-12.max-total-use(data-content="<i class='fa fa-exclamation-circle'></i>Total Use of Net Proceeds must be equal to Net Proceeds." data-placement="right" data-toggle="popover" data-container="body")
       .col-lg-12
         .border-bottom.m-b-3
         h3.text-xs-center Business Plan
 
       .col-lg-12.create-perks.doc
         .text-lg-right.img-ppt
-          +fieldFileDropzone("business_plan", {
+          +fileDropzone("business_plan_file_id", _.extend({
             class1: 'col-lg-3',
             class2: 'col-lg-9 p-l-1 p-r-1',
             text: 'Drop your PDF or DOC here or click to upload',
             icon: 'file',
-            default: '/img/default' + suffix + '.png',
-          })
+            data: values.business_plan_file_data[0],
+            default: '/img/default/file.png',
+          }, fields.business_plan_file_id))
       
       .col-lg-12.text-lg-right.m-t-2
         //- a(href="#").btn.btn-primary.text-uppercase save

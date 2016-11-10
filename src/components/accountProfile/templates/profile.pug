@@ -1,201 +1,197 @@
 include ../../../templates/mixins.pug
+include ../../../templates/fields_mixins.pug
 
 +breadcrumbs('Profile', '', 
-    [
-        ['Home', '/'],
-        ['Profile', '']
-    ]
+  [
+    ['Home', '/'],
+    ['Profile', '']
+  ]
 ) 
-      
+
+mixin fieldInput(name, attr)
+  - attr = attr ? attr : fields[name];
+  - attr.value = attr.value ? attr.value : values ? values[name] : '';
+  div(class=attr.class)
+    input(
+            id=attr.id || name
+            name=attr.name || name
+            placeholder=attr.placeholder ? attr.placeholder :attr.label
+            type=attr.type ? attr.type : 'text'
+            class=(attr.help_text ? 'showPopover' : '') 
+            data-content=(attr.help_text ?attr.help_text : '')
+            value=attr.value
+            maxlength = attr.maxlength ? attr.maxlength : false
+            disabled=(attr.disabled ? attr.disabled : false)).form-control
+
 .container.profile.pt-50
-    .row 
-        aside.col-xl-3
-            form(method="post" action="").form.form-section
-                - var values = user;
+  .row 
+    aside.col-xl-3.m-b-1
+      form(method="post" action="").form.form-section
+        - var values = user;
+        h3.m-t-0.m-b-1.profile-user-name.text-xl-left.text-xs-center #{user.first_name + ' ' + user.last_name}
+        +userprofileDropzone("image", {
+          thumbSize: '255x135',
+          default: '/img/default/255x153.png',
+          icon: 'camera',
+          text: 'Drop your profile photo here or click to upload',
+          })
+      .row.m-t-2
+        .col-lg-12.text-xs-center
+          a(href="/account/change-password").link-3 Need to change your password?
 
-                +fieldDropzone("image", {
-                  thumbSize: '255x135',
-                  default: '/img/default/255x153.png',
-                  text: user.first_name + ' ' + user.last_name,
-                  icon: 'file-image-o',
-                  viewType: 3
-                  })
-            .row.m-t-2
-                .col-lg-12
-                    a(href="/account/change-password").link-3 Need to change your password?
+    .col-xl-9.col-lg-12
+      ul.nav.nav-tabs.profile-tabs
+        li(aria-expanded="false").nav-item
+          a(href="#account_info" data-toggle="tab"  aria-expanded="true" role="tab").active.nav-link.uppercase Profile information
+        li.nav-item
+          a(
+            href="#financial_info" 
+            data-toggle="tab" 
+            role="tab" 
+            aria-expanded="true").nav-link.uppercase Financial information
 
+      .tab-content.profile-tabs-content.mt30
 
-        .col-xl-9.col-lg-12
-            ul.nav.nav-tabs.profile-tabs
-                li.nav-item(aria-expanded="false")
-                    a(
-                        href="#account_info"
-                        data-toggle="tab" 
-                        aria-expanded="true"
-                        role="tab"
-                    ).active.nav-link.uppercase Profile information
-                li.nav-item  
-                    a(
-                        href="#financial_info" 
-                        data-toggle="tab" 
-                        role="tab" 
-                        aria-expanded="true"
-                    ).nav-link.uppercase Financial information
-                li.nav-item 
-                    a(
-                        href="#investment_preferences" 
-                        data-toggle="tab" 
-                        role="tab" 
-                        aria-expanded="true"
-                    ).nav-link.uppercase Investment preferences
+        div(aria-expanded="true")#account_info.tab-pane.fade.active.in
+          .row 
+            section.form-section.clearfix 
+              form(method="post" action="").form
+                .form-body.clearfix 
+                  .col-xs-12
+                    section.right-block
+                      .form-group.row
+                        label.col-lg-3.text-lg-right.text-xs-left Legal Name
+                        +fieldInput("first_name", {'class': 'col-lg-4 m-b-md-25','placeholder':'First Name' })
+                        +fieldInput("last_name", {'class': 'col-lg-4','placeholder':'Last Name' })
+                      .form-group.row
+                        label.col-lg-3.text-lg-right.text-xs-left Country
+                        .col-lg-8
+                          - user.country = 'us';
+                          select(name="country").custom-select.w-100.country-select
+                            option(value="us") United States
+                            option(value="ua") UA
+                            option(value='ru') Russia
+                      +fieldBlock("street_address_1", user.street_address_1, {'class1': 'col-lg-3 ', 'class2': 'col-lg-8 ', 'type': 'text'})
+                      +fieldBlock("street_address_2", user.street_address_2, {'class1': 'col-lg-3 ', 'class2': 'col-lg-8 ', 'type': 'text'})
+                      .row.us-row(style="display:" + (user.country == 'us' ? 'block' : 'none'))
+                        input(type="hidden" name="city" values=values['city'] disabled=((user.country=='us') ? false : true))
+                        input(type="hidden" name="state" value=values['state'] disabled=((user.country=='us') ? false : true))
+                        .col-md-12.col-lg-6
+                          if user.country == 'us'
+                            +fieldBlock("zip_code", user.zip_code, {'class1': 'col-lg-6', 'class2': 'col-lg-6', 'type': 'text'})
+                          else
+                            +fieldBlock("zip_code", user.zip_code, {'class1': 'col-lg-6', 'class2': 'col-lg-6', 'type': 'text', disabled: true})
 
-            .tab-content.profile-tabs-content.mt30
+                        .col-lg-5.city_states.required
+                          .row
+                            label.col-lg-5.col-xs-6.text-lg-right.text-xs-left City/State
+                            .col-lg-6.col-xs-6
+                              a(data-toggle="modal" data-target="#city_state_modal" href="#city_state_modal").change_state_city
+                                span.input-value.js-city-state #{ values['city'] ? values['city'] : '(City)' }, #{ values['state'] ? values['state'] : '(State)' }
+                                i.fa.fa-pencil-square-o.link-1
 
-                #account_info.tab-pane.fade.active.in(aria-expanded="true")
-                    .row 
-                        section.form-section.clearfix 
-                            form(method="post" action="").form
-                                input(type="hidden" name="city" values=values['city'])
-                                input(type="hidden" name="state" value=values['state'])
-                                .form-body.clearfix 
-                                    .col-xs-12
-                                        section.right-block 
-                                            +fieldBlock("first_name", user.first_name, {'class1': 'col-lg-3 ', 'class2': 'col-lg-8 ', 'type': 'text'})
-                                            +fieldBlock("last_name", user.last_name, {'class1': 'col-lg-3', 'class2': 'col-lg-8 ', 'type': 'text'})
-                                            +fieldBlock("street_address_1", user.street_address_1, {'class1': 'col-lg-3 ', 'class2': 'col-lg-8 ', 'type': 'text'})
-                                            +fieldBlock("street_address_2", user.street_address_2, {'class1': 'col-lg-3 ', 'class2': 'col-lg-8 ', 'type': 'text'})
-                                            .row 
-                                                .col-md-12.col-lg-6
-                                                    +fieldBlock("zip_code", user.zip_code, {'class1': 'col-lg-6', 'class2': 'col-lg-6', 'type': 'text'})
+                      .row.foreign-country-row(style="display:" + (user.country == 'us' ? 'none' : 'block'))
+                        .col-lg-6
+                          if user.country == 'us'
+                            +fieldBlock("city", user.city, {'class1': 'col-lg-6 ', 'class2': 'col-lg-6 ', 'type': 'text', disabled: true})
+                          else
+                            +fieldBlock("city", user.city, {'class1': 'col-lg-6 ', 'class2': 'col-lg-6 ', 'type': 'text'})
+                        .col-lg-5
+                          .form-group.row.state.text
+                            label.text-lg-right.col-lg-5(for="state").p-t-0.m-b-0 State/Province/ Region
+                            div.col-lg-7
+                              input.form-control(name='state' placeholder='State/Province/Region' type="text" value=user.state)
+                      .row.foreign-country-row(style="display:" + (user.country == 'us' ? 'none' : 'block'))
+                        .col-lg-6
+                          .form-group.row.zip_code.text
+                            label.text-lg-right.col-lg-6(for="zip_code") Postal Code
+                            div.col-lg-6
+                              input.form-control(name='zip_code' placeholder='Postal Code' type="text" value=user.zip_code) 
+                        .col-lg-5
+                          +fieldBlock("phone", user.phone, {'class1': 'col-lg-5 ', 'class2': 'col-lg-7 ', 'type': 'text'})
 
-                                                .col-lg-5.city_states.required
-                                                    .row
-                                                        label.col-lg-5.col-xs-6.text-lg-right.text-xs-left City/State
-                                                        .col-lg-6.col-xs-6
-                                                            a(data-toggle="modal" data-target="#city_state_modal" href="#city_state_modal").change_state_city
-                                                                span.input-value.js-city-state #{ values['city'] ? values['city'] : '(City)' }, #{ values['state'] ? values['state'] : '(State)' }
-                                                                i.fa.fa-pencil-square-o.link-1
+                      .form-group.row.clearfix.m0 
+                        .col-lg-11.mt30.text-xs-center
+                          .controls  
+                            button(type="submit").btn.btn-primary.pull-lg-right SAVE 
 
-                                            .row 
-                                                .col-lg-6
-                                                    +fieldBlock("phone", user.phone, {'class1': 'col-lg-6 ', 'class2': 'col-lg-6 ', 'type': 'text'})
-                                                
-                                                .col-lg-6
-                                                    +fieldBlock("dob", user.dob, {'class1': ' col-lg-4', 'class2': '   col-lg-6', 'type': 'date'})
-                                            
-                 
-                                            .form-group.row.clearfix.m0 
-                                                .col-lg-11.mt30
-                                                    .controls  
-                                                        button(
-                                                            type="submit"
-                                                        ).btn.btn-primary.pull-right SAVE 
+        div(aria-expanded="true")#financial_info.tab-pane.fade
+          .row 
+            section.form-section.clearfix 
+              form(method="post" action="")
+                .form-body.clearfix 
 
-                #financial_info.tab-pane.fade(aria-expanded="true")
-                    .row 
-                        section.form-section.clearfix 
-                            form(method="post" action="")
-                                .form-body.clearfix 
+                  .col-xs-12
+                    section.right-block
+                      +fieldBlock("bank_name", user.bank_name,{'class1': 'col-lg-3 ', 'class2': 'col-lg-8 ', 'type': 'text'})
+                      +fieldBlock("name_on_bank_account", user.name_on_bank_account, {'class1': 'col-lg-3', 'class2': 'col-lg-8', 'type': 'text'})
+                      +fieldBlock("account_number", user.account_number, {'class1': 'col-lg-3 ', 'class2': 'col-lg-8 ', 'type': 'text'})
+                      +fieldBlock("account_number_re", user.account_number_rc, {'class1': 'col-lg-3 ', 'class2': 'col-lg-8', 'type': 'text'})
+                      +fieldBlock("routing_number", user.routing_number, {'class1': 'col-lg-3 ', 'class2': 'col-lg-8', 'type': 'text'})
+                      //+fieldBlock("account_type", user.account_type, {'class1': 'col-lg-3', 'class2': 'col-lg-8', 'type': 'text'})
+                      .form-group.row.radio
+                        label.text-md-right.col-lg-3 Account Type
+                        .col-lg-9.radio-input
+                          label 
+                            input(type="radio")
+                            |  Checking
+                          label 
+                            input(type="radio")
+                            |  Savings
+                      .row
+                        .col-sm-11
+                          hr.m-b-3.m-t-1
 
-                                    .col-xs-12
-                                        section.right-block 
-                                            +fieldBlock("first_name", user.first_name, {'class1': 'col-lg-3 ', 'class2': 'col-lg-8 ', 'type': 'text'})
-                                            +fieldBlock("last_name", user.last_name, {'class1': 'col-lg-3 ', 'class2': 'col-lg-8 ', 'type': 'text'})
-                                            +fieldBlock("street_address_1", user.stret_address_1, {'class1': 'col-lg-3 ', 'class2': 'col-lg-8 ', 'type': 'text'})
-                                            +fieldBlock("street_address_2", user.stret_address_1, {'class1': 'col-lg-3 ', 'class2': 'col-lg-8 ', 'type': 'text'})
-                                            +fieldBlock("account_number", user.account_number, {'class1': 'col-lg-3 ', 'class2': 'col-lg-8 ', 'type': 'text'})
-                                            +fieldBlock("account_number_re", user.account_number_rc, {'class1': 'col-lg-3 ', 'class2': 'col-lg-8', 'type': 'text'})
-                                            +fieldBlock("routing_number", user.routing_number, {'class1': 'col-lg-3 ', 'class2': 'col-lg-8', 'type': 'text'})
-                                            +fieldBlock("account_type", user.account_type, {'class1': 'col-lg-3', 'class2': 'col-lg-8', 'type': 'text'})
-                                            +fieldBlock("check_type", user.check_type, {'class1': 'col-lg-3 ', 'class2': 'col-lg-8', 'type': 'text'})
-                                            +fieldBlock("name_on_bank_account", user.name_on_bank_account, {'class1': 'col-lg-3', 'class2': 'col-lg-8', 'type': 'text'})
-                                            +fieldBlock("ssn", user.ssn, {'class1': 'col-lg-3', 'class2': 'col-lg-8', 'type': 'text'})
+                      .form-group.row 
+                        .col-lg-11
+                          .warning-block.m-b-0
+                            i.fa.fa-exclamation-triangle 
+                            span.warning-text 
+                              | Investors are limited to 12 month investment totals ranging from $2,000 - $100,000 based on income and net worth. Please update your financial information to see your limit.
 
-                                            .row
-                                                .col-sm-7.col-lg-8.offset-lg-3
-                                                    hr.mt30.mb50
+                      +fieldBlock("annual_income", user[annual_income], {'class1': 'col-lg-3 ', 'class2': 'col-lg-8 ', 'type': 'text'})
+                      +fieldBlock("net_worth", user[net_worth], {'class1': 'col-lg-3', 'class2': 'col-lg-8 ', 'type': 'text'})
 
-                                            .form-group.row 
-                                                .col-lg-11
-                                                    .warning-block
-                                                        i.fa.fa-exclamation-triangle 
-                                                        span.warning-text 
-                                                            | Investors are limited to 12 month investment totals ranging from $2,000 - $100,000 based on income and net worth. Please update your financial information to see your limit.
-
-                                            +fieldBlock("annual_income", user[annual_income], {'class1': 'col-lg-3 ', 'class2': 'col-lg-8 ', 'type': 'text'})
-                                            +fieldBlock("net_worth", user[net_worth], {'class1': 'col-lg-3', 'class2': 'col-lg-8 ', 'type': 'text'})
-                                              
-
-                                            .form-group.row.clearfix.m0
-                                                .col-lg-11.mt30
-                                                    .controls  
-                                                        button(
-                                                            type="submit"
-                                                        ).btn.btn-primary.pull-right SAVE 
-                                                    
-                #investment_preferences.tab-pane.fade(aria-expanded="true")
-                    .row 
-                        section.form-section.clearfix 
-                            form(
-                                method="post" 
-                                action=""
-                                role="form"
-                            ).form-body.clearfix 
-                                    
-                                .col-xs-12
-
-                                    section.right-block 
-                                        +fieldBlock("where_grow_up", user.where_grow_up, {'class1': 'col-lg-10 offset-lg-1  thin-label', 'class2': 'offset-lg-1 col-lg-10 ', 'type': 'text', 'text_align': 'left'})
-                                        +fieldBlock("where_go_college", user.where_ho_college, {'class1': 'col-lg-10 offset-lg-1  thin-label', 'class2': 'offset-lg-1  col-lg-10 ', 'type': 'text', 'text_align': 'left'})
-                                        +fieldBlock("industries", user.industries, {'class1': 'col-lg-10 offset-lg-1  thin-label', 'class2': 'offset-lg-1 col-lg-10', 'type': 'text', 'text_align': 'left'})
-                                        +fieldBlock("locations", user.locations, {'class1': 'col-lg-10 offset-lg-1 thin-label', 'class2': 'offset-lg-1 col-lg-10 ', 'type': 'text', 'text_align': 'left'})
-                                        +fieldBlock("interested", user.interested, {'class1': 'col-lg-10 offset-lg-1  thin-label', 'class2': 'offset-lg-1 col-lg-10', 'type': 'text', 'text_align': 'left'})
-                                        +fieldBlock("investment_goals", user.investment_goals, {'class1': 'col-lg-10 offset-lg-1  thin-label', 'class2': 'offset-lg-1  col-lg-10', 'type': 'text', 'text_align': 'left'})
-                                        +fieldBlock("important_attributes", user.important_attributes, {'class1': 'col-lg-10 offset-lg-1  thin-label', 'class2': ' col-lg-10 offset-lg-1 ', 'type': 'text', 'text_align': 'left'})
-             
-                                        .form-group.row.clearfix.m0 
-                                            .col-lg-11.mt25
-                                                .controls  
-                                                    button(
-                                                        type="submit"
-                                                    ).btn.btn-primary.pull-right SAVE 
-                                        
-    .popover-content-ssn 
-        i.fa.fa-info-circle 
-        span Why do we need this? I know it seems terribly invasive but we are required to obtain your socialsecurity number for two reasons, 
-        p 1) regulators require we comply with know your customer and anti-money laundering rules and; 
-        p 2) companies will need to provide you with tax information based on your investment.  
-        p Don’t worry, we’re obsessive about your privacy.
-
+                      .form-group.row.clearfix.m0
+                        .col-lg-11.mt30.text-xs-center
+                          .controls  
+                            button(type="submit").btn.btn-primary.pull-lg-right SAVE  
+                    
+  .popover-content-ssn 
+    i.fa.fa-info-circle 
+    span Why do we need this? I know it seems terribly invasive but we are required to obtain your socialsecurity number for two reasons, 
+    p 1) regulators require we comply with know your customer and anti-money laundering rules and; 
+    p 2) companies will need to provide you with tax information based on your investment.  
+    p Don’t worry, we’re obsessive about your privacy.
 
 //MODAL
-#city_state_modal.modal.fade(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")
-    .modal-dialog(role="document")
-        .modal-content
-            .modal-header
-                button(type="button" class="close" data-dismiss="modal" aria-label="Close")
-                    span(aria-hidden="true")
-                        i.fa.fa-times
-                h2(class="modal-title").text-lg-center.text-uppercase.dosis City/State
+div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")#city_state_modal.modal.fade
+  div(role="document").modal-dialog
+    .modal-content
+      .modal-header
+        button(type="button" data-dismiss="modal" aria-label="Close").close
+          span(aria-hidden="true")
+            i.fa.fa-times
+        h2.text-xs-center.text-uppercase.dosis.modal-title City/State
 
-            .modal-body
-                .container.form-section
-                    form.col-lg-10.offset-lg-1.border-bottom
-                        .form-group.row.clearfix.required
-                            input#city.js-city(type="text" placeholder="City" value=values['city']).form-control
-                        .form-group.row.clearfix.required
-                            select#state.js-state(name='state').form-control.custom-select
-                                option(checked='checked', value="") State
-                                each state in states
-                                    if state.abbreviation == values.state
-                                        option(value=state.abbreviation selected)= state.name
-                                    else
-                                        option(value=state.abbreviation)= state.name
-                        .form-group.row.clearfix.required.m0
-                            .row
-                                .col-lg-12
-                                    .col-lg-12.text-lg-center
-                                            button.btn.btn-primary.text-uppercase save
-                .modal-footer
+      .modal-body
+        .container.form-section
+          form.col-lg-10.offset-lg-1.border-bottom
+            .form-group.row.clearfix.required
+              input(type="text" placeholder="City" value=values['city'])#city.js-city.form-control
+            .form-group.row.clearfix.required
+              select(name='state')#state.js-state.form-control.custom-select
+                option(checked='checked', value="") State
+                each state in states
+                  if state.abbreviation == values.state
+                    option(value=state.abbreviation selected)= state.name
+                  else
+                    option(value=state.abbreviation)= state.name
+            .form-group.row.clearfix.required.m0
+              .row
+                .col-lg-12
+                  .col-lg-12.text-xs-center
+                    button.btn.btn-primary.text-uppercase save
+        .modal-footer
 
 script(src= window.location.protocol + "//maps.google.com/maps/api/js?language=en&key=" + googleMapKey)

@@ -1,0 +1,35 @@
+include ../../../../templates/fields_mixins.pug
+
+mixin row(value, index)
+  - var index = index;
+
+  .col-xl-12(data-index=index class=name + ' addSectionBlock')
+    .delete-section-container
+      a(href="#" data-section=name data-index=index).delete-sectionnew
+        i.fa.fa-times
+
+    +fieldNestedTextLabel(name, 'title', value, index, {class1:'col-xl-3 col-lg-12 text-lg-left text-xl-right', class2: 'col-xl-9 col-lg-12'})
+    +fieldNestedTextareaLabel(name, 'body', value, index, {class1:'col-xl-3 col-lg-12 text-lg-left text-xl-right', class2: 'col-xl-9 col-lg-12'})
+
+mixin run()
+
+  if first_run
+    .row
+      .col-lg-12.m-b-1.text-lg-center.text-md-center.text-xs-center
+        h3.d-inline-block.m-b-0.m-t-0 Additional Information 
+    div(class=(attr.row == 0 ? '' : 'row ') + name + '_block' + (attr.required == true ? ' required ' : ' ') + ' nested')
+      div(class=(attr.row == 0 ? '' : '') + name + '_container' + (attr.required == true ? ' required ' : ' ') + ' nested')
+        if values == null || values.length == 0
+          +row({}, 0)
+        else
+          each value, index in values
+            +row(value, index)
+    .row.add-link
+      .col-xl-9.offset-xl-3
+        a(href="#" data-section=name data-comp="raiseFunds" data-template="additional_info").link-2.add-sectionnew
+          i.fa.fa-plus
+          |  Add Another Section
+  else
+    +row({}, index)
+
++run()
