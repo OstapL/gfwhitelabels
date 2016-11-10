@@ -32,7 +32,7 @@ const submitCampaign = function submitCampaign(e) {
     this.$('.help-block').scrollTo(45);
     return;
   } else {
-    let url = this.urlRoot + '/' + data.id;
+    let url = this.urlRoot.replace(/:id/, data.id);
     let type = 'PUT';
     delete data.id;
 
@@ -199,7 +199,7 @@ module.exports = {
   }, leavingConfirmationHelper.methods, phoneHelper.methods, menuHelper.methods)),
 
   generalInformation: Backbone.View.extend(_.extend({
-      urlRoot: raiseCapitalUrl + 'campaign/:id/general_information',
+      urlRoot: raiseCapitalUrl + '/campaign/:id/general_information',
       template: require('./templates/generalInformation.pug'),
       events: _.extend({
           'submit form': api.submitAction,
@@ -853,6 +853,12 @@ module.exports = {
           minimum_increment: 'The Minimum investment is',
           length_days: 'Length of the Campaign',
           investor_presentation: 'Upload an Investor Presentation',
+          premoney_valuation: 'Pre-Money Valuation',
+          price_per_share: 'Price Per Share',
+          min_number_of_shares: 'Minimum № of Shares',
+          max_number_of_shares: 'Maximum № of Shares',
+          min_equity_offered: 'Minimum Equity Offered',
+          max_equity_offered: 'Maximum Equity Offered',
         };
         this.assignLabels();
         this.createIndexes();
