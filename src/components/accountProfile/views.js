@@ -288,4 +288,57 @@ module.exports = {
       return this;
     },
   }),
+
+  membershipConfirmation: Backbone.View.extend({
+    urlRoot: formcServer + '/invitation',
+
+    template: require('./templates/confirmation.pug'),
+
+    events: {
+      'click .btn-confirm': 'confirmMembership',
+      'click .btn-cancel': 'cancelMembership',
+    },
+
+    initialize(options) {
+      this.code = options.code;
+      this.title = options.title;
+      this.company_name = options.company_name;
+    },
+
+    render() {
+      this.$el.html(
+        this.template({
+          title: this.title,
+          company_name: this.company_name,
+          code: this.code,
+        })
+      );
+
+      return this;
+    },
+
+    getSuccessUrl() {
+      return '/account/profile';
+    },
+
+    confirmMembership(e) {
+      e.preventDefault();
+
+      api.submitAction.call(this, e);
+
+      return false;
+    },
+
+    cancelMembership(e) {
+      e.preventDefault();
+
+      $('#content').scrollTo();
+      app.routers.navigate(
+        'account/profile',
+        { trigger: true, replace: false }
+      );
+
+      return false;
+    },
+  }),
 };

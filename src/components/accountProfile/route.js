@@ -3,6 +3,7 @@ module.exports = Backbone.Router.extend({
     'account/profile': 'accountProfile',
     'account/logout': 'logout',
     'account/change-password': 'changePassword',
+    'code/:code': 'membershipConfirmation',
     'reset/password/confirm/': 'setNewPassword',
     // 'account/new-password': 'setNewPassword',
     'dashboard/issue-dashboard': 'issueDashboard',
@@ -63,6 +64,25 @@ module.exports = Backbone.Router.extend({
       i.render();
       app.hideLoading();
     });
+  },
+
+  membershipConfirmation(code) {
+    require.ensure([], function() {
+      // api.makeRequest(formcServer + '/invitation/' + code, 'GET').done((response) => {
+        let data = {
+          company_name: 'COMPANY NAME',
+          title: 'TITLE',
+          code: code,
+        };
+
+        const View = require('components/accountProfile/views.js');
+        let i = new View.membershipConfirmation(_.extend({
+          el: '#content',
+        }, data));
+        i.render();
+        app.hideLoading();
+      });
+    // });
   },
 
   setNewPassword: function() {
