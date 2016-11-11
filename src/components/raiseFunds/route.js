@@ -78,13 +78,16 @@ module.exports = Backbone.Router.extend({
 
       var a1 = app.makeCacheRequest(raiseCapitalUrl + '/campaign/' + id + '/general_information', 'OPTIONS');
       var a2 = app.makeCacheRequest(raiseCapitalUrl + '/campaign/' + id + '/general_information');
+      // let formcR = api.makeCacheRequest(authServer + '/user/formc');
 
+      // $.when(a1, a2, formcR).done((meta, model, formc) => {
       $.when(a1, a2).done((meta, model) => {
         model[0].id = id;
         var i = new View.generalInformation({
           el: '#content',
           fields: meta[0].fields,
-          model: model[0]
+          model: model[0],
+          // formc: formc[0],
         });
 
         i.render();

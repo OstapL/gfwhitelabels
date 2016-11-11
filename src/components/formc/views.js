@@ -190,6 +190,7 @@ module.exports = {
       this.fields = options.fields;
       this.fields.company_name = { required: true };
       this.fields.full_name = { required: true };
+      this.campaign = options.campaign;
     },
 
     render() {
@@ -201,6 +202,7 @@ module.exports = {
           Urls: Urls,
           fields: this.fields,
           values: this.model,
+          campaignId: this.campaign.id,
         })
       );
 
@@ -239,6 +241,7 @@ module.exports = {
       this.fields = options.fields;
       this.fields.full_time_employers = { label: 'Full Time Employees' };
       this.fields.part_time_employers = { label: 'Part Time Employees' };
+      this.campaign = options.campaign;
     },
 
     deleteMember: function (e) {
@@ -273,6 +276,7 @@ module.exports = {
           Urls: Urls,
           fields: this.fields,
           values: this.model,
+          campaignId: this.campaign.id,
           roles: ['shareholder', 'director', 'officer'],
           titles: {
             ceo: 'CEO/President',
@@ -295,6 +299,7 @@ module.exports = {
 
     initialize(options) {
       this.fields = options.fields;
+      this.campaign = options.campaign;
       this.role = options.role;
 
       this.labels = {
@@ -354,6 +359,7 @@ module.exports = {
           Urls: Urls,
           fields: this.fields,
           values: this.model,
+          campaignId: this.campaign.id,
           templates: this.jsonTemplates,
         })
       );
@@ -480,6 +486,7 @@ module.exports = {
 
     initialize(options) {
       this.fields = options.fields;
+      this.campaign = options.campaign;
 
       this.labels = {
         transaction_with_related_parties: {
@@ -508,6 +515,7 @@ module.exports = {
           Urls: Urls,
           fields: this.fields,
           values: this.model,
+          campaignId: this.campaign.id,
           templates: this.jsonTemplates,
         })
       );
@@ -631,6 +639,7 @@ module.exports = {
           maxRaise: this.campaign.maximum_raise,
           minRaise: this.campaign.minimum_raise,
           formatHelper: formatHelper,
+          campaignId: this.campaign.id,
         })
       );
       this.$('.max-total-use').popover({
@@ -651,7 +660,9 @@ module.exports = {
   }, menuHelper.methods, dropzoneHelpers.methods, addSectionHelper.methods)),
 
   riskFactorsInstruction: Backbone.View.extend(_.extend({
-    initialize(options) {},
+    initialize(options) {
+      this.campaign = options.campaign;
+    },
 
     events: _.extend({
       'submit form': 'submit',
@@ -665,6 +676,7 @@ module.exports = {
         template({
           serverUrl: serverUrl,
           Urls: Urls,
+          campaignId: this.campaign.id,
           values: this.model,
         })
       );
@@ -680,6 +692,7 @@ module.exports = {
       this.fields = options.fields;
       this.fields.title = { label: 'Title for Risk' };
       this.fields.risk = { label: 'Describe Your Risk' };
+      this.campaign = options.campaign;
       this.defaultRisks = {
         0: {
           title: 'There is a limited market for the Company’s product or services',
@@ -763,6 +776,7 @@ module.exports = {
           fields: this.fields,
           values: this.model,
           defaultRisks: this.defaultRisks,
+          campaignId: this.campaign.id,
         })
       );
       this.$('textarea').each(function () {
@@ -781,6 +795,7 @@ module.exports = {
       this.fields = options.fields;
       this.fields.title = { label: 'Title for Risk' };
       this.fields.risk = { label: 'Describe Your Risk' };
+      this.campaign = options.campaign;
       this.defaultRisks = {
         0: {
           title: 'The amount of capital the Company is attempting to raise in the Offering ' +
@@ -872,6 +887,7 @@ module.exports = {
           fields: this.fields,
           values: this.model,
           defaultRisks: this.defaultRisks,
+          campaignId: this.campaign.id,
         })
       );
       this.$('textarea').each(function () {
@@ -890,6 +906,7 @@ module.exports = {
       this.fields = options.fields;
       this.fields.title = { label: 'Title for Risk' };
       this.fields.risk = { label: 'Describe Your Risk' };
+      this.campaign = options.campaign;
       this.defaultRisks = {
         0: {
           title: 'We have a limited operating history upon which you can e valuate ' +
@@ -1007,6 +1024,7 @@ module.exports = {
           Urls: Urls,
           fields: this.fields,
           values: this.model,
+          campaignId: this.campaign.id,
           defaultRisks: this.defaultRisks,
         })
       );
@@ -1027,6 +1045,7 @@ module.exports = {
       this.fields = options.fields;
       this.fields.title = { label: 'Title for Risk' };
       this.fields.risk = { label: 'Describe Your Risk' };
+      this.campaign = options.campaign;
       this.defaultRisks = {
         0: {
           title: 'The development and commercialization of our services is highly competitive.',
@@ -1089,6 +1108,7 @@ module.exports = {
           Urls: Urls,
           fields: this.fields,
           values: this.model,
+          campaignId: this.campaign.id,
           defaultRisks: this.defaultRisks,
         })
       );
@@ -1109,6 +1129,7 @@ module.exports = {
       this.fields = options.fields;
       this.fields.title = { label: 'Title for Risk' };
       this.fields.risk = { label: 'Describe Your Risk' };
+      this.campaign = options.campaign;
       this.defaultRisks = {
         0: {
           title: 'Our company may be unable to retain senior personnel. ',
@@ -1190,6 +1211,7 @@ module.exports = {
           Urls: Urls,
           fields: this.fields,
           values: this.model,
+          campaignId: this.campaign.id,
           defaultRisks: this.defaultRisks,
         })
       );
@@ -1208,6 +1230,7 @@ module.exports = {
       this.fields = options.fields;
       this.fields.title = { label: 'Title for Risk' };
       this.fields.risk = { label: 'Describe Your Risk' };
+      this.campaign = options.campaign;
       this.defaultRisks = {
         0: {
           title: 'We rely on various intellectual property rights in order to operate our ' +
@@ -1311,6 +1334,7 @@ module.exports = {
           Urls: Urls,
           fields: this.fields,
           values: this.model,
+          campaignId: this.campaign.id,
           defaultRisks: this.defaultRisks,
         })
       );
@@ -1329,6 +1353,7 @@ module.exports = {
       this.fields = options.fields;
       this.fields.title = { label: 'Title for Risk' };
       this.fields.risk = { label: 'Describe Your Risk' };
+      this.campaign = options.campaign;
       this.defaultRisks = {};
       this.labels = labels;
       this.assignLabels();
@@ -1346,6 +1371,7 @@ module.exports = {
           Urls: Urls,
           fields: this.fields,
           values: this.model,
+          campaignId: this.campaign.id,
           defaultRisks: this.defaultRisks,
         })
       );
@@ -1405,6 +1431,7 @@ module.exports = {
           Urls: Urls,
           fields: this.fields,
           values: this.model,
+          campaignId: this.campaign.id,
           templates: this.jsonTemplates,
         })
       );
@@ -1450,6 +1477,7 @@ module.exports = {
         1: 'Yes',
         0: 'No',
       };
+      this.campaign = options.campaign;
       this.labels = {
         outstanding_securities: {
           security_type: "Security Type",
@@ -1585,6 +1613,7 @@ module.exports = {
           Urls: Urls,
           fields: this.fields,
           values: this.model,
+          campaignId: this.campaign.id,
           templates: this.jsonTemplates,
         })
       );
@@ -1597,6 +1626,7 @@ module.exports = {
     urlRoot: formcServer + '/:id' + '/background-check',
     initialize(options) {
       this.fields = options.fields;
+      this.campaign = options.campaign;
       this.labels = {
         company_or_director_subjected_to: 'If Yes, Explain',
         descrption_material_information: '2) If you\'ve provided any information in a format, ' +
@@ -1628,6 +1658,7 @@ module.exports = {
           Urls: Urls,
           fields: this.fields,
           values: this.model,
+          campaignId: this.campaign.id,
         })
       );
       return this;
