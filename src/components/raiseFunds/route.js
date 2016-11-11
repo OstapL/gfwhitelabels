@@ -1,6 +1,7 @@
 module.exports = Backbone.Router.extend({
   routes: {
     'company/create': 'company',
+    'company/company-dashboard': 'companyDashboard',
     'campaign/:id/general_information': 'generalInformation',
     'campaign/:id/media': 'media',
     'campaign/:id/team-members/add/:type/:index': 'teamMembersAdd',
@@ -55,7 +56,14 @@ module.exports = Backbone.Router.extend({
       );
     }
   },
-
+    companyDashboard: function() {
+      const View = require('components/raiseFunds/views.js');
+      let i = new View.companyDashboard({
+        el: '#content',
+      });
+      i.render();
+      app.hideLoading();
+  }, 
   generalInformation (id) {
     if (!app.user.is_anonymous()) {
       const Model = require('components/campaign/models.js');
@@ -267,5 +275,6 @@ module.exports = Backbone.Router.extend({
         '/account/login', {trigger: true, replace: true}
       );
     }
-  },    
+  },
+   
 });
