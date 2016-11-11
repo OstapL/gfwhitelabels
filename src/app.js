@@ -88,7 +88,9 @@ let app = {
     return _.chain(location.search.slice(1).split('&'))
       .map(function (item) {
         if (item) {
-          return item.split('=');
+          let arr = item.split('=');
+          arr[1] = decodeURIComponent(arr[1]);
+          return arr;
         }
       })
       .compact()
