@@ -49,15 +49,15 @@ section.formc-team-members-director.container.m-b-85
         p.pb10 You will be required to file a complete set of financial statements, including balance sheet, income statement, statement of cash flows and statement of changes in owners equity and notes to the financial statements. They must be prepared in accordance with U.S. generally accepted accounting principles and must cover the two most recently completed fiscal years or the period(s) since inception, if shorter. If the financial statements are not audited, they must be labeled as “unaudited.” You must provide these financial statements even if you have no operating history.
         p.m-t-1.m-b-2 If your aggregate offering is:
         b $100,000 or less:
-        p *Financial statements of the issuer and its predecessors, if any, certified by CEO
-        p *Disclosure of amount of income, taxable income and total tax reflected on federal tax return, cetified by CEO
-        p *If statements are available that have been reviewed or audited by an independent public accountant, they must be provided instead along with a signed audit or review report and need not include information from tax return or certification of CEO
+        p.text-indent *Financial statements of the issuer and its predecessors, if any, certified by CEO
+        p.text-indent *Disclosure of amount of income, taxable income and total tax reflected on federal tax return, cetified by CEO
+        p.text-indent.pb10 *If statements are available that have been reviewed or audited by an independent public accountant, they must be provided instead along with a signed audit or review report and need not include information from tax return or certification of CEO
         b $100,001-$500,000: 
-        p *Financial statements of the issuer and its predecessors, if any, reviewed by an independent public accountant including a signed review report
-        p *If statements are available that have been audited by an independent public accountant, they must be provided instead along with a signed audit report
+        p.text-indent *Financial statements of the issuer and its predecessors, if any, reviewed by an independent public accountant including a signed review report
+        p.text-indent.pb10 *If statements are available that have been audited by an independent public accountant, they must be provided instead along with a signed audit report
         b $500,001-$1,000,000:
-        p *If this is your first offering in reliance on Regulation Crowdfunding, then you’ll need financial statements reviewed by an independent public accountant, along with a signed review report (unless statements are available that have been audited by an independent public accountant, they must be provided instead along with a signed audit report)
-        p *If you have previously sold securities in reliance on Regulation Crowdfunding, you’ll need to provide financial statements audited by an independent public accountant along with a signed audit report.
+        p.text-indent *If this is your first offering in reliance on Regulation Crowdfunding, then you’ll need financial statements reviewed by an independent public accountant, along with a signed review report (unless statements are available that have been audited by an independent public accountant, they must be provided instead along with a signed audit report)
+        p.text-indent *If you have previously sold securities in reliance on Regulation Crowdfunding, you’ll need to provide financial statements audited by an independent public accountant along with a signed audit report.
         .border-bottom.m-t-3.m-b-3
         h3 INSTRUCTIONS
         p.m-b-2 To determine the financial statements required, the Aggregate Offering Amount for purposes means the aggregate amounts offered and sold by the issuer, all entities controlled by or under common control with the issuer, and all predecessors of the issuer in reliance on Section 4(a)(6) of the Securities Act within the preceding 12-month period plus the current maximum offering amount provided on the cover of this Form.
@@ -86,13 +86,13 @@ section.formc-team-members-director.container.m-b-85
               |  No
         .sold_securities_choice.shown-yes(style="display:" + (values['sold_securities_choice'] ? 'block' : 'none'))
           +fieldTextLabel("sold_securities_amount", _.extend({
-            class1: 'col-lg-12 col-md-12 text-md-left text-xl-left',
-            class2: 'col-lg-12 col-md-12',
+            class1: 'col-xl-12 text-xl-left',
+            class2: 'col-xl-12',
           }, fields.sold_securities_amount))
-        .text-lg-right.img-ppt
+        .img-ppt
           +fileDropzone("fiscal_recent_file_id", _.extend({
-            class1: 'col-lg-3',
-            class2: 'col-lg-9 p-l-1 p-r-1',
+            class1: 'col-xl-3 col-lg-12 text-xl-right text-lg-left',
+            class2: 'col-xl-9 col-lg-12 p-l-1 p-r-1',
             text: 'Drop your PDF or DOC here or click to upload',
             icon: 'file',
             data: values.fiscal_recent_file_data[0],
@@ -100,10 +100,10 @@ section.formc-team-members-director.container.m-b-85
             default: '/img/icons/file.png',
           }, fields.fiscal_recent_file_data))
 
-        .text-lg-right.img-ppt
+        .img-ppt
           +fileDropzone("fiscal_prior_file_id", _.extend({
-            class1: 'col-lg-3',
-            class2: 'col-lg-9 p-l-1 p-r-1',
+            class1: 'col-xl-3 col-lg-12 text-xl-right text-lg-left',
+            class2: 'col-xl-9 col-lg-12 p-l-1 p-r-1',
             text: 'Drop your PDF or DOC here or click to upload',
             icon: 'file',
             data: values.fiscal_prior_file_data[0],
