@@ -8,11 +8,11 @@ mixin row(value, index)
         a(href="#" data-section=name data-index=index).delete-sectionnew
           i.fa.fa-times
 
-      +fieldNestedTextLabel(name, "amount_sold", value, index, {})
-      +fieldNestedTextLabel(name, "exemption_relied_upon", value, index, {class1: 'text-lg-right col-lg-3 col-md-12 text-md-left m-b-0 p-t-0'})
-      +fieldNestedTextLabel(name, "offering_date", value, index, {class1: 'text-lg-right col-lg-3 col-md-12 text-md-left m-b-0 p-t-0'})
-      +fieldNestedTextLabel(name, "securities_offered", value, index, {})
-      +fieldNestedTextLabel(name, "use_of_proceeds", value, index, {})
+      +fieldNestedTextLabel(name, "amount_sold", value, index, {class1:'col-xl-3 col-lg-12 text-lg-left text-xl-right', class2: 'col-xl-9 col-lg-12'})
+      +fieldNestedTextLabel(name, "exemption_relied_upon", value, index, {class1:'col-xl-3 col-lg-12 text-lg-left text-xl-right m-b-0 p-t-0', class2: 'col-xl-9 col-lg-12'})
+      +fieldNestedTextLabel(name, "offering_date", value, index, {class1:'col-xl-3 col-lg-12 text-lg-left text-xl-right m-b-0 p-t-0', class2: 'col-xl-9 col-lg-12'})
+      +fieldNestedTextLabel(name, "securities_offered", value, index, {class1:'col-xl-3 col-lg-12 text-lg-left text-xl-right', class2: 'col-xl-9 col-lg-12'})
+      +fieldNestedTextLabel(name, "use_of_proceeds", value, index, {class1:'col-xl-3 col-lg-12 text-lg-left text-xl-right', class2: 'col-xl-9 col-lg-12'})
 
 mixin run()
 
