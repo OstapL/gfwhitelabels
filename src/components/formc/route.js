@@ -17,6 +17,7 @@ module.exports = Backbone.Router.extend({
     'formc/:id/outstanding-security': 'outstandingSecurity',
     'formc/:id/background-check': 'backgroundCheck',
     'formc/:id/final-review': 'finalReview',
+    'formc/:id/final-review-two': 'finalReviewTwo',
   },
 
   execute: function (callback, args, name) {
@@ -375,4 +376,28 @@ module.exports = Backbone.Router.extend({
     });
   },
 
+  finalReviewTwo: function(id) {
+    const View = require('components/formc/views.js');
+
+    let companyR = api.makeCacheRequest(raiseCapitalUrl + '/company', 'OPTIONS');
+    let campaignR = api.makeCacheRequest(raiseCapitalUrl + '/campaign', 'OPTIONS');
+    let formcR = api.makeCacheRequest(formcServer + '/' + id + '/final-review', 'OPTIONS');
+    let dataR = api.makeCacheRequest(formcServer + '/' + id + '/final-review');
+
+    $.when(companyR, campaignR, formcR, dataR).done((company, campaign, formc, data) => {
+      data[0].id = id;
+      const fields = {
+        company: company[0].fields,
+        campaign: campaign[0].fields,
+        formc: formc[0].fields,
+      };
+      const i = new View.finalReviewTwo({
+        el: '#content',
+        model: data[0],
+        fields: fields
+      });
+      i.render();
+      app.hideLoading();
+    });
+  }, 
 });
