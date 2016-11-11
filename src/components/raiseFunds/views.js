@@ -336,7 +336,7 @@ module.exports = {
 
       initialize(options) {
         this.fields = options.fields;
-        this.fields.gallery.fn = function checkNotEmpty(value, attr, fn, model, computed) {
+        this.fields.gallery_data.fn = function checkNotEmpty(value, attr, fn, model, computed) {
           if(document.querySelectorAll('.dropzone__gallery .img-fluid').length === 0) {
             throw 'Please upload at least 1 image';
           }
