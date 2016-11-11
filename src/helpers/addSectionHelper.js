@@ -115,7 +115,7 @@ module.exports = {
       });
     },
 
-    buildJsonTemplates(component) {
+    buildJsonTemplates(component, context={}) {
       /*
        * Build html for nested fields
        * PARAMS:
@@ -124,15 +124,15 @@ module.exports = {
        */
 
       _(this.fields).each((el, key) => {
-        if(el.type == 'nested' &&  !key.endsWith('_data')) {
-          this.jsonTemplates[key] = require('components/' + component + '/templates/snippets/' + key + '.pug')({
+        if(el.type == 'nested' &&  !el.schema.hasOwnProperty('urls')) {
+          this.jsonTemplates[key] = require('components/' + component + '/templates/snippets/' + key + '.pug')(_.extend({
             attr: _.extend(
               {}, this.fields[key]
             ),
             name: key,
             values: this.model[key] || {},
             first_run: 1,
-          });
+          }, context));
         }
       });
     },

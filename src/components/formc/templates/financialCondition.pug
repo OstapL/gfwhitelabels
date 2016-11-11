@@ -95,8 +95,10 @@ section.formc-team-members-director.container.m-b-85
             class2: 'col-lg-9 p-l-1 p-r-1',
             text: 'Drop your PDF or DOC here or click to upload',
             icon: 'file',
+            data: values.fiscal_recent_file_data[0],
+            label: "Upload financials for most recent fiscal year",
             default: '/img/icons/file.png',
-          }, fields.fiscal_recent_file_id))
+          }, fields.fiscal_recent_file_data))
 
         .text-lg-right.img-ppt
           +fileDropzone("fiscal_prior_file_id", _.extend({
@@ -104,8 +106,10 @@ section.formc-team-members-director.container.m-b-85
             class2: 'col-lg-9 p-l-1 p-r-1',
             text: 'Drop your PDF or DOC here or click to upload',
             icon: 'file',
+            data: values.fiscal_prior_file_data[0],
+            label: "Upload financials for prior fiscal year",
             default: '/img/icons/file.png',
-          }, fields.fiscal_prior_file_id))
+          }, fields.fiscal_prior_file_data))
 
       |!{ templates.sold_securities_data }
       .col-lg-12.m-t-2

@@ -1,74 +1,69 @@
 include ../../../templates/mixins.pug
 include ../../raiseFunds/templates/menu.pug
+include ../../../templates/fields_mixins.pug
 
 +breadcrumbs('form c', '', 
-    [
-        ['Home', '/'],
-        ['FORM C', ''],
-        ['team members (20% voting shareholder)', ''],
-    ]
+  [
+    ['Home', '/'],
+    ['FORM C', ''],
+    ['team members (20% voting shareholder)', ''],
+  ]
 )
 
 section.formc-team-members-director.container.m-b-85
   +menu('formc', 'team-members-holder')
 
-
-
   //START RIGHT BLOCK
-  .col-lg-8
+  .col-xl-8.col-lg-8.col-md-12
     h2.text-uppercase.text-lg-center.text-xs-center.m-t-0.dosis Team members (20% voting Shareholder)
     h3.text-lg-left.text-xs-center.col-lg-12.m-t-1 20%+ Voting Shareholder:
     p.col-lg-12.m-b-2 No earlier than 120 days prior to the date of this offering, please list beneficial owners of 20% or more of issuer’s outstanding voting equity securities.  To calculate total voting power, include direct/indirect shares, include the right through the exercise of options/warrants/conversion, or if securities are held by a family member, through corporations or partnerships, co-trustee, etc. To calculate outstanding voting equity securities, assume all outstanding options are exercised and all outstanding convertible securities converted.
 
     form(action="").form-section
-      +fieldBlock("first_name", '', {
-        class1: 'col-lg-3 col-md-12 text-md-left',
-        class2: 'col-lg-9 col-md-12',
-        type: 'text',
-        label: 'First Name',
-        placeholder: 'First Name',
-        })
-      +fieldBlock("last_name", '', {
-        class1: 'col-lg-3 col-md-12 text-md-left',
-        class2: 'col-lg-9 col-md-12',
-        type: 'text',
-        label: 'Last Name',
-        placeholder: 'Last Name',
-        })
-      +fieldBlock("email", '', {
-        class1: 'col-lg-3 col-md-12 text-md-left',
-        class2: 'col-lg-9 col-md-12',
-        type: 'text',
-        label: 'Email Address',
-        placeholder: 'Email Address',
-        })
-      +fieldBlock("dob", '', {
-        class1: 'col-lg-3 col-md-12 text-md-left',
-        class2: 'col-lg-9 col-md-12',
-        type: 'date',
-        label: 'Date of birth',
-        })
-      +fieldBlock("number_of_shares", '', {
-        class1: 'col-lg-3 col-md-12 text-md-left',
-        class2: 'col-lg-9 col-md-12',
-        type: 'text',
-        label: 'Number of Shares',
-        placeholder: 'Number of Shares',
-        })
-      +fieldBlock("class_of_securities", '', {
-        class1: 'col-lg-3 col-md-12 text-md-left',
-        class2: 'col-lg-9 col-md-12',
-        type: 'text',
-        label: 'Class of Securities',
-        placeholder: 'Class of Securities',
-        })
-      +fieldBlock("voting_power_percent", '', {
-        class1: 'col-lg-3 col-md-12 text-md-left p-t-0 m-b-0',
-        class2: 'col-lg-9 col-md-12',
-        type: 'text',
-        label: '% of Voting Power Prior to Offering',
-        placeholder: '% of Voting Power Prior to Offering',
-        })
-      .row.m-t-3
-        .col-lg-12.text-md-center.text-sm-center-text-xs-center
-          button.btn.btn-primary.text-uppercase.pull-lg-right Save
+      .col-xl-12
+        +fieldTextLabel("first_name", _.extend({
+          class1: 'col-xl-3 col-lg-12 text-lg-left text-xl-right ',
+          class2: 'col-xl-9 col-lg-12',
+          }, fields.first_name))
+        +fieldTextLabel("last_name", _.extend({
+          class1: 'col-xl-3 col-lg-12 text-lg-left text-xl-right ',
+          class2: 'col-xl-9 col-lg-12',
+          }, fields.last_name))
+        +fieldTextLabel("email", _.extend({
+          class1: 'col-xl-3 col-lg-12 text-lg-left text-xl-right ',
+          class2: 'col-xl-9 col-lg-12',
+          }, fields.email))
+        .row.form-group
+          .col-date
+            label.col-xl-3.col-lg-12.text-xl-right.textlg-left Date of birth
+            .col-xl-4.col-lg-6.p-r-0
+              +fieldDateDay("dob", _.extend({
+                class: 'col-xl-4 col-lg-4 col-xs-4 no-gutter p-l-0',
+                placeholder: 'MM',
+              }, fields.dob))
+              +fieldDateMonth("dob", _.extend({
+                class: 'col-xl-4 col-lg-4 col-xs-4 no-gutter p-l-0',
+                placeholder: 'DD',
+              }, fields.dob))
+              +fieldDateYear("dob", _.extend({
+                class: 'col-xl-4 col-lg-4 col-xs-4 no-gutter p-l-0',
+                placeholder: 'YYYY',
+              }, fields.dob))
+        +fieldTextLabel("number_of_shares", _.extend({
+          class1: 'col-xl-3 col-lg-12 text-lg-left text-xl-right ',
+          class2: 'col-xl-9 col-lg-12',
+          label: 'Number of Shares',
+          }, fields))
+        +fieldTextLabel("class_of_securities", _.extend({
+          class1: 'col-xl-3 col-lg-12 text-lg-left text-xl-right ',
+          class2: 'col-xl-9 col-lg-12',
+          label: 'Class of Securities',
+          }, fields))
+        +fieldTextLabel("voting_power_percent", _.extend({
+          class1: 'col-xl-3 col-lg-12 text-lg-left text-xl-right m-b-0 p-t-0',
+          class2: 'col-xl-9 col-lg-12',
+          label: '% of Voting Power Prior to Offering',
+          placeholder: '% of Voting Power Prior to Offering',
+          }, fields))
+      .col-lg-12.text-md-center.text-sm-center.text-xs-center.m-t-2
+        button.btn.btn-primary.text-uppercase.pull-lg-right Save
