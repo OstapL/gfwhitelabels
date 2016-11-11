@@ -98,7 +98,6 @@ module.exports = {
   // the min value specified
   min: function (name, rule, attr, data) {
     let value = this.toNumber(data[name]);
-    debugger
     if (value === false || value < rule) {
       throw this.format(this.messages.min, attr.label, rule);
     }
