@@ -224,7 +224,14 @@ $('body').on('click', '.user-info', function () {
 
   return false;
 });
+$('body').on('click', '.notification-bell', function () {
+  if ($('.navbar-toggler:visible').length !== 0) {
+    $('html').removeClass('show-menu');
+    $('header').toggleClass('no-overflow-bell');
+  }
 
+  return false;
+});
 $('body').on('click', '#menuList .nav-item', function (event) {
   var href = $(event.target).attr('href');
 

@@ -604,21 +604,21 @@ section
               //-       h2.font-weight-bold #{ values.days_to_go } days
 
   section#perks.perks
-    if values.perks && Object.keys(values.perks).length > 0 && values.perks[0].perk != ''
-      //- h3.col-lg-12.text-lg-center Perks
-      .container
-        h3.text-lg-center.text-xs-center.campaign-subheading Perks
-        .row
-          .col-lg-12.text-center-flex
-            each v,k in values.perks
-              if v
-                .col-xl-4.col-xs-12.col-lg-6
-                  .jumbotron.jumbotron-fluid
-                    .container
-                      h3.m-t-0.m-b-1 Invest 
-                        span #{ formatHelper.formatPrice(v.amount) }
-                        |  or more
-                      p.text-justify #{ v.perk }
+    - values.perks = values.perks.filter(function(value) { return value && value.perk; });
+    - values.perks.sort(function (a, b) { return Number(a.amount) - Number(b.amount); });
+    .container
+      h3.text-lg-center.text-xs-center.campaign-subheading Perks
+      .row
+        .col-lg-12.text-center-flex
+          each v,k in values.perks
+            if v
+              .col-xl-4.col-xs-12.col-lg-6
+                .jumbotron.jumbotron-fluid
+                  .container
+                    h3.m-t-0.m-b-1 Invest 
+                      span #{ formatHelper.formatPrice(v.amount) }
+                      |  or more
+                    p.text-justify #{ v.perk }
 
   section(style="display: none").investors-all.border-bottom
     .container

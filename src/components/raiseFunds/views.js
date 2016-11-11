@@ -50,6 +50,8 @@ const submitCampaign = function submitCampaign(e) {
         }
 
         doCampaignValidation(e, data);
+    }, (error) => {
+      doCampaignValidation(null, this.model);
     });
   }
 };
@@ -196,6 +198,20 @@ module.exports = {
     },
   }, leavingConfirmationHelper.methods, phoneHelper.methods, menuHelper.methods)),
 
+  companyDashboard: Backbone.View.extend({
+    el: '#content',
+    template: require('./templates/companyDashboard.pug'),
+
+    render() {
+      this.$el.html(
+        this.template({
+          values: this.model,
+        })
+      );
+      return this;
+    },
+  }),
+
   generalInformation: Backbone.View.extend(_.extend({
       urlRoot: raiseCapitalUrl + '/campaign/:id/general_information',
       template: require('./templates/generalInformation.pug'),
@@ -220,6 +236,7 @@ module.exports = {
 
       initialize(options) {
         this.fields = options.fields;
+        // this.formc = options.formc;
         this.faqIndex = 1;
         this.additional_infoIndex = 1;
         this.$el.on('keypress', ':input:not(textarea)', function (event) {
@@ -260,6 +277,7 @@ module.exports = {
               // values: this.model.toJSON(),
               values: this.model,
               templates: this.jsonTemplates,
+              // formc: this.formc.id,
             })
         );
 
@@ -318,6 +336,11 @@ module.exports = {
 
       initialize(options) {
         this.fields = options.fields;
+        this.fields.gallery_data.fn = function checkNotEmpty(value, attr, fn, model, computed) {
+          if(document.querySelectorAll('.dropzone__gallery .img-fluid').length === 0) {
+            throw 'Please upload at least 1 image';
+          }
+        };
         this.pressIndex = 1;
         this.additional_videoIndex = 1;
         this.$el.on('keypress', ':input:not(textarea)', function (event) {
