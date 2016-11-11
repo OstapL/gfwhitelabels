@@ -138,10 +138,11 @@ module.exports = {
 
             this.eSignCompanyName.val(company.name || '');
 
-            this.eSignUserName.val('Maria Kravchuk');
-            this.eSignPreview.text('Maria Kravchuk');
+            let fullName = app.user.get('first_name') + ' ' + app.user.get('first_name');
+            this.eSignFullName.val(fullName);
+            this.changeSign();
 
-            this.eSignForm.removeClass('collapse');
+            this.$('.electronically-sign').removeClass('collapse');
           });
 
         }).fail((xhr, ajaxOptions, err)=>{
@@ -168,17 +169,27 @@ module.exports = {
         data.failed_to_comply = 'Please explain.';
       }
 
-      api.submitAction.call(this, e, data);
+      let signData = {
+        type: 'POST',
+        'company_name': this.eSignCompanyName.val(),
+        'full_name': this.eSignFullName.val(),
+      };
+
+      // api.makeRequest(formcServer + '/' + this.model.id + '/sign', signData).done(() => {
+        api.submitAction.call(this, e, data);
+      // });
 
       return false;
     },
 
-    changeSign(e) {
-      this.eSignPreview.text(this.eSignUserName.val());
+    changeSign() {
+      this.eSignPreview.text(this.eSignFullName.val());
     },
 
     initialize(options) {
       this.fields = options.fields;
+      this.fields.company_name = { required: true };
+      this.fields.full_name = { required: true };
     },
 
     render() {
@@ -193,10 +204,10 @@ module.exports = {
         })
       );
 
-      this.eSignForm = $('.electronically-sign');
-      this.eSignCompanyName = this.eSignForm.find('.company-name');
-      this.eSignUserName = this.eSignForm.find('.user-name');
-      this.eSignPreview = this.eSignForm.find('.electronically .name');
+      let eSignForm = this.$('.electronically-sign');
+      this.eSignCompanyName = eSignForm.find('#company-name');
+      this.eSignFullName = eSignForm.find('#full-name');
+      this.eSignPreview = eSignForm.find('.electronically .name');
 
       return this;
     },
