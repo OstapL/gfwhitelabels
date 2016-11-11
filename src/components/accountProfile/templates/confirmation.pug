@@ -1,15 +1,16 @@
-include mixins.pug
+include ../../../templates/mixins.pug
 
 +breadcrumbs('Confirmation', '', 
 []
 )
 
-.container
+form(data-method="" action="").container
+  input(type="hidden" name="activation_code" value=code)
   .row
     .col-lg-12
       h2.text-xs-center.thankyou-title.m0 
         i(aria-hidden="true").fa.fa-smile-o.icon-color
-        | Welcome to Some Company on the GrowthFountain!
+        | Welcome to #{company_name} on the GrowthFountain!
 
   .row
     .col-lg-10.offset-lg-1.mb50.mt50
@@ -17,8 +18,8 @@ include mixins.pug
   
   .row
     .col-lg-8.offset-lg-2.text-xs-center
-      span Some Company Name marks you as a member of her team as CEO/President. Do you confirm that you belong to Some Company Name on the CEO/President title?
+      span #{company_name} marks you as a member of her team as #{title}. Do you confirm that you belong to #{company_name} on the #{title} title?
 
       .info-btn-block.pt50
-        a(href="#").btn.btn-secondary.m-r-1 cancel
-        a(href="#").btn.btn-primary confirm
+        a(href="#").btn.btn-cancel.btn-secondary.m-r-1 cancel
+        a(href="#" data-method="PUT").btn.btn-confirm.btn-primary confirm

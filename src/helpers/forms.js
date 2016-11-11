@@ -56,7 +56,7 @@ module.exports = {
     this.$el.find('.alert').remove();
     e.preventDefault();
 
-    data = data || $(e.target).serializeJSON({ useIntKeysAsArrayIndex: true });
+    data = data || $(e.target).closest('form').serializeJSON({ useIntKeysAsArrayIndex: true });
     api.fixDateFields.call(this, data);
 
     // if view already have some data - extend that info
@@ -65,15 +65,6 @@ module.exports = {
       data = _.extend({}, this.model)
     }
 
-    /*
-       var newValidators = {};
-       for(var k in this.fields) {
-       if (k.required == true) {
-       newValidators[k] = baseModel.validation[k];
-       }
-       };
-       this.model.validation = newValidators;
-    */
     this.$('.help-block').remove();
     if (e.target.dataset.method != 'PATCH' && !validation.validate(this.fields, data, this)) {
       _(validation.errors).each((errors, key) => {
@@ -83,7 +74,7 @@ module.exports = {
       return;
     } else {
       let url = this.urlRoot;
-      let type = 'POST';
+      let type = e.target.dataset.method || 'POST';
 
       if(data.hasOwnProperty('id')) {
         url = url.replace(':id', data.id);
