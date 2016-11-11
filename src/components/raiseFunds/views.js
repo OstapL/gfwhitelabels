@@ -196,6 +196,20 @@ module.exports = {
     },
   }, leavingConfirmationHelper.methods, phoneHelper.methods, menuHelper.methods)),
 
+  companyDashboard: Backbone.View.extend({
+    el: '#content',
+    template: require('./templates/companyDashboard.pug'),
+
+    render() {
+      this.$el.html(
+        this.template({
+          values: this.model,
+        })
+      );
+      return this;
+    },
+  }),
+
   generalInformation: Backbone.View.extend(_.extend({
       urlRoot: raiseCapitalUrl + '/campaign/:id/general_information',
       template: require('./templates/generalInformation.pug'),
