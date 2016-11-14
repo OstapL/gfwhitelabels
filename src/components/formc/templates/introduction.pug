@@ -91,15 +91,6 @@ section.formc.introduction.create-company-media.container
               .col-lg-12.m-t-2
                 button#pay-btn.btn.btn-primary.text-uppercase Agree and Pay
           .electronically-sign(style=(values.is_paid == true ? '' :  "display: none"))
-            .col-xl-10.offset-xl-1.m-t-0.investment
-              .col-lg-12
-                h3.m-t-0.text-lg-center.m-b-2 Electronically Sign
-              .form-group.row
-                +fieldText('full_name', _.extend({ 'id': 'full-name', 'placeholder': 'Type your name', 'class': 'col-xl-6', 'help_text': 'Type name (it signs on right)'}, fields.full_name))
-                .col-xl-6
-                  .electronically
-                    span.by By:
-                    span.name
             .row
               .col-lg-12
                 .btn-save.text-lg-right
