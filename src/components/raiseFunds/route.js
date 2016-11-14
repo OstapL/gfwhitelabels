@@ -56,7 +56,7 @@ module.exports = Backbone.Router.extend({
       );
     }
   },
-    companyDashboard: function() {
+  companyDashboard: function() {
       const View = require('components/raiseFunds/views.js');
       let i = new View.companyDashboard({
         el: '#content',
