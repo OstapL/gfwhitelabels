@@ -60,14 +60,17 @@ section.create-company.container.m-b-85
             .col-date#founding_date
               label.col-xl-4.col-lg-12.p-t-0.p-l-0.m-b-0.text-xl-right.textlg-left Founding date
               .col-xl-8.col-lg-12.p-r-0.p-l-0
-                +fieldDateDay("founding_date", _.extend({
-                  class: 'col-xl-4 col-lg-4 col-xs-4 no-gutter p-l-0 p-r-0',
-                }, fields.founding_date))
                 +fieldDateMonth("founding_date", _.extend({
                   class: 'col-xl-4 col-lg-4 col-xs-4 no-gutter p-l-0 p-r-0',
+                  placeholder: 'MM',
+                }, fields.founding_date))
+                +fieldDateDay("founding_date", _.extend({
+                  class: 'col-xl-4 col-lg-4 col-xs-4 no-gutter p-l-0 p-r-0',
+                  placeholder: 'DD',
                 }, fields.founding_date))
                 +fieldDateYear("founding_date", _.extend({
                   class: 'col-xl-4 col-lg-4 col-xs-4 no-gutter p-l-0 p-r-0',
+                  placeholder: 'YYYY',
                 }, fields.founding_date))
         .border-bottom
         +fieldTextLabel("address_1", _.extend({

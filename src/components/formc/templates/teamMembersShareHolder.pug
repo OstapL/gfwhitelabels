@@ -20,6 +20,7 @@ section.formc-team-members-director.container.m-b-85
     p.col-lg-12.m-b-2 No earlier than 120 days prior to the date of this offering, please list beneficial owners of 20% or more of issuer’s outstanding voting equity securities.  To calculate total voting power, include direct/indirect shares, include the right through the exercise of options/warrants/conversion, or if securities are held by a family member, through corporations or partnerships, co-trustee, etc. To calculate outstanding voting equity securities, assume all outstanding options are exercised and all outstanding convertible securities converted.
 
     form(action="").form-section
+      input(type="hidden" value=0 name="role")
       .col-xl-12
         +fieldTextLabel("first_name", _.extend({
           class1: 'col-xl-3 col-lg-12 text-lg-left text-xl-right ',

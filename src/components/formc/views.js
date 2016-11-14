@@ -374,30 +374,6 @@ module.exports = {
       e.preventDefault();
       var data = $(e.target).serializeJSON({ useIntKeysAsArrayIndex: true });
 
-      data.board_service_start_date =
-          (data.board_service_start_date__year && data.board_service_start_date__month)
-            ? (data.board_service_start_date__year +
-                '-' + data.board_service_start_date__month + '-' + '01'
-            ) : '';
-
-      delete data.board_service_start_date__month;
-      delete data.board_service_start_date__year;
-      data.board_service_end_date =
-          (data.board_service_end_date__year && data.board_service_end_date__month)
-            ? (data.board_service_end_date__year + '-'
-                + data.board_service_end_date__month + '-' + '01'
-            ) : '';
-      delete data.board_service_end_date__month;
-      delete data.board_service_end_date__year;
-
-      data.employer_start_date =
-          (data.employer_start_date__year && data.employer_start_date__month)
-            ? (data.employer_start_date__year + '-'
-                + data.employer_start_date__month + '-' + '01'
-          ) : '';
-      delete data.employer_start_date__year;
-      delete data.employer_start_date__month;
-
       _(data.positions).each((el, i) => {
         el.start_date_of_service =
             (el.start_date_of_service__year && el.start_date_of_service__month)
