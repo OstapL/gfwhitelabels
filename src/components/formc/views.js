@@ -49,7 +49,7 @@ module.exports = {
 
     events: _.extend({
       'submit form': 'submit',
-      'keyup .electronically-sign .user-name': 'changeSign',
+      'keyup .electronically-sign #full-name': 'changeSign',
       'click #pay-btn': 'stripeSubmit',
     }, menuHelper.events, yesNoHelper.events),
     preinitialize() {
