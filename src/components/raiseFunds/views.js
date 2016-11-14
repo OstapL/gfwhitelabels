@@ -141,6 +141,9 @@ module.exports = {
         linkedin: 'Linkedin',
       };
       this.assignLabels();
+      if(this.model.hasOwnProperty('id')) {
+        this.urlRoot += '/:id/edit';
+      }
     },
 
     updateLocation(e) {

@@ -46,10 +46,11 @@ section.formc.introduction.create-company-media.container
                 label If Yes, Explain
               .col-lg-9
                 textarea(rows="3" name="failed_to_comply").form-control= values['failed_to_comply']
-          .expiration-block
+          .expiration-block(style=(values.is_paid == false ? '' :  "display: none"))
             .growthfountain-charges
-              p GrowthFountain charges $500 for Form C generation, background checks and escrow.
-              .form-group.row
+              p.m-b-1 GrowthFountain charges $500 for Form C generation, background checks and escrow. To authorize this charge and to enter into the Listing Agreement, please electronically sign below.
+              a(href="#").link-2 To review the Listing Agreement, click here
+              .form-group.row.m-t-2
                 .col-lg-3.text-lg-right
                   label Credit Card Number
                 .col-lg-9
@@ -73,27 +74,24 @@ section.formc.introduction.create-company-media.container
                 .col-lg-2
                   label CVV Code
                 .col-lg-3.p-l-0
-                    .input-icon
-                      i.fa.fa-question-circle
-                    input(type="text" data-stripe="cvc" id="card_cvc").form-control
-            .row
-              .col-lg-12.offset-lg-3
-                a(href="#").link-2 Contract for listing your campaign on GrowthFountain
+                  .input-icon
+                    i.fa.fa-question-circle
+                  input(type="text" data-stripe="cvc" id="card_cvc" placeholder="CVV Code").form-control
+              .electronically-sign
+                .col-xl-10.offset-xl-1.m-t-3.investment
+                  .col-lg-12
+                    h3.m-t-0.text-lg-center.m-b-2 Electronically Sign
+                  .form-group.row
+                    +fieldText('full_name', _.extend({ 'id': 'full-name', 'placeholder': 'Type your name', 'class': 'col-xl-6', 'help_text': 'Type name (it signs on right)'}, fields.full_name))
+                    .col-xl-6
+                      .electronically
+                        span.by By:
+                        span.name
             .row.btn-pay
+              .col-lg-12.m-t-2
+                button#pay-btn.btn.btn-primary.text-uppercase Agree and Pay
+          .electronically-sign(style=(values.is_paid == true ? '' :  "display: none"))
+            .row
               .col-lg-12
-                button#pay-btn.btn.btn-primary.text-uppercase pay
-          .electronically-sign.collapse
-            .col-lg-9.offset-lg-3.m-t-2.investment
-              .col-lg-8
-                h3.m-t-0.text-lg-center.m-b-2 Electronically Sign
-              .row
-                +fieldText('company_name', _.extend({ 'id': 'company-name', 'placeholder': 'Company name', 'class': 'col-lg-8 form-group' }, fields.company_name))
-              .form-group.row
-                +fieldText('full_name', _.extend({ 'id': 'full-name', 'placeholder': 'Type your name', 'class': 'col-lg-4', 'help_text': 'Type name (it signs on right)'}, fields.full_name))
-                .col-lg-4
-                  .electronically
-                    span.by By:
-                    span.name
-            .col-lg-12
-              .btn-save.text-lg-right
-                button(type='submit').btn.btn-primary.text-uppercase save
+                .btn-save.text-lg-right
+                  button(type='submit').btn.btn-primary.text-uppercase save

@@ -528,6 +528,9 @@ module.exports = {
 
     initialize(options) {
       this.fields = options.fields;
+      this.fields.proceeds_equal_expenses = {fn: (function (value, attr, fn, model, computed) {
+        if (!this.calculate(null)) throw 'Total Use of Net Proceeds must be equal to Net Proceeds.';
+      }).bind(this)};
       this.campaign = options.campaign;
       this.labels = {
         describe: 'Describe your business plan',
@@ -567,7 +570,7 @@ module.exports = {
         return values.reduce(function (total, num) { return total + num; });
     },
 
-    calculate(e) {
+    calculate(e, warning=true) {
       if (e) {
         let $target = $(e.target);
         $target.val(formatHelper.formatNumber($target.val()));
@@ -588,19 +591,23 @@ module.exports = {
       this.$('.max-total-use').text('$' + formatHelper.formatNumber(maxTotalUse));
 
       // return true if the table is valid in terms of the calculation, else return false
-      if (minNetProceeds == minTotalUse) {
-        $('.min-net-proceeds,.min-total-use').removeClass('red');
-      } else {
-        $('.min-net-proceeds,.min-total-use').addClass('red');
-      }
+      let minEqual = minNetProceeds == minTotalUse;
+      let maxEqual = maxNetProceeds == maxTotalUse
+      let result = minEqual && maxEqual;
+      if (warning) {
+        if (minEqual) {
+          $('.min-net-proceeds,.min-total-use').removeClass('red');
+        } else {
+          $('.min-net-proceeds,.min-total-use').addClass('red');
+        }
 
-      if (maxNetProceeds == maxTotalUse) {
-        $('.max-net-proceeds,.max-total-use').removeClass('red');
-      } else {
-        $('.max-net-proceeds,.max-total-use').addClass('red');
+        if (maxEqual) {
+          $('.max-net-proceeds,.max-total-use').removeClass('red');
+        } else {
+          $('.max-net-proceeds,.max-total-use').addClass('red');
+        }
+        this.$('.max-total-use').popover(result ? 'hide' : 'show');
       }
-      let result = (minNetProceeds == minTotalUse) && (maxNetProceeds == maxTotalUse);
-      this.$('.max-total-use').popover(result ? 'hide' : 'show');
       return result;
     },
 
@@ -615,14 +622,16 @@ module.exports = {
     },
 
     submit(e) {
-      if (!this.calculate(null)) {
-        e.preventDefault();
-        alert("Total Use of Net Proceeds must be equal to Net Proceeds.");
-        return;
-      }
-
       var $target = $(e.target);
       var data = $target.serializeJSON({ useIntKeysAsArrayIndex: true });
+      data.use_of_net_proceeds.forEach(function (elem) {
+        elem.min = elem.min.replace(/,/g, '');
+        elem.max = elem.max.replace(/,/g, '');
+      });
+      data.less_offering_express.forEach(function (elem) {
+        elem.min = elem.min.replace(/,/g, '');
+        elem.max = elem.max.replace(/,/g, '');
+      });
       api.submitAction.call(this, e, data);
     },
 
@@ -652,8 +661,7 @@ module.exports = {
         $this.val(formatHelper.formatNumber($this.val()));
       });
 
-
-      this.calculate(null);
+      this.calculate(null, false);
       setTimeout(() => { this.createDropzones() } , 1000);
       return this;
     }, 
