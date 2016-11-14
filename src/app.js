@@ -88,7 +88,9 @@ let app = {
     return _.chain(location.search.slice(1).split('&'))
       .map(function (item) {
         if (item) {
-          return item.split('=');
+          let arr = item.split('=');
+          arr[1] = decodeURIComponent(arr[1]);
+          return arr;
         }
       })
       .compact()
@@ -222,7 +224,14 @@ $('body').on('click', '.user-info', function () {
 
   return false;
 });
+$('body').on('click', '.notification-bell', function () {
+  if ($('.navbar-toggler:visible').length !== 0) {
+    $('html').removeClass('show-menu');
+    $('header').toggleClass('no-overflow-bell');
+  }
 
+  return false;
+});
 $('body').on('click', '#menuList .nav-item', function (event) {
   var href = $(event.target).attr('href');
 

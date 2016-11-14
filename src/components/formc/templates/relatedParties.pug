@@ -13,7 +13,7 @@ section.formc-team-members-director.container.m-b-85
   +menu('formc', 'related-parties')
 
   //START RIGHT BLOCK
-  .col-lg-8
+  .col-xl-8.col-lg-8.col-md-12
     h2.text-uppercase.text-lg-center.text-xs-center.m-t-0.dosis.mb45 related parties
     p.pb10.col-lg-12 Please describe any transaction or proposed transaction with related parties in the last 12 months in excess of 5% of capital raised in reliance on 4(a)(6) inclusive of current offering.
     p.pb10.col-lg-12 Related parties is defined as: any director, officer or 20% voting shareholder (no earlier than 120 days prior to this offering for 20%+ shareholder), any promoter (if organized within past three years), or any family member of the foregoing persons.  Family member includes any child, stepchild, grandchild, parent, stepparent, grandparent, spouse or spousal equivalent, sibling, mother-in-law, father-in-law, son-in-law, daughter-in-law, brother-in-law, or sister-in-law of the person, and includes adoptive relationships.  The term “spousal equivalent” means a cohabitant occupying a relationship generally equivalent to that of a spouse.
@@ -31,9 +31,10 @@ section.formc-team-members-director.container.m-b-85
           label 
             input(type="radio" name="transaction_with_related_parties_choice" value="false" checked=!values['transaction_with_related_parties_choice'])
             |  No
-      .transaction_with_related_parties_choice.shown-yes.required(style="display:" + (values['transaction_with_related_parties_choice'] ? 'block' : 'none'))
-        |!{ templates.transaction_with_related_parties }
+      .col-xl-12
+        .transaction_with_related_parties_choice.shown-yes.required(style="display:" + (values['transaction_with_related_parties_choice'] ? 'block' : 'none'))
+          |!{ templates.transaction_with_related_parties }
 
-      .row.m-t-3
-        .col-lg-12.text-md-center.text-sm-center.text-xs-center
-          button.btn.btn-primary.text-uppercase.pull-lg-right Save
+        .row.m-t-3
+          .col-lg-12.text-md-center.text-sm-center.text-xs-center
+            button.btn.btn-primary.text-uppercase.pull-lg-right Save

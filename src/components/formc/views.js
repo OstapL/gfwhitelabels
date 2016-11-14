@@ -138,10 +138,11 @@ module.exports = {
 
             this.eSignCompanyName.val(company.name || '');
 
-            this.eSignUserName.val('Maria Kravchuk');
-            this.eSignPreview.text('Maria Kravchuk');
+            let fullName = app.user.get('first_name') + ' ' + app.user.get('first_name');
+            this.eSignFullName.val(fullName);
+            this.changeSign();
 
-            this.eSignForm.removeClass('collapse');
+            this.$('.electronically-sign').removeClass('collapse');
           });
 
         }).fail((xhr, ajaxOptions, err)=>{
@@ -168,17 +169,28 @@ module.exports = {
         data.failed_to_comply = 'Please explain.';
       }
 
-      api.submitAction.call(this, e, data);
+      let signData = {
+        type: 'POST',
+        'company_name': this.eSignCompanyName.val(),
+        'full_name': this.eSignFullName.val(),
+      };
+
+      // api.makeRequest(formcServer + '/' + this.model.id + '/sign', signData).done(() => {
+        api.submitAction.call(this, e, data);
+      // });
 
       return false;
     },
 
-    changeSign(e) {
-      this.eSignPreview.text(this.eSignUserName.val());
+    changeSign() {
+      this.eSignPreview.text(this.eSignFullName.val());
     },
 
     initialize(options) {
       this.fields = options.fields;
+      this.fields.company_name = { required: true };
+      this.fields.full_name = { required: true };
+      this.campaign = options.campaign;
     },
 
     render() {
@@ -190,13 +202,14 @@ module.exports = {
           Urls: Urls,
           fields: this.fields,
           values: this.model,
+          campaignId: this.campaign.id,
         })
       );
 
-      this.eSignForm = $('.electronically-sign');
-      this.eSignCompanyName = this.eSignForm.find('.company-name');
-      this.eSignUserName = this.eSignForm.find('.user-name');
-      this.eSignPreview = this.eSignForm.find('.electronically .name');
+      let eSignForm = this.$('.electronically-sign');
+      this.eSignCompanyName = eSignForm.find('#company-name');
+      this.eSignFullName = eSignForm.find('#full-name');
+      this.eSignPreview = eSignForm.find('.electronically .name');
 
       return this;
     },
@@ -228,6 +241,7 @@ module.exports = {
       this.fields = options.fields;
       this.fields.full_time_employers = { label: 'Full Time Employees' };
       this.fields.part_time_employers = { label: 'Part Time Employees' };
+      this.campaign = options.campaign;
     },
 
     deleteMember: function (e) {
@@ -262,6 +276,7 @@ module.exports = {
           Urls: Urls,
           fields: this.fields,
           values: this.model,
+          campaignId: this.campaign.id,
           roles: ['shareholder', 'director', 'officer'],
           titles: {
             ceo: 'CEO/President',
@@ -284,6 +299,7 @@ module.exports = {
 
     initialize(options) {
       this.fields = options.fields;
+      this.campaign = options.campaign;
       this.role = options.role;
 
       this.labels = {
@@ -343,6 +359,7 @@ module.exports = {
           Urls: Urls,
           fields: this.fields,
           values: this.model,
+          campaignId: this.campaign.id,
           templates: this.jsonTemplates,
         })
       );
@@ -469,6 +486,7 @@ module.exports = {
 
     initialize(options) {
       this.fields = options.fields;
+      this.campaign = options.campaign;
 
       this.labels = {
         transaction_with_related_parties: {
@@ -497,6 +515,7 @@ module.exports = {
           Urls: Urls,
           fields: this.fields,
           values: this.model,
+          campaignId: this.campaign.id,
           templates: this.jsonTemplates,
         })
       );
@@ -509,6 +528,9 @@ module.exports = {
 
     initialize(options) {
       this.fields = options.fields;
+      this.fields.proceeds_equal_expenses = {fn: (function (value, attr, fn, model, computed) {
+        if (!this.calculate(null)) throw 'Total Use of Net Proceeds must be equal to Net Proceeds.';
+      }).bind(this)};
       this.campaign = options.campaign;
       this.labels = {
         describe: 'Describe your business plan',
@@ -548,7 +570,7 @@ module.exports = {
         return values.reduce(function (total, num) { return total + num; });
     },
 
-    calculate(e) {
+    calculate(e, warning=true) {
       if (e) {
         let $target = $(e.target);
         $target.val(formatHelper.formatNumber($target.val()));
@@ -569,19 +591,23 @@ module.exports = {
       this.$('.max-total-use').text('$' + formatHelper.formatNumber(maxTotalUse));
 
       // return true if the table is valid in terms of the calculation, else return false
-      if (minNetProceeds == minTotalUse) {
-        $('.min-net-proceeds,.min-total-use').removeClass('red');
-      } else {
-        $('.min-net-proceeds,.min-total-use').addClass('red');
-      }
+      let minEqual = minNetProceeds == minTotalUse;
+      let maxEqual = maxNetProceeds == maxTotalUse
+      let result = minEqual && maxEqual;
+      if (warning) {
+        if (minEqual) {
+          $('.min-net-proceeds,.min-total-use').removeClass('red');
+        } else {
+          $('.min-net-proceeds,.min-total-use').addClass('red');
+        }
 
-      if (maxNetProceeds == maxTotalUse) {
-        $('.max-net-proceeds,.max-total-use').removeClass('red');
-      } else {
-        $('.max-net-proceeds,.max-total-use').addClass('red');
+        if (maxEqual) {
+          $('.max-net-proceeds,.max-total-use').removeClass('red');
+        } else {
+          $('.max-net-proceeds,.max-total-use').addClass('red');
+        }
+        this.$('.max-total-use').popover(result ? 'hide' : 'show');
       }
-      let result = (minNetProceeds == minTotalUse) && (maxNetProceeds == maxTotalUse);
-      this.$('.max-total-use').popover(result ? 'hide' : 'show');
       return result;
     },
 
@@ -596,14 +622,16 @@ module.exports = {
     },
 
     submit(e) {
-      if (!this.calculate(null)) {
-        e.preventDefault();
-        alert("Total Use of Net Proceeds must be equal to Net Proceeds.");
-        return;
-      }
-
       var $target = $(e.target);
       var data = $target.serializeJSON({ useIntKeysAsArrayIndex: true });
+      data.use_of_net_proceeds.forEach(function (elem) {
+        elem.min = elem.min.replace(/,/g, '');
+        elem.max = elem.max.replace(/,/g, '');
+      });
+      data.less_offering_express.forEach(function (elem) {
+        elem.min = elem.min.replace(/,/g, '');
+        elem.max = elem.max.replace(/,/g, '');
+      });
       api.submitAction.call(this, e, data);
     },
 
@@ -620,6 +648,7 @@ module.exports = {
           maxRaise: this.campaign.maximum_raise,
           minRaise: this.campaign.minimum_raise,
           formatHelper: formatHelper,
+          campaignId: this.campaign.id,
         })
       );
       this.$('.max-total-use').popover({
@@ -632,15 +661,16 @@ module.exports = {
         $this.val(formatHelper.formatNumber($this.val()));
       });
 
-
-      this.calculate(null);
+      this.calculate(null, false);
       setTimeout(() => { this.createDropzones() } , 1000);
       return this;
     }, 
   }, menuHelper.methods, dropzoneHelpers.methods, addSectionHelper.methods)),
 
   riskFactorsInstruction: Backbone.View.extend(_.extend({
-    initialize(options) {},
+    initialize(options) {
+      this.campaign = options.campaign;
+    },
 
     events: _.extend({
       'submit form': 'submit',
@@ -654,6 +684,7 @@ module.exports = {
         template({
           serverUrl: serverUrl,
           Urls: Urls,
+          campaignId: this.campaign.id,
           values: this.model,
         })
       );
@@ -669,6 +700,7 @@ module.exports = {
       this.fields = options.fields;
       this.fields.title = { label: 'Title for Risk' };
       this.fields.risk = { label: 'Describe Your Risk' };
+      this.campaign = options.campaign;
       this.defaultRisks = {
         0: {
           title: 'There is a limited market for the Company’s product or services',
@@ -752,6 +784,7 @@ module.exports = {
           fields: this.fields,
           values: this.model,
           defaultRisks: this.defaultRisks,
+          campaignId: this.campaign.id,
         })
       );
       this.$('textarea').each(function () {
@@ -770,6 +803,7 @@ module.exports = {
       this.fields = options.fields;
       this.fields.title = { label: 'Title for Risk' };
       this.fields.risk = { label: 'Describe Your Risk' };
+      this.campaign = options.campaign;
       this.defaultRisks = {
         0: {
           title: 'The amount of capital the Company is attempting to raise in the Offering ' +
@@ -861,6 +895,7 @@ module.exports = {
           fields: this.fields,
           values: this.model,
           defaultRisks: this.defaultRisks,
+          campaignId: this.campaign.id,
         })
       );
       this.$('textarea').each(function () {
@@ -879,6 +914,7 @@ module.exports = {
       this.fields = options.fields;
       this.fields.title = { label: 'Title for Risk' };
       this.fields.risk = { label: 'Describe Your Risk' };
+      this.campaign = options.campaign;
       this.defaultRisks = {
         0: {
           title: 'We have a limited operating history upon which you can e valuate ' +
@@ -996,6 +1032,7 @@ module.exports = {
           Urls: Urls,
           fields: this.fields,
           values: this.model,
+          campaignId: this.campaign.id,
           defaultRisks: this.defaultRisks,
         })
       );
@@ -1016,6 +1053,7 @@ module.exports = {
       this.fields = options.fields;
       this.fields.title = { label: 'Title for Risk' };
       this.fields.risk = { label: 'Describe Your Risk' };
+      this.campaign = options.campaign;
       this.defaultRisks = {
         0: {
           title: 'The development and commercialization of our services is highly competitive.',
@@ -1078,6 +1116,7 @@ module.exports = {
           Urls: Urls,
           fields: this.fields,
           values: this.model,
+          campaignId: this.campaign.id,
           defaultRisks: this.defaultRisks,
         })
       );
@@ -1098,6 +1137,7 @@ module.exports = {
       this.fields = options.fields;
       this.fields.title = { label: 'Title for Risk' };
       this.fields.risk = { label: 'Describe Your Risk' };
+      this.campaign = options.campaign;
       this.defaultRisks = {
         0: {
           title: 'Our company may be unable to retain senior personnel. ',
@@ -1179,6 +1219,7 @@ module.exports = {
           Urls: Urls,
           fields: this.fields,
           values: this.model,
+          campaignId: this.campaign.id,
           defaultRisks: this.defaultRisks,
         })
       );
@@ -1197,6 +1238,7 @@ module.exports = {
       this.fields = options.fields;
       this.fields.title = { label: 'Title for Risk' };
       this.fields.risk = { label: 'Describe Your Risk' };
+      this.campaign = options.campaign;
       this.defaultRisks = {
         0: {
           title: 'We rely on various intellectual property rights in order to operate our ' +
@@ -1300,6 +1342,7 @@ module.exports = {
           Urls: Urls,
           fields: this.fields,
           values: this.model,
+          campaignId: this.campaign.id,
           defaultRisks: this.defaultRisks,
         })
       );
@@ -1318,6 +1361,7 @@ module.exports = {
       this.fields = options.fields;
       this.fields.title = { label: 'Title for Risk' };
       this.fields.risk = { label: 'Describe Your Risk' };
+      this.campaign = options.campaign;
       this.defaultRisks = {};
       this.labels = labels;
       this.assignLabels();
@@ -1335,6 +1379,7 @@ module.exports = {
           Urls: Urls,
           fields: this.fields,
           values: this.model,
+          campaignId: this.campaign.id,
           defaultRisks: this.defaultRisks,
         })
       );
@@ -1394,6 +1439,7 @@ module.exports = {
           Urls: Urls,
           fields: this.fields,
           values: this.model,
+          campaignId: this.campaign.id,
           templates: this.jsonTemplates,
         })
       );
@@ -1439,6 +1485,7 @@ module.exports = {
         1: 'Yes',
         0: 'No',
       };
+      this.campaign = options.campaign;
       this.labels = {
         outstanding_securities: {
           security_type: "Security Type",
@@ -1574,6 +1621,7 @@ module.exports = {
           Urls: Urls,
           fields: this.fields,
           values: this.model,
+          campaignId: this.campaign.id,
           templates: this.jsonTemplates,
         })
       );
@@ -1586,6 +1634,7 @@ module.exports = {
     urlRoot: formcServer + '/:id' + '/background-check',
     initialize(options) {
       this.fields = options.fields;
+      this.campaign = options.campaign;
       this.labels = {
         company_or_director_subjected_to: 'If Yes, Explain',
         descrption_material_information: '2) If you\'ve provided any information in a format, ' +
@@ -1617,6 +1666,7 @@ module.exports = {
           Urls: Urls,
           fields: this.fields,
           values: this.model,
+          campaignId: this.campaign.id,
         })
       );
       return this;
@@ -1677,6 +1727,56 @@ module.exports = {
           Urls: Urls,
           fields: this.fields,
           values: this.model,
+        })
+      );
+      return this;
+    },
+  }),
+  finalReviewTwo: Backbone.View.extend({
+    el: '#content',
+    template: require('./templates/finalReviewTwo.pug'),
+    initialize(options) {
+      this.fields = options.fields;
+    },
+    events: {
+      'click .show-input': 'showInput'
+    }, 
+    showInput: function (event) {
+      event.preventDefault();
+      if ($(event.target).hasClass('noactive')) {
+          return false;
+      }
+      var $this = $(event.target),
+          inputId = $this.data('name'),
+          $input = $('input' + '#' + inputId);
+
+      $this.hide();
+
+      if ($input.length == 0) {
+        $input = $('<input type="text" id="' + inputId + '" name="' + inputId + '" class="text-input"/>');
+        $this.after($input);
+      }
+
+      $input.fadeIn().focus();
+
+      $('body').on('focusout', '.text-input', function(event) {
+      var $this = $(event.target),
+          value = $this.val(),
+          inputId = $this.attr('id'),
+          $span = $('[data-name="' + inputId + '"]');
+      if (value !== '') {
+          $span.text(value);
+      }
+
+      $this.hide();
+      $span.fadeIn();
+      });
+    },
+    render() {
+      this.$el.html(
+        this.template({
+          values: this.model,
+          fields: this.fields,
         })
       );
       return this;

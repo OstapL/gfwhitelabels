@@ -114,6 +114,21 @@ mixin fieldTextareaLabel(name, attr)
         disabled=(attr.disabled ? attr.disabled : false)
       ).form-control=attr.value
 
+mixin fieldText(name, attr)
+    - attr = attr ? attr : fields[name];
+    - attr.value = attr.value ? attr.value : values ? values[name] : '';
+    div(class=attr.class)
+        input(
+        id=attr.id || name
+        name=attr.name || name
+        placeholder=attr.placeholder ? attr.placeholder : attr.label
+        type=attr.type ? attr.type : 'text'
+        class=(attr.help_text ? 'showPopover' : '')
+        data-content=(attr.help_text ? attr.help_text : '')
+        value=attr.value
+        maxlength = attr.maxlength ? attr.maxlength : false
+        disabled=(attr.disabled ? attr.disabled : false)).form-control
+
 
 mixin fieldChoiceLabel(name, attr)
   +prepareField(name, attr)

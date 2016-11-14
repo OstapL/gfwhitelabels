@@ -8,20 +8,6 @@ include ../../../templates/fields_mixins.pug
   ]
 )
 
-mixin fieldInput(name, attr)
-  - attr = attr ? attr : fields[name];
-  - attr.value = attr.value ? attr.value : values ? values[name] : '';
-  div(class=attr.class)
-    input(
-            id=attr.id || name
-            name=attr.name || name
-            placeholder=attr.placeholder ? attr.placeholder :attr.label
-            type=attr.type ? attr.type : 'text'
-            class=(attr.help_text ? 'showPopover' : '')
-            data-content=(attr.help_text ?attr.help_text : '')
-            value=attr.value
-            maxlength = attr.maxlength ? attr.maxlength : false
-            disabled=(attr.disabled ? attr.disabled : false)).form-control
 
 .container.profile.pt-50
   .row 
@@ -62,8 +48,8 @@ mixin fieldInput(name, attr)
                       .form-group.row.required
                         label.col-lg-3.text-lg-right.text-xs-left Legal Name
                           span.color-red *
-                        +fieldInput("first_name", {'class': 'col-lg-4 m-b-md-25','placeholder':'First Name' })
-                        +fieldInput("last_name", {'class': 'col-lg-4','placeholder':'Last Name' })
+                        +fieldText("first_name", {'class': 'col-lg-4 m-b-md-25','placeholder':'First Name' })
+                        +fieldText("last_name", {'class': 'col-lg-4','placeholder':'Last Name' })
                       .form-group.row.required
                         label.col-lg-3.text-lg-right.text-xs-left Country
                           span.color-red *

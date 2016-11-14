@@ -1,6 +1,7 @@
 module.exports = Backbone.Router.extend({
   routes: {
     'company/create': 'company',
+    'company/company-dashboard': 'companyDashboard',
     'campaign/:id/general_information': 'generalInformation',
     'campaign/:id/media': 'media',
     'campaign/:id/team-members/add/:type/:index': 'teamMembersAdd',
@@ -55,7 +56,14 @@ module.exports = Backbone.Router.extend({
       );
     }
   },
-
+    companyDashboard: function() {
+      const View = require('components/raiseFunds/views.js');
+      let i = new View.companyDashboard({
+        el: '#content',
+      });
+      i.render();
+      app.hideLoading();
+  }, 
   generalInformation (id) {
     if (!app.user.is_anonymous()) {
       const Model = require('components/campaign/models.js');
@@ -70,13 +78,16 @@ module.exports = Backbone.Router.extend({
 
       var a1 = app.makeCacheRequest(raiseCapitalUrl + '/campaign/' + id + '/general_information', 'OPTIONS');
       var a2 = app.makeCacheRequest(raiseCapitalUrl + '/campaign/' + id + '/general_information');
+      // let formcR = api.makeCacheRequest(authServer + '/user/formc');
 
+      // $.when(a1, a2, formcR).done((meta, model, formc) => {
       $.when(a1, a2).done((meta, model) => {
         model[0].id = id;
         var i = new View.generalInformation({
           el: '#content',
           fields: meta[0].fields,
-          model: model[0]
+          model: model[0],
+          // formc: formc[0],
         });
 
         i.render();
@@ -267,5 +278,6 @@ module.exports = Backbone.Router.extend({
         '/account/login', {trigger: true, replace: true}
       );
     }
-  },    
+  },
+   
 });

@@ -1,4 +1,25 @@
 if user.token != ""
+
+  li.nav-item.notification.notification-bell.text-center.drop-container
+    a(href="#").nav-link.notification.bell-drop-li
+      i.fa.fa-bell-o
+      span.count-notific 2
+
+    .list-container.notification-container.bell-drop
+      ul.submenu.list-unstyled 
+        li.clearfix.title.nav-link
+          span.pull-left
+            b 2 pending 
+            |  comments
+          a(href="#").pull-right  view all
+
+        li.clearfix.nav-link
+          span.pull-left Maria Kravchuk wrote...
+          i.pull-right just now
+
+        li.clearfix.nav-link
+          span.pull-left Maria Kravchuk wrote...
+          i.pull-right just now
   li.nav-item.user-info
     a.nav-link.notification.user-info-name
       span
