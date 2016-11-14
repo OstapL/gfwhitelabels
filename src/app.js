@@ -182,6 +182,19 @@ $('body').on('focus', 'textarea.showPopover', function () {
   }
 });
 
+$('body').on('focus', 'i.showPopover', function () {
+  var $el = $(this);
+  if ($el.attr('aria-describedby') == null) {
+    $(this).popover({
+      html: true,
+      template: popoverTemplate.replace('divPopover', 'textareaPopover'),
+      placement: 'top',
+      trigger: 'hover',
+    });
+    $(this).popover('show');
+  }
+});
+
 // show bottom logo while scrolling page
 $(window).scroll(function () {
   var $bottomLogo = $('#fade_in_logo');
