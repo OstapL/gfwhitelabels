@@ -49,12 +49,13 @@ section.create-company.container.m-b-85
           placeholder: 'Your Company Description',
           help_text: 'Explain what your company does in a way that everyone  will understand.<br />  “If you can’t explain it simply, you don’t understand it well enough.” – Albert Einstein',
           }, fields.description))
-        +fieldChoiceLabel("corporate_structure", _.extend({
-            class1: 'col-xl-3 col-lg-12 text-lg-left text-xl-right m-b-0 p-t-0',
-            class2: 'col-xl-9 col-lg-12',
-            help_text: 'C-corps can choose to issue Common Equity or a Revenue Share. LLC’s can only issue a Revenue Share',
-            empty: {'': 'Choose'},
-        }, fields.corporate_structure))
+        .row.form-group
+          label.col-xl-3.col-lg-12.text-xl-right.textlg-left.m-b-0.p-t-0 Corporate Structure
+            span.color-red *
+          .col-xl-9.col-lg-12.showPopover(data-content="C-corps can choose to issue Common Equity or a Revenue Share. LLC’s can only issue a Revenue Share")
+            +fieldChoice("corporate_structure", _.extend({
+                empty: {'': 'Choose'},
+            }, fields.corporate_structure))
         .row.form-group
           .col-date#founding_date
             label.col-xl-3.col-lg-12.text-xl-right.textlg-left.m-b-0.p-t-0 Date of Organization
