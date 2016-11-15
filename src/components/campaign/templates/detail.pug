@@ -3,11 +3,6 @@ include ../../../templates/mixins.pug
 
 - var percentage_raised = formatHelper.calculateRaisedPercentage(values.campaign.minimum_raise, values.campaign.amount_raised)
 
-//- style.
-//-   p {
-//-     white-space: pre-wrap;
-//-   }
-
 section(style="background-image: url(" + (values.campaign.header_image_data.url ? values.cmapaign.header_image_data.url : '/img/default.png') + ")")#home.home-section.bg-dark-alfa-70.parallax-2.fixed-height-small.hide-bg-fixed
   .js-height-parent.container-fluid
     .home-content
