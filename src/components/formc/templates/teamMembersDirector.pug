@@ -47,13 +47,11 @@ section.formc-team-members-director.container.m-b-85
             label.col-xl-3.col-lg-12.text-xl-right.textlg-left Date of birth
               span.color-red *
             .col-xl-4.col-lg-6.p-r-0
-              +fieldDateDay("dob", _.extend({
-                class: 'col-xl-4 col-lg-4 col-xs-4 p-l-0 m-d-p-r-5',
-                placeholder: 'MM',
-              }, fields.dob))
               +fieldDateMonth("dob", _.extend({
-                class: 'col-xl-4 col-lg-4 col-xs-4 p-r-0  m-d-p-l-5',
-                placeholder: 'DD',
+                class: 'col-xl-4 col-lg-4 col-xs-4 p-l-0  m-d-p-r-5',
+              }, fields.dob))
+              +fieldDateDay("dob", _.extend({
+                class: 'col-xl-4 col-lg-4 col-xs-4 p-r-0 m-d-p-l-5',
               }, fields.dob))
               +fieldDateYear("dob", _.extend({
                 class: 'col-xl-4 col-lg-4 col-xs-4 p-r-0 ',
@@ -115,7 +113,7 @@ section.formc-team-members-director.container.m-b-85
         .row
           .col-xl-6.col-lg-6
             .row
-              label.col-xl-6.col-lg-12.text-xl-right.text-lg-left Employer Start Date
+              label.col-xl-6.col-lg-12.text-xl-right.text-lg-left.m-b-0.p-t-0 Employer Start Date
                 span.color-red *
               #employer_start_date.col-xl-6.col-lg-12
                 .row
