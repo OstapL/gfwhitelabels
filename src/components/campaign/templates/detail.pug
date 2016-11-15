@@ -1,7 +1,6 @@
 - 'use strict';
 include ../../../templates/mixins.pug
 
-// - var percentage_raised = formatHelper.calculateRaisedPercentage(values.minimum_raise, values.amount_raised)
 - var percentage_raised = formatHelper.calculateRaisedPercentage(values.campaign.minimum_raise, values.campaign.amount_raised)
 
 style.
@@ -208,12 +207,6 @@ section
         //- h3.our.text-lg-center Why You Should Invest
         h2.dosis.our.text-uppercase.text-lg-center.text-xs-center.campaign-subheading Why You Should Invest
         p #{ values.pitch }
-
-        //- if values.additional_info
-        //-   each v,k in values.additional_info
-        //-     //- h3.our.text-lg-center #{ v.title }
-        //-     h2.dosis.our.text-uppercase.text-lg-center.campaign-subheading #{ v.title }
-        //-     p #{ v.body }
       
       #gallery1.col-lg-12.pt50.photo-gallegy.text-center-flex
         if values.campaign.gallery_data.all_files
@@ -385,21 +378,9 @@ section
                               p.card-text #{ v.headline }
                               .pos-bottom
                                 .links.d-inline-block.card-text #{ formatHelper.getWebsiteUrl(v.link) }
-                //- each v,k in values.press
-                //-   //- .col-lg-4.articles_press
-                //-   div(class="col-lg-4 articles_press" + (counter < 3 ? '' : ' hidden-article-press') style="display:" + (counter < 3 ? 'inline-block' : 'none') +';')
-                //-     a(href=v.link target="_blank")
-                //-       .card.card-inverse.m-b-2
-                //-         .card-title
-                //-           i.fa.fa-link
-                //-           p.card-text #{ v.headline }
-                //-           .pos-bottom
-                //-             .links.d-inline-block.card-text #{ formatHelper.getWebsiteUrl(v.link) }
-                //-   - counter++;
 
               div(style="display:" + (showMore ? 'block' : 'none') + ";").row
                 .col-lg-12.text-xs-center
-                  //- a(href="#hidden-article-press" data-toggle="collapse").link-4.see-all-article-press See All Articles and Press
                   a(href="#hidden-article-press" data-toggle="collapse").link-4.see-all-article-press Show More
   
   else
@@ -503,9 +484,6 @@ section
                   .col-lg-5.p-l-3.col-sm-12.p-md-0
                     p Type of Security
                     h2.font-weight-bold Common Equity
-                  //- .col-lg-3.p-l-3
-                  //-   p Target Minimum Raise Amonunt
-                  //-   h2.font-weight-bold #{ formatHelper.formatPrice(values.minimum_raise) }
                   .col-lg-3.p-l-1.col-sm-12.p-md-0
                     p Minimum Investment
                     h2.font-weight-bold #{ formatHelper.formatPrice(values.campaign.minimum_increment) }
@@ -513,24 +491,16 @@ section
                     p Minimum # of Shares
                     h2.font-weight-bold #{ (Math.round(values.campaign.minimum_raise / values.campaign.price_per_share)).toLocaleString('en-US') }
 
-                  //- .col-lg-3.p-l-3
-                  //-   p Minimum Equity Offered
-                  //-   h2.font-weight-bold #{ values.min_number_of_shares }
                 .row
                   .col-lg-5.p-l-3.col-sm-12.p-md-0
                     p Pre-Money Valuation
                     h2.font-weight-bold #{ formatHelper.formatPrice(values.campaign.premoney_valuation) }
-                  //- .col-lg-3.p-l-3
-                  //-   p Target Maximum Raise Amount
                   .col-lg-3.p-l-1.col-sm-12.p-md-0
                     p Price per Share
                     h2.font-weight-bold #{ formatHelper.formatPrice(values.campaign.price_per_share) }
                   .col-lg-4.p-l-3.col-sm-12.p-md-0
                     p Maximum # of Shares
                     h2.font-weight-bold #{ (Math.round(values.campaign.maximum_raise / values.campaign.price_per_share)).toLocaleString('en-US') }
-                  //- .col-lg-3.p-l-3
-                  //-   p Maximum Equity Offered
-                  //-   h2.font-weight-bold #{ formatHelper.max_number_of_shares }
               else
                 .row
                   .col-lg-4.p-l-3.p-md-0
@@ -553,22 +523,22 @@ section
                     p Cap
                     h2.font-weight-bold #{ values.campaign.cap }X
 
-  //- section#perks.perks
-  //-   - values.perks = values.perks.filter(function(value) { return value && value.perk; });
-  //-   - values.perks.sort(function (a, b) { return Number(a.amount) - Number(b.amount); });
-  //-   .container
-  //-     h3.text-lg-center.text-xs-center.campaign-subheading Perks
-  //-     .row
-  //-       .col-lg-12.text-center-flex
-  //-         each v,k in values.perks
-  //-           if v
-  //-             .col-xl-4.col-xs-12.col-lg-6
-  //-               .jumbotron.jumbotron-fluid
-  //-                 .container
-  //-                   h3.m-t-0.m-b-1 Invest 
-  //-                     span #{ formatHelper.formatPrice(v.amount) }
-  //-                     |  or more
-  //-                   p.text-justify #{ v.perk }
+  section#perks.perks
+    - values.perks = values.perks.filter(function(value) { return value && value.perk; });
+    - values.perks.sort(function (a, b) { return Number(a.amount) - Number(b.amount); });
+    .container
+      h3.text-lg-center.text-xs-center.campaign-subheading Perks
+      .row
+        .col-lg-12.text-center-flex
+          each v,k in values.perks
+            if v
+              .col-xl-4.col-xs-12.col-lg-6
+                .jumbotron.jumbotron-fluid
+                  .container
+                    h3.m-t-0.m-b-1 Invest 
+                      span #{ formatHelper.formatPrice(v.amount) }
+                      |  or more
+                    p.text-justify #{ v.perk }
 
   section(style="display: none").investors-all.border-bottom
     .container
@@ -667,40 +637,6 @@ section
                   class=(counter == 0 ? 'in' : '') + ' panel-collapse collapse'
                   ) #{ v.answer }
                   - counter ++;
-            //
-              .panel.panel-default
-                #faqTwo(role="tab").panel-heading
-                  a(data-toggle="collapse"
-                  data-parent="#accordion" 
-                  href="#collapsefaqTwo"
-                  aria-controls="collapsefaqTwo"
-                  ).list-group-item-action How did Smartbe start and then evolve? 
-                    i.fa.fa-angle-down
-                #collapsefaqTwo(role="tabpanel"
-                aria-labelledby="faqTwo"
-                ).panel-collapse.collapse  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eligendi, hic, distinctio, enim nam consequuntur iste quos, accusamus blanditiis a id odio perferendis vel perspiciatis provident et! Consequuntur nemo reprehenderit inventore.
-              .panel.panel-default
-                #faqThree(role="tab").panel-heading
-                  a(data-toggle="collapse"
-                  data-parent="#accordion" 
-                  href="#collapsefaqThree"
-                  aria-controls="collapsefaqThree"
-                  ).list-group-item-action What is your impact?     
-                    i.fa.fa-angle-down
-                #collapsefaqThree(role="tabpanel"
-                aria-labelledby="faqThree"
-                ).panel-collapse.collapse  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius inventore iste numquam nemo, fugit nihil fugiat quasi, excepturi repellendus pariatur! Facilis odit cupiditate tenetur, inventore adipisci consequatur eius suscipit voluptas.
-              .panel.panel-default
-                #faqFour(role="tab").panel-heading
-                  a(data-toggle="collapse"
-                  data-parent="#accordion" 
-                  href="#collapsefaqFour"
-                  aria-controls="collapsefaqFour"
-                  ).list-group-item-action Do you have any intellectual property?   
-                    i.fa.fa-angle-down
-                #collapsefaqFour(role="tabpanel"
-                aria-labelledby="faqFour"
-                ).panel-collapse.collapse  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eius inventore iste numquam nemo, fugit nihil fugiat quasi, excepturi repellendus pariatur! Facilis odit cupiditate tenetur, inventore adipisci consequatur eius suscipit voluptas.
         
   .border-bottom.m-t-3
   section.ask.border-bottom
@@ -771,20 +707,17 @@ div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true
           iframe.embed-responsive-item(src="//player.vimeo.com/video/" + mainVideo.id allowfullscreen="true")
         else
           iframe.embed-responsive-item(src="//www.youtube.com/embed/?rel=0" allowfullscreen="true")
-        //- iframe.embed-responsive-item(src="//www.youtube.com/embed/" + app.getVideoId(values.video) + "?rel=0" allowfullscreen="true")
 
-//- each v,k in values.additional_video
-//-   if v
-//-     div(id="videoModal-" + k tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true").modal.fade.video-modal
-//-       div(role="document").modal-dialog.modal-lg
-//-         .modal-content
-//-           .embed-responsive.embed-responsive-16by9
-//-             //- - var link =  app.getVideoId(v.link)
-//-             - let additionalVideo = app.getVideoId(v.link);
-//-             if additionalVideo && additionalVideo.provider == 'youtube'
-//-               iframe(src="//www.youtube.com/embed/" + additionalVideo.id + "?rel=0" allowfullscreen="true").embed-responsive-item
-//-             else if additionalVideo && additionalVideo.provider == 'vimeo'
-//-               iframe(src="//player.vimeo.com/video/" + additionalVideo.id allowfullscreen="true").embed-responsive-item
-//-             else
-//-               iframe(src="//www.youtube.com/embed/?rel=0" allowfullscreen="true").embed-responsive-item
-//-             //- iframe.embed-responsive-item(src="//www.youtube.com/embed/" + link + "?rel=0" allowfullscreen="true")
+each v,k in values.campaign.additional_video
+  if v
+    div(id="videoModal-" + k tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true").modal.fade.video-modal
+      div(role="document").modal-dialog.modal-lg
+        .modal-content
+          .embed-responsive.embed-responsive-16by9
+            - let additionalVideo = app.getVideoId(v.link);
+            if additionalVideo && additionalVideo.provider == 'youtube'
+              iframe(src="//www.youtube.com/embed/" + additionalVideo.id + "?rel=0" allowfullscreen="true").embed-responsive-item
+            else if additionalVideo && additionalVideo.provider == 'vimeo'
+              iframe(src="//player.vimeo.com/video/" + additionalVideo.id allowfullscreen="true").embed-responsive-item
+            else
+              iframe(src="//www.youtube.com/embed/?rel=0" allowfullscreen="true").embed-responsive-item
