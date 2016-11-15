@@ -179,9 +179,10 @@ module.exports = {
         delete data[key_year];
         delete data[key_month];
         delete data[key_day];
-      } else if(el.type == 'schema') {
-        debugger;
-        this.fixDateFields(el.schema, data[el.name]);
+      } else if(el.type == 'nested') {
+        data[key].forEach((val, index) => {
+          api.fixDateFields.call(this, el.schema, data[key][index]);
+        });
       }
     });
   },
