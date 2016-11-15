@@ -289,11 +289,14 @@ module.exports = {
           values: this.model,
           campaignId: this.campaign.id,
           roles: ['shareholder', 'director', 'officer'],
-          titles: {
-            ceo: 'CEO/President',
-            financial: 'Principal Financial Officer/Treasurer',
-            controller: 'Controller/Principal Accounting Officer',
-          },
+          titles: [
+            '',
+            'CEO/President',
+            'Principal Financial Officer/Treasurer',
+            'Vice President',
+            'Secretary',
+            'Controller/Principal Accounting Officer',
+          ],
         })
       );
       return this;
