@@ -147,7 +147,18 @@ mixin fieldChoiceLabel(name, attr)
             
           each v,k in attr.validate.choices
             option(value=k selected=(k == attr.value ? "selected" : undefined)) #{ v }
-
+mixin fieldChoice(name, attr)
+  +prepareField(name, attr)
+  if attr.type == null
+    - attr.type = 'select'
+  select(
+    id=attr.id || name
+    name=name
+    ).custom-select.w-100
+    if attr.hasOwnProperty('empty')
+      option(value=attr.empty.value) #{attr.empty['']}  
+    each v,k in attr.validate.choices
+      option(value=k selected=(k == attr.value ? "selected" : undefined)) #{ v }
 
 mixin fieldRadioLabel(name, attr)
   +prepareField(name, attr)
