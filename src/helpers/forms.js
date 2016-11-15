@@ -57,7 +57,7 @@ module.exports = {
     e.preventDefault();
 
     data = data || $(e.target).closest('form').serializeJSON({ useIntKeysAsArrayIndex: true });
-    api.fixDateFields.call(this, data);
+    api.fixDateFields.call(this, this.fields, data);
 
     // if view already have some data - extend that info
     if(this.hasOwnProperty('model')) {
@@ -167,8 +167,8 @@ module.exports = {
     },
   },
 
-  fixDateFields(data) {
-    _(this.fields).each((el, key) => {
+  fixDateFields(fields, data) {
+    _(fields).each((el, key) => {
       if(el.type == 'date') {
         var key_year = key + '__year';
         var key_month = key + '__month';
@@ -179,6 +179,9 @@ module.exports = {
         delete data[key_year];
         delete data[key_month];
         delete data[key_day];
+      } else if(el.type == 'schema') {
+        debugger;
+        this.fixDateFields(el.schema, data[el.name]);
       }
     });
   },

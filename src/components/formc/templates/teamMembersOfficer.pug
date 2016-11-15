@@ -17,6 +17,7 @@ section.formc-team-members-director.container.m-b-85
   .col-xl-8.col-lg-8.col-md-12.team-member-formc
     h2.text-uppercase.text-lg-center.text-xs-center.m-t-0.dosis.mb50 Team members (officer)
     form(metod="post" action="").form-section
+      input(type="hidden" value=2 name="role")
       .col-xl-12
         +fieldTextLabel("first_name", _.extend({
           class1: 'col-xl-3 col-lg-12 text-lg-left text-xl-right ',

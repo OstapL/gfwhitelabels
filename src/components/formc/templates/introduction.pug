@@ -17,7 +17,7 @@ section.formc.introduction.create-company-media.container
         p.m-b-1 This is a lengthy process and we will need a robust amount of information about your business, as required by law. Don’t worry, we’re here to help in any way we can! The process includes creating a company profile, submitting to a background check and ultimately launching your fundraising campaign.
         p.m-b-1 Much of the information you provide will be filed with the SEC. So, be very careful and precise in answering all questions. Give full and complete answers so that they are not misleading under the circumstances involved. Do not discuss any future performance or other anticipated event unless you have a reasonable basis to believe that it will actually occur within the foreseeable future. If any answer requiring significant information is materially inaccurate, incomplete or misleading, the Company, its management and principal shareholders may be liable to investors based on that information.
         p At the end, you’ll have the opportunity to review all material before submission, including the ability to have your attorney approve.
-        form(metod="post" action="").form-section
+        form(action="").form-section
           .certify-checkbox
             .form-group.required
               label
@@ -55,7 +55,7 @@ section.formc.introduction.create-company-media.container
                   label Credit Card Number
                 .col-lg-9
                   .input-icon
-                    i.fa.fa-question-circle
+                    div.fa.fa-question-circle.showPopover(data-content="Privet Ostap")
                   input(type="text" data-stripe="number" id="card_number").form-control
                   img(src="/img/visa_logo_6.gif", alt="")
                   img(src="/img/mastercard_logo_5.gif", alt="")
@@ -75,7 +75,7 @@ section.formc.introduction.create-company-media.container
                   label CVV Code
                 .col-lg-3.p-l-0
                   .input-icon
-                    i.fa.fa-question-circle
+                    div.fa.fa-question-circle.showPopover(data-content="text <img src='http://localhost:7070/img/visa_logo_6.gif' />")
                   input(type="text" data-stripe="cvc" id="card_cvc" placeholder="CVV Code").form-control
               .electronically-sign
                 .col-xl-10.offset-xl-1.m-t-3.investment

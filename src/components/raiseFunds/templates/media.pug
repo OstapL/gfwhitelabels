@@ -15,7 +15,7 @@ section.create-company-media.container.media-container
   //START RIGHT BLOCK
   .col-xl-8.col-lg-8.col-md-12
     h2.text-uppercase.dosis.text-lg-center.text-xs-center.dosis.m-t-0.m-b-3 Media
-    form(data-method="PATCH" action="").form-section
+    form(data-method="PUT" action="").form-section
 
       +imageDropzone("header_image", {
         class1: 'col-xl-3 col-lg-12 text-xs-center text-xl-right',
@@ -73,6 +73,6 @@ section.create-company-media.container.media-container
           .border-bottom.m-t-3.m-b-3
         |!{ templates.press}
         .col-xl-12.pull-lg-right.text-lg-right.text-sm-center.text-md-center.text-xs-center.m-t-3
-          button(type="submit" data-method="PATCH").btn.btn-primary.text-uppercase save and continue
+          button(type="submit" data-method="PUT").btn.btn-primary.text-uppercase save and continue
             i.fa.fa-angle-right
   //- +menu('media')

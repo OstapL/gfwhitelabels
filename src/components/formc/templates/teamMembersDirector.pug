@@ -29,6 +29,7 @@ section.formc-team-members-director.container.m-b-85
   .col-xl-8.col-lg-8.col-md-12.team-member-formc
     h2.text-uppercase.text-lg-center.text-xs-center.m-t-0.dosis.mb50 Team members (director)
     form(metod="post" action="").form-section
+      input(type="hidden" value=1 name="role")
       .col-xl-12
         +fieldTextLabel("first_name", _.extend({
           class1: 'col-xl-3 col-lg-12 text-lg-left text-xl-right ',
@@ -42,8 +43,9 @@ section.formc-team-members-director.container.m-b-85
           }, fields.last_name))
 
         .row.form-group
-          .col-date
+          .col-date#dob
             label.col-xl-3.col-lg-12.text-xl-right.textlg-left Date of birth
+              span.color-red *
             .col-xl-4.col-lg-6.p-r-0
               +fieldDateDay("dob", _.extend({
                 class: 'col-xl-4 col-lg-4 col-xs-4 no-gutter p-l-0',
@@ -67,6 +69,7 @@ section.formc-team-members-director.container.m-b-85
           .col-xl-6.col-lg-6.form-group
             .row
               label.col-xl-6.col-lg-12.text-xl-right.text-lg-left.m-b-0.p-t-0 Board Service Start Date
+                span.color-red *
               #board_service_start_date.col-xl-6.col-lg-12
                 .row
                   +fieldDateMonth("board_service_start_date", _.extend({
@@ -83,21 +86,18 @@ section.formc-team-members-director.container.m-b-85
                   }, fields.board_service_start_date))
           .col-xl-6.col-lg-6.form-group
             .row
-              label.col-xl-6.col-lg-12.text-xl-right.text-lg-left.m-b-0.p-t-0 Board Service Start Date
-              #board_service_start_date.col-xl-6.col-lg-12
+              label.col-xl-6.col-lg-12.text-xl-right.text-lg-left.m-b-0.p-t-0 Board Service End Date
+                span.color-red *
+              #board_service_end_date.col-xl-6.col-lg-12
                 .row
-                  +fieldDateMonth("board_service_start_date", _.extend({
+                  +fieldDateMonth("board_service_end_date", _.extend({
                     class: 'col-xl-6 col-lg-6 col-sm-6 col-xs-6 m-d-p-r-5',
                     placeholder: 'MM',
-                    name: 'board_service_start_date',
-                    label: 'Board Service Start Date',
-                  }, fields.board_service_start_date))
-                  +fieldDateYear("board_service_start_date", _.extend({
+                  }, fields.board_service_end_date))
+                  +fieldDateYear("board_service_end_date", _.extend({
                     class: 'col-xl-6 col-lg-6 col-sm-6 col-xs-6 m-d-p-l-5',
                     placeholder: 'YYYY',
-                    name: 'board_service_start_date',
-                    label: 'Board Service Start Date',
-                  }, fields.board_service_start_date))
+                  }, fields.board_service_end_date))
 
 
         +fieldTextLabel("principal_occupation", _.extend({
@@ -115,7 +115,8 @@ section.formc-team-members-director.container.m-b-85
           .col-xl-6.col-lg-6
             .row
               label.col-xl-6.col-lg-12.text-xl-right.text-lg-left Employer Start Date
-              #board_service_start_date.col-xl-6.col-lg-12
+                span.color-red *
+              #employer_start_date.col-xl-6.col-lg-12
                 .row
                   +fieldDateMonth("employer_start_date", _.extend({
                     class: 'col-xl-6 col-lg-6 col-sm-6 col-xs-6 m-d-p-r-5',

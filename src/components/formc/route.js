@@ -74,7 +74,10 @@ module.exports = Backbone.Router.extend({
       });
       i.render();
       app.hideLoading();
-      $('#content').scrollTo();
+    }).fail((response, error, status) => {
+      if(response.responseJSON.location) {
+         app.routers.navigate('/formc' + response.responseJSON.location +  '?notPaid=1', { trigger: true, replace: true } );
+      }
     });
   },
 
@@ -109,6 +112,10 @@ module.exports = Backbone.Router.extend({
       });
       addForm.render();
       app.hideLoading();
+    }).fail((response, error, status) => {
+      if(response.responseJSON.location) {
+         app.routers.navigate('/formc' + response.responseJSON.location +  '?notPaid=1', { trigger: true, replace: true } );
+      }
     });
   },
 
@@ -134,7 +141,11 @@ module.exports = Backbone.Router.extend({
       });
       i.render();
       app.hideLoading();
-    })
+    }).fail((response, error, status) => {
+      if(response.responseJSON.location) {
+         app.routers.navigate('/formc' + response.responseJSON.location +  '?notPaid=1', { trigger: true, replace: true } );
+      }
+    });
   },
 
   useOfProceeds(id) {
@@ -155,6 +166,10 @@ module.exports = Backbone.Router.extend({
       });
       i.render();
       app.hideLoading();
+    }).fail((response, error, status) => {
+      if(response.responseJSON.location) {
+         app.routers.navigate('/formc' + response.responseJSON.location +  '?notPaid=1', { trigger: true, replace: true } );
+      }
     });
   },
 
@@ -162,6 +177,7 @@ module.exports = Backbone.Router.extend({
     const View = require('components/formc/views.js');
     let campaignR = api.makeCacheRequest(authServer + '/user/campaign');
 
+    $('#content').scrollTo();
     $.when(campaignR).done((campaign) => {
       const i = new View.riskFactorsInstruction({
         el: '#content',
@@ -173,8 +189,12 @@ module.exports = Backbone.Router.extend({
 
       });
       i.render();
+      app.hideLoading();
+    }).fail((response, error, status) => {
+      if(response.responseJSON.location) {
+         app.routers.navigate('/formc' + response.responseJSON.location +  '?notPaid=1', { trigger: true, replace: true } );
+      }
     });
-    app.hideLoading();
   },
 
   riskFactorsMarket(id) {
@@ -195,6 +215,10 @@ module.exports = Backbone.Router.extend({
       });
       i.render();
       app.hideLoading();
+    }).fail((response, error, status) => {
+      if(response.responseJSON.location) {
+         app.routers.navigate('/formc' + response.responseJSON.location +  '?notPaid=1', { trigger: true, replace: true } );
+      }
     });
   },
 
@@ -205,6 +229,7 @@ module.exports = Backbone.Router.extend({
     let dataR = api.makeCacheRequest(formcServer + '/' + id + '/risk-factors-financial');
     let campaignR = api.makeCacheRequest(authServer + '/user/campaign');
 
+    $('#content').scrollTo();
     $.when(fieldsR, dataR, campaignR).done((fields, data, campaign) => {
       data[0].id = id;
       const i = new View.riskFactorsFinancial({
@@ -215,6 +240,10 @@ module.exports = Backbone.Router.extend({
       });
       i.render();
       app.hideLoading();
+    }).fail((response, error, status) => {
+      if(response.responseJSON.location) {
+         app.routers.navigate('/formc' + response.responseJSON.location +  '?notPaid=1', { trigger: true, replace: true } );
+      }
     });
   },
 
@@ -225,6 +254,7 @@ module.exports = Backbone.Router.extend({
     let dataR = api.makeCacheRequest(formcServer + '/' + id + '/risk-factors-operational');
     let campaignR = api.makeCacheRequest(authServer + '/user/campaign');
 
+    $('#content').scrollTo();
     $.when(fieldsR, dataR, campaignR).done((fields, data, campaign) => {
       data[0].id = id;
       const i = new View.riskFactorsOperational({
@@ -235,6 +265,10 @@ module.exports = Backbone.Router.extend({
       });
       i.render();
       app.hideLoading();
+    }).fail((response, error, status) => {
+      if(response.responseJSON.location) {
+         app.routers.navigate('/formc' + response.responseJSON.location +  '?notPaid=1', { trigger: true, replace: true } );
+      }
     });
   },
 
@@ -245,6 +279,7 @@ module.exports = Backbone.Router.extend({
     let dataR = api.makeCacheRequest(formcServer + '/' + id + '/risk-factors-competitive');
     let campaignR = api.makeCacheRequest(authServer + '/user/campaign');
 
+    $('#content').scrollTo();
     $.when(fieldsR, dataR, campaignR).done((fields, data, campaign) => {
       data[0].id = id;
       const i = new View.riskFactorsCompetitive({
@@ -255,6 +290,10 @@ module.exports = Backbone.Router.extend({
       });
       i.render();
       app.hideLoading();
+    }).fail((response, error, status) => {
+      if(response.responseJSON.location) {
+         app.routers.navigate('/formc' + response.responseJSON.location +  '?notPaid=1', { trigger: true, replace: true } );
+      }
     });
   },
 
@@ -265,6 +304,7 @@ module.exports = Backbone.Router.extend({
     let dataR = api.makeCacheRequest(formcServer + '/' + id + '/risk-factors-personnel');
     let campaignR = api.makeCacheRequest(authServer + '/user/campaign');
 
+    $('#content').scrollTo();
     $.when(fieldsR, dataR, campaignR).done((fields, data, campaign) => {
       data[0].id = id;
       const i = new View.riskFactorsPersonnel({
@@ -275,6 +315,10 @@ module.exports = Backbone.Router.extend({
       });
       i.render();
       app.hideLoading();
+    }).fail((response, error, status) => {
+      if(response.responseJSON.location) {
+         app.routers.navigate('/formc' + response.responseJSON.location +  '?notPaid=1', { trigger: true, replace: true } );
+      }
     });
   },
 
@@ -285,6 +329,7 @@ module.exports = Backbone.Router.extend({
     let dataR = api.makeCacheRequest(formcServer + '/' + id + '/risk-factors-legal');
     let campaignR = api.makeCacheRequest(authServer + '/user/campaign');
 
+    $('#content').scrollTo();
     $.when(fieldsR, dataR, campaignR).done((fields, data, campaign) => {
       data[0].id = id;
       const i = new View.riskFactorsLegal({
@@ -295,6 +340,10 @@ module.exports = Backbone.Router.extend({
       });
       i.render();
       app.hideLoading();
+    }).fail((response, error, status) => {
+      if(response.responseJSON.location) {
+         app.routers.navigate('/formc' + response.responseJSON.location +  '?notPaid=1', { trigger: true, replace: true } );
+      }
     });
   },
 
@@ -305,6 +354,7 @@ module.exports = Backbone.Router.extend({
     let dataR = api.makeCacheRequest(formcServer + '/' + id + '/risk-factors-misc');
     let campaignR = api.makeCacheRequest(authServer + '/user/campaign');
 
+    $('#content').scrollTo();
     $.when(fieldsR, dataR, campaignR).done((fields, data, campaign) => {
       data[0].id = id;
       const i = new View.riskFactorsMisc({
@@ -315,6 +365,10 @@ module.exports = Backbone.Router.extend({
       });
       i.render();
       app.hideLoading();
+    }).fail((response, error, status) => {
+      if(response.responseJSON.location) {
+         app.routers.navigate('/formc' + response.responseJSON.location +  '?notPaid=1', { trigger: true, replace: true } );
+      }
     });
   },
 
@@ -331,6 +385,7 @@ module.exports = Backbone.Router.extend({
       authServer + '/user/campaign'
     );
 
+    $('#content').scrollTo();
     $.when(fieldsR, dataR, campaignR).done((fields, data, campaign) => {
       data[0].id = id;
       const i = new View.financialCondition({
@@ -341,7 +396,11 @@ module.exports = Backbone.Router.extend({
       });
       i.render();
       app.hideLoading();
-    })
+    }).fail((response, error, status) => {
+      if(response.responseJSON.location) {
+         app.routers.navigate('/formc' + response.responseJSON.location +  '?notPaid=1', { trigger: true, replace: true } );
+      }
+    });
   },
 
   outstandingSecurity(id) {
@@ -351,6 +410,7 @@ module.exports = Backbone.Router.extend({
     let dataR = api.makeCacheRequest(formcServer + '/' + id + '/outstanding-security');
     let campaignR = api.makeCacheRequest(authServer + '/user/campaign');
 
+    $('#content').scrollTo();
     $.when(fieldsR, dataR, campaignR).done((fields, data, campaign) => {
       data[0].id = id;
       const i = new View.outstandingSecurity({
@@ -361,6 +421,10 @@ module.exports = Backbone.Router.extend({
       });
       i.render();
       app.hideLoading();
+    }).fail((response, error, status) => {
+      if(response.responseJSON.location) {
+         app.routers.navigate('/formc' + response.responseJSON.location +  '?notPaid=1', { trigger: true, replace: true } );
+      }
     });
   },
 
@@ -371,6 +435,7 @@ module.exports = Backbone.Router.extend({
     let dataR = api.makeCacheRequest(formcServer + '/' + id + '/background-check');
     let campaignR = api.makeCacheRequest(authServer + '/user/campaign');
 
+    $('#content').scrollTo();
     $.when(fieldsR, dataR, campaignR).done((fields, data, campaign) => {
       data[0].id = id;
       const i = new View.backgroundCheck({
@@ -381,6 +446,10 @@ module.exports = Backbone.Router.extend({
       });
       i.render();
       app.hideLoading();
+    }).fail((response, error, status) => {
+      if(response.responseJSON.location) {
+         app.routers.navigate('/formc' + response.responseJSON.location +  '?notPaid=1', { trigger: true, replace: true } );
+      }
     });
   },
 
@@ -392,6 +461,7 @@ module.exports = Backbone.Router.extend({
     let formcR = api.makeCacheRequest(formcServer + '/' + id + '/final-review', 'OPTIONS');
     let dataR = api.makeCacheRequest(formcServer + '/' + id + '/final-review');
 
+    $('#content').scrollTo();
     $.when(companyR, campaignR, formcR, dataR).done((company, campaign, formc, data) => {
       data[0].id = id;
       const fields = {
@@ -406,6 +476,10 @@ module.exports = Backbone.Router.extend({
       });
       i.render();
       app.hideLoading();
+    }).fail((response, error, status) => {
+      if(response.responseJSON.location) {
+         app.routers.navigate('/formc' + response.responseJSON.location +  '?notPaid=1', { trigger: true, replace: true } );
+      }
     });
   },
 
@@ -417,6 +491,7 @@ module.exports = Backbone.Router.extend({
     let formcR = api.makeCacheRequest(formcServer + '/' + id + '/final-review', 'OPTIONS');
     let dataR = api.makeCacheRequest(formcServer + '/' + id + '/final-review');
 
+    $('#content').scrollTo();
     $.when(companyR, campaignR, formcR, dataR).done((company, campaign, formc, data) => {
       data[0].id = id;
       const fields = {
@@ -431,6 +506,10 @@ module.exports = Backbone.Router.extend({
       });
       i.render();
       app.hideLoading();
+    }).fail((response, error, status) => {
+      if(response.responseJSON.location) {
+         app.routers.navigate('/formc' + response.responseJSON.location +  '?notPaid=1', { trigger: true, replace: true } );
+      }
     });
   }, 
 });

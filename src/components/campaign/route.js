@@ -61,7 +61,7 @@ module.exports = Backbone.Router.extend({
     require.ensure([], () => {
       const View = require('./views.js');
 
-      api.makeCacheRequest(Urls['campaign-detail'](id)).
+      api.makeCacheRequest(raiseCapitalUrl + "/" + id).
         then((modelData) => {
           let i = new View.detail({
             el: '#content',
