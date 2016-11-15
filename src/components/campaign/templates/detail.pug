@@ -608,7 +608,7 @@ section
           div(role="tablist" aria-multiselectable="true").accordion
             - var counter = 0
             each v,k in values.campaign.faq
-              if v
+              if v && v.answer
                 .panel.panel-default
                   div(id="faq" + k role="tab").panel-heading
                     a(data-toggle="collapse"
