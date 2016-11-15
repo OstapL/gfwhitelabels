@@ -6,6 +6,7 @@ import '../../js/graf/graf.js';
 import '../../js/graf/jquery.flot.growraf';
 
 const formatPrice = calculatorHelper.formatPrice;
+const formatPercentage = calculatorHelper.formatPercentage;
 const minPersents = 200;
 
 module.exports = {
@@ -47,8 +48,13 @@ module.exports = {
 
         savePercents(e) {
             let target = e.target,
-                value = parseFloat(e.target.value.replace('$', '') || 0);
-            app.cache.payBackShareCalculator[target.dataset.modelValue] = value;
+                value = e.target.value.replace('$', '');
+
+            while(value && !value.match(/^[1-9]?\d(\.\d{0,2})?$/)){
+                value = value.substring(0, value.length - 1);
+            }
+            e.target.value = value;
+            app.cache.payBackShareCalculator[target.dataset.modelValue] = Number(value);
         },
 
         cutZeros(e) {
@@ -60,7 +66,7 @@ module.exports = {
                 elem.value = '';
             } else {
                 elem.dataset.currentValue = parseFloat(value);
-                elem.value = formatPrice(elem.dataset.currentValue);
+                elem.value = formatPercentage(elem.dataset.currentValue);
             }
         },
 

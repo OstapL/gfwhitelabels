@@ -16,6 +16,12 @@ module.exports = {
         return result;
     },
 
+    formatPercentage(percentage) {
+        let result = Number(percentage.replace(/%/g, ''));
+        if (!result || !(0 <= result && result <= 100)) return percentage;
+        return result + '%';
+    },
+
     getCaretPosition(oField) {
         // Initialize
         var iCaretPos = 0;
