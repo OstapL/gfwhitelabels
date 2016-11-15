@@ -3,10 +3,10 @@ include ../../../templates/mixins.pug
 
 - var percentage_raised = formatHelper.calculateRaisedPercentage(values.campaign.minimum_raise, values.campaign.amount_raised)
 
-style.
-  p {
-    white-space: pre-wrap;
-  }
+//- style.
+//-   p {
+//-     white-space: pre-wrap;
+//-   }
 
 section(style="background-image: url(" + (values.campaign.header_image_data.url ? values.cmapaign.header_image_data.url : '/img/default.png') + ")")#home.home-section.bg-dark-alfa-70.parallax-2.fixed-height-small.hide-bg-fixed
   .js-height-parent.container-fluid
@@ -200,10 +200,10 @@ section
     .container
       .col-lg-12
         h2#about.dosis.text-uppercase.text-lg-center.text-xs-center.campaign-subheading About #{ values.name }
-        p #{ values.description }
+        p !{ textHelper.restoreLineBreak(values.description) }
 
         h2.dosis.our.text-uppercase.text-lg-center.text-xs-center.campaign-subheading Why You Should Invest
-        p #{ values.pitch }
+        p !{ textHelper.restoreLineBreak(values.campaign.pitch) }
       
       #gallery1.col-lg-12.pt50.photo-gallegy.text-center-flex
         if values.campaign.gallery_data.all_files
@@ -285,17 +285,17 @@ section
 
       .col-lg-12
         h2.dosis.our.text-uppercase.text-lg-center.text-xs-center.campaign-subheading How We Intend to Make Money
-        p #{ values.campaign.intended_use_of_proceeds }
+        p !{ textHelper.restoreLineBreak(values.campaign.intended_use_of_proceeds) }
 
         h2.dosis.text-uppercase.text-lg-center.text-xs-center.campaign-subheading Why We are Raising Capital, and What We’ll Do with It
-        p #{ values.campaign.business_model }
+        p !{ textHelper.restoreLineBreak(values.campaign.business_model) }
 
       if values.campaign.additional_info
         each v,k in values.campaign.additional_info
           if v && v.title && v.body
             .col-lg-12
               h2.dosis.our.text-uppercase.text-lg-center.text-xs-center.campaign-subheading #{ v.title }
-              p #{ v.body }
+              p !{ textHelper.restoreLineBreak(v.body) }
    
   if values.members
     section#members
@@ -317,7 +317,7 @@ section
                         i.fa.fa-linkedin.more
                       a(href=v.facebook target="_blank").link-1
                         i.fa.fa-facebook
-                      p.card-text.text-justify.hide-more-detail #{v.bio}
+                      p.card-text.text-justify.hide-more-detail !{textHelper.restoreLineBreak(v.bio)}
                         if v.bio.length > 200
                           a(href="#").show-more-members.link-3 Read More
                       .d-block.text-lg-left.cite_education
@@ -629,7 +629,7 @@ section
                   div(id="collapsefaq" + k role="tabpanel"
                   aria-labelledby="faq" + k
                   class=(counter == 0 ? 'in' : '') + ' panel-collapse collapse'
-                  ) #{ v.answer }
+                  ) !{ textHelper.restoreLineBreak(v.answer) }
                   - counter ++;
         
   .border-bottom.m-t-3
