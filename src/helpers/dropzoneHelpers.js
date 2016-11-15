@@ -108,7 +108,7 @@ module.exports = {
       _(handlers).each((handler, eventName) => {
         if (eventName === 'success') {
           dropbox.on(eventName, (file, data) => {
-            handler.call(this, arguments);
+            handler.call(this, data);
             if (typeof(onSuccess) === 'function') {
               onSuccess(data);
             }
@@ -117,6 +117,19 @@ module.exports = {
           dropbox.on(eventName, handler);
         }
       });
+    },
+
+    _notifyServerAboutChanges(name, data) {
+      let params = {
+        type: 'PATCH',
+        [name]: data[0].id,
+        [name.replace('_id', '_data')]: data,
+      };
+
+      app.makeRequest(
+        this.urlRoot.replace(':id', this.model.id),
+        params
+      );
     },
 
     _file(name) {
@@ -141,21 +154,13 @@ module.exports = {
           $('.img-' + name).attr('src', '/img/icons/' + icon + '.png');
           $('.a-' + name).attr('href', data[0].urls[0]).html(data[0].name);
           $('#' + name).val(data[0].id);
+          this.model[name] = data[0].id;
           this.model[name.replace('_id', '_data')] = data;
         }
       });
 
       this._initializeDropzone(name, dzOptions, dzHandlers, (data) => {
-        let params = {
-          type: 'PATCH',
-        };
-
-        params[key] = data.file_id;
-
-        app.makeRequest(
-          this.urlRoot.replace(':id', this.model.id),
-          params
-        );
+        this._notifyServerAboutChanges.call(this, name, data)
       });
     },
 
@@ -183,15 +188,7 @@ module.exports = {
       });
 
       this._initializeDropzone(name, dzOptions, dzHandlers, (data) => {
-        let params = {
-          type: 'PATCH',
-        };
-        params[key] = data.file_id;
-
-        app.makeRequest(
-          this.urlRoot.replace(':id', this.model.id),
-          params
-        );
+        this._notifyServerAboutChanges.call(this, name, data)
       });
     },
 
@@ -207,11 +204,11 @@ module.exports = {
         paramName: name,
         params: dzParams,
         clickable: '.dropzone__' + name + ' span',
-        acceptedFiles: '*/*',
+        acceptedFiles: 'application/pdf',
       });
 
       let dzHandlers = _.extend({}, _dropzoneDefaultHandlers, {
-        success() {
+        success(data) {
           let mimetypeIcons = require('helpers/mimetypeIcons.js');
           let icon = mimetypeIcons[data[0].mime.split('/')[1]];
           $('.img-' + name).attr('src', '/img/icons/' + icon + '.png');
@@ -221,15 +218,7 @@ module.exports = {
       });
 
       this._initializeDropzone(name, dzOptions, dzHandlers, (data) => {
-        let params = {
-          type: 'PATCH',
-        };
-        params[key] = data.file_id;
-
-        app.makeRequest(
-          this.urlRoot.replace(':id', this.model.id),
-          params
-        );
+        this._notifyServerAboutChanges.call(this, name, data)
       });
     },
 
