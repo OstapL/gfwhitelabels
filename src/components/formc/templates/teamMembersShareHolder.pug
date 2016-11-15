@@ -11,6 +11,7 @@ include ../../../templates/fields_mixins.pug
 )
 
 section.formc-team-members-director.container.m-b-85
+  - var formcId = values.formc_id;
   +menu('formc', 'team-members-holder')
 
   //START RIGHT BLOCK
@@ -20,6 +21,7 @@ section.formc-team-members-director.container.m-b-85
     p.col-lg-12.m-b-2 No earlier than 120 days prior to the date of this offering, please list beneficial owners of 20% or more of issuer’s outstanding voting equity securities.  To calculate total voting power, include direct/indirect shares, include the right through the exercise of options/warrants/conversion, or if securities are held by a family member, through corporations or partnerships, co-trustee, etc. To calculate outstanding voting equity securities, assume all outstanding options are exercised and all outstanding convertible securities converted.
 
     form(action="").form-section
+      input(type="hidden" value=0 name="role")
       .col-xl-12
         +fieldTextLabel("first_name", _.extend({
           class1: 'col-xl-3 col-lg-12 text-lg-left text-xl-right ',
@@ -32,21 +34,23 @@ section.formc-team-members-director.container.m-b-85
         +fieldTextLabel("email", _.extend({
           class1: 'col-xl-3 col-lg-12 text-lg-left text-xl-right ',
           class2: 'col-xl-9 col-lg-12',
+          help_text: 'On this  team member’s E-mail we will send invitation, using which he has to confirm that really belongs to your company.',
           }, fields.email))
         .row.form-group
           .col-date
             label.col-xl-3.col-lg-12.text-xl-right.textlg-left Date of birth
+              span.color-red *
             .col-xl-4.col-lg-6.p-r-0
               +fieldDateDay("dob", _.extend({
-                class: 'col-xl-4 col-lg-4 col-xs-4 no-gutter p-l-0',
+                class: 'col-xl-4 col-lg-4 col-xs-4 p-l-0 m-d-p-r-5',
                 placeholder: 'MM',
               }, fields.dob))
               +fieldDateMonth("dob", _.extend({
-                class: 'col-xl-4 col-lg-4 col-xs-4 no-gutter p-l-0',
+                class: 'col-xl-4 col-lg-4 col-xs-4 p-r-0  m-d-p-l-5',
                 placeholder: 'DD',
               }, fields.dob))
               +fieldDateYear("dob", _.extend({
-                class: 'col-xl-4 col-lg-4 col-xs-4 no-gutter p-l-0',
+                class: 'col-xl-4 col-lg-4 col-xs-4 p-r-0 m-d-p-l-10',
                 placeholder: 'YYYY',
               }, fields.dob))
         +fieldTextLabel("number_of_shares", _.extend({

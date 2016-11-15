@@ -17,21 +17,23 @@ section.create-company-media.container.media-container
     h2.text-uppercase.dosis.text-lg-center.text-xs-center.dosis.m-t-0.m-b-3 Media
     form(data-method="PUT" action="").form-section
 
-      +fieldDropzone("header_image", {
+      +imageDropzone("header_image", {
         class1: 'col-xl-3 col-lg-12 text-xs-center text-xl-right',
         class2: 'col-xl-9 col-lg-12 text-xs-center p-sm-0',
         thumbSize: '255x153',
         default: '/img/default/255x153.png',
         text: 'Drop your photo here or click to upload',
-        icon: 'file-image-o'
+        icon: 'file-image-o',
+        label: 'Header Image'
         })
-      +fieldDropzone("list_image", {
+      +imageDropzone("list_image", {
         class1: 'col-xl-3 col-xs-12 text-xs-center text-xl-right',
         class2: 'col-xl-9 col-xs-12 text-xs-center p-sm-0 p-l-1',
         thumbSize: '255x153',
         default: '/img/default/255x153.png',
         text: 'Drop your photo here or click to upload',
-        icon: 'file-image-o'
+        icon: 'file-image-o',
+        label: 'Thumbnail Picture'
         })
       .row.m-b-2
         +fieldDropzone("gallery", {

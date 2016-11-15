@@ -39,7 +39,7 @@ section.formc.use_of_proceeds.create-company-media.container
             thead
               tr.color-grey.row-gray
                 td.w-50.p-l-r-20 Net Proceeds
-                  .pull-right.icon
+                  .pull-right.icon.showPopover(data-content="Minimum and maximum net proceeds is calculated automatically: <br> Net Proceeds = Total Proceeds - Sum (A+B+C)")
                     i.fa.fa-question-circle.m-r-0
                 td.w-25.text-lg-center.font-size-12.min-net-proceeds
                 td.w-25.text-lg-center.font-size-12.max-net-proceeds
@@ -48,7 +48,7 @@ section.formc.use_of_proceeds.create-company-media.container
             tbody
               tr.row-gray
                 td.w-50 Total Use of Net Proceeds
-                  .pull-right.icon
+                  .pull-right.icon.showPopover(data-content="Minimum and maximum total use of net proceeds is calculated automatically: <br>  Total Use of Net Proceeds = Sum (A+B+C)")
                     i.fa.fa-question-circle
                 td.w-25.text-lg-center.font-size-12.min-total-use
                 td.w-25.text-lg-center.font-size-12.max-total-use(data-content="<i class='fa fa-exclamation-circle'></i>Total Use of Net Proceeds must be equal to Net Proceeds." data-placement="right" data-toggle="popover" data-container="body")

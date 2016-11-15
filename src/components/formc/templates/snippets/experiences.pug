@@ -14,7 +14,8 @@ mixin row(value, index)
       .row
         .col-xl-6.col-lg-6.form-group
           .row
-            label.col-xl-6.col-lg-12.text-xl-right.text-lg-left Start Date of Service
+            label.col-xl-6.col-lg-12.text-xl-right.text-lg-left.m-b-0.p-t-0 Start Date of Service
+              span.color-red *
             .col-xl-6.col-lg-12
               div(id=name + '__' + index + '__' + 'start_date_of_service').row
                 +fieldNestedDateMonth(name, "start_date_of_service", value, index, {placeholder: 'MM', class: 'col-xl-6 col-lg-6 col-sm-6 col-xs-6 m-d-p-r-5'})
@@ -23,6 +24,7 @@ mixin row(value, index)
         .col-xl-6.col-lg-6.form-group
           .row
             label.col-xl-6.col-lg-12.text-xl-right.text-lg-left End Date of Service
+              span.color-red *
             .col-xl-6.col-lg-12
               div(id=name + '__' + index + '__' + 'end_date_of_service').row
                 +fieldNestedDateMonth(name, "end_date_of_service", value, index, {placeholder: 'MM', class: 'col-xl-6 col-lg-6 col-sm-6 col-xs-6 m-d-p-r-5'})
@@ -32,7 +34,7 @@ mixin run()
 
   if first_run
     .row
-      b.col-lg-12.m-t-2.m-b-3.m-t-3 Business experience for past three years: Please list your employers, titles and dates of positions held during the past three years with an indication of job responsibilities.
+      b.col-lg-12.m-t-2.m-b-1.m-t-3 Business experience for past three years: Please list your employers, titles and dates of positions held during the past three years with an indication of job responsibilities.
 
     div(class=(attr.row == 0 ? '' : 'row ') + name + '_block' + (attr.required == true ? ' required ' : ' ') + ' nested')
       div(class=(attr.row == 0 ? '' : 'row ') + name + '_container' + (attr.required == true ? ' required ' : ' ') + ' nested')

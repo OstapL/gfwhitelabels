@@ -6,8 +6,11 @@
   "scripts": {
     "start": "webpack-dev-server --config ./webpack.config.js",
     "build": "webpack -p --config ./webpack.config.production.js",
-    "analyzer": "./node_modules/webpack/bin/webpack.js --json | ./node_modules/webpack-bundle-size-analyzer/webpack-bundle-size-analyzer",
-    "test": "./node_modules/mocha/bin/mocha -r test/init.js"
+    "webpack_analyzer": "webpack --json | ./node_modules/webpack-bundle-size-analyzer/webpack-bundle-size-analyzer",
+    "lint": "jshint src/**/*.js",
+    "jscs": "jscs src/**/*.js",
+    "sass-lint": "sass-lint -c ./.sass-link.yml  '**/*.scss' -v -q",
+    "test": "mocha -r test/init.js"
   },
   "devDependencies": {
     "as-jqplot": "^1.0.8",
@@ -50,6 +53,7 @@
     "pug-cli": "^1.0.0-alpha6",
     "pug-loader": "^2.2.1",
     "resolve-url-loader": "^1.6.0",
+    "sass-lint": "^1.10.2",
     "sass-loader": "^4.0.0",
     "sinon": "^1.17.5",
     "style-loader": "^0.12.4",

@@ -17,7 +17,7 @@ section.formc.introduction.create-company-media.container
         p.m-b-1 This is a lengthy process and we will need a robust amount of information about your business, as required by law. Don’t worry, we’re here to help in any way we can! The process includes creating a company profile, submitting to a background check and ultimately launching your fundraising campaign.
         p.m-b-1 Much of the information you provide will be filed with the SEC. So, be very careful and precise in answering all questions. Give full and complete answers so that they are not misleading under the circumstances involved. Do not discuss any future performance or other anticipated event unless you have a reasonable basis to believe that it will actually occur within the foreseeable future. If any answer requiring significant information is materially inaccurate, incomplete or misleading, the Company, its management and principal shareholders may be liable to investors based on that information.
         p At the end, you’ll have the opportunity to review all material before submission, including the ability to have your attorney approve.
-        form(metod="post" action="").form-section
+        form(action="").form-section
           .certify-checkbox
             .form-group.required
               label
@@ -46,15 +46,19 @@ section.formc.introduction.create-company-media.container
                 label If Yes, Explain
               .col-lg-9
                 textarea(rows="3" name="failed_to_comply").form-control= values['failed_to_comply']
-          .expiration-block
+          .expiration-block(style=(values.is_paid == false ? '' :  "display: none"))
+            .row
+              .col-xl-12
+                .border-bottom.m-t-2.m-b-3
             .growthfountain-charges
-              p GrowthFountain charges $500 for Form C generation, background checks and escrow.
-              .form-group.row
+              p.m-b-1 GrowthFountain charges $500 for Form C generation, background checks and escrow. To authorize this charge and to enter into the Listing Agreement, please electronically sign below.
+              a(href="#").link-2 To review the Listing Agreement, click here
+              .form-group.row.m-t-2
                 .col-lg-3.text-lg-right
                   label Credit Card Number
                 .col-lg-9
                   .input-icon
-                    i.fa.fa-question-circle
+                    div.fa.fa-question-circle.showPopover(data-content="Privet Ostap")
                   input(type="text" data-stripe="number" id="card_number").form-control
                   img(src="/img/visa_logo_6.gif", alt="")
                   img(src="/img/mastercard_logo_5.gif", alt="")
@@ -63,37 +67,40 @@ section.formc.introduction.create-company-media.container
             
             div(id="expiration-block").expiration
               .form-group.row.m-b-0
-                .col-lg-3.text-lg-right
-                  label Expiration
-                .col-lg-4.date-input
-                  .col-lg-6.p-l-0
-                    input(type="text" placeholder="MM" data-stripe="exp_month" id="card_exp_month").form-control
-                  div(id="card_exp_date_year").col-lg-6.p-r-0
-                    input(type="text" placeholder="YYYY" data-stripe="exp_year" id="card_exp_year").form-control
-                .col-lg-2
-                  label CVV Code
-                .col-lg-3.p-l-0
+                .col-xl-7
+                  .col-lg-5.text-lg-right
+                    label Expiration
+                  .col-lg-7
+                    +fieldDateMonth("card_exp_month", _.extend({
+                    class: 'col-xl-6 p-l-0',
+                    }, fields.card_exp_month))
+                    +fieldDateYear("card_exp_date_year", _.extend({
+                    class: 'col-xl-6 p-r-0',
+                    placeholder: 'YYYY',
+                    }, fields.card_exp_date_year))
+                .col-xl-5.p-r-0
+                  .col-lg-5
+                    label CVV Code
+                  .col-lg-7.p-l-0
                     .input-icon
-                      i.fa.fa-question-circle
-                    input(type="text" data-stripe="cvc" id="card_cvc").form-control
-            .row
-              .col-lg-12.offset-lg-3
-                a(href="#").link-2 Contract for listing your campaign on GrowthFountain
+                      div.fa.fa-question-circle.showPopover(
+                      data-content="<p class='pb10'>For Visa, MasterCard and Discover (left), the <br> 3 digits on the <u>back</u> of your card.</p> <p class='pb10'>For American Express (right) the 4 digits on the <br> <u>front</u> of your card.</p><img class='m-r-1 m-l-1' src='http://localhost:7070/img/cart_pay_1.png' /> <img  src='http://localhost:7070/img/cart_pay_2.png' />")
+                    input(type="text" data-stripe="cvc" id="card_cvc" placeholder="CVV Code").form-control
+              .electronically-sign
+                .col-xl-10.offset-xl-1.m-t-3.investment
+                  .col-lg-12
+                    h3.m-t-0.text-lg-center.m-b-2 Electronically Sign
+                  .form-group.row
+                    +fieldText('full_name', _.extend({ 'id': 'full-name', 'placeholder': 'Type your name', 'class': 'col-xl-6', 'help_text': 'Type name (it signs on right)'}, fields.full_name))
+                    .col-xl-6
+                      .electronically
+                        span.by By:
+                        span.name
             .row.btn-pay
+              .col-lg-12.m-t-2
+                button#pay-btn.btn.btn-primary.text-uppercase Agree and Pay
+          .electronically-sign(style=(values.is_paid == true ? '' :  "display: none"))
+            .row
               .col-lg-12
-                button#pay-btn.btn.btn-primary.text-uppercase pay
-          .electronically-sign.collapse
-            .col-lg-9.offset-lg-3.m-t-2.investment
-              .col-lg-8
-                h3.m-t-0.text-lg-center.m-b-2 Electronically Sign
-              .row
-                +fieldText('company_name', _.extend({ 'id': 'company-name', 'placeholder': 'Company name', 'class': 'col-lg-8 form-group' }, fields.company_name))
-              .form-group.row
-                +fieldText('full_name', _.extend({ 'id': 'full-name', 'placeholder': 'Type your name', 'class': 'col-lg-4', 'help_text': 'Type name (it signs on right)'}, fields.full_name))
-                .col-lg-4
-                  .electronically
-                    span.by By:
-                    span.name
-            .col-lg-12
-              .btn-save.text-lg-right
-                button(type='submit').btn.btn-primary.text-uppercase save
+                .btn-save.text-lg-right.m-t-2
+                  button(type='submit').btn.btn-primary.text-uppercase save
