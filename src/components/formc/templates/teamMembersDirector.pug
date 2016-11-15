@@ -54,7 +54,7 @@ section.formc-team-members-director.container.m-b-85
                 class: 'col-xl-4 col-lg-4 col-xs-4 p-r-0 m-d-p-l-5',
               }, fields.dob))
               +fieldDateYear("dob", _.extend({
-                class: 'col-xl-4 col-lg-4 col-xs-4 p-r-0 ',
+                class: 'col-xl-4 col-lg-4 col-xs-4 p-r-0 m-d-p-l-10',
                 placeholder: 'YYYY',
               }, fields.dob))
         +fieldTextLabel("email", _.extend({
@@ -88,14 +88,13 @@ section.formc-team-members-director.container.m-b-85
               label.col-xl-6.col-lg-12.text-xl-right.text-lg-left.m-b-0.p-t-0 Board Service End Date
                 span.color-red *
               #board_service_end_date.col-xl-6.col-lg-12
-                .row
+                .row.showPopover(data-content="If your Board Service has a term, please input the end date.  Otherwise, leave blank")
                   +fieldDateMonth("board_service_end_date", _.extend({
                     class: 'col-xl-6 col-lg-6 col-sm-6 col-xs-6 m-d-p-r-5',
                     placeholder: 'MM',
                   }, fields.board_service_end_date))
                   +fieldDateYear("board_service_end_date", _.extend({
                     class: 'col-xl-6 col-lg-6 col-sm-6 col-xs-6 m-d-p-l-5',
-                    help_text: 'If your Board Service has a term, please input the end date.  Otherwise, leave blank'
                   }, fields.board_service_end_date))
 
 
