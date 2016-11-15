@@ -18,7 +18,7 @@ module.exports = {
 
     formatPercentage(percentage) {
         let result = Number(percentage.replace(/%/g, ''));
-        if (!(result && (0 <= result && result <= 100))) return percentage;
+        if (!(result && 0 <= result)) return percentage;
         return result + '%';
     },
 

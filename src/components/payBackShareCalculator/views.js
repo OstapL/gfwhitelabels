@@ -50,7 +50,7 @@ module.exports = {
             let target = e.target,
                 value = e.target.value.replace('$', '');
 
-            while(value && !value.match(/^[1-9]?\d(\.\d{0,2})?$/)){
+            while(value && !value.match(/^(0|[1-9]\d*)(\.\d{0,2})?$/)){
                 value = value.substring(0, value.length - 1);
             }
             e.target.value = value;
