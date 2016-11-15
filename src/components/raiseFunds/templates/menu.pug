@@ -1,10 +1,11 @@
 - 'use strict';
 mixin getCompanyUrl(id, section, currentStep, step, name)
-    - let prefix = '/' + section + '/';
+    - var prefix = '/' + section + '/';
     if id || currentStep == step
         a(
           href='/' + section + '/' + id + '/' + step
-          class="list-group-item list-group-item-action " + (currentStep == step ? 'active' : '')
+          class="list-group-item list-group-item-action " + (currentStep == step ? 'active' : '') + 
+          ((section == 'formc' && values.is_paid == false ) ? 'disabled' : '')
         ) #{ name }
             if currentStep == step
                 .icon-check
@@ -20,7 +21,8 @@ mixin getRiskFactorsItem(id, section, currentStep, step, name)
   if id || currentStep == step
       a(
         href=prefix + id + "/" + step
-        class="list-group-item list-group-item-action " + (currentStep == step ? 'active' : '')
+        class="list-group-item list-group-item-action " + (currentStep == step ? 'active' : '') +
+          ((section == 'formc' && values.is_paid == false ) ? 'disabled' : '')
       ) #{ name }
           if currentStep == step
               .icon-check
@@ -88,14 +90,12 @@ mixin menu(currentSection, currentStep)
                 span.pull-right
                   //- i.fa.fa-angle-left
                   i(class="arrow fa " + (currentSection == 'formc' ? 'fa-angle-down' : 'fa-angle-left'))
-            //- #form_c(role="tabpanel").panel-collapse.collapse
             #form_c(role="tabpanel" class="panel-collapse collapse" + (currentSection == 'formc' ? ' in' : ''))
                 .list-group
                     +getCompanyUrl(formcId || values.id, 'formc', currentStep, 'introduction', 'Introduction')
                     +getCompanyUrl(formcId || values.id, 'formc', currentStep, 'team-members', 'Team Members')
                     +getCompanyUrl(formcId || values.id, 'formc', currentStep, 'related-parties', 'Related Parties')
                     +getCompanyUrl(formcId || values.id, 'formc', currentStep, 'use-of-proceeds', 'Use of Proceeds')
-                    //- +getCompanyUrl(formcId || values.id, 'formc', currentStep, 'risk-factors-instruction', 'Risk Factors')
                     .panel.panel-default.sub-menu
                       - let inRiskFactors = currentStep.startsWith('risk-factors');
                       a(data-toggle="collapse"

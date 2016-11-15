@@ -17,7 +17,7 @@ section.formc-team-members-director.container.m-b-85
   .col-xl-8.col-lg-8.col-md-12.team-member-formc
     h2.text-uppercase.text-lg-center.text-xs-center.m-t-0.dosis.mb50 Team members (officer)
     form(metod="post" action="").form-section
-      input(type="hidden" value=2 name="role")
+      input(name="role" type="hidden" value=2)
       .col-xl-12
         +fieldTextLabel("first_name", _.extend({
           class1: 'col-xl-3 col-lg-12 text-lg-left text-xl-right ',
@@ -34,7 +34,8 @@ section.formc-team-members-director.container.m-b-85
         .row.form-group
           .col-date
             label.col-xl-3.col-lg-12.text-xl-right.textlg-left Date of birth
-            .col-xl-4.col-lg-6.p-r-0
+              span.color-red *
+            #dob.col-xl-4.col-lg-6.p-r-0
               +fieldDateDay("dob", _.extend({
                 class: 'col-xl-4 col-lg-4 col-xs-4 no-gutter p-l-0',
                 placeholder: 'MM',
@@ -50,37 +51,39 @@ section.formc-team-members-director.container.m-b-85
         +fieldTextLabel("responsibilities", _.extend({
           class1: 'col-xl-3 col-lg-12 text-lg-left text-xl-right ',
           class2: 'col-xl-9 col-lg-12',
-          label: 'Responsibilities',
-          }, fields))
+          label: '',
+          }, fields.responsibilities))
         .filter.p-t-0.p-b-0.m-b-2
           .one_drop.m-t-2
             .row.form-group
               label.col-xl-3.col-lg-12.text-lg-left.text-xl-right Title
+                span.color-red *
               .col-xl-9.col-lg-12
-                select( multiple="true" title="Title").form-control.selectpicker.w-100.team-select
-                  option(selected) CEO/President
-                  option Principal Financial Officer/Treasurer
-                  option Vice President
-                  option Secretary
-                  option Controller/Principal Accounting Officer
+                select(name="title" multiple="true" title="Title").form-control.selectpicker.w-100.team-select
+                  option(value=1 selected=(values.title == 1) ? true : false ) CEO/President
+                  option(value=2 selected=(values.title == 2) ? true : false ) Principal Financial Officer/Treasurer
+                  option(value=3 selected=(values.title == 3) ? true : false ) Vice President
+                  option(value=4 selected=(values.title == 4) ? true : false ) Secretary
+                  option(value=5 selected=(values.title == 5) ? true : false ) Controller/Principal Accounting Officer
         .row
           .col-xl-6.col-lg-6
             .row
               label.col-xl-6.col-lg-12.text-xl-right.text-lg-left Start Date
-              #board_service_start_date.col-xl-6.col-lg-12
-                .row
-                  +fieldDateMonth("employer_start_date", _.extend({
+                span.color-red *
+              .col-xl-6.col-lg-12
+                #start_date.row
+                  +fieldDateMonth("start_date", _.extend({
                     class: 'col-xl-6 col-lg-6 col-sm-6 col-xs-6 m-d-p-r-5',
                     placeholder: 'MM',
-                    name: 'employer_start_date',
-                    label: 'Employer Start Date',
-                  }, fields.board_service_start_date))
-                  +fieldDateYear("board_service_start_date", _.extend({
+                    name: 'start_date',
+                    label: 'Start Date',
+                  }, fields.start_date))
+                  +fieldDateYear("start_date", _.extend({
                     class: 'col-xl-6 col-lg-6 col-sm-6 col-xs-6 m-d-p-l-5',
                     placeholder: 'YYYY',
-                    name: 'employer_start_date',
-                    label: 'Employer Start Date',
-                  }, fields.board_service_start_date)) 
+                    name: 'start_date',
+                    label: 'Start Date',
+                  }, fields.start_date)) 
         
         .border-bottom.m-t-3.m-b-3
         |!{ templates.positions }

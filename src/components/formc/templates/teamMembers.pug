@@ -10,6 +10,19 @@ include ../../raiseFunds/templates/menu.pug
   ['team members', ''],
   ]
 )
+
+mixin isInvited(data)
+  if data.is_invited == true
+    td.text-xs-center
+      span.confirmed
+        i.fa.fa-check
+        | Confirmed 
+  else
+    td.text-xs-center
+      a(href="#").link-3.invite
+        i.fa.fa-envelope-o 
+        | Invite
+
 section.create-company-team-add.container
   +menu('formc', 'team-members')
 
@@ -84,64 +97,42 @@ section.create-company-team-add.container
                 .warning-block.warning-team-add.team-member-no-border.text-lg-left.m-b-0
                   i.fa.fa-info-circle 
                   span.warning-text First of all please identify the Officers in your company responsible for the following 3 roles. Please note that, if necessary, the same person may be identified with multiple titles.
-            tr
-              td CEO/President
-              td.text-xs-center Kenneth Staut
-              td.text-xs-center
-                span.confirmed
-                  i.fa.fa-check
-                  | Confirmed 
-              td.text-xl-center
-                a(href="/formc/" + values.id + "/team-members/" +  '/' + v.user_id).link-1
-                  i.fa.fa-pencil-square-o
-              td.text-xl-center
-                a(href="#" data-id=v.uuid data-role="").link-1.delete-member
-                  i.fa.fa-times
-            tr
-              td Principal Financial Officer/Treasurer
-              td.text-xs-center Michael Jenkins
-              td.text-xs-center
-                a(href="#").link-3.invite
-                  i.fa.fa-envelope-o 
-                  | Invite
-              td.text-xl-center
-                a(href="/formc/" + values.id + "/team-members/" +  '/' + v.user_id).link-1
-                  i.fa.fa-pencil-square-o
-              td.text-xl-center
-                a(href="#" data-id=v.uuid data-role="").link-1.delete-member
-                  i.fa.fa-times
-            //PLEASE IDENTIFY
-            tr
-              td Controller/Principal Accounting Officer
-              td.text-xs-center
-                span.identify Please Identify
-              td.text-xs-center
-                hr
-              td.text-xl-center
-                a(href="/formc/" + values.id + "/team-members/" + roles[v.role] + '/' + v.user_id).link-1
-                  i.fa.fa-pencil-square-o
-              td.text-xl-center
-                a(href="#" data-id=v.uuid data-role=roles[v.role]).link-1.delete-member
-                  i.fa.fa-times
+            - var requiredRoles = { 1: 'CEO/President', 2: 'Principal Financial Officer/Treasurer', 5: 'Controller/Principal Accounting Officer' };
+            each v,k in requiredRoles
+              - var person = values.team_members.filter((el) => { return el.role[0] == v})
+              if person.length
+                - person = person[0];
+                tr
+                  td #{ v } 
+                  td.text-xs-center #{ person.first_name + ' ' + person.last_name }
+                  +isInvited(person)
+                  td.text-xl-center
+                    a(href="/formc/" + values.id + "/team-members/" +  '/' + person.user_id).link-1
+                      i.fa.fa-pencil-square-o
+                  td.text-xl-center
+                    a(href="#" data-id=person.uuid data-role=roles[k]).link-1.delete-member
+                      i.fa.fa-times
+              else
+                tr
+                  td #{ v }
+                  td.text-xs-center
+                    span.identify Please Identify
+                  td.text-xs-center
+                    hr
+                  td.text-xl-center &nbsp;
+                  td.text-xl-center &nbsp;
             each v,k in values.team_members
-              tr
-                td #{ roles[v.role] }
-                td.text-xs-center #{ v.first_name + ' ' + v.last_name }
-                if v.is_invited == true
-                  span.confirmed
-                    i.fa.fa-check
-                    | Confirmed 
-                else
-                  td.text-xs-center.color-red 
-                    a(href="#").link-3.invite
-                      i.fa.fa-envelope-o 
-                      | Invite
-                td.text-xl-center
-                  a(href="/formc/" + values.id + "/team-members/" + roles[v.role] + '/' + v.user_id).link-1
-                    i.fa.fa-pencil-square-o
-                td.text-xl-center
-                  a(href="#" data-id=v.uuid data-role=roles[v.role]).link-1.delete-member
-                    i.fa.fa-times
+              if v.role == -1
+                tr
+                  td #{ roles[k] }
+                  td.text-xs-center #{ v.first_name + ' ' + v.last_name }
+                  +isInvited(v)
+                  td.text-xl-center
+                    a(href="/formc/" + values.id + "/team-members/" + roles[v.role] + '/' + v.user_id).link-1
+                      i.fa.fa-pencil-square-o
+                  td.text-xl-center
+                    a(href="#" data-id=v.uuid data-role=roles[v.role]).link-1.delete-member
+                      i.fa.fa-times
                 
 
       div(style="display: " +  (values.team_members.length >= 1 ? 'block' : 'none')).col-lg-12.pull-lg-right.p-r-0.m-t-3

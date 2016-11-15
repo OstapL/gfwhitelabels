@@ -49,7 +49,7 @@ module.exports = {
 
     events: _.extend({
       'submit form': 'submit',
-      'keyup .electronically-sign .user-name': 'changeSign',
+      'keyup #full-name': 'changeSign',
       'click #pay-btn': 'stripeSubmit',
     }, menuHelper.events, yesNoHelper.events),
 
@@ -320,6 +320,7 @@ module.exports = {
         dob: 'Date of birth',
         principal_occupation: 'Principal Occupation',
         employer_principal_businesss: 'Employer and Principal Business',
+        responsibilities: 'Responsibilities',
         experiences: {
           employer: 'Employer',
           employer_principal: 'Employer Principal',
