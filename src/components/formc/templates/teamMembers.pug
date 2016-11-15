@@ -33,12 +33,9 @@ section.create-company-team-add.container
       .warning-block.warning-team-add.text-lg-left
         i.fa.fa-info-circle 
         span.warning-text Please enter all Officers, Directors and 20% Voting Shareholders.
-          br
-          |  We are required by law to run background checks on all of these individuals.  We will email them separately to collect the information required to run these checks - and you'll see the status on your Issuer Dashboard.
-          br
-          |  OFFICER means:  president, vice president, secretary, treasurer or principal financial officer, comptroller or principal accounting officer, and any person routinely performing similar functions.
-          br
-          |  20% VOTING SHAREHOLDER means: no earlier than 120 days prior to the date of this offering, please list beneficial owners of 20% or more of issuer’s outstanding voting equity securities.
+          p.pb10  We are required by law to run background checks on all of these individuals.  We will email them separately to collect the information required to run these checks - and you'll see the status on your Issuer Dashboard.
+          p.pb10 OFFICER means:  president, vice president, secretary, treasurer or principal financial officer, comptroller or principal accounting officer, and any person routinely performing similar functions.
+          | 20% VOTING SHAREHOLDER means: no earlier than 120 days prior to the date of this offering, please list beneficial owners of 20% or more of issuer’s outstanding voting equity securities.
 
     form(action="").form-section
       .col-lg-12.m-t-1.m-b-2
@@ -78,11 +75,8 @@ section.create-company-team-add.container
               a(href="/formc/" + values.id + "/team-members/" + roles[v.role] + '/' + v.user_id).link-1
                 i.fa.fa-pencil-square-o
           - counter ++
-      .col-lg-12
-        .border-bottom.m-t-3.m-b-3
-      .col-lg-12.m-b-1
-        p Please identify the Officers in your company responsible for the following roles. Please note that, if necessary, the same person may be identified with multiple titles
-      .col-lg-12.table-responsive
+
+      .col-lg-12.table-responsive.m-t-2
         - var v = {};
         table.table.table-bordered.m-b-0.team-member-table
           thead
@@ -137,5 +131,5 @@ section.create-company-team-add.container
 
       div(style="display: " +  (values.team_members.length >= 1 ? 'block' : 'none')).col-lg-12.pull-lg-right.p-r-0.m-t-3
 
-      .col-lg-12.text-md-center.text-sm-center.text-xs-center
+      .col-lg-12.text-md-center.text-sm-center.text-xs-center.m-t-3
         button(type="submit").btn.btn-primary.text-uppercase.pull-lg-right Save
