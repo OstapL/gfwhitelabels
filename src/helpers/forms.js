@@ -60,7 +60,6 @@ module.exports = {
     api.fixDateFields.call(this, this.fields, data);
 
     // if view already have some data - extend that info
-    debugger;
     if(this.hasOwnProperty('model')) {
       _.extend(this.model, data);
       data = _.extend({}, this.model)
