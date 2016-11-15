@@ -49,15 +49,15 @@ section.formc-team-members-director.container.m-b-85
               span.color-red *
             .col-xl-4.col-lg-6.p-r-0
               +fieldDateDay("dob", _.extend({
-                class: 'col-xl-4 col-lg-4 col-xs-4 no-gutter p-l-0',
+                class: 'col-xl-4 col-lg-4 col-xs-4 p-l-0 m-d-p-r-5',
                 placeholder: 'MM',
               }, fields.dob))
               +fieldDateMonth("dob", _.extend({
-                class: 'col-xl-4 col-lg-4 col-xs-4 no-gutter p-l-0',
+                class: 'col-xl-4 col-lg-4 col-xs-4 p-r-0  m-d-p-l-5',
                 placeholder: 'DD',
               }, fields.dob))
               +fieldDateYear("dob", _.extend({
-                class: 'col-xl-4 col-lg-4 col-xs-4 no-gutter p-l-0',
+                class: 'col-xl-4 col-lg-4 col-xs-4 p-r-0',
                 placeholder: 'YYYY',
               }, fields.dob))
         +fieldTextLabel("email", _.extend({

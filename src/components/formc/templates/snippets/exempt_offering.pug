@@ -10,7 +10,20 @@ mixin row(value, index)
 
       +fieldNestedTextLabel(name, "amount_sold", value, index, {class1:'col-xl-3 col-lg-12 text-lg-left text-xl-right', class2: 'col-xl-9 col-lg-12'})
       +fieldNestedTextLabel(name, "exemption_relied_upon", value, index, {class1:'col-xl-3 col-lg-12 text-lg-left text-xl-right m-b-0 p-t-0', class2: 'col-xl-9 col-lg-12'})
-      +fieldNestedTextLabel(name, "offering_date", value, index, {class1:'col-xl-3 col-lg-12 text-lg-left text-xl-right m-b-0 p-t-0', class2: 'col-xl-9 col-lg-12'})
+      .row.form-group
+        .col-date#offering_date
+          label.col-xl-3.col-lg-12.text-xl-right.textlg-left Maturity Date
+            span.color-red *
+          .col-xl-4.col-lg-6.p-r-0
+            +fieldDateMonth("offering_date", _.extend({
+              class: 'col-xl-4 col-lg-4 col-xs-4 p-l-0 m-d-p-r-5',
+            }, fields))
+            +fieldDateDay("offering_date", _.extend({
+              class: 'col-xl-4 col-lg-4 col-xs-4 p-r-0 m-d-p-l-5',
+            }, fields))
+            +fieldDateYear("offering_date", _.extend({
+              class: 'col-xl-4 col-lg-4 col-xs-4 p-r-0',
+            }, fields))
       +fieldNestedTextLabel(name, "securities_offered", value, index, {class1:'col-xl-3 col-lg-12 text-lg-left text-xl-right', class2: 'col-xl-9 col-lg-12'})
       +fieldNestedTextLabel(name, "use_of_proceeds", value, index, {class1:'col-xl-3 col-lg-12 text-lg-left text-xl-right', class2: 'col-xl-9 col-lg-12'})
 

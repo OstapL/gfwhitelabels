@@ -175,34 +175,66 @@ mixin fieldDateDay(name, attr)
   +prepareField(name, attr)
   if attr.type == null
     - attr.type = 'dateday'
-
-  div(class=attr.class + ' ' + (attr.id || name) + (attr.required == true ? ' required ' : ' ') + ' ' + attr.type).date-input
-    - var value = attr.value ? attr.value.split('-') : values && values[name] ? values[name].split('-') : []
-    input(
+  div(class=attr.class + ' ' + (attr.id || name) + (attr.required == true ? ' required ' : ' ') + ' ' + attr.type)
+    select(
         id=attr.id || name + '__day'
         name=(attr.name || name) + '__day'
-        placeholder=(attr.placeholder ? attr.placeholder : "DD")
-        type='text'
-        maxlength=2
-        value=value[1]
-      ).form-control
-
+    ).custom-select.w-100
+      option(value="") DD
+      option(value = 1 selected = (attr.value == '1') ? true : false) 1
+      option(value = 2 selected = (attr.value == '2') ? true : false) 2
+      option(value = 3 selected = (attr.value == '3') ? true : false) 3
+      option(value = 4 selected = (attr.value == '4') ? true : false) 4
+      option(value = 5 selected = (attr.value == '5') ? true : false) 5
+      option(value = 6 selected = (attr.value == '6') ? true : false) 6
+      option(value = 7 selected = (attr.value == '7') ? true : false) 7
+      option(value = 8 selected = (attr.value == '8') ? true : false) 8
+      option(value = 9 selected = (attr.value == '9') ? true : false) 9
+      option(value = 10 selected = (attr.value == '10') ? true : false) 10
+      option(value = 11 selected = (attr.value == '11') ? true : false) 11
+      option(value = 13 selected = (attr.value == '13') ? true : false) 13
+      option(value = 14 selected = (attr.value == '14') ? true : false) 14
+      option(value = 15 selected = (attr.value == '15') ? true : false) 15
+      option(value = 16 selected = (attr.value == '16') ? true : false) 16
+      option(value = 17 selected = (attr.value == '17') ? true : false) 17
+      option(value = 18 selected = (attr.value == '18') ? true : false) 18
+      option(value = 19 selected = (attr.value == '19') ? true : false) 19
+      option(value = 20 selected = (attr.value == '20') ? true : false) 20
+      option(value = 21 selected = (attr.value == '21') ? true : false) 21
+      option(value = 22 selected = (attr.value == '22') ? true : false) 22
+      option(value = 23 selected = (attr.value == '23') ? true : false) 23
+      option(value = 24 selected = (attr.value == '24') ? true : false) 24
+      option(value = 25 selected = (attr.value == '25') ? true : false) 25
+      option(value = 26 selected = (attr.value == '26') ? true : false) 26
+      option(value = 27 selected = (attr.value == '27') ? true : false) 27
+      option(value = 28 selected = (attr.value == '28') ? true : false) 28
+      option(value = 29 selected = (attr.value == '29') ? true : false) 29
+      option(value = 30 selected = (attr.value == '30') ? true : false) 30
+      option(value = 31 selected = (attr.value == '31') ? true : false) 31
 
 mixin fieldDateMonth(name, attr)
   +prepareField(name, attr)
   if attr.type == null
     - attr.type = 'datemonth'
 
-  div(class=attr.class + ' ' + (attr.id || name) + (attr.required == true ? ' required ' : ' ') + ' ' + attr.type).date-input
-    - var value = attr.value ? attr.value.split('-') : values && values[name] ? values[name].split('-') : []
-    input(
+  div(class=attr.class + ' ' + (attr.id || name) + (attr.required == true ? ' required ' : ' ') + ' ' + attr.type)
+    select(
         id=attr.id || name + '__month'
         name=(attr.name || name) + '__month'
-        placeholder=(attr.placeholder ? attr.placeholder : "MM")
-        type='text'
-        maxlength=2
-        value=value[1]
-      ).form-control
+    ).custom-select.w-100
+      option(value="") MM
+      option(value = "01" selected = (attr.value == '01') ? true : false) Jan
+      option(value = "02" selected = (attr.value == '02') ? true : false) Feb
+      option(value = "03" selected = (attr.value == '03') ? true : false) Mar
+      option(value = "04" selected = (attr.value == '04') ? true : false) Apr
+      option(value = "05" selected = (attr.value == '05') ? true : false) May
+      option(value = "06" selected = (attr.value == '06') ? true : false) Jun
+      option(value = "07" selected = (attr.value == '07') ? true : false) Jul
+      option(value = "08" selected = (attr.value == '08') ? true : false) Aug
+      option(value = "09" selected = (attr.value == '09') ? true : false) Sep
+      option(value = "10" selected = (attr.value == '10') ? true : false) Oct
+      option(value = "11" selected = (attr.value == '11') ? true : false) Nov
+      option(value = "12" selected = (attr.value == '12') ? true : false) Dec
 
 
 mixin fieldDateYear(name, attr)
