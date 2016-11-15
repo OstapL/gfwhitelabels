@@ -34,7 +34,7 @@ module.exports = {
       'click .tabs-scroll .nav .nav-link': 'smoothScroll',
       'hide.bs.collapse .panel': 'onCollapse',
       'show.bs.collapse .panel': 'onCollapse',
-      'click .email-share': 'sharWithEmail',
+      'click .email-share': 'shareWithEmail',
       'click .linkedin-share': 'shareOnLinkedin',
       'click .facebook-share': 'shareOnFacebook',
       'click .twitter-share': 'shareOnTwitter',
@@ -177,10 +177,10 @@ module.exports = {
       });
     },
 
-    sharWithEmail (e) {
+    shareWithEmail (e) {
       event.preventDefault();
       // Check out COMPANY NAME's fundraise on GrowthFountain
-      let companyName = this.model.company.name;
+      let companyName = this.model.name;
       let text = "Check out " + companyName + "'s fundraise on GrowthFountain";
       window.open("mailto:?subject=" + text + "&body=" + text + "%0D%0A" + window.location.href);
     },
@@ -190,18 +190,18 @@ module.exports = {
       FB.ui({
         method: 'share',
         href: window.location.href,
-        caption: this.model.company.tagline,
-        description: this.model.company.description,
-        title: this.model.company.name,
-        picture: (this.model.header_image_data ? this.model.header_image_data.url : null),
+        caption: this.model.tagline,
+        description: this.model.description,
+        title: this.model.name,
+        picture: (this.model.campaign.header_image_data.url ? this.model.campaign.header_image_data.url : null),
       }, function(response){});
     },
 
     shareOnLinkedin(event) {
       event.preventDefault();
       window.open(encodeURI('https://www.linkedin.com/shareArticle?mini=true&url=' + window.location.href +
-            '&title=' + this.model.company.name +
-            '&summary=' + this.model.company.description +
+            '&title=' + this.model.name +
+            '&summary=' + this.model.description +
             '&source=Growth Fountain'),'Growth Fountain Campaingn','width=605,height=545');
     },
 
