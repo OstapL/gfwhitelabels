@@ -56,13 +56,14 @@ section.formc-team-members-director.container.m-b-85
                 placeholder: 'DD',
               }, fields.dob))
               +fieldDateYear("dob", _.extend({
-                class: 'col-xl-4 col-lg-4 col-xs-4 p-r-0',
+                class: 'col-xl-4 col-lg-4 col-xs-4 p-r-0 ',
                 placeholder: 'YYYY',
               }, fields.dob))
         +fieldTextLabel("email", _.extend({
           class1: 'col-xl-3 col-lg-12 text-lg-left text-xl-right ',
           class2: 'col-xl-9 col-lg-12',
           label: 'Email Address',
+          help_text: 'On this  team member’s E-mail we will send invitation, using which he has to confirm that really belongs to your company.',
           placeholder: 'Email Address',
           }, fields.email))
         .row
@@ -96,7 +97,7 @@ section.formc-team-members-director.container.m-b-85
                   }, fields.board_service_end_date))
                   +fieldDateYear("board_service_end_date", _.extend({
                     class: 'col-xl-6 col-lg-6 col-sm-6 col-xs-6 m-d-p-l-5',
-                    placeholder: 'YYYY',
+                    help_text: 'If your Board Service has a term, please input the end date.  Otherwise, leave blank'
                   }, fields.board_service_end_date))
 
 
