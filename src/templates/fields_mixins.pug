@@ -179,7 +179,7 @@ mixin fieldDateDay(name, attr)
     select(
         id=attr.id || name + '__day'
         name=(attr.name || name) + '__day'
-    ).custom-select.w-
+    ).custom-select.w-100
       option(value="") DD
       option(value = 1 selected = (attr.value == '1') ? true : false) 1
       option(value = 2 selected = (attr.value == '2') ? true : false) 2
