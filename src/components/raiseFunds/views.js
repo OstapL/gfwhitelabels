@@ -234,7 +234,7 @@ module.exports = {
       },
 
       getSuccessUrl(data) {
-        return '/campaign/' + data.id + '/media';
+        return '/campaign/' + (data.id ? data.id : this.model.id)  + '/media';
       },
 
       initialize(options) {
@@ -309,7 +309,7 @@ module.exports = {
         'click .submit_form': submitCampaign,
         'click .onPreview': onPreviewAction,
       }, leavingConfirmationHelper.events, menuHelper.events, addSectionHelper.events),
-      urlRoot: Urls['campaign-list']() + '/media',
+      urlRoot: raiseCapitalUrl + '/campaign/:id/media',
 
       appendHttpsIfNecessary(e) {
         appendHttpIfNecessary(e, true);
@@ -334,7 +334,7 @@ module.exports = {
       },
 
       getSuccessUrl(data) {
-        return '/campaign/team-members/' + data.id;
+        return '/campaign/' + (data.id ? data.id : this.model.id) + '/team-members';
       },
 
       initialize(options) {
@@ -865,7 +865,7 @@ module.exports = {
       },
 
       getSuccessUrl(data) {
-        return '/campaign/perks/' + data.id;
+        return '/campaign/' + data.id + '/perks';
       },
 
       initialize(options) {
