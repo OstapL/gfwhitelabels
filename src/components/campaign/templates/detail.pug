@@ -116,7 +116,6 @@ section.campaigndetail
       h1.text-xs-center.text-lg-left #{ values.tagline }
       .row.mt20
         .col-lg-4.col-xs-6
-          //- a(href="").link-1
           .sity-detail
             i.fa.fa-map-marker
             |  #{ values.city }, #{ values.state }
@@ -143,7 +142,6 @@ section.campaigndetail
         //- span Less than 20% Funded
         span Less than #{ percentage_raised }% Funded
         span.pull-right Committed 
-          //- span.committed $15,000
           span.committed #{ formatHelper.formatPrice(values.campaign.amount_raised)}
         .clear
         progress(value=percentage_raised max="100").progress
@@ -204,7 +202,6 @@ section
         h2#about.dosis.text-uppercase.text-lg-center.text-xs-center.campaign-subheading About #{ values.name }
         p #{ values.description }
 
-        //- h3.our.text-lg-center Why You Should Invest
         h2.dosis.our.text-uppercase.text-lg-center.text-xs-center.campaign-subheading Why You Should Invest
         p #{ values.pitch }
       
@@ -287,11 +284,9 @@ section
                   h3.card-text.text-lg-center Title for Optional Video 3
 
       .col-lg-12
-        //- h3.our.text-lg-center Our Edge
         h2.dosis.our.text-uppercase.text-lg-center.text-xs-center.campaign-subheading How We Intend to Make Money
         p #{ values.campaign.intended_use_of_proceeds }
 
-        //- h3.text-lg-center Why We are Raising Capital, and What We’ll Do with It
         h2.dosis.text-uppercase.text-lg-center.text-xs-center.campaign-subheading Why We are Raising Capital, and What We’ll Do with It
         p #{ values.campaign.business_model }
 
@@ -330,7 +325,6 @@ section
                           if v.growup && v.state
                             i.fa.fa-home.p-l-0
                             |  #{v.growup}, #{v.state}
-                          //- a(href="#").link-1.pull-right
                         span.pull-right.color-grey
                           if v.college
                             i.fa.fa-graduation-cap
@@ -474,7 +468,6 @@ section
     .container
       .row
         h2#overview.col-lg-12.dosis.text-uppercase.text-lg-center.text-xs-center.campaign-subheading overview and terms
-        //- h3.col-lg-12.text-lg-center Fundraising Description
         h3.text-lg-center.text-xs-center.campaign-subheading Fundraising Description
         .col-xl-8.offset-xl-2.col-lg-10.offset-lg-1.col-md-12.offset-md-0.fundraising
           .jumbotron.jumbotron-fluid.text-xs-center.text-xl-left
