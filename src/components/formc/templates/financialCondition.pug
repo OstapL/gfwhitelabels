@@ -90,26 +90,26 @@ section.formc-team-members-director.container.m-b-85
             class2: 'col-xl-12',
           }, fields.sold_securities_amount))
         .img-ppt
-          +fileDropzone("fiscal_recent_file_id", _.extend({
+          +fileDropzone("fiscal_recent_group_id", _.extend({
             class1: 'col-xl-3 col-lg-12 text-xl-right text-lg-left',
             class2: 'col-xl-9 col-lg-12 p-l-1 p-r-1',
             text: 'Drop your PDF or DOC here or click to upload',
             icon: 'file',
-            data: values.fiscal_recent_file_data[0],
+            data: values.fiscal_recent_group_data,
             label: "Upload financials for most recent fiscal year",
             default: '/img/icons/file.png',
-          }, fields.fiscal_recent_file_data))
+          }, fields.fiscal_recent_group_id))
 
         .img-ppt
-          +fileDropzone("fiscal_prior_file_id", _.extend({
+          +fileDropzone("fiscal_prior_group_id", _.extend({
             class1: 'col-xl-3 col-lg-12 text-xl-right text-lg-left',
             class2: 'col-xl-9 col-lg-12 p-l-1 p-r-1',
             text: 'Drop your PDF or DOC here or click to upload',
             icon: 'file',
-            data: values.fiscal_prior_file_data[0],
+            data: values.fiscal_prior_group_data,
             label: "Upload financials for prior fiscal year",
             default: '/img/icons/file.png',
-          }, fields.fiscal_prior_file_data))
+          }, fields.fiscal_prior_group_id))
 
       |!{ templates.sold_securities_data }
       .col-lg-12.m-t-2

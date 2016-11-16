@@ -120,9 +120,6 @@ module.exports = {
     },
 
     _notifyServerAboutChanges(name, data) {
-      const cropper = require('helpers/cropHelper.js');
-      cropper.showCropper(data[0].urls[0]);
-
       // let params = {
       //   type: 'PATCH',
       //   [name]: data[0].id,
@@ -188,6 +185,10 @@ module.exports = {
           $('.img-' + name).attr('src', data.url);
           $('.a-' + name).attr('href', data.origin_url).html(data.name);
           $('#' + name).val(data.file_id);
+
+          const cropperHelper = require('helpers/cropHelper.js');
+          cropperHelper.showCropper(data[0].urls[0]);
+
         }
       });
 
@@ -200,7 +201,7 @@ module.exports = {
       let dzParams = {
         folder: name,
         file_name: name,
-        // rename: '',
+        group_id: this.model[name],
       };
 
       let dzOptions = _.extend({}, _dropzoneDefaults, {

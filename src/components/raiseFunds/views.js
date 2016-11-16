@@ -956,7 +956,7 @@ module.exports = {
           $('.security_type_list').hide();
           $('.security_type_1').show();
         }        
-
+        $('#description_determine').parent().parent().hide();
         return this;
       },
     }, leavingConfirmationHelper.methods, menuHelper.methods, dropzoneHelpers.methods, addSectionHelper.methods)),
