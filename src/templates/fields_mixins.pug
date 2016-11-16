@@ -269,7 +269,7 @@ mixin fieldDateYear(name, attr)
 
 mixin fileDropzone(name, attr)
     - var icon = attr.type
-    if attr.hasOwnProperty('data') == false
+    if attr.hasOwnProperty('data') == false || attr.data == null
       - attr.data = {};
     if attr.data.hasOwnProperty('urls') == false
       - attr.data.urls = [];
@@ -300,6 +300,43 @@ mixin fileDropzone(name, attr)
               .col-xl-12
                 img(src='/img/icons/' + icon + '.png' alt=attr.label class="img-file img-" + name)
               a(class=("a-" + name) href=attr.data.urls[0]) #{ attr.data.name }
+
+
+mixin fileFolderDropzone(name, attr)
+    - var icon = attr.type
+    if attr.hasOwnProperty('data') == false || Array.isArray(attr.data) == false
+      - attr.data = [];
+    - mimetypeIcons = require('helpers/mimetypeIcons.js');
+
+    div(
+      class='row media-item ' + attr.class + ' ' + (attr.id || name) + 
+        (attr.required == true ? ' required ' : ' ') + ' fileDropzone' +
+        (attr.help_text ? ' showPopover' : '')
+      data-content=(attr.help_text ? attr.help_text : '')
+    )
+      div(class=attr.class1 + ' ' + (attr.required == true ? ' required ' : ' ') )
+        label( for=attr.id || name)!= attr.label
+
+      div(class=(attr.class2 + ' dropzone__' + name))
+        div(class=" col-lg-12 border-dropzone")
+          div(class="uploading collapse")
+            img(alt="activity indicator" src="/img/ajax-loader.gif")
+          span
+            div.col-lg-5.col-md-5.col-sm-5.col-xs-5.text-xs-center.text-md-center.text-lg-center.p-dropzone
+              a(class='link-1' href="#" onclick="return false")
+                p.drop-photo #{attr.text}
+                i(class="fa fa-" + attr.icon)
+            div.col-lg-7.col-md-7.col-sm-7.col-xs-7.p-r-0.p-l-0.p-dropzone.img-dropzone.text-lg-center
+              input(name=name id=(attr.id || name) value=attr.value type="hidden")
+              each v,k in attr.data
+                if v.mime
+                  icon = mimetypeIcons[attr.data.mime.split('/')[1]];
+                else
+                  icon = attr.type
+                .col-xl-12
+                  img(src='/img/icons/' + icon + '.png' alt=attr.label class="img-file img-" + name)
+                a(class=("a-" + name) href=v.urls[0]) #{ v.name }
+
 
 mixin userprofileDropzone(name, attr)
     - var icon = attr.type
