@@ -269,7 +269,7 @@ mixin fieldDateYear(name, attr)
 
 mixin fileDropzone(name, attr)
     - var icon = attr.type
-    if attr.hasOwnProperty('data') == false
+    if attr.hasOwnProperty('data') == false || attr.data == null
       - attr.data = {};
     if attr.data.hasOwnProperty('urls') == false
       - attr.data.urls = [];
