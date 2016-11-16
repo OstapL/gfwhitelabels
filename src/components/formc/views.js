@@ -103,7 +103,7 @@ module.exports = {
     stripeSubmit(e) {
       e.preventDefault();
 
-      let $stripeForm = $('.expiration-block');
+      let $stripeForm = $('.payment-block');
 
       function validateCard(form, selectors) {
 
@@ -151,6 +151,12 @@ module.exports = {
         return;
       }
 
+      if (!this.eSignFullName.val().trim()) {
+        validation.invalidMsg({ $: $ }, 'full-name', ['Check your name']);
+        $payBtn.prop('disabled', false);
+        return;
+      }
+
       Stripe.setPublishableKey(stripeKey);
 
       Stripe.card.createToken(card, (status, stripeResponse) => {
@@ -178,7 +184,7 @@ module.exports = {
             this.eSignFullName.val(fullName);
             this.changeSign();
 
-            this.$('.electronically-sign').removeClass('collapse');
+            this.$('#save-button-block').removeClass('collapse');
           });
 
         }).fail((xhr, ajaxOptions, err)=>{
