@@ -122,6 +122,12 @@ module.exports = {
           return false;
         }
       });
+      this.fields.min_equity_offered = {
+        label: 'Minimum Equity Offered'
+      }
+      this.fields.max_equity_offered = {
+        label: 'Maximum Equity Offered'
+      }
       this.labels = {
         name: 'Legal Name of Company',
         industry: 'Industry',
@@ -139,6 +145,7 @@ module.exports = {
         facebook: 'Facebook',
         instagram: 'Instagram',
         linkedin: 'Linkedin',
+        security_type: 'Security Type',
       };
       this.assignLabels();
       if(this.model.hasOwnProperty('id')) {
