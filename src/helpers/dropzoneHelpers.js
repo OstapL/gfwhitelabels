@@ -216,9 +216,17 @@ module.exports = {
         success(data) {
           let mimetypeIcons = require('helpers/mimetypeIcons.js');
           let icon = mimetypeIcons[data[0].mime.split('/')[1]];
-          $('.img-' + name).attr('src', '/img/icons/' + icon + '.png');
-          $('.a-' + name).attr('href', data[0].urls[0]).html(data[0].name);
-          this.model[name.replace('_id', '_data')] = data;
+          debugger;
+          if(this.model[name.replace('_id', '_data')].length == 0) {
+            $('.img-' + name).attr('src', '/img/icons/' + icon + '.png');
+            $('.a-' + name).attr('href', data[0].urls[0]).html(data[0].name);
+          } else {
+            $('.a-' + name + ':last').after(
+              '<div class="col-xl-12"><img class="img-file img-' + name + '" src="/img/icons/' + icon + '.png" /></div>' +
+              '<a class="a-' + name + '" href="' + data[0].urls[0] + '">' + data[0].name + '</a>'
+            );
+          }
+          this.model[name.replace('_id', '_data')].push(data[0]);
         }
       });
 

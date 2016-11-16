@@ -332,9 +332,9 @@ mixin fileFolderDropzone(name, attr)
               input(name=name id=(attr.id || name) value=attr.value type="hidden")
               each v,k in attr.data
                 if v.mime
-                  icon = mimetypeIcons[attr.data.mime.split('/')[1]];
+                  - icon = mimetypeIcons[v.mime.split('/')[1]];
                 else
-                  icon = attr.type
+                  - icon = attr.type
                 .col-xl-12
                   img(src='/img/icons/' + icon + '.png' alt=attr.label class="img-file img-" + name)
                 a(class=("a-" + name) href=v.urls[0]) #{ v.name }
