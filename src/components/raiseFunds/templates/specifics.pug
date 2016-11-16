@@ -68,10 +68,10 @@ section.campaign-specifics.container.m-b-85
         .col-lg-12.text-lg-center.text-md-center.text-xs-center.m-b-1.p-b-1
           a(href="https://github.com/vladyslav2/gfwhitelabels/files/470205/growthfountain_security_description.pdf" target="_blank").link-2 Click here to see descriptions of Common Equity and Revenue Share
         .row
-          .col-xl-12.pre-money-terms.m-b-1
+          .pre-money-terms.m-b-1
             +fieldRadioLabel("security_type", _.extend({
-              class1: 'col-lg-3', 
-              class2: 'col-lg-9',
+              class1: 'col-xl-3 text-xl-right text-lg-left', 
+              class2: 'col-xl-9',
               type: 'radio',
               label: 'Security Type',
             }, fields.security_type))
@@ -96,13 +96,13 @@ section.campaign-specifics.container.m-b-85
                 placeholder: '$',
               }, fields.premoney_valuation))
           +fieldChoiceLabel("valuation_determine", _.extend({
-              class1: 'col-lg-12 p-t-0',
-              class2: 'col-lg-12',
+              class1: 'col-xl-3 col-lg-12 text-xl-right text-lg-left big-label-text',
+              class2: 'col-xl-9 col-lg-12',
             }, fields.valuation_determine))
-          +fieldTextareaLabel("description", _.extend({
+          +fieldTextareaLabel("description_determine", _.extend({
             class1: 'col-xl-3 col-lg-12 text-xl-right text-lg-left',
             class2: 'col-xl-9 col-lg-12',
-          }, fields.description))
+          }, fields.description_determine))
           +fieldTextLabel("price_per_share", _.extend({
             class1: 'col-xl-3 col-lg-12 text-xl-right text-lg-left',
             class2: 'col-xl-9 col-lg-12',
