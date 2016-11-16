@@ -18,10 +18,10 @@ const formatPrice = function(price = '', withDollarSign = true) {
 module.exports = {
     formatPrice: formatPrice,
 
-    formatPercentage(percentage) {
+    formatPercentage(percentage, withDot = false) {
         let result = Number(percentage.replace(/%/g, ''));
         if (!(result && 0 <= result)) return percentage;
-        return formatPrice(result, false) + '%';
+        return formatPrice(result, false) + (withDot ? '.' : '') + '%';
     },
 
     getCaretPosition(oField) {

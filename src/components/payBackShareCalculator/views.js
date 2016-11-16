@@ -50,8 +50,9 @@ module.exports = {
         },
 
         filterKeyCodeForPercentage(e) {
-            if (!((((e.keyCode >= 48 && e.keyCode <= 57) || (e.keyCode >= 96 && e.keyCode <= 105)) && !(e.target.value.match(/\.\d{2}$/))) ||
-                    ((e.keyCode == 110 || e.keyCode == 190) && !(e.target.value.match(/\./))))
+            let value = e.target.value.replace(/\%/g, '');
+            if (!((((e.keyCode >= 48 && e.keyCode <= 57) || (e.keyCode >= 96 && e.keyCode <= 105)) && !(value.match(/\.\d{2}$/))) ||
+                    ((e.keyCode == 110 || e.keyCode == 190) && !(value.match(/\./))))
                 && !(e.keyCode == settings.BACKSPACEKEYCODE ||
                         e.keyCode == settings.TABKEYCODE ||
                         e.keyCode == settings.LEFTARROWKEYCODE ||
@@ -68,6 +69,12 @@ module.exports = {
                 e.preventDefault();
                 e.stopPropagation();
             }
+            if (e.keyCode == settings.BACKSPACEKEYCODE) {
+                e.preventDefault();
+                e.stopPropagation();
+                value = value.substring(0, value.length - 1);
+                e.target.value = value;
+            }
         },
 
         savePercents(e) {
@@ -75,6 +82,11 @@ module.exports = {
                 value = e.target.value.replace(/[\$\%\,]/g, '');
 
             app.cache.payBackShareCalculator[target.dataset.modelValue] = Number(value);
+            let withDot = false
+            if (e.keyCode == 110 || e.keyCode == 190) {
+                withDot = true;
+            }
+            target.value = formatPercentage(value, withDot);
         },
 
         cutZeros(e) {
