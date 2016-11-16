@@ -73,15 +73,16 @@ section.create-company-team-add.container
           tbody
             tr
               td(colspan="5").p-x-0.p-y-0
-                .warning-block.warning-team-add.team-member-no-border.text-lg-left.m-b-0
+                #membersMessage.warning-block.warning-team-add.team-member-no-border.text-lg-left.m-b-0
                   i.fa.fa-info-circle 
                   span.warning-text First of all please identify the Officers in your company responsible for the following 3 roles. Please note that, if necessary, the same person may be identified with multiple titles.
             - var requiredRoles = { 1: 'CEO/President', 2: 'Principal Financial Officer/Treasurer', 5: 'Controller/Principal Accounting Officer' };
+            - var roleCounter = 0;
             each k,v in requiredRoles
               - var persons = values.team_members.filter((el) => { return (el.title ? el.title.indexOf(v) != -1: false)})
               for person in persons
                 tr
-                  td #{ k } 
+                  td #{ k }
                   td.text-xs-center #{ person.first_name + ' ' + person.last_name }
                   +isInvited(person)
                   td.text-xl-center
@@ -90,6 +91,7 @@ section.create-company-team-add.container
                   td.text-xl-center
                     a(href="#" data-id=person.uuid data-role=roles[k]).link-1.delete-member
                       i.fa.fa-times
+                  - roleCounter ++;
               else
                 tr
                   td #{ k }
