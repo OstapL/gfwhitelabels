@@ -67,13 +67,14 @@ section.campaign-specifics.container.m-b-85
         h3.text-lg-center.col-md-center.text-xs-center.col-lg-12.pre-money-terms Pre-Money Valuation and Equity Terms
         .col-lg-12.text-lg-center.text-md-center.text-xs-center.m-b-1.p-b-1
           a(href="https://github.com/vladyslav2/gfwhitelabels/files/470205/growthfountain_security_description.pdf" target="_blank").link-2 Click here to see descriptions of Common Equity and Revenue Share
-
-        .pre-money-terms
-          +fieldRadioLabel("security_type", _.extend({
-            class1: 'col-lg-3', 
-            class2: 'col-lg-9',
-            type: 'radio',
-          }, fields.security_type))
+        .row
+          .col-xl-12.pre-money-terms.m-b-1
+            +fieldRadioLabel("security_type", _.extend({
+              class1: 'col-lg-3', 
+              class2: 'col-lg-9',
+              type: 'radio',
+              label: 'Security Type',
+            }, fields.security_type))
         div(style=(values.security_type == 0 ? '' :  "display: none")).security_type_list.security_type_0
           .row
             .col-xl-7.col-lg-6.form-group.clearfix
@@ -89,114 +90,59 @@ section.campaign-specifics.container.m-b-85
                     a(href="/calculator/establishedBusiness/intro" target="_blank").dropdown-item Established Business Valuation
                     a(href="/calculator/selectCalculator" target="_blank").dropdown-item New Startup Valuation
             .col-xl-5.col-lg-5.pull-lg-right.pull-md-left.p-l-0
-              +fieldBlock("premoney_valuation", '', {
-              class1: 'col-xl-4 col-lg-12 text-xl-right text-lg-left m-b-0 p-t-0 p-l-0', 
-              class2: 'col-xl-8 col-lg-12', 
-              type: 'text',
-              placeholder: '$',
-              })
-          +fieldBlock("price_per_share", '', {
-             class1: 'col-xl-3 col-lg-12 text-xl-right text-lg-left',
-             class2: 'col-xl-9 col-lg-12 ',
-             type: 'text',
-             placeholder: '$',
-             })
+              +fieldTextLabel("premoney_valuation", _.extend({
+                class1: 'col-xl-4 col-lg-12 text-xl-right text-lg-left m-b-0 p-t-0 p-l-0',
+                class2: 'col-xl-8 col-lg-12',
+                placeholder: '$',
+              }, fields.premoney_valuation))
+          +fieldTextLabel("price_per_share", _.extend({
+            class1: 'col-xl-3 col-lg-12 text-xl-right text-lg-left',
+            class2: 'col-xl-9 col-lg-12',
+            placeholder: '$',
+          }, fields.price_per_share))
+
           
           .m-t-2
           .row
-            .col-xl-6.col-l-65
-              +fieldBlock("min_number_of_shares", '', {
-                class1: 'col-xl-6 col-lg-12 text-xl-right text-lg-left', 
-                class2: 'col-xl-6 col-lg-12', 
+            .col-xl-6.col-l-65.showPopover(data-content="Minimum # of Shares is calculated automatically: <br>(Minimum Total Raise / Price Per Share)")
+              +fieldTextLabel("tagline", _.extend({
+                class1: 'col-xl-6 col-lg-12 text-xl-right text-lg-left p-t-0 m-b-0',
+                class2: 'col-xl-6 col-lg-12',
                 type: 'text',
-                placeholder: '$',
+                maxlength: 90,
+                label: 'Minimum # of Shares',
                 disabled: true,
-                })
-            .col-xl-6
-              +fieldBlock("max_number_of_shares", '', {
-                class1: 'col-xl-5 col-lg-12 text-lg-left text-xl-right  p-t-0 m-b-0', 
-                class2: 'col-xl-7 col-lg-12', 
+              }, fields.tagline))
+            .col-xl-6.showPopover(data-content="Maximum # of Shares is calculated automatically: <br>(Maximum Total Raise / Price Per Share)")
+              +fieldTextLabel("max_number_of_shares", _.extend({
+                class1: 'col-xl-5 col-lg-12 text-xl-right text-lg-left p-t-0 m-b-0',
+                class2: 'col-xl-7 col-lg-12',
                 type: 'text',
-                placeholder: '$',
+                maxlength: 90,
+                label: 'Maximum # of Shares',
                 disabled: true,
-                })
+              }, fields.max_number_of_shares))
           .row
             .col-xl-6.col-l-65
-              +fieldBlock("min_equity_offered", '', {
-                class1: 'col-xl-6 col-lg-12 text-xl-right text-lg-left', 
-                class2: 'col-xl-6 col-lg-12', 
+              +fieldTextLabel("min_equity_offered", _.extend({
+                class1: 'col-xl-6 col-lg-12 text-xl-right text-lg-left p-t-0 m-b-0',
+                class2: 'col-xl-6 col-lg-12',
                 type: 'text',
-                placeholder: '$',
+                maxlength: 90,
+                label: 'Minimum Equity Offered',
                 disabled: true,
-                })
-            .col-xl-6
-              +fieldBlock("max_equity_offered", '', {
-                class1: 'col-xl-5 col-lg-12 text-xl-right text-lg-left p-t-0 m-b-0', 
-                class2: 'col-xl-7 col-lg-12', 
+              }, fields.min_equity_offered))
+            .col-xl-6.showPopover(data-content="Minimum Equity Offered is calculated automatically: <br> Minimum Total Raise / Minimum Total Raise+Pre-Money Valuation")
+              +fieldTextLabel("max_equity_offered", _.extend({
+                class1: 'col-xl-5 col-lg-12 text-xl-right text-lg-left p-t-0 m-b-0',
+                class2: 'col-xl-7 col-lg-12',
                 type: 'text',
-                placeholder: '$',
+                maxlength: 90,
+                label: 'Maximum Equity Offered',
                 disabled: true,
-                })
-
-          //.row.m-t-2.form-group-m-b-15
-            .col-lg-6.col-l-65
-              .form-group.row.min_equity_offered.required
-                label(for="min_equity_offered").text-lg-right.col-lg-6.p-l-2.col-md-12 Minimum Equity Offered
-                .col-lg-6.col-md-12
-                  input(name="min_equity_offered" placeholder="$" type="text" value="0" disabled).form-control#min_equity_offered
-
-            .col-lg-6.col-l-65
-              .form-group.row.max_equity_offered.required
-                label(for="max_equity_offered").text-lg-right.col-lg-5.col-md-12 Maximum Equity Offered
-                .col-lg-6.col-md-12
-                  input(name="max_equity_offered" placeholder="$" type="text" value="0" disabled).form-control#max_equity_offered
-
-          //- .row.m-t-2.form-group-m-b-15
-          //-   .col-lg-6.col-l-65
-          //-     +fieldBlock("min_equity_offered", '', {
-          //-       class1: 'col-lg-6 p-l-2', 
-          //-       class2: 'col-lg-6 col-md-9', 
-          //-       type: 'text',
-          //-       placeholder: '$',
-          //-       disabled: true,
-          //-       })
-
-          //-   .col-lg-6.col-l-65
-          //-     +fieldBlock("max_equity_offered", '', {
-          //-       class1: 'col-lg-5 col-md-3', 
-          //-       class2: 'col-lg-7 col-md-9', 
-          //-       type: 'text',
-          //-       placeholder: '$',
-          //-       disabled: true,
-          //-       })
-            //- .col-lg-6 Maximum # of Share: 
-            //-   span#min_number_of_share 1000
+              }, fields.max_equity_offered))
 
         div(style=(values.security_type == 1 ? '' :  "display: none")).security_type_list.security_type_1
-          //- .row
-          //- .label-top-6
-          //-   +fieldBlock("percentage_revenue", '', {
-          //-      class1: 'col-lg-3 col-md-4',
-          //-      class2: 'col-lg-9 col-md-8',
-          //-      type: 'text',
-          //-      placeholder: '$',
-          //-      })
-          
-          //- .row.m-t-2.form-group-m-b-15
-          //-   .col-lg-6.col-l-65.label-top-6
-          //-     +fieldBlock("cap", '', {
-          //-       class1: 'col-lg-6 p-l-2', 
-          //-       class2: 'col-lg-6 col-md-9', 
-          //-       type: 'text',
-          //-       placeholder: '$',
-          //-       })
-          //-   .col-lg-6.col-l-65.label-top-6
-          //-     +fieldBlock("expiration_date", '', {
-          //-       class1: 'col-lg-6 p-r-2', 
-          //-       class2: 'col-lg-6 col-md-9', 
-          //-       type: 'date',
-          //-       })
-
           .row.m-t-2
             .col-xl-6
               .form-group.row.min_equity_offered.required
