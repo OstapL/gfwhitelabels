@@ -67,7 +67,7 @@ section.campaign-specifics.container.m-b-85
         h3.text-lg-center.col-md-center.text-xs-center.col-lg-12.pre-money-terms Pre-Money Valuation and Equity Terms
         .col-lg-12.text-lg-center.text-md-center.text-xs-center.m-b-1.p-b-1
           a(href="https://github.com/vladyslav2/gfwhitelabels/files/470205/growthfountain_security_description.pdf" target="_blank").link-2 Click here to see descriptions of Common Equity and Revenue Share
-        .row
+        .row.m-b-1
           .pre-money-terms.m-b-1
             +fieldRadioLabel("security_type", _.extend({
               class1: 'col-xl-3 text-xl-right text-lg-left', 
@@ -96,12 +96,13 @@ section.campaign-specifics.container.m-b-85
                 placeholder: '$',
               }, fields.premoney_valuation))
           +fieldChoiceLabel("valuation_determine", _.extend({
-              class1: 'col-xl-3 col-lg-12 text-xl-right text-lg-left big-label-text',
+              class1: 'col-xl-3 col-lg-12 text-xl-right text-lg-left big-label-text m-b-0',
               class2: 'col-xl-9 col-lg-12',
             }, fields.valuation_determine))
           +fieldTextareaLabel("description_determine", _.extend({
             class1: 'col-xl-3 col-lg-12 text-xl-right text-lg-left',
             class2: 'col-xl-9 col-lg-12',
+            help_text: 'How are the securities being offered being valued? Include examples of methods for how such securities may be valued by the issuer in the future, including during subsequent corporate actions.'
           }, fields.description_determine))
           +fieldTextLabel("price_per_share", _.extend({
             class1: 'col-xl-3 col-lg-12 text-xl-right text-lg-left',
@@ -110,26 +111,26 @@ section.campaign-specifics.container.m-b-85
           }, fields.price_per_share))
           .m-t-2
           .row
-            .col-xl-6.col-l-65.showPopover(data-content="Minimum # of Shares is calculated automatically: <br>(Minimum Total Raise / Price Per Share)")
+            .col-xl-6.col-l-65.showPopover(data-content="<div class=''><span>Minimum # of Shares is calculated automatically: </span><br><span class='fraction'><span class='top'>Minimum Total Raise</span><span class='bottom'>Price Per Share</span></span></div>")
               +fieldTextLabel("tagline", _.extend({
                 class1: 'col-xl-6 col-lg-12 text-xl-right text-lg-left p-t-0 m-b-0',
                 class2: 'col-xl-6 col-lg-12',
                 type: 'text',
                 maxlength: 90,
-                label: 'Minimum # of Shares',
+                label: 'Minimum № of Shares',
                 disabled: true,
               }, fields.tagline))
-            .col-xl-6.showPopover(data-content="Maximum # of Shares is calculated automatically: <br>(Maximum Total Raise / Price Per Share)")
+            .col-xl-6.showPopover(data-content="<div class=''><span>Maximum # of Shares is calculated automatically: </span><br><span class='fraction'><span class='top'>Maximum Total Raise</span><span class='bottom'>Price Per Share</span></span></div>")
               +fieldTextLabel("max_number_of_shares", _.extend({
                 class1: 'col-xl-5 col-lg-12 text-xl-right text-lg-left p-t-0 m-b-0',
                 class2: 'col-xl-7 col-lg-12',
                 type: 'text',
                 maxlength: 90,
-                label: 'Maximum # of Shares',
+                label: 'Maximum № of Shares',
                 disabled: true,
               }, fields.max_number_of_shares))
           .row
-            .col-xl-6.col-l-65
+            .col-xl-6.col-l-65.showPopover(data-content="<div class=''><span>Minimum Equity Offered is calculated automatically: </span><br><span class='fraction'><span class='top'>Minimum Total Raise</span><span class='bottom'>Minimum Total Raise+Pre-Money Valuation</span></span></div>")
               +fieldTextLabel("min_equity_offered", _.extend({
                 class1: 'col-xl-6 col-lg-12 text-xl-right text-lg-left p-t-0 m-b-0',
                 class2: 'col-xl-6 col-lg-12',
@@ -138,7 +139,8 @@ section.campaign-specifics.container.m-b-85
                 label: 'Minimum Equity Offered',
                 disabled: true,
               }, fields.min_equity_offered))
-            .col-xl-6.showPopover(data-content="Minimum Equity Offered is calculated automatically: <br> Minimum Total Raise / Minimum Total Raise+Pre-Money Valuation")
+
+            .col-xl-6.showPopover(data-content="<div class=''><span>Maximum Equity Offered is calculated automatically: </span><br><span class='fraction'><span class='top'>Maximum Total Raise</span><span class='bottom'>Maximum Total Raise+Pre-Money Valuation</span></span></div>")
               +fieldTextLabel("max_equity_offered", _.extend({
                 class1: 'col-xl-5 col-lg-12 text-xl-right text-lg-left p-t-0 m-b-0',
                 class2: 'col-xl-7 col-lg-12',
@@ -184,7 +186,7 @@ section.campaign-specifics.container.m-b-85
               li.p-b-1 No distributions are required until the second full calendar year and the company is allowed one year of forbearance as needed;
               li In the event of default, investors become general unsecured creditors (senior to equity).
         
-        .col-xl-12.border-top.m-t-0
+        .col-xl-12.border-top.m-t-2
           h3 Here some important things to remember about the campaign process.
           ol(type="1")
             li.pb10.text-justify Investors will have the ability to cancel their investment commitment until 48 hours prior to the deadline you’ve selected.
