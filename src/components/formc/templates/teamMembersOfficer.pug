@@ -11,6 +11,7 @@ include ../../raiseFunds/templates/menu.pug
 )
 
 section.formc-team-members-director.container.m-b-85
+  - var formcId = values.formc_id;
   +menu('formc', 'team-members-officer')
 
   //START RIGHT BLOCK
@@ -30,22 +31,21 @@ section.formc-team-members-director.container.m-b-85
         +fieldTextLabel("email", _.extend({
           class1: 'col-xl-3 col-lg-12 text-lg-left text-xl-right ',
           class2: 'col-xl-9 col-lg-12',
+          help_text: 'On this  team member’s E-mail we will send invitation, using which he has to confirm that really belongs to your company.',
           }, fields.email))
         .row.form-group
-          .col-date
+          .col-date#dob
             label.col-xl-3.col-lg-12.text-xl-right.textlg-left Date of birth
               span.color-red *
             #dob.col-xl-4.col-lg-6.p-r-0
-              +fieldDateDay("dob", _.extend({
-                class: 'col-xl-4 col-lg-4 col-xs-4 no-gutter p-l-0',
-                placeholder: 'MM',
-              }, fields.dob))
               +fieldDateMonth("dob", _.extend({
-                class: 'col-xl-4 col-lg-4 col-xs-4 no-gutter p-l-0',
-                placeholder: 'DD',
+                class: 'col-xl-4 col-lg-4 col-xs-4 p-l-0  m-d-p-r-5',
+              }, fields.dob))
+              +fieldDateDay("dob", _.extend({
+                class: 'col-xl-4 col-lg-4 col-xs-4 p-r-0 m-d-p-l-5',
               }, fields.dob))
               +fieldDateYear("dob", _.extend({
-                class: 'col-xl-4 col-lg-4 col-xs-4 no-gutter p-l-0',
+                class: 'col-xl-4 col-lg-4 col-xs-4 p-r-0 m-d-p-l-10',
                 placeholder: 'YYYY',
               }, fields.dob))
         +fieldTextLabel("responsibilities", _.extend({
@@ -58,13 +58,13 @@ section.formc-team-members-director.container.m-b-85
             .row.form-group
               label.col-xl-3.col-lg-12.text-lg-left.text-xl-right Title
                 span.color-red *
-              .col-xl-9.col-lg-12
-                select(name="title" multiple="true" title="Title").form-control.selectpicker.w-100.team-select
-                  option(value=1 selected=(values.title == 1) ? true : false ) CEO/President
-                  option(value=2 selected=(values.title == 2) ? true : false ) Principal Financial Officer/Treasurer
-                  option(value=3 selected=(values.title == 3) ? true : false ) Vice President
-                  option(value=4 selected=(values.title == 4) ? true : false ) Secretary
-                  option(value=5 selected=(values.title == 5) ? true : false ) Controller/Principal Accounting Officer
+              #title.col-xl-9.col-lg-12.showPopover(data-content=" Select all roles that currently apply.")
+                select(name="title[]" multiple="true" title="Title" data-type="array").form-control.selectpicker.w-100.team-select
+                  option(value=1 data-value-type="number" selected=(values.title == "1") ? true : false ) CEO/President
+                  option(value=2 data-value-type="number" selected=(values.title == "2") ? true : false ) Principal Financial Officer/Treasurer
+                  option(value=3 data-value-type="number" selected=(values.title == "3") ? true : false ) Vice President
+                  option(value=4 data-value-type="number" selected=(values.title == "4") ? true : false ) Secretary
+                  option(value=5 data-value-type="number" selected=(values.title == "5") ? true : false ) Controller/Principal Accounting Officer
         .row
           .col-xl-6.col-lg-6
             .row

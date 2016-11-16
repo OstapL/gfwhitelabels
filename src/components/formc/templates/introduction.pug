@@ -21,7 +21,7 @@ section.formc.introduction.create-company-media.container
           .certify-checkbox
             .form-group.required
               label
-                input(type="checkbox" name="certify" value="1" checked=(values['certify1']))
+                input(type="checkbox" name="certify" checked=(values['certify1']))
                 | Check this box to certify that all the following statements are true:
           .list
             ul
@@ -47,6 +47,9 @@ section.formc.introduction.create-company-media.container
               .col-lg-9
                 textarea(rows="3" name="failed_to_comply").form-control= values['failed_to_comply']
           .expiration-block(style=(values.is_paid == false ? '' :  "display: none"))
+            .row
+              .col-xl-12
+                .border-bottom.m-t-2.m-b-3
             .growthfountain-charges
               p.m-b-1 GrowthFountain charges $500 for Form C generation, background checks and escrow. To authorize this charge and to enter into the Listing Agreement, please electronically sign below.
               a(href="#").link-2 To review the Listing Agreement, click here
@@ -64,19 +67,25 @@ section.formc.introduction.create-company-media.container
             
             div(id="expiration-block").expiration
               .form-group.row.m-b-0
-                .col-lg-3.text-lg-right
-                  label Expiration
-                .col-lg-4.date-input
-                  .col-lg-6.p-l-0
-                    input(type="text" placeholder="MM" data-stripe="exp_month" id="card_exp_month").form-control
-                  div(id="card_exp_date_year").col-lg-6.p-r-0
-                    input(type="text" placeholder="YYYY" data-stripe="exp_year" id="card_exp_year").form-control
-                .col-lg-2
-                  label CVV Code
-                .col-lg-3.p-l-0
-                  .input-icon
-                    div.fa.fa-question-circle.showPopover(data-content="text <img src='http://localhost:7070/img/visa_logo_6.gif' />")
-                  input(type="text" data-stripe="cvc" id="card_cvc" placeholder="CVV Code").form-control
+                .col-xl-7
+                  .col-lg-5.text-lg-right
+                    label Expiration
+                  .col-lg-7
+                    +fieldDateMonth("card_exp_month", _.extend({
+                    class: 'col-xl-6 p-l-0',
+                    }, fields.card_exp_month))
+                    +fieldDateYear("card_exp_date_year", _.extend({
+                    class: 'col-xl-6 p-r-0',
+                    placeholder: 'YYYY',
+                    }, fields.card_exp_date_year))
+                .col-xl-5.p-r-0
+                  .col-lg-5
+                    label CVV Code
+                  .col-lg-7.p-l-0
+                    .input-icon
+                      div.fa.fa-question-circle.showPopover(
+                      data-content="<p class='pb10'>For Visa, MasterCard and Discover (left), the <br> 3 digits on the <u>back</u> of your card.</p> <p class='pb10'>For American Express (right) the 4 digits on the <br> <u>front</u> of your card.</p><img class='m-r-1 m-l-1' src='http://localhost:7070/img/cart_pay_1.png' /> <img  src='http://localhost:7070/img/cart_pay_2.png' />")
+                    input(type="text" data-stripe="cvc" id="card_cvc" placeholder="CVV Code").form-control
               .electronically-sign
                 .col-xl-10.offset-xl-1.m-t-3.investment
                   .col-lg-12
@@ -93,5 +102,5 @@ section.formc.introduction.create-company-media.container
           .electronically-sign(style=(values.is_paid == true ? '' :  "display: none"))
             .row
               .col-lg-12
-                .btn-save.text-lg-right
+                .btn-save.text-lg-right.m-t-2
                   button(type='submit').btn.btn-primary.text-uppercase save

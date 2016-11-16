@@ -147,7 +147,18 @@ mixin fieldChoiceLabel(name, attr)
             
           each v,k in attr.validate.choices
             option(value=k selected=(k == attr.value ? "selected" : undefined)) #{ v }
-
+mixin fieldChoice(name, attr)
+  +prepareField(name, attr)
+  if attr.type == null
+    - attr.type = 'select'
+  select(
+    id=attr.id || name
+    name=name
+    ).custom-select.w-100
+    if attr.hasOwnProperty('empty')
+      option(value=attr.empty.value) #{attr.empty['']}  
+    each v,k in attr.validate.choices
+      option(value=k selected=(k == attr.value ? "selected" : undefined)) #{ v }
 
 mixin fieldRadioLabel(name, attr)
   +prepareField(name, attr)
@@ -179,7 +190,7 @@ mixin fieldDateDay(name, attr)
     select(
         id=attr.id || name + '__day'
         name=(attr.name || name) + '__day'
-    ).custom-select.w-
+    ).custom-select.w-100
       option(value="") DD
       option(value = 1 selected = (attr.value == '1') ? true : false) 1
       option(value = 2 selected = (attr.value == '2') ? true : false) 2
@@ -223,18 +234,18 @@ mixin fieldDateMonth(name, attr)
         name=(attr.name || name) + '__month'
     ).custom-select.w-100
       option(value="") MM
-      option(value = 1 selected = (attr.value == '1') ? true : false) Jan
-      option(value = 2 selected = (attr.value == '2') ? true : false) Feb
-      option(value = 3 selected = (attr.value == '3') ? true : false) Mar
-      option(value = 4 selected = (attr.value == '4') ? true : false) Apr
-      option(value = 5 selected = (attr.value == '5') ? true : false) May
-      option(value = 6 selected = (attr.value == '6') ? true : false) Jun
-      option(value = 7 selected = (attr.value == '7') ? true : false) Jul
-      option(value = 8 selected = (attr.value == '8') ? true : false) Aug
-      option(value = 9 selected = (attr.value == '9') ? true : false) Sep
-      option(value = 10 selected = (attr.value == '10') ? true : false) Oct
-      option(value = 11 selected = (attr.value == '11') ? true : false) Nov
-      option(value = 12 selected = (attr.value == '12') ? true : false) Dec
+      option(value = "01" selected = (attr.value == '01') ? true : false) Jan
+      option(value = "02" selected = (attr.value == '02') ? true : false) Feb
+      option(value = "03" selected = (attr.value == '03') ? true : false) Mar
+      option(value = "04" selected = (attr.value == '04') ? true : false) Apr
+      option(value = "05" selected = (attr.value == '05') ? true : false) May
+      option(value = "06" selected = (attr.value == '06') ? true : false) Jun
+      option(value = "07" selected = (attr.value == '07') ? true : false) Jul
+      option(value = "08" selected = (attr.value == '08') ? true : false) Aug
+      option(value = "09" selected = (attr.value == '09') ? true : false) Sep
+      option(value = "10" selected = (attr.value == '10') ? true : false) Oct
+      option(value = "11" selected = (attr.value == '11') ? true : false) Nov
+      option(value = "12" selected = (attr.value == '12') ? true : false) Dec
 
 
 mixin fieldDateYear(name, attr)
@@ -258,7 +269,7 @@ mixin fieldDateYear(name, attr)
 
 mixin fileDropzone(name, attr)
     - var icon = attr.type
-    if attr.hasOwnProperty('data') == false
+    if attr.hasOwnProperty('data') == false || attr.data == null
       - attr.data = {};
     if attr.data.hasOwnProperty('urls') == false
       - attr.data.urls = [];

@@ -289,11 +289,14 @@ module.exports = {
           values: this.model,
           campaignId: this.campaign.id,
           roles: ['shareholder', 'director', 'officer'],
-          titles: {
-            ceo: 'CEO/President',
-            financial: 'Principal Financial Officer/Treasurer',
-            controller: 'Controller/Principal Accounting Officer',
-          },
+          titles: [
+            '',
+            'CEO/President',
+            'Principal Financial Officer/Treasurer',
+            'Vice President',
+            'Secretary',
+            'Controller/Principal Accounting Officer',
+          ],
         })
       );
       return this;
@@ -305,7 +308,7 @@ module.exports = {
     urlRoot: formcServer + '/:id' + '/team-members',
     roles: ['shareholder', 'director', 'officer'],
     events: _.extend({
-      'submit form': 'submit',
+      'submit form': api.submitAction,
     }, addSectionHelper.events, menuHelper.events),
 
     initialize(options) {
@@ -382,42 +385,6 @@ module.exports = {
       return '/formc/' + this.model.formc_id + '/team-members';
     },
 
-    submit: function (e) {
-      e.preventDefault();
-      var data = $(e.target).serializeJSON({ useIntKeysAsArrayIndex: true });
-
-      _(data.positions).each((el, i) => {
-        el.start_date_of_service =
-            (el.start_date_of_service__year && el.start_date_of_service__month)
-              ? (el.start_date_of_service__year + '-'
-                  + el.start_date_of_service__month + '-' + '01'
-            ) : '';
-        delete el.start_date_of_service__year;
-        delete el.start_date_of_service__month;
-
-        el.end_date_of_service = el.end_date_of_service__year && el.end_date_of_service__month
-          ? el.end_date_of_service__year + '-' + el.end_date_of_service__month + '-' + '01'
-          : '';
-        delete el.end_date_of_service__year;
-        delete el.end_date_of_service__month;
-      });
-
-      _(data.experiences).each((el, i) => {
-        el.start_date_of_service =
-          (el.start_date_of_service__year && el.start_date_of_service__month)
-            ? (el.start_date_of_service__year + '-' +
-                el.start_date_of_service__month + '-' + '01'
-            ) : '';
-        delete el.start_date_of_service__year;
-        delete el.start_date_of_service__month;
-        el.end_date_of_service = el.end_date_of_service__year && el.end_date_of_service__month
-          ? el.end_date_of_service__year + '-' + el.end_date_of_service__month + '-' + '01'
-          : '';
-        delete el.end_date_of_service__year;
-        delete el.end_date_of_service__month;
-      });
-      api.submitAction.call(this, e, data);
-    },
   }, addSectionHelper.methods, menuHelper.methods)),
 
   offering: Backbone.View.extend(_.extend({

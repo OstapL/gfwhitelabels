@@ -122,6 +122,12 @@ module.exports = {
           return false;
         }
       });
+      this.fields.min_equity_offered = {
+        label: 'Minimum Equity Offered'
+      };
+      this.fields.max_equity_offered = {
+        label: 'Maximum Equity Offered'
+      };
       this.labels = {
         name: 'Legal Name of Company',
         industry: 'Industry',
@@ -139,6 +145,7 @@ module.exports = {
         facebook: 'Facebook',
         instagram: 'Instagram',
         linkedin: 'Linkedin',
+        security_type: 'Security Type',
       };
       this.assignLabels();
       if(this.model.hasOwnProperty('id')) {
@@ -915,32 +922,7 @@ module.exports = {
               })
         );
 
-        const Model = require('components/campaign/models.js');
-        dropzoneHelpers.methods.createFileDropzone(
-            'investor_presentation',
-            'investor_presentation', '',
-            (data) => {
-                this.model.urlRoot = this.urlRoot;
-                // this.model.save({
-                  // (new Model.model(this.model)).save({
-                  //   investor_presentation: data.file_id,
-                  // }, {
-                  //   patch: true,
-                  app.makeRequest(this.urlRoot +'/' + this.model.id, {investor_presentation: data.file_id, type: 'PATCH'})
-                  // }).then((data) => {
-                  .then((data) => {
-                    const extension = data.investor_presentation_data.name.split('.').pop();
-                    const suffix = extension == 'pdf' ? '_pdf' : (['ppt', 'pptx'].indexOf(extension) != -1 ? '_pptx' : '_file');
-                    $('.img-investor_presentation').attr('src', '/img/default' + suffix + '.png');
-                    // $('.img-investor_presentation').after('<a class="link-3" href="' + data.url + '">' + data.name + '</a>');
-                    // $('.a-investor_presentation').attr('href', data.url).text(data.name);
-                  });
-              }
-        );
-
-        $('.a-investor_presentation').click(function (e) {
-          e.stopPropagation();
-        });
+        setTimeout(() => { this.createDropzones() } , 1000);
 
         this.calculateNumberOfShares(null);
 

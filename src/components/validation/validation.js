@@ -106,10 +106,12 @@ module.exports = {
     this.errors = {};
 
     _(schema).each((attr, name) => {
-      if (attr.type == 'nested' && attr.required == true) {
-        _(attr.schema.validate).each((attr, subname) => {
+      // TODO
+      // How to check nested one element if that can be blank ?
+      if (attr.type == 'nested' && (attr.required == true || data[name].length > 1)) {
+        _(attr.schema1).each((attr, subname) => {
           if (fixedRegex.indexOf(attr.type) != -1) {
-            _(data[name]).each((jsonFields, index) => {
+            _(attr.validate).each((jsonFields, index) => {
               try {
                 rules.regex(name, attr, data, attr.type);
                 this.runRules(attr, name);
@@ -119,7 +121,7 @@ module.exports = {
               }
             });
           } else {
-            _(data[name]).each((jsonFields, index) => {
+            _(attr.validate).each((jsonFields, index) => {
               this.runRules(attr, name + '.' + index + '.' + subname);
             });
           }

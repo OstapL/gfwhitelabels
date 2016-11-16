@@ -20,7 +20,7 @@ section.create-company.container.m-b-85
     form(metod="post" action="").form-section
       .col-xl-12
         +fieldTextLabel("name", _.extend({
-          class1: 'col-xl-3 col-lg-12 p-t-0 text-lg-left text-xl-right',
+          class1: 'col-xl-3 col-lg-12 p-t-0 text-lg-left text-xl-right m-b-0',
           class2: 'col-xl-9 col-lg-12',
           type: 'text',
           placeholder: 'Company Legal Name',
@@ -42,36 +42,35 @@ section.create-company.container.m-b-85
           placeholder: 'Your Company Slogan',
           maxlength: 90,
           }, fields.tagline))
-        +fieldTextLabel("description", _.extend({
+        +fieldTextareaLabel("description", _.extend({
           class1: 'col-xl-3 col-lg-12 text-lg-left text-xl-right',
           class2: 'col-xl-9 col-lg-12',
           type: 'textarea',
           placeholder: 'Your Company Description',
+          help_text: 'Explain what your company does in a way that everyone  will understand.<br />  “If you can’t explain it simply, you don’t understand it well enough.” – Albert Einstein',
           }, fields.description))
-        .row
-          .col-lg-6.col-xs-12.castom-select-5
-            +fieldChoiceLabel("corporate_structure", _.extend({
-              class1: 'col-xl-6 col-lg-12 text-xl-right text-lg-left p-t-0 m-b-0',
-              class2: 'col-xl-6 col-lg-12',
-              help_text: 'C-corps can choose to issue Common Equity or a Revenue Share. LLC’s can only issue a Revenue Share',
-              empty: {'': 'Choose'},
+        .row.form-group
+          label.col-xl-3.col-lg-12.text-xl-right.textlg-left.m-b-0.p-t-0 Corporate Structure
+            span.color-red *
+          .col-xl-9.col-lg-12.showPopover(data-content="C-corps can choose to issue Common Equity or a Revenue Share. LLC’s can only issue a Revenue Share")
+            +fieldChoice("corporate_structure", _.extend({
+                empty: {'': 'Choose'},
             }, fields.corporate_structure))
-          .col-lg-6.col-xs-12.date-input.pull-right.required
-            .col-date#founding_date
-              label.col-xl-4.col-lg-12.p-t-0.p-l-0.m-b-0.text-xl-right.textlg-left Founding date
-              .col-xl-8.col-lg-12.p-r-0.p-l-0
-                +fieldDateMonth("founding_date", _.extend({
-                  class: 'col-xl-4 col-lg-4 col-xs-4 no-gutter p-l-0 p-r-0',
-                  placeholder: 'MM',
-                }, fields.founding_date))
-                +fieldDateDay("founding_date", _.extend({
-                  class: 'col-xl-4 col-lg-4 col-xs-4 no-gutter p-l-0 p-r-0',
-                  placeholder: 'DD',
-                }, fields.founding_date))
-                +fieldDateYear("founding_date", _.extend({
-                  class: 'col-xl-4 col-lg-4 col-xs-4 no-gutter p-l-0 p-r-0',
-                  placeholder: 'YYYY',
-                }, fields.founding_date))
+        .row.form-group
+          .col-date#founding_date
+            label.col-xl-3.col-lg-12.text-xl-right.textlg-left.m-b-0.p-t-0 Date of Organization
+              span.color-red *
+            .col-xl-4.col-lg-6.p-r-0
+              +fieldDateMonth("founding_date", _.extend({
+                class: 'col-xl-4 col-lg-4 col-xs-4 p-l-0  m-d-p-r-5',
+              }, fields.dob))
+              +fieldDateDay("dob", _.extend({
+                class: 'col-xl-4 col-lg-4 col-xs-4 p-r-0 m-d-p-l-5',
+              }, fields.dob))
+              +fieldDateYear("founding_date", _.extend({
+                class: 'col-xl-4 col-lg-4 col-xs-4 p-r-0 m-d-p-l-10',
+                placeholder: 'YYYY',
+              }, fields.founding_date))
         .border-bottom
         +fieldTextLabel("address_1", _.extend({
           class1: 'col-xl-3 col-lg-12 text-lg-left text-xl-right',
