@@ -179,7 +179,7 @@ module.exports = {
         delete data[key_year];
         delete data[key_month];
         delete data[key_day];
-      } else if(el.type == 'nested') {
+      } else if(el.type == 'nested' && data[key]) {
         data[key].forEach((val, index) => {
           api.fixDateFields.call(this, el.schema, data[key][index]);
         });
