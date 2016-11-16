@@ -113,17 +113,17 @@ module.exports = {
         let cvc = form.find('#' + selectors.cvc);
 
         if (!Stripe.card.validateCardNumber(number.val())) {
-          validation.invalidMsg({ $: $ }, selectors.number, ['Please, check card number.']);
+          validation.invalidMsg({ $: $, $el: $('#content') }, selectors.number, ['Please, check card number.']);
           return null;
         }
 
         if (!Stripe.card.validateExpiry(expMonth.val(), expYear.val())) {
-          validation.invalidMsg({ $: $ }, selectors.expDate, ['Please, check expiration date.']);
+          validation.invalidMsg({ $: $, $el: $('#content') }, selectors.expDate, ['Please, check expiration date.']);
           return null;
         }
 
         if (!Stripe.card.validateCVC(cvc.val())) {
-          validation.invalidMsg({ $: $ }, selectors.cvc, ['Please, check CVC.']);
+          validation.invalidMsg({ $: $, $el: $('#content') }, selectors.cvc, ['Please, check CVC.']);
           return null;
         }
 
@@ -140,9 +140,9 @@ module.exports = {
 
       var card = validateCard($stripeForm,
         { number: 'card_number',
-          expDate: 'card_exp_date_year',
-          expMonth: 'card_exp_month',
-          expYear: 'card_exp_year',
+          expDate: 'card_exp_date_year__year',
+          expMonth: 'card_exp_month__month',
+          expYear: 'card_exp_date_year__year',
           cvc: 'card_cvc',
         });
 

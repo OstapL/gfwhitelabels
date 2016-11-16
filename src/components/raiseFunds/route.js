@@ -25,36 +25,29 @@ module.exports = Backbone.Router.extend({
   },
 
   company() {
-    if (!app.user.is_anonymous()) {
-      const Model = require('components/company/models.js');
-      const View = require('components/raiseFunds/views.js');
+    const View = require('components/raiseFunds/views.js');
 
-      const optionsR = app.makeCacheRequest(raiseCapitalUrl + '/company', 'OPTIONS');
-      const companyR = app.makeCacheRequest(authServer + '/user/company');
-      const campaignR = app.makeCacheRequest(authServer + '/user/campaign');
+    const optionsR = app.makeCacheRequest(raiseCapitalUrl + '/company', 'OPTIONS');
+    const companyR = app.makeCacheRequest(authServer + '/user/company');
+    const formcR = api.makeCacheRequest(authServer + '/user/formc');
 
-      $.when(optionsR, companyR, campaignR).done((options, company, campaign) => {
-        $('body').scrollTo(); 
-        var i = new View.company({
-          el: '#content',
-          fields: options[0].fields,
-          model: company[0] || {},
-          campaign: campaign[0] || {},
-        });
-
-        app.hideLoading();
-        i.render();
-        //app.views.campaign[id].render();
-        //app.cache[window.location.pathname] = i.$el.html();
-
-      }).fail(function(xhr, response, error) {
-        api.errorAction.call(this, $('#content'), xhr, response, error);
+    $('body').scrollTo(); 
+    $.when(optionsR, companyR, formcR).done((options, company, formc) => {
+      const i = new View.company({
+        el: '#content',
+        fields: options[0].fields,
+        model: company[0] || {},
+        formc: formc[0] || {},
       });
-    } else {
-      app.routers.navigate(
-          '/account/login', {trigger: true, replace: true}
-      );
-    }
+
+      app.hideLoading();
+      i.render();
+      //app.views.campaign[id].render();
+      //app.cache[window.location.pathname] = i.$el.html();
+
+    }).fail(function(xhr, response, error) {
+      api.errorAction.call(this, $('#content'), xhr, response, error);
+    });
   },
   companyDashboard: function() {
       const View = require('components/raiseFunds/views.js');
@@ -65,38 +58,37 @@ module.exports = Backbone.Router.extend({
       app.hideLoading();
   }, 
   generalInformation (id) {
-    if (!app.user.is_anonymous()) {
-      const Model = require('components/campaign/models.js');
-      const View = require('components/raiseFunds/views.js');
+    const View = require('components/raiseFunds/views.js');
 
-      if (id === null) {
-        alert('please set up id or company_id');
-        console.log('not goinng anywhere');
-        return;
-      }
-      $('#content').scrollTo(); 
+    if (id === null) {
+      alert('please set up id or company_id');
+      console.log('not goinng anywhere');
+      return;
+    }
+    $('#content').scrollTo(); 
 
-      var a1 = app.makeCacheRequest(raiseCapitalUrl + '/campaign/' + id + '/general_information', 'OPTIONS');
-      var a2 = app.makeCacheRequest(raiseCapitalUrl + '/campaign/' + id + '/general_information');
-      // let formcR = api.makeCacheRequest(authServer + '/user/formc');
+    var a1 = app.makeCacheRequest(raiseCapitalUrl + '/campaign/' + id + '/general_information', 'OPTIONS');
+    var a2 = app.makeCacheRequest(raiseCapitalUrl + '/campaign/' + id + '/general_information');
+    // let formcR = api.makeCacheRequest(authServer + '/user/formc');
 
-      // $.when(a1, a2, formcR).done((meta, model, formc) => {
-      $.when(a1, a2).done((meta, model) => {
-        model[0].id = id;
-        var i = new View.generalInformation({
-          el: '#content',
-          fields: meta[0].fields,
-          model: model[0],
-          // formc: formc[0],
-        });
-
-        i.render();
-        //app.cache[window.location.pathname] = i.$el.html();
-
-        app.hideLoading();
-      }).fail((xhr, error) =>  {
-        api.errorAction($('#content'), xhr, error);
+    // $.when(a1, a2, formcR).done((meta, model, formc) => {
+    $.when(a1, a2).done((meta, model) => {
+      model[0].id = id;
+      var i = new View.generalInformation({
+        el: '#content',
+        fields: meta[0].fields,
+        model: model[0],
+        // formc: formc[0],
       });
+
+      i.render();
+      //app.cache[window.location.pathname] = i.$el.html();
+
+      app.hideLoading();
+    }).fail((xhr, error) =>  {
+      api.errorAction($('#content'), xhr, error);
+    });
+    if (!app.user.is_anonymous()) {
     } else {
       app.routers.navigate(
         '/account/login', {trigger: true, replace: true}

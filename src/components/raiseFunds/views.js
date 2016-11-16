@@ -106,6 +106,7 @@ module.exports = {
       'click .update-location': 'updateLocation',
       'click .onPreview': onPreviewAction,
       'click .submit_form': api.submitAction,
+      'change #website': appendHttpIfNecessary,
       'change #website,#twitter,#facebook,#instagram,#linkedin': 'appendHttpsIfNecessary',
     }, leavingConfirmationHelper.events, phoneHelper.events, menuHelper.events),
 
@@ -115,7 +116,7 @@ module.exports = {
 
     initialize(options) {
       this.fields = options.fields;
-      this.campaign = options.campaign;
+      this.formc = options.formc;
       this.$el.on('keypress', ':input:not(textarea)', function (event) {
         if (event.keyCode == 13) {
           event.preventDefault();
@@ -187,7 +188,7 @@ module.exports = {
           fields: this.fields,
           values: this.model,
           user: app.user.toJSON(),
-          campaign: this.campaign,
+          formc: this.formc,
           states: this.usaStates,
         })
       );
