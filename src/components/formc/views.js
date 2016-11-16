@@ -66,9 +66,6 @@ module.exports = {
       this.campaign = options.campaign;
 
       if(this.model.is_paid === false) {
-        this.fields.company_name = {
-          required: true
-        };
         this.fields.full_name = { 
           required: true 
         };
@@ -85,6 +82,7 @@ module.exports = {
           fields: this.fields,
           values: this.model,
           campaignId: this.campaign.id,
+          fullName: app.user.get('first_name') + ' ' + app.user.get('first_name'),
         })
       );
 
@@ -103,7 +101,7 @@ module.exports = {
     stripeSubmit(e) {
       e.preventDefault();
 
-      let $stripeForm = $('.expiration-block');
+      let $stripeForm = $('.payment-block');
 
       function validateCard(form, selectors) {
 
@@ -113,17 +111,17 @@ module.exports = {
         let cvc = form.find('#' + selectors.cvc);
 
         if (!Stripe.card.validateCardNumber(number.val())) {
-          validation.invalidMsg({ $: $ }, selectors.number, ['Please, check card number.']);
+          validation.invalidMsg({ $: $, $el: $('#content') }, selectors.number, ['Please, check card number.']);
           return null;
         }
 
         if (!Stripe.card.validateExpiry(expMonth.val(), expYear.val())) {
-          validation.invalidMsg({ $: $ }, selectors.expDate, ['Please, check expiration date.']);
+          validation.invalidMsg({ $: $, $el: $('#content') }, selectors.expDate, ['Please, check expiration date.']);
           return null;
         }
 
         if (!Stripe.card.validateCVC(cvc.val())) {
-          validation.invalidMsg({ $: $ }, selectors.cvc, ['Please, check CVC.']);
+          validation.invalidMsg({ $: $, $el: $('#content') }, selectors.cvc, ['Please, check CVC.']);
           return null;
         }
 
@@ -140,9 +138,9 @@ module.exports = {
 
       var card = validateCard($stripeForm,
         { number: 'card_number',
-          expDate: 'card_exp_date_year',
-          expMonth: 'card_exp_month',
-          expYear: 'card_exp_year',
+          expDate: 'card_exp_date_year__year',
+          expMonth: 'card_exp_month__month',
+          expYear: 'card_exp_date_year__year',
           cvc: 'card_cvc',
         });
 
@@ -151,39 +149,65 @@ module.exports = {
         return;
       }
 
+      if (!this.eSignFullName.val().trim()) {
+        validation.invalidMsg({ $: $ }, 'full-name', ['Check your name']);
+        $payBtn.prop('disabled', false);
+        return;
+      }
+
+      app.showLoading();
+
       Stripe.setPublishableKey(stripeKey);
 
       Stripe.card.createToken(card, (status, stripeResponse) => {
         if (stripeResponse.error) {
           validation.invalidMsg({ $: $ }, 'form-section', [stripeResponse.error.message]);
           $payBtn.prop('disabled', false); // Re-enable submission
+          app.hideLoading();
           return;
         }
 
         api.makeRequest(formcServer + '/' + this.model.id + '/stripe', "PUT", {
           stripeToken: stripeResponse.id
-        }).done((formcResponse, statusText, xhr)=>{
+        }).done((formcResponse, statusText, xhr) => {
           if (xhr.status !== 200) {
-            validation.invalidMsg({'$': $}, "expiration-block", [formcResponse.description || 'Some error message should be here']);
+            validation.invalidMsg({'$': $}, "expiration-block",
+              [formcResponse.description || 'Some error message should be here']);
+
             $payBtn.prop('disabled', false);
+            app.hideLoading();
             return;
           }
 
-          api.makeRequest(authServer + '/user/company').done((company) => {
-            $stripeForm.remove();
+          //todo; sign data, make request to server
+          // let signData = {
+          //   type: 'POST',
+          //   'company_name': this.eSignCompanyName.val(),
+          //   'full_name': this.eSignFullName.val(),
+          // };
+          //
+          // if (this.model.is_paid == false) {
+          //   signData.company_name = this.eSignCompanyName.val();
+          //   signData.full_name = this.eSignFullName.val();
+          // }
 
-            this.eSignCompanyName.val(company.name || '');
 
-            let fullName = app.user.get('first_name') + ' ' + app.user.get('first_name');
-            this.eSignFullName.val(fullName);
-            this.changeSign();
 
-            this.$('.electronically-sign').removeClass('collapse');
-          });
+          this.model.is_paid = true;
+          delete this.fields.full_name;
 
-        }).fail((xhr, ajaxOptions, err)=>{
-          validation.invalidMsg({'$': $}, "expiration-block", [xhr.responseJSON.non_field_errors || "An error occurred, please, try again later."]);
+          $stripeForm.remove();
+
+          this.$('#save-button-block').removeClass('collapse');
+
+          app.hideLoading();
+
+        }).fail((xhr, ajaxOptions, err) => {
+          validation.invalidMsg({'$': $}, "expiration-block",
+            [xhr.responseJSON.non_field_errors || 'An error occurred, please, try again later.']);
+
           $payBtn.prop('disabled', false);
+          app.hideLoading();
         });
 
         return false;
@@ -197,23 +221,12 @@ module.exports = {
       let $submitBtn = $target.find('#pay-btn');
       $submitBtn.prop('disabled', true);
 
-      var data = $target.serializeJSON();
+      var data = $target.serializeJSON({ checkboxUncheckedValue: 'false', useIntKeysAsArrayIndex: true });
 
       // ToDo
       // Fix this
       if (data.failed_to_comply_choice == false) {
         data.failed_to_comply = 'Please explain.';
-      }
-
-      let signData = {
-        type: 'POST',
-        'company_name': this.eSignCompanyName.val(),
-        'full_name': this.eSignFullName.val(),
-      };
-
-      if(this.model.is_paid == false) {
-        signData.company_name = this.eSignCompanyName.val();
-        signData.full_name = this.eSignFullName.val();
       }
 
       api.submitAction.call(this, e, data);
@@ -288,7 +301,7 @@ module.exports = {
           fields: this.fields,
           values: this.model,
           campaignId: this.campaign.id,
-          roles: ['shareholder', 'director', 'officer'],
+          roles: ['Shareholder', 'Director', 'Officer'],
           titles: [
             '',
             'CEO/President',

@@ -9,6 +9,7 @@ module.exports = Backbone.Router.extend({
     'account/linkedin/login/': 'loginLinkedin',
     'account/finish/login/': 'finishSocialLogin',
     'account/reset': 'resetPassword',
+    'code/:code': 'membershipConfirmation',
   },
 
   login(id) {
@@ -152,6 +153,28 @@ module.exports = Backbone.Router.extend({
           i.render();
           app.hideLoading();
       });
+  },
+
+
+  membershipConfirmation(code) {
+    require.ensure([], function() {
+      api.makeRequest(formcServer + '/invitation/' + code, 'GET').done((response) => {
+
+        const data = {
+          company_name: response.company_name,
+          title: response.title,
+          code: code,
+        };
+
+        const View = require('components/anonymousAccount/views.js');
+        const i = new View.membershipConfirmation(_.extend({
+          el: '#content',
+        }, data));
+        i.render();
+        app.hideLoading();
+      });
+
+    });
   },
 
 });    

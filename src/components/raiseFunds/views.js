@@ -106,6 +106,7 @@ module.exports = {
       'click .update-location': 'updateLocation',
       'click .onPreview': onPreviewAction,
       'click .submit_form': api.submitAction,
+      'change #website': appendHttpIfNecessary,
       'change #website,#twitter,#facebook,#instagram,#linkedin': 'appendHttpsIfNecessary',
     }, leavingConfirmationHelper.events, phoneHelper.events, menuHelper.events),
 
@@ -115,7 +116,7 @@ module.exports = {
 
     initialize(options) {
       this.fields = options.fields;
-      this.campaign = options.campaign;
+      this.formc = options.formc;
       this.$el.on('keypress', ':input:not(textarea)', function (event) {
         if (event.keyCode == 13) {
           event.preventDefault();
@@ -180,7 +181,7 @@ module.exports = {
           fields: this.fields,
           values: this.model,
           user: app.user.toJSON(),
-          campaign: this.campaign,
+          formc: this.formc,
           states: this.usaStates,
         })
       );
@@ -188,14 +189,12 @@ module.exports = {
     },
 
     _success(data) {
-      if (this.campaign.hasOwnProperty('id') == false) {
-        // IF we dont have campaign data
-        // Server should create it
-        this.campaign = data.campaign;
+      if (this.hasOwnProperty('formc') == false) {
+        data.campaign_id = this.formc.campaign_id;
       }
 
       app.routers.navigate(
-        '/campaign/' + this.campaign.id + '/general_information',
+        '/campaign/' + data.campaign_id + '/general_information',
         { trigger: true, replace: false }
       );
     },
@@ -806,6 +805,7 @@ module.exports = {
         'click .onPreview': onPreviewAction,
         'click .submit_form': submitCampaign,
         'click .submit-specifics': 'checkMinMaxRaise',
+        'change #valuation_determine': 'valuationDetermine',
       }, leavingConfirmationHelper.events, menuHelper.events, dropzoneHelpers.events),
 
       checkMinMaxRaise(e) {
@@ -870,6 +870,16 @@ module.exports = {
 
       initialize(options) {
         this.fields = options.fields;
+        this.fields.description_determine = {
+          label: 'Description'
+        }
+        this.fields.valuation_determine = {}
+        this.fields.valuation_determine.validate = {}
+        this.fields.valuation_determine.validate.choices = {
+        0: 'I used the Established Business Valuation Calculator for reference',
+        1: 'I used the New Startup Valuation Calculator for reference',
+        2: 'Other',
+        };
         this.labels = {
           investor_presentation_data: '',
           minimum_raise: 'Our Minimum Total Raise is',
@@ -883,6 +893,9 @@ module.exports = {
           max_number_of_shares: 'Maximum № of Shares',
           min_equity_offered: 'Minimum Equity Offered',
           max_equity_offered: 'Maximum Equity Offered',
+          security_type: 'Security Type',
+          valuation_determine : 'How did you determine your valuation?',
+          description_determine: 'Description',
         };
         this.assignLabels();
         this.createIndexes();
@@ -895,7 +908,13 @@ module.exports = {
           }
         });
       },
-
+      valuationDetermine(e) {
+      if (e.target.options[e.target.selectedIndex].value == '2') {
+        $('#description_determine').parent().parent().show();
+      } else {
+        $('#description_determine').parent().parent().hide();
+      }
+    },
       updateSecurityType(e) {
         let val = e.currentTarget.value;
         $('.security_type_list').hide();
@@ -915,32 +934,7 @@ module.exports = {
               })
         );
 
-        const Model = require('components/campaign/models.js');
-        dropzoneHelpers.methods.createFileDropzone(
-            'investor_presentation',
-            'investor_presentation', '',
-            (data) => {
-                this.model.urlRoot = this.urlRoot;
-                // this.model.save({
-                  // (new Model.model(this.model)).save({
-                  //   investor_presentation: data.file_id,
-                  // }, {
-                  //   patch: true,
-                  app.makeRequest(this.urlRoot +'/' + this.model.id, {investor_presentation: data.file_id, type: 'PATCH'})
-                  // }).then((data) => {
-                  .then((data) => {
-                    const extension = data.investor_presentation_data.name.split('.').pop();
-                    const suffix = extension == 'pdf' ? '_pdf' : (['ppt', 'pptx'].indexOf(extension) != -1 ? '_pptx' : '_file');
-                    $('.img-investor_presentation').attr('src', '/img/default' + suffix + '.png');
-                    // $('.img-investor_presentation').after('<a class="link-3" href="' + data.url + '">' + data.name + '</a>');
-                    // $('.a-investor_presentation').attr('href', data.url).text(data.name);
-                  });
-              }
-        );
-
-        $('.a-investor_presentation').click(function (e) {
-          e.stopPropagation();
-        });
+        setTimeout(() => { this.createDropzones() } , 1000);
 
         this.calculateNumberOfShares(null);
 
@@ -960,7 +954,7 @@ module.exports = {
           $('.security_type_list').hide();
           $('.security_type_1').show();
         }        
-
+        $('#description_determine').parent().parent().hide();
         return this;
       },
     }, leavingConfirmationHelper.methods, menuHelper.methods, dropzoneHelpers.methods, addSectionHelper.methods)),
