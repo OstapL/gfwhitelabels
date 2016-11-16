@@ -221,7 +221,7 @@ module.exports = {
       let $submitBtn = $target.find('#pay-btn');
       $submitBtn.prop('disabled', true);
 
-      var data = $target.serializeJSON();
+      var data = $target.serializeJSON({ checkboxUncheckedValue: 'false', useIntKeysAsArrayIndex: true });
 
       // ToDo
       // Fix this
