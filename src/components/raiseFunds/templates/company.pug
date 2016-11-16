@@ -66,9 +66,9 @@ section.create-company.container.m-b-85
               +fieldDateMonth("founding_date", _.extend({
                 class: 'col-xl-4 col-lg-4 col-xs-4 p-l-0  m-d-p-r-5',
               }, fields.dob))
-              +fieldDateDay("dob", _.extend({
+              +fieldDateDay("founding_date", _.extend({
                 class: 'col-xl-4 col-lg-4 col-xs-4 p-r-0 m-d-p-l-5',
-              }, fields.dob))
+              }, fields.founding_date))
               +fieldDateYear("founding_date", _.extend({
                 class: 'col-xl-4 col-lg-4 col-xs-4 p-r-0 m-d-p-l-10',
                 placeholder: 'YYYY',
@@ -141,10 +141,9 @@ section.create-company.container.m-b-85
               type: 'text',
               }, fields.linkedin))
         .row.m-t-2.pull-lg-right.text-md-center.text-sm-center.text-xs-center
-          if campaignId
-            .col-xl-12
-              button(type="submit").btn.btn-primary.text-uppercase save and continue
-                i.fa.fa-angle-right
+          .col-xl-12
+            button(type="submit").btn.btn-primary.text-uppercase save and continue
+              i.fa.fa-angle-right
 
 div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")#company_publish.modal.fade
   div(role="document").modal-dialog

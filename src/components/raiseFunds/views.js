@@ -189,14 +189,12 @@ module.exports = {
     },
 
     _success(data) {
-      if (this.campaign.hasOwnProperty('id') == false) {
-        // IF we dont have campaign data
-        // Server should create it
-        this.campaign = data.campaign;
+      if (this.hasOwnProperty('formc') == false) {
+        data.campaign_id = this.formc.campaign_id;
       }
 
       app.routers.navigate(
-        '/campaign/' + this.campaign.id + '/general_information',
+        '/campaign/' + data.campaign_id + '/general_information',
         { trigger: true, replace: false }
       );
     },
