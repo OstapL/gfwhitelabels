@@ -156,25 +156,26 @@ module.exports = {
         $payBtn.prop('disabled', false);
         return;
       }
-      // Stripe.setPublishableKey(stripeKey);
-      //
-      // Stripe.card.createToken(card, (status, stripeResponse) => {
-      //   if (stripeResponse.error) {
-      //     validation.invalidMsg({ $: $ }, 'form-section', [stripeResponse.error.message]);
-      //     $payBtn.prop('disabled', false); // Re-enable submission
-      //     return;
-      //   }
-      //
-      //   api.makeRequest(formcServer + '/' + this.model.id + '/stripe', "PUT", {
-      //     stripeToken: stripeResponse.id
-      //   }).done((formcResponse, statusText, xhr)=>{
-      //     if (xhr.status !== 200) {
-      //       validation.invalidMsg({'$': $}, "expiration-block", [formcResponse.description || 'Some error message should be here']);
-      //       $payBtn.prop('disabled', false);
-      //       return;
-      //     }
-      //
-      //     api.makeRequest(authServer + '/user/company').done((company) => {
+
+      Stripe.setPublishableKey(stripeKey);
+
+      Stripe.card.createToken(card, (status, stripeResponse) => {
+        if (stripeResponse.error) {
+          validation.invalidMsg({ $: $ }, 'form-section', [stripeResponse.error.message]);
+          $payBtn.prop('disabled', false); // Re-enable submission
+          return;
+        }
+
+        api.makeRequest(formcServer + '/' + this.model.id + '/stripe', "PUT", {
+          stripeToken: stripeResponse.id
+        }).done((formcResponse, statusText, xhr)=>{
+          if (xhr.status !== 200) {
+            validation.invalidMsg({'$': $}, "expiration-block", [formcResponse.description || 'Some error message should be here']);
+            $payBtn.prop('disabled', false);
+            return;
+          }
+
+          api.makeRequest(authServer + '/user/company').done((company) => {
             $stripeForm.remove();
 
             this.eSignCompanyName.val(company.name || '');
@@ -184,15 +185,15 @@ module.exports = {
             this.changeSign();
 
             this.$('#save-button-block').removeClass('collapse');
-        //   });
-        //
-        // }).fail((xhr, ajaxOptions, err)=>{
-        //   validation.invalidMsg({'$': $}, "expiration-block", [xhr.responseJSON.non_field_errors || "An error occurred, please, try again later."]);
-        //   $payBtn.prop('disabled', false);
-        // });
+          });
+
+        }).fail((xhr, ajaxOptions, err)=>{
+          validation.invalidMsg({'$': $}, "expiration-block", [xhr.responseJSON.non_field_errors || "An error occurred, please, try again later."]);
+          $payBtn.prop('disabled', false);
+        });
 
         return false;
-      // });
+      });
     },
 
     submit(e) {
