@@ -294,7 +294,7 @@ module.exports = {
           fields: this.fields,
           values: this.model,
           campaignId: this.campaign.id,
-          roles: ['shareholder', 'director', 'officer'],
+          roles: ['Shareholder', 'Director', 'Officer'],
           titles: [
             '',
             'CEO/President',

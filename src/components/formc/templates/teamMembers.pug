@@ -85,7 +85,7 @@ section.create-company-team-add.container
                   td.text-xs-center #{ person.first_name + ' ' + person.last_name }
                   +isInvited(person)
                   td.text-xl-center
-                    a(href="/formc/" + values.id + "/team-members/" +  '/' + person.user_id).link-1
+                    a(href="/formc/" + values.id + "/team-members/" +  roles[person.role[0]].toLowerCase() + '/' + person.user_id).link-1
                       i.fa.fa-pencil-square-o
                   td.text-xl-center
                     a(href="#" data-id=person.uuid data-role=roles[k]).link-1.delete-member
@@ -100,7 +100,6 @@ section.create-company-team-add.container
                   td.text-xl-center &nbsp;
                   td.text-xl-center &nbsp;
             each v,k in values.team_members
-              - console.log('v k ', v, k);
               - v.title = v.title ? v.title : [];
               if (v.title[0] != 1 && v.title[0] != 2 && v.title[0] != 5)
                 tr
@@ -114,7 +113,7 @@ section.create-company-team-add.container
                   td.text-xs-center #{ v.first_name + ' ' + v.last_name }
                   +isInvited(v)
                   td.text-xl-center
-                    a(href="/formc/" + values.id + "/team-members/" + roles[v.role[0]] + '/' + v.user_id).link-1
+                    a(href="/formc/" + values.id + "/team-members/" + roles[v.role[0]].toLowerCase() + '/' + v.user_id).link-1
                       i.fa.fa-pencil-square-o
                   td.text-xl-center
                     a(href="#" data-id=v.uuid data-role=roles[v.role]).link-1.delete-member
