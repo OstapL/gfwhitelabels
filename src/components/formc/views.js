@@ -103,7 +103,7 @@ module.exports = {
     stripeSubmit(e) {
       e.preventDefault();
 
-      let $stripeForm = $('.expiration-block');
+      let $stripeForm = $('.payment-block');
 
       function validateCard(form, selectors) {
 
@@ -151,25 +151,30 @@ module.exports = {
         return;
       }
 
-      Stripe.setPublishableKey(stripeKey);
-
-      Stripe.card.createToken(card, (status, stripeResponse) => {
-        if (stripeResponse.error) {
-          validation.invalidMsg({ $: $ }, 'form-section', [stripeResponse.error.message]);
-          $payBtn.prop('disabled', false); // Re-enable submission
-          return;
-        }
-
-        api.makeRequest(formcServer + '/' + this.model.id + '/stripe', "PUT", {
-          stripeToken: stripeResponse.id
-        }).done((formcResponse, statusText, xhr)=>{
-          if (xhr.status !== 200) {
-            validation.invalidMsg({'$': $}, "expiration-block", [formcResponse.description || 'Some error message should be here']);
-            $payBtn.prop('disabled', false);
-            return;
-          }
-
-          api.makeRequest(authServer + '/user/company').done((company) => {
+      if (!this.eSignFullName.val().trim()) {
+        validation.invalidMsg({ $: $ }, 'full-name', ['Check your name']);
+        $payBtn.prop('disabled', false);
+        return;
+      }
+      // Stripe.setPublishableKey(stripeKey);
+      //
+      // Stripe.card.createToken(card, (status, stripeResponse) => {
+      //   if (stripeResponse.error) {
+      //     validation.invalidMsg({ $: $ }, 'form-section', [stripeResponse.error.message]);
+      //     $payBtn.prop('disabled', false); // Re-enable submission
+      //     return;
+      //   }
+      //
+      //   api.makeRequest(formcServer + '/' + this.model.id + '/stripe', "PUT", {
+      //     stripeToken: stripeResponse.id
+      //   }).done((formcResponse, statusText, xhr)=>{
+      //     if (xhr.status !== 200) {
+      //       validation.invalidMsg({'$': $}, "expiration-block", [formcResponse.description || 'Some error message should be here']);
+      //       $payBtn.prop('disabled', false);
+      //       return;
+      //     }
+      //
+      //     api.makeRequest(authServer + '/user/company').done((company) => {
             $stripeForm.remove();
 
             this.eSignCompanyName.val(company.name || '');
@@ -178,16 +183,16 @@ module.exports = {
             this.eSignFullName.val(fullName);
             this.changeSign();
 
-            this.$('.electronically-sign').removeClass('collapse');
-          });
-
-        }).fail((xhr, ajaxOptions, err)=>{
-          validation.invalidMsg({'$': $}, "expiration-block", [xhr.responseJSON.non_field_errors || "An error occurred, please, try again later."]);
-          $payBtn.prop('disabled', false);
-        });
+            this.$('#save-button-block').removeClass('collapse');
+        //   });
+        //
+        // }).fail((xhr, ajaxOptions, err)=>{
+        //   validation.invalidMsg({'$': $}, "expiration-block", [xhr.responseJSON.non_field_errors || "An error occurred, please, try again later."]);
+        //   $payBtn.prop('disabled', false);
+        // });
 
         return false;
-      });
+      // });
     },
 
     submit(e) {
