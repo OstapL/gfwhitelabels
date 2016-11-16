@@ -307,7 +307,7 @@ mixin userprofileDropzone(name, attr)
       data-content=(attr.help_text ? attr.help_text : '')
     )
 
-      div(class=(attr.class + ' dropzone__' + name))
+      div(class=((attr.class || '') + ' dropzone__' + name))
         div(class=" col-lg-12 border-dropzone")
           div(class="uploading collapse")
             img(alt="activity indicator" src="/img/ajax-loader.gif")
