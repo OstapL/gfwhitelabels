@@ -122,12 +122,6 @@ module.exports = {
           return false;
         }
       });
-      this.fields.min_equity_offered = {
-        label: 'Minimum Equity Offered'
-      }
-      this.fields.max_equity_offered = {
-        label: 'Maximum Equity Offered'
-      }
       this.labels = {
         name: 'Legal Name of Company',
         industry: 'Industry',
@@ -145,7 +139,6 @@ module.exports = {
         facebook: 'Facebook',
         instagram: 'Instagram',
         linkedin: 'Linkedin',
-        security_type: 'Security Type',
       };
       this.assignLabels();
       if(this.model.hasOwnProperty('id')) {
@@ -877,6 +870,13 @@ module.exports = {
 
       initialize(options) {
         this.fields = options.fields;
+        this.fields.valuation_determine = {}
+        this.fields.valuation_determine.validate = {}
+        this.fields.valuation_determine.validate.choices = {
+        0: 'Other',
+        1: 'Common Stock',
+        2: 'Other',
+        };
         this.labels = {
           investor_presentation_data: '',
           minimum_raise: 'Our Minimum Total Raise is',
@@ -890,6 +890,8 @@ module.exports = {
           max_number_of_shares: 'Maximum № of Shares',
           min_equity_offered: 'Minimum Equity Offered',
           max_equity_offered: 'Maximum Equity Offered',
+          security_type: 'Security Type',
+          valuation_determine : 'How did you determine your valuation?',
         };
         this.assignLabels();
         this.createIndexes();
