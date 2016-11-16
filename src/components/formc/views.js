@@ -66,9 +66,6 @@ module.exports = {
       this.campaign = options.campaign;
 
       if(this.model.is_paid === false) {
-        this.fields.company_name = {
-          required: true
-        };
         this.fields.full_name = { 
           required: true 
         };
@@ -85,6 +82,7 @@ module.exports = {
           fields: this.fields,
           values: this.model,
           campaignId: this.campaign.id,
+          fullName: app.user.get('first_name') + ' ' + app.user.get('first_name'),
         })
       );
 
@@ -157,39 +155,59 @@ module.exports = {
         return;
       }
 
+      app.showLoading();
+
       Stripe.setPublishableKey(stripeKey);
 
       Stripe.card.createToken(card, (status, stripeResponse) => {
         if (stripeResponse.error) {
           validation.invalidMsg({ $: $ }, 'form-section', [stripeResponse.error.message]);
           $payBtn.prop('disabled', false); // Re-enable submission
+          app.hideLoading();
           return;
         }
 
         api.makeRequest(formcServer + '/' + this.model.id + '/stripe', "PUT", {
           stripeToken: stripeResponse.id
-        }).done((formcResponse, statusText, xhr)=>{
+        }).done((formcResponse, statusText, xhr) => {
           if (xhr.status !== 200) {
-            validation.invalidMsg({'$': $}, "expiration-block", [formcResponse.description || 'Some error message should be here']);
+            validation.invalidMsg({'$': $}, "expiration-block",
+              [formcResponse.description || 'Some error message should be here']);
+
             $payBtn.prop('disabled', false);
+            app.hideLoading();
             return;
           }
 
-          api.makeRequest(authServer + '/user/company').done((company) => {
-            $stripeForm.remove();
+          //todo; sign data, make request to server
+          // let signData = {
+          //   type: 'POST',
+          //   'company_name': this.eSignCompanyName.val(),
+          //   'full_name': this.eSignFullName.val(),
+          // };
+          //
+          // if (this.model.is_paid == false) {
+          //   signData.company_name = this.eSignCompanyName.val();
+          //   signData.full_name = this.eSignFullName.val();
+          // }
 
-            this.eSignCompanyName.val(company.name || '');
 
-            let fullName = app.user.get('first_name') + ' ' + app.user.get('first_name');
-            this.eSignFullName.val(fullName);
-            this.changeSign();
 
-            this.$('#save-button-block').removeClass('collapse');
-          });
+          this.model.is_paid = true;
+          delete this.fields.full_name;
 
-        }).fail((xhr, ajaxOptions, err)=>{
-          validation.invalidMsg({'$': $}, "expiration-block", [xhr.responseJSON.non_field_errors || "An error occurred, please, try again later."]);
+          $stripeForm.remove();
+
+          this.$('#save-button-block').removeClass('collapse');
+
+          app.hideLoading();
+
+        }).fail((xhr, ajaxOptions, err) => {
+          validation.invalidMsg({'$': $}, "expiration-block",
+            [xhr.responseJSON.non_field_errors || 'An error occurred, please, try again later.']);
+
           $payBtn.prop('disabled', false);
+          app.hideLoading();
         });
 
         return false;
@@ -209,17 +227,6 @@ module.exports = {
       // Fix this
       if (data.failed_to_comply_choice == false) {
         data.failed_to_comply = 'Please explain.';
-      }
-
-      let signData = {
-        type: 'POST',
-        'company_name': this.eSignCompanyName.val(),
-        'full_name': this.eSignFullName.val(),
-      };
-
-      if(this.model.is_paid == false) {
-        signData.company_name = this.eSignCompanyName.val();
-        signData.full_name = this.eSignFullName.val();
       }
 
       api.submitAction.call(this, e, data);
