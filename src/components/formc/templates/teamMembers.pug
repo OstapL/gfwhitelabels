@@ -61,21 +61,6 @@ section.create-company-team-add.container
           i.fa.fa-plus
           |  ADD 20% VOTING SHAREHOLDER
 
-      if values.team_members
-        - counter = 0
-        each v,k in values.team_members
-          .col-lg-3.m-t-2.p-r-0.p-l-0.m-l-2.m-r-2
-            .team-add-item.text-lg-center.text-xs-center
-              a(href="/formc/" + values.id + "/team-members/" + roles[v.role] + '/' + v.user_id).link-1
-                img(src=v.photo alt=v.first_name).img-circle
-              //a(href="#" data-id=v.uuid data-role=roles[v.role] style="position: absolute").link-1.delete-member.pull-right
-                i.fa.fa-times
-              p.name.text-uppercase #{v.first_name} #{v.last_name}
-              p.small #{ roles[v.role] }
-              a(href="/formc/" + values.id + "/team-members/" + roles[v.role] + '/' + v.user_id).link-1
-                i.fa.fa-pencil-square-o
-          - counter ++
-
       .col-lg-12.table-responsive.m-t-2
         - var v = {};
         table.table.table-bordered.m-b-0.team-member-table
@@ -92,12 +77,11 @@ section.create-company-team-add.container
                   i.fa.fa-info-circle 
                   span.warning-text First of all please identify the Officers in your company responsible for the following 3 roles. Please note that, if necessary, the same person may be identified with multiple titles.
             - var requiredRoles = { 1: 'CEO/President', 2: 'Principal Financial Officer/Treasurer', 5: 'Controller/Principal Accounting Officer' };
-            each v,k in requiredRoles
-              - var person = values.team_members.filter((el) => { return el.role[0] == v})
-              if person.length
-                - person = person[0];
+            each k,v in requiredRoles
+              - var persons = values.team_members.filter((el) => { return (el.title ? el.title.indexOf(parseInt(v)) != -1: false)})
+              for person in persons
                 tr
-                  td #{ v } 
+                  td #{ k } 
                   td.text-xs-center #{ person.first_name + ' ' + person.last_name }
                   +isInvited(person)
                   td.text-xl-center
@@ -108,7 +92,7 @@ section.create-company-team-add.container
                       i.fa.fa-times
               else
                 tr
-                  td #{ v }
+                  td #{ k }
                   td.text-xs-center
                     span.identify Please Identify
                   td.text-xs-center
@@ -116,13 +100,21 @@ section.create-company-team-add.container
                   td.text-xl-center &nbsp;
                   td.text-xl-center &nbsp;
             each v,k in values.team_members
-              if v.role == -1
+              - console.log('v k ', v, k);
+              - v.title = v.title ? v.title : [];
+              if (v.title[0] != 1 && v.title[0] != 2 && v.title[0] != 5)
                 tr
-                  td #{ roles[k] }
+                  td 
+                    if v.title[0]
+                      each r in v.title
+                        | #{ titles[r] } 
+                    else
+                      each r in v.role
+                        | #{ roles[r] } 
                   td.text-xs-center #{ v.first_name + ' ' + v.last_name }
                   +isInvited(v)
                   td.text-xl-center
-                    a(href="/formc/" + values.id + "/team-members/" + roles[v.role] + '/' + v.user_id).link-1
+                    a(href="/formc/" + values.id + "/team-members/" + roles[v.role[0]] + '/' + v.user_id).link-1
                       i.fa.fa-pencil-square-o
                   td.text-xl-center
                     a(href="#" data-id=v.uuid data-role=roles[v.role]).link-1.delete-member
@@ -132,4 +124,4 @@ section.create-company-team-add.container
       div(style="display: " +  (values.team_members.length >= 1 ? 'block' : 'none')).col-lg-12.pull-lg-right.p-r-0.m-t-3
 
       .col-lg-12.text-md-center.text-sm-center.text-xs-center.m-t-3
-        button(type="submit").btn.btn-primary.text-uppercase.pull-lg-right Save
+        button(type="submit").btn.btn-primary.text-uppercase.pull-lg-right Save And Continue
