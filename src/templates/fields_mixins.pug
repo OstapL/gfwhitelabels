@@ -168,7 +168,7 @@ mixin fieldRadioLabel(name, attr)
   div(class=attr.class1 + (attr.required == true ? ' required ' : ' '))
     label!= attr.label
   div(class=attr.class2)
-    div(class="form-group m-b-0 "  + (attr.row == 0 ? '' : 'row ') + (attr.id || name)  + ' ' + attr.type)
+    div(class="form-group m-b-0 "  + (attr.row == 0 ? '' : '') + (attr.id || name)  + ' ' + attr.type)
       div(class=attr.class3).radio-input
         each v, k in attr.validate.choices
           label
@@ -269,7 +269,7 @@ mixin fieldDateYear(name, attr)
 
 mixin fileDropzone(name, attr)
     - var icon = attr.type
-    if attr.hasOwnProperty('data') == false || attr.data == null
+    if attr.hasOwnProperty('data') == false
       - attr.data = {};
     if attr.data.hasOwnProperty('urls') == false
       - attr.data.urls = [];
@@ -318,7 +318,7 @@ mixin userprofileDropzone(name, attr)
       data-content=(attr.help_text ? attr.help_text : '')
     )
 
-      div(class=(attr.class + ' dropzone__' + name))
+      div(class=((attr.class || '') + ' dropzone__' + name))
         div(class=" col-lg-12 border-dropzone")
           div(class="uploading collapse")
             img(alt="activity indicator" src="/img/ajax-loader.gif")

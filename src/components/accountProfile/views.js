@@ -16,8 +16,6 @@ module.exports = {
       'keyup #zip_code': 'changeZipCode',
       'change .js-city': 'changeAddressManually',
       'change .js-state': 'changeAddressManually',
-      // dragover: 'globalDragover',
-      // dragleave: 'globalDragleave',
       'change .country-select': 'changeCountry',
     }, phoneHelper.events, dropzoneHelpers.events),
 
@@ -37,19 +35,9 @@ module.exports = {
       }
     },
 
-    // globalDragover() {
-    //   // this.$('.dropzone').css({ border: 'dashed 1px lightgray' });
-    //   this.$('.border-dropzone').addClass('active-border');
-    // },
-    //
-    // globalDragleave() {
-    //   // this.$('.dropzone').css({ border: 'none' });
-    //   this.$('.border-dropzone').removeClass('active-border');
-    // },
-
     initialize(options) {
       this.fields = options.fields;
-      this.fields.image = { type: 'file'};
+      this.fields.image = { type: 'image' };
 
       this.fields.phone.required = true;
       this.fields.first_name.required = true;
@@ -95,43 +83,6 @@ module.exports = {
       this.stateField = this.$('.js-state');
       this.zipCodeField = this.$('#zip_code');
 
-      /*
-      dropzoneHelpers.createImageDropzone(
-        dropzone,
-        'image', 
-        'avatars', '', 
-        (data) => {
-          app.user.save({
-            image: data.file_id,
-          }, {
-            patch: true
-          }).then((data) => {
-            $('#user-thumbnail').attr(
-              'src', 
-              app.getThumbnail('55x55', data.image_data.thumbnails)
-            );
-            var r = _.extend(data, localStorage.getItem('user'));
-            localStorage.setItem('user', JSON.stringify(r));
-          });
-        }
-      );
-      */
-      /*
-         app.createFileDropzone(
-         dropzone,
-         'image', 
-         'avatars', '', 
-         (data) => {
-         this.model.save({
-         image: data.file_id,
-         }, {
-         patch: true
-         }).then((model) => {
-         localStorage.setItem('user', JSON.stringify(this.model.toJSON()));
-         });
-         }
-         );
-         */
       return this;
     },
 
@@ -223,7 +174,8 @@ module.exports = {
 
     changeAddressManually() {
       this.cityStateArea.text(`${this.cityField.val()}/${this.stateField.val()}`);
-    }
+    },
+
   }, phoneHelper.methods, dropzoneHelpers.methods)),
 
   changePassword: Backbone.View.extend({
@@ -341,4 +293,5 @@ module.exports = {
       return false;
     },
   }),
+
 };
