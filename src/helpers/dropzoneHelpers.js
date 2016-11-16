@@ -120,16 +120,19 @@ module.exports = {
     },
 
     _notifyServerAboutChanges(name, data) {
-      let params = {
-        type: 'PATCH',
-        [name]: data[0].id,
-        [name.replace('_id', '_data')]: data,
-      };
+      const cropper = require('helpers/cropHelper.js');
+      cropper.showCropper(data[0].urls[0]);
 
-      app.makeRequest(
-        this.urlRoot.replace(':id', this.model.id),
-        params
-      );
+      // let params = {
+      //   type: 'PATCH',
+      //   [name]: data[0].id,
+      //   [name.replace('_id', '_data')]: data,
+      // };
+      //
+      // app.makeRequest(
+      //   this.urlRoot.replace(':id', this.model.id),
+      //   params
+      // );
     },
 
     _file(name) {
@@ -154,6 +157,7 @@ module.exports = {
           $('.img-' + name).attr('src', '/img/icons/' + icon + '.png');
           $('.a-' + name).attr('href', data[0].urls[0]).html(data[0].name);
           $('#' + name).val(data[0].id);
+
           this.model[name] = data[0].id;
           this.model[name.replace('_id', '_data')] = data;
         }
@@ -175,7 +179,7 @@ module.exports = {
         url: filerUrl + '/upload',
         paramName: name,
         params: dzParams,
-        clickable: '.dropzone__' + name + ' span',
+        clickable: '.dropzone__' + name + ' .border-dropzone',
         acceptedFiles: 'image/*',
       });
 
