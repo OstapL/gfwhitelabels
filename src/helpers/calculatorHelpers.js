@@ -1,25 +1,27 @@
+const formatPrice = function(price = '', withDollarSign = true) {
+    // here we need to take care of passing the number of 0
+    // if we got a 0 we should return $0, not empty string
+    // if (!+price) return ''; doesn't take care the situation above, thus I use the following one.
+    // Arthur Yip 2016-9-14
+    if (!price && !(price === 0)) return '';
+    price = price + '';
+    price = price.replace(/,/g, '');
+    let deci;
+    [price, deci] = price.split('.');
+    var result =  (withDollarSign ? "$" : '') + price.split('').reverse().map(function(item, index) {
+            return (index + 1) % 3 == 0 && (index + 1) != price.length ? ',' + item : item
+        }).reverse().join('');
+    if (deci) result += '.' + deci;
+    return result;
+};
+
 module.exports = {
-    formatPrice(price = '') {
-        // here we need to take care of passing the number of 0
-        // if we got a 0 we should return $0, not empty string
-        // if (!+price) return ''; doesn't take care the situation above, thus I use the following one.
-        // Arthur Yip 2016-9-14
-        if (!price && !(price === 0)) return '';
-        price = price + '';
-        price = price.replace(/,/g, '');
-        let deci;
-        [price, deci] = price.split('.');
-        var result =  "$" + price.split('').reverse().map(function(item, index) {
-                return (index + 1) % 3 == 0 && (index + 1) != price.length ? ',' + item : item
-            }).reverse().join('');
-        if (deci) result += '.' + deci;
-        return result;
-    },
+    formatPrice: formatPrice,
 
     formatPercentage(percentage) {
         let result = Number(percentage.replace(/%/g, ''));
         if (!(result && 0 <= result)) return percentage;
-        return result + '%';
+        return formatPrice(result, false) + '%';
     },
 
     getCaretPosition(oField) {

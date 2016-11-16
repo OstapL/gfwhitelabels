@@ -5,6 +5,8 @@ import flyPriceFormatter from '../../helpers/flyPriceFormatter';
 import '../../js/graf/graf.js';
 import '../../js/graf/jquery.flot.growraf';
 
+const settings = calculatorHelper.settings;
+
 const formatPrice = calculatorHelper.formatPrice;
 const formatPercentage = calculatorHelper.formatPercentage;
 const minPersents = 200;
@@ -43,17 +45,35 @@ module.exports = {
             // calculate your income
             'submit .js-calc-form': 'doCalculation',
             'keyup [data-input-mask="percent"]': 'savePercents',
+            'keydown [data-input-mask="percent"]': 'filterKeyCodeForPercentage',
             'blur [data-input-mask="percent"]': 'cutZeros'
+        },
+
+        filterKeyCodeForPercentage(e) {
+            if (!((((e.keyCode >= 48 && e.keyCode <= 57) || (e.keyCode >= 96 && e.keyCode <= 105)) && !(e.target.value.match(/\.\d{2}$/))) ||
+                    ((e.keyCode == 110 || e.keyCode == 190) && !(e.target.value.match(/\./))))
+                && !(e.keyCode == settings.BACKSPACEKEYCODE ||
+                        e.keyCode == settings.TABKEYCODE ||
+                        e.keyCode == settings.LEFTARROWKEYCODE ||
+                        e.keyCode == settings.RIGHTARROWKEYCODE ||
+                        e.keyCode == settings.HOMEKEYCODE ||
+                        e.keyCode == settings.ENDKEYCODE ||
+                        e.keyCode == settings.F5KEYCODE ||
+                        e.keyCode == settings.ENTERKEYCODE ||
+                        ((e.ctrlKey || e.metaKey) && e.keyCode == settings.CKEYCODE) ||
+                        ((e.ctrlKey || e.metaKey) && e.keyCode == settings.AKEYCODE) ||
+                        ((e.ctrlKey || e.metaKey) && e.keyCode == settings.VKEYCODE)
+                    )
+                ) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
         },
 
         savePercents(e) {
             let target = e.target,
-                value = e.target.value.replace('$', '');
+                value = e.target.value.replace(/[\$\%\,]/g, '');
 
-            while(value && !value.match(/^(0|[1-9]\d*)(\.\d{0,2})?$/)){
-                value = value.substring(0, value.length - 1);
-            }
-            e.target.value = value;
             app.cache.payBackShareCalculator[target.dataset.modelValue] = Number(value);
         },
 
