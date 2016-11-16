@@ -122,12 +122,6 @@ module.exports = {
           return false;
         }
       });
-      this.fields.min_equity_offered = {
-        label: 'Minimum Equity Offered'
-      };
-      this.fields.max_equity_offered = {
-        label: 'Maximum Equity Offered'
-      };
       this.labels = {
         name: 'Legal Name of Company',
         industry: 'Industry',
@@ -145,7 +139,6 @@ module.exports = {
         facebook: 'Facebook',
         instagram: 'Instagram',
         linkedin: 'Linkedin',
-        security_type: 'Security Type',
       };
       this.assignLabels();
       if(this.model.hasOwnProperty('id')) {
@@ -813,6 +806,7 @@ module.exports = {
         'click .onPreview': onPreviewAction,
         'click .submit_form': submitCampaign,
         'click .submit-specifics': 'checkMinMaxRaise',
+        'change #valuation_determine': 'valuationDetermine',
       }, leavingConfirmationHelper.events, menuHelper.events, dropzoneHelpers.events),
 
       checkMinMaxRaise(e) {
@@ -877,6 +871,16 @@ module.exports = {
 
       initialize(options) {
         this.fields = options.fields;
+        this.fields.description_determine = {
+          label: 'Description'
+        }
+        this.fields.valuation_determine = {}
+        this.fields.valuation_determine.validate = {}
+        this.fields.valuation_determine.validate.choices = {
+        0: 'I used the Established Business Valuation Calculator for reference',
+        1: 'I used the New Startup Valuation Calculator for reference',
+        2: 'Other',
+        };
         this.labels = {
           investor_presentation_data: '',
           minimum_raise: 'Our Minimum Total Raise is',
@@ -890,6 +894,9 @@ module.exports = {
           max_number_of_shares: 'Maximum № of Shares',
           min_equity_offered: 'Minimum Equity Offered',
           max_equity_offered: 'Maximum Equity Offered',
+          security_type: 'Security Type',
+          valuation_determine : 'How did you determine your valuation?',
+          description_determine: 'Description',
         };
         this.assignLabels();
         this.createIndexes();
@@ -902,7 +909,13 @@ module.exports = {
           }
         });
       },
-
+      valuationDetermine(e) {
+      if (e.target.options[e.target.selectedIndex].value == '2') {
+        $('#description_determine').parent().parent().show();
+      } else {
+        $('#description_determine').parent().parent().hide();
+      }
+    },
       updateSecurityType(e) {
         let val = e.currentTarget.value;
         $('.security_type_list').hide();
