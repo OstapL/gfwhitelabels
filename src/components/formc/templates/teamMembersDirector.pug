@@ -87,7 +87,6 @@ section.formc-team-members-director.container.m-b-85
           .col-xl-6.col-lg-6.form-group
             .row
               label.col-xl-6.col-lg-12.text-xl-right.text-lg-left.m-b-0.p-t-0 Board Service End Date
-                span.color-red *
               #board_service_end_date.col-xl-6.col-lg-12
                 .row.showPopover(data-content="If your Board Service has a term, please input the end date.  Otherwise, leave blank")
                   +fieldDateMonth("board_service_end_date", _.extend({
@@ -140,3 +139,4 @@ section.formc-team-members-director.container.m-b-85
           .col-xl-12
             .text-md-center.text-sm-center.text-xs-center
               button(type='submit').btn.btn-primary.text-uppercase.pull-lg-right Save
+              a(href='/formc/' + values.formc_id + '/team-members').btn.btn-secondary.text-uppercas.pull-lg-right.m-r-1 Cancel
