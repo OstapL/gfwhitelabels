@@ -52,12 +52,20 @@ module.exports = {
 
 
     $(document.body).append(modalTemplate);
-    $('.bd-example-modal-lg').modal();
+    const $modal = $('.bd-example-modal-lg');
+    $modal.modal();
+    $modal.on('hidden.bs.modal', (e) => {
+      $modal.remove();
+    });
 
     let $cropperOk = $('.cropper-ok');
     $cropperOk.on('click', function(e) {
       e.preventDefault();
+
+      $modal.modal('hide');
+
       console.log(cropper.getData(true));
+
       return false;
     });
 
