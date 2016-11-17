@@ -216,7 +216,6 @@ module.exports = {
         success(data) {
           let mimetypeIcons = require('helpers/mimetypeIcons.js');
           let icon = mimetypeIcons[data[0].mime.split('/')[1]];
-          debugger;
           if(this.model[name.replace('_id', '_data')].length == 0) {
             $('.img-' + name).attr('src', '/img/icons/' + icon + '.png');
             $('.a-' + name).attr('href', data[0].urls[0]).html(data[0].name);

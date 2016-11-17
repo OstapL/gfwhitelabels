@@ -5,6 +5,7 @@ import 'bootstrap-slider/dist/bootstrap-slider'
 import 'bootstrap-slider/dist/css/bootstrap-slider.css'
 
 let formatPrice = calculatorHelper.formatPrice;
+const validation = require('components/validation/validation.js');
 
 if (!app.cache.whatMyBusinessWorthCalculator) {
     app.cache.whatMyBusinessWorthCalculator = {
@@ -23,6 +24,25 @@ if (!app.cache.whatMyBusinessWorthCalculator) {
     }
 }
 
+const validate = function(e) {
+    let data = $(e.target).serializeJSON({ useIntKeysAsArrayIndex: true });
+    this.$('.help-block').remove();
+    if(!validation.validate(this.fields, data, this)) {
+        _(validation.errors).each((errors, key) => {
+            validation.invalidMsg(this, key, errors);
+        });
+        this.$('.help-block').prev().scrollTo(5);
+        return false;
+    }
+    return true;
+};
+
+const validatePercentage = function (value, attr, fn, model, computed) {
+    if (!(0 < this[value] && this[value] <= 100)) {
+        throw "Must be larger than 0.";
+    }
+};
+
 module.exports = {
     intro: Backbone.View.extend({
         el: '#content',
@@ -39,6 +59,55 @@ module.exports = {
         el: '#content',
 
         template: require('./templates/step1.pug'),
+
+        initialize(options) {
+            this.fields = {
+                excessCash: {
+                    required: true,
+                    type: 'integer',
+                    validate: {},
+                },
+                ownCache: {
+                    required: true,
+                    type: 'integer',
+                    validate: {},
+                },
+                projectedRevenueYear: {
+                    required: true,
+                    type: 'integer',
+                    validate: {},
+                },
+                projectedRevenueTwoYears: {
+                    required: true,
+                    type: 'integer',
+                    validate: {},
+                },
+                grossMargin: {
+                    required: true,
+                    type: 'integer',
+                    validate: {},
+                    fn: validatePercentage,
+                },
+                monthlyOperatingYear: {
+                    required: true,
+                    type: 'integer',
+                    validate: {},
+                },
+            };
+        },
+
+        events: {
+            'submit form': 'nextStep',
+        },
+
+        validate: validate,
+
+        nextStep(e) {
+            e.preventDefault();
+            if (this.validate(e)) {
+                app.routers.navigate('/calculator/whatmybusinessworth/step-2', {trigger: true});
+            }
+        },
 
         ui() {
             // get inputs by inputmask category

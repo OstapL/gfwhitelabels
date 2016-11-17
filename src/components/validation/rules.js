@@ -72,7 +72,6 @@ module.exports = {
     if (_.isString(fn)) {
       fn = model[fn];
     }
-
     return fn.call(model, value, attr, computed);
   },
 

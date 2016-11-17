@@ -407,7 +407,6 @@ module.exports = {
             'activation_code': this.code,
           },
       ).then((data) => {
-        debugger;
         localStorage.setItem('token', data.token);
         setTimeout(() => {
           window.location = this.next ? this.next : '/account/profile';
