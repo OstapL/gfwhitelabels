@@ -1,62 +1,5 @@
 const Dropzone = require('dropzone');
 
-const _dropzoneDefaults = {
-  createImageThumbnails: false,
-  thumbnail: function (file, dataUrl) {
-    console.log('preview', file, file.xhr, file.xhr.response, file.xhr.responseText);
-  },
-
-  previewTemplate: `<div class="dz-details"></div>
-          <div class="dz-progress"><span class="dz-upload" data-dz-uploadprogress></span></div>
-          <div class="dz-error-message"><span data-dz-errormessage></span></div>`,
-  headers: {
-    Authorization:  'Bearer ' + localStorage.getItem('token'),
-    'Cache-Control': null,
-    'X-Requested-With': null,
-  },
-
-  uploadprogress: function (file, progress, bytesSend) {
-    $(this.element).find('.uploading').show();
-  },
-
-  complete: function (file) {
-    $(this.element).find('.uploading').hide();
-  },
-
-  dragover: function (e) {
-    $('.border-dropzone').addClass('active-border');
-    $(this.element).find('.border-dropzone').addClass('dragging-over');
-  },
-
-  dragleave: function (e) {
-    $('.border-dropzone').removeClass('active-border');
-    $(this.element).find('.border-dropzone').removeClass('dragging-over');
-  },
-
-  dragend: function (e) {
-    $('.border-dropzone').removeClass('active-border');
-    $(this.element).find('.border-dropzone').removeClass('dragging-over');
-  },
-
-  drop: function (e) {
-    $(this.element).find('.uploading').show();
-
-    $('.border-dropzone').removeClass('active-border');
-    $(this.element).find('.border-dropzone').removeClass('dragging-over');
-  },
-
-};
-
-const _dropzoneDefaultHandlers = {
-  addedfile(file) {
-    _(this.files).each((f, i) => {
-      if (f.lastModified != file.lastModified) {
-        this.removeFile(f);
-      }
-    });
-  },
-};
-
 module.exports = {
 
   events: {
@@ -99,24 +42,76 @@ module.exports = {
       });
     },
 
-    _initializeDropzone(name, options, handlers, onSuccess) {
+    _initializeDropzone(name, options, onSuccess) {
 
-      let dropbox = new Dropzone('.dropzone__' + name, options);
+      let defaultOptions = {
+        url: filerUrl + '/upload',
+        clickable: '.dropzone__' + name + ' .border-dropzone',
+        createImageThumbnails: false,
+        thumbnail: function (file, dataUrl) {
+          console.log('preview', file, file.xhr, file.xhr.response, file.xhr.responseText);
+        },
+
+        previewTemplate: `<div class="dz-details"></div>
+          <div class="dz-progress"><span class="dz-upload" data-dz-uploadprogress></span></div>
+          <div class="dz-error-message"><span data-dz-errormessage></span></div>`,
+        headers: {
+          Authorization:  'Bearer ' + localStorage.getItem('token'),
+          'Cache-Control': null,
+          'X-Requested-With': null,
+        },
+
+        uploadprogress: function (file, progress, bytesSend) {
+          $(this.element).find('.uploading').show();
+        },
+
+        complete: function (file) {
+          $(this.element).find('.uploading').hide();
+        },
+
+        dragover: function (e) {
+          $('.border-dropzone').addClass('active-border');
+          $(this.element).find('.border-dropzone').addClass('dragging-over');
+        },
+
+        dragleave: function (e) {
+          $('.border-dropzone').removeClass('active-border');
+          $(this.element).find('.border-dropzone').removeClass('dragging-over');
+        },
+
+        dragend: function (e) {
+          $('.border-dropzone').removeClass('active-border');
+          $(this.element).find('.border-dropzone').removeClass('dragging-over');
+        },
+
+        drop: function (e) {
+          $(this.element).find('.uploading').show();
+
+          $('.border-dropzone').removeClass('active-border');
+          $(this.element).find('.border-dropzone').removeClass('dragging-over');
+        },
+
+      };
+
+      let dropbox = new Dropzone('.dropzone__' + name, _.extend(defaultOptions, options));
 
       $('.dropzone__' + name).addClass('dropzone');
 
-      _(handlers).each((handler, eventName) => {
-        if (eventName === 'success') {
-          dropbox.on(eventName, (file, data) => {
-            handler.call(this, data);
-            if (typeof(onSuccess) === 'function') {
-              onSuccess(data);
-            }
-          });
-        } else {
-          dropbox.on(eventName, handler);
+      dropbox.on('addedfile', (file) => {
+        _(this.files).each((f, i) => {
+          if (f.lastModified != file.lastModified) {
+            this.removeFile(f);
+          }
+        });
+      });
+
+      dropbox.on('success', (file, data) => {
+        this._notifyServerAboutChanges(name, data);
+        if (typeof(onSuccess) === 'function') {
+          onSuccess(data);
         }
       });
+
     },
 
     _notifyServerAboutChanges(name, data) {
@@ -134,103 +129,74 @@ module.exports = {
 
     _file(name) {
 
-      let dzParams = {
-        file_name: name,
-        // rename: '',
+      let dzOptions = {
+        paramName: 'file',
+        params: {
+          file_name: name,
+        },
+        acceptedFiles: 'application/pdf,.pptx,.ppt',
       };
 
-      let dzOptions = _.extend({}, _dropzoneDefaults, {
-        url: filerUrl + '/upload',
-        paramName: 'file',
-        params: dzParams,
-        clickable: '.dropzone__' + name + ' span',
-        acceptedFiles: 'application/pdf,.pptx,.ppt',
-      });
+      this._initializeDropzone(name, dzOptions, (data) => {
+        let mimetypeIcons = require('helpers/mimetypeIcons.js');
+        let icon = mimetypeIcons[data[0].mime.split('/')[1]];
+        $('.img-' + name).attr('src', '/img/icons/' + icon + '.png');
+        $('.a-' + name).attr('href', data[0].urls[0]).html(this._shortenFileName(data[0].name, 20).attr('title', data[0].name));
+        $('#' + name).val(data[0].id);
 
-      let dzHandlers = _.extend({}, _dropzoneDefaultHandlers, {
-        success(data) {
-          let mimetypeIcons = require('helpers/mimetypeIcons.js');
-          let icon = mimetypeIcons[data[0].mime.split('/')[1]];
-          $('.img-' + name).attr('src', '/img/icons/' + icon + '.png');
-          $('.a-' + name).attr('href', data[0].urls[0]).html(data[0].name);
-          $('#' + name).val(data[0].id);
-
-          this.model[name] = data[0].id;
-          this.model[name.replace('_id', '_data')] = data;
-        }
-      });
-
-      this._initializeDropzone(name, dzOptions, dzHandlers, (data) => {
-        this._notifyServerAboutChanges.call(this, name, data)
+        this.model[name] = data[0].id;
+        this.model[name.replace('_id', '_data')] = data;
       });
     },
 
     _image(name) {
-      let dzParams = {
-        folder: name,
-        file_name: name,
-        // rename: ''
+      let dzOptions = {
+        paramName: name,
+        params: {
+          file_name: name,
+          // rename: ''
+        },
+        acceptedFiles: 'image/*',
       };
 
-      let dzOptions = _.extend({}, _dropzoneDefaults, {
-        url: filerUrl + '/upload',
-        paramName: name,
-        params: dzParams,
-        clickable: '.dropzone__' + name + ' .border-dropzone',
-        acceptedFiles: 'image/*',
-      });
+      this._initializeDropzone(name, dzOptions, (data) => {
+        $('.img-' + name).attr('src', data[0].urls[0]);
+        $('.a-' + name).attr('href', data.origin_url).html(data.name);
+        //$('#' + name).val(data.file_id);
 
-      let dzHandlers = _.extend({}, _dropzoneDefaultHandlers, {
-        success(data) {
-          $('.img-' + name).attr('src', data[0].urls[0]);
-          $('.a-' + name).attr('href', data.origin_url).html(data.name);
-          $('#' + name).val(data.file_id);
+        this.model[name] = data[0].id;
+        this.model[name.replace('_id', '_data')] = data;
 
-          const cropperHelper = require('helpers/cropHelper.js');
-          cropperHelper.showCropper(data[0].urls[0]);
-
-        }
-      });
-
-      this._initializeDropzone(name, dzOptions, dzHandlers, (data) => {
-        this._notifyServerAboutChanges.call(this, name, data)
+        const cropperHelper = require('helpers/cropHelper.js');
+        cropperHelper.showCropper(data[0].urls[0]);
       });
     },
 
     _filefolder(name) {
-      let dzParams = {
-        folder: name,
-        file_name: name,
-        group_id: this.model[name],
+
+      let dzOptions = {
+        paramName: name,
+        params: {
+          //folder: name,
+          file_name: name,
+          group_id: this.model[name],
+        },
+        acceptedFiles: 'application/pdf',
       };
 
-      let dzOptions = _.extend({}, _dropzoneDefaults, {
-        url: filerUrl + '/upload',
-        paramName: name,
-        params: dzParams,
-        clickable: '.dropzone__' + name + ' span',
-        acceptedFiles: 'application/pdf',
-      });
-
-      let dzHandlers = _.extend({}, _dropzoneDefaultHandlers, {
-        success(data) {
-          let mimetypeIcons = require('helpers/mimetypeIcons.js');
-          let icon = mimetypeIcons[data[0].mime.split('/')[1]];
-          if(this.model[name.replace('_id', '_data')].length == 0) {
-            $('.img-' + name).attr('src', '/img/icons/' + icon + '.png');
-            $('.a-' + name).attr('href', data[0].urls[0]).html(data[0].name);
-          } else {
-            $('.a-' + name + ':last').after(
-              '<div class="col-xl-12"><img class="img-file img-' + name + '" src="/img/icons/' + icon + '.png" /></div>' +
-              '<a class="a-' + name + '" href="' + data[0].urls[0] + '">' + data[0].name + '</a>'
-            );
-          }
-          this.model[name.replace('_id', '_data')].push(data[0]);
+      this._initializeDropzone(name, dzOptions, (data) => {
+        let mimetypeIcons = require('helpers/mimetypeIcons.js');
+        let icon = mimetypeIcons[data[0].mime.split('/')[1]];
+        if(this.model[name.replace('_id', '_data')].length == 0) {
+          $('.img-' + name).attr('src', '/img/icons/' + icon + '.png');
+          $('.a-' + name).attr('href', data[0].urls[0]).html(data[0].name);
+        } else {
+          $('.a-' + name + ':last').after(
+            '<div class="col-xl-12"><img class="img-file img-' + name + '" src="/img/icons/' + icon + '.png" /></div>' +
+            '<a class="a-' + name + '" href="' + data[0].urls[0] + '">' + data[0].name + '</a>'
+          );
         }
-      });
-
-      this._initializeDropzone(name, dzOptions, dzHandlers, (data) => {
-        this._notifyServerAboutChanges.call(this, name, data)
+        this.model[name.replace('_id', '_data')].push(data[0]);
       });
     },
 
