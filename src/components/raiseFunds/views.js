@@ -825,7 +825,8 @@ module.exports = {
   specifics: Backbone.View.extend(_.extend({
       urlRoot: Urls['campaign-list']() + '/specifics',
       events: _.extend({
-        'submit form': api.submitAction,
+        // 'submit form': api.submitAction,
+        'submit form': 'submit',
         'change input[name="security_type"]': 'updateSecurityType',
         'focus #minimum_raise,#maximum_raise,#minimum_increment,#premoney_valuation,#price_per_share': 'clearZeroAmount',
         'change #minimum_raise,#maximum_raise,#minimum_increment,#premoney_valuation': 'formatNumber',
@@ -836,6 +837,16 @@ module.exports = {
         'click .submit_form': submitCampaign,
         'click .submit-specifics': 'checkMinMaxRaise',
       }, leavingConfirmationHelper.events, menuHelper.events),
+
+      submit(e) {
+        e.preventDefault();
+        let data = $(e.target).serializeJSON();
+        let fields = ['minimum_raise', 'maximum_raise', 'minimum_increment', 'min_number_of_shares', 'max_number_of_shares'];
+        fields.forEach(function(elem) {
+          data[elem] = data[elem].replace(/\,/g, '');
+        });
+        api.submitAction.call(this, e, data);
+      },
 
       checkMinMaxRaise(e) {
         let min = this.$('input[name=minimum_raise]').val();
