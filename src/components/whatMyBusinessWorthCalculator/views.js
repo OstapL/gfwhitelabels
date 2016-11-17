@@ -23,17 +23,6 @@ if (!app.cache.whatMyBusinessWorthCalculator) {
     }
 }
 
-let _allFieldsFilled = function (e) {
-    let result = true;
-    this.bootstrapSlider.each(function(elem) {
-        if(!$(this).bootstrapSlider('getValue')) result = false;
-    });
-    this.inputPrice.each(function(elem) {
-        if(!$(this).val()) result = false;
-    });
-    return result;
-}
-
 module.exports = {
     intro: Backbone.View.extend({
         el: '#content',
@@ -50,22 +39,6 @@ module.exports = {
         el: '#content',
 
         template: require('./templates/step1.pug'),
-
-        events: {
-            'submit form': 'nextStep',
-        },        
-
-        nextStep(e) {
-            e.preventDefault();
-            // check if all fields are filled
-            if (!this._allFieldsFilled()) {
-                alert('There are still empty fields!');
-                return;
-            }
-            app.routers.navigate('/calculator/whatmybusinessworth/step-2', {trigger: true});
-        },
-
-        _allFieldsFilled: _allFieldsFilled,
 
         ui() {
             // get inputs by inputmask category
@@ -122,15 +95,8 @@ module.exports = {
             'submit .js-calc-form': 'doCalculation',
         },
 
-        _allFieldsFilled: _allFieldsFilled,
-
         doCalculation(e) {
             e.preventDefault();
-
-            if (!this._allFieldsFilled()) {
-                alert('There are still empty fields!');
-                return;
-            }
 
             // "Baseline Capital Needs" calculations
             this.calculateWithDelta();
