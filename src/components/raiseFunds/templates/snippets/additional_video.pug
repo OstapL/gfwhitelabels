@@ -26,7 +26,7 @@ mixin row(value, index)
 
       .col-lg-5.p-l-1.col-md-12.col-xs-12
         .embed-responsive.embed-responsive-16by9 
-          - let additionalVideo = app.getVideoId(values ? values[index].link : null);
+          - var additionalVideo = app.getVideoId(values && values[index] ? values[index].link : null);
           if additionalVideo && additionalVideo.provider == 'youtube'
             iframe.embed-responsive-item(src="//www.youtube.com/embed/" + additionalVideo.id + "?rel=0" allowfullscreen="true")
           else if additionalVideo && additionalVideo.provider == 'vimeo'
