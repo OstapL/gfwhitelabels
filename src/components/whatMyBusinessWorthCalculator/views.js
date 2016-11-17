@@ -86,6 +86,8 @@ module.exports = {
                     required: true,
                     type: 'integer',
                     validate: {},
+                    // min_value: 1,
+                    // label: 'Gross Margin Percentage',
                     fn: validatePercentage,
                 },
                 monthlyOperatingYear: {
