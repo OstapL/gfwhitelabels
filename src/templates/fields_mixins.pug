@@ -312,7 +312,7 @@ mixin fileFolderDropzone(name, attr)
 
     div(
       class='row media-item ' + attr.class + ' ' + (attr.id || name) + 
-        (attr.required == true ? ' required ' : ' ') + ' fileDropzone' +
+        (attr.required == true ? ' required ' : ' ') + ' fileFolderDropzone' +
         (attr.help_text ? ' showPopover' : '')
       data-content=(attr.help_text ? attr.help_text : '')
     )
@@ -337,10 +337,11 @@ mixin fileFolderDropzone(name, attr)
                   - icon = attr.type
                 .col-xl-12
                   img(src='/img/icons/' + icon + '.png' alt=attr.label class="img-file img-" + name)
-                a(class=("a-" + name) href=v.urls[0]) #{ v.name }
+                a(class=("a-" + name) target="_blank" href=v.urls[0]) #{ v.name }
               else
                 .col-xl-12
                   img(src='/img/icons/' + icon + '.png' alt=attr.label class="img-file img-" + name)
+                a(class=("a-" + name) href="#")
 
 
 mixin userprofileDropzone(name, attr)
@@ -355,7 +356,7 @@ mixin userprofileDropzone(name, attr)
 
     div(
       class='row media-item ' + attr.class + ' ' + (attr.id || name) + 
-        (attr.required == true ? ' required ' : ' ') + ' fileDropzone' +
+        (attr.required == true ? ' required ' : ' ') + ' userProfileDropzone' +
         (attr.help_text ? ' showPopover' : '')
       data-content=(attr.help_text ? attr.help_text : '')
     )
@@ -382,12 +383,12 @@ mixin imageDropzone(name, attr)
 
     div(
       class='row media-item ' + attr.class + ' ' + (attr.id || name) + 
-        (attr.required == true ? ' required ' : ' ') + ' fileDropzone' +
+        (attr.required == true ? ' required ' : ' ') + ' imageDropzone' +
         (attr.help_text ? ' showPopover' : '')
       data-content=(attr.help_text ? attr.help_text : '')
     )
       div(class=attr.class1 + ' ' + (attr.required == true ? ' required ' : ' ') )
-        label( for=attr.id || name)!= attr.label
+        label(for=attr.id || name)!= attr.label
 
       div(class=(attr.class2 + ' dropzone__' + name))
         div(class=" col-lg-12 p-r-0 border-dropzone")
