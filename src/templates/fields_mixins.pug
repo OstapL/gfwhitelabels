@@ -338,6 +338,9 @@ mixin fileFolderDropzone(name, attr)
                 .col-xl-12
                   img(src='/img/icons/' + icon + '.png' alt=attr.label class="img-file img-" + name)
                 a(class=("a-" + name) href=v.urls[0]) #{ v.name }
+              else
+                .col-xl-12
+                  img(src='/img/icons/' + icon + '.png' alt=attr.label class="img-file img-" + name)
 
 
 mixin userprofileDropzone(name, attr)

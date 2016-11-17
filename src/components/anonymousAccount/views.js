@@ -138,7 +138,7 @@ module.exports = {
         localStorage.setItem('user', JSON.stringify(data));
         setTimeout(function() {
           window.location = app.getParams().next ? app.getParams().next : 
-                '/formc/17/introduction';
+                '/account/profile';
         }, 200);
       } else {
         validation.invalidMsg(form, '', 'Server return no authentication data');
