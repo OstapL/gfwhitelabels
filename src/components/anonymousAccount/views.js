@@ -405,7 +405,7 @@ module.exports = {
           'PUT',
           {
             'activation_code': this.code,
-          },
+          }
       ).then((data) => {
         localStorage.setItem('token', data.token);
         setTimeout(() => {
