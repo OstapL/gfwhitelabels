@@ -896,10 +896,18 @@ module.exports = {
         var maxRaise = parseInt(this.$('#maximum_raise').val().replace(/,/g, ''));
         var pricePerShare = parseInt(this.$('#price_per_share').val().replace(/,/g, ''));
         var premoneyVal = parseInt(this.$('#premoney_valuation').val().replace(/,/g, ''));
-        this.$('#min_number_of_shares').val((Math.round(minRaise / pricePerShare)).toLocaleString('en-US'));
-        this.$('#max_number_of_shares').val((Math.round(maxRaise / pricePerShare)).toLocaleString('en-US'));
-        this.$('#min_equity_offered').val(Math.round(100 * minRaise / (minRaise + premoneyVal)) + '%');
-        this.$('#max_equity_offered').val(Math.round(100 * maxRaise / (maxRaise + premoneyVal)) + '%');
+        let min_number_of_shares = Math.round(minRaise / pricePerShare);
+        if (!min_number_of_shares) min_number_of_shares = 0;
+        let max_number_of_shares = Math.round(maxRaise / pricePerShare);
+        if (!max_number_of_shares) max_number_of_shares = 0;
+        let min_equity_offered = Math.round(100 * minRaise / (minRaise + premoneyVal));
+        if (!min_number_of_shares) min_number_of_shares = 0;
+        let max_equity_offered = Math.round(100 * maxRaise / (maxRaise + premoneyVal));
+        if (!max_number_of_shares) max_number_of_shares = 0;
+        this.$('#min_number_of_shares').val(min_number_of_shares.toLocaleString('en-US'));
+        this.$('#max_number_of_shares').val(max_number_of_shares.toLocaleString('en-US'));
+        this.$('#min_equity_offered').val(min_number_of_shares + '%');
+        this.$('#max_equity_offered').val(max_number_of_shares + '%');
       },
 
       addSection: jsonActions.addSection,
