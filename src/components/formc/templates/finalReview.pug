@@ -88,7 +88,9 @@ include ../../../templates/mixins.pug
 -  }
 
 mixin editText(currentName)
-  a(href="#" class="show-input" data-name=currentName).link-1 #{getData(names[currentName])}
+  if names[currentName] == null
+    - alert(' no name ' + currentName);
+  a(href="#" class="show-input" data-name=currentName data-type=names[currentName].split('.')[0]).link-1 #{getData(names[currentName])}
 
 mixin editSelect(currentName)
   a(href="#" class="show-select" data-name=currentName).link-1 #{getSelectData(names[currentName])}
@@ -143,7 +145,7 @@ section.formc-review
         
         h3.text-xs-center
           +editText('issuer_legal_name')
-        h3.text-xs-center.m-b-0.m-t-0.pb10 A
+        h3.text-xs-center.m-b-0.m-t-0.pb10 A 
           +editSelect('jurisdiction_of_organization')
           | !{' '}
           +editSelect('corporate_structure')
@@ -382,8 +384,8 @@ section.formc-review
         p.pb10.text-indent These securities have not been recommended or reviewed by any federal or state securities commission or regulatory authority and these authorities have not passed upon the accuracy or adequacy of this Material. FINRA and the SEC do not pass upon the merits of any securities offered and they are not providing any endorsement or investment advice related to this Offering.  The Shares are being offered under an exemption from registration; however, the SEC has not made an independent determination that these securities are exempt from registration.  There may be a risk that the Shares will fail to qualify for this exemption due to actions taken by the Company that are not properly disclosed.  The Intermediary has not investigated or verified the information provided by the Company and neither has any regulatory authority, so each investor must perform their own assessment of the information contained in the Material prior to relying on the Company for its completeness and accuracy.
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u Changes Are Possible In Certain Circumstances
-        p.pb10.text-indent The Company reserves the right to modify any of the terms of the Offering at any time before the Offering closes. However, if any material changes are made, each investor will be notified and will be required to reconfirm their investment commitment within 5 days of such notice or their entire investment commitment shall be cancelled. Investors are also given the right to terminate an investment at any time prior to 48 hours from a notified closing date.  Additional details on the procedures involved with this Offering are contained later in this Material.  Additional information relating to this Offering, including communication channels allowing investors to pose questions and receive answers, is available through the Intermediary on the Platform at GrowthFountain.com/
-          a(href="#" class="show-input" data-name="campaign_link").link-1 campaign.link
+        p.pb10.text-indent The Company reserves the right to modify any of the terms of the Offering at any time before the Offering closes. However, if any material changes are made, each investor will be notified and will be required to reconfirm their investment commitment within 5 days of such notice or their entire investment commitment shall be cancelled. Investors are also given the right to terminate an investment at any time prior to 48 hours from a notified closing date.  Additional
+          | details on the procedures involved with this Offering are contained later in this Material.  Additional information relating to this Offering, including communication channels allowing investors to pose questions and receive answers, is available through the Intermediary on the Platform at https://growthfountain.com/#{ values.company.id }
 
       // page 5
       section.page-formc-review.m-t-1

@@ -1642,7 +1642,7 @@ module.exports = {
   }, menuHelper.methods, yesNoHelper.methods, addSectionHelper.methods)),
 
   finalReview: Backbone.View.extend({
-    urlRoot: formcServer + '/:id' + '/final-review',
+    urlRoot: formcServer + '/:id/final-review',
     initialize(options) {
       this.fields = options.fields;
     },
@@ -1700,6 +1700,7 @@ module.exports = {
       return this;
     },
   }),
+
   finalReviewTwo: Backbone.View.extend({
     el: '#content',
     template: require('./templates/finalReviewTwo.pug'),
