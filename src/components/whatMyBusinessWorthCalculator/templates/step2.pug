@@ -22,7 +22,7 @@ include ../../../templates/mixins.pug
 
   .row
     .offset-lg-3.col-lg-6
-      form(method="post" action="").js-calc-form
+      form(method="post" action="").js-calc-form.form-section
         .form-body.clearfix
 
           .form-group.row
@@ -37,7 +37,8 @@ include ../../../templates/mixins.pug
                 autocomplete='off'
                 data-input-mask='price',
                 data-model-value='monthlyOperatingTwoYears',
-                data-current-value= data.monthlyOperatingTwoYears)#monthlyOperatingTwoYears.form-control.js-field
+                data-current-value= data.monthlyOperatingTwoYears
+                name="monthlyOperatingTwoYears")#monthlyOperatingTwoYears.form-control.js-field
 
           .form-group.row
             label(for="workingCapital").col-lg-12  How much working capital do you need to generate your projected revenue over the next 24 months?) &nbsp;&nbsp;
@@ -47,6 +48,7 @@ include ../../../templates/mixins.pug
               input(
                 type='text',
                 data-slider-value= data.workingCapital,
+                name="workingCapital"
                 data-model-value='workingCapital')#workingCapital.form-control.js-bootstrap-slider
 
           .form-group.row
@@ -61,7 +63,8 @@ include ../../../templates/mixins.pug
                 autocomplete='off'
                 data-input-mask='price',
                 data-model-value='additionalOperating',
-                data-current-value= data.additionalOperating)#additionalOperating.form-control.js-field
+                data-current-value= data.additionalOperating
+                name="additionalOperating")#additionalOperating.form-control.js-field
 
           .form-group.row
             label(for="capitalExpenditures").col-lg-12 Are you expecting any Capital Expenditures over the next 24 months? &nbsp;&nbsp;
@@ -75,7 +78,8 @@ include ../../../templates/mixins.pug
                 autocomplete='off'
                 data-input-mask='price',
                 data-model-value='capitalExpenditures',
-                data-current-value= data.capitalExpenditures)#capitalExpenditures.form-control.js-field
+                data-current-value= data.capitalExpenditures
+                name="capitalExpenditures")#capitalExpenditures.form-control.js-field
 
           .form-group.row
             label(for="taxRate").col-lg-12 What Tax Rate do you expect to pay on your operating profit? (including federal, state, local, and any other taxes applicable to the operation of your business)
@@ -84,6 +88,7 @@ include ../../../templates/mixins.pug
               input(
                 type='text',
                 data-slider-value= data.taxRate,
+                name="taxRate"
                 data-model-value='taxRate')#taxRate.form-control.js-bootstrap-slider
 
           .form-group.row
@@ -97,7 +102,8 @@ include ../../../templates/mixins.pug
                 autocomplete='off'
                 data-input-mask='price',
                 data-model-value='annualInterest',
-                data-current-value= data.annualInterest)#annualInterest.form-control.js-field
+                data-current-value= data.annualInterest
+                name="annualInterest")#annualInterest.form-control.js-field
 
           .form-group.row.clearfix.m0
             .col-xs-6.p-t-2.m-t-1
