@@ -360,7 +360,7 @@ module.exports = {
     render() {
       let template = null;
 
-      if(this.model.hasOwnProperty('user_id')  && this.model.uuid != '') {
+      if(this.model.hasOwnProperty('user_id')  && this.model.user_id != '') {
         this.model.id = this.model.formc_id;
         this.urlRoot += '/' + this.role + '/' + this.model.user_id;
       } else {
@@ -1642,7 +1642,7 @@ module.exports = {
   }, menuHelper.methods, yesNoHelper.methods, addSectionHelper.methods)),
 
   finalReview: Backbone.View.extend({
-    urlRoot: formcServer + '/:id' + '/final-review',
+    urlRoot: formcServer + '/:id/final-review',
     initialize(options) {
       this.fields = options.fields;
     },
@@ -1700,6 +1700,7 @@ module.exports = {
       return this;
     },
   }),
+
   finalReviewTwo: Backbone.View.extend({
     el: '#content',
     template: require('./templates/finalReviewTwo.pug'),

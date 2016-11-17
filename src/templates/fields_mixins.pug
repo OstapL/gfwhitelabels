@@ -54,6 +54,26 @@ mixin fieldNestedDateMonth(nestedName, name, value, index, myAttr)
   )
 
 
+mixin fieldNestedDateDay(nestedName, name, value, index, myAttr)
+  +prepareNestedField(nestedName, name, value, index, myAttr)
+  - myAttr.class = myAttr.class ? myAttr.class : 'col-lg-6 p-r-0';
+  - myAttr.id = myAttr.id + '__day'
+  +fieldDateDay(
+    nestedName + '[' + index + '][' + name + ']',
+    myAttr
+  )
+
+
+mixin fieldNestedDateMonth(nestedName, name, value, index, myAttr)
+  +prepareNestedField(nestedName, name, value, index, myAttr)
+  - myAttr.class = myAttr.class ? myAttr.class : 'col-lg-6 p-r-0';
+  - myAttr.id = myAttr.id + '__month'
+  +fieldDateMonth(
+    nestedName + '[' + index + '][' + name + ']',
+    myAttr
+  )
+
+
 mixin fieldNestedDateYear(nestedName, name, value, index, myAttr)
   +prepareNestedField(nestedName, name, value, index, myAttr)
   - myAttr.class = myAttr.class ? myAttr.class : 'col-lg-6 p-r-0';
