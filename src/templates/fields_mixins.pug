@@ -344,7 +344,7 @@ mixin fileFolderDropzone(name, attr)
                 a(class=("a-" + name) href="#")
 
 
-mixin userprofileDropzone(name, attr)
+mixin userProfileDropzone(name, attr)
     - var icon = attr.type
     if attr.mime
       - mimetypeIcons = require('helpers/mimetypeIcons.js');
@@ -366,7 +366,7 @@ mixin userprofileDropzone(name, attr)
           div(class="uploading collapse")
             img(alt="activity indicator" src="/img/ajax-loader.gif")
           .row
-            img(src="/img/default/255x153.png" class="w-100")
+            img(class=("img-" + name) src="/img/default/255x153.png" class="w-100")
           .drop-image-title.text-xs-center.p-l-1.p-r-1.p-t-2.p-b-2 
             p.drop-photo #{attr.text}
             i(class="fa fa-" + attr.icon)
