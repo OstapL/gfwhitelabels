@@ -336,7 +336,10 @@ module.exports = {
         dob: 'Date of birth',
         principal_occupation: 'Principal Occupation',
         employer_principal_businesss: 'Employer and Principal Business',
-        responsibilities: 'Responsibilities',
+        responsibilities: 'Title',
+        number_of_shares: 'Number of Shares',
+        class_of_securities: 'Class of Securities',
+        voting_power_percent: '% of Voting Power Prior to Offering',
         experiences: {
           employer: 'Employer',
           employer_principal: 'Employer Principal',
