@@ -17,7 +17,7 @@ section.create-company-media.container.media-container
     h2.text-uppercase.dosis.text-lg-center.text-xs-center.dosis.m-t-0.m-b-3 Media
     form(data-method="PUT" action="").form-section
 
-      +imageDropzone("header_image", {
+      +imageDropzone("header_image_image_id", {
         class1: 'col-xl-3 col-lg-12 text-xs-center text-xl-right',
         class2: 'col-xl-9 col-lg-12 text-xs-center p-sm-0',
         thumbSize: '255x153',
@@ -25,8 +25,8 @@ section.create-company-media.container.media-container
         text: 'Drop your photo here or click to upload',
         icon: 'file-image-o',
         label: 'Header Image'
-        })
-      +imageDropzone("list_image", {
+      })
+      +imageDropzone("list_image_image_id", {
         class1: 'col-xl-3 col-xs-12 text-xs-center text-xl-right',
         class2: 'col-xl-9 col-xs-12 text-xs-center p-sm-0 p-l-1',
         thumbSize: '255x153',
@@ -34,16 +34,16 @@ section.create-company-media.container.media-container
         text: 'Drop your photo here or click to upload',
         icon: 'file-image-o',
         label: 'Thumbnail Picture'
-        })
+      })
       .row.m-b-2
-        +fieldDropzone("gallery", {
-            class1: 'col-lg-5 text-sm-center col-xs-4 col-sm-5 col-md-5 text-xs-center p-dropzone',
-            class2: 'col-lg-7 col-xs-8 col-sm-7 col-md-7 text-sm-center p-r-0',
-            default: '/img/default/77x45.png',
-            text: 'Drop your photo here or click to upload',
-            icon: 'file-image-o',
-            viewType: 2
-          })
+        +fieldDropzone("gallery_group_id", {
+          class1: 'col-lg-5 text-sm-center col-xs-4 col-sm-5 col-md-5 text-xs-center p-dropzone',
+          class2: 'col-lg-7 col-xs-8 col-sm-7 col-md-7 text-sm-center p-r-0',
+          default: '/img/default/77x45.png',
+          text: 'Drop your photo here or click to upload',
+          icon: 'file-image-o',
+          viewType: 2
+        })
       .col-lg-12.p-r-0.m-t-2.m-b-3
         hr
       .col-lg-12
