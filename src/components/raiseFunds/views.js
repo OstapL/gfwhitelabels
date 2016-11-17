@@ -825,7 +825,6 @@ module.exports = {
   specifics: Backbone.View.extend(_.extend({
       urlRoot: Urls['campaign-list']() + '/specifics',
       events: _.extend({
-        // 'submit form': api.submitAction,
         'submit form': 'submit',
         'change input[name="security_type"]': 'updateSecurityType',
         'focus #minimum_raise,#maximum_raise,#minimum_increment,#premoney_valuation,#price_per_share': 'clearZeroAmount',
