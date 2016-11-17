@@ -3,7 +3,6 @@ const dropzoneHelpers = require('helpers/dropzoneHelpers.js');
 const validation = require('components/validation/validation.js');
 const phoneHelper = require('helpers/phoneHelper.js');
 let countries = require('helpers/countries.js');
-countries = _.map(countries, (country) => { return { value: country.code, display_name: country.name } });
 
 module.exports = {
   profile: Backbone.View.extend(_.extend({
@@ -73,7 +72,6 @@ module.exports = {
           user: this.model,
           fields: this.fields,
           states: this.usaStates,
-          countries: countries,
         })
       );
       setTimeout(() => { this.createDropzones() } , 1000);
