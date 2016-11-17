@@ -1,7 +1,7 @@
 include ../../../templates/mixins.pug
 include ../../../templates/fields_mixins.pug
 
-+breadcrumbs('Profile', '', 
++breadcrumbs('Profile', '',
   [
     ['Home', '/'],
     ['Profile', '']
@@ -10,17 +10,18 @@ include ../../../templates/fields_mixins.pug
 
 
 .container.profile.pt-50
-  .row 
+  .row
     aside.col-xl-3.m-b-1
       form(method="post" action="").form.form-section
         - var values = user;
         h3.m-t-0.m-b-1.profile-user-name.text-xl-left.text-xs-center #{user.first_name + ' ' + user.last_name}
-        +userprofileDropzone("image", {
+        +userProfileDropzone("image", _.extend({
           thumbSize: '255x135',
           default: '/img/default/255x153.png',
           icon: 'camera',
           text: 'Drop your profile photo here or click to upload',
-          })
+          value: values.image_id,
+        }, fields.image))
       .row.m-t-2
         .col-lg-12.text-xs-center
           a(href="/account/change-password").link-3 Need to change your password?
@@ -31,18 +32,18 @@ include ../../../templates/fields_mixins.pug
           a(href="#account_info" data-toggle="tab"  aria-expanded="true" role="tab").active.nav-link.uppercase Profile information
         li.nav-item
           a(
-            href="#financial_info" 
-            data-toggle="tab" 
-            role="tab" 
+            href="#financial_info"
+            data-toggle="tab"
+            role="tab"
             aria-expanded="true").nav-link.uppercase Financial information
 
       .tab-content.profile-tabs-content.mt30
 
         div(aria-expanded="true")#account_info.tab-pane.fade.active.in
-          .row 
-            section.form-section.clearfix 
+          .row
+            section.form-section.clearfix
               form(method="post" action="").form
-                .form-body.clearfix 
+                .form-body.clearfix
                   .col-xs-12
                     section.right-block
                       .form-group.row.required
@@ -57,22 +58,16 @@ include ../../../templates/fields_mixins.pug
                         class2: 'col-lg-8',
                         empty: {'': 'Choose Country'},
                       }, fields.country))
-
-                          //select(name="country").custom-select.w-100.country-select
-                          //  option(value="us") United States
-                          //  option(value="ua") UA
-                          //  option(value='ru') Russia
                       +fieldTextLabel("street_address_1", _.extend({'class1': 'col-lg-3 text-lg-right text-xs-left', 'class2': 'col-lg-8 ', 'type': 'text'}, fields.street_address_1))
                       +fieldTextLabel("street_address_2", _.extend({'class1': 'col-lg-3 text-lg-right text-xs-left', 'class2': 'col-lg-8 ', 'type': 'text'}, fields.street_address_2))
-                      .row.us-row(style="display:" + (user.country == 'us' ? 'block' : 'none'))
-                        input(type="hidden" name="city" values=values['city'] disabled=((user.country=='us') ? false : true))
-                        input(type="hidden" name="state" value=values['state'] disabled=((user.country=='us') ? false : true))
+                      .row.us-row(style="display:" + (user.country == 'US' ? 'block' : 'none'))
+                        input(type="hidden" name="city" values=values['city'] disabled=((user.country=='US') ? false : true))
+                        input(type="hidden" name="state" value=values['state'] disabled=((user.country=='US') ? false : true))
                         .col-md-12.col-lg-6
-                          if user.country == 'us'
-                            +fieldTextLabel('zip_code', _.extend({'class1': 'col-lg-6 text-lg-right text-xs-left', 'class2': 'col-lg-6', 'type': 'text'}, fields.zip_code))
-                            //+fieldBlock("zip_code", user.zip_code, {'class1': 'col-lg-6', 'class2': 'col-lg-6', 'type': 'text'})
+                          if user.country == 'US'
+                            +fieldTextLabel('zip_code', _.extend({'class1': 'col-lg-6 text-lg-right text-xs-left', 'class2': 'col-lg-6', 'type': 'text', 'value': user.zip_code}, fields.zip_code))
                           else
-                            +fieldBlock("zip_code", user.zip_code, {'class1': 'col-lg-6', 'class2': 'col-lg-6', 'type': 'text', disabled: true})
+                            +fieldTextLabel('zip_code', _.extend({'class1': 'col-lg-6', 'class2': 'col-lg-6', 'type': 'text', disabled: true }, fields.zip_code))
 
                         .col-lg-5.city_states.required
                           .row
@@ -82,78 +77,78 @@ include ../../../templates/fields_mixins.pug
                                 span.input-value.js-city-state #{ values['city'] ? values['city'] : '(City)' }, #{ values['state'] ? values['state'] : '(State)' }
                                 i.fa.fa-pencil-square-o.link-1
 
-                      .row.foreign-country-row(style="display:" + (user.country == 'us' ? 'none' : 'block'))
+                      .row.foreign-country-row(style="display:" + (user.country == 'US' ? 'none' : 'block'))
                         .col-lg-6
-                          if user.country == 'us'
-                            +fieldBlock("city", user.city, {'class1': 'col-lg-6 ', 'class2': 'col-lg-6 ', 'type': 'text', disabled: true})
+                          if user.country == 'US'
+                            +fieldTextLabel('city', _.extend({'class1': 'col-lg-6 ', 'class2': 'col-lg-6 ', 'type': 'text', disabled: true}, fields.city))
                           else
-                            +fieldBlock("city", user.city, {'class1': 'col-lg-6 ', 'class2': 'col-lg-6 ', 'type': 'text'})
+                            +fieldTextLabel('city', _.extend({'class1': 'col-lg-6 ', 'class2': 'col-lg-6 ', 'type': 'text', 'value': user.city}, fields.city))
                         .col-lg-5
                           .form-group.row.state.text
                             label.text-lg-right.col-lg-5(for="state").p-t-0.m-b-0 State/Province/ Region
                             div.col-lg-7
                               input.form-control(name='state' placeholder='State/Province/Region' type="text" value=user.state)
-                      .row.foreign-country-row(style="display:" + (user.country == 'us' ? 'none' : 'block'))
+                      .row.foreign-country-row(style="display:" + (user.country == 'US' ? 'none' : 'block'))
                         .col-lg-6
                           .form-group.row.zip_code.text
                             label.text-lg-right.col-lg-6(for="zip_code") Postal Code
                             div.col-lg-6
-                              input.form-control(name='zip_code' placeholder='Postal Code' type="text" value=user.zip_code) 
+                              input.form-control(name='zip_code' placeholder='Postal Code' type="text" value=user.zip_code)
                         .col-lg-5
-                          +fieldBlock("phone", user.phone, {'class1': 'col-lg-5 ', 'class2': 'col-lg-7 ', 'type': 'text'})
+                          +fieldTextLabel('phone', _.extend({'class1': 'col-lg-5 ', 'class2': 'col-lg-7 ', 'type': 'text', 'value': user.phone }, fields.phone))
 
-                      .form-group.row.clearfix.m0 
+                      .form-group.row.clearfix.m0
                         .col-lg-11.mt30.text-xs-center
-                          .controls  
-                            button(type="submit").btn.btn-primary.pull-lg-right SAVE 
+                          .controls
+                            button(type="submit").btn.btn-primary.pull-lg-right SAVE
 
         div(aria-expanded="true")#financial_info.tab-pane.fade
-          .row 
-            section.form-section.clearfix 
+          .row
+            section.form-section.clearfix
               form(method="post" action="")
-                .form-body.clearfix 
+                .form-body.clearfix
 
                   .col-xs-12
                     section.right-block
-                      +fieldBlock("bank_name", user.bank_name,{'class1': 'col-lg-3 ', 'class2': 'col-lg-8 ', 'type': 'text'})
-                      +fieldBlock("name_on_bank_account", user.name_on_bank_account, {'class1': 'col-lg-3', 'class2': 'col-lg-8', 'type': 'text'})
-                      +fieldBlock("account_number", user.account_number, {'class1': 'col-lg-3 ', 'class2': 'col-lg-8 ', 'type': 'text'})
-                      +fieldBlock("account_number_re", user.account_number_rc, {'class1': 'col-lg-3 ', 'class2': 'col-lg-8', 'type': 'text'})
-                      +fieldBlock("routing_number", user.routing_number, {'class1': 'col-lg-3 ', 'class2': 'col-lg-8', 'type': 'text'})
-                      //+fieldBlock("account_type", user.account_type, {'class1': 'col-lg-3', 'class2': 'col-lg-8', 'type': 'text'})
-                      .form-group.row.radio
+                      +fieldTextLabel('bank_name', _.extend({'class1': 'col-lg-3 text-lg-right text-xs-left', 'class2': 'col-lg-8 ', 'type': 'text', 'value': user.bank_name}, fields.bank_name))
+                      +fieldTextLabel('name_on_bank_account', _.extend({'class1': 'col-lg-3 text-lg-right text-xs-left', 'class2': 'col-lg-8 ', 'type': 'text', 'value': user.name_on_bank_account}, fields.name_on_bank_account))
+                      +fieldTextLabel('account_number', _.extend({'class1': 'col-lg-3 text-lg-right text-xs-left', 'class2': 'col-lg-8 ', 'type': 'text', 'value': user.account_number}, fields.account_number))
+                      +fieldTextLabel('account_number_re', _.extend({'class1': 'col-lg-3 text-lg-right text-xs-left', 'class2': 'col-lg-8 ', 'type': 'text', 'value': user.account_number_re}, fields.account_number_re))
+                      +fieldTextLabel('routing_number', _.extend({'class1': 'col-lg-3 text-lg-right text-xs-left', 'class2': 'col-lg-8 ', 'type': 'text', 'value': user.routing_number}, fields.routing_number))
+                      .form-group.row.radio.requried
                         label.text-md-right.col-lg-3 Account Type
+                          span.color-red *
                         .col-lg-9.radio-input
-                          label 
-                            input(type="radio")
+                          label
+                            input(type="radio" name='account_type')
                             |  Checking
-                          label 
-                            input(type="radio")
+                          label
+                            input(type="radio" name='account_type')
                             |  Savings
                       .row
                         .col-sm-11
                           hr.m-b-3.m-t-1
 
-                      .form-group.row 
+                      .form-group.row
                         .col-lg-11
                           .warning-block.m-b-0
-                            i.fa.fa-exclamation-triangle 
-                            span.warning-text 
+                            i.fa.fa-exclamation-triangle
+                            span.warning-text
                               | Investors are limited to 12 month investment totals ranging from $2,000 - $100,000 based on income and net worth. Please update your financial information to see your limit.
 
-                      +fieldBlock("annual_income", user[annual_income], {'class1': 'col-lg-3 ', 'class2': 'col-lg-8 ', 'type': 'text'})
-                      +fieldBlock("net_worth", user[net_worth], {'class1': 'col-lg-3', 'class2': 'col-lg-8 ', 'type': 'text'})
+                      +fieldTextLabel('annual_income', _.extend({'class1': 'col-lg-3 text-lg-right text-xs-left', 'class2': 'col-lg-8 ', 'type': 'text', 'value': user.annual_income}, fields.annual_income))
+                      +fieldTextLabel('net_worth', _.extend({'class1': 'col-lg-3 text-lg-right text-xs-left', 'class2': 'col-lg-8 ', 'type': 'text', 'value': user.net_worth}, fields.net_worth))
 
                       .form-group.row.clearfix.m0
                         .col-lg-11.mt30.text-xs-center
-                          .controls  
-                            button(type="submit").btn.btn-primary.pull-lg-right SAVE  
-                    
-  .popover-content-ssn 
-    i.fa.fa-info-circle 
-    span Why do we need this? I know it seems terribly invasive but we are required to obtain your socialsecurity number for two reasons, 
-    p 1) regulators require we comply with know your customer and anti-money laundering rules and; 
-    p 2) companies will need to provide you with tax information based on your investment.  
+                          .controls
+                            button(type="submit").btn.btn-primary.pull-lg-right SAVE
+
+  .popover-content-ssn
+    i.fa.fa-info-circle
+    span Why do we need this? I know it seems terribly invasive but we are required to obtain your socialsecurity number for two reasons,
+    p 1) regulators require we comply with know your customer and anti-money laundering rules and;
+    p 2) companies will need to provide you with tax information based on your investment.
     p Don’t worry, we’re obsessive about your privacy.
 
 //MODAL

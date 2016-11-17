@@ -2,7 +2,8 @@ const dropzone = require('dropzone');
 const dropzoneHelpers = require('helpers/dropzoneHelpers.js');
 const validation = require('components/validation/validation.js');
 const phoneHelper = require('helpers/phoneHelper.js');
-let countries = require('helpers/countries.js');
+let countries = {};
+_.each(require('helpers/countries.js'), (c) => { countries[c.code] = c.name; });
 
 module.exports = {
   profile: Backbone.View.extend(_.extend({
@@ -41,12 +42,39 @@ module.exports = {
       this.fields.phone.required = true;
       this.fields.first_name.required = true;
       this.fields.last_name.required  = true;
-      this.fields.country = { required: true, value: 'US' , label: 'Country'};
-      this.fields.country.validate = {};
-      this.fields.country.validate.choices = countries;
-      this.fields.street_address_1 = { label: 'Street address 1', required: true };
-      this.fields.street_address_2 = { label: 'Street address 2'};
-      this.fields.zip_code.label = 'Zip code';
+      this.fields.country = { required: true, value: 'US' };
+      this.fields.country.validate = { choices: countries };
+
+      this.fields.street_address_1 = { required: true };
+      this.fields.street_address_2 = {};
+
+      this.fields.bank_name.required = true;
+      this.fields.name_on_bank_account.required = true;
+      this.fields.account_number.required = true;
+      this.fields.account_number_re = { required: true };
+      this.fields.routing_number.required = true;
+      this.fields.account_type = { requried: true };
+      this.fields.annual_income = { required: true };
+      this.fields.net_worth.required = true;
+
+      this.labels = {
+        country: 'Country',
+        street_address_1: 'Street address 1',
+        street_address_2: 'Street address 2',
+        zip_code: 'Zip code',
+        city: 'City',
+        account_number: 'Account number',
+        account_number_re: 'Re-Enter Account Number',
+        routing_number: 'Routing Number',
+        annual_income: 'Annual Income',
+        net_worth: 'Net worth',
+      };
+
+      this.assignLabels();
+
+
+      this.fields.bank_name.label = 'Bank name';
+      this.fields.name_on_bank_account.label = 'Name on bank account';
 
       // define ui elements
       this.cityStateArea = null;

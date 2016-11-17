@@ -182,7 +182,7 @@ module.exports = {
 
       let dzHandlers = _.extend({}, _dropzoneDefaultHandlers, {
         success(data) {
-          $('.img-' + name).attr('src', data.url);
+          $('.img-' + name).attr('src', data[0].urls[0]);
           $('.a-' + name).attr('href', data.origin_url).html(data.name);
           $('#' + name).val(data.file_id);
 
