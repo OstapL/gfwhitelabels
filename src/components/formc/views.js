@@ -360,7 +360,7 @@ module.exports = {
     render() {
       let template = null;
 
-      if(this.model.hasOwnProperty('user_id')  && this.model.uuid != '') {
+      if(this.model.hasOwnProperty('user_id')  && this.model.user_id != '') {
         this.model.id = this.model.formc_id;
         this.urlRoot += '/' + this.role + '/' + this.model.user_id;
       } else {

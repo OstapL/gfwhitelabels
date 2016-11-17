@@ -467,7 +467,7 @@ section.formc-review
                       br
                       a(href="#" class="show-input" data-name="officer_last_name").link-1 #{v.last_name}
                     td.text-xs-center
-                      a(href="#" class="show-input" data-name="officer_start_date").link-1 #{v.board_service_start_date}
+                      a(href="#" class="show-input" data-name="officer_start_date").link-1 #{v.start_date}
                       br
                       a(href="#" class="show-input" data-name="officer_end_date ").link-1 #{v.board_service_end_date}
                     td.text-xs-center
@@ -487,18 +487,21 @@ section.formc-review
             tbody
               each v,k in values.formc.team_members
                 if v.role[0] == 1
+                  - console.log(v, k)
                   tr
                     td.text-xs-center
                       a(href="#" class="show-input" data-name="director.1.first_name").link-1 #{v.first_name}
                       br
                       a(href="#" class="show-input" data-name="director.1.last_name").link-1 #{v.last_name}
+                    td.text-xs-center
                     if v.business_experiences
                       each v1,k1 in v.business_experiences
-                        td.text-xs-center
                           a(href="#" class="show-input" data-name="director.1.service_start ").link-1 #{v1.start_date_of_service}
                           br
                           a(href="#" class="show-input" data-name="director.1.service_end").link-1 #{v1.end_date_of_service}
-                        td.text-xs-center
+                    td.text-xs-center
+                    if v.business_experiences
+                      each v1,k1 in v.business_experiences
                           a(href="#" class="show-input" data-name="director.1.occupation").link-1 #{v1.principal_occupation}
                           br
                           a(href="#" class="show-input" data-name="director.1.employer").link-1 #{v1.employer}
@@ -606,10 +609,8 @@ section.formc-review
         p.text-indent Investors may cancel an investment commitment at any time up until forty-eight (48) hours prior to the applicable closing date.  The process for any such cancellation is for the investor to log onto the Platform and indicate a cancellation by selecting such option in connection with the applicable offering once they have logged into their account and accessed their investor dashboard.  With respect to specific scenarios: (1) if the target minimum offering amount is not met prior to the target closing date, then the Intermediary will automatically cancel all investment commitments and notify each investor of the return of their respective funds, (2) if the issuer reaches the target minimum offering amount prior to the deadline identified in the offering materials, then it may close the offering early (if it provides notice about the new offering deadline at least five business days prior to such new offering deadline) provided that the investor would be able to cancel the investment commitment before the 48-hour period prior to the new offering deadline, (3) if the issuer notifies the investor of a material change to an offering, then the investor must reconfirm their investment commitment after the material change is made to the offering, or such investor’s investment commitment will be cancelled and the committed funds will be returned.
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u Method for Delivering the Securities
-        p.pb10.logic LOGIC: if transfer_method = self-manage then:
-        p.pb10.text-indent The issuer will record all investments in book entry form so that no certificates would be delivered.  The fully executed Subscription Agreement relating to the Offering will serve as a written record of the transaction and will be available on the Platform via the investor dashboard.  The investor will also receive email confirmation of the successful closing of the Offering, which will confirm the number of securities purchased and the amount paid. 
-        p.pb10.logic LOGIC: if transfer_method = use of Solo then:
-        p.pb10.text-indent The issuer will use a third-party software-as-a-service transfer agent provided by Transfer Online.  Consequently, the issuer will serve as its own transfer agent and will have the choice whether to deliver certificates or to keep all investments in book entry form.  Regardless, the fully executed Subscription Agreement relating to the Offering will serve as a written record of the transaction and will be available on the Platform via the investor dashboard.  The investor will also receive email confirmation of the successful closing of the Offering which will confirm the number of securities purchased and the amount paid.
+          div 
+          a(href="#").link-1 The issuer has represented that it has established means to keep accurate records of the holders of the securities sold in the Offering.  The issuer intends to keep all records relating to the securities in book entry or electronic form so you should not expect any physical delivery of the securities that you purchase. The fully executed Subscription Agreement relating to the Offering will serve as a written record of the transaction and will be available on the Platform for each investor to review in their investor dashboard.  Each investor will also receive an email confirmation of the successful closing of the Offering  which will confirm the investment amount.
 
       // page 11
       section.page-formc-review.m-t-1
@@ -618,8 +619,6 @@ section.formc-review
           p.small.pb10
             +editText('issuer_short_name')
             |  as Issuer
-        p.pb10.logic LOGIC: if transfer_method = full service then:
-        p.text-indent The issuer will use a full-service third-party transfer agent to handle the delivery of all certificates.  In addition, the fully executed Subscription Agreement relating to the Offering will serve as a written record of the transaction and will be available on the Platform via the investor dashboard.  The investor will also receive email confirmation of the successful closing of the Offering which will confirm the number of securities purchased and the amount paid.
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u Use of Third Party Services
         p.text-indent Each investor commitment made in connection with the completion of a Subscription Agreement will be held in a depository account maintained for the benefit of investors.  The Intermediary will not hold any investor funds or issuer securities in connection with this Offering.
@@ -764,10 +763,11 @@ section.formc-review
           +editText('use_of_net_proceeds_minimum')
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u  Assuming A Maximum Raise
-        p.pb10.logic [LOGIC: Exclude if no max raise]
-        p.pb10.text-indent In the case that the Offering is oversubscribed and closes with the maximum amount achieved, the Company anticipates using the proceeds in the following manner: 
-        p.pb10
-          +editText('use_of_net_proceeds_maximum')
+        if values.campaign.minimum_raise != values.campaign.maximum_raise
+          p.pb10.logic [LOGIC: Exclude if no max raise]
+          p.pb10.text-indent In the case that the Offering is oversubscribed and closes with the maximum amount achieved, the Company anticipates using the proceeds in the following manner: 
+          p.pb10
+            +editText('use_of_net_proceeds_maximum')
         p.pb10.text-indent The following table reflects our anticipated estimated use of proceeds:
         .table-responsive.m-t-1
           table.table.table-bordered
@@ -1068,13 +1068,6 @@ section.formc-review
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u Financial Statements
         p.pb10.text-indent The issuer’s financial statements are attached as Exhibit B.  Based on the size of this offering and issuer’s previous activity, the issuer is required to provide 
-          span.logic < insert > 
-          span.logic SEE LOGIC
-        p.pb10.logic LOGIC:
-        p OPTION 1: The following information or their equivalent line items as reported on the federal income tax return filed by the Company for the most recently completed year (if any): (1) Total income, (2) Taxable income; and (3) Total tax.    Financial statements of the Company and its predecessors, if any, in each case as certified by the principal executive officer of the Company to reflect accurately the information reported on the Company’s federal income tax returns.
-        p OPTION 2: Financial statements of the Company and its predecessors, if any, reviewed by a public accountant that is independent of the Company and must include a signed review report.
-        p OPTION 3: Financial statements of the Company and its predecessors, if any, audited by a public accountant that is independent of the Company and must include a signed review report.
-        p.pb10.text-indent The attached financial statements have been prepared in accordance with U.S. generally accepted accounting principles and include balance sheets, statements of comprehensive income, statements of cash flows, statements of changes in stockholders’ equity and notes to the financial statements.  If the financial statements are not audited, they are labeled as “unaudited.”
         p.pb10.text-indent For an offering conducted in the first 120 days of a fiscal year, the financial statements provided may be for the two fiscal years prior to the issuer’s most recently completed fiscal year; however, financial statements for the two most recently completed fiscal years must be provided if they are otherwise available. If more than 120 days have passed since the end of the issuer’s most recently completed fiscal year, the financial statements provided must be for the issuer’s two most recently completed fiscal years.
 
       // page 21
