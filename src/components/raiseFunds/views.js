@@ -834,7 +834,6 @@ module.exports = {
         dragleave: 'globalDragleave',
         'click .onPreview': onPreviewAction,
         'click .submit_form': submitCampaign,
-        'click .submit-specifics': 'checkMinMaxRaise',
       }, leavingConfirmationHelper.events, menuHelper.events),
 
       submit(e) {
