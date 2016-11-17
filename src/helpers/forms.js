@@ -150,7 +150,7 @@ module.exports = {
     if (view.$el.find('.alert').length) {
       view.$el.find('.alert').scrollTo();
     } else {
-      view.$el.find('.has-error').prev().scrollTo(5);
+      view.$el.find('.has-error').parent().scrollTo(5);
     }
 
     app.hideLoading();
