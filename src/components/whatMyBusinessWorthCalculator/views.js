@@ -59,23 +59,12 @@ module.exports = {
             e.preventDefault();
             // check if all fields are filled
             if (!this._allFieldsFilled()) {
-                alert('empty fields!');
+                alert('There are still empty fields!');
                 return;
             }
             app.routers.navigate('/calculator/whatmybusinessworth/step-2', {trigger: true});
         },
 
-        // _allFieldsFilled() {
-        //     // if (!this.bootstrapSlider.bootstrapSlider('getValue')) return false;
-        //     let result = true;
-        //     this.bootstrapSlider.each(function(elem) {
-        //         if(!$(this).bootstrapSlider('getValue')) result = false;
-        //     });
-        //     this.inputPrice.each(function(elem) {
-        //         if(!$(this).val()) result = false;
-        //     });
-        //     return result;
-        // },
         _allFieldsFilled: _allFieldsFilled,
 
         ui() {
@@ -139,7 +128,7 @@ module.exports = {
             e.preventDefault();
 
             if (!this._allFieldsFilled()) {
-                alert('empty fields!');
+                alert('There are still empty fields!');
                 return;
             }
 
