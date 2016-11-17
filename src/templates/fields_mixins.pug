@@ -1,4 +1,7 @@
 mixin prepareNestedField(nestedName, name, value, index, myAttr)
+  if value == null 
+    - console.log('value for ' + name + ' is null ')
+    - value = {}
   - _.extend(myAttr, attr.schema[name]);
   - myAttr.value = value[name] ? value[name]: '';
   - myAttr.id = nestedName + '__' + index + '__' + name + '';
@@ -54,6 +57,26 @@ mixin fieldNestedDateMonth(nestedName, name, value, index, myAttr)
   )
 
 
+mixin fieldNestedDateDay(nestedName, name, value, index, myAttr)
+  +prepareNestedField(nestedName, name, value, index, myAttr)
+  - myAttr.class = myAttr.class ? myAttr.class : 'col-lg-6 p-r-0';
+  - myAttr.id = myAttr.id + '__day'
+  +fieldDateDay(
+    nestedName + '[' + index + '][' + name + ']',
+    myAttr
+  )
+
+
+mixin fieldNestedDateMonth(nestedName, name, value, index, myAttr)
+  +prepareNestedField(nestedName, name, value, index, myAttr)
+  - myAttr.class = myAttr.class ? myAttr.class : 'col-lg-6 p-r-0';
+  - myAttr.id = myAttr.id + '__month'
+  +fieldDateMonth(
+    nestedName + '[' + index + '][' + name + ']',
+    myAttr
+  )
+
+
 mixin fieldNestedDateYear(nestedName, name, value, index, myAttr)
   +prepareNestedField(nestedName, name, value, index, myAttr)
   - myAttr.class = myAttr.class ? myAttr.class : 'col-lg-6 p-r-0';
@@ -69,7 +92,7 @@ mixin prepareField(name, attr)
   - attr.value = attr.value ? attr.value : values ? values[name] : '';
 
   if attr.placeholder == null || attr.placeholder == ''
-    - attr.placeholder = attr.label
+    - attr.placeholder = attr.label || ''
   if attr.required == true
     - attr.label += '<span class="color-red">*</span>'
 
@@ -305,6 +328,7 @@ mixin fileDropzone(name, attr)
 
 
 mixin fileFolderDropzone(name, attr)
+    - var textHelper = require('helpers/textHelper.js')
     - var icon = attr.type
     if attr.hasOwnProperty('data') == false || Array.isArray(attr.data) == false
       - attr.data = [];
@@ -312,7 +336,7 @@ mixin fileFolderDropzone(name, attr)
 
     div(
       class='row media-item ' + attr.class + ' ' + (attr.id || name) + 
-        (attr.required == true ? ' required ' : ' ') + ' fileDropzone' +
+        (attr.required == true ? ' required ' : ' ') + ' fileFolderDropzone' +
         (attr.help_text ? ' showPopover' : '')
       data-content=(attr.help_text ? attr.help_text : '')
     )
@@ -337,10 +361,14 @@ mixin fileFolderDropzone(name, attr)
                   - icon = attr.type
                 .col-xl-12
                   img(src='/img/icons/' + icon + '.png' alt=attr.label class="img-file img-" + name)
-                a(class=("a-" + name) href=v.urls[0]) #{ v.name }
+                a(class=("a-" + name) target="_blank" href=v.urls[0] title=v.name) #{ textHelper.shortenFileName(v.name) }
+              else
+                .col-xl-12
+                  img(src='/img/icons/' + icon + '.png' alt=attr.label class="img-file img-" + name)
+                a(class=("a-" + name) href="#")
 
 
-mixin userprofileDropzone(name, attr)
+mixin userProfileDropzone(name, attr)
     - var icon = attr.type
     if attr.mime
       - mimetypeIcons = require('helpers/mimetypeIcons.js');
@@ -352,7 +380,7 @@ mixin userprofileDropzone(name, attr)
 
     div(
       class='row media-item ' + attr.class + ' ' + (attr.id || name) + 
-        (attr.required == true ? ' required ' : ' ') + ' fileDropzone' +
+        (attr.required == true ? ' required ' : ' ') + ' userProfileDropzone' +
         (attr.help_text ? ' showPopover' : '')
       data-content=(attr.help_text ? attr.help_text : '')
     )
@@ -362,7 +390,7 @@ mixin userprofileDropzone(name, attr)
           div(class="uploading collapse")
             img(alt="activity indicator" src="/img/ajax-loader.gif")
           .row
-            img(src="/img/default/255x153.png" class="w-100")
+            img(class=("w-100 img-" + name) src="/img/default/255x153.png")
           .drop-image-title.text-xs-center.p-l-1.p-r-1.p-t-2.p-b-2 
             p.drop-photo #{attr.text}
             i(class="fa fa-" + attr.icon)
@@ -379,12 +407,12 @@ mixin imageDropzone(name, attr)
 
     div(
       class='row media-item ' + attr.class + ' ' + (attr.id || name) + 
-        (attr.required == true ? ' required ' : ' ') + ' fileDropzone' +
+        (attr.required == true ? ' required ' : ' ') + ' imageDropzone' +
         (attr.help_text ? ' showPopover' : '')
       data-content=(attr.help_text ? attr.help_text : '')
     )
       div(class=attr.class1 + ' ' + (attr.required == true ? ' required ' : ' ') )
-        label( for=attr.id || name)!= attr.label
+        label(for=attr.id || name)!= attr.label
 
       div(class=(attr.class2 + ' dropzone__' + name))
         div(class=" col-lg-12 p-r-0 border-dropzone")
@@ -398,5 +426,5 @@ mixin imageDropzone(name, attr)
             div.col-lg-7.col-md-7.col-sm-7.col-xs-7.p-r-0.p-l-0.img-dropzone.text-lg-center
               input(name=name id=(attr.id || name) value=attr.data.id type="hidden")
               .col-xl-12.p-r-0
-                img(src="/img/default/255x153.png" class="w-100")
+                img(class=("w-100 img-" + name) src="/img/default/255x153.png")
               a(class=("a-" + name) href=attr.data.urls[0]) #{ attr.data.name }

@@ -56,19 +56,15 @@ section.formc-team-members-director.container.m-b-85
         +fieldTextLabel("number_of_shares", _.extend({
           class1: 'col-xl-3 col-lg-12 text-lg-left text-xl-right ',
           class2: 'col-xl-9 col-lg-12',
-          label: 'Number of Shares',
-          }, fields))
+          }, fields.number_of_shares))
         +fieldTextLabel("class_of_securities", _.extend({
           class1: 'col-xl-3 col-lg-12 text-lg-left text-xl-right ',
           class2: 'col-xl-9 col-lg-12',
-          label: 'Class of Securities',
-          }, fields))
+          }, fields.class_of_securities))
         +fieldTextLabel("voting_power_percent", _.extend({
           class1: 'col-xl-3 col-lg-12 text-lg-left text-xl-right m-b-0 p-t-0',
           class2: 'col-xl-9 col-lg-12',
-          label: '% of Voting Power Prior to Offering',
-          placeholder: '% of Voting Power Prior to Offering',
-          }, fields))
+          }, fields.voting_power_percent))
       .col-lg-12.text-md-center.text-sm-center.text-xs-center.m-t-2
         button.btn.btn-primary.text-uppercase.pull-lg-right Save
         a(href='/formc/' + values.formc_id + '/team-members').btn.btn-secondary.text-uppercas.pull-lg-right.m-r-1 Cancel
