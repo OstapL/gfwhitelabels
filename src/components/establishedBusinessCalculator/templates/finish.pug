@@ -30,11 +30,8 @@ include ../../../templates/mixins.pug
   .row
     .col-lg-12
       #chart
-  .row
-    .offset-md-3.col-md-6.text-sm-center
-      hr.mt50.mb50
 
-  .row
+  .row.m-t-3
     .offset-md-3.col-md-6.text-sm-left
       p Based upon the information you submitted, GrowthFountain estimates your business to be worth&nbsp;
         span.font-weight-bold #{ estimate }
@@ -47,7 +44,9 @@ include ../../../templates/mixins.pug
       p.mt15 Based upon this amount, GrowthFountain estimates you will need to offer&nbsp;
         span.font-weight-bold #{ offer }%&nbsp;
         | of your business's equity
-
-  .row.m-t-3
+  .row
+    .offset-md-3.col-md-6.text-sm-center
+      hr.mt50.mb50
+  .row
     .offset-lg-3.col-lg-6.text-xs-center
       a(href="/calculator/establishedBusiness/step-3").btn.btn-primary.text-uppercase back
