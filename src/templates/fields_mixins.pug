@@ -1,4 +1,7 @@
 mixin prepareNestedField(nestedName, name, value, index, myAttr)
+  if value == null 
+    - console.log('value for ' + name + ' is null ')
+    - value = {}
   - _.extend(myAttr, attr.schema[name]);
   - myAttr.value = value[name] ? value[name]: '';
   - myAttr.id = nestedName + '__' + index + '__' + name + '';

@@ -44,11 +44,13 @@ section.create-company-team-add.container
         +fieldTextLabel("full_time_employers", _.extend({
           class1: 'col-lg-4 col-md-12 text-md-left text-xl-right p-t-0 m-b-0',
           class2: 'col-lg-8 col-md-12',
+          required: true,
         }, fields.full_time_employers))
       .col-lg-6.required
         +fieldTextLabel("part_time_employers", _.extend({
           class1: 'col-lg-4 col-md-12 text-md-left text-xl-right p-t-0 m-b-0',
           class2: 'col-lg-8 col-md-12',
+          required: true,
         }, fields.part_time_employers))
       .col-lg-12.text-lg-center.text-md-center.text-sm-center.text-xs-center.m-t-2.m-b-2
         a(href='/formc/' + values.id + '/team-members/director/new').btn.text-uppercase.m-r-3 
