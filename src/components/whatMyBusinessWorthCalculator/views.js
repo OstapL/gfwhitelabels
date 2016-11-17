@@ -37,12 +37,6 @@ const validate = function(e) {
     return true;
 };
 
-const validatePercentage = function (value, attr, fn, model, computed) {
-    if (!(0 < this[value] && this[value] <= 100)) {
-        throw "Must be larger than 0.";
-    }
-};
-
 module.exports = {
     intro: Backbone.View.extend({
         el: '#content',
@@ -86,9 +80,8 @@ module.exports = {
                     required: true,
                     type: 'integer',
                     validate: {},
-                    // min_value: 1,
-                    // label: 'Gross Margin Percentage',
-                    fn: validatePercentage,
+                    label: 'Gross Margin',
+                    range: [1, 100],
                 },
                 monthlyOperatingYear: {
                     required: true,
@@ -166,8 +159,53 @@ module.exports = {
             'submit .js-calc-form': 'doCalculation',
         },
 
+        validate: validate,
+
+        initialize(options) {
+            this.fields = {
+                monthlyOperatingTwoYears: {
+                    required: true,
+                    type: 'integer',
+                    validate: {},
+                },
+                workingCapital: {
+                    required: true,
+                    type: 'integer',
+                    validate: {},
+                    label: 'Working Capital',
+                    range: [1, 100],
+                },
+                additionalOperating: {
+                    required: true,
+                    type: 'integer',
+                    validate: {},
+                },
+                capitalExpenditures: {
+                    required: true,
+                    type: 'integer',
+                    validate: {},
+                },
+                taxRate: {
+                    required: true,
+                    type: 'integer',
+                    validate: {},
+                    label: 'Tax Rate',
+                    range: [1, 100],
+                },
+                annualInterest: {
+                    required: true,
+                    type: 'integer',
+                    validate: {},
+                },
+            };
+        },
+
         doCalculation(e) {
             e.preventDefault();
+
+            if (!this.validate(e)) {
+                return;
+            }
 
             // "Baseline Capital Needs" calculations
             this.calculateWithDelta();

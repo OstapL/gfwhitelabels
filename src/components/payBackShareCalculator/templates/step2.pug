@@ -42,7 +42,8 @@ include ../../../templates/mixins.pug
                 autocomplete="off"
                 data-input-mask='price',
                 data-model-value='raiseMoney',
-                data-current-value= data.raiseMoney)#raiseMoney.form-control.js-field
+                data-current-value= data.raiseMoney
+                name="raiseMoney")#raiseMoney.form-control.js-field
 
           .form-group.row
             label(for="nextYearRevenue").col-lg-12 What do you expect your revenue to be next year?
