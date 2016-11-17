@@ -2,7 +2,8 @@ const dropzone = require('dropzone');
 const dropzoneHelpers = require('helpers/dropzoneHelpers.js');
 const validation = require('components/validation/validation.js');
 const phoneHelper = require('helpers/phoneHelper.js');
-let countries = require('helpers/countries.js');
+let countries = {};
+_.each(require('helpers/countries.js'), (c) => { countries[c.code] = c.name; });
 
 module.exports = {
   profile: Backbone.View.extend(_.extend({
