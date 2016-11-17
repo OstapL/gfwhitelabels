@@ -80,7 +80,7 @@ section.campaign-specifics.container.m-b-85
             .col-xl-7.col-lg-6.form-group.clearfix
               label.col-xl-5.col-lg-12.text-xl-right.text-lg-left.m-b-0.p-t-0 Link to Calculators
               .col-xl-6.col-lg-12
-                .btn-group
+                .btn-group.showPopover(data-content="Our calculators can help you:<br>1. Derive your valuation;<br>2. Choose the right security;<br>3. Know how much money to raise")
                   button(data-toggle="dropdown" aria-haspopup="true" aria-expanded="false").btn.btn-dropdown Link to Calculators
                   button(data-toggle="dropdown" aria-haspopup="true" aria-expanded="false").btn.dropdown-toggle.dropdown-toggle-split.btn-dropdown-click
                     span.sr-only 
@@ -108,6 +108,7 @@ section.campaign-specifics.container.m-b-85
             class1: 'col-xl-3 col-lg-12 text-xl-right text-lg-left',
             class2: 'col-xl-9 col-lg-12',
             placeholder: '$',
+            help_text: 'Why do we ask? If you’ve issued shares in the past, you’ll have to calculate this in coordination with the current terms of your offering. If this is your first share issuance, we recommend something easy, like $1 per share.',
           }, fields.price_per_share))
           .m-t-2
           .row
@@ -168,7 +169,7 @@ section.campaign-specifics.container.m-b-85
             .form-group.clearfix
               label.col-xl-3.col-lg-12.text-xl-right.text-lg-left Link to Calculators
               .col-xl-9.col-lg-12
-                .btn-group
+                .btn-group.showPopover(data-content="Our calculators can help you:<br>1. Derive your valuation;<br>2. Choose the right security;<br>3. Know how much money to raise")
                   button(data-toggle="dropdown" aria-haspopup="true" aria-expanded="false").btn.btn-dropdown Link to Calculators
                   button(data-toggle="dropdown" aria-haspopup="true" aria-expanded="false").btn.dropdown-toggle.dropdown-toggle-split.btn-dropdown-click
                     span.sr-only 
