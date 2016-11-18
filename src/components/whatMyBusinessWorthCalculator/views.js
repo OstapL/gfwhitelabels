@@ -5,6 +5,7 @@ import 'bootstrap-slider/dist/bootstrap-slider'
 import 'bootstrap-slider/dist/css/bootstrap-slider.css'
 
 let formatPrice = calculatorHelper.formatPrice;
+const validation = require('components/validation/validation.js');
 
 if (!app.cache.whatMyBusinessWorthCalculator) {
     app.cache.whatMyBusinessWorthCalculator = {
@@ -23,6 +24,19 @@ if (!app.cache.whatMyBusinessWorthCalculator) {
     }
 }
 
+const validate = function(e) {
+    let data = $(e.target).serializeJSON({ useIntKeysAsArrayIndex: true });
+    this.$('.help-block').remove();
+    if(!validation.validate(this.fields, data, this)) {
+        _(validation.errors).each((errors, key) => {
+            validation.invalidMsg(this, key, errors);
+        });
+        this.$('.help-block').prev().scrollTo(5);
+        return false;
+    }
+    return true;
+};
+
 module.exports = {
     intro: Backbone.View.extend({
         el: '#content',
@@ -39,7 +53,57 @@ module.exports = {
         el: '#content',
 
         template: require('./templates/step1.pug'),
-        
+
+        initialize(options) {
+            this.fields = {
+                excessCash: {
+                    required: true,
+                    type: 'integer',
+                    validate: {},
+                },
+                ownCache: {
+                    required: true,
+                    type: 'integer',
+                    validate: {},
+                },
+                projectedRevenueYear: {
+                    required: true,
+                    type: 'integer',
+                    validate: {},
+                },
+                projectedRevenueTwoYears: {
+                    required: true,
+                    type: 'integer',
+                    validate: {},
+                },
+                grossMargin: {
+                    required: true,
+                    type: 'integer',
+                    validate: {},
+                    label: 'Gross Margin',
+                    range: [1, 100],
+                },
+                monthlyOperatingYear: {
+                    required: true,
+                    type: 'integer',
+                    validate: {},
+                },
+            };
+        },
+
+        events: {
+            'submit form': 'nextStep',
+        },
+
+        validate: validate,
+
+        nextStep(e) {
+            e.preventDefault();
+            if (this.validate(e)) {
+                app.routers.navigate('/calculator/whatmybusinessworth/step-2', {trigger: true});
+            }
+        },
+
         ui() {
             // get inputs by inputmask category
             this.inputPrice = this.$('[data-input-mask="price"]');
@@ -94,8 +158,54 @@ module.exports = {
             // calculate your income
             'submit .js-calc-form': 'doCalculation',
         },
+
+        validate: validate,
+
+        initialize(options) {
+            this.fields = {
+                monthlyOperatingTwoYears: {
+                    required: true,
+                    type: 'integer',
+                    validate: {},
+                },
+                workingCapital: {
+                    required: true,
+                    type: 'integer',
+                    validate: {},
+                    label: 'Working Capital',
+                    range: [1, 100],
+                },
+                additionalOperating: {
+                    required: true,
+                    type: 'integer',
+                    validate: {},
+                },
+                capitalExpenditures: {
+                    required: true,
+                    type: 'integer',
+                    validate: {},
+                },
+                taxRate: {
+                    required: true,
+                    type: 'integer',
+                    validate: {},
+                    label: 'Tax Rate',
+                    range: [1, 100],
+                },
+                annualInterest: {
+                    required: true,
+                    type: 'integer',
+                    validate: {},
+                },
+            };
+        },
+
         doCalculation(e) {
             e.preventDefault();
+
+            if (!this.validate(e)) {
+                return;
+            }
 
             // "Baseline Capital Needs" calculations
             this.calculateWithDelta();

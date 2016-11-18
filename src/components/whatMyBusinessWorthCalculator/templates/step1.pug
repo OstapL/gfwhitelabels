@@ -22,7 +22,7 @@ include ../../../templates/mixins.pug
 
   .row
     .offset-lg-3.col-lg-6
-      form(method="post" action="")
+      form(method="post" action="").form-section
         .form-body.clearfix
 
           .form-group.row
@@ -37,7 +37,8 @@ include ../../../templates/mixins.pug
                 data-input-mask='price',
                 autocomplete='off'
                 data-model-value='excessCash',
-                data-current-value= data.excessCash)#excessCash.form-control.js-field
+                data-current-value= data.excessCash
+                name='excessCash')#excessCash.form-control.js-field
 
           .form-group.row
             label(for="ownCache").col-lg-12 How much cash does your business currently have?
@@ -50,7 +51,8 @@ include ../../../templates/mixins.pug
                 autocomplete='off'
                 data-input-mask='price',
                 data-model-value='ownCache',
-                data-current-value= data.ownCache)#ownCache.form-control.js-field
+                data-current-value= data.ownCache
+                name='ownCache')#ownCache.form-control.js-field
 
           .form-group.row
             label(for="projectedRevenueYear").col-lg-12 What is your business’s projected revenue for the next 12 months?
@@ -63,7 +65,8 @@ include ../../../templates/mixins.pug
                 autocomplete='off'
                 data-input-mask='price',
                 data-model-value='projectedRevenueYear',
-                data-current-value= data.projectedRevenueYear)#projectedRevenueYear.form-control.js-field
+                data-current-value= data.projectedRevenueYear
+                name="projectedRevenueYear")#projectedRevenueYear.form-control.js-field
 
           .form-group.row
             label(for="projectedRevenueTwoYears").col-lg-12 What is your business’s projected revenue for the subsequent 12 months? (i.e. months 13 - 24)
@@ -76,7 +79,8 @@ include ../../../templates/mixins.pug
                 autocomplete='off'
                 data-input-mask='price',
                 data-model-value='projectedRevenueTwoYears',
-                data-current-value= data.projectedRevenueTwoYears)#projectedRevenueTwoYears.form-control.js-field
+                data-current-value= data.projectedRevenueTwoYears
+                name="projectedRevenueTwoYears")#projectedRevenueTwoYears.form-control.js-field
 
           .form-group.row
             label(for="grossMargin").col-lg-12 Let's focus on Cost of Goods Sold, or COGS: What gross margin  do you expect to earn on your business’s sales over the next 2 years?&nbsp;&nbsp;
@@ -86,6 +90,7 @@ include ../../../templates/mixins.pug
               input(
                 type='text',
                 data-slider-value= data.grossMargin
+                name="grossMargin"
                 data-model-value='grossMargin')#grossMargin.form-control.js-bootstrap-slider
 
           .form-group.row
@@ -100,7 +105,8 @@ include ../../../templates/mixins.pug
                 autocomplete='off'
                 data-input-mask='price',
                 data-model-value='monthlyOperatingYear',
-                data-current-value= data.monthlyOperatingYear)#monthlyOperatingYear.form-control.js-field
+                data-current-value= data.monthlyOperatingYear
+                name="monthlyOperatingYear")#monthlyOperatingYear.form-control.js-field
 
           .form-group.row.clearfix.m0
             .col-xs-6.p-t-2.m-t-1
@@ -108,5 +114,5 @@ include ../../../templates/mixins.pug
 
             .col-xs-6.mt30
               .controls
-                a(href="/calculator/whatmybusinessworth/step-2").btn.btn-primary.pull-right.text-uppercase Next
+                button.btn.btn-primary.pull-right.text-uppercase Next
                 // add class .pointer-events-none to disable all events for this button

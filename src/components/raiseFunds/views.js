@@ -301,13 +301,11 @@ module.exports = {
         'submit form': api.submitAction,
         // 'click .delete-image': 'deleteImage',
         'change #video,.additional_video_link': 'updateVideo',
-        dragover: 'globalDragover',
-        dragleave: 'globalDragleave',
         // 'change #video,.additional_video_link': 'appendHttpsIfNecessary',
         'change .press_link': 'appendHttpIfNecessary',
         'click .submit_form': submitCampaign,
         'click .onPreview': onPreviewAction,
-      }, leavingConfirmationHelper.events, menuHelper.events, addSectionHelper.events),
+      }, leavingConfirmationHelper.events, menuHelper.events, addSectionHelper.events, dropzoneHelpers.events),
       urlRoot: raiseCapitalUrl + '/campaign/:id/media',
 
       appendHttpsIfNecessary(e) {
@@ -351,6 +349,10 @@ module.exports = {
             return false;
           }
         });
+        this.fields.header_image_image_id.type =
+          this.fields.list_image_image_id.type =
+            this.fields.gallery_group_id.type = 'image';
+
         this.labels = {
           gallery_data: {
             url: 'Gallery',
@@ -419,59 +421,44 @@ module.exports = {
               fields: this.fields,
               // values: this.model.toJSON(),
               values: this.model,
-              dropzoneHelpers: dropzoneHelpers.methods,
               templates: this.jsonTemplates,
             })
         );
 
+        setTimeout(() => { this.createDropzones() } , 1000);
+
         const Model = require('components/campaign/models.js');
 
-        this.createImageDropzone(
-          // dropzone,
-          'header_image',
-          'campaign_headers', '',
-          (data) => {
-            // this.model.save({
-            // (new Model.model(this.model)).save({
-            //   header_image: data.file_id,
-            // }, {
-            //   patch: true,
-            // app.makeRequest(this.urlRoot, {header_image: data.file_id, type: 'PATCH'})
-            app.makeRequest(this.urlRoot +'/' + this.model.id, {header_image: data.file_id, type: 'PATCH'})
-            // }).then((model) => {
-            .then((model) => {
-              console.log('image upload done', model);
-            });
-          }
-        );
-        this.createImageDropzone(
-          // dropzone,
-          'list_image',
-          'campaign_lists', '',
-          (data) => {
-            app.makeRequest(this.urlRoot +'/' + this.model.id, {list_image: data.file_id, type: 'PATCH'})
-          }
-        );
-        this.createImageDropzone(
-          // dropzone,
-          'gallery',
-          'galleries/' + this.model.id, '',
-          (data) => {
-            let $el = $('<div class="thumb-image-container" style="float: left; overflow: hidden; position: relative;">' +
-              '<div class="delete-image-container" style="position: absolute;">' +
-              '<a class="delete-image" href="#" data-id="' + data.image_id + '">' +
-              '<i class="fa fa-times"></i>' +
-              '</a>' +
-              '</div>' +
-              '<img class="img-fluid pull-left" src="' + data.origin_url + '">' +
-              '</div>'
-              );
-            $('.photo-scroll').append($el);
-            $el.find('.delete-image').click(this.deleteImage.bind(this));
-            $('#gallery').val(data.folder_id);
-            app.makeRequest(this.urlRoot +'/' + this.model.id, {gallery: data.folder_id, type: 'PATCH'})
-          },
-          );
+        // this.createImageDropzone(
+        //   // dropzone,
+        //   'list_image',
+        //   'campaign_lists', '',
+        //   (data) => {
+        //     app.makeRequest(this.urlRoot +'/' + this.model.id, {list_image: data.file_id, type: 'PATCH'})
+        //   }
+        // );
+
+        // this.createImageDropzone({
+        //   // dropzone,
+        //   'gallery',
+        //   'galleries/' + this.model.id, '',
+        //   (data) => {
+        //     let $el = $('<div class="thumb-image-container" style="float: left; overflow: hidden; position: relative;">' +
+        //       '<div class="delete-image-container" style="position: absolute;">' +
+        //       '<a class="delete-image" href="#" data-id="' + data.image_id + '">' +
+        //       '<i class="fa fa-times"></i>' +
+        //       '</a>' +
+        //       '</div>' +
+        //       '<img class="img-fluid pull-left" src="' + data.origin_url + '">' +
+        //       '</div>'
+        //       );
+        //     $('.photo-scroll').append($el);
+        //     $el.find('.delete-image').click(this.deleteImage.bind(this));
+        //     $('#gallery').val(data.folder_id);
+        //     app.makeRequest(this.urlRoot +'/' + this.model.id, {gallery: data.folder_id, type: 'PATCH'})
+        //   },
+        //   );
+
         $('.delete-image').click(this.deleteImage.bind(this));
 
         if(app.getParams().check == '1') {

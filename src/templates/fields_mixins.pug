@@ -328,6 +328,7 @@ mixin fileDropzone(name, attr)
 
 
 mixin fileFolderDropzone(name, attr)
+    - var textHelper = require('helpers/textHelper.js')
     - var icon = attr.type
     if attr.hasOwnProperty('data') == false || Array.isArray(attr.data) == false
       - attr.data = [];
@@ -360,7 +361,7 @@ mixin fileFolderDropzone(name, attr)
                   - icon = attr.type
                 .col-xl-12
                   img(src='/img/icons/' + icon + '.png' alt=attr.label class="img-file img-" + name)
-                a(class=("a-" + name) target="_blank" href=v.urls[0]) #{ v.name }
+                a(class=("a-" + name) target="_blank" href=v.urls[0] title=v.name) #{ textHelper.shortenFileName(v.name) }
               else
                 .col-xl-12
                   img(src='/img/icons/' + icon + '.png' alt=attr.label class="img-file img-" + name)
@@ -389,7 +390,7 @@ mixin userProfileDropzone(name, attr)
           div(class="uploading collapse")
             img(alt="activity indicator" src="/img/ajax-loader.gif")
           .row
-            img(class=("img-" + name) src="/img/default/255x153.png" class="w-100")
+            img(class=("w-100 img-" + name) src="/img/default/255x153.png")
           .drop-image-title.text-xs-center.p-l-1.p-r-1.p-t-2.p-b-2 
             p.drop-photo #{attr.text}
             i(class="fa fa-" + attr.icon)
@@ -425,5 +426,5 @@ mixin imageDropzone(name, attr)
             div.col-lg-7.col-md-7.col-sm-7.col-xs-7.p-r-0.p-l-0.img-dropzone.text-lg-center
               input(name=name id=(attr.id || name) value=attr.data.id type="hidden")
               .col-xl-12.p-r-0
-                img(src="/img/default/255x153.png" class="w-100")
+                img(class=("w-100 img-" + name) src="/img/default/255x153.png")
               a(class=("a-" + name) href=attr.data.urls[0]) #{ attr.data.name }
