@@ -108,7 +108,7 @@ module.exports = {
       dropbox.on('success', (file, data) => {
         this._notifyServerAboutChanges(name, data);
         if (typeof(onSuccess) === 'function') {
-          onSuccess(data);
+          onSuccess(data, file);
         }
       });
 
@@ -138,13 +138,19 @@ module.exports = {
       };
 
       this._initializeDropzone(name, dzOptions, (data) => {
+        let textHelper = require('helpers/textHelper.js');
         let mimetypeIcons = require('helpers/mimetypeIcons.js');
         let icon = mimetypeIcons[data[0].mime.split('/')[1]];
-        $('.img-' + name).attr('src', '/img/icons/' + icon + '.png');
-        $('.a-' + name).attr('href', data[0].urls[0]).html(this._shortenFileName(data[0].name, 20).attr('title', data[0].name));
-        $('#' + name).val(data[0].id);
 
-        this.model[name] = data[0].id;
+        let fileName = data[0].name;
+        let url = data[0].urls[0];
+        let id = data[0].id;
+
+        $('.img-' + name).attr('src', '/img/icons/' + icon + '.png');
+        $('.a-' + name).attr('href', url).html(textHelper.shortenFileName(fileName).attr('title', fileName));
+        $('#' + name).val(id);
+
+        this.model[name] = id;
         this.model[name.replace('_id', '_data')] = data;
       });
     },
@@ -184,18 +190,35 @@ module.exports = {
         acceptedFiles: 'application/pdf',
       };
 
-      this._initializeDropzone(name, dzOptions, (data) => {
+      this._initializeDropzone(name, dzOptions, (data, file) => {
+        let textHelper = require('helpers/textHelper.js');
         let mimetypeIcons = require('helpers/mimetypeIcons.js');
         let icon = mimetypeIcons[data[0].mime.split('/')[1]];
-        if(this.model[name.replace('_id', '_data')].length == 0) {
+
+        let fieldDataName = name.replace('_id', '_data');
+        let url = data[0].urls[0];
+
+        if(this.model[fieldDataName].length == 0) {
           $('.img-' + name).attr('src', '/img/icons/' + icon + '.png');
-          $('.a-' + name).attr('href', data[0].urls[0]).html(data[0].name);
+          $('.a-' + name).attr('href', url).html(data[0].name);
         } else {
+          let $removeButton = $('<button type="button" class="close" data-dismiss="modal" aria-label="Close">' +
+            '<span aria-hidden="true">&times;</span>' +
+          '</button>');
+
+          $removeButton.on('click', (e) => {
+            this.removeFile(file);
+            return false;
+          });
+
           $('.a-' + name + ':last').after(
-            '<div class="col-xl-12"><img class="img-file img-' + name + '" src="/img/icons/' + icon + '.png" /></div>' +
-            '<a class="a-' + name + '" href="' + data[0].urls[0] + '">' + data[0].name + '</a>'
-          );
+            '<div class="col-xl-12">' +
+              '<img class="img-file img-' + name + '" src="/img/icons/' + icon + '.png" />' +
+            '</div>' +
+            '<a class="a-' + name + '" href="' + url + '" title="' + data[0].name +'">' + textHelper.shortenFileName(data[0].name) + '</a>'
+          ).after($removeButton);
         }
+
         this.model[name.replace('_id', '_data')].push(data[0]);
       });
     },
