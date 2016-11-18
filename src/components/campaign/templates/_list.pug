@@ -31,7 +31,6 @@
             .bottom_pr
               if campaign.security_type == 0
                 p Price per share: #{format.formatPrice(campaign.price_per_share)}
-                //- p Number of shares: #{campaign.min_number_of_shares.toLocaleString('en-US')}
                 - let min_num_of_share =  Math.round(campaign.minimum_raise.replace(/,/g, '') / campaign.price_per_share);
                 p Number of shares: #{(min_num_of_share ? min_num_of_share : 0).toLocaleString('en-US')}
               else
