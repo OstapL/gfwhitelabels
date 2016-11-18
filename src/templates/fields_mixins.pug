@@ -344,24 +344,46 @@ mixin fileFolderDropzone(name, attr)
         label( for=attr.id || name)!= attr.label
 
       div(class=(attr.class2 + ' dropzone__' + name))
-        div(class=" col-lg-12 border-dropzone")
+        div(class=" col-lg-12 border-dropzone p-r-0")
           div(class="uploading collapse")
             img(alt="activity indicator" src="/img/ajax-loader.gif")
-          span
+          span.filescroll
             div.col-lg-5.col-md-5.col-sm-5.col-xs-5.text-xs-center.text-md-center.text-lg-center.p-dropzone
               a(class='link-1' href="#" onclick="return false")
                 p.drop-photo #{attr.text}
                 i(class="fa fa-" + attr.icon)
-            div.col-lg-7.col-md-7.col-sm-7.col-xs-7.p-r-0.p-l-0.p-dropzone.img-dropzone.text-lg-center
+            div.col-lg-7.col-md-7.col-sm-7.col-xs-7.p-r-0.p-l-0.img-dropzone.text-lg-center.all-file-scroll
               input(name=name id=(attr.id || name) value=attr.value type="hidden")
               each v,k in attr.data
                 if v.mime
                   - icon = mimetypeIcons[v.mime.split('/')[1]];
                 else
                   - icon = attr.type
-                .col-xl-12
-                  img(src='/img/icons/' + icon + '.png' alt=attr.label class="img-file img-" + name)
-                a(class=("a-" + name) target="_blank" href=v.urls[0] title=v.name) #{ textHelper.shortenFileName(v.name) }
+                .file-scroll
+                  .thumb-file-container
+                    .delete-file-container(style="position: absolute;")
+                      a(href="#")
+                        i.fa.fa-times
+                    img(src='/img/icons/' + icon + '.png' alt=attr.label class="img-file img-" + name)
+                    a(class=("link-file a-" + name) target="_blank" href=v.urls[0] title=v.name) #{ textHelper.shortenFileName(v.name) }
+                  .thumb-file-container
+                    .delete-file-container(style="position: absolute;")
+                      a(href="#")
+                        i.fa.fa-times
+                    img(src='/img/icons/' + icon + '.png' alt=attr.label class="img-file img-" + name)
+                    a(class=("link-file a-" + name) target="_blank" href=v.urls[0] title=v.name) #{ textHelper.shortenFileName(v.name) }
+                  .thumb-file-container
+                    .delete-file-container(style="position: absolute;")
+                      a(href="#")
+                        i.fa.fa-times
+                    img(src='/img/icons/' + icon + '.png' alt=attr.label class="img-file img-" + name)
+                    a(class=("link-file a-" + name) target="_blank" href=v.urls[0] title=v.name) #{ textHelper.shortenFileName(v.name) }
+                  .thumb-file-container
+                    .delete-file-container(style="position: absolute;")
+                      a(href="#")
+                        i.fa.fa-times
+                    img(src='/img/icons/' + icon + '.png' alt=attr.label class="img-file img-" + name)
+                    a(class=("link-file a-" + name) target="_blank" href=v.urls[0] title=v.name) #{ textHelper.shortenFileName(v.name) }
               else
                 .col-xl-12
                   img(src='/img/icons/' + icon + '.png' alt=attr.label class="img-file img-" + name)
