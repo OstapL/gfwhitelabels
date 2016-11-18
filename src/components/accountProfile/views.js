@@ -3,7 +3,7 @@ const dropzoneHelpers = require('helpers/dropzoneHelpers.js');
 const validation = require('components/validation/validation.js');
 const phoneHelper = require('helpers/phoneHelper.js');
 let countries = {};
-_.each(require('helpers/countries.js'), (c) => { countries[c.code] = c.name; });
+_.each(require('helpers/countries.json'), (c) => { countries[c.code] = c.name; });
 
 module.exports = {
   profile: Backbone.View.extend(_.extend({
@@ -256,7 +256,7 @@ module.exports = {
       const socket = require('socket.io-client')('http://localhost:3000');
       socket.on('connect', function () {
         socket.emit('newUser', app.user.id, function (data) {
-          console.log(data); 
+          console.log(data);
         });
       });
       socket.on('notification', function(msg){
