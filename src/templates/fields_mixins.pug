@@ -1,5 +1,5 @@
 mixin prepareNestedField(nestedName, name, value, index, myAttr)
-  if value == null 
+  if value == null
     - console.log('value for ' + name + ' is null ')
     - value = {}
   - _.extend(myAttr, attr.schema[name]);
@@ -110,7 +110,7 @@ mixin fieldTextLabel(name, attr)
             name=attr.name || name
             placeholder=attr.placeholder ? attr.placeholder :attr.label
             type=attr.type ? attr.type : 'text'
-            class=(attr.help_text ? 'showPopover' : '') 
+            class=(attr.help_text ? 'showPopover' : '')
             data-content=(attr.help_text ?attr.help_text : '')
             value=attr.value
             maxlength = attr.maxlength ? attr.maxlength : false
@@ -131,7 +131,7 @@ mixin fieldTextareaLabel(name, attr)
         name=attr.name || name
         placeholder=attr.placeholder ? attr.placeholder :attr.label
         type=attr.type ? attr.type : 'text'
-        class=(attr.help_text ? 'showPopover' : '') 
+        class=(attr.help_text ? 'showPopover' : '')
         data-content=(attr.help_text ?attr.help_text : '')
         maxlength = attr.maxlength ? attr.maxlength : false
         disabled=(attr.disabled ? attr.disabled : false)
@@ -167,7 +167,7 @@ mixin fieldChoiceLabel(name, attr)
       ).custom-select.w-100
           if attr.hasOwnProperty('empty')
             option(value=attr.empty.value) #{attr.empty['']}
-            
+
           each v,k in attr.validate.choices
             option(value=k selected=(k == attr.value ? "selected" : undefined)) #{ v }
 mixin fieldChoice(name, attr)
@@ -179,7 +179,7 @@ mixin fieldChoice(name, attr)
     name=name
     ).custom-select.w-100
     if attr.hasOwnProperty('empty')
-      option(value=attr.empty.value) #{attr.empty['']}  
+      option(value=attr.empty.value) #{attr.empty['']}
     each v,k in attr.validate.choices
       option(value=k selected=(k == attr.value ? "selected" : undefined)) #{ v }
 
@@ -196,8 +196,8 @@ mixin fieldRadioLabel(name, attr)
         each v, k in attr.validate.choices
           label
             input(
-              type="radio" 
-              class="form-check-input" 
+              type="radio"
+              class="form-check-input"
               name=name
               data-value-type = (attr.type == 'boolean' ? attr.type : '')
               checked=(k == attr.value ? "checked" : undefined)
@@ -277,14 +277,14 @@ mixin fieldDateYear(name, attr)
   +prepareField(name, attr)
   if attr.type == null
     - attr.type = 'dateyear'
-    
+
   div(class=attr.class + ' ' + (attr.id || name) + (attr.required == true ? ' required ' : ' ') + ' ' + attr.type).date-input
     - var value = attr.value ? attr.value.split('-') : values && values[name] ? values[name].split('-') : []
     input(
         id=attr.id || name + '__year'
         name=(attr.name || name) + '__year'
         placeholder=(attr.placeholder ? attr.placeholder : "YYYY")
-        class=(attr.help_text ? 'showPopover' : '') 
+        class=(attr.help_text ? 'showPopover' : '')
         data-content=(attr.help_text ?attr.help_text : '')
         type='text'
         maxlength=4
@@ -303,7 +303,7 @@ mixin fileDropzone(name, attr)
       - var icon = mimetypeIcons[attr.data.mime.split('/')[1]];
 
     div(
-      class='row media-item ' + attr.class + ' ' + (attr.id || name) + 
+      class='row media-item ' + attr.class + ' ' + (attr.id || name) +
         (attr.required == true ? ' required ' : ' ') + ' fileDropzone' +
         (attr.help_text ? ' showPopover' : '')
       data-content=(attr.help_text ? attr.help_text : '')
@@ -335,7 +335,7 @@ mixin fileFolderDropzone(name, attr)
     - mimetypeIcons = require('helpers/mimetypeIcons.js');
 
     div(
-      class='row media-item ' + attr.class + ' ' + (attr.id || name) + 
+      class='row media-item ' + attr.class + ' ' + (attr.id || name) +
         (attr.required == true ? ' required ' : ' ') + ' fileFolderDropzone' +
         (attr.help_text ? ' showPopover' : '')
       data-content=(attr.help_text ? attr.help_text : '')
@@ -354,40 +354,22 @@ mixin fileFolderDropzone(name, attr)
                 i(class="fa fa-" + attr.icon)
             div.col-lg-7.col-md-7.col-sm-7.col-xs-7.p-r-0.p-l-0.img-dropzone.text-lg-center.all-file-scroll
               input(name=name id=(attr.id || name) value=attr.value type="hidden")
-              each v,k in attr.data
-                if v.mime
-                  - icon = mimetypeIcons[v.mime.split('/')[1]];
+              .file-scroll
+                each v,k in attr.data
+                  if v.mime
+                    - icon = mimetypeIcons[v.mime.split('/')[1]]
+                  else
+                    - icon = attr.type;
+                  .thumb-file-container
+                    .delete-file-container(style="position: absolute;")
+                      a(href="#" class="delete-file" data-fileid=v.id)
+                        i.fa.fa-times
+                    img(src='/img/icons/' + icon + '.png' alt=attr.label class="img-file img-" + name)
+                    a(class=("link-file a-" + name) target="_blank" href=v.urls[0] title=v.name) #{ textHelper.shortenFileName(v.name) }
                 else
-                  - icon = attr.type
-                .file-scroll
-                  .thumb-file-container
-                    .delete-file-container(style="position: absolute;")
-                      a(href="#")
-                        i.fa.fa-times
+                  .thumb-file-container.col-xl-12
                     img(src='/img/icons/' + icon + '.png' alt=attr.label class="img-file img-" + name)
-                    a(class=("link-file a-" + name) target="_blank" href=v.urls[0] title=v.name) #{ textHelper.shortenFileName(v.name) }
-                  .thumb-file-container
-                    .delete-file-container(style="position: absolute;")
-                      a(href="#")
-                        i.fa.fa-times
-                    img(src='/img/icons/' + icon + '.png' alt=attr.label class="img-file img-" + name)
-                    a(class=("link-file a-" + name) target="_blank" href=v.urls[0] title=v.name) #{ textHelper.shortenFileName(v.name) }
-                  .thumb-file-container
-                    .delete-file-container(style="position: absolute;")
-                      a(href="#")
-                        i.fa.fa-times
-                    img(src='/img/icons/' + icon + '.png' alt=attr.label class="img-file img-" + name)
-                    a(class=("link-file a-" + name) target="_blank" href=v.urls[0] title=v.name) #{ textHelper.shortenFileName(v.name) }
-                  .thumb-file-container
-                    .delete-file-container(style="position: absolute;")
-                      a(href="#")
-                        i.fa.fa-times
-                    img(src='/img/icons/' + icon + '.png' alt=attr.label class="img-file img-" + name)
-                    a(class=("link-file a-" + name) target="_blank" href=v.urls[0] title=v.name) #{ textHelper.shortenFileName(v.name) }
-              else
-                .col-xl-12
-                  img(src='/img/icons/' + icon + '.png' alt=attr.label class="img-file img-" + name)
-                a(class=("a-" + name) href="#")
+                    a(class=("a-" + name) href="#")
 
 
 mixin userProfileDropzone(name, attr)
@@ -401,7 +383,7 @@ mixin userProfileDropzone(name, attr)
       - attr.data.urls = [];
 
     div(
-      class='row media-item ' + attr.class + ' ' + (attr.id || name) + 
+      class='row media-item ' + attr.class + ' ' + (attr.id || name) +
         (attr.required == true ? ' required ' : ' ') + ' userProfileDropzone' +
         (attr.help_text ? ' showPopover' : '')
       data-content=(attr.help_text ? attr.help_text : '')
@@ -413,7 +395,7 @@ mixin userProfileDropzone(name, attr)
             img(alt="activity indicator" src="/img/ajax-loader.gif")
           .row
             img(class=("w-100 img-" + name) src="/img/default/255x153.png")
-          .drop-image-title.text-xs-center.p-l-1.p-r-1.p-t-2.p-b-2 
+          .drop-image-title.text-xs-center.p-l-1.p-r-1.p-t-2.p-b-2
             p.drop-photo #{attr.text}
             i(class="fa fa-" + attr.icon)
 
@@ -428,7 +410,7 @@ mixin imageDropzone(name, attr)
       - var icon = mimetypeIcons[attr.data.mime.split('/')[1]];
 
     div(
-      class='row media-item ' + attr.class + ' ' + (attr.id || name) + 
+      class='row media-item ' + attr.class + ' ' + (attr.id || name) +
         (attr.required == true ? ' required ' : ' ') + ' imageDropzone' +
         (attr.help_text ? ' showPopover' : '')
       data-content=(attr.help_text ? attr.help_text : '')
