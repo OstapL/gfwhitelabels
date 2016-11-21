@@ -122,6 +122,7 @@ module.exports = {
                 this.outputData[i] = {};
 
                 this.outputData[i].revenue = Math.ceil(this.outputData[i - 1].revenue * (1 + growLevel / 100));
+                console.log('growLevel: ' + growLevel);
                 this.outputData[i].annual = Math.ceil(0.05 * this.outputData[i].revenue);
 
                 let helper = {
@@ -159,7 +160,7 @@ module.exports = {
 
             // save data
             app.cache.payBackShareCalculator.outputData = this.outputData;
-            app.cache.payBackShareCalculator.nextYearRevenue = e.target.querySelector('#nextYearRevenue').value.replace('$', '').replace(',','');
+            app.cache.payBackShareCalculator.nextYearRevenue = e.target.querySelector('#nextYearRevenue').value.replace('$', '').replace(/\,/g,'');
             app.cache.payBackShareCalculator.maxOfMultipleReturned = maxOfMultipleReturned;
 
             // navigate to the finish step
