@@ -10,7 +10,7 @@
     "lint": "jshint src/**/*.js",
     "jscs": "jscs src/**/*.js",
     "sass-lint": "sass-lint -c ./.sass-link.yml  '**/*.scss' -v -q",
-    "test": "mocha -r test/init.js"
+    "test": "export NODE_PATH=\"`pwd`/src\" && mocha -r test/init.js"
   },
   "devDependencies": {
     "as-jqplot": "^1.0.8",
