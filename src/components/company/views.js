@@ -32,7 +32,7 @@ module.exports = {
       'click .tabs-scroll .nav .nav-link': 'smoothScroll',
       'hide.bs.collapse .panel': 'onCollapse',
       'show.bs.collapse .panel': 'onCollapse',
-      'click .email-share': 'sharWithEmail',
+      'click .email-share': 'shareWithEmail',
       'click .linkedin-share': 'shareOnLinkedin',
       'click .facebook-share': 'shareOnFacebook',
       'click .twitter-share': 'shareOnTwitter',
@@ -175,7 +175,7 @@ module.exports = {
       });
     },
 
-    sharWithEmail (e) {
+    shareWithEmail (e) {
       event.preventDefault();
       // Check out COMPANY NAME's fundraise on GrowthFountain
       let companyName = this.model.company.name;

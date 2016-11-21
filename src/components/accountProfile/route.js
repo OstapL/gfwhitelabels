@@ -81,12 +81,22 @@ module.exports = Backbone.Router.extend({
 
   issueDashboard: function() {
     require.ensure([], function() {
-      const View = require('components/accountProfile/views.js');
-      let i = new View.issueDashboard({
-        el: '#content',
+      const companyR = app.makeCacheRequest(authServer + '/user/company');
+      companyR.done((company) => {
+        // let companyId = data.id;
+        let companyId = 1;
+        const detailR = app.makeCacheRequest(raiseCapitalUrl + '/' + companyId);
+        detailR.done((detail) => {
+          const View = require('components/accountProfile/views.js');
+          let i = new View.issueDashboard({
+            el: '#content',
+            model: detail,
+          });
+          i.render();
+          app.hideLoading();
+        }); 
       });
-      i.render();
-      app.hideLoading();
+
     });
   },
 });    
