@@ -6,7 +6,7 @@ hello.init({
     linkedin: linkedinClientId, 
 }, {
     redirect_uri: '/account/finish/login/',
-    oauth_proxy: formcServer+'/proxy/'
+    oauth_proxy: authServer+'/proxy/'
 });
 
 var helloApp = {
@@ -14,7 +14,7 @@ var helloApp = {
         console.log('sendToken');
         return $.ajax({
             method: 'POST',
-            url: formcServer+'/rest-auth/'+network+'/',
+            url: authServer+'/rest-auth/'+network+'/',
             data: {access_token: token},
         });
     }
