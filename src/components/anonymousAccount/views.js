@@ -228,7 +228,8 @@ module.exports = {
       'submit .signup-form': api.submitAction,
       'click .btn-google': 'loginGoogle',
       'click .btn-linkedin': 'loginLinkedin',
-      'click .btn-facebook': 'loginFacebook'
+      'click .btn-facebook': 'loginFacebook',
+      'click input[type=checkbox]': 'agreeWithRules',
     },
 
     initialize(options) {
@@ -264,6 +265,27 @@ module.exports = {
             this, '', 'Server return no authentication data'
           );
       }
+    },
+
+    agreeWithRules(e) {
+
+      let agreedWithRules = this.$('input[type=checkbox]').is(':checked');
+
+      _.each(['.btn-google', '.btn-linkedin', '.btn-facebook'], (btnSelector) => {
+        if (agreedWithRules) {
+          this.$(btnSelector)
+            .removeClass('disabled')
+            .addClass('active')
+            .prop('disabled', false);
+        } else {
+          this.$(btnSelector)
+            .addClass('disabled')
+            .removeClass('active')
+            .prop('disabled', true);
+        }
+
+      });
+
     },
 
     loginGoogle() {
