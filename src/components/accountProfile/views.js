@@ -110,10 +110,26 @@ module.exports = {
       this.bootstrapSlider = this.$('.js-bootstrap-slider');
       this.bootstrapSlider.each(function() {
         $(this).bootstrapSlider ({
-          min: 0,
-          max: 100,
+          ticks: [0, 50, 100, 200, 500],
+          ticks_positions: [0, 25, 50, 75, 100],
+          ticks_labels: ['$0', '$50K', '$100K', '$200K', '$500K+'],
+          ticks_snap_bounds: 1,
           formatter: function(value) {
-            return value + '%'
+            return '$' + value + 'K'
+          }
+        }).on('slideStop', function(slider) {
+          console.log(slider)
+        });
+      });
+      this.bootstrapSliderAnnual = this.$('.js-bootstrap-slider-annual');
+      this.bootstrapSliderAnnual.each(function() {
+        $(this).bootstrapSlider ({
+          ticks: [0, 50, 100, 200, 500, 1000, 2000, 5000],
+          ticks_positions: [0, 14, 28, 42, 56, 70, 85, 100],
+          ticks_labels: ['$0', '$50K', '$100K', '$200K', '$500K' , '$1M', '$2M', '$5M+'],
+          ticks_snap_bounds: 1,
+          formatter: function(value) {
+            return '$' + value + 'K'
           }
         }).on('slideStop', function(slider) {
           console.log(slider)
