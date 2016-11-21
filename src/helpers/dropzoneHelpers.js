@@ -48,7 +48,7 @@ module.exports = {
         url: filerUrl + '/upload',
         clickable: '.dropzone__' + name + ' .border-dropzone',
         createImageThumbnails: false,
-        addRemoveLinks: true,
+        addRemoveLinks: false,
         thumbnail: function (file, dataUrl) {
           console.log('preview', file, file.xhr, file.xhr.response, file.xhr.responseText);
         },
@@ -148,7 +148,9 @@ module.exports = {
         let id = data[0].id;
 
         $('.img-' + name).attr('src', '/img/icons/' + icon + '.png');
-        $('.a-' + name).attr('href', url).html(textHelper.shortenFileName(fileName).attr('title', fileName));
+        $('.a-' + name).attr('href', url)
+          .html(textHelper.shortenFileName(fileName))
+          .attr('title', fileName);
         $('#' + name).val(id);
 
         this.model[name] = id;
@@ -188,7 +190,10 @@ module.exports = {
           file_name: name,
           group_id: this.model[name],
         },
-        acceptedFiles: 'application/pdf',
+        acceptedFiles: 'application/pdf,' +
+          'application/msword,' + //.doc
+          'application/vnd.openxmlformats-officedocument.wordprocessingml.document,' +//.docx
+          'application/vnd.openxmlformats-officedocument.presentationml.presentation',//.pptx
       };
 
       this._initializeDropzone(name, dzOptions, (data, file) => {
@@ -199,7 +204,7 @@ module.exports = {
         let fieldDataName = name.replace('_id', '_data');
         let url = data[0].urls[0];
 
-        let fileBlock = $('<div class=".thumb-file-container">' +
+        let fileBlock = $('<div class="thumb-file-container">' +
           '<div class="delete-file-container" style="position: absolute;">' +
             '<a href="#" class="delete-file" data-fileid="' + data[0].id + '"><i class="fa fa-times"></i></a>' +
           '</div>' +
@@ -236,7 +241,7 @@ module.exports = {
           return false;
         });
 
-        $('.dropzone__' + name + ' .thumb-file-container :last').after(fileBlock);
+        $('.dropzone__' + name + ' .thumb-file-container:last').after(fileBlock);
 
 
 
