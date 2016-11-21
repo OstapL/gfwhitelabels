@@ -60,14 +60,14 @@ module.exports = {
       this.fields.account_type = { requried: true };
       this.fields.annual_income = { required: true };
       this.fields.net_worth.required = true;
-
+      this.fields.accredited_investor = {};
       this.labels = {
         country: 'Country',
         street_address_1: 'Street address 1',
         street_address_2: 'Street address 2',
         zip_code: 'Zip code',
         city: 'City',
-        account_number: 'Account number',
+        account_number: 'Account Number',
         account_number_re: 'Re-Enter Account Number',
         routing_number: 'Routing Number',
         annual_income: 'Annual Income',
@@ -77,8 +77,8 @@ module.exports = {
       this.assignLabels();
 
 
-      this.fields.bank_name.label = 'Bank name';
-      this.fields.name_on_bank_account.label = 'Name on bank account';
+      this.fields.bank_name.label = 'Bank Name';
+      this.fields.name_on_bank_account.label = 'Name on Bank Account';
 
       // define ui elements
       this.cityStateArea = null;
