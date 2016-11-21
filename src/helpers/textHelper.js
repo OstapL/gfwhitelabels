@@ -11,7 +11,7 @@ module.exports = {
     }
 
     let lastPart = text.substring(text.length - lastLength);
-    let firstPart = text.substring(0, toLength - lastLength);
+    let firstPart = text.substring(0, toLength - lastLength - 3);
 
     return `${firstPart}...${lastPart}`;
 
