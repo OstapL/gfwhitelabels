@@ -5,6 +5,10 @@ const phoneHelper = require('helpers/phoneHelper.js');
 let countries = {};
 _.each(require('helpers/countries.json'), (c) => { countries[c.code] = c.name; });
 
+import 'bootstrap-slider/dist/bootstrap-slider'
+import 'bootstrap-slider/dist/css/bootstrap-slider.css'
+
+
 module.exports = {
   profile: Backbone.View.extend(_.extend({
     template: require('./templates/profile.pug'),
@@ -102,6 +106,19 @@ module.exports = {
           states: this.usaStates,
         })
       );
+      ///!!!
+      this.bootstrapSlider = this.$('.js-bootstrap-slider');
+      this.bootstrapSlider.each(function() {
+        $(this).bootstrapSlider ({
+          min: 0,
+          max: 100,
+          formatter: function(value) {
+            return value + '%'
+          }
+        }).on('slideStop', function(slider) {
+          console.log(slider)
+        });
+      });
       setTimeout(() => { this.createDropzones() } , 1000);
 
       this.cityStateArea = this.$('.js-city-state');
