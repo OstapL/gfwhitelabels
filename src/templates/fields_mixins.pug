@@ -252,7 +252,7 @@ mixin fieldDateMonth(name, attr)
   if attr.type == null
     - attr.type = 'datemonth'
 
-  - var value = attr.value && attr.value.indexOf('-') != -1 ? attr.value.split('-')[2] : '';
+  - var value = attr.value && attr.value.indexOf('-') != -1 ? attr.value.split('-')[1] : '';
   div(class=attr.class + ' ' + (attr.id || name) + (attr.required == true ? ' required ' : ' ') + ' ' + attr.type)
     select(
         id=attr.id || name + '__month'
