@@ -1515,27 +1515,35 @@ module.exports = {
       const sectionName = e.target.dataset.section;
       const template = require('./templates/snippets/outstanding_securities.pug');
 
-      $('.' + sectionName + '_container').append(
-        template({
-          fields: this.fields[sectionName],
-          name: sectionName,
-          attr: this.fields[sectionName],
-          value: data,
-          index: this[sectionName + 'Index'],
-        })
-      );
+      if (!validation.validate(this.fields.outstanding_securities.schema, data, this)) {
+        _(validation.errors).each((errors, key) => {
+          validation.invalidMsg(this, key, errors);
+        });
+        this.$('.help-block').prev().scrollTo(5);
+        return;
+      } else {
+        $('.' + sectionName + '_container').append(
+          template({
+            fields: this.fields[sectionName],
+            name: sectionName,
+            attr: this.fields[sectionName],
+            value: data,
+            index: this[sectionName + 'Index'],
+          })
+        );
 
-      this.model[sectionName].push(data);
-      this[sectionName + 'Index']++;
+        this.model[sectionName].push(data);
+        this[sectionName + 'Index']++;
 
-      $('#security_modal').modal('hide');
+        $('#security_modal').modal('hide');
 
-      e.target.querySelectorAll('input').forEach(function(el, i) {
-        if (el.type == "radio") el.checked = false; 
-        else el.value = '';
-      });
+        e.target.querySelectorAll('input').forEach(function(el, i) {
+          if (el.type == "radio") el.checked = false; 
+          else el.value = '';
+        });
 
-      e.target.querySelector('textarea').value = '';
+        e.target.querySelector('textarea').value = '';
+      };
     },
 
     deleteOutstanding(e) {
