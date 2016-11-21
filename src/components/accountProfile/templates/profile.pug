@@ -113,9 +113,17 @@ include ../../../templates/fields_mixins.pug
             section.form-section.clearfix
               form(method="post" action="")
                 .form-body.clearfix
-
+                  
                   .col-xs-12
                     section.right-block
+                      .form-group.row
+                        .col-lg-11
+                          .warning-block.m-b-2
+                            i.fa.fa-exclamation-triangle
+                            span.warning-text
+                              | Please confirm your identity and investor status. We are required by the SEC to review this information in order to determine how much you can invest and what offerings will be available to you.
+                      
+
                       +fieldTextLabel('bank_name', _.extend({'class1': 'col-lg-3 text-lg-right text-xs-left', 'class2': 'col-lg-8 ', 'type': 'text', 'value': user.bank_name}, fields.bank_name))
                       +fieldTextLabel('name_on_bank_account', _.extend({'class1': 'col-lg-3 text-lg-right text-xs-left', 'class2': 'col-lg-8 ', 'type': 'text', 'value': user.name_on_bank_account}, fields.name_on_bank_account))
                       +fieldTextLabel('account_number', _.extend({'class1': 'col-lg-3 text-lg-right text-xs-left', 'class2': 'col-lg-8 ', 'type': 'text', 'value': user.account_number}, fields.account_number))
