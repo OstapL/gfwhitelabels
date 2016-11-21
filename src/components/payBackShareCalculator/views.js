@@ -159,7 +159,7 @@ module.exports = {
 
             // save data
             app.cache.payBackShareCalculator.outputData = this.outputData;
-            app.cache.payBackShareCalculator.nextYearRevenue = e.target.querySelector('#nextYearRevenue').value.replace('$', '').replace(',','');
+            app.cache.payBackShareCalculator.nextYearRevenue = e.target.querySelector('#nextYearRevenue').value.replace('$', '').replace(/\,/g,'');
             app.cache.payBackShareCalculator.maxOfMultipleReturned = maxOfMultipleReturned;
 
             // navigate to the finish step

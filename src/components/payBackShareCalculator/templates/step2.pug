@@ -63,7 +63,7 @@ include ../../../templates/mixins.pug
 
             .col-lg-12
               input(
-                value= data.growLevel,
+                value=(data.growLevel ? data.growLevel + '%' : ''),
                 type='text',
                 placeholder='0%',
                 autocomplete="off"
