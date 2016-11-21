@@ -246,7 +246,7 @@ module.exports = {
 
 
         if(this.model[fieldDataName].length == 0) {
-          $('.dropzone__' + name + ' .thumb-file-container :first').remove();
+          $('.dropzone__' + name + ' .thumb-file-container:first').remove();
         }
 
         this.model[name.replace('_id', '_data')].push(data[0]);
