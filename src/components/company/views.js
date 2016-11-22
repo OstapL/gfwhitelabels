@@ -32,7 +32,7 @@ module.exports = {
       'click .tabs-scroll .nav .nav-link': 'smoothScroll',
       'hide.bs.collapse .panel': 'onCollapse',
       'show.bs.collapse .panel': 'onCollapse',
-      'click .email-share': 'sharWithEmail',
+      'click .email-share': 'shareWithEmail',
       'click .linkedin-share': 'shareOnLinkedin',
       'click .facebook-share': 'shareOnFacebook',
       'click .twitter-share': 'shareOnTwitter',
@@ -175,7 +175,7 @@ module.exports = {
       });
     },
 
-    sharWithEmail (e) {
+    shareWithEmail (e) {
       event.preventDefault();
       // Check out COMPANY NAME's fundraise on GrowthFountain
       let companyName = this.model.company.name;
@@ -200,7 +200,7 @@ module.exports = {
       window.open(encodeURI('https://www.linkedin.com/shareArticle?mini=true&url=' + window.location.href +
             '&title=' + this.model.company.name +
             '&summary=' + this.model.company.description +
-            '&source=Growth Fountain'),'Growth Fountain Campaingn','width=605,height=545');
+            '&source=Growth Fountain'),'Growth Fountain Campaign','width=605,height=545');
     },
 
     shareOnTwitter(event) {
@@ -208,7 +208,7 @@ module.exports = {
       window.open(encodeURI('https://twitter.com/share?url=' + window.location.href +
             '&via=' + 'growthfountain' +
             '&hashtags=investment,fundraising' +
-            '&text=Check out '),'Growth Fountain Campaingn','width=550,height=420');
+            '&text=Check out '),'Growth Fountain Campaign','width=550,height=420');
     },
 
     render() {
