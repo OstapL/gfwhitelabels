@@ -403,50 +403,6 @@ module.exports = {
 
   }, addSectionHelper.methods, menuHelper.methods)),
 
-  offering: Backbone.View.extend(_.extend({
-    events: _.extend({
-      'submit form': 'submit',
-    }, addSectionHelper.events, menuHelper.events),
-
-    preinitialize() {
-      // ToDo
-      // Hack for undelegate previous events
-      for (let k in this.events) {
-        $('#content ' + k.split(' ')[1]).undelegate();
-      }
-    },
-
-    getSuccessUrl() {
-      return '/formc/offering/' + this.model.id;
-    },
-
-    submit: api.submitAction,
-
-    initialize(options) {
-      this.fields = options.fields;
-    },
-
-    render() {
-      let template = require('templates/formc/offering.pug');
-      let values = this.model;
-
-      if (!Array.isArray(values.members)) {
-        values.members = [];
-      }
-
-      this.$el.html(
-        template({
-          serverUrl: serverUrl,
-          Urls: Urls,
-          fields: this.fields,
-          values: values,
-        })
-      );
-      return this;
-    },
-
-  }, addSectionHelper.methods, menuHelper.methods)),
-
   relatedParties: Backbone.View.extend(_.extend({
     el: '#content',
     urlRoot: formcServer + '/:id' + '/related-parties',
@@ -1522,6 +1478,7 @@ module.exports = {
         this.$('.help-block').prev().scrollTo(5);
         return;
       } else {
+        this.$el.find('.outstanding_securities_block').show();
         $('.' + sectionName + '_container').append(
           template({
             fields: this.fields[sectionName],
