@@ -6,7 +6,7 @@ include ../../../templates/mixins.pug
         ['issuer dashboard', ''],
     ]
 )
-- let amt_raised_in_ks = Math.round(values.campaign.amount_raised/1000).toLocaleString('en-US');
+- var amt_raised_in_ks = Math.round(values.campaign.amount_raised/1000).toLocaleString('en-US');
 section.issuer-dashbord-top
   .container
     .row
@@ -74,7 +74,7 @@ section.issuer-dashbord-top
             .desc New Interactions
 
       .col-md-7.col-sm-7.p-r-0
-        - let percentage_raised = values.campaign.amount_raised / values.campaign.minimum_raise * 100;
+        - var percentage_raised = values.campaign.amount_raised / values.campaign.minimum_raise * 100;
         .tpl-progress
           progress(
             value=percentage_raised
@@ -82,7 +82,7 @@ section.issuer-dashbord-top
           span(
             style="width:" + percentage_raised + "%").circle_progress
             i.fa.fa-circle-o
-          - let now = new Date();
+          - var now = new Date();
           span(style="left:" + percentage_raised + "%").text_position #{now.toLocaleString('en-US', { month: "short" })} #{now.getDate()}
             br
             | $#{amt_raised_in_ks}K Raised
