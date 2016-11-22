@@ -11,10 +11,10 @@ include ../../../templates/fields_mixins.pug
 
 .container.profile.pt-50
   .row
-    aside.col-xl-3.m-b-1
+    aside.col-xl-3.col-lg-3.m-b-1
       form(method="post" action="").form.form-section
         - var values = user;
-        h3.m-t-0.m-b-1.profile-user-name.text-xl-left.text-xs-center #{user.first_name + ' ' + user.last_name}
+        h3.m-t-0.m-b-1.profile-user-name.text-xs-center #{user.first_name + ' ' + user.last_name}
         +userProfileDropzone("image", _.extend({
           thumbSize: '255x135',
           default: '/img/default/255x153.png',
@@ -23,10 +23,21 @@ include ../../../templates/fields_mixins.pug
           value: values.image_id,
         }, fields.image))
       .row.m-t-2
-        .col-lg-12.text-xs-center
-          a(href="/account/change-password").link-3 Need to change your password?
+        .col-xl-12.p-l-0.p-r-0
+          .profile-type-user
+            span.user-type Shareholder
+            .user-company
+              | in
+              a(href="/api/campaign/147").link-3  NETFLIX
+              |  company.
+        .col-xl-12.p-l-0.p-r-0
+          hr
+        .col-lg-12.text-xl-left.p-l-0.p-r-0
+          a(href="/account/change-password").link-3 
+            i.fa.fa-lock
+            |  Need to change your password?
 
-    .col-xl-9.col-lg-12
+    .col-xl-9.col-lg-9
       ul.nav.nav-tabs.profile-tabs
         li(aria-expanded="false").nav-item
           a(href="#account_info" data-toggle="tab"  aria-expanded="true" role="tab").active.nav-link.uppercase Profile information
