@@ -189,7 +189,7 @@ module.exports = {
     },
 
     _success(data) {
-      if (this.hasOwnProperty('formc') == false) {
+      if (data.hasOwnProperty('campaign_id') == false) {
         data.campaign_id = this.formc.campaign_id;
       }
 
@@ -336,7 +336,7 @@ module.exports = {
 
       initialize(options) {
         this.fields = options.fields;
-        this.fields.gallery_data.fn = function checkNotEmpty(value, attr, fn, model, computed) {
+        this.fields.gallery_group_id.validate.fn = function checkNotEmpty(value, attr, fn, model, computed) {
           if(document.querySelectorAll('.dropzone__gallery .img-fluid').length === 0) {
             throw 'Please upload at least 1 image';
           }
@@ -780,7 +780,7 @@ module.exports = {
   }, menuHelper.methods)),
 
   specifics: Backbone.View.extend(_.extend({
-      urlRoot: Urls['campaign-list']() + '/specifics',
+      urlRoot: raiseCapitalUrl + '/campaign/:id/specifics',
       events: _.extend({
         'submit form': api.submitAction,
         'change input[name="security_type"]': 'updateSecurityType',

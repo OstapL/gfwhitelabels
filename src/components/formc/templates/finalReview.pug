@@ -678,7 +678,6 @@ section.formc-review
               
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u Description of Securities, Material Terms and Other Rights:
-        p.pb10.logic LOGIC: The description for each separate security that is listed above appears below
         each v,k in values.formc.outstanding_securities
           p.pb10 #{ v.security_type }
             a(href="#" class="show-input" data-name="cap_type_common_description").link-1 #{ v.terms_and_rights }
@@ -764,7 +763,6 @@ section.formc-review
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u  Assuming A Maximum Raise
         if values.campaign.minimum_raise != values.campaign.maximum_raise
-          p.pb10.logic [LOGIC: Exclude if no max raise]
           p.pb10.text-indent In the case that the Offering is oversubscribed and closes with the maximum amount achieved, the Company anticipates using the proceeds in the following manner: 
           p.pb10
             +editText('use_of_net_proceeds_maximum')
@@ -1354,19 +1352,20 @@ section.formc-review
                   tbody
                     if v.experiences
                       each v1,k1 in v.experiences
-                        tr
-                          td
-                            a(href="#" class="show-input" data-name="director.1.employer.1").link-1 #{v1.employer}
-                          td
-                            a(href="#" class="show-input" data-name="director.1.employer_biz.1").link-1 #{v1.employer_principal}
-                          td
-                            a(href="#" class="show-input" data-name="director.1.employer_title.1").link-1 #{v1.title}
-                          td
-                            a(href="#" class="show-input" data-name="director.1.employer_responsibilitiees.1").link-1 #{v1.responsibilities}
-                          td
-                            a(href="#" class="show-input" data-name="director.1.position_start.1").link-1 #{v1.start_date_of_service}
-                          td
-                            a(href="#" class="show-input" data-name="director.1.position_end.1").link-1 #{v1.end_date_of_service}
+                        if v1
+                          tr
+                            td
+                              a(href="#" class="show-input" data-name="director.1.employer.1").link-1 #{v1.employer}
+                            td
+                              a(href="#" class="show-input" data-name="director.1.employer_biz.1").link-1 #{v1.employer_principal}
+                            td
+                              a(href="#" class="show-input" data-name="director.1.employer_title.1").link-1 #{v1.title}
+                            td
+                              a(href="#" class="show-input" data-name="director.1.employer_responsibilitiees.1").link-1 #{v1.responsibilities}
+                            td
+                              a(href="#" class="show-input" data-name="director.1.position_start.1").link-1 #{v1.start_date_of_service}
+                            td
+                              a(href="#" class="show-input" data-name="director.1.position_end.1").link-1 #{v1.end_date_of_service}
         p.pb10.text-indent Employment information from previous employers over the last three years for each of the Company’s directors is as follows:
         p.pb10
           each v,k in values.formc.team_members
@@ -1385,19 +1384,20 @@ section.formc-review
                   tbody
                     if v.experiences
                       each v1,k1 in v.experiences
-                        tr
-                          td
-                            a(href="#" class="show-input" data-name="director.1.employer.1").link-1 #{v1.employer}
-                          td
-                            a(href="#" class="show-input" data-name="director.1.employer_biz.1").link-1 #{v1.employer_principal}
-                          td
-                            a(href="#" class="show-input" data-name="director.1.employer_title.1").link-1 #{v1.title}
-                          td
-                            a(href="#" class="show-input" data-name="director.1.employer_responsibilitiees.1").link-1 #{v1.responsibilities}
-                          td
-                            a(href="#" class="show-input" data-name="director.1.position_start.1").link-1 #{v1.start_date_of_service}
-                          td
-                            a(href="#" class="show-input" data-name="director.1.position_end.1").link-1 #{v1.end_date_of_service}
+                        if v1
+                          tr
+                            td
+                              a(href="#" class="show-input" data-name="director.1.employer.1").link-1 #{v1.employer}
+                            td
+                              a(href="#" class="show-input" data-name="director.1.employer_biz.1").link-1 #{v1.employer_principal}
+                            td
+                              a(href="#" class="show-input" data-name="director.1.employer_title.1").link-1 #{v1.title}
+                            td
+                              a(href="#" class="show-input" data-name="director.1.employer_responsibilitiees.1").link-1 #{v1.responsibilities}
+                            td
+                              a(href="#" class="show-input" data-name="director.1.position_start.1").link-1 #{v1.start_date_of_service}
+                            td
+                              a(href="#" class="show-input" data-name="director.1.position_end.1").link-1 #{v1.end_date_of_service}
 
       // page 34
       section.page-formc-review.m-t-1
