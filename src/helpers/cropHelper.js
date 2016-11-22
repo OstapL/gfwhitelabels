@@ -29,7 +29,7 @@ module.exports = {
     };
 
     let modalTemplate =
-      '<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">' +
+      '<div class="modal fade bd-example-modal-lg modal-dropzone" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">' +
         '<div class="modal-dialog modal-lg">' +
           '<div class="modal-content">' +
             '<div class="modal-header">' +
@@ -38,18 +38,20 @@ module.exports = {
             '</div>' +
             '<div class="modal-body">' +
               '<div class="form-group">' +
-                '<div class="crop-image-container col-lg-9">' +
+                '<div class="crop-image-container col-xl-7">' +
                   '<img src="' + imageUrl + '" id="cropSrcImage">' +
                 '</div>' +
-                '<div class="preview-container col-lg-3">' +
+                '<div class="preview-container col-xl-5 text-xl-center">' +
                   '<div class="img-preview" style="width: 150px; height: 150px; float: left; overflow: hidden; margin: 8px;"></div>' +
-                  '<div class="img-preview" style="width: 80px; height: 80px; float: left; overflow: hidden; margin: 8px;"></div>' +
+                  '<div class="img-preview mini" style="width: 50px; height: 50px; float: left; overflow: hidden; margin: 8px;"></div>' +
                 '</div>' +
               '</div>' +
             '</div>' +
-            '<div class="modal-footer">' +
-              '<button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>' +
-              '<button type="button" class="btn btn-primary cropper-ok" data-dissmiss="modal">Save</button>' +
+            '<div class="modal-footer ">' +
+              '<div class="col-xl-12 m-t-3 m-b-2 text-xl-center">' + 
+                '<button type="button" class="btn btn-secondary m-r-2" data-dismiss="modal">Cancel</button>' +
+                '<button type="button" class="btn btn-primary cropper-ok" data-dissmiss="modal">Save</button>' +
+              '</div>'
             '</div>' +
           '</div>' +
         '</div>' +
