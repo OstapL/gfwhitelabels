@@ -393,6 +393,11 @@ mixin userProfileDropzone(name, attr)
           div(class="uploading collapse")
             img(alt="activity indicator" src="/img/ajax-loader.gif")
           .row
+            div(class="icon-delete-edit")
+              a(href="#").icon
+                i(class="fa fa-crop")
+              a(href="#").icon
+                i(class="fa fa-times")
             .user-photo-wrap.text-xs-center
               img(class=(" img-" + name) src="/img/default/Default_photo.png")
           .row.border-dropzone.dropzone-profile
