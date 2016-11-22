@@ -8,7 +8,6 @@ include ../../../templates/fields_mixins.pug
   ]
 )
 
-
 .container.profile.pt-50
   .row
     aside.col-xl-3.col-lg-3.m-b-1
@@ -181,8 +180,13 @@ include ../../../templates/fields_mixins.pug
                           data-slider-ticks-labels="['$0', '$50K', '$100K', '$200K', '$500K']",
                           data-model-value='taxRate').form-control.js-bootstrap-slider
                       .radio-input
-                        p.font-weight-bold Are you an Accredited Investor?
-                          i(aria-hidden="true").fa.fa-question-circle.text-muted
+                        p.font-weight-bold.d-inline-block.m-b-1 Are you an Accredited Investor?&nbsp;
+                          div.d-inline-block
+                            div.showPopover(data-content="An accredited investor is a natural person who has individual net worth, or joint net worth with the persons spouse, that exceeds $1mm at the time of the purchase, excluding the value of the primary residence of such person; or a natural person with income exceeding $200k in each of the two most recent years or joint income with a spouse exceeding $300k for those years and a reasonable expectation of the same income level in the current year.")
+                              i(aria-hidden="true").fa.fa-question-circle.text-muted
+                            
+                          
+
                         .form-group.m-b-0
                           label
                             input(type="radio" name="accredited_investor"  value="true" checked="checked")
@@ -190,7 +194,7 @@ include ../../../templates/fields_mixins.pug
                           label
                             input(type="radio" name="accredited_investor" value="false")
                             | No
-                      .form-group
+                      .form-group.m-t-1
                         label
                           input(type="checkbox" name="" value='1').col-xl-1
                           span.font-weight-normal.col-xl-10.p-l-0 I am an Accredited Investor because my net worth, or joint net worth with my spouse, exceeds $1 million excluding my primary residence.
