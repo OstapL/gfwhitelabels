@@ -369,7 +369,6 @@ mixin fileFolderDropzone(name, attr)
                 else
                   .thumb-file-container.col-xl-12
                     img(src='/img/icons/' + icon + '.png' alt=attr.label class="img-file img-" + name)
-                    a(class=("a-" + name) href="#")
 
 
 mixin userProfileDropzone(name, attr)
@@ -390,14 +389,17 @@ mixin userProfileDropzone(name, attr)
     )
 
       div(class=((attr.class || '') + ' dropzone__' + name))
-        div(class=" col-lg-12 border-dropzone")
+        div(class=" col-lg-12 ")
           div(class="uploading collapse")
             img(alt="activity indicator" src="/img/ajax-loader.gif")
           .row
-            img(class=("w-100 img-" + name) src="/img/default/255x153.png")
-          .drop-image-title.text-xs-center.p-l-1.p-r-1.p-t-2.p-b-2
-            p.drop-photo #{attr.text}
-            i(class="fa fa-" + attr.icon)
+            .user-photo-wrap.text-xl-center
+              img(class=(" img-" + name) src="/img/default/Default_photo.png")
+          .row.border-dropzone.dropzone-profile
+            .drop-image-title.text-xs-center.p-dropzone.p-l-2.p-r-2
+              a(class='link-1' href="#" onclick="return false")
+                p.drop-photo #{attr.text}
+                i(class="fa fa-" + attr.icon)
 
 mixin imageDropzone(name, attr)
     - var icon = attr.type

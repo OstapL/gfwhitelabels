@@ -203,7 +203,7 @@ module.exports = {
       window.open(encodeURI('https://www.linkedin.com/shareArticle?mini=true&url=' + window.location.href +
             '&title=' + this.model.name +
             '&summary=' + this.model.description +
-            '&source=Growth Fountain'),'Growth Fountain Campaingn','width=605,height=545');
+            '&source=Growth Fountain'),'Growth Fountain Campaign','width=605,height=545');
     },
 
     shareOnTwitter(event) {
@@ -211,7 +211,7 @@ module.exports = {
       window.open(encodeURI('https://twitter.com/share?url=' + window.location.href +
             '&via=' + 'growthfountain' +
             '&hashtags=investment,fundraising' +
-            '&text=Check out '),'Growth Fountain Campaingn','width=550,height=420');
+            '&text=Check out '),'Growth Fountain Campaign','width=550,height=420');
     },
 
     render() {

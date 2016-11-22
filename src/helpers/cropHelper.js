@@ -2,11 +2,11 @@ module.exports = {
 
   showCropper(imageUrl, options, callbacks) {
     let defaultOptions = {
-      viewMode: 2,
+      viewMode: 1,
       dragMode: 'crop',
       aspectRatio: 1,
       // data: {}, //prev stored cropper data. We may need it when we allow user to change img cropping
-      preview: 'cropper-preview',
+      preview: '.img-preview',
       responsive: true, //re-render cropper on window resize
       checkCrossOrigin: false, //need for reloading cached images
       modal: true,
@@ -29,21 +29,29 @@ module.exports = {
     };
 
     let modalTemplate =
-      '<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">' +
+      '<div class="modal fade bd-example-modal-lg modal-dropzone" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">' +
         '<div class="modal-dialog modal-lg">' +
           '<div class="modal-content">' +
             '<div class="modal-header">' +
               '<button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span> </button>' +
-              '<h4 class="modal-title" id="exampleModalLabel">Edit photo</h4>' +
+              '<h4 class="modal-title" id="exampleModalLabel"></h4>' +
             '</div>' +
             '<div class="modal-body">' +
               '<div class="form-group">' +
-                '<img src="' + imageUrl + '" id="cropSrcImage">' +
+                '<div class="crop-image-container col-xl-7">' +
+                  '<img src="' + imageUrl + '" id="cropSrcImage">' +
+                '</div>' +
+                '<div class="preview-container col-xl-5 text-xl-center">' +
+                  '<div class="img-preview" style="width: 150px; height: 150px; float: left; overflow: hidden; margin: 8px;"></div>' +
+                  '<div class="img-preview mini" style="width: 50px; height: 50px; float: left; overflow: hidden; margin: 8px;"></div>' +
+                '</div>' +
               '</div>' +
             '</div>' +
-            '<div class="modal-footer">' +
-              '<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>' +
-              '<button type="button" class="btn btn-primary cropper-ok" data-dissmiss="modal">Save changes</button>' +
+            '<div class="modal-footer ">' +
+              '<div class="col-xl-12 m-t-3 m-b-2 text-xl-center">' + 
+                '<button type="button" class="btn btn-secondary m-r-2" data-dismiss="modal">Cancel</button>' +
+                '<button type="button" class="btn btn-primary cropper-ok" data-dissmiss="modal">Save</button>' +
+              '</div>'
             '</div>' +
           '</div>' +
         '</div>' +

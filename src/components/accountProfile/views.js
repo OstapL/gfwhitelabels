@@ -2,8 +2,14 @@ const dropzone = require('dropzone');
 const dropzoneHelpers = require('helpers/dropzoneHelpers.js');
 const validation = require('components/validation/validation.js');
 const phoneHelper = require('helpers/phoneHelper.js');
+const formatHelper = require('helpers/formatHelper');
+
 let countries = {};
 _.each(require('helpers/countries.json'), (c) => { countries[c.code] = c.name; });
+
+import 'bootstrap-slider/dist/bootstrap-slider'
+import 'bootstrap-slider/dist/css/bootstrap-slider.css'
+
 
 module.exports = {
   profile: Backbone.View.extend(_.extend({
@@ -56,14 +62,14 @@ module.exports = {
       this.fields.account_type = { requried: true };
       this.fields.annual_income = { required: true };
       this.fields.net_worth.required = true;
-
+      this.fields.accredited_investor = {};
       this.labels = {
         country: 'Country',
         street_address_1: 'Street address 1',
         street_address_2: 'Street address 2',
         zip_code: 'Zip code',
         city: 'City',
-        account_number: 'Account number',
+        account_number: 'Account Number',
         account_number_re: 'Re-Enter Account Number',
         routing_number: 'Routing Number',
         annual_income: 'Annual Income',
@@ -73,8 +79,8 @@ module.exports = {
       this.assignLabels();
 
 
-      this.fields.bank_name.label = 'Bank name';
-      this.fields.name_on_bank_account.label = 'Name on bank account';
+      this.fields.bank_name.label = 'Bank Name';
+      this.fields.name_on_bank_account.label = 'Name on Bank Account';
 
       // define ui elements
       this.cityStateArea = null;
@@ -102,6 +108,35 @@ module.exports = {
           states: this.usaStates,
         })
       );
+      ///!!!
+      this.bootstrapSlider = this.$('.js-bootstrap-slider');
+      this.bootstrapSlider.each(function() {
+        $(this).bootstrapSlider ({
+          ticks: [0, 50, 100, 200, 500],
+          ticks_positions: [0, 25, 50, 75, 100],
+          ticks_labels: ['$0', '$50K', '$100K', '$200K', '$500K+'],
+          ticks_snap_bounds: 1,
+          formatter: function(value) {
+            return '$' + value + 'K'
+          }
+        }).on('slideStop', function(slider) {
+          console.log(slider)
+        });
+      });
+      this.bootstrapSliderAnnual = this.$('.js-bootstrap-slider-annual');
+      this.bootstrapSliderAnnual.each(function() {
+        $(this).bootstrapSlider ({
+          ticks: [0, 50, 100, 200, 500, 1000, 2000, 5000],
+          ticks_positions: [0, 14, 28, 42, 56, 70, 85, 100],
+          ticks_labels: ['$0', '$50K', '$100K', '$200K', '$500K' , '$1M', '$2M', '$5M+'],
+          ticks_snap_bounds: 1,
+          formatter: function(value) {
+            return '$' + value + 'K'
+          }
+        }).on('slideStop', function(slider) {
+          console.log(slider)
+        });
+      });
       setTimeout(() => { this.createDropzones() } , 1000);
 
       this.cityStateArea = this.$('.js-city-state');
@@ -205,7 +240,7 @@ module.exports = {
   }, phoneHelper.methods, dropzoneHelpers.methods)),
 
   changePassword: Backbone.View.extend({
-    urlRoot: serverUrl + Urls.rest_password_change(),
+    urlRoot: authServer + Urls.rest_password_change(),
     events: {
       'submit form': api.submitAction,
     },
@@ -220,7 +255,7 @@ module.exports = {
   }),
 
   setNewPassword: Backbone.View.extend({
-    urlRoot: serverUrl + Urls.rest_password_reset_confirm(),
+    urlRoot: authServer + Urls.rest_password_reset_confirm(),
     events: {
         'submit form': api.submitAction,
     },
@@ -245,13 +280,74 @@ module.exports = {
   }),
 
   issueDashboard: Backbone.View.extend({
+    initialize(options) {
+      this.model.description = "Something long comes from here. Something long comes from here. Something long comes from here. Something long comes from here. Something long comes from here. ";
+      this.model.campaign = {
+        minimum_raise: 80000,
+        amount_raised: 40000,
+        starting_date: "2016-04-04",
+        expiration_date: "2016-10-04",
+      }
+    },
+    events: {
+      'click .linkedin-share': 'shareOnLinkedIn',
+      'click .facebook-share': 'shareOnFaceBook',
+      'click .twitter-share': 'shareOnTwitter',
+      'click .email-share': 'shareWithEmail',
+      'click .google-plus-share': 'shareWithGooglePlus',
+    },
+
+    shareOnLinkedIn(e) {
+      event.preventDefault();
+      window.open(encodeURI('https://www.linkedin.com/shareArticle?mini=true&url=' + 'http://growthfountain.com/' + this.model.id +
+        '&title=' + this.model.name +
+        '&summary=' + this.model.description +
+        '&source=Growth Fountain'),'Growth Fountain Campaign','width=605,height=545');
+    },
+
+    shareOnFaceBook(e) {
+      event.preventDefault();
+      FB.ui({
+        method: 'share',
+        href: 'http://growthfountain.com/' + this.model.id,
+        caption: this.model.tagline,
+        description: this.model.description,
+        title: this.model.name,
+        picture: null,
+      }, function(response){});
+    },
+
+    shareOnTwitter(e) {
+      event.preventDefault();
+      window.open(encodeURI('https://twitter.com/share?url=' + 'http://growthfountain.com/' + this.model.id +
+        '&via=' + 'growthfountain' +
+        '&hashtags=investment,fundraising' +
+        '&text=Check out '),'Growth Fountain Campaign','width=550,height=420');
+    },
+
+    shareWithEmail(e) {
+      event.preventDefault();
+      let companyName = this.model.name;
+      let text = "Check out " + companyName + "'s fundraise on GrowthFountain";
+      window.open("mailto:?subject=" + text + "&body=" + text + "%0D%0A" + 'http://growthfountain.com/' + this.model.id);
+    },
+
+    shareWithGooglePlus(e) {
+      event.preventDefault();
+    },
 
     render(){
+      const socialMediaScripts = require('helpers/shareButtonHelper.js');
       const template = require('./templates/issuerDashboard.pug');
 
       this.$el.html(
-        template({ })
+        template({
+          values: this.model,
+          formatHelper: formatHelper,
+        })
       );
+
+      socialMediaScripts.facebook();
 
       const socket = require('socket.io-client')('http://localhost:3000');
       socket.on('connect', function () {

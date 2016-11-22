@@ -229,7 +229,7 @@ module.exports = {
                 dataArr.splice(dataIdx, 1);
                 if (!dataArr.length) {
                   //add empty file
-                  $link.closest('.file-scroll').append('<div class="thumb-file-container col-xl-12">' +
+                  $link.closest('.file-scroll').append('<div class="thumb-file-container text-xl-center">' +
                     '<img src="/img/icons/nofile.png" alt="" class="img-file img-"' + name + '>' +
                     '<a class="a-' + name + '" href="#"></a>' +
                   '</div>');
@@ -246,7 +246,7 @@ module.exports = {
 
 
         if(this.model[fieldDataName].length == 0) {
-          $('.dropzone__' + name + ' .thumb-file-container :first').remove();
+          $('.dropzone__' + name + ' .thumb-file-container:first').remove();
         }
 
         this.model[name.replace('_id', '_data')].push(data[0]);
@@ -272,7 +272,7 @@ module.exports = {
                 dataArr.splice(dataIdx, 1);
                 if (!dataArr.length) {
                   //add empty file
-                  $link.closest('.file-scroll').append('<div class="thumb-file-container col-xl-12">' +
+                  $link.closest('.file-scroll').append('<div class="thumb-file-container text-xl-center">' +
                     '<img src="/img/icons/nofile.png" alt="" class="img-file img-"' + name + '>' +
                     '<a class="a-' + name + '" href="#"></a>' +
                   '</div>');
