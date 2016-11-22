@@ -10,20 +10,16 @@ module.exports = Backbone.Router.extend({
             const template = require('templates/mainPage.pug');
 
             const campaigns = new model.collection();
-            campaigns.fetch({
-                data: {limit: 6},
-                success: (collection, response, options) => {
-                    var html = template({
-                        campaigns: collection.toJSON(),
-                        collection: collection,
-                        Urls: Urls,
-                    });
-                    app.cache[window.location.pathname] = html;
-                    $('#content').html(html);
-                    $('body').scrollTo();
-                    app.hideLoading();
-                }
+          api.makeCacheRequest(raiseCapitalUrl + '?limit=6').then((data) => {
+            var html = template({
+                companies: data.data,
+                Urls: Urls,
             });
+            app.cache[window.location.pathname] = html;
+            $('#content').html(html);
+            $('body').scrollTo();
+            app.hideLoading();
+          });
 
         });
     },
