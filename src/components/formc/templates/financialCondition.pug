@@ -18,17 +18,16 @@ section.formc-team-members-director.container.m-b-85
   .col-lg-8
     h2.text-uppercase.text-lg-center.text-xs-center.m-t-0.dosis.mb45 financial condition
     form(action="").form-section
-      input(type="hidden" name="financials_condition_choice" value="true")
       .col-lg-12
         b Does the issuer have an operating history?
           span.color-red *
         .form-group.form-section.m-t-2.m-b-0
           .radio-input.m-b-1.yesno
             label 
-              input(type="radio" name="financials_condition_choice" value="true" checked=(values['financials_condition_choice']))
+              input(type="radio" name="financials_condition_choice" value=1 checked=(values['financials_condition_choice']))
               |  Yes
             label 
-              input(type="radio" name="financials_condition_choice" value="false" checked=(!values['financials_condition_choice']))
+              input(type="radio" name="financials_condition_choice" value=0 checked=(!values['financials_condition_choice']))
               |  No
         .financials_condition_choice.shown-yes(style="display:" + (values['financials_condition_choice'] ? 'block' : 'none') + ";")
           .col-lg-12

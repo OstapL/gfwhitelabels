@@ -731,7 +731,6 @@ section.formc-review
         p.p-l-2.pb10
           a(href="#" class="show-input" data-name="valuation_determine_describe").link-1 valuation_determine_describe
         p.pb10.text-indent The price of each Share was determined by the Company in good faith based on its own assessment of its current position and the possibility of future growth.  The Company has taken into account its own internal calculation of potential future revenue and based on such forward looking estimates has created a valuation that reflects the multiple or premium determined by the Company to be appropriate in this situation.  The Company acknowledges that the valuation bears no relationship to established value criteria such as net tangible assets or a multiple of earnings per share.  The Company accepts that some investors may conclude that the current valuation is not an indication of the actual value of the Company.
-        p.logic LOGIC: if valuation_determine = use_BIZcalculator then:
 
       // page 16
       section.page-formc-review.m-t-1
@@ -740,10 +739,11 @@ section.formc-review
           p.small.pb10
             +editText('issuer_short_name')
             |  as Issuer
-        p.pb10.text-indent The price of each Share was determined by the Company in good faith based on its own assessment of its current position and the benchmarking reference range determined by the use of certain business calculators provided by the Intermediary.  Such calculators use the data provided by the Company and do not reflect any advice or recommendation on the part of the Intermediary.  In working with the calculators, the Company considered its current capital structure, including current debt and cash, and assembled an income statement from the last twelve months including an estimate of net income and EBITDA.  The Company also made projections for the next twelve months along with a similar estimate of net income and EBITDA.
-        p.pb10.text-indent The Company then looked at potential peers that trade in public markets and considered a variety of metrics, including but not limited to Price/Sales, Enterprise Value/EBITDA and Price/Equity.  The Company applied a 20% liquidity discount to publically traded peers and utilized an average of different valuation metrics to derive a benchmarking range for the Company’s ultimate value.
-        p.pb10.logic LOGIC: if valuation_determine = use_SUcalculator then:
-        p.pb10.text-indent The price of each Share was determined by the Company in good faith based on its own assessment of its current position and by taking a variety of quantitative and qualitative considerations into account.  Quantitatively, the Company considered revenue and operating profit, both one year from now and five years from now along with an analysis of the Company’s existing capital structure and available cash.  The Company then assessed where publicly traded peer were being valued in the markets.  After considering several different valuation metrics, including Price/Sales and Enterprise Value/EBIT, the Company discounted its valuation by its cost of capital.  The, for qualitative factors, the Company considered the type of industry that it is in and applied a discount rate appropriate for such industry.  Finally, the Company applied a liquidity discount which resulted in a post-money valuation which takes into consideration the money projected to be raised in order to derive the valuation contained in this Material.
+        if values.campaign.valuation_determination == '0'
+          p.pb10.text-indent The price of each Share was determined by the Company in good faith based on its own assessment of its current position and the benchmarking reference range determined by the use of certain business calculators provided by the Intermediary.  Such calculators use the data provided by the Company and do not reflect any advice or recommendation on the part of the Intermediary.  In working with the calculators, the Company considered its current capital structure, including current debt and cash, and assembled an income statement from the last twelve months including an estimate of net income and EBITDA.  The Company also made projections for the next twelve months along with a similar estimate of net income and EBITDA.
+          p.pb10.text-indent The Company then looked at potential peers that trade in public markets and considered a variety of metrics, including but not limited to Price/Sales, Enterprise Value/EBITDA and Price/Equity.  The Company applied a 20% liquidity discount to publically traded peers and utilized an average of different valuation metrics to derive a benchmarking range for the Company’s ultimate value.
+        if values.campaign.valuation_determination == '1'
+          p.pb10.text-indent The price of each Share was determined by the Company in good faith based on its own assessment of its current position and by taking a variety of quantitative and qualitative considerations into account.  Quantitatively, the Company considered revenue and operating profit, both one year from now and five years from now along with an analysis of the Company’s existing capital structure and available cash.  The Company then assessed where publicly traded peer were being valued in the markets.  After considering several different valuation metrics, including Price/Sales and Enterprise Value/EBIT, the Company discounted its valuation by its cost of capital.  The, for qualitative factors, the Company considered the type of industry that it is in and applied a discount rate appropriate for such industry.  Finally, the Company applied a liquidity discount which resulted in a post-money valuation which takes into consideration the money projected to be raised in order to derive the valuation contained in this Material.
 
       // page 17
       section.page-formc-review.m-t-1
@@ -915,12 +915,12 @@ section.formc-review
         p.text-indent References to the future financial condition of the Company may contain forward-looking statements. Such forward-looking statements are not guarantees of future performance and involve uncertainties and other factors which may cause the Company’s actual results, performance or achievements to be materially different from any future results, performance or achievements expressed or implied by such forward-looking statements. Actual operating results may be affected by various factors including, without limitation, changes in national economic conditions, competitive market conditions, uncertainties related to government regulation, and actual versus projected timing of events, all of which may cause such actual results to differ materially from what is expressed or forecast in this Material.  For purposes of this section, any reference to the Company includes its predecessors, if any.  The Company's actual results may differ materially from those discussed herein.
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u Prior Operating History
-        p.pb10.logic LOGIC: if history_toggle = yes then:
-        p.pb10.text-indent The following describes the operating history of the issuer with a focus on whether historical results and cash flows are representative of what investors should expect in the future. 
-          a(href="#" class="show-input" data-name="operating_history").link-1 operating_history
-        p.pb10.logic LOGIC: if history_toggle = no then:
-        p.pb10.text-indent Because the issuer has no operating history, the following provides information on the issuer’s financial milestones and operational, liquidity and other challenges. 
-          a(href="#" class="show-input" data-name="operating_history").link-1 operating_history
+        if values.formc.financials_condition_choice == '1'
+          p.pb10.text-indent The following describes the operating history of the issuer with a focus on whether historical results and cash flows are representative of what investors should expect in the future. 
+            a(href="#" class="show-input" data-name="operating_history").link-1 operating_history
+        else
+          p.pb10.text-indent Because the issuer has no operating history, the following provides information on the issuer’s financial milestones and operational, liquidity and other challenges. 
+            a(href="#" class="show-input" data-name="operating_history").link-1 operating_history
         .table-responsive.m-t-1
           table.table.table-bordered
             theader
@@ -1001,10 +1001,10 @@ section.formc-review
           a(href="#" class="show-input" data-name="future_capital").link-1 future_capital
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u Material Indebtedness
-        p.pb10.logic LOGIC: if debt_toggle = no then:
-        p.pb10.text-indent The Company has indicated that it has no outstanding material indebtedness.
-        p.pb10.logic LOGIC: if debt_toggle = yes then:
-        p.pb10.text-indent The Company has indicated that it currently has outstanding material indebtedness.  The general terms of the Company’s current and outstanding indebtedness are reflected of the following table:
+        if values.formc.business_loans_or_debt_choice == '0'
+          p.pb10.text-indent The Company has indicated that it has no outstanding material indebtedness.
+        if values.formc.business_loans_or_debt_choice == '1'
+          p.pb10.text-indent The Company has indicated that it currently has outstanding material indebtedness.  The general terms of the Company’s current and outstanding indebtedness are reflected of the following table:
         .table-responsive.m-t-1.m-b-0
           table.table.table-bordered
             theader
@@ -1029,9 +1029,8 @@ section.formc-review
                     a(href="#" class="show-input" data-name="creditor.#_terms").link-1 #{v.other_material_terms}
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u Previous Issuer Offerings
-        p.pb10.logic LOGIC: if exempt_offering_toggle = no then:
-        p.pb10.text-indent The Company has indicated that it has not conducted any prior exempt offerings in the past three years.
-        p.pb10.logic LOGIC: if exempt_offering_toggle = yes then:
+        if values.formc.exempt_offering_choice == '0'
+          p.pb10.text-indent The Company has indicated that it has not conducted any prior exempt offerings in the past three years.
 
       // page 20
       section.page-formc-review.m-t-1
@@ -1040,29 +1039,30 @@ section.formc-review
           p.small.pb10
             +editText('issuer_short_name')
             |  as Issuer
-        p.pb10.text-indent The Company has provided the following list of exempt offerings conducted over the past 3 years:
-        .table-responsive.m-t-1.m-b-0
-          table.table.table-bordered
-            theader
-              tr.bg-grey
-                th.text-xs-center Date of Offering
-                th.text-xs-center Exemption Relied Upon
-                th.text-xs-center Securities Offered
-                th.text-xs-center Amount Sold
-                th.text-xs-center Use of Proceeds
-            tbody
-              each v,k in values.formc.exempt_offering
-                tr
-                  td.text-xs-center
-                    a(href="#" class="show-input" data-name="offering.#._date").link-1 #{v.offering_date}
-                  td.text-xs-center
-                    a(href="#" class="show-input" data-name="offering.#._exemption").link-1 #{v.exemption_relied_upon}
-                  td.text-xs-center
-                    a(href="#" class="show-input" data-name="offering.#._type").link-1 #{v.securities_offered}
-                  td.text-xs-center
-                    a(href="#" class="show-input" data-name="offering.#._amount").link-1 #{v.amount_sold}
-                  td.text-xs-center
-                    a(href="#" class="show-input" data-name="offering.#._use").link-1 #{v.use_of_proceeds}
+        if values.formc.exempt_offering_choice == '1'
+          p.pb10.text-indent The Company has provided the following list of exempt offerings conducted over the past 3 years:
+          .table-responsive.m-t-1.m-b-0
+            table.table.table-bordered
+              theader
+                tr.bg-grey
+                  th.text-xs-center Date of Offering
+                  th.text-xs-center Exemption Relied Upon
+                  th.text-xs-center Securities Offered
+                  th.text-xs-center Amount Sold
+                  th.text-xs-center Use of Proceeds
+              tbody
+                each v,k in values.formc.exempt_offering
+                  tr
+                    td.text-xs-center
+                      a(href="#" class="show-input" data-name="offering.#._date").link-1 #{v.offering_date}
+                    td.text-xs-center
+                      a(href="#" class="show-input" data-name="offering.#._exemption").link-1 #{v.exemption_relied_upon}
+                    td.text-xs-center
+                      a(href="#" class="show-input" data-name="offering.#._type").link-1 #{v.securities_offered}
+                    td.text-xs-center
+                      a(href="#" class="show-input" data-name="offering.#._amount").link-1 #{v.amount_sold}
+                    td.text-xs-center
+                      a(href="#" class="show-input" data-name="offering.#._use").link-1 #{v.use_of_proceeds}
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u Financial Statements
         p.pb10.text-indent The issuer’s financial statements are attached as Exhibit B.
@@ -1312,9 +1312,10 @@ section.formc-review
             +editText('issuer_short_name')
             |  as Issuer
         h2.text-uppercase.text-xs-center.font-weight-bold.letter-spacing-normal.m-b-3 EXHIBIT A: BUSINESS PLAN
-        p See Attached
-        p
-          a(href="#" class="show-input" data-name="Business_plan_file").link-1 Business_plan_file
+        if values.formc.business_plan_file_data.length > 0
+          p
+            for v,k in values.formc.business_plan_file_data[0].urls
+              a(href=v target="_blank").link-1 #{ v.substr(0, 20) }
 
       // page 32
       section.page-formc-review.m-t-1
@@ -1324,7 +1325,10 @@ section.formc-review
             +editText('issuer_short_name')
             |  as Issuer
         h2.text-uppercase.text-xs-center.font-weight-bold.letter-spacing-normal.m-b-3 EXHIBIT B: FINANCIAL STATEMENTS
-        p See Attached
+        if values.formc.fiscal_recent_group_data.length > 0
+          p
+            for v,k in values.formc.fiscal_recent_group_data.urls
+              a(href=v.urls[0] target="_blank").link-1 #{ v.urls[0].substr(0, 20) }
 
       // page 33
       section.page-formc-review.m-t-1
