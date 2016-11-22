@@ -107,9 +107,38 @@ include ../../../templates/fields_mixins.pug
                               input.form-control(name='zip_code' placeholder='Postal Code' type="text" value=user.zip_code)
                         .col-lg-5
                           +fieldTextLabel('phone', _.extend({'class1': 'col-lg-5 ', 'class2': 'col-lg-7 ', 'type': 'text', 'value': user.phone }, fields.phone))
+                      
+                      .col-xl-11.p-r-0
+                        .border-bottom.m-t-2.m-b-3
+                      .row.m-b-0
+                        .col-xl-6.col-lg-6.col-l-65
+                          +fieldTextLabel("twitter", _.extend({
+                            class1: 'col-xl-6 col-lg-12 text-lg-left text-xl-right', 
+                            class2: 'col-xl-6 col-lg-12', 
+                            type: 'text',
+                            }, fields.twitter))
+                        .col-xl-6.col-lg-6
+                          +fieldTextLabel("facebook", _.extend({
+                            class1: 'col-xl-4 col-lg-12 text-lg-left text-xl-right', 
+                            class2: 'col-xl-6 col-lg-12', 
+                            type: 'text',
+                            }, fields.facebook))
+                      .row.m-b-0
+                        .col-xl-6.col-lg-6.col-l-65
+                          +fieldTextLabel("instagram", _.extend({
+                            class1: 'col-xl-6 col-lg-12 text-lg-left text-xl-right', 
+                            class2: 'col-xl-6 col-lg-12', 
+                            type: 'text',
+                            }, fields.instagram))
+                        .col-xl-6.col-lg-6
+                          +fieldTextLabel("linkedin", _.extend({
+                            class1: 'col-xl-4 col-lg-12 text-lg-left text-xl-right', 
+                            class2: 'col-xl-6 col-lg-12', 
+                            type: 'text',
+                            }, fields.linkedin))
 
                       .form-group.row.clearfix.m0
-                        .col-lg-11.mt30.text-xs-center
+                        .col-lg-11.text-xs-center.m-t-2
                           .controls
                             button(type="submit").btn.btn-primary.pull-lg-right SAVE
 
