@@ -12,11 +12,11 @@ mixin row(value, index)
                   - securityType = 'Common Stock';
               when 2
                   - securityType = 'Debt';
-              when 3
+              when 3 
                   - securityType = 'Warrants';
-              when 4
+              when 4 
                   - securityType = 'Options';
-              default
+              when 5
                   - securityType = 'Other';
           | #{securityType}
           .collapse
@@ -47,7 +47,7 @@ mixin run()
       i.fa.fa-plus
       |  add outstanding securities
 
-    div(class=(attr.row == 0 ? '' : 'row ') + name + '_block' + (attr.required == true ? ' required ' : ' ') + ' nested')
+    div(class=(attr.row == 0 ? '' : 'row ') + (values.length == 0 ? ' collapse ' : '') + name + '_block' + (attr.required == true ? ' required ' : ' ') + ' nested')
       .table-responsive.col-lg-12
         table.table.table-bordered.table-striped.text-xs-center.table-outstanding.m-b-0.securities-table
           thead
@@ -60,7 +60,6 @@ mixin run()
           tbody(class=(attr.row == 0 ? '' : '') + name + '_container' + (attr.required == true ? ' required ' : ' ') + ' nested')
             each value, index in values
               +row(value, index)
-
 
   else
     +row(value || {}, index)

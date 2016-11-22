@@ -15,15 +15,18 @@ mixin row(value, index)
           label.col-xl-3.col-lg-12.text-xl-right.textlg-left Maturity Date
             span.color-red *
           .col-xl-4.col-lg-6.p-r-0
-            +fieldDateMonth("offering_date", _.extend({
+            +fieldNestedDateMonth(name, "offering_date", value, index, {
+              placeholder: 'MM', 
               class: 'col-xl-4 col-lg-4 col-xs-4 p-l-0 m-d-p-r-5',
-            }, fields))
-            +fieldDateDay("offering_date", _.extend({
+            })
+            +fieldNestedDateDay(name, "offering_date", value, index, {
+              placeholder: 'DD', 
               class: 'col-xl-4 col-lg-4 col-xs-4 p-r-0 m-d-p-l-5',
-            }, fields))
-            +fieldDateYear("offering_date", _.extend({
+            })
+            +fieldNestedDateYear(name, "offering_date", value, index, {
+              placeholder: 'YYY', 
               class: 'col-xl-4 col-lg-4 col-xs-4 p-r-0 m-d-p-l-10',
-            }, fields))
+            })
       +fieldNestedTextLabel(name, "securities_offered", value, index, {class1:'col-xl-3 col-lg-12 text-lg-left text-xl-right', class2: 'col-xl-9 col-lg-12'})
       +fieldNestedTextLabel(name, "use_of_proceeds", value, index, {class1:'col-xl-3 col-lg-12 text-lg-left text-xl-right', class2: 'col-xl-9 col-lg-12'})
 

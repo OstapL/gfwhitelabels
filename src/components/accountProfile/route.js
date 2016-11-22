@@ -80,12 +80,26 @@ module.exports = Backbone.Router.extend({
 
   issueDashboard: function() {
     require.ensure([], function() {
-      const View = require('components/accountProfile/views.js');
-      let i = new View.issueDashboard({
-        el: '#content',
+      const companyR = app.makeCacheRequest(authServer + '/user/company');
+      companyR.done((company) => {
+        // let companyId = data.id;
+        // ToDo
+        // Some company detail response don't work. I used id 1 for now. Should change it once all the campaigns are filled.
+        // Arthur Yip
+        // Nov 21, 2016
+        let companyId = 1;
+        const detailR = app.makeCacheRequest(raiseCapitalUrl + '/' + companyId);
+        detailR.done((detail) => {
+          const View = require('components/accountProfile/views.js');
+          let i = new View.issueDashboard({
+            el: '#content',
+            model: detail,
+          });
+          i.render();
+          app.hideLoading();
+        }); 
       });
-      i.render();
-      app.hideLoading();
+
     });
   },
 });    

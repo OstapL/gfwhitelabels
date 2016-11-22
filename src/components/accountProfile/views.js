@@ -2,6 +2,8 @@ const dropzone = require('dropzone');
 const dropzoneHelpers = require('helpers/dropzoneHelpers.js');
 const validation = require('components/validation/validation.js');
 const phoneHelper = require('helpers/phoneHelper.js');
+const formatHelper = require('helpers/formatHelper');
+
 let countries = {};
 _.each(require('helpers/countries.json'), (c) => { countries[c.code] = c.name; });
 
@@ -278,13 +280,74 @@ module.exports = {
   }),
 
   issueDashboard: Backbone.View.extend({
+    initialize(options) {
+      this.model.description = "Something long comes from here. Something long comes from here. Something long comes from here. Something long comes from here. Something long comes from here. ";
+      this.model.campaign = {
+        minimum_raise: 80000,
+        amount_raised: 40000,
+        starting_date: "2016-04-04",
+        expiration_date: "2016-10-04",
+      }
+    },
+    events: {
+      'click .linkedin-share': 'shareOnLinkedIn',
+      'click .facebook-share': 'shareOnFaceBook',
+      'click .twitter-share': 'shareOnTwitter',
+      'click .email-share': 'shareWithEmail',
+      'click .google-plus-share': 'shareWithGooglePlus',
+    },
+
+    shareOnLinkedIn(e) {
+      event.preventDefault();
+      window.open(encodeURI('https://www.linkedin.com/shareArticle?mini=true&url=' + 'http://growthfountain.com/' + this.model.id +
+        '&title=' + this.model.name +
+        '&summary=' + this.model.description +
+        '&source=Growth Fountain'),'Growth Fountain Campaign','width=605,height=545');
+    },
+
+    shareOnFaceBook(e) {
+      event.preventDefault();
+      FB.ui({
+        method: 'share',
+        href: 'http://growthfountain.com/' + this.model.id,
+        caption: this.model.tagline,
+        description: this.model.description,
+        title: this.model.name,
+        picture: null,
+      }, function(response){});
+    },
+
+    shareOnTwitter(e) {
+      event.preventDefault();
+      window.open(encodeURI('https://twitter.com/share?url=' + 'http://growthfountain.com/' + this.model.id +
+        '&via=' + 'growthfountain' +
+        '&hashtags=investment,fundraising' +
+        '&text=Check out '),'Growth Fountain Campaign','width=550,height=420');
+    },
+
+    shareWithEmail(e) {
+      event.preventDefault();
+      let companyName = this.model.name;
+      let text = "Check out " + companyName + "'s fundraise on GrowthFountain";
+      window.open("mailto:?subject=" + text + "&body=" + text + "%0D%0A" + 'http://growthfountain.com/' + this.model.id);
+    },
+
+    shareWithGooglePlus(e) {
+      event.preventDefault();
+    },
 
     render(){
+      const socialMediaScripts = require('helpers/shareButtonHelper.js');
       const template = require('./templates/issuerDashboard.pug');
 
       this.$el.html(
-        template({ })
+        template({
+          values: this.model,
+          formatHelper: formatHelper,
+        })
       );
+
+      socialMediaScripts.facebook();
 
       const socket = require('socket.io-client')('http://localhost:3000');
       socket.on('connect', function () {

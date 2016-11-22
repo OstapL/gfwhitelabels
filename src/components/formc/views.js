@@ -403,50 +403,6 @@ module.exports = {
 
   }, addSectionHelper.methods, menuHelper.methods)),
 
-  offering: Backbone.View.extend(_.extend({
-    events: _.extend({
-      'submit form': 'submit',
-    }, addSectionHelper.events, menuHelper.events),
-
-    preinitialize() {
-      // ToDo
-      // Hack for undelegate previous events
-      for (let k in this.events) {
-        $('#content ' + k.split(' ')[1]).undelegate();
-      }
-    },
-
-    getSuccessUrl() {
-      return '/formc/offering/' + this.model.id;
-    },
-
-    submit: api.submitAction,
-
-    initialize(options) {
-      this.fields = options.fields;
-    },
-
-    render() {
-      let template = require('templates/formc/offering.pug');
-      let values = this.model;
-
-      if (!Array.isArray(values.members)) {
-        values.members = [];
-      }
-
-      this.$el.html(
-        template({
-          serverUrl: serverUrl,
-          Urls: Urls,
-          fields: this.fields,
-          values: values,
-        })
-      );
-      return this;
-    },
-
-  }, addSectionHelper.methods, menuHelper.methods)),
-
   relatedParties: Backbone.View.extend(_.extend({
     el: '#content',
     urlRoot: formcServer + '/:id' + '/related-parties',
@@ -1515,27 +1471,36 @@ module.exports = {
       const sectionName = e.target.dataset.section;
       const template = require('./templates/snippets/outstanding_securities.pug');
 
-      $('.' + sectionName + '_container').append(
-        template({
-          fields: this.fields[sectionName],
-          name: sectionName,
-          attr: this.fields[sectionName],
-          value: data,
-          index: this[sectionName + 'Index'],
-        })
-      );
+      if (!validation.validate(this.fields.outstanding_securities.schema, data, this)) {
+        _(validation.errors).each((errors, key) => {
+          validation.invalidMsg(this, key, errors);
+        });
+        this.$('.help-block').prev().scrollTo(5);
+        return;
+      } else {
+        this.$el.find('.outstanding_securities_block').show();
+        $('.' + sectionName + '_container').append(
+          template({
+            fields: this.fields[sectionName],
+            name: sectionName,
+            attr: this.fields[sectionName],
+            value: data,
+            index: this[sectionName + 'Index'],
+          })
+        );
 
-      this.model[sectionName].push(data);
-      this[sectionName + 'Index']++;
+        this.model[sectionName].push(data);
+        this[sectionName + 'Index']++;
 
-      $('#security_modal').modal('hide');
+        $('#security_modal').modal('hide');
 
-      e.target.querySelectorAll('input').forEach(function(el, i) {
-        if (el.type == "radio") el.checked = false; 
-        else el.value = '';
-      });
+        e.target.querySelectorAll('input').forEach(function(el, i) {
+          if (el.type == "radio") el.checked = false; 
+          else el.value = '';
+        });
 
-      e.target.querySelector('textarea').value = '';
+        e.target.querySelector('textarea').value = '';
+      };
     },
 
     deleteOutstanding(e) {
