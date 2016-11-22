@@ -254,6 +254,9 @@ module.exports = {
         amount_raised: 40000,
         starting_date: "2016-04-04",
         expiration_date: "2016-10-04",
+        investors: 333,
+        views: 123456,
+        interactions: 4567,
       }
     },
     events: {

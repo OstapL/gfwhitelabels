@@ -48,7 +48,7 @@ section.issuer-dashbord-top
             .number
               span(
                 data-counter="counterup"
-                data-value="1349") 1349
+                data-value=values.campaign.investors) #{values.campaign.investors.toLocaleString('en-US')}
             .desc Number of Investors
 
       .col-md-2.col-sm-6
@@ -59,7 +59,7 @@ section.issuer-dashbord-top
             .number
               span(
                 data-counter="counterup"
-                data-value="1500") 1,5K
+                data-value=values.campaign.views) #{(Math.round(values.campaign.views/100)/10).toLocaleString('en-US')}K
             .desc Page Views
 
       .col-md-2.col-sm-6
@@ -70,7 +70,7 @@ section.issuer-dashbord-top
             .number
               span(
                 data-counter="counterup"
-                data-value="456") 456
+                data-value=values.campaign.interactions) #{values.campaign.interactions.toLocaleString('en-US')}
             .desc New Interactions
 
       .col-md-7.col-sm-7.p-r-0
