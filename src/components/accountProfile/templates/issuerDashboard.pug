@@ -12,9 +12,10 @@ section.issuer-dashbord-top
     .row
       .col-md-4
         .img_under_text
-          img(src="/img/smartbe-intelligent-stroller.jpg" alt="")
-          h2.text-uppercase.dosis.m-t-0 company name
-          .timer_day 19 Days Left
+          img(src=values.thumbnail alt="")
+          h2.text-uppercase.dosis.m-t-0 #{values.name}
+          - const days_left = Math.floor((Date.parse(values.campaign.expiration_date) - new Date()) / (1000 * 60 * 60 * 24));
+          .timer_day #{days_left} Days Left
         .share-block.d-inline-block
           span.font-weight-bold Share:
           .social-dark.d-inline-block
