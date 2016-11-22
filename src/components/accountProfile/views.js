@@ -2,6 +2,8 @@ const dropzone = require('dropzone');
 const dropzoneHelpers = require('helpers/dropzoneHelpers.js');
 const validation = require('components/validation/validation.js');
 const phoneHelper = require('helpers/phoneHelper.js');
+const formatHelper = require('helpers/formatHelper');
+
 let countries = {};
 _.each(require('helpers/countries.js'), (c) => { countries[c.code] = c.name; });
 
@@ -247,6 +249,12 @@ module.exports = {
   issueDashboard: Backbone.View.extend({
     initialize(options) {
       this.model.description = "Something long comes from here. Something long comes from here. Something long comes from here. Something long comes from here. Something long comes from here. ";
+      this.model.campaign = {
+        minimum_raise: 80000,
+        amount_raised: 40000,
+        starting_date: "2016-04-04",
+        expiration_date: "2016-10-04",
+      }
     },
     events: {
       'click .linkedin-share': 'shareOnLinkedIn',
@@ -261,7 +269,7 @@ module.exports = {
       window.open(encodeURI('https://www.linkedin.com/shareArticle?mini=true&url=' + 'http://growthfountain.com/' + this.model.id +
         '&title=' + this.model.name +
         '&summary=' + this.model.description +
-        '&source=Growth Fountain'),'Growth Fountain Campaingn','width=605,height=545');
+        '&source=Growth Fountain'),'Growth Fountain Campaign','width=605,height=545');
     },
 
     shareOnFaceBook(e) {
@@ -281,7 +289,7 @@ module.exports = {
       window.open(encodeURI('https://twitter.com/share?url=' + 'http://growthfountain.com/' + this.model.id +
         '&via=' + 'growthfountain' +
         '&hashtags=investment,fundraising' +
-        '&text=Check out '),'Growth Fountain Campaingn','width=550,height=420');
+        '&text=Check out '),'Growth Fountain Campaign','width=550,height=420');
     },
 
     shareWithEmail(e) {
@@ -300,7 +308,10 @@ module.exports = {
       const template = require('./templates/issuerDashboard.pug');
 
       this.$el.html(
-        template({ })
+        template({
+          values: this.model,
+          formatHelper: formatHelper,
+        })
       );
 
       socialMediaScripts.facebook();

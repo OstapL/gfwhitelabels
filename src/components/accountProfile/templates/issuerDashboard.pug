@@ -6,6 +6,7 @@ include ../../../templates/mixins.pug
         ['issuer dashboard', ''],
     ]
 )
+- let amt_raised_in_ks = Math.round(values.campaign.amount_raised/1000).toLocaleString('en-US');
 section.issuer-dashbord-top
   .container
     .row
@@ -36,7 +37,7 @@ section.issuer-dashbord-top
             .number
               span(
                 data-counter="counterup"
-                data-value="750") $750K
+                data-value=values.campaign.amount_raised) $#{amt_raised_in_ks}K
             .desc Amount Raised
 
       .col-md-2.col-sm-6
@@ -73,27 +74,29 @@ section.issuer-dashbord-top
             .desc New Interactions
 
       .col-md-7.col-sm-7.p-r-0
+        - let percentage_raised = values.campaign.amount_raised / values.campaign.minimum_raise * 100;
         .tpl-progress
           progress(
-            value="21"
-            max="100").progress.big_prog 21%
+            value=percentage_raised
+            max="100").progress.big_prog #{percentage_raised}%
           span(
-            style="width:21%").circle_progress
+            style="width:" + percentage_raised + "%").circle_progress
             i.fa.fa-circle-o
-          span(style="left:21%").text_position 12 May
+          - let now = new Date();
+          span(style="left:" + percentage_raised + "%").text_position #{now.toLocaleString('en-US', { month: "short" })} #{now.getDate()}
             br
-            | $750K Raised
+            | $#{amt_raised_in_ks}K Raised
         .progress_description
           .pull-left
-            p.text-uppercase 1 may
+            p #{formatHelper.formatMonthDate(values.campaign.starting_date)}
             span Begining of campaign
           .pull-right.text-lg-right
-            p 1 june
+            p #{formatHelper.formatMonthDate(values.campaign.expiration_date)}
             span End of campaign
           .clearfix
       .col-md-1.col-sm-1
         .right_fixed_text.text-lg-center
-          b $500K
+          b $#{Math.round(values.campaign.minimum_raise/1000).toLocaleString('en-US')}K
           span Goal
       .col-md-8.col-sm-12.text-lg-center
         a(href="").btn.btn-secondary.text-uppercase view Campaign
