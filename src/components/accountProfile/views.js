@@ -238,7 +238,7 @@ module.exports = {
   }, phoneHelper.methods, dropzoneHelpers.methods)),
 
   changePassword: Backbone.View.extend({
-    urlRoot: authServer + Urls.rest_password_change(),
+    urlRoot: authServer + '/rest-auth/password/change',
     events: {
       'submit form': api.submitAction,
     },

@@ -55,10 +55,9 @@ module.exports = Backbone.Router.extend({
   changePassword: function() {
     require.ensure([], function() {
       const View = require('components/accountProfile/views.js');
-      let model = new userModel({id: app.user.pk});
       let i = new View.changePassword({
         el: '#content',
-        model: model,
+        model: {},
       });
       i.render();
       app.hideLoading();
