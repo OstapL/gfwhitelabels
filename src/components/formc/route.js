@@ -18,6 +18,7 @@ module.exports = Backbone.Router.extend({
     'formc/:id/background-check': 'backgroundCheck',
     'formc/:id/final-review': 'finalReview',
     'formc/:id/final-review-two': 'finalReviewTwo',
+    'formc/:id/formc-elecrtonic-signature': 'electronicSignature',
   },
 
   execute: function (callback, args, name) {
@@ -511,5 +512,13 @@ module.exports = Backbone.Router.extend({
          app.routers.navigate('/formc' + response.responseJSON.location +  '?notPaid=1', { trigger: true, replace: true } );
       }
     });
-  }, 
+  },
+  electronicSignature(id) {
+      const View = require('components/formc/views.js');
+      let i = new View.electronicSignature({
+        el: '#content',
+      });
+      i.render();
+      app.hideLoading();
+  },
 });
