@@ -33,7 +33,7 @@ mixin frField(name, type)
   - var value = ggetData(name)
   if type == 'select'
     - valuesList = name.split('.').reduce((o,i)=>o[i], fields);
-    if valuesList.validate && valuesList.validate.OneOf
+    if valuesList && valuesList.validate && valuesList.validate.OneOf
       - valuesList = valuesList.validate.OneOf;
       if valuesList.labels
         - value = valuesList.labels[valuesList.choices.indexOf(value.toString())]
