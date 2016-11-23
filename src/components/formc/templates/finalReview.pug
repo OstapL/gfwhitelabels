@@ -1,4 +1,5 @@
 include ../../../templates/mixins.pug
+include fields_final_review.pug
 
 +breadcrumbs('Form C Review', '', 
     [
@@ -140,32 +141,32 @@ section.formc-review
         .top-intro
           p.small.text-xs-left.font-weight-bold FORM C Offering Material for
           p.small
-            +editText('issuer_short_name')
-            |  as Issuer
+            +frField('company.name', 'text')
+            | as Issuer
         
         h3.text-xs-center
-          +editText('issuer_legal_name')
+          +frField('company.name', 'text')
         h3.text-xs-center.m-b-0.m-t-0.pb10 A 
-          +editSelect('jurisdiction_of_organization')
+          +frField('company.founding_state', 'select')
           | !{' '}
-          +editSelect('corporate_structure')
+          +frField('company.corporate_structure', 'select')
         p.text-xs-center.m-b-1
-          +editText('website')
+          +frField('company.website', 'text')
         
         p.text-xs-center.font-weight-bold $
-          +editText('maximum_raise')
+          +frField('campaign.maximum_raise', 'text')
           |   MAXIMUM OFFERING
         p.text-xs-center.font-weight-bold.m-b-3 $
-          +editText('minimum_raise')
+          +frField('campaign.minimum_raise', 'text')
           |   MINIMUM OFFERING
         p.text-xs-center.font-weight-bold OFFERING PRICE: $
-          +editText('price_per_share')
+          +frField('campaign.price_per_share', 'text')
           |  per Share
         p.text-xs-center.font-weight-bold
-          +editText('security_type')
+          +frField('campaign.security_type', 'select')
           |  Offered
         p.text-xs-center.font-weight-bold $
-          +editText('minimum_increment')
+          +frField('campaign.minimum_increment', 'text')
           |  MINIMUM INVESTMENT
 
         p.text-uppercase.text-xs-center.m-t-3.m-b-2 
@@ -181,7 +182,7 @@ section.formc-review
         .top-intro
           p.small.text-xs-left.font-weight-bold FORM C Offering Material for
           p.small
-            +editText('issuer_short_name')
+            +frField('company.name', 'text')
             |  as Issuer
         h2.text-uppercase.text-xs-center.font-weight-bold#overview_information.letter-spacing-normal OVERVIEW INFORMATION
         .one-block.m-b-3
@@ -191,38 +192,38 @@ section.formc-review
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
               p.font-weight-bold Name of issuer:
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
-              +editText('issuer_legal_name')
+              +frField('company.name', 'text')
           .row
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
               p.font-weight-bold Entity Form:
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
-              +editSelect('corporate_structure')
+              +frField('company.corporate_structure', 'select')
           .row
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
               p.font-weight-bold Jurisdiction of Organization:
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
-              +editSelect('jurisdiction_of_organization')
+              +frField('company.founding_state', 'select')
           .row
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
               p.font-weight-bold Date of Organization:
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
-              +editText('founding_date')
+              +frField('company.founding_date', 'text')
           .row
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
               p.font-weight-bold Physical address:
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
-              +editText('address_1')
+              +frField('company.address_1', 'text')
               | !{' '}
-              +editText('address_2')
+              +frField('company.address_2', 'text')
               | !{' '}
-              +editText('city')
+              +frField('company.city', 'text')
               | !{' '}
-              +editText('zip_code')
+              +frField('company.zip_code', 'text')
           .row
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
               p.font-weight-bold Website address:
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
-              +editText('website')
+              +frField('company.website', 'text')
         .one-block.m-b-3
           p.text-uppercase.m-t-0.m-b-0.pb10 
             u Intermediary Information
@@ -268,7 +269,7 @@ section.formc-review
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
               p.font-weight-bold Type of security offered:
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
-              +editSelect('security_type')
+              +frField('campaign.security_type', 'select')
           .row
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
               p.font-weight-bold Voting rights:
@@ -278,49 +279,49 @@ section.formc-review
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
               p.font-weight-bold Minimum target number of securities being offered:
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
-              +editText('min_number_of_shares')
+              +frField('campaign.min_number_of_shares', 'text')
           .row
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
               p.font-weight-bold Price of security:
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
-              +editText('price_per_share')
+              +frField('campaign.price_per_share', 'text')
           .row
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
               p.font-weight-bold Minimum target amount of offering:
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
-              +editText('minimum_raise')
+              +frField('campaign.minimum_raise', 'text')
           .row
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
               p.font-weight-bold Oversubscription allowed:
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
-              a(href="#" class="show-input" data-name="oversubscription").link-1 Yes
+              +frField('campaign.oversubscription', 'select')
           .row
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
               p.font-weight-bold Allocation method of oversubscription:
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
-              a(href="#" class="show-input" data-name="allocation_method").link-1 Yes
+              +frField('campaign.allocation_method', 'select')
           .row
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
               p.font-weight-bold Oversubscription allowed:
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
-              a(href="#" class="show-input" data-name="first_come_first_served").link-1 First Come First Served
+              +frField('campaign.first_come_first_served', 'text')
           .row
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
               p.font-weight-bold Maximum amount of offering:
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
-              +editText('maximum_raise')
+              +frField('campaign.maximum_raise', 'text')
           .row
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
               p.font-weight-bold Deadline to reach target amount:
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
-              +editText('close_date')
+              +frField('campaign.expiration_date', 'text')
 
       // page 3
       section.page-formc-review.m-t-1
         .top-intro
           p.small.text-xs-left.wont-weight-bold FORM C Offering Material for
           p.small
-            +editText('issuer_short_name')
+            +frField('company.name', 'text')
             |  as Issuer
         h2.text-uppercase.text-xs-center.font-weight-bold#introductory_notices.letter-spacing-normal INTRODUCTORY NOTICES
         p.text-uppercase.m-t-0.m-b-0.pb10 
@@ -328,32 +329,32 @@ section.formc-review
         p.pb10.text-indent This offering material, including all the exhibits attached hereto (collectively, the 
           u “Material”
           |  ) describes the terms relating to an offer and sale of securities to qualified investors consistent with the rules and regulations of Regulation Crowdfunding (17 CFR §227). 
-          +editText('issuer_legal_name')
+          +frField('company.name', 'text')
           |  , a 
-          +editSelect('jurisdiction_of_organization')
+          +frField('company.founding_state', 'select')
           | !{' '}
-          +editSelect('corporate_structure')
+          +frField('company.corporate_structure', 'select')
           |  (the “Company”), is offering up to 
-          +editText('max_number_of_shares')
+          +frField('campaign.max_number_of_shares', 'text')
           |   shares of 
-          a(href="#" class="show-input" data-name="security_type").link-1 #{values.campaign.security_type}
+          +frField('campaign.security_type', 'select')
           |  (the 
           u “Shares”)
           |  at an offering price of $
-          +editText('price_per_share')
+          +frField('campaign.price_per_share', 'text')
           |  per Share for a maximum aggregate offering price of $
-          +editText('minimum_raise').
+          +frField('campaign.minimum_raise', 'text').
         p.pb10.text-indent The Company has established a minimum offering of at least 
-          +editText('min_number_of_shares')
+          +frField('campaign.min_number_of_shares', 'text')
           |  Shares for a minimum aggregate offering price of $
-          +editText('minimum_raise')
+          +frField('campaign.minimum_raise', 'text')
           |  prior to 
-          +editText('close_date')
+          +frField('campaign.expiration_date', 'text')
           |  (the 
           u “Offering”
           |  ).  If the sum of the investment commitments does not equal or exceed this minimum target amount at the Offering deadline, no securities will be sold in the Offering, investment commitments will be cancelled and committed funds will be returned. There can be no assurance that the minimum number of the Shares offered will be subscribed for and therefore these if no guarantee that this Offering will be completed.
         p.text-indent The minimum subscription by an investor is a $
-          +editText('minimum_increment')
+          +frField('campaign.minimum_increment', 'text')
           |  investment.  Each investor interested in participating in this Offering must register at 
           a(href="www.GrowthFountain.com").link-1 www.GrowthFountain.com.
           |  The website GrowthFountain.com (the 
@@ -374,7 +375,7 @@ section.formc-review
         .top-intro
           p.small.text-xs-left.font-weight-bold FORM C Offering Material for
           p.small.pb10
-            +editText('issuer_short_name')
+            +frField('company.name', 'text')
             |  as Issuer
         p.pb10 dispose of the Shares.  This Material contains significant additional disclosure of investment risks to be reviewed by each potential investor.  Each investor should review all pf the risks related to this Offering prior to making a commitment to invest in the Shares.
         p.text-uppercase.m-t-3.m-b-0.pb10 
@@ -385,52 +386,53 @@ section.formc-review
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u Changes Are Possible In Certain Circumstances
         p.pb10.text-indent The Company reserves the right to modify any of the terms of the Offering at any time before the Offering closes. However, if any material changes are made, each investor will be notified and will be required to reconfirm their investment commitment within 5 days of such notice or their entire investment commitment shall be cancelled. Investors are also given the right to terminate an investment at any time prior to 48 hours from a notified closing date.  Additional
-          | details on the procedures involved with this Offering are contained later in this Material.  Additional information relating to this Offering, including communication channels allowing investors to pose questions and receive answers, is available through the Intermediary on the Platform at https://growthfountain.com/#{ values.company.id }
+          | details on the procedures involved with this Offering are contained later in this Material.  Additional information relating to this Offering, including communication channels allowing investors to pose questions and receive answers, is available through the Intermediary on the Platform at https://growthfountain.com/
+          +frField('company.site_id', 'text')
 
       // page 5
       section.page-formc-review.m-t-1
         .top-intro
           p.small.text-xs-left.font-weight-bold FORM C Offering Material for
           p.small.pb10
-            +editText('issuer_short_name')
+            +frField('company.name', 'text')
             |  as Issuer
         h2.text-uppercase.text-xs-center.font-weight-bold#description_business.letter-spacing-normal.m-b-3 DESCRIPTION OF THE ISSUER’S BUSINESS
         p.text-uppercase.m-t-0.m-b-0.pb10 
           u The Company
         p.text-indent
-          +editText('issuer_legal_name')
+          +frField('company.name', 'text')
           | , was organized on 
-          +editText('founding_date')
+          +frField('company.founding_date', 'text')
           | , as a 
-          +editSelect('jurisdiction_of_organization')
+          +frField('company.founding_state', 'select')
           | !{' '}
-          +editSelect('corporate_structure')
+          +frField('company.corporate_structure', 'select')
           |  The Company’s headquarters is located 
-          +editText('address_1')
+          +frField('company.address_1', 'text')
           | !{' '}
-          +editText('address_2')
+          +frField('company.address_2', 'text')
           | !{' '}
-          +editText('city')
+          +frField('company.city', 'text')
           | !{' '}
-          +editText('state')
+          +frField('company.state', 'select')
           | !{' '}
-          +editText('zip_code')
+          +frField('company.zip_code', 'text')
           |  The Company’s website is 
-          +editText('website')
+          +frField('company.website', 'text')
           | .
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u Business Overview
         p.p-l-2.pb10 
-          +editText('pitch')
+          +frField('campaign.pitch', 'textarea')
           | .
         p.p-l-2
-          +editText('business_model')
+          +frField('campaign.business_model', 'textarea')
           | .
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u Business Plan
         p.pb10.text-indent Please refer to the copy of the Company’s business plan which is attached as Exhibit A hereto.
         p.p-l-2.pb10
-          +editText('description')
+          +frField('company.description', 'textarea')
           | .
 
       // page 6
@@ -438,16 +440,16 @@ section.formc-review
         .top-intro
           p.small.text-xs-left.font-weight-bold FORM C Offering Material for
           p.small.pb10
-            +editText('issuer_short_name')
+            +frField('company.name', 'text')
             |  as Issuer
         h2.text-uppercase.text-xs-center.font-weight-bold#management_material_persons.letter-spacing-normal.m-b-3 MANAGEMENT & MATERIAL PERSONS
         p.text-indent Specific biographical information on each of the Company’s officers and members of its Board of Directors of is attached as Exhibit D.  Exhibit D contains information on the last three years of employment and supplements the information summarized below.  The Company has confirmed that no officer, director or 20% shareholder would cause a violation of Rule 503(a) of the Crowdfunding Regulations (17 CFR §227.503).
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u Number of Total Employees
         p.p-l-2 Full time employees: 
-          +editText('full_time_employee')
+          +frField('formc.full_time_employers', 'text')
         p.p-l-2 Part time employees: 
-          +editText('part_time_employee')
+          +frField('formc.part_time_employers', 'text')
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u Officers
         p.pb10.text-indent The following information has been provided by the Company as true and correct regarding each of the Company’s officers.  For purposes of this Form C, the term “officer” means a president, vice president, secretary, treasurer or principal financial officer, comptroller or principal accounting officer, and any person routinely performing similar functions.
@@ -463,7 +465,7 @@ section.formc-review
                 if v.role[0] == 2
                   tr
                     td.text-xs-center
-                      a(href="#" class="show-input" data-name="officer_first_name").link-1 #{v.first_name}
+                      +frField('v.first_name', 'text')
                       br
                       a(href="#" class="show-input" data-name="officer_last_name").link-1 #{v.last_name}
                     td.text-xs-center
@@ -514,7 +516,7 @@ section.formc-review
         .top-intro
           p.small.text-xs-left.font-weight-bold FORM C Offering Material for
           p.small
-            +editText('issuer_short_name')
+            +frField('company.name', 'text')
             |  as Issuer
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u 20% Holders
@@ -553,7 +555,7 @@ section.formc-review
         .top-intro
           p.small.text-xs-left.font-weight-bold FORM C Offering Material for
           p.small.pb10
-            +editText('issuer_short_name')
+            +frField('company.name', 'text')
             |  as Issuer
         if values.formc.transaction_with_related_parties_choice == 1
           p.pb10.text-indent The Company is disclosing certain related party transactions below arising from any of the transactions occurring in the Company’s last fiscal year.  As used here, the term “related party” includes: (1) any director or officer of the Company; (2) any person who is, as of the most recent practicable date, the beneficial owner of twenty percent (20%) or more of the Company’s outstanding voting equity securities, calculated on the basis of voting power; (3) if the Company was incorporated or organized within the past three years, any promoter of the Company; or (4) any immediate family member of any of the foregoing persons.  Only those transactions are listed in which the related party had or is expected to have a direct or indirect material interest in such transaction, and the list includes transactions with entities under common control with the issuer.  As used here, the term “transaction” includes, but is not limited to, any financial transaction, arrangement or relationship (including any indebtedness or guarantee of indebtedness) or any series of similar transactions, arrangements or relationships.  Where it is not practicable to state the approximate amount of the interest, the amount involved in the transaction has been approximated.
@@ -580,13 +582,13 @@ section.formc-review
         .top-intro
           p.small.text-xs-left.font-weight-bold FORM C Offering Material for
           p.small.pb10
-            +editText('issuer_short_name')
+            +frField('company.name', 'text')
             |  as Issuer
         h2.text-uppercase.text-xs-center.font-weight-bold#procedure_purchasing_securities.letter-spacing-normal.m-b-3 PROCEDURE FOR PURCHASING SECURITIES
         p.text-uppercase.m-t-0.m-b-0.pb10 
           u Minimum Commitment and Closing Date
         p.text-indent To participate in this Offering, each investor must purchase securities in a minimum dollar amount equal to $
-          +editText('minimum_increment')
+          +frField('campaign.minimum_increment', 'text')
           | .
           |   The securities are being offered until [close.date], unless notice is provided to investors at least five (5) business days prior to any change in such date.  The Company reserves the right to change the closing date with such notice and with a minimum twenty-one (21) day period in which to carry out the offering.
         p.text-uppercase.m-t-3.m-b-0.pb10 
@@ -601,7 +603,7 @@ section.formc-review
         .top-intro
           p.small.text-xs-left.font-weight-bold FORM C Offering Material for
           p.small.pb10
-            +editText('issuer_short_name')
+            +frField('company.name', 'text')
             |  as Issuer
         p commitments collectively, the issuer would be able to close the transaction on the original target closing date or an earlier date with at least five business days prior notice to the investors; and (5) the funds would be released by the escrow agent to the issuer, less any required fees sent to the Intermediary, and the issuer would issue the securities to the investor.
         p.text-uppercase.m-t-3.m-b-0.pb10 
@@ -617,7 +619,7 @@ section.formc-review
         .top-intro
           p.small.text-xs-left.font-weight-bold FORM C Offering Material for
           p.small.pb10
-            +editText('issuer_short_name')
+            +frField('company.name', 'text')
             |  as Issuer
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u Use of Third Party Services
@@ -637,7 +639,7 @@ section.formc-review
         .top-intro
           p.small.text-xs-left.font-weight-bold FORM C Offering Material for
           p.small.pb10
-            +editText('issuer_short_name')
+            +frField('company.name', 'text')
             |  as Issuer
         p execution of a Subscription Agreement available on the Platform, which contains, among other things, certain representations, warranties and covenants.  The Company must secure investor commitments that equal or exceed the minimum target amount for the Offering prior to the applicable closing date, or the Offering will be canceled and investor funds committed in connection with the Offering will be returned.  An investor commitment is conditional after being made, but only up until the time that is 48 hours before the applicable closing date.  For the 48-hour period prior to the applicable closing date, investor commitments may not be cancelled by the investor but in certain circumstances may still be returned (e.g. if the target minimum amount is not met).   As a reminder, investors are required to reconfirm their investment commitment after receiving notice of a material change to the Offering.  If an investor takes no action to reconfirm the investment commitment after the Company notifies the investor of a material change, the commitment will be cancelled and funds relating to that Offering returned. 
         p.text-uppercase.m-t-3.m-b-0.pb10 
@@ -650,9 +652,9 @@ section.formc-review
         .top-intro
           p.small.text-xs-left.font-weight-bold FORM C Offering Material for
           p.small.pb10
-            +editText('issuer_short_name')
+            +frField('company.name', 'text')
             |  as Issuer
-        h2.text-uppercase.text-xs-center.font-weight-bold#capital_structure.letter-spacing-normal.m-b-3 CAPITAL STRUCTURE OF THE ISSUER
+        h2#capital_structure.text-uppercase.text-xs-center.font-weight-bold.letter-spacing-normal.m-b-3 CAPITAL STRUCTURE OF THE ISSUER
         p.text-uppercase.m-t-0.m-b-0.pb10 
           u Description of the Issuer’s Existing Securities
         p.pb10.text-indent The outstanding and authorized amounts of the Company’s existing securities are identified in the table below.  Please note that the Company has indicated that this table includes (a) all instruments that could convert into securities such as convertible debt, (b) securities that are reserved for issuance upon exercise or conversion such as an option plan and (c) any other instruments that could be expected to impact the capitalization of the Company.
@@ -687,7 +689,7 @@ section.formc-review
         .top-intro
           p.small.text-xs-left.font-weight-bold FORM C Offering Material for
           p.small.pb10
-            +editText('issuer_short_name')
+            +frField('company.name', 'text')
             |  as Issuer
         h2.text-uppercase.text-xs-center.font-weight-bold#description_securities.letter-spacing-normal.m-b-3 DESCRIPTION OF SECURITIES OFFERED
         p.text-uppercase.m-t-0.m-b-0.pb10 
@@ -699,7 +701,7 @@ section.formc-review
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u Voting Rights and Limitations
         p.text-indent The Shares have no voting rights and will be excluded from all voting.  Additionally, the Shares have no liquidation or preference rights. 
-          a(href="#" class="show-input" data-name="modify_method").link-1 modify_method
+          +frField('formc.modify_method', 'text')
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u Restrictions on Transfer of Shares
         p.pb10.text-indent Consistent with Subpart E of Regulation Crowdfunding (17 CFR 501), securities issued in this Offering pursuant to section 4(a)(6) of the Securities Act (15 U.S.C. 77d(a)(6)) may not be transferred by any purchaser of such securities during the one-year period beginning when the securities were issued, unless such securities are transferred to a limited group including (a) to the Company, (b) to an accredited investor, (c) as part of an offering registered with the SEC, or (d) to a family member, trust or equivalent.  In connection with any participation in this Offering, each potential investor may be required to agree not to dispose of or otherwise sell or transfer any of the Shares, until there is in effect a registration statement under the Securities Act covering such proposed disposition or if such disposition will not require registration under the Securities Act.
@@ -709,27 +711,27 @@ section.formc-review
         .top-intro
           p.small.text-xs-left.font-weight-bold FORM C Offering Material for
           p.small
-            +editText('issuer_short_name')
+            +frField('company.name', 'text')
             |  as Issuer
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u Distinguishing the Securities
         p.pb10.text-indent Differences between the securities being offered and the other classes of securities:
         p.p-l-2.pb10
-          +editText('security_differences')
+          +frField('formc.security_differences', 'textarea')
         p.pb10.text-indent Ability of one class of security to materially limit, dilute or qualify the rights of another class:
         p.p-l-2.pb10
-          +editText('rights_of_securities_being')
+          +frField('formc.rights_of_securities_being', 'textarea')
         p.pb10.text-indent Ability of any principal shareholders to affect the purchasers of the securities being offered:
         p.p-l-2
-          +editText('principal_shareholders_affect')
+          +frField('formc.principal_shareholders_affect', 'textarea')
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u Valuation of the Securities
         p.pb10.text-indent The offering price of the securities in this Offering has been established by the Company and does not necessarily bear any specific relation to the assets, book value or potential earnings of the Company or any other recognized criteria of value. The Shares have not been registered under the Securities Exchange Act of 1934 and have not been traded or quoted on any exchange or quotation system. There is no public market in which shareholders may sell their Shares, and there can be no assurance given that such a market will ever develop. The securities offered hereby are restricted by law and the ability to transfer and interests in the Shares is severely limited.
         p.pb10.text-indent Method by which the offered securities are valued:
         p.p-l-2.pb10
-          a(href="#" class="show-input" data-name="valuation_determine").link-1 valuation_determine
+          +frField('campaign.valuation_determination', 'select')
         p.p-l-2.pb10
-          a(href="#" class="show-input" data-name="valuation_determine_describe").link-1 valuation_determine_describe
+          +frField('campaign.valuation_determination_other', 'select')
         p.pb10.text-indent The price of each Share was determined by the Company in good faith based on its own assessment of its current position and the possibility of future growth.  The Company has taken into account its own internal calculation of potential future revenue and based on such forward looking estimates has created a valuation that reflects the multiple or premium determined by the Company to be appropriate in this situation.  The Company acknowledges that the valuation bears no relationship to established value criteria such as net tangible assets or a multiple of earnings per share.  The Company accepts that some investors may conclude that the current valuation is not an indication of the actual value of the Company.
 
       // page 16
@@ -737,7 +739,7 @@ section.formc-review
         .top-intro
           p.small.text-xs-left.font-weight-bold FORM C Offering Material for
           p.small.pb10
-            +editText('issuer_short_name')
+            +frField('company.name', 'text')
             |  as Issuer
         if values.campaign.valuation_determination == '0'
           p.pb10.text-indent The price of each Share was determined by the Company in good faith based on its own assessment of its current position and the benchmarking reference range determined by the use of certain business calculators provided by the Intermediary.  Such calculators use the data provided by the Company and do not reflect any advice or recommendation on the part of the Intermediary.  In working with the calculators, the Company considered its current capital structure, including current debt and cash, and assembled an income statement from the last twelve months including an estimate of net income and EBITDA.  The Company also made projections for the next twelve months along with a similar estimate of net income and EBITDA.
@@ -750,22 +752,22 @@ section.formc-review
         .top-intro
           p.small.text-xs-left.font-weight-bold FORM C Offering Material for
           p.small.pb10
-            +editText('issuer_short_name')
+            +frField('company.name', 'text')
             |  as Issuer
         h2.text-uppercase.text-xs-center.font-weight-bold#use_of_proceeds.letter-spacing-normal.m-b-3 USE OF PROCEEDS
         p.pb10.text-indent The Company intends to apply the proceeds of this Offering substantially as set forth herein, subject to reallocation by management as it deems in the best interests of the Company. The actual use of proceeds of this Offering is subject to the discretion of management and the board of directors, and may include general corporate purposes.
         p
-          +editText('intended_use_of_proceeds')
+          +frField('formc.intended_use_of_proceeds', 'text')
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u Assuming A Minimum Raise
         p
-          +editText('use_of_net_proceeds_minimum')
+          +frField('formc.use_of_net_proceeds_minimum', 'text')
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u  Assuming A Maximum Raise
         if values.campaign.minimum_raise != values.campaign.maximum_raise
           p.pb10.text-indent In the case that the Offering is oversubscribed and closes with the maximum amount achieved, the Company anticipates using the proceeds in the following manner: 
           p.pb10
-            +editText('use_of_net_proceeds_maximum')
+            +frField('formc.use_of_net_proceeds_maximum', 'text')
         p.pb10.text-indent The following table reflects our anticipated estimated use of proceeds:
         .table-responsive.m-t-1
           table.table.table-bordered
@@ -909,7 +911,7 @@ section.formc-review
         .top-intro
           p.small.text-xs-left.font-weight-bold FORM C Offering Material for
           p.small.pb10
-            +editText('issuer_short_name')
+            +frField('company.name', 'text')
             |  as Issuer
         h2.text-uppercase.text-xs-center.font-weight-bold#financial_condition.letter-spacing-normal.m-b-3 FINANCIAL CONDITION
         p.text-indent References to the future financial condition of the Company may contain forward-looking statements. Such forward-looking statements are not guarantees of future performance and involve uncertainties and other factors which may cause the Company’s actual results, performance or achievements to be materially different from any future results, performance or achievements expressed or implied by such forward-looking statements. Actual operating results may be affected by various factors including, without limitation, changes in national economic conditions, competitive market conditions, uncertainties related to government regulation, and actual versus projected timing of events, all of which may cause such actual results to differ materially from what is expressed or forecast in this Material.  For purposes of this section, any reference to the Company includes its predecessors, if any.  The Company's actual results may differ materially from those discussed herein.
@@ -917,88 +919,87 @@ section.formc-review
           u Prior Operating History
         if values.formc.financials_condition_choice == '1'
           p.pb10.text-indent The following describes the operating history of the issuer with a focus on whether historical results and cash flows are representative of what investors should expect in the future. 
-            a(href="#" class="show-input" data-name="operating_history").link-1 operating_history
+            +frField('formc.financials_condition_no', 'textarea')
         else
           p.pb10.text-indent Because the issuer has no operating history, the following provides information on the issuer’s financial milestones and operational, liquidity and other challenges. 
-            a(href="#" class="show-input" data-name="operating_history").link-1 operating_history
-        .table-responsive.m-t-1
-          table.table.table-bordered
-            theader
-              tr.bg-grey
-                th.text-xs-center
-                th.text-xs-center Most Recent Fiscal Year End
-                th.text-xs-center Prior Fiscal Year End
-            tbody
-              tr
-                td Total Assets
-                td.text-xs-center
-                  a(href="#" class="show-input" data-name="recent_total_assets").link-1 recent_total_assets
-                td.text-xs-center
-                  a(href="#" class="show-input" data-name="prior_total_assets").link-1 prior_total_assets
-              tr
-                td Cash & Cash Equivalents
-                td.text-xs-center
-                  a(href="#" class="show-input" data-name="recent_cash_and_equivalents").link-1 recent_cash_and_equivalents
-                td.text-xs-center
-                  a(href="#" class="show-input" data-name="prior_cash_and_equivalents").link-1 prior_cash_and_equivalents
-              tr
-                td Accounts Receivable
-                td.text-xs-center
-                  a(href="#" class="show-input" data-name="recent_account_receivable").link-1 recent_account_receivable
-                td.text-xs-center
-                  a(href="#" class="show-input" data-name="prior_account_receivable").link-1 prior_account_receivable
-              tr
-                td Short-term Debt
-                td.text-xs-center
-                  a(href="#" class="show-input" data-name="recent_short_term_debt").link-1 recent_short_term_debt
-                td.text-xs-center
-                  a(href="#" class="show-input" data-name="prior_short_term_debt").link-1 prior_short_term_debt
-              tr
-                td Long-term Debt
-                td.text-xs-center
-                  a(href="#" class="show-input" data-name="recent_long_term_debt").link-1 recent_long_term_debt
-                td.text-xs-center
-                  a(href="#" class="show-input" data-name="prior_long_term_debt").link-1 prior_long_term_debt
-              tr
-                td Revenues/Sales
-                td.text-xs-center
-                  a(href="#" class="show-input" data-name="recent_revenues_sales").link-1 recent_revenues_sales
-                td.text-xs-center
-                  a(href="#" class="show-input" data-name="prior_revenues_sales").link-1 prior_revenues_sales
-              tr
-                td Cost of Goods Sold
-                td.text-xs-center
-                  a(href="#" class="show-input" data-name="recent_cost_of_goods_sold").link-1 recent_cost_of_goods_sold
-                td.text-xs-center
-                  a(href="#" class="show-input" data-name="prior_cost_of_goods_sold").link-1 prior_cost_of_goods_sold
-              tr
-                td Taxes Paid
-                td.text-xs-center
-                  a(href="#" class="show-input" data-name="recent_Taxes_paid").link-1 recent_Taxes_paid   
-                td.text-xs-center
-                  a(href="#" class="show-input" data-name="prior_Taxes_paid") prior_Taxes_paid
-              tr
-                td Net Income
-                td.text-xs-center
-                  a(href="#" class="show-input" data-name="recent_Net_income").link-1 recent_Net_income
-                td.text-xs-center
-                  a(href="#" class="show-input" data-name="prior_Net_income").link-1 prior_Net_income
+            +frField('formc.financials_condition_yes', 'textarea')
+
+        if values.formc.sold_securities_data.length > 1
+          .table-responsive.m-t-1
+            table.table.table-bordered
+              theader
+                tr.bg-grey
+                  th.text-xs-center
+                  th.text-xs-center Most Recent Fiscal Year End
+                  th.text-xs-center Prior Fiscal Year End
+              tbody
+                tr
+                  td Total Assets
+                  td.text-xs-center
+                    a(href="#" class="show-input" data-name="recent_total_assets").link-1 values.formc.sold_securities_data[0].total_assets
+                  td.text-xs-center
+                    a(href="#" class="show-input" data-name="prior_total_assets").link-1 values.formc.sold_securities_data[1].total_assets
+                tr
+                  td Cash & Cash Equivalents
+                  td.text-xs-center
+                    a(href="#" class="show-input" data-name="recent_cash_and_equivalents").link-1 values.formc.sold_securities_data[0].cash_and_equivalents
+                  td.text-xs-center
+                    a(href="#" class="show-input" data-name="prior_cash_and_equivalents").link-1 values.formc.sold_securities_data[1].cash_and_equivalents
+                tr
+                  td Accounts Receivable
+                  td.text-xs-center
+                    a(href="#" class="show-input" data-name="recent_account_receivable").link-1 values.formc.sold_securities_data[0].account_receivable
+                  td.text-xs-center
+                    a(href="#" class="show-input" data-name="prior_account_receivable").link-1 values.formc.sold_securities_data[1].account_receivable
+                tr
+                  td Short-term Debt
+                  td.text-xs-center
+                    a(href="#" class="show-input" data-name="recent_short_term_debt").link-1 values.formc.sold_securities_data[0].short_term_debt
+                  td.text-xs-center
+                    a(href="#" class="show-input" data-name="prior_short_term_debt").link-1 values.formc.sold_securities_data[1].short_term_debt
+                tr
+                  td Long-term Debt
+                  td.text-xs-center
+                    a(href="#" class="show-input" data-name="recent_long_term_debt").link-1 values.formc.sold_securities_data[0].long_term_debt
+                  td.text-xs-center
+                    a(href="#" class="show-input" data-name="prior_long_term_debt").link-1 values.formc.sold_securities_data[1].long_term_debt
+                tr
+                  td Revenues/Sales
+                  td.text-xs-center
+                    a(href="#" class="show-input" data-name="recent_revenues_sales").link-1 values.formc.sold_securities_data[0].revenues_sales
+                  td.text-xs-center
+                    a(href="#" class="show-input" data-name="prior_revenues_sales").link-1 values.formc.sold_securities_data[1].revenues_sales
+                tr
+                  td Cost of Goods Sold
+                  td.text-xs-center
+                    a(href="#" class="show-input" data-name="recent_cost_of_goods_sold").link-1 values.formc.sold_securities_data[0].cost_of_goods_sold
+                  td.text-xs-center
+                    a(href="#" class="show-input" data-name="prior_cost_of_goods_sold").link-1 values.formc.sold_securities_data[1].cost_of_goods_sold
+                tr
+                  td Taxes Paid
+                  td.text-xs-center
+                    a(href="#" class="show-input" data-name="recent_Taxes_paid").link-1 values.formc.sold_securities_data[0].taxes_paid
+                  td.text-xs-center
+                    a(href="#" class="show-input" data-name="prior_Taxes_paid").link-1 values.formc.sold_securities_data[1].taxes_paid
+                tr
+                  td Net Income
+                  td.text-xs-center
+                    a(href="#" class="show-input" data-name="recent_Net_income").link-1 values.formc.sold_securities_data[0].net_income
+                  td.text-xs-center
+                    a(href="#" class="show-input" data-name="prior_Net_income").link-1 values.formc.sold_securities_data[1].net_income 
 
       // page 19
       section.page-formc-review.m-t-1
         .top-intro
           p.small.text-xs-left.font-weight-bold FORM C Offering Material for
           p.small
-            +editText('issuer_short_name')
+            +frField('company.name', 'text')
             |  as Issuer
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u Results of Operations
         p.pb10.text-indent The following is a description of the financial condition of the Company, including any items that have had a material impact on the Company, for each year when financial statements are provided.  This discussion also includes an identification of any known material changes or trends in the financial condition and results of operations of the Company during any time period subsequent to the period for which financial statements are provided.
         p.pb10.p-l-2
-          a(href="#" class="show-input" data-name="financial_condition").link-1 financial_condition
-        p.pb10.text-indent The following discusses whether additional funds are necessary to the viability of the business, how quickly the Company anticipates using its available cash and whether other sources of capital are anticipated to be available to the Company.
-        p.p-l-2
-          a(href="#" class="show-input" data-name="future_capital").link-1 future_capital
+          +frField('formc.financials_condition_yes', 'textarea')
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u Material Indebtedness
         if values.formc.business_loans_or_debt_choice == '0'
@@ -1037,7 +1038,7 @@ section.formc-review
         .top-intro
           p.small.text-xs-left.font-weight-bold FORM C Offering Material for
           p.small.pb10
-            +editText('issuer_short_name')
+            +frField('company.name', 'text')
             |  as Issuer
         if values.formc.exempt_offering_choice == '1'
           p.pb10.text-indent The Company has provided the following list of exempt offerings conducted over the past 3 years:
@@ -1138,40 +1139,46 @@ section.formc-review
         h2.text-uppercase.text-xs-center.font-weight-bold.letter-spacing-normal.m-b-3 ISSUER-SPECIFIC RISK FACTORS
         p.text-uppercase.m-t-0.m-b-0.pb10 
           u MARKET AND CUSTOMER RISK FACTORS
-        h3
-          +editText('mac_risk_title')
-        p
-          +editText('mac_risk')
+          each v,k in values.formc.market_and_customer_risk
+            h3
+              | #{ v.title }
+            p
+              | #{ v.risk }
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u FINANCIAL RISK FACTORS
-        h3
-          //+editText('fin_risk_title')
-        p
-          //+editText('fin_risk')
+          each v,k in values.formc.financial_risk
+            h3
+              | #{ v.title }
+            p
+              | #{ v.risk }
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u OPERATIONAL RISK FACTORS
-        h3
-          //+editText('ops_risk_title')
-        p
-          //+editText('ops_risk')
+          each v,k in values.formc.operational_risk
+            h3
+              | #{ v.title }
+            p
+              | #{ v.risk }
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u COMPETITIVE RISK FACTORS
-        h3
-          //+editText('com_risk_title')
-        p
-          //+editText('com_risk')
+          each v,k in values.formc.competitive_risk
+            h3
+              | #{ v.title }
+            p
+              | #{ v.risk }
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u PERSONNEL AND THIRD PARTY RISK FACTORS
-        h3
-          //+editText('pat_risk_title')
-        p
-          //+editText('pat_risk')
+          each v,k in values.formc.personnel_and_third_parties_risk
+            h3
+              | #{ v.title }
+            p
+              | #{ v.risk }
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u LEGAL AND REGULATORY RISK FACTORS
-        h3
-          +editText('lar_risk_title')
-        p
-          +editText('lar_risk')
+          for v,k in values.formc.legal_and_regulatory_risk
+            h3
+              | #{ v.title }
+            p
+              | #{ v.risk }
 
       // page 25
       section.page-formc-review.m-t-1
@@ -1403,16 +1410,6 @@ section.formc-review
                             td
                               a(href="#" class="show-input" data-name="director.1.position_end.1").link-1 #{v1.end_date_of_service}
 
-      // page 34
-      section.page-formc-review.m-t-1
-        .top-intro
-          p.small.text-xs-left.font-weight-bold FORM C Offering Material for
-          p.small.pb10
-            +editText('issuer_short_name')
-            |  as Issuer
-        h2.text-uppercase.text-xs-center.font-weight-bold.letter-spacing-normal.m-b-3 EXHIBIT D: EXCERPTS
-        p See Attached
-  
 
 //MODAL
 #formc_review_popup.modal.fade(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")

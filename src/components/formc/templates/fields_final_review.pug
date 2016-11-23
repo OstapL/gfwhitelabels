@@ -1,0 +1,45 @@
+- function ggetData(name) {
+-   if(name.indexOf('.') == -1) {
+-       return values[name];                                                           
+-   } else {
+-       try {
+-           return name.split('.').reduce((o,i)=>o[i], values);                            
+-       } catch(e) { 
+-           console.log('no name ' + name); return ''; 
+-       }
+-   }                                                                              
+- }
+
+mixin frprepareNestedField(nestedName, name, value, index, myAttr)
+  if value == null
+    - console.log('value for ' + name + ' is null ')
+    - value = {}
+  - _.extend(myAttr, attr.schema[name]);
+  - myAttr.value = value[name] ? value[name]: '';
+  - myAttr.id = nestedName + '__' + index + '__' + name + '';
+
+
+mixin frfieldNestedTextLabel(nestedName, name, value, index, myAttr)
+  +prepareNestedField(nestedName, name, value, index, myAttr)
+  - myAttr.class1 = myAttr.class1 ? myAttr.class1 : 'text-lg-right col-lg-3 col-md-12 text-md-left';
+  - myAttr.class2 = myAttr.class2 ? myAttr.class2 : 'col-lg-9 col-md-12';
+  +fieldTextLabel(
+    nestedName + '[' + index + '][' + name + ']',
+    myAttr
+  )
+
+
+mixin frField(name, type)
+  - var value = ggetData(name)
+  if type == 'select'
+    - valuesList = name.split('.').reduce((o,i)=>o[i], fields);
+    if valuesList && valuesList.validate && valuesList.validate.OneOf
+      - valuesList = valuesList.validate.OneOf;
+      if valuesList.labels
+        - value = valuesList.labels[valuesList.choices.indexOf(value.toString())]
+  a(
+    href="#"
+    data-name=name
+    data-type=type || 'text'
+    data-value=ggetData(name)
+    ).createField.show-input.link-1 #{ value }

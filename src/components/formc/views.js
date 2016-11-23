@@ -1614,14 +1614,44 @@ module.exports = {
     initialize(options) {
       this.fields = options.fields;
     },
+    events: {
+      'click .BROKEshow-input': 'showInput',
+      'click .createField': 'createField'
+    },
 
     getSuccessUrl() {
       return  '/formc/' + this.model.id + '/review';
     },
 
-    events: {
-      'click .show-input': 'showInput'
-    }, 
+    createField: function (event) {
+      event.preventDefault();
+      if ($(event.target).hasClass('noactive')) {
+          return false;
+      }
+
+      let target = event.target;
+      let element = '';
+      if(target.dataset.type == 'text') {
+        element = document.createElement('input');
+        element.name = target.dataset.name;
+        element.value = target.innerHTML;
+      } else if(target.dataset.type == 'select') {
+        element = document.createElement('select');
+        element.name = target.dataset.name;
+        let v = target.dataset.name.split('.').reduce((o,i)=>o[i], this.fields);
+        v = v.validate.OneOf;
+        v.choices.forEach((el, i) => {
+          let e = document.createElement('option');
+          e.innerHTML = v.labels[i];
+          e.value = v.choices[i];
+          element.appendChild(e);
+        })
+      }
+
+      target.parentElement.insertBefore(element, target);
+      target.remove();
+    },
+
     showInput: function (event) {
       event.preventDefault();
       if ($(event.target).hasClass('noactive')) {
@@ -1708,6 +1738,26 @@ module.exports = {
       $this.hide();
       $span.fadeIn();
       });
+    },
+    render() {
+      this.$el.html(
+        this.template({
+          values: this.model,
+          fields: this.fields,
+        })
+      );
+      return this;
+    },
+  }),
+
+  electronicSignature: Backbone.View.extend({
+    el: '#content',
+    template: require('./templates/formc_els_company_formc_first.pug'),
+    
+    initialize(options) {
+      this.fields = options.fields;
+      this.name = {};
+
     },
     render() {
       this.$el.html(
