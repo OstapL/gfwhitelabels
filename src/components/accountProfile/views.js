@@ -3,6 +3,7 @@ const dropzoneHelpers = require('helpers/dropzoneHelpers.js');
 const validation = require('components/validation/validation.js');
 const phoneHelper = require('helpers/phoneHelper.js');
 const formatHelper = require('helpers/formatHelper');
+const yesNoHelper = require('helpers/yesNoHelper.js');
 
 let countries = {};
 _.each(require('helpers/countries.json'), (c) => { countries[c.code] = c.name; });
@@ -23,7 +24,9 @@ module.exports = {
       'change .js-city': 'changeAddressManually',
       'change .js-state': 'changeAddressManually',
       'change #country': 'changeCountry',
-    }, phoneHelper.events, dropzoneHelpers.events),
+      'change input[name=accredited_investor]': 'changeAccreditedInvestor',
+
+    }, phoneHelper.events, dropzoneHelpers.events, yesNoHelper.events),
 
     changeCountry(e) {
       let $target = $(e.target);
@@ -83,6 +86,8 @@ module.exports = {
         instagram: 'Instagram',
         linkedin: 'LinkedIn',
       };
+
+      this.model.phone = '';
 
       this.assignLabels();
 
@@ -261,7 +266,7 @@ module.exports = {
       this.cityStateArea.text(`${this.cityField.val()}/${this.stateField.val()}`);
     },
 
-  }, phoneHelper.methods, dropzoneHelpers.methods)),
+  }, phoneHelper.methods, dropzoneHelpers.methods, yesNoHelper.methods)),
 
   changePassword: Backbone.View.extend({
     urlRoot: authServer + '/rest-auth/password/change',
