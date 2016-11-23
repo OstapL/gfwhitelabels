@@ -490,25 +490,23 @@ section.formc-review
               each v,k in values.formc.team_members
                 if v.role[0] == 1
                   - console.log(v, k)
-                  tr
-                    td.text-xs-center
-                      +frField('formc.team_members[' + k + '].first_name', 'text')
-                      br
-                      +frField('formc.team_members[' + k + '].last_name', 'text')
-                    td.text-xs-center
-                    if v.experiences
-                      each v1,k1 in v.experiences
-                        +frField('formc.team_members[' + k + '].experiences[' + k1 + '].start_date_of_service', 'text')
-                        br
-                        +frField('formc.team_members[' + k + '].experiences[' + k1 + '].end_date_of_service', 'text')
-                    td.text-xs-center
-                    if v.experiences
-                      each v1,k1 in v.experiences
-                        +frField('formc.team_members[' + k + '].principal_occupation', 'text')
-                        br
-                        +frField('formc.team_members[' + k + '].experiences[' + k1 + '].employer', 'text')
-                        br
-                        +frField('formc.team_members[' + k + '].experiences[' + k1 + '].responsibilities', 'text')
+                  if v.experiences
+                    each v1,k1 in v.experiences
+                      tr
+                        td.text-xs-center
+                          +frField('formc.team_members[' + k + '].first_name', 'text')
+                          br
+                          +frField('formc.team_members[' + k + '].last_name', 'text')
+                        td.text-xs-center
+                          +frField('formc.team_members[' + k + '].experiences[' + k1 + '].start_date_of_service', 'text')
+                          br
+                          +frField('formc.team_members[' + k + '].experiences[' + k1 + '].end_date_of_service', 'text')
+                        td.text-xs-center
+                          +frField('formc.team_members[' + k + '].principal_occupation', 'text')
+                          br
+                          +frField('formc.team_members[' + k + '].experiences[' + k1 + '].employer', 'text')
+                          br
+                          +frField('formc.team_members[' + k + '].experiences[' + k1 + '].responsibilities', 'text')
             
 
       // page 7
@@ -941,57 +939,59 @@ section.formc-review
                 tr
                   td Total Assets
                   td.text-xs-center
-                    a(href="#" class="show-input" data-name="recent_total_assets").link-1 values.formc.sold_securities_data[0].total_assets
+                    +frField('formc.sold_securities_data[0].total_assets', 'text')
                   td.text-xs-center
-                    a(href="#" class="show-input" data-name="prior_total_assets").link-1 values.formc.sold_securities_data[1].total_assets
+                    +frField('formc.sold_securities_data[1].total_assets', 'text')
                 tr
                   td Cash & Cash Equivalents
                   td.text-xs-center
-                    a(href="#" class="show-input" data-name="recent_cash_and_equivalents").link-1 values.formc.sold_securities_data[0].cash_and_equivalents
+                    +frField('formc.sold_securities_data[0].cash_and_equivalents', 'text')
+
                   td.text-xs-center
-                    a(href="#" class="show-input" data-name="prior_cash_and_equivalents").link-1 values.formc.sold_securities_data[1].cash_and_equivalents
+                    +frField('formc.sold_securities_data[1].cash_and_equivalents', 'text')
                 tr
                   td Accounts Receivable
                   td.text-xs-center
-                    a(href="#" class="show-input" data-name="recent_account_receivable").link-1 values.formc.sold_securities_data[0].account_receivable
+                    +frField('formc.sold_securities_data[0].cash_and_equivalents', 'text')
                   td.text-xs-center
-                    a(href="#" class="show-input" data-name="prior_account_receivable").link-1 values.formc.sold_securities_data[1].account_receivable
+                    +frField('formc.sold_securities_data[1].cash_and_equivalents', 'text')
                 tr
                   td Short-term Debt
                   td.text-xs-center
-                    a(href="#" class="show-input" data-name="recent_short_term_debt").link-1 values.formc.sold_securities_data[0].short_term_debt
+                    +frField('formc.sold_securities_data[0].short_term_debt', 'text')
                   td.text-xs-center
-                    a(href="#" class="show-input" data-name="prior_short_term_debt").link-1 values.formc.sold_securities_data[1].short_term_debt
+                    +frField('formc.sold_securities_data[1].short_term_debt', 'text')
                 tr
                   td Long-term Debt
                   td.text-xs-center
-                    a(href="#" class="show-input" data-name="recent_long_term_debt").link-1 values.formc.sold_securities_data[0].long_term_debt
+                    +frField('formc.sold_securities_data[0].long_term_debt', 'text')
                   td.text-xs-center
-                    a(href="#" class="show-input" data-name="prior_long_term_debt").link-1 values.formc.sold_securities_data[1].long_term_debt
+                    +frField('formc.sold_securities_data[1].long_term_debt', 'text')
                 tr
                   td Revenues/Sales
                   td.text-xs-center
-                    a(href="#" class="show-input" data-name="recent_revenues_sales").link-1 values.formc.sold_securities_data[0].revenues_sales
+                    +frField('formc.sold_securities_data[0].revenues_sales', 'text')
                   td.text-xs-center
-                    a(href="#" class="show-input" data-name="prior_revenues_sales").link-1 values.formc.sold_securities_data[1].revenues_sales
+                    +frField('formc.sold_securities_data[1].revenues_sales', 'text')
                 tr
                   td Cost of Goods Sold
                   td.text-xs-center
-                    a(href="#" class="show-input" data-name="recent_cost_of_goods_sold").link-1 values.formc.sold_securities_data[0].cost_of_goods_sold
+                    +frField('formc.sold_securities_data[0].cost_of_goods_sold', 'text')
                   td.text-xs-center
-                    a(href="#" class="show-input" data-name="prior_cost_of_goods_sold").link-1 values.formc.sold_securities_data[1].cost_of_goods_sold
+                    +frField('formc.sold_securities_data[1].cost_of_goods_sold', 'text')
                 tr
                   td Taxes Paid
                   td.text-xs-center
-                    a(href="#" class="show-input" data-name="recent_Taxes_paid").link-1 values.formc.sold_securities_data[0].taxes_paid
+                    +frField('formc.sold_securities_data[0].total_tax', 'text')
                   td.text-xs-center
-                    a(href="#" class="show-input" data-name="prior_Taxes_paid").link-1 values.formc.sold_securities_data[1].taxes_paid
+                    +frField('formc.sold_securities_data[1].total_tax', 'text')
+
                 tr
                   td Net Income
                   td.text-xs-center
-                    a(href="#" class="show-input" data-name="recent_Net_income").link-1 values.formc.sold_securities_data[0].net_income
+                    +frField('formc.sold_securities_data[0].taxable_income', 'text')
                   td.text-xs-center
-                    a(href="#" class="show-input" data-name="prior_Net_income").link-1 values.formc.sold_securities_data[1].net_income 
+                    +frField('formc.sold_securities_data[1].taxable_income', 'text')
 
       // page 19
       section.page-formc-review.m-t-1
