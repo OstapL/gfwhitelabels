@@ -1074,7 +1074,7 @@ section.formc-review
         .top-intro
           p.small.text-xs-left.font-weight-bold FORM C Offering Material for
           p.small.pb10
-            +editText('issuer_short_name')
+            +frField('company.name', 'text')
             |  as Issuer
         h2.text-uppercase.text-xs-center.font-weight-bold#risk_factors.letter-spacing-normal.m-b-3 CROWDFUNDING RISK FACTORS
         p.text-indent An investment in the Company’s securities involves substantial risk.  Prospective investors should carefully consider the risk factors referred to in this Material. An investor should not invest any funds in the Offering unless he or she can afford to lose his or her entire investment.  In making an investment decision, investors must rely on their own examination of the Company and the terms of the Offering, including the merits and risks involved.  The Shares have not been recommended or reviewed by any federal or state securities commission or regulatory authority.  There is no ready market for the sale of the Shares and it may be difficult or impossible for an investor to sell or otherwise dispose of the Shares.
@@ -1094,7 +1094,7 @@ section.formc-review
         .top-intro
           p.small.text-xs-left.font-weight-bold FORM C Offering Material for
           p.small.pb10
-            +editText('issuer_short_name')
+            +frField('company.name', 'text')
             |  as Issuer
         ul
           li.pb10 Minority owners have limited rights, if any, to have their interest bought out. There is the risk that a minority owner will want to sell their interest and they will have no right to force the Company to buy them out.  There will also be liquidity risk if there is no secondary market for the Company’s securities.
@@ -1118,7 +1118,7 @@ section.formc-review
         .top-intro
           p.small.text-xs-left.font-weight-bold FORM C Offering Material for
           p.small.pb10
-            +editText('issuer_short_name')
+            +frField('company.name', 'text')
             |  as Issuer
         p.pb10.text-indent The Shares are not guaranteed or insured by any government agency or by any private party. The amount of earnings is not guaranteed and can vary with market conditions. The return of all or any portion of capital invested in the Shares is not guaranteed, and the Shares could become worthless.
         p.text-indent Investors should be aware of the potentially long-term nature of their investment. Each purchaser of Shares will be required to represent that it is purchasing such securities for its own account for investment purposes and not with an intention to resell or distribute. Purchasers may be required to bear the economic risks of the investment for an indefinite period of time. There is currently no public market for the Company’s securities.  Ultimately, each investor’s risk with respect to this Offering includes the potential for a complete loss of their investment.
@@ -1134,7 +1134,7 @@ section.formc-review
         .top-intro
           p.small.text-xs-left.font-weight-bold FORM C Offering Material for
           p.small.pb10
-            +editText('issuer_short_name')
+            +frField('company.name', 'text')
             |  as Issuer
         h2.text-uppercase.text-xs-center.font-weight-bold.letter-spacing-normal.m-b-3 ISSUER-SPECIFIC RISK FACTORS
         p.text-uppercase.m-t-0.m-b-0.pb10 
@@ -1185,7 +1185,7 @@ section.formc-review
         .top-intro
           p.small.text-xs-left.font-weight-bold FORM C Offering Material for
           p.small.pb10
-            +editText('issuer_short_name')
+            +frField('company.name', 'text')
             |  as Issuer
         h2.text-uppercase.text-xs-center.font-weight-bold#eligibility_information.letter-spacing-normal.m-b-3 ELIGIBILITY INFORMATION
         p.text-uppercase.m-t-0.m-b-0.pb10 
@@ -1215,7 +1215,7 @@ section.formc-review
         .top-intro
           p.small.text-xs-left.font-weight-bold FORM C Offering Material for
           p.small
-            +editText('issuer_short_name')
+            +frField('company.name', 'text')
             |  as Issuer
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u No Disqualifications
@@ -1241,7 +1241,7 @@ section.formc-review
         .top-intro
           p.small.text-xs-left.font-weight-bold FORM C Offering Material for
           p.small.pb10
-            +editText('issuer_short_name')
+            +frField('company.name', 'text')
             |  as Issuer
         p.pb10 appropriate federal banking agency; the U.S. Commodity Futures Trading Commission; or the National Credit Union Administration that:
         ol(type="I")
@@ -1266,7 +1266,7 @@ section.formc-review
         .top-intro
           p.small.text-xs-left.font-weight-bold FORM C Offering Material for
           p.small.pb10
-            +editText('issuer_short_name')
+            +frField('company.name', 'text')
             |  as Issuer  
         p.pb10 (7)  The Company has confirmed that no Covered Person filed, or was any such person named as an underwriter in, any registration statement or Regulation A offering statement filed with the SEC that, within five years before the filing of this offering statement, was the subject of a refusal order, stop order, or order suspending the Regulation A exemption, or is any such person, at the time of such filing, the subject of an investigation or proceeding to determine whether a stop order or suspension order should be issued.
         p.pb10 (8)  The Company has confirmed that no Covered Person is subject to a United States Postal Service false representation order entered within five years before the filing of the information required by Section 4A(b) of the Securities Act, or is any such person, at the time of filing of this offering statement, subject to a temporary restraining order or preliminary injunction with respect to conduct alleged by the United States Postal Service to constitute a scheme or device for obtaining money or property through the mail by means of false representations
@@ -1276,24 +1276,24 @@ section.formc-review
         .top-intro
           p.small.text-xs-left.font-weight-bold FORM C Offering Material for
           p.small.pb10
-            +editText('issuer_short_name')
+            +frField('company.name', 'text')
             |  as Issuer
         h2.text-uppercase.text-xs-center.font-weight-bold.letter-spacing-normal.m-b-3 OTHER MATTERS
         p.text-uppercase.m-t-0.m-b-0.pb10 
           u Additional Material Disclosure
         p.pb10.text-indent The issuer has opted to include the following information that may be deemed material to investors in connection with this offering. The issuer is also providing the following information to reduce the possibility that any of the required statements are misleading, in light of the circumstances under which they are made. 
         p.pb10.p-l-2
-          +editText('material_information')
+          +frField('formc.material_information', 'textarea')
         p.pb10.text-indent To the extent the issuer has made certain information available to investors in a format, media or other means not able to be reflected in text or portable document format, a description of such material is provided as follows:
         p.pb10.p-l-2
-          +editText('descrption_material_information')
+          +frField('formc.descrption_material_information', 'textarea')
 
       // page 30
       section.page-formc-review.m-t-1
         .top-intro
           p.small.text-xs-left.font-weight-bold FORM C Offering Material for
           p.small.pb10
-            +editText('issuer_short_name')
+            +frField('company.name', 'text')
             |  as Issuer
         h2.text-uppercase.text-xs-center.font-weight-bold.letter-spacing-normal.m-b-3 REPORTING OBLIGATIONS
         p.text-uppercase.m-t-0.m-b-0.pb10 
@@ -1308,15 +1308,15 @@ section.formc-review
           u Location of Annual Report
         p.pb10.text-indent The issuer will file a report electronically with the Securities & Exchange Commission annually and post the report on its website, no later than 120 days after the end of each fiscal year covered by the report.
         p.pb10.text-indent Once posted, the annual report may be found on the issuer's website at: 
-          +editText('website')
-          | This will remain the location for future annual reports by the issuer unless an investor is notified otherwise.
+          +frField('company.website', 'text')
+          |  This will remain the location for future annual reports by the issuer unless an investor is notified otherwise.
 
       // page 31
       section.page-formc-review.m-t-1
         .top-intro
           p.small.text-xs-left.font-weight-bold FORM C Offering Material for
           p.small.pb10
-            +editText('issuer_short_name')
+            +frField('company.name', 'text')
             |  as Issuer
         h2.text-uppercase.text-xs-center.font-weight-bold.letter-spacing-normal.m-b-3 EXHIBIT A: BUSINESS PLAN
         if values.formc.business_plan_file_data.length > 0
@@ -1329,7 +1329,7 @@ section.formc-review
         .top-intro
           p.small.text-xs-left.font-weight-bold FORM C Offering Material for
           p.small.pb10
-            +editText('issuer_short_name')
+            +frField('company.name', 'text')
             |  as Issuer
         h2.text-uppercase.text-xs-center.font-weight-bold.letter-spacing-normal.m-b-3 EXHIBIT B: FINANCIAL STATEMENTS
         if values.formc.fiscal_recent_group_data.length > 0
@@ -1342,7 +1342,7 @@ section.formc-review
         .top-intro
           p.small.text-xs-left.font-weight-bold FORM C Offering Material for
           p.small.pb10
-            +editText('issuer_short_name')
+            +frField('company.name', 'text')
             |  as Issuer
         h2.text-uppercase.text-xs-center.font-weight-bold.letter-spacing-normal.m-b-3 EXHIBIT C: BIOGRAPHIES
         p.pb10.text-indent Employment information from previous employers over the last three years for each of the Company’s officers is as follows:
