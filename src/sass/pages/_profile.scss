@@ -26,7 +26,35 @@
 
 
 .profile {
-
+	.profile-type-user {
+		span.user-type {
+			font-size: rem(11);
+			font-weight: bold;
+			color: $white;
+			background-color: $sandy-brown;
+			padding: rem(5) rem(18);
+			border-radius: 2px;
+		}
+		.user-company {
+			margin-top: rem(10);
+		}
+	}
+	.icon-delete-edit {
+		position: absolute;
+		right: 0;
+		.icon {
+			color: $white;
+			
+			margin-left: 2px;
+			
+			i {
+				font-size: rem(14)!important;
+				margin-top: 0!important;
+				background-color: $small-text;
+				padding: 5px;
+			}
+		}
+	}
 	.profile-tabs.nav-tabs {
 		margin-bottom: rem(15);
 		margin-left: rem(110);

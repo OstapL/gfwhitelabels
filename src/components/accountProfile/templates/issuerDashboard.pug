@@ -12,9 +12,10 @@ section.issuer-dashbord-top
     .row
       .col-md-4
         .img_under_text
-          img(src="/img/smartbe-intelligent-stroller.jpg" alt="")
-          h2.text-uppercase.dosis.m-t-0 company name
-          .timer_day 19 Days Left
+          img(src=values.thumbnail alt="")
+          h2.text-uppercase.dosis.m-t-0 #{values.name}
+          - const days_left = Math.floor((Date.parse(values.campaign.expiration_date) - new Date()) / (1000 * 60 * 60 * 24));
+          .timer_day #{days_left} Days Left
         .share-block.d-inline-block
           span.font-weight-bold Share:
           .social-dark.d-inline-block
@@ -48,7 +49,7 @@ section.issuer-dashbord-top
             .number
               span(
                 data-counter="counterup"
-                data-value="1349") 1349
+                data-value=values.campaign.investors) #{values.campaign.investors.toLocaleString('en-US')}
             .desc Number of Investors
 
       .col-md-2.col-sm-6
@@ -59,7 +60,7 @@ section.issuer-dashbord-top
             .number
               span(
                 data-counter="counterup"
-                data-value="1500") 1,5K
+                data-value=values.campaign.views) #{(Math.round(values.campaign.views/100)/10).toLocaleString('en-US')}K
             .desc Page Views
 
       .col-md-2.col-sm-6
@@ -70,7 +71,7 @@ section.issuer-dashbord-top
             .number
               span(
                 data-counter="counterup"
-                data-value="456") 456
+                data-value=values.campaign.interactions) #{values.campaign.interactions.toLocaleString('en-US')}
             .desc New Interactions
 
       .col-md-7.col-sm-7.p-r-0
@@ -99,7 +100,7 @@ section.issuer-dashbord-top
           b $#{Math.round(values.campaign.minimum_raise/1000).toLocaleString('en-US')}K
           span Goal
       .col-md-8.col-sm-12.text-lg-center
-        a(href="").btn.btn-secondary.text-uppercase view Campaign
+        a(href=Urls['campaign-detail'](values.id)).btn.btn-secondary.text-uppercase view Campaign
           i(aria-hidden="true").fa.fa-angle-right
     .col-lg-12.border-bottom-50
 section.grafic-dashboard

@@ -229,7 +229,6 @@ module.exports = {
       'click .btn-google': 'loginGoogle',
       'click .btn-linkedin': 'loginLinkedin',
       'click .btn-facebook': 'loginFacebook',
-      'click input[type=checkbox]': 'agreeWithRules',
     },
 
     initialize(options) {
@@ -267,28 +266,31 @@ module.exports = {
       }
     },
 
-    agreeWithRules(e) {
+    _ensureAgreedWithRules() {
+      let data = {};
+      let cb = this.el.querySelector('#agree-rules');
 
-      let agreedWithRules = this.$('input[type=checkbox]').is(':checked');
+      if (cb.checked)
+        data.checkbox1 = cb.value;
 
-      _.each(['.btn-google', '.btn-linkedin', '.btn-facebook'], (btnSelector) => {
-        if (agreedWithRules) {
-          this.$(btnSelector)
-            .removeClass('disabled')
-            .addClass('active')
-            .prop('disabled', false);
-        } else {
-          this.$(btnSelector)
-            .addClass('disabled')
-            .removeClass('active')
-            .prop('disabled', true);
-        }
+      if (!validation.validate({checkbox1: this.fields.checkbox1}, data, this)) {
+        _(validation.errors).each((errors, key) => {
+          validation.invalidMsg(this, key, errors);
+        });
 
-      });
+        return false;
+      }
 
+      return true;
     },
 
-    loginGoogle() {
+    loginGoogle(e) {
+
+      if (!this._ensureAgreedWithRules()) {
+        e.preventDefault();
+        return false;
+      }
+
       var self = this;
 
       self.hello('google').login({
@@ -312,7 +314,14 @@ module.exports = {
           });
 
     },
-    loginFacebook() {
+
+    loginFacebook(e) {
+
+      if (!this._ensureAgreedWithRules()) {
+        e.preventDefault();
+        return false;
+      }
+
       var self = this;
 
       self.hello('facebook').login({
@@ -335,7 +344,14 @@ module.exports = {
               );
           });
     },
-    loginLinkedin() {
+
+    loginLinkedin(e) {
+
+      if (!this._ensureAgreedWithRules()) {
+        e.preventDefault();
+        return false;
+      }
+
       var self = this;
 
       self.hello('linkedin').login({

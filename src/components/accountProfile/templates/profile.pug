@@ -8,13 +8,12 @@ include ../../../templates/fields_mixins.pug
   ]
 )
 
-
 .container.profile.pt-50
   .row
-    aside.col-xl-3.m-b-1
+    aside.col-xl-3.col-lg-3.m-b-1
       form(method="post" action="").form.form-section
         - var values = user;
-        h3.m-t-0.m-b-1.profile-user-name.text-xl-left.text-xs-center #{user.first_name + ' ' + user.last_name}
+        h3.m-t-0.m-b-1.profile-user-name.text-xs-center #{user.first_name + ' ' + user.last_name}
         +userProfileDropzone("image", _.extend({
           thumbSize: '255x135',
           default: '/img/default/255x153.png',
@@ -23,10 +22,21 @@ include ../../../templates/fields_mixins.pug
           value: values.image_id,
         }, fields.image))
       .row.m-t-2
-        .col-lg-12.text-xs-center
-          a(href="/account/change-password").link-3 Need to change your password?
+        .col-xl-12.p-l-0.p-r-0
+          .profile-type-user
+            span.user-type Shareholder
+            .user-company
+              | in
+              a(href="/api/campaign/147").link-3  NETFLIX
+              |  company.
+        .col-xl-12.p-l-0.p-r-0
+          hr
+        .col-lg-12.text-xl-left.p-l-0.p-r-0
+          a(href="/account/change-password").link-3 
+            i.fa.fa-lock
+            |  Need to change your password?
 
-    .col-xl-9.col-lg-12
+    .col-xl-9.col-lg-9
       ul.nav.nav-tabs.profile-tabs
         li(aria-expanded="false").nav-item
           a(href="#account_info" data-toggle="tab"  aria-expanded="true" role="tab").active.nav-link.uppercase Profile information
@@ -96,9 +106,38 @@ include ../../../templates/fields_mixins.pug
                               input.form-control(name='zip_code' placeholder='Postal Code' type="text" value=user.zip_code)
                         .col-lg-5
                           +fieldTextLabel('phone', _.extend({'class1': 'col-lg-5 ', 'class2': 'col-lg-7 ', 'type': 'text', 'value': user.phone }, fields.phone))
+                      
+                      .col-xl-11.p-r-0
+                        .border-bottom.m-t-2.m-b-3
+                      .row.m-b-0
+                        .col-xl-6.col-lg-6.col-l-65
+                          +fieldTextLabel("twitter", _.extend({
+                            class1: 'col-xl-6 col-lg-12 text-lg-left text-xl-right', 
+                            class2: 'col-xl-6 col-lg-12', 
+                            type: 'text',
+                            }, fields.twitter))
+                        .col-xl-6.col-lg-6
+                          +fieldTextLabel("facebook", _.extend({
+                            class1: 'col-xl-4 col-lg-12 text-lg-left text-xl-right', 
+                            class2: 'col-xl-6 col-lg-12', 
+                            type: 'text',
+                            }, fields.facebook))
+                      .row.m-b-0
+                        .col-xl-6.col-lg-6.col-l-65
+                          +fieldTextLabel("instagram", _.extend({
+                            class1: 'col-xl-6 col-lg-12 text-lg-left text-xl-right', 
+                            class2: 'col-xl-6 col-lg-12', 
+                            type: 'text',
+                            }, fields.instagram))
+                        .col-xl-6.col-lg-6
+                          +fieldTextLabel("linkedin", _.extend({
+                            class1: 'col-xl-4 col-lg-12 text-lg-left text-xl-right', 
+                            class2: 'col-xl-6 col-lg-12', 
+                            type: 'text',
+                            }, fields.linkedin))
 
                       .form-group.row.clearfix.m0
-                        .col-lg-11.mt30.text-xs-center
+                        .col-lg-11.text-xs-center.m-t-2
                           .controls
                             button(type="submit").btn.btn-primary.pull-lg-right SAVE
 
@@ -118,7 +157,7 @@ include ../../../templates/fields_mixins.pug
                               | Please confirm your identity and investor status. We are required by the SEC to review this information in order to determine how much you can invest and what offerings will be available to you.
                       .form-group.row.bootstrap-slider-custom
                         .col-xl-11
-                          label.m-b-2 Annual Income
+                          label.m-b-2 My Net Worth
                         .col-xl-11
                           input(
                           type='text'
@@ -130,7 +169,7 @@ include ../../../templates/fields_mixins.pug
                           data-model-value='taxRate').form-control.js-bootstrap-slider-annual
                       .form-group.row.bootstrap-slider-custom
                         .col-xl-11
-                          label.m-b-2 Net Worth
+                          label.m-b-2 My Annual Income
                         .col-xl-11
                           input(
                           type='text',
@@ -141,8 +180,13 @@ include ../../../templates/fields_mixins.pug
                           data-slider-ticks-labels="['$0', '$50K', '$100K', '$200K', '$500K']",
                           data-model-value='taxRate').form-control.js-bootstrap-slider
                       .radio-input
-                        p.font-weight-bold Are you an Accredited Investor?
-                          i(aria-hidden="true").fa.fa-question-circle.text-muted
+                        p.font-weight-bold.d-inline-block.m-b-1 Are you an Accredited Investor?&nbsp;
+                          div.d-inline-block
+                            div.showPopover(data-content="An accredited investor is a natural person who has individual net worth, or joint net worth with the persons spouse, that exceeds $1mm at the time of the purchase, excluding the value of the primary residence of such person; or a natural person with income exceeding $200k in each of the two most recent years or joint income with a spouse exceeding $300k for those years and a reasonable expectation of the same income level in the current year.")
+                              i(aria-hidden="true").fa.fa-question-circle.text-muted
+                            
+                          
+
                         .form-group.m-b-0
                           label
                             input(type="radio" name="accredited_investor"  value="true" checked="checked")
@@ -150,7 +194,7 @@ include ../../../templates/fields_mixins.pug
                           label
                             input(type="radio" name="accredited_investor" value="false")
                             | No
-                      .form-group
+                      .form-group.m-t-1
                         label
                           input(type="checkbox" name="" value='1').col-xl-1
                           span.font-weight-normal.col-xl-10.p-l-0 I am an Accredited Investor because my net worth, or joint net worth with my spouse, exceeds $1 million excluding my primary residence.
