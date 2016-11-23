@@ -3,7 +3,12 @@
 -       return values[name];                                                           
 -   } else {
 -       try {
--           return name.split('.').reduce((o,i)=>o[i], values);                            
+-           return name.split('.').reduce(function(o,i) {
+-                if(i.indexOf('[') != -1) { 
+-                    i = i.split('['); k = i[0]; i = i[1].replace(']', ''); return o[k][i];
+-                }
+-                return o[i];
+-            }, values);
 -       } catch(e) { 
 -           console.log('no name ' + name); return ''; 
 -       }

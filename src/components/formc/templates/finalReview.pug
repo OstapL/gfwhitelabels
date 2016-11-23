@@ -465,17 +465,17 @@ section.formc-review
                 if v.role[0] == 2
                   tr
                     td.text-xs-center
-                      +frField('v.first_name', 'text')
+                      +frField('formc.team_members[' + k + '].first_name', 'text')
                       br
-                      a(href="#" class="show-input" data-name="officer_last_name").link-1 #{v.last_name}
+                      +frField('formc.team_members[' + k + '].last_name', 'text')
                     td.text-xs-center
-                      a(href="#" class="show-input" data-name="officer_start_date").link-1 #{v.start_date}
+                      +frField('formc.team_members[' + k + '].start_date', 'text')
                       br
-                      a(href="#" class="show-input" data-name="officer_end_date ").link-1 #{v.board_service_end_date}
+                      +frField('formc.team_members[' + k + '].board_service_end_date', 'text')
                     td.text-xs-center
-                      a(href="#" class="show-input" data-name="officer_title").link-1 #{v.title}
+                      +frField('formc.team_members[' + k + '].title', 'text')
                       br
-                      a(href="#" class="show-input" data-name="officer_responsibilities").link-1 #{v.responsibilities}
+                      +frField('formc.team_members[' + k + '].responsibilities', 'text')
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u Board of Directors
         p.pb10.text-indent The following information has been provided by the Company as true and correct regarding each of the Company’s directors (and any person performing a similar function):
