@@ -204,7 +204,7 @@ include ../../../templates/fields_mixins.pug
                             
                           
 
-                        .form-group.m-b-0
+                        .form-group.m-b-0.yesno
                           label
                             input(type="radio" name="accredited_investor"  value="true" checked="checked")
                             | Yes
@@ -218,10 +218,10 @@ include ../../../templates/fields_mixins.pug
                         label
                           input(type="checkbox" name="" value='2').col-xl-1.investor-200k
                           span.font-weight-normal.col-xl-10.p-l-0 I am an Accredited Investor because my annual income exceeds $200,000 or my joint annual income with my spouse exceeds $300,000 for each of the past two (2) years and expect the same this year
-                        label
+                        label.accredited_investor.shown-yes
                           input(type="checkbox" name="" value='3').col-xl-1.investor-entity
                           span.font-weight-normal.col-xl-10.p-l-0 I am an Accredited Investor because I am authorized to invest on behalf of an entity with at least $5M in assets or an entity where all of the owners are Accredited Investors.
-                        label
+                        label.accredited_investor.shown-yes
                           input(type="checkbox" name="" value='4').col-xl-1.investor-risk-agree
                           span.font-weight-normal.col-xl-10.p-l-0 I understand that investing in start-ups and small businesses listed on GrowthFountain is very risky, and that I should not invest any funds unless I can afford to lose my entire investment.
                       .row
