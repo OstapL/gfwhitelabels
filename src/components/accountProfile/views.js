@@ -288,11 +288,15 @@ module.exports = {
   issueDashboard: Backbone.View.extend({
     initialize(options) {
       this.model.description = "Something long comes from here. Something long comes from here. Something long comes from here. Something long comes from here. Something long comes from here. ";
+      this.model.thumbnail = '/img/smartbe-intelligent-stroller.jpg',
       this.model.campaign = {
         minimum_raise: 80000,
-        amount_raised: 40000,
+        amount_raised: 20000,
         starting_date: "2016-04-04",
-        expiration_date: "2016-10-04",
+        expiration_date: "2017-02-04",
+        investors: 333,
+        views: 123456,
+        interactions: 4567,
       }
     },
     events: {

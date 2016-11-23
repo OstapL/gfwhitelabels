@@ -12,46 +12,14 @@ module.exports = Backbone.Router.extend({
     require.ensure([], () => {
       const Model = require('./models.js');
       const View = require('./views.js');
-      const campaigns = new Model.collection();
 
-      campaigns.fetch({
-        success: (collection, response, options) => {
-
-          $('body').scrollTo(); 
-          $('#content').html('');
-          new View.list({
-            collection: collection,
-          }).render();
-
-          /*
-          setTimeout(() => {
-            app.cache[window.location.pathname] = i.$el.html();
-          }, 500);
-
-             let filterView = new CampaignFilterView();
-             filterView.render();
-
-             $('#content').append(_.template($('#campaignListT').html())());
-
-             collection.forEach(function(model) {
-             let campaignView = new CampaignListView({
-             model: model,
-             template: campaignItemListT,
-             });
-             campaignView.render();
-             });
-          */
-          app.hideLoading();
-        },
-        error: (model, response, options) => {
-          // ToDo
-          // Move that check to global check
-          if (response.responseJSON.detail == 'Invalid token.') {
-            localStorage.removeItem('token');
-            localStorage.removeItem('user');
-            window.location.reload();
-          }
-        },
+      api.makeCacheRequest(raiseCapitalUrl).then((data) => {
+        let i = new View.list({
+          el: '#content',
+          collection: data.data,
+        });
+        i.render();
+        app.hideLoading();
       });
 
     });
