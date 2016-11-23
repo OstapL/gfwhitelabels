@@ -440,16 +440,16 @@ section.formc-review
         .top-intro
           p.small.text-xs-left.font-weight-bold FORM C Offering Material for
           p.small.pb10
-            +editText('issuer_short_name')
+            +frField('company.name', 'text')
             |  as Issuer
         h2.text-uppercase.text-xs-center.font-weight-bold#management_material_persons.letter-spacing-normal.m-b-3 MANAGEMENT & MATERIAL PERSONS
         p.text-indent Specific biographical information on each of the Company’s officers and members of its Board of Directors of is attached as Exhibit D.  Exhibit D contains information on the last three years of employment and supplements the information summarized below.  The Company has confirmed that no officer, director or 20% shareholder would cause a violation of Rule 503(a) of the Crowdfunding Regulations (17 CFR §227.503).
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u Number of Total Employees
         p.p-l-2 Full time employees: 
-          +editText('full_time_employee')
+          +frField('formc.full_time_employers', 'text')
         p.p-l-2 Part time employees: 
-          +editText('part_time_employee')
+          +frField('formc.part_time_employers', 'text')
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u Officers
         p.pb10.text-indent The following information has been provided by the Company as true and correct regarding each of the Company’s officers.  For purposes of this Form C, the term “officer” means a president, vice president, secretary, treasurer or principal financial officer, comptroller or principal accounting officer, and any person routinely performing similar functions.
@@ -465,7 +465,7 @@ section.formc-review
                 if v.role[0] == 2
                   tr
                     td.text-xs-center
-                      a(href="#" class="show-input" data-name="officer_first_name").link-1 #{v.first_name}
+                      +frField('v.first_name', 'text')
                       br
                       a(href="#" class="show-input" data-name="officer_last_name").link-1 #{v.last_name}
                     td.text-xs-center
@@ -516,7 +516,7 @@ section.formc-review
         .top-intro
           p.small.text-xs-left.font-weight-bold FORM C Offering Material for
           p.small
-            +editText('issuer_short_name')
+            +frField('company.name', 'text')
             |  as Issuer
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u 20% Holders
@@ -555,7 +555,7 @@ section.formc-review
         .top-intro
           p.small.text-xs-left.font-weight-bold FORM C Offering Material for
           p.small.pb10
-            +editText('issuer_short_name')
+            +frField('company.name', 'text')
             |  as Issuer
         if values.formc.transaction_with_related_parties_choice == 1
           p.pb10.text-indent The Company is disclosing certain related party transactions below arising from any of the transactions occurring in the Company’s last fiscal year.  As used here, the term “related party” includes: (1) any director or officer of the Company; (2) any person who is, as of the most recent practicable date, the beneficial owner of twenty percent (20%) or more of the Company’s outstanding voting equity securities, calculated on the basis of voting power; (3) if the Company was incorporated or organized within the past three years, any promoter of the Company; or (4) any immediate family member of any of the foregoing persons.  Only those transactions are listed in which the related party had or is expected to have a direct or indirect material interest in such transaction, and the list includes transactions with entities under common control with the issuer.  As used here, the term “transaction” includes, but is not limited to, any financial transaction, arrangement or relationship (including any indebtedness or guarantee of indebtedness) or any series of similar transactions, arrangements or relationships.  Where it is not practicable to state the approximate amount of the interest, the amount involved in the transaction has been approximated.
@@ -582,13 +582,13 @@ section.formc-review
         .top-intro
           p.small.text-xs-left.font-weight-bold FORM C Offering Material for
           p.small.pb10
-            +editText('issuer_short_name')
+            +frField('company.name', 'text')
             |  as Issuer
         h2.text-uppercase.text-xs-center.font-weight-bold#procedure_purchasing_securities.letter-spacing-normal.m-b-3 PROCEDURE FOR PURCHASING SECURITIES
         p.text-uppercase.m-t-0.m-b-0.pb10 
           u Minimum Commitment and Closing Date
         p.text-indent To participate in this Offering, each investor must purchase securities in a minimum dollar amount equal to $
-          +editText('minimum_increment')
+          +frField('campaign.minimum_increment', 'text')
           | .
           |   The securities are being offered until [close.date], unless notice is provided to investors at least five (5) business days prior to any change in such date.  The Company reserves the right to change the closing date with such notice and with a minimum twenty-one (21) day period in which to carry out the offering.
         p.text-uppercase.m-t-3.m-b-0.pb10 
@@ -603,7 +603,7 @@ section.formc-review
         .top-intro
           p.small.text-xs-left.font-weight-bold FORM C Offering Material for
           p.small.pb10
-            +editText('issuer_short_name')
+            +frField('company.name', 'text')
             |  as Issuer
         p commitments collectively, the issuer would be able to close the transaction on the original target closing date or an earlier date with at least five business days prior notice to the investors; and (5) the funds would be released by the escrow agent to the issuer, less any required fees sent to the Intermediary, and the issuer would issue the securities to the investor.
         p.text-uppercase.m-t-3.m-b-0.pb10 
@@ -619,7 +619,7 @@ section.formc-review
         .top-intro
           p.small.text-xs-left.font-weight-bold FORM C Offering Material for
           p.small.pb10
-            +editText('issuer_short_name')
+            +frField('company.name', 'text')
             |  as Issuer
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u Use of Third Party Services
@@ -639,7 +639,7 @@ section.formc-review
         .top-intro
           p.small.text-xs-left.font-weight-bold FORM C Offering Material for
           p.small.pb10
-            +editText('issuer_short_name')
+            +frField('company.name', 'text')
             |  as Issuer
         p execution of a Subscription Agreement available on the Platform, which contains, among other things, certain representations, warranties and covenants.  The Company must secure investor commitments that equal or exceed the minimum target amount for the Offering prior to the applicable closing date, or the Offering will be canceled and investor funds committed in connection with the Offering will be returned.  An investor commitment is conditional after being made, but only up until the time that is 48 hours before the applicable closing date.  For the 48-hour period prior to the applicable closing date, investor commitments may not be cancelled by the investor but in certain circumstances may still be returned (e.g. if the target minimum amount is not met).   As a reminder, investors are required to reconfirm their investment commitment after receiving notice of a material change to the Offering.  If an investor takes no action to reconfirm the investment commitment after the Company notifies the investor of a material change, the commitment will be cancelled and funds relating to that Offering returned. 
         p.text-uppercase.m-t-3.m-b-0.pb10 
@@ -652,7 +652,7 @@ section.formc-review
         .top-intro
           p.small.text-xs-left.font-weight-bold FORM C Offering Material for
           p.small.pb10
-            +editText('issuer_short_name')
+            +frField('company.name', 'text')
             |  as Issuer
         h2#capital_structure.text-uppercase.text-xs-center.font-weight-bold.letter-spacing-normal.m-b-3 CAPITAL STRUCTURE OF THE ISSUER
         p.text-uppercase.m-t-0.m-b-0.pb10 
@@ -689,7 +689,7 @@ section.formc-review
         .top-intro
           p.small.text-xs-left.font-weight-bold FORM C Offering Material for
           p.small.pb10
-            +editText('issuer_short_name')
+            +frField('company.name', 'text')
             |  as Issuer
         h2.text-uppercase.text-xs-center.font-weight-bold#description_securities.letter-spacing-normal.m-b-3 DESCRIPTION OF SECURITIES OFFERED
         p.text-uppercase.m-t-0.m-b-0.pb10 
@@ -701,7 +701,7 @@ section.formc-review
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u Voting Rights and Limitations
         p.text-indent The Shares have no voting rights and will be excluded from all voting.  Additionally, the Shares have no liquidation or preference rights. 
-          a(href="#" class="show-input" data-name="modify_method").link-1 modify_method
+          +frField('formc.modify_method', 'text')
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u Restrictions on Transfer of Shares
         p.pb10.text-indent Consistent with Subpart E of Regulation Crowdfunding (17 CFR 501), securities issued in this Offering pursuant to section 4(a)(6) of the Securities Act (15 U.S.C. 77d(a)(6)) may not be transferred by any purchaser of such securities during the one-year period beginning when the securities were issued, unless such securities are transferred to a limited group including (a) to the Company, (b) to an accredited investor, (c) as part of an offering registered with the SEC, or (d) to a family member, trust or equivalent.  In connection with any participation in this Offering, each potential investor may be required to agree not to dispose of or otherwise sell or transfer any of the Shares, until there is in effect a registration statement under the Securities Act covering such proposed disposition or if such disposition will not require registration under the Securities Act.
