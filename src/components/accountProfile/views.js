@@ -116,6 +116,21 @@ module.exports = {
         })
       );
 
+      this._initSliders();
+      setTimeout(() => { this.createDropzones() } , 1000);
+
+      this.cityStateArea = this.$('.js-city-state');
+      this.cityField = this.$('.js-city');
+      this.stateField = this.$('.js-state');
+      this.zipCodeField = this.$('#zip_code');
+
+      return this;
+    },
+
+    _initSliders() {
+      let cbInvestor1m = this.$('.investor-1m');
+      let cbInvestor200k = this.$('.investor-200k');
+
       this.$('.slider-net-worth').bootstrapSlider({
         ticks: [0, 50, 100, 200, 500, 1000, 2000, 5000],
         ticks_positions: [0, 14, 28, 42, 56, 70, 85, 100],
@@ -127,8 +142,11 @@ module.exports = {
             : ('$' + (value / 1000).toFixed(1) + 'M');
         },
 
-      }).on('slideStop', (slider) => {
-
+      }).on('slideStop', (e) => {
+        cbInvestor1m.prop('disabled', e.value < 1000);
+        if (e.value < 1000) {
+          cbInvestor1m.prop('checked', false);
+        }
       });
 
       this.$('.slider-annual-income').bootstrapSlider({
@@ -140,18 +158,17 @@ module.exports = {
           return '$' + value + 'K'
         },
 
-      }).on('slideStop', (slider) => {
-
+      }).on('slideStop', (e) => {
+        cbInvestor200k.prop('disabled', e.value < 200);
+        if (e.value < 200) {
+          cbInvestor200k.prop('checked', false);
+        }
       });
 
-      setTimeout(() => { this.createDropzones() } , 1000);
+      //todo: disable checkboxes according to initial values
 
-      this.cityStateArea = this.$('.js-city-state');
-      this.cityField = this.$('.js-city');
-      this.stateField = this.$('.js-state');
-      this.zipCodeField = this.$('#zip_code');
-
-      return this;
+      cbInvestor1m.prop('disabled', true);
+      cbInvestor200k.prop('disabled', true);
     },
 
     submit(e) {
