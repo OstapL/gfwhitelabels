@@ -987,6 +987,9 @@ module.exports = {
 
         if (this.model.company.corporate_structure == 2) {
           this.$('input[type=radio][name=security_type][value=0]').prop('disabled', true);
+          const text = "Common Equity is traditionally associated with C-Corps. Though LLC's can issue membership interests, they create a lot of complexity. To simplify the process, we have created a Revenue Share Security as a favorable alternative.";
+          const popoverTemplate = '<div class="popover  divPopover"  role="tooltip"><span class="popover-arrow"></span> <h3 class="popover-title"></h3> <span class="icon-popover"><i class="fa fa-info-circle" aria-hidden="true"></i></span> <span class="popover-content"> XXX </span></div>';
+          this.$('label:has(input[type=radio][name=security_type][value=0])').attr('data-toogle', 'popover').attr({'data-content': text, 'data-trigger': 'hover', 'data-placement': 'top'}).popover({template: popoverTemplate});
           this.$('input[type=radio][name=security_type][value=1]').attr('checked', true);
           $('.security_type_list').hide();
           $('.security_type_1').show();
