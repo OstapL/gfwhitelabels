@@ -154,19 +154,19 @@ section.formc-review
           +frField('company.website', 'text')
         
         p.text-xs-center.font-weight-bold $
-          +editText('maximum_raise')
+          +frField('campaign.maximum_raise', 'text')
           |   MAXIMUM OFFERING
         p.text-xs-center.font-weight-bold.m-b-3 $
-          +editText('minimum_raise')
+          +frField('campaign.minimum_raise', 'text')
           |   MINIMUM OFFERING
         p.text-xs-center.font-weight-bold OFFERING PRICE: $
-          +editText('price_per_share')
+          +frField('campaign.price_per_share', 'text')
           |  per Share
         p.text-xs-center.font-weight-bold
-          +editText('security_type')
+          +frField('campaign.security_type', 'select')
           |  Offered
         p.text-xs-center.font-weight-bold $
-          +editText('minimum_increment')
+          +frField('campaign.minimum_increment', 'text')
           |  MINIMUM INVESTMENT
 
         p.text-uppercase.text-xs-center.m-t-3.m-b-2 
@@ -182,7 +182,7 @@ section.formc-review
         .top-intro
           p.small.text-xs-left.font-weight-bold FORM C Offering Material for
           p.small
-            +editText('issuer_short_name')
+            +frField('company.name', 'text')
             |  as Issuer
         h2.text-uppercase.text-xs-center.font-weight-bold#overview_information.letter-spacing-normal OVERVIEW INFORMATION
         .one-block.m-b-3
@@ -192,38 +192,38 @@ section.formc-review
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
               p.font-weight-bold Name of issuer:
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
-              +editText('issuer_legal_name')
+              +frField('company.name', 'text')
           .row
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
               p.font-weight-bold Entity Form:
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
-              +editSelect('corporate_structure')
+              +frField('company.corporate_structure', 'select')
           .row
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
               p.font-weight-bold Jurisdiction of Organization:
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
-              +editSelect('jurisdiction_of_organization')
+              +frField('company.founding_state', 'select')
           .row
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
               p.font-weight-bold Date of Organization:
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
-              +editText('founding_date')
+              +frField('company.founding_date', 'text')
           .row
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
               p.font-weight-bold Physical address:
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
-              +editText('address_1')
+              +frField('company.address_1', 'text')
               | !{' '}
-              +editText('address_2')
+              +frField('company.address_2', 'text')
               | !{' '}
-              +editText('city')
+              +frField('company.city', 'text')
               | !{' '}
-              +editText('zip_code')
+              +frField('company.zip_code', 'text')
           .row
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
               p.font-weight-bold Website address:
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
-              +editText('website')
+              +frField('company.website', 'text')
         .one-block.m-b-3
           p.text-uppercase.m-t-0.m-b-0.pb10 
             u Intermediary Information
@@ -269,7 +269,7 @@ section.formc-review
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
               p.font-weight-bold Type of security offered:
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
-              +editSelect('security_type')
+              +frField('campaign.security_type', 'select')
           .row
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
               p.font-weight-bold Voting rights:
@@ -279,49 +279,49 @@ section.formc-review
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
               p.font-weight-bold Minimum target number of securities being offered:
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
-              +editText('min_number_of_shares')
+              +frField('campaign.min_number_of_shares', 'text')
           .row
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
               p.font-weight-bold Price of security:
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
-              +editText('price_per_share')
+              +frField('campaign.price_per_share', 'text')
           .row
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
               p.font-weight-bold Minimum target amount of offering:
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
-              +editText('minimum_raise')
+              +frField('campaign.minimum_raise', 'text')
           .row
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
               p.font-weight-bold Oversubscription allowed:
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
-              a(href="#" class="show-input" data-name="oversubscription").link-1 Yes
+              +frField('campaign.oversubscription', 'select')
           .row
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
               p.font-weight-bold Allocation method of oversubscription:
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
-              a(href="#" class="show-input" data-name="allocation_method").link-1 Yes
+              +frField('campaign.allocation_method', 'select')
           .row
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
               p.font-weight-bold Oversubscription allowed:
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
-              a(href="#" class="show-input" data-name="first_come_first_served").link-1 First Come First Served
+              +frField('campaign.first_come_first_served', 'text')
           .row
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
               p.font-weight-bold Maximum amount of offering:
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
-              +editText('maximum_raise')
+              +frField('campaign.maximum_raise', 'text')
           .row
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
               p.font-weight-bold Deadline to reach target amount:
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
-              +editText('close_date')
+              +frField('campaign.expiration_date', 'text')
 
       // page 3
       section.page-formc-review.m-t-1
         .top-intro
           p.small.text-xs-left.wont-weight-bold FORM C Offering Material for
           p.small
-            +editText('issuer_short_name')
+            +frField('company.name', 'text')
             |  as Issuer
         h2.text-uppercase.text-xs-center.font-weight-bold#introductory_notices.letter-spacing-normal INTRODUCTORY NOTICES
         p.text-uppercase.m-t-0.m-b-0.pb10 
@@ -329,32 +329,32 @@ section.formc-review
         p.pb10.text-indent This offering material, including all the exhibits attached hereto (collectively, the 
           u “Material”
           |  ) describes the terms relating to an offer and sale of securities to qualified investors consistent with the rules and regulations of Regulation Crowdfunding (17 CFR §227). 
-          +editText('issuer_legal_name')
+          +frField('company.name', 'text')
           |  , a 
-          +editSelect('jurisdiction_of_organization')
+          +frField('company.founding_state', 'select')
           | !{' '}
-          +editSelect('corporate_structure')
+          +frField('company.corporate_structure', 'select')
           |  (the “Company”), is offering up to 
-          +editText('max_number_of_shares')
+          +frField('campaign.max_number_of_shares', 'text')
           |   shares of 
-          a(href="#" class="show-input" data-name="security_type").link-1 #{values.campaign.security_type}
+          +frField('campaign.security_type', 'select')
           |  (the 
           u “Shares”)
           |  at an offering price of $
-          +editText('price_per_share')
+          +frField('campaign.price_per_share', 'text')
           |  per Share for a maximum aggregate offering price of $
-          +editText('minimum_raise').
+          +frField('campaign.minimum_raise', 'text').
         p.pb10.text-indent The Company has established a minimum offering of at least 
-          +editText('min_number_of_shares')
+          +frField('campaign.min_number_of_shares', 'text')
           |  Shares for a minimum aggregate offering price of $
-          +editText('minimum_raise')
+          +frField('campaign.minimum_raise', 'text')
           |  prior to 
-          +editText('close_date')
+          +frField('campaign.expiration_date', 'text')
           |  (the 
           u “Offering”
           |  ).  If the sum of the investment commitments does not equal or exceed this minimum target amount at the Offering deadline, no securities will be sold in the Offering, investment commitments will be cancelled and committed funds will be returned. There can be no assurance that the minimum number of the Shares offered will be subscribed for and therefore these if no guarantee that this Offering will be completed.
         p.text-indent The minimum subscription by an investor is a $
-          +editText('minimum_increment')
+          +frField('campaign.minimum_increment', 'text')
           |  investment.  Each investor interested in participating in this Offering must register at 
           a(href="www.GrowthFountain.com").link-1 www.GrowthFountain.com.
           |  The website GrowthFountain.com (the 
