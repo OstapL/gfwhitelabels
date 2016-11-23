@@ -128,8 +128,8 @@ module.exports = {
     },
 
     _initSliders() {
-      this.cbInvestor1m = this.$('.investor-1m');
-      this.cbInvestor200k = this.$('.investor-200k');
+      let cbInvestor1m = this.$('.investor-1m');
+      let cbInvestor200k = this.$('.investor-200k');
 
       this.$('.slider-net-worth').bootstrapSlider({
         ticks: [0, 50, 100, 200, 500, 1000, 2000, 5000],
@@ -143,9 +143,9 @@ module.exports = {
         },
 
       }).on('slideStop', (e) => {
-        this.cbInvestor1m.prop('disabled', e.value < 1000);
+        cbInvestor1m.prop('disabled', e.value < 1000);
         if (e.value < 1000) {
-          this.cbInvestor1m.prop('checked', false);
+          cbInvestor1m.prop('checked', false);
         }
       });
 
@@ -159,16 +159,16 @@ module.exports = {
         },
 
       }).on('slideStop', (e) => {
-        this.cbInvestor200k.prop('disabled', e.value < 200);
+        cbInvestor200k.prop('disabled', e.value < 200);
         if (e.value < 200) {
-          this.cbInvestor200k.prop('checked', false);
+          cbInvestor200k.prop('checked', false);
         }
       });
 
       //todo: disable checkboxes according to initial values
 
-      this.cbInvestor1m.prop('disabled', true);
-      this.cbInvestor200k.prop('disabled', true);
+      cbInvestor1m.prop('disabled', true);
+      cbInvestor200k.prop('disabled', true);
     },
 
     submit(e) {
