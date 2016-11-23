@@ -147,7 +147,7 @@ section.formc-review
         h3.text-xs-center
           +frField('company.name')
         h3.text-xs-center.m-b-0.m-t-0.pb10 A 
-          +frField('company.jurisdiction_of_organization', 'select')
+          +frField('company.founding_state', 'select')
           | !{' '}
           +frField('company.corporate_structure', 'select')
         p.text-xs-center.m-b-1
@@ -202,7 +202,7 @@ section.formc-review
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
               p.font-weight-bold Jurisdiction of Organization:
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
-              +frField('company.jurisdiction_of_organization', 'select')
+              +frField('company.founding_state', 'select')
           .row
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
               p.font-weight-bold Date of Organization:
@@ -331,7 +331,7 @@ section.formc-review
           |  ) describes the terms relating to an offer and sale of securities to qualified investors consistent with the rules and regulations of Regulation Crowdfunding (17 CFR §227). 
           +frField('company.name', 'text')
           |  , a 
-          +frField('company.jurisdiction_of_organization', 'select')
+          +frField('company.founding_state', 'select')
           | !{' '}
           +frField('company.corporate_structure', 'select')
           |  (the “Company”), is offering up to 
