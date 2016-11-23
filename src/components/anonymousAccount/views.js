@@ -268,10 +268,10 @@ module.exports = {
 
     _ensureAgreedWithRules() {
       let data = {};
-      let cb = this.$('input[type=checkbox]');
+      let cb = this.el.querySelector('#agree-rules');
 
-      if (cb.is(':checked'))
-        data.checkbox1 = cb.val();
+      if (cb.checked)
+        data.checkbox1 = cb.value;
 
       if (!validation.validate({checkbox1: this.fields.checkbox1}, data, this)) {
         _(validation.errors).each((errors, key) => {
@@ -284,10 +284,11 @@ module.exports = {
       return true;
     },
 
-    loginGoogle() {
+    loginGoogle(e) {
 
       if (!this._ensureAgreedWithRules()) {
-        return;
+        e.preventDefault();
+        return false;
       }
 
       var self = this;
@@ -314,10 +315,11 @@ module.exports = {
 
     },
 
-    loginFacebook() {
+    loginFacebook(e) {
 
       if (!this._ensureAgreedWithRules()) {
-        return;
+        e.preventDefault();
+        return false;
       }
 
       var self = this;
@@ -342,10 +344,12 @@ module.exports = {
               );
           });
     },
-    loginLinkedin() {
+
+    loginLinkedin(e) {
 
       if (!this._ensureAgreedWithRules()) {
-        return;
+        e.preventDefault();
+        return false;
       }
 
       var self = this;
