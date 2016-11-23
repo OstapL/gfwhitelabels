@@ -492,23 +492,23 @@ section.formc-review
                   - console.log(v, k)
                   tr
                     td.text-xs-center
-                      a(href="#" class="show-input" data-name="director.1.first_name").link-1 #{v.first_name}
+                      +frField('formc.team_members[' + k + '].first_name', 'text')
                       br
-                      a(href="#" class="show-input" data-name="director.1.last_name").link-1 #{v.last_name}
+                      +frField('formc.team_members[' + k + '].last_name', 'text')
                     td.text-xs-center
-                    if v.business_experiences
-                      each v1,k1 in v.business_experiences
-                          a(href="#" class="show-input" data-name="director.1.service_start ").link-1 #{v1.start_date_of_service}
-                          br
-                          a(href="#" class="show-input" data-name="director.1.service_end").link-1 #{v1.end_date_of_service}
+                    if v.experiences
+                      each v1,k1 in v.experiences
+                        +frField('formc.team_members[' + k + '].experiences[' + k1 + '].start_date_of_service', 'text')
+                        br
+                        +frField('formc.team_members[' + k + '].experiences[' + k1 + '].end_date_of_service', 'text')
                     td.text-xs-center
-                    if v.business_experiences
-                      each v1,k1 in v.business_experiences
-                          a(href="#" class="show-input" data-name="director.1.occupation").link-1 #{v1.principal_occupation}
-                          br
-                          a(href="#" class="show-input" data-name="director.1.employer").link-1 #{v1.employer}
-                          br
-                          a(href="#" class="show-input" data-name="director.1.employer").link-1 #{v1.title}
+                    if v.experiences
+                      each v1,k1 in v.experiences
+                        +frField('formc.team_members[' + k + '].principal_occupation', 'text')
+                        br
+                        +frField('formc.team_members[' + k + '].experiences[' + k1 + '].employer', 'text')
+                        br
+                        +frField('formc.team_members[' + k + '].experiences[' + k1 + '].responsibilities', 'text')
             
 
       // page 7
@@ -534,15 +534,15 @@ section.formc-review
                 if v.role[0] == 0
                   tr
                     td.text-xs-center
-                      a(href="#" class="show-input" data-name="holder.1.first_name").link-1 #{v.first_name}
+                      +frField('formc.team_members[' + k + '].first_name', 'text')
                       br
-                      a(href="#" class="show-input" data-name="holder.1.last_name").link-1 #{v.last_name}
+                      +frField('formc.team_members[' + k + '].last_name', 'text')
                     td.text-xs-center
-                      a(href="#" class="show-input" data-name="holder.1.class_shares").link-1 #{v.class_of_securities}
+                      +frField('formc.team_members[' + k + '].class_of_securities', 'text')
                     td.text-xs-center
-                      a(href="#" class="show-input" data-name="holder.1.number_shares").link-1 #{v.number_of_shares}
+                      +frField('formc.team_members[' + k + '].number_of_shares', 'text')
                     td.text-xs-center
-                      a(href="#" class="show-input" data-name="holder.1.voting_power").link-1 #{v.voting_power_percent}
+                      +frField('formc.team_members[' + k + '].voting_power_percent', 'text')
 
         p.text-indent The Company has confirmed that information above is accurate for the period spanning 120 days prior to the date of filing of this Material.   For any calculation above of total voting power, all securities are included for which the person directly or indirectly has or shares the voting power, which includes the power to vote or to direct the voting of such securities. If the person has the right to acquire voting power of such securities within 60 days, including through the exercise of any option, warrant or right, the conversion of a security, or other arrangement, or if securities are held by a member of the family, through corporations or partnerships, or otherwise in a manner that would allow a person to direct or control the voting of the securities (or share in such direction or control — as, for example, a co-trustee) they are included as being “beneficially owned.” For any calculation of outstanding voting equity securities, all outstanding options are assumed to be exercised and all outstanding convertible securities converted.
         p.text-uppercase.m-t-3.m-b-0.pb10 
@@ -571,10 +571,14 @@ section.formc-review
               tbody
                 for v in values.formc.transaction_with_related_parties
                   tr
-                    td.text-xs-center #{ v.specified_person }
-                    td.text-xs-center #{ v.relationship_to_issuer }
-                    td.text-xs-center #{ v.nature_of_interest }
-                    td.text-xs-center #{ v.amount_of_interest }
+                    td.text-xs-center
+                      +frField('formc.transaction_with_related_parties[' + v + '].specified_person', 'text')
+                    td.text-xs-center
+                      +frField('formc.transaction_with_related_parties[' + v + '].relationship_to_issuer', 'text')
+                    td.text-xs-center
+                      +frField('formc.transaction_with_related_parties[' + v + '].nature_of_interest', 'text')
+                    td.text-xs-center
+                      +frField('formc.transaction_with_related_parties[' + v + '].amount_of_interest', 'text')
           p.pb10.text-indent The term “immediate family member” includes any child, stepchild, grandchild, parent, stepparent, grandparent, spouse or spousal equivalent, sibling, mother-in-law, father-in-law, son-in-law, daughter-in-law, brother-in-law, or sister-in-law of the person, and includes adoptive relationships. The term “spousal equivalent” means a co-habitant occupying a relationship generally equivalent to that of a spouse.
 
       // page 9
@@ -670,19 +674,20 @@ section.formc-review
               each v,k in values.formc.outstanding_securities
                 tr
                   td
-                    a(href="#" class="show-input" data-name="cap_type").link-1 #{v.security_type}
+                    +frField('formc.outstanding_securities[' + k + '].security_type', 'text')
                   td
-                    a(href="#" class="show-input" data-name="cap_type_XXX_outstanding_1").link-1 #{v.amount_authroized}
+                    +frField('formc.outstanding_securities[' + k + '].amount_authroized', 'text')
                   td
-                    a(href="#" class="show-input" data-name="cap_type_XXX_outstanding_1-2").link-1 #{v.amount_outstanding}
+                    +frField('formc.outstanding_securities[' + k + '].amount_outstanding', 'text')
                   td
-                    a(href="#" class="show-input" data-name="cap_type_XXX_voting_1").link-1 #{v.voting_right}
+                    +frField('formc.outstanding_securities[' + k + '].voting_right', 'text')
               
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u Description of Securities, Material Terms and Other Rights:
         each v,k in values.formc.outstanding_securities
-          p.pb10 #{ v.security_type }
-            a(href="#" class="show-input" data-name="cap_type_common_description").link-1 #{ v.terms_and_rights }
+          p.pb10
+            //a(href="#" class="show-input" data-name="cap_type_common_description").link-1 #{ v.terms_and_rights }
+            +frField('formc.outstanding_securities[' + k + '].terms_and_rights', 'text')
 
       // page 14
       section.page-formc-review.m-t-1
