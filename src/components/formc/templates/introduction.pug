@@ -7,6 +7,7 @@ include ../../../templates/fields_mixins.pug
 +breadcrumbs('Create Formc', '', [['home', '/'], [ 'Create Formc', page.get_absolute_url], ['Introduction']])
 
 section.formc.introduction.create-company-media.container
+  - var campaignId = values.campaign_id;
   +menu('formc', 'introduction')
   .col-lg-8
     h2.text-uppercase.text-lg-center.text-xs-center.dosis.m-t-0.mb-50 introduction

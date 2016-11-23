@@ -120,7 +120,7 @@ include ../../../templates/fields_mixins.pug
                           .form-group.row.zip_code.text
                             label.text-lg-right.col-lg-6(for="zip_code") Postal Code
                             div.col-lg-6
-                              input.form-control(name='zip_code' placeholder='Postal Code' type="text" value=user.zip_code)
+                              input.form-control(name='zip_code1' placeholder='Postal Code' type="text" value=user.zip_code)
                         .col-lg-5
                           +fieldTextLabel('phone', _.extend({'class1 ': 'col-lg-5 text-lg-right text-xs-right', 'class2': 'col-lg-7 ', 'type': 'text', 'value': user.phone }, fields.phone))
                       
@@ -237,10 +237,10 @@ include ../../../templates/fields_mixins.pug
                           span.color-red *
                         .col-lg-9.radio-input
                           label
-                            input(type="radio" name='account_type')
+                            input(type="radio" name='bank_account_type')
                             |  Checking
                           label
-                            input(type="radio" name='account_type')
+                            input(type="radio" name='bank_account_type')
                             |  Savings
                       
                       //+fieldTextLabel('annual_income', _.extend({'class1': 'col-lg-3 text-lg-right text-xs-left', 'class2': 'col-lg-8 ', 'type': 'text', 'value': user.annual_income}, fields.annual_income))
