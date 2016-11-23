@@ -1,67 +1,67 @@
 - const format = require('helpers/formatHelper.js');
 
 .row
-  for campaign in campaigns
+  for company in companies
 
     .col-xl-4.col-lg-6.col-xs-12.col-sm-12.col-md-12
-      a(href=Urls['campaign-detail'](campaign.id)).block_link
+      a(href=Urls['campaign-detail'](company.id)).block_link
       .one_block
         .for_img
           img(
-            src=app.getThumbnail('255x153', campaign.list_image_data ? campaign.list_image_data.thumbnails : [], '/img/default/255x153.png')
-            alt=campaign.company.name)
+            src=app.getThumbnail('255x153', company.list_image_data ? company.list_image_data.thumbnails : [], '/img/default/255x153.png')
+            alt=company.name)
 
           .more_inform
             .title.text-center
-              if campaign.security_type == 0
-                h3 Valuation: #{format.formatPrice(campaign.premoney_valuation)}
+              if company.campaign.security_type == 0
+                h3 Valuation: #{format.formatPrice(company.campaign.premoney_valuation)}
               else
-                h3 Percentage Revenue: #{campaign.percentage_revenue}%
+                h3 Percentage Revenue: #{company.campaign.percentage_revenue}%
 
             .small_text
-              if campaign.company.tagline
-                p #{campaign.company.tagline.substr(0, 120)}
+              if company.tagline
+                p #{company.tagline.substr(0, 120)}
 
             .ico_cont
-              a(href=Urls['campaign-detail'](campaign.id) + '#team').link-1
+              a(href=Urls['campaign-detail'](company.id) + '#team').link-1
                 i.fa.fa-users
-              a(href=Urls['campaign-detail'](campaign.id) + '#overview').link-1
+              a(href=Urls['campaign-detail'](company.id) + '#overview').link-1
                 i.fa.fa-list
 
             .bottom_pr
-              if campaign.security_type == 0
-                p Price per share: #{format.formatPrice(campaign.price_per_share)}
-                p Number of shares: #{(Math.round(campaign.minimum_increment.replace(/,/g, '') / campaign.price_per_share)).toLocaleString('en-US')}
+              if company.campaign.security_type == 0
+                p Price per share: #{format.formatPrice(company.campaign.price_per_share)}
+                p Number of shares: #{(Math.round(company.campaign.minimum_increment / company.campaign.price_per_share)).toLocaleString('en-US')}
               else
                 //- p % Revenue: #{campaign.percentage_revenue}%
-                p Cap: #{campaign.cap}X
-                p Percentage Revenue: #{campaign.percentage_revenue}%
+                p Cap: #{company.campaign.cap}X
+                p Percentage Revenue: #{company.campaign.percentage_revenue}%
 
         .title.text-xs-center
-          h3.m-t-0.m-x-auto= campaign.company.name
+          h3.m-t-0.m-x-auto= company.name
           span.place
             i.fa.fa-map-marker
-            = campaign.company.city + ' ' + campaign.company.state
+            = company.city + ' ' + company.state
           .clear
         .description
-          if campaign.company.description
-            p= campaign.company.description.substr(0,250)
+          if company.description
+            p= company.description.substr(0,250)
 
         .progress_bar_container
-          span.left_text #{campaign.progress} % Funded
+          span.left_text #{company.campaign.progress} % Funded
           span.right_text 
-            b #{format.formatPrice(campaign.amount_raised)} 
-            | of #{format.formatPrice(campaign.minimum_raise)}
+            b #{format.formatPrice(company.campaign.amount_raised)} 
+            | of #{format.formatPrice(company.campaign.minimum_raise)}
           .clear
-            progress(value=campaign.progress max="100").progress #{campaign.progress} %
+            progress(value=company.campaign.progress max="100").progress #{company.campaign.progress} %
 
         .bottom_text
           span.left_desc
             b Security:
-            | #{campaign.get_security_type_display}
+            | #{company.campaign.security_type == 0 ? 'Common Equity' : 'Revenue Share'}
           span.right_desc
             b Industry: 
-            case campaign.company.industry
+            case company.industry
               when 1
                 | Entertainment
               when 2
