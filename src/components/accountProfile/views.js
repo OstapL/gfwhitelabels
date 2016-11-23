@@ -137,8 +137,10 @@ module.exports = {
           ticks_positions: [0, 14, 28, 42, 56, 70, 85, 100],
           ticks_labels: ['$0', '$50K', '$100K', '$200K', '$500K' , '$1M', '$2M', '$5M+'],
           ticks_snap_bounds: 1,
-          formatter: function(value) {
-            return '$' + value + 'K'
+          formatter(value) {
+            return value < 1000
+              ? ('$' + value + 'K')
+              : ('$' + (value / 1000).toFixed(1) + 'M');
           }
         }).on('slideStop', function(slider) {
           console.log(slider)
