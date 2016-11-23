@@ -22,13 +22,13 @@ module.exports = {
       'keyup #zip_code': 'changeZipCode',
       'change .js-city': 'changeAddressManually',
       'change .js-state': 'changeAddressManually',
-      'change .country-select': 'changeCountry',
+      'change #country': 'changeCountry',
     }, phoneHelper.events, dropzoneHelpers.events),
 
     changeCountry(e) {
       let $target = $(e.target);
       let country = $target.val();
-      if (country == 'us') {
+      if (country == 'US') {
         $('.foreign-country-row').hide();
         $('.foreign-country-row input').prop('disabled', true);
         $('.us-row').show();
@@ -72,6 +72,7 @@ module.exports = {
         street_address_2: 'Street address 2',
         zip_code: 'Zip code',
         city: 'City',
+        phone: 'Phone',
         account_number: 'Account Number',
         account_number_re: 'Re-Enter Account Number',
         routing_number: 'Routing Number',
