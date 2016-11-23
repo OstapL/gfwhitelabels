@@ -22,13 +22,13 @@ module.exports = {
       'keyup #zip_code': 'changeZipCode',
       'change .js-city': 'changeAddressManually',
       'change .js-state': 'changeAddressManually',
-      'change .country-select': 'changeCountry',
+      'change #country': 'changeCountry',
     }, phoneHelper.events, dropzoneHelpers.events),
 
     changeCountry(e) {
       let $target = $(e.target);
       let country = $target.val();
-      if (country == 'us') {
+      if (country == 'US') {
         $('.foreign-country-row').hide();
         $('.foreign-country-row input').prop('disabled', true);
         $('.us-row').show();
@@ -72,6 +72,7 @@ module.exports = {
         street_address_2: 'Street address 2',
         zip_code: 'Zip code',
         city: 'City',
+        phone: 'Phone',
         account_number: 'Account Number',
         account_number_re: 'Re-Enter Account Number',
         routing_number: 'Routing Number',
@@ -114,35 +115,35 @@ module.exports = {
           states: this.usaStates,
         })
       );
-      ///!!!
-      this.bootstrapSlider = this.$('.js-bootstrap-slider');
-      this.bootstrapSlider.each(function() {
-        $(this).bootstrapSlider ({
-          ticks: [0, 50, 100, 200, 500],
-          ticks_positions: [0, 25, 50, 75, 100],
-          ticks_labels: ['$0', '$50K', '$100K', '$200K', '$500K+'],
-          ticks_snap_bounds: 1,
-          formatter: function(value) {
-            return '$' + value + 'K'
-          }
-        }).on('slideStop', function(slider) {
-          console.log(slider)
-        });
+
+      this.$('.slider-net-worth').bootstrapSlider({
+        ticks: [0, 50, 100, 200, 500, 1000, 2000, 5000],
+        ticks_positions: [0, 14, 28, 42, 56, 70, 85, 100],
+        ticks_labels: ['$0', '$50K', '$100K', '$200K', '$500K' , '$1M', '$2M', '$5M+'],
+        ticks_snap_bounds: 1,
+        formatter(value) {
+          return value < 1000
+            ? ('$' + value + 'K')
+            : ('$' + (value / 1000).toFixed(1) + 'M');
+        },
+
+      }).on('slideStop', (slider) => {
+
       });
-      this.bootstrapSliderAnnual = this.$('.js-bootstrap-slider-annual');
-      this.bootstrapSliderAnnual.each(function() {
-        $(this).bootstrapSlider ({
-          ticks: [0, 50, 100, 200, 500, 1000, 2000, 5000],
-          ticks_positions: [0, 14, 28, 42, 56, 70, 85, 100],
-          ticks_labels: ['$0', '$50K', '$100K', '$200K', '$500K' , '$1M', '$2M', '$5M+'],
-          ticks_snap_bounds: 1,
-          formatter: function(value) {
-            return '$' + value + 'K'
-          }
-        }).on('slideStop', function(slider) {
-          console.log(slider)
-        });
+
+      this.$('.slider-annual-income').bootstrapSlider({
+        ticks: [0, 50, 100, 200, 500],
+        ticks_positions: [0, 25, 50, 75, 100],
+        ticks_labels: ['$0', '$50K', '$100K', '$200K', '$500K+'],
+        ticks_snap_bounds: 1,
+        formatter(value) {
+          return '$' + value + 'K'
+        },
+
+      }).on('slideStop', (slider) => {
+
       });
+
       setTimeout(() => { this.createDropzones() } , 1000);
 
       this.cityStateArea = this.$('.js-city-state');
