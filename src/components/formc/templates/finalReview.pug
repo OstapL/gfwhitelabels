@@ -375,7 +375,7 @@ section.formc-review
         .top-intro
           p.small.text-xs-left.font-weight-bold FORM C Offering Material for
           p.small.pb10
-            +editText('issuer_short_name')
+            +frField('company.name', 'text')
             |  as Issuer
         p.pb10 dispose of the Shares.  This Material contains significant additional disclosure of investment risks to be reviewed by each potential investor.  Each investor should review all pf the risks related to this Offering prior to making a commitment to invest in the Shares.
         p.text-uppercase.m-t-3.m-b-0.pb10 
@@ -386,52 +386,53 @@ section.formc-review
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u Changes Are Possible In Certain Circumstances
         p.pb10.text-indent The Company reserves the right to modify any of the terms of the Offering at any time before the Offering closes. However, if any material changes are made, each investor will be notified and will be required to reconfirm their investment commitment within 5 days of such notice or their entire investment commitment shall be cancelled. Investors are also given the right to terminate an investment at any time prior to 48 hours from a notified closing date.  Additional
-          | details on the procedures involved with this Offering are contained later in this Material.  Additional information relating to this Offering, including communication channels allowing investors to pose questions and receive answers, is available through the Intermediary on the Platform at https://growthfountain.com/#{ values.company.id }
+          | details on the procedures involved with this Offering are contained later in this Material.  Additional information relating to this Offering, including communication channels allowing investors to pose questions and receive answers, is available through the Intermediary on the Platform at https://growthfountain.com/
+          +frField('company.site_id', 'text')
 
       // page 5
       section.page-formc-review.m-t-1
         .top-intro
           p.small.text-xs-left.font-weight-bold FORM C Offering Material for
           p.small.pb10
-            +editText('issuer_short_name')
+            +frField('company.name', 'text')
             |  as Issuer
         h2.text-uppercase.text-xs-center.font-weight-bold#description_business.letter-spacing-normal.m-b-3 DESCRIPTION OF THE ISSUER’S BUSINESS
         p.text-uppercase.m-t-0.m-b-0.pb10 
           u The Company
         p.text-indent
-          +editText('issuer_legal_name')
+          +frField('company.name', 'text')
           | , was organized on 
-          +editText('founding_date')
+          +frField('company.founding_date', 'text')
           | , as a 
-          +editSelect('jurisdiction_of_organization')
+          +frField('company.founding_state', 'select')
           | !{' '}
-          +editSelect('corporate_structure')
+          +frField('company.corporate_structure', 'select')
           |  The Company’s headquarters is located 
-          +editText('address_1')
+          +frField('company.address_1', 'text')
           | !{' '}
-          +editText('address_2')
+          +frField('company.address_2', 'text')
           | !{' '}
-          +editText('city')
+          +frField('company.city', 'text')
           | !{' '}
-          +editText('state')
+          +frField('company.state', 'select')
           | !{' '}
-          +editText('zip_code')
+          +frField('company.zip_code', 'text')
           |  The Company’s website is 
-          +editText('website')
+          +frField('company.website', 'text')
           | .
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u Business Overview
         p.p-l-2.pb10 
-          +editText('pitch')
+          +frField('campaign.pitch', 'textarea')
           | .
         p.p-l-2
-          +editText('business_model')
+          +frField('campaign.business_model', 'textarea')
           | .
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u Business Plan
         p.pb10.text-indent Please refer to the copy of the Company’s business plan which is attached as Exhibit A hereto.
         p.p-l-2.pb10
-          +editText('description')
+          +frField('company.description', 'textarea')
           | .
 
       // page 6
