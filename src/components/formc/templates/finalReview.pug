@@ -145,13 +145,13 @@ section.formc-review
             | as Issuer
         
         h3.text-xs-center
-          +frField('company.name')
+          +frField('company.name', 'text')
         h3.text-xs-center.m-b-0.m-t-0.pb10 A 
-          +frField('company.jurisdiction_of_organization', 'text')
+          +frField('company.founding_state', 'select')
           | !{' '}
-          +frField('company.corporate_structure', 'text')
+          +frField('company.corporate_structure', 'select')
         p.text-xs-center.m-b-1
-          +editText('website', 'text')
+          +frField('company.website', 'text')
         
         p.text-xs-center.font-weight-bold $
           +editText('maximum_raise')

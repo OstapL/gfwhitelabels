@@ -1617,7 +1617,7 @@ module.exports = {
     events: {
       'click .BROKEshow-input': 'showInput',
       'click .createField': 'createField'
-    }, 
+    },
 
     getSuccessUrl() {
       return  '/formc/' + this.model.id + '/review';
@@ -1632,10 +1632,20 @@ module.exports = {
       let target = event.target;
       let element = '';
       if(target.dataset.type == 'text') {
-        element = document.createElement('input', {
-          name: target.dataset.name,
-          value: target.innerHTML
-        });
+        element = document.createElement('input');
+        element.name = target.dataset.name;
+        element.value = target.innerHTML;
+      } else if(target.dataset.type == 'select') {
+        element = document.createElement('select');
+        element.name = target.dataset.name;
+        let v = target.dataset.name.split('.').reduce((o,i)=>o[i], this.fields);
+        v = v.validate.OneOf;
+        v.choices.forEach((el, i) => {
+          let e = document.createElement('option');
+          e.innerHTML = v.labels[i];
+          e.value = v.choices[i];
+          element.appendChild(e);
+        })
       }
 
       target.parentElement.insertBefore(element, target);
