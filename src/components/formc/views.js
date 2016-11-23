@@ -440,7 +440,6 @@ module.exports = {
       if (data.transaction_with_related_parties_choice == false) {
         data.transaction_with_related_parties = this.model.transaction_with_related_parties;
       }
-      debugger;
 
       api.submitAction.call(this, e, data);
     },
