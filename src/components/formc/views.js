@@ -1719,4 +1719,24 @@ module.exports = {
       return this;
     },
   }),
+
+  electronicSignature: Backbone.View.extend({
+    el: '#content',
+    template: require('./templates/formc_els_company_formc_first.pug'),
+    
+    initialize(options) {
+      this.fields = options.fields;
+      this.name = {};
+
+    },
+    render() {
+      this.$el.html(
+        this.template({
+          values: this.model,
+          fields: this.fields,
+        })
+      );
+      return this;
+    },
+  }),
 };
