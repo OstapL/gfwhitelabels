@@ -3,7 +3,7 @@ mixin row(value, index)
   tr(class="border-b-t-none p-t-b-5 addSectionBlock " + name data-index=index)
     td.border-t-n.d-block.input-w-80
       .d-inline-block.pull-left.p-r-1
-      input(type="text" value=value.description name="less_offering_express[" + index + "][description]").input-border-bottom.form-control.font-size-12.pull-left
+      input(type="text" value=value.title name="less_offering_express[" + index + "][title]").input-border-bottom.form-control.font-size-12.pull-left
       .d-inline-block.pull-right
         .delete-section-container
           a(href="#" data-index=index data-section=name).delete-sectionnew

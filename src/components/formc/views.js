@@ -408,7 +408,7 @@ module.exports = {
     urlRoot: formcServer + '/:id' + '/related-parties',
 
     events: _.extend({
-      'submit form': api.submitAction,
+      'submit form': 'submit',
     }, addSectionHelper.events, menuHelper.events, yesNoHelper.events),
 
     initialize(options) {
@@ -431,6 +431,18 @@ module.exports = {
 
     getSuccessUrl(data) {
       return '/formc/' + this.model.id + '/use-of-proceeds';
+    },
+
+    submit(e) {
+      e.preventDefault();
+      let data = $(e.target).serializeJSON({ useIntKeysAsArrayIndex: true });
+
+      if (data.transaction_with_related_parties_choice == false) {
+        data.transaction_with_related_parties = this.model.transaction_with_related_parties;
+      }
+      debugger;
+
+      api.submitAction.call(this, e, data);
     },
 
     render() {
