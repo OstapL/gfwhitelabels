@@ -6,6 +6,8 @@ import '../../js/graf/graf.js';
 import '../../js/graf/jquery.flot.categories.js';
 import '../../js/graf/jquery.flot.growraf';
 
+const calculatorValidationHelper = require('helpers/calculatorValidationHelper.js');
+
 if (!app.cache.establishedBusinessCalculator) {
     app.cache.establishedBusinessCalculator = {
         // 1st page
@@ -67,13 +69,40 @@ module.exports = {
         }
     }),
 
-    step1: Backbone.View.extend({
+    step1: Backbone.View.extend(_.extend({
         el: '#content',
 
         template: require('./templates/step1.pug'),
 
-        events: {
-            'change .js-select': 'saveValue'
+        events: _.extend({
+            'change .js-select': 'saveValue',
+            'submit form': 'nextStep',
+        }, calculatorValidationHelper.events),
+
+        initialize(options) {
+            this.fields = {
+                raiseCash: {
+                    required: true,
+                    type: 'integer',
+                    validate: {},
+                },
+                ownCache: {
+                    required: true,
+                    type: 'integer',
+                    validate: {},
+                },
+                currentDebt: {
+                    required: true,
+                    type: 'integer',
+                    validate: {},
+                },
+            };
+        },
+
+        nextStep(e) {
+            e.preventDefault();
+            if (!this.validate(e)) return;
+            app.routers.navigate('/calculator/establishedBusiness/step-2', {trigger: true});
         },
 
         saveValue(e) {
@@ -104,12 +133,62 @@ module.exports = {
 
             return this;
         }
-    }),
+    }, calculatorValidationHelper.methods)),
 
-    step2: Backbone.View.extend({
+    step2: Backbone.View.extend(_.extend({
         el: '#content',
 
         template: require('./templates/step2.pug'),
+
+        events: _.extend({
+            'submit form': 'nextStep',
+        }, calculatorValidationHelper.events),
+
+        initialize(options) {
+            this.fields = {
+                revenue: {
+                    required: true,
+                    type: 'integer',
+                    validate: {},
+                },
+                goodsCost: {
+                    required: true,
+                    type: 'integer',
+                    validate: {},
+                },
+                operatingExpense: {
+                    required: true,
+                    type: 'integer',
+                    validate: {},
+                },
+                oneTimeExpenses: {
+                    required: true,
+                    type: 'integer',
+                    validate: {},
+                },
+                depreciationAmortization: {
+                    required: true,
+                    type: 'integer',
+                    validate: {},
+                },
+                interestPaid: {
+                    required: true,
+                    type: 'integer',
+                    validate: {},
+                },
+                taxesPaid: {
+                    required: true,
+                    type: 'integer',
+                    validate: {},
+                },
+            };
+        },
+
+        nextStep(e) {
+            e.preventDefault();
+            if (!this.validate(e)) return;
+            app.routers.navigate('/calculator/establishedBusiness/step-3', {trigger: true});
+        },
 
         ui() {
             this.inputPrice = this.$('[data-input-mask="price"]');
@@ -154,12 +233,52 @@ module.exports = {
 
             return this;
         }
-    }),
+    }, calculatorValidationHelper.methods)),
 
-    step3: Backbone.View.extend({
+    step3: Backbone.View.extend(_.extend({
         el: '#content',
 
         template: require('./templates/step3.pug'),
+
+        initialize(options) {
+            this.fields = {
+                revenue2: {
+                    required: true,
+                    type: 'integer',
+                    validate: {},
+                },
+                goodsCost2: {
+                    required: true,
+                    type: 'integer',
+                    validate: {},
+                },
+                operatingExpense2: {
+                    required: true,
+                    type: 'integer',
+                    validate: {},
+                },
+                oneTimeExpenses2: {
+                    required: true,
+                    type: 'integer',
+                    validate: {},
+                },
+                depreciationAmortization2: {
+                    required: true,
+                    type: 'integer',
+                    validate: {},
+                },
+                interestPaid2: {
+                    required: true,
+                    type: 'integer',
+                    validate: {},
+                },
+                taxesPaid2: {
+                    required: true,
+                    type: 'integer',
+                    validate: {},
+                },
+            };
+        },
 
         goToStep2() {
             app.routers.navigate('/calculator/establishedBusiness/step-2', {trigger: true});
@@ -169,13 +288,16 @@ module.exports = {
             this.inputPrice = this.$('[data-input-mask="price"]');
         },
 
-        events: {
+        events: _.extend({
             // calculate your income
-            'submit .js-calc-form': 'doCalculation'
-        },
+            'submit .js-calc-form': 'doCalculation',
+        }, calculatorValidationHelper.events),
 
         doCalculation(e) {
             e.preventDefault();
+
+            if (!this.validate(e)) return;
+
             let data = app.cache.establishedBusinessCalculator,
                 calculatedData = {},
                 industry = data.industry,
@@ -302,7 +424,7 @@ module.exports = {
 
             return this;
         }
-    }),
+    }, calculatorValidationHelper.methods)),
 
     finish: Backbone.View.extend({
         el: '#content',

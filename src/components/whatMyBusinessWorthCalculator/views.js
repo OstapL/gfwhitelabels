@@ -4,8 +4,9 @@ import flyPriceFormatter from '../../helpers/flyPriceFormatter';
 import 'bootstrap-slider/dist/bootstrap-slider'
 import 'bootstrap-slider/dist/css/bootstrap-slider.css'
 
+const calculatorValidationHelper = require('helpers/calculatorValidationHelper.js');
+
 let formatPrice = calculatorHelper.formatPrice;
-const validation = require('components/validation/validation.js');
 
 if (!app.cache.whatMyBusinessWorthCalculator) {
     app.cache.whatMyBusinessWorthCalculator = {
@@ -24,19 +25,6 @@ if (!app.cache.whatMyBusinessWorthCalculator) {
     }
 }
 
-const validate = function(e) {
-    let data = $(e.target).serializeJSON({ useIntKeysAsArrayIndex: true });
-    this.$('.help-block').remove();
-    if(!validation.validate(this.fields, data, this)) {
-        _(validation.errors).each((errors, key) => {
-            validation.invalidMsg(this, key, errors);
-        });
-        this.$('.help-block').prev().scrollTo(5);
-        return false;
-    }
-    return true;
-};
-
 module.exports = {
     intro: Backbone.View.extend({
         el: '#content',
@@ -49,7 +37,7 @@ module.exports = {
         }
     }),
 
-    step1: Backbone.View.extend({
+    step1: Backbone.View.extend(_.extend({
         el: '#content',
 
         template: require('./templates/step1.pug'),
@@ -91,11 +79,9 @@ module.exports = {
             };
         },
 
-        events: {
+        events: _.extend({
             'submit form': 'nextStep',
-        },
-
-        validate: validate,
+        }, calculatorValidationHelper.events),
 
         nextStep(e) {
             e.preventDefault();
@@ -147,19 +133,17 @@ module.exports = {
             
             return this; 
         }
-    }),
+    }, calculatorValidationHelper.methods)),
 
-    step2: Backbone.View.extend({
+    step2: Backbone.View.extend(_.extend({
         el: '#content',
 
         template: require('./templates/step2.pug'),
 
-        events: {
+        events: _.extend({
             // calculate your income
             'submit .js-calc-form': 'doCalculation',
-        },
-
-        validate: validate,
+        }, calculatorValidationHelper.events),
 
         initialize(options) {
             this.fields = {
@@ -356,7 +340,7 @@ module.exports = {
 
             return this;
         }
-    }),
+    }, calculatorValidationHelper.methods)),
 
     finish: Backbone.View.extend({
         el: '#content',

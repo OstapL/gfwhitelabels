@@ -11,6 +11,8 @@ const formatPrice = calculatorHelper.formatPrice;
 const formatPercentage = calculatorHelper.formatPercentage;
 const minPersents = 200;
 
+const calculatorValidationHelper = require('helpers/calculatorValidationHelper.js');
+
 module.exports = {
     step1: Backbone.View.extend({
         el: '#content',
@@ -23,7 +25,7 @@ module.exports = {
         }
     }),
 
-    step2: Backbone.View.extend({
+    step2: Backbone.View.extend(_.extend({
         el: '#content',
 
         template: require('./templates/step2.pug'),
@@ -39,15 +41,35 @@ module.exports = {
                     'growLevel': ''
                 };
             }
+            this.fields = {
+                raiseMoney: {
+                    required: true,
+                    type: 'integer',
+                    validate: {},
+                },
+                nextYearRevenue: {
+                    required: true,
+                    type: 'integer',
+                    validate: {},
+                },
+                growLevel: {
+                    required: true,
+                    type: 'integer',
+                    validate: {},
+                },
+            };
         },
 
-        events: {
+        events: _.extend({
             // calculate your income
             'submit .js-calc-form': 'doCalculation',
             'keyup [data-input-mask="percent"]': 'savePercents',
             'keydown [data-input-mask="percent"]': 'filterKeyCodeForPercentage',
-            'blur [data-input-mask="percent"]': 'cutZeros'
-        },
+            'blur [data-input-mask="percent"]': 'cutZeros',
+        }, calculatorValidationHelper.events),
+
+        validate: calculatorHelper.validate,
+        validateForLinks: calculatorHelper.validateForLinks,
 
         filterKeyCodeForPercentage(e) {
             let value = e.target.value.replace(/\%/g, '');
@@ -104,6 +126,8 @@ module.exports = {
 
         doCalculation(e) {
             e.preventDefault();
+            if (!this.validate(e)) return;
+
             let maxOfMultipleReturned = 0,
                 countOfMultipleReturned = 0,
                 { raiseMoney, nextYearRevenue, growLevel } = app.cache.payBackShareCalculator;
@@ -204,7 +228,7 @@ module.exports = {
             */
             return this;
         }
-    }),
+    }, calculatorValidationHelper.methods)),
 
     step3: Backbone.View.extend({
         el: '#content',
