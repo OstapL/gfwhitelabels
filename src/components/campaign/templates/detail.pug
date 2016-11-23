@@ -689,7 +689,7 @@ div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true
       span(aria-hidden="true") &times;
     .modal-content
       .embed-responsive.embed-responsive-16by9
-        - let mainVideo = app.getVideoId(values.campaign.video);
+        - var mainVideo = app.getVideoId(values.campaign.video);
         if mainVideo && mainVideo.provider == 'youtube'
           iframe.embed-responsive-item(src="//www.youtube.com/embed/" + mainVideo.id + "?rel=0" allowfullscreen="true")
         else if mainVideo && mainVideo.provider == 'vimeo'
@@ -703,7 +703,7 @@ each v,k in values.campaign.additional_video
       div(role="document").modal-dialog.modal-lg
         .modal-content
           .embed-responsive.embed-responsive-16by9
-            - let additionalVideo = app.getVideoId(v.link);
+            - var additionalVideo = app.getVideoId(v.link);
             if additionalVideo && additionalVideo.provider == 'youtube'
               iframe(src="//www.youtube.com/embed/" + additionalVideo.id + "?rel=0" allowfullscreen="true").embed-responsive-item
             else if additionalVideo && additionalVideo.provider == 'vimeo'

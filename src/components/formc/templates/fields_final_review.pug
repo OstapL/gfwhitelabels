@@ -1,0 +1,209 @@
+- function ggetData(name) {
+-   if(name.indexOf('.') == -1) {
+-       return values[name];                                                           
+-   } else {
+-       try {
+-           return name.split('.').reduce((o,i)=>o[i], values);                            
+-       } catch(e) { 
+-           console.log('no name ' + name); return ''; 
+-       }
+-   }                                                                              
+- }
+
+mixin frprepareNestedField(nestedName, name, value, index, myAttr)
+  if value == null
+    - console.log('value for ' + name + ' is null ')
+    - value = {}
+  - _.extend(myAttr, attr.schema[name]);
+  - myAttr.value = value[name] ? value[name]: '';
+  - myAttr.id = nestedName + '__' + index + '__' + name + '';
+
+
+mixin frfieldNestedTextLabel(nestedName, name, value, index, myAttr)
+  +prepareNestedField(nestedName, name, value, index, myAttr)
+  - myAttr.class1 = myAttr.class1 ? myAttr.class1 : 'text-lg-right col-lg-3 col-md-12 text-md-left';
+  - myAttr.class2 = myAttr.class2 ? myAttr.class2 : 'col-lg-9 col-md-12';
+  +fieldTextLabel(
+    nestedName + '[' + index + '][' + name + ']',
+    myAttr
+  )
+
+
+mixin frfieldNestedTextareaLabel(nestedName, name, value, index, myAttr)
+  +prepareNestedField(nestedName, name, value, index, myAttr)
+  - myAttr.class1 = myAttr.class1 ? myAttr.class1 : 'text-lg-right col-lg-3 col-md-12 text-md-left';
+  - myAttr.class2 = myAttr.class2 ? myAttr.class2 : 'col-lg-9 col-md-12';
+  +fieldTextareaLabel(
+    nestedName + '[' + index + '][' + name + ']',
+    myAttr
+  )
+
+
+mixin frfieldNestedChoiceLabel(nestedName, name, value, index, myAttr)
+  +prepareNestedField(nestedName, name, value, index, myAttr)
+  - myAttr.class1 = myAttr.class1 ? myAttr.class1 : 'text-lg-right col-lg-3 col-md-12 text-md-left';
+  - myAttr.class2 = myAttr.class2 ? myAttr.class2 : 'col-lg-9 col-md-12';
+  +fieldChoiceLabel(
+    nestedName + '[' + index + '][' + name + ']',
+    myAttr
+  )
+
+
+mixin frfieldNestedRadioLabel(nestedName, name, value, index, myAttr)
+  +prepareNestedField(nestedName, name, value, index, myAttr)
+  - myAttr.class1 = myAttr.class1 ? myAttr.class1 : 'text-lg-right col-lg-3 col-md-12 text-md-left';
+  - myAttr.class2 = myAttr.class2 ? myAttr.class2 : 'col-lg-9 col-md-12';
+  +fieldRadioLabel(
+    nestedName + '[' + index + '][' + name + ']',
+    myAttr
+  )
+
+
+mixin frfieldNestedDateMonth(nestedName, name, value, index, myAttr)
+  +prepareNestedField(nestedName, name, value, index, myAttr)
+  - myAttr.class = myAttr.class ? myAttr.class : 'col-lg-6 p-r-0';
+  - myAttr.id = myAttr.id + '__month'
+  +fieldDateMonth(
+    nestedName + '[' + index + '][' + name + ']',
+    myAttr
+  )
+
+
+mixin frfieldNestedDateDay(nestedName, name, value, index, myAttr)
+  +prepareNestedField(nestedName, name, value, index, myAttr)
+  - myAttr.class = myAttr.class ? myAttr.class : 'col-lg-6 p-r-0';
+  - myAttr.id = myAttr.id + '__day'
+  +fieldDateDay(
+    nestedName + '[' + index + '][' + name + ']',
+    myAttr
+  )
+
+
+mixin frfieldNestedDateMonth(nestedName, name, value, index, myAttr)
+  +prepareNestedField(nestedName, name, value, index, myAttr)
+  - myAttr.class = myAttr.class ? myAttr.class : 'col-lg-6 p-r-0';
+  - myAttr.id = myAttr.id + '__month'
+  +fieldDateMonth(
+    nestedName + '[' + index + '][' + name + ']',
+    myAttr
+  )
+
+
+mixin frfieldNestedDateYear(nestedName, name, value, index, myAttr)
+  +prepareNestedField(nestedName, name, value, index, myAttr)
+  - myAttr.class = myAttr.class ? myAttr.class : 'col-lg-6 p-r-0';
+  - myAttr.id = myAttr.id + '__year'
+  +fieldDateYear(
+    nestedName + '[' + index + '][' + name + ']',
+    myAttr
+  )
+
+
+mixin frprepareField(name, attr)
+  - attr = attr ? attr : {};
+
+  if attr.placeholder == null || attr.placeholder == ''
+    - attr.placeholder = attr.label || ''
+  
+
+
+mixin frField(name, type)
+  a(href="#" class="createField show-input" data-type=type || 'text').link-1 #{ggetData(name)}
+
+
+mixin frfieldChoice(name, attr)
+  +prepareField(name, attr)
+  if attr.type == null
+    - attr.type = 'select'
+
+  select(
+    id=attr.id || name
+    name=name
+    ).custom-select.w-100
+    if attr.hasOwnProperty('empty')
+      option(value=attr.empty.value) #{attr.empty['']}
+    each v,k in attr.validate.choices
+      option(value=k selected=(k == getData(name) ? "selected" : undefined)) #{ v }
+
+
+mixin frfieldDateDay(name, attr)
+  +prepareField(name, attr)
+  if attr.type == null
+    - attr.type = 'dateday'
+  - var value = getData(name)
+
+  select(
+      id=attr.id || name + '__day'
+      name=(attr.name || name) + '__day'
+  ).custom-select.w-100
+    option(value="") DD
+    option(value = 1 selected = (value == '01') ? true : false) 1
+    option(value = 2 selected = (value == '02') ? true : false) 2
+    option(value = 3 selected = (value == '03') ? true : false) 3
+    option(value = 4 selected = (value == '04') ? true : false) 4
+    option(value = 5 selected = (value == '05') ? true : false) 5
+    option(value = 6 selected = (value == '06') ? true : false) 6
+    option(value = 7 selected = (value == '07') ? true : false) 7
+    option(value = 8 selected = (value == '08') ? true : false) 8
+    option(value = 9 selected = (value == '09') ? true : false) 9
+    option(value = 10 selected = (value == '10') ? true : false) 10
+    option(value = 11 selected = (value == '11') ? true : false) 11
+    option(value = 13 selected = (value == '13') ? true : false) 13
+    option(value = 14 selected = (value == '14') ? true : false) 14
+    option(value = 15 selected = (value == '15') ? true : false) 15
+    option(value = 16 selected = (value == '16') ? true : false) 16
+    option(value = 17 selected = (value == '17') ? true : false) 17
+    option(value = 18 selected = (value == '18') ? true : false) 18
+    option(value = 19 selected = (value == '19') ? true : false) 19
+    option(value = 20 selected = (value == '20') ? true : false) 20
+    option(value = 21 selected = (value == '21') ? true : false) 21
+    option(value = 22 selected = (value == '22') ? true : false) 22
+    option(value = 23 selected = (value == '23') ? true : false) 23
+    option(value = 24 selected = (value == '24') ? true : false) 24
+    option(value = 25 selected = (value == '25') ? true : false) 25
+    option(value = 26 selected = (value == '26') ? true : false) 26
+    option(value = 27 selected = (value == '27') ? true : false) 27
+    option(value = 28 selected = (value == '28') ? true : false) 28
+    option(value = 29 selected = (value == '29') ? true : false) 29
+    option(value = 30 selected = (value == '30') ? true : false) 30
+    option(value = 31 selected = (value == '31') ? true : false) 31
+
+mixin frfieldDateMonth(name, attr)
+  +prepareField(name, attr)
+  if attr.type == null
+    - attr.type = 'datemonth'
+  - var value = getData(name)
+
+  select(
+      id=attr.id || name + '__month'
+      name=(attr.name || name) + '__month'
+  ).custom-select.w-100
+    option(value="") MM
+    option(value = "01" selected = (value == '01') ? true : false) Jan
+    option(value = "02" selected = (value == '02') ? true : false) Feb
+    option(value = "03" selected = (value == '03') ? true : false) Mar
+    option(value = "04" selected = (value == '04') ? true : false) Apr
+    option(value = "05" selected = (value == '05') ? true : false) May
+    option(value = "06" selected = (value == '06') ? true : false) Jun
+    option(value = "07" selected = (value == '07') ? true : false) Jul
+    option(value = "08" selected = (value == '08') ? true : false) Aug
+    option(value = "09" selected = (value == '09') ? true : false) Sep
+    option(value = "10" selected = (value == '10') ? true : false) Oct
+    option(value = "11" selected = (value == '11') ? true : false) Nov
+    option(value = "12" selected = (value == '12') ? true : false) Dec
+
+
+mixin frfieldDateYear(name, attr)
+  +prepareField(name, attr)
+  if attr.type == null
+    - attr.type = 'dateyear'
+  - var value = getData(name)
+
+  input(
+      id=attr.id || name + '__year'
+      name=(attr.name || name) + '__year'
+      placeholder=(attr.placeholder ? attr.placeholder : "YYYY")
+      type='text'
+      maxlength=4
+      value=value[0]
+    ).form-control

@@ -1,4 +1,5 @@
 include ../../../templates/mixins.pug
+include fields_final_review.pug
 
 +breadcrumbs('Form C Review', '', 
     [
@@ -140,17 +141,17 @@ section.formc-review
         .top-intro
           p.small.text-xs-left.font-weight-bold FORM C Offering Material for
           p.small
-            +editText('issuer_short_name')
-            |  as Issuer
+            +frField('company.name', 'text')
+            | as Issuer
         
         h3.text-xs-center
-          +editText('issuer_legal_name')
+          +frField('company.name')
         h3.text-xs-center.m-b-0.m-t-0.pb10 A 
-          +editSelect('jurisdiction_of_organization')
+          +frField('company.jurisdiction_of_organization', 'text')
           | !{' '}
-          +editSelect('corporate_structure')
+          +frField('company.corporate_structure', 'text')
         p.text-xs-center.m-b-1
-          +editText('website')
+          +editText('website', 'text')
         
         p.text-xs-center.font-weight-bold $
           +editText('maximum_raise')
@@ -652,7 +653,7 @@ section.formc-review
           p.small.pb10
             +editText('issuer_short_name')
             |  as Issuer
-        h2.text-uppercase.text-xs-center.font-weight-bold#capital_structure.letter-spacing-normal.m-b-3 CAPITAL STRUCTURE OF THE ISSUER
+        h2#capital_structure.text-uppercase.text-xs-center.font-weight-bold.letter-spacing-normal.m-b-3 CAPITAL STRUCTURE OF THE ISSUER
         p.text-uppercase.m-t-0.m-b-0.pb10 
           u Description of the Issuer’s Existing Securities
         p.pb10.text-indent The outstanding and authorized amounts of the Company’s existing securities are identified in the table below.  Please note that the Company has indicated that this table includes (a) all instruments that could convert into securities such as convertible debt, (b) securities that are reserved for issuance upon exercise or conversion such as an option plan and (c) any other instruments that could be expected to impact the capitalization of the Company.
@@ -727,9 +728,9 @@ section.formc-review
         p.pb10.text-indent The offering price of the securities in this Offering has been established by the Company and does not necessarily bear any specific relation to the assets, book value or potential earnings of the Company or any other recognized criteria of value. The Shares have not been registered under the Securities Exchange Act of 1934 and have not been traded or quoted on any exchange or quotation system. There is no public market in which shareholders may sell their Shares, and there can be no assurance given that such a market will ever develop. The securities offered hereby are restricted by law and the ability to transfer and interests in the Shares is severely limited.
         p.pb10.text-indent Method by which the offered securities are valued:
         p.p-l-2.pb10
-          a(href="#" class="show-input" data-name="valuation_determine").link-1 valuation_determine
+          a(href="#" class="show-input" data-name="valuation_determine").link-1 #{ values.campaign.valuation_determination }
         p.p-l-2.pb10
-          a(href="#" class="show-input" data-name="valuation_determine_describe").link-1 valuation_determine_describe
+          a(href="#" class="show-input" data-name="valuation_determine_describe").link-1 #{ values.campaign.valuation_determination_other }
         p.pb10.text-indent The price of each Share was determined by the Company in good faith based on its own assessment of its current position and the possibility of future growth.  The Company has taken into account its own internal calculation of potential future revenue and based on such forward looking estimates has created a valuation that reflects the multiple or premium determined by the Company to be appropriate in this situation.  The Company acknowledges that the valuation bears no relationship to established value criteria such as net tangible assets or a multiple of earnings per share.  The Company accepts that some investors may conclude that the current valuation is not an indication of the actual value of the Company.
 
       // page 16
@@ -921,68 +922,70 @@ section.formc-review
         else
           p.pb10.text-indent Because the issuer has no operating history, the following provides information on the issuer’s financial milestones and operational, liquidity and other challenges. 
             a(href="#" class="show-input" data-name="operating_history").link-1 operating_history
-        .table-responsive.m-t-1
-          table.table.table-bordered
-            theader
-              tr.bg-grey
-                th.text-xs-center
-                th.text-xs-center Most Recent Fiscal Year End
-                th.text-xs-center Prior Fiscal Year End
-            tbody
-              tr
-                td Total Assets
-                td.text-xs-center
-                  a(href="#" class="show-input" data-name="recent_total_assets").link-1 recent_total_assets
-                td.text-xs-center
-                  a(href="#" class="show-input" data-name="prior_total_assets").link-1 prior_total_assets
-              tr
-                td Cash & Cash Equivalents
-                td.text-xs-center
-                  a(href="#" class="show-input" data-name="recent_cash_and_equivalents").link-1 recent_cash_and_equivalents
-                td.text-xs-center
-                  a(href="#" class="show-input" data-name="prior_cash_and_equivalents").link-1 prior_cash_and_equivalents
-              tr
-                td Accounts Receivable
-                td.text-xs-center
-                  a(href="#" class="show-input" data-name="recent_account_receivable").link-1 recent_account_receivable
-                td.text-xs-center
-                  a(href="#" class="show-input" data-name="prior_account_receivable").link-1 prior_account_receivable
-              tr
-                td Short-term Debt
-                td.text-xs-center
-                  a(href="#" class="show-input" data-name="recent_short_term_debt").link-1 recent_short_term_debt
-                td.text-xs-center
-                  a(href="#" class="show-input" data-name="prior_short_term_debt").link-1 prior_short_term_debt
-              tr
-                td Long-term Debt
-                td.text-xs-center
-                  a(href="#" class="show-input" data-name="recent_long_term_debt").link-1 recent_long_term_debt
-                td.text-xs-center
-                  a(href="#" class="show-input" data-name="prior_long_term_debt").link-1 prior_long_term_debt
-              tr
-                td Revenues/Sales
-                td.text-xs-center
-                  a(href="#" class="show-input" data-name="recent_revenues_sales").link-1 recent_revenues_sales
-                td.text-xs-center
-                  a(href="#" class="show-input" data-name="prior_revenues_sales").link-1 prior_revenues_sales
-              tr
-                td Cost of Goods Sold
-                td.text-xs-center
-                  a(href="#" class="show-input" data-name="recent_cost_of_goods_sold").link-1 recent_cost_of_goods_sold
-                td.text-xs-center
-                  a(href="#" class="show-input" data-name="prior_cost_of_goods_sold").link-1 prior_cost_of_goods_sold
-              tr
-                td Taxes Paid
-                td.text-xs-center
-                  a(href="#" class="show-input" data-name="recent_Taxes_paid").link-1 recent_Taxes_paid   
-                td.text-xs-center
-                  a(href="#" class="show-input" data-name="prior_Taxes_paid") prior_Taxes_paid
-              tr
-                td Net Income
-                td.text-xs-center
-                  a(href="#" class="show-input" data-name="recent_Net_income").link-1 recent_Net_income
-                td.text-xs-center
-                  a(href="#" class="show-input" data-name="prior_Net_income").link-1 prior_Net_income
+
+        if values.formc.sold_securities_data.length > 1
+          .table-responsive.m-t-1
+            table.table.table-bordered
+              theader
+                tr.bg-grey
+                  th.text-xs-center
+                  th.text-xs-center Most Recent Fiscal Year End
+                  th.text-xs-center Prior Fiscal Year End
+              tbody
+                tr
+                  td Total Assets
+                  td.text-xs-center
+                    a(href="#" class="show-input" data-name="recent_total_assets").link-1 values.formc.sold_securities_data[0].total_assets
+                  td.text-xs-center
+                    a(href="#" class="show-input" data-name="prior_total_assets").link-1 values.formc.sold_securities_data[1].total_assets
+                tr
+                  td Cash & Cash Equivalents
+                  td.text-xs-center
+                    a(href="#" class="show-input" data-name="recent_cash_and_equivalents").link-1 values.formc.sold_securities_data[0].cash_and_equivalents
+                  td.text-xs-center
+                    a(href="#" class="show-input" data-name="prior_cash_and_equivalents").link-1 values.formc.sold_securities_data[1].cash_and_equivalents
+                tr
+                  td Accounts Receivable
+                  td.text-xs-center
+                    a(href="#" class="show-input" data-name="recent_account_receivable").link-1 values.formc.sold_securities_data[0].account_receivable
+                  td.text-xs-center
+                    a(href="#" class="show-input" data-name="prior_account_receivable").link-1 values.formc.sold_securities_data[1].account_receivable
+                tr
+                  td Short-term Debt
+                  td.text-xs-center
+                    a(href="#" class="show-input" data-name="recent_short_term_debt").link-1 values.formc.sold_securities_data[0].short_term_debt
+                  td.text-xs-center
+                    a(href="#" class="show-input" data-name="prior_short_term_debt").link-1 values.formc.sold_securities_data[1].short_term_debt
+                tr
+                  td Long-term Debt
+                  td.text-xs-center
+                    a(href="#" class="show-input" data-name="recent_long_term_debt").link-1 values.formc.sold_securities_data[0].long_term_debt
+                  td.text-xs-center
+                    a(href="#" class="show-input" data-name="prior_long_term_debt").link-1 values.formc.sold_securities_data[1].long_term_debt
+                tr
+                  td Revenues/Sales
+                  td.text-xs-center
+                    a(href="#" class="show-input" data-name="recent_revenues_sales").link-1 values.formc.sold_securities_data[0].revenues_sales
+                  td.text-xs-center
+                    a(href="#" class="show-input" data-name="prior_revenues_sales").link-1 values.formc.sold_securities_data[1].revenues_sales
+                tr
+                  td Cost of Goods Sold
+                  td.text-xs-center
+                    a(href="#" class="show-input" data-name="recent_cost_of_goods_sold").link-1 values.formc.sold_securities_data[0].cost_of_goods_sold
+                  td.text-xs-center
+                    a(href="#" class="show-input" data-name="prior_cost_of_goods_sold").link-1 values.formc.sold_securities_data[1].cost_of_goods_sold
+                tr
+                  td Taxes Paid
+                  td.text-xs-center
+                    a(href="#" class="show-input" data-name="recent_Taxes_paid").link-1 values.formc.sold_securities_data[0].taxes_paid
+                  td.text-xs-center
+                    a(href="#" class="show-input" data-name="prior_Taxes_paid").link-1 values.formc.sold_securities_data[1].taxes_paid
+                tr
+                  td Net Income
+                  td.text-xs-center
+                    a(href="#" class="show-input" data-name="recent_Net_income").link-1 values.formc.sold_securities_data[0].net_income
+                  td.text-xs-center
+                    a(href="#" class="show-input" data-name="prior_Net_income").link-1 values.formc.sold_securities_data[1].net_income 
 
       // page 19
       section.page-formc-review.m-t-1
@@ -995,10 +998,7 @@ section.formc-review
           u Results of Operations
         p.pb10.text-indent The following is a description of the financial condition of the Company, including any items that have had a material impact on the Company, for each year when financial statements are provided.  This discussion also includes an identification of any known material changes or trends in the financial condition and results of operations of the Company during any time period subsequent to the period for which financial statements are provided.
         p.pb10.p-l-2
-          a(href="#" class="show-input" data-name="financial_condition").link-1 financial_condition
-        p.pb10.text-indent The following discusses whether additional funds are necessary to the viability of the business, how quickly the Company anticipates using its available cash and whether other sources of capital are anticipated to be available to the Company.
-        p.p-l-2
-          a(href="#" class="show-input" data-name="future_capital").link-1 future_capital
+          a(href="#" class="show-input" data-name="financial_condition").link-1 #{ values.formc.financials_condition_no } #{ values.formc.financials_condition_yes }
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u Material Indebtedness
         if values.formc.business_loans_or_debt_choice == '0'
@@ -1138,40 +1138,46 @@ section.formc-review
         h2.text-uppercase.text-xs-center.font-weight-bold.letter-spacing-normal.m-b-3 ISSUER-SPECIFIC RISK FACTORS
         p.text-uppercase.m-t-0.m-b-0.pb10 
           u MARKET AND CUSTOMER RISK FACTORS
-        h3
-          +editText('mac_risk_title')
-        p
-          +editText('mac_risk')
+          each v,k in values.formc.market_and_customer_risk
+            h3
+              | #{ v.title }
+            p
+              | #{ v.risk }
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u FINANCIAL RISK FACTORS
-        h3
-          //+editText('fin_risk_title')
-        p
-          //+editText('fin_risk')
+          each v,k in values.formc.financial_risk
+            h3
+              | #{ v.title }
+            p
+              | #{ v.risk }
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u OPERATIONAL RISK FACTORS
-        h3
-          //+editText('ops_risk_title')
-        p
-          //+editText('ops_risk')
+          each v,k in values.formc.operational_risk
+            h3
+              | #{ v.title }
+            p
+              | #{ v.risk }
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u COMPETITIVE RISK FACTORS
-        h3
-          //+editText('com_risk_title')
-        p
-          //+editText('com_risk')
+          each v,k in values.formc.competitive_risk
+            h3
+              | #{ v.title }
+            p
+              | #{ v.risk }
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u PERSONNEL AND THIRD PARTY RISK FACTORS
-        h3
-          //+editText('pat_risk_title')
-        p
-          //+editText('pat_risk')
+          each v,k in values.formc.personnel_and_third_parties_risk
+            h3
+              | #{ v.title }
+            p
+              | #{ v.risk }
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u LEGAL AND REGULATORY RISK FACTORS
-        h3
-          +editText('lar_risk_title')
-        p
-          +editText('lar_risk')
+          for v,k in values.formc.legal_and_regulatory_risk
+            h3
+              | #{ v.title }
+            p
+              | #{ v.risk }
 
       // page 25
       section.page-formc-review.m-t-1
@@ -1403,16 +1409,6 @@ section.formc-review
                             td
                               a(href="#" class="show-input" data-name="director.1.position_end.1").link-1 #{v1.end_date_of_service}
 
-      // page 34
-      section.page-formc-review.m-t-1
-        .top-intro
-          p.small.text-xs-left.font-weight-bold FORM C Offering Material for
-          p.small.pb10
-            +editText('issuer_short_name')
-            |  as Issuer
-        h2.text-uppercase.text-xs-center.font-weight-bold.letter-spacing-normal.m-b-3 EXHIBIT D: EXCERPTS
-        p See Attached
-  
 
 //MODAL
 #formc_review_popup.modal.fade(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")

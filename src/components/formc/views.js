@@ -1614,14 +1614,34 @@ module.exports = {
     initialize(options) {
       this.fields = options.fields;
     },
+    events: {
+      'click .BROKEshow-input': 'showInput',
+      'click .createField': 'createField'
+    }, 
 
     getSuccessUrl() {
       return  '/formc/' + this.model.id + '/review';
     },
 
-    events: {
-      'click .show-input': 'showInput'
-    }, 
+    createField: function (event) {
+      event.preventDefault();
+      if ($(event.target).hasClass('noactive')) {
+          return false;
+      }
+
+      let target = event.target;
+      let element = '';
+      if(target.dataset.type == 'text') {
+        element = document.createElement('input', {
+          name: target.dataset.name,
+          value: target.innerHTML
+        });
+      }
+
+      target.parentElement.insertBefore(element, target);
+      target.remove();
+    },
+
     showInput: function (event) {
       event.preventDefault();
       if ($(event.target).hasClass('noactive')) {
