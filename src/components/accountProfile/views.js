@@ -48,12 +48,14 @@ module.exports = {
       this.fields = options.fields;
       this.fields.image = { type: 'image' };
 
+      /*
       this.fields.phone.required = true;
       this.fields.first_name.required = true;
       this.fields.last_name.required  = true;
-      this.fields.country = { required: true, value: 'US' };
+      */
+      this.fields.country = {value: 'US' };
       this.fields.country.validate = { choices: countries };
-
+      /*
       this.fields.street_address_1 = { required: true };
       this.fields.street_address_2 = {};
       this.fields.twitter = {};
@@ -69,6 +71,7 @@ module.exports = {
       this.fields.annual_income = { required: true };
       this.fields.net_worth.required = true;
       this.fields.accredited_investor = {};
+      */
       this.labels = {
         country: 'Country',
         street_address_1: 'Street address 1',
@@ -226,6 +229,10 @@ module.exports = {
 
     changeAddressManually() {
       this.cityStateArea.text(`${this.cityField.val()}/${this.stateField.val()}`);
+    },
+
+    _success(data) {
+      app.hideLoading();
     },
 
   }, phoneHelper.methods, dropzoneHelpers.methods, yesNoHelper.methods)),
