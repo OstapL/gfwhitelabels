@@ -1,6 +1,7 @@
 module.exports = {
   'pdf': 'pdf',
   'doc': 'doc',
-  'docx': 'docx',
+  'docx': 'doc',
+  'msword': 'doc',
   "vnd.openxmlformats-officedocument.presentationml.presentation": "pptx"
 };
