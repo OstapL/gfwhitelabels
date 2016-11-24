@@ -157,7 +157,10 @@ module.exports = {
             '</a>' +
           '</div>' +
           '<img class="img-file img-' + name + '" src="/img/icons/' + icon + '.png" />' +
-          '<a class="link-file a-' + name + '" target="_blank" href="' + url + '" title="' + data[0].name +'">' + textHelper.shortenFileName(data[0].name) + '</a>');
+          '<div class="row">' +
+          '<a class="link-file a-' + name + '" target="_blank" href="' + url + '" title="' + data[0].name +'">' + textHelper.shortenFileName(data[0].name) + '</a>' +
+          '</div>'
+          );
 
         let $link = fileBlock.find('a.delete-file');
         $link.on('click', (e) => {
