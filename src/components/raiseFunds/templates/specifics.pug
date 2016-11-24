@@ -12,9 +12,9 @@ include menu.pug
 )
 
 section.campaign-specifics.container.m-b-85
+  - var formcId = formc.id;
   +menu('campaign', 'specifics')
 
-  //START RIGHT BLOCK
   .col-xl-8.col-lg-8.col-md-12
     h2.text-uppercase.text-lg-center.text-xs-center.dosis.m-t-0 specifics
     form(data-method="PUT" action="").form-section

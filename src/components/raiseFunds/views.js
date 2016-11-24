@@ -792,17 +792,6 @@ module.exports = {
         'change #valuation_determine': 'valuationDetermine',
       }, leavingConfirmationHelper.events, menuHelper.events, dropzoneHelpers.events),
 
-      checkMinMaxRaise(e) {
-        let min = this.$('input[name=minimum_raise]').val();
-        let max = this.$('input[name=maximum_raise]').val();
-        min = parseInt(min.replace(/,/g, ''));
-        max = parseInt(max.replace(/,/g, ''));
-        if ((min && max) && !(min < max)) {
-          alert("Maximum Raise must be larger than Minimum Raise!");
-          e.preventDefault();
-        }
-      },
-
       preinitialize() {
         // ToDo
         // Hack for undelegate previous events
@@ -812,38 +801,9 @@ module.exports = {
         }
       },
 
-      formatNumber: function (e) {
-        var valStr = $(e.target).val().replace(/,/g, '');
-        var val = parseInt(valStr);
-        if (val) {
-          $(e.target).val(val.toLocaleString('en-US'));
-        }
-      },
-
-      clearZeroAmount: function (e) {
-        let val = parseInt(e.target.value);
-        if(val == 0 || val == NaN) {
-          e.target.value = '';
-        }
-      },
-
-      calculateNumberOfShares: function (e) {
-        var minRaise = parseInt(this.$('#minimum_raise').val().replace(/,/g, ''));
-        var maxRaise = parseInt(this.$('#maximum_raise').val().replace(/,/g, ''));
-        var pricePerShare = parseInt(this.$('#price_per_share').val().replace(/,/g, ''));
-        var premoneyVal = parseInt(this.$('#premoney_valuation').val().replace(/,/g, ''));
-        this.$('#min_number_of_shares').val((Math.round(minRaise / pricePerShare)).toLocaleString('en-US'));
-        this.$('#max_number_of_shares').val((Math.round(maxRaise / pricePerShare)).toLocaleString('en-US'));
-        this.$('#min_equity_offered').val(Math.round(100 * minRaise / (minRaise + premoneyVal)) + '%');
-        this.$('#max_equity_offered').val(Math.round(100 * maxRaise / (maxRaise + premoneyVal)) + '%');
-      },
-
-      getSuccessUrl(data) {
-        return '/campaign/' + data.id + '/perks';
-      },
-
       initialize(options) {
         this.fields = options.fields;
+        this.formc = options.formc;
         this.fields.description_determine = {
           label: 'Description'
         }
@@ -882,6 +842,48 @@ module.exports = {
           }
         });
       },
+
+      checkMinMaxRaise(e) {
+        let min = this.$('input[name=minimum_raise]').val();
+        let max = this.$('input[name=maximum_raise]').val();
+        min = parseInt(min.replace(/,/g, ''));
+        max = parseInt(max.replace(/,/g, ''));
+        if ((min && max) && !(min < max)) {
+          alert("Maximum Raise must be larger than Minimum Raise!");
+          e.preventDefault();
+        }
+      },
+
+      formatNumber: function (e) {
+        var valStr = $(e.target).val().replace(/,/g, '');
+        var val = parseInt(valStr);
+        if (val) {
+          $(e.target).val(val.toLocaleString('en-US'));
+        }
+      },
+
+      clearZeroAmount: function (e) {
+        let val = parseInt(e.target.value);
+        if(val == 0 || val == NaN) {
+          e.target.value = '';
+        }
+      },
+
+      calculateNumberOfShares: function (e) {
+        var minRaise = parseInt(this.$('#minimum_raise').val().replace(/,/g, ''));
+        var maxRaise = parseInt(this.$('#maximum_raise').val().replace(/,/g, ''));
+        var pricePerShare = parseInt(this.$('#price_per_share').val().replace(/,/g, ''));
+        var premoneyVal = parseInt(this.$('#premoney_valuation').val().replace(/,/g, ''));
+        this.$('#min_number_of_shares').val((Math.round(minRaise / pricePerShare)).toLocaleString('en-US'));
+        this.$('#max_number_of_shares').val((Math.round(maxRaise / pricePerShare)).toLocaleString('en-US'));
+        this.$('#min_equity_offered').val(Math.round(100 * minRaise / (minRaise + premoneyVal)) + '%');
+        this.$('#max_equity_offered').val(Math.round(100 * maxRaise / (maxRaise + premoneyVal)) + '%');
+      },
+
+      getSuccessUrl(data) {
+        return '/campaign/' + data.id + '/perks';
+      },
+
       valuationDetermine(e) {
       if (e.target.options[e.target.selectedIndex].value == '2') {
         $('#description_determine').parent().parent().show();
@@ -902,8 +904,8 @@ module.exports = {
                 serverUrl: serverUrl,
                 Urls: Urls,
                 fields: this.fields,
-                // values: this.model.toJSON(),
                 values: this.model,
+                formc: this.formc,
               })
         );
 

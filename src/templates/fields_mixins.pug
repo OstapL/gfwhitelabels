@@ -322,7 +322,6 @@ mixin fileDropzone(name, attr)
                 p.drop-photo #{attr.text}
                 i(class="fa fa-" + attr.icon)
             div.col-lg-7.col-md-7.col-sm-7.col-xs-7.p-r-0.p-l-0.img-dropzone.text-lg-center
-              input(name=name id=(attr.id || name) value=attr.data.id type="hidden")
               .file-scroll
                 .thumb-file-container.col-xl-12
                   if attr.data.mime
@@ -363,7 +362,6 @@ mixin fileFolderDropzone(name, attr)
                 p.drop-photo #{attr.text}
                 i(class="fa fa-" + attr.icon)
             div.col-lg-7.col-md-7.col-sm-7.col-xs-7.p-r-0.p-l-0.img-dropzone.text-lg-center.all-file-scroll
-              input(name=name id=(attr.id || name) value=attr.value type="hidden")
               .file-scroll
                 each v,k in attr.data
                   if v.mime
@@ -445,7 +443,6 @@ mixin imageDropzone(name, attr)
                 p.drop-photo #{attr.text}
                 i(class="fa fa-" + attr.icon)
             div.col-lg-7.col-md-7.col-sm-7.col-xs-7.p-r-0.p-l-0.img-dropzone.text-lg-center
-              input(name=name id=(attr.id || name) value=attr.data.id type="hidden")
               .col-xl-12.p-r-0
                 img(class=("w-100 img-" + name) src="/img/default/255x153.png")
               a(class=("a-" + name) href=attr.data.urls[0]) #{ attr.data.name }

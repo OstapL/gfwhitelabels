@@ -183,21 +183,22 @@ module.exports = Backbone.Router.extend({
 
   specifics(id) {
     if (!app.user.is_anonymous()) {
-      $('body').scrollTo(); 
-      const Model = require('components/campaign/models.js');
       const View = require('components/raiseFunds/views.js');
 
-      var a1 = app.makeCacheRequest(raiseCapitalServer + '/campaign/' + id + '/specifics', 'OPTIONS');
-      var a2 = app.makeCacheRequest(raiseCapitalServer + '/campaign/' + id + '/specifics');
-      var a3 = app.makeCacheRequest(authServer + '/user/company');
+      const a1 = app.makeCacheRequest(raiseCapitalServer + '/campaign/' + id + '/specifics', 'OPTIONS');
+      const a2 = app.makeCacheRequest(raiseCapitalServer + '/campaign/' + id + '/specifics');
+      const a3 = app.makeCacheRequest(authServer + '/user/company');
+      const formcR = api.makeCacheRequest(authServer + '/user/formc');
 
-      $.when(a1, a2, a3).done((meta, model, company) => {
+      $('body').scrollTo(); 
+      $.when(a1, a2, a3, formcR).done((meta, model, company, formc) => {
         model[0].id = id;
         model[0].company = company[0];
-        var i = new View.specifics({
+        const i = new View.specifics({
           el: '#content',
           fields: meta[0].fields,
           model: model[0],
+          formc: formc,
         });
         i.render();
         app.hideLoading();
