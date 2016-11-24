@@ -321,16 +321,17 @@ mixin fileDropzone(name, attr)
               a(class='link-1' href="#" onclick="return false")
                 p.drop-photo #{attr.text}
                 i(class="fa fa-" + attr.icon)
-            div.col-lg-7.col-md-7.col-sm-7.col-xs-7.p-r-0.p-l-0.p-dropzone.img-dropzone.text-lg-center
+            div.col-lg-7.col-md-7.col-sm-7.col-xs-7.p-r-0.p-l-0.img-dropzone.text-lg-center
               input(name=name id=(attr.id || name) value=attr.data.id type="hidden")
               .file-scroll
                 .thumb-file-container.col-xl-12
                   if attr.data.mime
-                    .delete-file-container(style="position: absolute;")
+                    .delete-file-container
                       a(href="#" class="delete-file" data-fileid=attr.data.id)
                         i.fa.fa-times
                     img(src='/img/icons/' + icon + '.png' alt=attr.label class=("img-file img-" + name))
-                    a(class=("a-" + name) href=attr.data.urls[0] title=attr.data.name) #{ textHelper.shortenFileName(attr.data.name) }
+                    .row
+                      a(class=("a-" + name) href=attr.data.urls[0] title=attr.data.name) #{ textHelper.shortenFileName(attr.data.name) }
                   else
                     img(src='/img/icons/' + icon + '.png' alt=attr.label class="img-file img-" + name)
 
