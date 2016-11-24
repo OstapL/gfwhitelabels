@@ -230,7 +230,7 @@ module.exports = {
                 if (!dataArr.length) {
                   //add empty file
                   $link.closest('.file-scroll').append('<div class="thumb-file-container text-xl-center">' +
-                    '<img src="/img/icons/nofile.png" alt="" class="img-file img-"' + name + '>' +
+                    '<img src="/img/icons/file.png" alt="" class="img-file img-"' + name + '>' +
                     '<a class="a-' + name + '" href="#"></a>' +
                   '</div>');
                 }
@@ -273,7 +273,7 @@ module.exports = {
                 if (!dataArr.length) {
                   //add empty file
                   $link.closest('.file-scroll').append('<div class="thumb-file-container text-xl-center">' +
-                    '<img src="/img/icons/nofile.png" alt="" class="img-file img-"' + name + '>' +
+                    '<img src="/img/icons/file.png" alt="" class="img-file img-"' + name + '>' +
                     '<a class="a-' + name + '" href="#"></a>' +
                   '</div>');
                 }
