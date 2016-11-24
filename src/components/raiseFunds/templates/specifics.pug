@@ -53,13 +53,14 @@ section.campaign-specifics.container.m-b-85
           class2: 'col-xl-9 col-lg-12',
         }, fields.length_days))
         .text-lg-right.img-ppt.m-b-3
-          +fileDropzone("investor_presentation", _.extend({
+          +fileDropzone("investor_presentation_file_id", _.extend({
               class1: 'col-xl-3 col-lg-12 text-xl-right text-lg-center',
               class2: 'col-xl-9 col-lg-12 p-l-1 p-r-1',
-              text: 'Drop your PPT or PDF here or click to upload',
+              text: 'Drop your PPT, PDF or DOC here or click to upload',
+              data: values.investor_presentation_file_data[0],
+              default: '/img/default/file.png',
               icon: 'file',
-              default: '/img/default' + suffix + '.png',
-          }, fields.investor_presentation, { label: 'Upload an Investor Presentation'}))
+          }, fields.investor_presentation_file_id, { label: 'Upload an Investor Presentation'}))
         .row
           .col-xl-12
             .border-bottom
