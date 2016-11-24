@@ -193,11 +193,11 @@ module.exports = Backbone.Router.extend({
       $('body').scrollTo(); 
       $.when(a1, a2, a3, formcR).done((meta, model, company, formc) => {
         model[0].id = id;
-        model[0].company = company[0];
         const i = new View.specifics({
           el: '#content',
           fields: meta[0].fields,
           model: model[0],
+          company: company[0],
           formc: formc,
         });
         i.render();
