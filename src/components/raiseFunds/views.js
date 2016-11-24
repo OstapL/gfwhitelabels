@@ -215,7 +215,19 @@ module.exports = {
       return this;
     },
   }),
+  companyDashboardFirst: Backbone.View.extend({
+    el: '#content',
+    template: require('./templates/companyDashboardFirst.pug'),
 
+    render() {
+      this.$el.html(
+        this.template({
+          values: this.model,
+        })
+      );
+      return this;
+    },
+  }),
   generalInformation: Backbone.View.extend(_.extend({
       urlRoot: raiseCapitalServer + '/campaign/:id/general_information',
       template: require('./templates/generalInformation.pug'),
