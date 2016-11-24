@@ -145,6 +145,10 @@ module.exports = {
             'submit .js-calc-form': 'doCalculation',
         }, calculatorValidationHelper.events),
 
+        preinitialize() {
+            $('#content').undelegate();
+        },
+
         initialize(options) {
             this.fields = {
                 monthlyOperatingTwoYears: {
