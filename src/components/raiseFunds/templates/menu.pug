@@ -1,15 +1,21 @@
-- 'use strict';
 mixin getCompanyUrl(id, section, currentStep, step, name)
     - var prefix = '/' + section + '/';
     if id || currentStep == step
-        a(
+      a(
           href='/' + section + '/' + id + '/' + step
           class="list-group-item list-group-item-action " + (currentStep == step ? 'active' : '') + 
-          ((section == 'formc' && values.is_paid == false ) ? 'disabled' : '')
-        ) #{ name }
-            if currentStep == step
-                .icon-check
-                  i.fa.fa-check-circle-o
+          ((section == 'formc' && values.is_paid == false ) ? 'disabled' : '')) #{ name }
+      if step == 'company'
+        .icon-check
+          i.fa.fa-check-circle-o
+      if campaign
+        if campaign.progress[step] == true
+          .icon-check
+            i.fa.fa-check-circle-o
+      if campaignId
+        if values.progress[step] == true
+          .icon-check
+            i.fa.fa-check-circle-o
     else
         a(
           href="#"

@@ -10,7 +10,7 @@ module.exports = Backbone.Router.extend({
             const template = require('templates/mainPage.pug');
 
             const campaigns = new model.collection();
-          api.makeCacheRequest(raiseCapitalUrl + '?limit=6').then((data) => {
+          api.makeCacheRequest(raiseCapitalServer + '?limit=6').then((data) => {
             var html = template({
                 companies: data.data,
                 Urls: Urls,

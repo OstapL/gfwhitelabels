@@ -88,7 +88,7 @@ module.exports = Backbone.Router.extend({
         // Arthur Yip
         // Nov 21, 2016
         let companyId = 99;
-        const detailR = app.makeCacheRequest(raiseCapitalUrl + '/' + companyId);
+        const detailR = app.makeCacheRequest(raiseCapitalServer + '/' + companyId);
         detailR.done((detail) => {
           const View = require('components/accountProfile/views.js');
           let i = new View.issueDashboard({

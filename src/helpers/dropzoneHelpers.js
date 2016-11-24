@@ -45,7 +45,7 @@ module.exports = {
     _initializeDropzone(name, options, onSuccess) {
 
       let defaultOptions = {
-        url: filerUrl + '/upload',
+        url: filerServer + '/upload',
         clickable: '.dropzone__' + name + ' .border-dropzone',
         createImageThumbnails: false,
         addRemoveLinks: false,

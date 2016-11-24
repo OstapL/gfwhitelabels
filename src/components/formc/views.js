@@ -43,6 +43,80 @@ const labels = {
   },
 };
 
+const submitFormc = function submitFormc(e) {
+  e.preventDefault();
+  let $form = this.$el.find('form');
+  var data = $form.serializeJSON();
+
+  _.extend(this.model, data);
+  data = _.extend({}, this.model);
+
+  // ToDo
+  // Refactor code
+  if(this.hasOwnProperty('index')) {
+    data.index = this.index;
+  };
+
+  this.$('.help-block').remove();
+  if (!validation.validate(this.fields, data, this)) {
+    _(validation.errors).each((errors, key) => {
+      validation.invalidMsg(this, key, errors);
+    });
+    this.$('.help-block').scrollTo(45);
+    return;
+  } else {
+    let url = this.urlRoot.replace(/:id/, data.id);
+    let type = 'PUT';
+    delete data.id;
+
+    api.makeRequest(url, type, data).
+      then((data) => {
+
+        if(this.hasOwnProperty('campaign')) {
+          data.id = this.campaign.id;
+        };
+
+        // if we saved company information we will not have any progress data in
+        // response
+        if(data.hasOwnProperty('progress') == false) {
+          data.progress = this.campaign.progress;
+        }
+
+        doCampaignValidation(e, data);
+    }, (error) => {
+      doCampaignValidation(null, this.model);
+    });
+  }
+};
+
+const doFormcValidation = function doFormcValidation(e, data) {
+
+  if(data == null) {
+    data = this.model;
+  }
+
+  if(
+      data.progress.general_information == true &&
+      data.progress.media == true &&
+      data.progress.specifics == true &&
+      data.progress['team-members'] == true
+  ) {
+    $('#company_publish_confirm').modal('show');
+  } else {
+    var errors = {};
+    _(data.progress).each((d, k) => {
+      if(k != 'perks') {
+        if(d == false)  {
+          $('#company_publish .'+k).removeClass('collapse');
+        } else {
+          $('#company_publish .'+k).addClass('collapse');
+        }
+      }
+    });
+    $('#company_publish').modal('toggle');
+  }
+};
+
 module.exports = {
   introduction: Backbone.View.extend(_.extend({
     urlRoot: formcServer + '/:id/introduction',

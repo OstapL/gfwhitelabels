@@ -10,10 +10,9 @@ module.exports = Backbone.Router.extend({
 
   list() {
     require.ensure([], () => {
-      const Model = require('./models.js');
       const View = require('./views.js');
 
-      api.makeCacheRequest(raiseCapitalUrl).then((data) => {
+      api.makeCacheRequest(raiseCapitalServer).then((data) => {
         let i = new View.list({
           el: '#content',
           collection: data.data,
@@ -29,7 +28,7 @@ module.exports = Backbone.Router.extend({
     require.ensure([], () => {
       const View = require('./views.js');
 
-      api.makeCacheRequest(raiseCapitalUrl + "/" + id).
+      api.makeCacheRequest(raiseCapitalServer + "/" + id).
         then((modelData) => {
           let i = new View.detail({
             el: '#content',
@@ -50,7 +49,6 @@ module.exports = Backbone.Router.extend({
     require.ensure([], () => {
       if (!app.user.is_anonymous()) {
         const Model = require('./models.js');
-        //const investModel = require('../investment/models.js');
         const View = require('./views.js');
 
         var a1 = api.makeCacheRequest(Urls['investment-list'](), 'OPTIONS');

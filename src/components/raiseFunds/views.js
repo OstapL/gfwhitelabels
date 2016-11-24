@@ -98,7 +98,7 @@ const onPreviewAction = function(e) {
 
 module.exports = {
   company: Backbone.View.extend(_.extend({
-    urlRoot: raiseCapitalUrl + '/company',
+    urlRoot: raiseCapitalServer + '/company',
     template: require('./templates/company.pug'),
     events: _.extend({
       'submit form': api.submitAction,
@@ -215,7 +215,7 @@ module.exports = {
   }),
 
   generalInformation: Backbone.View.extend(_.extend({
-      urlRoot: raiseCapitalUrl + '/campaign/:id/general_information',
+      urlRoot: raiseCapitalServer + '/campaign/:id/general_information',
       template: require('./templates/generalInformation.pug'),
       events: _.extend({
           'submit form': api.submitAction,
@@ -306,7 +306,7 @@ module.exports = {
         'click .submit_form': submitCampaign,
         'click .onPreview': onPreviewAction,
       }, leavingConfirmationHelper.events, menuHelper.events, addSectionHelper.events, dropzoneHelpers.events),
-      urlRoot: raiseCapitalUrl + '/campaign/:id/media',
+      urlRoot: raiseCapitalServer + '/campaign/:id/media',
 
       appendHttpsIfNecessary(e) {
         appendHttpIfNecessary(e, true);
@@ -780,7 +780,7 @@ module.exports = {
   }, menuHelper.methods)),
 
   specifics: Backbone.View.extend(_.extend({
-      urlRoot: raiseCapitalUrl + '/campaign/:id/specifics',
+      urlRoot: raiseCapitalServer + '/campaign/:id/specifics',
       events: _.extend({
         'submit form': api.submitAction,
         'change input[name="security_type"]': 'updateSecurityType',

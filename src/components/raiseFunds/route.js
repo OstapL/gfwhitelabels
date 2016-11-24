@@ -27,7 +27,7 @@ module.exports = Backbone.Router.extend({
   company() {
     const View = require('components/raiseFunds/views.js');
 
-    const optionsR = app.makeCacheRequest(raiseCapitalUrl + '/company', 'OPTIONS');
+    const optionsR = app.makeCacheRequest(raiseCapitalServer + '/company', 'OPTIONS');
     const companyR = app.makeCacheRequest(authServer + '/user/company');
     const formcR = api.makeCacheRequest(authServer + '/user/formc');
 
@@ -67,8 +67,8 @@ module.exports = Backbone.Router.extend({
     }
     $('#content').scrollTo(); 
 
-    var a1 = app.makeCacheRequest(raiseCapitalUrl + '/campaign/' + id + '/general_information', 'OPTIONS');
-    var a2 = app.makeCacheRequest(raiseCapitalUrl + '/campaign/' + id + '/general_information');
+    var a1 = app.makeCacheRequest(raiseCapitalServer + '/campaign/' + id + '/general_information', 'OPTIONS');
+    var a2 = app.makeCacheRequest(raiseCapitalServer + '/campaign/' + id + '/general_information');
     // let formcR = api.makeCacheRequest(authServer + '/user/formc');
 
     // $.when(a1, a2, formcR).done((meta, model, formc) => {
@@ -102,8 +102,8 @@ module.exports = Backbone.Router.extend({
       const Model = require('components/campaign/models.js');
       const View = require('components/raiseFunds/views.js');
 
-      var a1 = app.makeCacheRequest(raiseCapitalUrl + '/campaign/' + id + '/media', 'OPTIONS');
-      var a2 = app.makeCacheRequest(raiseCapitalUrl + '/campaign/' + id + '/media');
+      var a1 = app.makeCacheRequest(raiseCapitalServer + '/campaign/' + id + '/media', 'OPTIONS');
+      var a2 = app.makeCacheRequest(raiseCapitalServer + '/campaign/' + id + '/media');
 
       // var a1 = app.makeCacheRequest(Urls['campaign-list']() + '/media/' + id, 'OPTIONS');
       // var a2 = app.makeCacheRequest(Urls['campaign-list']() + '/media/' + id);
@@ -136,7 +136,7 @@ module.exports = Backbone.Router.extend({
       const View = require('components/raiseFunds/views.js');
 
       // var a2 = app.makeCacheRequest(Urls['campaign-list']() + '/team_members/' + id);
-      var a2 = app.makeCacheRequest(raiseCapitalUrl + '/campaign/' + id + '/team_members');
+      var a2 = app.makeCacheRequest(raiseCapitalServer + '/campaign/' + id + '/team_members');
 
       $.when(a2).done((model) => {
         model.id = id;
@@ -165,7 +165,7 @@ module.exports = Backbone.Router.extend({
       const View = require('components/raiseFunds/views.js');
 
       // var a2 = app.makeCacheRequest(Urls['campaign-list']() + '/team_members/' + id);
-      var a2 = app.makeCacheRequest(raiseCapitalUrl + '/campaign/' + id + '/team_members');
+      var a2 = app.makeCacheRequest(raiseCapitalServer + '/campaign/' + id + '/team_members');
       $.when(a2).done((model) => {
         const addForm = new View.teamMemberAdd({
           el: '#content',
@@ -191,8 +191,8 @@ module.exports = Backbone.Router.extend({
       const Model = require('components/campaign/models.js');
       const View = require('components/raiseFunds/views.js');
 
-      var a1 = app.makeCacheRequest(raiseCapitalUrl + '/campaign/' + id + '/specifics', 'OPTIONS');
-      var a2 = app.makeCacheRequest(raiseCapitalUrl + '/campaign/' + id + '/specifics');
+      var a1 = app.makeCacheRequest(raiseCapitalServer + '/campaign/' + id + '/specifics', 'OPTIONS');
+      var a2 = app.makeCacheRequest(raiseCapitalServer + '/campaign/' + id + '/specifics');
       var a3 = app.makeCacheRequest(authServer + '/user/company');
 
       $.when(a1, a2, a3).done((meta, model, company) => {
@@ -222,8 +222,8 @@ module.exports = Backbone.Router.extend({
       const Model = require('components/campaign/models.js');
       const View = require('components/raiseFunds/views.js');
 
-      var a1 = app.makeCacheRequest(raiseCapitalUrl + '/campaign/' + id + '/perks', 'OPTIONS');
-      var a2 = app.makeCacheRequest(raiseCapitalUrl + '/campaign/' + id + '/perks');
+      var a1 = app.makeCacheRequest(raiseCapitalServer + '/campaign/' + id + '/perks', 'OPTIONS');
+      var a2 = app.makeCacheRequest(raiseCapitalServer + '/campaign/' + id + '/perks');
 
       $.when(a1, a2).done((meta, model) => {
         model[0].id = id;
