@@ -82,6 +82,11 @@ module.exports = {
         type = e.target.dataset.method || 'PUT';
       }
 
+      _(this.fields).each((el, key) => {
+        if(el.required === false && data[key] == '')
+          delete data[key];
+      });
+
       api.makeRequest(url, type, data).
         then((data) => {
           app.showLoading();
