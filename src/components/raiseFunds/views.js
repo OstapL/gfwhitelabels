@@ -117,6 +117,7 @@ module.exports = {
     initialize(options) {
       this.fields = options.fields;
       this.formc = options.formc;
+      this.campaign = options.campaign;
       this.$el.on('keypress', ':input:not(textarea)', function (event) {
         if (event.keyCode == 13) {
           event.preventDefault();
@@ -182,6 +183,7 @@ module.exports = {
           values: this.model,
           user: app.user.toJSON(),
           formc: this.formc,
+          campaign: this.campaign,
           states: this.usaStates,
         })
       );
@@ -238,9 +240,7 @@ module.exports = {
 
       initialize(options) {
         this.fields = options.fields;
-        // this.formc = options.formc;
-        this.faqIndex = 1;
-        this.additional_infoIndex = 1;
+        this.formc = options.formc;
         this.$el.on('keypress', ':input:not(textarea)', function (event) {
           if (event.keyCode == 13) {
             event.preventDefault();
@@ -276,10 +276,9 @@ module.exports = {
               serverUrl: serverUrl,
               Urls: Urls,
               fields: this.fields,
-              // values: this.model.toJSON(),
               values: this.model,
               templates: this.jsonTemplates,
-              // formc: this.formc.id,
+              formc: this.formc,
             })
         );
 
@@ -944,38 +943,31 @@ module.exports = {
         $('#description_determine').parent().parent().hide();
         return this;
       },
-    }, leavingConfirmationHelper.methods, menuHelper.methods, dropzoneHelpers.methods, addSectionHelper.methods)),
+  }, leavingConfirmationHelper.methods, menuHelper.methods, dropzoneHelpers.methods, addSectionHelper.methods)),
 
   perks: Backbone.View.extend(_.extend({
+    urlRoot: raiseCapitalServer + '/campaign/:id/perks',
     events: _.extend({
         'submit form': 'onSubmit',
         'click .onPreview': onPreviewAction,
         'click .submit_form': submitCampaign,
     }, leavingConfirmationHelper.events, menuHelper.events, addSectionHelper.events),
-    urlRoot: Urls['campaign-list']() + '/perks',
 
     onSubmit(e) {
       e.preventDefault();
 
       let data = $(e.target).serializeJSON({ useIntKeysAsArrayIndex: true });
-      let url = this.urlRoot;
-      
-      if(this.hasOwnProperty('model')) {
-        _.extend(this.model, data);
-        data = _.extend({}, this.model)
-      }
-      let type = 'POST';
-      if(data.hasOwnProperty('id')) {
-        url += '/' + data.id;
-        delete data.id;
-        type = e.target.dataset.method;
-      }
+      let url = this.urlRoot.replace(':id', this.model.id);
 
+      _.extend(this.model, data);
+      data = _.extend({}, this.model)
+      delete data.id;
+      
       app.showLoading();
-      api.makeRequest(url, type, data).then((data) => {
+      api.makeRequest(url, 'PUT', data).then((data) => {
         this.model = data;
         app.hideLoading();
-        $('button.submit_form').click();
+        //$('button.submit_form').click();
       }).
       fail((xhr, status, text) => {
         api.errorAction(this, xhr, status, text, this.fields);

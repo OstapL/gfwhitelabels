@@ -410,7 +410,7 @@ module.exports = {
 
   investment: Backbone.View.extend({
     template: require('./templates/investment.pug'),
-    urlRoot: serverUrl + Urls['investment_list'](),
+    urlRoot: investmentServer + '/',
     events: {
       'submit form': api.submitAction,
       'keyup #amount': 'amountUpdate',
@@ -418,8 +418,11 @@ module.exports = {
       'click .update-location': 'updateLocation'
     },
     initialize(options) {
-      this.campaignModel = options.campaignModel;
       this.fields = options.fields;
+      this.labels = {
+        amount: 'Amount',
+      };
+      this.assignLabels();
     },
 
     updateLocation(e) {
@@ -454,8 +457,7 @@ module.exports = {
             serverUrl: serverUrl,
             Urls: Urls,
             fields: this.fields,
-            campaignModel: this.campaignModel,
-            campaign: this.campaignModel.toJSON(),
+            values: this.model,
             user: app.user.toJSON(),
             states: this.usaStates
           })

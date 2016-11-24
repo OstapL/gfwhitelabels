@@ -3,9 +3,9 @@ include ../../../templates/mixins.pug
 +breadcrumbs('Invest', '', 
   [
     ['Home', '/'], 
-    ['Explore', Urls['campaign-list']()],  
-    [campaign.company.name, Urls['campaign-detail'](campaign.id)], 
-    ['Invest in ' + campaign.company.name, '']
+    ['Explore', ''],  
+    [values.name, ''], 
+    ['Invest in ' + values.name, '']
   ]
 )
 mixin fieldInput(name, attr)
@@ -29,7 +29,7 @@ mixin fieldInput(name, attr)
     .col-lg-8
       h2.text-uppercase.dosis.m-t-0.text-md-center.text-sm-center.text-xs-center.text-lg-left Investment
       .form-section.clearfix
-        form(metod="post" action="").invest_form.clearfix
+        form(action="").invest_form.clearfix
           .row
             .col-xl-12
               +fieldBlock("amount", '', {
@@ -259,7 +259,7 @@ mixin fieldInput(name, attr)
     //START RIGHT BLOCK
     .col-lg-4.pull-right
 
-      if campaign.perks
+      if values.campaign.perks
         h2.text-uppercase.dosis.m-t-0 PERKS
           span.small-text.open-sans Investor Perks are not intended to affect the value of the security and investors should evaluate the merits of each investment without regard to any Investor Perks.
         .list-group.list-group-border-invest.invest-right-margin

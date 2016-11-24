@@ -12,8 +12,9 @@ include menu.pug
 )
 
 section.create-company.container.m-b-85
-  - var campaignId = formc.campaign_id;
+  - var campaignId = campaign.id;
   - var formcId = formc.id;
+  - values.progress = campaign.progress;
   +menu('company', 'create')
 
   //START RIGHT BLOCK

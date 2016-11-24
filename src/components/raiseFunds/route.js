@@ -29,14 +29,16 @@ module.exports = Backbone.Router.extend({
 
     const optionsR = app.makeCacheRequest(raiseCapitalServer + '/company', 'OPTIONS');
     const companyR = app.makeCacheRequest(authServer + '/user/company');
+    const campaignR = app.makeCacheRequest(authServer + '/user/campaign');
     const formcR = api.makeCacheRequest(authServer + '/user/formc');
 
     $('body').scrollTo(); 
-    $.when(optionsR, companyR, formcR).done((options, company, formc) => {
+    $.when(optionsR, companyR, campaignR, formcR).done((options, company, campaign, formc) => {
       const i = new View.company({
         el: '#content',
         fields: options[0].fields,
         model: company[0] || {},
+        campaign: campaign[0] || {},
         formc: formc[0] || {},
       });
 
@@ -60,25 +62,19 @@ module.exports = Backbone.Router.extend({
   generalInformation (id) {
     const View = require('components/raiseFunds/views.js');
 
-    if (id === null) {
-      alert('please set up id or company_id');
-      console.log('not goinng anywhere');
-      return;
-    }
     $('#content').scrollTo(); 
 
-    var a1 = app.makeCacheRequest(raiseCapitalServer + '/campaign/' + id + '/general_information', 'OPTIONS');
-    var a2 = app.makeCacheRequest(raiseCapitalServer + '/campaign/' + id + '/general_information');
-    // let formcR = api.makeCacheRequest(authServer + '/user/formc');
+    const metaR = app.makeCacheRequest(raiseCapitalServer + '/campaign/' + id + '/general_information', 'OPTIONS');
+    const campaignR = app.makeCacheRequest(raiseCapitalServer + '/campaign/' + id + '/general_information');
+    const formcR = api.makeCacheRequest(authServer + '/user/formc');
 
-    // $.when(a1, a2, formcR).done((meta, model, formc) => {
-    $.when(a1, a2).done((meta, model) => {
+    $.when(metaR, campaignR, formcR).done((meta, model, formc) => {
       model[0].id = id;
       var i = new View.generalInformation({
         el: '#content',
         fields: meta[0].fields,
         model: model[0],
-        // formc: formc[0],
+        formc: formc[0],
       });
 
       i.render();

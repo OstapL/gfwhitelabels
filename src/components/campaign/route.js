@@ -48,22 +48,48 @@ module.exports = Backbone.Router.extend({
   investment(id) {
     require.ensure([], () => {
       if (!app.user.is_anonymous()) {
-        const Model = require('./models.js');
         const View = require('./views.js');
 
-        var a1 = api.makeCacheRequest(Urls['investment-list'](), 'OPTIONS');
-        var a2 = api.makeCacheRequest(Urls['campaign-detail'](id));
+        const a1 = null; //api.makeCacheRequest(investmentServer + '/', 'OPTIONS');
+        const a2 = null; //api.makeCacheRequest(raiseCapitalServer + '/' + id);
 
         $.when(a1, a2).
-          then((metaData, campaignModel) => {
-            console.log(metaData, campaignModel);
-            var i = new View.investment({
+          then((investmentMeta, companyData) => {
+            investmentMeta = [
+              {
+                fields: {
+                  amount: { type: 'int', required: true},
+                  first_name: { type: 'str', required: true},
+                  last_name: { type: 'str', required: true},
+                  country: { type: 'choice', required: true},
+                  address1: { type: 'str', required: true},
+                  address2: { type: 'str', required: false},
+                  zip_code: { type: 'str', required: true},
+                  city: { type: 'str', required: true},
+                  state: { type: 'str', required: true},
+                  payment_method: { type: 'str', required: true},
+                  name_on_bank_account: { type: 'str', required: true},
+                  account_number_re: { type: 'str', required: true},
+                  route_number: { type: 'str', required: true},
+                  bank_account_type: { type: 'str', required: true},
+                }
+              }
+            ];
+            companyData = [
+              {
+                id: 1,
+                name: 'N!CE',
+                campaign: {
+                  perks: [],
+                }
+              }
+            ]
+            const i = new View.investment({
               el: '#content',
-                campaignModel: new Model.model(campaignModel[0]),
-                fields: metaData[0].actions.POST
+                model: companyData[0],
+                fields: investmentMeta[0].fields
             });
             i.render();
-            //app.cache[window.location.pathname] = app.views.campaign[id].$el.html();
             $('#content').scrollTo();
             app.hideLoading();
           })
