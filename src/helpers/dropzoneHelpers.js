@@ -142,6 +142,28 @@ module.exports = {
           '.docx'
       };
 
+      const deleteFile = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        let $link = $(e.target).closest('a.delete-file');
+
+        // let fileId = $link.data('fileid');
+
+        $link.prop('enabled', false);
+        $link.off('click');
+        // api.makeRequest(filerUrl + '/' + fileId, 'DELETE').done(() => {
+        //remove field from model
+        let dataArr = this.model[name.replace('_id', '_data')];
+        $link.closest('.thumb-file-container')
+          .empty()
+          .append('<img src="/img/icons/file.png" alt="" class="img-file img-"' + name + '>' +
+            '<a class="a-' + name + '" href="#"></a>');
+        // });
+
+        return false;
+      };
+
       this._initializeDropzone(name, dzOptions, (data) => {
         let textHelper = require('helpers/textHelper.js');
         let mimetypeIcons = require('helpers/mimetypeIcons.js');
@@ -158,30 +180,14 @@ module.exports = {
           '</div>' +
           '<img class="img-file img-' + name + '" src="/img/icons/' + icon + '.png" />' +
           '<div class="row">' +
-          '<a class="link-file a-' + name + '" target="_blank" href="' + url + '" title="' + data[0].name +'">' + textHelper.shortenFileName(data[0].name) + '</a>' +
+          '<a class="link-file a-' + name + '" target="_blank" ' +
+            'href="' + url + '" title="' + data[0].name +'">' +
+              textHelper.shortenFileName(data[0].name) + '</a>' +
           '</div>'
           );
 
         let $link = fileBlock.find('a.delete-file');
-        $link.on('click', (e) => {
-          e.preventDefault();
-          e.stopPropagation();
-
-          // let fileId = $link.data('fileid');
-
-          $link.prop('enabled', false);
-          $link.off('click');
-          // api.makeRequest(filerUrl + '/' + fileId, 'DELETE').done(() => {
-          //remove field from model
-          let dataArr = this.model[name.replace('_id', '_data')];
-          $link.closest('.thumb-file-container')
-            .empty()
-            .append('<img src="/img/icons/file.png" alt="" class="img-file img-"' + name + '>' +
-              '<a class="a-' + name + '" href="#"></a>');
-          // });
-
-          return false;
-        });
+        $link.on('click', deleteFile);
 
         $('.dropzone__' + name + ' .thumb-file-container')
           .empty()
@@ -190,6 +196,11 @@ module.exports = {
         this.model[name] = id;
         this.model[name.replace('_id', '_data')] = data;
       });
+
+      $('.dropzone__' + name + ' .img-dropzone a.delete-file').each((idx, link) => {
+        $(link).on('click', deleteFile);
+      });
+
     },
 
     _image(name) {
@@ -230,6 +241,36 @@ module.exports = {
           'application/vnd.openxmlformats-officedocument.presentationml.presentation',  //.pptx
       };
 
+      const deleteFile = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        let $link = $(e.target).closest('a.delete-file');
+        let fileId = $link.data('fileid');
+
+        $link.prop('enabled', false);
+        $link.off('click');
+        // api.makeRequest(filerUrl + '/' + fileId, 'DELETE').done(() => {
+        //remove field from model
+        let dataArr = this.model[name.replace('_id', '_data')];
+        let dataIdx = _(dataArr).findIndex((elem) => { return elem.id == fileId});
+        if (dataIdx >= 0) {
+          dataArr.splice(dataIdx, 1);
+          if (!dataArr.length) {
+            //add empty file
+            $link.closest('.file-scroll')
+              .append('<div class="thumb-file-container text-xl-center">' +
+              '<img src="/img/icons/file.png" alt="" class="img-file img-"' + name + '>' +
+              '<a class="a-' + name + '" href="#"></a>' +
+              '</div>');
+          }
+          $link.closest('.thumb-file-container').remove();
+        }
+        // });
+
+        return false;
+      };
+
       this._initializeDropzone(name, dzOptions, (data, file) => {
         let textHelper = require('helpers/textHelper.js');
         let mimetypeIcons = require('helpers/mimetypeIcons.js');
@@ -240,44 +281,20 @@ module.exports = {
 
         let fileBlock = $('<div class="thumb-file-container">' +
           '<div class="delete-file-container" style="position: absolute;">' +
-            '<a href="#" class="delete-file" data-fileid="' + data[0].id + '"><i class="fa fa-times"></i></a>' +
+            '<a href="#" class="delete-file" data-fileid="' + data[0].id + '">' +
+              '<i class="fa fa-times"></i>' +
+            '</a>' +
           '</div>' +
           '<img class="img-file img-' + name + '" src="/img/icons/' + icon + '.png" />' +
-          '<a class="link-file a-' + name + '" target="_blank" href="' + url + '" title="' + data[0].name +'">' + textHelper.shortenFileName(data[0].name) + '</a>' +
+          '<a class="link-file a-' + name + '" target="_blank" ' +
+            'href="' + url + '" title="' + data[0].name +'">' +
+            textHelper.shortenFileName(data[0].name) + '</a>' +
         '</div>');
 
         let $link = fileBlock.find('a.delete-file');
-        $link.on('click', (e) => {
-          e.preventDefault();
-          e.stopPropagation();
-
-          let fileId = $link.data('fileid');
-
-          $link.prop('enabled', false);
-          $link.off('click');
-          // api.makeRequest(filerUrl + '/' + fileId, 'DELETE').done(() => {
-              //remove field from model
-              let dataArr = this.model[name.replace('_id', '_data')];
-              let dataIdx = _(dataArr).findIndex((elem) => { return elem.id == fileId});
-              if (dataIdx >= 0) {
-                dataArr.splice(dataIdx, 1);
-                if (!dataArr.length) {
-                  //add empty file
-                  $link.closest('.file-scroll').append('<div class="thumb-file-container text-xl-center">' +
-                    '<img src="/img/icons/file.png" alt="" class="img-file img-"' + name + '>' +
-                    '<a class="a-' + name + '" href="#"></a>' +
-                  '</div>');
-                }
-                $link.closest('.thumb-file-container').remove();
-              }
-          // });
-
-          return false;
-        });
+        $link.on('click', deleteFile);
 
         $('.dropzone__' + name + ' .thumb-file-container:last').after(fileBlock);
-
-
 
         if(this.model[fieldDataName].length == 0) {
           $('.dropzone__' + name + ' .thumb-file-container:first').remove();
@@ -290,33 +307,7 @@ module.exports = {
       $('.dropzone__' + name + ' .img-dropzone a.delete-file').each((idx, link) => {
         let $link = $(link);
 
-        $link.on('click', (e) => {
-          e.preventDefault();
-          e.stopPropagation();
-
-          let fileId = $link.data('fileid');
-
-          $link.prop('enabled', false);
-          $link.off('click');
-          // api.makeRequest(filerUrl + '/' + fileId, 'DELETE').done(() => {
-              //remove field from model
-              let dataArr = this.model[name.replace('_id', '_data')];
-              let dataIdx = _(dataArr).findIndex((elem) => { return elem.id == fileId});
-              if (dataIdx >= 0) {
-                dataArr.splice(dataIdx, 1);
-                if (!dataArr.length) {
-                  //add empty file
-                  $link.closest('.file-scroll').append('<div class="thumb-file-container text-xl-center">' +
-                    '<img src="/img/icons/file.png" alt="" class="img-file img-"' + name + '>' +
-                    '<a class="a-' + name + '" href="#"></a>' +
-                  '</div>');
-                }
-                $link.closest('.thumb-file-container').remove();
-              }
-          // });
-
-          return false;
-        });
+        $link.on('click', deleteFile);
       });
     },
 
