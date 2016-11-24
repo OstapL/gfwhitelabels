@@ -293,6 +293,7 @@ mixin fieldDateYear(name, attr)
 
 
 mixin fileDropzone(name, attr)
+    - var textHelper = require('helpers/textHelper.js')
     - var icon = attr.type
     if attr.hasOwnProperty('data') == false || attr.data == null
       - attr.data = {};
@@ -300,7 +301,7 @@ mixin fileDropzone(name, attr)
       - attr.data.urls = [];
     if attr.data.mime
       - mimetypeIcons = require('helpers/mimetypeIcons.js');
-      - var icon = mimetypeIcons[attr.data.mime.split('/')[1]];
+      - icon = mimetypeIcons[attr.data.mime.split('/')[1]];
 
     div(
       class='row media-item ' + attr.class + ' ' + (attr.id || name) +
@@ -322,9 +323,17 @@ mixin fileDropzone(name, attr)
                 i(class="fa fa-" + attr.icon)
             div.col-lg-7.col-md-7.col-sm-7.col-xs-7.p-r-0.p-l-0.p-dropzone.img-dropzone.text-lg-center
               input(name=name id=(attr.id || name) value=attr.data.id type="hidden")
-              .col-xl-12
-                img(src='/img/icons/' + icon + '.png' alt=attr.label class="img-file img-" + name)
-              a(class=("a-" + name) href=attr.data.urls[0]) #{ attr.data.name }
+              .file-scroll
+                .thumb-file-container.col-xl-12
+                  if attr.data.mime
+                    .delete-file-container(style="position: absolute;")
+                      a(href="#" class="delete-file" data-fileid=attr.data.id)
+                        i.fa.fa-times
+                    img(src='/img/icons/' + icon + '.png' alt=attr.label class=("img-file img-" + name))
+                    a(class=("a-" + name) href=attr.data.urls[0] title=attr.data.name) #{ textHelper.shortenFileName(attr.data.name) }
+                  else
+                    img(src='/img/icons/' + icon + '.png' alt=attr.label class="img-file img-" + name)
+
 
 
 mixin fileFolderDropzone(name, attr)

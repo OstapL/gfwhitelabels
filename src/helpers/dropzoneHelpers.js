@@ -135,7 +135,11 @@ module.exports = {
         params: {
           file_name: name,
         },
-        acceptedFiles: 'application/pdf,.pptx,.ppt',
+        acceptedFiles: 'application/pdf,' +
+          '.pptx,' +
+          '.ppt,' +
+          '.doc,' +
+          '.docx'
       };
 
       this._initializeDropzone(name, dzOptions, (data) => {
@@ -147,11 +151,38 @@ module.exports = {
         let url = data[0].urls[0];
         let id = data[0].id;
 
-        $('.img-' + name).attr('src', '/img/icons/' + icon + '.png');
-        $('.a-' + name).attr('href', url)
-          .html(textHelper.shortenFileName(fileName))
-          .attr('title', fileName);
-        $('#' + name).val(id);
+        let fileBlock = $('<div class="delete-file-container" style="position: absolute;">' +
+            '<a href="#" class="delete-file" data-fileid="' + data[0].id + '">' +
+              '<i class="fa fa-times"></i>' +
+            '</a>' +
+          '</div>' +
+          '<img class="img-file img-' + name + '" src="/img/icons/' + icon + '.png" />' +
+          '<a class="link-file a-' + name + '" target="_blank" href="' + url + '" title="' + data[0].name +'">' + textHelper.shortenFileName(data[0].name) + '</a>');
+
+        let $link = fileBlock.find('a.delete-file');
+        $link.on('click', (e) => {
+          e.preventDefault();
+          e.stopPropagation();
+
+          // let fileId = $link.data('fileid');
+
+          $link.prop('enabled', false);
+          $link.off('click');
+          // api.makeRequest(filerUrl + '/' + fileId, 'DELETE').done(() => {
+          //remove field from model
+          let dataArr = this.model[name.replace('_id', '_data')];
+          $link.closest('.thumb-file-container')
+            .empty()
+            .append('<img src="/img/icons/file.png" alt="" class="img-file img-"' + name + '>' +
+              '<a class="a-' + name + '" href="#"></a>');
+          // });
+
+          return false;
+        });
+
+        $('.dropzone__' + name + ' .thumb-file-container')
+          .empty()
+          .append(fileBlock);
 
         this.model[name] = id;
         this.model[name.replace('_id', '_data')] = data;
@@ -192,8 +223,8 @@ module.exports = {
         },
         acceptedFiles: 'application/pdf,' +
           'application/msword,' + //.doc
-          'application/vnd.openxmlformats-officedocument.wordprocessingml.document,' +//.docx
-          'application/vnd.openxmlformats-officedocument.presentationml.presentation',//.pptx
+          'application/vnd.openxmlformats-officedocument.wordprocessingml.document,' +  //.doc
+          'application/vnd.openxmlformats-officedocument.presentationml.presentation',  //.pptx
       };
 
       this._initializeDropzone(name, dzOptions, (data, file) => {
@@ -230,7 +261,7 @@ module.exports = {
                 if (!dataArr.length) {
                   //add empty file
                   $link.closest('.file-scroll').append('<div class="thumb-file-container text-xl-center">' +
-                    '<img src="/img/icons/nofile.png" alt="" class="img-file img-"' + name + '>' +
+                    '<img src="/img/icons/file.png" alt="" class="img-file img-"' + name + '>' +
                     '<a class="a-' + name + '" href="#"></a>' +
                   '</div>');
                 }
@@ -273,7 +304,7 @@ module.exports = {
                 if (!dataArr.length) {
                   //add empty file
                   $link.closest('.file-scroll').append('<div class="thumb-file-container text-xl-center">' +
-                    '<img src="/img/icons/nofile.png" alt="" class="img-file img-"' + name + '>' +
+                    '<img src="/img/icons/file.png" alt="" class="img-file img-"' + name + '>' +
                     '<a class="a-' + name + '" href="#"></a>' +
                   '</div>');
                 }
