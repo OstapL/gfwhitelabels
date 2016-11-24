@@ -1354,7 +1354,7 @@ section.formc-review
         p.pb10
           each v,k in values.formc.team_members
             if v.role[0] == 2
-              a(href="#" class="show-input" data-name="director.1.first_name_director.1.last_name").link-1 #{v.first_name}
+              +frField('formc.team_members[' + k + '].first_name', 'text')
               .table-responsive.m-t-1
                 table.table.table-bordered
                   theader
@@ -1371,22 +1371,22 @@ section.formc-review
                         if v1
                           tr
                             td
-                              a(href="#" class="show-input" data-name="director.1.employer.1").link-1 #{v1.employer}
+                              +frField('formc.team_members[' + k + '].experiences[' + k1 + '].employer', 'text')
                             td
-                              a(href="#" class="show-input" data-name="director.1.employer_biz.1").link-1 #{v1.employer_principal}
+                              +frField('formc.team_members[' + k + '].experiences[' + k1 + '].title', 'text')
                             td
-                              a(href="#" class="show-input" data-name="director.1.employer_title.1").link-1 #{v1.title}
+                              +frField('formc.team_members[' + k + '].experiences[' + k1 + '].title', 'text')
                             td
-                              a(href="#" class="show-input" data-name="director.1.employer_responsibilitiees.1").link-1 #{v1.responsibilities}
+                              +frField('formc.team_members[' + k + '].experiences[' + k1 + '].responsibilities', 'text')
                             td
-                              a(href="#" class="show-input" data-name="director.1.position_start.1").link-1 #{v1.start_date_of_service}
+                              +frField('formc.team_members[' + k + '].experiences[' + k1 + '].start_date_of_service', 'text')
                             td
-                              a(href="#" class="show-input" data-name="director.1.position_end.1").link-1 #{v1.end_date_of_service}
+                              +frField('formc.team_members[' + k + '].experiences[' + k1 + '].end_date_of_service', 'text')
         p.pb10.text-indent Employment information from previous employers over the last three years for each of the Company’s directors is as follows:
         p.pb10
           each v,k in values.formc.team_members
             if v.role[0] == 1
-              a(href="#" class="show-input" data-name="director.1.first_name_director.1.last_name").link-1 #{v.first_name}
+              +frField('formc.team_members[' + k + '].first_name', 'text')
               .table-responsive.m-t-1
                 table.table.table-bordered
                   theader
@@ -1403,17 +1403,17 @@ section.formc-review
                         if v1
                           tr
                             td
-                              a(href="#" class="show-input" data-name="director.1.employer.1").link-1 #{v1.employer}
+                              +frField('formc.team_members[' + k + '].experiences[' + k1 + '].employer', 'text')
                             td
-                              a(href="#" class="show-input" data-name="director.1.employer_biz.1").link-1 #{v1.employer_principal}
+                              +frField('formc.team_members[' + k + '].experiences[' + k1 + '].employer_principal', 'text')
                             td
-                              a(href="#" class="show-input" data-name="director.1.employer_title.1").link-1 #{v1.title}
+                              +frField('formc.team_members[' + k + '].experiences[' + k1 + '].title', 'text')
                             td
-                              a(href="#" class="show-input" data-name="director.1.employer_responsibilitiees.1").link-1 #{v1.responsibilities}
+                              +frField('formc.team_members[' + k + '].experiences[' + k1 + '].responsibilities', 'text')
                             td
-                              a(href="#" class="show-input" data-name="director.1.position_start.1").link-1 #{v1.start_date_of_service}
+                              +frField('formc.team_members[' + k + '].experiences[' + k1 + '].start_date_of_service', 'text')
                             td
-                              a(href="#" class="show-input" data-name="director.1.position_end.1").link-1 #{v1.end_date_of_service}
+                              +frField('formc.team_members[' + k + '].experiences[' + k1 + '].end_date_of_service', 'text')
 
 
 //MODAL
