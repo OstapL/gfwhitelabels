@@ -71,37 +71,39 @@ include ../../../templates/fields_mixins.pug
                       +fieldTextLabel("street_address_1", _.extend({'class1': 'col-lg-3 text-lg-right text-xs-left', 'class2': 'col-lg-8 ', 'type': 'text'}, fields.street_address_1))
                       +fieldTextLabel("street_address_2", _.extend({'class1': 'col-lg-3 text-lg-right text-xs-left', 'class2': 'col-lg-8 ', 'type': 'text'}, fields.street_address_2))
 
-                      .row.us-row(style="display:" + (user.country == 'US' ? 'block' : 'none'))
+                      .us-row(style="display:" + (user.country == 'US' ? 'block' : 'none'))
                         input(type="hidden" name="city" values=values['city'] disabled=((user.country=='US') ? false : true))
                         input(type="hidden" name="state" value=values['state'] disabled=((user.country=='US') ? false : true))
-                        .col-md-12.col-lg-6
-                          if user.country == 'US'
-                            +fieldTextLabel('zip_code', _.extend({'class1': 'col-lg-6 text-lg-right text-xs-left', 'class2': 'col-lg-6', 'type': 'text', 'value': user.zip_code}, fields.zip_code))
-                          else
-                            +fieldTextLabel('zip_code', _.extend({'class1': 'col-lg-6 text-lg-right text-xs-left', 'class2': 'col-lg-6', 'type': 'text', disabled: true }, fields.zip_code))
+                        .row
+                          .col-md-12.col-lg-6
+                            if user.country == 'US'
+                              +fieldTextLabel('zip_code', _.extend({'class1': 'col-lg-6 text-lg-right text-xs-left', 'class2': 'col-lg-6', 'type': 'text', 'value': user.zip_code}, fields.zip_code))
+                            else
+                              +fieldTextLabel('zip_code', _.extend({'class1': 'col-lg-6 text-lg-right text-xs-left', 'class2': 'col-lg-6', 'type': 'text', disabled: true }, fields.zip_code))
 
-                        .col-lg-5.city_states.required
-                          .row
-                            label.col-lg-5.col-xs-6.text-lg-right.text-xs-left City/State
-                            .col-lg-6.col-xs-6
-                              a(data-toggle="modal" data-target="#city_state_modal" href="#city_state_modal").change_state_city
-                                span.input-value.js-city-state #{ values['city'] ? values['city'] : '(City)' }, #{ values['state'] ? values['state'] : '(State)' }
-                                i.fa.fa-pencil-square-o.link-1
-                        .col-md-12.col-lg-6
-                          if user.country == 'US'
-                            +fieldTextLabel('phone', _.extend({
-                              'class1': 'col-lg-6 text-lg-right text-xs-left',
-                              'class2': 'col-lg-6',
-                              'type': 'text',
-                              'value': user.phone
-                            }, fields.phone))
-                          else
-                            +fieldTextLabel('phone', _.extend({
-                              'class1': 'col-lg-6 text-lg-right text-xs-left',
-                              'class2': 'col-lg-6',
-                              'type': 'text',
-                              disabled: true
-                            }, fields.phone))
+                          .col-lg-5.city_states.required
+                            .row
+                              label.col-lg-5.col-xs-6.text-lg-right.text-xs-left City/State
+                              .col-lg-6.col-xs-6
+                                a(data-toggle="modal" data-target="#city_state_modal" href="#city_state_modal").change_state_city
+                                  span.input-value.js-city-state #{ values['city'] ? values['city'] : '(City)' }, #{ values['state'] ? values['state'] : '(State)' }
+                                  i.fa.fa-pencil-square-o.link-1
+                        .row
+                          .col-xl-6
+                            if user.country == 'US'
+                              +fieldTextLabel('phone', _.extend({
+                                'class1': 'col-lg-6 text-lg-right text-xs-left',
+                                'class2': 'col-lg-6',
+                                'type': 'text',
+                                'value': user.phone
+                              }, fields.phone))
+                            else
+                              +fieldTextLabel('phone', _.extend({
+                                'class1': 'col-lg-6 text-lg-right text-xs-left',
+                                'class2': 'col-lg-6',
+                                'type': 'text',
+                                disabled: true
+                              }, fields.phone))
 
                       .row.foreign-country-row(style="display:" + (user.country == 'US' ? 'none' : 'block'))
                         .col-lg-6
@@ -122,7 +124,7 @@ include ../../../templates/fields_mixins.pug
                             div.col-lg-6
                               input.form-control(name='zip_code1' placeholder='Postal Code' type="text" value=user.zip_code)
                         .col-lg-5
-                          +fieldTextLabel('phone', _.extend({'class1 ': 'col-lg-5 text-lg-right text-xs-right', 'class2': 'col-lg-7 ', 'type': 'text', 'value': user.phone }, fields.phone))
+                          +fieldTextLabel('phone', _.extend({class1: 'col-lg-5 text-xl-right text-lg-left', class2: 'col-lg-7 ', 'type': 'text', 'value': user.phone }, fields.phone))
                       
                       .col-xl-11.p-r-0
                         .border-bottom.m-t-2.m-b-3

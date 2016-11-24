@@ -6,6 +6,8 @@ import lookupData from '../../helpers/capitalraiseCalculatorData';
 let formatPrice = calculatorHelper.formatPrice;
 let industryData = lookupData();
 
+const calculatorValidationHelper = require('helpers/calculatorValidationHelper.js');
+
 module.exports = {
     intro: Backbone.View.extend({
         el: '#content',
@@ -18,7 +20,7 @@ module.exports = {
         }
     }),
 
-    step1: Backbone.View.extend({
+    step1: Backbone.View.extend(_.extend({
         el: '#content',
 
         template: require('./templates/step1.pug'),
@@ -48,6 +50,58 @@ module.exports = {
                     // 'Be revolutionary and disruptive to the market' - 4
                     'typeOfEstablishment': 0
                 }
+                this.fields = {
+                    industry: {
+                        required: true,
+                        type: 'integer',
+                        validate: {},
+                    },
+                    industryEstablishment: {
+                        required: true,
+                        type: 'integer',
+                        validate: {},
+                    },
+                    typeOfEstablishment: {
+                        required: true,
+                        type: 'integer',
+                        validate: {},
+                    },
+                    projectedRevenue: {
+                        required: true,
+                        type: 'integer',
+                        validate: {},
+                    },
+                    operatingProfit: {
+                        required: true,
+                        type: 'integer',
+                        validate: {},
+                    },
+                    projectedRevenueTwo: {
+                        required: true,
+                        type: 'integer',
+                        validate: {},
+                    },
+                    operatingProfitTwo: {
+                        required: true,
+                        type: 'integer',
+                        validate: {},
+                    },
+                    CashOnHand: {
+                        required: true,
+                        type: 'integer',
+                        validate: {},
+                    },
+                    yourDebt: {
+                        required: true,
+                        type: 'integer',
+                        validate: {},
+                    },
+                    cashRaise: {
+                        required: true,
+                        type: 'integer',
+                        validate: {},
+                    },
+                };
             }
 
             // declare data for two selects
@@ -79,12 +133,12 @@ module.exports = {
             }
         },
 
-        events: {
+        events: _.extend({
             // calculate your income
             'submit .js-calc-form': 'doCalculation',
 
             'change .js-select': 'saveValue'
-        },
+        }, calculatorValidationHelper.events),
 
         saveValue(e) {
             let selectBox = e.target;
@@ -93,6 +147,9 @@ module.exports = {
 
         doCalculation(e) {
             e.preventDefault();
+
+            if (!this.validate(e)) return;
+
             let data = app.cache.capitalRaiseCalculator,
                 calculatedData = {},
                 industry = data.industry,
@@ -174,7 +231,7 @@ module.exports = {
 
             return this;
         }
-    }),
+    }, calculatorValidationHelper.methods)),
 
     finish: Backbone.View.extend({
         el: '#content',
