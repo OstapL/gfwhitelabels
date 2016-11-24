@@ -330,7 +330,7 @@ mixin fileDropzone(name, attr)
                       a(href="#" class="delete-file" data-fileid=attr.data.id)
                         i.fa.fa-times
                     img(src='/img/icons/' + icon + '.png' alt=attr.label class=("img-file img-" + name))
-                    .row
+                    div.row
                       a(class=("a-" + name) href=attr.data.urls[0] title=attr.data.name) #{ textHelper.shortenFileName(attr.data.name) }
                   else
                     img(src='/img/icons/' + icon + '.png' alt=attr.label class="img-file img-" + name)
@@ -377,7 +377,7 @@ mixin fileFolderDropzone(name, attr)
                     img(src='/img/icons/' + icon + '.png' alt=attr.label class="img-file img-" + name)
                     a(class=("link-file a-" + name) target="_blank" href=v.urls[0] title=v.name) #{ textHelper.shortenFileName(v.name) }
                 else
-                  .thumb-file-container.col-xl-12
+                  .thumb-file-container.text-xl-center
                     img(src='/img/icons/' + icon + '.png' alt=attr.label class="img-file img-" + name)
 
 
