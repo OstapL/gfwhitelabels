@@ -154,7 +154,10 @@ module.exports = {
         $link.off('click');
         // api.makeRequest(filerUrl + '/' + fileId, 'DELETE').done(() => {
         //remove field from model
-        let dataArr = this.model[name.replace('_id', '_data')];
+
+        delete this.model[name];
+        delete this.model[name.replace('_id', '_data')];
+
         $link.closest('.thumb-file-container')
           .empty()
           .append('<img src="/img/icons/file.png" alt="" class="img-file img-"' + name + '>' +
@@ -253,7 +256,7 @@ module.exports = {
         // api.makeRequest(filerUrl + '/' + fileId, 'DELETE').done(() => {
         //remove field from model
         let dataArr = this.model[name.replace('_id', '_data')];
-        let dataIdx = _(dataArr).findIndex((elem) => { return elem.id == fileId});
+        let dataIdx = _(dataArr).findIndex((elem) => { return elem.id == fileId });
         if (dataIdx >= 0) {
           dataArr.splice(dataIdx, 1);
           if (!dataArr.length) {
@@ -305,9 +308,7 @@ module.exports = {
 
       //attach remove event handlers to dropzone items
       $('.dropzone__' + name + ' .img-dropzone a.delete-file').each((idx, link) => {
-        let $link = $(link);
-
-        $link.on('click', deleteFile);
+        $(link).on('click', deleteFile);
       });
     },
 
