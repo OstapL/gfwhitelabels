@@ -22,7 +22,7 @@ include ../../../templates/mixins.pug
         li
           a(href="/calculator/establishedBusiness/step-3").current.btn.text-uppercase step 3
         li
-          a(href="/calculator/establishedBusiness/finish").btn.text-uppercase Finish
+          a(href="/calculator/establishedBusiness/finish").next.btn.text-uppercase Finish
 
   .row
     .offset-lg-3.col-lg-6
@@ -34,7 +34,7 @@ include ../../../templates/mixins.pug
 
   .row
     .offset-lg-3.col-lg-6
-      form(method="post" action="").js-calc-form
+      form(method="post" action="").js-calc-form.form-section
         .form-body.clearfix
           .form-group.row
             label(for="revenue2").col-lg-12 Revenue
@@ -46,6 +46,7 @@ include ../../../templates/mixins.pug
                 placeholder='Revenue',
                 data-input-mask='price',
                 data-model-value='revenue2',
+                name="revenue2",
                 data-current-value= data.revenue2)#revenue2.form-control.js-field
 
           .form-group.row
@@ -59,6 +60,7 @@ include ../../../templates/mixins.pug
                 autocomplete='off'
                 data-input-mask='price',
                 data-model-value='goodsCost2',
+                name="goodsCost2",
                 data-current-value= data.goodsCost2)#goodsCost2.form-control.js-field
 
           .form-group.row
@@ -74,6 +76,7 @@ include ../../../templates/mixins.pug
                 autocomplete='off'
                 data-input-mask='price',
                 data-model-value='operatingExpense2',
+                name="operatingExpense2",
                 data-current-value= data.operatingExpense2)#operatingExpense2.form-control.js-field
 
           .form-group.row
@@ -88,6 +91,7 @@ include ../../../templates/mixins.pug
                 autocomplete='off'
                 data-input-mask='price',
                 data-model-value='oneTimeExpenses2',
+                name="oneTimeExpenses2",
                 data-current-value= data.oneTimeExpenses2)#oneTimeExpenses2.form-control.js-field
 
           .form-group.row
@@ -102,6 +106,7 @@ include ../../../templates/mixins.pug
                 autocomplete='off'
                 data-input-mask='price',
                 data-model-value='depreciationAmortization2',
+                name="depreciationAmortization2"
                 data-current-value= data.depreciationAmortization2)#depreciationAmortization2.form-control.js-field
 
           .form-group.row
@@ -115,6 +120,7 @@ include ../../../templates/mixins.pug
                 autocomplete='off'
                 data-input-mask='price',
                 data-model-value='interestPaid2',
+                name="interestPaid2",
                 data-current-value= data.interestPaid2)#interestPaid2.form-control.js-field
 
           .form-group.row
@@ -128,6 +134,7 @@ include ../../../templates/mixins.pug
                 autocomplete='off'
                 data-input-mask='price',
                 data-model-value='taxesPaid2',
+                name="taxesPaid2"
                 data-current-value= data.taxesPaid2)#taxesPaid2.form-control.js-field
 
           .form-group.row.clearfix.m0

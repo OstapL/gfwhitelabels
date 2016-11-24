@@ -786,8 +786,6 @@ module.exports = {
         'focus #minimum_raise,#maximum_raise,#minimum_increment,#premoney_valuation,#price_per_share': 'clearZeroAmount',
         'change #minimum_raise,#maximum_raise,#minimum_increment,#premoney_valuation': 'formatNumber',
         'change #minimum_raise,#maximum_raise,#price_per_share,#premoney_valuation': 'calculateNumberOfShares',
-        dragover: 'globalDragover',
-        dragleave: 'globalDragleave',
         'click .onPreview': onPreviewAction,
         'click .submit_form': submitCampaign,
         'click .submit-specifics': 'checkMinMaxRaise',
@@ -803,16 +801,6 @@ module.exports = {
           alert("Maximum Raise must be larger than Minimum Raise!");
           e.preventDefault();
         }
-      },
-
-      globalDragover() {
-        // this.$('.dropzone').css({ border: 'dashed 1px lightgray' });
-        this.$('.border-dropzone').addClass('active-border');
-      },
-
-      globalDragleave() {
-        // this.$('.dropzone').css({ border: 'none' });
-        this.$('.border-dropzone').removeClass('active-border');
       },
 
       preinitialize() {
@@ -916,7 +904,6 @@ module.exports = {
                 fields: this.fields,
                 // values: this.model.toJSON(),
                 values: this.model,
-                dropzoneHelpers: dropzoneHelpers.methods,
               })
         );
 

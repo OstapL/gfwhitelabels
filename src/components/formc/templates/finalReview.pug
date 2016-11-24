@@ -490,25 +490,23 @@ section.formc-review
               each v,k in values.formc.team_members
                 if v.role[0] == 1
                   - console.log(v, k)
-                  tr
-                    td.text-xs-center
-                      a(href="#" class="show-input" data-name="director.1.first_name").link-1 #{v.first_name}
-                      br
-                      a(href="#" class="show-input" data-name="director.1.last_name").link-1 #{v.last_name}
-                    td.text-xs-center
-                    if v.business_experiences
-                      each v1,k1 in v.business_experiences
-                          a(href="#" class="show-input" data-name="director.1.service_start ").link-1 #{v1.start_date_of_service}
+                  if v.experiences
+                    each v1,k1 in v.experiences
+                      tr
+                        td.text-xs-center
+                          +frField('formc.team_members[' + k + '].first_name', 'text')
                           br
-                          a(href="#" class="show-input" data-name="director.1.service_end").link-1 #{v1.end_date_of_service}
-                    td.text-xs-center
-                    if v.business_experiences
-                      each v1,k1 in v.business_experiences
-                          a(href="#" class="show-input" data-name="director.1.occupation").link-1 #{v1.principal_occupation}
+                          +frField('formc.team_members[' + k + '].last_name', 'text')
+                        td.text-xs-center
+                          +frField('formc.team_members[' + k + '].experiences[' + k1 + '].start_date_of_service', 'text')
                           br
-                          a(href="#" class="show-input" data-name="director.1.employer").link-1 #{v1.employer}
+                          +frField('formc.team_members[' + k + '].experiences[' + k1 + '].end_date_of_service', 'text')
+                        td.text-xs-center
+                          +frField('formc.team_members[' + k + '].principal_occupation', 'text')
                           br
-                          a(href="#" class="show-input" data-name="director.1.employer").link-1 #{v1.title}
+                          +frField('formc.team_members[' + k + '].experiences[' + k1 + '].employer', 'text')
+                          br
+                          +frField('formc.team_members[' + k + '].experiences[' + k1 + '].responsibilities', 'text')
             
 
       // page 7
@@ -534,15 +532,15 @@ section.formc-review
                 if v.role[0] == 0
                   tr
                     td.text-xs-center
-                      a(href="#" class="show-input" data-name="holder.1.first_name").link-1 #{v.first_name}
+                      +frField('formc.team_members[' + k + '].first_name', 'text')
                       br
-                      a(href="#" class="show-input" data-name="holder.1.last_name").link-1 #{v.last_name}
+                      +frField('formc.team_members[' + k + '].last_name', 'text')
                     td.text-xs-center
-                      a(href="#" class="show-input" data-name="holder.1.class_shares").link-1 #{v.class_of_securities}
+                      +frField('formc.team_members[' + k + '].class_of_securities', 'text')
                     td.text-xs-center
-                      a(href="#" class="show-input" data-name="holder.1.number_shares").link-1 #{v.number_of_shares}
+                      +frField('formc.team_members[' + k + '].number_of_shares', 'text')
                     td.text-xs-center
-                      a(href="#" class="show-input" data-name="holder.1.voting_power").link-1 #{v.voting_power_percent}
+                      +frField('formc.team_members[' + k + '].voting_power_percent', 'text')
 
         p.text-indent The Company has confirmed that information above is accurate for the period spanning 120 days prior to the date of filing of this Material.   For any calculation above of total voting power, all securities are included for which the person directly or indirectly has or shares the voting power, which includes the power to vote or to direct the voting of such securities. If the person has the right to acquire voting power of such securities within 60 days, including through the exercise of any option, warrant or right, the conversion of a security, or other arrangement, or if securities are held by a member of the family, through corporations or partnerships, or otherwise in a manner that would allow a person to direct or control the voting of the securities (or share in such direction or control — as, for example, a co-trustee) they are included as being “beneficially owned.” For any calculation of outstanding voting equity securities, all outstanding options are assumed to be exercised and all outstanding convertible securities converted.
         p.text-uppercase.m-t-3.m-b-0.pb10 
@@ -571,10 +569,14 @@ section.formc-review
               tbody
                 for v in values.formc.transaction_with_related_parties
                   tr
-                    td.text-xs-center #{ v.specified_person }
-                    td.text-xs-center #{ v.relationship_to_issuer }
-                    td.text-xs-center #{ v.nature_of_interest }
-                    td.text-xs-center #{ v.amount_of_interest }
+                    td.text-xs-center
+                      +frField('formc.transaction_with_related_parties[' + v + '].specified_person', 'text')
+                    td.text-xs-center
+                      +frField('formc.transaction_with_related_parties[' + v + '].relationship_to_issuer', 'text')
+                    td.text-xs-center
+                      +frField('formc.transaction_with_related_parties[' + v + '].nature_of_interest', 'text')
+                    td.text-xs-center
+                      +frField('formc.transaction_with_related_parties[' + v + '].amount_of_interest', 'text')
           p.pb10.text-indent The term “immediate family member” includes any child, stepchild, grandchild, parent, stepparent, grandparent, spouse or spousal equivalent, sibling, mother-in-law, father-in-law, son-in-law, daughter-in-law, brother-in-law, or sister-in-law of the person, and includes adoptive relationships. The term “spousal equivalent” means a co-habitant occupying a relationship generally equivalent to that of a spouse.
 
       // page 9
@@ -670,19 +672,20 @@ section.formc-review
               each v,k in values.formc.outstanding_securities
                 tr
                   td
-                    a(href="#" class="show-input" data-name="cap_type").link-1 #{v.security_type}
+                    +frField('formc.outstanding_securities[' + k + '].security_type', 'text')
                   td
-                    a(href="#" class="show-input" data-name="cap_type_XXX_outstanding_1").link-1 #{v.amount_authroized}
+                    +frField('formc.outstanding_securities[' + k + '].amount_authroized', 'text')
                   td
-                    a(href="#" class="show-input" data-name="cap_type_XXX_outstanding_1-2").link-1 #{v.amount_outstanding}
+                    +frField('formc.outstanding_securities[' + k + '].amount_outstanding', 'text')
                   td
-                    a(href="#" class="show-input" data-name="cap_type_XXX_voting_1").link-1 #{v.voting_right}
+                    +frField('formc.outstanding_securities[' + k + '].voting_right', 'text')
               
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u Description of Securities, Material Terms and Other Rights:
         each v,k in values.formc.outstanding_securities
-          p.pb10 #{ v.security_type }
-            a(href="#" class="show-input" data-name="cap_type_common_description").link-1 #{ v.terms_and_rights }
+          p.pb10
+            //a(href="#" class="show-input" data-name="cap_type_common_description").link-1 #{ v.terms_and_rights }
+            +frField('formc.outstanding_securities[' + k + '].terms_and_rights', 'text')
 
       // page 14
       section.page-formc-review.m-t-1
@@ -936,57 +939,59 @@ section.formc-review
                 tr
                   td Total Assets
                   td.text-xs-center
-                    a(href="#" class="show-input" data-name="recent_total_assets").link-1 values.formc.sold_securities_data[0].total_assets
+                    +frField('formc.sold_securities_data[0].total_assets', 'text')
                   td.text-xs-center
-                    a(href="#" class="show-input" data-name="prior_total_assets").link-1 values.formc.sold_securities_data[1].total_assets
+                    +frField('formc.sold_securities_data[1].total_assets', 'text')
                 tr
                   td Cash & Cash Equivalents
                   td.text-xs-center
-                    a(href="#" class="show-input" data-name="recent_cash_and_equivalents").link-1 values.formc.sold_securities_data[0].cash_and_equivalents
+                    +frField('formc.sold_securities_data[0].cash_and_equivalents', 'text')
+
                   td.text-xs-center
-                    a(href="#" class="show-input" data-name="prior_cash_and_equivalents").link-1 values.formc.sold_securities_data[1].cash_and_equivalents
+                    +frField('formc.sold_securities_data[1].cash_and_equivalents', 'text')
                 tr
                   td Accounts Receivable
                   td.text-xs-center
-                    a(href="#" class="show-input" data-name="recent_account_receivable").link-1 values.formc.sold_securities_data[0].account_receivable
+                    +frField('formc.sold_securities_data[0].cash_and_equivalents', 'text')
                   td.text-xs-center
-                    a(href="#" class="show-input" data-name="prior_account_receivable").link-1 values.formc.sold_securities_data[1].account_receivable
+                    +frField('formc.sold_securities_data[1].cash_and_equivalents', 'text')
                 tr
                   td Short-term Debt
                   td.text-xs-center
-                    a(href="#" class="show-input" data-name="recent_short_term_debt").link-1 values.formc.sold_securities_data[0].short_term_debt
+                    +frField('formc.sold_securities_data[0].short_term_debt', 'text')
                   td.text-xs-center
-                    a(href="#" class="show-input" data-name="prior_short_term_debt").link-1 values.formc.sold_securities_data[1].short_term_debt
+                    +frField('formc.sold_securities_data[1].short_term_debt', 'text')
                 tr
                   td Long-term Debt
                   td.text-xs-center
-                    a(href="#" class="show-input" data-name="recent_long_term_debt").link-1 values.formc.sold_securities_data[0].long_term_debt
+                    +frField('formc.sold_securities_data[0].long_term_debt', 'text')
                   td.text-xs-center
-                    a(href="#" class="show-input" data-name="prior_long_term_debt").link-1 values.formc.sold_securities_data[1].long_term_debt
+                    +frField('formc.sold_securities_data[1].long_term_debt', 'text')
                 tr
                   td Revenues/Sales
                   td.text-xs-center
-                    a(href="#" class="show-input" data-name="recent_revenues_sales").link-1 values.formc.sold_securities_data[0].revenues_sales
+                    +frField('formc.sold_securities_data[0].revenues_sales', 'text')
                   td.text-xs-center
-                    a(href="#" class="show-input" data-name="prior_revenues_sales").link-1 values.formc.sold_securities_data[1].revenues_sales
+                    +frField('formc.sold_securities_data[1].revenues_sales', 'text')
                 tr
                   td Cost of Goods Sold
                   td.text-xs-center
-                    a(href="#" class="show-input" data-name="recent_cost_of_goods_sold").link-1 values.formc.sold_securities_data[0].cost_of_goods_sold
+                    +frField('formc.sold_securities_data[0].cost_of_goods_sold', 'text')
                   td.text-xs-center
-                    a(href="#" class="show-input" data-name="prior_cost_of_goods_sold").link-1 values.formc.sold_securities_data[1].cost_of_goods_sold
+                    +frField('formc.sold_securities_data[1].cost_of_goods_sold', 'text')
                 tr
                   td Taxes Paid
                   td.text-xs-center
-                    a(href="#" class="show-input" data-name="recent_Taxes_paid").link-1 values.formc.sold_securities_data[0].taxes_paid
+                    +frField('formc.sold_securities_data[0].total_tax', 'text')
                   td.text-xs-center
-                    a(href="#" class="show-input" data-name="prior_Taxes_paid").link-1 values.formc.sold_securities_data[1].taxes_paid
+                    +frField('formc.sold_securities_data[1].total_tax', 'text')
+
                 tr
                   td Net Income
                   td.text-xs-center
-                    a(href="#" class="show-input" data-name="recent_Net_income").link-1 values.formc.sold_securities_data[0].net_income
+                    +frField('formc.sold_securities_data[0].taxable_income', 'text')
                   td.text-xs-center
-                    a(href="#" class="show-input" data-name="prior_Net_income").link-1 values.formc.sold_securities_data[1].net_income 
+                    +frField('formc.sold_securities_data[1].taxable_income', 'text')
 
       // page 19
       section.page-formc-review.m-t-1
@@ -1019,15 +1024,15 @@ section.formc-review
               each v,k in values.formc.business_loans_or_debt
                 tr
                   td.text-xs-center
-                    a(href="#" class="show-input" data-name="creditor.#").link-1 #{v.creditor}
+                    +frField('formc.business_loans_or_debt[' + k + '].creditor', 'text')
                   td.text-xs-center
-                    a(href="#" class="show-input" data-name="creditor.#_amount").link-1 #{v.outstanding_amount}
+                    +frField('formc.business_loans_or_debt[' + k + '].outstanding_amount', 'text')
                   td.text-xs-center
-                    a(href="#" class="show-input" data-name="creditor.#_rate").link-1 #{v.interest_rate}
+                    +frField('formc.business_loans_or_debt[' + k + '].interest_rate', 'text')
                   td.text-xs-center
-                    a(href="#" class="show-input" data-name="creditor.#_date").link-1 #{v.maturity_date}
+                    +frField('formc.business_loans_or_debt[' + k + '].maturity_date', 'text')
                   td.text-xs-center
-                    a(href="#" class="show-input" data-name="creditor.#_terms").link-1 #{v.other_material_terms}
+                    +frField('formc.business_loans_or_debt[' + k + '].other_material_terms', 'text')
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u Previous Issuer Offerings
         if values.formc.exempt_offering_choice == '0'
@@ -1055,15 +1060,15 @@ section.formc-review
                 each v,k in values.formc.exempt_offering
                   tr
                     td.text-xs-center
-                      a(href="#" class="show-input" data-name="offering.#._date").link-1 #{v.offering_date}
+                      +frField('formc.exempt_offering[' + k + '].offering_date', 'text')
                     td.text-xs-center
-                      a(href="#" class="show-input" data-name="offering.#._exemption").link-1 #{v.exemption_relied_upon}
+                      +frField('formc.exempt_offering[' + k + '].exemption_relied_upon', 'text')
                     td.text-xs-center
-                      a(href="#" class="show-input" data-name="offering.#._type").link-1 #{v.securities_offered}
+                      +frField('formc.exempt_offering[' + k + '].securities_offered', 'text')
                     td.text-xs-center
-                      a(href="#" class="show-input" data-name="offering.#._amount").link-1 #{v.amount_sold}
+                      +frField('formc.exempt_offering[' + k + '].amount_sold', 'text')
                     td.text-xs-center
-                      a(href="#" class="show-input" data-name="offering.#._use").link-1 #{v.use_of_proceeds}
+                      +frField('formc.exempt_offering[' + k + '].use_of_proceeds', 'text')
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u Financial Statements
         p.pb10.text-indent The issuer’s financial statements are attached as Exhibit B.
@@ -1141,44 +1146,44 @@ section.formc-review
           u MARKET AND CUSTOMER RISK FACTORS
           each v,k in values.formc.market_and_customer_risk
             h3
-              | #{ v.title }
+              +frField('formc.market_and_customer_risk[' + k + '].title', 'textarea')
             p
-              | #{ v.risk }
+              +frField('formc.market_and_customer_risk[' + k + '].risk', 'textarea')
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u FINANCIAL RISK FACTORS
           each v,k in values.formc.financial_risk
             h3
-              | #{ v.title }
+              +frField('formc.financial_risk[' + k + '].title', 'textarea')
             p
-              | #{ v.risk }
+              +frField('formc.financial_risk[' + k + '].risk', 'textarea')
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u OPERATIONAL RISK FACTORS
           each v,k in values.formc.operational_risk
             h3
-              | #{ v.title }
+              +frField('formc.operational_risk[' + k + '].title', 'textarea')
             p
-              | #{ v.risk }
+              +frField('formc.operational_risk[' + k + '].risk', 'textarea')
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u COMPETITIVE RISK FACTORS
           each v,k in values.formc.competitive_risk
             h3
-              | #{ v.title }
+              +frField('formc.competitive_risk[' + k + '].title', 'textarea')
             p
-              | #{ v.risk }
+              +frField('formc.competitive_risk[' + k + '].risk', 'textarea')
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u PERSONNEL AND THIRD PARTY RISK FACTORS
           each v,k in values.formc.personnel_and_third_parties_risk
             h3
-              | #{ v.title }
+              +frField('formc.personnel_and_third_parties_risk[' + k + '].title', 'textarea')
             p
-              | #{ v.risk }
+              +frField('formc.personnel_and_third_parties_risk[' + k + '].risk', 'textarea')
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u LEGAL AND REGULATORY RISK FACTORS
           for v,k in values.formc.legal_and_regulatory_risk
             h3
-              | #{ v.title }
+              +frField('formc.legal_and_regulatory_risk[' + k + '].title', 'textarea')
             p
-              | #{ v.risk }
+              +frField('formc.legal_and_regulatory_risk[' + k + '].risk', 'textarea')
 
       // page 25
       section.page-formc-review.m-t-1
@@ -1349,7 +1354,7 @@ section.formc-review
         p.pb10
           each v,k in values.formc.team_members
             if v.role[0] == 2
-              a(href="#" class="show-input" data-name="director.1.first_name_director.1.last_name").link-1 #{v.first_name}
+              +frField('formc.team_members[' + k + '].first_name', 'text')
               .table-responsive.m-t-1
                 table.table.table-bordered
                   theader
@@ -1366,22 +1371,22 @@ section.formc-review
                         if v1
                           tr
                             td
-                              a(href="#" class="show-input" data-name="director.1.employer.1").link-1 #{v1.employer}
+                              +frField('formc.team_members[' + k + '].experiences[' + k1 + '].employer', 'text')
                             td
-                              a(href="#" class="show-input" data-name="director.1.employer_biz.1").link-1 #{v1.employer_principal}
+                              +frField('formc.team_members[' + k + '].experiences[' + k1 + '].title', 'text')
                             td
-                              a(href="#" class="show-input" data-name="director.1.employer_title.1").link-1 #{v1.title}
+                              +frField('formc.team_members[' + k + '].experiences[' + k1 + '].title', 'text')
                             td
-                              a(href="#" class="show-input" data-name="director.1.employer_responsibilitiees.1").link-1 #{v1.responsibilities}
+                              +frField('formc.team_members[' + k + '].experiences[' + k1 + '].responsibilities', 'text')
                             td
-                              a(href="#" class="show-input" data-name="director.1.position_start.1").link-1 #{v1.start_date_of_service}
+                              +frField('formc.team_members[' + k + '].experiences[' + k1 + '].start_date_of_service', 'text')
                             td
-                              a(href="#" class="show-input" data-name="director.1.position_end.1").link-1 #{v1.end_date_of_service}
+                              +frField('formc.team_members[' + k + '].experiences[' + k1 + '].end_date_of_service', 'text')
         p.pb10.text-indent Employment information from previous employers over the last three years for each of the Company’s directors is as follows:
         p.pb10
           each v,k in values.formc.team_members
             if v.role[0] == 1
-              a(href="#" class="show-input" data-name="director.1.first_name_director.1.last_name").link-1 #{v.first_name}
+              +frField('formc.team_members[' + k + '].first_name', 'text')
               .table-responsive.m-t-1
                 table.table.table-bordered
                   theader
@@ -1398,17 +1403,17 @@ section.formc-review
                         if v1
                           tr
                             td
-                              a(href="#" class="show-input" data-name="director.1.employer.1").link-1 #{v1.employer}
+                              +frField('formc.team_members[' + k + '].experiences[' + k1 + '].employer', 'text')
                             td
-                              a(href="#" class="show-input" data-name="director.1.employer_biz.1").link-1 #{v1.employer_principal}
+                              +frField('formc.team_members[' + k + '].experiences[' + k1 + '].employer_principal', 'text')
                             td
-                              a(href="#" class="show-input" data-name="director.1.employer_title.1").link-1 #{v1.title}
+                              +frField('formc.team_members[' + k + '].experiences[' + k1 + '].title', 'text')
                             td
-                              a(href="#" class="show-input" data-name="director.1.employer_responsibilitiees.1").link-1 #{v1.responsibilities}
+                              +frField('formc.team_members[' + k + '].experiences[' + k1 + '].responsibilities', 'text')
                             td
-                              a(href="#" class="show-input" data-name="director.1.position_start.1").link-1 #{v1.start_date_of_service}
+                              +frField('formc.team_members[' + k + '].experiences[' + k1 + '].start_date_of_service', 'text')
                             td
-                              a(href="#" class="show-input" data-name="director.1.position_end.1").link-1 #{v1.end_date_of_service}
+                              +frField('formc.team_members[' + k + '].experiences[' + k1 + '].end_date_of_service', 'text')
 
 
 //MODAL

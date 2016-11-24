@@ -17,7 +17,7 @@ include ../../../templates/mixins.pug
         li
           a(href="/calculator/paybackshare/step-2").current.btn.text-uppercase step 1
         li
-          a(href="/calculator/paybackshare/step-3").btn.text-uppercase finish
+          a(href="/calculator/paybackshare/step-3").next.btn.text-uppercase finish
 
   .row
     .offset-lg-3.col-lg-6
@@ -28,7 +28,7 @@ include ../../../templates/mixins.pug
 
   .row
     .offset-lg-3.col-lg-6
-      form(method="post" action="").js-calc-form
+      form(method="post" action="").js-calc-form.form-section
         .form-body.clearfix 
 
           .form-group.row
@@ -56,6 +56,7 @@ include ../../../templates/mixins.pug
                 autocomplete="off"
                 data-input-mask='price',
                 data-model-value='nextYearRevenue',
+                name="nextYearRevenue",
                 data-current-value= data.nextYearRevenue)#nextYearRevenue.form-control.js-field
 
           .form-group.row
@@ -68,6 +69,7 @@ include ../../../templates/mixins.pug
                 placeholder='0%',
                 autocomplete="off"
                 data-input-mask='percent',
+                name="growLevel",
                 data-model-value='growLevel')#growLevel.form-control.js-field
 
           .form-group.row.clearfix.m0

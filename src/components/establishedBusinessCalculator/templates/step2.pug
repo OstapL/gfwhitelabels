@@ -20,9 +20,9 @@ include ../../../templates/mixins.pug
         li
           a(href="/calculator/establishedBusiness/step-2").current.btn.text-uppercase step 2
         li
-          a(href="/calculator/establishedBusiness/step-3").btn.text-uppercase step 3
+          a(href="/calculator/establishedBusiness/step-3").next.btn.text-uppercase step 3
         li
-          a(href="/calculator/establishedBusiness/finish").btn.text-uppercase Finish
+          a(href="/calculator/establishedBusiness/finish").next.btn.text-uppercase Finish
 
   .row
     .offset-lg-3.col-lg-6
@@ -34,7 +34,7 @@ include ../../../templates/mixins.pug
 
   .row
     .offset-lg-3.col-lg-6
-      form(method="post" action="")
+      form(method="post" action="").form-section
         .form-body.clearfix
           .form-group.row
             label(for="revenue").col-lg-12 Revenue
@@ -47,6 +47,7 @@ include ../../../templates/mixins.pug
                 autocomplete='off'
                 data-input-mask='price',
                 data-model-value='revenue',
+                name="revenue",
                 data-current-value= data.revenue)#revenue.form-control.js-field
 
           .form-group.row
@@ -60,6 +61,7 @@ include ../../../templates/mixins.pug
                 autocomplete='off'
                 data-input-mask='price',
                 data-model-value='goodsCost',
+                name="goodsCost",
                 data-current-value= data.goodsCost)#goodsCost.form-control.js-field
 
           .form-group.row
@@ -73,6 +75,7 @@ include ../../../templates/mixins.pug
                 autocomplete='off'
                 data-input-mask='price',
                 data-model-value='operatingExpense',
+                name="operatingExpense",
                 data-current-value= data.operatingExpense)#operatingExpense.form-control.js-field
 
           .form-group.row
@@ -87,6 +90,7 @@ include ../../../templates/mixins.pug
                 autocomplete='off'
                 data-input-mask='price',
                 data-model-value='oneTimeExpenses',
+                name="oneTimeExpenses",
                 data-current-value= data.oneTimeExpenses)#oneTimeExpenses.form-control.js-field
 
           .form-group.row
@@ -101,6 +105,7 @@ include ../../../templates/mixins.pug
                 autocomplete='off'
                 data-input-mask='price',
                 data-model-value='depreciationAmortization',
+                name="depreciationAmortization"
                 data-current-value= data.depreciationAmortization)#depreciationAmortization.form-control.js-field
 
           .form-group.row
@@ -114,6 +119,7 @@ include ../../../templates/mixins.pug
                 autocomplete='off'
                 data-input-mask='price',
                 data-model-value='interestPaid',
+                name="interestPaid",
                 data-current-value= data.interestPaid)#interestPaid.form-control.js-field
 
           .form-group.row
@@ -127,6 +133,7 @@ include ../../../templates/mixins.pug
                 autocomplete='off'
                 data-input-mask='price',
                 data-model-value='taxesPaid',
+                name="taxesPaid"
                 data-current-value= data.taxesPaid)#taxesPaid.form-control.js-field
 
           .form-group.row.clearfix.m0
@@ -135,5 +142,5 @@ include ../../../templates/mixins.pug
 
             .col-xs-6.mt30
               .controls
-                a(href='/calculator/establishedBusiness/step-3').btn.btn-primary.pull-right.text-uppercase Next
+                button.btn.btn-primary.pull-right.text-uppercase Next
                 // add class .pointer-events-none to disable all events for this button
