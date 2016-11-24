@@ -1024,15 +1024,15 @@ section.formc-review
               each v,k in values.formc.business_loans_or_debt
                 tr
                   td.text-xs-center
-                    a(href="#" class="show-input" data-name="creditor.#").link-1 #{v.creditor}
+                    +frField('formc.business_loans_or_debt[' + k + '].creditor', 'text')
                   td.text-xs-center
-                    a(href="#" class="show-input" data-name="creditor.#_amount").link-1 #{v.outstanding_amount}
+                    +frField('formc.business_loans_or_debt[' + k + '].outstanding_amount', 'text')
                   td.text-xs-center
-                    a(href="#" class="show-input" data-name="creditor.#_rate").link-1 #{v.interest_rate}
+                    +frField('formc.business_loans_or_debt[' + k + '].interest_rate', 'text')
                   td.text-xs-center
-                    a(href="#" class="show-input" data-name="creditor.#_date").link-1 #{v.maturity_date}
+                    +frField('formc.business_loans_or_debt[' + k + '].maturity_date', 'text')
                   td.text-xs-center
-                    a(href="#" class="show-input" data-name="creditor.#_terms").link-1 #{v.other_material_terms}
+                    +frField('formc.business_loans_or_debt[' + k + '].other_material_terms', 'text')
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u Previous Issuer Offerings
         if values.formc.exempt_offering_choice == '0'
@@ -1060,15 +1060,15 @@ section.formc-review
                 each v,k in values.formc.exempt_offering
                   tr
                     td.text-xs-center
-                      a(href="#" class="show-input" data-name="offering.#._date").link-1 #{v.offering_date}
+                      +frField('formc.exempt_offering[' + k + '].offering_date', 'text')
                     td.text-xs-center
-                      a(href="#" class="show-input" data-name="offering.#._exemption").link-1 #{v.exemption_relied_upon}
+                      +frField('formc.exempt_offering[' + k + '].exemption_relied_upon', 'text')
                     td.text-xs-center
-                      a(href="#" class="show-input" data-name="offering.#._type").link-1 #{v.securities_offered}
+                      +frField('formc.exempt_offering[' + k + '].securities_offered', 'text')
                     td.text-xs-center
-                      a(href="#" class="show-input" data-name="offering.#._amount").link-1 #{v.amount_sold}
+                      +frField('formc.exempt_offering[' + k + '].amount_sold', 'text')
                     td.text-xs-center
-                      a(href="#" class="show-input" data-name="offering.#._use").link-1 #{v.use_of_proceeds}
+                      +frField('formc.exempt_offering[' + k + '].use_of_proceeds', 'text')
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u Financial Statements
         p.pb10.text-indent The issuer’s financial statements are attached as Exhibit B.
@@ -1146,44 +1146,44 @@ section.formc-review
           u MARKET AND CUSTOMER RISK FACTORS
           each v,k in values.formc.market_and_customer_risk
             h3
-              | #{ v.title }
+              +frField('formc.market_and_customer_risk[' + k + '].title', 'textarea')
             p
-              | #{ v.risk }
+              +frField('formc.market_and_customer_risk[' + k + '].risk', 'textarea')
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u FINANCIAL RISK FACTORS
           each v,k in values.formc.financial_risk
             h3
-              | #{ v.title }
+              +frField('formc.financial_risk[' + k + '].title', 'textarea')
             p
-              | #{ v.risk }
+              +frField('formc.financial_risk[' + k + '].risk', 'textarea')
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u OPERATIONAL RISK FACTORS
           each v,k in values.formc.operational_risk
             h3
-              | #{ v.title }
+              +frField('formc.operational_risk[' + k + '].title', 'textarea')
             p
-              | #{ v.risk }
+              +frField('formc.operational_risk[' + k + '].risk', 'textarea')
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u COMPETITIVE RISK FACTORS
           each v,k in values.formc.competitive_risk
             h3
-              | #{ v.title }
+              +frField('formc.competitive_risk[' + k + '].title', 'textarea')
             p
-              | #{ v.risk }
+              +frField('formc.competitive_risk[' + k + '].risk', 'textarea')
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u PERSONNEL AND THIRD PARTY RISK FACTORS
           each v,k in values.formc.personnel_and_third_parties_risk
             h3
-              | #{ v.title }
+              +frField('formc.personnel_and_third_parties_risk[' + k + '].title', 'textarea')
             p
-              | #{ v.risk }
+              +frField('formc.personnel_and_third_parties_risk[' + k + '].risk', 'textarea')
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u LEGAL AND REGULATORY RISK FACTORS
           for v,k in values.formc.legal_and_regulatory_risk
             h3
-              | #{ v.title }
+              +frField('formc.legal_and_regulatory_risk[' + k + '].title', 'textarea')
             p
-              | #{ v.risk }
+              +frField('formc.legal_and_regulatory_risk[' + k + '].risk', 'textarea')
 
       // page 25
       section.page-formc-review.m-t-1
@@ -1354,7 +1354,7 @@ section.formc-review
         p.pb10
           each v,k in values.formc.team_members
             if v.role[0] == 2
-              a(href="#" class="show-input" data-name="director.1.first_name_director.1.last_name").link-1 #{v.first_name}
+              +frField('formc.team_members[' + k + '].first_name', 'text')
               .table-responsive.m-t-1
                 table.table.table-bordered
                   theader
@@ -1371,22 +1371,22 @@ section.formc-review
                         if v1
                           tr
                             td
-                              a(href="#" class="show-input" data-name="director.1.employer.1").link-1 #{v1.employer}
+                              +frField('formc.team_members[' + k + '].experiences[' + k1 + '].employer', 'text')
                             td
-                              a(href="#" class="show-input" data-name="director.1.employer_biz.1").link-1 #{v1.employer_principal}
+                              +frField('formc.team_members[' + k + '].experiences[' + k1 + '].title', 'text')
                             td
-                              a(href="#" class="show-input" data-name="director.1.employer_title.1").link-1 #{v1.title}
+                              +frField('formc.team_members[' + k + '].experiences[' + k1 + '].title', 'text')
                             td
-                              a(href="#" class="show-input" data-name="director.1.employer_responsibilitiees.1").link-1 #{v1.responsibilities}
+                              +frField('formc.team_members[' + k + '].experiences[' + k1 + '].responsibilities', 'text')
                             td
-                              a(href="#" class="show-input" data-name="director.1.position_start.1").link-1 #{v1.start_date_of_service}
+                              +frField('formc.team_members[' + k + '].experiences[' + k1 + '].start_date_of_service', 'text')
                             td
-                              a(href="#" class="show-input" data-name="director.1.position_end.1").link-1 #{v1.end_date_of_service}
+                              +frField('formc.team_members[' + k + '].experiences[' + k1 + '].end_date_of_service', 'text')
         p.pb10.text-indent Employment information from previous employers over the last three years for each of the Company’s directors is as follows:
         p.pb10
           each v,k in values.formc.team_members
             if v.role[0] == 1
-              a(href="#" class="show-input" data-name="director.1.first_name_director.1.last_name").link-1 #{v.first_name}
+              +frField('formc.team_members[' + k + '].first_name', 'text')
               .table-responsive.m-t-1
                 table.table.table-bordered
                   theader
@@ -1403,17 +1403,17 @@ section.formc-review
                         if v1
                           tr
                             td
-                              a(href="#" class="show-input" data-name="director.1.employer.1").link-1 #{v1.employer}
+                              +frField('formc.team_members[' + k + '].experiences[' + k1 + '].employer', 'text')
                             td
-                              a(href="#" class="show-input" data-name="director.1.employer_biz.1").link-1 #{v1.employer_principal}
+                              +frField('formc.team_members[' + k + '].experiences[' + k1 + '].employer_principal', 'text')
                             td
-                              a(href="#" class="show-input" data-name="director.1.employer_title.1").link-1 #{v1.title}
+                              +frField('formc.team_members[' + k + '].experiences[' + k1 + '].title', 'text')
                             td
-                              a(href="#" class="show-input" data-name="director.1.employer_responsibilitiees.1").link-1 #{v1.responsibilities}
+                              +frField('formc.team_members[' + k + '].experiences[' + k1 + '].responsibilities', 'text')
                             td
-                              a(href="#" class="show-input" data-name="director.1.position_start.1").link-1 #{v1.start_date_of_service}
+                              +frField('formc.team_members[' + k + '].experiences[' + k1 + '].start_date_of_service', 'text')
                             td
-                              a(href="#" class="show-input" data-name="director.1.position_end.1").link-1 #{v1.end_date_of_service}
+                              +frField('formc.team_members[' + k + '].experiences[' + k1 + '].end_date_of_service', 'text')
 
 
 //MODAL
