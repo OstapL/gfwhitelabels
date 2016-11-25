@@ -26,7 +26,7 @@ module.exports = {
     */
   },
 
-  makeRequest(url, type, data) {
+  makeRequest(url, type, data, options) {
     // We can pass type as a string
     // or we can pass dict with type and data
     if (typeof type === 'object') {
@@ -47,7 +47,15 @@ module.exports = {
       url: url,
       type: type,
       data: data,
-    }, api.requestOptions);
+      dataType: 'json',
+      contentType: "application/x-www-form-urlencoded",// "application/json; charset=utf-8",
+      beforeSend: function (xhr) {
+        let token = localStorage.getItem('token');
+        if (token !== null && token !== '') {
+          xhr.setRequestHeader('Authorization', 'Bearer ' + token);
+        }
+      },
+    }, options);
 
     return $.ajax(params);
   },
@@ -159,17 +167,6 @@ module.exports = {
     }
 
     app.hideLoading();
-  },
-
-  requestOptions: {
-    dataType: 'json',
-    //contentType: "application/json; charset=utf-8",
-    beforeSend: function (xhr) {
-      let token = localStorage.getItem('token');
-      if (token !== null && token !== '') {
-        xhr.setRequestHeader('Authorization', 'Bearer ' + token);
-      }
-    },
   },
 
   fixDateFields(fields, data) {

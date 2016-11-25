@@ -321,7 +321,7 @@ module.exports = {
               file_name: fileName,
             }).value();
 
-          api.makeRequest(filerServer + '/crop', 'PUT', reqData).done((imgResponse) => {
+          api.makeRequest(filerServer + '/crop', 'PUT', reqData, { contentType: 'application/json; charset=utf-8' }).done((imgResponse) => {
             console.log(imgResponse);
           });
         });
