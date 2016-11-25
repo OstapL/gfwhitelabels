@@ -144,6 +144,10 @@ module.exports = {
             'submit form': 'nextStep',
         }, calculatorValidationHelper.events),
 
+        preinitialize() {
+          $('#content').undelegate();
+        },
+
         initialize(options) {
             this.fields = {
                 revenue: {
@@ -239,6 +243,10 @@ module.exports = {
         el: '#content',
 
         template: require('./templates/step3.pug'),
+
+        preinitialize() {
+            $('#content').undelegate();
+        },
 
         initialize(options) {
             this.fields = {

@@ -312,7 +312,7 @@ mixin fileDropzone(name, attr)
       div(class=attr.class1 + ' ' + (attr.required == true ? ' required ' : ' ') )
         label( for=attr.id || name)!= attr.label
 
-      div(class=(attr.class2 + ' dropzone__' + name))
+      div(class=(attr.class2 + ' dropzone__' + name) id=(attr.id || name))
         div(class=" col-lg-12 border-dropzone")
           div(class="uploading collapse")
             img(alt="activity indicator" src="/img/ajax-loader.gif")
@@ -352,7 +352,7 @@ mixin fileFolderDropzone(name, attr)
       div(class=attr.class1 + ' ' + (attr.required == true ? ' required ' : ' ') )
         label( for=attr.id || name)!= attr.label
 
-      div(class=(attr.class2 + ' dropzone__' + name))
+      div(class=(attr.class2 + ' dropzone__' + name) id=(attr.id || name))
         div(class=" col-lg-12 border-dropzone p-r-0")
           div(class="uploading collapse")
             img(alt="activity indicator" src="/img/ajax-loader.gif")
@@ -446,3 +446,69 @@ mixin imageDropzone(name, attr)
               .col-xl-12.p-r-0
                 img(class=("w-100 img-" + name) src="/img/default/255x153.png")
               a(class=("a-" + name) href=attr.data.urls[0]) #{ attr.data.name }
+
+mixin galleryDropzone(name, attr)
+    - var icon = attr.type
+    if attr.hasOwnProperty('data') == false
+      - attr.data = {};
+    if attr.data.hasOwnProperty('urls') == false
+      - attr.data.urls = [];
+    if attr.data.mime
+      - mimetypeIcons = require('helpers/mimetypeIcons.js');
+      - var icon = mimetypeIcons[attr.data.mime.split('/')[1]];
+
+    div(
+      class='row media-item ' + attr.class + ' ' + (attr.id || name) +
+        (attr.required == true ? ' required ' : ' ') + ' galleryDropzone' +
+        (attr.help_text ? ' showPopover' : '')
+      data-content=(attr.help_text ? attr.help_text : '')
+    )
+      div(class=attr.class1 + ' ' + (attr.required == true ? ' required ' : ' ') )
+        label(for=attr.id || name)!= attr.label
+
+      div(class=(attr.class2 + ' dropzone__' + name))
+        div(class=" col-lg-12 p-r-0 p-l-0 border-dropzone")
+          div(class="uploading collapse")
+            img(alt="activity indicator" src="/img/ajax-loader.gif")
+          div.row
+            div.col-xl-4.offset-xl-4.text-xs-center.dropzone-text.p-l-0.p-r-0
+              a(class='link-1' href="#" onclick="return false")
+                p.drop-photo #{attr.text}
+                i(class="icon-gallery fa fa-" + attr.icon) 
+            div.row
+              div.col-xl-12.all-gallery
+                .col-xl-4.one-photo
+                  .delete-image-container
+                    a(href="#").crop-image
+                      i.fa.fa-crop
+                    a(href="#").delete-image
+                      i.fa.fa-times
+                  img(class=("w-100 img-" + name) src="/img/default/255x153.png")
+                .col-xl-4.one-photo
+                  .delete-image-container
+                    a(href="#").crop-image
+                      i.fa.fa-crop
+                    a(href="#").delete-image
+                      i.fa.fa-times
+                  img(class=("w-100 img-" + name) src="/img/default/255x153.png")
+                .col-xl-4.one-photo
+                  .delete-image-container
+                    a(href="#").crop-image
+                      i.fa.fa-crop
+                    a(href="#").delete-image
+                      i.fa.fa-times
+                  img(class=("w-100 img-" + name) src="/img/default/255x153.png")
+                .col-xl-4.one-photo
+                  .delete-image-container
+                    a(href="#").crop-image
+                      i.fa.fa-crop
+                    a(href="#").delete-image
+                      i.fa.fa-times
+                  img(class=("w-100 img-" + name) src="/img/default/255x153.png")
+                .col-xl-4.one-photo
+                  .delete-image-container
+                    a(href="#").crop-image
+                      i.fa.fa-crop
+                    a(href="#").delete-image
+                      i.fa.fa-times
+                  img(class=("w-100 img-" + name) src="/img/default/255x153.png")
