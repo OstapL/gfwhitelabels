@@ -382,7 +382,8 @@ module.exports = {
           header_image_data: {
             urls: 'Header Image',
           },
-          video: 'Main Video for Campaign'
+          video: 'Main Video for Campaign',
+          gallery_group_id: 'Gallery'
         };
         this.assignLabels();
         this.createIndexes();
