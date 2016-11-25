@@ -176,7 +176,7 @@ section.formc-review
         p.pb10.text-indent GrowthFountain Capital LLC is acting as the funding portal in this offering of securities in reliance on section 4(a)(6) of the Securities Act of 1933 (15 U.S.C. 77d(a)(6)).  To participate in this offering, you must open an account at www.GrowthFountain.com.
         p.pb10.text-indent A crowdfunding investment involves risk. You should not invest any funds in this offering unless you can afford to lose your entire investment. In making an investment decision, investors must rely on their own examination of the issuer and the terms of the offering, including the merits and risks involved. These securities have not been recommended or approved by any federal or state securities commission or regulatory authority. Furthermore, these authorities have not passed upon the accuracy or adequacy of this document, or the completeness of any information contained herein or listed with the funding portal.  These securities are being offered under an exemption from registration; however, the U.S. Securities and Exchange Commission has not made an independent determination that these securities are exempt from registration.  GrowthFountain Capital LLC and its affiliates are not making any investment recommendation in connection with making this offering material available to you.
         p The date of this offering material being listed on the funding portal at www.GrowthFountain.com is
-          a(href="#" class="show-input" data-name="live.date").link-1  #{values.company.founding_date}
+          a(href="#" class="show-input" data-name="live.date").link-1  #{new Date()}
       //page 2
       section.page-formc-review.m-t-1
         .top-intro
@@ -1338,7 +1338,7 @@ section.formc-review
             +frField('company.name', 'text')
             |  as Issuer
         h2.text-uppercase.text-xs-center.font-weight-bold.letter-spacing-normal.m-b-3 EXHIBIT B: FINANCIAL STATEMENTS
-        if values.formc.fiscal_recent_group_data.length > 0
+        if values.formc.fiscal_recent_group_data.length > 0 && values.formc.fiscal_recent_group_data.urls
           p
             for v,k in values.formc.fiscal_recent_group_data.urls
               a(href=v.urls[0] target="_blank").link-1 #{ v.urls[0].substr(0, 20) }
