@@ -306,20 +306,24 @@ module.exports = {
 
         this.model[name] = data[0].id;
         this.model[name.replace('_id', '_data')] = data;
+        let fileName = data[0].name;
 
         const cropperHelper = require('helpers/cropHelper.js');
         cropperHelper.showCropper(data[0].urls[0], this.fields[name].imgOptions, (imgData) => {
-          console.log(imgData);
+
+          let extPos = fileName.lastIndexOf('.');
+          fileName = fileName.substring(0, extPos) + imgData.width + 'x' + imgData.height + fileName.substring(extPos);
+
           let reqData = _.chain(imgData)
             .pick(['x', 'y', 'width', 'height'])
             .extend({
               id: data[0].id,
-              file_name: data[0].name,
+              file_name: fileName,
             }).value();
 
-          // api.makeRequest(filerServer + '/crop', 'PUT', reqData).done((imgResponse) => {
-          //   console.log(imgResponse);
-          // });
+          api.makeRequest(filerServer + '/crop', 'PUT', reqData).done((imgResponse) => {
+            console.log(imgResponse);
+          });
         });
       });
     },
