@@ -309,6 +309,8 @@ module.exports = {
     }, leavingConfirmationHelper.methods, menuHelper.methods, addSectionHelper.methods)),
 
   media: Backbone.View.extend(_.extend({
+      template: require('./templates/media.pug'),
+
       events: _.extend({
         'submit form': api.submitAction,
         // 'click .delete-image': 'deleteImage',
@@ -317,7 +319,10 @@ module.exports = {
         'change .press_link': 'appendHttpIfNecessary',
         'click .submit_form': submitCampaign,
         'click .onPreview': onPreviewAction,
-      }, leavingConfirmationHelper.events, menuHelper.events, addSectionHelper.events, dropzoneHelpers.events),
+      },
+        leavingConfirmationHelper.events, menuHelper.events,
+        addSectionHelper.events, dropzoneHelpers.events),
+
       urlRoot: raiseCapitalServer + '/campaign/:id/media',
 
       appendHttpsIfNecessary(e) {
@@ -325,14 +330,6 @@ module.exports = {
       },
 
       appendHttpIfNecessary: appendHttpIfNecessary,
-
-      globalDragover() {
-        this.$('.border-dropzone').addClass('active-border');
-      },
-
-      globalDragleave() {
-        this.$('.border-dropzone').removeClass('active-border');
-      },
 
       preinitialize() {
         // ToDo
@@ -342,135 +339,110 @@ module.exports = {
         }
       },
 
-      getSuccessUrl(data) {
-        return '/campaign/' + (data.id ? data.id : this.model.id) + '/team-members';
-      },
+    initialize(options) {
+      this.fields = options.fields;
+      this.fields.gallery_group_id.validate.fn = function checkNotEmpty(value, attr, fn, model, computed) {
+        if(document.querySelectorAll('.dropzone__gallery .img-fluid').length === 0) {
+          throw 'Please upload at least 1 image';
+        }
+      };
+      this.pressIndex = 1;
+      this.additional_videoIndex = 1;
+      this.$el.on('keypress', ':input:not(textarea)', function (event) {
+        if (event.keyCode == 13) {
+          event.preventDefault();
+          return false;
+        }
+      });
+      this.fields.header_image_image_id.type =
+        this.fields.list_image_image_id.type = 'image';
 
-      initialize(options) {
-        this.fields = options.fields;
-        this.fields.gallery_group_id.validate.fn = function checkNotEmpty(value, attr, fn, model, computed) {
-          if(document.querySelectorAll('.dropzone__gallery .img-fluid').length === 0) {
-            throw 'Please upload at least 1 image';
-          }
-        };
-        this.pressIndex = 1;
-        this.additional_videoIndex = 1;
-        this.$el.on('keypress', ':input:not(textarea)', function (event) {
-          if (event.keyCode == 13) {
-            event.preventDefault();
-            return false;
-          }
-        });
-        this.fields.header_image_image_id.type =
-          this.fields.list_image_image_id.type =
-            this.fields.gallery_group_id.type = 'image';
+      this.fields.header_image_image_id.imgOptions = {
+        aspectRatio: 16/9,
+      };
+      this.fields.list_image_image_id.imgOptions = {
+        aspectRatio: 16 / 9,
+      };
 
-        this.labels = {
-          gallery_data: {
-            url: 'Gallery',
-          },
-          press: {
-            headline: 'Headline',
-            link: 'Article Link',
-          },
-          additional_video: {
-            link: 'Youtube or Vimeo Link',
-            headline: 'Title',
-          },
-          list_image_data: {
-            urls: 'Thumbnail Picture',
-          },
-          header_image_data: {
-            urls: 'Header Image',
-          },
-          video: 'Main Video for Campaign',
-          gallery_group_id: 'Gallery'
-        };
-        this.assignLabels();
-        this.createIndexes();
-        this.buildJsonTemplates('raiseFunds');
-      },
+      this.fields.gallery_group_id.type = 'imagefolder';
+
+      this.fields.press.type = 'json';
+      this.fields.press.schema = {
+        headline: {
+          type: 'string',
+          label: 'Headline',
+          placeholder: 'Title',
+          maxLength: 90,
+        },
+        link: {
+          type: 'url',
+          label: 'Article link',
+          placeholder: 'http://www.',
+        },
+      };
+      this.fields.additional_video.type = 'jsonVideo';
+      this.fields.additional_video.schema = {
+        headline: {
+          type: 'string',
+          label: 'Title',
+          placeholder: 'Title',
+        },
+        link: {
+          type: 'url',
+          label: 'Youtube or vimeo link',
+          placeholder: 'https://',
+        },
+      };
+
+      if (this.model.additional_video) {
+        this.additional_videoIndex = Object.keys(this.model.additional_video).length;
+      } else {
+        this.additional_videoIndex = 0;
+      }
+
+      this.labels = {
+        gallery_data: {
+          url: 'Gallery',
+        },
+        press: {
+          headline: 'Headline',
+          link: 'Article Link',
+        },
+        additional_video: {
+          link: 'Youtube or Vimeo Link',
+          headline: 'Title',
+        },
+        list_image_data: {
+          urls: 'Thumbnail Picture',
+        },
+        header_image_data: {
+          urls: 'Header Image',
+        },
+        video: 'Main Video for Campaign',
+        gallery_group_id: 'Gallery'
+      };
+
+      this.assignLabels();
+      this.createIndexes();
+      this.buildJsonTemplates('raiseFunds');
+    },
 
       render() {
-        let template = require('./templates/media.pug');
-        this.fields.press.type = 'json';
-        this.fields.press.schema = {
-          headline: {
-            type: 'string',
-            label: 'Headline',
-            placeholder: 'Title',
-            maxLength: 90,
-          },
-          link: {
-            type: 'url',
-            label: 'Article link',
-            placeholder: 'http://www.',
-          },
-        };
-        this.fields.additional_video.type = 'jsonVideo';
-        this.fields.additional_video.schema = {
-          headline: {
-            type: 'string',
-            label: 'Title',
-            placeholder: 'Title',
-          },
-          link: {
-            type: 'url',
-            label: 'Youtube or vimeo link',
-            placeholder: 'https://',
-          },
-        };
-
-        if (this.model.additional_video) {
-          this.additional_videoIndex = Object.keys(this.model.additional_video).length;
-        } else {
-          this.additional_videoIndex = 0;
-        }
-
         this.$el.html(
-            template({
-              serverUrl: serverUrl,
-              Urls: Urls,
-              fields: this.fields,
-              // values: this.model.toJSON(),
-              values: this.model,
-              templates: this.jsonTemplates,
-            })
+          this.template({
+            serverUrl: serverUrl,
+            Urls: Urls,
+            fields: this.fields,
+            // values: this.model.toJSON(),
+            values: this.model,
+            templates: this.jsonTemplates,
+          })
         );
 
         setTimeout(() => { this.createDropzones() } , 1000);
 
         const Model = require('components/campaign/models.js');
 
-        // this.createImageDropzone(
-        //   // dropzone,
-        //   'list_image',
-        //   'campaign_lists', '',
-        //   (data) => {
-        //     app.makeRequest(this.urlRoot +'/' + this.model.id, {list_image: data.file_id, type: 'PATCH'})
-        //   }
-        // );
-
-        // this.createImageDropzone({
-        //   // dropzone,
-        //   'gallery',
-        //   'galleries/' + this.model.id, '',
-        //   (data) => {
-        //     let $el = $('<div class="thumb-image-container" style="float: left; overflow: hidden; position: relative;">' +
-        //       '<div class="delete-image-container" style="position: absolute;">' +
-        //       '<a class="delete-image" href="#" data-id="' + data.image_id + '">' +
-        //       '<i class="fa fa-times"></i>' +
-        //       '</a>' +
-        //       '</div>' +
-        //       '<img class="img-fluid pull-left" src="' + data.origin_url + '">' +
-        //       '</div>'
-        //       );
-        //     $('.photo-scroll').append($el);
-        //     $el.find('.delete-image').click(this.deleteImage.bind(this));
-        //     $('#gallery').val(data.folder_id);
-        //     app.makeRequest(this.urlRoot +'/' + this.model.id, {gallery: data.folder_id, type: 'PATCH'})
-        //   },
-        //   );
 
         $('.delete-image').click(this.deleteImage.bind(this));
 
@@ -515,8 +487,8 @@ module.exports = {
 
         $(e.currentTarget).parent().parent().remove();
         var params = _.extend({
-                url: serverUrl + Urls['image2-list']() + '/' + imageId,
-              }, app.defaultOptionsRequest);
+          url: serverUrl + Urls['image2-list']() + '/' + imageId,
+        }, app.defaultOptionsRequest);
         params.type = 'DELETE';
 
         $.ajax(params);
@@ -550,7 +522,11 @@ module.exports = {
           //e.target.value = id;
         }
       }
-  }, leavingConfirmationHelper.methods, menuHelper.methods, dropzoneHelpers.methods, addSectionHelper.methods)),
+    }, leavingConfirmationHelper.methods, menuHelper.methods, dropzoneHelpers.methods, addSectionHelper.methods)),
+
+      getSuccessUrl(data) {
+        return '/campaign/' + (data.id ? data.id : this.model.id) + '/team-members';
+      },
 
   teamMemberAdd: Backbone.View.extend(_.extend({
       events: _.extend({

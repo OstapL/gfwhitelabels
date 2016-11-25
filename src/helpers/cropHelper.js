@@ -1,7 +1,7 @@
 module.exports = {
 
-  showCropper(imageUrl, options, callbacks) {
-    let defaultOptions = {
+  showCropper(imageUrl, options, callback) {
+    let defaultOptions = _.extend({
       viewMode: 1,
       dragMode: 'crop',
       aspectRatio: 1,
@@ -26,7 +26,7 @@ module.exports = {
       //   cropper.enable();
       // }
 
-    };
+    }, options);
 
     let modalTemplate =
       '<div class="modal fade bd-example-modal-lg modal-dropzone" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">' +
@@ -77,7 +77,9 @@ module.exports = {
 
       $modal.modal('hide');
 
-      console.log(cropper.getData(true));
+      if (typeof(callback) === 'function') callback(cropper.getData(true));
+
+      // console.log(cropper.getData(true));
 
       return false;
     });
