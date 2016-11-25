@@ -1012,28 +1012,28 @@ section.formc-review
           p.pb10.text-indent The Company has indicated that it has no outstanding material indebtedness.
         if values.formc.business_loans_or_debt_choice == '1'
           p.pb10.text-indent The Company has indicated that it currently has outstanding material indebtedness.  The general terms of the Company’s current and outstanding indebtedness are reflected of the following table:
-        .table-responsive.m-t-1.m-b-0
-          table.table.table-bordered
-            theader
-              tr.bg-grey
-                th.text-xs-center Creditor
-                th.text-xs-center Amount Outstanding
-                th.text-xs-center Interest Rate
-                th.text-xs-center Maturity Date
-                th.text-xs-center Material Terms
-            tbody
-              each v,k in values.formc.business_loans_or_debt
-                tr
-                  td.text-xs-center
-                    +frField('formc.business_loans_or_debt[' + k + '].creditor', 'text')
-                  td.text-xs-center
-                    +frField('formc.business_loans_or_debt[' + k + '].outstanding_amount', 'text')
-                  td.text-xs-center
-                    +frField('formc.business_loans_or_debt[' + k + '].interest_rate', 'text')
-                  td.text-xs-center
-                    +frField('formc.business_loans_or_debt[' + k + '].maturity_date', 'text')
-                  td.text-xs-center
-                    +frField('formc.business_loans_or_debt[' + k + '].other_material_terms', 'text')
+          .table-responsive.m-t-1.m-b-0
+            table.table.table-bordered
+              theader
+                tr.bg-grey
+                  th.text-xs-center Creditor
+                  th.text-xs-center Amount Outstanding
+                  th.text-xs-center Interest Rate
+                  th.text-xs-center Maturity Date
+                  th.text-xs-center Material Terms
+              tbody
+                each v,k in values.formc.business_loans_or_debt
+                  tr
+                    td.text-xs-center
+                      +frField('formc.business_loans_or_debt[' + k + '].creditor', 'text')
+                    td.text-xs-center
+                      +frField('formc.business_loans_or_debt[' + k + '].outstanding_amount', 'text')
+                    td.text-xs-center
+                      +frField('formc.business_loans_or_debt[' + k + '].interest_rate', 'text')
+                    td.text-xs-center
+                      +frField('formc.business_loans_or_debt[' + k + '].maturity_date', 'text')
+                    td.text-xs-center
+                      +frField('formc.business_loans_or_debt[' + k + '].other_material_terms', 'text')
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u Previous Issuer Offerings
         if values.formc.exempt_offering_choice == '0'
