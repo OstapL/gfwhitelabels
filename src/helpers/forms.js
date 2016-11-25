@@ -47,7 +47,15 @@ module.exports = {
       url: url,
       type: type,
       data: data,
-    }, api.requestOptions, options);
+      dataType: 'json',
+      contentType: "application/x-www-form-urlencoded",// "application/json; charset=utf-8",
+      beforeSend: function (xhr) {
+        let token = localStorage.getItem('token');
+        if (token !== null && token !== '') {
+          xhr.setRequestHeader('Authorization', 'Bearer ' + token);
+        }
+      },
+    }, options);
 
     return $.ajax(params);
   },
@@ -159,17 +167,6 @@ module.exports = {
     }
 
     app.hideLoading();
-  },
-
-  requestOptions: {
-    dataType: 'json',
-    contentType: "application/x-www-form-urlencoded",// "application/json; charset=utf-8",
-    beforeSend: function (xhr) {
-      let token = localStorage.getItem('token');
-      if (token !== null && token !== '') {
-        xhr.setRequestHeader('Authorization', 'Bearer ' + token);
-      }
-    },
   },
 
   fixDateFields(fields, data) {
