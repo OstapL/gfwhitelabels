@@ -1827,4 +1827,32 @@ module.exports = {
       return this;
     },
   }),
+  electronicSignatureCik: Backbone.View.extend({
+    el: '#content',
+    template: require('./templates/formc_els_cik_code.pug'),
+    
+    initialize(options) {
+      this.fields = {}; //options.fields;
+      this.fields.ein = { };
+      this.fields.prefer_cik = { };
+      this.fields.fiscal_year_end = { };
+      this.fields.type_name = {};
+      this.labels = {
+        ein: 'Please enter your company`s EIN',
+        prefer_cik: 'awdaw',
+        type_name: 'Please type name here',
+      };
+
+      this.assignLabels();
+    },
+    render() {
+      this.$el.html(
+        this.template({
+          values: this.model,
+          fields: this.fields,
+        })
+      );
+      return this;
+    },
+  }),
 };
