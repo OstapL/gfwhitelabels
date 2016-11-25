@@ -449,7 +449,6 @@ mixin imageDropzone(name, attr)
               a(class=("a-" + name) href=attr.data.urls[0]) #{ attr.data.name }
 
 mixin galleryDropzone(name, attr)
-    - var icon = attr.type
     if attr.hasOwnProperty('data') == false
       - attr.data = {};
     if attr.data.hasOwnProperty('urls') == false
@@ -486,8 +485,4 @@ mixin galleryDropzone(name, attr)
                       a(href="#" data-imageid=v.id).delete-image
                         i.fa.fa-times
                     img(class=("w-100 img-" + name) src=v.urls[0])
-                else
-                  .col-xl-4.one-photo
-                    .delete-image-container
-                    img(class=("w-100 img-" + name) src="/img/default/255x153.png")
 
