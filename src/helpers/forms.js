@@ -178,9 +178,10 @@ module.exports = {
         var key_year = key + '__year';
         var key_month = key + '__month';
         var key_day = key + '__day';
-        data[key] = data[key_year]
-          ? data[key_year] + '-' + (data[key_month] || '01') + '-' + (data[key_day] || '01') 
-          : '';
+        if(data[key_year]) {
+          data[key] = data[key_year] + '-' + (data[key_month] || '01') + '-' + 
+            (data[key_day] || '01') 
+        }
         delete data[key_year];
         delete data[key_month];
         delete data[key_day];
