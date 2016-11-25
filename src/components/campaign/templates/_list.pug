@@ -4,7 +4,7 @@
   for company in companies
 
     .col-xl-4.col-lg-6.col-xs-12.col-sm-12.col-md-12
-      a(href=Urls['campaign-detail'](company.id)).block_link
+      a(href="/" + company.id).block_link
       .one_block
         .for_img
           img(
@@ -23,9 +23,9 @@
                 p #{company.tagline.substr(0, 120)}
 
             .ico_cont
-              a(href=Urls['campaign-detail'](company.id) + '#team').link-1
+              a(href="/" + company.id + '#team').link-1
                 i.fa.fa-users
-              a(href=Urls['campaign-detail'](company.id) + '#overview').link-1
+              a(href="/" + company.id + '#overview').link-1
                 i.fa.fa-list
 
             .bottom_pr

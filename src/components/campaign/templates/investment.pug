@@ -29,7 +29,9 @@ mixin fieldInput(name, attr)
     .col-lg-8
       h2.text-uppercase.dosis.m-t-0.text-md-center.text-sm-center.text-xs-center.text-lg-left Investment
       .form-section.clearfix
-        form(action="").invest_form.clearfix
+        form(action="POST" data-method="POST").invest_form.clearfix
+          input(type="hidden" name="company_id" value=values.id)
+          input(type="hidden" name="campaign_id" value="45")
           .row
             .col-xl-12
               +fieldBlock("amount", '', {
@@ -141,10 +143,10 @@ mixin fieldInput(name, attr)
               label.text-md-right.col-lg-3 Account Type
               .col-lg-9.radio-input
                 label 
-                  input(type="radio")
+                  input(type="radio" name="payment_information_type" value="0")
                   |  Checking
                 label 
-                  input(type="radio")
+                  input(type="radio" name="payment_information_type" value="1")
                   |  Savings
             // IF CHECK
             .row
@@ -165,7 +167,7 @@ mixin fieldInput(name, attr)
                       .col-lg-6
                         span Memo:
                       .col-lg-6
-                        span.font-weight-bold Invest in Netflix 
+                        span.font-weight-bold Invest in #{values.name} 
                         span.help-block (as indicated above)
                     .row.m-b-2
                       .col-lg-6
@@ -188,10 +190,10 @@ mixin fieldInput(name, attr)
                 .row
                   .col-lg-6.col-md-6.col-sm-6.col-xs-6.text-lg-center
                     label.d-block.label-true-false TRUE
-                    input(type="radio").d-block.m-x-auto
+                    input(type="radio" value="true" name="is_reviewed_educational_material").d-block.m-x-auto
                   .col-lg-6.col-md-6.col-sm-6.col-xs-6.text-lg-center
                     label.d-block.label-true-false FALSE
-                    input(type="radio").d-block.m-x-auto
+                    input(type="radio" value="false" name="is_reviewed_educational_material").d-block.m-x-auto
                     
               .col-lg-10
                 label I confirm and represent that (a) I have reviewed the educational material that has been made available on this website, (b) I understand that the entire amount of my investment may be lost and (c) I am in a financial condition to bear the loss of the investment.
@@ -200,10 +202,10 @@ mixin fieldInput(name, attr)
                 .row
                   .col-lg-6.col-md-6.col-sm-6.col-xs-6.text-lg-center
                     label.d-block.label-true-false TRUE
-                    input(type="radio").d-block.m-x-auto
+                    input(type="radio" value="true" name="is_understand_restrictions_to_cancel_investment").d-block.m-x-auto
                   .col-lg-6.col-md-6.col-sm-6.col-xs-6.text-lg-center
                     label.d-block.label-true-false FALSE
-                    input(type="radio").d-block.m-x-auto
+                    input(type="radio" value="false" name="is_understand_restrictions_to_cancel_investment").d-block.m-x-auto
                     
               .col-lg-10
                 label I understand that there are restrictions on my ability to cancel an investment commitment and obtain a return of my investment.
@@ -212,10 +214,10 @@ mixin fieldInput(name, attr)
                 .row
                   .col-lg-6.col-md-6.col-sm-6.col-xs-6.text-lg-center
                     label.d-block.label-true-false TRUE
-                    input(type="radio").d-block.m-x-auto
+                    input(type="radio" value="true" name="is_understand_difficult_to_resell_purchashed").d-block.m-x-auto
                   .col-lg-6.col-md-6.col-sm-6.col-xs-6.text-lg-center
                     label.d-block.label-true-false FALSE
-                    input(type="radio").d-block.m-x-auto
+                    input(type="radio" value="false" name="is_understand_difficult_to_resell_purchashed").d-block.m-x-auto
                     
               .col-lg-10
                 label I understand that it may be difficult to resell securities purchased on GrowthFountain.
@@ -224,19 +226,19 @@ mixin fieldInput(name, attr)
                 .row
                   .col-lg-6.col-md-6.col-sm-6.col-xs-6.text-lg-center
                     label.d-block.label-true-false TRUE
-                    input(type="radio").d-block.m-x-auto
+                    input(type="radio" value="true" name="is_understand_investing_is_risky").d-block.m-x-auto
                   .col-lg-6.col-md-6.col-sm-6.col-xs-6.text-lg-center
                     label.d-block.label-true-false FALSE
-                    input(type="radio").d-block.m-x-auto
+                    input(type="radio" value="false" name="is_understand_investing_is_risky").d-block.m-x-auto
                     
               .col-lg-10
                 label I understand that investing in start-ups and small businesses listed on GrowthFountain is very risky, and that I should not invest any funds unless I can afford to lose my entire investment.
             .col-lg-12.m-t-2
               .row
                 span By Signing You Acknowledge and Agree to the 
-                  a(href="#").link-2 Subscription Agreement
+                  a(href="#" data-tpl="common_stock").link-2 Subscription Agreement
                   |  and 
-                  a(href="#").link-2 Participation Agreement
+                  a(href="#" data-tpl="revenue_share").link-2 Participation Agreement
             .col-lg-12.m-t-2
               .row
                 .form-group.row
@@ -263,16 +265,12 @@ mixin fieldInput(name, attr)
         h2.text-uppercase.dosis.m-t-0 PERKS
           span.small-text.open-sans Investor Perks are not intended to affect the value of the security and investors should evaluate the merits of each investment without regard to any Investor Perks.
         .list-group.list-group-border-invest.invest-right-margin
-          a(href="#" data-from='1000' data-to='1500').list-group-item.list-group-item-action.perk
-            h3.list-group-item-heading 
-              span.text-color-puerto_rico $1000
-              |  Investments 
-            p.list-group-item-text.text-justify FULLY LOADED PACKAGE: The Peloton Bike plus Peloton headphones, Peloton biking shoes, a Peloton heart rate monitor, the Peloton hand weights, a Peloton shirt, and a Peloton sweat mat (you're going to need it!).
-          a(href="#" data-from='1500' data-to='100000').list-group-item.list-group-item-action.perk
-            h3.list-group-item-heading 
-              span.text-color-puerto_rico $1500
-              |  Investments
-            p.list-group-item-text.text-justify The Peloton Bike (and all of the accessories) AND a trip for two to NYC to meet the team and teach (or take) your very own class in the Peloton Studio, to be accessible to all Peloton riders via on-demand classes! (USA ONLY)
+          each v,k in values.campaign.perks
+            a(href="#" data-from='1000' data-to='1500').list-group-item.list-group-item-action.perk
+              h3.list-group-item-heading 
+                span.text-color-puerto_rico $#{v.amount}
+                |  Investments 
+              p.list-group-item-text.text-justify #{v.perk}
         
       h2.text-uppercase.dosis.text-md-center.text-sm-center.text-xs-center Investment Summary
       .jumbotron.jumbotron-fluid.investment-summary
@@ -280,7 +278,7 @@ mixin fieldInput(name, attr)
           .col-md-7
             .row
               span Target
-              p.font-weight-bold $500,000 - $1,000,000
+              p.font-weight-bold $#{values.campaign.minimum_raise.toLocaleString('en-US')} - $#{values.campaign.maximum_raise.toLocaleString('en-US')}
           .col-md-5
             .row
               span Committed
@@ -293,7 +291,7 @@ mixin fieldInput(name, attr)
           .col-md-5
             .row
               span Type of security
-              p.font-weight-bold.m-b-0 Equity
+              p.font-weight-bold.m-b-0 #{values.campaign.security_type == 0 ? 'Common Equity' : 'Revenue Share'}
 
 //MODAL
 div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")#city_state_modal.modal.fade

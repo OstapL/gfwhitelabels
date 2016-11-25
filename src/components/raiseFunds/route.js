@@ -258,7 +258,7 @@ module.exports = Backbone.Router.extend({
       const Model = require('components/campaign/models.js');
       const View = require('components/raiseFunds/views.js');
 
-      var a2 = app.makeCacheRequest(Urls['campaign-detail'](id));
+      var a2 = app.makeCacheRequest('/' + id);
 
       $.when(a2).done((campaign) => {
         var i = new View.thankYou({
