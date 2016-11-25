@@ -567,16 +567,17 @@ section.formc-review
                   th.text-xs-center Nature of Transaction
                   th.text-xs-center Amount of Interest
               tbody
-                for v in values.formc.transaction_with_related_parties
+                //for v in values.formc.transaction_with_related_parties
+                each v,k in values.formc.transaction_with_related_parties
                   tr
                     td.text-xs-center
-                      +frField('formc.transaction_with_related_parties[' + v + '].specified_person', 'text')
+                      +frField('formc.transaction_with_related_parties[' + k + '].specified_person', 'text')
                     td.text-xs-center
-                      +frField('formc.transaction_with_related_parties[' + v + '].relationship_to_issuer', 'text')
+                      +frField('formc.transaction_with_related_parties[' + k + '].relationship_to_issuer', 'text')
                     td.text-xs-center
-                      +frField('formc.transaction_with_related_parties[' + v + '].nature_of_interest', 'text')
+                      +frField('formc.transaction_with_related_parties[' + k + '].nature_of_interest', 'text')
                     td.text-xs-center
-                      +frField('formc.transaction_with_related_parties[' + v + '].amount_of_interest', 'text')
+                      +frField('formc.transaction_with_related_parties[' + k+ '].amount_of_interest', 'text')
           p.pb10.text-indent The term “immediate family member” includes any child, stepchild, grandchild, parent, stepparent, grandparent, spouse or spousal equivalent, sibling, mother-in-law, father-in-law, son-in-law, daughter-in-law, brother-in-law, or sister-in-law of the person, and includes adoptive relationships. The term “spousal equivalent” means a co-habitant occupying a relationship generally equivalent to that of a spouse.
 
       // page 9
