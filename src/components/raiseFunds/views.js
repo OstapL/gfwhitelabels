@@ -13,7 +13,8 @@ const menuHelper = require('helpers/menuHelper.js');
 const submitCampaign = function submitCampaign(e) {
   e.preventDefault();
   let $form = this.$el.find('form');
-  var data = $form.serializeJSON();
+  var data = $form.serializeJSON({ useIntKeysAsArrayIndex: true });
+  api.fixDateFields.call(this, this.fields, data);
 
   _.extend(this.model, data);
   data = _.extend({}, this.model);
@@ -101,11 +102,11 @@ module.exports = {
     urlRoot: raiseCapitalServer + '/company',
     template: require('./templates/company.pug'),
     events: _.extend({
-      'submit form': api.submitAction,
+      'click .btn-primary': api.submitAction,
       'keyup #zip_code': 'changeZipCode',
       'click .update-location': 'updateLocation',
       'click .onPreview': onPreviewAction,
-      'click .submit_form': api.submitAction,
+      'click .submit_form': submitCampaign,
       'change #website': appendHttpIfNecessary,
       'change #website,#twitter,#facebook,#instagram,#linkedin': 'appendHttpsIfNecessary',
     }, leavingConfirmationHelper.events, phoneHelper.events, menuHelper.events),
@@ -793,16 +794,7 @@ module.exports = {
       initialize(options) {
         this.fields = options.fields;
         this.formc = options.formc;
-        this.fields.description_determine = {
-          label: 'Description'
-        }
-        this.fields.valuation_determine = {}
-        this.fields.valuation_determine.validate = {}
-        this.fields.valuation_determine.validate.choices = {
-        0: 'I used the Established Business Valuation Calculator for reference',
-        1: 'I used the New Startup Valuation Calculator for reference',
-        2: 'Other',
-        };
+        this.company = options.company;
         this.labels = {
           investor_presentation_data: '',
           minimum_raise: 'Our Minimum Total Raise is',
@@ -817,8 +809,8 @@ module.exports = {
           min_equity_offered: 'Minimum Equity Offered',
           max_equity_offered: 'Maximum Equity Offered',
           security_type: 'Security Type',
-          valuation_determine : 'How did you determine your valuation?',
-          description_determine: 'Description',
+          valuation_determination: 'How did you determine your valuation?',
+          valuation_determination_other: 'Description',
         };
         this.assignLabels();
         this.createIndexes();
@@ -870,7 +862,7 @@ module.exports = {
       },
 
       getSuccessUrl(data) {
-        return '/campaign/' + data.id + '/perks';
+        return '/campaign/' + this.model.id + '/perks';
       },
 
       valuationDetermine(e) {
@@ -897,6 +889,7 @@ module.exports = {
                 formc: this.formc,
               })
         );
+        delete this.model.progress;
 
         setTimeout(() => { this.createDropzones() } , 1000);
 
@@ -912,9 +905,9 @@ module.exports = {
           }
         }
 
-        if (this.model.company.corporate_structure == 2) {
-          this.$('input[type=radio][name=security_type][value=0]').prop('disabled', true);
-          this.$('input[type=radio][name=security_type][value=1]').attr('checked', true);
+        if (this.company.corporate_structure == 2) {
+          this.$('input[name=security_type][value=0]').prop('disabled', true);
+          this.$('input[name=security_type][value=1]').attr('checked', true);
           $('.security_type_list').hide();
           $('.security_type_1').show();
         }        
@@ -963,6 +956,7 @@ module.exports = {
 
     initialize(options) {
       this.fields = options.fields;
+      this.formc = options.formc;
       this.labels = {
         perks: {
           amount: 'If an Investor Invests Over',
@@ -982,28 +976,13 @@ module.exports = {
 
     render() {
       let template = require('./templates/perks.pug');
-      this.fields.perks.type = 'json';
-      this.fields.perks.schema = {
-          amount: {
-              type: 'number',
-              label: 'If an Investor Invests Over',
-              placeholder: '$',
-              values: [],
-              inputType: 'number'
-            },
-          perk: {
-              type: 'string',
-              label: 'Describe the Perk',
-              placholder: 'Description',
-              values: [],
-            },
-      };
       this.$el.html(
         template({
             serverUrl: serverUrl,
             Urls: Urls,
             fields: this.fields,
             values: this.model,
+            formc: this.formc,
             templates: this.jsonTemplates,
         })
       );

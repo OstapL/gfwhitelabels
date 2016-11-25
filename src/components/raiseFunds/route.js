@@ -203,11 +203,11 @@ module.exports = Backbone.Router.extend({
       $('body').scrollTo(); 
       $.when(a1, a2, a3, formcR).done((meta, model, company, formc) => {
         model[0].id = id;
-        model[0].company = company[0];
         const i = new View.specifics({
           el: '#content',
           fields: meta[0].fields,
           model: model[0],
+          company: company[0],
           formc: formc,
         });
         i.render();
@@ -225,24 +225,22 @@ module.exports = Backbone.Router.extend({
 
   perks(id) {
     if (!app.user.is_anonymous()) {
-      $('body').scrollTo(); 
-      const Model = require('components/campaign/models.js');
       const View = require('components/raiseFunds/views.js');
 
-      var a1 = app.makeCacheRequest(raiseCapitalServer + '/campaign/' + id + '/perks', 'OPTIONS');
-      var a2 = app.makeCacheRequest(raiseCapitalServer + '/campaign/' + id + '/perks');
+      const a1 = app.makeCacheRequest(raiseCapitalServer + '/campaign/' + id + '/perks', 'OPTIONS');
+      const a2 = app.makeCacheRequest(raiseCapitalServer + '/campaign/' + id + '/perks');
+      const formcR = api.makeCacheRequest(authServer + '/user/formc');
 
-      $.when(a1, a2).done((meta, model) => {
+      $('body').scrollTo(); 
+      $.when(a1, a2, formcR).done((meta, model, formc) => {
         model[0].id = id;
         var i = new View.perks({
           el: '#content',
           fields: meta[0].fields,
-          // model: new Model.model(model[0]),
           model: model[0],
+          formc: formc[0],
         });
         i.render();
-        //app.views.campaign[id].render();
-        //app.cache[window.location.pathname] = i.$el.html();
 
         app.hideLoading();
       });
