@@ -36,14 +36,17 @@ section.create-company-media.container.media-container
         label: 'Thumbnail Picture'
       })
       .row.m-b-2
-        +fieldDropzone("gallery_group_id", {
-          class1: 'col-lg-5 text-sm-center col-xs-4 col-sm-5 col-md-5 text-xs-center p-dropzone',
-          class2: 'col-lg-7 col-xs-8 col-sm-7 col-md-7 text-sm-center p-r-0',
-          default: '/img/default/77x45.png',
+        +fileFolderDropzone("gallery_group_id", _.extend({
+          class1: 'col-xl-3 col-xs-12 text-xs-center text-xl-right p-dropzone',
+          class2: 'col-xl-9 col-xs-12 text-xs-center p-sm-0 p-l-1',
           text: 'Drop your photo here or click to upload',
-          icon: 'file-image-o',
-          viewType: 2
-        })
+          icon: 'file',
+          data: values.gallery_group_data,
+          value: values.gallery_group_id,
+          label: "Upload financials for prior fiscal year",
+          default: '/img/icons/file.png',
+        }, fields.gallery_group_id))
+
       .col-lg-12.p-r-0.m-t-2.m-b-3
         hr
       .col-lg-12
