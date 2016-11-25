@@ -152,7 +152,7 @@ module.exports = {
 
         $link.prop('enabled', false);
         $link.off('click');
-        // api.makeRequest(filerUrl + '/' + fileId, 'DELETE').done(() => {
+        // api.makeRequest(filerServer + '/' + fileId, 'DELETE').done(() => {
         //remove field from model
 
         delete this.model[name];
@@ -206,29 +206,6 @@ module.exports = {
 
     },
 
-    _image(name) {
-      let dzOptions = {
-        paramName: name,
-        params: {
-          file_name: name,
-          // rename: ''
-        },
-        acceptedFiles: 'image/*',
-      };
-
-      this._initializeDropzone(name, dzOptions, (data) => {
-        $('.img-' + name).attr('src', data[0].urls[0]);
-        $('.a-' + name).attr('href', data.origin_url).html(data.name);
-        //$('#' + name).val(data.file_id);
-
-        this.model[name] = data[0].id;
-        this.model[name.replace('_id', '_data')] = data;
-
-        const cropperHelper = require('helpers/cropHelper.js');
-        cropperHelper.showCropper(data[0].urls[0]);
-      });
-    },
-
     _filefolder(name) {
 
       let dzOptions = {
@@ -239,9 +216,9 @@ module.exports = {
           group_id: this.model[name],
         },
         acceptedFiles: 'application/pdf,' +
-          'application/msword,' + //.doc
-          'application/vnd.openxmlformats-officedocument.wordprocessingml.document,' +  //.doc
-          'application/vnd.openxmlformats-officedocument.presentationml.presentation',  //.pptx
+        'application/msword,' + //.doc
+        'application/vnd.openxmlformats-officedocument.wordprocessingml.document,' +  //.docx
+        'application/vnd.openxmlformats-officedocument.presentationml.presentation',  //.pptx
       };
 
       const deleteFile = (e) => {
@@ -253,7 +230,7 @@ module.exports = {
 
         $link.prop('enabled', false);
         $link.off('click');
-        // api.makeRequest(filerUrl + '/' + fileId, 'DELETE').done(() => {
+        // api.makeRequest(filerServer + '/' + fileId, 'DELETE').done(() => {
         //remove field from model
         let dataArr = this.model[name.replace('_id', '_data')];
         let dataIdx = _(dataArr).findIndex((elem) => { return elem.id == fileId });
@@ -263,9 +240,9 @@ module.exports = {
             //add empty file
             $link.closest('.file-scroll')
               .append('<div class="thumb-file-container text-xl-center">' +
-              '<img src="/img/icons/file.png" alt="" class="img-file img-"' + name + '>' +
-              '<a class="a-' + name + '" href="#"></a>' +
-              '</div>');
+                '<img src="/img/icons/file.png" alt="" class="img-file img-"' + name + '>' +
+                '<a class="a-' + name + '" href="#"></a>' +
+                '</div>');
           }
           $link.closest('.thumb-file-container').remove();
         }
@@ -284,15 +261,15 @@ module.exports = {
 
         let fileBlock = $('<div class="thumb-file-container">' +
           '<div class="delete-file-container" style="position: absolute;">' +
-            '<a href="#" class="delete-file" data-fileid="' + data[0].id + '">' +
-              '<i class="fa fa-times"></i>' +
-            '</a>' +
+          '<a href="#" class="delete-file" data-fileid="' + data[0].id + '">' +
+          '<i class="fa fa-times"></i>' +
+          '</a>' +
           '</div>' +
           '<img class="img-file img-' + name + '" src="/img/icons/' + icon + '.png" />' +
           '<a class="link-file a-' + name + '" target="_blank" ' +
-            'href="' + url + '" title="' + data[0].name +'">' +
-            textHelper.shortenFileName(data[0].name) + '</a>' +
-        '</div>');
+          'href="' + url + '" title="' + data[0].name +'">' +
+          textHelper.shortenFileName(data[0].name) + '</a>' +
+          '</div>');
 
         let $link = fileBlock.find('a.delete-file');
         $link.on('click', deleteFile);
@@ -312,6 +289,120 @@ module.exports = {
       });
     },
 
+    _image(name) {
+      let dzOptions = {
+        paramName: name,
+        params: {
+          file_name: name,
+          // rename: ''
+        },
+        acceptedFiles: 'image/*',
+      };
+
+      this._initializeDropzone(name, dzOptions, (data) => {
+        $('.img-' + name).attr('src', data[0].urls[0]);
+        $('.a-' + name).attr('href', data.origin_url).html(data.name);
+        //$('#' + name).val(data.file_id);
+
+        this.model[name] = data[0].id;
+        this.model[name.replace('_id', '_data')] = data;
+
+        const cropperHelper = require('helpers/cropHelper.js');
+        cropperHelper.showCropper(data[0].urls[0], this.fields[name].imgOptions, (imgData) => {
+          console.log(imgData);
+          let reqData = _.chain(imgData)
+            .pick(['x', 'y', 'width', 'height'])
+            .extend({
+              id: data[0].id,
+              file_name: data[0].name,
+            }).value();
+
+          // api.makeRequest(filerServer + '/crop', 'PUT', reqData).done((imgResponse) => {
+          //   console.log(imgResponse);
+          // });
+        });
+      });
+    },
+
+    _imagefolder(name) {
+      let dzOptions = {
+        paramName: name,
+        params: {
+          //folder: name,
+          file_name: name,
+          group_id: this.model[name],
+        },
+        acceptedFiles: 'image/*',
+
+      };
+
+      const deleteFile = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        let $link = $(e.target).closest('a.delete-file');
+        let fileId = $link.data('fileid');
+
+        $link.prop('enabled', false);
+        $link.off('click');
+        // api.makeRequest(filerServer + '/' + fileId, 'DELETE').done(() => {
+        //remove field from model
+        let dataArr = this.model[name.replace('_image_id', '_data')];
+        let dataIdx = _(dataArr).findIndex((elem) => { return elem.id == fileId });
+        if (dataIdx >= 0) {
+          dataArr.splice(dataIdx, 1);
+          if (!dataArr.length) {
+            //add empty file
+            $link.closest('.file-scroll')
+              .append('<div class="thumb-file-container text-xl-center">' +
+                '<img src="/img/icons/file.png" alt="" class="img-file img-"' + name + '>' +
+                '<a class="a-' + name + '" href="#"></a>' +
+                '</div>');
+          }
+          $link.closest('.thumb-file-container').remove();
+        }
+        // });
+
+        return false;
+      };
+
+      this._initializeDropzone(name, dzOptions, (data, file) => {
+        let textHelper = require('helpers/textHelper.js');
+        let mimetypeIcons = require('helpers/mimetypeIcons.js');
+        let icon = mimetypeIcons[data[0].mime.split('/')[1]];
+
+        let fieldDataName = name.replace('_id', '_data');
+        let url = data[0].urls[0];
+
+        let fileBlock = $('<div class="thumb-file-container">' +
+          '<div class="delete-file-container" style="position: absolute;">' +
+          '<a href="#" class="delete-file" data-fileid="' + data[0].id + '">' +
+          '<i class="fa fa-times"></i>' +
+          '</a>' +
+          '</div>' +
+          '<img class="img-file img-' + name + '" src="/img/icons/' + icon + '.png" />' +
+          '<a class="link-file a-' + name + '" target="_blank" ' +
+          'href="' + url + '" title="' + data[0].name +'">' +
+          textHelper.shortenFileName(data[0].name) + '</a>' +
+          '</div>');
+
+        let $link = fileBlock.find('a.delete-file');
+        $link.on('click', deleteFile);
+
+        $('.dropzone__' + name + ' .thumb-file-container:last').after(fileBlock);
+
+        if(this.model[fieldDataName].length == 0) {
+          $('.dropzone__' + name + ' .thumb-file-container:first').remove();
+        }
+
+        this.model[name.replace('_id', '_data')].push(data[0]);
+      });
+
+      //attach remove event handlers to dropzone items
+      $('.dropzone__' + name + ' .img-dropzone a.delete-file').each((idx, link) => {
+        $(link).on('click', deleteFile);
+      });
+    }
   },
 
 };
