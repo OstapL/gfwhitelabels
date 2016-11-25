@@ -274,6 +274,7 @@ mixin fieldDateMonth(name, attr)
 
 
 mixin fieldDateYear(name, attr)
+  - attr.placeholder = attr.placeholder ? attr.placeholder : "YYYY"
   +prepareField(name, attr)
   if attr.type == null
     - attr.type = 'dateyear'
@@ -283,7 +284,7 @@ mixin fieldDateYear(name, attr)
     input(
         id=attr.id || name + '__year'
         name=(attr.name || name) + '__year'
-        placeholder=(attr.placeholder ? attr.placeholder : "YYYY")
+        placeholder=attr.placeholder
         class=(attr.help_text ? 'showPopover' : '')
         data-content=(attr.help_text ?attr.help_text : '')
         type='text'
