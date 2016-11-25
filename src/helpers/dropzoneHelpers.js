@@ -336,71 +336,78 @@ module.exports = {
 
       };
 
-      const deleteFile = (e) => {
+      const deleteImage = (e) => {
         e.preventDefault();
         e.stopPropagation();
 
-        let $link = $(e.target).closest('a.delete-file');
-        let fileId = $link.data('fileid');
+        let $link = $(e.target).closest('a.delete-image');
+        let imageId = $link.data('imageid');
 
         $link.prop('enabled', false);
         $link.off('click');
         // api.makeRequest(filerServer + '/' + fileId, 'DELETE').done(() => {
         //remove field from model
-        let dataArr = this.model[name.replace('_image_id', '_data')];
-        let dataIdx = _(dataArr).findIndex((elem) => { return elem.id == fileId });
+        let dataArr = this.model[name.replace('_id', '_data')];
+        let dataIdx = _(dataArr).findIndex((elem) => { return elem.id == imageId });
         if (dataIdx >= 0) {
           dataArr.splice(dataIdx, 1);
           if (!dataArr.length) {
             //add empty file
-            $link.closest('.file-scroll')
-              .append('<div class="thumb-file-container text-xl-center">' +
-                '<img src="/img/icons/file.png" alt="" class="img-file img-"' + name + '>' +
-                '<a class="a-' + name + '" href="#"></a>' +
+            $link.closest('.all-gallery')
+              .append('<div class="col-xl-4 one-photo">' +
+                '<div class="delete-image-container"></div>' +
+                '<img class="w-100 img-"' + name + '" src="/img/default/255x153.png">' +
                 '</div>');
           }
-          $link.closest('.thumb-file-container').remove();
+          $link.closest('.one-photo').remove();
         }
         // });
 
         return false;
       };
+      const cropImage = (e) => { console.log('NOT IMPLEMENTED')};
 
       this._initializeDropzone(name, dzOptions, (data, file) => {
         let textHelper = require('helpers/textHelper.js');
         let mimetypeIcons = require('helpers/mimetypeIcons.js');
-        let icon = mimetypeIcons[data[0].mime.split('/')[1]];
+        // let icon = mimetypeIcons[data[0].mime.split('/')[1]];
 
         let fieldDataName = name.replace('_id', '_data');
         let url = data[0].urls[0];
+        let imageId = data[0].id;
 
-        let fileBlock = $('<div class="thumb-file-container">' +
-          '<div class="delete-file-container" style="position: absolute;">' +
-          '<a href="#" class="delete-file" data-fileid="' + data[0].id + '">' +
-          '<i class="fa fa-times"></i>' +
-          '</a>' +
+        let imageBlock = $('<div class="col-xl-4 one-photo">' +
+          '<div class="delete-image-container">' +
+            '<a class="crop-image" href="#" data-imageid="' + imageId + '">' +
+              '<i class="fa fa-crop"></i>' +
+            '</a>' +
+            '<a class="delete-image" href="#" data-imageid="' + imageId + '">' +
+              '<i class="fa fa-times"></i>' +
+            '</a>' +
           '</div>' +
-          '<img class="img-file img-' + name + '" src="/img/icons/' + icon + '.png" />' +
-          '<a class="link-file a-' + name + '" target="_blank" ' +
-          'href="' + url + '" title="' + data[0].name +'">' +
-          textHelper.shortenFileName(data[0].name) + '</a>' +
-          '</div>');
+          '<img class="w-100 img-' + name + '" src="' + url + '">' +
+        '</div>');
 
-        let $link = fileBlock.find('a.delete-file');
-        $link.on('click', deleteFile);
+        imageBlock.find('a.delete-image').on('click', deleteImage);
+        imageBlock.find('a.crop-image').on('click', cropImage);
 
-        $('.dropzone__' + name + ' .thumb-file-container:last').after(fileBlock);
+        $('.dropzone__' + name + ' .one-photo:last').after(imageBlock);
 
         if(this.model[fieldDataName].length == 0) {
-          $('.dropzone__' + name + ' .thumb-file-container:first').remove();
+          $('.dropzone__' + name + ' .one-photo:first').remove();
         }
 
-        this.model[name.replace('_id', '_data')].push(data[0]);
+        this.model[fieldDataName].push(data[0]);
       });
 
-      //attach remove event handlers to dropzone items
-      $('.dropzone__' + name + ' .img-dropzone a.delete-file').each((idx, link) => {
-        $(link).on('click', deleteFile);
+      //attach remove item handlers
+      $('.dropzone__' + name + ' .img-dropzone a.delete-image').each((idx, link) => {
+        $(link).on('click', deleteImage);
+      });
+
+      //attach crop image handlers
+      $('.dropzone__' + name + ' .img-dropzone a.crop-image').each((idx, link) => {
+        $(link).on('click', cropImage);
       });
     }
   },

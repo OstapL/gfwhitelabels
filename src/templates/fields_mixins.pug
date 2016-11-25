@@ -477,38 +477,16 @@ mixin galleryDropzone(name, attr)
                 i(class="icon-gallery fa fa-" + attr.icon) 
             div.row
               div.col-xl-12.all-gallery
-                .col-xl-4.one-photo
-                  .delete-image-container
-                    a(href="#").crop-image
-                      i.fa.fa-crop
-                    a(href="#").delete-image
-                      i.fa.fa-times
-                  img(class=("w-100 img-" + name) src="/img/default/255x153.png")
-                .col-xl-4.one-photo
-                  .delete-image-container
-                    a(href="#").crop-image
-                      i.fa.fa-crop
-                    a(href="#").delete-image
-                      i.fa.fa-times
-                  img(class=("w-100 img-" + name) src="/img/default/255x153.png")
-                .col-xl-4.one-photo
-                  .delete-image-container
-                    a(href="#").crop-image
-                      i.fa.fa-crop
-                    a(href="#").delete-image
-                      i.fa.fa-times
-                  img(class=("w-100 img-" + name) src="/img/default/255x153.png")
-                .col-xl-4.one-photo
-                  .delete-image-container
-                    a(href="#").crop-image
-                      i.fa.fa-crop
-                    a(href="#").delete-image
-                      i.fa.fa-times
-                  img(class=("w-100 img-" + name) src="/img/default/255x153.png")
-                .col-xl-4.one-photo
-                  .delete-image-container
-                    a(href="#").crop-image
-                      i.fa.fa-crop
-                    a(href="#").delete-image
-                      i.fa.fa-times
-                  img(class=("w-100 img-" + name) src="/img/default/255x153.png")
+                each v, k in attr.data
+                  .col-xl-4.one-photo
+                    .delete-image-container
+                      a(href="#" data-imageid=v.id).crop-image
+                        i.fa.fa-crop
+                      a(href="#" data-imageid=v.id).delete-image
+                        i.fa.fa-times
+                    img(class=("w-100 img-" + name) src=v.urls[0])
+                else
+                  .col-xl-4.one-photo
+                    .delete-image-container
+                    img(class=("w-100 img-" + name) src="/img/default/255x153.png")
+
