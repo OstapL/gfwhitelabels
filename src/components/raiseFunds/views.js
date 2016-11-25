@@ -13,7 +13,8 @@ const menuHelper = require('helpers/menuHelper.js');
 const submitCampaign = function submitCampaign(e) {
   e.preventDefault();
   let $form = this.$el.find('form');
-  var data = $form.serializeJSON();
+  var data = $form.serializeJSON({ useIntKeysAsArrayIndex: true });
+  api.fixDateFields.call(this, this.fields, data);
 
   _.extend(this.model, data);
   data = _.extend({}, this.model);
@@ -101,11 +102,11 @@ module.exports = {
     urlRoot: raiseCapitalServer + '/company',
     template: require('./templates/company.pug'),
     events: _.extend({
-      'submit form': api.submitAction,
+      'click .btn-primary': api.submitAction,
       'keyup #zip_code': 'changeZipCode',
       'click .update-location': 'updateLocation',
       'click .onPreview': onPreviewAction,
-      'click .submit_form': api.submitAction,
+      'click .submit_form': submitCampaign,
       'change #website': appendHttpIfNecessary,
       'change #website,#twitter,#facebook,#instagram,#linkedin': 'appendHttpsIfNecessary',
     }, leavingConfirmationHelper.events, phoneHelper.events, menuHelper.events),
@@ -884,7 +885,7 @@ module.exports = {
       },
 
       getSuccessUrl(data) {
-        return '/campaign/' + data.id + '/perks';
+        return '/campaign/' + this.model.id + '/perks';
       },
 
       valuationDetermine(e) {
@@ -978,6 +979,7 @@ module.exports = {
 
     initialize(options) {
       this.fields = options.fields;
+      this.formc = options.formc;
       this.labels = {
         perks: {
           amount: 'If an Investor Invests Over',
@@ -997,28 +999,13 @@ module.exports = {
 
     render() {
       let template = require('./templates/perks.pug');
-      this.fields.perks.type = 'json';
-      this.fields.perks.schema = {
-          amount: {
-              type: 'number',
-              label: 'If an Investor Invests Over',
-              placeholder: '$',
-              values: [],
-              inputType: 'number'
-            },
-          perk: {
-              type: 'string',
-              label: 'Describe the Perk',
-              placholder: 'Description',
-              values: [],
-            },
-      };
       this.$el.html(
         template({
             serverUrl: serverUrl,
             Urls: Urls,
             fields: this.fields,
             values: this.model,
+            formc: this.formc,
             templates: this.jsonTemplates,
         })
       );

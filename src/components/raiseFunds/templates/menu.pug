@@ -4,7 +4,7 @@ mixin getCompanyUrl(id, section, currentStep, step, name)
       a(
           href='/' + section + '/' + id + '/' + step
           class="list-group-item list-group-item-action " + (currentStep == step ? 'active' : '') + 
-          ((section == 'formc' && values.is_paid == false ) ? 'disabled' : '')) #{ name }
+          ((section == 'formc' && (values.is_paid == false || values.is_approved == false) ) ? 'disabled' : '')) #{ name }
         if step == 'company'
           .icon-check
             i.fa.fa-check-circle-o
@@ -126,7 +126,7 @@ mixin menu(currentSection, currentStep)
                     +getCompanyUrl(formcId || values.id, 'formc', currentStep, 'financial-condition', 'Financial Condition')
                     +getCompanyUrl(formcId || values.id, 'formc', currentStep, 'outstanding-security', 'Outstanding Security')
                     +getCompanyUrl(formcId || values.id, 'formc', currentStep, 'background-check', 'Background Check')
-      if currentSection == 'formc'
+      if currentSection == 'formc' || values.is_approved == true
         .row
           .col-lg-12.text-xs-center
             .row
@@ -168,23 +168,23 @@ mixin menu(currentSection, currentStep)
                 .col-lg-6.pull-left.p-l-0.general_information.collapse
                   h3.m-b-0.m-t-0 General Information
                 .col-lg-6.text-xs-right.m-b-10.p-r-0.general_information.collapse
-                  a(href="/campaign/" + values.id + "/general_information?check=1").btn.btn-sm.btn-secondary.text-uppercase.m-t-0 Edit
+                  a(href="/campaign/" + (campaignId || values.id) + "/general_information?check=1").btn.btn-sm.btn-secondary.text-uppercase.m-t-0 Edit
                 .col-lg-6.pull-left.p-l-0.media.collapse
                   h3.m-b-0.m-t-0 Media 
                 .col-lg-6.text-xs-right.m-b-10.p-r-0.media.collapse
-                  a(href='/campaign/' + values.id + '/media?check=1').btn.btn-sm.btn-secondary.text-uppercase.m-t-0 Edit
+                  a(href='/campaign/' + (campaignId || values.id) + '/media?check=1').btn.btn-sm.btn-secondary.text-uppercase.m-t-0 Edit
                 .col-lg-6.pull-left.p-l-0.team-members.collapse
                   h3.m-b-0.m-t-0 Team Members 
                 .col-lg-6.text-xs-right.m-b-10.p-r-0.team-members.collapse
-                  a(href='/campaign/' + values.id + '/team-members?check=1').btn.btn-sm.btn-secondary.text-uppercase.m-t-0 Edit
+                  a(href='/campaign/' + (campaignId || values.id) + '/team-members?check=1').btn.btn-sm.btn-secondary.text-uppercase.m-t-0 Edit
                 .col-lg-6.pull-left.p-l-0.specifics.collapse
                   h3.m-b-0.m-t-0 Specifics 
                 .col-lg-6.text-xs-right.m-b-10.p-r-0.specifics.collapse
-                  a(href='/campaign/' + values.id + '/specifics?check=1').btn.btn-sm.btn-secondary.text-uppercase.m-t-0 Edit
+                  a(href='/campaign/' + (campaignId || values.id) + '/specifics?check=1').btn.btn-sm.btn-secondary.text-uppercase.m-t-0 Edit
                 .col-lg-6.pull-left.p-l-0.perks.collapse
                   h3.m-b-0.m-t-0 Perks 
                 .col-lg-6.text-xs-right.mb30.p-r-0.perks.collapse
-                  a(href='/campaign/' + values.id + '/perks?check=1').btn.btn-sm.btn-secondary.text-uppercase.m-t-0 Edit
+                  a(href='/campaign/' + (campaignId || values.id) + '/perks?check=1').btn.btn-sm.btn-secondary.text-uppercase.m-t-0 Edit
             .modal-footer
       div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")#company_publish_confirm.modal.fade
         div(role="document").modal-dialog
