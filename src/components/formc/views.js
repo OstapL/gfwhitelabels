@@ -154,7 +154,7 @@ module.exports = {
           Urls: Urls,
           fields: this.fields,
           values: this.model,
-          fullName: app.user.get('first_name') + ' ' + app.user.get('first_name'),
+          fullName: app.user.get('first_name') + ' ' + app.user.get('last_name'),
         })
       );
 

@@ -351,14 +351,6 @@ module.exports = {
         let dataIdx = _(dataArr).findIndex((elem) => { return elem.id == imageId });
         if (dataIdx >= 0) {
           dataArr.splice(dataIdx, 1);
-          if (!dataArr.length) {
-            //add empty file
-            $link.closest('.all-gallery')
-              .append('<div class="col-xl-4 one-photo">' +
-                '<div class="delete-image-container"></div>' +
-                '<img class="w-100 img-"' + name + '" src="/img/default/255x153.png">' +
-                '</div>');
-          }
           $link.closest('.one-photo').remove();
         }
         // });
@@ -368,9 +360,6 @@ module.exports = {
       const cropImage = (e) => { console.log('NOT IMPLEMENTED')};
 
       this._initializeDropzone(name, dzOptions, (data, file) => {
-        let textHelper = require('helpers/textHelper.js');
-        let mimetypeIcons = require('helpers/mimetypeIcons.js');
-        // let icon = mimetypeIcons[data[0].mime.split('/')[1]];
 
         let fieldDataName = name.replace('_id', '_data');
         let url = data[0].urls[0];
@@ -391,11 +380,7 @@ module.exports = {
         imageBlock.find('a.delete-image').on('click', deleteImage);
         imageBlock.find('a.crop-image').on('click', cropImage);
 
-        $('.dropzone__' + name + ' .one-photo:last').after(imageBlock);
-
-        if(this.model[fieldDataName].length == 0) {
-          $('.dropzone__' + name + ' .one-photo:first').remove();
-        }
+        $('.dropzone__' + name + ' .all-gallery').append(imageBlock);
 
         this.model[fieldDataName].push(data[0]);
       });
