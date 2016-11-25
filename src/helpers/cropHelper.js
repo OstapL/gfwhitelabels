@@ -79,8 +79,6 @@ module.exports = {
 
       if (typeof(callback) === 'function') callback(cropper.getData(true));
 
-      // console.log(cropper.getData(true));
-
       return false;
     });
 
