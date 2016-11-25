@@ -312,7 +312,7 @@ mixin fileDropzone(name, attr)
       div(class=attr.class1 + ' ' + (attr.required == true ? ' required ' : ' ') )
         label( for=attr.id || name)!= attr.label
 
-      div(class=(attr.class2 + ' dropzone__' + name))
+      div(class=(attr.class2 + ' dropzone__' + name) id=(attr.id || name))
         div(class=" col-lg-12 border-dropzone")
           div(class="uploading collapse")
             img(alt="activity indicator" src="/img/ajax-loader.gif")
@@ -352,7 +352,7 @@ mixin fileFolderDropzone(name, attr)
       div(class=attr.class1 + ' ' + (attr.required == true ? ' required ' : ' ') )
         label( for=attr.id || name)!= attr.label
 
-      div(class=(attr.class2 + ' dropzone__' + name))
+      div(class=(attr.class2 + ' dropzone__' + name) id=(attr.id || name))
         div(class=" col-lg-12 border-dropzone p-r-0")
           div(class="uploading collapse")
             img(alt="activity indicator" src="/img/ajax-loader.gif")
