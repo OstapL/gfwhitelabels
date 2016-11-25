@@ -590,8 +590,8 @@ module.exports = {
         this.template({
           serverUrl: serverUrl,
           Urls: Urls,
-          // investment: this.model,
-          // campaign: this.campaignModel.attributes,
+          investment: this.model,
+          campaign: this.campaignModel.attributes,
         })
       );
       return this;
