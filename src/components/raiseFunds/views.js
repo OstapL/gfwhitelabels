@@ -92,7 +92,7 @@ const onPreviewAction = function(e) {
   app.showLoading();
   let that = this;
   setTimeout(function() {
-    window.location = '/api/campaign/' + (that.campaign ? that.campaign.id : that.model.id) + '?preview=1&previous=' + pathname;
+    window.location = '/' + (that.campaign ? that.campaign.id : that.model.id) + '?preview=1&previous=' + pathname;
   }, 100);
 };
 

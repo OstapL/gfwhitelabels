@@ -3,8 +3,8 @@ include ../../../templates/mixins.pug
 +breadcrumbs('Congratulations!', '', 
   [
     ['Home', '/'],
-    ['Explore', Urls['campaign-list']],
-    ['Smartbe', Urls['campaign-detail'](campaign.id)],
+    ['Explore', '/companies'],
+    ['Smartbe', '/' + campaign.id],
     ['Invest in ' + campaign.company.name, '']
   ]
 )

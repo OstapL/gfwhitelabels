@@ -410,19 +410,100 @@ module.exports = {
 
   investment: Backbone.View.extend({
     template: require('./templates/investment.pug'),
+    templatesOfPdf: {
+      revenue_share: require('./templates/agreement/revenue_share.pug'),
+      common_stock: require('./templates/agreement/common_stock.pug'),
+    },
     urlRoot: investmentServer + '/',
     events: {
-      'submit form': api.submitAction,
+      'submit form.invest_form': api.submitAction,
       'keyup #amount': 'amountUpdate',
       'keyup #zip_code': 'changeZipCode',
-      'click .update-location': 'updateLocation'
+      'click .update-location': 'updateLocation',
+      'click .link-2': 'openPdf'
+    },
+
+    getSuccessUrl(data) {
+      return '/invest_thanks';
     },
     initialize(options) {
       this.fields = options.fields;
+      this.fields.street_address_1 = { type: 'string', required: true};
+      this.fields.street_address_2 = { type: 'string', required: false};
+      this.fields.phone = {type: 'string', required: true};
+      this.fields.name_on_bank_account = {type: 'string', required: true};
+      this.fields.account_number = {type: 'string', required: true};
+      this.fields.account_number_re = {type: 'string', required: true};
+      this.fields.zip_code = {type: 'string', required: true};
+      this.fields.city = {type: 'string', required: true};
+      this.fields.fee = {type: 'int', required: true};
+      this.fields.route_number = {type: 'string', required: true};
       this.labels = {
         amount: 'Amount',
+        street_address_1: 'Street Address 1',
+        street_address_2: 'Street Address 2',
+        zip_code: 'Zip Code',
+        city: 'City',
+        phone: 'Phone',
+        name_on_bank_account: 'Name On Bank Account',
+        account_number: 'Account Number',
+        account_number_re: 'Account Number Again',
+        fee: 'Fee',
+        route_number: 'Route Number',
       };
       this.assignLabels();
+    },
+
+    openPdf (e) {
+      const investor_legal_name = $('#first_name').val() + $('#last_name').val()
+                      || app.user.get('first_name') + app.user.get('last_name');
+      var data = {
+        address_1: $('#street_address_1').val(),
+        address_2: $('#street_address_2').val(),
+        aggregate_inclusive_purchase: $('#total').val(),
+        city: $('#city').val(),
+        investor_total_purchase: $('#amount').val(),
+        investor_legal_name: investor_legal_name,
+        state: $('#state').val(),
+        zip_code: $('#zip_code').val(),
+        Commitment_Date_X: this.getCurrentDate(),
+        fees_to_investor: 10,
+        investor_address: app.user.get('address_1'),
+        investor_city: app.user.get('city'),
+        investor_code: app.user.get('zip_code'),
+        investor_email: app.user.get('email'),
+        Investor_optional_address: app.user.get('address_2'),
+        investor_state: app.user.get('state'),
+        investor_number_purchased: '',
+        Investor_optional_address: '',
+        investor_state: '',
+        issuer_email: '',
+        issuer_legal_name: '',
+        issuer_signer: '',
+        issuer_signer_title: '',
+        jurisdiction_of_organization: '',
+        listing_fee: '',
+        maximum_raise: '',
+        minimum_raise: '',
+        price_per_share: '',
+        registration_fee: '',
+      };
+      const tplName = e.target.dataset.tpl;
+      const tpl = this.templatesOfPdf[tplName];
+      var docTxt = tpl(data);
+      var doc = JSON.parse(docTxt);
+
+      window.pdfMake
+        .createPdf(doc)
+        .download(e.target.text, () => app.hideLoading());
+      
+      app.showLoading()
+      e.preventDefault();
+    },
+
+    getCurrentDate () {
+        const date = new Date();
+        return date.getMonth() + '/' + date.getDate() + '/' + date.getFullYear();
     },
 
     updateLocation(e) {
