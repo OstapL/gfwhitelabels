@@ -46,7 +46,7 @@ section(style="background-image: url(" + (values.campaign.header_image_data.url 
             p Days Left
             h2.font-weight-bold #{ values.campaign.length_days }
           .col-lg-4.p-sm-0.col-md-12.col-xs-12.pull-lg-right.text-xs-center
-            a(href="/company/" + values.id + "/invest").btn.btn-primary.text-uppercase.pull-lg-right Invest
+            a(href="/" + values.id + "/invest").btn.btn-primary.text-uppercase.pull-lg-right Invest
 
 if app.getParams().preview == '1'
   div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")#company_publish.modal.fade
@@ -185,7 +185,7 @@ section.border-bottom-scroll.hidden-lg-down
           a(href="#faq").nav-link faq
         li.nav-item.text-uppercase
           a(href="#ask").nav-link Ask a Question
-        a(href="/company/" + values.id + "/invest").btn.btn-primary.text-uppercase.pull-xl-right.pull-lg-left invest
+        a(href="/" + values.id + "/invest").btn.btn-primary.text-uppercase.pull-xl-right.pull-lg-left invest
 section
   div(data-spy="scroll"
   data-target="#navbar-example2"
@@ -680,7 +680,7 @@ section
         h2
           i.fa.fa-thumbs-up
           |  I’d Like to Invest in #{ values.name }!
-        a(href="/company/" + values.id + "/invest").btn.btn-primary.text-uppercase Invest
+        a(href="/" + values.id + "/invest").btn.btn-primary.text-uppercase Invest
 
 div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")#videoModal.modal.fade.video-modal
   div(role="document").modal-dialog.modal-lg
