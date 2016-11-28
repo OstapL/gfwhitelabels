@@ -1,5 +1,6 @@
 .slider.slider-horizontal {
 	width:100%!important;
+	margin-bottom: 0px!important;
 
 	.slider-track {
 		height: 15px!important;
@@ -50,21 +51,26 @@
 			top: -15px;
 			font-size: 11px;
 			color: $small-text;
+			margin-left: -15px!important;
+			text-align: left!important;
+
 		}
 		.slider-tick-label:first-child {
-			padding-left: 15px;
+			margin-left: 0px!important;
+
 		}
 		.slider-tick-label:last-child {
-			padding-left: 0;
-			padding-right: 30px;
+			margin-left: -30px!important;
+			
 		}
+
 	}
 
 	.slider-tick-container {
 		.slider-tick {
 
 			width: 1px;
-			margin-left: 0;
+			margin-left: 0px!important;
 
 			background: $btstr_slider_other_nandle_block_bg;
 			border-radius: 0;
