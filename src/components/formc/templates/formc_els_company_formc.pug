@@ -11,69 +11,67 @@ include ../../../templates/fields_mixins.pug
 
 section.formc-team-members-director.container.m-b-85
   //START LEFT BLOCK
-  .col-lg-3.create_compaign
+  .col-lg-4.col-xl-3.create_compaign.create_compaign
     .jumbotron.jumbotron-fluid.row.bg-check-menu
-        .raise-funds
-          h4.font-weight-bold.text-uppercase.m-b-0 REQUIRED INFORMATION
-            .small-text (10% Done)
-        .list-group
-          a(href="#").list-group-item.active Company Form C Electronic Signature
-            i.fa.fa-check.pull-right
-          a(href="#").list-group-item CIK Code
-          a(href="#").list-group-item Financials Certification  
+      .raise-funds
+        h4.font-weight-bold.text-uppercase.m-b-0 REQUIRED INFORMATION
+          .small-text (10% Done)
+      .list-group
+        a(href="#").list-group-item.active Company Form C Electronic Signature
+          i.fa.fa-check.pull-right
+        a(href="#").list-group-item CIK Code
+        a(href="#").list-group-item Financials Certification  
     
 
 
   //START RIGHT BLOCK
-  .col-lg-8
+  .col-xl-8.col-lg-8.col-md-12
     h2.text-uppercase.text-lg-center.text-xs-center.m-t-0.dosis Company Form C Electronic Signature – Signature on Behalf of Company
     .col-lg-12
-      p.pb10 Company Name is preparing to file its Form C Offering Material and to officially begin their fundraising campaign.
-      p.pb10 Congratulations on this exciting milestone for your company!
-      p The Form C is a legally required document that we anticipate filing with the SEC to commence your Offering through our Funding Portal.  
-      p The SEC requires each issuer to include in the Form C all the material information that is necessary to make the statements in the Form C not misleading. Intentional misstatements or omissions of fact constitute federal criminal violations. See 18 U.S.C. 1001. Including any material misstatements in the Form C could invalidate the Offering, so please review the contents carefully. 
+      p.pb10.text-justify Company Name is preparing to file its Form C Offering Material and to officially begin their fundraising campaign.
+      p.pb10.text-justify Congratulations on this exciting milestone for your company!
+      p.text-justify The Form C is a legally required document that we anticipate filing with the SEC to commence your Offering through our Funding Portal.  
+      p.text-justify The SEC requires each issuer to include in the Form C all the material information that is necessary to make the statements in the Form C not misleading. Intentional misstatements or omissions of fact constitute federal criminal violations. See 18 U.S.C. 1001. Including any material misstatements in the Form C could invalidate the Offering, so please review the contents carefully. 
     .col-lg-12.m-t-2.m-b-2
       a(href="#").link-2 Click Here to View the Form C Offering Statement and Electronically Sign
 
     form(metod="post" action="").form-section
       .col-lg-12
         iframe(src="http://resume2015.ru/shablon-rezyume.pdf" type="application/pdf" style="width:100%; height:680px;" frameborder="0").m-t-1.m-b-2
-        p Pursuant to the requirements of Sections 4(a)(6) and 4A of the Securities Act of 1933 and Regulation Crowdfunding (§ 227.100-503), the issuer certifies that it has reasonable grounds to believe that it meets all of the requirements for filing Form C and has duly caused this Form to be signed on its behalf by the duly authorized undersigned.
+        p.text-justify Pursuant to the requirements of Sections 4(a)(6) and 4A of the Securities Act of 1933 and Regulation Crowdfunding (§ 227.100-503), the issuer certifies that it has reasonable grounds to believe that it meets all of the requirements for filing Form C and has duly caused this Form to be signed on its behalf by the duly authorized undersigned.
       .col-lg-12.m-t-2.investment
-        .row
-          .col-lg-6.form-group
-            input(type="text" placeholder="Company Name").form-control
-            .help-block Company Name (pre-populated)
+        .row.form-group
+          +fieldText("company_name", {'class': 'col-xl-8','placeholder':'Company Name' })
         .form-group.row
-          .col-lg-3
-            input(type="text" placeholder="Type Your Name").form-control
-            .help-block Type your name here
-          .col-lg-3
+          +fieldText("name", {'class': 'col-xl-4','placeholder':'Type your name here' })
+          .col-xl-4
             .electronically
               span.by By:
               span.name Maria Kravchuk
-        .row
-          .col-lg-6.form-group
-            input(type="text" placeholder="Title").form-control
-            .help-block Title (pre-populate CEO/President)
-      p.col-lg-12.m-t-1 Pursuant to the requirements of Sections 4(a)(6) and 4A of the Securities Act of 1933 and Regulation Crowdfunding (§ 227.100-503), this Form C has been signed by the following persons in the capacities and on the dates indicated.
+        .row.form-group
+          +fieldText("title", {'class': 'col-xl-8','placeholder':'Title' })
+      p.col-lg-12.m-t-1.text-justify Pursuant to the requirements of Sections 4(a)(6) and 4A of the Securities Act of 1933 and Regulation Crowdfunding (§ 227.100-503), this Form C has been signed by the following persons in the capacities and on the dates indicated.
       .col-lg-12.m-t-2.investment
         .form-group.row
-          .col-lg-3
-            input(type="text" placeholder="Type Your Name").form-control
-            .help-block Type your name here
-          .col-lg-3
+          +fieldText("name", {'class': 'col-xl-4 m-b-md-25','placeholder':'Type your name here' })
+          .col-xl-4
             .electronically
               span.by By:
               span.name Maria Kravchuk
-        .row
-          .col-lg-6.form-group
-            input(type="text" placeholder="Title").form-control
-            .help-block Title (pre-populate CEO/President)
-        .row
-          .col-lg-6.form-group
-            input(type="text" placeholder="Date").form-control
-            .help-block Date (auto-populate)
-      .m-t-3
-        .col-lg-12.text-md-center.text-sm-center-text-xs-center
-          a(href="#").btn.btn-primary.text-uppercase.pull-lg-right submit
+        .row.form-group
+          +fieldText("title", {'class': 'col-xl-8','placeholder':'Title' })
+        .row.form-group
+          .col-xl-4.col-lg-6.p-r-0
+              +fieldDateMonth("dob", _.extend({
+                class: 'col-xl-4 col-lg-4 col-xs-4 p-l-0  m-d-p-r-5',
+              }, fields.dob))
+              +fieldDateDay("dob", _.extend({
+                class: 'col-xl-4 col-lg-4 col-xs-4 p-r-0 m-d-p-l-5',
+              }, fields.dob))
+              +fieldDateYear("dob", _.extend({
+                class: 'col-xl-4 col-lg-4 col-xs-4 p-r-0 m-d-p-l-10',
+                placeholder: 'YYYY',
+              }, fields.dob))
+      
+      .col-lg-12.text-md-center.text-sm-center-text-xs-center.m-t-2
+        a(href="#").btn.btn-primary.text-uppercase.pull-lg-right submit
