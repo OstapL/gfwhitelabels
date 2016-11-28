@@ -255,7 +255,7 @@ mixin fieldBlock(name, data, attr)
                                 if values[name][kkeys[counter]]
                                   .col-lg-5.p-l-1.col-md-12.col-xs-12.p-sm-0.p-r-0  
                                       .embed-responsive.embed-responsive-16by9 
-                                          - const additionalVideo = app.getVideoId(values[name][kkeys[counter]].link);
+                                          - var additionalVideo = app.getVideoId(values[name][kkeys[counter]].link);
                                           if additionalVideo && additionalVideo.provider == 'youtube'
                                             iframe.embed-responsive-item(src="//www.youtube.com/embed/" + additionalVideo.id + "?rel=0" allowfullscreen="true")
                                           else if additionalVideo && additionalVideo.provider == 'vimeo'

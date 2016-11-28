@@ -240,7 +240,7 @@ section
               if v
                 .col-lg-4
                   .card.card-inverse
-                    - const additionalVideo = app.getVideoId(v.link);
+                    - var additionalVideo = app.getVideoId(v.link);
                     if additionalVideo && additionalVideo.provider == 'youtube'
                       img(src="http://img.youtube.com/vi/" + additionalVideo.id + "/0.jpg" alt="" style="width: 338px").card-img
                     else if additionalVideo && additionalVideo.provider == 'vimeo'
@@ -332,14 +332,14 @@ section
           .row
             .col-lg-12.text-center-flex
               .articles_press
-                - const keys = Object.keys(values.campaign.press);
+                - var keys = Object.keys(values.campaign.press);
                 - var counter = 0;
                 - var lastArticleIdx = 0;
                 div
                   each k in keys
                     if counter >= 3
                       - break;
-                    - const v = values.campaign.press[k]
+                    - var v = values.campaign.press[k]
                     if v
                       - counter++;
                       - lastArticleIdx = k;
@@ -355,7 +355,7 @@ section
                   each k in keys
                     if k <= lastArticleIdx
                       - continue;
-                    - const v = values.campaign.press[k]
+                    - var v = values.campaign.press[k]
                     if v
                       - showMore = true;
                       div.col-xs-12.col-sm-12.col-md-12.col-lg-6.articles_press
