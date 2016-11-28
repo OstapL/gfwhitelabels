@@ -1,8 +1,8 @@
-- let indexCounter = index || 0
+- const indexCounter = index || 0
 
 tr(class='index_' + indexCounter)
   td
-    - let securityType;
+    - var securityType;
     case parseInt(values.security_type)
       when 0
         - securityType = 'Preferred Stock';

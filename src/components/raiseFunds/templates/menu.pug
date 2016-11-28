@@ -23,7 +23,7 @@ mixin getCompanyUrl(id, section, currentStep, step, name)
         ) #{ name }
 
 mixin getRiskFactorsItem(id, section, currentStep, step, name)
-  - let prefix = '/' + section + '/';
+  - const prefix = '/' + section + '/';
   if id || currentStep == step
       a(
         href=prefix + id + "/" + step
@@ -104,7 +104,7 @@ mixin menu(currentSection, currentStep)
                     +getCompanyUrl(formcId || values.id, 'formc', currentStep, 'related-parties', 'Related Parties')
                     +getCompanyUrl(formcId || values.id, 'formc', currentStep, 'use-of-proceeds', 'Use of Proceeds')
                     .panel.panel-default.sub-menu
-                      - let inRiskFactors = currentStep.startsWith('risk-factors');
+                      - const inRiskFactors = currentStep.startsWith('risk-factors');
                       a(data-toggle="collapse"
                         href="#risk_factors"
                         aria-expanded="true"

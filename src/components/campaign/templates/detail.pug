@@ -240,7 +240,7 @@ section
               if v
                 .col-lg-4
                   .card.card-inverse
-                    - let additionalVideo = app.getVideoId(v.link);
+                    - const additionalVideo = app.getVideoId(v.link);
                     if additionalVideo && additionalVideo.provider == 'youtube'
                       img(src="http://img.youtube.com/vi/" + additionalVideo.id + "/0.jpg" alt="" style="width: 338px").card-img
                     else if additionalVideo && additionalVideo.provider == 'vimeo'
@@ -327,19 +327,19 @@ section
     section.articles
       .container
         if values.campaign.press && Object.keys(values.campaign.press).length > 0 && values.campaign.press[0].headline != ''
-          - let showMore = false;
+          - var showMore = false;
           h2.dosis.text-uppercase.text-lg-center.text-xs-center.campaign-subheading.m-t-0 Articles and Press
           .row
             .col-lg-12.text-center-flex
               .articles_press
-                - let keys = Object.keys(values.campaign.press);
-                - let counter = 0;
-                - let lastArticleIdx = 0;
+                - const keys = Object.keys(values.campaign.press);
+                - var counter = 0;
+                - var lastArticleIdx = 0;
                 div
                   each k in keys
                     if counter >= 3
                       - break;
-                    - let v = values.campaign.press[k]
+                    - const v = values.campaign.press[k]
                     if v
                       - counter++;
                       - lastArticleIdx = k;
@@ -355,7 +355,7 @@ section
                   each k in keys
                     if k <= lastArticleIdx
                       - continue;
-                    - let v = values.campaign.press[k]
+                    - const v = values.campaign.press[k]
                     if v
                       - showMore = true;
                       div.col-xs-12.col-sm-12.col-md-12.col-lg-6.articles_press
