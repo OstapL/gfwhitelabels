@@ -184,8 +184,8 @@ module.exports = {
           '<img class="img-file img-' + name + '" src="/img/icons/' + icon + '.png" />' +
           '<div class="row">' +
           '<a class="link-file a-' + name + '" target="_blank" ' +
-            'href="' + url + '" title="' + data[0].name +'">' +
-              textHelper.shortenFileName(data[0].name) + '</a>' +
+            'href="' + url + '" title="' + fileName +'">' +
+              textHelper.shortenFileName(fileName) + '</a>' +
           '</div>'
           );
 

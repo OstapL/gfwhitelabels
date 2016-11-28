@@ -359,9 +359,14 @@ module.exports = {
 
       this.fields.header_image_image_id.imgOptions = {
         aspectRatio: 16/9,
+        cssClass : 'img-crop',
+        showPreview: false,
       };
+
       this.fields.list_image_image_id.imgOptions = {
         aspectRatio: 16 / 9,
+        cssClass: 'img-crop',
+        showPreview: false,
       };
 
       this.fields.gallery_group_id.type = 'imagefolder';
