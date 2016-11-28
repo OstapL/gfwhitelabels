@@ -436,7 +436,7 @@ module.exports = {
       this.fields.account_number_re = {type: 'string', required: true};
       this.fields.zip_code = {type: 'string', required: true};
       this.fields.city = {type: 'string', required: true};
-      this.fields.fee = {type: 'int', required: true};
+      this.fields.fee = {type: 'int', required: false};
       this.fields.route_number = {type: 'string', required: true};
       this.labels = {
         amount: 'Amount',

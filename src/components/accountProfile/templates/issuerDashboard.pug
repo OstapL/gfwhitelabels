@@ -14,7 +14,7 @@ section.issuer-dashbord-top
         .img_under_text
           img(src=values.thumbnail alt="")
           h2.text-uppercase.dosis.m-t-0 #{values.name}
-          - const days_left = Math.floor((Date.parse(values.campaign.expiration_date) - new Date()) / (1000 * 60 * 60 * 24));
+          - var days_left = Math.floor((Date.parse(values.campaign.expiration_date) - new Date()) / (1000 * 60 * 60 * 24));
           .timer_day #{days_left} Days Left
         .share-block.d-inline-block
           span.font-weight-bold Share:

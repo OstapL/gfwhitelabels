@@ -1,4 +1,6 @@
 include ../../../templates/mixins.pug
+include ../../../templates/fields_mixins.pug
+
 
 +breadcrumbs('Invest', '', 
   [
@@ -34,21 +36,21 @@ mixin fieldInput(name, attr)
           input(type="hidden" name="campaign_id" value="45")
           .row
             .col-xl-12
-              +fieldBlock("amount", '', {
-                  class1: 'col-lg-3 col-md-12',
-                  class2: 'col-lg-4 col-md-12',
-                  type: 'text',
-                  placeholder: '$2,500',
-                  text: "$10 of payment processing fee. Your money will be returned to you if the campaign doesn't reach the target goal ($500,000)."
-                  })
+              +fieldTextLabel("amount", _.extend({
+                class1: 'col-lg-3 col-md-12 text-lg-left text-xl-right',
+                class2: 'col-lg-4 col-md-12',
+                placeholder: '$2,500',
+                text: "$10 of payment processing fee. Your money will be returned to you if the campaign doesn't reach the target goal ($500,000)."
+                }, fields.amount))
           .row
             .col-xl-12
-              +fieldBlock("fee", '', {
-                  class1: 'col-lg-3 col-md-12',
-                  class2: 'col-lg-4 col-md-12 input-border-bottom',
-                  type: 'text',
-                  placeholder: '+ $10'
-                  })
+              +fieldTextLabel("fee", _.extend({
+                class1: 'col-lg-3 col-md-12 text-lg-left text-xl-right',
+                class2: 'col-lg-4 col-md-12 input-border-bottom',
+                placeholder: '+ $10',
+                value: '$10',
+                disabled: true
+                }, fields.fee))
           .row
             label.col-lg-3.text-lg-right.p-t-0.total-investment-label Total
             .col-lg-4
