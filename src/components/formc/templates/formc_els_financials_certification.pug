@@ -1,0 +1,70 @@
+include ../../../templates/mixins.pug
+include ../../../templates/fields_mixins.pug
+
++breadcrumbs('form c and electronic signature', '', 
+    [
+        ['', ''],
+        ['', ''],
+        ['', ''],
+    ]
+)
+
+section.formc-team-members-director.container.m-b-85
+  //START LEFT BLOCK
+  .col-lg-4.col-xl-3.create_compaign
+    .jumbotron.jumbotron-fluid.row.bg-check-menu
+      .raise-funds
+        h4.font-weight-bold.text-uppercase.m-b-0 REQUIRED INFORMATION
+          .small-text (10% Done)
+      .list-group
+        a(href="#").list-group-item Company Form C Electronic Signature
+        a(href="#").list-group-item CIK Code
+        a(href="#").list-group-item.active Financials Certification
+          i.fa.fa-check.pull-right 
+    
+  //START RIGHT BLOCK
+  .col-xl-8.col-lg-8.col-md-12
+    h2.text-uppercase.text-lg-center.text-xs-center.m-t-0.dosis.m-b-3 Financials Certification
+    form(metod="post" action="").form-section
+      .row.form-group
+        .col-date#dob
+          label.col-xl-3.col-lg-12.text-xl-right.textlg-left.p-t-0.m-b-0 Date of Most Recent Tax Return
+            span.color-red *
+          .col-xl-4.col-lg-6.p-r-0
+            +fieldDateMonth("dob", _.extend({
+              class: 'col-xl-4 col-lg-4 col-xs-4 p-l-0  m-d-p-r-5',
+            }, fields.dob))
+            +fieldDateDay("dob", _.extend({
+              class: 'col-xl-4 col-lg-4 col-xs-4 p-r-0 m-d-p-l-5',
+            }, fields.dob))
+            +fieldDateYear("dob", _.extend({
+              class: 'col-xl-4 col-lg-4 col-xs-4 p-r-0 m-d-p-l-10',
+              placeholder: 'YYYY',
+            }, fields.dob)) 
+      .col-lg-12.m-t-1
+        p.m-b-3 A principal executive officer must provide the following certification:
+      .col-lg-12
+        .input-border-block(style="border:solid 1px #ccc; padding:10px 20px")
+          p.pb10 I, 
+            input(type="text" placeholder="autopopulate CEO’s name" style="width:190px;").input-border-bottom
+            |  certify that:
+          p.pb10 1) The financials statement of
+            input(type="text" placeholder="autopopulate company name" style="width:213px;").input-border-bottom
+            |  included in this Form are true and complete in all material respects, and
+          p 2) The tax return information of
+            input(type="text" placeholder="autopopulate company name" style="width:213px;").input-border-bottom
+            |  included in this Form reflects accurately the information reported on the tax return for
+            input(type="text" placeholder="autopopulate company name" style="width:213px;").input-border-bottom
+            |  field for the fiscal year ended.
+      .col-lg-12.investment.m-t-2
+        .form-group.row
+          +fieldText("name", {'class': 'col-xl-4 m-b-md-25','placeholder':'Type your name here' })
+          .col-xl-4
+            .electronically
+              span.by By:
+              span.name Maria Kravchuk
+        .row.form-group
+          +fieldText("title", {'class': 'col-xl-8','placeholder':'Title' })
+      
+      .col-lg-12.text-md-center.text-sm-center-text-xs-center.m-t-2
+        a(href="#").btn.btn-primary.text-uppercase.pull-lg-right submit
