@@ -73,7 +73,7 @@ include ../../../templates/mixins.pug
 -      return values[name];                                                           
 -    } else {
 -       try {
--           return name.split('.').reduce((o,i)=>o[i], values);                            
+-           return name.split('.').reduce(function(o,i){ return o[i]; }, values);                            
 -       } catch(e) { 
 -          return ''; 
 -       }
@@ -84,7 +84,7 @@ include ../../../templates/mixins.pug
 -    if(name.indexOf('.') == -1) {
 -      return fields[name].choices[data];                                                           
 -    } else {                                                                       
--      var f = name.split('.').reduce((o,i)=>o[i], fields);                            
+-      var f = name.split('.').reduce(function(o,i) { return o[i]; }, fields);                            
 -      return f.validate.choices[data];
 -    }                                                                              
 -  }
