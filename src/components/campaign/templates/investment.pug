@@ -33,7 +33,6 @@ mixin fieldInput(name, attr)
       .form-section.clearfix
         form(action="POST" data-method="POST").invest_form.clearfix
           input(type="hidden" name="company_id" value=values.id)
-          input(type="hidden" name="campaign_id" value="45")
           .row
             .col-xl-12
               +fieldTextLabel("amount", _.extend({
@@ -69,8 +68,8 @@ mixin fieldInput(name, attr)
               span.small-text.open-sans Required by United States banking laws. This information is transmitted securely and will never be used for any purpose beyond executing your investment. You only have to do this once.
             .form-group.row
               label.col-lg-3.col-md-12.text-lg-right.text-xs-left.pull-xs-left Legal Name
-              +fieldInput("first_name", {'class': 'col-lg-4-5 m-b-md-25 col-md-12','placeholder':'First Name' })
-              +fieldInput("last_name", {'class': 'col-lg-4-5 col-md-12 ','placeholder':'Last Name' })
+              +fieldInput("personal_information_data[first_name]", {'class': 'col-lg-4-5 m-b-md-25 col-md-12','placeholder':'First Name' })
+              +fieldInput("personal_information_data[last_name]", {'class': 'col-lg-4-5 col-md-12 ','placeholder':'Last Name' })
             .form-group.row
               label.col-lg-3.text-lg-right.text-xs-left Country
               .col-lg-9
@@ -79,23 +78,21 @@ mixin fieldInput(name, attr)
                   option(value="us") United States
                   option(value="ua") UA
                   option(value='ru') Russia
-            +fieldBlock("street_address_1", '', {
-              class1: 'col-lg-3 col-md-12',
+            +fieldTextLabel("personal_information_data[street_addres_1]", _.extend({
+              class1: 'col-lg-3 col-md-12 text-lg-left text-xl-right',
               class2: 'col-lg-9 col-md-12',
-              type: 'text',
-              })
-            +fieldBlock("street_address_2", '', {
-              class1: 'col-lg-3 col-md-12',
+              }, fields.street_address_1))
+            +fieldTextLabel("personal_information_data[street_addres_2]", _.extend({
+              class1: 'col-lg-3 col-md-12 text-lg-left text-xl-right',
               class2: 'col-lg-9 col-md-12',
-              type: 'text',
-              }).street_address_2
+              }, fields.street_address_2))
             // IF USA
             .row
               .col-lg-7.p-l-2.col-md-12
-                +fieldBlock("zip_code", '', {
-                  class1: 'col-lg-5',
+                +fieldTextLabel("personal_information_data[zip_code]", _.extend({
+                  class1: 'col-lg-5 text-lg-left text-xl-right',
                   class2: 'col-lg-7',
-                  })
+                  }, fields.zip_code))
               .col-lg-5.city_states.col-md-12
                 label.col-lg-5.col-md-6.col-sm-6.col-xs-6 City/State
                 .col-lg-7.col-md-6.col-sm-6.col-xs-6
@@ -105,20 +102,20 @@ mixin fieldInput(name, attr)
             // IF OTHER COUNTRY
             .row
               .col-lg-6.p-l-0.p-r-0
-                +fieldBlock("city", user.city, {'class1': 'col-lg-6 ', 'class2': 'col-lg-6 p-r-0', 'type': 'text'})
+                +fieldTextLabel("personal_information_data[city]", _.extend({'class1': 'col-lg-6 text-lg-left text-xl-right', 'class2': 'col-lg-6 p-r-0'}, fields.city))
               .col-lg-6
                 .form-group.row.state.text
-                  label.text-lg-right.col-lg-5(for="state").p-t-0.m-b-0 State/Province/ Region
+                  label.text-lg-right.col-lg-5(for="state").p-t-0.m-b-0 State/Province/Region
                   div.col-lg-7
-                    input.form-control(name='state' placeholder='State/Province/Region' type="text" value=user.state)
+                    input.form-control(name='personal_information_data[state]' placeholder='State/Province/Region' type="text" value=user.state)
             .row
               .col-lg-6.p-l-0.p-r-0
                 .form-group.row.zip_code.text
                   label.text-lg-right.col-lg-6(for="zip_code") Postal Code
                   div.col-lg-6.p-r-0
-                    input.form-control(name='zip_code' placeholder='Postal Code' type="text" value=user.zip_code)
+                    input.form-control(name='personal_information_data[zip_code]' placeholder='Postal Code' type="text" value=user.zip_code)
               .col-lg-6
-                +fieldBlock("phone", user.phone, {'class1': 'col-lg-5 ', 'class2': 'col-lg-7 ', 'type': 'text'})
+                +fieldTextLabel("personal_information_data[phone]", _.extend({'class1': 'col-lg-5 text-lg-left text-xl-right', 'class2': 'col-lg-7 ', 'type': 'text'}, fields.phone))
 
           section.payment-information.border-bottom
             h2.text-uppercase.dosis.text-md-center.text-sm-center.text-xs-center.text-lg-left Payment information
@@ -129,18 +126,22 @@ mixin fieldInput(name, attr)
                   option(value="echeck") Echeck (ACH)
                   option(value="check") Check
             //IF ECHECK
-            +fieldBlock("name_on_bank_account", user.name_on_bank_account, {'class1': 'col-lg-3', 'class2': 'col-lg-9', 'type': 'text'})
-            +fieldBlock("account_number", '', {
-              class1: 'col-lg-3 col-md-3',
-              class2: 'col-lg-9 col-md-9',
-              type: 'text',
-              })
-            +fieldBlock("account_number_re", user.account_number_rc, {'class1': 'col-lg-3 ', 'class2': 'col-lg-9', 'type': 'text'})
-            +fieldBlock("route_number", '', {
-              class1: 'col-lg-3 col-md-3',
-              class2: 'col-lg-9 col-md-9',
-              type: 'text',
-              })
+            //- I may need to add a value into the attr object to make sure proper data is populated.
+            +fieldTextLabel("payment_information_data[name_on_bank_account]", _.extend({
+              class1: 'col-lg-3 col-md-12 text-lg-left text-xl-right',
+              class2: 'col-lg-9 col-md-12',
+              }, fields.name_on_bank_account))
+            +fieldTextLabel("payment_information_data[account_number]", _.extend({
+              class1: 'col-lg-3 col-md-12 text-lg-left text-xl-right',
+              class2: 'col-lg-9 col-md-12',
+              }, fields.account_number))
+            +fieldTextLabel("payment_information_data[account_number_re]", _.extend({
+              class1: 'col-lg-3 col-md-12 text-lg-left text-xl-right',
+              class2: 'col-lg-9 col-md-12',
+              }, fields.account_number_re))
+            +fieldTextLabel("payment_information_data[routing_number]", _.extend({
+              class1: 'col-lg-3 col-md-12 text-lg-left text-xl-right',
+              class2: 'col-lg-9 col-md-12',
             .form-group.row.radio
               label.text-md-right.col-lg-3 Account Type
               .col-lg-9.radio-input
