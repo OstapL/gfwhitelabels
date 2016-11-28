@@ -1,5 +1,5 @@
 .slider.slider-horizontal {
-	width:99.7%!important;
+	width:100%!important;
 
 	.slider-track {
 		height: 15px!important;
@@ -10,6 +10,7 @@
 	.tooltip.top {
 		margin-top: rem(20);
 		opacity: 1;
+		z-index: 1;
 
 		.tooltip-inner {
 			color: $black_text;
@@ -43,7 +44,21 @@
 
 		background: $btstr_slider_nandle_block_bg;
 	}
-
+	.slider-tick-label-container {
+		.slider-tick-label {
+			position: absolute;
+			top: -15px;
+			font-size: 11px;
+			color: $small-text;
+		}
+		.slider-tick-label:first-child {
+			padding-left: 15px;
+		}
+		.slider-tick-label:last-child {
+			padding-left: 0;
+			padding-right: 30px;
+		}
+	}
 
 	.slider-tick-container {
 		.slider-tick {
