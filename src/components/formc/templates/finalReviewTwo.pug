@@ -73,7 +73,7 @@ include ../../../templates/mixins.pug
 -      return values[name];                                                           
 -    } else {
 -       try {
--           return name.split('.').reduce(function(o,i){ return o[i]; }, values);                            
+-           return name.split('.').reduce(function(o,i) { return o[i]; }, values);                            
 -       } catch(e) { 
 -          return ''; 
 -       }
