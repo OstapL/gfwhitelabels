@@ -29,7 +29,7 @@ include ../../../templates/mixins.pug
       form(method="post" action="").form-section
         .form-body.clearfix
           .form-group.row
-            label(for='industry').col-lg-12.col-form-label Please provide the industry to which your business belongs.
+            label(for='industry').col-lg-12.col-form-label.font-weight-normal Please provide the industry to which your business belongs.
             .col-lg-12
               select(data-model-value='industry' name="industry")#industry.form-control.js-select
                 each val, index in industryData
@@ -39,7 +39,7 @@ include ../../../templates/mixins.pug
                     option= val
 
           .form-group.row
-            label(for="raiseCash").col-lg-12 How much cash do you plan to raise?
+            label(for="raiseCash").col-lg-12.font-weight-normal How much cash do you plan to raise?
 
             .col-lg-12
               input(
@@ -53,7 +53,7 @@ include ../../../templates/mixins.pug
                 data-current-value= data.raiseCash)#raiseCash.form-control.js-field
 
           .form-group.row
-            label(for="ownCache").col-lg-12 How much cash, beyond what's needed for immediate operating needs, does your business currently have?
+            label(for="ownCache").col-lg-12.font-weight-normal How much cash, beyond what's needed for immediate operating needs, does your business currently have?
 
             .col-lg-12
               input(
@@ -67,7 +67,7 @@ include ../../../templates/mixins.pug
                 data-current-value= data.ownCache)#ownCache.form-control.js-field
 
           .form-group.row
-            label(for="currentDebt").col-lg-12 How much debt is your business currently carrying?
+            label(for="currentDebt").col-lg-12.font-weight-normal How much debt is your business currently carrying?
 
             .col-lg-12
               input(
