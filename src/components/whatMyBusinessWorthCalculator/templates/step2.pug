@@ -26,8 +26,8 @@ include ../../../templates/mixins.pug
         .form-body.clearfix
 
           .form-group.row
-            label(for="monthlyOperatingTwoYears").col-lg-12 What do you expect your monthly operating expenses to average over the subsequent 12 months? (i.e. months 13 - 24) &nbsp;&nbsp;
-              i(aria-hidden="true",data-toggle="tooltip",data-original-title="<b>Operating Expense.</b> The sum of a business's operating expenses for a period of time, such as a month or year. In throughput accounting, the cost accounting aspect of the theory of constraints (TOC), operating expense is the money spent turning  nventory into throughput.").fa.fa-question-circle.text-muted
+            label(for="monthlyOperatingTwoYears").col-lg-12.font-weight-normal What do you expect your monthly operating expenses to average over the subsequent 12 months? (i.e. months 13 - 24) &nbsp;&nbsp;
+              i(aria-hidden="true",data-toggle="tooltip",data-original-title="<b><u>Operating Expense.</u> The sum of a business's operating expenses for a period of time, such as a month or year. In throughput accounting, the cost accounting aspect of the theory of constraints (TOC), operating expense is the money spent turning  nventory into throughput.</b>").fa.fa-question-circle.text-muted
 
             .col-lg-12
               input(
@@ -41,8 +41,8 @@ include ../../../templates/mixins.pug
                 name="monthlyOperatingTwoYears")#monthlyOperatingTwoYears.form-control.js-field
 
           .form-group.row
-            label(for="workingCapital").col-lg-12  How much working capital do you need to generate your projected revenue over the next 24 months?) &nbsp;&nbsp;
-              i(aria-hidden="true",data-toggle="tooltip",data-original-title="<b>Working Capital.</b> The amount of capital needed to carry on a business.  This represents the operating liquidity and is calculated as current assets minus current liabilities; accounts receivable plus inventory minus accounts payable.").fa.fa-question-circle.text-muted
+            label(for="workingCapital").col-lg-12.font-weight-normal  How much working capital do you need to generate your projected revenue over the next 24 months?) &nbsp;&nbsp;
+              i(aria-hidden="true",data-toggle="tooltip",data-original-title="<b><u>Working Capital.</u> The amount of capital needed to carry on a business.  This represents the operating liquidity and is calculated as current assets minus current liabilities; accounts receivable plus inventory minus accounts payable.</b>").fa.fa-question-circle.text-muted
 
             .col-lg-12.mb20
               input(
@@ -52,8 +52,8 @@ include ../../../templates/mixins.pug
                 data-model-value='workingCapital')#workingCapital.form-control.js-bootstrap-slider
 
           .form-group.row
-            label(for="additionalOperating").col-lg-12 If your revenue comes in 50% higher than you are currently projecting, how much in additional monthly operating expenses would you need? &nbsp;&nbsp;
-              i(aria-hidden="true",data-toggle="tooltip",data-original-title="<b>Operating Expenses.</b> The sum of a business's operating expenses for a period of time, such as a month or year. In throughput accounting, the cost accounting aspect of the theory of constraints (TOC), operating expense is the money spent turning inventory into throughput.").fa.fa-question-circle.text-muted
+            label(for="additionalOperating").col-lg-12.font-weight-normal If your revenue comes in 50% higher than you are currently projecting, how much in additional monthly operating expenses would you need? &nbsp;&nbsp;
+              i(aria-hidden="true",data-toggle="tooltip",data-original-title="<b><u>Operating Expenses.</u> The sum of a business's operating expenses for a period of time, such as a month or year. In throughput accounting, the cost accounting aspect of the theory of constraints (TOC), operating expense is the money spent turning inventory into throughput.</b>").fa.fa-question-circle.text-muted
 
             .col-lg-12
               input(
@@ -67,8 +67,8 @@ include ../../../templates/mixins.pug
                 name="additionalOperating")#additionalOperating.form-control.js-field
 
           .form-group.row
-            label(for="capitalExpenditures").col-lg-12 Are you expecting any Capital Expenditures over the next 24 months? &nbsp;&nbsp;
-              i(aria-hidden="true",data-toggle="tooltip",data-original-title="<b>Capital Expenditures.</b> Money spent by a business or organization on acquiring or maintaining fixed assets, such as land, buildings, and equipment.").fa.fa-question-circle.text-muted
+            label(for="capitalExpenditures").col-lg-12.font-weight-normal Are you expecting any Capital Expenditures over the next 24 months? &nbsp;&nbsp;
+              i(aria-hidden="true",data-toggle="tooltip",data-original-title="<b><u>Capital Expenditures.</u> Money spent by a business or organization on acquiring or maintaining fixed assets, such as land, buildings, and equipment.</b>").fa.fa-question-circle.text-muted
 
             .col-lg-12
               input(
@@ -82,7 +82,7 @@ include ../../../templates/mixins.pug
                 name="capitalExpenditures")#capitalExpenditures.form-control.js-field
 
           .form-group.row
-            label(for="taxRate").col-lg-12 What Tax Rate do you expect to pay on your operating profit? (including federal, state, local, and any other taxes applicable to the operation of your business)
+            label(for="taxRate").col-lg-12.font-weight-normal What Tax Rate do you expect to pay on your operating profit? (including federal, state, local, and any other taxes applicable to the operation of your business)
 
             .col-lg-12.mb20
               input(
@@ -92,7 +92,7 @@ include ../../../templates/mixins.pug
                 data-model-value='taxRate')#taxRate.form-control.js-bootstrap-slider
 
           .form-group.row
-            label(for="annualInterest").col-lg-12 What do you expect your annual interest expense to be over the next 2 years?
+            label(for="annualInterest").col-lg-12.font-weight-normal What do you expect your annual interest expense to be over the next 2 years?
 
             .col-lg-12
               input(

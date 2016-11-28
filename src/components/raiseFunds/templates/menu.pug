@@ -62,7 +62,8 @@ mixin menu(currentSection, currentStep)
               .list-group
                 a(href="/company/create" class="list-group-item list-group-item-action" + (currentSection == 'company' && currentStep == 'company' ? ' active' : '')) Company Detail
                   if currentSection == 'company' && currentStep == 'create'
-                    i.fa.fa-check
+                    .icon-check
+                      i.fa.fa-check-circle-o
           .panel.panel-default
             .panel-heading(role="tab")
               a(data-toggle="collapse"

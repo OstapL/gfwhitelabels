@@ -37,7 +37,7 @@ include ../../../templates/mixins.pug
       form(method="post" action="").form-section
         .form-body.clearfix
           .form-group.row
-            label(for="revenue").col-lg-12 Revenue
+            label(for="revenue").col-lg-12.font-weight-normal Revenue
 
             .col-lg-12
               input(
@@ -51,7 +51,7 @@ include ../../../templates/mixins.pug
                 data-current-value= data.revenue)#revenue.form-control.js-field
 
           .form-group.row
-            label(for="goodsCost").col-lg-12 Cost of Goods Sold
+            label(for="goodsCost").col-lg-12.font-weight-normal Cost of Goods Sold
 
             .col-lg-12
               input(
@@ -65,8 +65,8 @@ include ../../../templates/mixins.pug
                 data-current-value= data.goodsCost)#goodsCost.form-control.js-field
 
           .form-group.row
-            label(for="operatingExpense").col-lg-12 SG&A, and other Operating Expenses&nbsp;&nbsp;
-              i(aria-hidden="true",data-toggle="tooltip",data-original-title="<b>Selling, General & Administrative Operating Expense.</b> The sum of all direct and indirect selling expenses and all general and administrative expenses of a company").fa.fa-question-circle.text-muted
+            label(for="operatingExpense").col-lg-12.font-weight-normal SG&A, and other Operating Expenses&nbsp;&nbsp;
+              i(aria-hidden="true",data-toggle="tooltip",data-original-title="<b><u>Selling, General & Administrative Operating Expense.</u> The sum of all direct and indirect selling expenses and all general and administrative expenses of a company</b>").fa.fa-question-circle.text-muted
             .col-lg-12
               input(
                 value= formatPrice(data.operatingExpense),
@@ -79,8 +79,8 @@ include ../../../templates/mixins.pug
                 data-current-value= data.operatingExpense)#operatingExpense.form-control.js-field
 
           .form-group.row
-            label(for="oneTimeExpenses").col-lg-12 One Time (Extraordinary) Expenses&nbsp;&nbsp;
-              i(aria-hidden="true",data-toggle="tooltip",data-original-title="<b>One Time (Extraordinary) Expenses.</b> A rare, infrequent event which financial analysts separate out of the income statement in order to avoid distorting the 'regular' earnings reported by a company. They can include things like adverse legal, regulatory or tax issues, storm damage or restructuring charges.").fa.fa-question-circle.text-muted
+            label(for="oneTimeExpenses").col-lg-12.font-weight-normal One Time (Extraordinary) Expenses&nbsp;&nbsp;
+              i(aria-hidden="true",data-toggle="tooltip",data-original-title="<b><u>One Time (Extraordinary) Expenses.</u> A rare, infrequent event which financial analysts separate out of the income statement in order to avoid distorting the 'regular' earnings reported by a company. They can include things like adverse legal, regulatory or tax issues, storm damage or restructuring charges.</b>").fa.fa-question-circle.text-muted
 
             .col-lg-12
               input(
@@ -94,8 +94,8 @@ include ../../../templates/mixins.pug
                 data-current-value= data.oneTimeExpenses)#oneTimeExpenses.form-control.js-field
 
           .form-group.row
-            label(for="depreciationAmortization").col-lg-12 Depreciation  & Amortization&nbsp;&nbsp;
-              i(aria-hidden="true",data-toggle="tooltip",data-original-title="<b>Depreciation</b><br/>The allocation of the cost of assets to periods in which the assets are used.<br/><br/><b>Amoritization</b><br/>To write off the cost of an asset gradually.").fa.fa-question-circle.text-muted
+            label(for="depreciationAmortization").col-lg-12.font-weight-normal Depreciation  & Amortization&nbsp;&nbsp;
+              i(aria-hidden="true",data-toggle="tooltip",data-original-title="<b><u>Depreciation</u><br/>The allocation of the cost of assets to periods in which the assets are used.<br/><br/><u>Amoritization</u><br/>To write off the cost of an asset gradually.</b>").fa.fa-question-circle.text-muted
 
             .col-lg-12
               input(
@@ -109,7 +109,7 @@ include ../../../templates/mixins.pug
                 data-current-value= data.depreciationAmortization)#depreciationAmortization.form-control.js-field
 
           .form-group.row
-            label(for="interestPaid").col-lg-12 Interest Paid
+            label(for="interestPaid").col-lg-12.font-weight-normal Interest Paid
 
             .col-lg-12
               input(
@@ -123,7 +123,7 @@ include ../../../templates/mixins.pug
                 data-current-value= data.interestPaid)#interestPaid.form-control.js-field
 
           .form-group.row
-            label(for="taxesPaid").col-lg-12 Taxes Paid
+            label(for="taxesPaid").col-lg-12.font-weight-normal Taxes Paid
 
             .col-lg-12
               input(

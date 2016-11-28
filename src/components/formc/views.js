@@ -1827,6 +1827,25 @@ module.exports = {
       return this;
     },
   }),
+    electronicSignatureCompany: Backbone.View.extend({
+    el: '#content',
+    template: require('./templates/formc_els_company_formc.pug'),
+    
+    initialize(options) {
+      this.fields = {};
+      this.dob = {};
+      this.assignLabels();
+    },
+    render() {
+      this.$el.html(
+        this.template({
+          values: this.model,
+          fields: this.fields,
+        })
+      );
+      return this;
+    },
+  }),
   electronicSignatureCik: Backbone.View.extend({
     el: '#content',
     template: require('./templates/formc_els_cik_code.pug'),
@@ -1843,6 +1862,25 @@ module.exports = {
         type_name: 'Please type name here',
       };
 
+      this.assignLabels();
+    },
+    render() {
+      this.$el.html(
+        this.template({
+          values: this.model,
+          fields: this.fields,
+        })
+      );
+      return this;
+    },
+  }),
+  electronicSignatureFinancials: Backbone.View.extend({
+    el: '#content',
+    template: require('./templates/formc_els_financials_certification.pug'),
+    
+    initialize(options) {
+      this.fields = {};
+      this.dob = {};
       this.assignLabels();
     },
     render() {
