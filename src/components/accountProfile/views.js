@@ -47,6 +47,11 @@ module.exports = {
     initialize(options) {
       this.fields = options.fields;
       this.fields.image = { type: 'image' };
+      this.fields.image.imgOptions = {
+        aspectRatio: 1 / 1,
+        cssClass : 'img-profile-crop',
+        showPreview: true,
+      };
 
       /*
       this.fields.phone.required = true;
