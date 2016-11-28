@@ -24,7 +24,7 @@ include ../../../templates/mixins.pug
       form.js-calc-form.form-section
         .form-body.clearfix
           .form-group.row
-            label(for='industry').col-lg-12.col-form-label Please provide the industry to which your business belongs.
+            label(for='industry').col-lg-12.col-form-label.font-weight-normal Please provide the industry to which your business belongs.
             .col-lg-12
               select(data-model-value='industry' name="industry")#industry.form-control.js-select
                 option(value = '')= '---'
@@ -35,7 +35,7 @@ include ../../../templates/mixins.pug
                     option= val
 
           .form-group.row
-            label(for='industryEstablishment').col-lg-12.col-form-label Is your industry fairly well established? Or is it new, with the potential to quickly grow?
+            label(for='industryEstablishment').col-lg-12.col-form-label.font-weight-normal Is your industry fairly well established? Or is it new, with the potential to quickly grow?
             .col-lg-12
               select(data-model-value='industryEstablishment' name="industryEstablishment")#industryEstablishment.form-control.js-select
                 option(value = '')= '---'
@@ -46,7 +46,7 @@ include ../../../templates/mixins.pug
                     option(value= item.value)= item.text
 
           .form-group.row
-            label(for='typeOfEstablishment').col-lg-12.col-form-label Would you describe your product or service as a solid improvement over what the market currently offers? Or is it revolutionary, with the potential to be disruptive to the market?
+            label(for='typeOfEstablishment').col-lg-12.col-form-label.font-weight-normal Would you describe your product or service as a solid improvement over what the market currently offers? Or is it revolutionary, with the potential to be disruptive to the market?
             .col-lg-12
               select(data-model-value='typeOfEstablishment' name="typeOfEstablishment")#typeOfEstablishment.form-control.js-select
                 option(value = '')= '---'
@@ -57,7 +57,7 @@ include ../../../templates/mixins.pug
                     option(value= item.value)= item.text
 
           .form-group.row
-            label(for='projectedRevenue').col-lg-12.col-form-label How much revenue do you expect your business will produce in Year 1?
+            label(for='projectedRevenue').col-lg-12.col-form-label.font-weight-normal How much revenue do you expect your business will produce in Year 1?
             .col-lg-12
               input(
                 value= formatPrice(data.projectedRevenue),
@@ -70,7 +70,7 @@ include ../../../templates/mixins.pug
                 data-current-value= data.projectedRevenue)#projectedRevenue.form-control.js-field
 
           .form-group.row
-            label(for='operatingProfit').col-lg-12.col-form-label How much operating profit do you expect to earn in Year 1?
+            label(for='operatingProfit').col-lg-12.col-form-label.font-weight-normal How much operating profit do you expect to earn in Year 1?
             .col-lg-12
               input(
                 value= formatPrice(data.operatingProfit),
@@ -83,7 +83,7 @@ include ../../../templates/mixins.pug
                 data-current-value= data.operatingProfit)#operatingProfit.form-control.js-field
 
           .form-group.row
-            label(for='projectedRevenueTwo').col-lg-12.col-form-label How much revenue do you expect your business will produce in Year 5?
+            label(for='projectedRevenueTwo').col-lg-12.col-form-label.font-weight-normal How much revenue do you expect your business will produce in Year 5?
             .col-lg-12
               input(
                 value= formatPrice(data.projectedRevenueTwo),
@@ -96,7 +96,7 @@ include ../../../templates/mixins.pug
                 data-current-value= data.projectedRevenueTwo)#projectedRevenueTwo.form-control.js-field
           
           .form-group.row
-            label(for='operatingProfitTwo').col-lg-12.col-form-label How much operating profit do you expect to earn in Year 5?
+            label(for='operatingProfitTwo').col-lg-12.col-form-label.font-weight-normal How much operating profit do you expect to earn in Year 5?
             .col-lg-12
               input(
                 value= formatPrice(data.operatingProfitTwo),
@@ -109,7 +109,7 @@ include ../../../templates/mixins.pug
                 data-current-value= data.operatingProfitTwo)#operatingProfitTwo.form-control.js-field
 
           .form-group.row
-            label(for='CashOnHand').col-lg-12.col-form-label How much cash, beyond what's needed for immediate operating needs, does your business currently have?
+            label(for='CashOnHand').col-lg-12.col-form-label.font-weight-normal How much cash, beyond what's needed for immediate operating needs, does your business currently have?
             .col-lg-12
               input(
                 value= formatPrice(data.CashOnHand),
@@ -122,7 +122,7 @@ include ../../../templates/mixins.pug
                 data-current-value= data.CashOnHand)#CashOnHand.form-control.js-field
 
           .form-group.row
-            label(for='yourDebt').col-lg-12.col-form-label How much debt is your business currently carrying?
+            label(for='yourDebt').col-lg-12.col-form-label.font-weight-normal How much debt is your business currently carrying?
             .col-lg-12
               input(
                 value= formatPrice(data.yourDebt),
@@ -135,7 +135,7 @@ include ../../../templates/mixins.pug
                 data-current-value= data.yourDebt)#yourDebt.form-control.js-field
 
           .form-group.row
-            label(for='cashRaise').col-lg-12.col-form-label How much cash do you plan to raise?
+            label(for='cashRaise').col-lg-12.col-form-label.font-weight-normal How much cash do you plan to raise?
             .col-lg-12
               input(
                 value= formatPrice(data.cashRaise),
