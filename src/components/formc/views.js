@@ -1832,9 +1832,9 @@ module.exports = {
     template: require('./templates/formc_els_company_formc.pug'),
     
     initialize(options) {
-      this.fields = options.fields;
-      this.name = {};
-
+      this.fields = {};
+      this.dob = {};
+      this.assignLabels();
     },
     render() {
       this.$el.html(
