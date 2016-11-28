@@ -19,6 +19,7 @@ module.exports = Backbone.Router.extend({
     'formc/:id/final-review': 'finalReview',
     'formc/:id/final-review-two': 'finalReviewTwo',
     'formc/:id/formc-elecrtonic-signature': 'electronicSignature',
+    'formc/:id/formc-elecrtonic-signature-company': 'electronicSignatureCompany',
     'formc/:id/formc-elecrtonic-signature-cik': 'electronicSignatureCik',
   },
 
@@ -486,6 +487,14 @@ module.exports = Backbone.Router.extend({
   electronicSignature(id) {
       const View = require('components/formc/views.js');
       let i = new View.electronicSignature({
+        el: '#content',
+      });
+      i.render();
+      app.hideLoading();
+  },
+  electronicSignatureCompany(id) {
+      const View = require('components/formc/views.js');
+      let i = new View.electronicSignatureCompany({
         el: '#content',
       });
       i.render();
