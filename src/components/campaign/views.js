@@ -586,10 +586,9 @@ module.exports = {
 
         this.$('.perk').each((i, el) => {
           if(parseInt(el.dataset.from) <= amount) {
-            $('.perk').removeClass('active');
-            $('.perk .fa-check').remove();
-            el.classList.add('active');
-            $(el).find('.list-group-item-heading').append('<i class="fa fa-check"></i>');
+            $(el).addClass('active').find('i.fa.fa-check').show();
+          } else {
+            $(el).removeClass('active').find('i.fa.fa-check').hide();
           }
         });
       }
