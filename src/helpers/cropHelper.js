@@ -48,8 +48,12 @@ module.exports = {
             '<img src="' + imgUrl + '" id="cropSrcImage">' +
           '</div>' +
           '<div class="preview-container col-xl-5 col-lg-5 text-xs-center">' +
-            '<div class="img-preview" style="width: 150px; height: 150px; float: left; overflow: hidden; margin: 8px;"></div>' +
-            '<div class="img-preview mini" style="width: 50px; height: 50px; float: left; overflow: hidden; margin: 8px;"></div>' +
+            '<div class="row">' +
+              '<div class="img-preview" style="width: 150px; height: 150px; float: left; overflow: hidden; margin: 8px;"></div>' +
+            '</div>' +
+            '<div class="row">' +
+              '<div class="img-preview mini" style="width: 50px; height: 50px; float: left; overflow: hidden; margin: 8px;"></div>' +
+            '</div>' +
           '</div>' +
         '</div>' +
         '<div class="row">' +
@@ -67,7 +71,7 @@ module.exports = {
     let cropperTemplate =
       '<div class="form-group">' +
         '<div class="row">' +
-          '<div class="crop-image-container col-xl-12 col-lg-12">' +
+          '<div class="crop-image-container">' +
             '<img src="' + imgUrl + '" id="cropSrcImage">' +
           '</div>' +
         '</div>' +
