@@ -428,12 +428,15 @@ module.exports = {
 
     changePaymentType(e) {
       let val = $(e.target).val();
+      this.$('.payment-fields').hide();
       if (val == 'echeck') {
         $('.echeck-fields').show();
-        $('.check-fields').hide();
-      } else {
+        // $('.check-fields').hide();
+      } else if (val == 'check') {
         $('.check-fields').show();
-        $('.echeck-fields').hide();
+        // $('.echeck-fields').hide();
+      } else if (val == 'wire') {
+        $('.wire-fields').show();
       }
     },
 

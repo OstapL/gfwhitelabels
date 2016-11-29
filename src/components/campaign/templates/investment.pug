@@ -141,9 +141,10 @@ mixin fieldInput(name, attr)
                 select(name="payment_information_type").custom-select.w-100.payment-type-select
                   option(value="echeck") Echeck (ACH)
                   option(value="check") Check
+                  option(value="wire") Wire
             //IF ECHECK
             //- I may need to add a value into the attr object to make sure proper data is populated.
-            .echeck-fields
+            .echeck-fields.payment-fields
               +fieldTextLabel("payment_information_data[name_on_bank_account]", _.extend({
                 class1: 'col-lg-3 col-md-12 text-lg-left text-xl-right',
                 class2: 'col-lg-9 col-md-12',
@@ -164,17 +165,17 @@ mixin fieldInput(name, attr)
                 class2: 'col-lg-9 col-md-12',
                 value: user.routing_number,
                 }, fields.routing_number))
-            .form-group.row.radio.check-fields
-              label.text-md-right.col-lg-3 Account Type
-              .col-lg-9.radio-input
-                label 
-                  input(type="radio" name="payment_information_data[account_type]" value="0" checked=(user.account_type == 0))
-                  |  Checking
-                label 
-                  input(type="radio" name="payment_information_data[account_type]" value="1" checked=(user.account_type == 1))
-                  |  Savings
+              .form-group.row.radio.check-fields
+                label.text-md-right.col-lg-3 Account Type
+                .col-lg-9.radio-input
+                  label 
+                    input(type="radio" name="payment_information_data[account_type]" value="0" checked=(user.account_type == 0))
+                    |  Checking
+                  label 
+                    input(type="radio" name="payment_information_data[account_type]" value="1" checked=(user.account_type == 1))
+                    |  Savings
             // IF CHECK
-            .row.check-fields(style="display:none;")
+            .row.check-fields.payment-fields(style="display:none;")
               .col-lg-12
                 .row
                   .col-lg-9.offset-lg-3
@@ -187,24 +188,69 @@ mixin fieldInput(name, attr)
                       .col-lg-6
                         span In the Amount of: 
                       .col-lg-6
-                        span.font-weight-bold $1100
+                        span.font-weight-bold.total-investment-amount $1100
                     .row.m-b-2
                       .col-lg-6
                         span Memo:
                       .col-lg-6
                         span.font-weight-bold Invest in #{values.name} 
-                        span.help-block (as indicated above)
+                        //- span.help-block (as indicated above)
                     .row.m-b-2
                       .col-lg-6
                         span And mail the check to: 
                       .col-lg-6
-                        span.font-weight-bold GrowthFountain 
+                        span.font-weight-bold GrowthFountain Capital LLC
                           br
                           |  C/O Boston Private Bank 
                           br
                           |  60 South Market Suite 100 
                           br
                           |  San Jose, CA 95113
+            .row.wire-fields.payment-fields(style="display:none;")
+              .col-lg-12
+                .row
+                  .col-lg-9.offset-lg-3
+                    .row
+                      .col-lg-6
+                        span Please Send your Wire to::
+                      .col-lg-6
+                        span.font-weight-bold GrowthFountain Capital LLC
+                    .row
+                      .col-lg-6
+                        span In the Amount of: 
+                      .col-lg-6
+                        span.font-weight-bold.total-investment-amount $1100
+                    .row.m-b-2
+                      .col-lg-6
+                        span Memo:
+                      .col-lg-6
+                        span.font-weight-bold Invest in #{values.name} 
+                        //- span.help-block (as indicated above)
+                    .row.m-b-2
+                      .col-lg-6
+                        span Wire Instructions: 
+                      .col-lg-6
+                        span.font-weight-bold GrowthFountain Capital LLC
+                          br
+                          |  C/O Boston Private Bank 
+                          br
+                          |  60 South Market Suite 100 
+                          br
+                          |  San Jose, CA 95113
+
+                          br
+                          br
+                          | Routing/ABA# 122287251
+                          br
+                          | Account# 200100086657
+
+                          br
+                          br
+                          | BofI Federal Bank 
+                          br
+                          | 4350 La Jolla Village Drive, Suite 140
+                          br
+                          | San Diego, CA 92122
             //.col-md-12
               span.help-block GrowthFountain does not store your bank login credentials
 
