@@ -421,7 +421,19 @@ module.exports = {
       'keyup #amount': 'amountUpdate',
       'keyup #zip_code': 'changeZipCode',
       'click .update-location': 'updateLocation',
-      'click .link-2': 'openPdf'
+      'click .link-2': 'openPdf',
+      'change .country-select': 'changeCountry',
+    },
+
+    changeCountry(e) {
+      let val = $(e.target).val();
+      if (val == 'us') {
+        $('.us-fields').show();
+        $('.other-countries-fields').hide();
+      } else {
+        $('.us-fields').hide();
+        $('.other-countries-fields').show();
+      }
     },
 
     submit(e) {
