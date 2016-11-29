@@ -126,7 +126,6 @@ mixin fieldInput(name, attr)
                   option(value="echeck") Echeck (ACH)
                   option(value="check") Check
             //IF ECHECK
-            //- +fieldBlock("name_on_bank_account", user.name_on_bank_account, {'class1': 'col-lg-3', 'class2': 'col-lg-9', 'type': 'text'})
             //- I may need to add a value into the attr object to make sure proper data is populated.
             +fieldTextLabel("payment_information_data[name_on_bank_account]", _.extend({
               class1: 'col-lg-3 col-md-12 text-lg-left text-xl-right',

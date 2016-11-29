@@ -72,6 +72,7 @@ module.exports = {
       _.extend(this.model, data);
       data = _.extend({}, this.model)
     }
+    delete data.doNotExtendModel;
 
     this.$('.help-block').remove();
     if (e.target.dataset.method != 'PATCH' && !validation.validate(this.fields, data, this)) {
