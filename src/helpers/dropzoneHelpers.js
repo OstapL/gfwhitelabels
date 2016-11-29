@@ -290,6 +290,13 @@ module.exports = {
     },
 
     _image(name) {
+      let cropperData = {};
+
+      const onCrop = (imgData) => {
+        $('.img-' + name).attr('src', imgData.urls[0]);
+      };
+
+
       let dzOptions = {
         paramName: name,
         params: {
@@ -304,8 +311,9 @@ module.exports = {
         let url = data[0].urls[0];
         let imgId = data[0].id;
         let fileName = data[0].name;
-        // let originUrl = data[0].origin_url;
+        let originUrl = data[0].urls[0];
 
+        //update ui and bind events
         let imgActionsBlock = $(
           '<div class="delete-image-container">' +
             '<a class="crop-image" data-imageid="' + imgId + '">' +
@@ -318,7 +326,14 @@ module.exports = {
 
         imgActionsBlock.find('a.crop-image')
           // .data('imageid', imgId)
-          .on('click', this._cropImage.bind(this));
+          .on('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+
+            this._cropImage(img, this.fields[name].imgOptions, onCrop);
+
+            return false;
+          });
 
         imgActionsBlock.find('a.delete-image')
           // .data('imageid', imgId)
@@ -330,7 +345,6 @@ module.exports = {
 
         imgContainer.prepend(imgActionsBlock);
 
-
         this.model[name] = imgId;
         this.model[dataFieldName] = data;
 
@@ -340,15 +354,13 @@ module.exports = {
           id: imgId,
         };
 
-        //todo: set default cropping^ possibly on the server
-        this._cropImage(img, this.fields[name].imgOptions, (imgData) => {
-          $('.img-' + name).attr('src', imgData.urls[0]);
-        });
+        //todo: set default cropping, possibly on the server
+        this._cropImage(img, this.fields[name].imgOptions, onCrop);
 
       });
 
       $('.dropzone__' + name + ' .img-dropzone a.delete-image').on('click', deleteImage);
-      $('.dropzone__' + name + ' .img-dropzone a.crop-image').on('click', this._cropImage.bind(this));
+      $('.dropzone__' + name + ' .img-dropzone a.crop-image').on('click', cropImage);
 
       const deleteImage = (e) => {
         e.preventDefault();
@@ -365,7 +377,6 @@ module.exports = {
         $link.off('click');
 
         api.makeRequest(filerServer + '/' + imgId, 'DELETE').done(() => {
-
           //remove field from model
           delete this.model[name];
           delete this.model[name.replace('_id', '_data')];
@@ -377,6 +388,9 @@ module.exports = {
         return false;
       };
 
+      const cropImage = (e) => {
+
+      };
     },
 
     _imagefolder(name) {
@@ -457,7 +471,8 @@ module.exports = {
       cropperHelper.showCropper(img.url, options, (imgData) => {
 
         let extPos = img.fileName.lastIndexOf('.');
-        let fileName = img.fileName.substring(0, extPos) + imgData.width + 'x' + imgData.height + img.fileName.substring(extPos);
+        let fileName = img.fileName.substring(0, extPos) +
+            imgData.width + 'x' + imgData.height + img.fileName.substring(extPos);
 
         let reqData = _.chain(imgData)
           .pick(['x', 'y', 'width', 'height'])
@@ -466,13 +481,14 @@ module.exports = {
             file_name: fileName,
           }).value();
 
-        api.makeRequest(filerServer + '/crop', 'PUT', reqData, { contentType: 'application/json; charset=utf-8' }).done(callback);
+        let reqOptions = {
+          contentType: 'application/json; charset=utf-8',
+        };
+
+        api.makeRequest(filerServer + '/crop', 'PUT', reqData, reqOptions).done(callback);
       });
     },
 
-    _deleteImage(e) {
-
-    }
   },
 
 };
