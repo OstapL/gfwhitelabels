@@ -419,7 +419,6 @@ module.exports = {
       // 'submit form.invest_form': api.submitAction,
       'submit form.invest_form': 'submit',
       'keyup #amount': 'amountUpdate',
-      // 'keyup #zip_code': 'changeZipCode',
       'keyup .us-fields :input[name*=zip_code]': 'changeZipCode',
       'click .update-location': 'updateLocation',
       'click .link-2': 'openPdf',
