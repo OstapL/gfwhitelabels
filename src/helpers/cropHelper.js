@@ -127,9 +127,14 @@ module.exports = {
     });
 
     require('cropperjs/dist/cropper.css');
+
     const Cropper = require('cropperjs').default;
     let cropper = new Cropper($('#cropSrcImage')[0], options);
 
+    //todo set cropper data
+    // cropper.setData();
+
+    return cropper.getData(true);
   },
 
 };
