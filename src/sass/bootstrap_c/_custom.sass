@@ -59,9 +59,14 @@
 .icon-color
 	color: #aed07c
 // для иконки удаления элемента при ховере
-.delete-section-container, .delete-file-container
+.delete-section-container
 	text-align: right
 	position: relative
+	a
+		&:hover
+			color: $crimson
+			
+.delete-file-container
 	a
 		&:hover
 			color: $crimson
