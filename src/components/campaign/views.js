@@ -591,6 +591,10 @@ module.exports = {
             $(el).removeClass('active').find('i.fa.fa-check').hide();
           }
         });
+
+        // Here 10 is the flat rate;
+        const totalAmount = Number(this.$('input[name=amount]').val()) + 10;
+        this.$('.total-investment-amount').text('$' + totalAmount);
       }
   }),
 
