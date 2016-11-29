@@ -424,6 +424,12 @@ module.exports = {
       'click .link-2': 'openPdf',
       'change .country-select': 'changeCountry',
       'change .payment-type-select': 'changePaymentType',
+      'change #amount': 'amountRounding',
+      click: 'hideRoundingPopover',
+    },
+
+    hideRoundingPopover(e) {
+      if (this.currentAmountTip == 'rounding') $('#amount').popover('hide');
     },
 
     changePaymentType(e) {
@@ -431,10 +437,8 @@ module.exports = {
       this.$('.payment-fields').hide();
       if (val == 'echeck') {
         $('.echeck-fields').show();
-        // $('.check-fields').hide();
       } else if (val == 'check') {
         $('.check-fields').show();
-        // $('.echeck-fields').hide();
       } else if (val == 'wire') {
         $('.wire-fields').show();
       }
@@ -577,6 +581,8 @@ module.exports = {
       });
     },
 
+    currentAmountTip: 'amount-campaign',
+
     render() {
       this.getCityStateByZipCode = require("helpers/getSityStateByZipCode");
       this.usaStates = require("helpers/usa-states");
@@ -591,44 +597,97 @@ module.exports = {
             states: this.usaStates
           })
           );
+
+      let that = this;
+      $('#amount').popover({
+        // trigger: 'focus',
+        placement(context, src) {
+          // $(context).addClass('amount-popover');
+          return 'top';
+        },
+        html: true,
+        content(){
+          var content = $('.invest_form').find('.popover-content-' + that.currentAmountTip).html();
+          return content;
+        },
+        trigger: 'manual',
+      }).popover('hide');
+
       return this;
+    },
+
+    amountRounding(e) {
+      let amount = $(e.target).val();
+      const price_per_share = this.model.campaign.price_per_share;
+      if (amount && amount % price_per_share != 0 && amount >= this.model.campaign.minimum_increment) {
+        amount = Math.ceil(amount / price_per_share) * price_per_share;
+        $(e.target).val(amount);
+        // Popup the explanation.
+        // $('#amount').popover({
+        //   // trigger: 'focus',
+        //   placement(context, src) {
+        //     // $(context).addClass('amount-popover');
+        //     return 'top';
+        //   },
+        //   html: true,
+        //   content(){
+        //     var content = $('.invest_form').find('.popover-content-rounding').html();
+        //     return content;
+        //   }
+        // });
+        this.currentAmountTip = 'rounding';
+        $('#amount').popover('show');
+        this._updateTotalAmount(e);
+      } else {
+        // $('#amount').popover('hide');
+      }
     },
 
     amountUpdate(e) {
       var amount = parseInt(e.currentTarget.value);
-      if(amount >= 5000) {
 
-        $('#amount').popover({
-          // trigger: 'focus',
-          placement(context, src) {
-            $(context).addClass('amount-popover');
-            return 'top';
-          },
-          html: true,
-          content(){
-            var content = $('.invest_form').find('.popover-content-amount-campaign').html();
-            return content;
-          }
-        });
+      if (amount < this.model.campaign.minimum_increment) {
+        this.currentAmountTip = 'minimum-investment';
+        $('#amount').popover('show');
+      } else if(amount >= 5000) {
 
-          $('#amount').popover('show');
-        } else {
-          $('#amount').popover('dispose');
-        }
-
-        this.$('.perk').each((i, el) => {
-          if(parseInt(el.dataset.from) <= amount) {
-            $(el).addClass('active').find('i.fa.fa-check').show();
-          } else {
-            $(el).removeClass('active').find('i.fa.fa-check').hide();
-          }
-        });
-
-        // Here 10 is the flat rate;
-        const totalAmount = Number(this.$('input[name=amount]').val()) + 10;
-        this.$('.total-investment-amount').text('$' + totalAmount);
+        // $('#amount').popover({
+        //   // trigger: 'focus',
+        //   placement(context, src) {
+        //     $(context).addClass('amount-popover');
+        //     return 'top';
+        //   },
+        //   html: true,
+        //   content(){
+        //     var content = $('.invest_form').find('.popover-content-amount-campaign').html();
+        //     return content;
+        //   }
+        // });
+        this.currentAmountTip = 'amount-campaign';
+        $('#amount').popover('show');
+      } else {
+        $('#amount').popover('hide');
       }
+
+      this.$('.perk').each((i, el) => {
+        if(parseInt(el.dataset.from) <= amount) {
+          $(el).addClass('active').find('i.fa.fa-check').show();
+        } else {
+          $(el).removeClass('active').find('i.fa.fa-check').hide();
+        }
+      });
+
+      this._updateTotalAmount(e);
+    },
+
+    _updateTotalAmount(e) {
+      // Here 10 is the flat rate;
+      const totalAmount = Number(this.$('input[name=amount]').val()) + 10;
+      this.$('.total-investment-amount').text('$' + totalAmount);
+
+    },
   }),
+
 
   investmentThankYou: Backbone.View.extend({
     template: require('./templates/thankYou.pug'),
