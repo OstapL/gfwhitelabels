@@ -290,12 +290,39 @@ module.exports = {
     },
 
     _image(name) {
-      let cropperData = {};
-
       const onCrop = (imgData) => {
         $('.img-' + name).attr('src', imgData.urls[0]);
       };
 
+      const deleteImage = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        let $link = $(e.target).closest('a.delete-image');
+
+        let imgId = $link.data('imageid');
+        if (!imgId) {
+          return;
+        }
+
+        $link.prop('enabled', false);
+        $link.off('click');
+
+        api.makeRequest(filerServer + '/' + imgId, 'DELETE').done(() => {
+          //remove field from model
+          delete this.model[name];
+          delete this.model[name.replace('_id', '_data')];
+
+          $link.closest('.one-photo').find('img.img-' + name).attr('src', '/img/default/255x153.png');
+          $link.closest('.delete-image-container').remove();
+        });
+
+        return false;
+      };
+
+      const cropImage = (e) => {
+
+      };
 
       let dzOptions = {
         paramName: name,
@@ -307,7 +334,9 @@ module.exports = {
       };
 
       this._initializeDropzone(name, dzOptions, (data) => {
-        let dataFieldName = name.replace('_id', '_data');
+        //image actions
+
+        let dataFieldName = name.replace('_' + this.fields[name].type + '_id', '_data');
         let url = data[0].urls[0];
         let imgId = data[0].id;
         let fileName = data[0].name;
@@ -361,36 +390,6 @@ module.exports = {
 
       $('.dropzone__' + name + ' .img-dropzone a.delete-image').on('click', deleteImage);
       $('.dropzone__' + name + ' .img-dropzone a.crop-image').on('click', cropImage);
-
-      const deleteImage = (e) => {
-        e.preventDefault();
-        e.stopPropagation();
-
-        let $link = $(e.target).closest('a.delete-image');
-
-        let imgId = $link.data('imageid');
-        if (!imgId) {
-          return;
-        }
-
-        $link.prop('enabled', false);
-        $link.off('click');
-
-        api.makeRequest(filerServer + '/' + imgId, 'DELETE').done(() => {
-          //remove field from model
-          delete this.model[name];
-          delete this.model[name.replace('_id', '_data')];
-
-          $link.closest('.one-photo').find('img.img-' + name).attr('src', '/img/default/255x153.png');
-          $link.closest('.delete-image-container').remove();
-        });
-
-        return false;
-      };
-
-      const cropImage = (e) => {
-
-      };
     },
 
     _imagefolder(name) {

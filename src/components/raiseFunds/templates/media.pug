@@ -24,7 +24,8 @@ section.create-company-media.container.media-container
         default: '/img/default/255x153.png',
         text: 'Drop your photo here or click to upload',
         icon: 'file-image-o',
-        label: 'Header Image'
+        label: 'Header Image',
+        data: values.header_image_data[0],
       }, this.fields.header_image_image_id))
       +imageDropzone("list_image_image_id", _.extend({
         class1: 'col-xl-3 col-xs-12 text-xs-center text-xl-right',
@@ -33,7 +34,8 @@ section.create-company-media.container.media-container
         default: '/img/default/255x153.png',
         text: 'Drop your photo here or click to upload',
         icon: 'file-image-o',
-        label: 'Thumbnail Picture'
+        label: 'Thumbnail Picture',
+        data: values.list_image_data[0],
       }, this.fields.list_image_image_id))
       .m-b-2
         +galleryDropzone("gallery_group_id", _.extend({

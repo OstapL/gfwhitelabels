@@ -325,6 +325,10 @@ module.exports = {
 
       urlRoot: raiseCapitalServer + '/campaign/:id/media',
 
+      getSuccessUrl(data) {
+        return '/campaign/' + (data.id ? data.id : this.model.id) + '/team-members';
+      },
+
       appendHttpsIfNecessary(e) {
         appendHttpIfNecessary(e, true);
       },
@@ -371,7 +375,6 @@ module.exports = {
 
       this.fields.gallery_group_id.type = 'imagefolder';
 
-      this.fields.press.type = 'json';
       this.fields.press.schema = {
         headline: {
           type: 'string',
@@ -508,7 +511,8 @@ module.exports = {
             );
           //e.target.value = id;
         }
-      }
+      },
+
     }, leavingConfirmationHelper.methods, menuHelper.methods, dropzoneHelpers.methods, addSectionHelper.methods)),
 
       getSuccessUrl(data) {
@@ -738,7 +742,7 @@ module.exports = {
 
         if (confirm('Are you sure you would like to delete this team member?')) {
           // app.makeRequest('/api/campaign/team_members/' + this.model.get('id') + '?index=' + memberId, 'DELETE').
-          app.makeRequest('/api/campaign/team_members/' + this.model.id + '?index=' + memberId, 'DELETE').
+          app.makeRequest('/api/campaign/team-members/' + this.model.id + '?index=' + memberId, 'DELETE').
               then((data) => {
                   this.model.members.splice(memberId, 1);
                   $(e.currentTarget).parent().remove();
