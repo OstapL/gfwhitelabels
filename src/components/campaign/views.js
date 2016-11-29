@@ -426,6 +426,11 @@ module.exports = {
       'change .payment-type-select': 'changePaymentType',
       'change #amount': 'amountRounding',
       click: 'hideRoundingPopover',
+      'keyup .typed-name': 'copyToSignature'
+    },
+
+    copyToSignature(e) {
+      this.$('.signature').text($(e.target).val());
     },
 
     hideRoundingPopover(e) {
@@ -617,6 +622,9 @@ module.exports = {
     },
 
     amountRounding(e) {
+      // No price per share for revenue share company.
+      if (this.model.campaign.security_type == 1) return;
+
       let amount = $(e.target).val();
       const price_per_share = this.model.campaign.price_per_share;
       if (amount && amount % price_per_share != 0 && amount >= this.model.campaign.minimum_increment) {
