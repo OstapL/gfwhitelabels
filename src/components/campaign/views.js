@@ -563,9 +563,7 @@ module.exports = {
         // this.zipCodeField.closest('div').find('.help-block').remove();
         if (success) {
           this.$('.js-city-state').text(`${city}, ${state}`);
-          // this.$('#city').val(city);
           this.$('.js-city').val(city);
-          // this.$('#state').val(city);
           this.$('.js-state').val(state);
           this.$('.us-fields input[name*=city]').val(city);
           this.$('.us-fields input[name*=state]').val(state);
