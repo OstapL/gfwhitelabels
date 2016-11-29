@@ -37,7 +37,7 @@ mixin frfieldNestedTextLabel(nestedName, name, value, index, myAttr)
 mixin frField(name, type)
   - var value = ggetData(name)
   if type == 'select'
-    - valuesList = name.split('.').reduce((o,i)=>o[i], fields);
+    - valuesList = name.split('.').reduce(function(o,i) { return o[i]; }, fields);
     if valuesList && valuesList.validate && valuesList.validate.OneOf
       - valuesList = valuesList.validate.OneOf;
       if valuesList.labels

@@ -82,7 +82,7 @@ section.create-company-team-add.container
             - var requiredRoles = { 1: 'CEO/President', 2: 'Principal Financial Officer/Treasurer', 5: 'Controller/Principal Accounting Officer' };
             - var roleCounter = 0;
             each k,v in requiredRoles
-              - var persons = values.team_members.filter((el) => { return (el.title ? el.title.indexOf(v) != -1: false)})
+              - var persons = values.team_members.filter(function(el) { return (el.title ? el.title.indexOf(v) != -1: false); })
               for person in persons
                 tr
                   td #{ k }
