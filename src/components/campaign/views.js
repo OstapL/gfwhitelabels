@@ -416,11 +416,19 @@ module.exports = {
     },
     urlRoot: investmentServer + '/',
     events: {
-      'submit form.invest_form': api.submitAction,
+      // 'submit form.invest_form': api.submitAction,
+      'submit form.invest_form': 'submit',
       'keyup #amount': 'amountUpdate',
       'keyup #zip_code': 'changeZipCode',
       'click .update-location': 'updateLocation',
       'click .link-2': 'openPdf'
+    },
+
+    submit(e) {
+      e.preventDefault();
+      let data = $(e.target).serializeJSON();
+      data.doNotExtendModel = true;
+      api.submitAction.call(this, e, data);
     },
 
     getSuccessUrl(data) {
@@ -428,16 +436,24 @@ module.exports = {
     },
     initialize(options) {
       this.fields = options.fields;
-      this.fields.street_address_1 = { type: 'string', required: true};
+      // this.fields.street_address_1 = { type: 'string', required: true};
+      this.fields.street_address_1 = { type: 'string', required: false};
       this.fields.street_address_2 = { type: 'string', required: false};
-      this.fields.phone = {type: 'string', required: true};
-      this.fields.name_on_bank_account = {type: 'string', required: true};
-      this.fields.account_number = {type: 'string', required: true};
-      this.fields.account_number_re = {type: 'string', required: true};
-      this.fields.zip_code = {type: 'string', required: true};
-      this.fields.city = {type: 'string', required: true};
+      // this.fields.phone = {type: 'string', required: true};
+      this.fields.phone = {type: 'string', required: false};
+      // this.fields.name_on_bank_account = {type: 'string', required: true};
+      this.fields.name_on_bank_account = {type: 'string', required: false};
+      // this.fields.account_number = {type: 'string', required: true};
+      this.fields.account_number = {type: 'string', required: false};
+      // this.fields.account_number_re = {type: 'string', required: true};
+      this.fields.account_number_re = {type: 'string', required: false};
+      // this.fields.zip_code = {type: 'string', required: true};
+      this.fields.zip_code = {type: 'string', required: false};
+      // this.fields.city = {type: 'string', required: true};
+      this.fields.city = {type: 'string', required: false};
       this.fields.fee = {type: 'int', required: false};
-      this.fields.route_number = {type: 'string', required: true};
+      // this.fields.route_number = {type: 'string', required: true};
+      this.fields.route_number = {type: 'string', required: false};
       this.labels = {
         amount: 'Amount',
         street_address_1: 'Street Address 1',
@@ -449,7 +465,7 @@ module.exports = {
         account_number: 'Account Number',
         account_number_re: 'Account Number Again',
         fee: 'Fee',
-        route_number: 'Route Number',
+        routing_number: 'Routing Number',
       };
       this.assignLabels();
     },
@@ -570,12 +586,15 @@ module.exports = {
 
         this.$('.perk').each((i, el) => {
           if(parseInt(el.dataset.from) <= amount) {
-            $('.perk').removeClass('active');
-            $('.perk .fa-check').remove();
-            el.classList.add('active');
-            $(el).find('.list-group-item-heading').append('<i class="fa fa-check"></i>');
+            $(el).addClass('active').find('i.fa.fa-check').show();
+          } else {
+            $(el).removeClass('active').find('i.fa.fa-check').hide();
           }
         });
+
+        // Here 10 is the flat rate;
+        const totalAmount = Number(this.$('input[name=amount]').val()) + 10;
+        this.$('.total-investment-amount').text('$' + totalAmount);
       }
   }),
 
