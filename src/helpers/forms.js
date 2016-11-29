@@ -68,10 +68,11 @@ module.exports = {
     api.fixDateFields.call(this, this.fields, data);
 
     // if view already have some data - extend that info
-    if(this.hasOwnProperty('model')) {
+    if(this.hasOwnProperty('model') && !data.doNotExtendModel) {
       _.extend(this.model, data);
       data = _.extend({}, this.model)
     }
+    delete data.doNotExtendModel;
 
     this.$('.help-block').remove();
     if (e.target.dataset.method != 'PATCH' && !validation.validate(this.fields, data, this)) {
