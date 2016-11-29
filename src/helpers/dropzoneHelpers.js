@@ -63,11 +63,11 @@ module.exports = {
         },
 
         uploadprogress: function (file, progress, bytesSend) {
-          $(this.element).find('.uploading').show();
+          $(this.element).find('.uploading').show().removeClass('collapse');
         },
 
         complete: function (file) {
-          $(this.element).find('.uploading').hide();
+          $(this.element).find('.uploading').hide().addClass('collapse');
         },
 
         dragover: function (e) {

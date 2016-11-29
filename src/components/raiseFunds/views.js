@@ -375,19 +375,6 @@ module.exports = {
 
       this.fields.gallery_group_id.type = 'imagefolder';
 
-      this.fields.press.schema = {
-        headline: {
-          type: 'string',
-          label: 'Headline',
-          placeholder: 'Title',
-          maxLength: 90,
-        },
-        link: {
-          type: 'url',
-          label: 'Article link',
-          placeholder: 'http://www.',
-        },
-      };
       this.fields.additional_video.type = 'jsonVideo';
       this.fields.additional_video.schema = {
         headline: {
