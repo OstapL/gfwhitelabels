@@ -449,8 +449,6 @@ module.exports = {
         const Model = require('components/campaign/models.js');
 
 
-        $('.delete-image').click(this.deleteImage.bind(this));
-
         if(app.getParams().check == '1') {
           var data = this.$el.find('form').serializeJSON();
           if (!validation.validate(this.fields, data, this)) {
@@ -483,22 +481,6 @@ module.exports = {
         }
 
         return {id: id, provider: provider};
-      },
-
-      deleteImage(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        const imageId = e.currentTarget.dataset.id;
-
-        $(e.currentTarget).parent().parent().remove();
-        var params = _.extend({
-          url: serverUrl + Urls['image2-list']() + '/' + imageId,
-        }, app.defaultOptionsRequest);
-        params.type = 'DELETE';
-
-        $.ajax(params);
-
-        return false;
       },
 
       updateVideo(e) {
