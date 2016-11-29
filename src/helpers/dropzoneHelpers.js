@@ -300,32 +300,83 @@ module.exports = {
       };
 
       this._initializeDropzone(name, dzOptions, (data) => {
-        $('.img-' + name).attr('src', data[0].urls[0]);
-        $('.a-' + name).attr('href', data.origin_url).html(data.name);
-        //$('#' + name).val(data.file_id);
-
-        this.model[name] = data[0].id;
-        this.model[name.replace('_id', '_data')] = data;
+        let dataFieldName = name.replace('_id', '_data');
+        let url = data[0].urls[0];
+        let imgId = data[0].id;
         let fileName = data[0].name;
+        // let originUrl = data[0].origin_url;
 
-        const cropperHelper = require('helpers/cropHelper.js');
-        cropperHelper.showCropper(data[0].urls[0], this.fields[name].imgOptions, (imgData) => {
+        let imgActionsBlock = $(
+          '<div class="delete-image-container">' +
+            '<a class="crop-image" data-imageid="' + imgId + '">' +
+              '<i class="fa fa-crop"></i>' +
+            '</a>' +
+            '<a class="delete-image" data-imageid="' + imgId + '">' +
+              '<i class="fa fa-times"></i>' +
+            '</a>' +
+          '</div>');
 
-          let extPos = fileName.lastIndexOf('.');
-          fileName = fileName.substring(0, extPos) + imgData.width + 'x' + imgData.height + fileName.substring(extPos);
+        imgActionsBlock.find('a.crop-image')
+          // .data('imageid', imgId)
+          .on('click', this._cropImage.bind(this));
 
-          let reqData = _.chain(imgData)
-            .pick(['x', 'y', 'width', 'height'])
-            .extend({
-              id: data[0].id,
-              file_name: fileName,
-            }).value();
+        imgActionsBlock.find('a.delete-image')
+          // .data('imageid', imgId)
+          .on('click', deleteImage);
 
-          api.makeRequest(filerServer + '/crop', 'PUT', reqData, { contentType: 'application/json; charset=utf-8' }).done((imgResponse) => {
-            console.log(imgResponse);
-          });
+        let imgContainer = $('.dropzone__' + name + ' .one-photo');
+        imgContainer.find('img.img-' + name).attr('src', url);
+        // imgContainer.find('a.a-' + name).attr('href', originUrl).html(fileName);
+
+        imgContainer.prepend(imgActionsBlock);
+
+
+        this.model[name] = imgId;
+        this.model[dataFieldName] = data;
+
+        let img = {
+          url: url,
+          fileName: fileName,
+          id: imgId,
+        };
+
+        //todo: set default cropping^ possibly on the server
+        this._cropImage(img, this.fields[name].imgOptions, (imgData) => {
+          $('.img-' + name).attr('src', imgData.urls[0]);
         });
+
       });
+
+      $('.dropzone__' + name + ' .img-dropzone a.delete-image').on('click', deleteImage);
+      $('.dropzone__' + name + ' .img-dropzone a.crop-image').on('click', this._cropImage.bind(this));
+
+      const deleteImage = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        let $link = $(e.target).closest('a.delete-image');
+
+        let imgId = $link.data('imageid');
+        if (!imgId) {
+          return;
+        }
+
+        $link.prop('enabled', false);
+        $link.off('click');
+
+        api.makeRequest(filerServer + '/' + imgId, 'DELETE').done(() => {
+
+          //remove field from model
+          delete this.model[name];
+          delete this.model[name.replace('_id', '_data')];
+
+          $link.closest('.one-photo').find('img.img-' + name).attr('src', '/img/default/255x153.png');
+          $link.closest('.delete-image-container').remove();
+        });
+
+        return false;
+      };
+
     },
 
     _imagefolder(name) {
@@ -361,6 +412,7 @@ module.exports = {
 
         return false;
       };
+
       const cropImage = (e) => { console.log('NOT IMPLEMENTED')};
 
       this._initializeDropzone(name, dzOptions, (data, file) => {
@@ -398,6 +450,28 @@ module.exports = {
       $('.dropzone__' + name + ' .img-dropzone a.crop-image').each((idx, link) => {
         $(link).on('click', cropImage);
       });
+    },
+
+    _cropImage(img, options, callback) {
+      const cropperHelper = require('helpers/cropHelper.js');
+      cropperHelper.showCropper(img.url, options, (imgData) => {
+
+        let extPos = img.fileName.lastIndexOf('.');
+        let fileName = img.fileName.substring(0, extPos) + imgData.width + 'x' + imgData.height + img.fileName.substring(extPos);
+
+        let reqData = _.chain(imgData)
+          .pick(['x', 'y', 'width', 'height'])
+          .extend({
+            id: img.id,
+            file_name: fileName,
+          }).value();
+
+        api.makeRequest(filerServer + '/crop', 'PUT', reqData, { contentType: 'application/json; charset=utf-8' }).done(callback);
+      });
+    },
+
+    _deleteImage(e) {
+
     }
   },
 
