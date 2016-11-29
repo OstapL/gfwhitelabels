@@ -251,7 +251,7 @@ section
               if v
                 .col-lg-4
                   .card.card-inverse
-                    - let additionalVideo = app.getVideoId(v.link);
+                    - var additionalVideo = app.getVideoId(v.link);
                     if additionalVideo && additionalVideo.provider == 'youtube'
                       img(src="http://img.youtube.com/vi/" + additionalVideo.id + "/0.jpg" alt="" style="width: 338px").card-img
                     else if additionalVideo && additionalVideo.provider == 'vimeo'
@@ -342,19 +342,19 @@ section
     section.articles
       .container
         if values.press && Object.keys(values.press).length > 0 && values.press[0].headline != ''
-          - let showMore = false;
+          - var showMore = false;
           h2.dosis.text-uppercase.text-lg-center.text-xs-center.campaign-subheading.m-t-0 Articles and Press
           .row
             .col-lg-12.text-center-flex
               .articles_press
-                - let keys = Object.keys(values.press);
-                - let counter = 0;
-                - let lastArticleIdx = 0;
+                - var keys = Object.keys(values.press);
+                - var counter = 0;
+                - var lastArticleIdx = 0;
                 div
                   each k in keys
                     if counter >= 3
                       - break;
-                    - let v = values.press[k]
+                    - var v = values.press[k]
                     if v
                       - counter++;
                       - lastArticleIdx = k;
@@ -370,7 +370,7 @@ section
                   each k in keys
                     if k <= lastArticleIdx
                       - continue;
-                    - let v = values.press[k]
+                    - var v = values.press[k]
                     if v
                       - showMore = true;
                       div.col-xs-12.col-sm-12.col-md-12.col-lg-6.articles_press
@@ -811,7 +811,7 @@ div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true
       span(aria-hidden="true") &times;
     .modal-content
       .embed-responsive.embed-responsive-16by9
-        - let mainVideo = app.getVideoId(values.video);
+        - var mainVideo = app.getVideoId(values.video);
         if mainVideo && mainVideo.provider == 'youtube'
           iframe.embed-responsive-item(src="//www.youtube.com/embed/" + mainVideo.id + "?rel=0" allowfullscreen="true")
         else if mainVideo && mainVideo.provider == 'vimeo'
@@ -827,7 +827,7 @@ each v,k in values.additional_video
         .modal-content
           .embed-responsive.embed-responsive-16by9
             //- - var link =  app.getVideoId(v.link)
-            - let additionalVideo = app.getVideoId(v.link);
+            - var additionalVideo = app.getVideoId(v.link);
             if additionalVideo && additionalVideo.provider == 'youtube'
               iframe(src="//www.youtube.com/embed/" + additionalVideo.id + "?rel=0" allowfullscreen="true").embed-responsive-item
             else if additionalVideo && additionalVideo.provider == 'vimeo'

@@ -1,4 +1,4 @@
-- const format = require('helpers/formatHelper.js');
+- var format = require('helpers/formatHelper.js');
 
 .row
   for campaign in campaigns
@@ -31,7 +31,7 @@
             .bottom_pr
               if campaign.security_type == 0
                 p Price per share: #{format.formatPrice(campaign.price_per_share)}
-                - let min_num_of_share =  Math.round(campaign.minimum_raise.replace(/,/g, '') / campaign.price_per_share);
+                - var min_num_of_share =  Math.round(campaign.minimum_raise.replace(/,/g, '') / campaign.price_per_share);
                 p Number of shares: #{(min_num_of_share ? min_num_of_share : 0).toLocaleString('en-US')}
               else
                 //- p % Revenue: #{campaign.percentage_revenue}%

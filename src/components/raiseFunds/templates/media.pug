@@ -58,7 +58,7 @@ section.create-company-media.container.media-container
           
           #video_source.col-lg-5.p-sm-0.p-r-0
             .embed-responsive.embed-responsive-16by9
-              - let mainVideo = app.getVideoId(values.video);
+              - var mainVideo = app.getVideoId(values.video);
               if mainVideo && mainVideo.provider == 'youtube'
                 iframe(src="//www.youtube.com/embed/" + mainVideo.id + "?rel=0" allowfullscreen="true").embed-responsive-item
               else if mainVideo && mainVideo.provider == 'vimeo'
