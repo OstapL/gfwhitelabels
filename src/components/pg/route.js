@@ -91,7 +91,7 @@ module.exports = Backbone.Router.extend({
             $('body').scrollTo();
             app.hideLoading();
             
-            if (['education', 'terms_of_use', 'privacy_policy'].indexOf(name) != -1) {
+            if (['education', 'terms_of_use', 'privacy_policy', 'advertising'].indexOf(name) != -1) {
                 require('components/sticky-kit/js/sticky-kit.js');
                 $('.sticky-side-menu').stick_in_parent()
                 .on('sticky_kit:bottom', function(e) {
