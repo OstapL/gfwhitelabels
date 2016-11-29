@@ -423,6 +423,18 @@ module.exports = {
       'click .update-location': 'updateLocation',
       'click .link-2': 'openPdf',
       'change .country-select': 'changeCountry',
+      'change .payment-type-select': 'changePaymentType',
+    },
+
+    changePaymentType(e) {
+      let val = $(e.target).val();
+      if (val == 'echeck') {
+        $('.echeck-fields').show();
+        $('.check-fields').hide();
+      } else {
+        $('.check-fields').show();
+        $('.echeck-fields').hide();
+      }
     },
 
     changeCountry(e) {
@@ -465,7 +477,7 @@ module.exports = {
       this.fields.city = {type: 'string', required: false};
       this.fields.fee = {type: 'int', required: false};
       // this.fields.route_number = {type: 'string', required: true};
-      this.fields.route_number = {type: 'string', required: false};
+      this.fields.routing_number = {type: 'string', required: false};
       this.labels = {
         amount: 'Amount',
         street_address_1: 'Street Address 1',

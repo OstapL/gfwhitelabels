@@ -100,50 +100,52 @@ mixin fieldInput(name, attr)
                     span.input-value.js-city-state New York, NY
                       i.fa.fa-pencil-square-o
             // IF OTHER COUNTRY
-            .row.other-countries-fields(style="display:" + (user.country == 'us' ? "none" : "display") + ";")
-              .col-lg-6.p-l-0.p-r-0
-                +fieldTextLabel("personal_information_data[city]", _.extend({'class1': 'col-lg-6 text-lg-left text-xl-right', 'class2': 'col-lg-6 p-r-0'}, fields.city))
-              .col-lg-6
-                .form-group.row.state.text
-                  label.text-lg-right.col-lg-5(for="state").p-t-0.m-b-0 State/Province/Region
-                  div.col-lg-7
-                    input.form-control(name='personal_information_data[state]' placeholder='State/Province/Region' type="text" value=user.state)
-            .row.other-countries-fields(style="display:" + (user.country == 'us' ? "none" : "display") + ";")
-              .col-lg-6.p-l-0.p-r-0
-                .form-group.row.zip_code.text
-                  label.text-lg-right.col-lg-6(for="zip_code") Postal Code
-                  div.col-lg-6.p-r-0
-                    input.form-control(name='personal_information_data[zip_code]' placeholder='Postal Code' type="text" value=user.zip_code)
-              .col-lg-6
-                +fieldTextLabel("personal_information_data[phone]", _.extend({'class1': 'col-lg-5 text-lg-left text-xl-right', 'class2': 'col-lg-7 ', 'type': 'text'}, fields.phone))
+            .other-countries-fields(style="display:" + (user.country == 'us' ? "none" : "display") + ";")
+              .row
+                .col-lg-6.p-l-0.p-r-0
+                  +fieldTextLabel("personal_information_data[city]", _.extend({'class1': 'col-lg-6 text-lg-left text-xl-right', 'class2': 'col-lg-6 p-r-0'}, fields.city))
+                .col-lg-6
+                  .form-group.row.state.text
+                    label.text-lg-right.col-lg-5(for="state").p-t-0.m-b-0 State/Province/Region
+                    div.col-lg-7
+                      input.form-control(name='personal_information_data[state]' placeholder='State/Province/Region' type="text" value=user.state)
+              .row
+                .col-lg-6.p-l-0.p-r-0
+                  .form-group.row.zip_code.text
+                    label.text-lg-right.col-lg-6(for="zip_code") Postal Code
+                    div.col-lg-6.p-r-0
+                      input.form-control(name='personal_information_data[zip_code]' placeholder='Postal Code' type="text" value=user.zip_code)
+                .col-lg-6
+                  +fieldTextLabel("personal_information_data[phone]", _.extend({'class1': 'col-lg-5 text-lg-left text-xl-right', 'class2': 'col-lg-7 ', 'type': 'text'}, fields.phone))
 
           section.payment-information.border-bottom
             h2.text-uppercase.dosis.text-md-center.text-sm-center.text-xs-center.text-lg-left Payment information
             .form-group.row
               label.col-lg-3.text-lg-right.text-xs-left I Want to Pay Using
               .col-lg-9
-                select(name="payment_information_type").custom-select.w-100.country-select
+                select(name="payment_information_type").custom-select.w-100.payment-type-select
                   option(value="echeck") Echeck (ACH)
                   option(value="check") Check
             //IF ECHECK
             //- I may need to add a value into the attr object to make sure proper data is populated.
-            +fieldTextLabel("payment_information_data[name_on_bank_account]", _.extend({
-              class1: 'col-lg-3 col-md-12 text-lg-left text-xl-right',
-              class2: 'col-lg-9 col-md-12',
-              }, fields.name_on_bank_account))
-            +fieldTextLabel("payment_information_data[account_number]", _.extend({
-              class1: 'col-lg-3 col-md-12 text-lg-left text-xl-right',
-              class2: 'col-lg-9 col-md-12',
-              }, fields.account_number))
-            +fieldTextLabel("payment_information_data[account_number_re]", _.extend({
-              class1: 'col-lg-3 col-md-12 text-lg-left text-xl-right',
-              class2: 'col-lg-9 col-md-12',
-              }, fields.account_number_re))
-            +fieldTextLabel("payment_information_data[routing_number]", _.extend({
-              class1: 'col-lg-3 col-md-12 text-lg-left text-xl-right',
-              class2: 'col-lg-9 col-md-12',
-              }, fields.routing_number))
-            .form-group.row.radio
+            .echeck-fields
+              +fieldTextLabel("payment_information_data[name_on_bank_account]", _.extend({
+                class1: 'col-lg-3 col-md-12 text-lg-left text-xl-right',
+                class2: 'col-lg-9 col-md-12',
+                }, fields.name_on_bank_account))
+              +fieldTextLabel("payment_information_data[account_number]", _.extend({
+                class1: 'col-lg-3 col-md-12 text-lg-left text-xl-right',
+                class2: 'col-lg-9 col-md-12',
+                }, fields.account_number))
+              +fieldTextLabel("payment_information_data[account_number_re]", _.extend({
+                class1: 'col-lg-3 col-md-12 text-lg-left text-xl-right',
+                class2: 'col-lg-9 col-md-12',
+                }, fields.account_number_re))
+              +fieldTextLabel("payment_information_data[routing_number]", _.extend({
+                class1: 'col-lg-3 col-md-12 text-lg-left text-xl-right',
+                class2: 'col-lg-9 col-md-12',
+                }, fields.routing_number))
+            .form-group.row.radio.check-fields
               label.text-md-right.col-lg-3 Account Type
               .col-lg-9.radio-input
                 label 
@@ -153,7 +155,7 @@ mixin fieldInput(name, attr)
                   input(type="radio" name="payment_information_data[account_type]" value="1")
                   |  Savings
             // IF CHECK
-            .row
+            .row.check-fields(style="display:none;")
               .col-lg-12
                 .row
                   .col-lg-9.offset-lg-3
