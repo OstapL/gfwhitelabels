@@ -57,34 +57,36 @@ mixin fieldInput(name, attr)
           // popover content for amount field
           div.popover-content-amount-campaign
             i.fa.fa-info-circle
-            span Investors are limited to 12 month investment totals ranging from $2,000 - $100,000 based on income and net worth.Please update your financial information to see your limit:
+            span Investors are limited to 12 month investment totals ranging from $2,000 - $100,000 based on income and net worth. Please update your financial information to see your limit:
 
-            +fieldBlock("annual_income", user[annual_income], {'class1': 'col-md-4', 'class2': 'col-md-8', 'type': 'text'})
+            +fieldBlock("annual_income", user.annual_income, {'class1': 'col-md-4', 'class2': 'col-md-8', 'type': 'text'})
 
-            +fieldBlock("net_worth", user[net_worth], {'class1': 'col-md-4', 'class2': 'col-md-8', 'type': 'text'})
+            +fieldBlock("net_worth", user.net_worth, {'class1': 'col-md-4', 'class2': 'col-md-8', 'type': 'text'})
 
           section.personal_information
             h2.text-uppercase.dosis.text-md-center.text-sm-center.text-xs-center.text-lg-left Personal Information
               span.small-text.open-sans Required by United States banking laws. This information is transmitted securely and will never be used for any purpose beyond executing your investment. You only have to do this once.
             .form-group.row
               label.col-lg-3.col-md-12.text-lg-right.text-xs-left.pull-xs-left Legal Name
-              +fieldInput("personal_information_data[first_name]", {'class': 'col-lg-4-5 m-b-md-25 col-md-12','placeholder':'First Name' })
-              +fieldInput("personal_information_data[last_name]", {'class': 'col-lg-4-5 col-md-12 ','placeholder':'Last Name' })
+              +fieldInput("personal_information_data[first_name]", {'class': 'col-lg-4-5 m-b-md-25 col-md-12','placeholder':'First Name', value: user.first_name })
+              +fieldInput("personal_information_data[last_name]", {'class': 'col-lg-4-5 col-md-12 ','placeholder':'Last Name', value: user.last_name })
             .form-group.row
               label.col-lg-3.text-lg-right.text-xs-left Country
               .col-lg-9
-                - user.country = 'us';
+                - if (!user.country) user.country = 'us';
                 select(name="country").custom-select.w-100.country-select
                   option(value="us" selected=(user.country == 'us')) United States
                   option(value="ua" selected=(user.country == 'ua')) UA
                   option(value='ru' selected=(user.country == 'ru')) Russia
-            +fieldTextLabel("personal_information_data[street_addres_1]", _.extend({
+            +fieldTextLabel("personal_information_data[street_address_1]", _.extend({
               class1: 'col-lg-3 col-md-12 text-lg-left text-xl-right',
               class2: 'col-lg-9 col-md-12',
+              value: user.street_address_1,
               }, fields.street_address_1))
-            +fieldTextLabel("personal_information_data[street_addres_2]", _.extend({
+            +fieldTextLabel("personal_information_data[street_address_2]", _.extend({
               class1: 'col-lg-3 col-md-12 text-lg-left text-xl-right',
               class2: 'col-lg-9 col-md-12',
+              value: user.street_address_1,
               }, fields.street_address_2))
             // IF USA
             .row.us-fields(style="display:" + (user.country == 'us' ? "display" : "none") + ";")
@@ -94,7 +96,8 @@ mixin fieldInput(name, attr)
                 +fieldTextLabel("personal_information_data[zip_code]", _.extend({
                   class1: 'col-lg-5 text-lg-left text-xl-right',
                   class2: 'col-lg-7',
-                  disabled: (user.country != 'us')
+                  disabled: (user.country != 'us'),
+                  value: user.zip_codem,
                   }, fields.zip_code))
               .col-lg-5.city_states.col-md-12
                 label.col-lg-5.col-md-6.col-sm-6.col-xs-6 City/State
@@ -109,7 +112,8 @@ mixin fieldInput(name, attr)
                   +fieldTextLabel("personal_information_data[city]", _.extend({
                     'class1': 'col-lg-6 text-lg-left text-xl-right',
                     'class2': 'col-lg-6 p-r-0',
-                    disabled: (user.country == 'us')
+                    disabled: (user.country == 'us'),
+                    value: user.city,
                     }, fields.city))
                 .col-lg-6
                   .form-group.row.state.text
@@ -143,27 +147,31 @@ mixin fieldInput(name, attr)
               +fieldTextLabel("payment_information_data[name_on_bank_account]", _.extend({
                 class1: 'col-lg-3 col-md-12 text-lg-left text-xl-right',
                 class2: 'col-lg-9 col-md-12',
+                value: user.name_on_bank_account,
                 }, fields.name_on_bank_account))
               +fieldTextLabel("payment_information_data[account_number]", _.extend({
                 class1: 'col-lg-3 col-md-12 text-lg-left text-xl-right',
                 class2: 'col-lg-9 col-md-12',
+                value: user.account_number,
                 }, fields.account_number))
               +fieldTextLabel("payment_information_data[account_number_re]", _.extend({
                 class1: 'col-lg-3 col-md-12 text-lg-left text-xl-right',
                 class2: 'col-lg-9 col-md-12',
+                value: user.account_number,
                 }, fields.account_number_re))
               +fieldTextLabel("payment_information_data[routing_number]", _.extend({
                 class1: 'col-lg-3 col-md-12 text-lg-left text-xl-right',
                 class2: 'col-lg-9 col-md-12',
+                value: user.routing_number,
                 }, fields.routing_number))
             .form-group.row.radio.check-fields
               label.text-md-right.col-lg-3 Account Type
               .col-lg-9.radio-input
                 label 
-                  input(type="radio" name="payment_information_data[account_type]" value="0")
+                  input(type="radio" name="payment_information_data[account_type]" value="0" checked=(user.account_type == 0))
                   |  Checking
                 label 
-                  input(type="radio" name="payment_information_data[account_type]" value="1")
+                  input(type="radio" name="payment_information_data[account_type]" value="1" checked=(user.account_type == 1))
                   |  Savings
             // IF CHECK
             .row.check-fields(style="display:none;")

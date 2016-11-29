@@ -460,6 +460,7 @@ module.exports = {
     },
     initialize(options) {
       this.fields = options.fields;
+      this.user = options.user;
       // this.fields.street_address_1 = { type: 'string', required: true};
       this.fields.street_address_1 = { type: 'string', required: false};
       this.fields.street_address_2 = { type: 'string', required: false};
@@ -582,7 +583,8 @@ module.exports = {
             Urls: Urls,
             fields: this.fields,
             values: this.model,
-            user: app.user.toJSON(),
+            // user: app.user.toJSON(),
+            user: this.user,
             states: this.usaStates
           })
           );

@@ -64,9 +64,10 @@ module.exports = Backbone.Router.extend({
 
         const a1 = api.makeCacheRequest(investmentServer + '/', 'OPTIONS');
         const a2 = api.makeCacheRequest(raiseCapitalServer + '/' + id);
+        const a3 = api.makeCacheRequest(authServer + '/rest-auth/data');
 
-        $.when(a1, a2).
-          then((investmentMeta, companyData) => {
+        $.when(a1, a2, a3).
+          then((investmentMeta, companyData, userData) => {
             // investmentMeta = [
             //   {
             //     fields: {
@@ -99,7 +100,8 @@ module.exports = Backbone.Router.extend({
             const i = new View.investment({
               el: '#content',
                 model: companyData[0],
-                fields: investmentMeta[0].fields
+                fields: investmentMeta[0].fields,
+                user: userData[0],
             });
             i.render();
             $('#content').scrollTo();
