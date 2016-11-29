@@ -58,7 +58,7 @@ module.exports = {
       this.fields.first_name.required = true;
       this.fields.last_name.required  = true;
       */
-      this.fields.country = {value: 'US' };
+      this.fields.country = {};
       this.fields.country.validate = { choices: countries };
       /*
       this.fields.street_address_1 = { required: true };
@@ -77,6 +77,7 @@ module.exports = {
       this.fields.net_worth.required = true;
       this.fields.accredited_investor = {};
       */
+
       this.labels = {
         country: 'Country',
         street_address_1: 'Street address 1',
@@ -97,7 +98,7 @@ module.exports = {
         name_on_bank_account: 'Name on Bank Account',
       };
 
-      this.model.phone = '';
+      // this.model.phone = '';
 
       this.assignLabels();
 
@@ -113,6 +114,7 @@ module.exports = {
       // define flag for the geocode function respond
       this.geocodeIsNotInProgress = true;
       this.model.id = '';
+      this.model.country = 'US';
     },
 
     render() {
