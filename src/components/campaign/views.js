@@ -419,7 +419,8 @@ module.exports = {
       // 'submit form.invest_form': api.submitAction,
       'submit form.invest_form': 'submit',
       'keyup #amount': 'amountUpdate',
-      'keyup #zip_code': 'changeZipCode',
+      // 'keyup #zip_code': 'changeZipCode',
+      'keyup .us-fields :input[name*=zip_code]': 'changeZipCode',
       'click .update-location': 'updateLocation',
       'click .link-2': 'openPdf',
       'change .country-select': 'changeCountry',
@@ -440,11 +441,11 @@ module.exports = {
     changeCountry(e) {
       let val = $(e.target).val();
       if (val == 'us') {
-        $('.us-fields').show();
-        $('.other-countries-fields').hide();
+        $('.us-fields').show().find(':input').prop('disabled', false);
+        $('.other-countries-fields').hide().find(':input').prop('disabled', true);
       } else {
-        $('.us-fields').hide();
-        $('.other-countries-fields').show();
+        $('.us-fields').hide().find(':input').prop('disabled', true);
+        $('.other-countries-fields').show().find(':input').prop('disabled', false);
       }
     },
 
@@ -547,7 +548,11 @@ module.exports = {
     },
 
     updateLocation(e) {
-      this.$('.js-city-state').text(this.$('.js-city').val() + ', ' + this.$('.js-state').val());
+      let city = this.$('.js-city').val();
+      let state = this.$('.js-state').val();
+      this.$('.js-city-state').text(city + ', ' + state);
+      this.$('.us-fields input[name*=city]').val(city);
+      this.$('.us-fields input[name*=state]').val(state);
     },
 
     changeZipCode(e) {
@@ -563,7 +568,8 @@ module.exports = {
           this.$('.js-city').val(city);
           // this.$('#state').val(city);
           this.$('.js-state').val(state);
-
+          this.$('.us-fields input[name*=city]').val(city);
+          this.$('.us-fields input[name*=state]').val(state);
         } else {
           console.log("error");
         }

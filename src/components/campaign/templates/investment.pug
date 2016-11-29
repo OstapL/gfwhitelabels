@@ -88,10 +88,13 @@ mixin fieldInput(name, attr)
               }, fields.street_address_2))
             // IF USA
             .row.us-fields(style="display:" + (user.country == 'us' ? "display" : "none") + ";")
+              input(type="hidden" name="personal_information_data[state]" value="NY" disabled=(user.country != 'us')) 
+              input(type="hidden" name="personal_information_data[city]" value="New York" disabled=(user.country != 'us')) 
               .col-lg-7.p-l-2.col-md-12
                 +fieldTextLabel("personal_information_data[zip_code]", _.extend({
                   class1: 'col-lg-5 text-lg-left text-xl-right',
                   class2: 'col-lg-7',
+                  disabled: (user.country != 'us')
                   }, fields.zip_code))
               .col-lg-5.city_states.col-md-12
                 label.col-lg-5.col-md-6.col-sm-6.col-xs-6 City/State
@@ -103,20 +106,28 @@ mixin fieldInput(name, attr)
             .other-countries-fields(style="display:" + (user.country == 'us' ? "none" : "display") + ";")
               .row
                 .col-lg-6.p-l-0.p-r-0
-                  +fieldTextLabel("personal_information_data[city]", _.extend({'class1': 'col-lg-6 text-lg-left text-xl-right', 'class2': 'col-lg-6 p-r-0'}, fields.city))
+                  +fieldTextLabel("personal_information_data[city]", _.extend({
+                    'class1': 'col-lg-6 text-lg-left text-xl-right',
+                    'class2': 'col-lg-6 p-r-0',
+                    disabled: (user.country == 'us')
+                    }, fields.city))
                 .col-lg-6
                   .form-group.row.state.text
                     label.text-lg-right.col-lg-5(for="state").p-t-0.m-b-0 State/Province/Region
                     div.col-lg-7
-                      input.form-control(name='personal_information_data[state]' placeholder='State/Province/Region' type="text" value=user.state)
+                      input.form-control(name='personal_information_data[state]' placeholder='State/Province/Region' type="text" value=user.state disabled=(user.country == 'us'))
               .row
                 .col-lg-6.p-l-0.p-r-0
                   .form-group.row.zip_code.text
                     label.text-lg-right.col-lg-6(for="zip_code") Postal Code
                     div.col-lg-6.p-r-0
-                      input.form-control(name='personal_information_data[zip_code]' placeholder='Postal Code' type="text" value=user.zip_code)
+                      input.form-control(name='personal_information_data[zip_code]' placeholder='Postal Code' type="text" value=user.zip_code disabled=(user.country == 'us'))
                 .col-lg-6
-                  +fieldTextLabel("personal_information_data[phone]", _.extend({'class1': 'col-lg-5 text-lg-left text-xl-right', 'class2': 'col-lg-7 ', 'type': 'text'}, fields.phone))
+                  +fieldTextLabel("personal_information_data[phone]", _.extend({
+                    'class1': 'col-lg-5 text-lg-left text-xl-right',
+                    'class2': 'col-lg-7 ', 'type': 'text',
+                    disabled: (user.country == 'us')
+                    }, fields.phone))
 
           section.payment-information.border-bottom
             h2.text-uppercase.dosis.text-md-center.text-sm-center.text-xs-center.text-lg-left Payment information
@@ -261,8 +272,6 @@ mixin fieldInput(name, attr)
                 .controls
                   button(
                   type="submit").btn.btn-primary.pull-lg-right.text-uppercase invest
-            input(type="hidden" name="state" value="NY") 
-            input(type="hidden" name="city" value="New York") 
     //END LEFT BLOCK
     //START RIGHT BLOCK
     .col-lg-4.pull-right
