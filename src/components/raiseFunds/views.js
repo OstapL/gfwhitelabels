@@ -420,12 +420,8 @@ module.exports = {
           link: 'Youtube or Vimeo Link',
           headline: 'Title',
         },
-        list_image_data: {
-          urls: 'Thumbnail Picture',
-        },
-        header_image_data: {
-          urls: 'Header Image',
-        },
+        list_image_image_id: 'Thumbnail Picture',
+        header_image_image_id: 'Header Image',
         video: 'Main Video for Campaign',
         gallery_group_id: 'Gallery'
       };
