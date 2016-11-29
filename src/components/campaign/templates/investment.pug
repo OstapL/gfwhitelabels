@@ -57,41 +57,47 @@ mixin fieldInput(name, attr)
           // popover content for amount field
           div.popover-content-amount-campaign
             i.fa.fa-info-circle
-            span Investors are limited to 12 month investment totals ranging from $2,000 - $100,000 based on income and net worth.Please update your financial information to see your limit:
+            span Investors are limited to 12 month investment totals ranging from $2,000 - $100,000 based on income and net worth. Please update your financial information to see your limit:
 
-            +fieldBlock("annual_income", user[annual_income], {'class1': 'col-md-4', 'class2': 'col-md-8', 'type': 'text'})
+            +fieldBlock("annual_income", user.annual_income, {'class1': 'col-md-4', 'class2': 'col-md-8', 'type': 'text'})
 
-            +fieldBlock("net_worth", user[net_worth], {'class1': 'col-md-4', 'class2': 'col-md-8', 'type': 'text'})
+            +fieldBlock("net_worth", user.net_worth, {'class1': 'col-md-4', 'class2': 'col-md-8', 'type': 'text'})
 
           section.personal_information
             h2.text-uppercase.dosis.text-md-center.text-sm-center.text-xs-center.text-lg-left Personal Information
               span.small-text.open-sans Required by United States banking laws. This information is transmitted securely and will never be used for any purpose beyond executing your investment. You only have to do this once.
             .form-group.row
               label.col-lg-3.col-md-12.text-lg-right.text-xs-left.pull-xs-left Legal Name
-              +fieldInput("personal_information_data[first_name]", {'class': 'col-lg-4-5 m-b-md-25 col-md-12','placeholder':'First Name' })
-              +fieldInput("personal_information_data[last_name]", {'class': 'col-lg-4-5 col-md-12 ','placeholder':'Last Name' })
+              +fieldInput("personal_information_data[first_name]", {'class': 'col-lg-4-5 m-b-md-25 col-md-12','placeholder':'First Name', value: user.first_name })
+              +fieldInput("personal_information_data[last_name]", {'class': 'col-lg-4-5 col-md-12 ','placeholder':'Last Name', value: user.last_name })
             .form-group.row
               label.col-lg-3.text-lg-right.text-xs-left Country
               .col-lg-9
-                - user.country = 'us';
+                - if (!user.country) user.country = 'us';
                 select(name="country").custom-select.w-100.country-select
-                  option(value="us") United States
-                  option(value="ua") UA
-                  option(value='ru') Russia
-            +fieldTextLabel("personal_information_data[street_addres_1]", _.extend({
+                  option(value="us" selected=(user.country == 'us')) United States
+                  option(value="ua" selected=(user.country == 'ua')) UA
+                  option(value='ru' selected=(user.country == 'ru')) Russia
+            +fieldTextLabel("personal_information_data[street_address_1]", _.extend({
               class1: 'col-lg-3 col-md-12 text-lg-left text-xl-right',
               class2: 'col-lg-9 col-md-12',
+              value: user.street_address_1,
               }, fields.street_address_1))
-            +fieldTextLabel("personal_information_data[street_addres_2]", _.extend({
+            +fieldTextLabel("personal_information_data[street_address_2]", _.extend({
               class1: 'col-lg-3 col-md-12 text-lg-left text-xl-right',
               class2: 'col-lg-9 col-md-12',
+              value: user.street_address_1,
               }, fields.street_address_2))
             // IF USA
-            .row
+            .row.us-fields(style="display:" + (user.country == 'us' ? "display" : "none") + ";")
+              input(type="hidden" name="personal_information_data[state]" value="NY" disabled=(user.country != 'us')) 
+              input(type="hidden" name="personal_information_data[city]" value="New York" disabled=(user.country != 'us')) 
               .col-lg-7.p-l-2.col-md-12
                 +fieldTextLabel("personal_information_data[zip_code]", _.extend({
                   class1: 'col-lg-5 text-lg-left text-xl-right',
                   class2: 'col-lg-7',
+                  disabled: (user.country != 'us'),
+                  value: user.zip_codem,
                   }, fields.zip_code))
               .col-lg-5.city_states.col-md-12
                 label.col-lg-5.col-md-6.col-sm-6.col-xs-6 City/State
@@ -100,60 +106,76 @@ mixin fieldInput(name, attr)
                     span.input-value.js-city-state New York, NY
                       i.fa.fa-pencil-square-o
             // IF OTHER COUNTRY
-            .row
-              .col-lg-6.p-l-0.p-r-0
-                +fieldTextLabel("personal_information_data[city]", _.extend({'class1': 'col-lg-6 text-lg-left text-xl-right', 'class2': 'col-lg-6 p-r-0'}, fields.city))
-              .col-lg-6
-                .form-group.row.state.text
-                  label.text-lg-right.col-lg-5(for="state").p-t-0.m-b-0 State/Province/Region
-                  div.col-lg-7
-                    input.form-control(name='personal_information_data[state]' placeholder='State/Province/Region' type="text" value=user.state)
-            .row
-              .col-lg-6.p-l-0.p-r-0
-                .form-group.row.zip_code.text
-                  label.text-lg-right.col-lg-6(for="zip_code") Postal Code
-                  div.col-lg-6.p-r-0
-                    input.form-control(name='personal_information_data[zip_code]' placeholder='Postal Code' type="text" value=user.zip_code)
-              .col-lg-6
-                +fieldTextLabel("personal_information_data[phone]", _.extend({'class1': 'col-lg-5 text-lg-left text-xl-right', 'class2': 'col-lg-7 ', 'type': 'text'}, fields.phone))
+            .other-countries-fields(style="display:" + (user.country == 'us' ? "none" : "display") + ";")
+              .row
+                .col-lg-6.p-l-0.p-r-0
+                  +fieldTextLabel("personal_information_data[city]", _.extend({
+                    'class1': 'col-lg-6 text-lg-left text-xl-right',
+                    'class2': 'col-lg-6 p-r-0',
+                    disabled: (user.country == 'us'),
+                    value: user.city,
+                    }, fields.city))
+                .col-lg-6
+                  .form-group.row.state.text
+                    label.text-lg-right.col-lg-5(for="state").p-t-0.m-b-0 State/Province/Region
+                    div.col-lg-7
+                      input.form-control(name='personal_information_data[state]' placeholder='State/Province/Region' type="text" value=user.state disabled=(user.country == 'us'))
+              .row
+                .col-lg-6.p-l-0.p-r-0
+                  .form-group.row.zip_code.text
+                    label.text-lg-right.col-lg-6(for="zip_code") Postal Code
+                    div.col-lg-6.p-r-0
+                      input.form-control(name='personal_information_data[zip_code]' placeholder='Postal Code' type="text" value=user.zip_code disabled=(user.country == 'us'))
+                .col-lg-6
+                  +fieldTextLabel("personal_information_data[phone]", _.extend({
+                    'class1': 'col-lg-5 text-lg-left text-xl-right',
+                    'class2': 'col-lg-7 ', 'type': 'text',
+                    disabled: (user.country == 'us')
+                    }, fields.phone))
 
           section.payment-information.border-bottom
             h2.text-uppercase.dosis.text-md-center.text-sm-center.text-xs-center.text-lg-left Payment information
             .form-group.row
               label.col-lg-3.text-lg-right.text-xs-left I Want to Pay Using
               .col-lg-9
-                select(name="").custom-select.w-100.country-select
+                select(name="payment_information_type").custom-select.w-100.payment-type-select
                   option(value="echeck") Echeck (ACH)
                   option(value="check") Check
+                  option(value="wire") Wire
             //IF ECHECK
             //- I may need to add a value into the attr object to make sure proper data is populated.
-            +fieldTextLabel("payment_information_data[name_on_bank_account]", _.extend({
-              class1: 'col-lg-3 col-md-12 text-lg-left text-xl-right',
-              class2: 'col-lg-9 col-md-12',
-              }, fields.name_on_bank_account))
-            +fieldTextLabel("payment_information_data[account_number]", _.extend({
-              class1: 'col-lg-3 col-md-12 text-lg-left text-xl-right',
-              class2: 'col-lg-9 col-md-12',
-              }, fields.account_number))
-            +fieldTextLabel("payment_information_data[account_number_re]", _.extend({
-              class1: 'col-lg-3 col-md-12 text-lg-left text-xl-right',
-              class2: 'col-lg-9 col-md-12',
-              }, fields.account_number_re))
-            +fieldTextLabel("payment_information_data[routing_number]", _.extend({
-              class1: 'col-lg-3 col-md-12 text-lg-left text-xl-right',
-              class2: 'col-lg-9 col-md-12',
-              }, fields.routing_number))
-            .form-group.row.radio
-              label.text-md-right.col-lg-3 Account Type
-              .col-lg-9.radio-input
-                label 
-                  input(type="radio" name="payment_information_type" value="0")
-                  |  Checking
-                label 
-                  input(type="radio" name="payment_information_type" value="1")
-                  |  Savings
+            .echeck-fields.payment-fields
+              +fieldTextLabel("payment_information_data[name_on_bank_account]", _.extend({
+                class1: 'col-lg-3 col-md-12 text-lg-left text-xl-right',
+                class2: 'col-lg-9 col-md-12',
+                value: user.name_on_bank_account,
+                }, fields.name_on_bank_account))
+              +fieldTextLabel("payment_information_data[account_number]", _.extend({
+                class1: 'col-lg-3 col-md-12 text-lg-left text-xl-right',
+                class2: 'col-lg-9 col-md-12',
+                value: user.account_number,
+                }, fields.account_number))
+              +fieldTextLabel("payment_information_data[account_number_re]", _.extend({
+                class1: 'col-lg-3 col-md-12 text-lg-left text-xl-right',
+                class2: 'col-lg-9 col-md-12',
+                value: user.account_number,
+                }, fields.account_number_re))
+              +fieldTextLabel("payment_information_data[routing_number]", _.extend({
+                class1: 'col-lg-3 col-md-12 text-lg-left text-xl-right',
+                class2: 'col-lg-9 col-md-12',
+                value: user.routing_number,
+                }, fields.routing_number))
+              .form-group.row.radio.check-fields
+                label.text-md-right.col-lg-3 Account Type
+                .col-lg-9.radio-input
+                  label 
+                    input(type="radio" name="payment_information_data[account_type]" value="0" checked=(user.account_type == 0))
+                    |  Checking
+                  label 
+                    input(type="radio" name="payment_information_data[account_type]" value="1" checked=(user.account_type == 1))
+                    |  Savings
             // IF CHECK
-            .row
+            .row.check-fields.payment-fields(style="display:none;")
               .col-lg-12
                 .row
                   .col-lg-9.offset-lg-3
@@ -166,24 +188,69 @@ mixin fieldInput(name, attr)
                       .col-lg-6
                         span In the Amount of: 
                       .col-lg-6
-                        span.font-weight-bold $1100
+                        span.font-weight-bold.total-investment-amount $1100
                     .row.m-b-2
                       .col-lg-6
                         span Memo:
                       .col-lg-6
                         span.font-weight-bold Invest in #{values.name} 
-                        span.help-block (as indicated above)
+                        //- span.help-block (as indicated above)
                     .row.m-b-2
                       .col-lg-6
                         span And mail the check to: 
                       .col-lg-6
-                        span.font-weight-bold GrowthFountain 
+                        span.font-weight-bold GrowthFountain Capital LLC
                           br
                           |  C/O Boston Private Bank 
                           br
                           |  60 South Market Suite 100 
                           br
                           |  San Jose, CA 95113
+            .row.wire-fields.payment-fields(style="display:none;")
+              .col-lg-12
+                .row
+                  .col-lg-9.offset-lg-3
+                    .row
+                      .col-lg-6
+                        span Please Send your Wire to::
+                      .col-lg-6
+                        span.font-weight-bold GrowthFountain Capital LLC
+                    .row
+                      .col-lg-6
+                        span In the Amount of: 
+                      .col-lg-6
+                        span.font-weight-bold.total-investment-amount $1100
+                    .row.m-b-2
+                      .col-lg-6
+                        span Memo:
+                      .col-lg-6
+                        span.font-weight-bold Invest in #{values.name} 
+                        //- span.help-block (as indicated above)
+                    .row.m-b-2
+                      .col-lg-6
+                        span Wire Instructions: 
+                      .col-lg-6
+                        span.font-weight-bold GrowthFountain Capital LLC
+                          br
+                          |  C/O Boston Private Bank 
+                          br
+                          |  60 South Market Suite 100 
+                          br
+                          |  San Jose, CA 95113
+
+                          br
+                          br
+                          | Routing/ABA# 122287251
+                          br
+                          | Account# 200100086657
+
+                          br
+                          br
+                          | BofI Federal Bank 
+                          br
+                          | 4350 La Jolla Village Drive, Suite 140
+                          br
+                          | San Diego, CA 92122
             //.col-md-12
               span.help-block GrowthFountain does not store your bank login credentials
 
@@ -259,8 +326,6 @@ mixin fieldInput(name, attr)
                 .controls
                   button(
                   type="submit").btn.btn-primary.pull-lg-right.text-uppercase invest
-            input(type="hidden" name="state" value="NY") 
-            input(type="hidden" name="city" value="New York") 
     //END LEFT BLOCK
     //START RIGHT BLOCK
     .col-lg-4.pull-right

@@ -419,9 +419,36 @@ module.exports = {
       // 'submit form.invest_form': api.submitAction,
       'submit form.invest_form': 'submit',
       'keyup #amount': 'amountUpdate',
-      'keyup #zip_code': 'changeZipCode',
+      'keyup .us-fields :input[name*=zip_code]': 'changeZipCode',
       'click .update-location': 'updateLocation',
-      'click .link-2': 'openPdf'
+      'click .link-2': 'openPdf',
+      'change .country-select': 'changeCountry',
+      'change .payment-type-select': 'changePaymentType',
+    },
+
+    changePaymentType(e) {
+      let val = $(e.target).val();
+      this.$('.payment-fields').hide();
+      if (val == 'echeck') {
+        $('.echeck-fields').show();
+        // $('.check-fields').hide();
+      } else if (val == 'check') {
+        $('.check-fields').show();
+        // $('.echeck-fields').hide();
+      } else if (val == 'wire') {
+        $('.wire-fields').show();
+      }
+    },
+
+    changeCountry(e) {
+      let val = $(e.target).val();
+      if (val == 'us') {
+        $('.us-fields').show().find(':input').prop('disabled', false);
+        $('.other-countries-fields').hide().find(':input').prop('disabled', true);
+      } else {
+        $('.us-fields').hide().find(':input').prop('disabled', true);
+        $('.other-countries-fields').show().find(':input').prop('disabled', false);
+      }
     },
 
     submit(e) {
@@ -436,6 +463,7 @@ module.exports = {
     },
     initialize(options) {
       this.fields = options.fields;
+      this.user = options.user;
       // this.fields.street_address_1 = { type: 'string', required: true};
       this.fields.street_address_1 = { type: 'string', required: false};
       this.fields.street_address_2 = { type: 'string', required: false};
@@ -453,7 +481,7 @@ module.exports = {
       this.fields.city = {type: 'string', required: false};
       this.fields.fee = {type: 'int', required: false};
       // this.fields.route_number = {type: 'string', required: true};
-      this.fields.route_number = {type: 'string', required: false};
+      this.fields.routing_number = {type: 'string', required: false};
       this.labels = {
         amount: 'Amount',
         street_address_1: 'Street Address 1',
@@ -523,7 +551,11 @@ module.exports = {
     },
 
     updateLocation(e) {
-      this.$('.js-city-state').text(this.$('.js-city').val() + ', ' + this.$('.js-state').val());
+      let city = this.$('.js-city').val();
+      let state = this.$('.js-state').val();
+      this.$('.js-city-state').text(city + ', ' + state);
+      this.$('.us-fields input[name*=city]').val(city);
+      this.$('.us-fields input[name*=state]').val(state);
     },
 
     changeZipCode(e) {
@@ -535,11 +567,10 @@ module.exports = {
         // this.zipCodeField.closest('div').find('.help-block').remove();
         if (success) {
           this.$('.js-city-state').text(`${city}, ${state}`);
-          // this.$('#city').val(city);
           this.$('.js-city').val(city);
-          // this.$('#state').val(city);
           this.$('.js-state').val(state);
-
+          this.$('.us-fields input[name*=city]').val(city);
+          this.$('.us-fields input[name*=state]').val(state);
         } else {
           console.log("error");
         }
@@ -555,7 +586,8 @@ module.exports = {
             Urls: Urls,
             fields: this.fields,
             values: this.model,
-            user: app.user.toJSON(),
+            // user: app.user.toJSON(),
+            user: this.user,
             states: this.usaStates
           })
           );
