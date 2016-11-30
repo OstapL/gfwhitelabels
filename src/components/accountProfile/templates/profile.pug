@@ -192,7 +192,7 @@ include ../../../templates/fields_mixins.pug
                         .col-xl-11
                           input(
                           type='text'
-                          data-slider-value= 100,
+                          data-slider-value=user.net_worth,
                           data-slider-ticks="[0, 50, 100, 200, 500, 1000, 2000, 5000]",
                           ticks_positions="[0, 14, 28, 42, 56, 70, 85, 100]",
                           data-slider-ticks-labels="['$0', '$50K', '$100K', '$200K', '$500K' , '$1M', '$2M', '$5M+']",
@@ -204,7 +204,7 @@ include ../../../templates/fields_mixins.pug
                         .col-xl-11
                           input(
                           type='text',
-                          data-slider-value= 50,
+                          data-slider-value=user.annual_income,
                           name="taxRate",
                           data-slider-ticks="[0, 50, 100, 200, 500]",
                           ticks_positions="[0, 30, 60, 70, 90, 100]",
@@ -227,25 +227,57 @@ include ../../../templates/fields_mixins.pug
                             | No
                       .form-group.m-t-1
                         label.accredited_investor.shown-yes
-                          input(type="checkbox" name="" value='1').col-xl-1.investor-1m
+                          input(type="checkbox" name="accredited_investor_1m" value='1' checked=user.accredited_investor_1m).col-xl-1.investor-1m
                           span.font-weight-normal.col-xl-10.p-l-0 I am an Accredited Investor because my net worth, or joint net worth with my spouse, exceeds $1 million excluding my primary residence.
                         label.accredited_investor.shown-yes
-                          input(type="checkbox" name="" value='2').col-xl-1.investor-200k
+                          input(type="checkbox" name="accredited_investor_200k" value='1' checked=user.accredited_investor_200k).col-xl-1.investor-200k
                           span.font-weight-normal.col-xl-10.p-l-0 I am an Accredited Investor because my annual income exceeds $200,000 or my joint annual income with my spouse exceeds $300,000 for each of the past two (2) years and expect the same this year
                         label.accredited_investor.shown-yes
-                          input(type="checkbox" name="" value='3').col-xl-1.investor-entity
+                          input(type="checkbox" name="accredited_investor_5m" value='1' checked=user.accredited_investor_5m).col-xl-1.investor-entity
                           span.font-weight-normal.col-xl-10.p-l-0 I am an Accredited Investor because I am authorized to invest on behalf of an entity with at least $5M in assets or an entity where all of the owners are Accredited Investors.
                         label.accredited_investor.shown-yes
-                          input(type="checkbox" name="" value='4').col-xl-1.investor-risk-agree
+                          input(type="checkbox" name="accredited_investor_poor" value='1' checked=user.accredited_investor_poor).col-xl-1.investor-risk-agree
                           span.font-weight-normal.col-xl-10.p-l-0 I understand that investing in start-ups and small businesses listed on GrowthFountain is very risky, and that I should not invest any funds unless I can afford to lose my entire investment.
                       .row
                         .col-sm-11
                           hr.m-b-3.m-t-1
-                      +fieldTextLabel('bank_name', _.extend({'class1': 'col-lg-3 text-lg-right text-xs-left', 'class2': 'col-lg-8 ', 'type': 'text', 'value': user.bank_name}, fields.bank_name))
-                      +fieldTextLabel('name_on_bank_account', _.extend({'class1': 'col-lg-3 text-lg-right text-xs-left', 'class2': 'col-lg-8 ', 'type': 'text', 'value': user.name_on_bank_account}, fields.name_on_bank_account))
-                      +fieldTextLabel('account_number', _.extend({'class1': 'col-lg-3 text-lg-right text-xs-left', 'class2': 'col-lg-8 ', 'help_text': '<img src="/img/routing-number-on-check.png">', 'type': 'text', 'value': user.account_number}, fields.account_number))
-                      +fieldTextLabel('account_number_re', _.extend({'class1': 'col-lg-3 text-lg-right text-xs-left m-b-0 p-t-0', 'class2': 'col-lg-8 ', 'type': 'text', 'value': user.account_number_re}, fields.account_number_re))
-                      +fieldTextLabel('routing_number', _.extend({'class1': 'col-lg-3 text-lg-right text-xs-left', 'class2': 'col-lg-8 ', 'help_text': '<img src="/img/routing-number-on-check.png">', 'type': 'text', 'value': user.routing_number}, fields.routing_number))
+                      +fieldTextLabel('bank_name', _.extend({
+                        'class1': 'col-lg-3 text-lg-right text-xs-left',
+                        'class2': 'col-lg-8 ',
+                        'type': 'text',
+                        'value': user.bank_name
+                      }, fields.bank_name))
+
+                      +fieldTextLabel('name_on_bank_account', _.extend({
+                        'class1': 'col-lg-3 text-lg-right text-xs-left',
+                        'class2': 'col-lg-8 ',
+                        'type': 'text',
+                        'value': user.name_on_bank_account
+                        }, fields.name_on_bank_account))
+
+                      +fieldTextLabel('account_number', _.extend({
+                        'class1': 'col-lg-3 text-lg-right text-xs-left',
+                        'class2': 'col-lg-8 ',
+                        'help_text': '<img src="/img/routing-number-on-check.png">',
+                        'type': 'text',
+                        'value': user.account_number
+                      }, fields.account_number))
+
+                      +fieldTextLabel('account_number_re', _.extend({
+                        'class1': 'col-lg-3 text-lg-right text-xs-left m-b-0 p-t-0',
+                        'class2': 'col-lg-8 ',
+                        'type': 'text',
+                        'value': user.account_number_re
+                      }, fields.account_number_re))
+
+                      +fieldTextLabel('routing_number', _.extend({
+                        'class1': 'col-lg-3 text-lg-right text-xs-left',
+                        'class2': 'col-lg-8 ',
+                        'help_text': '<img src="/img/routing-number-on-check.png">',
+                        'type': 'text',
+                        'value': user.routing_number
+                      }, fields.routing_number))
+
                       .form-group.row.radio.requried
                         label.text-md-right.col-lg-3 Account Type
                           span.color-red *

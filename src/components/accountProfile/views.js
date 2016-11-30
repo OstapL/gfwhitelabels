@@ -90,6 +90,8 @@ module.exports = {
       */
       this.fields.country = {};
       this.fields.country.validate = { choices: countries };
+      this.fields.account_number.required = true;
+      this.fields.account_number_re = { required: true };
       /*
       this.fields.street_address_1 = { required: true };
       this.fields.street_address_2 = {};
@@ -190,6 +192,7 @@ module.exports = {
         if (e.value < 1000) {
           cbInvestor1m.prop('checked', false);
         }
+        this.model.net_worth = e.value;
       });
 
       this.$('.slider-annual-income').bootstrapSlider({
@@ -206,12 +209,13 @@ module.exports = {
         if (e.value < 200) {
           cbInvestor200k.prop('checked', false);
         }
+        this.model.annual_income = e.value;
       });
 
       //todo: disable checkboxes according to initial values
 
-      cbInvestor1m.prop('disabled', true);
-      cbInvestor200k.prop('disabled', true);
+      cbInvestor1m.prop('disabled', this.model.net_worth < 1000);
+      cbInvestor200k.prop('disabled', this.model.annual_income < 200);
     },
 
     showSSNPopover(event){
