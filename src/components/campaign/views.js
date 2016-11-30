@@ -605,9 +605,7 @@ module.exports = {
 
       let that = this;
       $('#amount').popover({
-        // trigger: 'focus',
         placement(context, src) {
-          // $(context).addClass('amount-popover');
           return 'top';
         },
         html: true,
