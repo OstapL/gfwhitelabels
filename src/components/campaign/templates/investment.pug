@@ -267,7 +267,7 @@ mixin fieldInput(name, attr)
                     input(type="radio" value="false" name="is_reviewed_educational_material").d-block.m-x-auto
                     
               .col-lg-10
-                label I confirm and represent that (a) I have reviewed the educational material that has been made available on this website, (b) I understand that the entire amount of my investment may be lost and (c) I am in a financial condition to bear the loss of the investment.
+                label I confirm and represent that (a) I have reviewed the educational material that has been made available on this website, (b) I understand that the entire amount of my investment may be lost and (c) I am in a financial condition to bear the loss of the investment and (d) I represent that I have not exceeded my investment limitations.
             .form-group.row
               .col-lg-2
                 .row
@@ -334,8 +334,10 @@ mixin fieldInput(name, attr)
         h2.text-uppercase.dosis.m-t-0 PERKS
           span.small-text.open-sans Investor Perks are not intended to affect the value of the security and investors should evaluate the merits of each investment without regard to any Investor Perks.
         .list-group.list-group-border-invest.invest-right-margin
+          - values.campaign.perks = Object.keys(values.campaign.perks).map(function(key) { return values.campaign.perks[key]; });
+          - values.campaign.perks.sort(function (a, b) { return Number(b.amount) - Number(a.amount); });
           each v,k in values.campaign.perks
-            a(href="#" data-from=v.amount data-to='1500').list-group-item.list-group-item-action.perk
+            a(href="#" data-amount=v.amount).list-group-item.list-group-item-action.perk
               h3.list-group-item-heading 
                 span.text-color-puerto_rico $#{v.amount}
                 |  Investments 

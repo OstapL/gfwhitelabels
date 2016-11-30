@@ -24,6 +24,10 @@ module.exports = {
         el: '#content',
 
         template: require('./templates/step1.pug'),
+        
+        preinitialize() {
+            $('#content').undelegate();
+        },
 
         initialize() {
             if (!app.cache.capitalRaiseCalculator) {

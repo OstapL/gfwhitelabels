@@ -660,13 +660,16 @@ module.exports = {
         $('#amount').popover('hide');
       }
 
-      this.$('.perk').each((i, el) => {
-        if(parseInt(el.dataset.from) <= amount) {
-          $(el).addClass('active').find('i.fa.fa-check').show();
-        } else {
-          $(el).removeClass('active').find('i.fa.fa-check').hide();
+      let $targetPerk;
+      let $perks = this.$('.perk');
+      $perks.each((i, el) => {
+        if(parseInt(el.dataset.amount) <= amount) {
+          $targetPerk = $(el);
+          return false;
         }
       });
+      $perks.removeClass('active').find('i.fa.fa-check').hide();
+      if ($targetPerk) $targetPerk.addClass('active').find('i.fa.fa-check').show();
 
       this._updateTotalAmount(e);
     },
