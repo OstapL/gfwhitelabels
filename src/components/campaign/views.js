@@ -473,6 +473,12 @@ module.exports = {
     initialize(options) {
       this.fields = options.fields;
       this.user = options.user;
+
+      // stub the annual income and net worth
+      this.user.annual_income = 50000;
+      this.user.net_worth = 50000;
+      this.user.accumulated_investment = 15000;
+
       // this.fields.street_address_1 = { type: 'string', required: true};
       this.fields.street_address_1 = { type: 'string', required: false};
       this.fields.street_address_2 = { type: 'string', required: false};
@@ -492,6 +498,10 @@ module.exports = {
       // this.fields.route_number = {type: 'string', required: true};
       this.fields.routing_number = {type: 'string', required: false};
       this.labels = {
+        personal_information_data: {
+          street_address_1: 'Street Address 1',
+          street_address_2: 'Street Address 2',          
+        },
         amount: 'Amount',
         street_address_1: 'Street Address 1',
         street_address_2: 'Street Address 2',

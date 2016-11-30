@@ -84,16 +84,15 @@ mixin fieldInput(name, attr)
                   option(value="us" selected=(user.country == 'us')) United States
                   option(value="ua" selected=(user.country == 'ua')) UA
                   option(value='ru' selected=(user.country == 'ru')) Russia
-            +fieldTextLabel("personal_information_data[street_address_1]", _.extend({
+            +nestedTextLabel("personal_information_data", "street_address_1", {
               class1: 'col-lg-3 col-md-12 text-lg-left text-xl-right',
-              class2: 'col-lg-9 col-md-12',
-              value: user.street_address_1,
-              }, fields.street_address_1))
+              class2: 'col-lg-9 col-md-12',            
+            }, user)
             +fieldTextLabel("personal_information_data[street_address_2]", _.extend({
               class1: 'col-lg-3 col-md-12 text-lg-left text-xl-right',
               class2: 'col-lg-9 col-md-12',
-              value: user.street_address_1,
-              }, fields.street_address_2))
+              value: user.street_address_2,
+              }, fields.personal_information_data.schema.street_address_2))
             // IF USA
             .row.us-fields(style="display:" + (user.country == 'us' ? "display" : "none") + ";")
               input(type="hidden" name="personal_information_data[state]" value="NY" disabled=(user.country != 'us')) 
