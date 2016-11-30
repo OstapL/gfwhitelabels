@@ -25,6 +25,7 @@ section.create-company-media.container.media-container
         text: 'Drop your photo here or click to upload',
         icon: 'file-image-o',
         label: 'Header Image',
+        help_text: 'This is the image that will appear at the top of your campaign. A minimum size of 1600x400 is recommended.',
         data: values.header_image_data[0],
       }, this.fields.header_image_image_id))
       +imageDropzone("list_image_image_id", _.extend({
@@ -35,6 +36,7 @@ section.create-company-media.container.media-container
         text: 'Drop your photo here or click to upload',
         icon: 'file-image-o',
         label: 'Thumbnail Picture',
+        help_text: ' This image entices investors to view your campaign. A minimum size of 1600x400 is recommended.',
         data: values.list_image_data[0],
       }, this.fields.list_image_image_id))
       .m-b-2
@@ -44,6 +46,7 @@ section.create-company-media.container.media-container
             default: '/img/default/77x45.png',
             text: 'Drop your photo(s) here or click to upload',
             icon: 'file-image-o',
+            help_text: 'We recommend uploading 8 images that represent your service of business. These images will be displayed in a gallery format.',
             data: values.gallery_group_data,
           }, fields.gallery_group_id))
 
@@ -58,6 +61,7 @@ section.create-company-media.container.media-container
             +fieldTextLabel("video", _.extend({
               class1: 'col-xl-5 col-lg-12 p-sm-0 text-xl-right text-lg-left',
               class2: 'col-xl-7 col-lg-12 p-sm-0',
+              help_text: 'You Tube or Vimeo links only please.',
               }, fields.video))
             
           #video_source.col-lg-5.p-sm-0.p-r-0
