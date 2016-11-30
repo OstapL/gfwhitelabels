@@ -630,24 +630,9 @@ module.exports = {
       if (amount && amount % price_per_share != 0 && amount >= this.model.campaign.minimum_increment) {
         amount = Math.ceil(amount / price_per_share) * price_per_share;
         $(e.target).val(amount);
-        // Popup the explanation.
-        // $('#amount').popover({
-        //   // trigger: 'focus',
-        //   placement(context, src) {
-        //     // $(context).addClass('amount-popover');
-        //     return 'top';
-        //   },
-        //   html: true,
-        //   content(){
-        //     var content = $('.invest_form').find('.popover-content-rounding').html();
-        //     return content;
-        //   }
-        // });
         this.currentAmountTip = 'rounding';
         $('#amount').popover('show');
         this._updateTotalAmount(e);
-      } else {
-        // $('#amount').popover('hide');
       }
     },
 
