@@ -26,8 +26,10 @@ include ../../../templates/mixins.pug
         .form-body.clearfix
 
           .form-group.row
-            label(for="excessCash").col-lg-12.font-weight-normal How much excess cash  does your business need to maintain as a buffer against the unexpected?&nbsp;&nbsp;
-              i(aria-hidden="true",data-toggle="tooltip",data-original-title="<b>All entrepreneurs know to «Expect  the Unexpected» timing issues, liquidity crunches and other unexpected issues require a business to maintain excess cash on hand.</b>").fa.fa-question-circle.text-muted
+            label(for="excessCash").col-lg-12.font-weight-normal.d-inline-block How much excess cash  does your business need to maintain as a buffer against the unexpected?&nbsp;&nbsp;
+              div.d-inline-block
+                div.showPopover(data-content="All entrepreneurs know to «Expect  the Unexpected» timing issues, liquidity crunches and other unexpected issues require a business to maintain excess cash on hand.")
+                  i(aria-hidden="true").fa.fa-question-circle.text-muted
 
             .col-lg-12
               input(
@@ -83,7 +85,7 @@ include ../../../templates/mixins.pug
                 name="projectedRevenueTwoYears")#projectedRevenueTwoYears.form-control.js-field
 
           .form-group.row
-            label(for="grossMargin").col-lg-12.font-weight-normal Let's focus on Cost of Goods Sold, or COGS: What gross margin  do you expect to earn on your business’s sales over the next 2 years?&nbsp;&nbsp;
+            label(for="grossMargin").col-lg-12.font-weight-normal.d-inline-block Let's focus on Cost of Goods Sold, or COGS: What gross margin  do you expect to earn on your business’s sales over the next 2 years?&nbsp;&nbsp;
               i(aria-hidden="true",data-toggle="tooltip",data-original-title="<b><div class=\"large\"><span class=\"formula\">Gross Margin (:%) = Revenue -</span> <span class=\"fraction\"><span class=\"top\">Cost of Goods Sold</span><span class=\"bottom\">Revenue</span></span></div></b>").fa.fa-question-circle.text-muted
 
             .col-lg-12.mb20
@@ -94,8 +96,10 @@ include ../../../templates/mixins.pug
                 data-model-value='grossMargin')#grossMargin.form-control.js-bootstrap-slider
 
           .form-group.row
-            label(for="monthlyOperatingYear").col-lg-12.font-weight-normal What do you expect your monthly operating expenses to average over the next 12 months?&nbsp;&nbsp;
-              i(aria-hidden="true",data-toggle="tooltip",data-original-title="<b>The expenses a company incurs as a result of its normal business operations</b>").fa.fa-question-circle.text-muted
+            label(for="monthlyOperatingYear").col-lg-12.font-weight-normal.d-inline-block What do you expect your monthly operating expenses to average over the next 12 months?&nbsp;&nbsp;
+              div.d-inline-block
+                div.showPopover(data-content="The expenses a company incurs as a result of its normal business operations")
+                  i(aria-hidden="true").fa.fa-question-circle.text-muted
 
             .col-lg-12
               input(
