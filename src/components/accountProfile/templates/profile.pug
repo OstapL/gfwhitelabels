@@ -91,14 +91,14 @@ include ../../../templates/fields_mixins.pug
                                   span.input-value.js-city-state #{ values['city'] ? values['city'] : '(City)' }, #{ values['state'] ? values['state'] : '(State)' }
                                   i.fa.fa-pencil-square-o.link-1
                         .row
-                          .col-xl-6
-                            +fieldTextLabel('phone', _.extend({
-                              'class1': 'col-lg-6 text-lg-right text-xs-left',
-                              'class2': 'col-lg-6',
-                              'type': 'text',
-                              'value': user.country == 'US' ? user.phone : '',
-                              'disabled': user.country != 'US',
-                            }, fields.phone))
+                          .col-xl-6.us-phone
+                            if user.country == 'US'
+                              +fieldTextLabel('phone', _.extend({
+                                'class1': 'col-lg-6 text-lg-right text-xs-left',
+                                'class2': 'col-lg-6',
+                                'type': 'text',
+                                'value': user.phone,
+                              }, fields.phone))
 
                       .row.foreign-country-row(style="display:" + (user.country == 'US' ? 'none' : 'block'))
                         .col-lg-6
@@ -106,14 +106,22 @@ include ../../../templates/fields_mixins.pug
                             'class1': 'col-lg-6 text-lg-right text-xs-left',
                             'class2': 'col-lg-6 ',
                             'type': 'text',
-                            'value': user.country == 'US' ? '' : user.city,
-                            'disabled': user.country == 'US',
+                            'value': user.city,
                           }, fields.city))
                         .col-lg-5
-                          .form-group.row.state.text
-                            label.text-lg-right.col-lg-5(for="state").p-t-0.m-b-0 State/Province/ Region
-                            div.col-lg-7
-                              input.form-control(name='state' placeholder='State/Province/Region' type="text" value=user.state)
+                          +fieldTextLabel('state', _.extend({
+                            'class1': 'text-lg-right col-lg-5 p-t-0 m-b-0',
+                            'class2': 'col-lg-7',
+                            'type': 'text',
+                            'label': 'State/Province/ Region',
+                            'placeholder': 'State/Province/Region',
+                            'value': user.state,
+                          }))
+
+                          //.form-group.row.state.text
+                          //  label.text-lg-right.col-lg-5(for="state").p-t-0.m-b-0 State/Province/ Region
+                          //  div.col-lg-7
+                          //    input.form-control(name='state' placeholder='State/Province/Region' type="text" value=user.state)
 
                       .row.foreign-country-row(style="display:" + (user.country == 'US' ? 'none' : 'block'))
                         .col-lg-6
@@ -121,14 +129,14 @@ include ../../../templates/fields_mixins.pug
                             label.text-lg-right.col-lg-6(for="zip_code") Postal Code
                             div.col-lg-6
                               input.form-control(name='zip_code1' placeholder='Postal Code' type="text" value=user.zip_code)
-                        .col-lg-5
-                          +fieldTextLabel('phone', _.extend({
-                            'class1': 'col-lg-5 text-xl-right text-lg-left',
-                            'class2': 'col-lg-7 ',
-                            'type': 'text',
-                            'value': user.country == 'US' ? '' : user.phone,
-                            'disabled': user.country == 'US',
-                          }, fields.phone))
+                        .col-lg-5.foreign-country-phone
+                          if user.country != 'US'
+                            +fieldTextLabel('phone', _.extend({
+                              'class1': 'col-lg-5 text-xl-right text-lg-left',
+                              'class2': 'col-lg-7 ',
+                              'type': 'text',
+                              'value': user.phone,
+                            }, fields.phone))
                       
                       .col-xl-11.p-r-0
                         .border-bottom.m-t-2.m-b-3
