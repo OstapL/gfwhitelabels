@@ -62,6 +62,12 @@ mixin fieldInput(name, attr)
             +fieldBlock("annual_income", user.annual_income, {'class1': 'col-md-4', 'class2': 'col-md-8', 'type': 'text'})
 
             +fieldBlock("net_worth", user.net_worth, {'class1': 'col-md-4', 'class2': 'col-md-8', 'type': 'text'})
+          div.popover-content-rounding
+            i.fa.fa-info-circle
+            span Companies can’t issue fractional shares.  The price per share is $#{values.campaign.price_per_share} so investment amounts must be a multiple of $#{values.campaign.price_per_share}.
+          div.popover-content-minimum-investment
+            i.fa.fa-info-circle
+            span The minimum investment is $#{values.campaign.minimum_increment}.
 
           section.personal_information
             h2.text-uppercase.dosis.text-md-center.text-sm-center.text-xs-center.text-lg-left Personal Information
@@ -194,18 +200,15 @@ mixin fieldInput(name, attr)
                         span Memo:
                       .col-lg-6
                         span.font-weight-bold Invest in #{values.name} 
-                        //- span.help-block (as indicated above)
                     .row.m-b-2
                       .col-lg-6
                         span And mail the check to: 
                       .col-lg-6
                         span.font-weight-bold GrowthFountain Capital LLC
                           br
-                          |  C/O Boston Private Bank 
+                          | 79 Madison Ave, 5th Floor
                           br
-                          |  60 South Market Suite 100 
-                          br
-                          |  San Jose, CA 95113
+                          | New York, NY 10016
             .row.wire-fields.payment-fields(style="display:none;")
               .col-lg-12
                 .row
@@ -232,12 +235,9 @@ mixin fieldInput(name, attr)
                       .col-lg-6
                         span.font-weight-bold GrowthFountain Capital LLC
                           br
-                          |  C/O Boston Private Bank 
+                          | 79 Madison Ave, 5th Floor
                           br
-                          |  60 South Market Suite 100 
-                          br
-                          |  San Jose, CA 95113
-
+                          | New York, NY 10016
                           br
                           br
                           | Routing/ABA# 122287251
@@ -314,12 +314,12 @@ mixin fieldInput(name, attr)
               .row
                 .form-group.row
                   .col-lg-4
-                    input(type="text" placeholder="Type Your Name").form-control
+                    input(type="text" placeholder="Type Your Name").form-control.typed-name
                     .help-block Electronically Sign Here
                   .col-lg-4
                     .electronically
                       span.by By:
-                      span.name Maria Kravchuk
+                      span.name.signature
 
             .form-group.row
               .col-md-12.text-md-center.text-sm-center.text-xs-center

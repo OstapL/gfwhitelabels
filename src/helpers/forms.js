@@ -184,8 +184,8 @@ module.exports = {
         delete data[key_month];
         delete data[key_day];
       } else if(el.type == 'nested' && data[key]) {
-        data[key].forEach((val, index) => {
-          api.fixDateFields.call(this, el.schema, data[key][index]);
+        $.each(data[key], (index, val) => {
+          api.fixDateFields.call(this, el.schema, data[key][index])
         });
       }
     });
