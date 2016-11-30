@@ -334,8 +334,10 @@ mixin fieldInput(name, attr)
         h2.text-uppercase.dosis.m-t-0 PERKS
           span.small-text.open-sans Investor Perks are not intended to affect the value of the security and investors should evaluate the merits of each investment without regard to any Investor Perks.
         .list-group.list-group-border-invest.invest-right-margin
+          - values.campaign.perks = Object.keys(values.campaign.perks).map(function(key) { return values.campaign.perks[key]; });
+          - values.campaign.perks.sort(function (a, b) { return Number(b.amount) - Number(a.amount); });
           each v,k in values.campaign.perks
-            a(href="#" data-from=v.amount data-to='1500').list-group-item.list-group-item-action.perk
+            a(href="#" data-amount=v.amount).list-group-item.list-group-item-action.perk
               h3.list-group-item-heading 
                 span.text-color-puerto_rico $#{v.amount}
                 |  Investments 
