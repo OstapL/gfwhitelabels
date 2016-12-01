@@ -19,7 +19,7 @@ section.team-members.container.m-b-85
   .col-xl-8.col-lg-8.col-md-12
     h2.text-uppercase.text-lg-center.text-xs-center.dosis.m-t-0 #{type == 'advisor' ? 'advisor' : 'team member'}
 
-    form(method="post" action="").form-section
+    form.form-section
       +fieldTextLabel("first_name", _.extend({
         class1: 'col-xl-3 col-lg-12 text-lg-left text-xl-right ',
         class2: 'col-xl-9 col-lg-12',
@@ -38,13 +38,13 @@ section.team-members.container.m-b-85
         label: 'Email',
         value: member.email
       }, fields.email))
-      if member.title == 'advisor'
+      if type == 'advisor'
         +fieldTextLabel("title", _.extend({
           class1: 'col-xl-3 col-lg-12 text-lg-left text-xl-right ',
           class2: 'col-xl-9 col-lg-12',
           label: 'Title',
           readonly: true,
-          value: member.title
+          value: 'Advisor',
         }, fields.title))
       else
         +fieldTextLabel("title", _.extend({
@@ -54,27 +54,33 @@ section.team-members.container.m-b-85
           value: member.title
         }, fields.title))
 
-      .form-group.row.clearfix.required
-        label.col-lg-3.col-md-12.text-lg-right Bio
-        .col-lg-9.col-md-12
-          textarea(name="bio" placeholder="At least 150 characters" rows="4").form-control #{ member.bio }
+      +fieldTextareaLabel("bio", _.extend({
+          class1: 'col-xl-3 col-lg-12 text-lg-left text-xl-right ',
+          class2: 'col-xl-9 col-lg-12',
+          placeholder: "At least 150 characters",
+          label: 'Bio',
+          value: member.bio,
+        }, fields.bio))
+
       .row
-        .col-lg-9.col-md-12.recommended.label-p-t-0
-          +fieldTextLabel("growup", _.extend({
-            class1: 'col-xl-4 col-lg-12 text-lg-left text-xl-right ',
-            class2: 'col-xl-8 col-lg-12',
-            label: 'City',
-            placeholder: 'City',
-            value: member.email
-          }, fields.email))
-        .col-lg-3.col-md-12
-          select(name='state').custom-select
-            option(value="") State
-            each state in states
-              if member.state == state.abbreviation
-                option(value=state.abbreviation selected)= state.name
-              else
-                option(value=state.abbreviation)= state.name
+        input(type="hidden" name="city" values=member.city)
+        input(type="hidden" name="state" value=member.state)
+        .col-md-12.col-lg-6
+          +fieldTextLabel('zip_code', _.extend({
+            'class1': 'col-lg-6 text-lg-right text-xs-left',
+            'class2': 'col-lg-6',
+            'label': 'Zip code',
+            'type': 'text',
+            'value': member.zip_code,
+          }, fields.zip_code))
+
+        .col-lg-5.city_states.required
+          .row
+            label.col-lg-5.col-xs-6.text-lg-right.text-xs-left City/State
+            .col-lg-6.col-xs-6
+              a(data-toggle="modal" data-target="#city_state_modal" href="#city_state_modal").change_state_city
+                span.input-value.js-city-state #{ member['city'] ? member['city'] : '(City)' }, #{ member['state'] ? member['state'] : '(State)' }
+                i.fa.fa-pencil-square-o.link-1
       .label-p-t-0
         +fieldTextLabel("college", _.extend({
           class1: 'col-xl-3 col-lg-12 text-lg-left text-xl-right ',
@@ -82,7 +88,7 @@ section.team-members.container.m-b-85
           label:  'Collage',
           placeholder: 'Name of college or university',
           value: member.email
-        }, fields.email))
+        }, fields.collage))
       .row
         .col-lg-6.input-min-width
           +fieldTextLabel("linkedin", _.extend({
@@ -125,7 +131,7 @@ section.team-members.container.m-b-85
                   img(src=member.photo).img-fluid.img-circle.img-photo
       .col-lg-12.text-lg-right.p-r-0.p-t-2.text-md-center.text-sm-center.text-xs-center
         button.btn.btn-secondary.text-uppercase.m-r-3.cancel cancel
-        button.btn.btn-primary.text-uppercase.pull-lg-right Save
+        button(data-method="POST").btn.btn-primary.text-uppercase.pull-lg-right Save
           //
             .col-lg-6.p-r-0
               .dropdown.pull-right

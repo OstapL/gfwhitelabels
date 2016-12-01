@@ -500,6 +500,7 @@ module.exports = {
 
   teamMemberAdd: Backbone.View.extend(_.extend({
     urlRoot: raiseCapitalServer + '/campaign/:id/team-members',
+    // doNotExtendModel: true,
     events: _.extend({
       'click .btn-primary': api.submitAction,
       'click .delete-member': 'deleteMember',
@@ -510,7 +511,7 @@ module.exports = {
     }, leavingConfirmationHelper.events, menuHelper.events, dropzoneHelpers.events),
 
     getSuccessUrl(data) {
-      return '/campaign/' + (data.id ? data.id : this.model.id) + '/team-members';
+      return '/campaign/' + this.model.id + '/team-members';
     },
 
     preinitialize() {
@@ -526,6 +527,7 @@ module.exports = {
       this.formc = options.formc;
       this.type = options.type;
       this.index = options.index;
+      this.urlRoot = this.urlRoot.replace(':id', this.model.id);
       this.$el.on('keypress', ':input:not(textarea)', function (event) {
         if (event.keyCode == 13) {
           event.preventDefault();
@@ -538,7 +540,8 @@ module.exports = {
       const template = require('./templates/teamMemberAdd.pug');
 
       if (this.index != 'new') {
-        this.member = this.model.members[this.index];
+        this.member = this.model.data[this.index];
+        this.urlRoot  += '/' + this.index;
       } else {
         this.member = {
           photo_data: [],
@@ -560,6 +563,8 @@ module.exports = {
       );
 
       setTimeout(() => { this.createDropzones() } , 1000);
+      delete this.model.progress;
+      delete this.model.data;
       return this;
     },
 
@@ -609,8 +614,8 @@ module.exports = {
       // let values = this.model.toJSON();
       let values = this.model;
 
-      if (!Array.isArray(values.members)) {
-        values.members = [];
+      if (!Array.isArray(values.data)) {
+        values.data = [];
       }
 
       this.$el.html(
