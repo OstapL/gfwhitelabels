@@ -167,9 +167,9 @@ mixin fieldInput(name, attr)
               label.col-lg-3.text-lg-right.text-xs-left I Want to Pay Using
               .col-lg-9
                 select(name="payment_information_type").custom-select.w-100.payment-type-select
-                  option(value="echeck") Echeck (ACH)
-                  option(value="check") Check
-                  option(value="wire") Wire
+                  option(value="0") Echeck (ACH)
+                  option(value="1") Check
+                  option(value="2") Wire
             //IF ECHECK
             //- I may need to add a value into the attr object to make sure proper data is populated.
             .echeck-fields.payment-fields

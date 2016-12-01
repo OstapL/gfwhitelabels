@@ -458,11 +458,11 @@ module.exports = {
     changePaymentType(e) {
       let val = $(e.target).val();
       this.$('.payment-fields').hide();
-      if (val == 'echeck') {
+      if (val == 0) {
         $('.echeck-fields').show();
-      } else if (val == 'check') {
+      } else if (val == 1) {
         $('.check-fields').show();
-      } else if (val == 'wire') {
+      } else if (val == 2) {
         $('.wire-fields').show();
       }
     },
