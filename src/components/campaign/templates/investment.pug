@@ -86,23 +86,32 @@ mixin fieldInput(name, attr)
             +nestedTextLabel("personal_information_data", "street_address_1", {
               class1: 'col-lg-3 col-md-12 text-lg-left text-xl-right',
               class2: 'col-lg-9 col-md-12',            
-            }, user)
-            +fieldTextLabel("personal_information_data[street_address_2]", _.extend({
+              }, user)
+            //- +fieldTextLabel("personal_information_data[street_address_2]", _.extend({
+            //-   class1: 'col-lg-3 col-md-12 text-lg-left text-xl-right',
+            //-   class2: 'col-lg-9 col-md-12',
+            //-   value: user.street_address_2,
+            //-   }, fields.personal_information_data.schema.street_address_2))
+            +nestedTextLabel("personal_information_data", "street_address_2", {
               class1: 'col-lg-3 col-md-12 text-lg-left text-xl-right',
               class2: 'col-lg-9 col-md-12',
-              value: user.street_address_2,
-              }, fields.personal_information_data.schema.street_address_2))
+              }, user)
             // IF USA
             .row.us-fields(style="display:" + (user.country == 'us' ? "display" : "none") + ";")
               input(type="hidden" name="personal_information_data[state]" value="NY" disabled=(user.country != 'us')) 
               input(type="hidden" name="personal_information_data[city]" value="New York" disabled=(user.country != 'us')) 
               .col-lg-7.p-l-2.col-md-12
-                +fieldTextLabel("personal_information_data[zip_code]", _.extend({
+                //- +fieldTextLabel("personal_information_data[zip_code]", _.extend({
+                //-   class1: 'col-lg-5 text-lg-left text-xl-right',
+                //-   class2: 'col-lg-7',
+                //-   disabled: (user.country != 'us'),
+                //-   value: user.zip_codem,
+                //-   }, fields.zip_code))
+                +nestedTextLabel("personal_information_data", "zip_code", {
                   class1: 'col-lg-5 text-lg-left text-xl-right',
                   class2: 'col-lg-7',
                   disabled: (user.country != 'us'),
-                  value: user.zip_codem,
-                  }, fields.zip_code))
+                  }, user)
               .col-lg-5.city_states.col-md-12
                 label.col-lg-5.col-md-6.col-sm-6.col-xs-6 City/State
                 .col-lg-7.col-md-6.col-sm-6.col-xs-6
@@ -113,12 +122,17 @@ mixin fieldInput(name, attr)
             .other-countries-fields(style="display:" + (user.country == 'us' ? "none" : "display") + ";")
               .row
                 .col-lg-6.p-l-0.p-r-0
-                  +fieldTextLabel("personal_information_data[city]", _.extend({
+                  //- +fieldTextLabel("personal_information_data[city]", _.extend({
+                  //-   'class1': 'col-lg-6 text-lg-left text-xl-right',
+                  //-   'class2': 'col-lg-6 p-r-0',
+                  //-   disabled: (user.country == 'us'),
+                  //-   value: user.city,
+                  //-   }, fields.city))
+                  +nestedTextLabel("personal_information_data", "city", {
                     'class1': 'col-lg-6 text-lg-left text-xl-right',
                     'class2': 'col-lg-6 p-r-0',
                     disabled: (user.country == 'us'),
-                    value: user.city,
-                    }, fields.city))
+                    }, user)
                 .col-lg-6
                   .form-group.row.state.text
                     label.text-lg-right.col-lg-5(for="state").p-t-0.m-b-0 State/Province/Region
@@ -149,26 +163,38 @@ mixin fieldInput(name, attr)
             //IF ECHECK
             //- I may need to add a value into the attr object to make sure proper data is populated.
             .echeck-fields.payment-fields
-              +fieldTextLabel("payment_information_data[name_on_bank_account]", _.extend({
+              //- +fieldTextLabel("payment_information_data[name_on_bank_account]", _.extend({
+              //-   class1: 'col-lg-3 col-md-12 text-lg-left text-xl-right',
+              //-   class2: 'col-lg-9 col-md-12',
+              //-   value: user.name_on_bank_account,
+              //-   }, fields.name_on_bank_account))
+              +nestedTextLabel("payment_information_data", "name_on_bank_account", {
                 class1: 'col-lg-3 col-md-12 text-lg-left text-xl-right',
                 class2: 'col-lg-9 col-md-12',
-                value: user.name_on_bank_account,
-                }, fields.name_on_bank_account))
-              +fieldTextLabel("payment_information_data[account_number]", _.extend({
+                }, user)
+              //- +fieldTextLabel("payment_information_data[account_number]", _.extend({
+              //-   class1: 'col-lg-3 col-md-12 text-lg-left text-xl-right',
+              //-   class2: 'col-lg-9 col-md-12',
+              //-   value: user.account_number,
+              //-   }, fields.account_number))
+              +nestedTextLabel("payment_information_data", "account_number", {
                 class1: 'col-lg-3 col-md-12 text-lg-left text-xl-right',
                 class2: 'col-lg-9 col-md-12',
-                value: user.account_number,
-                }, fields.account_number))
+                }, user)
               +fieldTextLabel("payment_information_data[account_number_re]", _.extend({
                 class1: 'col-lg-3 col-md-12 text-lg-left text-xl-right',
                 class2: 'col-lg-9 col-md-12',
                 value: user.account_number,
                 }, fields.account_number_re))
-              +fieldTextLabel("payment_information_data[routing_number]", _.extend({
+              //- +fieldTextLabel("payment_information_data[routing_number]", _.extend({
+              //-   class1: 'col-lg-3 col-md-12 text-lg-left text-xl-right',
+              //-   class2: 'col-lg-9 col-md-12',
+              //-   value: user.routing_number,
+              //-   }, fields.routing_number))
+              +nestedTextLabel("payment_information_data", "routing_number", {
                 class1: 'col-lg-3 col-md-12 text-lg-left text-xl-right',
                 class2: 'col-lg-9 col-md-12',
-                value: user.routing_number,
-                }, fields.routing_number))
+                }, user)
               .form-group.row.radio.check-fields
                 label.text-md-right.col-lg-3 Account Type
                 .col-lg-9.radio-input

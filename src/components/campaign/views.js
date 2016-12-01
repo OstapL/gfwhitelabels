@@ -515,7 +515,15 @@ module.exports = {
       this.labels = {
         personal_information_data: {
           street_address_1: 'Street Address 1',
-          street_address_2: 'Street Address 2',          
+          street_address_2: 'Street Address 2',
+          zip_code: 'Zip Code',
+          city: 'City',       
+        },
+        payment_information_data: {
+          name_on_bank_account: 'Name On Bank Account',
+          account_number: 'Account Number',
+          account_number_re: 'Account Number Again',
+          routing_number: 'Routing Number',
         },
         amount: 'Amount',
         street_address_1: 'Street Address 1',
