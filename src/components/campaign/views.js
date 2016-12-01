@@ -648,6 +648,9 @@ module.exports = {
         html: true,
         content(){
           var content = $('.invest_form').find('.popover-content-' + that.currentAmountTip).html();
+          if (that.currentAmountTip == 'amount-ok') {
+            content = content.replace(/\:amount/g, that.$('#amount').val());
+          }
           return content;
         },
         trigger: 'manual',
