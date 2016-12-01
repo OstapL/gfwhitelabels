@@ -105,22 +105,20 @@ module.exports = Backbone.Router.extend({
   media(id) {
     if (!app.user.is_anonymous()) {
       $('#content').scrollTo(); 
-      const Model = require('components/campaign/models.js');
+
       const View = require('components/raiseFunds/views.js');
+      const a1 = app.makeCacheRequest(raiseCapitalServer + '/campaign/' + id + '/media', 'OPTIONS');
+      const a2 = app.makeCacheRequest(raiseCapitalServer + '/campaign/' + id + '/media');
+      const formcR = api.makeCacheRequest(authServer + '/user/formc');
 
-      var a1 = app.makeCacheRequest(raiseCapitalServer + '/campaign/' + id + '/media', 'OPTIONS');
-      var a2 = app.makeCacheRequest(raiseCapitalServer + '/campaign/' + id + '/media');
-
-      // var a1 = app.makeCacheRequest(Urls['campaign-list']() + '/media/' + id, 'OPTIONS');
-      // var a2 = app.makeCacheRequest(Urls['campaign-list']() + '/media/' + id);
-
-      $.when(a1, a2).done((meta, model) => {
+      $.when(a1, a2, formcR).done((meta, model, formc) => {
         model[0].id = id;
+
         var i = new View.media({
           el: '#content',
             fields: meta[0].fields,
-            // model: new Model.model(model[0])
             model: model[0],
+            formc: formc[0],
         });
         i.render();
         //app.views.campaign[id].render();

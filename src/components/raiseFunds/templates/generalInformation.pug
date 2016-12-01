@@ -18,7 +18,7 @@ section.create-company-general.container.m-b-85
   
   .col-xl-8.col-lg-8.col-md-12
     h2.text-uppercase.text-lg-center.text-xs-center.dosis.m-t-0.m-b-3 GENERAL INFORMATION
-    form(data-method="PUT" action="").form-section
+    form.form-section
       .col-xl-12
         +fieldTextareaLabel("pitch", _.extend({
           class1: 'col-xl-3 col-lg-12 text-lg-left text-xl-right',
@@ -38,5 +38,5 @@ section.create-company-general.container.m-b-85
         
         .col-lg-12.m-t-3.pull-lg-right.p-r-0.text-lg-right.text-md-center.text-sm-center.text-xs-center
           // button(type="submit").btn.btn-secondary.text-uppercase.m-r-3.m-t-0 Fields Review
-          button(type="submit").btn.btn-primary.text-uppercase.m-t-0 save and continue
+          button#submitForm.btn.btn-primary.text-uppercase.m-t-0 save and continue
             i.fa.fa-angle-right

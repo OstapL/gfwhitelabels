@@ -226,7 +226,7 @@ module.exports = {
       urlRoot: raiseCapitalServer + '/campaign/:id/general_information',
       template: require('./templates/generalInformation.pug'),
       events: _.extend({
-          'submit #submitForm': api.submitAction,
+          'click #submitForm': api.submitAction,
           'click .onPreview': onPreviewAction,
           'click .submit_form': submitCampaign,
         }, addSectionHelper.events, leavingConfirmationHelper.events, menuHelper.events),
@@ -300,7 +300,7 @@ module.exports = {
     urlRoot: raiseCapitalServer + '/campaign/:id/media',
 
     events: _.extend({
-      'submit form': api.submitAction,
+      'click #submitForm': api.submitAction,
       'change #video,.additional-video-link': 'updateVideo',
       // 'change #video,.additional-video-link': 'appendHttpsIfNecessary',
       'change .press_link': 'appendHttpIfNecessary',
@@ -309,7 +309,6 @@ module.exports = {
     }, leavingConfirmationHelper.events, menuHelper.events,
       addSectionHelper.events, dropzoneHelpers.events
     ),
-
 
     getSuccessUrl(data) {
       return '/campaign/' + (data.id ? data.id : this.model.id) + '/team-members';
@@ -331,18 +330,13 @@ module.exports = {
 
     initialize(options) {
       this.fields = options.fields;
+      this.formc = options.formc;
       this.fields.gallery_group_id.validate.fn = function checkNotEmpty(value, attr, fn, model, computed) {
         if(document.querySelectorAll('.dropzone__gallery .img-fluid').length === 0) {
           throw 'Please upload at least 1 image';
         }
       };
 
-      this.$el.on('keypress', ':input:not(textarea)', function (event) {
-        if (event.keyCode == 13) {
-          event.preventDefault();
-          return false;
-        }
-      });
       this.fields.header_image_image_id.type =
         this.fields.list_image_image_id.type = 'image';
 
@@ -409,27 +403,6 @@ module.exports = {
 
       return this;
     },
-
-    // getVideoId(url) {
-    //   try {
-    //     var provider = url.match(/https:\/\/(:?www.)?(\w*)/)[2];
-    //     provider = provider.toLowerCase();
-    //     var id;
-    //
-    //     if (provider == 'youtube') {
-    //       // id = url.match(/https:\/\/(?:www.)?(\w*).com\/.*v=(\w*)/)[2];
-    //       id = url.match(/https:\/\/(?:www.)?(\w*).com\/.*v=([A-Za-z0-9_-]*)/)[2];
-    //     } else if (provider == 'vimeo') {
-    //       id = url.match(/https:\/\/(?:www.)?(\w*).com\/(\d*)/)[2];
-    //     } else {
-    //       return '';
-    //     }
-    //   } catch (err) {
-    //     return '';
-    //   }
-    //
-    //   return {id: id, provider: provider};
-    // },
 
     updateVideo(e) {
       appendHttpIfNecessary(e, true);
@@ -601,11 +574,11 @@ module.exports = {
   specifics: Backbone.View.extend(_.extend({
       urlRoot: raiseCapitalServer + '/campaign/:id/specifics',
       events: _.extend({
-        'submit form': api.submitAction,
+        'click #submitForm': api.submitAction,
         'change input[name="security_type"]': 'updateSecurityType',
-        'focus #minimum_raise,#maximum_raise,#minimum_increment,#premoney_valuation,#price_per_share': 'clearZeroAmount',
-        'change #minimum_raise,#maximum_raise,#minimum_increment,#premoney_valuation': 'formatNumber',
-        'change #minimum_raise,#maximum_raise,#price_per_share,#premoney_valuation': 'calculateNumberOfShares',
+        // 'focus #minimum_raise,#maximum_raise,#minimum_increment,#premoney_valuation,#price_per_share': 'clearZeroAmount',
+        // 'change #minimum_raise,#maximum_raise,#minimum_increment,#premoney_valuation': 'formatNumber',
+        // 'change #minimum_raise,#maximum_raise,#price_per_share,#premoney_valuation': 'calculateNumberOfShares',
         'click .onPreview': onPreviewAction,
         'click .submit_form': submitCampaign,
         'click .submit-specifics': 'checkMinMaxRaise',
@@ -749,32 +722,10 @@ module.exports = {
   perks: Backbone.View.extend(_.extend({
     urlRoot: raiseCapitalServer + '/campaign/:id/perks',
     events: _.extend({
-        'submit form': 'onSubmit',
+        'click #submitForm': 'onSubmit',
         'click .onPreview': onPreviewAction,
         'click .submit_form': submitCampaign,
     }, leavingConfirmationHelper.events, menuHelper.events, addSectionHelper.events),
-
-    onSubmit(e) {
-      e.preventDefault();
-
-      let data = $(e.target).serializeJSON({ useIntKeysAsArrayIndex: true });
-      let url = this.urlRoot.replace(':id', this.model.id);
-
-      _.extend(this.model, data);
-      data = _.extend({}, this.model)
-      delete data.id;
-
-      app.showLoading();
-      api.makeRequest(url, 'PUT', data).then((data) => {
-        this.model = data;
-        app.hideLoading();
-        //$('button.submit_form').click();
-      }).
-      fail((xhr, status, text) => {
-        api.errorAction(this, xhr, status, text, this.fields);
-        app.hideLoading();
-      });
-    },
 
     preinitialize() {
       // ToDo
@@ -796,12 +747,6 @@ module.exports = {
       this.assignLabels();
       this.createIndexes();
       this.buildJsonTemplates('raiseFunds');
-      this.$el.on('keypress', ':input:not(textarea)', function (event) {
-        if (event.keyCode == 13) {
-          event.preventDefault();
-          return false;
-        }
-      });
     },
 
     render() {
@@ -817,6 +762,24 @@ module.exports = {
         })
       );
       return this;
+    },
+
+    onSubmit(e) {
+      e.preventDefault();
+
+      let data = $(e.target).closest('form').serializeJSON({ useIntKeysAsArrayIndex: true });
+      let url = this.urlRoot.replace(':id', this.model.id);
+      api.fixDateFields.call(this, this.fields, data);
+
+      app.showLoading();
+      api.makeRequest(url, 'PUT', data).then((data) => {
+        app.hideLoading();
+        //$('button.submit_form').click();
+      }).
+      fail((xhr, status, text) => {
+        api.errorAction(this, xhr, status, text, this.fields);
+        app.hideLoading();
+      });
     },
 
   }, leavingConfirmationHelper.methods, menuHelper.methods, addSectionHelper.methods)),
