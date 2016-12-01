@@ -106,6 +106,8 @@ let app = {
 
       if (provider == 'youtube') {
         id = url.match(/https:\/\/(?:www.)?(\w*).com\/.*v=(.*)/)[2];
+      } else if (provider == 'youtu') {
+        id = url.match(/https:\/\/(?:www.)?(\w*).be\/(.*)/)[2];
       } else if (provider == 'vimeo') {
         id = url.match(/https:\/\/(?:www.)?(\w*).com\/(\d*)/)[2];
       } else {
@@ -116,6 +118,21 @@ let app = {
     } catch (err) {
       console.log(url, 'Takes a YouTube or Vimeo URL');
     }
+  },
+
+  getVideoUrl(videoInfo) {
+    var provider = videoInfo && videoInfo.provider ? videoInfo.provider : '';
+
+    if (provider == 'youtube')
+      return '//www.youtube.com/embed/' + videoInfo.id + '?rel=0';
+
+    if (provider == 'youtu')
+      return  '//www.youtu.be/' + videoInfo.id;
+
+    if (provider == 'vimeo')
+      return '//player.vimeo.com/video/' + videoInfo.id;
+
+    return '//www.youtube.com/embed/?rel=0';
   },
 
   getThumbnail: function(size, thumbnails, _default) {
