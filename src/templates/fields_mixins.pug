@@ -296,9 +296,9 @@ mixin fieldDateYear(name, attr)
 mixin fileDropzone(name, attr)
     - var textHelper = require('helpers/textHelper.js')
     - var icon = attr.type
-    if attr.hasOwnProperty('data') == false || attr.data == null
+    if !attr.data
       - attr.data = {};
-    if attr.data.hasOwnProperty('urls') == false
+    if !attr.data.urls
       - attr.data.urls = [];
     if attr.data.mime
       - mimetypeIcons = require('helpers/mimetypeIcons.js');
@@ -340,7 +340,7 @@ mixin fileDropzone(name, attr)
 mixin fileFolderDropzone(name, attr)
     - var textHelper = require('helpers/textHelper.js')
     - var icon = attr.type
-    if attr.hasOwnProperty('data') == false || Array.isArray(attr.data) == false
+    if !attr.data || !Array.isArray(attr.data)
       - attr.data = [];
     - mimetypeIcons = require('helpers/mimetypeIcons.js');
 
@@ -381,13 +381,9 @@ mixin fileFolderDropzone(name, attr)
 
 
 mixin userProfileDropzone(name, attr)
-    - var icon = attr.type
-    if attr.mime
-      - mimetypeIcons = require('helpers/mimetypeIcons.js');
-      - var icon = mimetypeIcons[attr.mime];
-    if attr.hasOwnProperty('data') == false
+    if !attr.data
       - attr.data = {};
-    if attr.data.hasOwnProperty('urls') == false
+    if !attr.data.urls
       - attr.data.urls = [];
 
     div(
@@ -416,9 +412,9 @@ mixin userProfileDropzone(name, attr)
                 i(class="fa fa-" + attr.icon)
 
 mixin imageDropzone(name, attr)
-    if attr.hasOwnProperty('data') == false
+    if !attr.data
       - attr.data = {};
-    if attr.data.hasOwnProperty('urls') == false
+    if !attr.data.urls
       - attr.data.urls = [];
 
     div(
@@ -488,13 +484,10 @@ mixin teamMemberDropzone(name, attr)
                 img(class=("w-100 img-" + name) src=url).img-fluid.img-circle.img-photo
 
 mixin galleryDropzone(name, attr)
-    if attr.hasOwnProperty('data') == false
+    if !attr.data
       - attr.data = {};
-    if attr.data.hasOwnProperty('urls') == false
+    if !attr.data.urls
       - attr.data.urls = [];
-    if attr.data.mime
-      - mimetypeIcons = require('helpers/mimetypeIcons.js');
-      - var icon = mimetypeIcons[attr.data.mime.split('/')[1]];
 
     div(
       class='row media-item ' + attr.class + ' ' + (attr.id || name) +

@@ -419,9 +419,45 @@ module.exports = {
       // 'submit form.invest_form': api.submitAction,
       'submit form.invest_form': 'submit',
       'keyup #amount': 'amountUpdate',
-      'keyup #zip_code': 'changeZipCode',
+      'keyup .us-fields :input[name*=zip_code]': 'changeZipCode',
       'click .update-location': 'updateLocation',
-      'click .link-2': 'openPdf'
+      'click .link-2': 'openPdf',
+      'change .country-select': 'changeCountry',
+      'change .payment-type-select': 'changePaymentType',
+      'change #amount': 'amountRounding',
+      click: 'hideRoundingPopover',
+      'keyup .typed-name': 'copyToSignature'
+    },
+
+    copyToSignature(e) {
+      this.$('.signature').text($(e.target).val());
+    },
+
+    hideRoundingPopover(e) {
+      if (this.currentAmountTip == 'rounding') $('#amount').popover('hide');
+    },
+
+    changePaymentType(e) {
+      let val = $(e.target).val();
+      this.$('.payment-fields').hide();
+      if (val == 'echeck') {
+        $('.echeck-fields').show();
+      } else if (val == 'check') {
+        $('.check-fields').show();
+      } else if (val == 'wire') {
+        $('.wire-fields').show();
+      }
+    },
+
+    changeCountry(e) {
+      let val = $(e.target).val();
+      if (val == 'us') {
+        $('.us-fields').show().find(':input').prop('disabled', false);
+        $('.other-countries-fields').hide().find(':input').prop('disabled', true);
+      } else {
+        $('.us-fields').hide().find(':input').prop('disabled', true);
+        $('.other-countries-fields').show().find(':input').prop('disabled', false);
+      }
     },
 
     submit(e) {
@@ -436,6 +472,7 @@ module.exports = {
     },
     initialize(options) {
       this.fields = options.fields;
+      this.user = options.user;
       // this.fields.street_address_1 = { type: 'string', required: true};
       this.fields.street_address_1 = { type: 'string', required: false};
       this.fields.street_address_2 = { type: 'string', required: false};
@@ -453,7 +490,7 @@ module.exports = {
       this.fields.city = {type: 'string', required: false};
       this.fields.fee = {type: 'int', required: false};
       // this.fields.route_number = {type: 'string', required: true};
-      this.fields.route_number = {type: 'string', required: false};
+      this.fields.routing_number = {type: 'string', required: false};
       this.labels = {
         amount: 'Amount',
         street_address_1: 'Street Address 1',
@@ -523,7 +560,11 @@ module.exports = {
     },
 
     updateLocation(e) {
-      this.$('.js-city-state').text(this.$('.js-city').val() + ', ' + this.$('.js-state').val());
+      let city = this.$('.js-city').val();
+      let state = this.$('.js-state').val();
+      this.$('.js-city-state').text(city + ', ' + state);
+      this.$('.us-fields input[name*=city]').val(city);
+      this.$('.us-fields input[name*=state]').val(state);
     },
 
     changeZipCode(e) {
@@ -535,16 +576,17 @@ module.exports = {
         // this.zipCodeField.closest('div').find('.help-block').remove();
         if (success) {
           this.$('.js-city-state').text(`${city}, ${state}`);
-          // this.$('#city').val(city);
           this.$('.js-city').val(city);
-          // this.$('#state').val(city);
           this.$('.js-state').val(state);
-
+          this.$('.us-fields input[name*=city]').val(city);
+          this.$('.us-fields input[name*=state]').val(state);
         } else {
           console.log("error");
         }
       });
     },
+
+    currentAmountTip: 'amount-campaign',
 
     render() {
       this.getCityStateByZipCode = require("helpers/getSityStateByZipCode");
@@ -555,48 +597,91 @@ module.exports = {
             Urls: Urls,
             fields: this.fields,
             values: this.model,
-            user: app.user.toJSON(),
+            // user: app.user.toJSON(),
+            user: this.user,
             states: this.usaStates
           })
           );
+
+      let that = this;
+      $('#amount').popover({
+        placement(context, src) {
+          return 'top';
+        },
+        html: true,
+        content(){
+          var content = $('.invest_form').find('.popover-content-' + that.currentAmountTip).html();
+          return content;
+        },
+        trigger: 'manual',
+      }).popover('hide');
+
       return this;
+    },
+
+    amountRounding(e) {
+      // No price per share for revenue share company.
+      if (this.model.campaign.security_type == 1) return;
+
+      let amount = $(e.target).val();
+      const price_per_share = this.model.campaign.price_per_share;
+      if (amount && amount % price_per_share != 0 && amount >= this.model.campaign.minimum_increment) {
+        amount = Math.ceil(amount / price_per_share) * price_per_share;
+        $(e.target).val(amount);
+        this.currentAmountTip = 'rounding';
+        $('#amount').popover('show');
+        this._updateTotalAmount(e);
+      }
     },
 
     amountUpdate(e) {
       var amount = parseInt(e.currentTarget.value);
-      if(amount >= 5000) {
 
-        $('#amount').popover({
-          // trigger: 'focus',
-          placement(context, src) {
-            $(context).addClass('amount-popover');
-            return 'top';
-          },
-          html: true,
-          content(){
-            var content = $('.invest_form').find('.popover-content-amount-campaign').html();
-            return content;
-          }
-        });
+      if (amount < this.model.campaign.minimum_increment) {
+        this.currentAmountTip = 'minimum-investment';
+        $('#amount').popover('show');
+      } else if(amount >= 5000) {
 
-          $('#amount').popover('show');
-        } else {
-          $('#amount').popover('dispose');
-        }
-
-        this.$('.perk').each((i, el) => {
-          if(parseInt(el.dataset.from) <= amount) {
-            $(el).addClass('active').find('i.fa.fa-check').show();
-          } else {
-            $(el).removeClass('active').find('i.fa.fa-check').hide();
-          }
-        });
-
-        // Here 10 is the flat rate;
-        const totalAmount = Number(this.$('input[name=amount]').val()) + 10;
-        this.$('.total-investment-amount').text('$' + totalAmount);
+        // $('#amount').popover({
+        //   // trigger: 'focus',
+        //   placement(context, src) {
+        //     $(context).addClass('amount-popover');
+        //     return 'top';
+        //   },
+        //   html: true,
+        //   content(){
+        //     var content = $('.invest_form').find('.popover-content-amount-campaign').html();
+        //     return content;
+        //   }
+        // });
+        this.currentAmountTip = 'amount-campaign';
+        $('#amount').popover('show');
+      } else {
+        $('#amount').popover('hide');
       }
+
+      let $targetPerk;
+      let $perks = this.$('.perk');
+      $perks.each((i, el) => {
+        if(parseInt(el.dataset.amount) <= amount) {
+          $targetPerk = $(el);
+          return false;
+        }
+      });
+      $perks.removeClass('active').find('i.fa.fa-check').hide();
+      if ($targetPerk) $targetPerk.addClass('active').find('i.fa.fa-check').show();
+
+      this._updateTotalAmount(e);
+    },
+
+    _updateTotalAmount(e) {
+      // Here 10 is the flat rate;
+      const totalAmount = Number(this.$('input[name=amount]').val()) + 10;
+      this.$('.total-investment-amount').text('$' + totalAmount);
+
+    },
   }),
+
 
   investmentThankYou: Backbone.View.extend({
     template: require('./templates/thankYou.pug'),
