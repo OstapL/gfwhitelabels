@@ -107,13 +107,14 @@ let app = {
       if (provider == 'youtube') {
         id = url.match(/https:\/\/(?:www.)?(\w*).com\/.*v=(.*)/)[2];
       } else if (provider == 'youtu') {
+        provider = 'youtube';
         id = url.match(/https:\/\/(?:www.)?(\w*).be\/(.*)/)[2];
       } else if (provider == 'vimeo') {
         id = url.match(/https:\/\/(?:www.)?(\w*).com\/(\d*)/)[2];
       } else {
         console.log(url, 'Takes a YouTube or Vimeo URL');
       }
-      
+
       return {id: id, provider: provider};
     } catch (err) {
       console.log(url, 'Takes a YouTube or Vimeo URL');
@@ -125,9 +126,6 @@ let app = {
 
     if (provider == 'youtube')
       return '//www.youtube.com/embed/' + videoInfo.id + '?rel=0';
-
-    if (provider == 'youtu')
-      return  '//www.youtu.be/' + videoInfo.id;
 
     if (provider == 'vimeo')
       return '//player.vimeo.com/video/' + videoInfo.id;
