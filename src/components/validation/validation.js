@@ -109,7 +109,7 @@ module.exports = {
       // TODO
       // How to check nested one element if that can be blank ?
       if (attr.type == 'nested') {
-        _(attr.schema).each((attr, subname) => {
+        _(attr.schema1).each((attr, subname) => {
           if (fixedRegex.indexOf(attr.type) != -1) {
             _(attr.validate).each((jsonFields, index) => {
               try {
