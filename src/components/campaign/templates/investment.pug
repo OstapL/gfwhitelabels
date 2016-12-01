@@ -76,10 +76,12 @@ mixin fieldInput(name, attr)
               span.small-text.open-sans Required by United States banking laws. This information is transmitted securely and will never be used for any purpose beyond executing your investment. You only have to do this once.
             .form-group.row
               label.col-lg-3.col-md-12.text-lg-right.text-xs-left.pull-xs-left Legal Name
+                span.color-red *
               +fieldInput("personal_information_data[first_name]", {'class': 'col-lg-4-5 m-b-md-25 col-md-12','placeholder':'First Name', value: user.first_name })
               +fieldInput("personal_information_data[last_name]", {'class': 'col-lg-4-5 col-md-12 ','placeholder':'Last Name', value: user.last_name })
             .form-group.row
               label.col-lg-3.text-lg-right.text-xs-left Country
+                span.color-red *
               .col-lg-9
                 - if (!user.country) user.country = 'US';
                 select(name="country").custom-select.w-100.country-select
@@ -119,6 +121,7 @@ mixin fieldInput(name, attr)
                   }, user)
               .col-lg-5.city_states.col-md-12
                 label.col-lg-5.col-md-6.col-sm-6.col-xs-6 City/State
+                  span.color-red *
                 .col-lg-7.col-md-6.col-sm-6.col-xs-6
                   span(data-toggle="modal" data-target="#city_state_modal" href="#city_state_modal").change_state_city
                     span.input-value.js-city-state New York, NY
@@ -140,13 +143,15 @@ mixin fieldInput(name, attr)
                     }, user)
                 .col-lg-6
                   .form-group.row.state.text
-                    label.text-lg-right.col-lg-5(for="state").p-t-0.m-b-0 State/Province/Region
+                    label.text-lg-right.col-lg-5(for="state").p-t-0.m-b-0 State/Province/<br>Region
+                      span.color-red *
                     div.col-lg-7
                       input.form-control(name='personal_information_data[state]' placeholder='State/Province/Region' type="text" value=user.state disabled=(user.country == 'US'))
               .row
                 .col-lg-6.p-l-0.p-r-0
                   .form-group.row.zip_code.text
                     label.text-lg-right.col-lg-6(for="zip_code") Postal Code
+                      span.color-red *
                     div.col-lg-6.p-r-0
                       input.form-control(name='personal_information_data[zip_code]' placeholder='Postal Code' type="text" value=user.zip_code disabled=(user.country == 'US'))
                 .col-lg-6
@@ -244,7 +249,7 @@ mixin fieldInput(name, attr)
                   .col-lg-9.offset-lg-3
                     .row
                       .col-lg-6
-                        span Please Send your Wire to::
+                        span Please Send your Wire to:
                       .col-lg-6
                         span.font-weight-bold GrowthFountain Capital LLC
                     .row
