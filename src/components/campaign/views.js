@@ -431,9 +431,15 @@ module.exports = {
 
     updateIncomeWorth(e) {
       // let data = $(e.target).serializeJSON();
-      this.user.net_worth = $('.popover :input[id=net_worth]').val();
-      this.user.annual_income = $('.popover :input[id=annual_income]').val();
-      this.$('#amount').trigger('keyup');
+      let net_worth = $('.popover :input[id=net_worth]').val();
+      let annual_income = $('.popover :input[id=annual_income]').val();
+      api.makeRequest(authServer + '/rest-auth/data', 'PATCH', {net_worth: net_worth, annual_income: annual_income}).then((data) => {
+        this.user.net_worth = net_worth;
+        this.user.annual_income = annual_income;
+        this.$('#amount').trigger('keyup');
+      }).fail((xhr, status, text) => {
+        alert('Update failed. Please try again!');
+      });
     },
 
     copyToSignature(e) {
@@ -488,8 +494,8 @@ module.exports = {
       this.user = options.user;
 
       // stub the annual income and net worth
-      this.user.annual_income = 50001;
-      this.user.net_worth = 50001;
+      // this.user.annual_income = 50001;
+      // this.user.net_worth = 50001;
       this.user.accumulated_investment = 1500;
 
       // this.fields.street_address_1 = { type: 'string', required: true};
