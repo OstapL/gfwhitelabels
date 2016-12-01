@@ -192,7 +192,7 @@ module.exports = {
         href: window.location.href,
         caption: this.model.company.tagline,
         description: this.model.company.description,
-        title: this.model.company.name,
+        title: 'Chechk out ' + this.model.company.name + "'s fundraise on GrowthFountain.com",
         picture: (this.model.header_image_data ? this.model.header_image_data.url : null),
       }, function(response){});
     },
@@ -208,9 +208,9 @@ module.exports = {
     shareOnTwitter(event) {
       event.preventDefault();
       window.open(encodeURI('https://twitter.com/share?url=' + window.location.href +
-            '&via=' + 'growthfountain' +
-            '&hashtags=investment,fundraising' +
-            '&text=Check out '),'Growth Fountain Campaingn','width=550,height=420');
+            // '&via=' + 'growthfountain' +
+            // '&hashtags=investment,fundraising' +
+            '&text=Check out ' + this.model.company.name + "'s fundraise on @growthfountain "),'Growth Fountain Campaingn','width=550,height=420');
     },
 
     render() {
