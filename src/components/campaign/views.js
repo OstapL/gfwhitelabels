@@ -490,7 +490,7 @@ module.exports = {
     },
 
     getSuccessUrl(data) {
-      return '/invest_thanks';
+      return data.id + '/invest_thanks';
     },
     initialize(options) {
       this.fields = options.fields;
@@ -750,7 +750,7 @@ module.exports = {
   investmentThankYou: Backbone.View.extend({
     template: require('./templates/thankYou.pug'),
     initialize(options) {
-      this.campaignModel = options.campaignModel;
+      this.company = options.company;
     },
 
     render() {
@@ -759,7 +759,7 @@ module.exports = {
           serverUrl: serverUrl,
           Urls: Urls,
           investment: this.model,
-          campaign: this.campaignModel.attributes,
+          company: this.company,
         })
       );
       return this;
