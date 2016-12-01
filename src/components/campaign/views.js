@@ -651,7 +651,7 @@ module.exports = {
     },
 
     _exceedLimit(amount) {
-      amount = amount || this.$('#amount').val();
+      amount = parseInt(amount || this.$('#amount').val());
       let maxInvestment;
       let net_worth = this.user.net_worth, annual_income = this.user.annual_income;
       if (net_worth >= 100000 && annual_income >= 100000) {
