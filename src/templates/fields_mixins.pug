@@ -448,6 +448,40 @@ mixin imageDropzone(name, attr)
                 img(class=("w-100 img-" + name) src=url)
                 //-a(class=("a-" + name) href=attr.data.urls[0]) #{ attr.data.name }
 
+mixin teamMemberDropzone(name, attr)
+    if attr.hasOwnProperty('data') == false
+      - attr.data = {};
+    if attr.data.hasOwnProperty('urls') == false
+      - attr.data.urls = [];
+
+    div(
+      class='row media-item ' + (attr.class || '') + ' ' + (attr.id || name) +
+        (attr.required == true ? ' required ' : ' ') + ' imageDropzone' +
+        (attr.help_text ? ' showPopover' : '')
+      data-content=(attr.help_text ? attr.help_text : '')
+    )
+      div(class=attr.class1 + ' ' + (attr.required == true ? ' required ' : ' ') )
+        label(for=attr.id || name)!= attr.label
+
+      div(class=(attr.class2 + ' dropzone__' + name))
+        div(class=" col-lg-12 p-r-0 border-dropzone")
+          div(class="uploading collapse")
+            img(alt="activity indicator" src="/img/ajax-loader.gif")
+          span
+            div.col-lg-5.col-md-5.col-sm-5.col-xs-5.text-xs-center.text-md-center.text-lg-center.p-dropzone
+              a(class='link-1' href="#" onclick="return false")
+                p.drop-photo #{attr.text}
+                i(class="fa fa-" + attr.icon)
+            .col-lg-6.col-md-7.col-sm-7.col-xs-7.text-lg-center.p-dropzone
+                - var id = attr.data.id || 0;
+                - var url = attr.data.urls[0] || "/img/default/255x153.png";
+                if attr.data.urls[0]
+                  .delete-image-container
+                    a(href="#" data-imageid=id).crop-image
+                      i.fa.fa-crop
+                    a(href="#" data-imageid=id).delete-image
+                      i.fa.fa-times
+                img(class=("w-100 img-" + name) src=url).img-fluid.img-circle.img-photo
 
 mixin galleryDropzone(name, attr)
     if !attr.data
@@ -483,4 +517,3 @@ mixin galleryDropzone(name, attr)
                       a(href="#" data-imageid=v.id).delete-image
                         i.fa.fa-times
                     img(class=("w-100 img-" + name) src=v.urls[0])
-

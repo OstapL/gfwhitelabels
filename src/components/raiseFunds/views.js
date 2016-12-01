@@ -309,38 +309,38 @@ module.exports = {
     }, leavingConfirmationHelper.methods, menuHelper.methods, addSectionHelper.methods)),
 
   media: Backbone.View.extend(_.extend({
-      template: require('./templates/media.pug'),
+    template: require('./templates/media.pug'),
+    urlRoot: raiseCapitalServer + '/campaign/:id/media',
 
-      events: _.extend({
-        'submit form': api.submitAction,
-        'change #video,.additional_video_link': 'updateVideo',
-        // 'change #video,.additional_video_link': 'appendHttpsIfNecessary',
-        'change .press_link': 'appendHttpIfNecessary',
-        'click .submit_form': submitCampaign,
-        'click .onPreview': onPreviewAction,
-      },
-        leavingConfirmationHelper.events, menuHelper.events,
-        addSectionHelper.events, dropzoneHelpers.events),
+    events: _.extend({
+      'submit form': api.submitAction,
+      'change #video,.additional_video_link': 'updateVideo',
+      // 'change #video,.additional_video_link': 'appendHttpsIfNecessary',
+      'change .press_link': 'appendHttpIfNecessary',
+      'click .submit_form': submitCampaign,
+      'click .onPreview': onPreviewAction,
+    }, leavingConfirmationHelper.events, menuHelper.events,
+      addSectionHelper.events, dropzoneHelpers.events
+    ),
 
-      urlRoot: raiseCapitalServer + '/campaign/:id/media',
 
-      getSuccessUrl(data) {
-        return '/campaign/' + (data.id ? data.id : this.model.id) + '/team-members';
-      },
+    getSuccessUrl(data) {
+      return '/campaign/' + (data.id ? data.id : this.model.id) + '/team-members';
+    },
 
-      appendHttpsIfNecessary(e) {
-        appendHttpIfNecessary(e, true);
-      },
+    appendHttpsIfNecessary(e) {
+      appendHttpIfNecessary(e, true);
+    },
 
-      appendHttpIfNecessary: appendHttpIfNecessary,
+    appendHttpIfNecessary: appendHttpIfNecessary,
 
-      preinitialize() {
-        // ToDo
-        // Hack for undelegate previous events
-        for (let k in this.events) {
-          $('#content ' + k.split(' ')[1]).undelegate();
-        }
-      },
+    preinitialize() {
+      // ToDo
+      // Hack for undelegate previous events
+      for (let k in this.events) {
+        $('#content ' + k.split(' ')[1]).undelegate();
+      }
+    },
 
     initialize(options) {
       this.fields = options.fields;
@@ -417,277 +417,100 @@ module.exports = {
       this.buildJsonTemplates('raiseFunds');
     },
 
-      render() {
-        this.$el.html(
-          this.template({
-            serverUrl: serverUrl,
-            Urls: Urls,
-            fields: this.fields,
-            // values: this.model.toJSON(),
-            values: this.model,
-            templates: this.jsonTemplates,
-          })
-        );
+    render() {
+      this.$el.html(
+        this.template({
+          serverUrl: serverUrl,
+          Urls: Urls,
+          fields: this.fields,
+          // values: this.model.toJSON(),
+          values: this.model,
+          templates: this.jsonTemplates,
+        })
+      );
 
-        setTimeout(() => { this.createDropzones() } , 1000);
+      setTimeout(() => { this.createDropzones() } , 1000);
 
-        const Model = require('components/campaign/models.js');
+      const Model = require('components/campaign/models.js');
 
 
-        if(app.getParams().check == '1') {
-          var data = this.$el.find('form').serializeJSON();
-          if (!validation.validate(this.fields, data, this)) {
-            _(validation.errors).each((errors, key) => {
-              validation.invalidMsg(this, key, errors);
-            });
-            this.$('.help-block').prev().scrollTo(5);
-          }
+      if(app.getParams().check == '1') {
+        var data = this.$el.find('form').serializeJSON();
+        if (!validation.validate(this.fields, data, this)) {
+          _(validation.errors).each((errors, key) => {
+            validation.invalidMsg(this, key, errors);
+          });
+          this.$('.help-block').prev().scrollTo(5);
         }
+      }
 
-        return this;
-      },
+      return this;
+    },
 
-      getVideoId(url) {
-        try {
-          var provider = url.match(/https:\/\/(:?www.)?(\w*)/)[2];
-          provider = provider.toLowerCase();
-          var id;
+    getVideoId(url) {
+      try {
+        var provider = url.match(/https:\/\/(:?www.)?(\w*)/)[2];
+        provider = provider.toLowerCase();
+        var id;
 
-          if (provider == 'youtube') {
-            // id = url.match(/https:\/\/(?:www.)?(\w*).com\/.*v=(\w*)/)[2];
-            id = url.match(/https:\/\/(?:www.)?(\w*).com\/.*v=([A-Za-z0-9_-]*)/)[2];
-          } else if (provider == 'vimeo') {
-            id = url.match(/https:\/\/(?:www.)?(\w*).com\/(\d*)/)[2];
-          } else {
-            return '';
-          }
-        } catch (err) {
+        if (provider == 'youtube') {
+          // id = url.match(/https:\/\/(?:www.)?(\w*).com\/.*v=(\w*)/)[2];
+          id = url.match(/https:\/\/(?:www.)?(\w*).com\/.*v=([A-Za-z0-9_-]*)/)[2];
+        } else if (provider == 'vimeo') {
+          id = url.match(/https:\/\/(?:www.)?(\w*).com\/(\d*)/)[2];
+        } else {
           return '';
         }
+      } catch (err) {
+        return '';
+      }
 
-        return {id: id, provider: provider};
-      },
+      return {id: id, provider: provider};
+    },
 
-      updateVideo(e) {
-        appendHttpIfNecessary(e, true);
-        // var $form = $(e.target).parents('.row');
-        let $videoContainer;
-        if (e.target.id == 'video') $videoContainer = this.$('.main-video-block');
-        else $videoContainer = this.$('.additional-video-block .index_' + $(e.target).data('index'));
-        // var $form = $('.index_' + $(e.target).data('index'));
-        var video = e.target.value;
-        var res = this.getVideoId(video);
+    updateVideo(e) {
+      appendHttpIfNecessary(e, true);
+      // var $form = $(e.target).parents('.row');
+      let $videoContainer;
+      if (e.target.id == 'video') $videoContainer = this.$('.main-video-block');
+      else $videoContainer = this.$('.additional-video-block .index_' + $(e.target).data('index'));
+      // var $form = $('.index_' + $(e.target).data('index'));
+      var video = e.target.value;
+      var res = this.getVideoId(video);
 
-        // ToDo
-        // FixME
-        // Bad CHECK
-        //
-        if(res.id && res.provider) {
-          if (res.provider == 'youtube')
-            $videoContainer.find('iframe').attr(
-              'src', '//youtube.com/embed/' +  res.id + '?rel=0'
-            );
-          else
-            $videoContainer.find('iframe').attr(
-              'src', '//player.vimeo.com/video/' +  res.id
-            );
-          //e.target.value = id;
-        }
-      },
+      // ToDo
+      // FixME
+      // Bad CHECK
+      //
+      if(res.id && res.provider) {
+        if (res.provider == 'youtube')
+          $videoContainer.find('iframe').attr(
+            'src', '//youtube.com/embed/' +  res.id + '?rel=0'
+          );
+        else
+          $videoContainer.find('iframe').attr(
+            'src', '//player.vimeo.com/video/' +  res.id
+          );
+        //e.target.value = id;
+      }
+    },
 
-    }, leavingConfirmationHelper.methods, menuHelper.methods, dropzoneHelpers.methods, addSectionHelper.methods)),
-
-      getSuccessUrl(data) {
-        return '/campaign/' + (data.id ? data.id : this.model.id) + '/team-members';
-      },
+  }, leavingConfirmationHelper.methods, menuHelper.methods,
+    dropzoneHelpers.methods, addSectionHelper.methods)),
 
   teamMemberAdd: Backbone.View.extend(_.extend({
-      events: _.extend({
-        'submit form': 'submit',
-        'click .delete-member': 'deleteMember',
-        dragover: 'globalDragover',
-        dragleave: 'globalDragleave',
-        'click .submit_form': doCampaignValidation,
-        'change #linkedin,#facebook': 'appendHttpsIfNecessary',
-        'click .cancel': 'cancel',
-        'click .onPreview': onPreviewAction,
-      }, leavingConfirmationHelper.events, menuHelper.events),
-      // urlRoot: serverUrl + Urls['campaign-list']() + '/team_members',
-      urlRoot: Urls['campaign-list']() + '/team_members',
-
-      cancel(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        this.undelegateEvents();
-        if (confirm("Do you really want to leave?")) {
-          app.routers.navigate(
-            '/campaign/team-members/' + this.model.id,
-            { trigger: true, replace: false }
-          );
-        }
-      },
-
-      appendHttpsIfNecessary(e) {
-        appendHttpIfNecessary(e, true);
-      },
-
-      globalDragover() {
-        this.$('.border-dropzone').addClass('active-border');
-      },
-
-      globalDragleave() {
-        this.$('.border-dropzone').removeClass('active-border');
-      },
-
-      preinitialize() {
-        // ToDo
-        // Hack for undelegate previous events
-        for (let k in this.events) {
-          $('#content ' + k.split(' ')[1]).undelegate();
-        }
-      },
-
-      initialize(options) {
-        this.fields = options.fields;
-        this.type = options.type;
-        this.index = options.index;
-        this.$el.on('keypress', ':input:not(textarea)', function (event) {
-          if (event.keyCode == 13) {
-            event.preventDefault();
-            return false;
-          }
-        });
-      },
-
-      render() {
-        let template = require('./templates/teamMemberAdd.pug');
-        this.fields = {
-          first_name: {
-            type: 'string',
-            label: 'First Name',
-            placeholder: 'John',
-            required: true,
-          },
-          last_name: {
-            type: 'string',
-            label: 'Last Name',
-            placeholder: 'Jordon',
-            required: true,
-          },
-          title: {
-            type: 'string',
-            label: 'Title',
-            placeholder: 'CEO',
-            required: true,
-          },
-          email: {
-            type: 'email',
-            label: 'Email',
-            placeholder: 'imboss@comanpy.com',
-            required: true,
-          },
-          bio: {
-            type: 'text',
-            label: 'Bio',
-            placeholder: 'At least 150 characters and no more that 250 charactes',
-            required: true,
-          },
-          growup: {
-            type: 'string',
-            label: 'Where did you grow up',
-            placeholder: 'City',
-            required: false,
-          },
-          state: {
-            type: 'choice',
-            label: '',
-          },
-          college: {
-            type: 'string',
-            label: 'Where did you attend college',
-            placeholder: 'Collage/University',
-          },
-          linkedin: {
-            type: 'url',
-            label: 'LinkedIn',
-            placeholder: 'https://linkedin.com/',
-          },
-          facebook: {
-            type: 'url',
-            label: 'Facebook',
-            placeholder: 'https://facebook.com/',
-          },
-          photo: {
-            type: 'dropbox',
-            label: 'Profile Picture',
-          },
-        };
-
-        if (this.index != 'new') {
-          // this.values = this.model.toJSON().members[this.index];
-          this.values = this.model.members[this.index];
-        } else {
-
-          this.values = {
-            // id: this.model.get('id'),
-            id: this.model.id,
-          };
-        }
-
-        this.values.progress = this.model.progress;
-
-        this.usaStates = require('helpers/usa-states');
-        this.$el.html(
-          template({
-            serverUrl: serverUrl,
-            Urls: Urls,
-            fields: this.fields,
-            campaign: this.model,
-            member: this.values,
-            values: this.model,
-            type: this.type,
-            index: this.index,
-            states: this.usaStates,
-          })
-        );
-
-        // dropzoneHelpers.createFileDropzone(
-        dropzoneHelpers.createImageDropzone(
-          dropzone,
-          'photo',
-          'members', '',
-          (data) => {
-            this.$el.find('#photo').val(data.url);
-            this.$el.find('.img-photo').data('src', data.url);
-          }
-        );
-        return this;
-      },
-
-      getSuccessUrl(data) {
-        return '/campaign/team-members/' + data.id;
-      },
-
-      submit(e) {
-        e.preventDefault();
-        let json = $(e.target).serializeJSON();
-        json.index = this.index;
-
-        api.submitAction.call(this, e, json);
-      },
-  }, leavingConfirmationHelper.methods, menuHelper.methods)),
-
-  teamMembers: Backbone.View.extend(_.extend({
+    urlRoot: raiseCapitalServer + '/campaign/:id/team-members',
     events: _.extend({
+      'click .btn-primary': api.submitAction,
       'click .delete-member': 'deleteMember',
       'click .submit_form': doCampaignValidation,
+      'change #linkedin,#facebook': 'appendHttpsIfNecessary',
+      'click .cancel': 'cancel',
       'click .onPreview': onPreviewAction,
-      'submit form': 'submit',
-    }, menuHelper.events),
+    }, leavingConfirmationHelper.events, menuHelper.events, dropzoneHelpers.events),
 
-    // this is for no navigating to new page in the onPreviewAction method
-    submit(e) {
-      e.preventDefault();
+    getSuccessUrl(data) {
+      return '/campaign/' + (data.id ? data.id : this.model.id) + '/team-members';
     },
 
     preinitialize() {
@@ -696,6 +519,89 @@ module.exports = {
       for (let k in this.events) {
         $('#content ' + k.split(' ')[1]).undelegate();
       }
+    },
+
+    initialize(options) {
+      this.fields = options.fields;
+      this.formc = options.formc;
+      this.type = options.type;
+      this.index = options.index;
+      this.$el.on('keypress', ':input:not(textarea)', function (event) {
+        if (event.keyCode == 13) {
+          event.preventDefault();
+          return false;
+        }
+      });
+    },
+
+    render() {
+      const template = require('./templates/teamMemberAdd.pug');
+
+      if (this.index != 'new') {
+        this.member = this.model.members[this.index];
+      } else {
+        this.member = {
+          photo_data: [],
+          type: this.type
+        };
+      }
+
+      this.usaStates = require('helpers/usa-states');
+      this.$el.html(
+        template({
+          formc: this.formc,
+          fields: this.fields,
+          member: this.member,
+          values: this.model,
+          type: this.type,
+          index: this.index,
+          states: this.usaStates,
+        })
+      );
+
+      setTimeout(() => { this.createDropzones() } , 1000);
+      return this;
+    },
+
+    cancel(e) {
+      e.preventDefault();
+      e.stopPropagation();
+      this.undelegateEvents();
+      if (confirm("Do you really want to leave?")) {
+        app.routers.navigate(
+          '/campaign/team-members/' + this.model.id,
+          { trigger: true, replace: false }
+        );
+      }
+    },
+
+  }, leavingConfirmationHelper.methods, menuHelper.methods, dropzoneHelpers.methods)),
+
+  teamMembers: Backbone.View.extend(_.extend({
+    urlRoot: raiseCapitalServer + '/campaign/:id/team-members',
+    events: _.extend({
+      'click .delete-member': 'deleteMember',
+      'click .submit_form': doCampaignValidation,
+      'click .onPreview': onPreviewAction,
+      'submit form': 'submit',
+    }, menuHelper.events),
+
+    preinitialize() {
+      // ToDo
+      // Hack for undelegate previous events
+      for (let k in this.events) {
+        $('#content ' + k.split(' ')[1]).undelegate();
+      }
+    },
+
+    initialize(options) {
+      this.fields = options.fields;
+      this.$el.on('keypress', ':input:not(textarea)', function (event) {
+        if (event.keyCode == 13) {
+          event.preventDefault();
+          return false;
+        }
+      });
     },
 
     render() {
@@ -723,7 +629,6 @@ module.exports = {
         let memberId = e.currentTarget.dataset.id;
 
         if (confirm('Are you sure you would like to delete this team member?')) {
-          // app.makeRequest('/api/campaign/team_members/' + this.model.get('id') + '?index=' + memberId, 'DELETE').
           app.makeRequest('/api/campaign/team-members/' + this.model.id + '?index=' + memberId, 'DELETE').
               then((data) => {
                   this.model.members.splice(memberId, 1);
