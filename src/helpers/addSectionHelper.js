@@ -65,7 +65,7 @@ module.exports = {
           fields: this.fields[sectionName],
           name: e.target.dataset.section,
           attr: this.fields[sectionName],
-          value: [],
+          values: [],
           index: this[sectionName + 'Index']
         })
       );
@@ -84,8 +84,8 @@ module.exports = {
         if(this.$el.find('.' + sectionName).length > 1) {
           $(e.target).parents('.addSectionBlock').remove();
         } else {
-          this.$el.find('.' + sectionName + ' [data-index=' + e.currentTarget.dataset.index + '] input').val('');
-          this.$el.find('.' + sectionName + ' [data-index=' + e.currentTarget.dataset.index + '] textarea').val('');
+          this.$el.find('.' + sectionName + '[data-index=' + e.currentTarget.dataset.index + '] input').val('');
+          this.$el.find('.' + sectionName + '[data-index=' + e.currentTarget.dataset.index + '] textarea').val('');
         }
         this[sectionName + 'Index'] --;
         // TODO
