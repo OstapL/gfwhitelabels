@@ -170,6 +170,7 @@ module.exports = Backbone.Router.extend({
       const formcR = api.makeCacheRequest(authServer + '/user/formc');
 
       $.when(optionsR, dataR, formcR).done((fields, data, formc) => {
+        data[0].id = id;
         const addForm = new View.teamMemberAdd({
           el: '#content',
           model: data[0],

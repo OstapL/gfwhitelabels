@@ -112,6 +112,7 @@ mixin fieldTextLabel(name, attr)
             type=attr.type ? attr.type : 'text'
             class=(attr.help_text ? 'showPopover' : '')
             data-content=(attr.help_text ?attr.help_text : '')
+            readonly=(attr.readonly ?attr.readonly : false)
             value=attr.value
             maxlength = attr.maxlength ? attr.maxlength : false
             disabled=(attr.disabled ? attr.disabled : false)
@@ -472,7 +473,7 @@ mixin teamMemberDropzone(name, attr)
               a(class='link-1' href="#" onclick="return false")
                 p.drop-photo #{attr.text}
                 i(class="fa fa-" + attr.icon)
-            .col-lg-6.col-md-7.col-sm-7.col-xs-7.text-lg-center.p-dropzone
+            #photo_image_id.col-lg-6.col-md-7.col-sm-7.col-xs-7.text-lg-center.p-dropzone
                 - var id = attr.data.id || 0;
                 - var url = attr.data.urls[0] || "/img/default/255x153.png";
                 if attr.data.urls[0]
