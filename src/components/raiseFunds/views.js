@@ -313,7 +313,6 @@ module.exports = {
 
       events: _.extend({
         'submit form': api.submitAction,
-        // 'click .delete-image': 'deleteImage',
         'change #video,.additional_video_link': 'updateVideo',
         // 'change #video,.additional_video_link': 'appendHttpsIfNecessary',
         'change .press_link': 'appendHttpIfNecessary',
@@ -375,19 +374,19 @@ module.exports = {
 
       this.fields.gallery_group_id.type = 'imagefolder';
 
-      this.fields.additional_video.type = 'jsonVideo';
-      this.fields.additional_video.schema = {
-        headline: {
-          type: 'string',
-          label: 'Title',
-          placeholder: 'Title',
-        },
-        link: {
-          type: 'url',
-          label: 'Youtube or vimeo link',
-          placeholder: 'https://',
-        },
-      };
+      // this.fields.additional_video.type = 'jsonVideo';
+      // this.fields.additional_video.schema = {
+      //   headline: {
+      //     type: 'string',
+      //     label: 'Title',`
+      //     placeholder: 'Title',
+      //   },
+      //   link: {
+      //     type: 'url',
+      //     label: 'Youtube or vimeo link',
+      //     placeholder: 'https://',
+      //   },
+      // };
 
       if (this.model.additional_video) {
         this.additional_videoIndex = Object.keys(this.model.additional_video).length;
@@ -628,7 +627,7 @@ module.exports = {
           // this.values = this.model.toJSON().members[this.index];
           this.values = this.model.members[this.index];
         } else {
-          
+
           this.values = {
             // id: this.model.get('id'),
             id: this.model.id,
@@ -884,7 +883,7 @@ module.exports = {
           this.$('input[name=security_type][value=1]').attr('checked', true);
           $('.security_type_list').hide();
           $('.security_type_1').show();
-        }        
+        }
         $('#description_determine').parent().parent().hide();
         return this;
       },
@@ -907,7 +906,7 @@ module.exports = {
       _.extend(this.model, data);
       data = _.extend({}, this.model)
       delete data.id;
-      
+
       app.showLoading();
       api.makeRequest(url, 'PUT', data).then((data) => {
         this.model = data;

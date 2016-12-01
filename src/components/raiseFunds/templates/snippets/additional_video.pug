@@ -16,14 +16,6 @@ mixin row(value, index)
                 class1: 'col-xl-5 col-lg-12',
                 class2: 'col-xl-7 col-lg-12',
                 })
-        
-        if (first_run && value == {}) || (Array.isArray(values) && index == values.length-1) || (index == Object.keys(values).length-1)
-          .row.add-link
-            .col-xl-10.text-xl-right
-              a(href="#" data-section=name data-comp="raiseFunds" data-template="additional_video").link-2.add-sectionnew
-                i.fa.fa-plus
-                |  Add Another Video
-
       .col-lg-5.p-l-1.col-md-12.col-xs-12
         .embed-responsive.embed-responsive-16by9 
           - var additionalVideo = app.getVideoId(values && values[index] ? values[index].link : null);
@@ -35,7 +27,6 @@ mixin row(value, index)
             iframe.embed-responsive-item(src="//www.youtube.com/embed/?rel=0" allowfullscreen="true")
 
 mixin run()
-
   if first_run
     .row
       .col-lg-12.text-lg-center.text-md-center.text-xs-center
@@ -48,7 +39,20 @@ mixin run()
           each value, index in values
             +row(value, index)
 
+    .row.add-link
+      .col-xl-10.text-xl-right
+        a(href="#" data-section=name data-comp="raiseFunds" data-template="additional_video").link-2.add-sectionnew
+          i.fa.fa-plus
+          |  Add Another Video
+
   else
     +row({}, index)
+
+  //if first_run || (Array.isArray(values) && index == values.length - 1) || (index == Object.keys(values).length - 1)
+  //  .row.add-link
+  //    .col-xl-10.col-offset-xl-3
+  //      a(href="#" data-section=name data-comp="raiseFunds" data-template="additional_video").link-2.add-sectionnew
+  //        i.fa.fa-plus
+  //        |  Add Another Video
 
 +run()
