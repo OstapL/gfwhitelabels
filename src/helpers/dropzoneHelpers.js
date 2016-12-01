@@ -64,7 +64,7 @@ module.exports = {
         },
 
         uploadprogress: function (file, progress, bytesSend) {
-          $(this.element).find('.uploading').show().removeClass('collapse');
+          $(this.element).find('.uploading').removeClass('collapse').show();
         },
 
         complete: function (file) {
@@ -231,23 +231,23 @@ module.exports = {
 
         $link.prop('enabled', false);
         $link.off('click');
-        // api.makeRequest(filerServer + '/' + fileId, 'DELETE').done(() => {
-        //remove field from model
-        let dataArr = this.model[name.replace('_id', '_data')];
-        let dataIdx = _(dataArr).findIndex((elem) => { return elem.id == fileId });
-        if (dataIdx >= 0) {
-          dataArr.splice(dataIdx, 1);
-          if (!dataArr.length) {
-            //add empty file
-            $link.closest('.file-scroll')
-              .append('<div class="thumb-file-container text-xl-center">' +
-                '<img src="/img/icons/file.png" alt="" class="img-file img-"' + name + '>' +
-                '<a class="a-' + name + '" href="#"></a>' +
-                '</div>');
+        api.makeRequest(filerServer + '/' + fileId, 'DELETE').done(() => {
+          // remove field from model
+          let dataArr = this.model[name.replace('_id', '_data')];
+          let dataIdx = _(dataArr).findIndex((elem) => { return elem.id == fileId });
+          if (dataIdx >= 0) {
+            dataArr.splice(dataIdx, 1);
+            if (!dataArr.length) {
+              //add empty file
+              $link.closest('.file-scroll')
+                .append('<div class="thumb-file-container text-xl-center">' +
+                  '<img src="/img/icons/file.png" alt="" class="img-file img-"' + name + '>' +
+                  '<a class="a-' + name + '" href="#"></a>' +
+                  '</div>');
+            }
+            $link.closest('.thumb-file-container').remove();
           }
-          $link.closest('.thumb-file-container').remove();
-        }
-        // });
+        });
 
         return false;
       };
@@ -306,16 +306,18 @@ module.exports = {
           return;
         }
 
-        $link.prop('enabled', false);
-        $link.off('click');
-
         api.makeRequest(filerServer + '/' + imgId, 'DELETE').done(() => {
+          $link.prop('enabled', false);
+          $link.off('click');
+
           //remove field from model
           delete this.model[name];
           delete this.model[name.replace('_id', '_data')];
 
           $link.closest('.one-photo').find('img.img-' + name).attr('src', '/img/default/255x153.png');
           $link.closest('.delete-image-container').remove();
+        }).fail((err) => {
+          alert(err.responseJSON.error);
         });
 
         return false;
@@ -412,17 +414,21 @@ module.exports = {
         let $link = $(e.target).closest('a.delete-image');
         let imageId = $link.data('imageid');
 
-        $link.prop('enabled', false);
-        $link.off('click');
-        // api.makeRequest(filerServer + '/' + fileId, 'DELETE').done(() => {
-        //remove field from model
-        let dataArr = this.model[name.replace('_id', '_data')];
-        let dataIdx = _(dataArr).findIndex((elem) => { return elem.id == imageId });
-        if (dataIdx >= 0) {
-          dataArr.splice(dataIdx, 1);
-          $link.closest('.one-photo').remove();
-        }
-        // });
+        api.makeRequest(filerServer + '/' + fileId, 'DELETE').done(() => {
+          $link.prop('enabled', false);
+          $link.off('click');
+
+          //remove field from model
+          let dataArr = this.model[name.replace('_id', '_data')];
+          let dataIdx = _(dataArr).findIndex((elem) => { return elem.id == imageId });
+          if (dataIdx >= 0) {
+            dataArr.splice(dataIdx, 1);
+            $link.closest('.one-photo').remove();
+          }
+        }).fail((err) => {
+          console.error(err);
+          alert(err.responseJSON.error);
+        });
 
         return false;
       };
