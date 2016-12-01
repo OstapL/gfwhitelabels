@@ -426,7 +426,16 @@ module.exports = {
       'change .payment-type-select': 'changePaymentType',
       'change #amount': 'amountRounding',
       click: 'hideRoundingPopover',
-      'keyup .typed-name': 'copyToSignature'
+      'keyup .typed-name': 'copyToSignature',
+      // 'click button.update-worth-income': 'updateIncomeWorth',
+      // 'click .popover': 'updateIncomeWorth',
+    },
+
+    updateIncomeWorth(e) {
+      // let data = $(e.target).serializeJSON();
+      this.user.net_worth = this.$('#net_worth').val();
+      this.user.annual_income = this.$('#annual_income').val();
+      this.$('#amount').trigger('keyup');
     },
 
     copyToSignature(e) {
@@ -477,7 +486,7 @@ module.exports = {
       // stub the annual income and net worth
       this.user.annual_income = 50000;
       this.user.net_worth = 50000;
-      this.user.accumulated_investment = 15000;
+      this.user.accumulated_investment = 1500;
 
       // this.fields.street_address_1 = { type: 'string', required: true};
       this.fields.street_address_1 = { type: 'string', required: false};
@@ -629,6 +638,20 @@ module.exports = {
       return this;
     },
 
+    _exceedLimit(amount) {
+      let maxInvestment;
+      let net_worth = this.user.net_worth, annual_income = this.user.annual_income;
+      if (net_worth >= 100000 && annual_income >= 100000) {
+        maxInvestment = (net_worth < annual_income ? net_worth : annual_income) * .1;
+        maxInvestment = maxInvestment < 100000 ? maxInvestment : 100000;
+      } else {
+        maxInvestment = (net_worth < annual_income ? net_worth : annual_income) * .05;
+        maxInvestment = maxInvestment > 2000 ? maxInvestment : 2000;
+      }
+      if (amount + this.user.accumulated_investment > maxInvestment) return true;
+      else return false;
+    },
+
     amountRounding(e) {
       // No price per share for revenue share company.
       if (this.model.campaign.security_type == 1) return;
@@ -650,7 +673,7 @@ module.exports = {
       if (amount < this.model.campaign.minimum_increment) {
         this.currentAmountTip = 'minimum-investment';
         $('#amount').popover('show');
-      } else if(amount >= 5000) {
+      } else if(this._exceedLimit(amount || 0)) {
 
         // $('#amount').popover({
         //   // trigger: 'focus',
@@ -666,6 +689,9 @@ module.exports = {
         // });
         this.currentAmountTip = 'amount-campaign';
         $('#amount').popover('show');
+        // setTimeout(function() {$('.popover button').click(function(){console.log('hello');});}, 100);
+        // $('.popover button').click(function(){console.log('hello');});
+        $('.popover button').click(this.updateIncomeWorth.bind(this));
       } else {
         $('#amount').popover('hide');
       }
