@@ -56,7 +56,7 @@ section.create-company-media.container.media-container
         h3.text-lg-center.col-md-center.col-xs-center.m-t-0 Recommended Additional Media
 
       .row.m-b-2.recommended.p-sm-0.main-video-block
-        .col-lg-12.p-sm-0
+        .col-lg-12.p-sm-0.video-container
           .col-lg-7
             +fieldTextLabel("video", _.extend({
               class1: 'col-xl-5 col-lg-12 p-sm-0 text-xl-right text-lg-left',
@@ -66,13 +66,10 @@ section.create-company-media.container.media-container
             
           #video_source.col-lg-5.p-sm-0.p-r-0
             .embed-responsive.embed-responsive-16by9
-              - var mainVideo = app.getVideoId(values.video);
-              if mainVideo && mainVideo.provider == 'youtube'
-                iframe(src="//www.youtube.com/embed/" + mainVideo.id + "?rel=0" allowfullscreen="true").embed-responsive-item
-              else if mainVideo && mainVideo.provider == 'vimeo'
-                iframe(src="//player.vimeo.com/video/" + mainVideo.id allowfullscreen="true").embed-responsive-item
-              else
-                iframe(src="//www.youtube.com/embed/?rel=0" allowfullscreen="true").embed-responsive-item
+              -
+                var mainVideo = app.getVideoId(values.video);
+                var src = app.getVideoUrl(mainVideo);
+              iframe(src=src allowfullscreen="true").embed-responsive-item
 
         .row.m-b-0.additional-video-block
           |!{ templates.additional_video }

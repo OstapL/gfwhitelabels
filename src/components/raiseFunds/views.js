@@ -314,8 +314,8 @@ module.exports = {
 
     events: _.extend({
       'submit form': api.submitAction,
-      'change #video,.additional_video_link': 'updateVideo',
-      // 'change #video,.additional_video_link': 'appendHttpsIfNecessary',
+      'change #video,.additional-video-link': 'updateVideo',
+      // 'change #video,.additional-video-link': 'appendHttpsIfNecessary',
       'change .press_link': 'appendHttpIfNecessary',
       'click .submit_form': submitCampaign,
       'click .onPreview': onPreviewAction,
@@ -423,52 +423,36 @@ module.exports = {
       return this;
     },
 
-    getVideoId(url) {
-      try {
-        var provider = url.match(/https:\/\/(:?www.)?(\w*)/)[2];
-        provider = provider.toLowerCase();
-        var id;
-
-        if (provider == 'youtube') {
-          // id = url.match(/https:\/\/(?:www.)?(\w*).com\/.*v=(\w*)/)[2];
-          id = url.match(/https:\/\/(?:www.)?(\w*).com\/.*v=([A-Za-z0-9_-]*)/)[2];
-        } else if (provider == 'vimeo') {
-          id = url.match(/https:\/\/(?:www.)?(\w*).com\/(\d*)/)[2];
-        } else {
-          return '';
-        }
-      } catch (err) {
-        return '';
-      }
-
-      return {id: id, provider: provider};
-    },
+    // getVideoId(url) {
+    //   try {
+    //     var provider = url.match(/https:\/\/(:?www.)?(\w*)/)[2];
+    //     provider = provider.toLowerCase();
+    //     var id;
+    //
+    //     if (provider == 'youtube') {
+    //       // id = url.match(/https:\/\/(?:www.)?(\w*).com\/.*v=(\w*)/)[2];
+    //       id = url.match(/https:\/\/(?:www.)?(\w*).com\/.*v=([A-Za-z0-9_-]*)/)[2];
+    //     } else if (provider == 'vimeo') {
+    //       id = url.match(/https:\/\/(?:www.)?(\w*).com\/(\d*)/)[2];
+    //     } else {
+    //       return '';
+    //     }
+    //   } catch (err) {
+    //     return '';
+    //   }
+    //
+    //   return {id: id, provider: provider};
+    // },
 
     updateVideo(e) {
       appendHttpIfNecessary(e, true);
-      // var $form = $(e.target).parents('.row');
-      let $videoContainer;
-      if (e.target.id == 'video') $videoContainer = this.$('.main-video-block');
-      else $videoContainer = this.$('.additional-video-block .index_' + $(e.target).data('index'));
-      // var $form = $('.index_' + $(e.target).data('index'));
-      var video = e.target.value;
-      var res = this.getVideoId(video);
 
-      // ToDo
-      // FixME
-      // Bad CHECK
-      //
-      if(res.id && res.provider) {
-        if (res.provider == 'youtube')
-          $videoContainer.find('iframe').attr(
-            'src', '//youtube.com/embed/' +  res.id + '?rel=0'
-          );
-        else
-          $videoContainer.find('iframe').attr(
-            'src', '//player.vimeo.com/video/' +  res.id
-          );
-        //e.target.value = id;
-      }
+      let $videoContainer = $(e.target).closest('.video-container');
+
+      var videoInfo = app.getVideoId(e.target.value);
+      var src = app.getVideoUrl(videoInfo);
+
+      $videoContainer.find('iframe').attr('src', src);
     },
 
   }, leavingConfirmationHelper.methods, menuHelper.methods,
