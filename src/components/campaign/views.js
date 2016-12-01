@@ -441,7 +441,7 @@ module.exports = {
     },
 
     hideRoundingPopover(e) {
-      if (this.currentAmountTip == 'rounding') {
+      if (this.currentAmountTip == 'rounding' || this.currentAmountTip == 'amount-ok') {
         $('#amount').popover('hide');
       }
     },
@@ -704,6 +704,9 @@ module.exports = {
         $('.popover :input[id=net_worth]').val(this.user.net_worth);
         $('.popover :input[id=annual_income]').val(this.user.annual_income);
         $('.popover button').click(this.updateIncomeWorth.bind(this));
+      } else if (this.currentAmountTip == 'amount-campaign') {
+        this.currentAmountTip = 'amount-ok';
+        $('#amount').popover('show');
       } else {
         $('#amount').popover('hide');
       }
