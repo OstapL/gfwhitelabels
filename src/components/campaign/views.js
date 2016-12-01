@@ -427,8 +427,6 @@ module.exports = {
       'change #amount': 'amountRounding',
       click: 'hideRoundingPopover',
       'keyup .typed-name': 'copyToSignature',
-      // 'click button.update-worth-income': 'updateIncomeWorth',
-      // 'click .popover': 'updateIncomeWorth',
     },
 
     updateIncomeWorth(e) {
@@ -703,8 +701,6 @@ module.exports = {
         // });
         this.currentAmountTip = 'amount-campaign';
         $('#amount').popover('show');
-        // setTimeout(function() {$('.popover button').click(function(){console.log('hello');});}, 100);
-        // $('.popover button').click(function(){console.log('hello');});
         $('.popover :input[id=net_worth]').val(this.user.net_worth);
         $('.popover :input[id=annual_income]').val(this.user.annual_income);
         $('.popover button').click(this.updateIncomeWorth.bind(this));
