@@ -200,7 +200,7 @@ module.exports = {
     shareOnLinkedin(event) {
       event.preventDefault();
       window.open(encodeURI('https://www.linkedin.com/shareArticle?mini=true&url=' + window.location.href +
-            '&title=' + this.model.company.name +
+            '&title=' + 'Check out ' + this.model.company.name + "'s fundraise on GrowthFountain.com" +
             '&summary=' + this.model.company.description +
             '&source=Growth Fountain'),'Growth Fountain Campaingn','width=605,height=545');
     },
