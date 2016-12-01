@@ -653,7 +653,7 @@ module.exports = {
         content(){
           var content = $('.invest_form').find('.popover-content-' + that.currentAmountTip).html();
           if (that.currentAmountTip == 'amount-ok') {
-            content = content.replace(/\:amount/g, that.$('#amount').val());
+            content = content.replace(/\:amount/g, that._amountAllowed());
           }
           return content;
         },
@@ -665,6 +665,10 @@ module.exports = {
 
     _exceedLimit(amount) {
       amount = parseInt(amount || this.$('#amount').val());
+      return amount > this._amountAllowed();
+    },
+
+    _amountAllowed() {
       let maxInvestment;
       let net_worth = this.user.net_worth, annual_income = this.user.annual_income;
       if (net_worth >= 100000 && annual_income >= 100000) {
@@ -674,8 +678,7 @@ module.exports = {
         maxInvestment = (net_worth < annual_income ? net_worth : annual_income) * .05;
         maxInvestment = maxInvestment > 2000 ? maxInvestment : 2000;
       }
-      if (amount + this.user.accumulated_investment > maxInvestment) return true;
-      else return false;
+      return maxInvestment - this.user.accumulated_investment;
     },
 
     amountRounding(e) {
@@ -690,6 +693,7 @@ module.exports = {
         this.currentAmountTip = 'rounding';
         $('#amount').popover('show');
         this._updateTotalAmount(e);
+        $('.popover').scrollTo();
       }
     },
 
