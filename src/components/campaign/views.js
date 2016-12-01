@@ -433,8 +433,8 @@ module.exports = {
 
     updateIncomeWorth(e) {
       // let data = $(e.target).serializeJSON();
-      this.user.net_worth = this.$('#net_worth').val();
-      this.user.annual_income = this.$('#annual_income').val();
+      this.user.net_worth = $('.popover :input[id=net_worth]').val();
+      this.user.annual_income = $('.popover :input[id=annual_income]').val();
       this.$('#amount').trigger('keyup');
     },
 
@@ -443,7 +443,9 @@ module.exports = {
     },
 
     hideRoundingPopover(e) {
-      if (this.currentAmountTip == 'rounding') $('#amount').popover('hide');
+      if (this.currentAmountTip == 'rounding') {
+        $('#amount').popover('hide');
+      }
     },
 
     changePaymentType(e) {
@@ -471,6 +473,10 @@ module.exports = {
 
     submit(e) {
       e.preventDefault();
+      if (this._exceedLimit()) {
+        $('.popover').scrollTo();
+        return;
+      }
       let data = $(e.target).serializeJSON();
       data.doNotExtendModel = true;
       api.submitAction.call(this, e, data);
@@ -484,8 +490,8 @@ module.exports = {
       this.user = options.user;
 
       // stub the annual income and net worth
-      this.user.annual_income = 50000;
-      this.user.net_worth = 50000;
+      this.user.annual_income = 50001;
+      this.user.net_worth = 50001;
       this.user.accumulated_investment = 1500;
 
       // this.fields.street_address_1 = { type: 'string', required: true};
@@ -639,6 +645,7 @@ module.exports = {
     },
 
     _exceedLimit(amount) {
+      amount = amount || this.$('#amount').val();
       let maxInvestment;
       let net_worth = this.user.net_worth, annual_income = this.user.annual_income;
       if (net_worth >= 100000 && annual_income >= 100000) {
@@ -674,7 +681,6 @@ module.exports = {
         this.currentAmountTip = 'minimum-investment';
         $('#amount').popover('show');
       } else if(this._exceedLimit(amount || 0)) {
-
         // $('#amount').popover({
         //   // trigger: 'focus',
         //   placement(context, src) {
@@ -691,6 +697,8 @@ module.exports = {
         $('#amount').popover('show');
         // setTimeout(function() {$('.popover button').click(function(){console.log('hello');});}, 100);
         // $('.popover button').click(function(){console.log('hello');});
+        $('.popover :input[id=net_worth]').val(this.user.net_worth);
+        $('.popover :input[id=annual_income]').val(this.user.annual_income);
         $('.popover button').click(this.updateIncomeWorth.bind(this));
       } else {
         $('#amount').popover('hide');
