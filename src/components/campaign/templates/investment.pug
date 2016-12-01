@@ -81,11 +81,13 @@ mixin fieldInput(name, attr)
             .form-group.row
               label.col-lg-3.text-lg-right.text-xs-left Country
               .col-lg-9
-                - if (!user.country) user.country = 'us';
+                - if (!user.country) user.country = 'US';
                 select(name="country").custom-select.w-100.country-select
-                  option(value="us" selected=(user.country == 'us')) United States
-                  option(value="ua" selected=(user.country == 'ua')) UA
-                  option(value='ru' selected=(user.country == 'ru')) Russia
+                  each v, k in countries
+                    option(value=k selected=(user.country == k)) #{v}
+                  //- option(value="us" selected=(user.country == 'us')) United States
+                  //- option(value="ua" selected=(user.country == 'ua')) UA
+                  //- option(value='ru' selected=(user.country == 'ru')) Russia
             +nestedTextLabel("personal_information_data", "street_address_1", {
               class1: 'col-lg-3 col-md-12 text-lg-left text-xl-right',
               class2: 'col-lg-9 col-md-12',            
@@ -100,9 +102,9 @@ mixin fieldInput(name, attr)
               class2: 'col-lg-9 col-md-12',
               }, user)
             // IF USA
-            .row.us-fields(style="display:" + (user.country == 'us' ? "display" : "none") + ";")
-              input(type="hidden" name="personal_information_data[state]" value="NY" disabled=(user.country != 'us')) 
-              input(type="hidden" name="personal_information_data[city]" value="New York" disabled=(user.country != 'us')) 
+            .row.us-fields(style="display:" + (user.country == 'US' ? "display" : "none") + ";")
+              input(type="hidden" name="personal_information_data[state]" value="NY" disabled=(user.country != 'US')) 
+              input(type="hidden" name="personal_information_data[city]" value="New York" disabled=(user.country != 'US')) 
               .col-lg-7.p-l-2.col-md-12
                 //- +fieldTextLabel("personal_information_data[zip_code]", _.extend({
                 //-   class1: 'col-lg-5 text-lg-left text-xl-right',
@@ -113,7 +115,7 @@ mixin fieldInput(name, attr)
                 +nestedTextLabel("personal_information_data", "zip_code", {
                   class1: 'col-lg-5 text-lg-left text-xl-right',
                   class2: 'col-lg-7',
-                  disabled: (user.country != 'us'),
+                  disabled: (user.country != 'US'),
                   }, user)
               .col-lg-5.city_states.col-md-12
                 label.col-lg-5.col-md-6.col-sm-6.col-xs-6 City/State
@@ -122,7 +124,7 @@ mixin fieldInput(name, attr)
                     span.input-value.js-city-state New York, NY
                       i.fa.fa-pencil-square-o
             // IF OTHER COUNTRY
-            .other-countries-fields(style="display:" + (user.country == 'us' ? "none" : "display") + ";")
+            .other-countries-fields(style="display:" + (user.country == 'US' ? "none" : "display") + ";")
               .row
                 .col-lg-6.p-l-0.p-r-0
                   //- +fieldTextLabel("personal_information_data[city]", _.extend({
@@ -134,24 +136,24 @@ mixin fieldInput(name, attr)
                   +nestedTextLabel("personal_information_data", "city", {
                     'class1': 'col-lg-6 text-lg-left text-xl-right',
                     'class2': 'col-lg-6 p-r-0',
-                    disabled: (user.country == 'us'),
+                    disabled: (user.country == 'US'),
                     }, user)
                 .col-lg-6
                   .form-group.row.state.text
                     label.text-lg-right.col-lg-5(for="state").p-t-0.m-b-0 State/Province/Region
                     div.col-lg-7
-                      input.form-control(name='personal_information_data[state]' placeholder='State/Province/Region' type="text" value=user.state disabled=(user.country == 'us'))
+                      input.form-control(name='personal_information_data[state]' placeholder='State/Province/Region' type="text" value=user.state disabled=(user.country == 'US'))
               .row
                 .col-lg-6.p-l-0.p-r-0
                   .form-group.row.zip_code.text
                     label.text-lg-right.col-lg-6(for="zip_code") Postal Code
                     div.col-lg-6.p-r-0
-                      input.form-control(name='personal_information_data[zip_code]' placeholder='Postal Code' type="text" value=user.zip_code disabled=(user.country == 'us'))
+                      input.form-control(name='personal_information_data[zip_code]' placeholder='Postal Code' type="text" value=user.zip_code disabled=(user.country == 'US'))
                 .col-lg-6
                   +fieldTextLabel("personal_information_data[phone]", _.extend({
                     'class1': 'col-lg-5 text-lg-left text-xl-right',
                     'class2': 'col-lg-7 ', 'type': 'text',
-                    disabled: (user.country == 'us')
+                    disabled: (user.country == 'US')
                     }, fields.phone))
 
           section.payment-information.border-bottom

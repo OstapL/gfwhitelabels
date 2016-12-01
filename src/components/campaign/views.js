@@ -1,6 +1,9 @@
 const formatHelper = require('helpers/formatHelper');
 const textHelper = require('helpers/textHelper');
 
+let countries = {};
+_.each(require('helpers/countries.json'), (c) => { countries[c.code] = c.name; });
+
 module.exports = { 
   list: Backbone.View.extend({
     el: '#content',
@@ -636,7 +639,8 @@ module.exports = {
             values: this.model,
             // user: app.user.toJSON(),
             user: this.user,
-            states: this.usaStates
+            states: this.usaStates,
+            countries: countries,
           })
           );
 
