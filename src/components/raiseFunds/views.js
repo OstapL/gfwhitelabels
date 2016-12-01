@@ -349,8 +349,7 @@ module.exports = {
           throw 'Please upload at least 1 image';
         }
       };
-      this.pressIndex = 1;
-      this.additional_videoIndex = 1;
+
       this.$el.on('keypress', ':input:not(textarea)', function (event) {
         if (event.keyCode == 13) {
           event.preventDefault();
@@ -373,26 +372,6 @@ module.exports = {
       };
 
       this.fields.gallery_group_id.type = 'imagefolder';
-
-      // this.fields.additional_video.type = 'jsonVideo';
-      // this.fields.additional_video.schema = {
-      //   headline: {
-      //     type: 'string',
-      //     label: 'Title',`
-      //     placeholder: 'Title',
-      //   },
-      //   link: {
-      //     type: 'url',
-      //     label: 'Youtube or vimeo link',
-      //     placeholder: 'https://',
-      //   },
-      // };
-
-      if (this.model.additional_video) {
-        this.additional_videoIndex = Object.keys(this.model.additional_video).length;
-      } else {
-        this.additional_videoIndex = 0;
-      }
 
       this.labels = {
         gallery_data: {
@@ -430,9 +409,6 @@ module.exports = {
       );
 
       setTimeout(() => { this.createDropzones() } , 1000);
-
-      const Model = require('components/campaign/models.js');
-
 
       if(app.getParams().check == '1') {
         var data = this.$el.find('form').serializeJSON();
