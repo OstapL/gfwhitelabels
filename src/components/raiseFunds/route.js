@@ -138,22 +138,18 @@ module.exports = Backbone.Router.extend({
   teamMembers(id) {
     if (!app.user.is_anonymous()) {
       $('body').scrollTo(); 
-      const Model = require('components/campaign/models.js');
       const View = require('components/raiseFunds/views.js');
+      const optionR = app.makeCacheRequest(raiseCapitalServer + '/campaign/' + id + '/team-members', 'OPTIONS');
+      const dataR = app.makeCacheRequest(raiseCapitalServer + '/campaign/' + id + '/team-members');
 
-      // var a2 = app.makeCacheRequest(Urls['campaign-list']() + '/team_members/' + id);
-      var a2 = app.makeCacheRequest(raiseCapitalServer + '/campaign/' + id + '/team_members');
-
-      $.when(a2).done((model) => {
-        model.id = id;
-        var i = new View.teamMembers({
+      $.when(optionR, dataR).done((fields, data) => {
+        data[0].id = id;
+        const i = new View.teamMembers({
           el: '#content',
-          // model: new Model.model(model),
-          model: model,
+          fields: fields[0],
+          model: data[0],
         });
         i.render();
-        //app.views.campaign[id].render();
-        //app.cache[window.location.pathname] = i.$el.html();
 
         app.hideLoading();
       });
@@ -167,16 +163,18 @@ module.exports = Backbone.Router.extend({
   teamMembersAdd(id, type, index) {
     if (!app.user.is_anonymous()) {
       $('body').scrollTo(); 
-      const Model = require('components/campaign/models.js');
-      const View = require('components/raiseFunds/views.js');
 
-      // var a2 = app.makeCacheRequest(Urls['campaign-list']() + '/team_members/' + id);
-      var a2 = app.makeCacheRequest(raiseCapitalServer + '/campaign/' + id + '/team_members');
-      $.when(a2).done((model) => {
+      const View = require('components/raiseFunds/views.js');
+      const optionsR = app.makeCacheRequest(raiseCapitalServer + '/campaign/' + id + '/team-members', 'OPTIONS');
+      const dataR = app.makeCacheRequest(raiseCapitalServer + '/campaign/' + id + '/team-members');
+      const formcR = api.makeCacheRequest(authServer + '/user/formc');
+
+      $.when(optionsR, dataR, formcR).done((fields, data, formc) => {
         const addForm = new View.teamMemberAdd({
           el: '#content',
-          // model: new Model.model(model),
-          model: model,
+          model: data[0],
+          formc: formc[0],
+          fields: fields[0].fields,
           type: type,
           index: index,
         });

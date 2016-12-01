@@ -85,19 +85,20 @@ module.exports = Backbone.Router.extend({
     const View = require('components/formc/views.js');
 
     let fieldsR = api.makeCacheRequest(formcServer + '/' + id + '/team-members/' + role, 'OPTIONS');
-
-    let dataR = null;
-    if(user_id != 'new') {
-      dataR = api.makeCacheRequest(formcServer + '/' + id + '/team-members', 'GET');
-    }
+    let dataR = api.makeCacheRequest(formcServer + '/' + id + '/team-members', 'GET');
 
     $('#content').scrollTo();
     $.when(fieldsR, dataR).done((fields, data) => {
-      if(data) {
+      if(user_id != 'new') {
         data = data[0].team_members.filter(function(el) { return el.user_id == user_id})[0]
         data.formc_id = id;
       } else {
-        data = {formc_id: id};
+        data = {
+          formc_id: id,
+          campaign_id: data[0].campaign_id,
+          company_id: data[0].company_id,
+          progress: data[0].progress
+        };
       }
       const addForm = new View.teamMemberAdd({
         el: '#content',

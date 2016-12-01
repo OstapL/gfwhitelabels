@@ -34,6 +34,7 @@ module.exports = {
 
     createDropzones() {
       _(this.fields).each((field, name) => {
+        console.log('f', field, field.type);
         if (!this['_' + field.type]) {
           return;
         }
