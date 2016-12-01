@@ -66,7 +66,10 @@ include ../../../templates/mixins.pug
 
           .form-group.row
             label(for="operatingExpense").col-lg-12.font-weight-normal SG&A, and other Operating Expenses&nbsp;&nbsp;
-              i(aria-hidden="true",data-toggle="tooltip",data-original-title="<b><u>Selling, General & Administrative Operating Expense.</u> The sum of all direct and indirect selling expenses and all general and administrative expenses of a company</b>").fa.fa-question-circle.text-muted
+              div.d-inline-block
+                div.showPopover(data-content="<u>Selling, General & Administrative Operating Expense.</u> The sum of all direct and indirect selling expenses and all general and administrative expenses of a company")
+                  i(aria-hidden="true").fa.fa-question-circle.text-muted
+
             .col-lg-12
               input(
                 value= formatPrice(data.operatingExpense),
@@ -80,7 +83,9 @@ include ../../../templates/mixins.pug
 
           .form-group.row
             label(for="oneTimeExpenses").col-lg-12.font-weight-normal One Time (Extraordinary) Expenses&nbsp;&nbsp;
-              i(aria-hidden="true",data-toggle="tooltip",data-original-title="<b><u>One Time (Extraordinary) Expenses.</u> A rare, infrequent event which financial analysts separate out of the income statement in order to avoid distorting the 'regular' earnings reported by a company. They can include things like adverse legal, regulatory or tax issues, storm damage or restructuring charges.</b>").fa.fa-question-circle.text-muted
+              div.d-inline-block
+                div.showPopover(data-content="<u>One Time (Extraordinary) Expenses.</u> A rare, infrequent event which financial analysts separate out of the income statement in order to avoid distorting the 'regular' earnings reported by a company. They can include things like adverse legal, regulatory or tax issues, storm damage or restructuring charges.")
+                  i(aria-hidden="true").fa.fa-question-circle.text-muted
 
             .col-lg-12
               input(
@@ -95,7 +100,10 @@ include ../../../templates/mixins.pug
 
           .form-group.row
             label(for="depreciationAmortization").col-lg-12.font-weight-normal Depreciation  & Amortization&nbsp;&nbsp;
-              i(aria-hidden="true",data-toggle="tooltip",data-original-title="<b><u>Depreciation</u><br/>The allocation of the cost of assets to periods in which the assets are used.<br/><br/><u>Amoritization</u><br/>To write off the cost of an asset gradually.</b>").fa.fa-question-circle.text-muted
+              div.d-inline-block
+                div.showPopover(data-content="<u>Depreciation</u><br/>The allocation of the cost of assets to periods in which the assets are used.<br/><br/><u>Amoritization</u><br/>To write off the cost of an asset gradually.")
+                  i(aria-hidden="true").fa.fa-question-circle.text-muted
+
 
             .col-lg-12
               input(

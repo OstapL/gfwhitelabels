@@ -63,11 +63,11 @@ module.exports = {
         },
 
         uploadprogress: function (file, progress, bytesSend) {
-          $(this.element).find('.uploading').show();
+          $(this.element).find('.uploading').show().removeClass('collapse');
         },
 
         complete: function (file) {
-          $(this.element).find('.uploading').hide();
+          $(this.element).find('.uploading').hide().addClass('collapse');
         },
 
         dragover: function (e) {
@@ -184,8 +184,8 @@ module.exports = {
           '<img class="img-file img-' + name + '" src="/img/icons/' + icon + '.png" />' +
           '<div class="row">' +
           '<a class="link-file a-' + name + '" target="_blank" ' +
-            'href="' + url + '" title="' + data[0].name +'">' +
-              textHelper.shortenFileName(data[0].name) + '</a>' +
+            'href="' + url + '" title="' + fileName +'">' +
+              textHelper.shortenFileName(fileName) + '</a>' +
           '</div>'
           );
 
@@ -290,6 +290,40 @@ module.exports = {
     },
 
     _image(name) {
+      const onCrop = (imgData) => {
+        $('.img-' + name).attr('src', imgData.urls[0]);
+      };
+
+      const deleteImage = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        let $link = $(e.target).closest('a.delete-image');
+
+        let imgId = $link.data('imageid');
+        if (!imgId) {
+          return;
+        }
+
+        $link.prop('enabled', false);
+        $link.off('click');
+
+        api.makeRequest(filerServer + '/' + imgId, 'DELETE').done(() => {
+          //remove field from model
+          delete this.model[name];
+          delete this.model[name.replace('_id', '_data')];
+
+          $link.closest('.one-photo').find('img.img-' + name).attr('src', '/img/default/255x153.png');
+          $link.closest('.delete-image-container').remove();
+        });
+
+        return false;
+      };
+
+      const cropImage = (e) => {
+
+      };
+
       let dzOptions = {
         paramName: name,
         params: {
@@ -300,32 +334,62 @@ module.exports = {
       };
 
       this._initializeDropzone(name, dzOptions, (data) => {
-        $('.img-' + name).attr('src', data[0].urls[0]);
-        $('.a-' + name).attr('href', data.origin_url).html(data.name);
-        //$('#' + name).val(data.file_id);
+        //image actions
 
-        this.model[name] = data[0].id;
-        this.model[name.replace('_id', '_data')] = data;
+        let dataFieldName = name.replace('_' + this.fields[name].type + '_id', '_data');
+        let url = data[0].urls[0];
+        let imgId = data[0].id;
         let fileName = data[0].name;
+        let originUrl = data[0].urls[0];
 
-        const cropperHelper = require('helpers/cropHelper.js');
-        cropperHelper.showCropper(data[0].urls[0], this.fields[name].imgOptions, (imgData) => {
+        //update ui and bind events
+        let imgActionsBlock = $(
+          '<div class="delete-image-container">' +
+            '<a class="crop-image" data-imageid="' + imgId + '">' +
+              '<i class="fa fa-crop"></i>' +
+            '</a>' +
+            '<a class="delete-image" data-imageid="' + imgId + '">' +
+              '<i class="fa fa-times"></i>' +
+            '</a>' +
+          '</div>');
 
-          let extPos = fileName.lastIndexOf('.');
-          fileName = fileName.substring(0, extPos) + imgData.width + 'x' + imgData.height + fileName.substring(extPos);
+        imgActionsBlock.find('a.crop-image')
+          // .data('imageid', imgId)
+          .on('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
 
-          let reqData = _.chain(imgData)
-            .pick(['x', 'y', 'width', 'height'])
-            .extend({
-              id: data[0].id,
-              file_name: fileName,
-            }).value();
+            this._cropImage(img, this.fields[name].imgOptions, onCrop);
 
-          api.makeRequest(filerServer + '/crop', 'PUT', reqData, { contentType: 'application/json; charset=utf-8' }).done((imgResponse) => {
-            console.log(imgResponse);
+            return false;
           });
-        });
+
+        imgActionsBlock.find('a.delete-image')
+          // .data('imageid', imgId)
+          .on('click', deleteImage);
+
+        let imgContainer = $('.dropzone__' + name + ' .one-photo');
+        imgContainer.find('img.img-' + name).attr('src', url);
+        // imgContainer.find('a.a-' + name).attr('href', originUrl).html(fileName);
+
+        imgContainer.prepend(imgActionsBlock);
+
+        this.model[name] = imgId;
+        this.model[dataFieldName] = data;
+
+        let img = {
+          url: url,
+          fileName: fileName,
+          id: imgId,
+        };
+
+        //todo: set default cropping, possibly on the server
+        this._cropImage(img, this.fields[name].imgOptions, onCrop);
+
       });
+
+      $('.dropzone__' + name + ' .img-dropzone a.delete-image').on('click', deleteImage);
+      $('.dropzone__' + name + ' .img-dropzone a.crop-image').on('click', cropImage);
     },
 
     _imagefolder(name) {
@@ -361,6 +425,7 @@ module.exports = {
 
         return false;
       };
+
       const cropImage = (e) => { console.log('NOT IMPLEMENTED')};
 
       this._initializeDropzone(name, dzOptions, (data, file) => {
@@ -398,7 +463,31 @@ module.exports = {
       $('.dropzone__' + name + ' .img-dropzone a.crop-image').each((idx, link) => {
         $(link).on('click', cropImage);
       });
-    }
+    },
+
+    _cropImage(img, options, callback) {
+      const cropperHelper = require('helpers/cropHelper.js');
+      cropperHelper.showCropper(img.url, options, (imgData) => {
+
+        let extPos = img.fileName.lastIndexOf('.');
+        let fileName = img.fileName.substring(0, extPos) +
+            imgData.width + 'x' + imgData.height + img.fileName.substring(extPos);
+
+        let reqData = _.chain(imgData)
+          .pick(['x', 'y', 'width', 'height'])
+          .extend({
+            id: img.id,
+            file_name: fileName,
+          }).value();
+
+        let reqOptions = {
+          contentType: 'application/json; charset=utf-8',
+        };
+
+        api.makeRequest(filerServer + '/crop', 'PUT', reqData, reqOptions).done(callback);
+      });
+    },
+
   },
 
 };

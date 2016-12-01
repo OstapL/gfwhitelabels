@@ -122,6 +122,7 @@ mixin fieldTextLabel(name, attr)
             type=attr.type ? attr.type : 'text'
             class=(attr.help_text ? 'showPopover' : '')
             data-content=(attr.help_text ?attr.help_text : '')
+            readonly=(attr.readonly ?attr.readonly : false)
             value=attr.value
             maxlength = attr.maxlength ? attr.maxlength : false
             disabled=(attr.disabled ? attr.disabled : false)
@@ -306,9 +307,9 @@ mixin fieldDateYear(name, attr)
 mixin fileDropzone(name, attr)
     - var textHelper = require('helpers/textHelper.js')
     - var icon = attr.type
-    if attr.hasOwnProperty('data') == false || attr.data == null
+    if !attr.data
       - attr.data = {};
-    if attr.data.hasOwnProperty('urls') == false
+    if !attr.data.urls
       - attr.data.urls = [];
     if attr.data.mime
       - mimetypeIcons = require('helpers/mimetypeIcons.js');
@@ -332,7 +333,7 @@ mixin fileDropzone(name, attr)
               a(class='link-1' href="#" onclick="return false")
                 p.drop-photo #{attr.text}
                 i(class="fa fa-" + attr.icon)
-            div.col-lg-7.col-md-7.col-sm-7.col-xs-7.p-r-0.p-l-0.img-dropzone.text-lg-center
+            div.col-lg-7.col-md-7.col-sm-7.col-xs-7.p-r-0.p-l-0.img-dropzone.text-xs-center
               .file-scroll
                 .thumb-file-container.col-xl-12
                   if attr.data.mime
@@ -350,7 +351,7 @@ mixin fileDropzone(name, attr)
 mixin fileFolderDropzone(name, attr)
     - var textHelper = require('helpers/textHelper.js')
     - var icon = attr.type
-    if attr.hasOwnProperty('data') == false || Array.isArray(attr.data) == false
+    if !attr.data || !Array.isArray(attr.data)
       - attr.data = [];
     - mimetypeIcons = require('helpers/mimetypeIcons.js');
 
@@ -372,7 +373,7 @@ mixin fileFolderDropzone(name, attr)
               a(class='link-1' href="#" onclick="return false")
                 p.drop-photo #{attr.text}
                 i(class="fa fa-" + attr.icon)
-            div.col-lg-7.col-md-7.col-sm-7.col-xs-7.p-r-0.p-l-0.img-dropzone.text-lg-center.all-file-scroll
+            div.col-lg-7.col-md-7.col-sm-7.col-xs-7.p-r-0.p-l-0.img-dropzone.text-xs-center.all-file-scroll
               .file-scroll
                 each v,k in attr.data
                   if v.mime
@@ -391,13 +392,9 @@ mixin fileFolderDropzone(name, attr)
 
 
 mixin userProfileDropzone(name, attr)
-    - var icon = attr.type
-    if attr.mime
-      - mimetypeIcons = require('helpers/mimetypeIcons.js');
-      - var icon = mimetypeIcons[attr.mime];
-    if attr.hasOwnProperty('data') == false
+    if !attr.data
       - attr.data = {};
-    if attr.data.hasOwnProperty('urls') == false
+    if !attr.data.urls
       - attr.data.urls = [];
 
     div(
@@ -426,17 +423,13 @@ mixin userProfileDropzone(name, attr)
                 i(class="fa fa-" + attr.icon)
 
 mixin imageDropzone(name, attr)
-    - var icon = attr.type
-    if attr.hasOwnProperty('data') == false
+    if !attr.data
       - attr.data = {};
-    if attr.data.hasOwnProperty('urls') == false
+    if !attr.data.urls
       - attr.data.urls = [];
-    if attr.data.mime
-      - mimetypeIcons = require('helpers/mimetypeIcons.js');
-      - var icon = mimetypeIcons[attr.data.mime.split('/')[1]];
 
     div(
-      class='row media-item ' + attr.class + ' ' + (attr.id || name) +
+      class='row media-item ' + (attr.class || '') + ' ' + (attr.id || name) +
         (attr.required == true ? ' required ' : ' ') + ' imageDropzone' +
         (attr.help_text ? ' showPopover' : '')
       data-content=(attr.help_text ? attr.help_text : '')
@@ -454,18 +447,58 @@ mixin imageDropzone(name, attr)
                 p.drop-photo #{attr.text}
                 i(class="fa fa-" + attr.icon)
             div.col-lg-7.col-md-7.col-sm-7.col-xs-7.p-r-0.p-l-0.img-dropzone.text-lg-center
-              .col-xl-12.p-r-0
-                img(class=("w-100 img-" + name) src="/img/default/255x153.png")
-              a(class=("a-" + name) href=attr.data.urls[0]) #{ attr.data.name }
+              .col-xl-12.p-r-0.one-photo
+                - var id = attr.data.id || 0;
+                - var url = attr.data.urls[0] || "/img/default/255x153.png";
+                if attr.data.urls[0]
+                  .delete-image-container
+                    a(href="#" data-imageid=id).crop-image
+                      i.fa.fa-crop
+                    a(href="#" data-imageid=id).delete-image
+                      i.fa.fa-times
+                img(class=("w-100 img-" + name) src=url)
+                //-a(class=("a-" + name) href=attr.data.urls[0]) #{ attr.data.name }
 
-mixin galleryDropzone(name, attr)
+mixin teamMemberDropzone(name, attr)
     if attr.hasOwnProperty('data') == false
       - attr.data = {};
     if attr.data.hasOwnProperty('urls') == false
       - attr.data.urls = [];
-    if attr.data.mime
-      - mimetypeIcons = require('helpers/mimetypeIcons.js');
-      - var icon = mimetypeIcons[attr.data.mime.split('/')[1]];
+
+    div(
+      class='row media-item ' + (attr.class || '') + ' ' + (attr.id || name) +
+        (attr.required == true ? ' required ' : ' ') + ' imageDropzone' +
+        (attr.help_text ? ' showPopover' : '')
+      data-content=(attr.help_text ? attr.help_text : '')
+    )
+      div(class=attr.class1 + ' ' + (attr.required == true ? ' required ' : ' ') )
+        label(for=attr.id || name)!= attr.label
+
+      div(class=(attr.class2 + ' dropzone__' + name))
+        div(class=" col-lg-12 p-r-0 border-dropzone")
+          div(class="uploading collapse")
+            img(alt="activity indicator" src="/img/ajax-loader.gif")
+          span
+            div.col-lg-5.col-md-5.col-sm-5.col-xs-5.text-xs-center.text-md-center.text-lg-center.p-dropzone
+              a(class='link-1' href="#" onclick="return false")
+                p.drop-photo #{attr.text}
+                i(class="fa fa-" + attr.icon)
+            #photo_image_id.col-lg-6.col-md-7.col-sm-7.col-xs-7.text-lg-center.p-dropzone
+                - var id = attr.data.id || 0;
+                - var url = attr.data.urls[0] || "/img/default/255x153.png";
+                if attr.data.urls[0]
+                  .delete-image-container
+                    a(href="#" data-imageid=id).crop-image
+                      i.fa.fa-crop
+                    a(href="#" data-imageid=id).delete-image
+                      i.fa.fa-times
+                img(class=("w-100 img-" + name) src=url).img-fluid.img-circle.img-photo
+
+mixin galleryDropzone(name, attr)
+    if !attr.data
+      - attr.data = {};
+    if !attr.data.urls
+      - attr.data.urls = [];
 
     div(
       class='row media-item ' + attr.class + ' ' + (attr.id || name) +
@@ -495,4 +528,3 @@ mixin galleryDropzone(name, attr)
                       a(href="#" data-imageid=v.id).delete-image
                         i.fa.fa-times
                     img(class=("w-100 img-" + name) src=v.urls[0])
-

@@ -11,16 +11,6 @@ include ../../raiseFunds/templates/menu.pug
     ]
 )
 
-mixin fieldHeader(name, attr)
-
-  - attr = attr ? attr : fields[name];
-  div(class=(attr.type != 'nested' ? "form-group " : '' ) + (attr.row == 0 ? '' : 'row ') + name + (fields[name].required == true ? ' required ' : ' ') + ' ' + attr.type)
-
-
-mixin fieldNested(name, template, attr = {})
-  - val = attr.value ? attr.value : values[name]
-  - indexCounter = attr.index || 0
-
 
 section.formc-team-members-director.container.m-b-85
   - var formcId = values.formc_id;

@@ -29,32 +29,69 @@ module.exports = {
     }, phoneHelper.events, dropzoneHelpers.events, yesNoHelper.events),
 
     changeCountry(e) {
+      const usClass1 = 'col-lg-6 text-lg-right text-xs-left ';
+      const usClass2 = 'col-lg-6 ';
+      const foreignClass1 = 'col-lg-5 text-xl-right text-lg-left ';
+      const foreignClass2 = 'col-lg-7 ';
+
       let $target = $(e.target);
       let country = $target.val();
+
+      let $foreignCountryRow = $('.foreign-country-row');
+      let $foreignCountryPhoneContainer = $foreignCountryRow.find('.foreign-country-phone');
+      let $foreignCountryPhoneField = $foreignCountryPhoneContainer.find('.phone');
+
+      let $usRow = $('.us-row');
+      let $usPhoneContainer = $usRow.find('.us-phone');
+      let $usPhonePhoneField = $usPhoneContainer.find('.phone');
+
       if (country == 'US') {
-        $('.foreign-country-row').hide();
-        $('.foreign-country-row input').prop('disabled', true);
-        $('.us-row').show();
-        $('.us-row input').prop('disabled', false);
+        $foreignCountryRow.hide();
+        $foreignCountryPhoneField.appendTo($usPhoneContainer);
+
+        $foreignCountryPhoneField.find('label')
+          .removeClass(foreignClass1)
+          .addClass(usClass1);
+
+        $foreignCountryPhoneField.find('div')
+          .removeClass(foreignClass2)
+          .addClass(usClass2);
+
+        $usRow.show();
       } else {
-        $('.foreign-country-row').show();
-        $('.foreign-country-row input').prop('disabled', false);
-        $('.us-row').hide();
-        $('.us-row input').prop('disabled', true);
+        $usRow.hide();
+        $usPhonePhoneField.appendTo($foreignCountryPhoneContainer);
+
+        $usPhonePhoneField.find('label')
+          .removeClass(usClass1)
+          .addClass(foreignClass1);
+
+        $usPhonePhoneField.find('div')
+          .removeClass(usClass2)
+          .addClass(foreignClass2);
+
+        $foreignCountryRow.show();
       }
     },
 
     initialize(options) {
       this.fields = options.fields;
       this.fields.image = { type: 'image' };
+      this.fields.image.imgOptions = {
+        aspectRatio: 1 / 1,
+        cssClass : 'img-profile-crop',
+        showPreview: true,
+      };
 
       /*
       this.fields.phone.required = true;
       this.fields.first_name.required = true;
       this.fields.last_name.required  = true;
       */
-      this.fields.country = {value: 'US' };
+      this.fields.country = {};
       this.fields.country.validate = { choices: countries };
+      this.fields.account_number.required = true;
+      this.fields.account_number_re = { required: true };
       /*
       this.fields.street_address_1 = { required: true };
       this.fields.street_address_2 = {};
@@ -72,11 +109,13 @@ module.exports = {
       this.fields.net_worth.required = true;
       this.fields.accredited_investor = {};
       */
+
       this.labels = {
         country: 'Country',
         street_address_1: 'Street address 1',
         street_address_2: 'Street address 2',
         zip_code: 'Zip code',
+        state: 'State/Province/Region',
         city: 'City',
         phone: 'Phone',
         account_number: 'Account Number',
@@ -92,8 +131,6 @@ module.exports = {
         name_on_bank_account: 'Name on Bank Account',
       };
 
-      this.model.phone = '';
-
       this.assignLabels();
 
       // define ui elements
@@ -108,6 +145,7 @@ module.exports = {
       // define flag for the geocode function respond
       this.geocodeIsNotInProgress = true;
       this.model.id = '';
+      this.model.country = 'US';
     },
 
     render() {
@@ -154,6 +192,7 @@ module.exports = {
         if (e.value < 1000) {
           cbInvestor1m.prop('checked', false);
         }
+        this.model.net_worth = e.value;
       });
 
       this.$('.slider-annual-income').bootstrapSlider({
@@ -170,12 +209,13 @@ module.exports = {
         if (e.value < 200) {
           cbInvestor200k.prop('checked', false);
         }
+        this.model.annual_income = e.value;
       });
 
       //todo: disable checkboxes according to initial values
 
-      cbInvestor1m.prop('disabled', true);
-      cbInvestor200k.prop('disabled', true);
+      cbInvestor1m.prop('disabled', this.model.net_worth < 1000);
+      cbInvestor200k.prop('disabled', this.model.annual_income < 200);
     },
 
     showSSNPopover(event){

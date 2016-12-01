@@ -59,7 +59,14 @@
 .icon-color
 	color: #aed07c
 // для иконки удаления элемента при ховере
-.delete-section-container, .delete-file-container
+.delete-section-container
+	text-align: right
+	position: relative
+	a
+		&:hover
+			color: $crimson
+			
+.delete-file-container
 	a
 		&:hover
 			color: $crimson
@@ -126,11 +133,34 @@
 .fileDropzone
 	.thumb-file-container
 		margin-top: 30px
+		.link-file
+			font-size: 11px
 	.delete-file-container
 		position: absolute
 		right: 0
-		left: 65px
-		top: -5px
+		left: 70px
+		top: -7px
+.imageDropzone
+	.one-photo
+		.delete-image-container
+			position: absolute
+			right: 0
+			top: 0
+			.crop-image
+				margin-right: 3px
+				i
+					padding: 5px
+					background-color: rgba(0,0,0, .5)
+					color: $white_op
+					width: 25px
+					height: 25px
+			.delete-image
+				i
+					padding: 5px
+					background-color: rgba(0,0,0, .5)
+					color: $white_op
+					width: 25px
+					height: 25px
 .galleryDropzone
 	.dropzone-text
 		margin-top: 30px
@@ -151,8 +181,14 @@
 					margin-right: 3px
 					i
 						padding: 5px
-						background-color: rgba(0,0,0, .1)
+						background-color: rgba(0,0,0, .5)
+						color: $white_op
+						width: 25px
+						height: 25px
 				.delete-image
 					i
 						padding: 5px
-						background-color: rgba(0,0,0, .1)
+						background-color: rgba(0,0,0, .5)
+						color: $white_op
+						width: 25px
+						height: 25px

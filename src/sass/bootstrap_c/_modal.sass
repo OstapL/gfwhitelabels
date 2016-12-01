@@ -94,14 +94,17 @@
 		    font-size: rem(33)
 .modal-dropzone
 	.modal-dialog
-		max-width: 650px
+		max-width: 640px
+		.modal-header
+			.close
+				font-size: rem(30)
 		.img-preview
 			position: relative
-			left: 45px
-			border-radius: 100%;
+			left: 7%
+			border-radius: 100%
 			&.mini
-				left: 95px
-				top: 10px
+				left: 7%
+				top: 20px
 		.cropper-view-box
 			border-radius: 100%
 			outline: none
@@ -112,10 +115,14 @@
 		.cropper-line
 			background-color: transparent
 		.cropper-canvas
-			left: 0px!important
-			height: 100%!important
-			width: 100%!important
 			img
 				height: 100%!important
 				width: 100%!important
+	&.img-crop
+		.modal-dialog
+			max-width: 760px
+			.modal-body
+				padding: rem(15)
+		.cropper-view-box
+			border-radius: 0px
 

@@ -1,5 +1,5 @@
-- 'use strict';
 include ../../../templates/mixins.pug
+include ../../../templates/fields_mixins.pug
 include menu.pug
 
 +breadcrumbs('Create Company', '', 
@@ -11,92 +11,110 @@ include menu.pug
 )
 
 section.team-members.container.m-b-85
+  - var campaignId = values.id;
+  - var formcId = formc.id;
   +menu('campaign', 'team-members')
 
   //START RIGHT BLOCK
-  .col-lg-10.offset-lg-1.col-xl-8.offset-xl-0.push-xl-3
+  .col-xl-8.col-lg-8.col-md-12
     h2.text-uppercase.text-lg-center.text-xs-center.dosis.m-t-0 #{type == 'advisor' ? 'advisor' : 'team member'}
 
-    form(method="post" action="").form-section
-      input(type="hidden" name="type" value=type)#type
-      input(type="hidden" name="photo" value=member.photo)#photo
-      - values = member;
-      +fieldBlock("first_name", '', {
-        class1: 'col-lg-3 col-md-12',
-        class2: 'col-lg-9 col-md-12',
-        type: 'text',
-        })
-      +fieldBlock("last_name", '', {
-        class1: 'col-lg-3 col-md-12',
-        class2: 'col-lg-9 col-md-12',
-        type: 'text',
-        })
-      +fieldBlock("email", '', {
-        class1: 'col-lg-3 col-md-12',
-        class2: 'col-lg-9 col-md-12',
-        type: 'email',
-        })
+    form.form-section
+      +fieldTextLabel("first_name", _.extend({
+        class1: 'col-xl-3 col-lg-12 text-lg-left text-xl-right ',
+        class2: 'col-xl-9 col-lg-12',
+        label: 'First name',
+        value: member.first_name
+      }, fields.first_name))
+      +fieldTextLabel("last_name", _.extend({
+        class1: 'col-xl-3 col-lg-12 text-lg-left text-xl-right ',
+        class2: 'col-xl-9 col-lg-12',
+        label: 'Last name',
+        value: member.last_name
+      }, fields.last_name))
+      +fieldTextLabel("email", _.extend({
+        class1: 'col-xl-3 col-lg-12 text-lg-left text-xl-right ',
+        class2: 'col-xl-9 col-lg-12',
+        label: 'Email',
+        value: member.email
+      }, fields.email))
       if type == 'advisor'
-        +fieldBlock("title", 'Advisor', {
-          class1: 'col-lg-3 col-md-12',
-          class2: 'col-lg-9 col-md-12',
-          type: 'text',
+        +fieldTextLabel("title", _.extend({
+          class1: 'col-xl-3 col-lg-12 text-lg-left text-xl-right ',
+          class2: 'col-xl-9 col-lg-12',
+          label: 'Title',
           readonly: true,
-          })
+          value: 'Advisor',
+        }, fields.title))
       else
-        +fieldBlock("title", '', {
-          class1: 'col-lg-3 col-md-12',
-          class2: 'col-lg-9 col-md-12',
-          type: 'text',
-          })
+        +fieldTextLabel("title", _.extend({
+          class1: 'col-xl-3 col-lg-12 text-lg-left text-xl-right ',
+          class2: 'col-xl-9 col-lg-12',
+          label: 'Title',
+          value: member.title
+        }, fields.title))
 
-      .form-group.row.clearfix.required
-        label.col-lg-3.col-md-12.text-lg-right Bio
-        .col-lg-9.col-md-12
-          textarea(name="bio" placeholder="At least 150 characters" rows="4").form-control #{ member.bio }
+      +fieldTextareaLabel("bio", _.extend({
+          class1: 'col-xl-3 col-lg-12 text-lg-left text-xl-right ',
+          class2: 'col-xl-9 col-lg-12',
+          placeholder: "At least 150 characters",
+          label: 'Bio',
+          value: member.bio,
+        }, fields.bio))
+
       .row
-        .col-lg-9.col-md-12.recommended.label-p-t-0
-          +fieldBlock("growup", '', {
-            class1: 'col-lg-4 col-md-12',
-            class2: 'col-lg-8 col-md-12',
-            type: 'text',
-            placeholder: 'City'
-            })
-        .col-lg-3.col-md-12
-          //- select(name="state").orderby.custom-select
-          //-   option(checked="checked" value="0") ST
-          //-   option(value="1") STL
-          select(name='state').custom-select
-            option(value="") State
-            each state in states
-              if member.state == state.abbreviation
-                option(value=state.abbreviation selected)= state.name
-              else
-                option(value=state.abbreviation)= state.name
+        input(type="hidden" name="city" values=member.city)
+        input(type="hidden" name="state" value=member.state)
+        .col-md-12.col-lg-6
+          +fieldTextLabel('zip_code', _.extend({
+            'class1': 'col-lg-6 text-lg-right text-xs-left',
+            'class2': 'col-lg-6',
+            'label': 'Zip code',
+            'type': 'text',
+            'value': member.zip_code,
+          }, fields.zip_code))
+
+        .col-lg-5.city_states.required
+          .row
+            label.col-lg-5.col-xs-6.text-lg-right.text-xs-left City/State
+            .col-lg-6.col-xs-6
+              a(data-toggle="modal" data-target="#city_state_modal" href="#city_state_modal").change_state_city
+                span.input-value.js-city-state #{ member['city'] ? member['city'] : '(City)' }, #{ member['state'] ? member['state'] : '(State)' }
+                i.fa.fa-pencil-square-o.link-1
       .label-p-t-0
-        +fieldBlock("college", '', {
-          class1: 'col-lg-3 col-md-12',
-          class2: 'col-lg-9 col-md-12',
-          type: 'text',
+        +fieldTextLabel("college", _.extend({
+          class1: 'col-xl-3 col-lg-12 text-lg-left text-xl-right ',
+          class2: 'col-xl-9 col-lg-12',
+          label:  'Collage',
           placeholder: 'Name of college or university',
-          })
+          value: member.email
+        }, fields.collage))
       .row
         .col-lg-6.input-min-width
-          +fieldBlock("linkedin", '', {
-            class1: 'col-lg-6 col-md-12',
-            class2: 'col-lg-6 col-md-12',
-            type: 'text',
+          +fieldTextLabel("linkedin", _.extend({
+            class1: 'col-xl-6 col-lg-12 text-lg-left text-xl-right ',
+            class2: 'col-xl-6 col-lg-12',
+            label:  'Linkedin',
             placeholder: 'Your LinkedIn profile',
-            })
+            }, fields.facebook))
         .col-lg-6.input-min-width
-          +fieldBlock("facebook", '', {
-            class1: 'col-lg-5 col-md-12',
-            class2: 'col-lg-7 col-md-12',
-            type: 'text',
+          +fieldTextLabel("facebook", _.extend({
+            class1: 'col-xl-3 col-lg-12 text-lg-left text-xl-right ',
+            class2: 'col-xl-9 col-lg-12',
+            label:  'Facebook',
             placeholder: 'Your Facebook profile',
-            })
+            }, fields.facebook))
 
-      .row.dropzone__photo.media-item
+      +teamMemberDropzone("photo_image_id", _.extend({
+          class1: 'col-xl-3 col-lg-12 text-lg-left text-xl-right ',
+          class2: 'col-xl-9 col-lg-12',
+          thumbSize: '255x135',
+          default: '/img/default/255x153.png',
+          icon: 'camera',
+          text: 'Drop your photo here or click to upload',
+          value: member.photo_data[0],
+        }, fields.photo_image_id))
+      //.row.dropzone__photo.media-item
         .col-lg-3.p-r-12.col-md-12.text-md-center.text-sm-center.text-xs-center
           .pull-lg-right.font-weight-bold  Photo
         div(style="position:relative;").clearfix
@@ -113,7 +131,7 @@ section.team-members.container.m-b-85
                   img(src=member.photo).img-fluid.img-circle.img-photo
       .col-lg-12.text-lg-right.p-r-0.p-t-2.text-md-center.text-sm-center.text-xs-center
         button.btn.btn-secondary.text-uppercase.m-r-3.cancel cancel
-        button(type="submit").btn.btn-primary.text-uppercase.pull-lg-right Save
+        button(data-method="POST").btn.btn-primary.text-uppercase.pull-lg-right Save
           //
             .col-lg-6.p-r-0
               .dropdown.pull-right
