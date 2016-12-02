@@ -300,14 +300,13 @@ module.exports = {
     urlRoot: raiseCapitalServer + '/campaign/:id/media',
 
     events: _.extend({
-      'click #submitForm': api.submitAction,
-      'change #video,.additional-video-link': 'updateVideo',
-      // 'change #video,.additional-video-link': 'appendHttpsIfNecessary',
-      'change .press_link': 'appendHttpIfNecessary',
-      'click .submit_form': submitCampaign,
-      'click .onPreview': onPreviewAction,
-    }, leavingConfirmationHelper.events, menuHelper.events,
-      addSectionHelper.events, dropzoneHelpers.events
+        'submit form': api.submitAction,
+        'change #video,.additional-video-link': 'updateVideo',
+        'change .press_link': 'appendHttpIfNecessary',
+        'click .submit_form': submitCampaign,
+        'click .onPreview': onPreviewAction,
+      }, leavingConfirmationHelper.events, menuHelper.events,
+        addSectionHelper.events, dropzoneHelpers.events
     ),
 
     getSuccessUrl(data) {
@@ -329,30 +328,55 @@ module.exports = {
     },
 
     initialize(options) {
+      this.urlRoot = this.urlRoot.replace(':id', this.model.id);
+
       this.fields = options.fields;
-      this.formc = options.formc;
-      this.fields.gallery_group_id.validate.fn = function checkNotEmpty(value, attr, fn, model, computed) {
-        if(document.querySelectorAll('.dropzone__gallery .img-fluid').length === 0) {
-          throw 'Please upload at least 1 image';
+
+      this.fields.header_image_image_id = _.extend(this.fields.header_image_image_id, {
+        type: 'image',
+        imgOptions: {
+          aspectRatio: 16/9,
+          cssClass : 'img-crop',
+          showPreview: false,
+        },
+        fn: function checkNotEmpty(value, attr, fn, model, computed) {
+          if(!this.header_image_data || !this.header_image_data.length) {
+            throw 'Please upload Header Image';
+          }
+        },
+
+      });
+
+      this.fields.list_image_image_id = _.extend(this.fields.list_image_image_id, {
+        type: 'image',
+        imgOptions: {
+          aspectRatio: 16 / 9,
+          cssClass: 'img-crop',
+          showPreview: false,
+        },
+        fn: function checkNotEmpty(value, attr, fn, model, computed) {
+          if(!this.list_image_data || !this.list_image_data.length) {
+            throw 'Please upload Thumbnail Picture';
+          }
+        },
+
+      });
+
+      this.fields.gallery_group_id.type = _.extend(this.fields.gallery_group_id, {
+        type: 'imagefolder',
+        fn: function checkNotEmpty(value, attr, fn, model, computed) {
+          if(!this.gallery_group_data || !this.gallery_group_data.length) {
+            throw 'Please upload at least 1 image';
+          }
+        },
+      });
+
+      this.$el.on('keypress', ':input:not(textarea)', function (event) {
+        if (event.keyCode == 13) {
+          event.preventDefault();
+          return false;
         }
-      };
-
-      this.fields.header_image_image_id.type =
-        this.fields.list_image_image_id.type = 'image';
-
-      this.fields.header_image_image_id.imgOptions = {
-        aspectRatio: 16/9,
-        cssClass : 'img-crop',
-        showPreview: false,
-      };
-
-      this.fields.list_image_image_id.imgOptions = {
-        aspectRatio: 16 / 9,
-        cssClass: 'img-crop',
-        showPreview: false,
-      };
-
-      this.fields.gallery_group_id.type = 'imagefolder';
+      });
 
       this.labels = {
         gallery_data: {
