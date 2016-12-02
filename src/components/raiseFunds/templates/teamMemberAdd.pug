@@ -80,7 +80,7 @@ section.team-members.container.m-b-85
             .col-lg-6.col-xs-6
               a(data-toggle="modal" data-target="#city_state_modal" href="#city_state_modal").change_state_city
                 span.input-value.js-city-state #{ member['city'] ? member['city'] : '(City)' }, #{ member['state'] ? member['state'] : '(State)' }
-                i.fa.fa-pencil-square-o.link-1
+                  i.fa.fa-pencil-square-o.link-1
       .label-p-t-0
         +fieldTextLabel("college", _.extend({
           class1: 'col-xl-3 col-lg-12 text-lg-left text-xl-right ',
