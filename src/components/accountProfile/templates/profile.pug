@@ -52,7 +52,7 @@ include ../../../templates/fields_mixins.pug
         div(aria-expanded="true")#account_info.tab-pane.fade.active.in
           .row
             section.form-section.clearfix
-              form(method="post" action="" data-method="PATCH").form
+              form(method="post" action="").form
                 .form-body.clearfix
                   .col-xs-12
                     section.right-block
@@ -79,8 +79,7 @@ include ../../../templates/fields_mixins.pug
                               'class1': 'col-lg-6 text-lg-right text-xs-left',
                               'class2': 'col-lg-6',
                               'type': 'text',
-                              'value': user.country == 'US' ? user.zip_code : '',
-                              'disabled': user.country != 'US',
+                              'value': user.zip_code,
                             }, fields.zip_code))
 
                           .col-lg-5.city_states.required
@@ -170,12 +169,12 @@ include ../../../templates/fields_mixins.pug
                       .form-group.row.clearfix.m0
                         .col-lg-11.text-xs-center.m-t-2
                           .controls
-                            button(type="submit").btn.btn-primary.pull-lg-right SAVE
+                            button(type="button" data-method="PATCH")#save-account-info.btn.btn-primary.pull-lg-right SAVE
 
         div(aria-expanded="true")#financial_info.tab-pane.fade
           .row
             section.form-section.clearfix.col-xl-12
-              form(method="post" action="" data-method="PATCH")
+              form(method="post" action="")
                 .form-body.clearfix
                   
                   .col-xs-12
@@ -295,7 +294,7 @@ include ../../../templates/fields_mixins.pug
                       .form-group.row.clearfix.m0
                         .col-lg-11.mt30.text-xs-center
                           .controls
-                            button(type="submit").btn.btn-primary.pull-lg-right SAVE
+                            button(type="button" data-method="PATCH")#save-financial-info.btn.btn-primary.pull-lg-right SAVE
 
   .popover-content-ssn
     i.fa.fa-info-circle
@@ -334,4 +333,5 @@ div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true
                     button(data-dismiss="modal").btn.btn-primary.text-uppercase save
         .modal-footer
 
-script(src= window.location.protocol + "//maps.google.com/maps/api/js?language=en&key=" + googleMapKey)
+if !window.google || !window.google.maps
+  script(src= window.location.protocol + "//maps.google.com/maps/api/js?language=en&key=" + googleMapKey)

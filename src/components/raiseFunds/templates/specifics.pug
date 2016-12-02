@@ -3,7 +3,7 @@ include ../../../templates/mixins.pug
 include ../../../templates/fields_mixins.pug
 include menu.pug
 
-+breadcrumbs('Create Company', '', 
++breadcrumbs('Create Campaign', '', 
     [
         ['Home', '/'],
         ['Create campaign', '/campaign/' + values.id + '/general_information'],
@@ -67,7 +67,7 @@ section.campaign-specifics.container.m-b-85
 
         h3.text-lg-center.col-md-center.text-xs-center.col-lg-12.pre-money-terms Pre-Money Valuation and Equity Terms
         .col-lg-12.text-lg-center.text-md-center.text-xs-center.m-b-1.p-b-1
-          a(href="https://github.com/vladyslav2/gfwhitelabels/files/470205/growthfountain_security_description.pdf" target="_blank").link-2 Click here to see descriptions of Common Equity and Revenue Share
+          a(href="https://github.com/vladyslav2/gfwhitelabels/files/625832/GrowthFountain.Security.Description.pdf" target="_blank").link-2 Click here to see descriptions of Common Equity and Revenue Share
         .row.m-b-1
           .pre-money-terms.m-b-1
             +fieldRadioLabel("security_type", _.extend({

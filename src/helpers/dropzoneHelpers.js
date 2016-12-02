@@ -63,11 +63,11 @@ module.exports = {
         },
 
         uploadprogress: function (file, progress, bytesSend) {
-          $(this.element).find('.uploading').removeClass('collapse').show();
+          $(this.element).find('.uploading').removeClass('collapse').show().css('z-index', 999);
         },
 
         complete: function (file) {
-          $(this.element).find('.uploading').hide().addClass('collapse');
+          $(this.element).find('.uploading').hide().addClass('collapse').css('z-index', '');
         },
 
         dragover: function (e) {
@@ -305,19 +305,27 @@ module.exports = {
           return;
         }
 
-        api.makeRequest(filerServer + '/' + imgId, 'DELETE').done(() => {
+        let fieldDataName = name.replace('_' + this.fields[name].type + '_id', '_data');
+        // let emptyData = {
+        //   [fieldDataName]: [{ urls: [] }],
+        // };
+
+        // let filerR = api.makeRequest(filerServer + '/' + imgId, 'DELETE');
+        // let dataR = api.makeRequest(this.urlRoot,'PATCH', emptyData);
+        //
+        // Promise.all([filerR, dataR]).then((filerResponse, dataResponse) => {
           $link.prop('enabled', false);
           $link.off('click');
 
           //remove field from model
           delete this.model[name];
-          delete this.model[name.replace('_id', '_data')];
+          delete this.model[fieldDataName];
 
           $link.closest('.one-photo').find('img.img-' + name).attr('src', '/img/default/255x153.png');
           $link.closest('.delete-image-container').remove();
-        }).fail((err) => {
-          alert(err.responseJSON.error);
-        });
+        // }).catch((errors) => {
+        //   console.log(arguments);
+        // });
 
         return false;
       };
@@ -413,6 +421,7 @@ module.exports = {
         let $link = $(e.target).closest('a.delete-image');
         let imageId = $link.data('imageid');
 
+        //todo make request to the urlRoot
         api.makeRequest(filerServer + '/' + fileId, 'DELETE').done(() => {
           $link.prop('enabled', false);
           $link.off('click');

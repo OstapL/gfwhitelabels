@@ -16,8 +16,10 @@ module.exports = {
   profile: Backbone.View.extend(_.extend({
     template: require('./templates/profile.pug'),
     urlRoot: authServer + '/rest-auth/data',
+    doNotExtendModel: true,
     events: _.extend({
-      'submit form': api.submitAction,
+      'click #save-account-info': api.submitAction,
+      'click #save-financial-info': api.submitAction,
       'focus #ssn' : 'showSSNPopover',
       'focuseout #ssn' : 'hideSSNPopover',
       'keyup #zip_code': 'changeZipCode',
@@ -28,87 +30,19 @@ module.exports = {
 
     }, phoneHelper.events, dropzoneHelpers.events, yesNoHelper.events),
 
-    changeCountry(e) {
-      const usClass1 = 'col-lg-6 text-lg-right text-xs-left ';
-      const usClass2 = 'col-lg-6 ';
-      const foreignClass1 = 'col-lg-5 text-xl-right text-lg-left ';
-      const foreignClass2 = 'col-lg-7 ';
-
-      let $target = $(e.target);
-      let country = $target.val();
-
-      let $foreignCountryRow = $('.foreign-country-row');
-      let $foreignCountryPhoneContainer = $foreignCountryRow.find('.foreign-country-phone');
-      let $foreignCountryPhoneField = $foreignCountryPhoneContainer.find('.phone');
-
-      let $usRow = $('.us-row');
-      let $usPhoneContainer = $usRow.find('.us-phone');
-      let $usPhonePhoneField = $usPhoneContainer.find('.phone');
-
-      if (country == 'US') {
-        $foreignCountryRow.hide();
-        $foreignCountryPhoneField.appendTo($usPhoneContainer);
-
-        $foreignCountryPhoneField.find('label')
-          .removeClass(foreignClass1)
-          .addClass(usClass1);
-
-        $foreignCountryPhoneField.find('div')
-          .removeClass(foreignClass2)
-          .addClass(usClass2);
-
-        $usRow.show();
-      } else {
-        $usRow.hide();
-        $usPhonePhoneField.appendTo($foreignCountryPhoneContainer);
-
-        $usPhonePhoneField.find('label')
-          .removeClass(usClass1)
-          .addClass(foreignClass1);
-
-        $usPhonePhoneField.find('div')
-          .removeClass(usClass2)
-          .addClass(foreignClass2);
-
-        $foreignCountryRow.show();
-      }
-    },
-
     initialize(options) {
       this.fields = options.fields;
-      this.fields.image = { type: 'image' };
-      this.fields.image.imgOptions = {
-        aspectRatio: 1 / 1,
-        cssClass : 'img-profile-crop',
-        showPreview: true,
+      this.fields.image = {
+        type: 'image',
+        imgOptions: {
+          aspectRatio: 1 / 1,
+          cssClass : 'img-profile-crop',
+          showPreview: true,
+        }
       };
 
-      /*
-      this.fields.phone.required = true;
-      this.fields.first_name.required = true;
-      this.fields.last_name.required  = true;
-      */
-      this.fields.country = {};
-      this.fields.country.validate = { choices: countries };
       this.fields.account_number.required = true;
       this.fields.account_number_re = { required: true };
-      /*
-      this.fields.street_address_1 = { required: true };
-      this.fields.street_address_2 = {};
-      this.fields.twitter = {};
-      this.fields.facebook = {};
-      this.fields.instagram = {};
-      this.fields.linkedin = {};
-      this.fields.bank_name.required = true;
-      this.fields.name_on_bank_account.required = true;
-      this.fields.account_number.required = true;
-      this.fields.account_number_re = { required: true };
-      this.fields.routing_number.required = true;
-      this.fields.account_type = { requried: true };
-      this.fields.annual_income = { required: true };
-      this.fields.net_worth.required = true;
-      this.fields.accredited_investor = {};
-      */
 
       this.labels = {
         country: 'Country',
@@ -137,15 +71,6 @@ module.exports = {
       this.cityStateArea = null;
       this.cityField = null;
       this.stateField = null;
-      this.zipCodeField = null;
-
-      // define timeout for zip code keyup event
-      this.zipCodeTimeOut = null;
-
-      // define flag for the geocode function respond
-      this.geocodeIsNotInProgress = true;
-      this.model.id = '';
-      this.model.country = 'US';
     },
 
     render() {
@@ -162,12 +87,12 @@ module.exports = {
       );
 
       this._initSliders();
+
       setTimeout(() => { this.createDropzones() } , 1000);
 
       this.cityStateArea = this.$('.js-city-state');
       this.cityField = this.$('.js-city');
       this.stateField = this.$('.js-state');
-      this.zipCodeField = this.$('#zip_code');
 
       return this;
     },
@@ -218,6 +143,52 @@ module.exports = {
       cbInvestor200k.prop('disabled', this.model.annual_income < 200);
     },
 
+    changeCountry(e) {
+      const usClass1 = 'col-lg-6 text-lg-right text-xs-left ';
+      const usClass2 = 'col-lg-6 ';
+      const foreignClass1 = 'col-lg-5 text-xl-right text-lg-left ';
+      const foreignClass2 = 'col-lg-7 ';
+
+      let $target = $(e.target);
+      let country = $target.val();
+
+      let $foreignCountryRow = $('.foreign-country-row');
+      let $foreignCountryPhoneContainer = $foreignCountryRow.find('.foreign-country-phone');
+      let $foreignCountryPhoneField = $foreignCountryPhoneContainer.find('.phone');
+
+      let $usRow = $('.us-row');
+      let $usPhoneContainer = $usRow.find('.us-phone');
+      let $usPhonePhoneField = $usPhoneContainer.find('.phone');
+
+      if (country == 'US') {
+        $foreignCountryRow.hide();
+        $foreignCountryPhoneField.appendTo($usPhoneContainer);
+
+        $foreignCountryPhoneField.find('label')
+          .removeClass(foreignClass1)
+          .addClass(usClass1);
+
+        $foreignCountryPhoneField.find('div')
+          .removeClass(foreignClass2)
+          .addClass(usClass2);
+
+        $usRow.show();
+      } else {
+        $usRow.hide();
+        $usPhonePhoneField.appendTo($foreignCountryPhoneContainer);
+
+        $usPhonePhoneField.find('label')
+          .removeClass(usClass1)
+          .addClass(foreignClass1);
+
+        $usPhonePhoneField.find('div')
+          .removeClass(usClass2)
+          .addClass(foreignClass2);
+
+        $foreignCountryRow.show();
+      }
+    },
+
     showSSNPopover(event){
       $('#ssn').popover({
         trigger: 'focus',
@@ -244,7 +215,6 @@ module.exports = {
       if (e.target.value.length < 5) return;
       if (!e.target.value.match(/\d{5}/)) return;
       this.getCityStateByZipCode(e.target.value, ({ success=false, city='', state='' }) => {
-        // this.zipCodeField.closest('div').find('.help-block').remove();
         if (success) {
           this.$('.js-city-state').text(`${city}, ${state}`);
           // this.$('#city').val(city);
