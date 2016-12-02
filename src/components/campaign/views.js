@@ -668,7 +668,7 @@ module.exports = {
 
     _amountAllowed() {
       let maxInvestment;
-      let net_worth = this.user.net_worth, annual_income = this.user.annual_income;
+      let net_worth = this.user.net_worth * 1000, annual_income = this.user.annual_income * 1000;
       if (net_worth >= 100000 && annual_income >= 100000) {
         maxInvestment = (net_worth < annual_income ? net_worth : annual_income) * .1;
         maxInvestment = maxInvestment < 100000 ? maxInvestment : 100000;

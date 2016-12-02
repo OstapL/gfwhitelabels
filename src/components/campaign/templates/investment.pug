@@ -58,8 +58,8 @@ mixin fieldInput(name, attr)
           div.popover-content-amount-campaign
             i.fa.fa-info-circle
             span Investors are limited to 12 month investment totals ranging from $2,000 - $100,000 based on income and net worth. Please update your financial information to see your limit:
-            +fieldBlock("annual_income", user.annual_income, {'class1': 'col-md-4', 'class2': 'col-md-8', 'type': 'text', label: 'Annual Income'})
-            +fieldBlock("net_worth", user.net_worth, {'class1': 'col-md-4', 'class2': 'col-md-8', 'type': 'text', label: 'Net Worth'})
+            +fieldBlock("annual_income", user.annual_income, {'class1': 'col-md-4', 'class2': 'col-md-8', 'type': 'text', label: 'Annual Income in K'})
+            +fieldBlock("net_worth", user.net_worth, {'class1': 'col-md-4', 'class2': 'col-md-8', 'type': 'text', label: 'Net Worth in K'})
             button.btn.btn-primary.pull-lg-right.text-uppercase.update-worth-income Update
           div.popover-content-rounding
             i.fa.fa-info-circle
