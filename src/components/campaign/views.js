@@ -428,6 +428,7 @@ module.exports = {
       click: 'hideRoundingPopover',
       'keyup .typed-name': 'copyToSignature'
     },
+    doNotExtendModel: true,
 
     copyToSignature(e) {
       this.$('.signature').text($(e.target).val());
