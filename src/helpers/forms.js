@@ -144,10 +144,16 @@ module.exports = {
       let data = xhr.responseJSON;
 
       data = data ? data : { Server: status };
-      for (let key in data)  {
+      if (_.isString(data)) {
         validation.invalidMsg(
-          view, key, data[key]
+          view, 'error', data
         );
+      } else {
+        for (let key in data)  {
+          validation.invalidMsg(
+            view, key, data[key]
+          );
+        }
       }
     } else if (xhr.hasOwnProperty('statusText')) {
       let s = '<strong>Errors:</strong> ';
