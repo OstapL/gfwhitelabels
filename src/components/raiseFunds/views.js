@@ -362,7 +362,7 @@ module.exports = {
 
       });
 
-      this.fields.gallery_group_id.type = _.extend(this.fields.gallery_group_id, {
+      this.fields.gallery_group_id = _.extend(this.fields.gallery_group_id, {
         type: 'imagefolder',
         fn: function checkNotEmpty(value, attr, fn, model, computed) {
           if(!this.gallery_group_data || !this.gallery_group_data.length) {
