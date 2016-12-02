@@ -39,32 +39,8 @@ module.exports = {
         }
       };
 
-      /*
-      this.fields.phone.required = true;
-      this.fields.first_name.required = true;
-      this.fields.last_name.required  = true;
-      */
-      // this.fields.country = {};
-      // this.fields.country.validate = { choices: countries };
       this.fields.account_number.required = true;
       this.fields.account_number_re = { required: true };
-      /*
-      this.fields.street_address_1 = { required: true };
-      this.fields.street_address_2 = {};
-      this.fields.twitter = {};
-      this.fields.facebook = {};
-      this.fields.instagram = {};
-      this.fields.linkedin = {};
-      this.fields.bank_name.required = true;
-      this.fields.name_on_bank_account.required = true;
-      this.fields.account_number.required = true;
-      this.fields.account_number_re = { required: true };
-      this.fields.routing_number.required = true;
-      this.fields.account_type = { requried: true };
-      this.fields.annual_income = { required: true };
-      this.fields.net_worth.required = true;
-      this.fields.accredited_investor = {};
-      */
 
       this.labels = {
         country: 'Country',
@@ -109,6 +85,7 @@ module.exports = {
       );
 
       this._initSliders();
+
       setTimeout(() => { this.createDropzones() } , 1000);
 
       this.cityStateArea = this.$('.js-city-state');
