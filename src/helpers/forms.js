@@ -98,13 +98,14 @@ module.exports = {
           // ToDo
           // Create clearity function
           this.$el.find('.alert-warning').remove();
-          this.undelegateEvents();
+          // this.undelegateEvents();
           $('.popover').popover('hide');
 
           if (typeof this._success == 'function') {
             this._success(data);
           } else {
             $('#content').scrollTo();
+            this.undelegateEvents();
             app.routers.navigate(
               this.getSuccessUrl(data),
               { trigger: true, replace: false }
