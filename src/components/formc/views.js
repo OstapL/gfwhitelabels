@@ -82,9 +82,9 @@ const submitFormc = function submitFormc(e) {
           data.progress = this.campaign.progress;
         }
 
-        doCampaignValidation(e, data);
+        doFormcValidation(e, data);
     }, (error) => {
-      doCampaignValidation(null, this.model);
+      doFormcValidation(null, this.model);
     });
   }
 };
@@ -96,10 +96,20 @@ const doFormcValidation = function doFormcValidation(e, data) {
   }
 
   if(
-      data.progress.general_information == true &&
-      data.progress.media == true &&
-      data.progress.specifics == true &&
-      data.progress['team-members'] == true
+      data.progress.introduction == true &&
+      data.progress["team-members"] == true &&
+      data.progress["related-parties"] == true &&
+      data.progress["use-of-proceeds"] == true &&
+      data.progress["risk-factors-market"] == true &&
+      data.progress["risk-factors-financial"] == true &&
+      data.progress["risk-factors-operational"] == true &&
+      data.progress["risk-factors-competitive"] == true &&
+      data.progress["risk-factors-personnel"] == true &&
+      data.progress["risk-factors-legal"] == true &&
+      data.progress["risk-factors-misc"] == true &&
+      data.progress["financial-condition"] == true &&
+      data.progress["outstanding-security"] == true &&
+      data.progress["background-check"] == true
   ) {
     $('#company_publish_confirm').modal('show');
   } else {
@@ -123,6 +133,7 @@ module.exports = {
 
     events: _.extend({
       'submit form': 'submit',
+      'click .submit_formc': submitFormc,
       'keyup #full-name': 'changeSign',
       'click #pay-btn': 'stripeSubmit',
     }, menuHelper.events, yesNoHelper.events),

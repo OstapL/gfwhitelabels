@@ -88,12 +88,11 @@ const doCampaignValidation = function doCampaignValidation(e, data) {
 const onPreviewAction = function(e) {
   e.preventDefault();
   let pathname = location.pathname;
-  this.$el.find('form').submit()
+  //this.$el.find('#submitForm').click();
   app.showLoading();
-  let that = this;
-  setTimeout(function() {
-    window.location = '/' + (that.campaign ? that.campaign.id : that.model.id) + '?preview=1&previous=' + pathname;
-  }, 100);
+  window.location = '/' + this.formc.company_id + '?preview=1&previous=' + pathname;
+  setTimeout(() => {
+  }, 500);
 };
 
 
@@ -102,7 +101,7 @@ module.exports = {
     urlRoot: raiseCapitalServer + '/company',
     template: require('./templates/company.pug'),
     events: _.extend({
-      'click .btn-primary': api.submitAction,
+      'click #submitForm': api.submitAction,
       'keyup #zip_code': 'changeZipCode',
       'click .update-location': 'updateLocation',
       'click .onPreview': onPreviewAction,
@@ -119,12 +118,6 @@ module.exports = {
       this.fields = options.fields;
       this.formc = options.formc;
       this.campaign = options.campaign;
-      this.$el.on('keypress', ':input:not(textarea)', function (event) {
-        if (event.keyCode == 13) {
-          event.preventDefault();
-          return false;
-        }
-      });
       this.labels = {
         name: 'Legal Name of Company',
         industry: 'Industry',
@@ -233,7 +226,7 @@ module.exports = {
       urlRoot: raiseCapitalServer + '/campaign/:id/general_information',
       template: require('./templates/generalInformation.pug'),
       events: _.extend({
-          'submit form': api.submitAction,
+          'click #submitForm': api.submitAction,
           'click .onPreview': onPreviewAction,
           'click .submit_form': submitCampaign,
         }, addSectionHelper.events, leavingConfirmationHelper.events, menuHelper.events),
@@ -254,12 +247,6 @@ module.exports = {
       initialize(options) {
         this.fields = options.fields;
         this.formc = options.formc;
-        this.$el.on('keypress', ':input:not(textarea)', function (event) {
-          if (event.keyCode == 13) {
-            event.preventDefault();
-            return false;
-          }
-        });
         this.labels = {
           pitch: 'Why Should People Invest?',
           business_model: 'Why We Are Raising Capital?',
@@ -611,11 +598,11 @@ module.exports = {
   specifics: Backbone.View.extend(_.extend({
       urlRoot: raiseCapitalServer + '/campaign/:id/specifics',
       events: _.extend({
-        'submit form': api.submitAction,
+        'click #submitForm': api.submitAction,
         'change input[name="security_type"]': 'updateSecurityType',
-        'focus #minimum_raise,#maximum_raise,#minimum_increment,#premoney_valuation,#price_per_share': 'clearZeroAmount',
-        'change #minimum_raise,#maximum_raise,#minimum_increment,#premoney_valuation': 'formatNumber',
-        'change #minimum_raise,#maximum_raise,#price_per_share,#premoney_valuation': 'calculateNumberOfShares',
+        // 'focus #minimum_raise,#maximum_raise,#minimum_increment,#premoney_valuation,#price_per_share': 'clearZeroAmount',
+        // 'change #minimum_raise,#maximum_raise,#minimum_increment,#premoney_valuation': 'formatNumber',
+        // 'change #minimum_raise,#maximum_raise,#price_per_share,#premoney_valuation': 'calculateNumberOfShares',
         'click .onPreview': onPreviewAction,
         'click .submit_form': submitCampaign,
         'click .submit-specifics': 'checkMinMaxRaise',
@@ -759,32 +746,10 @@ module.exports = {
   perks: Backbone.View.extend(_.extend({
     urlRoot: raiseCapitalServer + '/campaign/:id/perks',
     events: _.extend({
-        'submit form': 'onSubmit',
+        'click #submitForm': 'onSubmit',
         'click .onPreview': onPreviewAction,
         'click .submit_form': submitCampaign,
     }, leavingConfirmationHelper.events, menuHelper.events, addSectionHelper.events),
-
-    onSubmit(e) {
-      e.preventDefault();
-
-      let data = $(e.target).serializeJSON({ useIntKeysAsArrayIndex: true });
-      let url = this.urlRoot.replace(':id', this.model.id);
-
-      _.extend(this.model, data);
-      data = _.extend({}, this.model)
-      delete data.id;
-
-      app.showLoading();
-      api.makeRequest(url, 'PUT', data).then((data) => {
-        this.model = data;
-        app.hideLoading();
-        //$('button.submit_form').click();
-      }).
-      fail((xhr, status, text) => {
-        api.errorAction(this, xhr, status, text, this.fields);
-        app.hideLoading();
-      });
-    },
 
     preinitialize() {
       // ToDo
@@ -806,12 +771,6 @@ module.exports = {
       this.assignLabels();
       this.createIndexes();
       this.buildJsonTemplates('raiseFunds');
-      this.$el.on('keypress', ':input:not(textarea)', function (event) {
-        if (event.keyCode == 13) {
-          event.preventDefault();
-          return false;
-        }
-      });
     },
 
     render() {
@@ -827,6 +786,24 @@ module.exports = {
         })
       );
       return this;
+    },
+
+    onSubmit(e) {
+      e.preventDefault();
+
+      let data = $(e.target).closest('form').serializeJSON({ useIntKeysAsArrayIndex: true });
+      let url = this.urlRoot.replace(':id', this.model.id);
+      api.fixDateFields.call(this, this.fields, data);
+
+      app.showLoading();
+      api.makeRequest(url, 'PUT', data).then((data) => {
+        app.hideLoading();
+        //$('button.submit_form').click();
+      }).
+      fail((xhr, status, text) => {
+        api.errorAction(this, xhr, status, text, this.fields);
+        app.hideLoading();
+      });
     },
 
   }, leavingConfirmationHelper.methods, menuHelper.methods, addSectionHelper.methods)),
