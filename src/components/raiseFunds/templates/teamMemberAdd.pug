@@ -65,7 +65,7 @@ section.team-members.container.m-b-85
       .row.showPopover(data-content="Why do we ask? These affinity based questions can help us share your campaign with potential investors with similar backgrounds.")
         input(type="hidden" name="city" values=member.city)
         input(type="hidden" name="state" value=member.state)
-        .col-xl-6.input-min-width
+        .col-xl-6.col-lg-6.input-min-width
           +fieldTextLabel('zip_code', _.extend({
             'class1': 'col-lg-6 text-lg-right text-xs-left p-t-0 m-b-0',
             'class2': 'col-lg-6',
@@ -74,7 +74,7 @@ section.team-members.container.m-b-85
             'value': member.zip_code,
           }, fields.zip_code))
 
-        .col-xl-5.city_states.required
+        .col-xl-5.col-lg-6.city_states.required
           .row
             label.col-lg-6.col-xs-6.text-lg-right.text-xs-left City/State
             .col-lg-6.col-xs-6
