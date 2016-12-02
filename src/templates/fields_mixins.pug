@@ -469,11 +469,11 @@ mixin teamMemberDropzone(name, attr)
           div(class="uploading collapse")
             img(alt="activity indicator" src="/img/ajax-loader.gif")
           span
-            div.col-lg-5.col-md-5.col-sm-5.col-xs-5.text-xs-center.text-md-center.text-lg-center.p-dropzone
+            div.col-xl-5.text-xs-center.text-md-center.text-lg-center.p-dropzone
               a(class='link-1' href="#" onclick="return false")
                 p.drop-photo #{attr.text}
                 i(class="fa fa-" + attr.icon)
-            #photo_image_id.col-lg-6.col-md-7.col-sm-7.col-xs-7.text-lg-center.p-dropzone
+            #photo_image_id.col-xl-7.text-xs-center
                 - var id = attr.data.id || 0;
                 - var url = attr.data.urls[0] || "/img/default/255x153.png";
                 if attr.data.urls[0]
@@ -482,7 +482,7 @@ mixin teamMemberDropzone(name, attr)
                       i.fa.fa-crop
                     a(href="#" data-imageid=id).delete-image
                       i.fa.fa-times
-                img(class=("w-100 img-" + name) src=url).img-fluid.img-circle.img-photo
+                img(class=("img-" + name) src=url).img-fluid.img-circle.img-photo
 
 mixin galleryDropzone(name, attr)
     if !attr.data
