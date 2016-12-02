@@ -2,33 +2,35 @@ include ../../../../templates/fields_mixins.pug
 
 mixin row(value, index)
   - var index = index;
-  .col-xl-12
-    .col-xl-12(data-index=index class=name + ' addSectionBlock').video-container
-      .delete-section-container.col-xl-12
+  div
+    .col-xl-12(data-index=index class=name + ' addSectionBlock').video-container.p-sm-0.m-b-1
+      .delete-section-container.media-delete
         a(href="#" data-section=name data-index=index).delete-sectionnew
           i.fa.fa-times
-      .col-lg-7.videoInteractive.text-xl-right.text-lg-left
-        +fieldNestedTextLabel(name, 'headline', value, index, {
-                class1: 'col-xl-5 col-lg-12',
-                class2: 'col-xl-7 col-lg-12',
-                })
-        +fieldNestedTextLabel(name, 'link', value, index, {
-                class1: 'col-xl-5 col-lg-12',
-                class2: 'col-xl-7 col-lg-12 additional-video-link',
-                })
-      .col-lg-5.p-l-1.col-md-12.col-xs-12
-        .embed-responsive.embed-responsive-16by9 
-          -
-            var additionalVideo = app.getVideoId(values && values[index] ? values[index].link : null);
-            var src = app.getVideoUrl(additionalVideo);
-          iframe.embed-responsive-item(src=src allowfullscreen="true")
+      .row.showPopover(data-content="You Tube or Vimeo links only please.")
+        .col-xl-7.col-lg-6.videoInteractive.text-xl-right.text-lg-left
+          +fieldNestedTextLabel(name, 'headline', value, index, {
+            class1: 'col-xl-5 col-lg-12 p-t-0 m-b-0',
+            class2: 'col-xl-7 col-lg-12',
+            placeholder: 'Title',
+          })
+          +fieldNestedTextLabel(name, 'link', value, index, {
+            class1: 'col-xl-5 col-lg-12',
+            class2: 'col-xl-7 col-lg-12 additional-video-link',
+            placeholder: 'http://www.',
+          })
+          
+
+        .col-xl-5.col-lg-6
+          .embed-responsive.embed-responsive-16by9 
+            -
+              var additionalVideo = app.getVideoId(values && values[index] ? values[index].link : null);
+              var src = app.getVideoUrl(additionalVideo);
+            iframe.embed-responsive-item(src=src allowfullscreen="true")
 
 
 mixin run()
   if first_run
-    .row
-      .col-lg-12.text-lg-center.text-md-center.text-xs-center
-        h3.d-inline-block.m-t-3.mb25 Additional Videos
     div(class=(attr.row == 0 ? '' : '') + name + '_block' + (attr.required == true ? ' required ' : ' ') + ' nested')
       div(class=(attr.row == 0 ? '' : '') + name + '_container' + (attr.required == true ? ' required ' : ' ') + ' nested')
         if values == null || values.length == 0
@@ -36,12 +38,12 @@ mixin run()
         else
           each value, index in values
             +row(value, index)
-
-    .row.add-link
-      .col-xl-10.text-xl-right
-        a(href="#" data-section=name data-comp="raiseFunds" data-template="additional_video").link-2.add-sectionnew
-          i.fa.fa-plus
-          |  Add Another Video
+        .row.add-link
+            .col-xl-6.offset-xl-4
+              a(href="#" data-section=name data-comp="raiseFunds" data-template="additional_video").link-2.add-sectionnew
+                i.fa.fa-plus
+                |  Add Another Video
+    
 
   else
     +row({}, index)

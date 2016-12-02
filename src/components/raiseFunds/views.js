@@ -387,8 +387,7 @@ module.exports = {
           link: 'Article Link',
         },
         additional_video: {
-          link: 'Youtube or Vimeo Link',
-          headline: 'Title',
+          headline: 'Additional Video for Campaign',
         },
         list_image_image_id: 'Thumbnail Picture',
         header_image_image_id: 'Header Image',
