@@ -24,9 +24,30 @@ module.exports = {
       'change .js-city': 'changeAddressManually',
       'change .js-state': 'changeAddressManually',
       'change #country': 'changeCountry',
-      'change input[name=accredited_investor]': 'changeAccreditedInvestor',
-
+      'change #not-qualify': 'changeQualify',
+      'change .investor-item-checkbox': 'changeAccreditedInvestorItem',
     }, phoneHelper.events, dropzoneHelpers.events, yesNoHelper.events),
+
+    changeAccreditedInvestorItem(e) {
+      let $target = $(e.target);
+      let name = $target.data('name');
+      let checked = $target.prop('checked');
+      this.$('input[name=' + name + ']').val(checked);
+      if (checked) {
+        this.$('#not-qualify').prop('checked', false).change();
+      }
+    },
+
+    changeQualify(e) {
+      let $target = $(e.target);
+      if ($target.prop('checked')) {
+        this.$('.investor-item-checkbox').prop('checked', false).change();
+
+        this.$('input[name=accredited_investor_choice]').val(false);
+      } else {
+        this.$('input[name=accredited_investor_choice]').val(true);
+      }
+    },
 
     changeCountry(e) {
       const usClass1 = 'col-lg-6 text-lg-right text-xs-left ';
