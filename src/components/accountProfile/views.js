@@ -16,8 +16,10 @@ module.exports = {
   profile: Backbone.View.extend(_.extend({
     template: require('./templates/profile.pug'),
     urlRoot: authServer + '/rest-auth/data',
+    doNotExtendModel: true,
     events: _.extend({
-      'submit form': api.submitAction,
+      'click #save-account-info': api.submitAction,
+      'click #save-financial-info': api.submitAction,
       'focus #ssn' : 'showSSNPopover',
       'focuseout #ssn' : 'hideSSNPopover',
       'keyup #zip_code': 'changeZipCode',
