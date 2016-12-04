@@ -73,9 +73,9 @@ module.exports = {
       var $errorDiv = $group.find('.help-block');
 
       if ($errorDiv.length != 0) {
-        $errorDiv.html(error.join(','));
+        $errorDiv.html(error.join(', '));
       } else {
-        $group.append('<div class="help-block">' + error.join(',') + '</div>');
+        $group.append('<div class="help-block">' + error.join(', ') + '</div>');
       }
     }
   },
