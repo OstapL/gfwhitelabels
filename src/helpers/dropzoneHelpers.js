@@ -118,7 +118,7 @@ module.exports = {
 
     _getDataFieldName(name) {
       return this.fields[name].type === 'imagefolder'
-        ? name.replace('_group_id', '_data')
+        ? name.replace('_id', '_data')
         : name.replace('_' + this.fields[name].type + '_id', '_data');
     },
 
@@ -509,12 +509,12 @@ module.exports = {
       });
 
       //attach remove item handlers
-      $('.dropzone__' + name + ' .img-dropzone a.delete-image').each((idx, link) => {
+      $('#' + name + ' a.delete-image').each((idx, link) => {
         $(link).on('click', deleteImage);
       });
 
       //attach crop image handlers
-      $('.dropzone__' + name + ' .img-dropzone a.crop-image').each((idx, link) => {
+      $('#' + name + ' a.crop-image').each((idx, link) => {
         $(link).on('click', cropImage);
       });
     },
