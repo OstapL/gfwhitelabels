@@ -117,7 +117,7 @@ module.exports = {
     },
 
     _getDataFieldName(name) {
-      return this.fields[name].type === 'imagefolder'
+      return (this.fields[name].type === 'imagefolder' || this.fields[name].type === 'filefolder')
         ? name.replace('_id', '_data')
         : name.replace('_' + this.fields[name].type + '_id', '_data');
     },
