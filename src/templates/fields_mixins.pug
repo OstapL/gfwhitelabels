@@ -437,7 +437,7 @@ mixin imageDropzone(name, attr)
               a(class='link-1' href="#" onclick="return false")
                 p.drop-photo #{attr.text}
                 i(class="fa fa-" + attr.icon)
-            div.col-lg-7.col-md-7.col-sm-7.col-xs-7.p-r-0.p-l-0.img-dropzone.text-lg-center
+            div(id=name).col-lg-7.col-md-7.col-sm-7.col-xs-7.p-r-0.p-l-0.img-dropzone.text-lg-center
               .col-xl-12.p-r-0.one-photo
                 - var id = attr.data.id || 0;
                 - var url = attr.data.urls[0] || "/img/default/255x153.png";
@@ -510,7 +510,7 @@ mixin galleryDropzone(name, attr)
                 p.drop-photo #{attr.text}
                 i(class="icon-gallery fa fa-" + attr.icon) 
             div.row
-              div.col-xl-12.all-gallery
+              div(id=name).col-xl-12.all-gallery
                 each v, k in attr.data
                   .col-xl-4.one-photo
                     .delete-image-container
