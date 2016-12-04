@@ -116,8 +116,17 @@ module.exports = {
       });
     },
 
+    _getDataFieldName(name) {
+      return (this.fields[name].type === 'imagefolder' || this.fields[name].type === 'filefolder')
+        ? name.replace('_id', '_data')
+        : name.replace('_' + this.fields[name].type + '_id', '_data');
+    },
+
     _updateModelData(name, data) {
-      let dataFieldName = name.replace('_' + this.fields[name].type + '_id', '_data');
+
+      let f = this.fields[name];
+
+      let dataFieldName = this._getDataFieldName(name);
 
       this.model[dataFieldName] = data;
       this.model[name] = data[0].id;
@@ -292,9 +301,17 @@ module.exports = {
     },
 
     _image(name) {
+
       const onCrop = (imgData) => {
-        const fieldDataName = name.replace('_' + this.fields[name].type + '_id', '_data');
-        this.model[fieldDataName].unshift(imgData);
+        const fieldDataName = this._getDataFieldName(name);
+        let model = this.model[fieldDataName];
+        if (!model[0].urls)
+          model[0].urls = [];
+
+        if (model[0].urls.length <= 1)
+          model[0].urls.unshift(imgData.urls[0]);
+        else
+          model[0].urls[0] = imgData.urls[0];
 
         $('.img-' + name).attr('src', imgData.urls[0]);
 
@@ -405,7 +422,6 @@ module.exports = {
           group_id: this.model[name],
         },
         acceptedFiles: 'image/*',
-
       };
 
       const deleteImage = (e) => {
@@ -435,7 +451,36 @@ module.exports = {
         return false;
       };
 
-      const cropImage = (e) => { console.log('NOT IMPLEMENTED')};
+      const onCrop = (imgData) => {
+        console.log(imgData);
+        let dataFieldName = this._getDataFieldName(name);
+        let model = this.model[dataFieldName];
+
+        let img = _.find(model, (i) => {
+          return this.originImageId == i.id;
+        });
+
+        if (img.urls.length <= 1) {
+          img.urls.unshift(imgData.urls[0]);
+        } else {
+          img.urls[0] = imgData.urls[0];
+        }
+
+        $('a.crop-image[data-imageid=' + this.originImageId + ']').closest('.one-photo').find('img').attr('src', imgData.urls[0]);
+
+      };
+
+      const cropImage = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        let imgId = $(e.target).closest('a.crop-image').data('imageid');
+        imgId = parseInt(imgId, 10);
+
+        this._cropImage(imgId, name, onCrop);
+
+        return false;
+      };
 
       this._initializeDropzone(name, dzOptions, (data, file) => {
 
@@ -464,26 +509,28 @@ module.exports = {
       });
 
       //attach remove item handlers
-      $('.dropzone__' + name + ' .img-dropzone a.delete-image').each((idx, link) => {
+      $('#' + name + ' a.delete-image').each((idx, link) => {
         $(link).on('click', deleteImage);
       });
 
       //attach crop image handlers
-      $('.dropzone__' + name + ' .img-dropzone a.crop-image').each((idx, link) => {
+      $('#' + name + ' a.crop-image').each((idx, link) => {
         $(link).on('click', cropImage);
       });
     },
 
     _cropImage(imgId, name, callback) {
 
-      let dataFieldName = name.replace('_' + this.fields[name].type + '_id', '_data');
+      let dataFieldName = this._getDataFieldName(name);
       let imgModel = this.model[dataFieldName];
 
       let img = _.find(imgModel, (i) => {
         return i.id == imgId;
       });
 
-      let url = img.urls[0];
+      this.originImageId = imgId;
+
+      let url = _.last(img.urls);
       let fileName = img.name;
 
       const cropHelper = require('helpers/cropHelper.js');

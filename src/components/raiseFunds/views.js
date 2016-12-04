@@ -290,7 +290,6 @@ module.exports = {
       this.fields = options.fields;
 
       this.fields.header_image_image_id = _.extend(this.fields.header_image_image_id, {
-        type: 'image',
         imgOptions: {
           aspectRatio: 16/9,
           cssClass : 'img-crop',
@@ -305,7 +304,6 @@ module.exports = {
       });
 
       this.fields.list_image_image_id = _.extend(this.fields.list_image_image_id, {
-        type: 'image',
         imgOptions: {
           aspectRatio: 16 / 9,
           cssClass: 'img-crop',
@@ -320,7 +318,11 @@ module.exports = {
       });
 
       this.fields.gallery_group_id = _.extend(this.fields.gallery_group_id, {
-        type: 'imagefolder',
+        imgOptions: {
+          aspectRatio: 16 / 9,
+          cssClass: 'img-crop',
+          showPreview: false,
+        },
         fn: function checkNotEmpty(value, attr, fn, model, computed) {
           if(!this.gallery_group_data || !this.gallery_group_data.length) {
             throw 'Please upload at least 1 image';
