@@ -137,8 +137,6 @@ module.exports = {
         this.model.annual_income = e.value;
       });
 
-      //todo: disable checkboxes according to initial values
-
       cbInvestor1m.prop('disabled', this.model.net_worth < 1000);
       cbInvestor200k.prop('disabled', this.model.annual_income < 200);
     },
@@ -243,6 +241,20 @@ module.exports = {
 
     _success(data) {
       app.hideLoading();
+
+      //todo: this is bad solution
+      this.model.first_name = this.el.querySelector('#first_name').value;
+      this.model.last_name = this.el.querySelector('#last_name').value;
+
+      app.user.set('first_name', this.model.first_name);
+      app.user.set('last_name', this.model.last_name);
+
+      let userData = app.user.toJSON();
+
+      localStorage.setItem('user', JSON.stringify(userData));
+      // app.trigger('userLoaded', userData);
+
+      $('#user_name').text(app.user.get('first_name') + ' ' + app.user.get('last_name'));
     },
 
   }, phoneHelper.methods, dropzoneHelpers.methods, yesNoHelper.methods)),
