@@ -98,7 +98,7 @@ module.exports = {
     },
 
     onImageCrop(name) {
-
+      $('#menuProfile .fa-user').css('background', 'uri(' + _.first(this.model[name.replace('_' + this.fields[name].type + '_id', '_data')]).urls[0] + ')');
     },
 
     _initSliders() {
@@ -257,8 +257,9 @@ module.exports = {
 
       localStorage.setItem('user', JSON.stringify(userData));
       // app.trigger('userLoaded', userData);
-
-      $('#user_name').text(app.user.get('first_name') + ' ' + app.user.get('last_name'));
+      let fullName = app.user.get('first_name') + ' ' + app.user.get('last_name');
+      $('#user_name').text(fullName);
+      $('.image_image_id').siblings('h3').text(fullName);
     },
 
   }, phoneHelper.methods, dropzoneHelpers.methods, yesNoHelper.methods)),
