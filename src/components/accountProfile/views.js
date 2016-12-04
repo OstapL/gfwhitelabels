@@ -32,14 +32,14 @@ module.exports = {
 
     initialize(options) {
       this.fields = options.fields;
-      this.fields.image = {
-        type: 'image',
+
+      this.fields.image_image_id = _.extend(this.fields.image_image_id, {
         imgOptions: {
           aspectRatio: 1 / 1,
           cssClass : 'img-profile-crop',
           showPreview: true,
         }
-      };
+      });
 
       this.fields.account_number.required = true;
       this.fields.account_number_re = { required: true };
@@ -97,6 +97,10 @@ module.exports = {
       return this;
     },
 
+    onImageCrop(name) {
+      $('#menuProfile .fa-user').css('background', 'uri(' + _.first(this.model[name.replace('_' + this.fields[name].type + '_id', '_data')]).urls[0] + ')');
+    },
+
     _initSliders() {
       let cbInvestor1m = this.$('.investor-1m');
       let cbInvestor200k = this.$('.investor-200k');
@@ -136,8 +140,6 @@ module.exports = {
         }
         this.model.annual_income = e.value;
       });
-
-      //todo: disable checkboxes according to initial values
 
       cbInvestor1m.prop('disabled', this.model.net_worth < 1000);
       cbInvestor200k.prop('disabled', this.model.annual_income < 200);
@@ -243,6 +245,21 @@ module.exports = {
 
     _success(data) {
       app.hideLoading();
+
+      //todo: this is bad solution
+      this.model.first_name = this.el.querySelector('#first_name').value;
+      this.model.last_name = this.el.querySelector('#last_name').value;
+
+      app.user.set('first_name', this.model.first_name);
+      app.user.set('last_name', this.model.last_name);
+
+      let userData = app.user.toJSON();
+
+      localStorage.setItem('user', JSON.stringify(userData));
+      // app.trigger('userLoaded', userData);
+      let fullName = app.user.get('first_name') + ' ' + app.user.get('last_name');
+      $('#user_name').text(fullName);
+      $('.image_image_id').siblings('h3').text(fullName);
     },
 
   }, phoneHelper.methods, dropzoneHelpers.methods, yesNoHelper.methods)),

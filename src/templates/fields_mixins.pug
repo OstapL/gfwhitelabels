@@ -382,10 +382,11 @@ mixin fileFolderDropzone(name, attr)
 
 
 mixin userProfileDropzone(name, attr)
-    if !attr.data
-      - attr.data = {};
-    if !attr.data.urls
-      - attr.data.urls = [];
+    -
+      if (!attr.data)
+        attr.data = {};
+      if (!attr.data.urls)
+        attr.data.urls = ['/img/default/Default_photo.png'];
 
     div(
       class='row media-item ' + attr.class + ' ' + (attr.id || name) +
@@ -405,7 +406,7 @@ mixin userProfileDropzone(name, attr)
               a(href="#").icon
                 i(class="fa fa-times")
             .user-photo-wrap.text-xs-center
-              img(class=(" img-" + name) src="/img/default/Default_photo.png")
+              img(class=(" img-" + name) src=attr.data.urls[0])
           .row.border-dropzone.dropzone-profile
             .drop-image-title.text-xs-center.p-dropzone.p-l-2.p-r-2
               a(class='link-1' href="#" onclick="return false")

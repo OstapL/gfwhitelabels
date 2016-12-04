@@ -5,7 +5,7 @@ const nonCropperProps = ['showPreview', 'cssClass'];
 
 module.exports = {
 
-  showCropper(imgUrl, options, callback) {
+  showCropper(imgUrl, options, cropData, callback) {
 
     options = _.extend({
       viewMode: 1,
@@ -132,9 +132,7 @@ module.exports = {
     let cropper = new Cropper($('#cropSrcImage')[0], options);
 
     //todo set cropper data
-    // cropper.setData();
-
-    return cropper.getData(true);
+    cropper.setData(cropData);
   },
 
 };
