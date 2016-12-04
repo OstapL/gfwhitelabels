@@ -440,7 +440,7 @@ mixin imageDropzone(name, attr)
             div(id=name).col-lg-7.col-md-7.col-sm-7.col-xs-7.p-r-0.p-l-0.img-dropzone.text-lg-center
               .col-xl-12.p-r-0.one-photo
                 - var id = attr.data.id || 0;
-                - var url = attr.data.urls[0] || "/img/default/255x153.png";
+                - var url = _.first(attr.data.urls) || "/img/default/255x153.png";
                 if attr.data.urls[0]
                   .delete-image-container
                     a(href="#" data-imageid=id).crop-image

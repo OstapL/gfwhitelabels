@@ -301,9 +301,17 @@ module.exports = {
     },
 
     _image(name) {
+
       const onCrop = (imgData) => {
-        const fieldDataName = name.replace('_' + this.fields[name].type + '_id', '_data');
-        this.model[fieldDataName].unshift(imgData);
+        const fieldDataName = this._getDataFieldName(name);
+        let model = this.model[fieldDataName];
+        if (!model[0].urls)
+          model[0].urls = [];
+
+        if (model[0].urls.length <= 1)
+          model[0].urls.unshift(imgData.urls[0]);
+        else
+          model[0].urls[0] = imgData.urls[0];
 
         $('.img-' + name).attr('src', imgData.urls[0]);
 
@@ -445,6 +453,21 @@ module.exports = {
 
       const onCrop = (imgData) => {
         console.log(imgData);
+        let dataFieldName = this._getDataFieldName(name);
+        let model = this.model[dataFieldName];
+
+        let img = _.find(model, (i) => {
+          return this.originImageId == i.id;
+        });
+
+        if (img.urls.length <= 1) {
+          img.urls.unshift(imgData.urls[0]);
+        } else {
+          img.urls[0] = imgData.urls[0];
+        }
+
+        $('a.crop-image[data-imageid=' + this.originImageId + ']').closest('.one-photo').find('img').attr('src', imgData.urls[0]);
+
       };
 
       const cropImage = (e) => {
@@ -507,7 +530,7 @@ module.exports = {
 
       this.originImageId = imgId;
 
-      let url = img.urls[0];
+      let url = _.last(img.urls);
       let fileName = img.name;
 
       const cropHelper = require('helpers/cropHelper.js');
