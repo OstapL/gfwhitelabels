@@ -128,15 +128,20 @@ module.exports = {
 
       let dataFieldName = this._getDataFieldName(name);
 
-      this.model[dataFieldName] = data;
-      this.model[name] = data[0].id;
+      if (f.type === 'imagefolder' || f.type === 'filefolder') {
+        this.model[dataFieldName].push(data[0]);
+        // this.model[name] = data[0].id;
+      } else {
+        this.model[dataFieldName] = data;
+        this.model[name] = data[0].id;
+      }
 
-      let imageData = {
+      let reqData = {
         [name]: data[0].id,
         [dataFieldName]: data,
       };
 
-      return app.makeRequest(this.urlRoot.replace(':id', this.model.id), 'PATCH', imageData);
+      return app.makeRequest(this.urlRoot.replace(':id', this.model.id), 'PATCH', reqData);
     },
 
     _file(name) {
@@ -338,14 +343,14 @@ module.exports = {
 
         // let filerR = api.makeRequest(filerServer + '/' + imgId, 'DELETE');
         // let dataR = api.makeRequest(this.urlRoot,'PATCH', emptyData);
-        //
+
         // Promise.all([filerR, dataR]).then((filerResponse, dataResponse) => {
           $link.prop('enabled', false);
           $link.off('click');
 
           //remove field from model
-          delete this.model[name];
-          delete this.model[fieldDataName];
+          this.model[name] = null;
+          this.model[fieldDataName] = [];
 
           $link.closest('.one-photo').find('img.img-' + name).attr('src', '/img/default/255x153.png');
           $link.closest('.delete-image-container').remove();
@@ -431,22 +436,23 @@ module.exports = {
         let $link = $(e.target).closest('a.delete-image');
         let imageId = $link.data('imageid');
 
+        let dataFieldName = this._getDataFieldName(name);
         //todo make request to the urlRoot
-        api.makeRequest(filerServer + '/' + fileId, 'DELETE').done(() => {
+        // api.makeRequest(filerServer + '/' + imageId, 'DELETE').done(() => {
           $link.prop('enabled', false);
           $link.off('click');
 
           //remove field from model
-          let dataArr = this.model[name.replace('_id', '_data')];
+          let dataArr = this.model[dataFieldName];
           let dataIdx = _(dataArr).findIndex((elem) => { return elem.id == imageId });
           if (dataIdx >= 0) {
             dataArr.splice(dataIdx, 1);
             $link.closest('.one-photo').remove();
           }
-        }).fail((err) => {
-          console.error(err);
-          alert(err.responseJSON.error);
-        });
+        // }).fail((err) => {
+        //   console.error(err);
+        //   alert(err.responseJSON.error);
+        // });
 
         return false;
       };
@@ -484,7 +490,7 @@ module.exports = {
 
       this._initializeDropzone(name, dzOptions, (data, file) => {
 
-        let fieldDataName = name.replace('_id', '_data');
+        let fieldDataName = this._getDataFieldName(name);
         let url = data[0].urls[0];
         let imageId = data[0].id;
 
@@ -505,7 +511,6 @@ module.exports = {
 
         $('.dropzone__' + name + ' .all-gallery').append(imageBlock);
 
-        this.model[fieldDataName].push(data[0]);
       });
 
       //attach remove item handlers
