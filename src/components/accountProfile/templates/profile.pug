@@ -14,12 +14,12 @@ include ../../../templates/fields_mixins.pug
       form(method="post" action="").form.form-section
         - var values = user;
         h3.m-t-0.m-b-1.profile-user-name.text-xs-center #{user.first_name + ' ' + user.last_name}
-        +userProfileDropzone("image", _.extend({
+        +userProfileDropzone("image_image_id", _.extend({
           thumbSize: '255x135',
           default: '/img/default/255x153.png',
           icon: 'camera',
           text: 'Drop your profile photo here or click to upload',
-          value: values.image_id,
+          data: _.first(user.image_data),
         }, fields.image))
       .row.m-t-2
         .col-xl-12.p-l-0.p-r-0
