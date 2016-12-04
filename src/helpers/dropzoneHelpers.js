@@ -116,8 +116,17 @@ module.exports = {
       });
     },
 
+    _getDataFieldName(name) {
+      return this.fields[name].type === 'imagefolder'
+        ? name.replace('_group_id', '_data')
+        : name.replace('_' + this.fields[name].type + '_id', '_data');
+    },
+
     _updateModelData(name, data) {
-      let dataFieldName = name.replace('_' + this.fields[name].type + '_id', '_data');
+
+      let f = this.fields[name];
+
+      let dataFieldName = this._getDataFieldName(name);
 
       this.model[dataFieldName] = data;
       this.model[name] = data[0].id;
@@ -405,7 +414,6 @@ module.exports = {
           group_id: this.model[name],
         },
         acceptedFiles: 'image/*',
-
       };
 
       const deleteImage = (e) => {
@@ -435,7 +443,21 @@ module.exports = {
         return false;
       };
 
-      const cropImage = (e) => { console.log('NOT IMPLEMENTED')};
+      const onCrop = (imgData) => {
+        console.log(imgData);
+      };
+
+      const cropImage = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        let imgId = $(e.target).closest('a.crop-image').data('imageid');
+        imgId = parseInt(imgId, 10);
+
+        this._cropImage(imgId, name, onCrop);
+
+        return false;
+      };
 
       this._initializeDropzone(name, dzOptions, (data, file) => {
 
@@ -476,12 +498,14 @@ module.exports = {
 
     _cropImage(imgId, name, callback) {
 
-      let dataFieldName = name.replace('_' + this.fields[name].type + '_id', '_data');
+      let dataFieldName = this._getDataFieldName(name);
       let imgModel = this.model[dataFieldName];
 
       let img = _.find(imgModel, (i) => {
         return i.id == imgId;
       });
+
+      this.originImageId = imgId;
 
       let url = img.urls[0];
       let fileName = img.name;
