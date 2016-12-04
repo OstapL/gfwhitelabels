@@ -598,13 +598,8 @@ module.exports = {
         this.assignLabels();
         this.createIndexes();
         this.buildJsonTemplates('raiseFunds');
+        this.formatData();
 
-        this.$el.on('keypress', ':input:not(textarea)', function (event) {
-          if (event.keyCode == 13) {
-            event.preventDefault();
-            return false;
-          }
-        });
       },
 
       checkMinMaxRaise(e) {

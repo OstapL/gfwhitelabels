@@ -8,6 +8,8 @@ global.userModel = require('components/accountProfile/model.js');
 global.Urls = require('./jsreverse.js');
 require('jquery-serializejson/jquery.serializejson.min.js');
 
+const formatHelper = require('helpers/formatHelper');
+
 $.fn.scrollTo = function (padding=0) {
   $('html, body').animate({
     scrollTop: $(this).offset().top - padding + 'px',
@@ -51,6 +53,14 @@ Backbone.View.prototype.assignLabels = function() {
       });
     } else {
       el.label = this.labels[key];
+    }
+  });
+};
+
+Backbone.View.prototype.formatData = function() {
+  _(this.fields).each((el, key) => {
+    if(el.type == 'money') {
+      this.model[key] = formatHelper.formatPrice(this.model[key]);
     }
   });
 }
@@ -147,6 +157,7 @@ app.user = new userModel();
 global.api = require('helpers/forms.js');
 _.extend(app, api);
 global.app = app;
+global.deep = require('deep-diff');
 
 // app routers
 app.routers = require('routers');

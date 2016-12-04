@@ -1,5 +1,6 @@
 'use strict';
 
+const formatHelper = require('helpers/formatHelper');
 const validation = require('components/validation/validation.js');
 
 module.exports = {
@@ -60,39 +61,132 @@ module.exports = {
     return $.ajax(params);
   },
 
-  submitAction(e, data) {
+	deepDiffMapper() {
+		return {
+			VALUE_CREATED: 'created',
+			VALUE_UPDATED: 'updated',
+			VALUE_DELETED: 'deleted',
+			VALUE_UNCHANGED: 'unchanged',
+			map: function(obj1, obj2) {
+					if (this.isFunction(obj1) || this.isFunction(obj2)) {
+							throw 'Invalid argument. Function given, object expected.';
+					}
+					if (this.isValue(obj1) || this.isValue(obj2)) {
+							return {
+									type: this.compareValues(obj1, obj2),
+									data: (obj1 === undefined) ? obj2 : obj1
+							};
+					}
+
+					var diff = {};
+					for (var key in obj1) {
+							if (this.isFunction(obj1[key])) {
+									continue;
+							}
+
+							var value2 = undefined;
+							if ('undefined' != typeof(obj2[key])) {
+									value2 = obj2[key];
+							}
+
+							diff[key] = this.map(obj1[key], value2);
+					}
+					for (var key in obj2) {
+							if (this.isFunction(obj2[key]) || ('undefined' != typeof(diff[key]))) {
+									continue;
+							}
+
+							diff[key] = this.map(undefined, obj2[key]);
+					}
+
+					return diff;
+
+			},
+			compareValues: function(value1, value2) {
+					//if (value1 === value2) {
+					if (value1 == value2) {
+							return this.VALUE_UNCHANGED;
+					}
+					if ('undefined' == typeof(value1)) {
+							return this.VALUE_CREATED;
+					}
+					if ('undefined' == typeof(value2)) {
+							return this.VALUE_DELETED;
+					}
+
+					return this.VALUE_UPDATED;
+			},
+			isFunction: function(obj) {
+					return {}.toString.apply(obj) === '[object Function]';
+			},
+			isArray: function(obj) {
+					return {}.toString.apply(obj) === '[object Array]';
+			},
+			isObject: function(obj) {
+					return {}.toString.apply(obj) === '[object Object]';
+			},
+			isValue: function(obj) {
+					return !this.isObject(obj) && !this.isArray(obj);
+			}
+		}
+	},
+
+  submitAction(e, newData) {
     e.preventDefault();
 
     this.$el.find('.alert').remove();
 
-    data = data || $(e.target).closest('form').serializeJSON({ useIntKeysAsArrayIndex: true });
-    api.fixDateFields.call(this, this.fields, data);
+    debugger;
+    let url = this.urlRoot || '';
+    let method = e.target.dataset.method || 'POST';
+
+    if(this.model.hasOwnProperty('id')) {
+      url = url.replace(':id', this.model.id);
+      method = e.target.dataset.method || 'PATCH';
+    }
+
+    newData = newData || $(e.target).closest('form').serializeJSON({ useIntKeysAsArrayIndex: true });
+    api.fixDateFields.call(this, this.fields, newData);
+    api.fixMoneyField.call(this, this.fields, newData);
 
     // if view already have some data - extend that info
     if(this.hasOwnProperty('model') && !this.doNotExtendModel) {
-      _.extend(this.model, data);
-      data = _.extend({}, this.model)
+      newData = _.extend({}, this.model, newData);
     }
 
+    // for PATCH method we will send only difference
+    if(method == 'PATCH') {
+      let patchData = {};
+      let d = api.deepDiffMapper().map(newData, this.model);
+      _(d).forEach((el, i) => {
+        if(el.type == 'updated') {
+          patchData[i] = el.data;
+        }
+      });
+      newData = patchData;
+    };
+
     this.$('.help-block').remove();
-    if (e.target.dataset.method != 'PATCH' && !validation.validate(this.fields, data, this)) {
+    let fields = this.fields;
+    if (method == 'PATCH') {
+      let patchFields = {};
+      _(newData).each((el, key) => {
+        patchFields[key] = fields[key];
+      })
+      fields = patchFields;
+    }
+    
+    if(!validation.validate(fields, newData, this)) {
       _(validation.errors).each((errors, key) => {
         validation.invalidMsg(this, key, errors);
       });
       this.$('.help-block').prev().scrollTo(5);
       return;
     } else {
-      let url = this.urlRoot;
-      let type = e.target.dataset.method || 'POST';
 
-      if(data.hasOwnProperty('id')) {
-        url = url.replace(':id', data.id);
-        delete data.id;
-        type = e.target.dataset.method || 'PUT';
-      }
-
-      api.makeRequest(url, type, data).
-        then((data) => {
+      api.makeRequest(url, method, newData).
+        then((responseData) => {
+          _.extend(this.model, newData);
           app.showLoading();
 
           // ToDo
@@ -102,12 +196,12 @@ module.exports = {
           $('.popover').popover('hide');
 
           if (typeof this._success == 'function') {
-            this._success(data);
+            this._success(responseData);
           } else {
             $('#content').scrollTo();
             this.undelegateEvents();
             app.routers.navigate(
-              this.getSuccessUrl(data),
+              this.getSuccessUrl(responseData),
               { trigger: true, replace: false }
             );
           }
@@ -192,4 +286,33 @@ module.exports = {
       }
     });
   },
+
+  deleteEmptyNested(fields, data) {
+    _(fields).each((el, key) => {
+      if(el.type == 'nested') {
+        if(Array.isArray(data[key])) {
+          debugger;
+          data[key].forEach((el, i) => {
+            emptyValues = 0;
+            _(el).each((val, subkey) => {
+              if(val == '' || val == 0) {
+                emptyValues ++;
+              }
+            });
+            if(Object.keys(el) == emptyValues) {
+              delete data[key][i]
+            };
+          });
+        }
+      }
+    });
+  },
+
+  fixMoneyField(fields, data) {
+    _(fields).each((el, key) => {
+      if(el.type == 'money') {
+        data[key] = formatHelper.unformatPrice(data[key]);
+      }
+    });
+  }
 };

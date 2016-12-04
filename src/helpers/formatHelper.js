@@ -31,6 +31,10 @@ module.exports = {
   formatPrice: formatPrice,
   formatNumber: formatNumber,
 
+  unformatPrice(price) {
+    return price.replace(/,/g, '').replace('$', '');
+  },
+
   months: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
 
   formatDate: function (dateStr) {
