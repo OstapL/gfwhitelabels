@@ -1,4 +1,5 @@
 const formatHelper = require('helpers/formatHelper');
+const textHelper = require('helpers/textHelper');
 
 module.exports = { 
   list: Backbone.View.extend({
@@ -227,6 +228,7 @@ module.exports = {
           edit: this.edit,
           previous: this.previous,
           preview: this.preview,
+          textHelper: textHelper,
         })
       );
 
