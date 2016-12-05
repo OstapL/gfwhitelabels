@@ -14,12 +14,12 @@ include ../../../templates/fields_mixins.pug
       form(method="post" action="").form.form-section
         - var values = user;
         h3.m-t-0.m-b-1.profile-user-name.text-xs-center #{user.first_name + ' ' + user.last_name}
-        +userProfileDropzone("image", _.extend({
+        +userProfileDropzone("image_image_id", _.extend({
           thumbSize: '255x135',
           default: '/img/default/255x153.png',
           icon: 'camera',
           text: 'Drop your profile photo here or click to upload',
-          value: values.image_id,
+          data: user.image_data[0],
         }, fields.image))
       .row.m-t-2
         .col-xl-12.p-l-0.p-r-0
@@ -52,7 +52,7 @@ include ../../../templates/fields_mixins.pug
         div(aria-expanded="true")#account_info.tab-pane.fade.active.in
           .row
             section.form-section.clearfix
-              form(method="post" action="" data-method="PATCH").form
+              form(method="post" action="").form
                 .form-body.clearfix
                   .col-xs-12
                     section.right-block
@@ -79,8 +79,7 @@ include ../../../templates/fields_mixins.pug
                               'class1': 'col-lg-6 text-lg-right text-xs-left',
                               'class2': 'col-lg-6',
                               'type': 'text',
-                              'value': user.country == 'US' ? user.zip_code : '',
-                              'disabled': user.country != 'US',
+                              'value': user.zip_code,
                             }, fields.zip_code))
 
                           .col-lg-5.city_states.required
@@ -170,12 +169,12 @@ include ../../../templates/fields_mixins.pug
                       .form-group.row.clearfix.m0
                         .col-lg-11.text-xs-center.m-t-2
                           .controls
-                            button(type="submit").btn.btn-primary.pull-lg-right SAVE
+                            button(type="button" data-method="PATCH")#save-account-info.btn.btn-primary.pull-lg-right SAVE
 
         div(aria-expanded="true")#financial_info.tab-pane.fade
           .row
             section.form-section.clearfix.col-xl-12
-              form(method="post" action="" data-method="PATCH")
+              form(method="post" action="")
                 .form-body.clearfix
                   
                   .col-xs-12
@@ -192,24 +191,18 @@ include ../../../templates/fields_mixins.pug
                         .col-xl-11
                           input(
                           type='text'
-                          data-slider-value=user.net_worth,
-                          data-slider-ticks="[0, 50, 100, 200, 500, 1000, 2000, 5000]",
-                          ticks_positions="[0, 14, 28, 42, 56, 70, 85, 100]",
-                          data-slider-ticks-labels="['$0', '$50K', '$100K', '$200K', '$500K' , '$1M', '$2M', '$5M+']",
-                          name="Annual_Income"
-                          data-model-value='taxRate').form-control.slider-net-worth
+                          name="net_worth"
+                          data-slider-value=user.net_worth
+                          ).form-control.slider-net-worth
                       .form-group.row.bootstrap-slider-custom
                         .col-xl-11
                           label.m-b-2.m-t-1 My Annual Income
                         .col-xl-11
                           input(
-                          type='text',
-                          data-slider-value=user.annual_income,
-                          name="taxRate",
-                          data-slider-ticks="[0, 50, 100, 200, 500]",
-                          ticks_positions="[0, 30, 60, 70, 90, 100]",
-                          data-slider-ticks-labels="['$0', '$50K', '$100K', '$200K', '$500K']",
-                          data-model-value='taxRate').form-control.slider-annual-income
+                          type='text'
+                          name="annual_income"
+                          data-slider-value=user.annual_income
+                          ).form-control.slider-annual-income
                       .radio-input
                         p.font-weight-bold.d-inline-block.m-b-1.m-t-1 Are you an Accredited Investor?&nbsp;
                           div.d-inline-block
@@ -303,7 +296,7 @@ include ../../../templates/fields_mixins.pug
                       .form-group.row.clearfix.m0
                         .col-lg-11.mt30.text-xs-center
                           .controls
-                            button(type="submit").btn.btn-primary.pull-lg-right SAVE
+                            button(type="button" data-method="PATCH")#save-financial-info.btn.btn-primary.pull-lg-right SAVE
 
   .popover-content-ssn
     i.fa.fa-info-circle
@@ -342,4 +335,5 @@ div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true
                     button(data-dismiss="modal").btn.btn-primary.text-uppercase save
         .modal-footer
 
-script(src= window.location.protocol + "//maps.google.com/maps/api/js?language=en&key=" + googleMapKey)
+if !window.google || !window.google.maps
+  script(src= window.location.protocol + "//maps.google.com/maps/api/js?language=en&key=" + googleMapKey)

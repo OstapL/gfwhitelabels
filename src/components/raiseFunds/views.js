@@ -11,50 +11,7 @@ const validation = require('components/validation/validation.js');
 const menuHelper = require('helpers/menuHelper.js');
 
 const submitCampaign = function submitCampaign(e) {
-  e.preventDefault();
-  let $form = this.$el.find('form');
-  var data = $form.serializeJSON({ useIntKeysAsArrayIndex: true });
-  api.fixDateFields.call(this, this.fields, data);
-
-  _.extend(this.model, data);
-  data = _.extend({}, this.model);
-
-  // ToDo
-  // Refactor code
-  if(this.hasOwnProperty('index')) {
-    data.index = this.index;
-  };
-
-  this.$('.help-block').remove();
-  if (!validation.validate(this.fields, data, this)) {
-    _(validation.errors).each((errors, key) => {
-      validation.invalidMsg(this, key, errors);
-    });
-    this.$('.help-block').scrollTo(45);
-    return;
-  } else {
-    let url = this.urlRoot.replace(/:id/, data.id);
-    let type = 'PUT';
-    delete data.id;
-
-    api.makeRequest(url, type, data).
-      then((data) => {
-
-        if(this.hasOwnProperty('campaign')) {
-          data.id = this.campaign.id;
-        };
-
-        // if we saved company information we will not have any progress data in
-        // response
-        if(data.hasOwnProperty('progress') == false) {
-          data.progress = this.campaign.progress;
-        }
-
-        doCampaignValidation(e, data);
-    }, (error) => {
-      doCampaignValidation(null, this.model);
-    });
-  }
+  doCampaignValidation(e, this.model);
 };
 
 const doCampaignValidation = function doCampaignValidation(e, data) {
@@ -88,12 +45,11 @@ const doCampaignValidation = function doCampaignValidation(e, data) {
 const onPreviewAction = function(e) {
   e.preventDefault();
   let pathname = location.pathname;
-  this.$el.find('form').submit()
+  //this.$el.find('#submitForm').click();
   app.showLoading();
-  let that = this;
-  setTimeout(function() {
-    window.location = '/' + (that.campaign ? that.campaign.id : that.model.id) + '?preview=1&previous=' + pathname;
-  }, 100);
+  window.location = '/' + this.formc.company_id + '?preview=1&previous=' + pathname;
+  setTimeout(() => {
+  }, 500);
 };
 
 
@@ -102,7 +58,7 @@ module.exports = {
     urlRoot: raiseCapitalServer + '/company',
     template: require('./templates/company.pug'),
     events: _.extend({
-      'click .btn-primary': api.submitAction,
+      'click #submitForm': api.submitAction,
       'keyup #zip_code': 'changeZipCode',
       'click .update-location': 'updateLocation',
       'click .onPreview': onPreviewAction,
@@ -119,12 +75,6 @@ module.exports = {
       this.fields = options.fields;
       this.formc = options.formc;
       this.campaign = options.campaign;
-      this.$el.on('keypress', ':input:not(textarea)', function (event) {
-        if (event.keyCode == 13) {
-          event.preventDefault();
-          return false;
-        }
-      });
       this.labels = {
         name: 'Legal Name of Company',
         industry: 'Industry',
@@ -192,6 +142,7 @@ module.exports = {
     },
 
     _success(data) {
+      this.undelegateEvents();
       if (data.hasOwnProperty('campaign_id') == false) {
         data.campaign_id = this.formc.campaign_id;
       }
@@ -229,11 +180,63 @@ module.exports = {
       return this;
     },
   }),
+  afterPaymentDashboard: Backbone.View.extend({
+    el: '#content',
+    template: require('./templates/afterPaymentDashboard.pug'),
+
+    render() {
+      this.$el.html(
+        this.template({
+          
+        })
+      );
+      return this;
+    },
+  }),
+  afterCompleteDashboard: Backbone.View.extend({
+    el: '#content',
+    template: require('./templates/afterCompleteFillingDashboard.pug'),
+
+    render() {
+      this.$el.html(
+        this.template({
+          
+        })
+      );
+      return this;
+    },
+  }),
+  afterFinalDashboard: Backbone.View.extend({
+    el: '#content',
+    template: require('./templates/afterFinalSubmitDashboard.pug'),
+
+    render() {
+      this.$el.html(
+        this.template({
+          
+        })
+      );
+      return this;
+    },
+  }),
+  afterSubmittingGovermentDashboard: Backbone.View.extend({
+    el: '#content',
+    template: require('./templates/afterSubmittingGovermentDashboard.pug'),
+
+    render() {
+      this.$el.html(
+        this.template({
+          
+        })
+      );
+      return this;
+    },
+  }),
   generalInformation: Backbone.View.extend(_.extend({
       urlRoot: raiseCapitalServer + '/campaign/:id/general_information',
       template: require('./templates/generalInformation.pug'),
       events: _.extend({
-          'submit form': api.submitAction,
+          'click #submitForm': api.submitAction,
           'click .onPreview': onPreviewAction,
           'click .submit_form': submitCampaign,
         }, addSectionHelper.events, leavingConfirmationHelper.events, menuHelper.events),
@@ -248,18 +251,12 @@ module.exports = {
       },
 
       getSuccessUrl(data) {
-        return '/campaign/' + (data.id ? data.id : this.model.id)  + '/media';
+        return '/campaign/' + this.model.id  + '/media';
       },
 
       initialize(options) {
         this.fields = options.fields;
         this.formc = options.formc;
-        this.$el.on('keypress', ':input:not(textarea)', function (event) {
-          if (event.keyCode == 13) {
-            event.preventDefault();
-            return false;
-          }
-        });
         this.labels = {
           pitch: 'Why Should People Invest?',
           business_model: 'Why We Are Raising Capital?',
@@ -313,19 +310,17 @@ module.exports = {
     urlRoot: raiseCapitalServer + '/campaign/:id/media',
 
     events: _.extend({
-      'submit form': api.submitAction,
-      'change #video,.additional_video_link': 'updateVideo',
-      // 'change #video,.additional_video_link': 'appendHttpsIfNecessary',
-      'change .press_link': 'appendHttpIfNecessary',
-      'click .submit_form': submitCampaign,
-      'click .onPreview': onPreviewAction,
-    }, leavingConfirmationHelper.events, menuHelper.events,
-      addSectionHelper.events, dropzoneHelpers.events
+        'click #submitForm': api.submitAction,
+        'change #video,.additional-video-link': 'updateVideo',
+        'change .press_link': 'appendHttpIfNecessary',
+        'click .submit_form': submitCampaign,
+        'click .onPreview': onPreviewAction,
+      }, leavingConfirmationHelper.events, menuHelper.events,
+        addSectionHelper.events, dropzoneHelpers.events
     ),
 
-
     getSuccessUrl(data) {
-      return '/campaign/' + (data.id ? data.id : this.model.id) + '/team-members';
+      return '/campaign/' + this.model.id + '/team-members';
     },
 
     appendHttpsIfNecessary(e) {
@@ -343,12 +338,36 @@ module.exports = {
     },
 
     initialize(options) {
+      this.urlRoot = this.urlRoot.replace(':id', this.model.id);
+
       this.fields = options.fields;
-      this.fields.gallery_group_id.validate.fn = function checkNotEmpty(value, attr, fn, model, computed) {
-        if(document.querySelectorAll('.dropzone__gallery .img-fluid').length === 0) {
-          throw 'Please upload at least 1 image';
-        }
-      };
+
+      this.fields.header_image_image_id = _.extend(this.fields.header_image_image_id, {
+        imgOptions: {
+          aspectRatio: 16/9,
+          cssClass : 'img-crop',
+          showPreview: false,
+        },
+
+      });
+
+      this.fields.list_image_image_id = _.extend(this.fields.list_image_image_id, {
+        imgOptions: {
+          aspectRatio: 16 / 9,
+          cssClass: 'img-crop',
+          showPreview: false,
+        },
+
+      });
+
+      this.fields.gallery_group_id = _.extend(this.fields.gallery_group_id, {
+        imgOptions: {
+          aspectRatio: 16 / 9,
+          cssClass: 'img-crop',
+          showPreview: false,
+        },
+
+      });
 
       this.$el.on('keypress', ':input:not(textarea)', function (event) {
         if (event.keyCode == 13) {
@@ -356,22 +375,6 @@ module.exports = {
           return false;
         }
       });
-      this.fields.header_image_image_id.type =
-        this.fields.list_image_image_id.type = 'image';
-
-      this.fields.header_image_image_id.imgOptions = {
-        aspectRatio: 16/9,
-        cssClass : 'img-crop',
-        showPreview: false,
-      };
-
-      this.fields.list_image_image_id.imgOptions = {
-        aspectRatio: 16 / 9,
-        cssClass: 'img-crop',
-        showPreview: false,
-      };
-
-      this.fields.gallery_group_id.type = 'imagefolder';
 
       this.labels = {
         gallery_data: {
@@ -382,8 +385,7 @@ module.exports = {
           link: 'Article Link',
         },
         additional_video: {
-          link: 'Youtube or Vimeo Link',
-          headline: 'Title',
+          headline: 'Additional Video for Campaign',
         },
         list_image_image_id: 'Thumbnail Picture',
         header_image_image_id: 'Header Image',
@@ -423,52 +425,15 @@ module.exports = {
       return this;
     },
 
-    getVideoId(url) {
-      try {
-        var provider = url.match(/https:\/\/(:?www.)?(\w*)/)[2];
-        provider = provider.toLowerCase();
-        var id;
-
-        if (provider == 'youtube') {
-          // id = url.match(/https:\/\/(?:www.)?(\w*).com\/.*v=(\w*)/)[2];
-          id = url.match(/https:\/\/(?:www.)?(\w*).com\/.*v=([A-Za-z0-9_-]*)/)[2];
-        } else if (provider == 'vimeo') {
-          id = url.match(/https:\/\/(?:www.)?(\w*).com\/(\d*)/)[2];
-        } else {
-          return '';
-        }
-      } catch (err) {
-        return '';
-      }
-
-      return {id: id, provider: provider};
-    },
-
     updateVideo(e) {
       appendHttpIfNecessary(e, true);
-      // var $form = $(e.target).parents('.row');
-      let $videoContainer;
-      if (e.target.id == 'video') $videoContainer = this.$('.main-video-block');
-      else $videoContainer = this.$('.additional-video-block .index_' + $(e.target).data('index'));
-      // var $form = $('.index_' + $(e.target).data('index'));
-      var video = e.target.value;
-      var res = this.getVideoId(video);
 
-      // ToDo
-      // FixME
-      // Bad CHECK
-      //
-      if(res.id && res.provider) {
-        if (res.provider == 'youtube')
-          $videoContainer.find('iframe').attr(
-            'src', '//youtube.com/embed/' +  res.id + '?rel=0'
-          );
-        else
-          $videoContainer.find('iframe').attr(
-            'src', '//player.vimeo.com/video/' +  res.id
-          );
-        //e.target.value = id;
-      }
+      let $videoContainer = $(e.target).closest('.video-container');
+
+      var videoInfo = app.getVideoId(e.target.value);
+      var src = app.getVideoUrl(videoInfo);
+
+      $videoContainer.find('iframe').attr('src', src);
     },
 
   }, leavingConfirmationHelper.methods, menuHelper.methods,
@@ -630,11 +595,11 @@ module.exports = {
   specifics: Backbone.View.extend(_.extend({
       urlRoot: raiseCapitalServer + '/campaign/:id/specifics',
       events: _.extend({
-        'submit form': api.submitAction,
+        'click #submitForm': api.submitAction,
         'change input[name="security_type"]': 'updateSecurityType',
-        'focus #minimum_raise,#maximum_raise,#minimum_increment,#premoney_valuation,#price_per_share': 'clearZeroAmount',
-        'change #minimum_raise,#maximum_raise,#minimum_increment,#premoney_valuation': 'formatNumber',
-        'change #minimum_raise,#maximum_raise,#price_per_share,#premoney_valuation': 'calculateNumberOfShares',
+        // 'focus #minimum_raise,#maximum_raise,#minimum_increment,#premoney_valuation,#price_per_share': 'clearZeroAmount',
+        // 'change #minimum_raise,#maximum_raise,#minimum_increment,#premoney_valuation': 'formatNumber',
+        // 'change #minimum_raise,#maximum_raise,#price_per_share,#premoney_valuation': 'calculateNumberOfShares',
         'click .onPreview': onPreviewAction,
         'click .submit_form': submitCampaign,
         'click .submit-specifics': 'checkMinMaxRaise',
@@ -674,13 +639,8 @@ module.exports = {
         this.assignLabels();
         this.createIndexes();
         this.buildJsonTemplates('raiseFunds');
+        this.formatData();
 
-        this.$el.on('keypress', ':input:not(textarea)', function (event) {
-          if (event.keyCode == 13) {
-            event.preventDefault();
-            return false;
-          }
-        });
       },
 
       checkMinMaxRaise(e) {
@@ -778,32 +738,10 @@ module.exports = {
   perks: Backbone.View.extend(_.extend({
     urlRoot: raiseCapitalServer + '/campaign/:id/perks',
     events: _.extend({
-        'submit form': 'onSubmit',
+        'click #submitForm': api.submitAction,
         'click .onPreview': onPreviewAction,
         'click .submit_form': submitCampaign,
     }, leavingConfirmationHelper.events, menuHelper.events, addSectionHelper.events),
-
-    onSubmit(e) {
-      e.preventDefault();
-
-      let data = $(e.target).serializeJSON({ useIntKeysAsArrayIndex: true });
-      let url = this.urlRoot.replace(':id', this.model.id);
-
-      _.extend(this.model, data);
-      data = _.extend({}, this.model)
-      delete data.id;
-
-      app.showLoading();
-      api.makeRequest(url, 'PUT', data).then((data) => {
-        this.model = data;
-        app.hideLoading();
-        //$('button.submit_form').click();
-      }).
-      fail((xhr, status, text) => {
-        api.errorAction(this, xhr, status, text, this.fields);
-        app.hideLoading();
-      });
-    },
 
     preinitialize() {
       // ToDo
@@ -825,12 +763,6 @@ module.exports = {
       this.assignLabels();
       this.createIndexes();
       this.buildJsonTemplates('raiseFunds');
-      this.$el.on('keypress', ':input:not(textarea)', function (event) {
-        if (event.keyCode == 13) {
-          event.preventDefault();
-          return false;
-        }
-      });
     },
 
     render() {
@@ -847,6 +779,10 @@ module.exports = {
       );
       return this;
     },
+
+    _success(data) {
+      app.hideLoading();
+    }
 
   }, leavingConfirmationHelper.methods, menuHelper.methods, addSectionHelper.methods)),
 

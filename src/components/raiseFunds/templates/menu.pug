@@ -131,12 +131,12 @@ mixin menu(currentSection, currentStep)
         .row
           .col-lg-12.text-xs-center
             .row
-              button(type="button").btn.btn-primary.text-uppercase.m-t-2.submit_form submit form c
+              button(type="button").btn.btn-primary.text-uppercase.m-t-2.submit_formc submit form c
       else
         .row
           .col-lg-12.text-xs-center
             .row
-              button(type="button" data-href=("#")).btn.btn-secondary.text-uppercase.m-t-2.onPreview preview
+              button(type="button").btn.btn-secondary.text-uppercase.m-t-2.onPreview preview
             .row
               button(type="button").btn.btn-primary.text-uppercase.m-t-2.submit_form submit campaign
         
@@ -188,6 +188,91 @@ mixin menu(currentSection, currentStep)
                   a(href='/campaign/' + (campaignId || values.id) + '/perks?check=1').btn.btn-sm.btn-secondary.text-uppercase.m-t-0 Edit
             .modal-footer
       div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")#company_publish_confirm.modal.fade
+        div(role="document").modal-dialog
+          .modal-content
+            .modal-header
+              button(type="button" data-dismiss="modal" aria-label="Close").close
+                span(aria-hidden="true")
+                  i.fa.fa-times
+              h2.text-lg-center.text-uppercase.text-md-center.text-xs-center.line-height-1.dosis.m-t-1.modal-title Are you sure you want to submit ?
+
+            .modal-body.m-b-2
+              .col-sm-12
+                .result-info-block.m-x-auto.text-xs-center
+                  |  Once you submit, you will no longer have the ability to edit your Campaign
+                  .info-btn-block.mb30
+                    a(href="#" data-dismiss="modal").btn.m-t-2.m-r-1.btn-secondary Cancel
+                    a(href="/campaign/" + values.id + "/thankyou").btn.m-t-2.btn-primary.text-uppercase Yes
+            .modal-footer
+      div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")#formc_publish.modal.fade
+        div(role="document").modal-dialog
+          .modal-content
+            .modal-header
+              button(type="button" data-dismiss="modal" aria-label="Close").close
+                span(aria-hidden="true")
+                  i.fa.fa-times
+              h2.text-lg-center.text-uppercase.text-md-center.text-xs-center.line-height-1.dosis.m-t-1.modal-title COMPLETE THE FOLLOWING TO SUBMIT YOUR CAMPAIGN
+
+            .modal-body.m-b-2
+              .form-section
+                .col-lg-6.pull-left.p-l-0.introduction.collapse
+                  h3.m-b-0.m-t-0 Introduction
+                .col-lg-6.text-xs-right.m-b-10.p-r-0.introduction.collapse
+                  a(href="/formc/" + (formcId || values.id) + "/introduction?check=1").btn.btn-sm.btn-secondary.text-uppercase.m-t-0 Edit
+                .col-lg-6.pull-left.p-l-0.team-members.collapse
+                  h3.m-b-0.m-t-0 Team Members 
+                .col-lg-6.text-xs-right.m-b-10.p-r-0.team-members.collapse
+                  a(href='/formc/' + (formcId || values.id) + '/team-members?check=1').btn.btn-sm.btn-secondary.text-uppercase.m-t-0 Edit
+                .col-lg-6.pull-left.p-l-0.related-parties.collapse
+                  h3.m-b-0.m-t-0 Related Parties
+                .col-lg-6.text-xs-right.m-b-10.p-r-0.related-parties.collapse
+                  a(href='/formc/' + (formcId || values.id) + '/related-parties?check=1').btn.btn-sm.btn-secondary.text-uppercase.m-t-0 Edit
+                .col-lg-6.pull-left.p-l-0.use-of-proceeds.collapse
+                  h3.m-b-0.m-t-0 Use of Proceeds 
+                .col-lg-6.text-xs-right.m-b-10.p-r-0.use-of-proceeds.collapse
+                  a(href='/formc/' + (formcId || values.id) + '/use-of-proceeds?check=1').btn.btn-sm.btn-secondary.text-uppercase.m-t-0 Edit
+                .col-lg-6.pull-left.p-l-0.risk-factors-market.collapse
+                  h3.m-b-0.m-t-0 Market and Customer 
+                .col-lg-6.text-xs-right.mb30.p-r-0.risk-factors-market.collapse
+                  a(href='/formc/' + (formcId || values.id) + '/risk-factors-market?check=1').btn.btn-sm.btn-secondary.text-uppercase.m-t-0 Edit
+                .col-lg-6.pull-left.p-l-0.risk-factors-financial.collapse
+                  h3.m-b-0.m-t-0 Financial
+                .col-lg-6.text-xs-right.m-b-10.p-r-0.risk-factors-financial.collapse
+                  a(href="/formc/" + (formcId || values.id) + "/risk-factors-financial?check=1").btn.btn-sm.btn-secondary.text-uppercase.m-t-0 Edit
+                .col-lg-6.pull-left.p-l-0.risk-factors-operational.collapse
+                  h3.m-b-0.m-t-0 Operational
+                .col-lg-6.text-xs-right.m-b-10.p-r-0.risk-factors-operational.collapse
+                  a(href="/formc/" + (formcId || values.id) + "/risk-factors-operational?check=1").btn.btn-sm.btn-secondary.text-uppercase.m-t-0 Edit
+                .col-lg-6.pull-left.p-l-0.risk-factors-competitive.collapse
+                  h3.m-b-0.m-t-0 Competitive
+                .col-lg-6.text-xs-right.m-b-10.p-r-0.risk-factors-competitive.collapse
+                  a(href="/formc/" + (formcId || values.id) + "/risk-factors-competitive?check=1").btn.btn-sm.btn-secondary.text-uppercase.m-t-0 Edit
+                .col-lg-6.pull-left.p-l-0.risk-factors-personnel.collapse
+                  h3.m-b-0.m-t-0 Personnel and Third Party
+                .col-lg-6.text-xs-right.m-b-10.p-r-0.risk-factors-personnel.collapse
+                  a(href="/formc/" + (formcId || values.id) + "/risk-factors-personnel?check=1").btn.btn-sm.btn-secondary.text-uppercase.m-t-0 Edit
+                .col-lg-6.pull-left.p-l-0.risk-factors-legal.collapse
+                  h3.m-b-0.m-t-0 Legal and Regulatory
+                .col-lg-6.text-xs-right.m-b-10.p-r-0.risk-factors-legal.collapse
+                  a(href="/formc/" + (formcId || values.id) + "/risk-factors-legal?check=1").btn.btn-sm.btn-secondary.text-uppercase.m-t-0 Edit
+                .col-lg-6.pull-left.p-l-0.risk-factors-misc.collapse
+                  h3.m-b-0.m-t-0 Miscellaneous
+                .col-lg-6.text-xs-right.m-b-10.p-r-0.risk-factors-misc.collapse
+                  a(href="/formc/" + (formcId || values.id) + "/risk-factors-misc?check=1").btn.btn-sm.btn-secondary.text-uppercase.m-t-0 Edit
+                .col-lg-6.pull-left.p-l-0.financial-condition.collapse
+                  h3.m-b-0.m-t-0 Financial Condition
+                .col-lg-6.text-xs-right.m-b-10.p-r-0.financial-condition.collapse
+                  a(href="/formc/" + (formcId || values.id) + "/financial-condition?check=1").btn.btn-sm.btn-secondary.text-uppercase.m-t-0 Edit
+                .col-lg-6.pull-left.p-l-0.outstanding-security.collapse
+                  h3.m-b-0.m-t-0 Outstanding Security
+                .col-lg-6.text-xs-right.m-b-10.p-r-0.outstanding-security.collapse
+                  a(href="/formc/" + (formcId || values.id) + "/outstanding-security?check=1").btn.btn-sm.btn-secondary.text-uppercase.m-t-0 Edit
+                .col-lg-6.pull-left.p-l-0.background-check.collapse
+                  h3.m-b-0.m-t-0 Background Check
+                .col-lg-6.text-xs-right.m-b-10.p-r-0.background-check.collapse
+                  a(href="/formc/" + (formcId || values.id) + "/background-check?check=1").btn.btn-sm.btn-secondary.text-uppercase.m-t-0 Edit
+            .modal-footer
+      div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")#formc_publish_confirm.modal.fade
         div(role="document").modal-dialog
           .modal-content
             .modal-header

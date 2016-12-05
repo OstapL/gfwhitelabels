@@ -8,6 +8,8 @@ global.userModel = require('components/accountProfile/model.js');
 global.Urls = require('./jsreverse.js');
 require('jquery-serializejson/jquery.serializejson.min.js');
 
+const formatHelper = require('helpers/formatHelper');
+
 $.fn.scrollTo = function (padding=0) {
   $('html, body').animate({
     scrollTop: $(this).offset().top - padding + 'px',
@@ -51,6 +53,14 @@ Backbone.View.prototype.assignLabels = function() {
       });
     } else {
       el.label = this.labels[key];
+    }
+  });
+};
+
+Backbone.View.prototype.formatData = function() {
+  _(this.fields).each((el, key) => {
+    if(el.type == 'money') {
+      this.model[key] = formatHelper.formatPrice(this.model[key]);
     }
   });
 }
@@ -106,16 +116,31 @@ let app = {
 
       if (provider == 'youtube') {
         id = url.match(/https:\/\/(?:www.)?(\w*).com\/.*v=(.*)/)[2];
+      } else if (provider == 'youtu') {
+        provider = 'youtube';
+        id = url.match(/https:\/\/(?:www.)?(\w*).be\/(.*)/)[2];
       } else if (provider == 'vimeo') {
         id = url.match(/https:\/\/(?:www.)?(\w*).com\/(\d*)/)[2];
       } else {
         console.log(url, 'Takes a YouTube or Vimeo URL');
       }
-      
+
       return {id: id, provider: provider};
     } catch (err) {
       console.log(url, 'Takes a YouTube or Vimeo URL');
     }
+  },
+
+  getVideoUrl(videoInfo) {
+    var provider = videoInfo && videoInfo.provider ? videoInfo.provider : '';
+
+    if (provider == 'youtube')
+      return '//www.youtube.com/embed/' + videoInfo.id + '?rel=0';
+
+    if (provider == 'vimeo')
+      return '//player.vimeo.com/video/' + videoInfo.id;
+
+    return '//www.youtube.com/embed/?rel=0';
   },
 
   getThumbnail: function(size, thumbnails, _default) {

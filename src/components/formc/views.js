@@ -72,19 +72,11 @@ const submitFormc = function submitFormc(e) {
     api.makeRequest(url, type, data).
       then((data) => {
 
-        if(this.hasOwnProperty('campaign')) {
-          data.id = this.campaign.id;
-        };
+        data.progress = this.model.progress;
 
-        // if we saved company information we will not have any progress data in
-        // response
-        if(data.hasOwnProperty('progress') == false) {
-          data.progress = this.campaign.progress;
-        }
-
-        doCampaignValidation(e, data);
+        doFormcValidation(e, data);
     }, (error) => {
-      doCampaignValidation(null, this.model);
+      doFormcValidation(null, this.model);
     });
   }
 };
@@ -96,24 +88,34 @@ const doFormcValidation = function doFormcValidation(e, data) {
   }
 
   if(
-      data.progress.general_information == true &&
-      data.progress.media == true &&
-      data.progress.specifics == true &&
-      data.progress['team-members'] == true
+      data.progress.introduction == true &&
+      data.progress["team-members"] == true &&
+      data.progress["related-parties"] == true &&
+      data.progress["use-of-proceeds"] == true &&
+      data.progress["risk-factors-market"] == true &&
+      data.progress["risk-factors-financial"] == true &&
+      data.progress["risk-factors-operational"] == true &&
+      data.progress["risk-factors-competitive"] == true &&
+      data.progress["risk-factors-personnel"] == true &&
+      data.progress["risk-factors-legal"] == true &&
+      data.progress["risk-factors-misc"] == true &&
+      data.progress["financial-condition"] == true &&
+      data.progress["outstanding-security"] == true &&
+      data.progress["background-check"] == true
   ) {
-    $('#company_publish_confirm').modal('show');
+    $('#formc_publish_confirm').modal('show');
   } else {
     var errors = {};
     _(data.progress).each((d, k) => {
       if(k != 'perks') {
         if(d == false)  {
-          $('#company_publish .'+k).removeClass('collapse');
+          $('#formc_publish .'+k).removeClass('collapse');
         } else {
-          $('#company_publish .'+k).addClass('collapse');
+          $('#formc_publish .'+k).addClass('collapse');
         }
       }
     });
-    $('#company_publish').modal('toggle');
+    $('#formc_publish').modal('toggle');
   }
 };
 
@@ -123,6 +125,7 @@ module.exports = {
 
     events: _.extend({
       'submit form': 'submit',
+      'click .submit_formc': submitFormc,
       'keyup #full-name': 'changeSign',
       'click #pay-btn': 'stripeSubmit',
     }, menuHelper.events, yesNoHelper.events),
@@ -316,6 +319,7 @@ module.exports = {
     urlRoot: formcServer + '/:id' + '/team-members',
     events: _.extend({
       'submit form': api.submitAction,
+      'click .submit_formc': submitFormc,
       'click .delete-member': 'deleteMember',
     }, menuHelper.events),
 
@@ -388,10 +392,12 @@ module.exports = {
   }, menuHelper.methods, addSectionHelper.methods)),
 
   teamMemberAdd: Backbone.View.extend(_.extend({
-    urlRoot: formcServer + '/:id' + '/team-members',
+    urlRoot: formcServer + '/:id/team-members',
+    doNotExtendModel: true,
     roles: ['shareholder', 'director', 'officer'],
     events: _.extend({
-      'submit form': api.submitAction,
+      'click #submitForm': api.submitAction,
+      'click .submit_formc': submitFormc,
     }, addSectionHelper.events, menuHelper.events),
 
     initialize(options) {
@@ -432,11 +438,11 @@ module.exports = {
     render() {
       let template = null;
 
+      this.urlRoot = this.urlRoot.replace(':id', this.model.formc_id);
       if(this.model.hasOwnProperty('user_id')  && this.model.user_id != '') {
         this.model.id = this.model.formc_id;
         this.urlRoot += '/' + this.role + '/' + this.model.user_id;
       } else {
-        this.urlRoot = this.urlRoot.replace(':id', this.model.formc_id);
         this.urlRoot += '/' + this.role;
       }
 
@@ -477,6 +483,7 @@ module.exports = {
 
     events: _.extend({
       'submit form': 'submit',
+      'click .submit_formc': submitFormc,
     }, addSectionHelper.events, menuHelper.events, yesNoHelper.events),
 
     initialize(options) {
@@ -550,6 +557,7 @@ module.exports = {
 
     events: _.extend({
       'submit form': 'submit',
+      'click .submit_formc': submitFormc,
       'change input[type=radio][name=doc_type]': 'changeDocType',
       'change .min-expense,.max-expense,.min-use,.max-use': 'calculate',
       'click .add-sectionnew': 'addSectionNew',
@@ -677,6 +685,7 @@ module.exports = {
 
     events: _.extend({
       'submit form': 'submit',
+      'click .submit_formc': submitFormc,
     }, menuHelper.events),
 
     submit: api.submitAction,
@@ -697,7 +706,9 @@ module.exports = {
 
   riskFactorsMarket: Backbone.View.extend(_.extend({
     urlRoot: formcServer + '/:id' + '/risk-factors-market/:index',
-    events: _.extend({}, menuHelper.events, riskFactorsHelper.events),
+    events: _.extend({
+      'click .submit_formc': submitFormc,
+    }, menuHelper.events, riskFactorsHelper.events),
 
     initialize(options) {
       this.fields = options.fields;
@@ -798,7 +809,9 @@ module.exports = {
 
   riskFactorsFinancial: Backbone.View.extend(_.extend({
     urlRoot: formcServer + '/:id' + '/risk-factors-financial/:index',
-    events: _.extend({}, menuHelper.events, riskFactorsHelper.events),
+    events: _.extend({
+      'click .submit_formc': submitFormc,
+    }, menuHelper.events, riskFactorsHelper.events),
 
     initialize(options) {
       this.fields = options.fields;
@@ -907,7 +920,9 @@ module.exports = {
 
   riskFactorsOperational: Backbone.View.extend(_.extend({
     urlRoot: formcServer + '/:id' + '/risk-factors-operational/:index',
-    events: _.extend({}, menuHelper.events, riskFactorsHelper.events),
+    events: _.extend({
+      'click .submit_formc': submitFormc,
+    }, menuHelper.events, riskFactorsHelper.events),
 
     initialize(options) {
       this.fields = options.fields;
@@ -1045,7 +1060,10 @@ module.exports = {
 
   riskFactorsCompetitive: Backbone.View.extend(_.extend({
     urlRoot: formcServer + '/:id' + '/risk-factors-competitive/:index',
-    events: _.extend({}, menuHelper.events, riskFactorsHelper.events),
+    events: _.extend({
+      'click .submit_formc': submitFormc,
+    }, menuHelper.events, riskFactorsHelper.events),
+
     initialize(options) {
       this.fields = options.fields;
       this.fields.title = { label: 'Title for Risk' };
@@ -1126,7 +1144,9 @@ module.exports = {
 
   riskFactorsPersonnel: Backbone.View.extend(_.extend({
     urlRoot: formcServer + '/:id' + '/risk-factors-personnel/:index',
-    events: _.extend({}, menuHelper.events, riskFactorsHelper.events),
+    events: _.extend({
+      'click .submit_formc': submitFormc,
+    }, menuHelper.events, riskFactorsHelper.events),
 
     initialize(options) {
       this.fields = options.fields;
@@ -1226,7 +1246,10 @@ module.exports = {
 
   riskFactorsLegal: Backbone.View.extend(_.extend({
     urlRoot: formcServer + '/:id' + '/risk-factors-legal/:index',
-    events: _.extend({}, menuHelper.events, riskFactorsHelper.events),
+    events: _.extend({
+      'click .submit_formc': submitFormc,
+    }, menuHelper.events, riskFactorsHelper.events),
+
     initialize(options) {
       this.fields = options.fields;
       this.fields.title = { label: 'Title for Risk' };
@@ -1347,7 +1370,10 @@ module.exports = {
 
   riskFactorsMisc: Backbone.View.extend(_.extend({
     urlRoot: formcServer + '/:id' + '/risk-factors-misc/:index',
-    events: _.extend({}, menuHelper.events, riskFactorsHelper.events),
+    events: _.extend({
+      'click .submit_formc': submitFormc,
+    }, menuHelper.events, riskFactorsHelper.events),
+
     initialize(options) {
       this.fields = options.fields;
       this.fields.title = { label: 'Title for Risk' };
@@ -1385,6 +1411,7 @@ module.exports = {
 
     events: _.extend({
       'submit form': api.submitAction,
+      'click .submit_formc': submitFormc,
     }, menuHelper.events, yesNoHelper.events, addSectionHelper.events, dropzoneHelpers.events),
 
     initialize(options) {
@@ -1438,11 +1465,12 @@ module.exports = {
   }, menuHelper.methods, yesNoHelper.methods, addSectionHelper.methods, dropzoneHelpers.methods)),
 
   outstandingSecurity: Backbone.View.extend(_.extend({
-    urlRoot: formcServer + '/:id' + '/outstanding-security',
+    urlRoot: formcServer + '/:id/outstanding-security',
     events: _.extend({
       'submit #security_model_form': 'addOutstanding',
       'change #security_type': 'outstandingSecurityUpdate',
-      'submit .form-section': 'submit',
+      'click #submitForm': api.submitAction,
+      'click .submit_formc': submitFormc,
       'click .delete-outstanding': 'deleteOutstanding',
     }, addSectionHelper.events, menuHelper.events, yesNoHelper.events),
 
@@ -1561,6 +1589,11 @@ module.exports = {
         });
 
         e.target.querySelector('textarea').value = '';
+        api.makeRequest(
+          this.urlRoot.replace(':id', this.model.id),
+          'PATCH',
+          {'outstanding_securities': this.model[sectionName]}
+        );
       };
     },
 
@@ -1582,25 +1615,16 @@ module.exports = {
       // Fix index counter
       this[sectionName + 'Index']--;
       this.$('.' + sectionName + '_container tr')
+
+      api.makeRequest(
+        this.urlRoot.replace(':id', this.model.id),
+        'PATCH',
+        {'outstanding_securities': this.model[sectionName]}
+      );
     },
 
     getSuccessUrl() {
       return '/formc/' + this.model.id + '/background-check';
-    },
-
-    submit(e) {
-      e.preventDefault();
-      let data = $(e.target).serializeJSON({ useIntKeysAsArrayIndex: true });
-
-      if (data.exempt_offering_choice == false) {
-        data.exempt_offering = this.model.exempt_offering;
-      }
-
-      if (data.business_loans_or_debt_choice == false) {
-        data.business_loans_or_debt = this.model.business_loans_or_debt;
-      }
-
-      api.submitAction.call(this, e, data);
     },
 
     render() {
@@ -1645,12 +1669,14 @@ module.exports = {
       this.assignLabels();
     },
 
-    getSuccessUrl() {
-      return  '/formc/' + this.model.id + '/final-review';
+    _success(data) {
+      app.hideLoading();
+      return false;
     },
 
     events: _.extend({
       'submit form': api.submitAction,
+      'click .submit_formc': submitFormc,
     }, menuHelper.events, yesNoHelper.events),
 
     render() {

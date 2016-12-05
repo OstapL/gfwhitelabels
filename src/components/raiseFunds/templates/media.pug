@@ -3,7 +3,7 @@ include ../../../templates/mixins.pug
 include ../../../templates/fields_mixins.pug
 include menu.pug
 
-+breadcrumbs('Create Company', '', 
++breadcrumbs('Create Campaign', '', 
     [
         ['Home', '/'],
         ['Create campaign', '/campaign/' + values.id + '/general_information'],
@@ -15,71 +15,69 @@ section.create-company-media.container.media-container
   //START RIGHT BLOCK
   .col-xl-8.col-lg-8.col-md-12
     h2.text-uppercase.dosis.text-lg-center.text-xs-center.dosis.m-t-0.m-b-3 Media
-    form(data-method="PUT" action="").form-section
+    form.form-section
+      .col-xl-12
+        +imageDropzone("header_image_image_id", _.extend({
+          class1: 'col-xl-3 col-lg-12 text-xs-center text-xl-right',
+          class2: 'col-xl-9 col-lg-12 text-xs-center p-sm-0',
+          thumbSize: '255x153',
+          default: '/img/default/255x153.png',
+          text: 'Drop your photo here or click to upload',
+          icon: 'file-image-o',
+          label: 'Header Image',
+          help_text: 'This is the image that will appear at the top of your campaign. A minimum size of 1600x400 is recommended.',
+          data: values.header_image_data[0],
+        }, this.fields.header_image_image_id))
+        +imageDropzone("list_image_image_id", _.extend({
+          class1: 'col-xl-3 col-xs-12 text-xs-center text-xl-right',
+          class2: 'col-xl-9 col-xs-12 text-xs-center p-sm-0 p-l-1',
+          thumbSize: '255x153',
+          default: '/img/default/255x153.png',
+          text: 'Drop your photo here or click to upload',
+          icon: 'file-image-o',
+          label: 'Thumbnail Picture',
+          help_text: ' This image entices investors to view your campaign. A minimum size of 1600x400 is recommended.',
+          data: values.list_image_data[0],
+        }, this.fields.list_image_image_id))
+        .m-b-2
+          +galleryDropzone("gallery_group_id", _.extend({
+              class1: 'col-xl-3 col-lg-12 text-xs-center text-xl-right',
+              class2: 'col-xl-9 col-lg-12 text-xs-center p-sm-0',
+              default: '/img/default/77x45.png',
+              text: 'Drop your photo(s) here or click to upload',
+              icon: 'file-image-o',
+              help_text: 'We recommend uploading 6 images that represent your service of business. These images will be displayed in a gallery format.',
+              data: values.gallery_group_data,
+            }, fields.gallery_group_id))
+        .row
+          .col-lg-12.m-t-2.m-b-3.p-sm-0
+            hr
+        .col-lg-12
+          h3.text-lg-center.col-md-center.col-xs-center.m-t-0 Recommended Additional Media
 
-      +imageDropzone("header_image_image_id", _.extend({
-        class1: 'col-xl-3 col-lg-12 text-xs-center text-xl-right',
-        class2: 'col-xl-9 col-lg-12 text-xs-center p-sm-0',
-        thumbSize: '255x153',
-        default: '/img/default/255x153.png',
-        text: 'Drop your photo here or click to upload',
-        icon: 'file-image-o',
-        label: 'Header Image',
-        help_text: 'This is the image that will appear at the top of your campaign. A minimum size of 1600x400 is recommended.',
-        data: values.header_image_data[0],
-      }, this.fields.header_image_image_id))
-      +imageDropzone("list_image_image_id", _.extend({
-        class1: 'col-xl-3 col-xs-12 text-xs-center text-xl-right',
-        class2: 'col-xl-9 col-xs-12 text-xs-center p-sm-0 p-l-1',
-        thumbSize: '255x153',
-        default: '/img/default/255x153.png',
-        text: 'Drop your photo here or click to upload',
-        icon: 'file-image-o',
-        label: 'Thumbnail Picture',
-        help_text: ' This image entices investors to view your campaign. A minimum size of 1600x400 is recommended.',
-        data: values.list_image_data[0],
-      }, this.fields.list_image_image_id))
-      .m-b-2
-        +galleryDropzone("gallery_group_id", _.extend({
-            class1: 'col-xl-3 col-lg-12 text-xs-center text-xl-right',
-            class2: 'col-xl-9 col-lg-12 text-xs-center p-sm-0',
-            default: '/img/default/77x45.png',
-            text: 'Drop your photo(s) here or click to upload',
-            icon: 'file-image-o',
-            help_text: 'We recommend uploading 6 images that represent your service of business. These images will be displayed in a gallery format.',
-            data: values.gallery_group_data,
-          }, fields.gallery_group_id))
-
-      .col-lg-12.p-r-0.m-t-2.m-b-3
-        hr
-      .col-lg-12
-        h3.text-lg-center.col-md-center.col-xs-center.m-t-0 Recommended Additional Media
-
-      .row.m-b-2.recommended.p-sm-0.main-video-block
-        .col-lg-12.p-sm-0
-          .col-lg-7
-            +fieldTextLabel("video", _.extend({
-              class1: 'col-xl-5 col-lg-12 p-sm-0 text-xl-right text-lg-left',
-              class2: 'col-xl-7 col-lg-12 p-sm-0',
-              help_text: 'You Tube or Vimeo links only please.',
-              }, fields.video))
-            
-          #video_source.col-lg-5.p-sm-0.p-r-0
-            .embed-responsive.embed-responsive-16by9
-              - var mainVideo = app.getVideoId(values.video);
-              if mainVideo && mainVideo.provider == 'youtube'
-                iframe(src="//www.youtube.com/embed/" + mainVideo.id + "?rel=0" allowfullscreen="true").embed-responsive-item
-              else if mainVideo && mainVideo.provider == 'vimeo'
-                iframe(src="//player.vimeo.com/video/" + mainVideo.id allowfullscreen="true").embed-responsive-item
-              else
-                iframe(src="//www.youtube.com/embed/?rel=0" allowfullscreen="true").embed-responsive-item
+        .row.m-b-2.recommended.p-sm-0.main-video-block
+          .p-sm-0.video-container
+            .col-xl-7.col-lg-6
+              +fieldTextLabel("video", _.extend({
+                class1: 'col-xl-5 col-lg-12 p-sm-0 text-xl-right text-lg-left',
+                class2: 'col-xl-7 col-lg-12 p-sm-0',
+                help_text: 'You Tube or Vimeo links only please.',
+                }, fields.video))
+              
+            #video_source.col-xl-5.col-lg-6.p-sm-0
+              .embed-responsive.embed-responsive-16by9
+                -
+                  var mainVideo = app.getVideoId(values.video);
+                  var src = app.getVideoUrl(mainVideo);
+                iframe(src=src allowfullscreen="true").embed-responsive-item
 
         .row.m-b-0.additional-video-block
           |!{ templates.additional_video }
-        .col-xl-12
-          .border-bottom.m-t-3.m-b-3
+        .row
+          .col-xl-12.p-sm-0
+            .border-bottom.m-t-2.m-b-3
         |!{ templates.press}
-        .col-xl-12.pull-lg-right.text-lg-right.text-sm-center.text-md-center.text-xs-center.m-t-3
-          button(type="submit" data-method="PUT").btn.btn-primary.text-uppercase save and continue
-            i.fa.fa-angle-right
-  //- +menu('media')
+        .row
+          .col-xl-12.pull-lg-right.text-lg-right.text-sm-center.text-md-center.text-xs-center.m-t-3
+            button#submitForm.btn.btn-primary.text-uppercase save and continue
+              i.fa.fa-angle-right

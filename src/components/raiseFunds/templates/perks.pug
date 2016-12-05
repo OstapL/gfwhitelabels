@@ -2,7 +2,7 @@
 include ../../../templates/mixins.pug
 include menu.pug
 
-+breadcrumbs('Create Company', '', 
++breadcrumbs('Create Campaign', '', 
     [
         ['Home', '/'],
         ['Create campaign', '/campaign/' + values.id + '/general_information'],
@@ -17,7 +17,7 @@ section.create-perks.container
   //START RIGHT BLOCK
   .col-xl-8.col-lg-8.col-md-12
     h2.text-uppercase.text-lg-center.text-xs-center.dosis.m-t-0.m-b-3 perks
-    form(data-method="PUT" action="").form-section
+    form.form-section
       .form-group
         .col-sm-12.p-r-0
           .warning-block  
@@ -30,5 +30,5 @@ section.create-perks.container
           .articles
             |!{ templates.perks }
       .col-lg-12.pull-lg-right.p-r-0.m-t-3.text-lg-right.text-md-center.text-sm-center.text-xs-center
-        button(type="submit").btn.btn-primary.text-uppercase save
+        button#submitForm.btn.btn-primary.text-uppercase save
           i.fa.fa-angle-right

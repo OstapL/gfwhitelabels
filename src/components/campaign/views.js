@@ -444,6 +444,7 @@ module.exports = {
         alert('Update failed. Please try again!');
       });
     },
+    doNotExtendModel: true,
 
     copyToSignature(e) {
       this.$('.signature').text($(e.target).val());

@@ -2,14 +2,13 @@ include ../../../../templates/fields_mixins.pug
 
 mixin row(value, index)
   - var index = index;
-  .col-xl-12
-    .col-xl-12(data-index=index class=name + ' addSectionBlock')
-      .delete-section-container
-        a(href="#" data-section=name data-index=index).delete-sectionnew
-          i.fa.fa-times
+  .col-xl-12(data-index=index class=name + ' addSectionBlock').p-sm-0
+    .delete-section-container
+      a(href="#" data-section=name data-index=index).delete-sectionnew
+        i.fa.fa-times
 
-      +fieldNestedTextLabel(name, 'headline', value, index, {class1:'col-xl-3 col-lg-12 text-lg-left text-xl-right', class2: 'col-xl-9 col-lg-12'})
-      +fieldNestedTextLabel(name, 'link', value, index, {class1:'col-xl-3 col-lg-12 text-lg-left text-xl-right', class2: 'col-xl-9 col-lg-12'})
+    +fieldNestedTextLabel(name, 'headline', value, index, {class1:'col-xl-3 col-lg-12 text-lg-left text-xl-right', class2: 'col-xl-9 col-lg-12'})
+    +fieldNestedTextLabel(name, 'link', value, index, {class1:'col-xl-3 col-lg-12 text-lg-left text-xl-right', class2: 'col-xl-9 col-lg-12'})
 
 mixin run()
 
@@ -24,12 +23,11 @@ mixin run()
         else
           each value, index in values
             +row(value, index)
-    .col-xl-12
-      .row.add-link
-        .col-xl-9.offset-xl-3
-          a(href="#" data-section=name data-comp="raiseFunds" data-template="press").link-2.add-sectionnew
-            i.fa.fa-plus
-            |  Add Another Article
+    .row.add-link
+      .col-xl-9.offset-xl-3.p-sm-0
+        a(href="#" data-section=name data-comp="raiseFunds" data-template="press").link-2.add-sectionnew
+          i.fa.fa-plus
+          |  Add Another Article
   else
     +row({}, index)
 

@@ -291,14 +291,14 @@ section
             .col-lg-12
               h2.dosis.our.text-uppercase.text-lg-center.text-xs-center.campaign-subheading #{ v.title }
               p !{ textHelper.restoreLineBreak(v.body) }
-  if values.campaign.members
+  if values.campaign.team_members
     section#members
       .container
-        if values.campaign.members && values.campaign.members instanceof Array && values.campaign.members.length > 0
+        if values.campaign.team_members && values.campaign.team_members instanceof Array && values.campaign.team_members.length > 0
           h2#team.dosis.text-uppercase.text-lg-center.text-xs-center.col-lg-12.campaign-subheading Team
           .row
             .col-lg-12.text-center-flex
-              each v,k in values.campaign.members
+              each v,k in values.campaign.team_members
                 .col-lg-4.team
                   .card.text-lg-center.text-xs-center
                     img(src=v.photo alt="").img-circle

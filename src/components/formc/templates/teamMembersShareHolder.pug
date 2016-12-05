@@ -67,5 +67,6 @@ section.formc-team-members-director.container.m-b-85
           class2: 'col-xl-9 col-lg-12',
           }, fields.voting_power_percent))
       .col-lg-12.text-md-center.text-sm-center.text-xs-center.m-t-2
-        button.btn.btn-primary.text-uppercase.pull-lg-right Save
+        - console.log(this.values, values);
+        button(type='button' data-method=(values.user_id ? 'PUT' : 'POST'))#submitForm.btn.btn-primary.text-uppercase.pull-lg-right Save
         a(href='/formc/' + values.formc_id + '/team-members').btn.btn-secondary.text-uppercas.pull-lg-right.m-r-1 Cancel

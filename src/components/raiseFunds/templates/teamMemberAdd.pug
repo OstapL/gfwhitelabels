@@ -2,7 +2,7 @@ include ../../../templates/mixins.pug
 include ../../../templates/fields_mixins.pug
 include menu.pug
 
-+breadcrumbs('Create Company', '', 
++breadcrumbs('Create Campaign', '', 
     [
         ['Home', '/'],
         ['Create campaign', '/campaign/' + values.id + '/general_information'],
@@ -56,52 +56,52 @@ section.team-members.container.m-b-85
 
       +fieldTextareaLabel("bio", _.extend({
           class1: 'col-xl-3 col-lg-12 text-lg-left text-xl-right ',
-          class2: 'col-xl-9 col-lg-12',
+          class2: 'col-xl-9 col-lg-12 big-textarea',
           placeholder: "At least 150 characters",
           label: 'Bio',
           value: member.bio,
         }, fields.bio))
 
-      .row
+      .row.showPopover(data-content="Why do we ask? These affinity based questions can help us share your campaign with potential investors with similar backgrounds.")
         input(type="hidden" name="city" values=member.city)
         input(type="hidden" name="state" value=member.state)
-        .col-md-12.col-lg-6
+        .col-xl-6.col-lg-6.input-min-width
           +fieldTextLabel('zip_code', _.extend({
-            'class1': 'col-lg-6 text-lg-right text-xs-left',
+            'class1': 'col-lg-6 text-lg-right text-xs-left p-t-0 m-b-0',
             'class2': 'col-lg-6',
-            'label': 'Zip code',
+            'label': 'Where did you grow up?',
             'type': 'text',
+            'placeholder': 'Zip code',
             'value': member.zip_code,
           }, fields.zip_code))
 
-        .col-lg-5.city_states.required
+        .col-xl-5.col-lg-6.city_states.required
           .row
-            label.col-lg-5.col-xs-6.text-lg-right.text-xs-left City/State
+            label.col-lg-6.col-xs-6.text-lg-right.text-xs-left City/State
             .col-lg-6.col-xs-6
               a(data-toggle="modal" data-target="#city_state_modal" href="#city_state_modal").change_state_city
                 span.input-value.js-city-state #{ member['city'] ? member['city'] : '(City)' }, #{ member['state'] ? member['state'] : '(State)' }
-                i.fa.fa-pencil-square-o.link-1
-      .label-p-t-0
-        +fieldTextLabel("college", _.extend({
-          class1: 'col-xl-3 col-lg-12 text-lg-left text-xl-right ',
-          class2: 'col-xl-9 col-lg-12',
-          label:  'Collage',
-          placeholder: 'Name of college or university',
-          value: member.email
-        }, fields.collage))
+                  i.fa.fa-pencil-square-o.link-1
+      +fieldTextLabel("college", _.extend({
+        class1: 'col-xl-3 col-lg-12 text-lg-left text-xl-right',
+        class2: 'col-xl-9 col-lg-12',
+        label:  'Collage',
+        placeholder: 'Name of college or university',
+        value: member.email
+      }, fields.collage))
       .row
         .col-lg-6.input-min-width
           +fieldTextLabel("linkedin", _.extend({
-            class1: 'col-xl-6 col-lg-12 text-lg-left text-xl-right ',
+            class1: 'col-xl-6 col-lg-12 text-lg-left text-xl-right p-l-3 p-t-0 m-b-0',
             class2: 'col-xl-6 col-lg-12',
-            label:  'Linkedin',
+            label:  'Your LinkedIn link',
             placeholder: 'Your LinkedIn profile',
-            }, fields.facebook))
-        .col-lg-6.input-min-width
+            }, fields.linkedin))
+        .col-lg-6
           +fieldTextLabel("facebook", _.extend({
-            class1: 'col-xl-3 col-lg-12 text-lg-left text-xl-right ',
-            class2: 'col-xl-9 col-lg-12',
-            label:  'Facebook',
+            class1: 'col-xl-5 col-lg-12 text-lg-left text-xl-right p-t-0 m-b-0',
+            class2: 'col-xl-7 col-lg-12',
+            label:  'Your Facebook link',
             placeholder: 'Your Facebook profile',
             }, fields.facebook))
 
@@ -111,6 +111,8 @@ section.team-members.container.m-b-85
           thumbSize: '255x135',
           default: '/img/default/255x153.png',
           icon: 'camera',
+          label: 'Profile Picture',
+          help_text: 'This image entices investors to view your campaign. A minimum size of 1600x400 is recommended.',
           text: 'Drop your photo here or click to upload',
           value: member.photo_data[0],
         }, fields.photo_image_id))
@@ -144,3 +146,32 @@ section.team-members.container.m-b-85
                 .dropdown-menu(aria-labelledby="dropdownMenuButton")
                   a(href="").dropdown-item Add Advisor
                   a(href="").dropdown-item Add Team Member
+//MODAL
+div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")#city_state_modal.modal.fade
+  div(role="document").modal-dialog
+    .modal-content
+      .modal-header
+        button(type="button" data-dismiss="modal" aria-label="Close").close
+          span(aria-hidden="true")
+            i.fa.fa-times
+        h2.text-xs-center.text-uppercase.dosis.modal-title City/State
+
+      .modal-body
+        .container.form-section
+          .col-lg-10.offset-lg-1.border-bottom
+            .form-group.row.clearfix.required
+              input(type="text" placeholder="City" value=values['city'])#city.js-city.form-control
+            .form-group.row.clearfix.required
+              select(name='state')#state.js-state.form-control.custom-select
+                option(checked='checked', value="") State
+                each state in states
+                  if state.abbreviation == values.state
+                    option(value=state.abbreviation selected)= state.name
+                  else
+                    option(value=state.abbreviation)= state.name
+            .form-group.row.clearfix.required.m-b-2
+              .row
+                .col-lg-12
+                  .col-lg-12.text-xs-center
+                    button(data-dismiss="modal").btn.btn-primary.text-uppercase save
+        .modal-footer

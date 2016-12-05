@@ -3,6 +3,10 @@ module.exports = Backbone.Router.extend({
     'company/create': 'company',
     'company/company-dashboard': 'companyDashboard',
     'company/:id/company-dashboard-first': 'companyDashboardFirst',
+    'company/:id/after-payment-dashboard': 'afterPaymentDashboard',
+    'company/:id/after-complete-dashboard': 'afterCompleteDashboard',
+    'company/:id/after-final-submit-dashboard': 'afterFinalDashboard',
+    'company/:id/after-submitting-goverment-dashboard': 'afterSubmittingGovermentDashboard',
     'campaign/:id/general_information': 'generalInformation',
     'campaign/:id/media': 'media',
     'campaign/:id/team-members/add/:type/:index': 'teamMembersAdd',
@@ -52,6 +56,7 @@ module.exports = Backbone.Router.extend({
       api.errorAction.call(this, $('#content'), xhr, response, error);
     });
   },
+
   companyDashboard: function() {
       const View = require('components/raiseFunds/views.js');
       let i = new View.companyDashboard({
@@ -60,6 +65,7 @@ module.exports = Backbone.Router.extend({
       i.render();
       app.hideLoading();
   },
+
   companyDashboardFirst:  function() {
       const View = require('components/raiseFunds/views.js');
       let i = new View.companyDashboardFirst({
@@ -68,7 +74,39 @@ module.exports = Backbone.Router.extend({
       i.render();
       app.hideLoading();
   },
-
+  
+  afterPaymentDashboard:  function() {
+      const View = require('components/raiseFunds/views.js');
+      let i = new View.afterPaymentDashboard({
+        el: '#content',
+      });
+      i.render();
+      app.hideLoading();
+  },
+  afterCompleteDashboard:  function() {
+      const View = require('components/raiseFunds/views.js');
+      let i = new View.afterCompleteDashboard({
+        el: '#content',
+      });
+      i.render();
+      app.hideLoading();
+  },
+  afterFinalDashboard:  function() {
+      const View = require('components/raiseFunds/views.js');
+      let i = new View.afterFinalDashboard({
+        el: '#content',
+      });
+      i.render();
+      app.hideLoading();
+  },
+  afterSubmittingGovermentDashboard:  function() {
+      const View = require('components/raiseFunds/views.js');
+      let i = new View.afterSubmittingGovermentDashboard({
+        el: '#content',
+      });
+      i.render();
+      app.hideLoading();
+  },
   generalInformation (id) {
     const View = require('components/raiseFunds/views.js');
 
@@ -94,186 +132,140 @@ module.exports = Backbone.Router.extend({
     }).fail((xhr, error) =>  {
       api.errorAction($('#content'), xhr, error);
     });
-    if (!app.user.is_anonymous()) {
-    } else {
-      app.routers.navigate(
-        '/account/login', {trigger: true, replace: true}
-      );
-    }
   },
 
   media(id) {
-    if (!app.user.is_anonymous()) {
-      $('#content').scrollTo(); 
-      const Model = require('components/campaign/models.js');
-      const View = require('components/raiseFunds/views.js');
+    $('#content').scrollTo(); 
 
-      var a1 = app.makeCacheRequest(raiseCapitalServer + '/campaign/' + id + '/media', 'OPTIONS');
-      var a2 = app.makeCacheRequest(raiseCapitalServer + '/campaign/' + id + '/media');
+    const View = require('components/raiseFunds/views.js');
+    const a1 = app.makeCacheRequest(raiseCapitalServer + '/campaign/' + id + '/media', 'OPTIONS');
+    const a2 = app.makeCacheRequest(raiseCapitalServer + '/campaign/' + id + '/media');
+    const formcR = api.makeCacheRequest(authServer + '/user/formc');
 
-      // var a1 = app.makeCacheRequest(Urls['campaign-list']() + '/media/' + id, 'OPTIONS');
-      // var a2 = app.makeCacheRequest(Urls['campaign-list']() + '/media/' + id);
+    $.when(a1, a2, formcR).done((meta, model, formc) => {
+      model[0].id = id;
 
-      $.when(a1, a2).done((meta, model) => {
-        model[0].id = id;
-        var i = new View.media({
-          el: '#content',
-            fields: meta[0].fields,
-            // model: new Model.model(model[0])
-            model: model[0],
-        });
-        i.render();
-        //app.views.campaign[id].render();
-        //app.cache[window.location.pathname] = i.$el.html();
-
-        app.hideLoading();
+      var i = new View.media({
+        el: '#content',
+          fields: meta[0].fields,
+          model: model[0],
+          formc: formc[0],
       });
-    } else {
-      app.routers.navigate(
-        '/account/login', {trigger: true, replace: true}
-      );
-    }
+      i.render();
+      //app.views.campaign[id].render();
+      //app.cache[window.location.pathname] = i.$el.html();
+
+      app.hideLoading();
+    });
   },
 
   teamMembers(id) {
-    if (!app.user.is_anonymous()) {
-      $('body').scrollTo(); 
-      const View = require('components/raiseFunds/views.js');
-      const optionR = app.makeCacheRequest(raiseCapitalServer + '/campaign/' + id + '/team-members', 'OPTIONS');
-      const dataR = app.makeCacheRequest(raiseCapitalServer + '/campaign/' + id + '/team-members');
+    $('body').scrollTo(); 
+    const View = require('components/raiseFunds/views.js');
+    const optionR = app.makeCacheRequest(raiseCapitalServer + '/campaign/' + id + '/team-members', 'OPTIONS');
+    const dataR = app.makeCacheRequest(raiseCapitalServer + '/campaign/' + id + '/team-members');
 
-      $.when(optionR, dataR).done((fields, data) => {
-        data[0].id = id;
-        const i = new View.teamMembers({
-          el: '#content',
-          fields: fields[0],
-          model: data[0],
-        });
-        i.render();
-
-        app.hideLoading();
+    $.when(optionR, dataR).done((fields, data) => {
+      data[0].id = id;
+      const i = new View.teamMembers({
+        el: '#content',
+        fields: fields[0],
+        model: data[0],
       });
-    } else {
-      app.routers.navigate(
-        '/account/login', {trigger: true, replace: true}
-      );
-    }
+      i.render();
+
+      app.hideLoading();
+    });
   },
 
   teamMembersAdd(id, type, index) {
-    if (!app.user.is_anonymous()) {
-      $('body').scrollTo(); 
+    $('body').scrollTo(); 
 
-      const View = require('components/raiseFunds/views.js');
-      const optionsR = app.makeCacheRequest(raiseCapitalServer + '/campaign/' + id + '/team-members', 'OPTIONS');
-      const dataR = app.makeCacheRequest(raiseCapitalServer + '/campaign/' + id + '/team-members');
-      const formcR = api.makeCacheRequest(authServer + '/user/formc');
+    const View = require('components/raiseFunds/views.js');
+    const optionsR = app.makeCacheRequest(raiseCapitalServer + '/campaign/' + id + '/team-members', 'OPTIONS');
+    const dataR = app.makeCacheRequest(raiseCapitalServer + '/campaign/' + id + '/team-members');
+    const formcR = api.makeCacheRequest(authServer + '/user/formc');
 
-      $.when(optionsR, dataR, formcR).done((fields, data, formc) => {
-        data[0].id = id;
-        const addForm = new View.teamMemberAdd({
-          el: '#content',
-          model: data[0],
-          formc: formc[0],
-          fields: fields[0].fields,
-          type: type,
-          index: index,
-        });
-        addForm.render();
-        app.hideLoading();
+    $.when(optionsR, dataR, formcR).done((fields, data, formc) => {
+      data[0].id = id;
+      const addForm = new View.teamMemberAdd({
+        el: '#content',
+        model: data[0],
+        formc: formc[0],
+        fields: fields[0].fields,
+        type: type,
+        index: index,
       });
-
-    } else {
-      app.routers.navigate(
-        '/account/login', {trigger: true, replace: true}
-      );
-    }
+      addForm.render();
+      app.hideLoading();
+    });
   },
 
   specifics(id) {
-    if (!app.user.is_anonymous()) {
-      const View = require('components/raiseFunds/views.js');
+    const View = require('components/raiseFunds/views.js');
+    const a1 = app.makeCacheRequest(raiseCapitalServer + '/campaign/' + id + '/specifics', 'OPTIONS');
+    const a2 = app.makeCacheRequest(raiseCapitalServer + '/campaign/' + id + '/specifics');
+    const a3 = app.makeCacheRequest(authServer + '/user/company');
+    const formcR = api.makeCacheRequest(authServer + '/user/formc');
 
-      const a1 = app.makeCacheRequest(raiseCapitalServer + '/campaign/' + id + '/specifics', 'OPTIONS');
-      const a2 = app.makeCacheRequest(raiseCapitalServer + '/campaign/' + id + '/specifics');
-      const a3 = app.makeCacheRequest(authServer + '/user/company');
-      const formcR = api.makeCacheRequest(authServer + '/user/formc');
-
-      $('body').scrollTo(); 
-      $.when(a1, a2, a3, formcR).done((meta, model, company, formc) => {
-        model[0].id = id;
-        const i = new View.specifics({
-          el: '#content',
-          fields: meta[0].fields,
-          model: model[0],
-          company: company[0],
-          formc: formc,
-        });
-        i.render();
-        app.hideLoading();
-      }).fail((xhr, error) =>  {
-        app.defaultSaveActions.error.error($('#content'), error);
-        app.hideLoading();
+    $('body').scrollTo(); 
+    $.when(a1, a2, a3, formcR).done((meta, model, company, formc) => {
+      model[0].id = id;
+      const i = new View.specifics({
+        el: '#content',
+        fields: meta[0].fields,
+        model: model[0],
+        company: company[0],
+        formc: formc,
       });
-    } else {
-      app.routers.navigate(
-        '/account/login', {trigger: true, replace: true}
-      );
-    }
+      i.render();
+      app.hideLoading();
+    }).fail((xhr, error) =>  {
+      app.defaultSaveActions.error.error($('#content'), error);
+      app.hideLoading();
+    });
   },
 
   perks(id) {
-    if (!app.user.is_anonymous()) {
-      const View = require('components/raiseFunds/views.js');
+    const View = require('components/raiseFunds/views.js');
 
-      const a1 = app.makeCacheRequest(raiseCapitalServer + '/campaign/' + id + '/perks', 'OPTIONS');
-      const a2 = app.makeCacheRequest(raiseCapitalServer + '/campaign/' + id + '/perks');
-      const formcR = api.makeCacheRequest(authServer + '/user/formc');
+    const a1 = app.makeCacheRequest(raiseCapitalServer + '/campaign/' + id + '/perks', 'OPTIONS');
+    const a2 = app.makeCacheRequest(raiseCapitalServer + '/campaign/' + id + '/perks');
+    const formcR = api.makeCacheRequest(authServer + '/user/formc');
 
-      $('body').scrollTo(); 
-      $.when(a1, a2, formcR).done((meta, model, formc) => {
-        model[0].id = id;
-        var i = new View.perks({
-          el: '#content',
-          fields: meta[0].fields,
-          model: model[0],
-          formc: formc[0],
-        });
-        i.render();
-
-        app.hideLoading();
+    $('body').scrollTo(); 
+    $.when(a1, a2, formcR).done((meta, model, formc) => {
+      model[0].id = id;
+      var i = new View.perks({
+        el: '#content',
+        fields: meta[0].fields,
+        model: model[0],
+        formc: formc[0],
       });
-    } else {
-      app.routers.navigate(
-        '/account/login', {trigger: true, replace: true}
-      );
-    }
+      i.render();
+
+      app.hideLoading();
+    });
   },    
 
   thankyou(id) {
-    if (!app.user.is_anonymous()) {
-      app.showLoading();
-      $('body').scrollTo(); 
-      const Model = require('components/campaign/models.js');
-      const View = require('components/raiseFunds/views.js');
+    app.showLoading();
+    $('body').scrollTo(); 
+    const Model = require('components/campaign/models.js');
+    const View = require('components/raiseFunds/views.js');
 
-      var a2 = app.makeCacheRequest('/' + id);
+    var a2 = app.makeCacheRequest('/' + id);
 
-      $.when(a2).done((campaign) => {
-        var i = new View.thankYou({
-          model: campaign,
-        });
-        i.render();
-        //app.views.campaign[id].render();
-        //app.cache[window.location.pathname] = i.$el.html();
-
-        app.hideLoading();
+    $.when(a2).done((campaign) => {
+      var i = new View.thankYou({
+        model: campaign,
       });
-    } else {
-      app.routers.navigate(
-        '/account/login', {trigger: true, replace: true}
-      );
-    }
+      i.render();
+      //app.views.campaign[id].render();
+      //app.cache[window.location.pathname] = i.$el.html();
+
+      app.hideLoading();
+    });
   },
    
 });

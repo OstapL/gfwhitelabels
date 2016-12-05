@@ -55,6 +55,7 @@
 	-webkit-transform: translate(-50%, -50%)
 	transform: translate(-50%, -50%)
 	position: absolute
+	z-index: 999
 // на страницах
 .icon-color
 	color: #aed07c
@@ -62,6 +63,7 @@
 .delete-section-container
 	text-align: right
 	position: relative
+	z-index: 999
 	a
 		&:hover
 			color: $crimson
@@ -129,8 +131,13 @@
 				i
 					font-size: 14px!important
 					margin-top: 0
+.fileFolderDropzone
+	.border-dropzone
+		min-height: 155px
 //drop zone с одним файлом
 .fileDropzone
+	.border-dropzone
+		min-height: 155px
 	.thumb-file-container
 		margin-top: 30px
 		.link-file
@@ -162,6 +169,8 @@
 					width: 25px
 					height: 25px
 .galleryDropzone
+	.border-dropzone
+		min-height: 155px
 	.dropzone-text
 		margin-top: 30px
 		.icon-gallery
@@ -192,3 +201,29 @@
 						color: $white_op
 						width: 25px
 						height: 25px
+.userProfileDropzone
+	.one-photo
+		.delete-image-container
+			position: absolute
+			right: 0px
+			top: 0
+			.crop-image
+				margin-right: 3px
+				i
+					padding: 5px
+					background-color: rgba(0,0,0, .5)
+					color: $white
+					width: 25px
+					height: 25px
+					text-align: center
+			.delete-image
+				i
+					padding: 5px
+					background-color: rgba(0,0,0, .5)
+					color: $white
+					width: 25px
+					height: 25px
+					text-align: center
+
+	.border-dropzone
+		min-height: 150px

@@ -63,11 +63,11 @@ module.exports = {
         },
 
         uploadprogress: function (file, progress, bytesSend) {
-          $(this.element).find('.uploading').show().removeClass('collapse');
+          $(this.element).find('.uploading').removeClass('collapse').show().css('z-index', 999);
         },
 
         complete: function (file) {
-          $(this.element).find('.uploading').hide().addClass('collapse');
+          $(this.element).find('.uploading').hide().addClass('collapse').css('z-index', '');
         },
 
         dragover: function (e) {
@@ -107,26 +107,44 @@ module.exports = {
       });
 
       dropbox.on('success', (file, data) => {
-        this._notifyServerAboutChanges(name, data);
-        if (typeof(onSuccess) === 'function') {
-          onSuccess(data, file);
-        }
+        this._updateModelData(name, data)
+          .done(() => {
+            if (typeof(onSuccess) === 'function') {
+              onSuccess(data, file);
+            }
+          });
       });
     },
 
-    _notifyServerAboutChanges(name, data) {
-      // let params = {
-      //   type: 'PATCH',
-      //   [name]: data[0].id,
-      //   [name.replace('_id', '_data')]: data,
-      // };
-      //
-      // app.makeRequest(
-      //   this.urlRoot.replace(':id', this.model.id),
-      //   params
-      // );
+    _getDataFieldName(name) {
+      return (this.fields[name].type === 'imagefolder' || this.fields[name].type === 'filefolder')
+        ? name.replace('_id', '_data')
+        : name.replace('_' + this.fields[name].type + '_id', '_data');
     },
 
+    _updateModelData(name, data) {
+
+      let f = this.fields[name];
+
+      let dataFieldName = this._getDataFieldName(name);
+
+      if (f.type === 'imagefolder' || f.type === 'filefolder') {
+        this.model[dataFieldName].push(data[0]);
+        // this.model[name] = data[0].id;
+      } else {
+        this.model[dataFieldName] = data;
+        this.model[name] = data[0].id;
+      }
+
+      return this._notifyServer(name);
+    },
+
+    _notifyServer(name) {
+      let dataFieldName = this._getDataFieldName(name);
+      let data = _.pick(this.model, [name, dataFieldName]);
+
+      return app.makeRequest(this.urlRoot.replace(':id', this.model.id), 'PATCH', data);
+    },
 
     _file(name) {
 
@@ -148,20 +166,29 @@ module.exports = {
 
         let $link = $(e.target).closest('a.delete-file');
 
-        // let fileId = $link.data('fileid');
+        let fileId = $link.data('fileid');
+
+        if (!fileId) {
+          return;
+        }
 
         $link.prop('enabled', false);
         $link.off('click');
+
         // api.makeRequest(filerServer + '/' + fileId, 'DELETE').done(() => {
-        //remove field from model
+          //remove field from model
 
-        delete this.model[name];
-        delete this.model[name.replace('_id', '_data')];
+          let dataFieldName = this._getDataFieldName(name);
 
-        $link.closest('.thumb-file-container')
-          .empty()
-          .append('<img src="/img/icons/file.png" alt="" class="img-file img-"' + name + '>' +
-            '<a class="a-' + name + '" href="#"></a>');
+          // delete this.model[name];
+          this.model[dataFieldName] = [];
+
+          this._notifyServer(name);
+
+          $link.closest('.thumb-file-container')
+            .empty()
+            .append('<img src="/img/icons/file.png" alt="" class="img-file img-"' + name + '>' +
+              '<a class="a-' + name + '" href="#"></a>');
         // });
 
         return false;
@@ -177,7 +204,7 @@ module.exports = {
         let id = data[0].id;
 
         let fileBlock = $('<div class="delete-file-container" style="position: absolute;">' +
-            '<a href="#" class="delete-file" data-fileid="' + data[0].id + '">' +
+            '<a href="#" class="delete-file" data-fileid="' + id + '">' +
               '<i class="fa fa-times"></i>' +
             '</a>' +
           '</div>' +
@@ -195,9 +222,6 @@ module.exports = {
         $('.dropzone__' + name + ' .thumb-file-container')
           .empty()
           .append(fileBlock);
-
-        this.model[name] = id;
-        this.model[name.replace('_id', '_data')] = data;
       });
 
       $('.dropzone__' + name + ' .img-dropzone a.delete-file').each((idx, link) => {
@@ -228,25 +252,33 @@ module.exports = {
         let $link = $(e.target).closest('a.delete-file');
         let fileId = $link.data('fileid');
 
+        if (!fileId) {
+          return;
+        }
+
         $link.prop('enabled', false);
         $link.off('click');
-        // api.makeRequest(filerServer + '/' + fileId, 'DELETE').done(() => {
-        //remove field from model
-        let dataArr = this.model[name.replace('_id', '_data')];
-        let dataIdx = _(dataArr).findIndex((elem) => { return elem.id == fileId });
-        if (dataIdx >= 0) {
-          dataArr.splice(dataIdx, 1);
-          if (!dataArr.length) {
-            //add empty file
-            $link.closest('.file-scroll')
-              .append('<div class="thumb-file-container text-xl-center">' +
-                '<img src="/img/icons/file.png" alt="" class="img-file img-"' + name + '>' +
-                '<a class="a-' + name + '" href="#"></a>' +
-                '</div>');
+
+        api.makeRequest(filerServer + '/' + fileId, 'DELETE').done(() => {
+          // remove field from model
+          let dataFieldName = this._getDataFieldName(name);
+
+          let dataArr = this.model[dataFieldName];
+          let dataIdx = _(dataArr).findIndex((elem) => { return elem.id == fileId });
+          if (dataIdx >= 0) {
+            dataArr.splice(dataIdx, 1);
+            if (!dataArr.length) {
+              //add empty file
+              $link.closest('.file-scroll')
+                .append('<div class="thumb-file-container text-xl-center">' +
+                  '<img src="/img/icons/file.png" alt="" class="img-file img-"' + name + '>' +
+                  '<a class="a-' + name + '" href="#"></a>' +
+                  '</div>');
+            }
+            $link.closest('.thumb-file-container').remove();
+            this._notifyServer(name);
           }
-          $link.closest('.thumb-file-container').remove();
-        }
-        // });
+        });
 
         return false;
       };
@@ -256,7 +288,7 @@ module.exports = {
         let mimetypeIcons = require('helpers/mimetypeIcons.js');
         let icon = mimetypeIcons[data[0].mime.split('/')[1]];
 
-        let fieldDataName = name.replace('_id', '_data');
+        let fieldDataName = this._getDataFieldName(name);
         let url = data[0].urls[0];
 
         let fileBlock = $('<div class="thumb-file-container">' +
@@ -276,11 +308,12 @@ module.exports = {
 
         $('.dropzone__' + name + ' .thumb-file-container:last').after(fileBlock);
 
-        if(this.model[fieldDataName].length == 0) {
+        let files = $('.dropzone__' + name + ' .thumb-file-container');
+
+        if(this.model[fieldDataName].length > files.length) {
           $('.dropzone__' + name + ' .thumb-file-container:first').remove();
         }
 
-        this.model[name.replace('_id', '_data')].push(data[0]);
       });
 
       //attach remove event handlers to dropzone items
@@ -290,8 +323,25 @@ module.exports = {
     },
 
     _image(name) {
+
       const onCrop = (imgData) => {
+        const fieldDataName = this._getDataFieldName(name);
+        let model = this.model[fieldDataName];
+        if (!model[0].urls)
+          model[0].urls = [];
+
+        if (model[0].urls.length <= 1)
+          model[0].urls.unshift(imgData.urls[0]);
+        else
+          model[0].urls[0] = imgData.urls[0];
+
         $('.img-' + name).attr('src', imgData.urls[0]);
+
+        if (typeof(this.onImageCrop) === 'function') {
+          this.onImageCrop(name);
+        }
+
+        this._notifyServer(name);
       };
 
       const deleteImage = (e) => {
@@ -299,7 +349,7 @@ module.exports = {
         e.stopPropagation();
 
         let $link = $(e.target).closest('a.delete-image');
-
+        let noimageUrl = $link.data('noimage');
         let imgId = $link.data('imageid');
         if (!imgId) {
           return;
@@ -308,20 +358,43 @@ module.exports = {
         $link.prop('enabled', false);
         $link.off('click');
 
-        api.makeRequest(filerServer + '/' + imgId, 'DELETE').done(() => {
-          //remove field from model
-          delete this.model[name];
-          delete this.model[name.replace('_id', '_data')];
+        let fieldDataName = this._getDataFieldName(name);
 
-          $link.closest('.one-photo').find('img.img-' + name).attr('src', '/img/default/255x153.png');
+        //remove field from model
+        // this.model[name] = null;
+        this.model[fieldDataName] = [{ id: this.model[name].id, urls: [] }];
+
+        let dataR = this._notifyServer(name);
+        // let filerR = api.makeRequest(filerServer + '/' + imgId, 'DELETE');
+
+        // Promise.all([filerR, dataR]).then((filerResponse, dataResponse) => {
+          $link.closest('.one-photo').find('img.img-' + name).attr('src', noimageUrl || '/img/default/255x153.png');
           $link.closest('.delete-image-container').remove();
-        });
+        // }).catch((errors) => {
+        //   console.log(arguments);
+        // });
+
+        if (typeof(this.onImageDelete) === 'function') {
+          this.onImageDelete(name);
+        }
 
         return false;
       };
 
       const cropImage = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
 
+        let imgId = $(e.target).closest('a.crop-image').data('imageid');
+        if (!imgId) {
+          return false;
+        }
+
+        imgId = parseInt(imgId, 10);
+
+        this._cropImage(imgId, name, onCrop);
+
+        return false;
       };
 
       let dzOptions = {
@@ -335,12 +408,8 @@ module.exports = {
 
       this._initializeDropzone(name, dzOptions, (data) => {
         //image actions
-
-        let dataFieldName = name.replace('_' + this.fields[name].type + '_id', '_data');
         let url = data[0].urls[0];
         let imgId = data[0].id;
-        let fileName = data[0].name;
-        let originUrl = data[0].urls[0];
 
         //update ui and bind events
         let imgActionsBlock = $(
@@ -355,14 +424,7 @@ module.exports = {
 
         imgActionsBlock.find('a.crop-image')
           // .data('imageid', imgId)
-          .on('click', (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-
-            this._cropImage(img, this.fields[name].imgOptions, onCrop);
-
-            return false;
-          });
+          .on('click', cropImage);
 
         imgActionsBlock.find('a.delete-image')
           // .data('imageid', imgId)
@@ -370,26 +432,14 @@ module.exports = {
 
         let imgContainer = $('.dropzone__' + name + ' .one-photo');
         imgContainer.find('img.img-' + name).attr('src', url);
-        // imgContainer.find('a.a-' + name).attr('href', originUrl).html(fileName);
 
         imgContainer.prepend(imgActionsBlock);
 
-        this.model[name] = imgId;
-        this.model[dataFieldName] = data;
-
-        let img = {
-          url: url,
-          fileName: fileName,
-          id: imgId,
-        };
-
-        //todo: set default cropping, possibly on the server
-        this._cropImage(img, this.fields[name].imgOptions, onCrop);
-
+        this._cropImage(imgId, name, onCrop);
       });
 
-      $('.dropzone__' + name + ' .img-dropzone a.delete-image').on('click', deleteImage);
-      $('.dropzone__' + name + ' .img-dropzone a.crop-image').on('click', cropImage);
+      $('.dropzone__' + name + ' a.delete-image').on('click', deleteImage);
+      $('.dropzone__' + name + ' a.crop-image').on('click', cropImage);
     },
 
     _imagefolder(name) {
@@ -401,7 +451,6 @@ module.exports = {
           group_id: this.model[name],
         },
         acceptedFiles: 'image/*',
-
       };
 
       const deleteImage = (e) => {
@@ -411,26 +460,64 @@ module.exports = {
         let $link = $(e.target).closest('a.delete-image');
         let imageId = $link.data('imageid');
 
-        $link.prop('enabled', false);
-        $link.off('click');
-        // api.makeRequest(filerServer + '/' + fileId, 'DELETE').done(() => {
-        //remove field from model
-        let dataArr = this.model[name.replace('_id', '_data')];
-        let dataIdx = _(dataArr).findIndex((elem) => { return elem.id == imageId });
-        if (dataIdx >= 0) {
-          dataArr.splice(dataIdx, 1);
-          $link.closest('.one-photo').remove();
-        }
+        let dataFieldName = this._getDataFieldName(name);
+        //todo make request to the urlRoot
+        // api.makeRequest(filerServer + '/' + imageId, 'DELETE').done(() => {
+          $link.prop('enabled', false);
+          $link.off('click');
+
+          //remove field from model
+          let dataArr = this.model[dataFieldName];
+          let dataIdx = _(dataArr).findIndex((elem) => { return elem.id == imageId });
+          if (dataIdx >= 0) {
+            dataArr.splice(dataIdx, 1);
+            $link.closest('.one-photo').remove();
+          }
+
+          this._notifyServer(name);
+
+        // }).fail((err) => {
+        //   console.error(err);
+        //   alert(err.responseJSON.error);
         // });
 
         return false;
       };
 
-      const cropImage = (e) => { console.log('NOT IMPLEMENTED')};
+      const onCrop = (imgData) => {
+        console.log(imgData);
+        let dataFieldName = this._getDataFieldName(name);
+        let model = this.model[dataFieldName];
+
+        let img = _.find(model, (i) => {
+          return this.originImageId == i.id;
+        });
+
+        if (img.urls.length <= 1) {
+          img.urls.unshift(imgData.urls[0]);
+        } else {
+          img.urls[0] = imgData.urls[0];
+        }
+
+        $('a.crop-image[data-imageid=' + this.originImageId + ']').closest('.one-photo').find('img').attr('src', imgData.urls[0]);
+
+        this._notifyServer(name);
+      };
+
+      const cropImage = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+
+        let imgId = $(e.target).closest('a.crop-image').data('imageid');
+
+        this._cropImage(imgId, name, onCrop);
+
+        return false;
+      };
 
       this._initializeDropzone(name, dzOptions, (data, file) => {
 
-        let fieldDataName = name.replace('_id', '_data');
+        let fieldDataName = this._getDataFieldName(name);
         let url = data[0].urls[0];
         let imageId = data[0].id;
 
@@ -451,34 +538,46 @@ module.exports = {
 
         $('.dropzone__' + name + ' .all-gallery').append(imageBlock);
 
-        this.model[fieldDataName].push(data[0]);
       });
 
       //attach remove item handlers
-      $('.dropzone__' + name + ' .img-dropzone a.delete-image').each((idx, link) => {
+      $('#' + name + ' a.delete-image').each((idx, link) => {
         $(link).on('click', deleteImage);
       });
 
       //attach crop image handlers
-      $('.dropzone__' + name + ' .img-dropzone a.crop-image').each((idx, link) => {
+      $('#' + name + ' a.crop-image').each((idx, link) => {
         $(link).on('click', cropImage);
       });
     },
 
-    _cropImage(img, options, callback) {
-      const cropperHelper = require('helpers/cropHelper.js');
-      cropperHelper.showCropper(img.url, options, (imgData) => {
+    _cropImage(imgId, name, callback) {
 
-        let extPos = img.fileName.lastIndexOf('.');
-        let fileName = img.fileName.substring(0, extPos) +
-            imgData.width + 'x' + imgData.height + img.fileName.substring(extPos);
+      let dataFieldName = this._getDataFieldName(name);
+      let imgModel = this.model[dataFieldName];
 
-        let reqData = _.chain(imgData)
-          .pick(['x', 'y', 'width', 'height'])
-          .extend({
-            id: img.id,
-            file_name: fileName,
-          }).value();
+      let img = _.find(imgModel, (i) => {
+        return i.id == imgId;
+      });
+
+      this.originImageId = imgId;
+
+      let url = _.last(img.urls);
+      let fileName = img.name;
+
+      const cropHelper = require('helpers/cropHelper.js');
+      cropHelper.showCropper(url, this.fields[name].imgOptions, this._cropInfo, (imgData) => {
+
+        let extPos = fileName.lastIndexOf('.');
+        fileName = fileName.substring(0, extPos) +
+            imgData.width + 'x' + imgData.height + fileName.substring(extPos);
+
+        this._cropInfo = _.pick(imgData, ['x', 'y', 'width', 'height']);
+
+        let reqData = _.extend({
+          id: img.id,
+          file_name: fileName,
+        }, this._cropInfo);
 
         let reqOptions = {
           contentType: 'application/json; charset=utf-8',
