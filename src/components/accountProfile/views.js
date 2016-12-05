@@ -26,6 +26,7 @@ module.exports = {
       'change .js-city': 'changeAddressManually',
       'change .js-state': 'changeAddressManually',
       'change #country': 'changeCountry',
+      'change #twitter,#facebook,#instagram,#linkedin': 'appendHttpsIfNecessary',
       'change input[name=accredited_investor]': 'changeAccreditedInvestor',
 
     }, phoneHelper.events, dropzoneHelpers.events, yesNoHelper.events),
@@ -124,6 +125,10 @@ module.exports = {
     saveInfo(e) {
       let data = _.pick(this.model, ['image_image_id', 'image_data']);
       return api.submitAction.call(this, e, data);
+    },
+
+    appendHttpsIfNecessary(e) {
+      formatHelper.appendHttpIfNecessary(e, true);
     },
 
     _initSliders() {
