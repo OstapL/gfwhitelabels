@@ -9,7 +9,7 @@ section(style="background-image: url(" + (values.header_image_data ? values.head
       .home-text.text-lg-center
         h1.hs-line-14.font-alt.margin-bottom-50.mb-xs-30 #{ values.company.name }
         .local-scroll
-          a(data-toggle="modal" href="#videoModal" data-target="#videoModal").big-icon.link-6.youtube_popup
+          a(data-toggle="modal" href="#videoModal" data-target="#videoModal" style="visibility:" + (values.video ? "visibile" : " hidden") + ";").big-icon.link-6.youtube_popup
             i.fa.fa-play-circle-o
           a(href=values.company.website target="_blank").link-6.link-campaing-detail #{ formatHelper.getWebsiteUrl(values.company.website) }
           .row.social-link
