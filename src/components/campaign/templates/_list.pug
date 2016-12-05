@@ -9,7 +9,7 @@
         .for_img
           img(
             src=((company.campaign.list_image_data && company.campaign.list_image_data[0]) ? company.campaign.list_image_data[0].urls[0] : '/img/default/255x153.png')
-            alt=company.name)
+            alt=(company.short_name || company.name))
 
           .more_inform
             .title.text-center
@@ -38,7 +38,7 @@
                 p Percentage Revenue: #{company.campaign.percentage_revenue}%
 
         .title.text-xs-center
-          h3.m-t-0.m-x-auto= company.name
+          h3.m-t-0.m-x-auto= company.short_name || company.name
           span.place
             i.fa.fa-map-marker
             = company.city + ' ' + company.state
