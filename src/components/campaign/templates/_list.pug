@@ -31,7 +31,7 @@
             .bottom_pr
               if company.campaign.security_type == 0
                 p Price per share: #{format.formatPrice(company.campaign.price_per_share)}
-                p Number of shares: #{(Math.round(company.campaign.minimum_increment / company.campaign.price_per_share)).toLocaleString('en-US')}
+                p Number of shares: #{(Math.round(company.campaign.minimum_increment / company.campaign.price_per_share) || 0).toLocaleString('en-US')}
               else
                 //- p % Revenue: #{campaign.percentage_revenue}%
                 p Cap: #{company.campaign.cap}X
