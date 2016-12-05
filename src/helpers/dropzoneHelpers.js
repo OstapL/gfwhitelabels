@@ -330,33 +330,38 @@ module.exports = {
         e.stopPropagation();
 
         let $link = $(e.target).closest('a.delete-image');
-
+        let noimageUrl = $link.data('noimage');
         let imgId = $link.data('imageid');
         if (!imgId) {
           return;
         }
 
-        let fieldDataName = name.replace('_' + this.fields[name].type + '_id', '_data');
-        // let emptyData = {
-        //   [fieldDataName]: [{ urls: [] }],
-        // };
+        $link.prop('enabled', false);
+        $link.off('click');
 
+        let fieldDataName = this._getDataFieldName(name);
+
+        //remove field from model
+        this.model[name] = null;
+        this.model[fieldDataName] = [];
+
+        // let emptyData = {
+        //   [fieldDataName]: [],
+        // };
+        //
         // let filerR = api.makeRequest(filerServer + '/' + imgId, 'DELETE');
         // let dataR = api.makeRequest(this.urlRoot,'PATCH', emptyData);
-
+        //
         // Promise.all([filerR, dataR]).then((filerResponse, dataResponse) => {
-          $link.prop('enabled', false);
-          $link.off('click');
-
-          //remove field from model
-          this.model[name] = null;
-          this.model[fieldDataName] = [];
-
-          $link.closest('.one-photo').find('img.img-' + name).attr('src', '/img/default/255x153.png');
+          $link.closest('.one-photo').find('img.img-' + name).attr('src', noimageUrl || '/img/default/255x153.png');
           $link.closest('.delete-image-container').remove();
         // }).catch((errors) => {
         //   console.log(arguments);
         // });
+
+        if (typeof(this.onImageDelete) === 'function') {
+          this.onImageDelete(name);
+        }
 
         return false;
       };
@@ -366,6 +371,10 @@ module.exports = {
         e.stopPropagation();
 
         let imgId = $(e.target).closest('a.crop-image').data('imageid');
+        if (!imgId) {
+          return false;
+        }
+
         imgId = parseInt(imgId, 10);
 
         this._cropImage(imgId, name, onCrop);
@@ -414,8 +423,8 @@ module.exports = {
         this._cropImage(imgId, name, onCrop);
       });
 
-      $('.dropzone__' + name + ' .img-dropzone a.delete-image').on('click', deleteImage);
-      $('.dropzone__' + name + ' .img-dropzone a.crop-image').on('click', cropImage);
+      $('.dropzone__' + name + ' a.delete-image').on('click', deleteImage);
+      $('.dropzone__' + name + ' a.crop-image').on('click', cropImage);
     },
 
     _imagefolder(name) {

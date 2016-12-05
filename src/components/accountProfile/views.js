@@ -26,6 +26,7 @@ module.exports = {
       'change .js-city': 'changeAddressManually',
       'change .js-state': 'changeAddressManually',
       'change #country': 'changeCountry',
+      'change #twitter,#facebook,#instagram,#linkedin': 'appendHttpsIfNecessary',
       'change input[name=accredited_investor]': 'changeAccreditedInvestor',
 
     }, phoneHelper.events, dropzoneHelpers.events, yesNoHelper.events),
@@ -41,8 +42,8 @@ module.exports = {
         }
       });
 
-      this.fields.account_number.required = true;
-      this.fields.account_number_re = { required: true };
+      // this.fields.account_number.required = true;
+      this.fields.account_number_re = {};
 
       this.labels = {
         country: 'Country',
@@ -90,6 +91,8 @@ module.exports = {
 
       setTimeout(() => { this.createDropzones() } , 1000);
 
+      this.onImageCrop();
+
       this.cityStateArea = this.$('.js-city-state');
       this.cityField = this.$('.js-city');
       this.stateField = this.$('.js-state');
@@ -98,7 +101,34 @@ module.exports = {
     },
 
     onImageCrop(name) {
-      $('#menuProfile .fa-user').css('background', 'uri(' + _.first(this.model[name.replace('_' + this.fields[name].type + '_id', '_data')]).urls[0] + ')');
+      let hasName = !!name;
+      name = name || 'image_image_id';
+      let dataFieldName = this._getDataFieldName(name);
+
+      $('.user-info-name > span')
+        .empty()
+        .append('<img src="' + this.model[dataFieldName][0].urls[0] + '"' +
+          ' id="user-thumbnail"' + ' class="img-fluid img-circle">');
+
+      if (hasName) {
+        api.makeRequest(this.urlRoot,'PATCH', _.pick(this.model, [name, dataFieldName]))
+          .done((r) => {
+            console.log(r);
+          });
+      }
+    },
+
+    onImageDelete(name) {
+      $('.user-info-name > span').empty().append('<i class="fa fa-user">');
+    },
+
+    saveInfo(e) {
+      let data = _.pick(this.model, ['image_image_id', 'image_data']);
+      return api.submitAction.call(this, e, data);
+    },
+
+    appendHttpsIfNecessary(e) {
+      formatHelper.appendHttpIfNecessary(e, true);
     },
 
     _initSliders() {
@@ -260,6 +290,8 @@ module.exports = {
       let fullName = app.user.get('first_name') + ' ' + app.user.get('last_name');
       $('#user_name').text(fullName);
       $('.image_image_id').siblings('h3').text(fullName);
+
+      $('#content').scrollTo();
     },
 
   }, phoneHelper.methods, dropzoneHelpers.methods, yesNoHelper.methods)),
