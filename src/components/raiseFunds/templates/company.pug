@@ -23,7 +23,7 @@ section.create-company.container.m-b-85
     form(metod="post" action="").form-section
       .col-xl-12
         +fieldTextLabel("name", _.extend({
-          class1: 'col-xl-3 col-lg-12 p-t-0 text-lg-left text-xl-right m-b-0',
+          class1: 'col-xl-3 col-lg-12 p-t-0 text-lg-left text-xl-right m-b-0 m-b-lg-1',
           class2: 'col-xl-9 col-lg-12',
           type: 'text',
           placeholder: 'Company Legal Name',
@@ -34,7 +34,7 @@ section.create-company.container.m-b-85
           empty: {'': 'Choose Industry'},
           }, fields.industry))
         +fieldChoiceLabel("founding_state", _.extend({
-          class1: 'col-xl-3 col-lg-12 p-t-0 m-b-0 big-label-text text-lg-left text-xl-right',
+          class1: 'col-xl-3 col-lg-12 p-t-0 m-b-0 m-b-lg-1 big-label-text text-lg-left text-xl-right',
           class2: 'col-xl-9 col-lg-12',
           empty: {'': 'Choose State'},
           }, fields.founding_state))
@@ -53,7 +53,7 @@ section.create-company.container.m-b-85
           help_text: 'Explain what your company does in a way that everyone  will understand.<br />  “If you can’t explain it simply, you don’t understand it well enough.” – Albert Einstein',
           }, fields.description))
         .row.form-group
-          label.col-xl-3.col-lg-12.text-xl-right.textlg-left.m-b-0.p-t-0 Corporate Structure
+          label.col-xl-3.col-lg-12.text-xl-right.textlg-left.m-b-0.p-t-0.m-b-lg-1 Corporate Structure
             span.color-red *
           .col-xl-9.col-lg-12.showPopover(data-content="C-corps can choose to issue Common Equity or a Revenue Share. LLC’s can only issue a Revenue Share")
             +fieldChoice("corporate_structure", _.extend({
@@ -61,7 +61,7 @@ section.create-company.container.m-b-85
             }, fields.corporate_structure))
         .row.form-group
           .col-date#founding_date
-            label.col-xl-3.col-lg-12.text-xl-right.textlg-left.m-b-0.p-t-0 Date of Organization
+            label.col-xl-3.col-lg-12.text-xl-right.textlg-left.m-b-0.p-t-0.m-b-lg-1 Date of Organization
               span.color-red *
             .col-xl-4.col-lg-6.p-r-0
               +fieldDateMonth("founding_date", _.extend({
@@ -71,10 +71,10 @@ section.create-company.container.m-b-85
                 class: 'col-xl-4 col-lg-4 col-xs-4 p-r-0 m-d-p-l-5',
               }, fields.founding_date))
               +fieldDateYear("founding_date", _.extend({
-                class: 'col-xl-4 col-lg-4 col-xs-4 p-r-0 m-d-p-l-10',
+                class: 'col-xl-4 col-lg-4 col-xs-4 p-r-0 p-r-lg-1 m-d-p-l-10',
                 placeholder: 'YYYY',
               }, fields.founding_date))
-        .border-bottom
+        .border-bottom.m-t-3.m-b-3
         +fieldTextLabel("address_1", _.extend({
           class1: 'col-xl-3 col-lg-12 text-lg-left text-xl-right',
           class2: 'col-xl-9 col-lg-12',
@@ -85,7 +85,7 @@ section.create-company.container.m-b-85
           class2: 'col-xl-9 col-lg-12',
           type: 'text',
           }, fields.address_2))
-        .row
+        .row.form-group
           .col-xl-6.col-lg-6.col-l-65
             +fieldTextLabel("zip_code", _.extend({
               class1: 'col-xl-6 col-lg-12 text-xl-right text-lg-left',
@@ -95,8 +95,8 @@ section.create-company.container.m-b-85
             input(type='hidden' name='state' value=values.state)#state
             input(type='hidden' name='city' value=values.city)#city
 
-            label.col-xl-6.col-lg-12.col-sm-6.text-xl-right.text-lg-left City/State
-            .col-xl-6.col-lg-12.col-sm-6
+            label.col-xl-6.col-lg-12.col-sm-6.col-xs-6.text-xl-right.text-lg-left.p-l-0 City/State
+            .col-xl-6.col-lg-12.col-sm-6.col-xs-6
               a(data-toggle="modal" data-target="#city_state_modal" href="#city_state_modal").change_state_city
                 span.input-value.js-city-state= (values.city ? values.city : "(city)") + ", " + (values.state ? values.state : "(state)") 
                 i.fa.fa-pencil-square-o.link-1
@@ -114,7 +114,7 @@ section.create-company.container.m-b-85
               type: 'text',
               placeholder: 'http://www.',
               }, fields.website))
-        .border-bottom.m-t-2
+        .border-bottom.m-t-2.m-b-3
         .row.m-b-0
           .col-xl-6.col-lg-6.col-l-65
             +fieldTextLabel("twitter", _.extend({
