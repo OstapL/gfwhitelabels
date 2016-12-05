@@ -399,12 +399,12 @@ mixin userProfileDropzone(name, attr)
         div(class=" col-lg-12 ")
           div(class="uploading collapse")
             img(alt="activity indicator" src="/img/ajax-loader.gif")
-          .row
-            div(class="icon-delete-edit" style="display:none")
-              a(href="#").icon
-                i(class="fa fa-crop")
-              a(href="#").icon
-                i(class="fa fa-times")
+          .row.one-photo
+            .delete-image-container
+              a(href="#" data-imageid=id).crop-image
+                i.fa.fa-crop
+              a(href="#" data-imageid=id).delete-image
+                i.fa.fa-times
             .user-photo-wrap.text-xs-center
               img(class=(" img-" + name) src=attr.data.urls[0])
           .row.border-dropzone.dropzone-profile
