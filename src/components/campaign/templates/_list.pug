@@ -48,7 +48,7 @@
             p= company.description.substr(0,250)
 
         .progress_bar_container
-          span.left_text #{company.campaign.progress} % Funded
+          span.left_text #{(company.campaign.amount_raised / company.campaign.minimum_raise) || 0} % Funded
           span.right_text 
             b #{format.formatPrice(company.campaign.amount_raised)} 
             | of #{format.formatPrice(company.campaign.minimum_raise)}
