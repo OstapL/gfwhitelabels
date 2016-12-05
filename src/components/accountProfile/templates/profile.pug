@@ -228,10 +228,12 @@ include ../../../templates/fields_mixins.pug
                           input(type="checkbox" data-name="accredited_investor_poor" value='1' checked=user.accredited_investor_poor).col-xl-1.investor-risk-agree.investor-item-checkbox
                           input(type="hidden" name="accredited_investor_poor" value=String(user.accredited_investor_poor))
                           span.font-weight-normal.col-xl-10.p-l-0 I am an Accredited Investor because I am authorized to invest on behalf of a trust with at least $5M in assets and I acknowledge that I have sufficient knowledge to evaluate the merits and risks of private offerings. 
-                        label.accredited_investor.shown-yes
-                          input(type="checkbox" checked=!user.accredited_investor_choice).col-xl-1.investor-risk-agree#not-qualify
-                          span.font-weight-normal.col-xl-10.p-l-0 I do not qualify. 
-                          input(type="hidden" name="accredited_investor_choice" value=String(user.accredited_investor_choice))
+                        .row
+                          label.accredited_investor.shown-yes.col-xl-12
+                            input(type="checkbox" checked=!user.accredited_investor_choice).col-xl-1.investor-risk-agree#not-qualify
+                            span.font-weight-normal.col-xl-10.p-l-0.d-block I do not qualify.
+                            input(type="hidden" name="accredited_investor_choice" value=String(user.accredited_investor_choice))
+ 
                       .row
                         .col-sm-11
                           hr.m-b-3.m-t-1
