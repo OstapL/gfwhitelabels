@@ -1,5 +1,5 @@
 include ../../../templates/mixins.pug
-include menu.pug
+
 - 'use strict'
 - var campaign = {id: 1};
 - var values = {id: 1};
@@ -52,12 +52,6 @@ section.formc-team-members-director.container.m-b-85
                   //- i.fa.fa-angle-down
                   i(class="arrow fa " + (currentSection == 'campaign' ? 'fa-angle-down' : 'fa-angle-left'))
             #campaign-steps(role="tabpanel" class="panel-collapse collapse" + (currentSection == 'campaign' ? ' in' : ''))
-                .list-group
-                    +getCompanyUrl(campaignId || values.id, 'campaign', currentStep, 'general_information', 'General Information')
-                    +getCompanyUrl(campaignId || values.id, 'campaign', currentStep, 'media', 'Media')
-                    +getCompanyUrl(campaignId || values.id, 'campaign', currentStep, 'team-members', 'Team Members')
-                    +getCompanyUrl(campaignId || values.id, 'campaign', currentStep, 'specifics', 'Specifics')
-                    +getCompanyUrl(campaignId || values.id, 'campaign', currentStep, 'perks', 'Perks')
     
   //START RIGHT BLOCK
   .col-xl-9.col-lg-8.col-md-12
