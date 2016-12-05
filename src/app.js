@@ -93,6 +93,9 @@ let app = {
 
       if (provider == 'youtube') {
         id = url.match(/https:\/\/(?:www.)?(\w*).com\/.*v=([^\&]*)/)[2];
+      } else if (provider == 'youtu') {
+        provider = 'youtube';
+        id = url.match(/https:\/\/(?:www.)?(\w*).be\/(.*)/)[2];
       } else if (provider == 'vimeo') {
         id = url.match(/https:\/\/(?:www.)?(\w*).com\/(\d*)/)[2];
       } else {
