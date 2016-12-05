@@ -1,6 +1,9 @@
 const formatHelper = require('helpers/formatHelper');
 const textHelper = require('helpers/textHelper');
 
+let countries = {};
+_.each(require('helpers/countries.json'), (c) => { countries[c.code] = c.name; });
+
 module.exports = { 
   list: Backbone.View.extend({
     el: '#content',
@@ -426,7 +429,20 @@ module.exports = {
       'change .payment-type-select': 'changePaymentType',
       'change #amount': 'amountRounding',
       click: 'hideRoundingPopover',
-      'keyup .typed-name': 'copyToSignature'
+      'keyup .typed-name': 'copyToSignature',
+    },
+
+    updateIncomeWorth(e) {
+      // let data = $(e.target).serializeJSON();
+      let net_worth = $('.popover :input[id=net_worth]').val();
+      let annual_income = $('.popover :input[id=annual_income]').val();
+      api.makeRequest(authServer + '/rest-auth/data', 'PATCH', {net_worth: net_worth, annual_income: annual_income}).then((data) => {
+        this.user.net_worth = net_worth;
+        this.user.annual_income = annual_income;
+        this.$('#amount').trigger('keyup');
+      }).fail((xhr, status, text) => {
+        alert('Update failed. Please try again!');
+      });
     },
     doNotExtendModel: true,
 
@@ -435,17 +451,19 @@ module.exports = {
     },
 
     hideRoundingPopover(e) {
-      if (this.currentAmountTip == 'rounding') $('#amount').popover('hide');
+      if (this.currentAmountTip == 'rounding' || this.currentAmountTip == 'amount-ok') {
+        $('#amount').popover('hide');
+      }
     },
 
     changePaymentType(e) {
       let val = $(e.target).val();
       this.$('.payment-fields').hide();
-      if (val == 'echeck') {
+      if (val == 0) {
         $('.echeck-fields').show();
-      } else if (val == 'check') {
+      } else if (val == 1) {
         $('.check-fields').show();
-      } else if (val == 'wire') {
+      } else if (val == 2) {
         $('.wire-fields').show();
       }
     },
@@ -463,17 +481,27 @@ module.exports = {
 
     submit(e) {
       e.preventDefault();
+      if (this._exceedLimit()) {
+        $('.popover').scrollTo();
+        return;
+      }
       let data = $(e.target).serializeJSON();
       data.doNotExtendModel = true;
       api.submitAction.call(this, e, data);
     },
 
     getSuccessUrl(data) {
-      return '/invest_thanks';
+      return data.id + '/invest_thanks';
     },
     initialize(options) {
       this.fields = options.fields;
       this.user = options.user;
+
+      // stub the annual income and net worth
+      // this.user.annual_income = 50001;
+      // this.user.net_worth = 50001;
+      this.user.accumulated_investment = 1500;
+
       // this.fields.street_address_1 = { type: 'string', required: true};
       this.fields.street_address_1 = { type: 'string', required: false};
       this.fields.street_address_2 = { type: 'string', required: false};
@@ -493,6 +521,18 @@ module.exports = {
       // this.fields.route_number = {type: 'string', required: true};
       this.fields.routing_number = {type: 'string', required: false};
       this.labels = {
+        personal_information_data: {
+          street_address_1: 'Street Address 1',
+          street_address_2: 'Street Address 2',
+          zip_code: 'Zip Code',
+          city: 'City',       
+        },
+        payment_information_data: {
+          name_on_bank_account: 'Name On Bank Account',
+          account_number: 'Account Number',
+          account_number_re: 'Account Number Again',
+          routing_number: 'Routing Number',
+        },
         amount: 'Amount',
         street_address_1: 'Street Address 1',
         street_address_2: 'Street Address 2',
@@ -512,34 +552,32 @@ module.exports = {
       const investor_legal_name = $('#first_name').val() + $('#last_name').val()
                       || app.user.get('first_name') + app.user.get('last_name');
       var data = {
-        address_1: $('#street_address_1').val(),
-        address_2: $('#street_address_2').val(),
-        aggregate_inclusive_purchase: $('#total').val(),
-        city: $('#city').val(),
-        investor_total_purchase: $('#amount').val(),
-        investor_legal_name: investor_legal_name,
-        state: $('#state').val(),
-        zip_code: $('#zip_code').val(),
+        address_1: this.model.address_1,
+        address_2: this.model.address_2,
+        aggregate_inclusive_purchase: this.$('#amount').val() + 10,
+        city: this.model.city,
+        investor_total_purchase: this.$('#amount').val(),
+        investor_legal_name: this.$(':input[name="personal_information_data[first_name]"]').val() + ' ' + this.$(':input[name="personal_information_data[last_name]"]').val(),
+        state: this.model.state,
+        zip_code: this.model.zip_code,
         Commitment_Date_X: this.getCurrentDate(),
         fees_to_investor: 10,
-        investor_address: app.user.get('address_1'),
-        investor_city: app.user.get('city'),
-        investor_code: app.user.get('zip_code'),
+        investor_address: this.$(':input[name="personal_information_data[street_address_1]"]').val(),
+        investor_city: this.$(':input[name="personal_information_data[city]"]').val(),
+        investor_code: this.$(':input[name="personal_information_data[zip_code]"]').val(),
         investor_email: app.user.get('email'),
-        Investor_optional_address: app.user.get('address_2'),
-        investor_state: app.user.get('state'),
-        investor_number_purchased: '',
-        Investor_optional_address: '',
-        investor_state: '',
+        Investor_optional_address: this.$(':input[name="personal_information_data[street_address_2]"]').val(),
+        investor_state: this.$(':input[name="personal_information_data[state]"]').val(),
+        investor_number_purchased: this.$('#amount').val() / this.model.campaign.price_per_share,
         issuer_email: '',
-        issuer_legal_name: '',
+        issuer_legal_name: this.model.name,
         issuer_signer: '',
         issuer_signer_title: '',
-        jurisdiction_of_organization: '',
+        jurisdiction_of_organization: this.model.founding_state,
         listing_fee: '',
-        maximum_raise: '',
-        minimum_raise: '',
-        price_per_share: '',
+        maximum_raise: this.model.campaign.maximum_raise,
+        minimum_raise: this.model.campaign.minimum_raise,
+        price_per_share: this.model.campaign.price_per_share,
         registration_fee: '',
       };
       const tplName = e.target.dataset.tpl;
@@ -600,7 +638,8 @@ module.exports = {
             values: this.model,
             // user: app.user.toJSON(),
             user: this.user,
-            states: this.usaStates
+            states: this.usaStates,
+            countries: countries,
           })
           );
 
@@ -612,12 +651,33 @@ module.exports = {
         html: true,
         content(){
           var content = $('.invest_form').find('.popover-content-' + that.currentAmountTip).html();
+          if (that.currentAmountTip == 'amount-ok') {
+            content = content.replace(/\:amount/g, that._amountAllowed());
+          }
           return content;
         },
         trigger: 'manual',
       }).popover('hide');
 
       return this;
+    },
+
+    _exceedLimit(amount) {
+      amount = parseInt(amount || this.$('#amount').val());
+      return amount > this._amountAllowed();
+    },
+
+    _amountAllowed() {
+      let maxInvestment;
+      let net_worth = this.user.net_worth * 1000, annual_income = this.user.annual_income * 1000;
+      if (net_worth >= 100000 && annual_income >= 100000) {
+        maxInvestment = (net_worth < annual_income ? net_worth : annual_income) * .1;
+        maxInvestment = maxInvestment < 100000 ? maxInvestment : 100000;
+      } else {
+        maxInvestment = (net_worth < annual_income ? net_worth : annual_income) * .05;
+        maxInvestment = maxInvestment > 2000 ? maxInvestment : 2000;
+      }
+      return maxInvestment - this.user.accumulated_investment;
     },
 
     amountRounding(e) {
@@ -632,6 +692,7 @@ module.exports = {
         this.currentAmountTip = 'rounding';
         $('#amount').popover('show');
         this._updateTotalAmount(e);
+        $('.popover').scrollTo();
       }
     },
 
@@ -641,8 +702,7 @@ module.exports = {
       if (amount < this.model.campaign.minimum_increment) {
         this.currentAmountTip = 'minimum-investment';
         $('#amount').popover('show');
-      } else if(amount >= 5000) {
-
+      } else if(this._exceedLimit(amount || 0)) {
         // $('#amount').popover({
         //   // trigger: 'focus',
         //   placement(context, src) {
@@ -656,6 +716,12 @@ module.exports = {
         //   }
         // });
         this.currentAmountTip = 'amount-campaign';
+        $('#amount').popover('show');
+        $('.popover :input[id=net_worth]').val(this.user.net_worth);
+        $('.popover :input[id=annual_income]').val(this.user.annual_income);
+        $('.popover button').click(this.updateIncomeWorth.bind(this));
+      } else if (this.currentAmountTip == 'amount-campaign') {
+        this.currentAmountTip = 'amount-ok';
         $('#amount').popover('show');
       } else {
         $('#amount').popover('hide');
@@ -687,7 +753,7 @@ module.exports = {
   investmentThankYou: Backbone.View.extend({
     template: require('./templates/thankYou.pug'),
     initialize(options) {
-      this.campaignModel = options.campaignModel;
+      this.company = options.company;
     },
 
     render() {
@@ -696,7 +762,7 @@ module.exports = {
           serverUrl: serverUrl,
           Urls: Urls,
           investment: this.model,
-          campaign: this.campaignModel.attributes,
+          company: this.company,
         })
       );
       return this;

@@ -1,3 +1,13 @@
+mixin nestedTextLabel(nestedName, name, myAttr, vals)
+  - vals = vals || values;
+  - _.extend(myAttr, fields[nestedName].schema[name])
+  - myAttr.value = vals[name] ? vals[name] : ''
+  +fieldTextLabel(
+    nestedName + '[' + name + ']',
+    myAttr
+  )
+
+
 mixin prepareNestedField(nestedName, name, value, index, myAttr)
   if value == null
     - console.log('value for ' + name + ' is null ')
