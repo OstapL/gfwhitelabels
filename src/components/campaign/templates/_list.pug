@@ -8,8 +8,8 @@
       .one_block
         .for_img
           img(
-            src=app.getThumbnail('255x153', company.list_image_data ? company.list_image_data.thumbnails : [], '/img/default/255x153.png')
-            alt=company.name)
+            src=((company.campaign.list_image_data && company.campaign.list_image_data[0]) ? company.campaign.list_image_data[0].urls[0] : '/img/default/255x153.png')
+            alt=(company.short_name || company.name))
 
           .more_inform
             .title.text-center
@@ -31,14 +31,14 @@
             .bottom_pr
               if company.campaign.security_type == 0
                 p Price per share: #{format.formatPrice(company.campaign.price_per_share)}
-                p Number of shares: #{(Math.round(company.campaign.minimum_increment / company.campaign.price_per_share)).toLocaleString('en-US')}
+                p Number of shares: #{(Math.round(company.campaign.minimum_increment / company.campaign.price_per_share) || 0).toLocaleString('en-US')}
               else
                 //- p % Revenue: #{campaign.percentage_revenue}%
                 p Cap: #{company.campaign.cap}X
                 p Percentage Revenue: #{company.campaign.percentage_revenue}%
 
         .title.text-xs-center
-          h3.m-t-0.m-x-auto= company.name
+          h3.m-t-0.m-x-auto= company.short_name || company.name
           span.place
             i.fa.fa-map-marker
             = company.city + ' ' + company.state
@@ -48,7 +48,7 @@
             p= company.description.substr(0,250)
 
         .progress_bar_container
-          span.left_text #{company.campaign.progress} % Funded
+          span.left_text #{(company.campaign.amount_raised / company.campaign.minimum_raise) || 0} % Funded
           span.right_text 
             b #{format.formatPrice(company.campaign.amount_raised)} 
             | of #{format.formatPrice(company.campaign.minimum_raise)}
