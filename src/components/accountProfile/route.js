@@ -5,6 +5,12 @@ module.exports = Backbone.Router.extend({
     'account/change-password': 'changePassword',
     'reset/password/confirm/': 'setNewPassword',
     // 'account/new-password': 'setNewPassword',
+    'account/company-dashboard': 'companyDashboard',
+    'account/company-dashboard-first': 'companyDashboardFirst',
+    'account/after-payment-dashboard': 'afterPaymentDashboard',
+    'account/after-complete-dashboard': 'afterCompleteDashboard',
+    'account/after-final-submit-dashboard': 'afterFinalDashboard',
+    'account/after-submitting-goverment-dashboard': 'afterSubmittingGovermentDashboard',
     'dashboard/issue-dashboard': 'issueDashboard',
   },
 
@@ -77,7 +83,56 @@ module.exports = Backbone.Router.extend({
       app.hideLoading();
     });
   },
+  companyDashboard: function() {
+      const View = require('components/accountProfile/views.js');
+      let i = new View.companyDashboard({
+        el: '#content',
+      });
+      i.render();
+      app.hideLoading();
+  },
 
+  companyDashboardFirst:  function() {
+      const View = require('components/accountProfile/views.js');
+      let i = new View.companyDashboardFirst({
+        el: '#content',
+      });
+      i.render();
+      app.hideLoading();
+  },
+  
+  afterPaymentDashboard:  function() {
+      const View = require('components/accountProfile/views.js');
+      let i = new View.afterPaymentDashboard({
+        el: '#content',
+      });
+      i.render();
+      app.hideLoading();
+  },
+  afterCompleteDashboard:  function() {
+      const View = require('components/accountProfile/views.js');
+      let i = new View.afterCompleteDashboard({
+        el: '#content',
+      });
+      i.render();
+      app.hideLoading();
+  },
+  afterFinalDashboard:  function() {
+      const View = require('components/accountProfile/views.js');
+      let i = new View.afterFinalDashboard({
+        el: '#content',
+      });
+      i.render();
+      app.hideLoading();
+  },
+  afterSubmittingGovermentDashboard:  function() {
+      const View = require('components/accountProfile/views.js');
+      let i = new View.afterSubmittingGovermentDashboard({
+        el: '#content',
+      });
+      i.render();
+      app.hideLoading();
+  },
   issueDashboard: function() {
     require.ensure([], function() {
       const companyR = app.makeCacheRequest(authServer + '/user/company');
