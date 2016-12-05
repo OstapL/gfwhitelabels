@@ -103,11 +103,14 @@ module.exports = {
     onImageCrop(name) {
       name = name || 'image_image_id';
       let dataFieldName = this._getDataFieldName(name);
+      let data = this.model[dataFieldName][0];
+      let url = data && data.urls ? data.urls[0] : null;
+      if (url) {
+        $('.user-info-name > span')
+          .empty()
+          .append('<img src="' + url + '" id="user-thumbnail"' + ' class="img-fluid img-circle">');
+      }
 
-      $('.user-info-name > span')
-        .empty()
-        .append('<img src="' + this.model[dataFieldName][0].urls[0] + '"' +
-          ' id="user-thumbnail"' + ' class="img-fluid img-circle">');
     },
 
     onImageDelete(name) {
