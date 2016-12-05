@@ -44,6 +44,7 @@ module.exports = Backbone.Router.extend({
           el: '#content',
           collection: data.data,
         });
+        $('body').scrollTo();
         i.render();
         app.hideLoading();
       });
