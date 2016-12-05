@@ -310,7 +310,7 @@ module.exports = {
 
         let files = $('.dropzone__' + name + ' .thumb-file-container');
 
-        if(this.model[fieldDataName].length > files.length) {
+        if(this.model[fieldDataName].length < files.length) {
           $('.dropzone__' + name + ' .thumb-file-container:first').remove();
         }
 
