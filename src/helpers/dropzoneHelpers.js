@@ -136,12 +136,14 @@ module.exports = {
         this.model[name] = data[0].id;
       }
 
-      let reqData = {
-        [name]: data[0].id,
-        [dataFieldName]: data,
-      };
+      return this._notifyServer(name);
+    },
 
-      return app.makeRequest(this.urlRoot.replace(':id', this.model.id), 'PATCH', reqData);
+    _notifyServer(name) {
+      let dataFieldName = this._getDataFieldName(name);
+      let data = _.pick(this.model, [name, dataFieldName]);
+
+      return app.makeRequest(this.urlRoot.replace(':id', this.model.id), 'PATCH', data);
     },
 
     _file(name) {
@@ -164,20 +166,29 @@ module.exports = {
 
         let $link = $(e.target).closest('a.delete-file');
 
-        // let fileId = $link.data('fileid');
+        let fileId = $link.data('fileid');
+
+        if (!fileId) {
+          return;
+        }
 
         $link.prop('enabled', false);
         $link.off('click');
+
         // api.makeRequest(filerServer + '/' + fileId, 'DELETE').done(() => {
-        //remove field from model
+          //remove field from model
 
-        delete this.model[name];
-        delete this.model[name.replace('_id', '_data')];
+          let dataFieldName = this._getDataFieldName(name);
 
-        $link.closest('.thumb-file-container')
-          .empty()
-          .append('<img src="/img/icons/file.png" alt="" class="img-file img-"' + name + '>' +
-            '<a class="a-' + name + '" href="#"></a>');
+          // delete this.model[name];
+          this.model[dataFieldName] = [];
+
+          this._notifyServer(name);
+
+          $link.closest('.thumb-file-container')
+            .empty()
+            .append('<img src="/img/icons/file.png" alt="" class="img-file img-"' + name + '>' +
+              '<a class="a-' + name + '" href="#"></a>');
         // });
 
         return false;
@@ -193,7 +204,7 @@ module.exports = {
         let id = data[0].id;
 
         let fileBlock = $('<div class="delete-file-container" style="position: absolute;">' +
-            '<a href="#" class="delete-file" data-fileid="' + data[0].id + '">' +
+            '<a href="#" class="delete-file" data-fileid="' + id + '">' +
               '<i class="fa fa-times"></i>' +
             '</a>' +
           '</div>' +
@@ -211,9 +222,6 @@ module.exports = {
         $('.dropzone__' + name + ' .thumb-file-container')
           .empty()
           .append(fileBlock);
-
-        this.model[name] = id;
-        this.model[name.replace('_id', '_data')] = data;
       });
 
       $('.dropzone__' + name + ' .img-dropzone a.delete-file').each((idx, link) => {
@@ -244,11 +252,18 @@ module.exports = {
         let $link = $(e.target).closest('a.delete-file');
         let fileId = $link.data('fileid');
 
+        if (!fileId) {
+          return;
+        }
+
         $link.prop('enabled', false);
         $link.off('click');
+
         api.makeRequest(filerServer + '/' + fileId, 'DELETE').done(() => {
           // remove field from model
-          let dataArr = this.model[name.replace('_id', '_data')];
+          let dataFieldName = this._getDataFieldName(name);
+
+          let dataArr = this.model[dataFieldName];
           let dataIdx = _(dataArr).findIndex((elem) => { return elem.id == fileId });
           if (dataIdx >= 0) {
             dataArr.splice(dataIdx, 1);
@@ -261,6 +276,7 @@ module.exports = {
                   '</div>');
             }
             $link.closest('.thumb-file-container').remove();
+            this._notifyServer(name);
           }
         });
 
@@ -272,7 +288,7 @@ module.exports = {
         let mimetypeIcons = require('helpers/mimetypeIcons.js');
         let icon = mimetypeIcons[data[0].mime.split('/')[1]];
 
-        let fieldDataName = name.replace('_id', '_data');
+        let fieldDataName = this._getDataFieldName(name);
         let url = data[0].urls[0];
 
         let fileBlock = $('<div class="thumb-file-container">' +
@@ -292,11 +308,12 @@ module.exports = {
 
         $('.dropzone__' + name + ' .thumb-file-container:last').after(fileBlock);
 
-        if(this.model[fieldDataName].length == 0) {
+        let files = $('.dropzone__' + name + ' .thumb-file-container');
+
+        if(this.model[fieldDataName].length > files.length) {
           $('.dropzone__' + name + ' .thumb-file-container:first').remove();
         }
 
-        this.model[name.replace('_id', '_data')].push(data[0]);
       });
 
       //attach remove event handlers to dropzone items
@@ -323,6 +340,8 @@ module.exports = {
         if (typeof(this.onImageCrop) === 'function') {
           this.onImageCrop(name);
         }
+
+        this._notifyServer(name);
       };
 
       const deleteImage = (e) => {
@@ -342,16 +361,12 @@ module.exports = {
         let fieldDataName = this._getDataFieldName(name);
 
         //remove field from model
-        this.model[name] = null;
-        this.model[fieldDataName] = [];
+        // this.model[name] = null;
+        this.model[fieldDataName] = [{ id: this.model[name].id, urls: [] }];
 
-        // let emptyData = {
-        //   [fieldDataName]: [],
-        // };
-        //
+        let dataR = this._notifyServer(name);
         // let filerR = api.makeRequest(filerServer + '/' + imgId, 'DELETE');
-        // let dataR = api.makeRequest(this.urlRoot,'PATCH', emptyData);
-        //
+
         // Promise.all([filerR, dataR]).then((filerResponse, dataResponse) => {
           $link.closest('.one-photo').find('img.img-' + name).attr('src', noimageUrl || '/img/default/255x153.png');
           $link.closest('.delete-image-container').remove();
@@ -458,6 +473,9 @@ module.exports = {
             dataArr.splice(dataIdx, 1);
             $link.closest('.one-photo').remove();
           }
+
+          this._notifyServer(name);
+
         // }).fail((err) => {
         //   console.error(err);
         //   alert(err.responseJSON.error);
@@ -483,6 +501,7 @@ module.exports = {
 
         $('a.crop-image[data-imageid=' + this.originImageId + ']').closest('.one-photo').find('img').attr('src', imgData.urls[0]);
 
+        this._notifyServer(name);
       };
 
       const cropImage = (e) => {
@@ -490,7 +509,6 @@ module.exports = {
         e.stopPropagation();
 
         let imgId = $(e.target).closest('a.crop-image').data('imageid');
-        imgId = parseInt(imgId, 10);
 
         this._cropImage(imgId, name, onCrop);
 

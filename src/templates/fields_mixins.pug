@@ -383,10 +383,11 @@ mixin fileFolderDropzone(name, attr)
 
 mixin userProfileDropzone(name, attr)
     -
+      var noimg = '/img/default/Default_photo.png';
       if (!attr.data)
         attr.data = {};
       if (!attr.data.urls)
-        attr.data.urls = ['/img/default/Default_photo.png'];
+        attr.data.urls = [noimg];
 
     div(
       class='row media-item ' + attr.class + ' ' + (attr.id || name) +
@@ -403,10 +404,10 @@ mixin userProfileDropzone(name, attr)
             .delete-image-container
               a(href="#" data-imageid=(attr.data.id || 0)).crop-image
                 i.fa.fa-crop
-              a(href="#" data-imageid=(attr.data.id || 0) data-noimage='/img/default/Default_photo.png').delete-image
+              a(href="#" data-imageid=(attr.data.id || 0) data-noimage=noimg).delete-image
                 i.fa.fa-times
             .user-photo-wrap.text-xs-center
-              img(class=(" img-" + name) src=attr.data.urls[0])
+              img(class=(" img-" + name) src=(attr.data.urls[0] || noimg))
           .row.border-dropzone.dropzone-profile
             .drop-image-title.text-xs-center.p-dropzone.p-l-2.p-r-2
               a(class='link-1' href="#" onclick="return false")

@@ -348,11 +348,6 @@ module.exports = {
           cssClass : 'img-crop',
           showPreview: false,
         },
-        fn: function checkNotEmpty(value, attr, fn, model, computed) {
-          if(!this.header_image_data || !this.header_image_data.length) {
-            throw 'Please upload Header Image';
-          }
-        },
 
       });
 
@@ -361,11 +356,6 @@ module.exports = {
           aspectRatio: 16 / 9,
           cssClass: 'img-crop',
           showPreview: false,
-        },
-        fn: function checkNotEmpty(value, attr, fn, model, computed) {
-          if(!this.list_image_data || !this.list_image_data.length) {
-            throw 'Please upload Thumbnail Picture';
-          }
         },
 
       });
@@ -376,11 +366,7 @@ module.exports = {
           cssClass: 'img-crop',
           showPreview: false,
         },
-        fn: function checkNotEmpty(value, attr, fn, model, computed) {
-          if(!this.gallery_group_data || !this.gallery_group_data.length) {
-            throw 'Please upload at least 1 image';
-          }
-        },
+
       });
 
       this.$el.on('keypress', ':input:not(textarea)', function (event) {

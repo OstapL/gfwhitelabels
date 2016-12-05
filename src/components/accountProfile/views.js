@@ -101,21 +101,16 @@ module.exports = {
     },
 
     onImageCrop(name) {
-      let hasName = !!name;
       name = name || 'image_image_id';
       let dataFieldName = this._getDataFieldName(name);
-
-      $('.user-info-name > span')
-        .empty()
-        .append('<img src="' + this.model[dataFieldName][0].urls[0] + '"' +
-          ' id="user-thumbnail"' + ' class="img-fluid img-circle">');
-
-      if (hasName) {
-        api.makeRequest(this.urlRoot,'PATCH', _.pick(this.model, [name, dataFieldName]))
-          .done((r) => {
-            console.log(r);
-          });
+      let data = this.model[dataFieldName][0];
+      let url = data && data.urls ? data.urls[0] : null;
+      if (url) {
+        $('.user-info-name > span')
+          .empty()
+          .append('<img src="' + url + '" id="user-thumbnail"' + ' class="img-fluid img-circle">');
       }
+
     },
 
     onImageDelete(name) {
