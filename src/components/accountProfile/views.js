@@ -398,7 +398,84 @@ module.exports = {
       return this;
     },
   }),
+  companyDashboard: Backbone.View.extend({
+    el: '#content',
+    template: require('./templates/companyDashboard.pug'),
 
+    render() {
+      this.$el.html(
+        this.template({
+          values: this.model,
+        })
+      );
+      return this;
+    },
+  }),
+  companyDashboardFirst: Backbone.View.extend({
+    el: '#content',
+    template: require('./templates/companyDashboardFirst.pug'),
+
+    render() {
+      this.$el.html(
+        this.template({
+          values: this.model,
+        })
+      );
+      return this;
+    },
+  }),
+  afterPaymentDashboard: Backbone.View.extend({
+    el: '#content',
+    template: require('./templates/afterPaymentDashboard.pug'),
+
+    render() {
+      this.$el.html(
+        this.template({
+          
+        })
+      );
+      return this;
+    },
+  }),
+  afterCompleteDashboard: Backbone.View.extend({
+    el: '#content',
+    template: require('./templates/afterCompleteFillingDashboard.pug'),
+
+    render() {
+      this.$el.html(
+        this.template({
+          
+        })
+      );
+      return this;
+    },
+  }),
+  afterFinalDashboard: Backbone.View.extend({
+    el: '#content',
+    template: require('./templates/afterFinalSubmitDashboard.pug'),
+
+    render() {
+      this.$el.html(
+        this.template({
+          
+        })
+      );
+      return this;
+    },
+  }),
+  afterSubmittingGovermentDashboard: Backbone.View.extend({
+    el: '#content',
+    template: require('./templates/afterSubmittingGovermentDashboard.pug'),
+
+    render() {
+      this.$el.html(
+        this.template({
+          
+        })
+      );
+      return this;
+    },
+  }),
   issueDashboard: Backbone.View.extend({
     initialize(options) {
       this.model.description = "Something long comes from here. Something long comes from here. Something long comes from here. Something long comes from here. Something long comes from here. ";
