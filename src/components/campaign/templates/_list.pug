@@ -8,7 +8,7 @@
       .one_block
         .for_img
           img(
-            src=app.getThumbnail('255x153', company.list_image_data ? company.list_image_data.thumbnails : [], '/img/default/255x153.png')
+            src=((company.campaign.list_image_data && company.campaign.list_image_data[0]) ? company.campaign.list_image_data[0].urls[0] : '/img/default/255x153.png')
             alt=company.name)
 
           .more_inform
