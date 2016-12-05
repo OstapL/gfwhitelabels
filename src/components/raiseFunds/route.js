@@ -6,6 +6,7 @@ module.exports = Backbone.Router.extend({
     'company/:id/after-payment-dashboard': 'afterPaymentDashboard',
     'company/:id/after-complete-dashboard': 'afterCompleteDashboard',
     'company/:id/after-final-submit-dashboard': 'afterFinalDashboard',
+    'company/:id/after-submitting-goverment-dashboard': 'afterSubmittingGovermentDashboard',
     'campaign/:id/general_information': 'generalInformation',
     'campaign/:id/media': 'media',
     'campaign/:id/team-members/add/:type/:index': 'teamMembersAdd',
@@ -93,6 +94,14 @@ module.exports = Backbone.Router.extend({
   afterFinalDashboard:  function() {
       const View = require('components/raiseFunds/views.js');
       let i = new View.afterFinalDashboard({
+        el: '#content',
+      });
+      i.render();
+      app.hideLoading();
+  },
+  afterSubmittingGovermentDashboard:  function() {
+      const View = require('components/raiseFunds/views.js');
+      let i = new View.afterSubmittingGovermentDashboard({
         el: '#content',
       });
       i.render();
