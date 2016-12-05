@@ -199,11 +199,11 @@ section
     .container
       .col-lg-12
         h2#about.dosis.text-uppercase.text-lg-center.text-xs-center.campaign-subheading About #{ values.company.name }
-        p #{ values.company.description }
+        p !{ textHelper.restoreLineBreak(values.company.description) }
 
         //- h3.our.text-lg-center Why You Should Invest
         h2.dosis.our.text-uppercase.text-lg-center.text-xs-center.campaign-subheading Why You Should Invest
-        p #{ values.pitch }
+        p !{ textHelper.restoreLineBreak(values.pitch) }
 
         //- if values.additional_info
         //-   each v,k in values.additional_info
@@ -292,18 +292,18 @@ section
       .col-lg-12
         //- h3.our.text-lg-center Our Edge
         h2.dosis.our.text-uppercase.text-lg-center.text-xs-center.campaign-subheading How We Intend to Make Money
-        p #{ values.intended_use_of_proceeds }
+        p !{ textHelper.restoreLineBreak(values.intended_use_of_proceeds) }
 
         //- h3.text-lg-center Why We are Raising Capital, and What We’ll Do with It
         h2.dosis.text-uppercase.text-lg-center.text-xs-center.campaign-subheading Why We are Raising Capital, and What We’ll Do with It
-        p #{ values.business_model }
+        p !{ textHelper.restoreLineBreak(values.business_model) }
 
       if values.additional_info
         each v,k in values.additional_info
           if v && v.title && v.body
             .col-lg-12
               h2.dosis.our.text-uppercase.text-lg-center.text-xs-center.campaign-subheading #{ v.title }
-              p #{ v.body }
+              p !{ textHelper.restoreLineBreak(v.body) }
    
   if values.members
     section#members
@@ -712,7 +712,7 @@ section
                   div(id="collapsefaq" + k role="tabpanel"
                   aria-labelledby="faq" + k
                   class=(counter == 0 ? 'in' : '') + ' panel-collapse collapse'
-                  ) #{ v.answer }
+                  ) !{ textHelper.restoreLineBreak(v.answer) }
                   - counter ++;
             //
               .panel.panel-default
