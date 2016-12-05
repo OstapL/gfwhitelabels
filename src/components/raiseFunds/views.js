@@ -180,6 +180,32 @@ module.exports = {
       return this;
     },
   }),
+  afterPaymentDashboard: Backbone.View.extend({
+    el: '#content',
+    template: require('./templates/afterPaymentDashboard.pug'),
+
+    render() {
+      this.$el.html(
+        this.template({
+          
+        })
+      );
+      return this;
+    },
+  }),
+  afterCompleteDashboard: Backbone.View.extend({
+    el: '#content',
+    template: require('./templates/afterCompleteFillingDashboard.pug'),
+
+    render() {
+      this.$el.html(
+        this.template({
+          
+        })
+      );
+      return this;
+    },
+  }),
   generalInformation: Backbone.View.extend(_.extend({
       urlRoot: raiseCapitalServer + '/campaign/:id/general_information',
       template: require('./templates/generalInformation.pug'),

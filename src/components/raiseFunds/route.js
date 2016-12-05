@@ -3,6 +3,8 @@ module.exports = Backbone.Router.extend({
     'company/create': 'company',
     'company/company-dashboard': 'companyDashboard',
     'company/:id/company-dashboard-first': 'companyDashboardFirst',
+    'company/:id/after-payment-dashboard': 'afterPaymentDashboard',
+    'company/:id/after-complete-dashboard': 'afterCompleteDashboard',
     'campaign/:id/general_information': 'generalInformation',
     'campaign/:id/media': 'media',
     'campaign/:id/team-members/add/:type/:index': 'teamMembersAdd',
@@ -70,7 +72,24 @@ module.exports = Backbone.Router.extend({
       i.render();
       app.hideLoading();
   },
-
+  
+  afterPaymentDashboard:  function() {
+      const View = require('components/raiseFunds/views.js');
+      let i = new View.afterPaymentDashboard({
+        el: '#content',
+      });
+      i.render();
+      app.hideLoading();
+  },
+  afterCompleteDashboard:  function() {
+      const View = require('components/raiseFunds/views.js');
+      let i = new View.afterCompleteDashboard({
+        el: '#content',
+      });
+      i.render();
+      app.hideLoading();
+  },
+  
   generalInformation (id) {
     const View = require('components/raiseFunds/views.js');
 
