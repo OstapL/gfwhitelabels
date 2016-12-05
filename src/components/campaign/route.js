@@ -3,20 +3,35 @@ if (typeof require.ensure !== `function`) require.ensure = (d, c) => c(require);
 
 module.exports = Backbone.Router.extend({
   routes: {
-    'invest_thanks': 'investmentThankYou',
+    ':id/invest_thanks': 'investmentThankYou',
     'companies': 'list',
     ':id': 'detail',
     ':id/invest': 'investment',
   },
 
-  investmentThankYou() {
+  investmentThankYou(id) {
     require.ensure([], () => {
       const View = require('./views.js');
       let i = new View.investmentThankYou({
         el: '#content',
+        model: {
+          id: 19,
+          amount: 10000,
+          transaction_id: '1234567',
+          amount_of_shares: 123,
+          perk: 'Perk Content',
+          security: 'Investment Terms Content'
+        },
+        company: {
+          id: 78,
+          name: 'Company Name',
+        },
       });
       i.render();
       app.hideLoading();
+      // const a1 = api.makeCacheRequest(investmentServer + '/' + id).then((data) => {
+
+      // });
     });
   },
 

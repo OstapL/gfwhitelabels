@@ -32,11 +32,12 @@ section.create-company-general.container.m-b-85
           class1: 'col-xl-3 col-lg-12 text-lg-left text-xl-right',
           class2: 'col-xl-9 col-lg-12',
           }, fields.business_model))
+        .border-bottom.m-t-3.m-b-3
         |!{ templates.faq }
-        .border-bottom
+        .border-bottom.m-t-3.m-b-3
         |!{ templates.additional_info }
         
-        .col-lg-12.m-t-3.pull-lg-right.p-r-0.text-lg-right.text-md-center.text-sm-center.text-xs-center
+        .col-lg-12.m-t-3.pull-lg-right.p-r-0.p-l-0.text-lg-right.text-md-center.text-sm-center.text-xs-center
           // button(type="submit").btn.btn-secondary.text-uppercase.m-r-3.m-t-0 Fields Review
           button#submitForm.btn.btn-primary.text-uppercase.m-t-0 save and continue
             i.fa.fa-angle-right

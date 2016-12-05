@@ -4,8 +4,8 @@ include ../../../templates/mixins.pug
   [
     ['Home', '/'],
     ['Explore', '/companies'],
-    ['Smartbe', '/' + campaign.id],
-    ['Invest in ' + campaign.company.name, '']
+    ['Smartbe', '/' + company.id],
+    ['Invest in ' + company.name, '']
   ]
 )
 
@@ -13,7 +13,7 @@ include ../../../templates/mixins.pug
   .row
     .col-sm-8.offset-sm-2
       h2.text-xs-center.thankyou-title.m0 
-        i(aria-hidden="true").fa.fa-thumbs-o-up You have invested $#{ investment.amount } in #{ campaign.company.name }
+        i(aria-hidden="true").fa.fa-thumbs-o-up You have invested $#{ investment.amount } in #{ company.name }
 
   .row
     .col-sm-8.offset-sm-2.mb50.mt50

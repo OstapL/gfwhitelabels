@@ -294,17 +294,18 @@ section.formc-review
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
               p.font-weight-bold Oversubscription allowed:
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
-              +frField('campaign.oversubscription', 'select')
+              if values.campaign.minimum_raise == values.campaign.maximum_raise
+                | No
+              else
+                | Yes
           .row
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
               p.font-weight-bold Allocation method of oversubscription:
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
-              +frField('campaign.allocation_method', 'select')
-          .row
-            .col-lg-6.col-md-6.col-sm-6.col-xs-12
-              p.font-weight-bold Oversubscription allowed:
-            .col-lg-6.col-md-6.col-sm-6.col-xs-12
-              +frField('campaign.first_come_first_served', 'text')
+              if values.campaign.minimum_raise == values.campaign.maximum_raise
+                | First Come First Served
+              else
+                | Not Applicable
           .row
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
               p.font-weight-bold Maximum amount of offering:
@@ -386,8 +387,7 @@ section.formc-review
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u Changes Are Possible In Certain Circumstances
         p.pb10.text-indent The Company reserves the right to modify any of the terms of the Offering at any time before the Offering closes. However, if any material changes are made, each investor will be notified and will be required to reconfirm their investment commitment within 5 days of such notice or their entire investment commitment shall be cancelled. Investors are also given the right to terminate an investment at any time prior to 48 hours from a notified closing date.  Additional
-          | details on the procedures involved with this Offering are contained later in this Material.  Additional information relating to this Offering, including communication channels allowing investors to pose questions and receive answers, is available through the Intermediary on the Platform at https://growthfountain.com/
-          +frField('company.id', 'text')
+          | details on the procedures involved with this Offering are contained later in this Material.  Additional information relating to this Offering, including communication channels allowing investors to pose questions and receive answers, is available through the Intermediary on the Platform at https://growthfountain.com/#{ values.company.id }
 
       // page 5
       section.page-formc-review.m-t-1

@@ -26,10 +26,78 @@ module.exports = {
       'change .js-city': 'changeAddressManually',
       'change .js-state': 'changeAddressManually',
       'change #country': 'changeCountry',
+      'change #not-qualify': 'changeQualify',
+      'change .investor-item-checkbox': 'changeAccreditedInvestorItem',
       'change #twitter,#facebook,#instagram,#linkedin': 'appendHttpsIfNecessary',
-      'change input[name=accredited_investor]': 'changeAccreditedInvestor',
-
+      // 'change input[name=accredited_investor]': 'changeAccreditedInvestor',
     }, phoneHelper.events, dropzoneHelpers.events, yesNoHelper.events),
+
+    changeAccreditedInvestorItem(e) {
+      let $target = $(e.target);
+      let name = $target.data('name');
+      let checked = $target.prop('checked');
+      this.$('input[name=' + name + ']').val(checked);
+      if (checked) {
+        this.$('#not-qualify').prop('checked', false).change();
+      }
+    },
+
+    changeQualify(e) {
+      let $target = $(e.target);
+      if ($target.prop('checked')) {
+        this.$('.investor-item-checkbox').prop('checked', false).change();
+
+        this.$('input[name=accredited_investor_choice]').val(false);
+      } else {
+        this.$('input[name=accredited_investor_choice]').val(true);
+      }
+    },
+
+    changeCountry(e) {
+      const usClass1 = 'col-lg-6 text-lg-right text-xs-left ';
+      const usClass2 = 'col-lg-6 ';
+      const foreignClass1 = 'col-lg-5 text-xl-right text-lg-left ';
+      const foreignClass2 = 'col-lg-7 ';
+
+      let $target = $(e.target);
+      let country = $target.val();
+
+      let $foreignCountryRow = $('.foreign-country-row');
+      let $foreignCountryPhoneContainer = $foreignCountryRow.find('.foreign-country-phone');
+      let $foreignCountryPhoneField = $foreignCountryPhoneContainer.find('.phone');
+
+      let $usRow = $('.us-row');
+      let $usPhoneContainer = $usRow.find('.us-phone');
+      let $usPhonePhoneField = $usPhoneContainer.find('.phone');
+
+      if (country == 'US') {
+        $foreignCountryRow.hide();
+        $foreignCountryPhoneField.appendTo($usPhoneContainer);
+
+        $foreignCountryPhoneField.find('label')
+          .removeClass(foreignClass1)
+          .addClass(usClass1);
+
+        $foreignCountryPhoneField.find('div')
+          .removeClass(foreignClass2)
+          .addClass(usClass2);
+
+        $usRow.show();
+      } else {
+        $usRow.hide();
+        $usPhonePhoneField.appendTo($foreignCountryPhoneContainer);
+
+        $usPhonePhoneField.find('label')
+          .removeClass(usClass1)
+          .addClass(foreignClass1);
+
+        $usPhonePhoneField.find('div')
+          .removeClass(usClass2)
+          .addClass(foreignClass2);
+
+        $foreignCountryRow.show();
+      }
+    },
 
     initialize(options) {
       this.fields = options.fields;
@@ -144,7 +212,7 @@ module.exports = {
       }).on('slideStop', (e) => {
         cbInvestor1m.prop('disabled', e.value < 1000);
         if (e.value < 1000) {
-          cbInvestor1m.prop('checked', false);
+          cbInvestor1m.prop('checked', false).change();
         }
         this.model.net_worth = e.value;
       });
@@ -161,7 +229,7 @@ module.exports = {
       }).on('slideStop', (e) => {
         cbInvestor200k.prop('disabled', e.value < 200);
         if (e.value < 200) {
-          cbInvestor200k.prop('checked', false);
+          cbInvestor200k.prop('checked', false).change();
         }
         this.model.annual_income = e.value;
       });
@@ -330,7 +398,84 @@ module.exports = {
       return this;
     },
   }),
+  companyDashboard: Backbone.View.extend({
+    el: '#content',
+    template: require('./templates/companyDashboard.pug'),
 
+    render() {
+      this.$el.html(
+        this.template({
+          values: this.model,
+        })
+      );
+      return this;
+    },
+  }),
+  companyDashboardFirst: Backbone.View.extend({
+    el: '#content',
+    template: require('./templates/companyDashboardFirst.pug'),
+
+    render() {
+      this.$el.html(
+        this.template({
+          values: this.model,
+        })
+      );
+      return this;
+    },
+  }),
+  afterPaymentDashboard: Backbone.View.extend({
+    el: '#content',
+    template: require('./templates/afterPaymentDashboard.pug'),
+
+    render() {
+      this.$el.html(
+        this.template({
+          
+        })
+      );
+      return this;
+    },
+  }),
+  afterCompleteDashboard: Backbone.View.extend({
+    el: '#content',
+    template: require('./templates/afterCompleteFillingDashboard.pug'),
+
+    render() {
+      this.$el.html(
+        this.template({
+          
+        })
+      );
+      return this;
+    },
+  }),
+  afterFinalDashboard: Backbone.View.extend({
+    el: '#content',
+    template: require('./templates/afterFinalSubmitDashboard.pug'),
+
+    render() {
+      this.$el.html(
+        this.template({
+          
+        })
+      );
+      return this;
+    },
+  }),
+  afterSubmittingGovermentDashboard: Backbone.View.extend({
+    el: '#content',
+    template: require('./templates/afterSubmittingGovermentDashboard.pug'),
+
+    render() {
+      this.$el.html(
+        this.template({
+          
+        })
+      );
+      return this;
+    },
+  }),
   issueDashboard: Backbone.View.extend({
     initialize(options) {
       this.model.description = "Something long comes from here. Something long comes from here. Something long comes from here. Something long comes from here. Something long comes from here. ";

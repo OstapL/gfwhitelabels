@@ -1,5 +1,5 @@
 include ../../../templates/mixins.pug
-include menu.pug
+
 - 'use strict'
 - var fields = { title_risk: { label: 'Title for Risk'} };
 - var fields = { describe: { label: 'Describe Your Risk'} };
@@ -14,8 +14,8 @@ include menu.pug
 )
 
 section.formc-team-members-director.container.m-b-85
-  +menu('company', 'companyDashboard')
-    
+  //+menu('company', 'companyDashboard')
+  .col-lg-4.col-xl-3.create_compaign
   //START RIGHT BLOCK
   .col-xl-9.col-lg-8.col-md-12
     .col-lg-10

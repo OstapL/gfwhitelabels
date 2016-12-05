@@ -38,7 +38,7 @@ mixin fieldInput(name, attr)
               +fieldTextLabel("amount", _.extend({
                 class1: 'col-lg-3 col-md-12 text-lg-left text-xl-right',
                 class2: 'col-lg-4 col-md-12',
-                placeholder: '$2,500',
+                placeholder: '$',
                 text: "$10 of payment processing fee. Your money will be returned to you if the campaign doesn't reach the target goal ($500,000)."
                 }, fields.amount))
           .row
@@ -58,85 +58,107 @@ mixin fieldInput(name, attr)
           div.popover-content-amount-campaign
             i.fa.fa-info-circle
             span Investors are limited to 12 month investment totals ranging from $2,000 - $100,000 based on income and net worth. Please update your financial information to see your limit:
-
-            +fieldBlock("annual_income", user.annual_income, {'class1': 'col-md-4', 'class2': 'col-md-8', 'type': 'text'})
-
-            +fieldBlock("net_worth", user.net_worth, {'class1': 'col-md-4', 'class2': 'col-md-8', 'type': 'text'})
+            +fieldBlock("annual_income", user.annual_income, {'class1': 'col-md-4', 'class2': 'col-md-8', 'type': 'text', label: 'Annual Income in K'})
+            +fieldBlock("net_worth", user.net_worth, {'class1': 'col-md-4', 'class2': 'col-md-8', 'type': 'text', label: 'Net Worth in K'})
+            button.btn.btn-primary.pull-lg-right.text-uppercase.update-worth-income Update
           div.popover-content-rounding
             i.fa.fa-info-circle
             span Companies can’t issue fractional shares.  The price per share is $#{values.campaign.price_per_share} so investment amounts must be a multiple of $#{values.campaign.price_per_share}.
           div.popover-content-minimum-investment
             i.fa.fa-info-circle
             span The minimum investment is $#{values.campaign.minimum_increment}.
+          div.popover-content-amount-ok
+            i.fa.fa-info-circle
+            span Base on your updated annual income and net worth, you can invest $:amount.
 
           section.personal_information
             h2.text-uppercase.dosis.text-md-center.text-sm-center.text-xs-center.text-lg-left Personal Information
               span.small-text.open-sans Required by United States banking laws. This information is transmitted securely and will never be used for any purpose beyond executing your investment. You only have to do this once.
             .form-group.row
               label.col-lg-3.col-md-12.text-lg-right.text-xs-left.pull-xs-left Legal Name
+                span.color-red *
               +fieldInput("personal_information_data[first_name]", {'class': 'col-lg-4-5 m-b-md-25 col-md-12','placeholder':'First Name', value: user.first_name })
               +fieldInput("personal_information_data[last_name]", {'class': 'col-lg-4-5 col-md-12 ','placeholder':'Last Name', value: user.last_name })
             .form-group.row
               label.col-lg-3.text-lg-right.text-xs-left Country
+                span.color-red *
               .col-lg-9
-                - if (!user.country) user.country = 'us';
+                - if (!user.country) user.country = 'US';
                 select(name="country").custom-select.w-100.country-select
-                  option(value="us" selected=(user.country == 'us')) United States
-                  option(value="ua" selected=(user.country == 'ua')) UA
-                  option(value='ru' selected=(user.country == 'ru')) Russia
-            +fieldTextLabel("personal_information_data[street_address_1]", _.extend({
+                  each v, k in countries
+                    option(value=k selected=(user.country == k)) #{v}
+                  //- option(value="us" selected=(user.country == 'us')) United States
+                  //- option(value="ua" selected=(user.country == 'ua')) UA
+                  //- option(value='ru' selected=(user.country == 'ru')) Russia
+            +nestedTextLabel("personal_information_data", "street_address_1", {
+              class1: 'col-lg-3 col-md-12 text-lg-left text-xl-right',
+              class2: 'col-lg-9 col-md-12',            
+              }, user)
+            //- +fieldTextLabel("personal_information_data[street_address_2]", _.extend({
+            //-   class1: 'col-lg-3 col-md-12 text-lg-left text-xl-right',
+            //-   class2: 'col-lg-9 col-md-12',
+            //-   value: user.street_address_2,
+            //-   }, fields.personal_information_data.schema.street_address_2))
+            +nestedTextLabel("personal_information_data", "street_address_2", {
               class1: 'col-lg-3 col-md-12 text-lg-left text-xl-right',
               class2: 'col-lg-9 col-md-12',
-              value: user.street_address_1,
-              }, fields.street_address_1))
-            +fieldTextLabel("personal_information_data[street_address_2]", _.extend({
-              class1: 'col-lg-3 col-md-12 text-lg-left text-xl-right',
-              class2: 'col-lg-9 col-md-12',
-              value: user.street_address_1,
-              }, fields.street_address_2))
+              }, user)
             // IF USA
-            .row.us-fields(style="display:" + (user.country == 'us' ? "display" : "none") + ";")
-              input(type="hidden" name="personal_information_data[state]" value="NY" disabled=(user.country != 'us')) 
-              input(type="hidden" name="personal_information_data[city]" value="New York" disabled=(user.country != 'us')) 
+            .row.us-fields(style="display:" + (user.country == 'US' ? "display" : "none") + ";")
+              input(type="hidden" name="personal_information_data[state]" value="NY" disabled=(user.country != 'US')) 
+              input(type="hidden" name="personal_information_data[city]" value="New York" disabled=(user.country != 'US')) 
               .col-lg-7.p-l-2.col-md-12
-                +fieldTextLabel("personal_information_data[zip_code]", _.extend({
+                //- +fieldTextLabel("personal_information_data[zip_code]", _.extend({
+                //-   class1: 'col-lg-5 text-lg-left text-xl-right',
+                //-   class2: 'col-lg-7',
+                //-   disabled: (user.country != 'us'),
+                //-   value: user.zip_codem,
+                //-   }, fields.zip_code))
+                +nestedTextLabel("personal_information_data", "zip_code", {
                   class1: 'col-lg-5 text-lg-left text-xl-right',
                   class2: 'col-lg-7',
-                  disabled: (user.country != 'us'),
-                  value: user.zip_codem,
-                  }, fields.zip_code))
+                  disabled: (user.country != 'US'),
+                  }, user)
               .col-lg-5.city_states.col-md-12
                 label.col-lg-5.col-md-6.col-sm-6.col-xs-6 City/State
+                  span.color-red *
                 .col-lg-7.col-md-6.col-sm-6.col-xs-6
                   span(data-toggle="modal" data-target="#city_state_modal" href="#city_state_modal").change_state_city
                     span.input-value.js-city-state New York, NY
                       i.fa.fa-pencil-square-o
             // IF OTHER COUNTRY
-            .other-countries-fields(style="display:" + (user.country == 'us' ? "none" : "display") + ";")
+            .other-countries-fields(style="display:" + (user.country == 'US' ? "none" : "display") + ";")
               .row
                 .col-lg-6.p-l-0.p-r-0
-                  +fieldTextLabel("personal_information_data[city]", _.extend({
+                  //- +fieldTextLabel("personal_information_data[city]", _.extend({
+                  //-   'class1': 'col-lg-6 text-lg-left text-xl-right',
+                  //-   'class2': 'col-lg-6 p-r-0',
+                  //-   disabled: (user.country == 'us'),
+                  //-   value: user.city,
+                  //-   }, fields.city))
+                  +nestedTextLabel("personal_information_data", "city", {
                     'class1': 'col-lg-6 text-lg-left text-xl-right',
                     'class2': 'col-lg-6 p-r-0',
-                    disabled: (user.country == 'us'),
-                    value: user.city,
-                    }, fields.city))
+                    disabled: (user.country == 'US'),
+                    }, user)
                 .col-lg-6
                   .form-group.row.state.text
-                    label.text-lg-right.col-lg-5(for="state").p-t-0.m-b-0 State/Province/Region
+                    label.text-lg-right.col-lg-5(for="state").p-t-0.m-b-0 State/Province/<br>Region
+                      span.color-red *
                     div.col-lg-7
-                      input.form-control(name='personal_information_data[state]' placeholder='State/Province/Region' type="text" value=user.state disabled=(user.country == 'us'))
+                      input.form-control(name='personal_information_data[state]' placeholder='State/Province/Region' type="text" value=user.state disabled=(user.country == 'US'))
               .row
                 .col-lg-6.p-l-0.p-r-0
                   .form-group.row.zip_code.text
                     label.text-lg-right.col-lg-6(for="zip_code") Postal Code
+                      span.color-red *
                     div.col-lg-6.p-r-0
-                      input.form-control(name='personal_information_data[zip_code]' placeholder='Postal Code' type="text" value=user.zip_code disabled=(user.country == 'us'))
+                      input.form-control(name='personal_information_data[zip_code]' placeholder='Postal Code' type="text" value=user.zip_code disabled=(user.country == 'US'))
                 .col-lg-6
                   +fieldTextLabel("personal_information_data[phone]", _.extend({
                     'class1': 'col-lg-5 text-lg-left text-xl-right',
                     'class2': 'col-lg-7 ', 'type': 'text',
-                    disabled: (user.country == 'us')
+                    disabled: (user.country == 'US')
                     }, fields.phone))
 
           section.payment-information.border-bottom
@@ -145,32 +167,44 @@ mixin fieldInput(name, attr)
               label.col-lg-3.text-lg-right.text-xs-left I Want to Pay Using
               .col-lg-9
                 select(name="payment_information_type").custom-select.w-100.payment-type-select
-                  option(value="echeck") Echeck (ACH)
-                  option(value="check") Check
-                  option(value="wire") Wire
+                  option(value="0") Echeck (ACH)
+                  option(value="1") Check
+                  option(value="2") Wire
             //IF ECHECK
             //- I may need to add a value into the attr object to make sure proper data is populated.
             .echeck-fields.payment-fields
-              +fieldTextLabel("payment_information_data[name_on_bank_account]", _.extend({
+              //- +fieldTextLabel("payment_information_data[name_on_bank_account]", _.extend({
+              //-   class1: 'col-lg-3 col-md-12 text-lg-left text-xl-right',
+              //-   class2: 'col-lg-9 col-md-12',
+              //-   value: user.name_on_bank_account,
+              //-   }, fields.name_on_bank_account))
+              +nestedTextLabel("payment_information_data", "name_on_bank_account", {
                 class1: 'col-lg-3 col-md-12 text-lg-left text-xl-right',
                 class2: 'col-lg-9 col-md-12',
-                value: user.name_on_bank_account,
-                }, fields.name_on_bank_account))
-              +fieldTextLabel("payment_information_data[account_number]", _.extend({
+                }, user)
+              //- +fieldTextLabel("payment_information_data[account_number]", _.extend({
+              //-   class1: 'col-lg-3 col-md-12 text-lg-left text-xl-right',
+              //-   class2: 'col-lg-9 col-md-12',
+              //-   value: user.account_number,
+              //-   }, fields.account_number))
+              +nestedTextLabel("payment_information_data", "account_number", {
                 class1: 'col-lg-3 col-md-12 text-lg-left text-xl-right',
                 class2: 'col-lg-9 col-md-12',
-                value: user.account_number,
-                }, fields.account_number))
+                }, user)
               +fieldTextLabel("payment_information_data[account_number_re]", _.extend({
                 class1: 'col-lg-3 col-md-12 text-lg-left text-xl-right',
                 class2: 'col-lg-9 col-md-12',
                 value: user.account_number,
                 }, fields.account_number_re))
-              +fieldTextLabel("payment_information_data[routing_number]", _.extend({
+              //- +fieldTextLabel("payment_information_data[routing_number]", _.extend({
+              //-   class1: 'col-lg-3 col-md-12 text-lg-left text-xl-right',
+              //-   class2: 'col-lg-9 col-md-12',
+              //-   value: user.routing_number,
+              //-   }, fields.routing_number))
+              +nestedTextLabel("payment_information_data", "routing_number", {
                 class1: 'col-lg-3 col-md-12 text-lg-left text-xl-right',
                 class2: 'col-lg-9 col-md-12',
-                value: user.routing_number,
-                }, fields.routing_number))
+                }, user)
               .form-group.row.radio.check-fields
                 label.text-md-right.col-lg-3 Account Type
                 .col-lg-9.radio-input
@@ -215,7 +249,7 @@ mixin fieldInput(name, attr)
                   .col-lg-9.offset-lg-3
                     .row
                       .col-lg-6
-                        span Please Send your Wire to::
+                        span Please Send your Wire to:
                       .col-lg-6
                         span.font-weight-bold GrowthFountain Capital LLC
                     .row
