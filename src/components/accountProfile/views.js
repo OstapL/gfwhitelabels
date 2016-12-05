@@ -41,8 +41,8 @@ module.exports = {
         }
       });
 
-      this.fields.account_number.required = true;
-      this.fields.account_number_re = { required: true };
+      // this.fields.account_number.required = true;
+      this.fields.account_number_re = {};
 
       this.labels = {
         country: 'Country',
@@ -98,7 +98,19 @@ module.exports = {
     },
 
     onImageCrop(name) {
-      $('#menuProfile .fa-user').css('background', 'uri(' + _.first(this.model[name.replace('_' + this.fields[name].type + '_id', '_data')]).urls[0] + ')');
+      $('.user-info-name > span')
+        .empty()
+        .append('<img src="' + this.model[this._getDataFieldName(name)][0].urls[0] + '"' +
+          ' id="user-thumbnail"' + ' class="img-fluid img-circle">');
+    },
+
+    onImageDelete(name) {
+      $('.user-info-name > span').empty().append('<i class="fa fa-user">');
+    },
+
+    saveInfo(e) {
+      let data = _.pick(this.model, ['image_image_id', 'image_data']);
+      return api.submitAction.call(this, e, data);
     },
 
     _initSliders() {
@@ -260,6 +272,8 @@ module.exports = {
       let fullName = app.user.get('first_name') + ' ' + app.user.get('last_name');
       $('#user_name').text(fullName);
       $('.image_image_id').siblings('h3').text(fullName);
+
+      $('#content').scrollTo();
     },
 
   }, phoneHelper.methods, dropzoneHelpers.methods, yesNoHelper.methods)),
