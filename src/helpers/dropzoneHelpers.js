@@ -136,12 +136,14 @@ module.exports = {
         this.model[name] = data[0].id;
       }
 
-      let reqData = {
-        [name]: data[0].id,
-        [dataFieldName]: data,
-      };
+      return this._notifyServer(name);
+    },
 
-      return app.makeRequest(this.urlRoot.replace(':id', this.model.id), 'PATCH', reqData);
+    _notifyServer(name) {
+      let dataFieldName = this._getDataFieldName(name);
+      let data = _.pick(this.model, [name, dataFieldName]);
+
+      return app.makeRequest(this.urlRoot.replace(':id', this.model.id), 'PATCH', data);
     },
 
     _file(name) {
@@ -323,6 +325,8 @@ module.exports = {
         if (typeof(this.onImageCrop) === 'function') {
           this.onImageCrop(name);
         }
+
+        this._notifyServer(name);
       };
 
       const deleteImage = (e) => {
@@ -342,16 +346,12 @@ module.exports = {
         let fieldDataName = this._getDataFieldName(name);
 
         //remove field from model
-        this.model[name] = null;
-        this.model[fieldDataName] = [];
+        // this.model[name] = null;
+        this.model[fieldDataName] = [{ id: this.model[name].id, urls: [] }];
 
-        // let emptyData = {
-        //   [fieldDataName]: [],
-        // };
-        //
+        let dataR = this._notifyServer(name);
         // let filerR = api.makeRequest(filerServer + '/' + imgId, 'DELETE');
-        // let dataR = api.makeRequest(this.urlRoot,'PATCH', emptyData);
-        //
+
         // Promise.all([filerR, dataR]).then((filerResponse, dataResponse) => {
           $link.closest('.one-photo').find('img.img-' + name).attr('src', noimageUrl || '/img/default/255x153.png');
           $link.closest('.delete-image-container').remove();
@@ -483,6 +483,7 @@ module.exports = {
 
         $('a.crop-image[data-imageid=' + this.originImageId + ']').closest('.one-photo').find('img').attr('src', imgData.urls[0]);
 
+        this._notifyServer(name);
       };
 
       const cropImage = (e) => {
@@ -490,7 +491,6 @@ module.exports = {
         e.stopPropagation();
 
         let imgId = $(e.target).closest('a.crop-image').data('imageid');
-        imgId = parseInt(imgId, 10);
 
         this._cropImage(imgId, name, onCrop);
 

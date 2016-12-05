@@ -101,7 +101,6 @@ module.exports = {
     },
 
     onImageCrop(name) {
-      let hasName = !!name;
       name = name || 'image_image_id';
       let dataFieldName = this._getDataFieldName(name);
 
@@ -109,13 +108,6 @@ module.exports = {
         .empty()
         .append('<img src="' + this.model[dataFieldName][0].urls[0] + '"' +
           ' id="user-thumbnail"' + ' class="img-fluid img-circle">');
-
-      if (hasName) {
-        api.makeRequest(this.urlRoot,'PATCH', _.pick(this.model, [name, dataFieldName]))
-          .done((r) => {
-            console.log(r);
-          });
-      }
     },
 
     onImageDelete(name) {
