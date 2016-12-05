@@ -26,9 +26,78 @@ module.exports = {
       'change .js-city': 'changeAddressManually',
       'change .js-state': 'changeAddressManually',
       'change #country': 'changeCountry',
-      'change input[name=accredited_investor]': 'changeAccreditedInvestor',
-
+      'change #not-qualify': 'changeQualify',
+      'change .investor-item-checkbox': 'changeAccreditedInvestorItem',
+      'change #twitter,#facebook,#instagram,#linkedin': 'appendHttpsIfNecessary',
+      // 'change input[name=accredited_investor]': 'changeAccreditedInvestor',
     }, phoneHelper.events, dropzoneHelpers.events, yesNoHelper.events),
+
+    changeAccreditedInvestorItem(e) {
+      let $target = $(e.target);
+      let name = $target.data('name');
+      let checked = $target.prop('checked');
+      this.$('input[name=' + name + ']').val(checked);
+      if (checked) {
+        this.$('#not-qualify').prop('checked', false).change();
+      }
+    },
+
+    changeQualify(e) {
+      let $target = $(e.target);
+      if ($target.prop('checked')) {
+        this.$('.investor-item-checkbox').prop('checked', false).change();
+
+        this.$('input[name=accredited_investor_choice]').val(false);
+      } else {
+        this.$('input[name=accredited_investor_choice]').val(true);
+      }
+    },
+
+    changeCountry(e) {
+      const usClass1 = 'col-lg-6 text-lg-right text-xs-left ';
+      const usClass2 = 'col-lg-6 ';
+      const foreignClass1 = 'col-lg-5 text-xl-right text-lg-left ';
+      const foreignClass2 = 'col-lg-7 ';
+
+      let $target = $(e.target);
+      let country = $target.val();
+
+      let $foreignCountryRow = $('.foreign-country-row');
+      let $foreignCountryPhoneContainer = $foreignCountryRow.find('.foreign-country-phone');
+      let $foreignCountryPhoneField = $foreignCountryPhoneContainer.find('.phone');
+
+      let $usRow = $('.us-row');
+      let $usPhoneContainer = $usRow.find('.us-phone');
+      let $usPhonePhoneField = $usPhoneContainer.find('.phone');
+
+      if (country == 'US') {
+        $foreignCountryRow.hide();
+        $foreignCountryPhoneField.appendTo($usPhoneContainer);
+
+        $foreignCountryPhoneField.find('label')
+          .removeClass(foreignClass1)
+          .addClass(usClass1);
+
+        $foreignCountryPhoneField.find('div')
+          .removeClass(foreignClass2)
+          .addClass(usClass2);
+
+        $usRow.show();
+      } else {
+        $usRow.hide();
+        $usPhonePhoneField.appendTo($foreignCountryPhoneContainer);
+
+        $usPhonePhoneField.find('label')
+          .removeClass(usClass1)
+          .addClass(foreignClass1);
+
+        $usPhonePhoneField.find('div')
+          .removeClass(usClass2)
+          .addClass(foreignClass2);
+
+        $foreignCountryRow.show();
+      }
+    },
 
     initialize(options) {
       this.fields = options.fields;
@@ -41,8 +110,8 @@ module.exports = {
         }
       });
 
-      this.fields.account_number.required = true;
-      this.fields.account_number_re = { required: true };
+      // this.fields.account_number.required = true;
+      this.fields.account_number_re = {};
 
       this.labels = {
         country: 'Country',
@@ -90,6 +159,8 @@ module.exports = {
 
       setTimeout(() => { this.createDropzones() } , 1000);
 
+      this.onImageCrop();
+
       this.cityStateArea = this.$('.js-city-state');
       this.cityField = this.$('.js-city');
       this.stateField = this.$('.js-state');
@@ -98,7 +169,29 @@ module.exports = {
     },
 
     onImageCrop(name) {
-      $('#menuProfile .fa-user').css('background', 'uri(' + _.first(this.model[name.replace('_' + this.fields[name].type + '_id', '_data')]).urls[0] + ')');
+      name = name || 'image_image_id';
+      let dataFieldName = this._getDataFieldName(name);
+      let data = this.model[dataFieldName][0];
+      let url = data && data.urls ? data.urls[0] : null;
+      if (url) {
+        $('.user-info-name > span')
+          .empty()
+          .append('<img src="' + url + '" id="user-thumbnail"' + ' class="img-fluid img-circle">');
+      }
+
+    },
+
+    onImageDelete(name) {
+      $('.user-info-name > span').empty().append('<i class="fa fa-user">');
+    },
+
+    saveInfo(e) {
+      let data = _.pick(this.model, ['image_image_id', 'image_data']);
+      return api.submitAction.call(this, e, data);
+    },
+
+    appendHttpsIfNecessary(e) {
+      formatHelper.appendHttpIfNecessary(e, true);
     },
 
     _initSliders() {
@@ -119,7 +212,7 @@ module.exports = {
       }).on('slideStop', (e) => {
         cbInvestor1m.prop('disabled', e.value < 1000);
         if (e.value < 1000) {
-          cbInvestor1m.prop('checked', false);
+          cbInvestor1m.prop('checked', false).change();
         }
         this.model.net_worth = e.value;
       });
@@ -136,7 +229,7 @@ module.exports = {
       }).on('slideStop', (e) => {
         cbInvestor200k.prop('disabled', e.value < 200);
         if (e.value < 200) {
-          cbInvestor200k.prop('checked', false);
+          cbInvestor200k.prop('checked', false).change();
         }
         this.model.annual_income = e.value;
       });
@@ -260,6 +353,8 @@ module.exports = {
       let fullName = app.user.get('first_name') + ' ' + app.user.get('last_name');
       $('#user_name').text(fullName);
       $('.image_image_id').siblings('h3').text(fullName);
+
+      $('#content').scrollTo();
     },
 
   }, phoneHelper.methods, dropzoneHelpers.methods, yesNoHelper.methods)),

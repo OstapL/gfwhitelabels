@@ -181,6 +181,58 @@ module.exports = {
       return this;
     },
   }),
+  afterPaymentDashboard: Backbone.View.extend({
+    el: '#content',
+    template: require('./templates/afterPaymentDashboard.pug'),
+
+    render() {
+      this.$el.html(
+        this.template({
+          
+        })
+      );
+      return this;
+    },
+  }),
+  afterCompleteDashboard: Backbone.View.extend({
+    el: '#content',
+    template: require('./templates/afterCompleteFillingDashboard.pug'),
+
+    render() {
+      this.$el.html(
+        this.template({
+          
+        })
+      );
+      return this;
+    },
+  }),
+  afterFinalDashboard: Backbone.View.extend({
+    el: '#content',
+    template: require('./templates/afterFinalSubmitDashboard.pug'),
+
+    render() {
+      this.$el.html(
+        this.template({
+          
+        })
+      );
+      return this;
+    },
+  }),
+  afterSubmittingGovermentDashboard: Backbone.View.extend({
+    el: '#content',
+    template: require('./templates/afterSubmittingGovermentDashboard.pug'),
+
+    render() {
+      this.$el.html(
+        this.template({
+          
+        })
+      );
+      return this;
+    },
+  }),
   generalInformation: Backbone.View.extend(_.extend({
       urlRoot: raiseCapitalServer + '/campaign/:id/general_information',
       template: require('./templates/generalInformation.pug'),
@@ -297,11 +349,6 @@ module.exports = {
           cssClass : 'img-crop',
           showPreview: false,
         },
-        fn: function checkNotEmpty(value, attr, fn, model, computed) {
-          if(!this.header_image_data || !this.header_image_data.length) {
-            throw 'Please upload Header Image';
-          }
-        },
 
       });
 
@@ -310,11 +357,6 @@ module.exports = {
           aspectRatio: 16 / 9,
           cssClass: 'img-crop',
           showPreview: false,
-        },
-        fn: function checkNotEmpty(value, attr, fn, model, computed) {
-          if(!this.list_image_data || !this.list_image_data.length) {
-            throw 'Please upload Thumbnail Picture';
-          }
         },
 
       });
@@ -325,11 +367,7 @@ module.exports = {
           cssClass: 'img-crop',
           showPreview: false,
         },
-        fn: function checkNotEmpty(value, attr, fn, model, computed) {
-          if(!this.gallery_group_data || !this.gallery_group_data.length) {
-            throw 'Please upload at least 1 image';
-          }
-        },
+
       });
 
       this.$el.on('keypress', ':input:not(textarea)', function (event) {
