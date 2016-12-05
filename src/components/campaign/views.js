@@ -26,6 +26,7 @@ module.exports = {
         })
       );
       this.$el.find('.selectpicker').selectpicker();
+      $('body').scrollTo();
       //selectPicker('.selectpicker');
       return this;
     },
