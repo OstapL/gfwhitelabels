@@ -142,6 +142,7 @@ module.exports = {
     },
 
     _success(data) {
+      this.undelegateEvents();
       if (data.hasOwnProperty('campaign_id') == false) {
         data.campaign_id = this.formc.campaign_id;
       }
@@ -198,7 +199,7 @@ module.exports = {
       },
 
       getSuccessUrl(data) {
-        return '/campaign/' + (data.id ? data.id : this.model.id)  + '/media';
+        return '/campaign/' + this.model.id  + '/media';
       },
 
       initialize(options) {
@@ -257,7 +258,7 @@ module.exports = {
     urlRoot: raiseCapitalServer + '/campaign/:id/media',
 
     events: _.extend({
-        'submit form': api.submitAction,
+        'click #submitForm': api.submitAction,
         'change #video,.additional-video-link': 'updateVideo',
         'change .press_link': 'appendHttpIfNecessary',
         'click .submit_form': submitCampaign,
@@ -267,7 +268,7 @@ module.exports = {
     ),
 
     getSuccessUrl(data) {
-      return '/campaign/' + (data.id ? data.id : this.model.id) + '/team-members';
+      return '/campaign/' + this.model.id + '/team-members';
     },
 
     appendHttpsIfNecessary(e) {
@@ -699,7 +700,7 @@ module.exports = {
   perks: Backbone.View.extend(_.extend({
     urlRoot: raiseCapitalServer + '/campaign/:id/perks',
     events: _.extend({
-        'click #submitForm': 'onSubmit',
+        'click #submitForm': api.submitAction,
         'click .onPreview': onPreviewAction,
         'click .submit_form': submitCampaign,
     }, leavingConfirmationHelper.events, menuHelper.events, addSectionHelper.events),
@@ -741,23 +742,9 @@ module.exports = {
       return this;
     },
 
-    onSubmit(e) {
-      e.preventDefault();
-
-      let data = $(e.target).closest('form').serializeJSON({ useIntKeysAsArrayIndex: true });
-      let url = this.urlRoot.replace(':id', this.model.id);
-      api.fixDateFields.call(this, this.fields, data);
-
-      app.showLoading();
-      api.makeRequest(url, 'PUT', data).then((data) => {
-        app.hideLoading();
-        //$('button.submit_form').click();
-      }).
-      fail((xhr, status, text) => {
-        api.errorAction(this, xhr, status, text, this.fields);
-        app.hideLoading();
-      });
-    },
+    _success(data) {
+      app.hideLoading();
+    }
 
   }, leavingConfirmationHelper.methods, menuHelper.methods, addSectionHelper.methods)),
 

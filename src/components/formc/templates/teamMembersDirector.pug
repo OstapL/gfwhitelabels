@@ -20,7 +20,7 @@ section.formc-team-members-director.container.m-b-85
   //START RIGHT BLOCK
   .col-xl-8.col-lg-8.col-md-12.team-member-formc
     h2.text-uppercase.text-lg-center.text-xs-center.m-t-0.dosis.mb50 Team members (director)
-    form(metod="post" action="").form-section
+    form.form-section
       input(type="hidden" value=1 name="role")
       .col-xl-12
         +fieldTextLabel("first_name", _.extend({
@@ -129,5 +129,5 @@ section.formc-team-members-director.container.m-b-85
         .row.m-t-3
           .col-xl-12
             .text-md-center.text-sm-center.text-xs-center
-              button(type='submit').btn.btn-primary.text-uppercase.pull-lg-right Save
+              button(type='button' data-method=(values.user_id ? 'PUT' : 'POST'))#submitForm.btn.btn-primary.text-uppercase.pull-lg-right Save
               a(href='/formc/' + values.formc_id + '/team-members').btn.btn-secondary.text-uppercas.pull-lg-right.m-r-1 Cancel

@@ -90,8 +90,13 @@ module.exports = Backbone.Router.extend({
     $('#content').scrollTo();
     $.when(fieldsR, dataR).done((fields, data) => {
       if(user_id != 'new') {
-        data = data[0].team_members.filter(function(el) { return el.user_id == user_id})[0]
-        data.formc_id = id;
+        let t = data[0].team_members.filter(function(el) { return el.user_id == user_id})[0]
+        t.formc_id = id;
+        t.campaign_id = data[0].campaign_id;
+        t.company_id =data[0].company_id;
+        t.progress = data[0].progress;
+        delete t.id;
+        data = t;
       } else {
         data = {
           formc_id: id,

@@ -1325,9 +1325,9 @@ section.formc-review
             +frField('company.name', 'text')
             |  as Issuer
         h2.text-uppercase.text-xs-center.font-weight-bold.letter-spacing-normal.m-b-3 EXHIBIT A: BUSINESS PLAN
-        if values.formc.business_plan_file_data.length > 0
+        if values.formc.business_plan_data.length > 0
           p
-            for v,k in values.formc.business_plan_file_data[0].urls
+            for v,k in values.formc.business_plan_data[0].urls
               a(href=v target="_blank").link-1 #{ v.substr(0, 20) }
 
       // page 32

@@ -392,10 +392,11 @@ module.exports = {
   }, menuHelper.methods, addSectionHelper.methods)),
 
   teamMemberAdd: Backbone.View.extend(_.extend({
-    urlRoot: formcServer + '/:id' + '/team-members',
+    urlRoot: formcServer + '/:id/team-members',
+    doNotExtendModel: true,
     roles: ['shareholder', 'director', 'officer'],
     events: _.extend({
-      'submit form': api.submitAction,
+      'click #submitForm': api.submitAction,
       'click .submit_formc': submitFormc,
     }, addSectionHelper.events, menuHelper.events),
 
@@ -437,11 +438,11 @@ module.exports = {
     render() {
       let template = null;
 
+      this.urlRoot = this.urlRoot.replace(':id', this.model.formc_id);
       if(this.model.hasOwnProperty('user_id')  && this.model.user_id != '') {
         this.model.id = this.model.formc_id;
         this.urlRoot += '/' + this.role + '/' + this.model.user_id;
       } else {
-        this.urlRoot = this.urlRoot.replace(':id', this.model.formc_id);
         this.urlRoot += '/' + this.role;
       }
 
@@ -1464,11 +1465,11 @@ module.exports = {
   }, menuHelper.methods, yesNoHelper.methods, addSectionHelper.methods, dropzoneHelpers.methods)),
 
   outstandingSecurity: Backbone.View.extend(_.extend({
-    urlRoot: formcServer + '/:id' + '/outstanding-security',
+    urlRoot: formcServer + '/:id/outstanding-security',
     events: _.extend({
       'submit #security_model_form': 'addOutstanding',
       'change #security_type': 'outstandingSecurityUpdate',
-      'submit .form-section': 'submit',
+      'click #submitForm': api.submitAction,
       'click .submit_formc': submitFormc,
       'click .delete-outstanding': 'deleteOutstanding',
     }, addSectionHelper.events, menuHelper.events, yesNoHelper.events),
@@ -1588,6 +1589,11 @@ module.exports = {
         });
 
         e.target.querySelector('textarea').value = '';
+        api.makeRequest(
+          this.urlRoot.replace(':id', this.model.id),
+          'PATCH',
+          {'outstanding_securities': this.model[sectionName]}
+        );
       };
     },
 
@@ -1609,25 +1615,16 @@ module.exports = {
       // Fix index counter
       this[sectionName + 'Index']--;
       this.$('.' + sectionName + '_container tr')
+
+      api.makeRequest(
+        this.urlRoot.replace(':id', this.model.id),
+        'PATCH',
+        {'outstanding_securities': this.model[sectionName]}
+      );
     },
 
     getSuccessUrl() {
       return '/formc/' + this.model.id + '/background-check';
-    },
-
-    submit(e) {
-      e.preventDefault();
-      let data = $(e.target).serializeJSON({ useIntKeysAsArrayIndex: true });
-
-      if (data.exempt_offering_choice == false) {
-        data.exempt_offering = this.model.exempt_offering;
-      }
-
-      if (data.business_loans_or_debt_choice == false) {
-        data.business_loans_or_debt = this.model.business_loans_or_debt;
-      }
-
-      api.submitAction.call(this, e, data);
     },
 
     render() {
@@ -1672,8 +1669,8 @@ module.exports = {
       this.assignLabels();
     },
 
-    _success() {
-      window.location.reload();
+    _success(data) {
+      app.hideLoading();
       return false;
     },
 

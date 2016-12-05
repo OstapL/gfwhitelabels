@@ -2,6 +2,7 @@
 
 const formatHelper = require('helpers/formatHelper');
 const validation = require('components/validation/validation.js');
+const deepDiff = require('deep-diff').diff;
 
 module.exports = {
   makeCacheRequest(url, type, data) {
@@ -136,7 +137,6 @@ module.exports = {
 
     this.$el.find('.alert').remove();
 
-    debugger;
     let url = this.urlRoot || '';
     let method = e.target.dataset.method || 'POST';
 
@@ -146,21 +146,22 @@ module.exports = {
     }
 
     newData = newData || $(e.target).closest('form').serializeJSON({ useIntKeysAsArrayIndex: true });
+    api.deleteEmptyNested.call(this, this.fields, newData);
     api.fixDateFields.call(this, this.fields, newData);
     api.fixMoneyField.call(this, this.fields, newData);
 
     // if view already have some data - extend that info
-    if(this.hasOwnProperty('model') && !this.doNotExtendModel) {
+    if(this.hasOwnProperty('model') && !this.doNotExtendModel && method != 'PATCH') {
       newData = _.extend({}, this.model, newData);
     }
 
     // for PATCH method we will send only difference
     if(method == 'PATCH') {
       let patchData = {};
-      let d = api.deepDiffMapper().map(newData, this.model);
+      let d = deepDiff(newData, this.model);
       _(d).forEach((el, i) => {
-        if(el.type == 'updated') {
-          patchData[i] = el.data;
+        if(el.kind == 'E' || el.kind == 'A') {
+          patchData[el.path[0]] = newData[el.path[0]];
         }
       });
       newData = patchData;
@@ -171,7 +172,11 @@ module.exports = {
     if (method == 'PATCH') {
       let patchFields = {};
       _(newData).each((el, key) => {
-        patchFields[key] = fields[key];
+        if(fields[key]) {
+          patchFields[key] = fields[key];
+        } else {
+          console.error('field meta data not found: ' + key);
+        }
       })
       fields = patchFields;
     }
@@ -291,16 +296,18 @@ module.exports = {
     _(fields).each((el, key) => {
       if(el.type == 'nested') {
         if(Array.isArray(data[key])) {
-          debugger;
           data[key].forEach((el, i) => {
-            emptyValues = 0;
+            let emptyValues = 0;
             _(el).each((val, subkey) => {
               if(val == '' || val == 0) {
                 emptyValues ++;
               }
             });
-            if(Object.keys(el) == emptyValues) {
-              delete data[key][i]
+            if(Object.keys(el).length == emptyValues) {
+              delete data[key][i];
+              if(Object.keys(data[key]).length == 0) {
+                data[key] = this.model[key];
+              }
             };
           });
         }

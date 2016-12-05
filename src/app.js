@@ -157,7 +157,6 @@ app.user = new userModel();
 global.api = require('helpers/forms.js');
 _.extend(app, api);
 global.app = app;
-global.deep = require('deep-diff');
 
 // app routers
 app.routers = require('routers');

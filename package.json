@@ -67,6 +67,7 @@
     "backbone": "git+https://github.com/jashkenas/backbone.git",
     "bootstrap-select": "^1.10.0",
     "cropperjs": "^0.8.1",
+    "deep-diff": "^0.3.4",
     "dropzone": "^4.3.0",
     "extract-text-webpack-plugin": "^0.8.2",
     "font-awesome": "^4.6.3",
