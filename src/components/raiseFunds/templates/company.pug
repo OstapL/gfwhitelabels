@@ -20,14 +20,18 @@ section.create-company.container.m-b-85
   //START RIGHT BLOCK
   .col-xl-8.col-lg-8.col-md-12
     h2.text-uppercase.text-lg-center.text-xs-center.m-t-0.dosis Company
-    form(metod="post" action="").form-section
+    form.form-section
       .col-xl-12
         +fieldTextLabel("name", _.extend({
           class1: 'col-xl-3 col-lg-12 p-t-0 text-lg-left text-xl-right m-b-0',
           class2: 'col-xl-9 col-lg-12',
-          type: 'text',
           placeholder: 'Company Legal Name',
           }, fields.name))
+        +fieldTextLabel("short_name", _.extend({
+          class1: 'col-xl-3 col-lg-12 p-t-0 text-lg-left text-xl-right m-b-0',
+          class2: 'col-xl-9 col-lg-12',
+          placeholder: 'Short Name',
+          }, fields.short_name))
         +fieldChoiceLabel("industry", _.extend({
           class1: 'col-xl-3 col-lg-12 text-lg-left text-xl-right',
           class2: 'col-xl-9 col-lg-12',

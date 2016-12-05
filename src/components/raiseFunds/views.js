@@ -77,6 +77,7 @@ module.exports = {
       this.campaign = options.campaign;
       this.labels = {
         name: 'Legal Name of Company',
+        short_name: 'Doing business as another name?',
         industry: 'Industry',
         founding_state: 'Jurisdiction of Incorporation / Organization',
         tagline: 'Tagline',
