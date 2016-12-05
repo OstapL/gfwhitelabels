@@ -219,6 +219,19 @@ module.exports = {
       return this;
     },
   }),
+  afterSubmittingGovermentDashboard: Backbone.View.extend({
+    el: '#content',
+    template: require('./templates/afterSubmittingGovermentDashboard.pug'),
+
+    render() {
+      this.$el.html(
+        this.template({
+          
+        })
+      );
+      return this;
+    },
+  }),
   generalInformation: Backbone.View.extend(_.extend({
       urlRoot: raiseCapitalServer + '/campaign/:id/general_information',
       template: require('./templates/generalInformation.pug'),
