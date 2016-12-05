@@ -169,27 +169,28 @@ module.exports = {
         let fileId = $link.data('fileid');
 
         if (!fileId) {
-          return;
+          return false;
         }
 
         $link.prop('enabled', false);
         $link.off('click');
 
-        // api.makeRequest(filerServer + '/' + fileId, 'DELETE').done(() => {
-          //remove field from model
+        let dataFieldName = this._getDataFieldName(name);
 
-          let dataFieldName = this._getDataFieldName(name);
-
-          // delete this.model[name];
-          this.model[dataFieldName] = [];
-
-          this._notifyServer(name);
-
+        // delete this.model[name];
+        this.model[dataFieldName] = [];
+        this._notifyServer(name).then((r) => {
+          console.log(r);
+          return api.makeRequest(filerServer + '/' + fileId, 'DELETE');
+        }).then((r) => {
+          console.log(r);
           $link.closest('.thumb-file-container')
             .empty()
             .append('<img src="/img/icons/file.png" alt="" class="img-file img-"' + name + '>' +
               '<a class="a-' + name + '" href="#"></a>');
-        // });
+        }).fail((err) => {
+          console.log(err.responseJSON.error);
+        });
 
         return false;
       };
@@ -259,25 +260,28 @@ module.exports = {
         $link.prop('enabled', false);
         $link.off('click');
 
-        api.makeRequest(filerServer + '/' + fileId, 'DELETE').done(() => {
-          // remove field from model
-          let dataFieldName = this._getDataFieldName(name);
+        let dataFieldName = this._getDataFieldName(name);
+        let dataArr = this.model[dataFieldName];
+        let dataIdx = _(dataArr).findIndex((elem) => { return elem.id == fileId });
+        if (dataIdx < 0) {
+          return false;
+        }
 
-          let dataArr = this.model[dataFieldName];
-          let dataIdx = _(dataArr).findIndex((elem) => { return elem.id == fileId });
-          if (dataIdx >= 0) {
-            dataArr.splice(dataIdx, 1);
-            if (!dataArr.length) {
-              //add empty file
-              $link.closest('.file-scroll')
-                .append('<div class="thumb-file-container text-xl-center">' +
-                  '<img src="/img/icons/file.png" alt="" class="img-file img-"' + name + '>' +
-                  '<a class="a-' + name + '" href="#"></a>' +
-                  '</div>');
-            }
-            $link.closest('.thumb-file-container').remove();
-            this._notifyServer(name);
+        dataArr.splice(dataIdx, 1);
+        this._notifyServer(name).then((r) => {
+          return api.makeRequest(filerServer + '/' + fileId, 'DELETE');
+        }).then(() => {
+          if (!dataArr.length) {
+            //add empty file
+            $link.closest('.file-scroll')
+              .append('<div class="thumb-file-container text-xl-center">' +
+                '<img src="/img/icons/file.png" alt="" class="img-file img-"' + name + '>' +
+                '<a class="a-' + name + '" href="#"></a>' +
+                '</div>');
           }
+          $link.closest('.thumb-file-container').remove();
+        }).fail((err) => {
+          console.log(err.responseJSON.error)
         });
 
         return false;
@@ -349,7 +353,7 @@ module.exports = {
         e.stopPropagation();
 
         let $link = $(e.target).closest('a.delete-image');
-        let noimageUrl = $link.data('noimage');
+
         let imgId = $link.data('imageid');
         if (!imgId) {
           return;
@@ -358,25 +362,26 @@ module.exports = {
         $link.prop('enabled', false);
         $link.off('click');
 
+        let dataContainer = $('.dropzone__' + name + ' .data-container');
+        let noimageUrl = dataContainer.data('noimage') || '/img/default/255x153.png';
+
         let fieldDataName = this._getDataFieldName(name);
 
         //remove field from model
         // this.model[name] = null;
         this.model[fieldDataName] = [{ id: this.model[name].id, urls: [] }];
 
-        let dataR = this._notifyServer(name);
-        // let filerR = api.makeRequest(filerServer + '/' + imgId, 'DELETE');
-
-        // Promise.all([filerR, dataR]).then((filerResponse, dataResponse) => {
+        this._notifyServer(name).then((r) => {
+          return api.makeRequest(filerServer + '/' + imgId, 'DELETE');
+        }).then((r) => {
           $link.closest('.one-photo').find('img.img-' + name).attr('src', noimageUrl || '/img/default/255x153.png');
           $link.closest('.delete-image-container').remove();
-        // }).catch((errors) => {
-        //   console.log(arguments);
-        // });
-
-        if (typeof(this.onImageDelete) === 'function') {
-          this.onImageDelete(name);
-        }
+          if (typeof(this.onImageDelete) === 'function') {
+            this.onImageDelete(name);
+          }
+        }).fail((error) => {
+          console.log(error);
+        });
 
         return false;
       };
@@ -463,27 +468,29 @@ module.exports = {
 
         let $link = $(e.target).closest('a.delete-image');
         let imageId = $link.data('imageid');
+        if (!imageId) {
+          return;
+        }
+
+        $link.prop('enabled', false);
+        $link.off('click');
 
         let dataFieldName = this._getDataFieldName(name);
-        //todo make request to the urlRoot
-        // api.makeRequest(filerServer + '/' + imageId, 'DELETE').done(() => {
-          $link.prop('enabled', false);
-          $link.off('click');
+        let dataArr = this.model[dataFieldName];
+        let dataIdx = _(dataArr).findIndex((elem) => { return elem.id == imageId });
+        if (dataIdx >= 0) {
+          dataArr.splice(dataIdx, 1);
+        }
 
-          //remove field from model
-          let dataArr = this.model[dataFieldName];
-          let dataIdx = _(dataArr).findIndex((elem) => { return elem.id == imageId });
+        this._notifyServer(name).then((r) => {
+          return api.makeRequest(filerServer + '/' + imageId, 'DELETE')
+        }).then((r) => {
           if (dataIdx >= 0) {
-            dataArr.splice(dataIdx, 1);
             $link.closest('.one-photo').remove();
           }
-
-          this._notifyServer(name);
-
-        // }).fail((err) => {
-        //   console.error(err);
-        //   alert(err.responseJSON.error);
-        // });
+        }).fail((err) => {
+          alert(err.responseJSON.error);
+        });
 
         return false;
       };
