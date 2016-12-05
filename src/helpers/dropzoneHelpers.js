@@ -431,6 +431,10 @@ module.exports = {
           .on('click', deleteImage);
 
         let imgContainer = $('.dropzone__' + name + ' .one-photo');
+
+        //remove buttons container if present
+        imgContainer.find('.delete-image-container').remove();
+
         imgContainer.find('img.img-' + name).attr('src', url);
 
         imgContainer.prepend(imgActionsBlock);
@@ -485,7 +489,6 @@ module.exports = {
       };
 
       const onCrop = (imgData) => {
-        console.log(imgData);
         let dataFieldName = this._getDataFieldName(name);
         let model = this.model[dataFieldName];
 
@@ -499,7 +502,7 @@ module.exports = {
           img.urls[0] = imgData.urls[0];
         }
 
-        $('a.crop-image[data-imageid=' + this.originImageId + ']').closest('.one-photo').find('img').attr('src', imgData.urls[0]);
+        $('a.crop-image[data-imageid=' + img.id + ']').closest('.one-photo').find('img').attr('src', imgData.urls[0]);
 
         this._notifyServer(name);
       };
