@@ -212,7 +212,7 @@ module.exports = {
       }).on('slideStop', (e) => {
         cbInvestor1m.prop('disabled', e.value < 1000);
         if (e.value < 1000) {
-          cbInvestor1m.prop('checked', false);
+          cbInvestor1m.prop('checked', false).change();
         }
         this.model.net_worth = e.value;
       });
@@ -229,7 +229,7 @@ module.exports = {
       }).on('slideStop', (e) => {
         cbInvestor200k.prop('disabled', e.value < 200);
         if (e.value < 200) {
-          cbInvestor200k.prop('checked', false);
+          cbInvestor200k.prop('checked', false).change();
         }
         this.model.annual_income = e.value;
       });
