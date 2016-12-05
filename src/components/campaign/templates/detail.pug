@@ -3,7 +3,7 @@ include ../../../templates/mixins.pug
 
 - var percentage_raised = formatHelper.calculateRaisedPercentage(values.campaign.minimum_raise, values.campaign.amount_raised)
 
-section(style="background-image: url(" + (values.campaign.header_image_data.url ? values.cmapaign.header_image_data.url : '/img/default.png') + ")")#home.home-section.bg-dark-alfa-70.parallax-2.fixed-height-small.hide-bg-fixed
+section(style="background-image: url(" + (values.campaign.header_image_data && values.campaign.header_image_data[0] ? values.campaign.header_image_data[0].urls[0] : '/img/default.png') + ")")#home.home-section.bg-dark-alfa-70.parallax-2.fixed-height-small.hide-bg-fixed
   .js-height-parent.container-fluid
     .home-content
       .home-text.text-lg-center
@@ -201,11 +201,11 @@ section
         p !{ textHelper.restoreLineBreak(values.campaign.pitch) }
       
       #gallery1.col-lg-12.pt50.photo-gallegy.text-center-flex
-        if values.campaign.gallery_group_data.all_files
-          each v,k in values.campaign.gallery_group_data.all_files
+        if values.campaign.gallery_group_data
+          each v,k in values.campaign.gallery_group_data
             .col-lg-4.no-padding-img
-              a(href=app.getThumbnail('1440x900', v.thumbnails) data-size='1440x900' rel="gallery1").fancybox
-                img(src=app.getThumbnail('362x220', v.thumbnails) alt=values.name).img-fluid.img-responsive
+              a(href=v.urls[v.urls.length - 1] data-size='1440x900' rel="gallery1").fancybox
+                img(src=v.urls[0] alt=values.name).img-fluid.img-responsive
         else
 
           .col-lg-3.no-padding-img
