@@ -8,6 +8,7 @@ include fields_final_review.pug
     ]
 )
 
+- var titles = ['', 'CEO/President', 'Principal Financial Officer/Treasurer', 'Vice President', 'Secretary', 'Controller/Principal Accounting Officer', ];
 - var names = {}
 - names.issuer_short_name = 'company.name';
 - names.issuer_legal_name = 'company.name';
@@ -592,8 +593,10 @@ section.formc-review
           u Minimum Commitment and Closing Date
         p.text-indent To participate in this Offering, each investor must purchase securities in a minimum dollar amount equal to $
           +frField('campaign.minimum_increment', 'text')
+          - var deadline = new Date();
+          - deadline.setDate(deadline.getDate() + values.campaign.length_days);
           | .
-          |   The securities are being offered until [close.date], unless notice is provided to investors at least five (5) business days prior to any change in such date.  The Company reserves the right to change the closing date with such notice and with a minimum twenty-one (21) day period in which to carry out the offering.
+          |   The securities are being offered until [#{ deadline.toString().split(' GMT')[0] }], unless notice is provided to investors at least five (5) business days prior to any change in such date.  The Company reserves the right to change the closing date with such notice and with a minimum twenty-one (21) day period in which to carry out the offering.
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u Account Opening Requirement
         p.text-indent If a potential investor is interested in participating in the Offering, such investor must first open an account with the Intermediary by registering at www.GrowthFountain.com.  During such registration process, the Intermediary may request financial information to determine investor’s eligibility and may require the acceptance of certain terms and conditions applicable to investor’s use of the Platform. In addition, prior to communicating any investment commitment, each investor must (a) consent to electronic delivery of materials, (b) provide a representation that such investor has reviewed the educational material available from the Intermediary delivered pursuant to Rule 302 of Regulation Crowdfunding, (c) provide a representation that such investor understands that the entire investment amount may be lost and that such investor could bear such loss, (d) complete a questionnaire demonstrating such investor’s understanding that there are limitations on cancelling an investment commitment and that it may be difficult to resell securities acquired in this Offering.  Each potential investor is subject to investment limitations established by the Securities Act (15 USC 77d(a)(6)(B)) and Regulation Crowdfunding (17 CFR 227.100(a)(2)).
@@ -615,7 +618,8 @@ section.formc-review
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u Method for Delivering the Securities
           div 
-          a(href="#").link-1.show-input The issuer has represented that it has established means to keep accurate records of the holders of the securities sold in the Offering.  The issuer intends to keep all records relating to the securities in book entry or electronic form so you should not expect any physical delivery of the securities that you purchase. The fully executed Subscription Agreement relating to the Offering will serve as a written record of the transaction and will be available on the Platform for each investor to review in their investor dashboard.  Each investor will also receive an email confirmation of the successful closing of the Offering  which will confirm the investment amount.
+            | FIX FIX FIX The issuer has represented that it has established means to keep accurate records of the holders of the securities sold in the Offering.  The issuer intends to keep all records relating to the securities in book entry or electronic form so you should not expect any physical delivery of the securities that you purchase. The fully executed Subscription Agreement relating to the Offering will serve as a written record of the transaction and will be available on the Platform for each investor to review in their investor dashboard.  Each investor will also receive an email confirmation of the successful closing of the Offering  which will confirm the investment amount.
+            +frField('formc.method_for_delivering_securities', 'text')
 
       // page 11
       section.page-formc-review.m-t-1
@@ -673,7 +677,7 @@ section.formc-review
               each v,k in values.formc.outstanding_securities
                 tr
                   td
-                    +frField('formc.outstanding_securities[' + k + '].security_type', 'text')
+                    +frField('formc.outstanding_securities[' + k + '].security_type', 'select')
                   td
                     +frField('formc.outstanding_securities[' + k + '].amount_authroized', 'text')
                   td
@@ -685,8 +689,8 @@ section.formc-review
           u Description of Securities, Material Terms and Other Rights:
         each v,k in values.formc.outstanding_securities
           p.pb10
-            //a(href="#" class="show-input" data-name="cap_type_common_description").link-1 #{ v.terms_and_rights }
-            +frField('formc.outstanding_securities[' + k + '].terms_and_rights', 'text')
+            if values.formc.outstanding_securities[k].security_type == 5
+              +frField('formc.outstanding_securities[' + k + '].custom_security_type', 'text')
 
       // page 14
       section.page-formc-review.m-t-1
@@ -724,10 +728,10 @@ section.formc-review
           +frField('formc.security_differences', 'textarea')
         p.pb10.text-indent Ability of one class of security to materially limit, dilute or qualify the rights of another class:
         p.p-l-2.pb10
-          +frField('formc.rights_of_securities_being', 'textarea')
+          +frField('formc.rights_of_securities', 'textarea')
         p.pb10.text-indent Ability of any principal shareholders to affect the purchasers of the securities being offered:
         p.p-l-2
-          +frField('formc.principal_shareholders_affect', 'textarea')
+          +frField('formc.exercise_of_rights', 'textarea')
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u Valuation of the Securities
         p.pb10.text-indent The offering price of the securities in this Offering has been established by the Company and does not necessarily bear any specific relation to the assets, book value or potential earnings of the Company or any other recognized criteria of value. The Shares have not been registered under the Securities Exchange Act of 1934 and have not been traded or quoted on any exchange or quotation system. There is no public market in which shareholders may sell their Shares, and there can be no assurance given that such a market will ever develop. The securities offered hereby are restricted by law and the ability to transfer and interests in the Shares is severely limited.
@@ -735,7 +739,8 @@ section.formc-review
         p.p-l-2.pb10
           +frField('campaign.valuation_determination', 'select')
         p.p-l-2.pb10
-          +frField('campaign.valuation_determination_other', 'text')
+          if values.campaign.valuation_determination == 2
+            +frField('campaign.valuation_determination_other', 'text')
         p.pb10.text-indent The price of each Share was determined by the Company in good faith based on its own assessment of its current position and the possibility of future growth.  The Company has taken into account its own internal calculation of potential future revenue and based on such forward looking estimates has created a valuation that reflects the multiple or premium determined by the Company to be appropriate in this situation.  The Company acknowledges that the valuation bears no relationship to established value criteria such as net tangible assets or a multiple of earnings per share.  The Company accepts that some investors may conclude that the current valuation is not an indication of the actual value of the Company.
 
       // page 16
@@ -1337,11 +1342,18 @@ section.formc-review
           p.small.pb10
             +frField('company.name', 'text')
             |  as Issuer
-        h2.text-uppercase.text-xs-center.font-weight-bold.letter-spacing-normal.m-b-3 EXHIBIT B: FINANCIAL STATEMENTS
-        if values.formc.fiscal_recent_group_data.length > 0 && values.formc.fiscal_recent_group_data.urls
+        h2.text-uppercase.text-xs-center.font-weight-bold.letter-spacing-normal.m-b-3 EXHIBIT B: FINANCIAL STATEMENTS for most recent fiscal year
+        if values.formc.fiscal_recent_group_data.length > 0
           p
-            for v,k in values.formc.fiscal_recent_group_data.urls
+            for v,k in values.formc.fiscal_recent_group_data
               a(href=v.urls[0] target="_blank").link-1 #{ v.urls[0].substr(0, 20) }
+              br 
+        h2.text-uppercase.text-xs-center.font-weight-bold.letter-spacing-normal.m-b-3 EXHIBIT B: FINANCIAL STATEMENTS for prior fiscal year
+        if values.formc.fiscal_prior_group_data.length > 0
+          p
+            for v,k in values.formc.fiscal_prior_group_data
+              a(href=v.urls[0] target="_blank").link-1 #{ v.urls[0].substr(0, 20) }
+              br 
 
       // page 33
       section.page-formc-review.m-t-1
@@ -1356,6 +1368,7 @@ section.formc-review
           each v,k in values.formc.team_members
             if v.role[0] == 2
               +frField('formc.team_members[' + k + '].first_name', 'text')
+              +frField('formc.team_members[' + k + '].last_name', 'text')
               .table-responsive.m-t-1
                 table.table.table-bordered
                   theader
@@ -1388,6 +1401,7 @@ section.formc-review
           each v,k in values.formc.team_members
             if v.role[0] == 1
               +frField('formc.team_members[' + k + '].first_name', 'text')
+              +frField('formc.team_members[' + k + '].last_name', 'text')
               .table-responsive.m-t-1
                 table.table.table-bordered
                   theader

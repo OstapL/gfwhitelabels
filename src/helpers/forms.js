@@ -140,7 +140,7 @@ module.exports = {
     let url = this.urlRoot || '';
     let method = e.target.dataset.method || 'POST';
 
-    if(this.model.hasOwnProperty('id')) {
+    if(this.model && this.model.hasOwnProperty('id')) {
       url = url.replace(':id', this.model.id);
       method = e.target.dataset.method || 'PATCH';
     }
