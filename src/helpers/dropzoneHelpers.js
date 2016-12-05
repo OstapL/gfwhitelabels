@@ -458,6 +458,9 @@ module.exports = {
             dataArr.splice(dataIdx, 1);
             $link.closest('.one-photo').remove();
           }
+
+          this._notifyServer(name);
+
         // }).fail((err) => {
         //   console.error(err);
         //   alert(err.responseJSON.error);
