@@ -90,6 +90,8 @@ module.exports = {
 
       setTimeout(() => { this.createDropzones() } , 1000);
 
+      this.onImageCrop();
+
       this.cityStateArea = this.$('.js-city-state');
       this.cityField = this.$('.js-city');
       this.stateField = this.$('.js-state');
@@ -98,10 +100,21 @@ module.exports = {
     },
 
     onImageCrop(name) {
+      let hasName = !!name;
+      name = name || 'image_image_id';
+      let dataFieldName = this._getDataFieldName(name);
+
       $('.user-info-name > span')
         .empty()
-        .append('<img src="' + this.model[this._getDataFieldName(name)][0].urls[0] + '"' +
+        .append('<img src="' + this.model[dataFieldName][0].urls[0] + '"' +
           ' id="user-thumbnail"' + ' class="img-fluid img-circle">');
+
+      if (hasName) {
+        api.makeRequest(this.urlRoot,'PATCH', _.pick(this.model, [name, dataFieldName]))
+          .done((r) => {
+            console.log(r);
+          });
+      }
     },
 
     onImageDelete(name) {
