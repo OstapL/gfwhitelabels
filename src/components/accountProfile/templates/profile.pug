@@ -211,13 +211,6 @@ include ../../../templates/fields_mixins.pug
                             
                           
 
-                        //- .form-group.m-b-0.yesno
-                        //-   label
-                        //-     input(type="radio" name="accredited_investor"  value="true" checked="checked")
-                        //-     | Yes
-                        //-   label
-                        //-     input(type="radio" name="accredited_investor" value="false")
-                        //-     | No
                       .form-group.m-t-1
                         label.accredited_investor.shown-yes
                           input(type="checkbox" data-name="accredited_investor_1m" value='1' checked=user.accredited_investor_1m).col-xl-1.investor-1m.investor-item-checkbox
@@ -237,7 +230,7 @@ include ../../../templates/fields_mixins.pug
                           span.font-weight-normal.col-xl-10.p-l-0 I am an Accredited Investor because I am authorized to invest on behalf of a trust with at least $5M in assets and I acknowledge that I have sufficient knowledge to evaluate the merits and risks of private offerings. 
                         label.accredited_investor.shown-yes
                           input(type="checkbox" checked=!user.accredited_investor_choice).col-xl-1.investor-risk-agree#not-qualify
-                          span.font-weight-normal.col-xl-10.p-l-0 I do not qualify. &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                          span.font-weight-normal.col-xl-10.p-l-0 I do not qualify. 
                           input(type="hidden" name="accredited_investor_choice" value=String(user.accredited_investor_choice))
                       .row
                         .col-sm-11
