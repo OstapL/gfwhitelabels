@@ -71,8 +71,8 @@ section.team-members.container.m-b-85
             'class2': 'col-lg-6',
             'label': 'Where did you grow up?',
             'type': 'text',
-            'placeholder': 'Zip code',
             'value': member.zip_code,
+            'placeholder': 'Zip code',
           }, fields.zip_code))
 
         .col-xl-5.col-lg-6.city_states.required
@@ -133,7 +133,7 @@ section.team-members.container.m-b-85
                   img(src=member.photo).img-fluid.img-circle.img-photo
       .col-lg-12.text-lg-right.p-r-0.p-t-2.text-md-center.text-sm-center.text-xs-center
         button.btn.btn-secondary.text-uppercase.m-r-3.cancel cancel
-        button(data-method="POST").btn.btn-primary.text-uppercase.pull-lg-right Save
+        button(data-method="PATCH").btn.btn-primary.text-uppercase.pull-lg-right.save Save
           //
             .col-lg-6.p-r-0
               .dropdown.pull-right
@@ -175,3 +175,7 @@ div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true
                   .col-lg-12.text-xs-center
                     button(data-dismiss="modal").btn.btn-primary.text-uppercase save
         .modal-footer
+
+
+if !window.google || !window.google.maps
+  script(src= window.location.protocol + "//maps.google.com/maps/api/js?language=en&key=" + googleMapKey)
