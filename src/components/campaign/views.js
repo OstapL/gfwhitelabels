@@ -470,7 +470,7 @@ module.exports = {
 
     changeCountry(e) {
       let val = $(e.target).val();
-      if (val == 'us') {
+      if (val == 'US') {
         $('.us-fields').show().find(':input').prop('disabled', false);
         $('.other-countries-fields').hide().find(':input').prop('disabled', true);
       } else {
