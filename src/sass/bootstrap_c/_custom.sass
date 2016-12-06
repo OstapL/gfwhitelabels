@@ -142,6 +142,7 @@
 				i
 					font-size: 14px!important
 					margin-top: 0
+
 .fileFolderDropzone
 	.border-dropzone
 		min-height: 155px
@@ -165,7 +166,7 @@
 	.one-photo
 		.delete-image-container
 			position: absolute
-			right: 0
+			right: 15px
 			top: 0
 			.crop-image
 				margin-right: 3px
@@ -175,6 +176,10 @@
 					color: $white_op
 					width: 25px
 					height: 25px
+				+mt(.2s)
+				&:hover
+					i
+						color: $puerto_rico
 			.delete-image
 				i
 					padding: 5px
@@ -182,6 +187,10 @@
 					color: $white_op
 					width: 25px
 					height: 25px
+				&:hover
+					i
+						color: $crimson
+
 .galleryDropzone
 	.border-dropzone
 		min-height: 155px
@@ -208,6 +217,9 @@
 						color: $white_op
 						width: 25px
 						height: 25px
+					&:hover
+						i
+							color: $puerto_rico
 				.delete-image
 					i
 						padding: 5px
@@ -215,6 +227,9 @@
 						color: $white_op
 						width: 25px
 						height: 25px
+					&:hover
+						i
+							color: $crimson
 .userProfileDropzone
 	.one-photo
 		.delete-image-container
@@ -230,6 +245,9 @@
 					width: 25px
 					height: 25px
 					text-align: center
+				&:hover
+					i
+						color: $puerto_rico
 			.delete-image
 				i
 					padding: 5px
@@ -238,6 +256,9 @@
 					width: 25px
 					height: 25px
 					text-align: center
+				&:hover
+					i
+						color: $crimson
 
 	.border-dropzone
 		min-height: 150px
