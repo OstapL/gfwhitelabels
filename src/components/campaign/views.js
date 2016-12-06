@@ -430,16 +430,30 @@ module.exports = {
       'change #amount': 'amountRounding',
       click: 'hideRoundingPopover',
       'keyup .typed-name': 'copyToSignature',
+      'click a.update-income-worth': 'testMethod',
+      'keyup #annual_income,#net_worth': 'updateLimitInModal',
+      'click button.submit-income-worth': 'updateIncomeWorth'
+    },
+
+    updateLimitInModal(e) {
+      let annual_income = Number(this.$('#annual_income').val().replace(/\,/g, '')), net_worth = Number(this.$('#net_worth').val().replace(/\,/g, ''));
+      this.$('#annual_income').val((annual_income || 0).toLocaleString('en-US'));
+      this.$('#net_worth').val((net_worth || 0).toLocaleString('en-US'));
+      this.$('span.current-limit').text((Math.round(this._amountAllowed(annual_income / 1000, net_worth / 1000))).toLocaleString('en-US'));
+    },
+
+    testMethod(e) {
+      e.preventDefault();
+      alert('hello');
     },
 
     updateIncomeWorth(e) {
-      // let data = $(e.target).serializeJSON();
-      let net_worth = $('.popover :input[id=net_worth]').val();
-      let annual_income = $('.popover :input[id=annual_income]').val();
+      let net_worth = $(':input[id=net_worth]').val().replace(/\,/g, '') / 1000;
+      let annual_income = $(':input[id=annual_income]').val().replace(/\,/g, '') / 1000;
       api.makeRequest(authServer + '/rest-auth/data', 'PATCH', {net_worth: net_worth, annual_income: annual_income}).then((data) => {
         this.user.net_worth = net_worth;
         this.user.annual_income = annual_income;
-        this.$('#amount').trigger('keyup');
+        this.$('#amount').keyup();
       }).fail((xhr, status, text) => {
         alert('Update failed. Please try again!');
       });
@@ -486,6 +500,7 @@ module.exports = {
         return;
       }
       let data = $(e.target).serializeJSON();
+      data.amount = data.amount.replace(/\,/g, '');
       data.doNotExtendModel = true;
       api.submitAction.call(this, e, data);
     },
@@ -500,7 +515,7 @@ module.exports = {
       // stub the annual income and net worth
       // this.user.annual_income = 50001;
       // this.user.net_worth = 50001;
-      this.user.accumulated_investment = 1500;
+      this.user.accumulated_investment = 0;
 
       // this.fields.street_address_1 = { type: 'string', required: true};
       this.fields.street_address_1 = { type: 'string', required: false};
@@ -648,16 +663,19 @@ module.exports = {
         placement(context, src) {
           return 'top';
         },
+        container: '#content',
         html: true,
         content(){
           var content = $('.invest_form').find('.popover-content-' + that.currentAmountTip).html();
-          if (that.currentAmountTip == 'amount-ok') {
-            content = content.replace(/\:amount/g, that._amountAllowed());
+          if (that.currentAmountTip == 'amount-ok' || that.currentAmountTip == 'amount-campaign') {
+            content = content.replace(/\:amount/g, that._amountAllowed().toLocaleString('en-US'));
           }
           return content;
         },
         trigger: 'manual',
       }).popover('hide');
+
+      $('span.current-limit').text(this._amountAllowed());
 
       return this;
     },
@@ -667,9 +685,10 @@ module.exports = {
       return amount > this._amountAllowed();
     },
 
-    _amountAllowed() {
+    _amountAllowed(annual_income, net_worth) {
       let maxInvestment;
-      let net_worth = this.user.net_worth * 1000, annual_income = this.user.annual_income * 1000;
+      net_worth = (net_worth || this.user.net_worth) * 1000;
+      annual_income = (annual_income || this.user.annual_income) * 1000;
       if (net_worth >= 100000 && annual_income >= 100000) {
         maxInvestment = (net_worth < annual_income ? net_worth : annual_income) * .1;
         maxInvestment = maxInvestment < 100000 ? maxInvestment : 100000;
@@ -697,7 +716,8 @@ module.exports = {
     },
 
     amountUpdate(e) {
-      var amount = parseInt(e.currentTarget.value);
+      var amount = parseInt(e.currentTarget.value.replace(/\,/g, ''));
+      $(e.currentTarget).val(amount.toLocaleString('en-US'))
 
       if (amount < this.model.campaign.minimum_increment) {
         this.currentAmountTip = 'minimum-investment';
@@ -717,9 +737,6 @@ module.exports = {
         // });
         this.currentAmountTip = 'amount-campaign';
         $('#amount').popover('show');
-        $('.popover :input[id=net_worth]').val(this.user.net_worth);
-        $('.popover :input[id=annual_income]').val(this.user.annual_income);
-        $('.popover button').click(this.updateIncomeWorth.bind(this));
       } else if (this.currentAmountTip == 'amount-campaign') {
         this.currentAmountTip = 'amount-ok';
         $('#amount').popover('show');
@@ -743,8 +760,8 @@ module.exports = {
 
     _updateTotalAmount(e) {
       // Here 10 is the flat rate;
-      const totalAmount = Number(this.$('input[name=amount]').val()) + 10;
-      this.$('.total-investment-amount').text('$' + totalAmount);
+      const totalAmount = Number(this.$('input[name=amount]').val().replace(/\,/g, '')) + 10;
+      this.$('.total-investment-amount').text('$' + totalAmount.toLocaleString('en-US'));
 
     },
   }),
