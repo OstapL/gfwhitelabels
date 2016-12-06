@@ -430,9 +430,8 @@ module.exports = {
       'change #amount': 'amountRounding',
       click: 'hideRoundingPopover',
       'keyup .typed-name': 'copyToSignature',
-      'click a.update-income-worth': 'testMethod',
       'keyup #annual_income,#net_worth': 'updateLimitInModal',
-      'click button.submit-income-worth': 'updateIncomeWorth'
+      'click button.submit-income-worth': 'updateIncomeWorth',
     },
 
     updateLimitInModal(e) {
@@ -440,11 +439,6 @@ module.exports = {
       this.$('#annual_income').val((annual_income || 0).toLocaleString('en-US'));
       this.$('#net_worth').val((net_worth || 0).toLocaleString('en-US'));
       this.$('span.current-limit').text((Math.round(this._amountAllowed(annual_income / 1000, net_worth / 1000))).toLocaleString('en-US'));
-    },
-
-    testMethod(e) {
-      e.preventDefault();
-      alert('hello');
     },
 
     updateIncomeWorth(e) {
@@ -675,6 +669,10 @@ module.exports = {
         trigger: 'manual',
       }).popover('hide');
 
+      $('#income_worth_modal').on('hidden.bs.modal', function() {
+        $('#amount').keyup();
+      });
+
       $('span.current-limit').text(this._amountAllowed());
 
       return this;
@@ -717,7 +715,7 @@ module.exports = {
 
     amountUpdate(e) {
       var amount = parseInt(e.currentTarget.value.replace(/\,/g, ''));
-      $(e.currentTarget).val(amount.toLocaleString('en-US'))
+      $(e.currentTarget).val(amount.toLocaleString('en-US') || 0)
 
       if (amount < this.model.campaign.minimum_increment) {
         this.currentAmountTip = 'minimum-investment';
@@ -737,6 +735,9 @@ module.exports = {
         // });
         this.currentAmountTip = 'amount-campaign';
         $('#amount').popover('show');
+        $('.popover a.update-income-worth').click(function () {
+          $('#amount').popover('hide');
+        });
       } else if (this.currentAmountTip == 'amount-campaign') {
         this.currentAmountTip = 'amount-ok';
         $('#amount').popover('show');
