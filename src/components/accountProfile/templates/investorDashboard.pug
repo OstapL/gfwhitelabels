@@ -1,4 +1,92 @@
 include ../../../templates/mixins.pug
+//include ../../../templates/fields_mixins.pug
+
+mixin investment(i)
+  .one_table
+    .img_column.text-lg-center.text-sm-center
+      img(src=(i.campaign.header_image || "/img/test.png") alt="").img-fluid
+      span.img_tab #{daysLeft(new Date(), i.campaign.expiration_date) + ' Days Left'}
+      p.text-uppercase #{i.company.name}
+    .right-columns
+      .one_line
+        .col40
+          span.light_grey Amount Invested
+        .col60
+          span.bold-grey.font-weight-bold #{$formatAmount(i.amount)}
+      .one_line
+        .col40
+          span.light_grey Investment Day
+        .col60
+          span.dark_grey #{i.created_date.toLocaleString()}
+      .one_line
+        .col40
+          span.light_grey Investment ID
+        .col60
+          span.dark_grey #{i.id}
+      .one_line
+        .col40
+          span.light_grey Security
+        .col60
+          span.dark_grey #{i.campaign.security_type}
+      .one_line
+        .col40
+          span.light_grey Perks
+        .col60
+          span.dark_grey #{i.perk}
+    .right_buttons
+      h4 Downloadable Files
+      ul
+        li
+          a(href="javascript: alert('not implemented')" ).link-3 Investor Presentation
+        li
+          a(href="javascript: alert('not implemented')").link-3 Form C
+        li
+          a(href="javascript: alert('not implemented')").link-3 Financials
+        li
+          a(href="javascript: alert('not implemented')").link-3 Agreement
+    .bottom_column
+      .top_descript
+        .left_text
+          b #{$formatAmount(i.campaign.amount_raised)}
+          span Raised
+        .right_text
+          b #{$formatAmount((i.campaign.minimum_raise))}
+          span Goal
+        p.percents #{percentage(i.campaign.amount_raised, i.campaign.minimum_raise) + '% Funded'}
+        .clear
+      .progress_line_container
+        progress(value=i.campaign.amount_raised max=i.campaign.minimum_raise).progress
+      .text-lg-center
+        a(href=(window.location.protocol + '//company.' + window.location.host + '/' + i.company.id)).btn.btn-sm.btn-secondary.text-uppercase view campaign
+          i.fa.fa-angle-right
+      .cancel_invest
+        a(href="#").font-weight-bold Cancel investment
+    .clear
+
+-
+  function $formatAmount(amount) {
+    if (amount < 1000)
+      return '$' + amount;
+
+    if (amount < 1000000)
+      return '$' + Math.round(amount/1000) + 'K';
+
+    if (amount < 1000000000)
+      return '$' + (amount/1000000).toFixed(3) + 'M';
+
+    return '$' + (amount / 1000000000).toFixed(2) + 'MM';
+  };
+
+  function percentage(amount, goal) {
+    return Math.round((amount / goal) * 100);
+  };
+
+  function daysLeft(today, end) {
+
+  var days = Math.ceil((end.valueOf() - today.valueOf()) / ( 1000 * 60 * 60 * 24));
+    return days < 10 ? '0' + days : days.toString();
+  };
+
 
 +breadcrumbs('investor dashboard', '', 
     [
@@ -39,125 +127,9 @@ section.investor-dashboard
             aria-expanded="true"
           )
             .active-investor-dashboard.investor_table
-              .one_table
-                .img_column.text-lg-center.text-sm-center
-                  img(src="/img/test.png" alt="").img-fluid
-                  span.img_tab 02 Days Left
-                  p.text-uppercase Company name
-                .right-columns
-                  .one_line
-                    .col40
-                      span.light_grey Amount Invested
-                    .col60
-                      span.bold-grey.font-weight-bold $25K
-                  .one_line
-                    .col40
-                      span.light_grey Investment Day
-                    .col60
-                      span.dark_grey MM/DD/YYYY
-                  .one_line
-                    .col40
-                      span.light_grey Investment ID
-                    .col60
-                      span.dark_grey 09879*****
-                  .one_line
-                    .col40
-                      span.light_grey Security
-                    .col60
-                      span.dark_grey Revenue Share
-                  .one_line
-                    .col40
-                      span.light_grey Perks
-                    .col60
-                      span.dark_grey Rewards
-                .right_buttons
-                  h4 Downloadable Files
-                  ul
-                    li
-                      a(href="#").link-3 Investor Presentation
-                    li
-                      a(href="#").link-3 Form C
-                    li
-                      a(href="#").link-3 Financials
-                    li
-                      a(href="#").link-3 Agreement
-                .bottom_column
-                  .top_descript
-                    .left_text
-                      b $1,5MM
-                      span Raised
-                    .right_text
-                      b $500K
-                      span Goal
-                    p.percents 150% Funded
-                    .clear
-                  .progress_line_container
-                    progress(value="10" max="100").progress
-                  .text-lg-center
-                    a(href="#").btn.btn-sm.btn-secondary.text-uppercase view campaign
-                      i.fa.fa-angle-right
-                  .cancel_invest
-                    a(href="#").font-weight-bold Cancel investment
-                .clear
-              .one_table
-                .img_column.text-lg-center.text-sm-center
-                  img(src="/img/test.png" alt="").img-fluid
-                  span.img_tab 02 Days Left
-                  p.text-uppercase Company name
-                .right-columns
-                  .one_line
-                    .col40
-                      span.light_grey Amount Invested
-                    .col60
-                      span.bold-grey.font-weight-bold $25K
-                  .one_line
-                    .col40
-                      span.light_grey Investment Day
-                    .col60
-                      span.dark_grey 06.15.2016
-                  .one_line
-                    .col40
-                      span.light_grey Investment ID
-                    .col60
-                      span.dark_grey 09879*****
-                  .one_line
-                    .col40
-                      span.light_grey Security
-                    .col60
-                      span.dark_grey Revenue Share
-                  .one_line
-                    .col40
-                      span.light_grey Perks
-                    .col60
-                      span.dark_grey Rewards
-                .right_buttons
-                  h4 Downloadable Files
-                  ul
-                    li
-                      a(href="#").link-3 Investor Presentation
-                    li
-                      a(href="#").link-3 Form C
-                    li
-                      a(href="#").link-3 Financials
-                    li
-                      a(href="#").link-3 Agreement
-                .bottom_column
-                  .top_descript
-                    .left_text
-                      b $1,5MM
-                      span Raised
-                    .right_text
-                      b $500K
-                      span Goal
-                    p.percents 150% Funded
-                    .clear
-                  .progress_line_container
-                    progress(value="10" max="100").progress
-                  .text-lg-center
-                    a(href="#").btn.btn-sm.btn-secondary.text-uppercase view campaign
-                      i.fa.fa-angle-right 
-                  .cancel_invest
-                    a(href="#").font-weight-bold Cancel investment
+              each i in active
+                +investment(i)
+
           .tab-pane.fade#historical(
             role="tabpanel"
             aria-labelledby="historical-tab"
@@ -285,3 +257,4 @@ section.investor-dashboard
                       i.fa.fa-angle-right
                   .cancel_invest
                     a(href="#").font-weight-bold Cancel investment
+

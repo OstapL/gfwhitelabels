@@ -94,7 +94,7 @@ module.exports = Backbone.Router.extend({
     Promise.all([fieldsR, dataR]).then((values) => {
         let i = new View.InvestorDashboard({
           fields: values[0],
-          investments: values[1],
+          model: values[1],
         });
 
         app.hideLoading();
