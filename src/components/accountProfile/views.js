@@ -398,6 +398,24 @@ module.exports = {
       return this;
     },
   }),
+  InvestorDashboard: Backbone.View.extend({
+    template: require('./templates/investorDashboard.pug'),
+    el: '#content',
+    events: {
+
+    },
+
+    initialize(options) {
+      this.fields = options.fields;
+      this.render();
+    },
+
+    render() {
+      this.$el.html(this.template({
+
+      }));
+    }
+  }),
   companyDashboard: Backbone.View.extend({
     el: '#content',
     template: require('./templates/companyDashboard.pug'),
