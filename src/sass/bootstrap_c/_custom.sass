@@ -32,6 +32,11 @@
 		top: 25px!important
 	.m-b-0.m-b-lg-1
 		margin-bottom: 8px!important
+	.p-l-0.p-l-lg-1
+		padding-left: 1rem!important
+	.p-l-2,.p-l-3
+		&.p-l-lg-1
+			padding-left: 1rem!important
 @media screen and (max-width: 992px)
 	.p-sm-0
 		padding-left: 0!important
@@ -49,6 +54,8 @@
 		padding-left: 1rem!important
 	.p-r-xs-1
 		padding-right: 1rem!important
+	.p-xs-0
+		padding: 0!important
 	.hide-bg-fixed
 		background-attachment: inherit!important
 //uploading in drop zone
@@ -135,6 +142,7 @@
 				i
 					font-size: 14px!important
 					margin-top: 0
+
 .fileFolderDropzone
 	.border-dropzone
 		min-height: 155px
@@ -142,6 +150,7 @@
 .fileDropzone
 	.border-dropzone
 		min-height: 155px
+		width: 100%
 	.thumb-file-container
 		margin-top: 30px
 		.link-file
@@ -152,10 +161,12 @@
 		left: 70px
 		top: -7px
 .imageDropzone
+	.border-dropzone
+		width: 100%
 	.one-photo
 		.delete-image-container
 			position: absolute
-			right: 0
+			right: 15px
 			top: 0
 			.crop-image
 				margin-right: 3px
@@ -165,6 +176,10 @@
 					color: $white_op
 					width: 25px
 					height: 25px
+				+mt(.2s)
+				&:hover
+					i
+						color: $puerto_rico
 			.delete-image
 				i
 					padding: 5px
@@ -172,6 +187,10 @@
 					color: $white_op
 					width: 25px
 					height: 25px
+				&:hover
+					i
+						color: $crimson
+
 .galleryDropzone
 	.border-dropzone
 		min-height: 155px
@@ -198,6 +217,9 @@
 						color: $white_op
 						width: 25px
 						height: 25px
+					&:hover
+						i
+							color: $puerto_rico
 				.delete-image
 					i
 						padding: 5px
@@ -205,6 +227,9 @@
 						color: $white_op
 						width: 25px
 						height: 25px
+					&:hover
+						i
+							color: $crimson
 .userProfileDropzone
 	.one-photo
 		.delete-image-container
@@ -220,6 +245,9 @@
 					width: 25px
 					height: 25px
 					text-align: center
+				&:hover
+					i
+						color: $puerto_rico
 			.delete-image
 				i
 					padding: 5px
@@ -228,6 +256,9 @@
 					width: 25px
 					height: 25px
 					text-align: center
+				&:hover
+					i
+						color: $crimson
 
 	.border-dropzone
 		min-height: 150px
