@@ -28,14 +28,14 @@ section.campaign-specifics.container.m-b-85
         .row
           .col-lg-6
             +fieldTextLabel("minimum_raise", _.extend({
-              class1: 'col-xl-6 col-lg-12 text-xl-right text-lg-left m-b-0 p-t-0', 
+              class1: 'col-xl-6 col-lg-12 text-xl-right text-lg-left m-b-0 p-t-0 m-b-lg-1', 
               class2: 'col-xl-6 col-l-65 col-lg-12', 
               type: 'text',
               placeholder: '$',
               }, fields.minimum_raise))
           .col-lg-6
             +fieldTextLabel("maximum_raise", _.extend({
-              class1: 'col-xl-5 col-lg-12 text-xl-right text-lg-left m-b-0 p-t-0', 
+              class1: 'col-xl-5 col-lg-12 text-xl-right text-lg-left m-b-0 p-t-0 m-b-lg-1', 
               class2: 'col-xl-7 col-lg-12', 
               type: 'text',
               placeholder: '$',
@@ -43,13 +43,13 @@ section.campaign-specifics.container.m-b-85
               }, fields.maximum_raise))
 
         +fieldTextLabel("minimum_increment", _.extend({
-           class1: 'col-xl-3 col-lg-12 text-xl-right text-lg-left m-b-0 p-t-0',
+           class1: 'col-xl-3 col-lg-12 text-xl-right text-lg-left m-b-0 p-t-0 m-b-lg-1',
            class2: 'col-xl-9 col-lg-12',
            type: 'text',
            placeholder: '$  People can invest this amount or more  ',
            }, fields.minimum_increment))
         +fieldChoiceLabel('length_days', _.extend({
-          class1: 'col-xl-3 col-lg-12 text-xl-right text-lg-left m-b-0 p-t-0',
+          class1: 'col-xl-3 col-lg-12 text-xl-right text-lg-left m-b-0 p-t-0 m-b-lg-1',
           class2: 'col-xl-9 col-lg-12',
         }, fields.length_days))
         .text-lg-right.img-ppt.m-b-3
@@ -78,9 +78,9 @@ section.campaign-specifics.container.m-b-85
             }, fields.security_type))
         div(style=(values.security_type == 0 ? '' :  "display: none")).security_type_list.security_type_0
           .row
-            .col-xl-7.col-lg-6.form-group.clearfix
-              label.col-xl-5.col-lg-12.text-xl-right.text-lg-left.m-b-0.p-t-0 Link to Calculators
-              .col-xl-6.col-lg-12
+            .col-xl-7.col-lg-6.col-sm-6.form-group.clearfix
+              label.col-xl-5.col-lg-12.text-xl-right.text-lg-left.m-b-0.p-t-0.m-b-lg-1.p-l-sm-0 Link to Calculators
+              .col-xl-6.col-lg-12.p-l-sm-0
                 .btn-group.showPopover(data-content="Our calculators can help you:<br>1. Derive your valuation;<br>2. Choose the right security;<br>3. Know how much money to raise")
                   button(data-toggle="dropdown" aria-haspopup="true" aria-expanded="false").btn.btn-dropdown Link to Calculators
                   button(data-toggle="dropdown" aria-haspopup="true" aria-expanded="false").btn.dropdown-toggle.dropdown-toggle-split.btn-dropdown-click
@@ -90,14 +90,14 @@ section.campaign-specifics.container.m-b-85
                     a(href="/calculator/whatmybusinessworth/intro" target="_blank").dropdown-item How Much Should I Raise?
                     a(href="/calculator/establishedBusiness/intro" target="_blank").dropdown-item Established Business Valuation
                     a(href="/calculator/selectCalculator" target="_blank").dropdown-item New Startup Valuation
-            .col-xl-5.col-lg-5.pull-lg-right.pull-md-left.p-l-0
+            .col-xl-5.col-lg-5.col-sm-6.pull-lg-right.pull-md-left
               +fieldTextLabel("premoney_valuation", _.extend({
-                class1: 'col-xl-4 col-lg-12 text-xl-right text-lg-left m-b-0 p-t-0 p-l-0',
+                class1: 'col-xl-4 col-lg-12 text-xl-right text-lg-left m-b-0 p-t-0 p-l-0 m-b-lg-1 p-l-lg-1',
                 class2: 'col-xl-8 col-lg-12',
                 placeholder: '$',
               }, fields.premoney_valuation))
           +fieldChoiceLabel("valuation_determination", _.extend({
-              class1: 'col-xl-3 col-lg-12 text-xl-right text-lg-left big-label-text m-b-0',
+              class1: 'col-xl-3 col-lg-12 text-xl-right text-lg-left big-label-text m-b-0 m-b-lg-1',
               class2: 'col-xl-9 col-lg-12',
             }, fields.valuation_determination))
           +fieldTextareaLabel("valuation_determination_other", _.extend({
@@ -115,7 +115,7 @@ section.campaign-specifics.container.m-b-85
           .row
             .col-xl-6.col-l-65.showPopover(data-content="<div class=''><span>Minimum # of Shares is calculated automatically: </span><br><span class='fraction'><span class='top'>Minimum Total Raise</span><span class='bottom'>Price Per Share</span></span></div>")
               +fieldTextLabel("tagline", _.extend({
-                class1: 'col-xl-6 col-lg-12 text-xl-right text-lg-left p-t-0 m-b-0',
+                class1: 'col-xl-6 col-lg-12 text-xl-right text-lg-left p-t-0 m-b-0 m-b-lg-1',
                 class2: 'col-xl-6 col-lg-12',
                 type: 'text',
                 maxlength: 90,
@@ -124,7 +124,7 @@ section.campaign-specifics.container.m-b-85
               }, fields.tagline))
             .col-xl-6.showPopover(data-content="<div class=''><span>Maximum # of Shares is calculated automatically: </span><br><span class='fraction'><span class='top'>Maximum Total Raise</span><span class='bottom'>Price Per Share</span></span></div>")
               +fieldTextLabel("max_number_of_shares", _.extend({
-                class1: 'col-xl-5 col-lg-12 text-xl-right text-lg-left p-t-0 m-b-0',
+                class1: 'col-xl-5 col-lg-12 text-xl-right text-lg-left p-t-0 m-b-0 m-b-lg-1',
                 class2: 'col-xl-7 col-lg-12',
                 type: 'text',
                 maxlength: 90,
@@ -134,7 +134,7 @@ section.campaign-specifics.container.m-b-85
           .row
             .col-xl-6.col-l-65.showPopover(data-content="<div class=''><span>Minimum Equity Offered is calculated automatically: </span><br><span class='fraction'><span class='top'>Minimum Total Raise</span><span class='bottom'>Minimum Total Raise+Pre-Money Valuation</span></span></div>")
               +fieldTextLabel("min_equity_offered", _.extend({
-                class1: 'col-xl-6 col-lg-12 text-xl-right text-lg-left p-t-0 m-b-0',
+                class1: 'col-xl-6 col-lg-12 text-xl-right text-lg-left p-t-0 m-b-0 m-b-lg-1',
                 class2: 'col-xl-6 col-lg-12',
                 type: 'text',
                 maxlength: 90,
@@ -144,7 +144,7 @@ section.campaign-specifics.container.m-b-85
 
             .col-xl-6.showPopover(data-content="<div class=''><span>Maximum Equity Offered is calculated automatically: </span><br><span class='fraction'><span class='top'>Maximum Total Raise</span><span class='bottom'>Maximum Total Raise+Pre-Money Valuation</span></span></div>")
               +fieldTextLabel("max_equity_offered", _.extend({
-                class1: 'col-xl-5 col-lg-12 text-xl-right text-lg-left p-t-0 m-b-0',
+                class1: 'col-xl-5 col-lg-12 text-xl-right text-lg-left p-t-0 m-b-0 m-b-lg-1',
                 class2: 'col-xl-7 col-lg-12',
                 type: 'text',
                 maxlength: 90,
