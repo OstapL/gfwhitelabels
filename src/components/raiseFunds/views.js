@@ -263,7 +263,7 @@ module.exports = {
 
     initialize(options) {
       this.urlRoot = this.urlRoot.replace(':id', this.model.id);
-
+      this.formc = options.formc;
       this.fields = options.fields;
 
       this.fields.header_image_image_id = _.extend(this.fields.header_image_image_id, {
@@ -487,6 +487,8 @@ module.exports = {
 
     initialize(options) {
       this.fields = options.fields;
+      this.formc = options.formc;
+
       this.$el.on('keypress', ':input:not(textarea)', function (event) {
         if (event.keyCode == 13) {
           event.preventDefault();

@@ -108,13 +108,15 @@ module.exports = Backbone.Router.extend({
     const View = require('components/raiseFunds/views.js');
     const optionR = app.makeCacheRequest(raiseCapitalServer + '/campaign/' + id + '/team-members', 'OPTIONS');
     const dataR = app.makeCacheRequest(raiseCapitalServer + '/campaign/' + id + '/team-members');
+    const formcR = api.makeCacheRequest(authServer + '/user/formc');
 
-    $.when(optionR, dataR).done((fields, data) => {
+    $.when(optionR, dataR, formcR).done((fields, data, formc) => {
       data[0].id = id;
       const i = new View.teamMembers({
         el: '#content',
         fields: fields[0],
         model: data[0],
+        formc: formc[0],
       });
       i.render();
 
@@ -160,7 +162,7 @@ module.exports = Backbone.Router.extend({
         fields: meta[0].fields,
         model: model[0],
         company: company[0],
-        formc: formc,
+        formc: formc[0],
       });
       i.render();
       app.hideLoading();
