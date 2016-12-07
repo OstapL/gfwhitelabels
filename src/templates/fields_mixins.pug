@@ -429,6 +429,7 @@ mixin imageDropzone(name, attr)
       - attr.data = {};
     if !attr.data.urls
       - attr.data.urls = [];
+    +prepareField(name, attr)
 
     div(
       class='row media-item ' + (attr.class || '') + ' ' + (attr.id || name) +
@@ -501,6 +502,7 @@ mixin galleryDropzone(name, attr)
       - attr.data = {};
     if !attr.data.urls
       - attr.data.urls = [];
+    +prepareField(name, attr)
 
     div(
       class='row media-item ' + attr.class + ' ' + (attr.id || name) +

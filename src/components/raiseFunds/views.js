@@ -263,8 +263,8 @@ module.exports = {
 
     initialize(options) {
       this.urlRoot = this.urlRoot.replace(':id', this.model.id);
-
       this.fields = options.fields;
+      this.formc = options.formc;
 
       this.fields.header_image_image_id = _.extend(this.fields.header_image_image_id, {
         imgOptions: {
@@ -290,14 +290,11 @@ module.exports = {
           cssClass: 'img-crop',
           showPreview: false,
         },
-
-      });
-
-      this.$el.on('keypress', ':input:not(textarea)', function (event) {
-        if (event.keyCode == 13) {
-          event.preventDefault();
-          return false;
-        }
+        fn: function checkNotEmpty(value, attr, fn, model, computed) {
+          if(!this.gallery_group_data || !this.gallery_group_data.length) {
+            throw 'Please upload at least 1 image';
+          }
+        },
       });
 
       this.labels = {
@@ -330,6 +327,7 @@ module.exports = {
           fields: this.fields,
           // values: this.model.toJSON(),
           values: this.model,
+          formc: this.formc,
           templates: this.jsonTemplates,
         })
       );
@@ -337,7 +335,12 @@ module.exports = {
       setTimeout(() => { this.createDropzones() } , 1000);
 
       if(app.getParams().check == '1') {
-        var data = this.$el.find('form').serializeJSON();
+        let data = this.$el.find('form').serializeJSON();
+        api.deleteEmptyNested.call(this, this.fields, data);
+        api.fixDateFields.call(this, this.fields, data);
+        api.fixMoneyField.call(this, this.fields, data);
+        data = _.extend({}, this.model, data);
+
         if (!validation.validate(this.fields, data, this)) {
           _(validation.errors).each((errors, key) => {
             validation.invalidMsg(this, key, errors);

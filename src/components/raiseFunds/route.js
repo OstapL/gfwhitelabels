@@ -52,14 +52,13 @@ module.exports = Backbone.Router.extend({
   },
 
   generalInformation (id) {
+
     const View = require('components/raiseFunds/views.js');
-
-    $('#content').scrollTo(); 
-
     const metaR = app.makeCacheRequest(raiseCapitalServer + '/campaign/' + id + '/general_information', 'OPTIONS');
     const campaignR = app.makeCacheRequest(raiseCapitalServer + '/campaign/' + id + '/general_information');
     const formcR = api.makeCacheRequest(authServer + '/user/formc');
 
+    $('#content').scrollTo(); 
     $.when(metaR, campaignR, formcR).done((meta, model, formc) => {
       model[0].id = id;
       var i = new View.generalInformation({
@@ -79,13 +78,13 @@ module.exports = Backbone.Router.extend({
   },
 
   media(id) {
-    $('#content').scrollTo(); 
 
     const View = require('components/raiseFunds/views.js');
     const a1 = app.makeCacheRequest(raiseCapitalServer + '/campaign/' + id + '/media', 'OPTIONS');
     const a2 = app.makeCacheRequest(raiseCapitalServer + '/campaign/' + id + '/media');
     const formcR = api.makeCacheRequest(authServer + '/user/formc');
 
+    $('#content').scrollTo(); 
     $.when(a1, a2, formcR).done((meta, model, formc) => {
       model[0].id = id;
 

@@ -318,7 +318,7 @@ module.exports = {
   teamMembers: Backbone.View.extend(_.extend({
     urlRoot: formcServer + '/:id' + '/team-members',
     events: _.extend({
-      'submit form': api.submitAction,
+      'click #submitForm': api.submitAction,
       'click .submit_formc': submitFormc,
       'click .delete-member': 'deleteMember',
     }, menuHelper.events),

@@ -1,4 +1,3 @@
-- 'use strict';
 include ../../../templates/mixins.pug
 include ../../../templates/fields_mixins.pug
 include ../../raiseFunds/templates/menu.pug
@@ -38,7 +37,7 @@ section.create-company-team-add.container
           p.pb10 OFFICER means:  president, vice president, secretary, treasurer or principal financial officer, comptroller or principal accounting officer, and any person routinely performing similar functions.
           | 20% VOTING SHAREHOLDER means: no earlier than 120 days prior to the date of this offering, please list beneficial owners of 20% or more of issuer’s outstanding voting equity securities.
 
-    form(action="").form-section
+    form.form-section
       .col-lg-12.m-t-1.m-b-2
         b How many emploees do you have?
       .col-lg-6.required
@@ -128,4 +127,4 @@ section.create-company-team-add.container
       div(style="display: " +  (values.team_members.length >= 1 ? 'block' : 'none')).col-lg-12.pull-lg-right.p-r-0.m-t-3
 
       .col-lg-12.text-md-center.text-sm-center.text-xs-center.m-t-3
-        button(type="submit").btn.btn-primary.text-uppercase.pull-lg-right Save And Continue
+        button(data-method="PUT")#submitForm.btn.btn-primary.text-uppercase.pull-lg-right Save And Continue

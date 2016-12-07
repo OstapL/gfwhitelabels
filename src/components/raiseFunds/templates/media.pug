@@ -11,7 +11,10 @@ include menu.pug
     ]
 )
 section.create-company-media.container.media-container
+  - var campaignId = values.id;
+  - var formcId = formc.id;
   +menu('campaign', 'media')
+
   //START RIGHT BLOCK
   .col-xl-8.col-lg-8.col-md-12
     h2.text-uppercase.dosis.text-lg-center.text-xs-center.dosis.m-t-0.m-b-3 Media
