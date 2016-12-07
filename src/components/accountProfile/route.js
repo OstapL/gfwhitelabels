@@ -5,6 +5,7 @@ module.exports = Backbone.Router.extend({
     'account/change-password': 'changePassword',
     'reset/password/confirm/': 'setNewPassword',
     // 'account/new-password': 'setNewPassword',
+    'account/investor-dashboard': 'investorDashboard',
     'account/company-dashboard': 'companyDashboard',
     'account/company-dashboard-first': 'companyDashboardFirst',
     'account/after-payment-dashboard': 'afterPaymentDashboard',
@@ -83,6 +84,25 @@ module.exports = Backbone.Router.extend({
       app.hideLoading();
     });
   },
+
+  investorDashboard() {
+    const View = require('components/accountProfile/views.js');
+
+    const fieldsR = app.makeCacheRequest(investmentServer, 'OPTIONS');
+    const dataR = app.makeCacheRequest(investmentServer);
+
+    Promise.all([fieldsR, dataR]).then((values) => {
+        let i = new View.InvestorDashboard({
+          fields: values[0].fields,
+          model: values[1],
+        });
+
+        app.hideLoading();
+      }).catch((err) => {
+        console.log(err);
+      });
+  },
+
   companyDashboard: function() {
       const View = require('components/accountProfile/views.js');
       let i = new View.companyDashboard({

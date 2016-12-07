@@ -155,7 +155,7 @@ module.exports = {
     },
   }, leavingConfirmationHelper.methods, phoneHelper.methods, menuHelper.methods)),
 
-  
+
   generalInformation: Backbone.View.extend(_.extend({
       urlRoot: raiseCapitalServer + '/campaign/:id/general_information',
       template: require('./templates/generalInformation.pug'),
@@ -263,8 +263,8 @@ module.exports = {
 
     initialize(options) {
       this.urlRoot = this.urlRoot.replace(':id', this.model.id);
-      this.fields = options.fields;
       this.formc = options.formc;
+      this.fields = options.fields;
 
       this.fields.header_image_image_id = _.extend(this.fields.header_image_image_id, {
         imgOptions: {
@@ -369,13 +369,15 @@ module.exports = {
   teamMemberAdd: Backbone.View.extend(_.extend({
     urlRoot: raiseCapitalServer + '/campaign/:id/team-members',
     // doNotExtendModel: true,
+    template: require('./templates/teamMemberAdd.pug'),
     events: _.extend({
-      'click .btn-primary': api.submitAction,
       'click .delete-member': 'deleteMember',
       'click .submit_form': doCampaignValidation,
       'change #linkedin,#facebook': 'appendHttpsIfNecessary',
       'click .cancel': 'cancel',
+      'click .save': api.submitAction,
       'click .onPreview': onPreviewAction,
+      'change #zip_code': 'changeZipCode',
     }, leavingConfirmationHelper.events, menuHelper.events, dropzoneHelpers.events),
 
     getSuccessUrl(data) {
@@ -396,44 +398,68 @@ module.exports = {
       this.type = options.type;
       this.index = options.index;
       this.urlRoot = this.urlRoot.replace(':id', this.model.id);
+
+      if (this.index != 'new') {
+        this.member = this.model.data[this.index];
+        this.urlRoot  += '/' + this.index;
+        this.submitMethod = 'PUT';
+      } else {
+        this.member = {
+          photo_data: [],
+          type: this.type
+        };
+        this.submitMethod = 'POST';
+      }
+
       this.$el.on('keypress', ':input:not(textarea)', function (event) {
         if (event.keyCode == 13) {
           event.preventDefault();
           return false;
         }
       });
+
+      this.getCityStateByZipCode = require("helpers/getSityStateByZipCode");
     },
 
     render() {
-      const template = require('./templates/teamMemberAdd.pug');
-
-      if (this.index != 'new') {
-        this.member = this.model.data[this.index];
-        this.urlRoot  += '/' + this.index;
-      } else {
-        this.member = {
-          photo_data: [],
-          type: this.type
-        };
-      }
-
       this.usaStates = require('helpers/usa-states');
+
       this.$el.html(
-        template({
+        this.template({
           formc: this.formc,
           fields: this.fields,
           member: this.member,
           values: this.model,
           type: this.type,
           index: this.index,
+          // submitMethod: this.submitMethod,
           states: this.usaStates,
         })
       );
 
       setTimeout(() => { this.createDropzones() } , 1000);
+
       delete this.model.progress;
       delete this.model.data;
       return this;
+    },
+
+    //TODO: it is reasonable make addresss helper
+    changeZipCode(e) {
+      // if not 5 digit, return
+      if (!e.target.value.match(/\d{5}/))
+        return;
+
+      this.getCityStateByZipCode(e.target.value, ({ success=false, city='', state='' }) => {
+        if (success) {
+          this.$('.js-city-state').text(`${city}, ${state}`);
+          $('form input[name=city]').val(city);
+          this.$('.js-state').val(state);
+          $('form input[name=state]').val(state);
+        } else {
+          console.log('error');
+        }
+      });
     },
 
     cancel(e) {
@@ -442,7 +468,7 @@ module.exports = {
       this.undelegateEvents();
       if (confirm("Do you really want to leave?")) {
         app.routers.navigate(
-          '/campaign/team-members/' + this.model.id,
+          '/campaign/' + this.model.id + '/team-members',
           { trigger: true, replace: false }
         );
       }
@@ -469,6 +495,8 @@ module.exports = {
 
     initialize(options) {
       this.fields = options.fields;
+      this.formc = options.formc;
+
       this.$el.on('keypress', ':input:not(textarea)', function (event) {
         if (event.keyCode == 13) {
           event.preventDefault();

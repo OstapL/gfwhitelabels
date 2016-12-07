@@ -1,7 +1,6 @@
 include ../../../templates/mixins.pug
 include ../../../templates/fields_mixins.pug
 
-
 +breadcrumbs('Invest', '', 
   [
     ['Home', '/'], 
@@ -57,10 +56,14 @@ mixin fieldInput(name, attr)
           // popover content for amount field
           div.popover-content-amount-campaign
             i.fa.fa-info-circle
-            span Investors are limited to 12 month investment totals ranging from $2,000 - $100,000 based on income and net worth. Please update your financial information to see your limit:
-            +fieldBlock("annual_income", user.annual_income, {'class1': 'col-md-4', 'class2': 'col-md-8', 'type': 'text', label: 'Annual Income in K'})
-            +fieldBlock("net_worth", user.net_worth, {'class1': 'col-md-4', 'class2': 'col-md-8', 'type': 'text', label: 'Net Worth in K'})
-            button.btn.btn-primary.pull-lg-right.text-uppercase.update-worth-income Update
+            p Investors are limited to 12 month investment totals ranging from $2,000 - $100,000 based on income and net worth.
+            p Based on your annual income and net worth, you can invest 
+              span(style="color:red;") only 
+              | up to 
+              span(style="color:red;") $:amount.
+            br
+            p Please 
+              a(data-toggle="modal" data-target="#income_worth_modal" href="#income_worth_modal").update-income-worth update your annual income and net worth. 
           div.popover-content-rounding
             i.fa.fa-info-circle
             span Companies can’t issue fractional shares.  The price per share is $#{values.campaign.price_per_share} so investment amounts must be a multiple of $#{values.campaign.price_per_share}.
@@ -424,6 +427,35 @@ div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true
                 .col-lg-12
                   .col-lg-12.text-lg-center
                     button(data-dismiss="modal" type="button").update-location.btn.btn-primary.text-uppercase save
+        .modal-footer
+//MODAL
+div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")#income_worth_modal.modal.fade
+  div(role="document").modal-dialog
+    .modal-content
+      .modal-header
+        button(type="button" data-dismiss="modal" aria-label="Close").close
+          span(aria-hidden="true")
+            i.fa.fa-times
+        h2.text-lg-center.text-uppercase.dosis.modal-title Annual Income/Net Worth
+
+      .modal-body
+        .container.form-section
+          form.col-lg-10.offset-lg-1.border-bottom.update-income-worth
+            div Your current limit is 
+              b $
+                span.current-limit 1000
+              | .
+            .form-group.row.clearfix.required
+              label Annual Income
+              input(type="text" placeholder="Annual Income" name="annual_income" value=(user.annual_income * 1000).toLocaleString('en-US'))#annual_income.annual_income.form-control
+            .form-group.row.clearfix.required
+              label Net Worth
+              input(type="text" placeholder="Net Worth" name="net_worth" value=(user.net_worth * 1000).toLocaleString('en-US'))#net_worth.net-worth.form-control
+            .form-group.row.clearfix.required.m0
+              .row
+                .col-lg-12
+                  .col-lg-12.text-lg-center
+                    button(data-dismiss="modal" type="button").btn.btn-primary.text-uppercase.submit-income-worth update
         .modal-footer
 
 if !window.google || !window.google.maps
