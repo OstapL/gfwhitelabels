@@ -366,6 +366,7 @@ module.exports = {
   teamMemberAdd: Backbone.View.extend(_.extend({
     urlRoot: raiseCapitalServer + '/campaign/:id/team-members',
     // doNotExtendModel: true,
+    template: require('./templates/teamMemberAdd.pug'),
     events: _.extend({
       'click .delete-member': 'deleteMember',
       'click .submit_form': doCampaignValidation,
@@ -405,8 +406,6 @@ module.exports = {
     },
 
     render() {
-      const template = require('./templates/teamMemberAdd.pug');
-
       if (this.index != 'new') {
         this.member = this.model.data[this.index];
         this.urlRoot  += '/' + this.index;
@@ -418,8 +417,9 @@ module.exports = {
       }
 
       this.usaStates = require('helpers/usa-states');
+
       this.$el.html(
-        template({
+        this.template({
           formc: this.formc,
           fields: this.fields,
           member: this.member,
@@ -431,6 +431,7 @@ module.exports = {
       );
 
       setTimeout(() => { this.createDropzones() } , 1000);
+
       delete this.model.progress;
       delete this.model.data;
       return this;
@@ -460,7 +461,7 @@ module.exports = {
       this.undelegateEvents();
       if (confirm("Do you really want to leave?")) {
         app.routers.navigate(
-          '/campaign/' + this.model.id + '/team-members/',
+          '/campaign/' + this.model.id + '/team-members',
           { trigger: true, replace: false }
         );
       }
