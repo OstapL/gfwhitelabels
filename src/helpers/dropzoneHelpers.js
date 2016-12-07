@@ -143,6 +143,9 @@ module.exports = {
       let dataFieldName = this._getDataFieldName(name);
       let data = _.pick(this.model, [name, dataFieldName]);
 
+      // let method = this.submitMethod || 'PATCH';
+      // return app.makeRequest(this.urlRoot.replace(':id', this.model.id), method, data);
+
       return app.makeRequest(this.urlRoot.replace(':id', this.model.id), 'PATCH', data);
     },
 

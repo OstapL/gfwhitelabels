@@ -395,6 +395,19 @@ module.exports = {
       this.type = options.type;
       this.index = options.index;
       this.urlRoot = this.urlRoot.replace(':id', this.model.id);
+
+      if (this.index != 'new') {
+        this.member = this.model.data[this.index];
+        this.urlRoot  += '/' + this.index;
+        this.submitMethod = 'PUT';
+      } else {
+        this.member = {
+          photo_data: [],
+          type: this.type
+        };
+        this.submitMethod = 'POST';
+      }
+
       this.$el.on('keypress', ':input:not(textarea)', function (event) {
         if (event.keyCode == 13) {
           event.preventDefault();
@@ -406,16 +419,6 @@ module.exports = {
     },
 
     render() {
-      if (this.index != 'new') {
-        this.member = this.model.data[this.index];
-        this.urlRoot  += '/' + this.index;
-      } else {
-        this.member = {
-          photo_data: [],
-          type: this.type
-        };
-      }
-
       this.usaStates = require('helpers/usa-states');
 
       this.$el.html(
@@ -426,6 +429,7 @@ module.exports = {
           values: this.model,
           type: this.type,
           index: this.index,
+          // submitMethod: this.submitMethod,
           states: this.usaStates,
         })
       );
