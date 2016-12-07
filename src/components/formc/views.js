@@ -10,6 +10,15 @@ const dropzoneHelpers = require('helpers/dropzoneHelpers.js');
 const riskFactorsHelper = require('helpers/riskFactorsHelper.js');
 const validation = require('components/validation/validation.js');
 
+const disableEnter = function () {
+  this.$el.on('keypress', ':input:not(textarea)', function (event) {
+    if (event.keyCode == 13) {
+      event.preventDefault();
+      return false;
+    }
+  });
+};
+
 const labels = {
   title: 'Title for Risk',
   risk: 'Describe Your Risk',
@@ -386,6 +395,7 @@ module.exports = {
           ],
         })
       );
+      disableEnter.call(this);
       return this;
     },
 
@@ -469,6 +479,8 @@ module.exports = {
         })
       );
       this.$el.find('.selectpicker').selectpicker();
+      disableEnter.call(this);
+      return this;
     },
 
     getSuccessUrl(data) {
@@ -530,6 +542,7 @@ module.exports = {
           templates: this.jsonTemplates,
         })
       );
+      disableEnter.call(this);
       return this;
     },
   }, addSectionHelper.methods, menuHelper.methods, yesNoHelper.methods)),
@@ -675,6 +688,7 @@ module.exports = {
 
       this.calculate(null, false);
       setTimeout(() => { this.createDropzones() } , 1000);
+      disableEnter.call(this);
       return this;
     }, 
   }, menuHelper.methods, dropzoneHelpers.methods, addSectionHelper.methods)),
@@ -802,7 +816,7 @@ module.exports = {
       this.$('textarea').each(function () {
         $(this).css({ height: this.scrollHeight + 'px' });
       });
-
+      disableEnter.call(this);
       return this;
     },
   }, menuHelper.methods, addSectionHelper.methods)),
@@ -913,7 +927,7 @@ module.exports = {
       this.$('textarea').each(function () {
         $(this).css({ height: this.scrollHeight + 'px' });
       });
-
+      disableEnter.call(this);
       return this;
     },
   }, menuHelper.methods, addSectionHelper.methods)),
@@ -1052,7 +1066,7 @@ module.exports = {
       this.$('textarea').each(function () {
         $(this).css({ height: this.scrollHeight + 'px' });
       });
-
+      disableEnter.call(this);
       return this;
     },
 
@@ -1136,7 +1150,7 @@ module.exports = {
       this.$('textarea').each(function () {
         $(this).css({ height: this.scrollHeight + 'px' });
       });
-
+      disableEnter.call(this);
       return this;
     },
 
@@ -1239,7 +1253,7 @@ module.exports = {
       this.$('textarea').each(function () {
         $(this).css({ height: this.scrollHeight + 'px' });
       });
-
+      disableEnter.call(this);
       return this;
     },
   }, menuHelper.methods, addSectionHelper.methods)),
@@ -1363,7 +1377,7 @@ module.exports = {
       this.$('textarea').each(function () {
         $(this).css({ height: this.scrollHeight + 'px' });
       });
-
+      disableEnter.call(this);
       return this;
     },
   }, menuHelper.methods, addSectionHelper.methods)),
@@ -1401,7 +1415,7 @@ module.exports = {
       this.$('textarea').each(function () {
         $(this).css({ height: this.scrollHeight + 'px' });
       });
-
+      disableEnter.call(this);
       return this;
     },
   }, menuHelper.methods, addSectionHelper.methods)),
@@ -1460,6 +1474,7 @@ module.exports = {
         })
       );
       setTimeout(() => { this.createDropzones() } , 1000);
+      disableEnter.call(this);
       return this;
     },
   }, menuHelper.methods, yesNoHelper.methods, addSectionHelper.methods, dropzoneHelpers.methods)),
@@ -1646,6 +1661,7 @@ module.exports = {
         })
       );
       $('#security_modal #custom_security_type').parent().parent().hide();
+      disableEnter.call(this);
       return this;
     },
   }, addSectionHelper.methods, menuHelper.methods, yesNoHelper.methods)),
@@ -1689,6 +1705,7 @@ module.exports = {
           values: this.model,
         })
       );
+      disableEnter.call(this);
       return this;
     },
   }, menuHelper.methods, yesNoHelper.methods, addSectionHelper.methods)),
@@ -1779,6 +1796,7 @@ module.exports = {
           values: this.model,
         })
       );
+      disableEnter.call(this);
       return this;
     },
   }),
