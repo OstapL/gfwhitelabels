@@ -124,9 +124,18 @@ section.formc-review
         li
           a(href='#risk_factors').d-inline-block.w-100.pb10 Risk Factors
         li
-          // у последнего елемента <a> клас pb10 отстутствует
-          a(href='#eligibility_information').d-inline-block.w-100 Eligibility Information
-      .col-lg-12.text-xs-center
+          a(href='#eligibility_information').d-inline-block.w-100.pb10 Eligibility Information
+        li
+          a(href='#other_matters').d-inline-block.w-100.pb10 OTHER MATTERS
+        li
+          a(href='#reporting_obligations').d-inline-block.w-100.pb10 REPORTING OBLIGATIONS
+        li
+          a(href='#business_plan').d-inline-block.w-100.pb10 EXHIBIT A: BUSINESS PLAN
+        li
+          a(href='#financial_statements').d-inline-block.w-100.pb10 EXHIBIT B: FINANCIAL STATEMENTS
+        li
+          a(href='#biographical_information').d-inline-block.w-100 EXHIBIT C: BIOGRAPHICAL INFORMATION
+      .col-lg-12.text-xs-center.m-t-1
         a(data-toggle="modal" data-target="#formc_review_popup" href="#formc_review_popup").btn.btn-primary submit Form C
 
     .col-xl-9
@@ -270,7 +279,7 @@ section.formc-review
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
               p.font-weight-bold Type of security offered:
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
-              +frField('campaign.security_type', 'select')
+              |  Common Equity
           .row
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
               p.font-weight-bold Voting rights:
@@ -444,7 +453,7 @@ section.formc-review
             +frField('company.name', 'text')
             |  as Issuer
         h2.text-uppercase.text-xs-center.font-weight-bold#management_material_persons.letter-spacing-normal.m-b-3 MANAGEMENT & MATERIAL PERSONS
-        p.text-indent Specific biographical information on each of the Company’s officers and members of its Board of Directors of is attached as Exhibit D.  Exhibit D contains information on the last three years of employment and supplements the information summarized below.  The Company has confirmed that no officer, director or 20% shareholder would cause a violation of Rule 503(a) of the Crowdfunding Regulations (17 CFR §227.503).
+        p.text-indent Specific biographical information on each of the Company’s officers and members of its Board of Directors of is attached as Exhibit C.  Exhibit C contaisns information on the last three years of employment and supplements the information summarized below.  The Company has confirmed that no officer, director or 20% shareholder would cause a violation of Rule 503(a) of the Crowdfunding Regulations (17 CFR §227.503).
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u Number of Total Employees
         p.p-l-2 Full time employees: 
@@ -618,8 +627,8 @@ section.formc-review
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u Method for Delivering the Securities
           div 
-            | FIX FIX FIX The issuer has represented that it has established means to keep accurate records of the holders of the securities sold in the Offering.  The issuer intends to keep all records relating to the securities in book entry or electronic form so you should not expect any physical delivery of the securities that you purchase. The fully executed Subscription Agreement relating to the Offering will serve as a written record of the transaction and will be available on the Platform for each investor to review in their investor dashboard.  Each investor will also receive an email confirmation of the successful closing of the Offering  which will confirm the investment amount.
-            +frField('formc.method_for_delivering_securities', 'text')
+            | The issuer will record all investments in book entry form so that no certificates would be delivered. The fully executed Subscription and Purchase Agreement relating to the Offering will serve as a written record of the transaction and will be available on the Platform via the investor dashboard. The investor will also receive email confirmation of the successful closing of the Offering, which will confirm the number of securities purchased and the amount paid.
+            //+frField('formc.method_for_delivering_securities', 'text')
 
       // page 11
       section.page-formc-review.m-t-1
@@ -636,7 +645,18 @@ section.formc-review
         p.text-indent The Intermediary makes available on the Platform certain communication channels by which registered users can communicate with representatives of the Company.  While any person can view the postings made within the communication channel, only registered users can post questions or comments.  Investors have the opportunity to use the communication channels in connection with their evaluation of the securities in this Offering to support their diligence effort and to clarify any information provided in the Material.  The Intermediary is not serving as an agent or representative of the Company in connection with the operation of the communication channels and is not providing any investment advice through the communication channels.  All promoters and representatives of the Company participating in the communication channels on the Platform are required to disclose their relationship with the Company.
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u Intermediary Compensation
-        p.text-indent The Intermediary will be compensated a dollar amount equal to 5% of the total Offering amount if the Offering is successfully completed and closed.  Such compensation is paid only if the Company’s total Offering proceeds meets or exceeds the target minimum offering amount indicated in this Material. Additionally, the Company reimburses the Intermediary for certain fees that the Intermediary passes through to the Company, such as the costs related to performing background checks and establishing an escrow account.  These fees are one-time fees and are not dependent on the success of the Offering.
+        p.text-indent The Intermediary will be compensated a dollar amount equal to 
+          +frField('company.trans_percent', 'text')
+          | % of the total Offering amount if the Offering is successfully completed and closed.  Such compensation is paid only if the Company’s total Offering proceeds meets or exceeds the target minimum offering amount indicated in this Material. Additionally, the Company reimburses the Intermediary for certain fees that the Intermediary passes through to the Company, such as the costs related to performing background checks and establishing an escrow account.  These fees are one-time fees and are not dependent on the success of the Offering. In total, the Intermediary will receive, directly or indirectly, a dollar amount equal to the sum of all the following: (a) a transaction fee equal to
+          | % of the total amount of monies raised in the Offering for the purchase of securities offered by the Company, payable upon success, (b) a registration and processing fee equal to $
+          +frField('company.trans_percent', 'text')
+          | % of the total amount of monies raised in the Offering for the purchase of securities offered by the Company, payable upon success, (b) a registration and processing fee equal to
+          +frField('company.registration_fee', 'text')
+          | ayable upon registration, (c) a third-party fees equal to $
+          +frField('company.party_fees', 'text')
+          | payable upon success and (d) a participation fee equal to
+          +frField('company.fees_to_investor ', 'text')
+          | committed to by the investor.
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u Conditional Commitment
         p.pb10.text-indent Purchase of the securities offered in this Offering shall be made pursuant to the 
@@ -702,14 +722,13 @@ section.formc-review
         h2.text-uppercase.text-xs-center.font-weight-bold#description_securities.letter-spacing-normal.m-b-3 DESCRIPTION OF SECURITIES OFFERED
         p.text-uppercase.m-t-0.m-b-0.pb10 
           u General Terms
-        p.text-indent The type of security being offered is non-voting shares of our common stock.  This means purchasers of the Shares will have no voting rights whatsoever.  Potential investors should reference the actual terms and provisions of the capital stock contained in the Company's [Certificate of Incorporation and the Company’s bylaws] attached as Exhibit C as well as the Subscription Agreement for the Shares. Each investor is responsible for reviewing and understanding such documents and can use the communication channels on the Platform to request clarification or additional information.
+        p.text-indent The type of security being offered is non-voting shares of our common stock.  This means purchasers of the Shares will have no voting rights whatsoever. Each investor is responsible for understanding the  Company’s  governing  documents and can use the communication channels on the Platform to request clarification or additional information.
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u Common Stock
         p.text-indent The voting, dividend and liquidation rights of the holders of the Common Stock are subject to and qualified by the rights, powers, and preferences of the holders of the Common Stock set forth in the Company’s charter documents as well as the terms of the Subscription Agreement. The securities in this Offering are non-voting common stock. Dividends upon the capital stock of the Company, if any, subject to the provisions of the Certificate of Incorporation, may be declared by the Board of Directors at any regular or special meeting, pursuant to law. The Company does not anticipate issuing any dividends in the near term.
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u Voting Rights and Limitations
-        p.text-indent The Shares have no voting rights and will be excluded from all voting.  Additionally, the Shares have no liquidation or preference rights. 
-          +frField('formc.modify_method', 'text')
+        p.text-indent The Shares have no voting rights and will be excluded from all voting.  Additionally, the Shares have no liquidation or preference rights. The rights of shareholders may be modified by a change to the Company’s governing documents.
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u Restrictions on Transfer of Shares
         p.pb10.text-indent Consistent with Subpart E of Regulation Crowdfunding (17 CFR 501), securities issued in this Offering pursuant to section 4(a)(6) of the Securities Act (15 U.S.C. 77d(a)(6)) may not be transferred by any purchaser of such securities during the one-year period beginning when the securities were issued, unless such securities are transferred to a limited group including (a) to the Company, (b) to an accredited investor, (c) as part of an offering registered with the SEC, or (d) to a family member, trust or equivalent.  In connection with any participation in this Offering, each potential investor may be required to agree not to dispose of or otherwise sell or transfer any of the Shares, until there is in effect a registration statement under the Securities Act covering such proposed disposition or if such disposition will not require registration under the Securities Act.
@@ -741,7 +760,6 @@ section.formc-review
         p.p-l-2.pb10
           if values.campaign.valuation_determination == 2
             +frField('campaign.valuation_determination_other', 'text')
-        p.pb10.text-indent The price of each Share was determined by the Company in good faith based on its own assessment of its current position and the possibility of future growth.  The Company has taken into account its own internal calculation of potential future revenue and based on such forward looking estimates has created a valuation that reflects the multiple or premium determined by the Company to be appropriate in this situation.  The Company acknowledges that the valuation bears no relationship to established value criteria such as net tangible assets or a multiple of earnings per share.  The Company accepts that some investors may conclude that the current valuation is not an indication of the actual value of the Company.
 
       // page 16
       section.page-formc-review.m-t-1
@@ -1044,13 +1062,6 @@ section.formc-review
         if values.formc.exempt_offering_choice == '0'
           p.pb10.text-indent The Company has indicated that it has not conducted any prior exempt offerings in the past three years.
 
-      // page 20
-      section.page-formc-review.m-t-1
-        .top-intro
-          p.small.text-xs-left.font-weight-bold FORM C Offering Material for
-          p.small.pb10
-            +frField('company.name', 'text')
-            |  as Issuer
         if values.formc.exempt_offering_choice == '1'
           p.pb10.text-indent The Company has provided the following list of exempt offerings conducted over the past 3 years:
           .table-responsive.m-t-1.m-b-0
@@ -1289,7 +1300,7 @@ section.formc-review
           p.small.pb10
             +frField('company.name', 'text')
             |  as Issuer
-        h2.text-uppercase.text-xs-center.font-weight-bold.letter-spacing-normal.m-b-3 OTHER MATTERS
+        h2.text-uppercase.text-xs-center.font-weight-bold.letter-spacing-normal.m-b-3#other_matters OTHER MATTERS
         p.text-uppercase.m-t-0.m-b-0.pb10 
           u Additional Material Disclosure
         p.pb10.text-indent The issuer has opted to include the following information that may be deemed material to investors in connection with this offering. The issuer is also providing the following information to reduce the possibility that any of the required statements are misleading, in light of the circumstances under which they are made. 
@@ -1306,7 +1317,7 @@ section.formc-review
           p.small.pb10
             +frField('company.name', 'text')
             |  as Issuer
-        h2.text-uppercase.text-xs-center.font-weight-bold.letter-spacing-normal.m-b-3 REPORTING OBLIGATIONS
+        h2.text-uppercase.text-xs-center.font-weight-bold.letter-spacing-normal.m-b-3#reporting_obligations REPORTING OBLIGATIONS
         p.text-uppercase.m-t-0.m-b-0.pb10 
           u End of Reporting Requirement
         p.pb10.text-indent The issuer may terminate its reporting obligations in the future in accordance with Rule 202(b) of Regulation Crowdfunding (§ 227.202(b)). The issuer must continue to comply with the ongoing reporting requirements until one of the following conditions is met:
@@ -1329,7 +1340,7 @@ section.formc-review
           p.small.pb10
             +frField('company.name', 'text')
             |  as Issuer
-        h2.text-uppercase.text-xs-center.font-weight-bold.letter-spacing-normal.m-b-3 EXHIBIT A: BUSINESS PLAN
+        h2.text-uppercase.text-xs-center.font-weight-bold.letter-spacing-normal.m-b-3#business_plan EXHIBIT A: BUSINESS PLAN
         if values.formc.business_plan_data.length > 0
           p
             for v,k in values.formc.business_plan_data[0].urls
@@ -1342,7 +1353,7 @@ section.formc-review
           p.small.pb10
             +frField('company.name', 'text')
             |  as Issuer
-        h2.text-uppercase.text-xs-center.font-weight-bold.letter-spacing-normal.m-b-3 EXHIBIT B: FINANCIAL STATEMENTS for most recent fiscal year
+        h2.text-uppercase.text-xs-center.font-weight-bold.letter-spacing-normal.m-b-3#financial_statements EXHIBIT B: FINANCIAL STATEMENTS for most recent fiscal year
         if values.formc.fiscal_recent_group_data.length > 0
           p
             for v,k in values.formc.fiscal_recent_group_data
@@ -1362,7 +1373,7 @@ section.formc-review
           p.small.pb10
             +frField('company.name', 'text')
             |  as Issuer
-        h2.text-uppercase.text-xs-center.font-weight-bold.letter-spacing-normal.m-b-3 EXHIBIT C: BIOGRAPHIES
+        h2.text-uppercase.text-xs-center.font-weight-bold.letter-spacing-normal.m-b-3#biographical_information EXHIBIT C: BIOGRAPHIES
         p.pb10.text-indent Employment information from previous employers over the last three years for each of the Company’s officers is as follows:
         p.pb10
           each v,k in values.formc.team_members
