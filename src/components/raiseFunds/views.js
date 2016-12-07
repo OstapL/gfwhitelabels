@@ -14,6 +14,17 @@ const submitCampaign = function submitCampaign(e) {
   doCampaignValidation(e, this.model);
 };
 
+
+const postForReview = function postForReview(e) {
+  api.makeRequest(raiseCapitalServer + '/company/' + e.target.dataset.companyid + '/post-for-review', 'PUT')
+    .then((data) => {
+      api.routers.navigate(
+        '/company/in-review',
+        { trigger: true, replace: false }
+      );
+    });
+};
+
 const doCampaignValidation = function doCampaignValidation(e, data) {
 
   if(data == null) {
@@ -63,6 +74,7 @@ module.exports = {
       'click .update-location': 'updateLocation',
       'click .onPreview': onPreviewAction,
       'click .submit_form': submitCampaign,
+      'click #postForReview': postForReview,
       'change #website': appendHttpIfNecessary,
       'change #website,#twitter,#facebook,#instagram,#linkedin': 'appendHttpsIfNecessary',
     }, leavingConfirmationHelper.events, phoneHelper.events, menuHelper.events),
@@ -155,79 +167,93 @@ module.exports = {
     },
   }, leavingConfirmationHelper.methods, phoneHelper.methods, menuHelper.methods)),
 
+  inReview: Backbone.View.extend(_.extend({
+    el: '#content',
+    template: require('./templates/companyInReview.pug'),
+
+    render() {
+      this.$el.html(
+        this.template({
+          company: this.model
+        })
+      );
+      return this;
+    },
+  })),
 
   generalInformation: Backbone.View.extend(_.extend({
-      urlRoot: raiseCapitalServer + '/campaign/:id/general_information',
-      template: require('./templates/generalInformation.pug'),
-      events: _.extend({
-          'click #submitForm': api.submitAction,
-          'click .onPreview': onPreviewAction,
-          'click .submit_form': submitCampaign,
-        }, addSectionHelper.events, leavingConfirmationHelper.events, menuHelper.events),
+    urlRoot: raiseCapitalServer + '/campaign/:id/general_information',
+    template: require('./templates/generalInformation.pug'),
+    events: _.extend({
+        'click #submitForm': api.submitAction,
+        'click .onPreview': onPreviewAction,
+        'click .submit_form': submitCampaign,
+        'click #postForReview': postForReview,
+      }, addSectionHelper.events, leavingConfirmationHelper.events, menuHelper.events),
 
-      preinitialize() {
-        // ToDo
-        // Hack for undelegate previous events
-        for (let k in this.events) {
-          console.log('#content ' + k.split(' ')[1]);
-          $('#content ' + k.split(' ')[1]).undelegate();
+    preinitialize() {
+      // ToDo
+      // Hack for undelegate previous events
+      for (let k in this.events) {
+        console.log('#content ' + k.split(' ')[1]);
+        $('#content ' + k.split(' ')[1]).undelegate();
+      }
+    },
+
+    getSuccessUrl(data) {
+      return '/campaign/' + this.model.id  + '/media';
+    },
+
+    initialize(options) {
+      this.fields = options.fields;
+      this.formc = options.formc;
+      this.labels = {
+        pitch: 'Why Should People Invest?',
+        business_model: 'Why We Are Raising Capital?',
+        intended_use_of_proceeds: 'How We Intend To Make Money?',
+        faq: {
+          question: 'Question',
+          answer: 'Answer',
+        },
+        additional_info: {
+          title: 'Title',
+          body: 'Description',
+        },
+      };
+      this.fields.pitch.help_text = 'What is your edge? Do you have a competitive advantage? Why should investors want to invest in your company?';
+      this.fields.intended_use_of_proceeds.help_text = 'How do you make money?';
+      this.fields.business_model.help_text = 'Why are you raising capital, and what do you intend to do with it?';
+      this.fields.additional_info.help_text = 'Is there anything else you want to tell your potential investors? Received any accolades? Patents? Major contracts? Distributors, etc?';
+      this.fields.faq.help_text = 'We need help text here too';
+      this.assignLabels();
+      this.createIndexes();
+      this.buildJsonTemplates('raiseFunds');
+    },
+
+    render() {
+      this.$el.html(
+          this.template({
+            serverUrl: serverUrl,
+            Urls: Urls,
+            fields: this.fields,
+            values: this.model,
+            templates: this.jsonTemplates,
+            formc: this.formc,
+          })
+      );
+
+      if(app.getParams().check == '1') {
+        var data = this.$el.find('form').serializeJSON();
+        if (!validation.validate(this.fields, data, this)) {
+          _(validation.errors).each((errors, key) => {
+            validation.invalidMsg(this, key, errors);
+          });
+          this.$('.help-block').prev().scrollTo(5);
         }
-      },
-
-      getSuccessUrl(data) {
-        return '/campaign/' + this.model.id  + '/media';
-      },
-
-      initialize(options) {
-        this.fields = options.fields;
-        this.formc = options.formc;
-        this.labels = {
-          pitch: 'Why Should People Invest?',
-          business_model: 'Why We Are Raising Capital?',
-          intended_use_of_proceeds: 'How We Intend To Make Money?',
-          faq: {
-            question: 'Question',
-            answer: 'Answer',
-          },
-          additional_info: {
-            title: 'Title',
-            body: 'Description',
-          },
-        };
-        this.fields.pitch.help_text = 'What is your edge? Do you have a competitive advantage? Why should investors want to invest in your company?';
-        this.fields.intended_use_of_proceeds.help_text = 'How do you make money?';
-        this.fields.business_model.help_text = 'Why are you raising capital, and what do you intend to do with it?';
-        this.fields.additional_info.help_text = 'Is there anything else you want to tell your potential investors? Received any accolades? Patents? Major contracts? Distributors, etc?';
-        this.fields.faq.help_text = 'We need help text here too';
-        this.assignLabels();
-        this.createIndexes();
-        this.buildJsonTemplates('raiseFunds');
-      },
-
-      render() {
-        this.$el.html(
-            this.template({
-              serverUrl: serverUrl,
-              Urls: Urls,
-              fields: this.fields,
-              values: this.model,
-              templates: this.jsonTemplates,
-              formc: this.formc,
-            })
-        );
-
-        if(app.getParams().check == '1') {
-          var data = this.$el.find('form').serializeJSON();
-          if (!validation.validate(this.fields, data, this)) {
-            _(validation.errors).each((errors, key) => {
-              validation.invalidMsg(this, key, errors);
-            });
-            this.$('.help-block').prev().scrollTo(5);
-          }
-        }
-        return this;
-      },
-    }, leavingConfirmationHelper.methods, menuHelper.methods, addSectionHelper.methods)),
+      }
+      return this;
+    },
+  }, leavingConfirmationHelper.methods, menuHelper.methods, addSectionHelper.methods)),
 
   media: Backbone.View.extend(_.extend({
     template: require('./templates/media.pug'),
@@ -238,6 +264,7 @@ module.exports = {
         'change #video,.additional-video-link': 'updateVideo',
         'change .press_link': 'appendHttpIfNecessary',
         'click .submit_form': submitCampaign,
+        'click #postForReview': postForReview,
         'click .onPreview': onPreviewAction,
       }, leavingConfirmationHelper.events, menuHelper.events,
         addSectionHelper.events, dropzoneHelpers.events
@@ -374,6 +401,7 @@ module.exports = {
     events: _.extend({
       'click .delete-member': 'deleteMember',
       'click .submit_form': doCampaignValidation,
+      'click #postForReview': postForReview,
       'change #linkedin,#facebook': 'appendHttpsIfNecessary',
       'click .cancel': 'cancel',
       'click .save': api.submitAction,
@@ -482,6 +510,7 @@ module.exports = {
     events: _.extend({
       'click .delete-member': 'deleteMember',
       'click .submit_form': doCampaignValidation,
+      'click #postForReview': postForReview,
       'click .onPreview': onPreviewAction,
       'submit form': 'submit',
     }, menuHelper.events),
@@ -554,13 +583,14 @@ module.exports = {
       events: _.extend({
         'click #submitForm': api.submitAction,
         'change input[name="security_type"]': 'updateSecurityType',
-        // 'focus #minimum_raise,#maximum_raise,#minimum_increment,#premoney_valuation,#price_per_share': 'clearZeroAmount',
-        // 'change #minimum_raise,#maximum_raise,#minimum_increment,#premoney_valuation': 'formatNumber',
-        // 'change #minimum_raise,#maximum_raise,#price_per_share,#premoney_valuation': 'calculateNumberOfShares',
+        'focus #minimum_raise,#maximum_raise,#minimum_increment,#premoney_valuation,#price_per_share': 'clearZeroAmount',
+        'change #minimum_raise,#maximum_raise,#minimum_increment,#premoney_valuation': 'formatNumber',
+        'change #minimum_raise,#maximum_raise,#price_per_share,#premoney_valuation': 'calculateNumberOfShares',
         'click .onPreview': onPreviewAction,
         'click .submit_form': submitCampaign,
+        'click #postForReview': postForReview,
         'click .submit-specifics': 'checkMinMaxRaise',
-        'change #valuation_determine': 'valuationDetermine',
+        'change #valuation_determination': 'valuationDetermine',
       }, leavingConfirmationHelper.events, menuHelper.events, dropzoneHelpers.events),
 
       preinitialize() {
@@ -642,12 +672,13 @@ module.exports = {
       },
 
       valuationDetermine(e) {
-      if (e.target.options[e.target.selectedIndex].value == '2') {
-        $('#description_determine').parent().parent().show();
-      } else {
-        $('#description_determine').parent().parent().hide();
-      }
-    },
+        if (e.target.options[e.target.selectedIndex].value == 2) {
+          $('#valuation_determination_other').parent().parent().parent().show();
+        } else {
+          $('#valuation_determination_other').parent().parent().parent().hide();
+        }
+      },
+
       updateSecurityType(e) {
         let val = e.currentTarget.value;
         $('.security_type_list').hide();
@@ -698,6 +729,7 @@ module.exports = {
         'click #submitForm': api.submitAction,
         'click .onPreview': onPreviewAction,
         'click .submit_form': submitCampaign,
+        'click #postForReview': postForReview,
     }, leavingConfirmationHelper.events, menuHelper.events, addSectionHelper.events),
 
     preinitialize() {
@@ -742,18 +774,4 @@ module.exports = {
     }
 
   }, leavingConfirmationHelper.methods, menuHelper.methods, addSectionHelper.methods)),
-
-  thankYou: Backbone.View.extend({
-    el: '#content',
-    template: require('./templates/thankyou.pug'),
-
-    render() {
-      this.$el.html(
-        this.template({
-          values: this.model,
-        })
-      );
-      return this;
-    },
-  }),
 };

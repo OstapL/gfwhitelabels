@@ -202,7 +202,7 @@ mixin menu(currentSection, currentStep)
                   |  Once you submit, you will no longer have the ability to edit your Campaign
                   .info-btn-block.mb30
                     a(href="#" data-dismiss="modal").btn.m-t-2.m-r-1.btn-secondary Cancel
-                    a(href="/campaign/" + values.id + "/thankyou").btn.m-t-2.btn-primary.text-uppercase Yes
+                    button(data-companyId=formc.company_id)#postForReview.btn.m-t-2.btn-primary.text-uppercase Yes
             .modal-footer
       div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")#formc_publish.modal.fade
         div(role="document").modal-dialog

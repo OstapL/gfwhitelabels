@@ -314,6 +314,7 @@ mixin fileDropzone(name, attr)
     if attr.data.mime
       - mimetypeIcons = require('helpers/mimetypeIcons.js');
       - icon = mimetypeIcons[attr.data.mime.split('/')[1]];
+    +prepareField(name, attr)
 
     div(
       class='row media-item ' + attr.class + ' ' + (attr.id || name) +
