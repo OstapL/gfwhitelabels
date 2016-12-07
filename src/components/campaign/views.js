@@ -529,6 +529,16 @@ module.exports = {
       this.fields.fee = {type: 'int', required: false};
       // this.fields.route_number = {type: 'string', required: true};
       this.fields.routing_number = {type: 'string', required: false};
+
+      // apply oneOf to the radio buttons
+      this.fields.is_reviewed_educational_material.oneOf = ['true'];
+      this.fields.is_understand_restrictions_to_cancel_investment.oneOf = ['true'];
+      this.fields.is_understand_difficult_to_resell_purchashed.oneOf = ['true'];
+      this.fields.is_understand_investing_is_risky.oneOf = ['true'];
+
+      // apply equalTo to account number
+      this.fields.account_number.equalTo = 'account_number_re';
+
       this.labels = {
         personal_information_data: {
           street_address_1: 'Street Address 1',
