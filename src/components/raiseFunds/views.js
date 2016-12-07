@@ -366,6 +366,7 @@ module.exports = {
   teamMemberAdd: Backbone.View.extend(_.extend({
     urlRoot: raiseCapitalServer + '/campaign/:id/team-members',
     // doNotExtendModel: true,
+    template: require('./templates/teamMemberAdd.pug'),
     events: _.extend({
       'click .delete-member': 'deleteMember',
       'click .submit_form': doCampaignValidation,
@@ -394,6 +395,19 @@ module.exports = {
       this.type = options.type;
       this.index = options.index;
       this.urlRoot = this.urlRoot.replace(':id', this.model.id);
+
+      if (this.index != 'new') {
+        this.member = this.model.data[this.index];
+        this.urlRoot  += '/' + this.index;
+        this.submitMethod = 'PUT';
+      } else {
+        this.member = {
+          photo_data: [],
+          type: this.type
+        };
+        this.submitMethod = 'POST';
+      }
+
       this.$el.on('keypress', ':input:not(textarea)', function (event) {
         if (event.keyCode == 13) {
           event.preventDefault();
@@ -405,32 +419,23 @@ module.exports = {
     },
 
     render() {
-      const template = require('./templates/teamMemberAdd.pug');
-
-      if (this.index != 'new') {
-        this.member = this.model.data[this.index];
-        this.urlRoot  += '/' + this.index;
-      } else {
-        this.member = {
-          photo_data: [],
-          type: this.type
-        };
-      }
-
       this.usaStates = require('helpers/usa-states');
+
       this.$el.html(
-        template({
+        this.template({
           formc: this.formc,
           fields: this.fields,
           member: this.member,
           values: this.model,
           type: this.type,
           index: this.index,
+          // submitMethod: this.submitMethod,
           states: this.usaStates,
         })
       );
 
       setTimeout(() => { this.createDropzones() } , 1000);
+
       delete this.model.progress;
       delete this.model.data;
       return this;
@@ -460,7 +465,7 @@ module.exports = {
       this.undelegateEvents();
       if (confirm("Do you really want to leave?")) {
         app.routers.navigate(
-          '/campaign/' + this.model.id + '/team-members/',
+          '/campaign/' + this.model.id + '/team-members',
           { trigger: true, replace: false }
         );
       }
