@@ -10,6 +10,8 @@ include menu.pug
   ]
 )
 section.create-company-team-add.container
+  - var campaignId = values.id;
+  - var formcId = formc.id;
   +menu('campaign', 'team-members')
 
   //START RIGHT BLOCK
