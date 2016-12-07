@@ -64,7 +64,6 @@ section.create-company-team-add.container
           |  ADD 20% VOTING SHAREHOLDER
 
       .col-lg-12.table-responsive.m-t-2
-        - var v = {};
         table.table.table-bordered.m-b-0.team-member-table
           thead
             tr.color-grey
@@ -77,7 +76,7 @@ section.create-company-team-add.container
               td(colspan="5").p-x-0.p-y-0
                 #membersMessage.warning-block.warning-team-add.team-member-no-border.text-lg-left.m-b-0
                   i.fa.fa-info-circle 
-                  span.warning-text First of all please identify the Officers in your company responsible for the following 3 roles. Please note that, if necessary, the same person may be identified with multiple titles.
+                  span.warning-text Please identify the Officers in your company responsible for the following 3 roles. Please note that, if necessary, the same person may be identified with multiple.
             - var requiredRoles = { 1: 'CEO/President', 2: 'Principal Financial Officer/Treasurer', 5: 'Controller/Principal Accounting Officer' };
             - var roleCounter = 0;
             each k,v in requiredRoles
@@ -103,6 +102,8 @@ section.create-company-team-add.container
                     hr
                   td.text-xl-center &nbsp;
                   td.text-xl-center &nbsp;
+            if roleCounter == 2
+              - setTimeout(() => document.querySelector('#membersMessage').style.display = 'none', 310);
             each v,k in values.team_members
               - v.title = v.title ? v.title : [];
               if (v.title[0] != 1 && v.title[0] != 2 && v.title[0] != 5)
