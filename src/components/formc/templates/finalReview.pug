@@ -126,15 +126,15 @@ section.formc-review
         li
           a(href='#eligibility_information').d-inline-block.w-100.pb10 Eligibility Information
         li
-          a(href='#risk_factors').d-inline-block.w-100.pb10 OTHER MATTERS
+          a(href='#other_matters').d-inline-block.w-100.pb10 OTHER MATTERS
         li
-          a(href='#risk_factors').d-inline-block.w-100.pb10 REPORTING OBLIGATIONS
+          a(href='#reporting_obligations').d-inline-block.w-100.pb10 REPORTING OBLIGATIONS
         li
-          a(href='#risk_factors').d-inline-block.w-100.pb10 EXHIBIT A: BUSINESS PLAN
+          a(href='#business_plan').d-inline-block.w-100.pb10 EXHIBIT A: BUSINESS PLAN
         li
-          a(href='#risk_factors').d-inline-block.w-100.pb10 EXHIBIT B: FINANCIAL STATEMENTS
+          a(href='#financial_statements').d-inline-block.w-100.pb10 EXHIBIT B: FINANCIAL STATEMENTS
         li
-          a(href='#risk_factors').d-inline-block.w-100 EXHIBIT C: BIOGRAPHICAL INFORMATION
+          a(href='#biographical_information').d-inline-block.w-100 EXHIBIT C: BIOGRAPHICAL INFORMATION
       .col-lg-12.text-xs-center.m-t-1
         a(data-toggle="modal" data-target="#formc_review_popup" href="#formc_review_popup").btn.btn-primary submit Form C
 
@@ -1300,7 +1300,7 @@ section.formc-review
           p.small.pb10
             +frField('company.name', 'text')
             |  as Issuer
-        h2.text-uppercase.text-xs-center.font-weight-bold.letter-spacing-normal.m-b-3 OTHER MATTERS
+        h2.text-uppercase.text-xs-center.font-weight-bold.letter-spacing-normal.m-b-3#other_matters OTHER MATTERS
         p.text-uppercase.m-t-0.m-b-0.pb10 
           u Additional Material Disclosure
         p.pb10.text-indent The issuer has opted to include the following information that may be deemed material to investors in connection with this offering. The issuer is also providing the following information to reduce the possibility that any of the required statements are misleading, in light of the circumstances under which they are made. 
@@ -1317,7 +1317,7 @@ section.formc-review
           p.small.pb10
             +frField('company.name', 'text')
             |  as Issuer
-        h2.text-uppercase.text-xs-center.font-weight-bold.letter-spacing-normal.m-b-3 REPORTING OBLIGATIONS
+        h2.text-uppercase.text-xs-center.font-weight-bold.letter-spacing-normal.m-b-3#reporting_obligations REPORTING OBLIGATIONS
         p.text-uppercase.m-t-0.m-b-0.pb10 
           u End of Reporting Requirement
         p.pb10.text-indent The issuer may terminate its reporting obligations in the future in accordance with Rule 202(b) of Regulation Crowdfunding (§ 227.202(b)). The issuer must continue to comply with the ongoing reporting requirements until one of the following conditions is met:
@@ -1340,7 +1340,7 @@ section.formc-review
           p.small.pb10
             +frField('company.name', 'text')
             |  as Issuer
-        h2.text-uppercase.text-xs-center.font-weight-bold.letter-spacing-normal.m-b-3 EXHIBIT A: BUSINESS PLAN
+        h2.text-uppercase.text-xs-center.font-weight-bold.letter-spacing-normal.m-b-3#business_plan EXHIBIT A: BUSINESS PLAN
         if values.formc.business_plan_data.length > 0
           p
             for v,k in values.formc.business_plan_data[0].urls
@@ -1353,7 +1353,7 @@ section.formc-review
           p.small.pb10
             +frField('company.name', 'text')
             |  as Issuer
-        h2.text-uppercase.text-xs-center.font-weight-bold.letter-spacing-normal.m-b-3 EXHIBIT B: FINANCIAL STATEMENTS for most recent fiscal year
+        h2.text-uppercase.text-xs-center.font-weight-bold.letter-spacing-normal.m-b-3#financial_statements EXHIBIT B: FINANCIAL STATEMENTS for most recent fiscal year
         if values.formc.fiscal_recent_group_data.length > 0
           p
             for v,k in values.formc.fiscal_recent_group_data
@@ -1373,7 +1373,7 @@ section.formc-review
           p.small.pb10
             +frField('company.name', 'text')
             |  as Issuer
-        h2.text-uppercase.text-xs-center.font-weight-bold.letter-spacing-normal.m-b-3 EXHIBIT C: BIOGRAPHIES
+        h2.text-uppercase.text-xs-center.font-weight-bold.letter-spacing-normal.m-b-3#biographical_information EXHIBIT C: BIOGRAPHIES
         p.pb10.text-indent Employment information from previous employers over the last three years for each of the Company’s officers is as follows:
         p.pb10
           each v,k in values.formc.team_members
