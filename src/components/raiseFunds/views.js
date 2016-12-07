@@ -331,6 +331,7 @@ module.exports = {
           // values: this.model.toJSON(),
           values: this.model,
           templates: this.jsonTemplates,
+          formc: this.formc,
         })
       );
 
@@ -512,6 +513,7 @@ module.exports = {
             campaign: values,
             Urls: Urls,
             values: values,
+            formc: this.formc,
           })
         );
 

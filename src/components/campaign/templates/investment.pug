@@ -77,6 +77,10 @@ mixin fieldInput(name, attr)
           section.personal_information
             h2.text-uppercase.dosis.text-md-center.text-sm-center.text-xs-center.text-lg-left Personal Information
               span.small-text.open-sans Required by United States banking laws. This information is transmitted securely and will never be used for any purpose beyond executing your investment. You only have to do this once.
+            //- div #{user.first_name + ' ' + user.last_name}
+            //-   br
+            //-   | #{user.street_address_1 + (user.street_address_2 ? (' ' + user.street_address_2) : '') + ', ' + user.state + ' ' + user.zip_code + ', ' + user.country} 
+            //-   a(href="#") change
             .form-group.row
               label.col-lg-3.col-md-12.text-lg-right.text-xs-left.pull-xs-left Legal Name
                 span.color-red *
