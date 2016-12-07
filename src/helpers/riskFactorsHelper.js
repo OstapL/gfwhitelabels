@@ -3,6 +3,7 @@ module.exports = {
     'submit form': 'submit',
     'click .delete': 'deleteRisk',
     'click .edit-risk': 'editRisk',
+    'click a.submit': 'submitRiskPage',
   },
   deleteRisk (e) {
     e.stopPropagation();
@@ -26,6 +27,9 @@ module.exports = {
         let $section = $('.risk-panel[index=' + index + ']');
         $section.remove();
       }
+
+      delete this.model[this.riskType][index];
+      this.updateComplete();
     // $form.find('.added-span').text(' (added to Form C)');
     }).fail((xhr, status, text) => {
       api.errorAction(this, xhr, status, text, this.fields);
@@ -81,8 +85,36 @@ module.exports = {
         }));
         $('.add-risk-form').find('input:text, textarea').val('');
       }
+      this.model[this.riskType][index] = formData;
+      this.updateComplete();
     }).
     fail((xhr, status, text) => {
+      api.errorAction(this, xhr, status, text, this.fields);
+    });
+  },
+
+  updateComplete() {
+    if (Object.keys(this.model[this.riskType]).length > 0) {
+      this.$('#complete').prop({ disabled: true, checked: false });
+    } else {
+      this.$('#complete').prop('disabled', false);
+    }
+  },
+
+  submitRiskPage(e) {
+    e.preventDefault();
+    e.stopPropagation();
+    let option, data;
+    if (this.$('#complete').is(':checked')) {
+      option = 'PATCH';
+      data = { risk: '', title: '' };
+    } else {
+      option = 'DELETE';
+    }
+    let url = this.urlRoot.replace(':id', this.model.id).replace(':index', 99);
+    api.makeRequest(url, option, data || {}).then((data) => {
+      app.routers.navigate($(e.target).data('href'), {trigger: true});
+    }).fail((xhr, status, text) => {
       api.errorAction(this, xhr, status, text, this.fields);
     });
   },

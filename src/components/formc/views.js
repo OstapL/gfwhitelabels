@@ -720,6 +720,7 @@ module.exports = {
 
   riskFactorsMarket: Backbone.View.extend(_.extend({
     urlRoot: formcServer + '/:id' + '/risk-factors-market/:index',
+    riskType: 'market_and_customer_risk',
     events: _.extend({
       'click .submit_formc': submitFormc,
     }, menuHelper.events, riskFactorsHelper.events),
@@ -801,6 +802,8 @@ module.exports = {
     deleteRisk: riskFactorsHelper.deleteRisk,
     editRisk: riskFactorsHelper.editRisk,
     submit: riskFactorsHelper.submitRisk,
+    updateComplete: riskFactorsHelper.updateComplete,
+    submitRiskPage: riskFactorsHelper.submitRiskPage,
 
     render() {
       let template = require('components/formc/templates/riskFactorsMarket.pug');
