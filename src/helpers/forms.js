@@ -162,6 +162,13 @@ module.exports = {
       _(d).forEach((el, i) => {
         if(el.kind == 'E' || el.kind == 'A') {
           patchData[el.path[0]] = newData[el.path[0]];
+        } else if(el.kind == 'N' && newData.hasOwnProperty(el.path[0])) {
+          // In case if we delete data that was in the model
+          var newArr = [];
+          newData[el.path[0]].forEach((arr, i) => {
+            newArr.push(arr);
+          });
+          patchData[el.path[0]] = newArr;
         }
       });
       newData = patchData;
