@@ -1,3 +1,5 @@
+const View = require('components/formc/views.js');
+
 module.exports = Backbone.Router.extend({
   routes: {
     'formc/:id/introduction': 'introduction',
@@ -39,11 +41,9 @@ module.exports = Backbone.Router.extend({
   },
 
   introduction(id) {
-    const View = require('components/formc/views.js');
 
     let fieldsR = api.makeCacheRequest(formcServer + '/' + id + '/introduction', 'OPTIONS');
     let dataR = api.makeCacheRequest(formcServer + '/' + id + '/introduction');
-
 
     $('#content').scrollTo();
     $.when(fieldsR, dataR).done((fields, data) => {
@@ -59,7 +59,6 @@ module.exports = Backbone.Router.extend({
   },
   
   teamMembers(id) {
-    const View = require('components/formc/views.js');
     // var i = new View.memberDirector({
     let fieldsR = api.makeCacheRequest(formcServer + '/' + id + '/team-members', 'OPTIONS');
     let dataR = api.makeCacheRequest(formcServer + '/' + id + '/team-members', 'GET');
@@ -82,7 +81,6 @@ module.exports = Backbone.Router.extend({
   },
 
   teamMemberAdd(id, role, user_id) {
-    const View = require('components/formc/views.js');
 
     let fieldsR = api.makeCacheRequest(formcServer + '/' + id + '/team-members/' + role, 'OPTIONS');
     let dataR = api.makeCacheRequest(formcServer + '/' + id + '/team-members', 'GET');
@@ -122,7 +120,6 @@ module.exports = Backbone.Router.extend({
   },
 
   relatedParties(id) {
-    const View = require('components/formc/views.js');
 
     let fieldsR = api.makeCacheRequest(
       formcServer + '/' + id + '/related-parties',
@@ -149,7 +146,6 @@ module.exports = Backbone.Router.extend({
   },
 
   useOfProceeds(id) {
-    const View = require('components/formc/views.js');
 
     let fieldsR = api.makeCacheRequest(formcServer + '/' + id + '/use-of-proceeds', 'OPTIONS');
     let dataR = api.makeCacheRequest(formcServer + '/' + id + '/use-of-proceeds');
@@ -174,7 +170,6 @@ module.exports = Backbone.Router.extend({
   },
 
   riskFactorsInstruction(id) {
-    const View = require('components/formc/views.js');
 
     let fieldsR = api.makeCacheRequest(formcServer + '/' + id + '/risk-factors-market', 'OPTIONS');
     let dataR = api.makeCacheRequest(formcServer + '/' + id + '/risk-factors-market');
@@ -197,7 +192,6 @@ module.exports = Backbone.Router.extend({
   },
 
   riskFactorsMarket(id) {
-    const View = require('components/formc/views.js');
 
     let fieldsR = api.makeCacheRequest(formcServer + '/' + id + '/risk-factors-market', 'OPTIONS');
     let dataR = api.makeCacheRequest(formcServer + '/' + id + '/risk-factors-market');
@@ -220,7 +214,6 @@ module.exports = Backbone.Router.extend({
   },
 
   riskFactorsFinancial(id) {
-    const View = require('components/formc/views.js');
 
     let fieldsR = api.makeCacheRequest(formcServer + '/' + id + '/risk-factors-financial', 'OPTIONS');
     let dataR = api.makeCacheRequest(formcServer + '/' + id + '/risk-factors-financial');
@@ -243,7 +236,6 @@ module.exports = Backbone.Router.extend({
   },
 
   riskFactorsOperational(id) {
-    const View = require('components/formc/views.js');
 
     let fieldsR = api.makeCacheRequest(formcServer + '/' + id + '/risk-factors-operational', 'OPTIONS');
     let dataR = api.makeCacheRequest(formcServer + '/' + id + '/risk-factors-operational');
@@ -266,7 +258,6 @@ module.exports = Backbone.Router.extend({
   },
 
   riskFactorsCompetitive(id) {
-    const View = require('components/formc/views.js');
 
     let fieldsR = api.makeCacheRequest(formcServer + '/' + id + '/risk-factors-competitive', 'OPTIONS');
     let dataR = api.makeCacheRequest(formcServer + '/' + id + '/risk-factors-competitive');
@@ -289,7 +280,6 @@ module.exports = Backbone.Router.extend({
   },
 
   riskFactorsPersonnel(id) {
-    const View = require('components/formc/views.js');
 
     let fieldsR = api.makeCacheRequest(formcServer + '/' + id + '/risk-factors-personnel', 'OPTIONS');
     let dataR = api.makeCacheRequest(formcServer + '/' + id + '/risk-factors-personnel');
@@ -312,7 +302,6 @@ module.exports = Backbone.Router.extend({
   },
 
   riskFactorsLegal(id) {
-    const View = require('components/formc/views.js');
 
     let fieldsR = api.makeCacheRequest(formcServer + '/' + id + '/risk-factors-legal', 'OPTIONS');
     let dataR = api.makeCacheRequest(formcServer + '/' + id + '/risk-factors-legal');
@@ -335,7 +324,6 @@ module.exports = Backbone.Router.extend({
   },
 
   riskFactorsMisc(id) {
-    const View = require('components/formc/views.js');
 
     let fieldsR = api.makeCacheRequest(formcServer + '/' + id + '/risk-factors-misc', 'OPTIONS');
     let dataR = api.makeCacheRequest(formcServer + '/' + id + '/risk-factors-misc');
@@ -358,7 +346,6 @@ module.exports = Backbone.Router.extend({
   },
 
   financialCondition(id) {
-    const View = require('components/formc/views.js');
     const fieldsR = api.makeRequest(
       formcServer + '/' + id + '/financial-condition', 
       'OPTIONS'
@@ -387,7 +374,6 @@ module.exports = Backbone.Router.extend({
   },
 
   outstandingSecurity(id) {
-    const View = require('components/formc/views.js');
 
     let fieldsR = api.makeCacheRequest(formcServer + '/' + id + '/outstanding-security', 'OPTIONS');
     let dataR = api.makeCacheRequest(formcServer + '/' + id + '/outstanding-security');
@@ -410,7 +396,6 @@ module.exports = Backbone.Router.extend({
   },
 
   backgroundCheck(id) {
-    const View = require('components/formc/views.js');
 
     let fieldsR = api.makeCacheRequest(formcServer + '/' + id + '/background-check', 'OPTIONS');
     let dataR = api.makeCacheRequest(formcServer + '/' + id + '/background-check');
@@ -433,7 +418,6 @@ module.exports = Backbone.Router.extend({
   },
 
   finalReview(id) {
-    const View = require('components/formc/views.js');
 
     let companyR = api.makeCacheRequest(raiseCapitalServer + '/company', 'OPTIONS');
     let campaignR = api.makeCacheRequest(raiseCapitalServer + '/campaign', 'OPTIONS');
@@ -463,7 +447,6 @@ module.exports = Backbone.Router.extend({
   },
 
   finalReviewTwo: function(id) {
-    const View = require('components/formc/views.js');
 
     let companyR = api.makeCacheRequest(raiseCapitalServer + '/company', 'OPTIONS');
     let campaignR = api.makeCacheRequest(raiseCapitalServer + '/campaign', 'OPTIONS');
@@ -492,7 +475,6 @@ module.exports = Backbone.Router.extend({
     });
   },
   electronicSignature(id) {
-      const View = require('components/formc/views.js');
       let i = new View.electronicSignature({
         el: '#content',
       });
@@ -500,15 +482,13 @@ module.exports = Backbone.Router.extend({
       app.hideLoading();
   },
   electronicSignatureCompany(id) {
-      const View = require('components/formc/views.js');
       let i = new View.electronicSignatureCompany({
         el: '#content',
       });
       i.render();
       app.hideLoading();
   },
-    electronicSignatureCik(id) {
-      const View = require('components/formc/views.js');
+  electronicSignatureCik(id) {
       let i = new View.electronicSignatureCik({
         el: '#content',
       });
@@ -516,7 +496,6 @@ module.exports = Backbone.Router.extend({
       app.hideLoading();
   },
   electronicSignatureFinancials(id) {
-      const View = require('components/formc/views.js');
       let i = new View.electronicSignatureFinancials({
         el: '#content',
       });

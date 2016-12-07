@@ -72,13 +72,18 @@ section.create-company-team-add.container
               th.text-xs-center Status
               th(colspan="2")
           tbody
-            tr
-              td(colspan="5").p-x-0.p-y-0
-                #membersMessage.warning-block.warning-team-add.team-member-no-border.text-lg-left.m-b-0
-                  i.fa.fa-info-circle 
-                  span.warning-text Please identify the Officers in your company responsible for the following 3 roles. Please note that, if necessary, the same person may be identified with multiple.
             - var requiredRoles = { 1: 'CEO/President', 2: 'Principal Financial Officer/Treasurer', 5: 'Controller/Principal Accounting Officer' };
             - var roleCounter = 0;
+            tr
+              td(colspan="5").p-x-0.p-y-0
+                each k,v in requiredRoles
+                  - var persons = values.team_members.filter(function(el) { return (el.title ? el.title.indexOf(v) != -1: false); })
+                  if persons.length > 0
+                    - roleCounter ++;
+                if roleCounter < 2
+                  #membersMessage.warning-block.warning-team-add.team-member-no-border.text-lg-left.m-b-0
+                    i.fa.fa-info-circle 
+                    span.warning-text Please identify the Officers in your company responsible for the following 3 roles. Please note that, if necessary, the same person may be identified with multiple.
             each k,v in requiredRoles
               - var persons = values.team_members.filter(function(el) { return (el.title ? el.title.indexOf(v) != -1: false); })
               for person in persons
@@ -102,8 +107,6 @@ section.create-company-team-add.container
                     hr
                   td.text-xl-center &nbsp;
                   td.text-xl-center &nbsp;
-            if roleCounter == 2
-              - setTimeout(() => document.querySelector('#membersMessage').style.display = 'none', 310);
             each v,k in values.team_members
               - v.title = v.title ? v.title : [];
               if (v.title[0] != 1 && v.title[0] != 2 && v.title[0] != 5)
