@@ -236,6 +236,13 @@ module.exports = {
 
       cbInvestor1m.prop('disabled', this.model.net_worth < 1000);
       cbInvestor200k.prop('disabled', this.model.annual_income < 200);
+
+      this.$('a[href="#financial_info"]').on('show.bs.tab', (e) => {
+        setTimeout(() => {
+          this.$('.slider-net-worth').bootstrapSlider('setValue', this.model.net_worth);
+          this.$('.slider-annual-income').bootstrapSlider('setValue', this.model.annual_income);
+        }, 200);
+      });
     },
 
     changeCountry(e) {
@@ -398,6 +405,7 @@ module.exports = {
       return this;
     },
   }),
+
   InvestorDashboard: Backbone.View.extend({
     template: require('./templates/investorDashboard.pug'),
     el: '#content',

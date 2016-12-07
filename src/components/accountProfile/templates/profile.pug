@@ -39,13 +39,19 @@ include ../../../templates/fields_mixins.pug
     .col-xl-9.col-lg-9
       ul.nav.nav-tabs.profile-tabs
         li(aria-expanded="false").nav-item
-          a(href="#account_info" data-toggle="tab"  aria-expanded="true" role="tab").active.nav-link.uppercase Profile information
+          a(
+            href="#account_info"
+            data-toggle="tab"
+            aria-expanded="true"
+            role="tab"
+          ).active.nav-link.uppercase Profile information
         li.nav-item
           a(
             href="#financial_info"
             data-toggle="tab"
             role="tab"
-            aria-expanded="true").nav-link.uppercase Financial information
+            aria-expanded="true"
+          ).nav-link.uppercase Financial information
 
       .tab-content.profile-tabs-content.mt30
 
