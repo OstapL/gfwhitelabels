@@ -194,7 +194,7 @@ module.exports = {
   // with the name specified
   equalTo: function (name, rule, attr, data, schema) {
     let value = this.getData(data, name);
-    let equalTo = data[schema[attr.equal].name];
+    let equalTo =  this.getData(data, schema[attr.equal].name);
     if (value !== equalTo) {
       throw this.format(this.messages.equalTo, attr.label, data[schema[attr.equal].name]);
     }

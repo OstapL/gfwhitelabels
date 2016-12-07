@@ -536,9 +536,6 @@ module.exports = {
       this.fields.is_understand_difficult_to_resell_purchashed.oneOf = ['true'];
       this.fields.is_understand_investing_is_risky.oneOf = ['true'];
 
-      // apply equalTo to account number
-      // this.fields.account_number.equalTo = 'account_number_re';
-
       this.labels = {
         personal_information_data: {
           street_address_1: 'Street Address 1',
