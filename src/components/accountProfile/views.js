@@ -416,48 +416,48 @@ module.exports = {
     initialize(options) {
       this.fields = options.fields;
       let investment = this.model.data[0];
-      investment.created_date = new Date(2016, 10, 10);
-      investment.id = 123456789;
+      if (investment) {
+        investment.created_date = new Date(2016, 10, 10);
+        investment.id = 123456789;
 
-      investment.campaign = {
-        id: '67',
-        amount_raised: 25000,
-        cap: 1000,
-        security_type: 'Revenue Share',
-        list_image_data: '/img/test.png',
-        max_number_of_shares: 0,
-        min_number_of_shares: 0,
-        minimum_increment: 0,
-        minimum_raise: 500000,
-        maximum_raise: 300000,
-        percentage_revenue: 10,
-        premoney_valuation: 10,
-        price_per_share: 10,
-        expiration_date: new Date(2016, 12, 26),
+        investment.campaign = {
+          id: '67',
+          amount_raised: 25000,
+          cap: 1000,
+          security_type: 'Revenue Share',
+          list_image_data: '/img/test.png',
+          max_number_of_shares: 0,
+          min_number_of_shares: 0,
+          minimum_increment: 0,
+          minimum_raise: 500000,
+          maximum_raise: 300000,
+          percentage_revenue: 10,
+          premoney_valuation: 10,
+          price_per_share: 10,
+          expiration_date: new Date(2016, 12, 26),
 
-      };
-      investment.company = {
-        id: 67,
-        name: 'Company Stub',
-        short_name: 'Company short name stub',
-        tagline: 'tagline',
-        corporate_structure: 'Corporate structure stub',
-        founding_state: 'Founding state',
-        founding_date: new Date(2016, 8, 8),
-        city: 'NY',
-        zip_code: 10002,
-        state: 'Washington',
-        industry: 'Industry stub',
-        website: 'http://google.com',
-        twitter: 'http://twitter.com/@user',
-        facebook: 'https://fb.com/user',
-        linkedin: 'https://linkedin.com',
-        instagram: 'https://instagram.com',
-        image_data: {urls: ['/img/test.png']},
-        description: 'Company description stub',
-      };
-
-      console.log(investment);
+        };
+        investment.company = {
+          id: 67,
+          name: 'Company Stub',
+          short_name: 'Company short name stub',
+          tagline: 'tagline',
+          corporate_structure: 'Corporate structure stub',
+          founding_state: 'Founding state',
+          founding_date: new Date(2016, 8, 8),
+          city: 'NY',
+          zip_code: 10002,
+          state: 'Washington',
+          industry: 'Industry stub',
+          website: 'http://google.com',
+          twitter: 'http://twitter.com/@user',
+          facebook: 'https://fb.com/user',
+          linkedin: 'https://linkedin.com',
+          instagram: 'https://instagram.com',
+          image_data: {urls: ['/img/test.png']},
+          description: 'Company description stub',
+        };
+      }
 
       this.render();
     },
