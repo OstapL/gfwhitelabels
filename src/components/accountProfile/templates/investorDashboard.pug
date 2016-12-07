@@ -98,163 +98,168 @@ mixin investment(i)
 section.investor-dashboard
   .container
     .col-lg-12
-      select.orderby.custom-select.pull-right.text-uppercase 
-        option(checked="checked" value="0") default sorting
-      ul(role="tablist").nav.standart-nav-tabs.row
-        li.nav-item
-          a.nav-link.text-uppercase.active#active-tab(
-            data-toggle="tab"
-            href="#active"
-            role="tab"
-            aria-controls="active"
-            aria-expanded="true"
-          ) active
-        li.nav-item
-          a.nav-link.text-uppercase#historical-tab(
-            data-toggle="tab"
-            href="#historical"
-            role="tab"
-            aria-controls="historical"
-            aria-expanded="false"
-          ) Historical
-            .clearfix
-      
-      .row
-        .tab-content
-          .tab-pane.fade.active.in#active(
-            role="tabpanel"
-            aria-labelledby="active-tab"
-            aria-expanded="true"
-          )
-            .active-investor-dashboard.investor_table
-              each i in active
-                +investment(i)
+      if (!active || !active.length) && (!passed || !passed.length)
+        div(role="alert").alert.alert-warning
+          strong You have not invested yet
 
-          .tab-pane.fade#historical(
-            role="tabpanel"
-            aria-labelledby="historical-tab"
-            aria-expanded="false"
-          )
-            .active-investor-dashboard.investor_table
-              .one_table
-                .img_column.text-lg-center.text-sm-center
-                  img(src="/img/test.png" alt="").img-fluid
-                  span.successfull  Successfully funded campaign
-                  span.end-date  03.07.2016 End Date
-                  p.text-uppercase Company name
-                .right-columns
-                  .one_line
-                    .col40
-                      span.light_grey Amount Invested
-                    .col60
-                      span.bold-grey.font-weight-bold $25K
-                  .one_line
-                    .col40
-                      span.light_grey Investment Day
-                    .col60
-                      span.dark_grey 06.15.2016
-                  .one_line
-                    .col40
-                      span.light_grey Investment ID
-                    .col60
-                      span.dark_grey 09879*****
-                  .one_line
-                    .col40
-                      span.light_grey Security
-                    .col60
-                      span.dark_grey Revenue Share
-                  .one_line
-                    .col40
-                      span.light_grey Perks
-                    .col60
-                      span.dark_grey Rewards
-                .right_buttons
-                  h4 Downloadable Files
-                  ul
-                    li
-                      a(href="#").link-3 Investor Presentation
-                    li
-                      a(href="#").link-3 Form C
-                    li
-                      a(href="#").link-3 Financials
-                    li
-                      a(href="#").link-3 Agreement
-                .bottom_column
-                  .top_descript
-                    .left_text
-                      b $1,5MM
-                      span Raised
-                    .right_text
-                      b $500K
-                      span Goal
-                    p.percents 150% Funded
-                    .clear
-                  .progress_line_container
-                    progress(value="10" max="100").progress
-                  .text-lg-center
-                    a(href="#").btn.btn-sm.btn-secondary.text-uppercase view campaign
-                      i.fa.fa-angle-right
-                  .cancel_invest
-                    a(href="#").font-weight-bold Cancel investment
-                .clear
-              .one_table
-                .img_column.text-lg-center.text-sm-center
-                  img(src="/img/test.png" alt="").img-fluid
-                  span.successfull.unsuccessfull  Unsuccessfully funded campaign
-                  span.end-date  03.07.2016 End Date
-                  p.text-uppercase Company name
-                .right-columns
-                  .one_line
-                    .col40
-                      span.light_grey Amount Invested
-                    .col60
-                      span.bold-grey.font-weight-bold $25K
-                  .one_line
-                    .col40
-                      span.light_grey Investment Day
-                    .col60
-                      span.dark_grey 06.15.2016
-                  .one_line
-                    .col40
-                      span.light_grey Investment ID
-                    .col60
-                      span.dark_grey 09879*****
-                  .one_line
-                    .col40
-                      span.light_grey Security
-                    .col60
-                      span.dark_grey Revenue Share
-                  .one_line
-                    .col40
-                      span.light_grey Perks
-                    .col60
-                      span.dark_grey Rewards
-                .right_buttons
-                  h4 Downloadable Files
-                  ul
-                    li
-                      a(href="#").link-3 Investor Presentation
-                    li
-                      a(href="#").link-3 Form C
-                    li
-                      a(href="#").link-3 Financials
-                    li
-                      a(href="#").link-3 Agreement
-                .bottom_column
-                  .top_descript
-                    .left_text
-                      b $1,5MM
-                      span Raised
-                    .right_text
-                      b $500K
-                      span Goal
-                    p.percents 150% Funded
-                    .clear
-                  .progress_line_container
-                    progress(value="10" max="100").progress
-                  .text-lg-center
-                    a(href="#").btn.btn-sm.btn-secondary.text-uppercase view campaign
-                      i.fa.fa-angle-right
-                  .cancel_invest
-                    a(href="#").font-weight-bold Cancel investment
+      else
+        select.orderby.custom-select.pull-right.text-uppercase
+          option(checked="checked" value="0") default sorting
+        ul(role="tablist").nav.standart-nav-tabs.row
+          li.nav-item
+            a.nav-link.text-uppercase.active#active-tab(
+              data-toggle="tab"
+              href="#active"
+              role="tab"
+              aria-controls="active"
+              aria-expanded="true"
+            ) active
+          li.nav-item
+            a.nav-link.text-uppercase#historical-tab(
+              data-toggle="tab"
+              href="#historical"
+              role="tab"
+              aria-controls="historical"
+              aria-expanded="false"
+            ) Historical
+              .clearfix
+
+        .row
+          .tab-content
+            .tab-pane.fade.active.in#active(
+              role="tabpanel"
+              aria-labelledby="active-tab"
+              aria-expanded="true"
+            )
+              .active-investor-dashboard.investor_table
+                each i in active
+                  +investment(i)
+
+            .tab-pane.fade#historical(
+              role="tabpanel"
+              aria-labelledby="historical-tab"
+              aria-expanded="false"
+            )
+              .active-investor-dashboard.investor_table
+                .one_table
+                  .img_column.text-lg-center.text-sm-center
+                    img(src="/img/test.png" alt="").img-fluid
+                    span.successfull  Successfully funded campaign
+                    span.end-date  03.07.2016 End Date
+                    p.text-uppercase Company name
+                  .right-columns
+                    .one_line
+                      .col40
+                        span.light_grey Amount Invested
+                      .col60
+                        span.bold-grey.font-weight-bold $25K
+                    .one_line
+                      .col40
+                        span.light_grey Investment Day
+                      .col60
+                        span.dark_grey 06.15.2016
+                    .one_line
+                      .col40
+                        span.light_grey Investment ID
+                      .col60
+                        span.dark_grey 09879*****
+                    .one_line
+                      .col40
+                        span.light_grey Security
+                      .col60
+                        span.dark_grey Revenue Share
+                    .one_line
+                      .col40
+                        span.light_grey Perks
+                      .col60
+                        span.dark_grey Rewards
+                  .right_buttons
+                    h4 Downloadable Files
+                    ul
+                      li
+                        a(href="#").link-3 Investor Presentation
+                      li
+                        a(href="#").link-3 Form C
+                      li
+                        a(href="#").link-3 Financials
+                      li
+                        a(href="#").link-3 Agreement
+                  .bottom_column
+                    .top_descript
+                      .left_text
+                        b $1,5MM
+                        span Raised
+                      .right_text
+                        b $500K
+                        span Goal
+                      p.percents 150% Funded
+                      .clear
+                    .progress_line_container
+                      progress(value="10" max="100").progress
+                    .text-lg-center
+                      a(href="#").btn.btn-sm.btn-secondary.text-uppercase view campaign
+                        i.fa.fa-angle-right
+                    .cancel_invest
+                      a(href="#").font-weight-bold Cancel investment
+                  .clear
+                .one_table
+                  .img_column.text-lg-center.text-sm-center
+                    img(src="/img/test.png" alt="").img-fluid
+                    span.successfull.unsuccessfull  Unsuccessfully funded campaign
+                    span.end-date  03.07.2016 End Date
+                    p.text-uppercase Company name
+                  .right-columns
+                    .one_line
+                      .col40
+                        span.light_grey Amount Invested
+                      .col60
+                        span.bold-grey.font-weight-bold $25K
+                    .one_line
+                      .col40
+                        span.light_grey Investment Day
+                      .col60
+                        span.dark_grey 06.15.2016
+                    .one_line
+                      .col40
+                        span.light_grey Investment ID
+                      .col60
+                        span.dark_grey 09879*****
+                    .one_line
+                      .col40
+                        span.light_grey Security
+                      .col60
+                        span.dark_grey Revenue Share
+                    .one_line
+                      .col40
+                        span.light_grey Perks
+                      .col60
+                        span.dark_grey Rewards
+                  .right_buttons
+                    h4 Downloadable Files
+                    ul
+                      li
+                        a(href="#").link-3 Investor Presentation
+                      li
+                        a(href="#").link-3 Form C
+                      li
+                        a(href="#").link-3 Financials
+                      li
+                        a(href="#").link-3 Agreement
+                  .bottom_column
+                    .top_descript
+                      .left_text
+                        b $1,5MM
+                        span Raised
+                      .right_text
+                        b $500K
+                        span Goal
+                      p.percents 150% Funded
+                      .clear
+                    .progress_line_container
+                      progress(value="10" max="100").progress
+                    .text-lg-center
+                      a(href="#").btn.btn-sm.btn-secondary.text-uppercase view campaign
+                        i.fa.fa-angle-right
+                    .cancel_invest
+                      a(href="#").font-weight-bold Cancel investment
 

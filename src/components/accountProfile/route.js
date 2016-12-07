@@ -93,7 +93,7 @@ module.exports = Backbone.Router.extend({
 
     Promise.all([fieldsR, dataR]).then((values) => {
         let i = new View.InvestorDashboard({
-          fields: values[0],
+          fields: values[0].fields,
           model: values[1],
         });
 
