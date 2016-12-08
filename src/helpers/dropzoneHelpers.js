@@ -330,6 +330,13 @@ module.exports = {
     _image(name) {
 
       const onCrop = (imgData) => {
+        if (!imgData) {
+          if (_.isFunction(this.onImageCrop))
+            this.onImageCrop(name);
+
+          return;
+        }
+
         const fieldDataName = this._getDataFieldName(name);
 
         let model = this.model[fieldDataName];
@@ -343,9 +350,8 @@ module.exports = {
 
         $('.img-' + name).attr('src', imgData.urls[0]);
 
-        if (typeof(this.onImageCrop) === 'function') {
+        if (_.isFunction(this.onImageCrop))
           this.onImageCrop(name);
-        }
 
         this._notifyServer(name);
       };
@@ -393,13 +399,8 @@ module.exports = {
         e.stopPropagation();
 
         let imgId = $(e.target).closest('a.crop-image').data('imageid');
-        if (!imgId) {
-          return false;
-        }
-
-        imgId = parseInt(imgId, 10);
-
-        this._cropImage(imgId, name, onCrop);
+        if (imgId)
+          this._cropImage(imgId, name, onCrop);
 
         return false;
       };
@@ -493,9 +494,8 @@ module.exports = {
 
         let $link = $(e.target).closest('a.delete-image');
         let imageId = $link.data('imageid');
-        if (!imageId) {
+        if (!imageId)
           return;
-        }
 
         $link.prop('enabled', false);
         $link.off('click');
@@ -508,7 +508,7 @@ module.exports = {
         }
 
         this._notifyServer(name).then((r) => {
-          return api.makeRequest(filerServer + '/' + imageId, 'DELETE')
+          return api.makeRequest(filerServer + '/' + imageId, 'DELETE');
         }).then((r) => {
           if (dataIdx >= 0) {
             $link.closest('.one-photo').remove();
@@ -521,6 +521,10 @@ module.exports = {
       };
 
       const onCrop = (imgData) => {
+        //cropping canceled by user
+        if (!imgData)
+          return cropNext(true);
+
         let dataFieldName = this._getDataFieldName(name);
         let model = this.model[dataFieldName];
 
@@ -546,19 +550,18 @@ module.exports = {
         e.stopPropagation();
 
         let imgId = $(e.target).closest('a.crop-image').data('imageid');
-
-        this._cropImage(imgId, name, onCrop);
+        if (imgId)
+          this._cropImage(imgId, name, onCrop);
 
         return false;
       };
 
       this._initializeDropzone(name, dzOptions, (data, file) => {
 
-        let fieldDataName = this._getDataFieldName(name);
         let url = data[0].urls[0];
         let imageId = data[0].id;
 
-        let imageBlock = $('<div class="col-xl-4 one-photo">' +
+        let imageBlock = $('<div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-xs-12 one-photo">' +
           '<div class="delete-image-container">' +
             '<a class="crop-image" href="#" data-imageid="' + imageId + '">' +
               '<i class="fa fa-crop"></i>' +
@@ -605,6 +608,8 @@ module.exports = {
 
       const cropHelper = require('helpers/cropHelper.js');
       cropHelper.showCropper(url, this.fields[name].imgOptions, this._cropInfo, (imgData) => {
+        if (!imgData)
+          return callback(imgData);
 
         let extPos = fileName.lastIndexOf('.');
         fileName = fileName.substring(0, extPos) +

@@ -6,6 +6,8 @@ const nonCropperProps = ['showPreview', 'cssClass'];
 module.exports = {
 
   showCropper(imgUrl, options, cropData, callback) {
+    require('cropperjs/dist/cropper.css');
+    const Cropper = require('cropperjs').default;
 
     options = _.extend({
       viewMode: 1,
@@ -29,7 +31,7 @@ module.exports = {
       cropBoxMovable: true,
       cropBoxResizable: true,
       // ready: function() {//fires when image is loaded
-      //   cropper.enable();
+      //
       // }
 
     }, options);
@@ -71,13 +73,13 @@ module.exports = {
     let cropperTemplate =
       '<div class="form-group">' +
         '<div class="row">' +
-          '<div class="crop-image-container">' +
+          '<div class="crop-image-container col-xl-7 col-lg-7 p-l-2">' +
             '<img src="' + imgUrl + '" id="cropSrcImage">' +
           '</div>' +
         '</div>' +
         '<div class="row">' +
           '<div class="col-xl-12 m-t-3 m-b-0 text-xs-center">' +
-            '<button type="button" class="btn btn-secondary m-r-2" data-dismiss="modal">' +
+            '<button type="button" class="btn btn-secondary m-r-2 cropper-cancel" data-dismiss="modal">' +
               'Cancel' +
             '</button>' +
             '<button type="button" class="btn btn-primary cropper-ok" data-dissmiss="modal">' +
@@ -107,32 +109,42 @@ module.exports = {
       '</div>' +
     '</div>';
 
+    let $modal = $(modalTemplate);
+    let resultData = null;
 
-    $(document.body).append(modalTemplate);
-    const $modal = $('.bd-example-modal-lg');
-    $modal.modal();
-    $modal.on('hidden.bs.modal', (e) => {
-      $modal.remove();
-    });
-
-    let $cropperOk = $('.cropper-ok');
-    $cropperOk.on('click', function(e) {
+    const clickButton = (e) => {
       e.preventDefault();
 
       $modal.modal('hide');
 
-      if (typeof(callback) === 'function') callback(cropper.getData(true));
-
       return false;
+    };
+
+    $modal.on('hidden.bs.modal', (e) => {
+      $modal.remove();
+
+      if (_.isFunction(callback))
+        callback(resultData);
     });
 
-    require('cropperjs/dist/cropper.css');
+    $modal.find('.cropper-ok').on('click', (e) => {
+      resultData = cropper.getData(true);
+      return clickButton(e);
+    });
 
-    const Cropper = require('cropperjs').default;
-    let cropper = new Cropper($('#cropSrcImage')[0], options);
+    $modal.find('.cropper-cancel').on('click',clickButton);
 
-    //todo set cropper data
-    cropper.setData(cropData);
+    //show cropper when original image is loaded
+    let $img = $modal.find('#cropSrcImage');
+    $img.on('ready', (e) => {
+      cropper.setData(cropData);
+    });
+
+    let cropper = new Cropper($img[0], options);
+
+    $(document.body).append($modal);
+
+    $modal.modal();
   },
 
 };
