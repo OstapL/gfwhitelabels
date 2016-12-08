@@ -109,8 +109,12 @@ module.exports = {
           option = 'DELETE';
         }
         let url = this.urlRoot.replace(':id', this.model.id).replace(':index', 99);
-        api.makeRequest(url, option, data || {}).then((data) => {
-          // app.routers.navigate($(e.target).data('href'), {trigger: true});
+        api.makeRequest(url, option, data || {}).then((responseData) => {
+          if (option == 'DELETE') {
+            delete this.model[this.riskType][99];
+          } else if (option == 'PATCH') {
+            this.model[this.riskType][99] = data;
+          }
         }).fail((xhr, status, text) => {
           api.errorAction(this, xhr, status, text, this.fields);
         });
