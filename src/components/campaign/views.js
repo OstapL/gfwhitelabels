@@ -726,7 +726,7 @@ module.exports = {
 
     amountUpdate(e) {
       var amount = parseInt(e.currentTarget.value.replace(/\,/g, ''));
-      $(e.currentTarget).val(amount.toLocaleString('en-US') || 0)
+      $(e.currentTarget).val((amount || '').toLocaleString('en-US'));
 
       if (amount < this.model.campaign.minimum_increment) {
         this.currentAmountTip = 'minimum-investment';
