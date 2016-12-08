@@ -492,15 +492,17 @@ mixin teamMemberDropzone(name, attr)
                 p.drop-photo #{attr.text}
                 i(class="fa fa-" + attr.icon)
             div(id=name).col-xl-7.col-lg-6.col-md-6.col-sm-6.col-xs-12.img-dropzone.text-xs-center
-                - var id = attr.data.id || 0;
-                - var url = attr.data.urls[0] || "/img/default/255x153.png";
-                if attr.data.urls[0]
-                  .delete-image-container
-                    a(href="#" data-imageid=id).crop-image
-                      i.fa.fa-crop
-                    a(href="#" data-imageid=id).delete-image
-                      i.fa.fa-times
-                img(class=("img-" + name) src=url).img-fluid.img-circle.img-photo
+              .row
+                .col-xl-12.one-photo
+                  - var id = attr.data.id || 0;
+                  - var url = attr.data.urls[0] || "/img/default/255x153.png";
+                  if attr.data.urls[0]
+                    .delete-image-container
+                      a(href="#" data-imageid=id).crop-image
+                        i.fa.fa-crop
+                      a(href="#" data-imageid=id).delete-image
+                        i.fa.fa-times
+                  img(class=("img-" + name) src=url).img-fluid.img-circle.img-photo
 
 mixin galleryDropzone(name, attr)
     if !attr.data

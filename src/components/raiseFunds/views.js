@@ -431,6 +431,7 @@ module.exports = {
       this.formc = options.formc;
       this.type = options.type;
       this.index = options.index;
+
       this.urlRoot = this.urlRoot.replace(':id', this.model.id);
 
       if (this.index != 'new') {
