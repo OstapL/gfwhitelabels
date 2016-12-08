@@ -37,8 +37,11 @@ section.formc-team-members-director.container.m-b-85
             each v, k in defaultRisks
               +showRiskForm(v, k, 'legal_and_regulatory_risk')
 
+            - var disabled = false;
             each v, k in values['legal_and_regulatory_risk']
-              - if (!(k < Object.keys(defaultRisks).length))
+              - if (k != 99 && !disabled)
+                - disabled = true;
+              - if (!(k < Object.keys(defaultRisks).length) && k != 99)
                 +showRiskForm(v, k, 'legal_and_regulatory_risk')
 
     .col-lg-12.m-t-3
@@ -52,7 +55,7 @@ section.formc-team-members-director.container.m-b-85
         li.pb10 Are there specific regulations that could apply to your business in the future?
       .pb10 In the text box below, please write in full sentences consistent with the sample language provided above. 
     .col-lg-12
-      form(data-method="PATCH").add-risk-form
+      form(data-method="PATCH").add-risk-form.clearfix
         +fieldBlock("title", '', {
           class1: 'col-lg-3 col-md-12 text-md-left',
           class2: 'col-lg-9 col-md-12',
@@ -66,6 +69,11 @@ section.formc-team-members-director.container.m-b-85
           placeholder: 'Describe Your Risk',
           })
         button(data-method="PATCH" data-concat="false").btn.btn-secondary.btn-sm.text-uppercase.pull-lg-right.m-b-3.add-risk save and Add this Risk
+
+      label
+        - var complete = values.legal_and_regulatory_risk[99] ? true : false
+        input(type="checkbox" name="complete" disabled=disabled data-previous=String(complete) checked=complete)#complete
+        span None of these risks apply. This page is complete.
 
       .row.m-t-3
         .col-lg-12.text-md-center.text-sm-center-text-xs-center
