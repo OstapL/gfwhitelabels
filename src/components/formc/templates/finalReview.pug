@@ -133,8 +133,15 @@ section.formc-review
           a(href='#business_plan').d-inline-block.w-100.pb10 EXHIBIT A: BUSINESS PLAN
         li
           a(href='#financial_statements').d-inline-block.w-100.pb10 EXHIBIT B: FINANCIAL STATEMENTS
-        li
-          a(href='#biographical_information').d-inline-block.w-100 EXHIBIT C: BIOGRAPHICAL INFORMATION
+        if values.campaign.security_type == 0  
+          li
+            a(href='#biographical_information').d-inline-block.w-100 EXHIBIT C: BIOGRAPHICAL INFORMATION
+        else
+          li
+            a(href='#biographical_information').d-inline-block.w-100.pb10 EXHIBIT C: BIOGRAPHICAL INFORMATION
+          li
+            a(href='#biographical_information').d-inline-block.w-100 EXHIBIT D: FORM OF REVENUE SHARE AGREEMENT
+
       .col-lg-12.text-xs-center.m-t-1
         a(data-toggle="modal" data-target="#formc_review_popup" href="#formc_review_popup").btn.btn-primary submit Form C
 
@@ -171,10 +178,14 @@ section.formc-review
           |   MINIMUM OFFERING
         p.text-xs-center.font-weight-bold OFFERING PRICE: $
           +frField('campaign.price_per_share', 'text')
-          |  per Share
-        p.text-xs-center.font-weight-bold
-          +frField('campaign.security_type', 'select')
-          |  Offered
+          if values.campaign.security_type == 0          
+            |  per Share
+            p.text-xs-center.font-weight-bold
+              +frField('campaign.security_type', 'select')
+              |  Offered
+          else
+            |  in Debt Securities
+            p.text-xs-center.font-weight-bold Revenue Share Agreement Offered
         p.text-xs-center.font-weight-bold $
           +frField('campaign.minimum_increment', 'text')
           |  MINIMUM INVESTMENT
@@ -279,7 +290,10 @@ section.formc-review
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
               p.font-weight-bold Type of security offered:
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
-              |  Common Equity
+              if values.campaign.security_type == 0
+                |  Common Equity
+              else
+                | Revenue Share Agreement
           .row
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
               p.font-weight-bold Voting rights:
@@ -337,49 +351,89 @@ section.formc-review
         h2.text-uppercase.text-xs-center.font-weight-bold#introductory_notices.letter-spacing-normal INTRODUCTORY NOTICES
         p.text-uppercase.m-t-0.m-b-0.pb10 
           u Offering Made Pursuant To Regulation Crowdfunding
-        p.pb10.text-indent This offering material, including all the exhibits attached hereto (collectively, the 
-          u “Material”
-          |  ) describes the terms relating to an offer and sale of securities to qualified investors consistent with the rules and regulations of Regulation Crowdfunding (17 CFR §227). 
-          +frField('company.name', 'text')
-          |  , a 
-          +frField('company.founding_state', 'select')
-          | !{' '}
-          +frField('company.corporate_structure', 'select')
-          |  (the “Company”), is offering up to 
-          +frField('campaign.max_number_of_shares', 'text')
-          |   shares of 
-          +frField('campaign.security_type', 'select')
-          |  (the 
-          u “Shares”)
-          |  at an offering price of $
-          +frField('campaign.price_per_share', 'text')
-          |  per Share for a maximum aggregate offering price of $
-          +frField('campaign.minimum_raise', 'text').
-        p.pb10.text-indent The Company has established a minimum offering of at least 
-          +frField('campaign.min_number_of_shares', 'text')
-          |  Shares for a minimum aggregate offering price of $
-          +frField('campaign.minimum_raise', 'text')
-          |  prior to 
-          +frField('campaign.expiration_date', 'text')
-          |  (the 
-          u “Offering”
-          |  ).  If the sum of the investment commitments does not equal or exceed this minimum target amount at the Offering deadline, no securities will be sold in the Offering, investment commitments will be cancelled and committed funds will be returned. There can be no assurance that the minimum number of the Shares offered will be subscribed for and therefore these if no guarantee that this Offering will be completed.
-        p.text-indent The minimum subscription by an investor is a $
-          +frField('campaign.minimum_increment', 'text')
-          |  investment.  Each investor interested in participating in this Offering must register at 
-          a(href="www.GrowthFountain.com").link-1 www.GrowthFountain.com.
-          |  The website GrowthFountain.com (the 
-          u “Platform”
-          | ) is operated by GrowthFountain Capital LLC (the 
-          u “Intermediary”
-          | ) which is registered with the U.S. Securities Exchange Commission (the 
-          u “SEC”
-          | ) as a funding portal and is also a member of the Financial Industry Regulatory Authority (
-          u “FINRA”
-          | ).  The Intermediary is the exclusive listing agent and funding portal for this Offering and is acting in reliance on section 4(a)(6) of the Securities Act of 1933 (15 U.S.C. 77d(a)(6)). 
+        if values.campaign.security_type == 0
+          p.pb10.text-indent This offering material, including all the exhibits attached hereto (collectively, the 
+            u “Material”
+            |  ) describes the terms relating to an offer and sale of securities to qualified investors consistent with the rules and regulations of Regulation Crowdfunding (17 CFR §227). 
+            +frField('company.name', 'text')
+            |  , a 
+            +frField('company.founding_state', 'select')
+            | !{' '}
+            +frField('company.corporate_structure', 'select')
+            |  (the “Company”), is offering up to 
+            +frField('campaign.max_number_of_shares', 'text')
+            |   shares of 
+            +frField('campaign.security_type', 'select')
+            |  (the 
+            u “Shares”)
+            |  at an offering price of $
+            +frField('campaign.price_per_share', 'text')
+            |  per Share for a maximum aggregate offering price of $
+            +frField('campaign.minimum_raise', 'text').
+          p.pb10.text-indent The Company has established a minimum offering of at least 
+            +frField('campaign.min_number_of_shares', 'text')
+            |  Shares for a minimum aggregate offering price of $
+            +frField('campaign.minimum_raise', 'text')
+            |  prior to 
+            +frField('campaign.expiration_date', 'text')
+            |  (the 
+            u “Offering”
+            |  ).  If the sum of the investment commitments does not equal or exceed this minimum target amount at the Offering deadline, no securities will be sold in the Offering, investment commitments will be cancelled and committed funds will be returned. There can be no assurance that the minimum number of the Shares offered will be subscribed for and therefore these if no guarantee that this Offering will be completed.
+          p.text-indent The minimum subscription by an investor is a $
+            +frField('campaign.minimum_increment', 'text')
+            |  investment.  Each investor interested in participating in this Offering must register at 
+            a(href="www.GrowthFountain.com").link-1 www.GrowthFountain.com.
+            |  The website GrowthFountain.com (the 
+            u “Platform”
+            | ) is operated by GrowthFountain Capital LLC (the 
+            u “Intermediary”
+            | ) which is registered with the U.S. Securities Exchange Commission (the 
+            u “SEC”
+            | ) as a funding portal and is also a member of the Financial Industry Regulatory Authority (
+            u “FINRA”
+            | ).  The Intermediary is the exclusive listing agent and funding portal for this Offering and is acting in reliance on section 4(a)(6) of the Securities Act of 1933 (15 U.S.C. 77d(a)(6)). 
+        else
+          p.pb10.text-indent This offering material, including all the exhibits attached hereto (collectively, the 
+            u “Material”
+            |  ) describes the terms relating to an offer and sale of debt securities to qualified investors consistent with the rules and regulations of Regulation Crowdfunding (17 CFR §227). 
+            +editText('issuer_legal_name')
+            |  , a 
+            +editSelect('jurisdiction_of_organization')
+            | !{' '}
+            +editSelect('corporate_structure')
+            |  (the “Company” also referred to as an “issuer"), is offering a Revenue Share Agreement similar to a promissory note in the form attached hereto as Exhibit D (each, a “Note” and collectively, the “
+            u Notes
+            | ”) in increments of 
+            +editText('price_per_share')
+            |   targeting a maximum aggregate offering price of $
+            +editText('maximum_raise')
+          p.pb10.text-indent The Company has established a minimum aggregate offering price of $ 
+            +editText('minimum_raise')
+            |  prior to 
+            +editText('close_date')
+            |  (the 
+            u “Offering”
+            |  ). If  the  sum  of  the  investment  commitments  does  not equal or exceed this minimum target amount at the Offering deadline, no securities will be sold in the Offering, investment commitments will be cancelled and committed funds will be returned, less  any  fees  incurred,  without  accrued  interest.  There can  be  no  assurance  that  Notes  in  an aggregate  amount  equal  to  the  minimum  target  amount  will  be  subscribed  for  and  therefore there is no guarantee that this Offering will be completed.
+          p.text-indent The minimum subscription by an investor is a $
+            +editText('minimum_increment')
+            |  investmentin the debt securities offered.  Each investor interested in participating in this Offering must register at 
+            a(href="www.GrowthFountain.com").link-1 www.GrowthFountain.com.
+            |  The website GrowthFountain.com (the 
+            u “Platform”
+            | ) is operated by GrowthFountain Capital LLC (the 
+            u “Intermediary”
+            | ) which is registered with the U.S. Securities Exchange Commission (the 
+            u “SEC”
+            | ) as a funding portal and is also a member of the Financial Industry Regulatory Authority (
+            u “FINRA”
+            | ).  The Intermediary is the exclusive listing agent and funding portal for this Offering and is acting in reliance on section 4(a)(6) of the Securities Act of 1933 (15 U.S.C. 77d(a)(6)). 
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u Crowdfunding Investments Are Risky
-        p.pb10.text-indent A crowdfunding investment involves risk. You should not invest any funds in this offering unless you can afford to lose your entire investment. In making an investment decision, investors must rely on their own examination of the issuer and the terms of the offering, including the merits and risks involved. The securities being offered in this Offering are not insured by the Federal Deposit Insurance Corporation, are not guaranteed by any bank and may lose their entire value.  The securities being offered will have transfer restrictions during the one-year period beginning when the Shares are issued. In addition, there is no ready market for the sale of the Shares and it may be difficult or impossible for an investor to sell or otherwise
+        p.pb10.text-indent A crowdfunding investment involves risk. You should not invest any funds in this offering unless you can afford to lose your entire investment. In making an investment decision, investors must rely on their own examination of the issuer and the terms of the offering, including the merits and risks involved. The 
+          if values.campaign.security_type == 0
+            | securities  being  offered  in  this  Offering  are  not insured  by  the  Federal  Deposit  Insurance  Corporation,  are  not  guaranteed  by  any  bank  and may lose their entire value.  The securities being offered will have transfer restrictions during the one-year period beginning when the Shares are issued. In addition, there is no ready market for the  sale of  the Shares and  it  may  be difficult or  impossible  for  an  investor  to  sell or otherwise dispose  of  the  Shares.
+          else
+            | Notes  being  offered  will  have  transfer  restrictions  during  the one-year period beginning when the Notes are issued. In addition, there is no ready market for the  sale  of  the  Notes  and  it  may  be  difficult  or  impossible  for  an  investor  to  sell  or  otherwise dispose of the Notes.
 
       // page 4
       section.page-formc-review.m-t-1
@@ -388,12 +442,26 @@ section.formc-review
           p.small.pb10
             +frField('company.name', 'text')
             |  as Issuer
-        p.pb10 dispose of the Shares.  This Material contains significant additional disclosure of investment risks to be reviewed by each potential investor.  Each investor should review all pf the risks related to this Offering prior to making a commitment to invest in the Shares.
+        p.pb10  This Material contains significant additional disclosure of investment risks to be reviewed by each potential investor.  Each investor should review all pf the risks related to this Offering prior to making a commitment to invest in the 
+          if values.campaign.security_type == 0
+            | Shares.
+          else
+            | Notes.
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u No Investment Advice is Being Provided
         p.pb10.text-indent This Material contains statements by the Company which have not been independently verified.  The Intermediary has not performed an independent assessment of any of these statements and the Intermediary is not providing any investment advice in connection with making this Material available on its Platform.
         p.pb10.text-indent Some of the Company’s statements in this Material may be forward-looking.  Projections relating to the Company’s future performance are subject to a high degree of uncertainty.  Actual results can be expected to vary from the results projected and such variances may be material. Prospective investors must not to construe the contents of this Material as legal, business, tax or investment advice. Each investor in any securities should consult their own attorney, business advisor and tax advisor as to the legal, business, tax and related matters concerning this Offering.  
-        p.pb10.text-indent These securities have not been recommended or reviewed by any federal or state securities commission or regulatory authority and these authorities have not passed upon the accuracy or adequacy of this Material. FINRA and the SEC do not pass upon the merits of any securities offered and they are not providing any endorsement or investment advice related to this Offering.  The Shares are being offered under an exemption from registration; however, the SEC has not made an independent determination that these securities are exempt from registration.  There may be a risk that the Shares will fail to qualify for this exemption due to actions taken by the Company that are not properly disclosed.  The Intermediary has not investigated or verified the information provided by the Company and neither has any regulatory authority, so each investor must perform their own assessment of the information contained in the Material prior to relying on the Company for its completeness and accuracy.
+        p.pb10.text-indent These securities have not been recommended or reviewed by any federal or state securities commission or regulatory authority and these authorities have not passed upon the accuracy or adequacy of this Material. FINRA and the SEC do not pass upon the merits of any securities offered and they are not providing any endorsement or investment advice related to this Offering.  The 
+          if values.campaign.security_type == 0
+            | Shares
+          else
+            | Notes
+          |  are being offered under an exemption from registration; however, the SEC has not made an independent determination that these securities are exempt from registration.  There may be a risk that the 
+          if values.campaign.security_type == 0
+            |  Shares
+          else
+            | Notes 
+          |  will fail to qualify for this exemption due to actions taken by the Company that are not properly disclosed.  The Intermediary has not investigated or verified the information provided by the Company and neither has any regulatory authority, so each investor must perform their own assessment of the information contained in the Material prior to relying on the Company for its completeness and accuracy.
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u Changes Are Possible In Certain Circumstances
         p.pb10.text-indent The Company reserves the right to modify any of the terms of the Offering at any time before the Offering closes. However, if any material changes are made, each investor will be notified and will be required to reconfirm their investment commitment within 5 days of such notice or their entire investment commitment shall be cancelled. Investors are also given the right to terminate an investment at any time prior to 48 hours from a notified closing date.  Additional
