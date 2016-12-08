@@ -2,6 +2,7 @@
 
 .row
   for company in companies
+    - var percentage_raised = format.calculateRaisedPercentage(company.campaign.minimum_raise, company.campaign.amount_raised);
 
     .col-xl-4.col-lg-6.col-xs-12.col-sm-12.col-md-12
       a(href="/" + company.id).block_link
@@ -48,12 +49,12 @@
             p= company.description.substr(0,250)
 
         .progress_bar_container
-          span.left_text #{(company.campaign.amount_raised / company.campaign.minimum_raise) || 0} % Funded
+          span.left_text #{ percentage_raised <= 20 ? 'Less than 20' : percentage_raised } % Funded
           span.right_text 
             b #{format.formatPrice(company.campaign.amount_raised)} 
             | of #{format.formatPrice(company.campaign.minimum_raise)}
           .clear
-            progress(value=company.campaign.progress max="100").progress #{company.campaign.progress} %
+            progress(value=percentage_raised max="100").progress #{company.campaign.progress} %
 
         .bottom_text
           span.left_desc

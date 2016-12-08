@@ -135,7 +135,7 @@ section.campaigndetail
     .col-lg-6.right-block-investors.p-l-0.p-sm-0
       .progress_bar_container
         //- span Less than 20% Funded
-        span Less than #{ percentage_raised }% Funded
+        span #{ percentage_raised <= 20 ? 'Less than 20' : percentage_raised }% Funded
         span.pull-right Committed 
           span.committed #{ formatHelper.formatPrice(values.campaign.amount_raised)}
         .clear
