@@ -521,7 +521,11 @@ section.formc-review
             +frField('company.name', 'text')
             |  as Issuer
         h2.text-uppercase.text-xs-center.font-weight-bold#management_material_persons.letter-spacing-normal.m-b-3 MANAGEMENT & MATERIAL PERSONS
-        p.text-indent Specific biographical information on each of the Company’s officers and members of its Board of Directors of is attached as Exhibit C.  Exhibit C contaisns information on the last three years of employment and supplements the information summarized below.  The Company has confirmed that no officer, director or 20% shareholder would cause a violation of Rule 503(a) of the Crowdfunding Regulations (17 CFR §227.503).
+        p.text-indent Specific biographical information on each of the Company’s officers and members of its Board of Directors of is attached as Exhibit C.  Exhibit C contaisns information on the last three years of employment and supplements the information summarized below.  The Company has confirmed that no officer, director or 20% shareholder 
+          if values.campaign.security_type == 0
+            |  would cause a violation of Rule 503(a) of the Crowdfunding Regulations (17 CFR §227.503).
+          else
+            |  or certain covered persons identified in the Eligibility section below would cause a violation of Rule 503(a) of the Crowdfunding Regulations (17 CFR §227.503).
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u Number of Total Employees
         p.p-l-2 Full time employees: 
@@ -620,7 +624,7 @@ section.formc-review
                     td.text-xs-center
                       +frField('formc.team_members[' + k + '].voting_power_percent', 'text')
 
-        p.text-indent The Company has confirmed that information above is accurate for the period spanning 120 days prior to the date of filing of this Material.   For any calculation above of total voting power, all securities are included for which the person directly or indirectly has or shares the voting power, which includes the power to vote or to direct the voting of such securities. If the person has the right to acquire voting power of such securities within 60 days, including through the exercise of any option, warrant or right, the conversion of a security, or other arrangement, or if securities are held by a member of the family, through corporations or partnerships, or otherwise in a manner that would allow a person to direct or control the voting of the securities (or share in such direction or control — as, for example, a co-trustee) they are included as being “beneficially owned.” For any calculation of outstanding voting equity securities, all outstanding options are assumed to be exercised and all outstanding convertible securities converted.
+        p.text-indent The Company has confirmed that the information above is accurate for the period spanning 120 days prior to the date of filing of this Material.   For any calculation above of total voting power, all securities are included for which the person directly or indirectly has or shares the voting power, which includes the power to vote or to direct the voting of such securities. If the person has the right to acquire voting power of such securities within 60 days, including through the exercise of any option, warrant or right, the conversion of a security, or other arrangement, or if securities are held by a member of the family, through corporations or partnerships, or otherwise in a manner that would allow a person to direct or control the voting of the securities (or share in such direction or control — as, for example, a co-trustee) they are included as being “beneficially owned.” For any calculation of outstanding voting equity securities, all outstanding options are assumed to be exercised and all outstanding convertible securities converted.
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u Related Party Transactions
         if values.formc.transaction_with_related_parties_choice == 0
@@ -679,7 +683,17 @@ section.formc-review
         p.text-indent If a potential investor is interested in participating in the Offering, such investor must first open an account with the Intermediary by registering at www.GrowthFountain.com.  During such registration process, the Intermediary may request financial information to determine investor’s eligibility and may require the acceptance of certain terms and conditions applicable to investor’s use of the Platform. In addition, prior to communicating any investment commitment, each investor must (a) consent to electronic delivery of materials, (b) provide a representation that such investor has reviewed the educational material available from the Intermediary delivered pursuant to Rule 302 of Regulation Crowdfunding, (c) provide a representation that such investor understands that the entire investment amount may be lost and that such investor could bear such loss, (d) complete a questionnaire demonstrating such investor’s understanding that there are limitations on cancelling an investment commitment and that it may be difficult to resell securities acquired in this Offering.  Each potential investor is subject to investment limitations established by the Securities Act (15 USC 77d(a)(6)(B)) and Regulation Crowdfunding (17 CFR 227.100(a)(2)).
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u Offering Process After Registration
-        p.text-indent Each Offering is listed on the Platform for a minimum of twenty-one (21) days and the Offering period may extend beyond such twenty-one days if set forth in the Material or each investor is properly notified.  During that period (or later if the investor is notified of a change), the Company must aggregate investor commitments that are equal to or greater than the Offering minimum target amount.  The process generally involves the following steps: (1) an investor registered on the Platform identifies a desired offering and communicates an investment commitment to purchase securities in such offering by completing a subscription agreement; (2) the Intermediary confirms the investor’s eligibility to participate in the Offering and then has the subscription agreement countersigned by the issuer; (3) the investor transfers the funds required to purchase the offered securities to the Intermediary’s designated escrow agent; (4) once the targeted minimum offering amount is achieved or exceeded through investor
+        p.text-indent Each Offering is listed on the Platform for a minimum of twenty-one (21) days and the Offering period may extend beyond such twenty-one days if set forth in the Material 
+          if values.campaign.security_type == 0
+            |  or 
+          else
+            | and   
+          | each investor is properly notified.  During that period (or later if the investor is notified of a change), the Company must aggregate investor commitments that are equal to or greater than the 
+          if values.campaign.security_type == 0
+            |  Offering
+          else
+            |  Offering’s 
+          |  minimum target amount.  The process generally involves the following steps: (1) an investor registered on the Platform identifies a desired offering and communicates an investment commitment to purchase securities in such offering by completing a subscription agreement; (2) the Intermediary confirms the investor’s eligibility to participate in the Offering and then has the subscription agreement countersigned by the issuer; (3) the investor transfers the funds required to purchase the offered securities to the Intermediary’s designated escrow agent; (4) once the targeted minimum offering amount is achieved or exceeded through investor
 
       // page 10
       section.page-formc-review.m-t-1
