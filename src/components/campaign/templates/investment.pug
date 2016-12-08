@@ -14,15 +14,16 @@ mixin fieldInput(name, attr)
   - attr.value = attr.value ? attr.value : values ? values[name] : '';
   div(class=attr.class)
     input(
-            id=attr.id || name
-            name=attr.name || name
-            placeholder=attr.placeholder ? attr.placeholder :attr.label
-            type=attr.type ? attr.type : 'text'
-            class=(attr.help_text ? 'showPopover' : '') 
-            data-content=(attr.help_text ?attr.help_text : '')
-            value=attr.value
-            maxlength = attr.maxlength ? attr.maxlength : false
-            disabled=(attr.disabled ? attr.disabled : false)).form-control
+      id=attr.id || name
+      name=attr.name || name
+      placeholder=attr.placeholder ? attr.placeholder :attr.label
+      type=attr.type ? attr.type : 'text'
+      class=(attr.help_text ? 'showPopover' : '')
+      data-content=(attr.help_text ?attr.help_text : '')
+      value=attr.value
+      maxlength = attr.maxlength ? attr.maxlength : false
+      disabled=(attr.disabled ? attr.disabled : false)
+      ).form-control
 
 .container.investment
   //START LEFT BLOCK
@@ -221,10 +222,10 @@ mixin fieldInput(name, attr)
                 label.text-md-right.col-lg-3 Account Type
                 .col-lg-9.radio-input
                   label 
-                    input(type="radio" name="payment_information_data[account_type]" value="0" checked=(user.account_type == 0))
+                    input(type="radio" name="payment_information_data[account_type]" value=0 checked=user.bank_account_type)
                     |  Checking
                   label 
-                    input(type="radio" name="payment_information_data[account_type]" value="1" checked=(user.account_type == 1))
+                    input(type="radio" name="payment_information_data[account_type]" value=1 checked=!user.bank_account_type)
                     |  Savings
             // IF CHECK
             .row.check-fields.payment-fields(style="display:none;")
@@ -304,7 +305,7 @@ mixin fieldInput(name, attr)
             h2.text-uppercase.dosis.text-md-center.text-sm-center.text-xs-center.text-lg-left CONFIRMATION OF UNDERSTANDING
             .form-group.row
               .col-lg-2
-                .row
+                div(id='is_reviewed_educational_material').row
                   .col-lg-6.col-md-6.col-sm-6.col-xs-6.text-lg-center
                     label.d-block.label-true-false TRUE
                     input(type="radio" value="true" name="is_reviewed_educational_material").d-block.m-x-auto
@@ -316,7 +317,7 @@ mixin fieldInput(name, attr)
                 label I confirm and represent that (a) I have reviewed the educational material that has been made available on this website, (b) I understand that the entire amount of my investment may be lost and (c) I am in a financial condition to bear the loss of the investment and (d) I represent that I have not exceeded my investment limitations.
             .form-group.row
               .col-lg-2
-                .row
+                div(id='is_understand_restrictions_to_cancel_investment').row
                   .col-lg-6.col-md-6.col-sm-6.col-xs-6.text-lg-center
                     label.d-block.label-true-false TRUE
                     input(type="radio" value="true" name="is_understand_restrictions_to_cancel_investment").d-block.m-x-auto
@@ -328,7 +329,7 @@ mixin fieldInput(name, attr)
                 label I understand that there are restrictions on my ability to cancel an investment commitment and obtain a return of my investment.
             .form-group.row
               .col-lg-2
-                .row
+                div(id='is_understand_difficult_to_resell_purchashed').row
                   .col-lg-6.col-md-6.col-sm-6.col-xs-6.text-lg-center
                     label.d-block.label-true-false TRUE
                     input(type="radio" value="true" name="is_understand_difficult_to_resell_purchashed").d-block.m-x-auto
@@ -340,7 +341,7 @@ mixin fieldInput(name, attr)
                 label I understand that it may be difficult to resell securities purchased on GrowthFountain.
             .form-group.row
               .col-lg-2
-                .row
+                div(id='is_understand_investing_is_risky').row
                   .col-lg-6.col-md-6.col-sm-6.col-xs-6.text-lg-center
                     label.d-block.label-true-false TRUE
                     input(type="radio" value="true" name="is_understand_investing_is_risky").d-block.m-x-auto
@@ -360,12 +361,12 @@ mixin fieldInput(name, attr)
               .row
                 .form-group.row
                   .col-lg-4
-                    input(type="text" placeholder="Type Your Name").form-control.typed-name
+                    input(type="text" placeholder="Type Your Name" value=(user.first_name + ' ' + user.last_name)).form-control.typed-name
                     .help-block Electronically Sign Here
                   .col-lg-4
                     .electronically
                       span.by By:
-                      span.name.signature
+                      span.name.signature #{user.first_name + ' ' + user.last_name }
 
             .form-group.row
               .col-md-12.text-md-center.text-sm-center.text-xs-center
