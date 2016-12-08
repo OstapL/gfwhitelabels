@@ -140,7 +140,7 @@ section.formc-review
           li
             a(href='#biographical_information').d-inline-block.w-100.pb10 EXHIBIT C: BIOGRAPHICAL INFORMATION
           li
-            a(href='#biographical_information').d-inline-block.w-100 EXHIBIT D: FORM OF REVENUE SHARE AGREEMENT
+            a(href='#revenue_share_agreement').d-inline-block.w-100 EXHIBIT D: FORM OF REVENUE SHARE AGREEMENT
 
       .col-lg-12.text-xs-center.m-t-1
         a(data-toggle="modal" data-target="#formc_review_popup" href="#formc_review_popup").btn.btn-primary submit Form C
@@ -1600,7 +1600,138 @@ section.formc-review
                               +frField('formc.team_members[' + k + '].experiences[' + k1 + '].start_date_of_service', 'text')
                             td
                               +frField('formc.team_members[' + k + '].experiences[' + k1 + '].end_date_of_service', 'text')
-
+      if values.campaign.security_type == 1 
+        section.page-formc-review.m-t-1
+          .top-intro
+            p.small.text-xs-left.font-weight-bold FORM C Offering Material for
+            p.small.pb10
+              +frField('company.name', 'text')
+              |  as Issuer
+          h2.text-uppercase.text-xs-center.font-weight-bold.letter-spacing-normal.m-b-3#revenue_share_agreement EXHIBIT D:  FORM OF REVENUE SHARE AGREEMENT
+          p.pb10.text-indent.text-uppercase.font-weight-bold THIS  INSTRUMENT  AND  THE  SECURITIES  DESCRIBED  HEREIN  HAVE  NOT BEEN REGISTERED UNDER THE SECURITIES ACT OF 1933, AS AMENDED (THE “ACT”),   OR   UNDER   THE    SECURITIES   LAWS    OF ANY    STATES.       THESE SECURITIES  MAY  NOT  BE  OFFERED,  SOLD  OR  OTHERWISE  TRANSFERRED, PLEDGED  OR  HYPOTHECATED EXCEPT  AS  PERMITTED UNDER  THE ACT AND APPLICABLE    STATE    SECURITIES    LAWS    PURSUANT    TO    AN    EFFECTIVE REGISTRATION STATEMENT OR AN EXEMPTION THEREFROM.
+          p.pb10.text-indent.text-uppercase.font-weight-bold THE INVESTOR ACKNOWLEDGES THAT THE SECURITIES DESCRIBED HEREIN HAVE    NOT    BEEN    REVIEWED    BY    THE    SECURITIES    AND    EXCHANGE COMMISSION  (“SEC”)  AND  THAT  THE  INVESTOR  HAS  RELIED  ON  ITS  OWN EVALUATION  OF  THESE  SECURITIES  IN  MAKING  AN  INVESMENT  DECISION. THE  INVESTOR  UNDERSTANDS  THAT  THIS  INSTRUMENT  HAS  BEEN  SOLD  IN RELIANCE    UPON    SECTION    4(A)(6)    OF    THE    ACT    AND    SEC    RULE    227 PROMULGATED  THEREUNDER  WHICH  INCLUDE  CERTAIN  RESTRICTIONS  ON TRANSFER FOR A ONE YEAR PERIOD AFTER THE DATE OF ISSUANCE.
+          h2.text-uppercase.text-xs-center.font-weight-bold.letter-spacing-normal.m-b-3 REVENUE SHARE AGREEMENT
+          p.pb10.text-indent This  Revenue  Share  Agreement (
+            b "Agreement"
+            | )  is  made  between  [ISSUER]  (the 
+            b “Company”
+            |), and [INVESTOR] (
+            b "Investor"
+            | ), on [THE CLOSING DATE] (
+            b “Issuance Date”
+            | ).For good and valuable consideration and intending to be legally bound, the parties agree as follows:
+          ol
+            li.pb10
+              b  Participation  in  Crowdfunded  Offering.
+              | Investor acquired the rights contained in this Agreement in connection with an offering (the 
+              b “Offering”
+              | ) in reliance on section 4(a)(6) of the  Act.      Investor  acknowledges  and  agrees  that  this  Agreement  represents  an  investment contract in which the Investor has joined with other participants in the Offering to invest money in  the  Company  with  the  expectation  of  profits  solely  from  the  efforts  of  the  Company.    The Investor acknowledges and understands that this Agreement is  one  of a series  of Revenue Share Agreements offered by the Company in the Offering.
+            li.pb10
+              b Repayment Promise.
+              |  For value received, the Company hereby promises to pay to the Investor in lawful money of the United States of America and in immediately available funds, the  Total Repayment  Amount  (as  defined  below)  in  the  manner  set  forth  in  this  Agreement.Investor   hereby   agrees  to   accept  the   Total  Repayment  Amount as   consideration   for  the Investment Amount (as defined below) consistent with the terms of this Agreement.   The parties agree  that  the  term
+              b  “Investment  Amount” 
+              | shall  mean  that  dollar  amount  committed  to  the Company  by the  Investor in the Offering  equal to $[INVESTMENT].   The parties  further agree that the term 
+              b  “Total Repayment Amount” 
+              | shall mean that dollar amount that is equal to a multiple of  two  times  (2x)  the  amount  of  the  Investment  Amount.    Investor  acknowledges  that  Investor may have paid certain fees to participate in the Offering and that such fees are not included in any calculation of the Investment Amount or the Total Repayment amount.
+            li.pb10
+              b Calculation of Revenue Share Payment.
+              |  The parties agree that the term 
+              b “Fiscal Year”  
+              | shall  mean  the  twelve  (12)  month  accounting  period  in  which  the  Company’s annual financial  statements  are  regularly  prepared.    For  any  Fiscal  Year  of  determination,  the  term 
+              b “Available  Revenue  Pool” 
+              | shall  mean that dollar  amount  equal to  five  percent  (5%)  of  the gross revenue  of  the  Company  in  such  Fiscal  Year  of  determination,  including all  of  the  Company’s cash  receipts  from  all  sales  of  any  kind  without  any  deduction  or  offset  of  any  kind.    For  any Fiscal Year of determination, the term “Revenue Share Payment” shall mean that dollar amount that  is  equal  to  the  product  of  (a)  the  Available  Revenue  Pool  calculated  for  such  Fiscal  Year multiplied  by  (b)  the  Proportionate  Share  (as  defined  below).   The  parties  agree  that  the  term 
+              b “Proportionate  Share” 
+              | shall  mean a fraction, the  numerator  of  which is the  Investment Amount, and  the  denominator  of  which  is  the  total  dollar  amount  committed  to  the  Company  in  the Offering by all participants in the Offering equal to $[TOTAL RAISE]. 
+        section.page-formc-review.m-t-1
+          .top-intro
+            p.small.text-xs-left.font-weight-bold FORM C Offering Material for
+            p.small.pb10
+              +frField('company.name', 'text')
+              |  as Issuer
+          ol(start="4")
+            li.pb10
+              b Annual Payments from Available Revenue Pool.
+              |  Except as otherwise provided in this Agreement and only until the Total Repayment Amount has been paid, for any Fiscal Year  of  determination,  if  the  Available  Revenue  Pool  exceeds  five  hundred  dollars  ($500)  in  such Fiscal Year, then the Company shall pay the Revenue Share Payment to the Investor on or prior to the  date  that  is  sixty  days  after  the  end  of  such  Fiscal  Year.   The  Company  shall  have  no obligation  to  make  Revenue  Share  Payments  under  this  Agreement  in  the  Company’s  first  full Fiscal Year occurring immediately after the Issuance Date, it being understood that the Company shall have a minimum of twelve (12) months after the Issuance Date in which no Revenue Share Payment is due.  Consequently, unless the Company exercises the forbearance right described in Section  5  of  this  Agreement,  the  Company  will  begin  making  Revenue  Share  Payments  to  the Investor  within  sixty  days  after  the  conclusion  of  the  Company’s  second  full  Fiscal  Year occurring immediately after the Issuance Date.
+            li.pb10
+              b One-Time Payment Forbearance.
+              |  In any single Fiscal Year and not in any other Fiscal Year, the Company  may  in its sole discretion  forbear the annual payment  of the Revenue Share  Payment  due  for  such  Fiscal  Year  upon  notice  to  Investor,  it  being  understood  that  such forbearance shall allow the Company to refrain from making the Revenue Share Payment for such Fiscal Year that the Company would otherwise be required to pay.  After the Company exercises the  forbearance  right  contained  in  this  Agreement,  it  may  never  use  such  right  again.    For  the avoidance of doubt, the Company may use the forbearance right contained in this Agreement only once,  and  it  in  no  way  relieves  the  Company  from  the  obligation  to  repay  the  Total  Repayment Amount.
+            li.pb10
+              b Voluntary  Payment  Acceleration.
+              |  The  Company  may  make  payments  to  the Investor  in  excess  of  the  Revenue  Share  Payment  at  any  time  and may  fully  or  partially  prepay any  amounts  at  any  time  provided  that  such  amounts  are  counted  toward  the  Total  Repayment Amount.  The parties agree that this Agreement contains no specific due date for the repayment of the  Total  Repayment  Amount.      The  Total  Repayment  Amount  will  be  considered  paid  in full when  the  Company  has  paid  to  the  Investor  those  Revenue  Share Payments  which,  when aggregated with any prepayment amounts, collectively are equal to the Total Repayment Amount.
+            li.pb10
+              b Payment  upon  Change  of  Control.
+              |  Upon  a  Change  of  Control  (as  defined below) at any time prior to the full payment of the  Total Repayment Amount to the Investor, the Company shall pay to the Investor, prior to or simultaneously with the closing of such Change in Control, an amount equal to the Total Repayment Amount less the sum of all previous payments made by the Company to the Investor pursuant to this Agreement.  The parties agree that the term 
+              b  “Change  of  Control”  
+              | shall  mean  the  earlier  to  occur  of  (a)  the  Company's  sale of  all  or substantially  all  of  its  material  assets  or  (b)  a  merger,  consolidation,  reorganization  or  similar business  transaction  which  results  in  a  change  in  the  ownership  of  more  than  50%  of  the outstanding voting power of the Company.
+            li.pb10
+              b Place and Form of Payment.
+              |  All amounts payable hereunder shall be paid to the Investor at the address on record with the Company or to the account that Investor has designated to the Company or to the account from which Investor made the investment in the Offering.  The Company  may  use a third-party  agent to  process  any such payments and  may share information relating  to  the  Investor  with  such  third  party,  including  personally  identifying  information  and account  information.    The  Company  may,  directly  or  indirectly through  a  third  party,  transfer payments via automated clearinghouse payment, wire transfer or check at its discretion.  Pursuant to the terms of this Agreement, the Company shall make, or cause to be made,  continuing annual Revenue Share Payments to the Investor until the Total Repayment Amount is repaid in full.
+        section.page-formc-review.m-t-1
+          .top-intro
+            p.small.text-xs-left.font-weight-bold FORM C Offering Material for
+            p.small.pb10
+              +frField('company.name', 'text')
+              |  as Issuer
+          ol(start="9")
+            li.pb10
+              b Payments  Made  Pro  Rata.
+              |  Investor  acknowledges  that  a  number  of  other participants  in  the  Offering  acquired  the  same  form  of  security  as  the  Investor  with  the  same rights to a repayment from the Available Revenue Pool of twice the amount that such participant invested  in  the  Offering  (each  such  participant,  not  including  the  Investor,  a 
+              b  “Holder”
+              | ).    The Company  warrants  that  Investor  and  each  Holder  invested  in  the  Company’s  securities  on  the same terms and conditions with respect to repayment although their invested amounts may differ.  This Agreement and the promise to pay contained herein is issued as part of a series of securities issued  in  the  Offering  and  the  Investor  agrees  that  payments  made  from the  Available  Revenue Pool shall be made pari passu between the Investor and each Holder in proportion to each party’s dollar  amount  invested  in  the  Offering  (excluding  any  fees  paid  to  participate  in  the  Offering).  Investor  acknowledges  and  agrees  that  all  payments  required  by  this  Agreement,  including optional  payments  with  respect  to  any  prepayment  amounts,  shall  be  made  pro  rata  among  the Investor and all of the Holders based on the amount of their investment in the Offering (excluding any fees paid to participate in the Offering) and the Investor shall make no claim for any amount of any Company payment greater that the Investor’s Proportionate Share of such payment.  If the Investor shall obtain any payment from the Company that was not made proportionately to other Holders,  then  the  Investor  shall  return  the  excess  amount  to  the  Company  to  be  shared  ratably with  the   other   Holders.   The  Company’s  repayment   obligation  to  the  Investor  under  this Agreement  shall  be  on  parity  with  the  Company’s  obligation  to  repay  all  of  the  Holders  of securities issued in the same Offering.  If the Company does not have sufficient funds to repay all participants in the Offering, then payment shall be  made ona pro  rata basis among the  Investor and all of the Holders based on the amount of their investment in the Offering (excluding any fees paid to participate in the Offering).
+            li.pb10
+              b Unsecured  Obligation.
+              |  Investor  understands  and  accepts  that  the  promise  and obligation to repay the  Total Repayment Amount is an unsecured obligation and that no security interest of any form is granted by this Agreement in any asset held by the Company.  No party has guaranteed  the  repayment  of  the  Total  Repayment  Amount.    The  obligations  in this  Agreement are the  corporate  obligation  of the  Company  only and no recourse shall be had against any  past, present  or  future  member  or  owner  of  the  Company  directly.  The obligations  in  this  Agreement will be handled pari passu with all other outstanding Revenue Share Agreement obligations of the Company that arise as a result of the Offering. 
+            li.pb10
+              b No  Stockholder  Rights.
+              |  The  Investor  is  not  entitled,  as  a  holder  of  this instrument, to vote or receive dividends or be deemed the holder of capital stock of the Company for  any  purpose,  nor  will  anything  contained  herein  be  construed  to  confer  on  the  Investor,  as such, any  of the  rights  of  a stockholder  of the  Company  or any  right to  vote  for the  election  of directors  or  upon  any  matter  submitted  to  stockholders  at  any  meeting  thereof,  or  to  give  or withhold  consent  to  any  corporate  action  or  to  receive  notice  of  meetings,  or  to  receive subscription rights or otherwise.
+            li.pb10
+              b Availability of Financial Information.
+              |  The Company agrees to timely file all tax returns  (federal,  state  and  local)  required  to  be  filed  by  it.   For  so  long  as  the  Total  Repayment Amount  remains  outstanding,  the  Company  will  make  available  to  Investor,  via  the  Company’s website or otherwise, a copy of the Company’s federal tax returns within thirty days of filing such return.  The Company warrants that all such tax returns made available will be true and correct in all  material  respects.The  Company  may,  at  its  sole  discretion,  substitute  audited  financial statements  or  unaudited  financial  statements  signed  by  an  independent  accountant for  the  tax returns  required in this Agreement, in  each  case  prepared in accordance with generally  accepted accounting principles applied  on  a  consistent basis throughout the periods indicated and in  each case certified by an officer of the Company.  In connection with the end of each Fiscal Year, the Company shall send to the Investor and each Holder a copy  of the financial statements prepared for such Fiscal year within sixty days of the end of such Fiscal Year.  The Company is obligated to file, and will file, an annual report electronically with the SEC annually and post the report on its  website  at  [WEBSITE].  The  Company  will  continue  to  comply  with  the  ongoing  reporting requirements  of the Act  until: (1) the Company is required to  file  reports under  Section 13(a)  or Section 15(d) of the Securities and  Exchange Act; (2) the Company has filed at least one annual report  pursuant  to  Regulation  Crowdfunding  and  has  fewer  than  300  holders  of  record  and  has total  assets  that  do  not  exceed  $10,000,000;  (3)  the  Company  has  filed  at  least  three  annual reports pursuant to  Regulation Crowdfunding;  (4) the Company  or another party  repurchases all of  the  securities  issued  in  reliance  on  the  4(a)(6)  exemption  of  the  Act;  or  (5)  the  Company liquidates or dissolves its business in accordance with state law.
+        section.page-formc-review.m-t-1
+          .top-intro
+            p.small.text-xs-left.font-weight-bold FORM C Offering Material for
+            p.small.pb10
+              +frField('company.name', 'text')
+              |  as Issuer
+          ol(start="13")
+            li.pb10
+              b Confidentiality.
+              |  The  Investor  agrees  (a)  to  use  all  non-public  information received  from  the  Company  only  to  the  extent  necessary  to  enable  the  Investor  to  assess  the Investor's  investment  in  the  Company  and  to  confirm  the  Company's  determination  of  the Revenue  Share  Payment  and  (b) not to disclose  or provide  any  non-public information received from  the  Company  to  any  person  or  entity  without  the  Company's prior  written  consent. Ownership of all right, title and interest in any information made available to the Investor by the Company pursuant to this Agreement shall remain at all times with the Company, and nothing in this  Agreement  shall  give  to  Investor  any  right,  title  or  interest  in, or  license  to,  any  such information.
+            li.pb10
+              b Default.
+              |  Upon  the  occurrence  of  an  Event  of  Default  (as  defined  below),  all unpaid  amounts  of  the  Total  Repayment  Amount  owing  hereunder  and  still  outstanding  shall automatically  be  immediately  due,  payable  and  collectible  by  Investor  pursuant  to  applicable law.    The  parties  agree  that  each  of  the  following  events  shall  be  an “Event  of  Default”hereunder:
+              ol(type="a")
+                li.pb10 Other than with  respect to the  one-time  forbearance  contemplated by  thisAgreement in Section 5, the Company fails to pay any annual Revenue Share Payment due under this Agreement on the date the same becomes due and payable;
+                li.pb10 The Company files any petition or action for relief under any bankruptcy, reorganization,  insolvency  or  moratorium  law  or  any  other  law  for  the  relief  of,  or  relating  to, debtors, now or hereafter in effect, or makes any assignment for the benefit of creditors or takes any action in furtherance of any of the foregoing; or
+                li.pb10 An involuntary petition is filed against the Company (unless such petition is  dismissed  or  discharged  within  60  days)  under  any  bankruptcy  statute  now  or  hereafter  in effect,  or  a  custodian,  receiver,  trustee  or  assignee  for  the  benefit  of  creditors  (or  other  similar official) is appointed to take possession, custody or control of any property of the Company.
+            li.pb10
+              b  Characterization  of  Investment.
+              |   Investor  acknowledges  and  accepts  that  this Agreement  and  the  promise  to  pay  a  sum  certain  contained  herein  may  be  deemed  a  form  of security  for purposes  of  the  Act.    The parties agree that they shall treat this  obligation to  repay the Total Repayment Amount as debt for financial, tax and other applicable purposes, and not as equity.  The promise to pay amounts due pursuant to this Agreement is an unsecured obligation and may, under certain circumstance, be deemed to be a promissory note or a form of unsecured loan.  Investor acknowledges that the contractual rights contained in this Agreement include the Company’s  promise  to  repay  the  Total  Repayment  Amount  over  time  in  variable  amounts  and consequently,  an  interest  rate  may  be  impossible  to  calculate.   To  the  extent  allowed  under applicable  law,  the  Revenue  Share  Payment  and  any  portion  thereof  will  not  be  considered interest  under  state  usury  laws.The  parties  agree  that  the  Investment  Amount  does  not  accrue interest because the promise to pay the Total Repayment Amount is effective immediately upon execution of this Agreement.  Investor understands and accepts that there is no specific date upon which  Total  Repayment  Amount  will  be  repaid  that  can  be  calculated  as  of  the  date  of  this Agreement.  Investor hereby authorizes the Company to make any withholding required by law.
+        section.page-formc-review.m-t-1
+          .top-intro
+            p.small.text-xs-left.font-weight-bold FORM C Offering Material for
+            p.small.pb10
+              +frField('company.name', 'text')
+              |  as Issuer
+          ol(start="16")
+            li.pb10
+              b Transfer,  Successors and Assigns.
+              |  This Agreement and the obligation to repay the  Total  Repayment  Amount  described  herein  may  not  be  sold,  transferred  or  assigned  by  the Investor without (a) the consent of the Company, which consent may be withheld for any reason, and  (b)  complying  with  all  applicable  federal  and  state  securities  laws.  The  Company  may require   that   any   desired   transferee   deliver   to   the   Company   a   signed   written   agreement acknowledging  and  agreeing  to  these  restrictions  on  transfer.The  Company  may  assign  this instrument  in  whole,  without  the  consent  of  the  Investor,  in  connection  with  any  Change  of Control  or  reincorporation  to  change  the  Company’s  domicile.    Subject  to  the  foregoing,  this instrument will be binding on the parties’ successors and assigns.
+            li.pb10
+              b Waiver.
+              |  The  Company  waives  presentment  and  demand  for  payment  and  shall pay  all  costs  of  collection  when  incurred,  including,  without  limitation,  reasonable  attorneys’fees, costs and other expenses.  The right to plead any and all statutes of limitations as a defense to any demands hereunder is hereby waived to the full extent permitted by law.
+            li.pb10
+              b Amendments.
+              |  Any  provision  of  this  instrument  may  be  amended,  waived  or modified upon the written consent of the Company and the participants in the Offering holding a majority of the dollar amount raised in the Offering.
+            li.pb10
+              b Notice.
+              |  Any  notice  required  or  permitted  by  this  instrument  will  be  deemed sufficient  when  delivered  personally  or  by  overnight  courier  or  sent  by  email  to  the  relevant address  listed  on  the  signature  page,  or  48  hours  after  being  deposited  in  the  U.S.  mail  as certified  or  registered  mail  with  postage  prepaid,  addressed  to  the  party  to  be  notified  at  such party’s address listed on the signature page, as subsequently modified by written notice.
+            li.pb10
+              b Governing  Law.
+              |  This  Agreement  shall  be  governed  by,  and  construed  and enforced  in  accordance  with,  the  laws  of  the  Issuer’s  State  of  [JURISDICTION], excluding conflict of laws principles that would cause the application of laws of any other jurisdiction.
+            li.pb10
+              b Termination.
+              |  This Agreement shall terminate once the Investor has been repaid the  Total Repayment Amount, provided however, that Sections 13 and15 shall survive any such termination.
 
 //MODAL
 #formc_review_popup.modal.fade(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")
