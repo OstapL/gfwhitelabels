@@ -53,7 +53,7 @@ section.formc-team-members-director.container.m-b-85
         li.pb10 Are there any risks identifying customers or risks around ensuring their retention?
       .pb10 In the text box below, please write in full sentences consistent with the sample language provided above.
     .col-lg-12
-      form(data-method="PATCH").add-risk-form
+      form(data-method="PATCH").add-risk-form.clearfix
         +fieldBlock("title", '', {
           class1: 'col-lg-3 col-md-12 text-md-left',
           class2: 'col-lg-9 col-md-12',
@@ -70,10 +70,10 @@ section.formc-team-members-director.container.m-b-85
 
       label
         - var complete = values.market_and_customer_risk[99] ? true : false
-        input(type="checkbox" name="complete" disabled=disabled checked=complete)#complete
+        input(type="checkbox" name="complete" disabled=disabled data-previous=String(complete) checked=complete)#complete
         span None of these risks apply. This page is complete.
 
       .row.m-t-3
         .col-lg-12.text-md-center.text-sm-center-text-xs-center
-          a(href="#" data-href="/formc/" + values.id + "/risk-factors-financial").btn.btn-primary.text-uppercase.pull-lg-right.submit next
+          a(href="#" data-href="/formc/" + values.id + "/risk-factors-financial").btn.btn-primary.text-uppercase.pull-lg-right next
             i.fa.fa-angle-right
