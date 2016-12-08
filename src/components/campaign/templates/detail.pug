@@ -301,7 +301,7 @@ section
               each v,k in values.campaign.team_members
                 .col-lg-4.team
                   .card.text-lg-center.text-xs-center
-                    img(src=v.photo alt="").img-circle
+                    img(src=(v.photo_data && v.photo_data[0] && v.photo_data[0].urls && v.photo_data[0].urls[0] ? v.photo_data[0].urls[0] : '') alt="").img-circle
                     .card-block
                       h4.text-xs-center.card-title.text-uppercase #{v.first_name} #{v.last_name }
                       p.card-text

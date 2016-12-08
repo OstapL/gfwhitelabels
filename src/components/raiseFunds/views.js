@@ -356,7 +356,6 @@ module.exports = {
           values: this.model,
           formc: this.formc,
           templates: this.jsonTemplates,
-          formc: this.formc,
         })
       );
 
@@ -423,6 +422,12 @@ module.exports = {
 
     initialize(options) {
       this.fields = options.fields;
+      this.fields.photo_image_id.imgOptions = {
+        aspectRatio: 1 / 1,
+        cssClass: 'img-crop',
+        showPreview: true,
+      };
+
       this.formc = options.formc;
       this.type = options.type;
       this.index = options.index;
@@ -527,6 +532,8 @@ module.exports = {
       this.fields = options.fields;
       this.formc = options.formc;
 
+      this.urlRoot = this.urlRoot.replace(':id', this.model.id);
+
       this.$el.on('keypress', ':input:not(textarea)', function (event) {
         if (event.keyCode == 13) {
           event.preventDefault();
@@ -561,11 +568,13 @@ module.exports = {
         let memberId = e.currentTarget.dataset.id;
 
         if (confirm('Are you sure you would like to delete this team member?')) {
-          app.makeRequest('/api/campaign/team-members/' + this.model.id + '?index=' + memberId, 'DELETE').
+
+          app.makeRequest(this.urlRoot + '/' + memberId, 'DELETE').
               then((data) => {
-                  this.model.members.splice(memberId, 1);
+                  this.model.data.splice(memberId, 1);
+
                   $(e.currentTarget).parent().remove();
-                  if (this.model.members.length < 1) {
+                  if (this.model.data.length < 1) {
                     this.$el.find('.notification').show();
                     this.$el.find('.buttons-row').hide();
                   } else {

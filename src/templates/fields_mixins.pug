@@ -466,11 +466,13 @@ mixin imageDropzone(name, attr)
                   //-a(class=("a-" + name) href=attr.data.urls[0]) #{ attr.data.name }
 
 mixin teamMemberDropzone(name, attr)
-    if attr.hasOwnProperty('data') == false
-      - attr.data = {};
-    if attr.data.hasOwnProperty('urls') == false
-      - attr.data.urls = [];
-
+    -
+      if (!attr.data)
+        attr.data = {};
+      if (!attr.data.urls)
+        attr.data.urls = [];
+      console.log(name + ' dropzone');
+      console.log(attr);
     div(
       class='row media-item ' + (attr.class || '') + ' ' + (attr.id || name) +
         (attr.required == true ? ' required ' : ' ') + ' imageDropzone' +
@@ -489,7 +491,7 @@ mixin teamMemberDropzone(name, attr)
               a(class='link-1' href="#" onclick="return false")
                 p.drop-photo #{attr.text}
                 i(class="fa fa-" + attr.icon)
-            #photo_image_id.col-xl-7.col-lg-6.col-md-6.col-sm-6.col-xs-12.text-xs-center
+            div(id=name).col-xl-7.col-lg-6.col-md-6.col-sm-6.col-xs-12.img-dropzone.text-xs-center
                 - var id = attr.data.id || 0;
                 - var url = attr.data.urls[0] || "/img/default/255x153.png";
                 if attr.data.urls[0]
