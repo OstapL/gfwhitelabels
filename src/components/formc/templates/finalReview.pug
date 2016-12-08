@@ -1257,20 +1257,36 @@ section.formc-review
           p.small.pb10
             +frField('company.name', 'text')
             |  as Issuer
-        ul
-          
-        p.text-uppercase.m-t-3.m-b-0.pb10 
-          u Risks Regarding Corporate Actions
-        p.pb10 The Company may take certain corporate actions that could impact investors that purchase the Shares.
-        ul
-          li.pb10 Regarding the additional issuances of securities, there is the risk that an investor has their ownership percentage diluted if, for example, the Company decides to raise additional amounts in the future.  There is also the risk that an investor is excluded from the opportunity to participate in future fund-raising so that they are unable to maintain their ownership percentage.
-          li.pb10 Regarding the authorization of new securities with different rights, there is the risk that a future investor is able to obtain rights that are superior to the rights afforded to the purchasers of the security available in this offering.
-          li.pb10 To the extent that there is ever an offer to repurchase the Shares by the Company, there is the risk that investors may feel pressured to sell their Shares to the Company without fully participating in or capturing the potential increase in value of such Shares.
-          li.pb10 Regarding a sale of the Company or of assets of the Company, there is the risk that any such transaction fails to maximize the value of the Company’s securities.  The investor will be required to rely on the business judgement of the management team and the Board of Directors of the Company so there can be no guarantee that the investor will receive the full market value of their Shares
-          li Regarding transactions with related parties, there is the risk that the Company is placed in a position that creates the possibility of a conflict of interest.  The Company may choose to participate in transactions with affiliates and related persons, with limited disclosure required to investors.
-        p.text-uppercase.m-t-3.m-b-0.pb10 
-          u Risks from an Investment in Securities
-        p.pb10.text-indent This Offering is being made on a conditional basis with no minimum number of Shares guaranteed to be sold. The Company has not engaged the services of an underwriter with respect to the Offering, and there is no guarantee that the minimum required amount of proceeds will be realized by the Company.
+        if values.campaign.security_type == 0 
+          p.text-uppercase.m-t-3.m-b-0.pb10 
+            u Risks Regarding Corporate Actions
+          p.pb10 The Company may take certain corporate actions that could impact investors that purchase the Shares.
+          ul
+            li.pb10 Regarding the additional issuances of securities, there is the risk that an investor has their ownership percentage diluted if, for example, the Company decides to raise additional amounts in the future.  There is also the risk that an investor is excluded from the opportunity to participate in future fund-raising so that they are unable to maintain their ownership percentage.
+            li.pb10 Regarding the authorization of new securities with different rights, there is the risk that a future investor is able to obtain rights that are superior to the rights afforded to the purchasers of the security available in this offering.
+            li.pb10 To the extent that there is ever an offer to repurchase the Shares by the Company, there is the risk that investors may feel pressured to sell their Shares to the Company without fully participating in or capturing the potential increase in value of such Shares.
+            li.pb10 Regarding a sale of the Company or of assets of the Company, there is the risk that any such transaction fails to maximize the value of the Company’s securities.  The investor will be required to rely on the business judgement of the management team and the Board of Directors of the Company so there can be no guarantee that the investor will receive the full market value of their Shares
+            li Regarding transactions with related parties, there is the risk that the Company is placed in a position that creates the possibility of a conflict of interest.  The Company may choose to participate in transactions with affiliates and related persons, with limited disclosure required to investors.
+        else
+          p.text-uppercase.m-t-3.m-b-0.pb10 
+            u Risks Related to Tax Considerations
+          p.pb10.text-indent The Company is subject to federal, state and local taxes.  The Company intends to treat the  Revenue  Share  Agreements  as  debt  for  federal  income  tax  purposes.    However,  the classification  of  the  Notes  for  federal  income  tax  purposes  is  not  definite  and  the  Company makes  no  guarantee  that  the  IRS  will  accept  the  tax  treatment  as  such.The  IRS  has  not provided  guidance  as  to  whether  the  Notes  are  considered  debt  or  equity  and  a  change  in  the Internal Revenue Code may alter the way that Note holders are treated for federal tax purposes.
+          p.pb10.text-indent The  Company  believes  its  tax  positions  and  estimates  are  reasonable,  however,  the Company could have additional tax liability, including interest and penalties, if a taxing authority disagrees  with  the  positions  taken  by  the  Company.    If  the  Company  must  make  additional payments of amounts, this could have a material impact on its results of operations and financial positions.
+          p.pb10.text-indent The  determination  by  the  Issuer  that  the  Revenues  Share  Agreement  be  treated  as  a debt instrument for U.S. federal income tax purposes is 
+            b NOT 
+            |  intended, nor construed to be legal, or tax advice for any individual(s).  All prospective investors are highly recommended to consult their  own  independent  tax  and  legal  professionals  for  any  information  related  to  the  purchase, ownership and disposition of the Notes.
+        if values.campaign.security_type == 0
+          p.text-uppercase.m-t-3.m-b-0.pb10 
+            u Risks from an Investment in Securities
+          p.pb10.text-indent This Offering is being made on a conditional basis with no minimum number of Shares guaranteed to be sold. The Company has not engaged the services of an underwriter with respect to the Offering, and there is no guarantee that the minimum required amount of proceeds will be realized by the Company.
+          p.pb10.text-indent The Shares are not guaranteed or insured by any government agency or by any private party. The amount of earnings is not guaranteed and can vary with market conditions. The return of all or any portion of capital invested in the Shares is not guaranteed, and the Shares could become worthless.
+          p.text-indent Investors should be aware of the potentially long-term nature of their investment. Each purchaser of Shares will be required to represent that it is purchasing such securities for its own account for investment purposes and not with an intention to resell or distribute. Purchasers may be required to bear the economic risks of the investment for an indefinite period of time. There is currently no public market for the Company’s securities.  Ultimately, each investor’s risk with respect to this Offering includes the potential for a complete loss of their investment.
+        else
+          p.text-uppercase.m-t-3.m-b-0.pb10 
+            u Risks from a Conditional Commitment in Debt Securities
+          p.pb10.text-indent This  Offering  is  being  made  on  a  conditional  basis  with no  minimumamount  of  Notes guaranteed  to  be  sold.  The  Company  has  not  engaged  the  services  of  an  underwriter  with respect  to  the  Offering,  and  there  is  no  guarantee  that  the  minimum  required  amount  of proceeds will be realized by the Company.
+          p.text-indent The  speed with which  each Note  is repaid  is not guaranteed and can  vary  with market conditions. The return of all or any portion of capital invested is not guaranteed, and the Notes could  become  worthless,  for  example  upon  a  bankruptcy  of  the  Company  where  there  are  no assets  to  satisfy  creditors.    Each  investor’s  risk  with  respect  to  this  Offering  includes  the potential for a complete loss of their investment.
+
 
       // page 23
       section.page-formc-review.m-t-1
@@ -1279,14 +1295,21 @@ section.formc-review
           p.small.pb10
             +frField('company.name', 'text')
             |  as Issuer
-        p.pb10.text-indent The Shares are not guaranteed or insured by any government agency or by any private party. The amount of earnings is not guaranteed and can vary with market conditions. The return of all or any portion of capital invested in the Shares is not guaranteed, and the Shares could become worthless.
-        p.text-indent Investors should be aware of the potentially long-term nature of their investment. Each purchaser of Shares will be required to represent that it is purchasing such securities for its own account for investment purposes and not with an intention to resell or distribute. Purchasers may be required to bear the economic risks of the investment for an indefinite period of time. There is currently no public market for the Company’s securities.  Ultimately, each investor’s risk with respect to this Offering includes the potential for a complete loss of their investment.
+        
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u Risks from Uncertain Capital Needs
-        p.text-indent The Company believes that the net proceeds of the Offering will be sufficient to fund the implementation of the Company’s business plan, operations and growth for the foreseeable future. Nevertheless, in the event that additional capital is required, no assurance can be given that additional financing will be available at all or on terms favorable to the Company. If adequate funds were not available to satisfy either short or long-term capital requirements, the Company may be unable to continue in business, with a resulting loss of all or part of investments made by the Company’s investors. Moreover, if additional equity securities are issued in connection with future financings, the ownership percentages of then shareholders could be diluted. Dilution of ownership percentages may also occur as a result of equity securities issued pursuant to possible sales or grants to existing shareholders, officers, managers, consultants, advisors, and/or employees.
+        if values.campaign.security_type == 0
+          p.text-indent The Company believes that the net proceeds of the Offering will be sufficient to fund the implementation of the Company’s business plan, operations and growth for the foreseeable future. Nevertheless, in the event that additional capital is required, no assurance can be given that additional financing will be available at all or on terms favorable to the Company. If adequate funds were not available to satisfy either short or long-term capital requirements, the Company may be unable to continue in business, with a resulting loss of all or part of investments made by the Company’s investors. Moreover, if additional equity securities are issued in connection with future financings, the ownership percentages of then shareholders could be diluted. Dilution of ownership percentages may also occur as a result of equity securities issued pursuant to possible sales or grants to existing shareholders, officers, managers, consultants, advisors, and/or employees.
+        else
+          p.text-indent The Company believes that the net proceeds of the Offering will be sufficient to fund the implementation  of  the  Company’s  business  plan,  operations  and  growth  for  the  foreseeable future. Nevertheless, in the event that additional capital is required, no assurance can be given that  additional  financing  will  be  available  at  all  or  on  terms  favorable  to  the  Company.  If adequate funds were not available to satisfy either short or long-term capital requirements, the Company  may  be  unable  to  continue  in  business,  with  a resulting  loss  of  revenue  translating into  the  inability  of  the  Company  to  continue  to  make  payments  to  the  Note  holders  in  the amounts anticipated.
+
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u Risks from Relying on an Exemption from Registration
-        p.pb10.text-indent The Shares are being offered for sale in reliance upon certain exemptions from the registration requirements of the Securities Act and applicable state securities laws. If the sale of the Shares were to fail to qualify for these exemptions, purchasers may seek rescission of their purchases of the Shares. If a number of purchasers were to obtain rescission, the Company would face significant financial demands, which could adversely affect the Company as a whole, as well as any non-rescinding purchasers.
+        if values.campaign.security_type == 0
+          p.pb10.text-indent The Shares are being offered for sale in reliance upon certain exemptions from the registration requirements of the Securities Act and applicable state securities laws. If the sale of the Shares were to fail to qualify for these exemptions, purchasers may seek rescission of their purchases of the Shares. If a number of purchasers were to obtain rescission, the Company would face significant financial demands, which could adversely affect the Company as a whole, as well as any non-rescinding purchasers.
+        else
+          p.pb10.text-indent The  Notes  are  being  offered  for  salein  reliance  upon  certain  exemptions  from  the registration requirements of the Securities Act and applicable state securities laws. If the sale of the Notes were  to fail  to qualify  for these  exemptions, purchasers may  seek  rescission of  their purchases  of  the Notes.  If  a  number  of  purchasers  were  to  obtain  rescission,  the  Company would face significant financial demands, which could adversely affect the Company as a whole, as  well  as  any  non-rescinding  purchasers.  Neither  the  Intermediary  nor  any  third  party  has made a determination that the Company may use the crowdfunding exemption.
+
 
       // page 24
       section.page-formc-review.m-t-1
