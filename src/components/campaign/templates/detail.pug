@@ -7,7 +7,7 @@ section(style="background-image: url(" + (values.campaign.header_image_data && v
   .js-height-parent.container-fluid
     .home-content
       .home-text.text-lg-center
-        h1.hs-line-14.font-alt.margin-bottom-50.mb-xs-30 #{ values.name }
+        h1.hs-line-14.font-alt.margin-bottom-50.mb-xs-30 #{ values.short_name || values.name }
         .local-scroll
           a(data-toggle="modal" href="#videoModal" data-target="#videoModal").big-icon.link-6.youtube_popup
             i.fa.fa-play-circle-o
@@ -194,7 +194,7 @@ section
   section.about-detail.border-bottom
     .container
       .col-lg-12
-        h2#about.dosis.text-uppercase.text-lg-center.text-xs-center.campaign-subheading About #{ values.name }
+        h2#about.dosis.text-uppercase.text-lg-center.text-xs-center.campaign-subheading About #{ values.short_name || values.name }
         p !{ textHelper.restoreLineBreak(values.description) }
 
         h2.dosis.our.text-uppercase.text-lg-center.text-xs-center.campaign-subheading Why You Should Invest
@@ -205,7 +205,7 @@ section
           each v,k in values.campaign.gallery_group_data
             .col-lg-4.no-padding-img
               a(href=v.urls[v.urls.length - 1] data-size='1440x900' rel="gallery1").fancybox
-                img(src=v.urls[0] alt=values.name).img-fluid.img-responsive
+                img(src=v.urls[0] alt=(values.short_name || values.name)).img-fluid.img-responsive
         else
 
           .col-lg-3.no-padding-img
@@ -679,7 +679,7 @@ section
       .col-lg-12.text-lg-center.text-xs-center
         h2
           i.fa.fa-thumbs-up
-          |  I’d Like to Invest in #{ values.name }!
+          |  I’d Like to Invest in #{ values.short_name || values.name }!
         a(href="/" + values.id + "/invest").btn.btn-primary.text-uppercase Invest
 
 div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")#videoModal.modal.fade.video-modal
