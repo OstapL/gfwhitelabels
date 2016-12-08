@@ -53,7 +53,7 @@ section.small-section.filter
 section.campaing-list
   .container#campaignList
     include _list.pug
-
+- var currentPage = Number(app.getParams().page) || 1;
 section.pagination
     .container
         .row
@@ -61,11 +61,13 @@ section.pagination
                 nav
                     ul.pagination.pagination-sm
                         li.page-item.active
-                            a(href="#").page-link 1
+                            a(href="/companies?page=1").page-link First
+                        li.page-item.active
+                            a(href="/companies?page=" + currentPage).page-link= currentPage
                         li.page-item
-                            a(href="#").page-link 2
+                            a(href="/companies?page=" + (currentPage + 1)).page-link= (currentPage + 1)
                         li.page-item
-                            a(href="#").page-link 3
+                            a(href="/companies?page=" + (currentPage + 2)).page-link= (currentPage + 2)
                         li.page-item
                             a(href="#" aria-label="Next").page-link
                                 span(aria-hidden="true")
