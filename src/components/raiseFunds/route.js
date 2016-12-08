@@ -1,13 +1,13 @@
 module.exports = Backbone.Router.extend({
   routes: {
     'company/create': 'company',
+    'company/in-review': 'inReview',
     'campaign/:id/general_information': 'generalInformation',
     'campaign/:id/media': 'media',
     'campaign/:id/team-members/add/:type/:index': 'teamMembersAdd',
     'campaign/:id/team-members': 'teamMembers',
     'campaign/:id/specifics': 'specifics',
     'campaign/:id/perks': 'perks',
-    'campaign/:id/thankyou': 'thankyou',
   },
 
   execute: function (callback, args, name) {
@@ -24,8 +24,8 @@ module.exports = Backbone.Router.extend({
   },
 
   company() {
-    const View = require('components/raiseFunds/views.js');
 
+    const View = require('components/raiseFunds/views.js');
     const optionsR = app.makeCacheRequest(raiseCapitalServer + '/company', 'OPTIONS');
     const companyR = app.makeCacheRequest(authServer + '/user/company');
     const campaignR = app.makeCacheRequest(authServer + '/user/campaign');
@@ -52,14 +52,13 @@ module.exports = Backbone.Router.extend({
   },
 
   generalInformation (id) {
+
     const View = require('components/raiseFunds/views.js');
-
-    $('#content').scrollTo(); 
-
     const metaR = app.makeCacheRequest(raiseCapitalServer + '/campaign/' + id + '/general_information', 'OPTIONS');
     const campaignR = app.makeCacheRequest(raiseCapitalServer + '/campaign/' + id + '/general_information');
     const formcR = api.makeCacheRequest(authServer + '/user/formc');
 
+    $('#content').scrollTo(); 
     $.when(metaR, campaignR, formcR).done((meta, model, formc) => {
       model[0].id = id;
       var i = new View.generalInformation({
@@ -79,13 +78,13 @@ module.exports = Backbone.Router.extend({
   },
 
   media(id) {
-    $('#content').scrollTo(); 
 
     const View = require('components/raiseFunds/views.js');
     const a1 = app.makeCacheRequest(raiseCapitalServer + '/campaign/' + id + '/media', 'OPTIONS');
     const a2 = app.makeCacheRequest(raiseCapitalServer + '/campaign/' + id + '/media');
     const formcR = api.makeCacheRequest(authServer + '/user/formc');
 
+    $('#content').scrollTo(); 
     $.when(a1, a2, formcR).done((meta, model, formc) => {
       model[0].id = id;
 
@@ -194,23 +193,26 @@ module.exports = Backbone.Router.extend({
     });
   },    
 
-  thankyou(id) {
+  inReview() {
     app.showLoading();
-    $('body').scrollTo(); 
-    const Model = require('components/campaign/models.js');
+
     const View = require('components/raiseFunds/views.js');
+    const companyR = app.makeCacheRequest(authServer + '/user/company');
 
-    var a2 = app.makeCacheRequest('/' + id);
-
-    $.when(a2).done((campaign) => {
-      var i = new View.thankYou({
-        model: campaign,
-      });
-      i.render();
-      //app.views.campaign[id].render();
-      //app.cache[window.location.pathname] = i.$el.html();
-
-      app.hideLoading();
+    $('body').scrollTo(); 
+    $.when(companyR).done((company) => {
+      if(company.is_approved == 1) {
+        const i = new View.inReview({
+          model: company,
+        });
+        i.render();
+        app.hideLoading();
+      } else {
+        app.routers.navigate(
+          '/company/create',
+          { trigger: true, replace: false }
+        );
+      }
     });
   },
    

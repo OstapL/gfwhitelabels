@@ -124,9 +124,25 @@ section.formc-review
         li
           a(href='#risk_factors').d-inline-block.w-100.pb10 Risk Factors
         li
-          // у последнего елемента <a> клас pb10 отстутствует
-          a(href='#eligibility_information').d-inline-block.w-100 Eligibility Information
-      .col-lg-12.text-xs-center
+          a(href='#eligibility_information').d-inline-block.w-100.pb10 Eligibility Information
+        li
+          a(href='#other_matters').d-inline-block.w-100.pb10 OTHER MATTERS
+        li
+          a(href='#reporting_obligations').d-inline-block.w-100.pb10 REPORTING OBLIGATIONS
+        li
+          a(href='#business_plan').d-inline-block.w-100.pb10 EXHIBIT A: BUSINESS PLAN
+        li
+          a(href='#financial_statements').d-inline-block.w-100.pb10 EXHIBIT B: FINANCIAL STATEMENTS
+        if values.campaign.security_type == 0  
+          li
+            a(href='#biographical_information').d-inline-block.w-100 EXHIBIT C: BIOGRAPHICAL INFORMATION
+        else
+          li
+            a(href='#biographical_information').d-inline-block.w-100.pb10 EXHIBIT C: BIOGRAPHICAL INFORMATION
+          li
+            a(href='#revenue_share_agreement').d-inline-block.w-100 EXHIBIT D: FORM OF REVENUE SHARE AGREEMENT
+
+      .col-lg-12.text-xs-center.m-t-1
         a(data-toggle="modal" data-target="#formc_review_popup" href="#formc_review_popup").btn.btn-primary submit Form C
 
     .col-xl-9
@@ -160,12 +176,15 @@ section.formc-review
         p.text-xs-center.font-weight-bold.m-b-3 $
           +frField('campaign.minimum_raise', 'text')
           |   MINIMUM OFFERING
-        p.text-xs-center.font-weight-bold OFFERING PRICE: $
-          +frField('campaign.price_per_share', 'text')
-          |  per Share
-        p.text-xs-center.font-weight-bold
-          +frField('campaign.security_type', 'select')
-          |  Offered
+        if values.campaign.security_type == 0 
+          p.text-xs-center.font-weight-bold OFFERING PRICE: $
+            +frField('campaign.price_per_share', 'text')
+            |  per Share
+          p.text-xs-center.font-weight-bold
+            +frField('campaign.security_type', 'select')
+            |  Offered
+        else
+          p.text-xs-center.font-weight-bold Revenue Share Agreement Offered
         p.text-xs-center.font-weight-bold $
           +frField('campaign.minimum_increment', 'text')
           |  MINIMUM INVESTMENT
@@ -270,7 +289,10 @@ section.formc-review
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
               p.font-weight-bold Type of security offered:
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
-              +frField('campaign.security_type', 'select')
+              if values.campaign.security_type == 0
+                |  Common Equity
+              else
+                | Revenue Share Agreement
           .row
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
               p.font-weight-bold Voting rights:
@@ -328,49 +350,89 @@ section.formc-review
         h2.text-uppercase.text-xs-center.font-weight-bold#introductory_notices.letter-spacing-normal INTRODUCTORY NOTICES
         p.text-uppercase.m-t-0.m-b-0.pb10 
           u Offering Made Pursuant To Regulation Crowdfunding
-        p.pb10.text-indent This offering material, including all the exhibits attached hereto (collectively, the 
-          u “Material”
-          |  ) describes the terms relating to an offer and sale of securities to qualified investors consistent with the rules and regulations of Regulation Crowdfunding (17 CFR §227). 
-          +frField('company.name', 'text')
-          |  , a 
-          +frField('company.founding_state', 'select')
-          | !{' '}
-          +frField('company.corporate_structure', 'select')
-          |  (the “Company”), is offering up to 
-          +frField('campaign.max_number_of_shares', 'text')
-          |   shares of 
-          +frField('campaign.security_type', 'select')
-          |  (the 
-          u “Shares”)
-          |  at an offering price of $
-          +frField('campaign.price_per_share', 'text')
-          |  per Share for a maximum aggregate offering price of $
-          +frField('campaign.minimum_raise', 'text').
-        p.pb10.text-indent The Company has established a minimum offering of at least 
-          +frField('campaign.min_number_of_shares', 'text')
-          |  Shares for a minimum aggregate offering price of $
-          +frField('campaign.minimum_raise', 'text')
-          |  prior to 
-          +frField('campaign.expiration_date', 'text')
-          |  (the 
-          u “Offering”
-          |  ).  If the sum of the investment commitments does not equal or exceed this minimum target amount at the Offering deadline, no securities will be sold in the Offering, investment commitments will be cancelled and committed funds will be returned. There can be no assurance that the minimum number of the Shares offered will be subscribed for and therefore these if no guarantee that this Offering will be completed.
-        p.text-indent The minimum subscription by an investor is a $
-          +frField('campaign.minimum_increment', 'text')
-          |  investment.  Each investor interested in participating in this Offering must register at 
-          a(href="www.GrowthFountain.com").link-1 www.GrowthFountain.com.
-          |  The website GrowthFountain.com (the 
-          u “Platform”
-          | ) is operated by GrowthFountain Capital LLC (the 
-          u “Intermediary”
-          | ) which is registered with the U.S. Securities Exchange Commission (the 
-          u “SEC”
-          | ) as a funding portal and is also a member of the Financial Industry Regulatory Authority (
-          u “FINRA”
-          | ).  The Intermediary is the exclusive listing agent and funding portal for this Offering and is acting in reliance on section 4(a)(6) of the Securities Act of 1933 (15 U.S.C. 77d(a)(6)). 
+        if values.campaign.security_type == 0
+          p.pb10.text-indent This offering material, including all the exhibits attached hereto (collectively, the 
+            u “Material”
+            |  ) describes the terms relating to an offer and sale of securities to qualified investors consistent with the rules and regulations of Regulation Crowdfunding (17 CFR §227). 
+            +frField('company.name', 'text')
+            |  , a 
+            +frField('company.founding_state', 'select')
+            | !{' '}
+            +frField('company.corporate_structure', 'select')
+            |  (the “Company”), is offering up to 
+            +frField('campaign.max_number_of_shares', 'text')
+            |   shares of 
+            +frField('campaign.security_type', 'select')
+            |  (the 
+            u “Shares”)
+            |  at an offering price of $
+            +frField('campaign.price_per_share', 'text')
+            |  per Share for a maximum aggregate offering price of $
+            +frField('campaign.minimum_raise', 'text').
+          p.pb10.text-indent The Company has established a minimum offering of at least 
+            +frField('campaign.min_number_of_shares', 'text')
+            |  Shares for a minimum aggregate offering price of $
+            +frField('campaign.minimum_raise', 'text')
+            |  prior to 
+            +frField('campaign.expiration_date', 'text')
+            |  (the 
+            u “Offering”
+            |  ).  If the sum of the investment commitments does not equal or exceed this minimum target amount at the Offering deadline, no securities will be sold in the Offering, investment commitments will be cancelled and committed funds will be returned. There can be no assurance that the minimum number of the Shares offered will be subscribed for and therefore these if no guarantee that this Offering will be completed.
+          p.text-indent The minimum subscription by an investor is a $
+            +frField('campaign.minimum_increment', 'text')
+            |  investment.  Each investor interested in participating in this Offering must register at 
+            a(href="www.GrowthFountain.com").link-1 www.GrowthFountain.com.
+            |  The website GrowthFountain.com (the 
+            u “Platform”
+            | ) is operated by GrowthFountain Capital LLC (the 
+            u “Intermediary”
+            | ) which is registered with the U.S. Securities Exchange Commission (the 
+            u “SEC”
+            | ) as a funding portal and is also a member of the Financial Industry Regulatory Authority (
+            u “FINRA”
+            | ).  The Intermediary is the exclusive listing agent and funding portal for this Offering and is acting in reliance on section 4(a)(6) of the Securities Act of 1933 (15 U.S.C. 77d(a)(6)). 
+        else
+          p.pb10.text-indent This offering material, including all the exhibits attached hereto (collectively, the 
+            u “Material”
+            |  ) describes the terms relating to an offer and sale of debt securities to qualified investors consistent with the rules and regulations of Regulation Crowdfunding (17 CFR §227). 
+            +editText('issuer_legal_name')
+            |  , a 
+            +editSelect('jurisdiction_of_organization')
+            | !{' '}
+            +editSelect('corporate_structure')
+            |  (the “Company” also referred to as an “issuer"), is offering a Revenue Share Agreement similar to a promissory note in the form attached hereto as Exhibit D (each, a “Note” and collectively, the “
+            u Notes
+            | ”) in increments of 
+            +editText('price_per_share')
+            |   targeting a maximum aggregate offering price of $
+            +editText('maximum_raise')
+          p.pb10.text-indent The Company has established a minimum aggregate offering price of $ 
+            +editText('minimum_raise')
+            |  prior to 
+            +editText('close_date')
+            |  (the 
+            u “Offering”
+            |  ). If  the  sum  of  the  investment  commitments  does  not equal or exceed this minimum target amount at the Offering deadline, no securities will be sold in the Offering, investment commitments will be cancelled and committed funds will be returned, less  any  fees  incurred,  without  accrued  interest.  There can  be  no  assurance  that  Notes  in  an aggregate  amount  equal  to  the  minimum  target  amount  will  be  subscribed  for  and  therefore there is no guarantee that this Offering will be completed.
+          p.text-indent The minimum subscription by an investor is a $
+            +editText('minimum_increment')
+            |  investment in the debt securities offered.  Each investor interested in participating in this Offering must register at 
+            a(href="www.GrowthFountain.com").link-1 www.GrowthFountain.com.
+            |  The website GrowthFountain.com (the 
+            u “Platform”
+            | ) is operated by GrowthFountain Capital LLC (the 
+            u “Intermediary”
+            | ) which is registered with the U.S. Securities Exchange Commission (the 
+            u “SEC”
+            | ) as a funding portal and is also a member of the Financial Industry Regulatory Authority (
+            u “FINRA”
+            | ).  The Intermediary is the exclusive listing agent and funding portal for this Offering and is acting in reliance on section 4(a)(6) of the Securities Act of 1933 (15 U.S.C. 77d(a)(6)). 
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u Crowdfunding Investments Are Risky
-        p.pb10.text-indent A crowdfunding investment involves risk. You should not invest any funds in this offering unless you can afford to lose your entire investment. In making an investment decision, investors must rely on their own examination of the issuer and the terms of the offering, including the merits and risks involved. The securities being offered in this Offering are not insured by the Federal Deposit Insurance Corporation, are not guaranteed by any bank and may lose their entire value.  The securities being offered will have transfer restrictions during the one-year period beginning when the Shares are issued. In addition, there is no ready market for the sale of the Shares and it may be difficult or impossible for an investor to sell or otherwise
+        p.pb10.text-indent A crowdfunding investment involves risk. You should not invest any funds in this offering unless you can afford to lose your entire investment. In making an investment decision, investors must rely on their own examination of the issuer and the terms of the offering, including the merits and risks involved. The 
+          if values.campaign.security_type == 0
+            | securities  being  offered  in  this  Offering  are  not insured  by  the  Federal  Deposit  Insurance  Corporation,  are  not  guaranteed  by  any  bank  and may lose their entire value.  The securities being offered will have transfer restrictions during the one-year period beginning when the Shares are issued. In addition, there is no ready market for the  sale of  the Shares and  it  may  be difficult or  impossible  for  an  investor  to  sell or otherwise dispose  of  the  Shares.
+          else
+            | Notes  being  offered  will  have  transfer  restrictions  during  the one-year period beginning when the Notes are issued. In addition, there is no ready market for the  sale  of  the  Notes  and  it  may  be  difficult  or  impossible  for  an  investor  to  sell  or  otherwise dispose of the Notes.
 
       // page 4
       section.page-formc-review.m-t-1
@@ -379,12 +441,26 @@ section.formc-review
           p.small.pb10
             +frField('company.name', 'text')
             |  as Issuer
-        p.pb10 dispose of the Shares.  This Material contains significant additional disclosure of investment risks to be reviewed by each potential investor.  Each investor should review all pf the risks related to this Offering prior to making a commitment to invest in the Shares.
+        p.pb10  This Material contains significant additional disclosure of investment risks to be reviewed by each potential investor.  Each investor should review all of the risks related to this Offering prior to making a commitment to invest in the 
+          if values.campaign.security_type == 0
+            | Shares.
+          else
+            | Notes.
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u No Investment Advice is Being Provided
         p.pb10.text-indent This Material contains statements by the Company which have not been independently verified.  The Intermediary has not performed an independent assessment of any of these statements and the Intermediary is not providing any investment advice in connection with making this Material available on its Platform.
         p.pb10.text-indent Some of the Company’s statements in this Material may be forward-looking.  Projections relating to the Company’s future performance are subject to a high degree of uncertainty.  Actual results can be expected to vary from the results projected and such variances may be material. Prospective investors must not to construe the contents of this Material as legal, business, tax or investment advice. Each investor in any securities should consult their own attorney, business advisor and tax advisor as to the legal, business, tax and related matters concerning this Offering.  
-        p.pb10.text-indent These securities have not been recommended or reviewed by any federal or state securities commission or regulatory authority and these authorities have not passed upon the accuracy or adequacy of this Material. FINRA and the SEC do not pass upon the merits of any securities offered and they are not providing any endorsement or investment advice related to this Offering.  The Shares are being offered under an exemption from registration; however, the SEC has not made an independent determination that these securities are exempt from registration.  There may be a risk that the Shares will fail to qualify for this exemption due to actions taken by the Company that are not properly disclosed.  The Intermediary has not investigated or verified the information provided by the Company and neither has any regulatory authority, so each investor must perform their own assessment of the information contained in the Material prior to relying on the Company for its completeness and accuracy.
+        p.pb10.text-indent These securities have not been recommended or reviewed by any federal or state securities commission or regulatory authority and these authorities have not passed upon the accuracy or adequacy of this Material. FINRA and the SEC do not pass upon the merits of any securities offered and they are not providing any endorsement or investment advice related to this Offering.  The 
+          if values.campaign.security_type == 0
+            | Shares
+          else
+            | Notes
+          |  are being offered under an exemption from registration; however, the SEC has not made an independent determination that these securities are exempt from registration.  There may be a risk that the 
+          if values.campaign.security_type == 0
+            |  Shares
+          else
+            | Notes 
+          |  will fail to qualify for this exemption due to actions taken by the Company that are not properly disclosed.  The Intermediary has not investigated or verified the information provided by the Company and neither has any regulatory authority, so each investor must perform their own assessment of the information contained in the Material prior to relying on the Company for its completeness and accuracy.
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u Changes Are Possible In Certain Circumstances
         p.pb10.text-indent The Company reserves the right to modify any of the terms of the Offering at any time before the Offering closes. However, if any material changes are made, each investor will be notified and will be required to reconfirm their investment commitment within 5 days of such notice or their entire investment commitment shall be cancelled. Investors are also given the right to terminate an investment at any time prior to 48 hours from a notified closing date.  Additional
@@ -444,7 +520,11 @@ section.formc-review
             +frField('company.name', 'text')
             |  as Issuer
         h2.text-uppercase.text-xs-center.font-weight-bold#management_material_persons.letter-spacing-normal.m-b-3 MANAGEMENT & MATERIAL PERSONS
-        p.text-indent Specific biographical information on each of the Company’s officers and members of its Board of Directors of is attached as Exhibit D.  Exhibit D contains information on the last three years of employment and supplements the information summarized below.  The Company has confirmed that no officer, director or 20% shareholder would cause a violation of Rule 503(a) of the Crowdfunding Regulations (17 CFR §227.503).
+        p.text-indent Specific biographical information on each of the Company’s officers and members of its Board of Directors of is attached as Exhibit C.  Exhibit C contaisns information on the last three years of employment and supplements the information summarized below.  The Company has confirmed that no officer, director or 20% shareholder 
+          if values.campaign.security_type == 0
+            |  would cause a violation of Rule 503(a) of the Crowdfunding Regulations (17 CFR §227.503).
+          else
+            |  or certain covered persons identified in the Eligibility section below would cause a violation of Rule 503(a) of the Crowdfunding Regulations (17 CFR §227.503).
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u Number of Total Employees
         p.p-l-2 Full time employees: 
@@ -543,7 +623,7 @@ section.formc-review
                     td.text-xs-center
                       +frField('formc.team_members[' + k + '].voting_power_percent', 'text')
 
-        p.text-indent The Company has confirmed that information above is accurate for the period spanning 120 days prior to the date of filing of this Material.   For any calculation above of total voting power, all securities are included for which the person directly or indirectly has or shares the voting power, which includes the power to vote or to direct the voting of such securities. If the person has the right to acquire voting power of such securities within 60 days, including through the exercise of any option, warrant or right, the conversion of a security, or other arrangement, or if securities are held by a member of the family, through corporations or partnerships, or otherwise in a manner that would allow a person to direct or control the voting of the securities (or share in such direction or control — as, for example, a co-trustee) they are included as being “beneficially owned.” For any calculation of outstanding voting equity securities, all outstanding options are assumed to be exercised and all outstanding convertible securities converted.
+        p.text-indent The Company has confirmed that the information above is accurate for the period spanning 120 days prior to the date of filing of this Material.   For any calculation above of total voting power, all securities are included for which the person directly or indirectly has or shares the voting power, which includes the power to vote or to direct the voting of such securities. If the person has the right to acquire voting power of such securities within 60 days, including through the exercise of any option, warrant or right, the conversion of a security, or other arrangement, or if securities are held by a member of the family, through corporations or partnerships, or otherwise in a manner that would allow a person to direct or control the voting of the securities (or share in such direction or control — as, for example, a co-trustee) they are included as being “beneficially owned.” For any calculation of outstanding voting equity securities, all outstanding options are assumed to be exercised and all outstanding convertible securities converted.
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u Related Party Transactions
         if values.formc.transaction_with_related_parties_choice == 0
@@ -602,7 +682,17 @@ section.formc-review
         p.text-indent If a potential investor is interested in participating in the Offering, such investor must first open an account with the Intermediary by registering at www.GrowthFountain.com.  During such registration process, the Intermediary may request financial information to determine investor’s eligibility and may require the acceptance of certain terms and conditions applicable to investor’s use of the Platform. In addition, prior to communicating any investment commitment, each investor must (a) consent to electronic delivery of materials, (b) provide a representation that such investor has reviewed the educational material available from the Intermediary delivered pursuant to Rule 302 of Regulation Crowdfunding, (c) provide a representation that such investor understands that the entire investment amount may be lost and that such investor could bear such loss, (d) complete a questionnaire demonstrating such investor’s understanding that there are limitations on cancelling an investment commitment and that it may be difficult to resell securities acquired in this Offering.  Each potential investor is subject to investment limitations established by the Securities Act (15 USC 77d(a)(6)(B)) and Regulation Crowdfunding (17 CFR 227.100(a)(2)).
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u Offering Process After Registration
-        p.text-indent Each Offering is listed on the Platform for a minimum of twenty-one (21) days and the Offering period may extend beyond such twenty-one days if set forth in the Material or each investor is properly notified.  During that period (or later if the investor is notified of a change), the Company must aggregate investor commitments that are equal to or greater than the Offering minimum target amount.  The process generally involves the following steps: (1) an investor registered on the Platform identifies a desired offering and communicates an investment commitment to purchase securities in such offering by completing a subscription agreement; (2) the Intermediary confirms the investor’s eligibility to participate in the Offering and then has the subscription agreement countersigned by the issuer; (3) the investor transfers the funds required to purchase the offered securities to the Intermediary’s designated escrow agent; (4) once the targeted minimum offering amount is achieved or exceeded through investor
+        p.text-indent Each Offering is listed on the Platform for a minimum of twenty-one (21) days and the Offering period may extend beyond such twenty-one days if set forth in the Material 
+          if values.campaign.security_type == 0
+            |  or 
+          else
+            | and   
+          | each investor is properly notified.  During that period (or later if the investor is notified of a change), the Company must aggregate investor commitments that are equal to or greater than the 
+          if values.campaign.security_type == 0
+            |  Offering
+          else
+            |  Offering’s 
+          |  minimum target amount.  The process generally involves the following steps: (1) an investor registered on the Platform identifies a desired offering and communicates an investment commitment to purchase securities in such offering by completing a subscription agreement; (2) the Intermediary confirms the investor’s eligibility to participate in the Offering and then has the subscription agreement countersigned by the issuer; (3) the investor transfers the funds required to purchase the offered securities to the Intermediary’s designated escrow agent; (4) once the targeted minimum offering amount is achieved or exceeded through investor
 
       // page 10
       section.page-formc-review.m-t-1
@@ -614,12 +704,19 @@ section.formc-review
         p commitments collectively, the issuer would be able to close the transaction on the original target closing date or an earlier date with at least five business days prior notice to the investors; and (5) the funds would be released by the escrow agent to the issuer, less any required fees sent to the Intermediary, and the issuer would issue the securities to the investor.
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u Method for Investor Cancellation of a Commitment 
-        p.text-indent Investors may cancel an investment commitment at any time up until forty-eight (48) hours prior to the applicable closing date.  The process for any such cancellation is for the investor to log onto the Platform and indicate a cancellation by selecting such option in connection with the applicable offering once they have logged into their account and accessed their investor dashboard.  With respect to specific scenarios: (1) if the target minimum offering amount is not met prior to the target closing date, then the Intermediary will automatically cancel all investment commitments and notify each investor of the return of their respective funds, (2) if the issuer reaches the target minimum offering amount prior to the deadline identified in the offering materials, then it may close the offering early (if it provides notice about the new offering deadline at least five business days prior to such new offering deadline) provided that the investor would be able to cancel the investment commitment before the 48-hour period prior to the new offering deadline, (3) if the issuer notifies the investor of a material change to an offering, then the investor must reconfirm their investment commitment after the material change is made to the offering, or such investor’s investment commitment will be cancelled and the committed funds will be returned.
+        p.text-indent Investors may cancel an investment commitment at any time up until forty-eight (48) hours prior to the applicable closing date.  The process for any such cancellation is for the investor to log onto the Platform and indicate a cancellation by selecting such option in connection with the applicable offering once they have logged into their account and accessed their investor dashboard.  With respect to specific scenarios: (1) if the target minimum offering amount is not met prior to the target closing date, then the Intermediary will automatically cancel all investment commitments and notify each investor of the return of their respective funds, (2) if the issuer reaches the target minimum offering amount prior to the deadline identified in the offering materials, then it may close the offering early (if it provides notice about the new offering deadline at least five business days prior to such new offering deadline) 
+          if values.campaign.security_type == 0
+            |  provided that the investor would be able to cancel the investment commitment before the 48-hour period prior to the new offering deadline, (3) if the issuer notifies the investor of a material change to an offering, then the investor must reconfirm their investment commitment after the material change is made to the offering, or such investor’s investment commitment will be cancelled and the committed funds will be returned.
+          else
+            |  with it always being the case that the investor would be able to cancel the investment commitment up until the 48-hour period prior to the new offering deadline, or (3) if the issuer notifies the investor of a material change to an offering, then the investor must reconfirm their investment commitment within five business days of receipt of the notice after the material change is made to the offering, or such investor’s investment commitment will be cancelled and the committed funds will be returned, less any fees incurred, without any accrued interest.
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u Method for Delivering the Securities
-          div 
-            | FIX FIX FIX The issuer has represented that it has established means to keep accurate records of the holders of the securities sold in the Offering.  The issuer intends to keep all records relating to the securities in book entry or electronic form so you should not expect any physical delivery of the securities that you purchase. The fully executed Subscription Agreement relating to the Offering will serve as a written record of the transaction and will be available on the Platform for each investor to review in their investor dashboard.  Each investor will also receive an email confirmation of the successful closing of the Offering  which will confirm the investment amount.
-            +frField('formc.method_for_delivering_securities', 'text')
+          p.text-indent The issuer will record all investments in book entry form so that no certificates would be delivered. The fully executed Subscription and Purchase Agreement relating to the Offering will serve as a written record of the transaction and will be available on the Platform via the investor dashboard. The investor will also receive email confirmation of the successful closing of the Offering
+            if values.campaign.security_type == 0
+              | , which will confirm the number of securities purchased and the amount paid.
+            else
+              | .
+            //+frField('formc.method_for_delivering_securities', 'text')
 
       // page 11
       section.page-formc-review.m-t-1
@@ -636,7 +733,22 @@ section.formc-review
         p.text-indent The Intermediary makes available on the Platform certain communication channels by which registered users can communicate with representatives of the Company.  While any person can view the postings made within the communication channel, only registered users can post questions or comments.  Investors have the opportunity to use the communication channels in connection with their evaluation of the securities in this Offering to support their diligence effort and to clarify any information provided in the Material.  The Intermediary is not serving as an agent or representative of the Company in connection with the operation of the communication channels and is not providing any investment advice through the communication channels.  All promoters and representatives of the Company participating in the communication channels on the Platform are required to disclose their relationship with the Company.
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u Intermediary Compensation
-        p.text-indent The Intermediary will be compensated a dollar amount equal to 5% of the total Offering amount if the Offering is successfully completed and closed.  Such compensation is paid only if the Company’s total Offering proceeds meets or exceeds the target minimum offering amount indicated in this Material. Additionally, the Company reimburses the Intermediary for certain fees that the Intermediary passes through to the Company, such as the costs related to performing background checks and establishing an escrow account.  These fees are one-time fees and are not dependent on the success of the Offering.
+        p.text-indent The Intermediary will be compensated a dollar amount equal to 
+          +frField('company.trans_percent', 'text')
+          | % of the total
+          if values.campaign.security_type == 0
+            |  Offering amount
+          else
+            |  aggregate amount raised in the Offering 
+          |  if the Offering is successfully completed and closed.  Such compensation is paid only if the Company’s total Offering proceeds meet or exceed the target minimum offering amount indicated in this Material. Additionally, the Company reimburses the Intermediary for certain fees that the Intermediary passes through to the Company, such as the costs related to performing background checks and establishing an escrow account.  These fees are one-time fees and are not dependent on the success of the Offering. In total, the Intermediary will receive, directly or indirectly, a dollar amount equal to the sum of all the following: (a) a transaction fee equal to
+          +frField('company.trans_percent', 'text')
+          | % of the total amount of monies raised in the Offering for the purchase of securities offered by the Company, payable upon success, (b) a registration and processing fee equal to $
+          +frField('company.registration_fee', 'text')
+          | payable upon registration, (c) a third-party fees equal to $
+          +frField('company.party_fees', 'text')
+          | payable upon success and (d) a participation fee equal to $
+          +frField('company.fees_to_investor ', 'text')
+          | committed to by the investor.
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u Conditional Commitment
         p.pb10.text-indent Purchase of the securities offered in this Offering shall be made pursuant to the 
@@ -648,7 +760,14 @@ section.formc-review
           p.small.pb10
             +frField('company.name', 'text')
             |  as Issuer
-        p execution of a Subscription Agreement available on the Platform, which contains, among other things, certain representations, warranties and covenants.  The Company must secure investor commitments that equal or exceed the minimum target amount for the Offering prior to the applicable closing date, or the Offering will be canceled and investor funds committed in connection with the Offering will be returned.  An investor commitment is conditional after being made, but only up until the time that is 48 hours before the applicable closing date.  For the 48-hour period prior to the applicable closing date, investor commitments may not be cancelled by the investor but in certain circumstances may still be returned (e.g. if the target minimum amount is not met).   As a reminder, investors are required to reconfirm their investment commitment after receiving notice of a material change to the Offering.  If an investor takes no action to reconfirm the investment commitment after the Company notifies the investor of a material change, the commitment will be cancelled and funds relating to that Offering returned. 
+        p execution of a Subscription Agreement available on the Platform, which contains, among other things, certain representations, warranties and covenants.  The Company must secure investor commitments that equal or exceed the minimum target amount for the Offering prior to the applicable closing date, or the Offering will be canceled and investor funds committed in connection with the Offering will be returned.  An investor commitment is conditional after being made, but only up until the time that is 48 hours before the applicable closing date.  For the 48-hour period prior to the applicable closing date, investor commitments may not be cancelled by the investor but in certain circumstances may still be returned (e.g. if the target minimum amount is not met).   As a reminder, investors are required to reconfirm their investment commitment  
+          if values.campaign.security_type == 1
+            |  within five days
+          |  after receiving notice of a material change to the Offering.  If an investor takes no action to reconfirm the investment commitment after the Company notifies the investor of a material change, the commitment will be cancelled and funds relating to that Offering returned
+          if values.campaign.security_type == 0
+            | .
+          else
+            | , less any fees incurred, without any accrued interest. 
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u Jurisdictional Coverage
         p.text-indent Jurisdictions in which the issuer intends to offer the securities include the following: AL, AK, AZ, AR, CA, CO, CT, DE, DC, FL, GA, HI, ID, IL, IN, IA, KS, KY, LA, ME, MD, MA, MI, MN, MS, MO, MT, NE, NV, NH, NJ, NY, NC, ND, OH, OK, OR, PA, RI, SC, SD, TN, TX, UT, VT, WA, WV, WI, WY, WY, PR, GU, VI, NMI, AS
@@ -702,16 +821,32 @@ section.formc-review
         h2.text-uppercase.text-xs-center.font-weight-bold#description_securities.letter-spacing-normal.m-b-3 DESCRIPTION OF SECURITIES OFFERED
         p.text-uppercase.m-t-0.m-b-0.pb10 
           u General Terms
-        p.text-indent The type of security being offered is non-voting shares of our common stock.  This means purchasers of the Shares will have no voting rights whatsoever.  Potential investors should reference the actual terms and provisions of the capital stock contained in the Company's [Certificate of Incorporation and the Company’s bylaws] attached as Exhibit C as well as the Subscription Agreement for the Shares. Each investor is responsible for reviewing and understanding such documents and can use the communication channels on the Platform to request clarification or additional information.
-        p.text-uppercase.m-t-3.m-b-0.pb10 
-          u Common Stock
-        p.text-indent The voting, dividend and liquidation rights of the holders of the Common Stock are subject to and qualified by the rights, powers, and preferences of the holders of the Common Stock set forth in the Company’s charter documents as well as the terms of the Subscription Agreement. The securities in this Offering are non-voting common stock. Dividends upon the capital stock of the Company, if any, subject to the provisions of the Certificate of Incorporation, may be declared by the Board of Directors at any regular or special meeting, pursuant to law. The Company does not anticipate issuing any dividends in the near term.
+        if values.campaign.security_type == 0
+          p.text-indent The type of security being offered is non-voting shares of our common stock.  This means purchasers of the Shares will have no voting rights whatsoever. Each investor is responsible for understanding the  Company’s  governing  documents and can use the communication channels on the Platform to request clarification or additional information.
+        else
+          p.text-indent.pb10 The  type  of  security  being  offered  is  a  debt  security  in  the  form  of  a  Revenue  Share Agreement which contains a promise to repay a sum certain similar to a promissory note (a form of the Revenue Share Agreement is attached as Exhibit D).  These Notes are unsecured so that the  repayment obligation  is  supported only by  the Company’s creditworthiness and not by any specifically  identified  collateral.    As  a  debt  security,  the  Notes  have  no  voting  rights,  which means  that  purchasers  of  the  Notes  will  have  no  ability  to  vote  on  any  matters  relating  to  the Company.
+          p.text-indent.pb10 The  Revenue  Share  Agreement  contain  a  promise  by  the  Company  to  repay  each investor  a  dollar  amount  equal  to  two  times  (2x)  the value  that  such  investor  invested  in  their respective Note, in each case in the manner described below.
+          ul
+            li.pb10 Beginning  with  the  second  full 12-month  financial  reporting  period  following  the completion of  the Offering, the Company will  set  aside  a dollar amount equal  to five  percent  (5%)  of  the  Company’s net  revenue  recorded  during  such  financial reporting  period  (such  amount,  the “ Revenue  Pool” ).    The  size  of  the  Revenue Pool may vary from year to year based on the performance of the Company, but will  always  comprise  five percent  (5%) of the  Company’s net  revenues  for  such year.
+            li.pb10 Beginning  with  the  second  full 12-month  financial  reporting  period  following  the completion  of  the  Offering, unless  the  Company  exercises  its  forbearance  right as provided below, the Company will pay to each investor a dollar amount equal to the product calculated by multiplying (a) the Revenue Pool by (b) a fraction the numerator of which is the individual dollar amount that such investor invested in the Notes and the denominator of which is the aggregate dollar amount of all the Notes sold in the Offering. In this manner, each investor will receive their pro-rata share of the Revenue Pool in each applicable financial reporting period until such time  that each  investor  is paid back  a dollar amount equal to  two  times (2x)  the value that such investor invested in the Notes.
+            li.pb10 The Company has the right to forebear one annual payment of the revenue share amount  upon  notice  to  the  investors.    Consequently,  the  Company  will  have  no repayment  obligation  in  the  first  full  twelve  (12)  month  financial  reporting  period following  the  Offering  and  it  may  also  have  no  repayment  obligation  in  one additional  twelve  (12)  month  financial  reporting  period  which  would  delay  the repayment  of  the  required  amount  to  each  investor.The  Company  may  not exercise this forbearance right more than once.
+            li.pb10 The Company has the right to repay an amount in excess of the Revenue Pool in any  given  period,  provided  that  each  investor  receives  their  pro-rata  share  of such  excess  amount.    The  Company  will  have  no  further  payment  obligations once it has returned  to each  investor  an amount  equal to  twice (2x) the amount that each investor invested in their respective Note.
+          p.text-indent The  form  of  Note  is  attached  as  Exhibit  D.    Each  investor  should  review  this  form  of  Note  to better understand the exact terms that would be applicable to each Note.
+        if values.campaign.security_type == 0
+          p.text-uppercase.m-t-3.m-b-0.pb10 
+            u Common Stock
+          p.text-indent The voting, dividend and liquidation rights of the holders of the Common Stock are subject to and qualified by the rights, powers, and preferences of the holders of the Common Stock set forth in the Company’s charter documents as well as the terms of the Subscription Agreement. The securities in this Offering are non-voting common stock. Dividends upon the capital stock of the Company, if any, subject to the provisions of the Certificate of Incorporation, may be declared by the Board of Directors at any regular or special meeting, pursuant to law. The Company does not anticipate issuing any dividends in the near term.
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u Voting Rights and Limitations
-        p.text-indent The Shares have no voting rights and will be excluded from all voting.  Additionally, the Shares have no liquidation or preference rights. 
-          +frField('formc.modify_method', 'text')
-        p.text-uppercase.m-t-3.m-b-0.pb10 
-          u Restrictions on Transfer of Shares
+        if values.campaign.security_type == 0
+          p.text-indent The Shares have no voting rights and will be excluded from all voting.  Additionally, the Shares have no liquidation or preference rights. The rights of shareholders may be modified by a change to the Company’s governing documents.
+        else
+          p.text-indent The Notes have no voting rights and will be excluded from all voting.  The ability to modify the rights of the Revenue Share Agreement will be set forth in the final form of the Revenue Share Agreement attached to the Subscription and Purchase Agreement. The default is the written consent of the Company and the participants in the Offering holding a majority of the dollar amount raised in the Offering.
+        p.text-uppercase.m-t-3.m-b-0.pb10
+          if values.campaign.security_type == 0 
+            u Restrictions on Transfer of Shares
+          else
+            u Restrictions on Transfer of the Notes
         p.pb10.text-indent Consistent with Subpart E of Regulation Crowdfunding (17 CFR 501), securities issued in this Offering pursuant to section 4(a)(6) of the Securities Act (15 U.S.C. 77d(a)(6)) may not be transferred by any purchaser of such securities during the one-year period beginning when the securities were issued, unless such securities are transferred to a limited group including (a) to the Company, (b) to an accredited investor, (c) as part of an offering registered with the SEC, or (d) to a family member, trust or equivalent.  In connection with any participation in this Offering, each potential investor may be required to agree not to dispose of or otherwise sell or transfer any of the Shares, until there is in effect a registration statement under the Securities Act covering such proposed disposition or if such disposition will not require registration under the Securities Act.
 
       // page 15
@@ -732,16 +867,20 @@ section.formc-review
         p.pb10.text-indent Ability of any principal shareholders to affect the purchasers of the securities being offered:
         p.p-l-2
           +frField('formc.exercise_of_rights', 'textarea')
-        p.text-uppercase.m-t-3.m-b-0.pb10 
-          u Valuation of the Securities
-        p.pb10.text-indent The offering price of the securities in this Offering has been established by the Company and does not necessarily bear any specific relation to the assets, book value or potential earnings of the Company or any other recognized criteria of value. The Shares have not been registered under the Securities Exchange Act of 1934 and have not been traded or quoted on any exchange or quotation system. There is no public market in which shareholders may sell their Shares, and there can be no assurance given that such a market will ever develop. The securities offered hereby are restricted by law and the ability to transfer and interests in the Shares is severely limited.
-        p.pb10.text-indent Method by which the offered securities are valued:
-        p.p-l-2.pb10
-          +frField('campaign.valuation_determination', 'select')
-        p.p-l-2.pb10
-          if values.campaign.valuation_determination == 2
-            +frField('campaign.valuation_determination_other', 'text')
-        p.pb10.text-indent The price of each Share was determined by the Company in good faith based on its own assessment of its current position and the possibility of future growth.  The Company has taken into account its own internal calculation of potential future revenue and based on such forward looking estimates has created a valuation that reflects the multiple or premium determined by the Company to be appropriate in this situation.  The Company acknowledges that the valuation bears no relationship to established value criteria such as net tangible assets or a multiple of earnings per share.  The Company accepts that some investors may conclude that the current valuation is not an indication of the actual value of the Company.
+        if values.campaign.security_type == 0 
+          p.text-uppercase.m-t-3.m-b-0.pb10
+            u Valuation of the Securities
+          p.pb10.text-indent The offering price of the securities in this Offering has been established by the Company and does not necessarily bear any specific relation to the assets, book value or potential earnings of the Company or any other recognized criteria of value. The Shares have not been registered under the Securities Exchange Act of 1934 and have not been traded or quoted on any exchange or quotation system. There is no public market in which shareholders may sell their Shares, and there can be no assurance given that such a market will ever develop. The securities offered hereby are restricted by law and the ability to transfer and interests in the Shares is severely limited.
+          p.pb10.text-indent Method by which the offered securities are valued:
+          p.p-l-2.pb10
+            +frField('campaign.valuation_determination', 'select')
+          p.p-l-2.pb10
+            if values.campaign.valuation_determination == 2
+              +frField('campaign.valuation_determination_other', 'text')
+        else
+          p.text-uppercase.m-t-3.m-b-0.pb10
+            u Valuation of the Securities
+          p.pb10.text-indent The Company has determined the purchase price for the Notes by taking into account its anticipated future revenue.  This purchase price was not based on any independent valuation of the Company or any of its assets.  It should be noted that one of the reasons that the Company chose to offer Revenue Share Agreement is that this type of security avoids the need to determine a valuation for the Company or its assets.  As stated on the Platform, the Intermediary has not provided any investment advice relating to the Offering or the pricing of the Notes.
 
       // page 16
       section.page-formc-review.m-t-1
@@ -1044,13 +1183,6 @@ section.formc-review
         if values.formc.exempt_offering_choice == '0'
           p.pb10.text-indent The Company has indicated that it has not conducted any prior exempt offerings in the past three years.
 
-      // page 20
-      section.page-formc-review.m-t-1
-        .top-intro
-          p.small.text-xs-left.font-weight-bold FORM C Offering Material for
-          p.small.pb10
-            +frField('company.name', 'text')
-            |  as Issuer
         if values.formc.exempt_offering_choice == '1'
           p.pb10.text-indent The Company has provided the following list of exempt offerings conducted over the past 3 years:
           .table-responsive.m-t-1.m-b-0
@@ -1094,11 +1226,28 @@ section.formc-review
         p.text-indent There is the risk that some of the information supplied by the Company may be inaccurate.  The management of the Company has provided all of the information stated in this Material without any third party verifying or investigating such information. The Company makes no express or implied representation or warranty as to the completeness of this information or, in the case of projections, estimates, future plans, or forward looking assumptions or statements, as to their attainability or the accuracy and completeness of the assumptions from which they are derived.  It is expected that each prospective investor will pursue their own independent investigation.  Forward-looking statements are subject to certain risks, trends and uncertainties that could cause actual results to differ materially from those projected.
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u Risks as a Minority Holder
-        p.pb10.text-indent Purchasers of a minority ownership have risks relating to limited control, limited information and limited rights.  Minority owners have no control over the marketability and value of their purchased securities and they may be required to hold onto their minority ownership position for an indefinite period.  Additionally, minority owners must address the following risks:
-        ul
-          li.pb10 Minority owners have no right to participate in any management decisions of the Company or the day-to-day operations. There is the risk that the majority owners make decisions or take actions that a minority owner thinks is bad for the Company.   A minority owner has limited ability to influence the governance and operations of a Company.
-          li.pb10 Minority owners have limited rights to information beyond those filings that are required by law to be made available.  There is the risk that minority owners may be denied immediate information about the Company’s performance or corporate affairs.
-          li.pb10 Minority owners have limited rights, if any, to demand current distributions from an operating business. Majority owners likely have the right and power to avoid making any distributions of profits at their discretion.  There is also the risk that the management of the Company pursues a spending plan that causes the Company not to generate any profits to be distributed.
+        if values.campaign.security_type == 0 
+          p.pb10.text-indent Purchasers of a minority ownership have risks relating to limited control, limited information and limited rights.  Minority owners have no control over the marketability and value of their purchased securities and they may be required to hold onto their minority ownership position for an indefinite period.  Additionally, minority owners must address the following risks:
+          ul
+            li.pb10 Minority owners have no right to participate in any management decisions of the Company or the day-to-day operations. There is the risk that the majority owners make decisions or take actions that a minority owner thinks is bad for the Company.   A minority owner has limited ability to influence the governance and operations of a Company.
+            li.pb10 Minority owners have limited rights to information beyond those filings that are required by law to be made available.  There is the risk that minority owners may be denied immediate information about the Company’s performance or corporate affairs.
+            li.pb10 Minority owners have limited rights, if any, to demand current distributions from an operating business. Majority owners likely have the right and power to avoid making any distributions of profits at their discretion.  There is also the risk that the management of the Company pursues a spending plan that causes the Company not to generate any profits to be distributed.
+            li.pb10 Minority owners have limited rights, if any, to have their interest bought out. There is the risk that a minority owner will want to sell their interest and they will have no right to force the Company to buy them out.  There will also be liquidity risk if there is no secondary market for the Company’s securities.
+            li.pb10 Minority owners have limited input into fundamental corporate changes such as sale of the Company.  There is a risk that a sale could be structured in a way to avoid certain payouts to minority owners, such as a sale of assets over time with the proceeds reinvested in another business.
+            li Minority owners may have interests that are different than shareholder-officers or shareholders that are part of the management team of the Company.  There is the risk that minority owners perceive a conflict of interest if, for example, the managers that are shareholders receive a significant raise.  Additionally, there is the risk that a minority owner will want to remove a manager or board member but have no independent power to do so.
+        else
+          p.pb10.text-indent Purchases of a Revenue Share Agreement are considered debt securities and have risks relating  to  limited  control,  limited  information  and  limited  rights.    Note  holders  have  no  voting power to influence the Company and must address the following risks:
+          ul
+            li.pb10 Note  holders  have  no  right  to  participate  in  any  management  decisions  of  the Company or the day-to-day operations.
+            li.pb10 Note  holders  have  limited  rights  to  information  beyond  those  filings  that  are required by law to be made available.
+            li.pb10 Note holders have limited rights to cause a prepayment of the amounts owed.
+            li.pb10 Note holders have no blocking rights and limited input into fundamental corporate changes  such  as  sale  of  the  Company.    There  is  a  risk  that  a  sale  could  be structured  in  a  way  to  avoid  certain  payouts  to  note holders,  such  as  a  sale  of assets over time with the proceeds reinvested in another business.
+            li.pb10 Note  holders  may  have  interests  that  are  different  than  equity  holders,  some  of whom may  be part of  the management  team of  the Company.   There  is  the  risk that a Note holder may perceive a conflict of interest if, for example, the managers that  are  shareholders  take  any  other  action  that  benefits  them  but  increases  the risk  that  revenue  may  be  impacted  such  that  the  repayment  period  from  the revenue share is extended.
+            li.pb10 The Company may take certain corporate actions that could impact Note holders, particularly if such actions impact the future revenue stream that is supporting the repayment of the Notes. 
+            li.pb10 To  the  extent  that  there  is  funding  that  exceeds  the minimum  amount,  investors may experience an extended payback period as additional investors will be pulling from the same fixed revenue pool.
+            li.pb10 In the event the Company does not generate any or sufficient revenue, investors may  not  receive  any  return  at  all  and/or  may  lose  a  portion  or  all  of  their investment amounts.
+            li.pb10 The return to investors who participate in the Revenue Share Agreement and the future value of the investment will depend on a number of factors which cannot be predicted at this time and which may be beyond the control of the Company.
+
 
       // page 22
       section.page-formc-review.m-t-1
@@ -1107,22 +1256,36 @@ section.formc-review
           p.small.pb10
             +frField('company.name', 'text')
             |  as Issuer
-        ul
-          li.pb10 Minority owners have limited rights, if any, to have their interest bought out. There is the risk that a minority owner will want to sell their interest and they will have no right to force the Company to buy them out.  There will also be liquidity risk if there is no secondary market for the Company’s securities.
-          li.pb10 Minority owners have limited input into fundamental corporate changes such as sale of the Company.  There is a risk that a sale could be structured in a way to avoid certain payouts to minority owners, such as a sale of assets over time with the proceeds reinvested in another business.
-          li Minority owners may have interests that are different than shareholder-officers or shareholders that are part of the management team of the Company.  There is the risk that minority owners perceive a conflict of interest if, for example, the managers that are shareholders receive a significant raise.  Additionally, there is the risk that a minority owner will want to remove a manager or board member but have no independent power to do so.
-        p.text-uppercase.m-t-3.m-b-0.pb10 
-          u Risks Regarding Corporate Actions
-        p.pb10 The Company may take certain corporate actions that could impact investors that purchase the Shares.
-        ul
-          li.pb10 Regarding the additional issuances of securities, there is the risk that an investor has their ownership percentage diluted if, for example, the Company decides to raise additional amounts in the future.  There is also the risk that an investor is excluded from the opportunity to participate in future fund-raising so that they are unable to maintain their ownership percentage.
-          li.pb10 Regarding the authorization of new securities with different rights, there is the risk that a future investor is able to obtain rights that are superior to the rights afforded to the purchasers of the security available in this offering.
-          li.pb10 To the extent that there is ever an offer to repurchase the Shares by the Company, there is the risk that investors may feel pressured to sell their Shares to the Company without fully participating in or capturing the potential increase in value of such Shares.
-          li.pb10 Regarding a sale of the Company or of assets of the Company, there is the risk that any such transaction fails to maximize the value of the Company’s securities.  The investor will be required to rely on the business judgement of the management team and the Board of Directors of the Company so there can be no guarantee that the investor will receive the full market value of their Shares
-          li Regarding transactions with related parties, there is the risk that the Company is placed in a position that creates the possibility of a conflict of interest.  The Company may choose to participate in transactions with affiliates and related persons, with limited disclosure required to investors.
-        p.text-uppercase.m-t-3.m-b-0.pb10 
-          u Risks from an Investment in Securities
-        p.pb10.text-indent This Offering is being made on a conditional basis with no minimum number of Shares guaranteed to be sold. The Company has not engaged the services of an underwriter with respect to the Offering, and there is no guarantee that the minimum required amount of proceeds will be realized by the Company.
+        if values.campaign.security_type == 0 
+          p.text-uppercase.m-t-3.m-b-0.pb10 
+            u Risks Regarding Corporate Actions
+          p.pb10 The Company may take certain corporate actions that could impact investors that purchase the Shares.
+          ul
+            li.pb10 Regarding the additional issuances of securities, there is the risk that an investor has their ownership percentage diluted if, for example, the Company decides to raise additional amounts in the future.  There is also the risk that an investor is excluded from the opportunity to participate in future fund-raising so that they are unable to maintain their ownership percentage.
+            li.pb10 Regarding the authorization of new securities with different rights, there is the risk that a future investor is able to obtain rights that are superior to the rights afforded to the purchasers of the security available in this offering.
+            li.pb10 To the extent that there is ever an offer to repurchase the Shares by the Company, there is the risk that investors may feel pressured to sell their Shares to the Company without fully participating in or capturing the potential increase in value of such Shares.
+            li.pb10 Regarding a sale of the Company or of assets of the Company, there is the risk that any such transaction fails to maximize the value of the Company’s securities.  The investor will be required to rely on the business judgement of the management team and the Board of Directors of the Company so there can be no guarantee that the investor will receive the full market value of their Shares
+            li Regarding transactions with related parties, there is the risk that the Company is placed in a position that creates the possibility of a conflict of interest.  The Company may choose to participate in transactions with affiliates and related persons, with limited disclosure required to investors.
+        else
+          p.text-uppercase.m-t-3.m-b-0.pb10 
+            u Risks Related to Tax Considerations
+          p.pb10.text-indent The Company is subject to federal, state and local taxes.  The Company intends to treat the  Revenue  Share  Agreements  as  debt  for  federal  income  tax  purposes.    However,  the classification  of  the  Notes  for  federal  income  tax  purposes  is  not  definite  and  the  Company makes  no  guarantee  that  the  IRS  will  accept  the  tax  treatment  as  such.The  IRS  has  not provided  guidance  as  to  whether  the  Notes  are  considered  debt  or  equity  and  a  change  in  the Internal Revenue Code may alter the way that Note holders are treated for federal tax purposes.
+          p.pb10.text-indent The  Company  believes  its  tax  positions  and  estimates  are  reasonable,  however,  the Company could have additional tax liability, including interest and penalties, if a taxing authority disagrees  with  the  positions  taken  by  the  Company.    If  the  Company  must  make  additional payments of amounts, this could have a material impact on its results of operations and financial positions.
+          p.pb10.text-indent The  determination  by  the  Issuer  that  the  Revenues  Share  Agreement  be  treated  as  a debt instrument for U.S. federal income tax purposes is 
+            b NOT 
+            |  intended, nor construed to be legal, or tax advice for any individual(s).  All prospective investors are highly recommended to consult their  own  independent  tax  and  legal  professionals  for  any  information  related  to  the  purchase, ownership and disposition of the Notes.
+        if values.campaign.security_type == 0
+          p.text-uppercase.m-t-3.m-b-0.pb10 
+            u Risks from an Investment in Securities
+          p.pb10.text-indent This Offering is being made on a conditional basis with no minimum number of Shares guaranteed to be sold. The Company has not engaged the services of an underwriter with respect to the Offering, and there is no guarantee that the minimum required amount of proceeds will be realized by the Company.
+          p.pb10.text-indent The Shares are not guaranteed or insured by any government agency or by any private party. The amount of earnings is not guaranteed and can vary with market conditions. The return of all or any portion of capital invested in the Shares is not guaranteed, and the Shares could become worthless.
+          p.text-indent Investors should be aware of the potentially long-term nature of their investment. Each purchaser of Shares will be required to represent that it is purchasing such securities for its own account for investment purposes and not with an intention to resell or distribute. Purchasers may be required to bear the economic risks of the investment for an indefinite period of time. There is currently no public market for the Company’s securities.  Ultimately, each investor’s risk with respect to this Offering includes the potential for a complete loss of their investment.
+        else
+          p.text-uppercase.m-t-3.m-b-0.pb10 
+            u Risks from a Conditional Commitment in Debt Securities
+          p.pb10.text-indent This  Offering  is  being  made  on  a  conditional  basis  with no  minimumamount  of  Notes guaranteed  to  be  sold.  The  Company  has  not  engaged  the  services  of  an  underwriter  with respect  to  the  Offering,  and  there  is  no  guarantee  that  the  minimum  required  amount  of proceeds will be realized by the Company.
+          p.text-indent The  speed with which  each Note  is repaid  is not guaranteed and can  vary  with market conditions. The return of all or any portion of capital invested is not guaranteed, and the Notes could  become  worthless,  for  example  upon  a  bankruptcy  of  the  Company  where  there  are  no assets  to  satisfy  creditors.    Each  investor’s  risk  with  respect  to  this  Offering  includes  the potential for a complete loss of their investment.
+
 
       // page 23
       section.page-formc-review.m-t-1
@@ -1131,14 +1294,21 @@ section.formc-review
           p.small.pb10
             +frField('company.name', 'text')
             |  as Issuer
-        p.pb10.text-indent The Shares are not guaranteed or insured by any government agency or by any private party. The amount of earnings is not guaranteed and can vary with market conditions. The return of all or any portion of capital invested in the Shares is not guaranteed, and the Shares could become worthless.
-        p.text-indent Investors should be aware of the potentially long-term nature of their investment. Each purchaser of Shares will be required to represent that it is purchasing such securities for its own account for investment purposes and not with an intention to resell or distribute. Purchasers may be required to bear the economic risks of the investment for an indefinite period of time. There is currently no public market for the Company’s securities.  Ultimately, each investor’s risk with respect to this Offering includes the potential for a complete loss of their investment.
+        
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u Risks from Uncertain Capital Needs
-        p.text-indent The Company believes that the net proceeds of the Offering will be sufficient to fund the implementation of the Company’s business plan, operations and growth for the foreseeable future. Nevertheless, in the event that additional capital is required, no assurance can be given that additional financing will be available at all or on terms favorable to the Company. If adequate funds were not available to satisfy either short or long-term capital requirements, the Company may be unable to continue in business, with a resulting loss of all or part of investments made by the Company’s investors. Moreover, if additional equity securities are issued in connection with future financings, the ownership percentages of then shareholders could be diluted. Dilution of ownership percentages may also occur as a result of equity securities issued pursuant to possible sales or grants to existing shareholders, officers, managers, consultants, advisors, and/or employees.
+        if values.campaign.security_type == 0
+          p.text-indent The Company believes that the net proceeds of the Offering will be sufficient to fund the implementation of the Company’s business plan, operations and growth for the foreseeable future. Nevertheless, in the event that additional capital is required, no assurance can be given that additional financing will be available at all or on terms favorable to the Company. If adequate funds were not available to satisfy either short or long-term capital requirements, the Company may be unable to continue in business, with a resulting loss of all or part of investments made by the Company’s investors. Moreover, if additional equity securities are issued in connection with future financings, the ownership percentages of then shareholders could be diluted. Dilution of ownership percentages may also occur as a result of equity securities issued pursuant to possible sales or grants to existing shareholders, officers, managers, consultants, advisors, and/or employees.
+        else
+          p.text-indent The Company believes that the net proceeds of the Offering will be sufficient to fund the implementation  of  the  Company’s  business  plan,  operations  and  growth  for  the  foreseeable future. Nevertheless, in the event that additional capital is required, no assurance can be given that  additional  financing  will  be  available  at  all  or  on  terms  favorable  to  the  Company.  If adequate funds were not available to satisfy either short or long-term capital requirements, the Company  may  be  unable  to  continue  in  business,  with  a resulting  loss  of  revenue  translating into  the  inability  of  the  Company  to  continue  to  make  payments  to  the  Note  holders  in  the amounts anticipated.
+
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u Risks from Relying on an Exemption from Registration
-        p.pb10.text-indent The Shares are being offered for sale in reliance upon certain exemptions from the registration requirements of the Securities Act and applicable state securities laws. If the sale of the Shares were to fail to qualify for these exemptions, purchasers may seek rescission of their purchases of the Shares. If a number of purchasers were to obtain rescission, the Company would face significant financial demands, which could adversely affect the Company as a whole, as well as any non-rescinding purchasers.
+        if values.campaign.security_type == 0
+          p.pb10.text-indent The Shares are being offered for sale in reliance upon certain exemptions from the registration requirements of the Securities Act and applicable state securities laws. If the sale of the Shares were to fail to qualify for these exemptions, purchasers may seek rescission of their purchases of the Shares. If a number of purchasers were to obtain rescission, the Company would face significant financial demands, which could adversely affect the Company as a whole, as well as any non-rescinding purchasers.
+        else
+          p.pb10.text-indent The  Notes  are  being  offered  for  salein  reliance  upon  certain  exemptions  from  the registration requirements of the Securities Act and applicable state securities laws. If the sale of the Notes were  to fail  to qualify  for these  exemptions, purchasers may  seek  rescission of  their purchases  of  the Notes.  If  a  number  of  purchasers  were  to  obtain  rescission,  the  Company would face significant financial demands, which could adversely affect the Company as a whole, as  well  as  any  non-rescinding  purchasers.  Neither  the  Intermediary  nor  any  third  party  has made a determination that the Company may use the crowdfunding exemption.
+
 
       // page 24
       section.page-formc-review.m-t-1
@@ -1289,7 +1459,7 @@ section.formc-review
           p.small.pb10
             +frField('company.name', 'text')
             |  as Issuer
-        h2.text-uppercase.text-xs-center.font-weight-bold.letter-spacing-normal.m-b-3 OTHER MATTERS
+        h2.text-uppercase.text-xs-center.font-weight-bold.letter-spacing-normal.m-b-3#other_matters OTHER MATTERS
         p.text-uppercase.m-t-0.m-b-0.pb10 
           u Additional Material Disclosure
         p.pb10.text-indent The issuer has opted to include the following information that may be deemed material to investors in connection with this offering. The issuer is also providing the following information to reduce the possibility that any of the required statements are misleading, in light of the circumstances under which they are made. 
@@ -1306,7 +1476,7 @@ section.formc-review
           p.small.pb10
             +frField('company.name', 'text')
             |  as Issuer
-        h2.text-uppercase.text-xs-center.font-weight-bold.letter-spacing-normal.m-b-3 REPORTING OBLIGATIONS
+        h2.text-uppercase.text-xs-center.font-weight-bold.letter-spacing-normal.m-b-3#reporting_obligations REPORTING OBLIGATIONS
         p.text-uppercase.m-t-0.m-b-0.pb10 
           u End of Reporting Requirement
         p.pb10.text-indent The issuer may terminate its reporting obligations in the future in accordance with Rule 202(b) of Regulation Crowdfunding (§ 227.202(b)). The issuer must continue to comply with the ongoing reporting requirements until one of the following conditions is met:
@@ -1329,7 +1499,7 @@ section.formc-review
           p.small.pb10
             +frField('company.name', 'text')
             |  as Issuer
-        h2.text-uppercase.text-xs-center.font-weight-bold.letter-spacing-normal.m-b-3 EXHIBIT A: BUSINESS PLAN
+        h2.text-uppercase.text-xs-center.font-weight-bold.letter-spacing-normal.m-b-3#business_plan EXHIBIT A: BUSINESS PLAN
         if values.formc.business_plan_data.length > 0
           p
             for v,k in values.formc.business_plan_data[0].urls
@@ -1342,7 +1512,7 @@ section.formc-review
           p.small.pb10
             +frField('company.name', 'text')
             |  as Issuer
-        h2.text-uppercase.text-xs-center.font-weight-bold.letter-spacing-normal.m-b-3 EXHIBIT B: FINANCIAL STATEMENTS for most recent fiscal year
+        h2.text-uppercase.text-xs-center.font-weight-bold.letter-spacing-normal.m-b-3#financial_statements EXHIBIT B: FINANCIAL STATEMENTS for most recent fiscal year
         if values.formc.fiscal_recent_group_data.length > 0
           p
             for v,k in values.formc.fiscal_recent_group_data
@@ -1362,7 +1532,7 @@ section.formc-review
           p.small.pb10
             +frField('company.name', 'text')
             |  as Issuer
-        h2.text-uppercase.text-xs-center.font-weight-bold.letter-spacing-normal.m-b-3 EXHIBIT C: BIOGRAPHIES
+        h2.text-uppercase.text-xs-center.font-weight-bold.letter-spacing-normal.m-b-3#biographical_information EXHIBIT C: BIOGRAPHIES
         p.pb10.text-indent Employment information from previous employers over the last three years for each of the Company’s officers is as follows:
         p.pb10
           each v,k in values.formc.team_members
@@ -1429,7 +1599,138 @@ section.formc-review
                               +frField('formc.team_members[' + k + '].experiences[' + k1 + '].start_date_of_service', 'text')
                             td
                               +frField('formc.team_members[' + k + '].experiences[' + k1 + '].end_date_of_service', 'text')
-
+      if values.campaign.security_type == 1 
+        section.page-formc-review.m-t-1
+          .top-intro
+            p.small.text-xs-left.font-weight-bold FORM C Offering Material for
+            p.small.pb10
+              +frField('company.name', 'text')
+              |  as Issuer
+          h2.text-uppercase.text-xs-center.font-weight-bold.letter-spacing-normal.m-b-3#revenue_share_agreement EXHIBIT D:  FORM OF REVENUE SHARE AGREEMENT
+          p.pb10.text-indent.text-uppercase.font-weight-bold THIS  INSTRUMENT  AND  THE  SECURITIES  DESCRIBED  HEREIN  HAVE  NOT BEEN REGISTERED UNDER THE SECURITIES ACT OF 1933, AS AMENDED (THE “ACT”),   OR   UNDER   THE    SECURITIES   LAWS    OF ANY    STATES.       THESE SECURITIES  MAY  NOT  BE  OFFERED,  SOLD  OR  OTHERWISE  TRANSFERRED, PLEDGED  OR  HYPOTHECATED EXCEPT  AS  PERMITTED UNDER  THE ACT AND APPLICABLE    STATE    SECURITIES    LAWS    PURSUANT    TO    AN    EFFECTIVE REGISTRATION STATEMENT OR AN EXEMPTION THEREFROM.
+          p.pb10.text-indent.text-uppercase.font-weight-bold THE INVESTOR ACKNOWLEDGES THAT THE SECURITIES DESCRIBED HEREIN HAVE    NOT    BEEN    REVIEWED    BY    THE    SECURITIES    AND    EXCHANGE COMMISSION  (“SEC”)  AND  THAT  THE  INVESTOR  HAS  RELIED  ON  ITS  OWN EVALUATION  OF  THESE  SECURITIES  IN  MAKING  AN  INVESMENT  DECISION. THE  INVESTOR  UNDERSTANDS  THAT  THIS  INSTRUMENT  HAS  BEEN  SOLD  IN RELIANCE    UPON    SECTION    4(A)(6)    OF    THE    ACT    AND    SEC    RULE    227 PROMULGATED  THEREUNDER  WHICH  INCLUDE  CERTAIN  RESTRICTIONS  ON TRANSFER FOR A ONE YEAR PERIOD AFTER THE DATE OF ISSUANCE.
+          h2.text-uppercase.text-xs-center.font-weight-bold.letter-spacing-normal.m-b-3 REVENUE SHARE AGREEMENT
+          p.pb10.text-indent This  Revenue  Share  Agreement (
+            b "Agreement"
+            | )  is  made  between  [ISSUER]  (the 
+            b “Company”
+            |), and [INVESTOR] (
+            b "Investor"
+            | ), on [THE CLOSING DATE] (
+            b “Issuance Date”
+            | ).For good and valuable consideration and intending to be legally bound, the parties agree as follows:
+          ol
+            li.pb10
+              b  Participation  in  Crowdfunded  Offering.
+              | Investor acquired the rights contained in this Agreement in connection with an offering (the 
+              b “Offering”
+              | ) in reliance on section 4(a)(6) of the  Act.      Investor  acknowledges  and  agrees  that  this  Agreement  represents  an  investment contract in which the Investor has joined with other participants in the Offering to invest money in  the  Company  with  the  expectation  of  profits  solely  from  the  efforts  of  the  Company.    The Investor acknowledges and understands that this Agreement is  one  of a series  of Revenue Share Agreements offered by the Company in the Offering.
+            li.pb10
+              b Repayment Promise.
+              |  For value received, the Company hereby promises to pay to the Investor in lawful money of the United States of America and in immediately available funds, the  Total Repayment  Amount  (as  defined  below)  in  the  manner  set  forth  in  this  Agreement.Investor   hereby   agrees  to   accept  the   Total  Repayment  Amount as   consideration   for  the Investment Amount (as defined below) consistent with the terms of this Agreement.   The parties agree  that  the  term
+              b  “Investment  Amount” 
+              | shall  mean  that  dollar  amount  committed  to  the Company  by the  Investor in the Offering  equal to $[INVESTMENT].   The parties  further agree that the term 
+              b  “Total Repayment Amount” 
+              | shall mean that dollar amount that is equal to a multiple of  two  times  (2x)  the  amount  of  the  Investment  Amount.    Investor  acknowledges  that  Investor may have paid certain fees to participate in the Offering and that such fees are not included in any calculation of the Investment Amount or the Total Repayment amount.
+            li.pb10
+              b Calculation of Revenue Share Payment.
+              |  The parties agree that the term 
+              b “Fiscal Year”  
+              | shall  mean  the  twelve  (12)  month  accounting  period  in  which  the  Company’s annual financial  statements  are  regularly  prepared.    For  any  Fiscal  Year  of  determination,  the  term 
+              b “Available  Revenue  Pool” 
+              | shall  mean that dollar  amount  equal to  five  percent  (5%)  of  the gross revenue  of  the  Company  in  such  Fiscal  Year  of  determination,  including all  of  the  Company’s cash  receipts  from  all  sales  of  any  kind  without  any  deduction  or  offset  of  any  kind.    For  any Fiscal Year of determination, the term “Revenue Share Payment” shall mean that dollar amount that  is  equal  to  the  product  of  (a)  the  Available  Revenue  Pool  calculated  for  such  Fiscal  Year multiplied  by  (b)  the  Proportionate  Share  (as  defined  below).   The  parties  agree  that  the  term 
+              b “Proportionate  Share” 
+              | shall  mean a fraction, the  numerator  of  which is the  Investment Amount, and  the  denominator  of  which  is  the  total  dollar  amount  committed  to  the  Company  in  the Offering by all participants in the Offering equal to $[TOTAL RAISE]. 
+        section.page-formc-review.m-t-1
+          .top-intro
+            p.small.text-xs-left.font-weight-bold FORM C Offering Material for
+            p.small.pb10
+              +frField('company.name', 'text')
+              |  as Issuer
+          ol(start="4")
+            li.pb10
+              b Annual Payments from Available Revenue Pool.
+              |  Except as otherwise provided in this Agreement and only until the Total Repayment Amount has been paid, for any Fiscal Year  of  determination,  if  the  Available  Revenue  Pool  exceeds  five  hundred  dollars  ($500)  in  such Fiscal Year, then the Company shall pay the Revenue Share Payment to the Investor on or prior to the  date  that  is  sixty  days  after  the  end  of  such  Fiscal  Year.   The  Company  shall  have  no obligation  to  make  Revenue  Share  Payments  under  this  Agreement  in  the  Company’s  first  full Fiscal Year occurring immediately after the Issuance Date, it being understood that the Company shall have a minimum of twelve (12) months after the Issuance Date in which no Revenue Share Payment is due.  Consequently, unless the Company exercises the forbearance right described in Section  5  of  this  Agreement,  the  Company  will  begin  making  Revenue  Share  Payments  to  the Investor  within  sixty  days  after  the  conclusion  of  the  Company’s  second  full  Fiscal  Year occurring immediately after the Issuance Date.
+            li.pb10
+              b One-Time Payment Forbearance.
+              |  In any single Fiscal Year and not in any other Fiscal Year, the Company  may  in its sole discretion  forbear the annual payment  of the Revenue Share  Payment  due  for  such  Fiscal  Year  upon  notice  to  Investor,  it  being  understood  that  such forbearance shall allow the Company to refrain from making the Revenue Share Payment for such Fiscal Year that the Company would otherwise be required to pay.  After the Company exercises the  forbearance  right  contained  in  this  Agreement,  it  may  never  use  such  right  again.    For  the avoidance of doubt, the Company may use the forbearance right contained in this Agreement only once,  and  it  in  no  way  relieves  the  Company  from  the  obligation  to  repay  the  Total  Repayment Amount.
+            li.pb10
+              b Voluntary  Payment  Acceleration.
+              |  The  Company  may  make  payments  to  the Investor  in  excess  of  the  Revenue  Share  Payment  at  any  time  and may  fully  or  partially  prepay any  amounts  at  any  time  provided  that  such  amounts  are  counted  toward  the  Total  Repayment Amount.  The parties agree that this Agreement contains no specific due date for the repayment of the  Total  Repayment  Amount.      The  Total  Repayment  Amount  will  be  considered  paid  in full when  the  Company  has  paid  to  the  Investor  those  Revenue  Share Payments  which,  when aggregated with any prepayment amounts, collectively are equal to the Total Repayment Amount.
+            li.pb10
+              b Payment  upon  Change  of  Control.
+              |  Upon  a  Change  of  Control  (as  defined below) at any time prior to the full payment of the  Total Repayment Amount to the Investor, the Company shall pay to the Investor, prior to or simultaneously with the closing of such Change in Control, an amount equal to the Total Repayment Amount less the sum of all previous payments made by the Company to the Investor pursuant to this Agreement.  The parties agree that the term 
+              b  “Change  of  Control”  
+              | shall  mean  the  earlier  to  occur  of  (a)  the  Company's  sale of  all  or substantially  all  of  its  material  assets  or  (b)  a  merger,  consolidation,  reorganization  or  similar business  transaction  which  results  in  a  change  in  the  ownership  of  more  than  50%  of  the outstanding voting power of the Company.
+            li.pb10
+              b Place and Form of Payment.
+              |  All amounts payable hereunder shall be paid to the Investor at the address on record with the Company or to the account that Investor has designated to the Company or to the account from which Investor made the investment in the Offering.  The Company  may  use a third-party  agent to  process  any such payments and  may share information relating  to  the  Investor  with  such  third  party,  including  personally  identifying  information  and account  information.    The  Company  may,  directly  or  indirectly through  a  third  party,  transfer payments via automated clearinghouse payment, wire transfer or check at its discretion.  Pursuant to the terms of this Agreement, the Company shall make, or cause to be made,  continuing annual Revenue Share Payments to the Investor until the Total Repayment Amount is repaid in full.
+        section.page-formc-review.m-t-1
+          .top-intro
+            p.small.text-xs-left.font-weight-bold FORM C Offering Material for
+            p.small.pb10
+              +frField('company.name', 'text')
+              |  as Issuer
+          ol(start="9")
+            li.pb10
+              b Payments  Made  Pro  Rata.
+              |  Investor  acknowledges  that  a  number  of  other participants  in  the  Offering  acquired  the  same  form  of  security  as  the  Investor  with  the  same rights to a repayment from the Available Revenue Pool of twice the amount that such participant invested  in  the  Offering  (each  such  participant,  not  including  the  Investor,  a 
+              b  “Holder”
+              | ).    The Company  warrants  that  Investor  and  each  Holder  invested  in  the  Company’s  securities  on  the same terms and conditions with respect to repayment although their invested amounts may differ.  This Agreement and the promise to pay contained herein is issued as part of a series of securities issued  in  the  Offering  and  the  Investor  agrees  that  payments  made  from the  Available  Revenue Pool shall be made pari passu between the Investor and each Holder in proportion to each party’s dollar  amount  invested  in  the  Offering  (excluding  any  fees  paid  to  participate  in  the  Offering).  Investor  acknowledges  and  agrees  that  all  payments  required  by  this  Agreement,  including optional  payments  with  respect  to  any  prepayment  amounts,  shall  be  made  pro  rata  among  the Investor and all of the Holders based on the amount of their investment in the Offering (excluding any fees paid to participate in the Offering) and the Investor shall make no claim for any amount of any Company payment greater that the Investor’s Proportionate Share of such payment.  If the Investor shall obtain any payment from the Company that was not made proportionately to other Holders,  then  the  Investor  shall  return  the  excess  amount  to  the  Company  to  be  shared  ratably with  the   other   Holders.   The  Company’s  repayment   obligation  to  the  Investor  under  this Agreement  shall  be  on  parity  with  the  Company’s  obligation  to  repay  all  of  the  Holders  of securities issued in the same Offering.  If the Company does not have sufficient funds to repay all participants in the Offering, then payment shall be  made ona pro  rata basis among the  Investor and all of the Holders based on the amount of their investment in the Offering (excluding any fees paid to participate in the Offering).
+            li.pb10
+              b Unsecured  Obligation.
+              |  Investor  understands  and  accepts  that  the  promise  and obligation to repay the  Total Repayment Amount is an unsecured obligation and that no security interest of any form is granted by this Agreement in any asset held by the Company.  No party has guaranteed  the  repayment  of  the  Total  Repayment  Amount.    The  obligations  in this  Agreement are the  corporate  obligation  of the  Company  only and no recourse shall be had against any  past, present  or  future  member  or  owner  of  the  Company  directly.  The obligations  in  this  Agreement will be handled pari passu with all other outstanding Revenue Share Agreement obligations of the Company that arise as a result of the Offering. 
+            li.pb10
+              b No  Stockholder  Rights.
+              |  The  Investor  is  not  entitled,  as  a  holder  of  this instrument, to vote or receive dividends or be deemed the holder of capital stock of the Company for  any  purpose,  nor  will  anything  contained  herein  be  construed  to  confer  on  the  Investor,  as such, any  of the  rights  of  a stockholder  of the  Company  or any  right to  vote  for the  election  of directors  or  upon  any  matter  submitted  to  stockholders  at  any  meeting  thereof,  or  to  give  or withhold  consent  to  any  corporate  action  or  to  receive  notice  of  meetings,  or  to  receive subscription rights or otherwise.
+            li.pb10
+              b Availability of Financial Information.
+              |  The Company agrees to timely file all tax returns  (federal,  state  and  local)  required  to  be  filed  by  it.   For  so  long  as  the  Total  Repayment Amount  remains  outstanding,  the  Company  will  make  available  to  Investor,  via  the  Company’s website or otherwise, a copy of the Company’s federal tax returns within thirty days of filing such return.  The Company warrants that all such tax returns made available will be true and correct in all  material  respects.The  Company  may,  at  its  sole  discretion,  substitute  audited  financial statements  or  unaudited  financial  statements  signed  by  an  independent  accountant for  the  tax returns  required in this Agreement, in  each  case  prepared in accordance with generally  accepted accounting principles applied  on  a  consistent basis throughout the periods indicated and in  each case certified by an officer of the Company.  In connection with the end of each Fiscal Year, the Company shall send to the Investor and each Holder a copy  of the financial statements prepared for such Fiscal year within sixty days of the end of such Fiscal Year.  The Company is obligated to file, and will file, an annual report electronically with the SEC annually and post the report on its  website  at  [WEBSITE].  The  Company  will  continue  to  comply  with  the  ongoing  reporting requirements  of the Act  until: (1) the Company is required to  file  reports under  Section 13(a)  or Section 15(d) of the Securities and  Exchange Act; (2) the Company has filed at least one annual report  pursuant  to  Regulation  Crowdfunding  and  has  fewer  than  300  holders  of  record  and  has total  assets  that  do  not  exceed  $10,000,000;  (3)  the  Company  has  filed  at  least  three  annual reports pursuant to  Regulation Crowdfunding;  (4) the Company  or another party  repurchases all of  the  securities  issued  in  reliance  on  the  4(a)(6)  exemption  of  the  Act;  or  (5)  the  Company liquidates or dissolves its business in accordance with state law.
+        section.page-formc-review.m-t-1
+          .top-intro
+            p.small.text-xs-left.font-weight-bold FORM C Offering Material for
+            p.small.pb10
+              +frField('company.name', 'text')
+              |  as Issuer
+          ol(start="13")
+            li.pb10
+              b Confidentiality.
+              |  The  Investor  agrees  (a)  to  use  all  non-public  information received  from  the  Company  only  to  the  extent  necessary  to  enable  the  Investor  to  assess  the Investor's  investment  in  the  Company  and  to  confirm  the  Company's  determination  of  the Revenue  Share  Payment  and  (b) not to disclose  or provide  any  non-public information received from  the  Company  to  any  person  or  entity  without  the  Company's prior  written  consent. Ownership of all right, title and interest in any information made available to the Investor by the Company pursuant to this Agreement shall remain at all times with the Company, and nothing in this  Agreement  shall  give  to  Investor  any  right,  title  or  interest  in, or  license  to,  any  such information.
+            li.pb10
+              b Default.
+              |  Upon  the  occurrence  of  an  Event  of  Default  (as  defined  below),  all unpaid  amounts  of  the  Total  Repayment  Amount  owing  hereunder  and  still  outstanding  shall automatically  be  immediately  due,  payable  and  collectible  by  Investor  pursuant  to  applicable law.    The  parties  agree  that  each  of  the  following  events  shall  be  an “Event  of  Default”hereunder:
+              ol(type="a")
+                li.pb10 Other than with  respect to the  one-time  forbearance  contemplated by  thisAgreement in Section 5, the Company fails to pay any annual Revenue Share Payment due under this Agreement on the date the same becomes due and payable;
+                li.pb10 The Company files any petition or action for relief under any bankruptcy, reorganization,  insolvency  or  moratorium  law  or  any  other  law  for  the  relief  of,  or  relating  to, debtors, now or hereafter in effect, or makes any assignment for the benefit of creditors or takes any action in furtherance of any of the foregoing; or
+                li.pb10 An involuntary petition is filed against the Company (unless such petition is  dismissed  or  discharged  within  60  days)  under  any  bankruptcy  statute  now  or  hereafter  in effect,  or  a  custodian,  receiver,  trustee  or  assignee  for  the  benefit  of  creditors  (or  other  similar official) is appointed to take possession, custody or control of any property of the Company.
+            li.pb10
+              b  Characterization  of  Investment.
+              |   Investor  acknowledges  and  accepts  that  this Agreement  and  the  promise  to  pay  a  sum  certain  contained  herein  may  be  deemed  a  form  of security  for purposes  of  the  Act.    The parties agree that they shall treat this  obligation to  repay the Total Repayment Amount as debt for financial, tax and other applicable purposes, and not as equity.  The promise to pay amounts due pursuant to this Agreement is an unsecured obligation and may, under certain circumstance, be deemed to be a promissory note or a form of unsecured loan.  Investor acknowledges that the contractual rights contained in this Agreement include the Company’s  promise  to  repay  the  Total  Repayment  Amount  over  time  in  variable  amounts  and consequently,  an  interest  rate  may  be  impossible  to  calculate.   To  the  extent  allowed  under applicable  law,  the  Revenue  Share  Payment  and  any  portion  thereof  will  not  be  considered interest  under  state  usury  laws.The  parties  agree  that  the  Investment  Amount  does  not  accrue interest because the promise to pay the Total Repayment Amount is effective immediately upon execution of this Agreement.  Investor understands and accepts that there is no specific date upon which  Total  Repayment  Amount  will  be  repaid  that  can  be  calculated  as  of  the  date  of  this Agreement.  Investor hereby authorizes the Company to make any withholding required by law.
+        section.page-formc-review.m-t-1
+          .top-intro
+            p.small.text-xs-left.font-weight-bold FORM C Offering Material for
+            p.small.pb10
+              +frField('company.name', 'text')
+              |  as Issuer
+          ol(start="16")
+            li.pb10
+              b Transfer,  Successors and Assigns.
+              |  This Agreement and the obligation to repay the  Total  Repayment  Amount  described  herein  may  not  be  sold,  transferred  or  assigned  by  the Investor without (a) the consent of the Company, which consent may be withheld for any reason, and  (b)  complying  with  all  applicable  federal  and  state  securities  laws.  The  Company  may require   that   any   desired   transferee   deliver   to   the   Company   a   signed   written   agreement acknowledging  and  agreeing  to  these  restrictions  on  transfer.The  Company  may  assign  this instrument  in  whole,  without  the  consent  of  the  Investor,  in  connection  with  any  Change  of Control  or  reincorporation  to  change  the  Company’s  domicile.    Subject  to  the  foregoing,  this instrument will be binding on the parties’ successors and assigns.
+            li.pb10
+              b Waiver.
+              |  The  Company  waives  presentment  and  demand  for  payment  and  shall pay  all  costs  of  collection  when  incurred,  including,  without  limitation,  reasonable  attorneys’fees, costs and other expenses.  The right to plead any and all statutes of limitations as a defense to any demands hereunder is hereby waived to the full extent permitted by law.
+            li.pb10
+              b Amendments.
+              |  Any  provision  of  this  instrument  may  be  amended,  waived  or modified upon the written consent of the Company and the participants in the Offering holding a majority of the dollar amount raised in the Offering.
+            li.pb10
+              b Notice.
+              |  Any  notice  required  or  permitted  by  this  instrument  will  be  deemed sufficient  when  delivered  personally  or  by  overnight  courier  or  sent  by  email  to  the  relevant address  listed  on  the  signature  page,  or  48  hours  after  being  deposited  in  the  U.S.  mail  as certified  or  registered  mail  with  postage  prepaid,  addressed  to  the  party  to  be  notified  at  such party’s address listed on the signature page, as subsequently modified by written notice.
+            li.pb10
+              b Governing  Law.
+              |  This  Agreement  shall  be  governed  by,  and  construed  and enforced  in  accordance  with,  the  laws  of  the  Issuer’s  State  of  [JURISDICTION], excluding conflict of laws principles that would cause the application of laws of any other jurisdiction.
+            li.pb10
+              b Termination.
+              |  This Agreement shall terminate once the Investor has been repaid the  Total Repayment Amount, provided however, that Sections 13 and15 shall survive any such termination.
 
 //MODAL
 #formc_review_popup.modal.fade(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")

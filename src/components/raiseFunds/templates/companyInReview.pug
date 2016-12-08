@@ -3,7 +3,7 @@ include ../../../templates/mixins.pug
 +breadcrumbs('Congratulations!', '', 
   [
     ['Home', '/'],
-    ['Thank you', '']
+    ['Review', '']
   ]
 )
 
@@ -26,4 +26,4 @@ include ../../../templates/mixins.pug
           br
           |  We will review and contact you shortly.
         .info-btn-block.m-t-3
-          a(href="/" + values.id).btn.btn-secondary PREVIEW
+          a(href="/" + company.id).btn.btn-secondary PREVIEW

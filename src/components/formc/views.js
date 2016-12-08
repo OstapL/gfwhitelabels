@@ -327,7 +327,8 @@ module.exports = {
   teamMembers: Backbone.View.extend(_.extend({
     urlRoot: formcServer + '/:id' + '/team-members',
     events: _.extend({
-      'submit form': api.submitAction,
+      'click #submitForm': api.submitAction,
+      'change #full_time_employers,#part_time_employers': 'updateServer',
       'click .submit_formc': submitFormc,
       'click .delete-member': 'deleteMember',
     }, menuHelper.events),
@@ -342,8 +343,7 @@ module.exports = {
     },
 
     getSuccessUrl(data) {
-      window.location.reload();
-      return '/formc/' + this.model.id + '/team-members';
+      return '/formc/' + this.model.id + '/related-parties';
     },
 
     initialize(options) {
@@ -373,6 +373,17 @@ module.exports = {
           }
         });
       }
+    },
+
+    updateServer(e) {
+      api.makeRequest(
+        this.urlRoot.replace(':id', this.model.id),
+        {
+          'full_time_employers': this.el.querySelector('#full_time_employers').value,
+          'part_time_employers': this.el.querySelector('#part_time_employers').value,
+        },
+        'PUT'
+      );
     },
 
     render() {

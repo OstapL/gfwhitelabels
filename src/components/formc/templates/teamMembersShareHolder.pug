@@ -35,18 +35,18 @@ section.formc-team-members-director.container.m-b-85
         +fieldTextLabel("email", _.extend({
           class1: 'col-xl-3 col-lg-12 text-lg-left text-xl-right ',
           class2: 'col-xl-9 col-lg-12',
-          help_text: 'On this  team member’s E-mail we will send invitation, using which he has to confirm that really belongs to your company.',
+          help_text: 'We will need to contact team members',
           }, fields.email))
         .row.form-group
-          .col-date
+          .col-date#dob
             label.col-xl-3.col-lg-12.text-xl-right.textlg-left Date of birth
               span.color-red *
             .col-xl-4.col-lg-6.p-r-0
-              +fieldDateDay("dob", _.extend({
+              +fieldDateMonth("dob", _.extend({
                 class: 'col-xl-4 col-lg-4 col-xs-4 p-l-0 m-d-p-r-5',
                 placeholder: 'MM',
               }, fields.dob))
-              +fieldDateMonth("dob", _.extend({
+              +fieldDateDay("dob", _.extend({
                 class: 'col-xl-4 col-lg-4 col-xs-4 p-r-0  m-d-p-l-5',
                 placeholder: 'DD',
               }, fields.dob))

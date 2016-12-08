@@ -114,7 +114,7 @@ section.team-members.container.m-b-85
           label: 'Profile Picture',
           help_text: 'This image entices investors to view your campaign. A minimum size of 1600x400 is recommended.',
           text: 'Drop your photo here or click to upload',
-          value: member.photo_data[0],
+          data: member.photo_data[0],
         }, fields.photo_image_id))
       //.row.dropzone__photo.media-item
         .col-lg-3.p-r-12.col-md-12.text-md-center.text-sm-center.text-xs-center
@@ -133,7 +133,7 @@ section.team-members.container.m-b-85
                   img(src=member.photo).img-fluid.img-circle.img-photo
       .col-lg-12.text-lg-right.p-r-0.p-t-2.text-md-center.text-sm-center.text-xs-center
         button.btn.btn-secondary.text-uppercase.m-r-3.cancel cancel
-        button(data-method="PATCH").btn.btn-primary.text-uppercase.pull-lg-right.save Save
+        button(data-method=index == 'new' ? 'POST' : 'PUT').btn.btn-primary.text-uppercase.pull-lg-right.save Save
           //
             .col-lg-6.p-r-0
               .dropdown.pull-right

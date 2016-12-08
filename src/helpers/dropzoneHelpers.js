@@ -179,6 +179,7 @@ module.exports = {
 
         // delete this.model[name];
         this.model[dataFieldName] = [];
+
         this._notifyServer(name).then((r) => {
           console.log(r);
           return api.makeRequest(filerServer + '/' + fileId, 'DELETE');
@@ -330,6 +331,7 @@ module.exports = {
 
       const onCrop = (imgData) => {
         const fieldDataName = this._getDataFieldName(name);
+
         let model = this.model[fieldDataName];
         if (!model[0].urls)
           model[0].urls = [];
@@ -452,6 +454,29 @@ module.exports = {
     },
 
     _imagefolder(name) {
+      //logic for showing cropper in sequentially for each image in gallery
+      let cropQueue = [];
+      let cropping = false;
+
+      const enqueueImage = (imgId) => {
+        cropQueue.push(imgId);
+        cropNext();
+      };
+
+      const cropNext = (resetCropping) => {
+        if (!cropQueue.length)
+          return;
+
+        cropping = resetCropping ? false : cropping;
+
+        if (cropping)
+          return;
+
+        let imgId = cropQueue.shift();
+        this._cropImage(imgId, name, onCrop);
+        cropping = true;
+      };
+
       let dzOptions = {
         paramName: name,
         params: {
@@ -512,6 +537,8 @@ module.exports = {
         $('a.crop-image[data-imageid=' + img.id + ']').closest('.one-photo').find('img').attr('src', imgData.urls[0]);
 
         this._notifyServer(name);
+
+        cropNext(true);
       };
 
       const cropImage = (e) => {
@@ -548,6 +575,7 @@ module.exports = {
 
         $('.dropzone__' + name + ' .all-gallery').append(imageBlock);
 
+        enqueueImage(imageId);
       });
 
       //attach remove item handlers

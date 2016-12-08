@@ -1,4 +1,3 @@
-- 'use strict';
 include ../../../templates/mixins.pug
 include ../../../templates/fields_mixins.pug
 include ../../raiseFunds/templates/menu.pug
@@ -38,7 +37,7 @@ section.create-company-team-add.container
           p.pb10 OFFICER means:  president, vice president, secretary, treasurer or principal financial officer, comptroller or principal accounting officer, and any person routinely performing similar functions.
           | 20% VOTING SHAREHOLDER means: no earlier than 120 days prior to the date of this offering, please list beneficial owners of 20% or more of issuer’s outstanding voting equity securities.
 
-    form(action="").form-section
+    form.form-section
       .col-lg-12.m-t-1.m-b-2
         b How many emploees do you have?
       .col-lg-6.required
@@ -65,7 +64,6 @@ section.create-company-team-add.container
           |  ADD 20% VOTING SHAREHOLDER
 
       .col-lg-12.table-responsive.m-t-2
-        - var v = {};
         table.table.table-bordered.m-b-0.team-member-table
           thead
             tr.color-grey
@@ -74,13 +72,18 @@ section.create-company-team-add.container
               th.text-xs-center Status
               th(colspan="2")
           tbody
-            tr
-              td(colspan="5").p-x-0.p-y-0
-                #membersMessage.warning-block.warning-team-add.team-member-no-border.text-lg-left.m-b-0
-                  i.fa.fa-info-circle 
-                  span.warning-text First of all please identify the Officers in your company responsible for the following 3 roles. Please note that, if necessary, the same person may be identified with multiple titles.
             - var requiredRoles = { 1: 'CEO/President', 2: 'Principal Financial Officer/Treasurer', 5: 'Controller/Principal Accounting Officer' };
             - var roleCounter = 0;
+            tr
+              td(colspan="5").p-x-0.p-y-0
+                each k,v in requiredRoles
+                  - var persons = values.team_members.filter(function(el) { return (el.title ? el.title.indexOf(v) != -1: false); })
+                  if persons.length > 0
+                    - roleCounter ++;
+                if roleCounter < 2
+                  #membersMessage.warning-block.warning-team-add.team-member-no-border.text-lg-left.m-b-0
+                    i.fa.fa-info-circle 
+                    span.warning-text Please identify the Officers in your company responsible for the following 3 roles. Please note that, if necessary, the same person may be identified with multiple.
             each k,v in requiredRoles
               - var persons = values.team_members.filter(function(el) { return (el.title ? el.title.indexOf(v) != -1: false); })
               for person in persons
@@ -128,4 +131,4 @@ section.create-company-team-add.container
       div(style="display: " +  (values.team_members.length >= 1 ? 'block' : 'none')).col-lg-12.pull-lg-right.p-r-0.m-t-3
 
       .col-lg-12.text-md-center.text-sm-center.text-xs-center.m-t-3
-        button(type="submit").btn.btn-primary.text-uppercase.pull-lg-right Save And Continue
+        button(data-method="PUT")#submitForm.btn.btn-primary.text-uppercase.pull-lg-right Save And Continue

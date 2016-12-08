@@ -197,7 +197,7 @@ div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true
             |  Once you submit, you will no longer have the ability to edit your Campaign
             .info-btn-block.mb30
               a(href="#" data-dismiss="modal").btn.m-t-2.m-r-1.btn-secondary Cancel
-              a(href="/campaign/thankyou/" + campaignId).btn.m-t-2.btn-primary.text-uppercase Yes
+              button(data-companyId=formc.company_id)#postForReview.btn.m-t-2.btn-primary.text-uppercase Yes
       .modal-footer
 //MODAL
 div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")#city_state_modal.modal.fade
