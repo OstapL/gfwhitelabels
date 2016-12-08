@@ -741,12 +741,7 @@ section.formc-review
             |  Offering amount
           else
             |  aggregate amount raised in the Offering 
-          |  if the Offering is successfully completed and closed.  Such compensation is paid only if the Company’s total Offering proceeds 
-          if values.campaign.security_type == 0
-            |  meets or exceeds 
-          else
-            |  meet or exceed 
-          | the target minimum offering amount indicated in this Material. Additionally, the Company reimburses the Intermediary for certain fees that the Intermediary passes through to the Company, such as the costs related to performing background checks and establishing an escrow account.  These fees are one-time fees and are not dependent on the success of the Offering. In total, the Intermediary will receive, directly or indirectly, a dollar amount equal to the sum of all the following: (a) a transaction fee equal to
+          |  if the Offering is successfully completed and closed.  Such compensation is paid only if the Company’s total Offering proceeds meet or exceed the target minimum offering amount indicated in this Material. Additionally, the Company reimburses the Intermediary for certain fees that the Intermediary passes through to the Company, such as the costs related to performing background checks and establishing an escrow account.  These fees are one-time fees and are not dependent on the success of the Offering. In total, the Intermediary will receive, directly or indirectly, a dollar amount equal to the sum of all the following: (a) a transaction fee equal to
           +frField('company.trans_percent', 'text')
           | % of the total amount of monies raised in the Offering for the purchase of securities offered by the Company, payable upon success, (b) a registration and processing fee equal to $
           +frField('company.registration_fee', 'text')
@@ -766,22 +761,7 @@ section.formc-review
           p.small.pb10
             +frField('company.name', 'text')
             |  as Issuer
-        p execution of a Subscription Agreement available on the Platform, which contains, among other things, certain representations, warranties and covenants.  The Company must secure investor commitments that equal or exceed the minimum target amount for the Offering prior to the applicable 
-          if values.campaign.security_type == 0
-            |  closing 
-          else
-            |  deadline
-          |  date, or the Offering will be canceled and investor funds committed in connection with the Offering will be returned.  An investor commitment is conditional after being made, but only up until the time that is 48 hours before the applicable
-          if values.campaign.security_type == 0
-            |  closing 
-          else
-            |  deadline 
-          |  date.  For the 48-hour period prior to the applicable 
-          if values.campaign.security_type == 0
-            |  closing 
-          else
-            |  deadline 
-          |  date, investor commitments may not be cancelled by the investor but in certain circumstances may still be returned (e.g. if the target minimum amount is not met).   As a reminder, investors are required to reconfirm their investment commitment  
+        p execution of a Subscription Agreement available on the Platform, which contains, among other things, certain representations, warranties and covenants.  The Company must secure investor commitments that equal or exceed the minimum target amount for the Offering prior to the applicable closing date, or the Offering will be canceled and investor funds committed in connection with the Offering will be returned.  An investor commitment is conditional after being made, but only up until the time that is 48 hours before the applicable closing date.  For the 48-hour period prior to the applicable closing date, investor commitments may not be cancelled by the investor but in certain circumstances may still be returned (e.g. if the target minimum amount is not met).   As a reminder, investors are required to reconfirm their investment commitment  
           if values.campaign.security_type == 1
             |  within five days
           |  after receiving notice of a material change to the Offering.  If an investor takes no action to reconfirm the investment commitment after the Company notifies the investor of a material change, the commitment will be cancelled and funds relating to that Offering returned
@@ -842,15 +822,32 @@ section.formc-review
         h2.text-uppercase.text-xs-center.font-weight-bold#description_securities.letter-spacing-normal.m-b-3 DESCRIPTION OF SECURITIES OFFERED
         p.text-uppercase.m-t-0.m-b-0.pb10 
           u General Terms
-        p.text-indent The type of security being offered is non-voting shares of our common stock.  This means purchasers of the Shares will have no voting rights whatsoever. Each investor is responsible for understanding the  Company’s  governing  documents and can use the communication channels on the Platform to request clarification or additional information.
-        p.text-uppercase.m-t-3.m-b-0.pb10 
-          u Common Stock
-        p.text-indent The voting, dividend and liquidation rights of the holders of the Common Stock are subject to and qualified by the rights, powers, and preferences of the holders of the Common Stock set forth in the Company’s charter documents as well as the terms of the Subscription Agreement. The securities in this Offering are non-voting common stock. Dividends upon the capital stock of the Company, if any, subject to the provisions of the Certificate of Incorporation, may be declared by the Board of Directors at any regular or special meeting, pursuant to law. The Company does not anticipate issuing any dividends in the near term.
+        if values.campaign.security_type == 0
+          p.text-indent The type of security being offered is non-voting shares of our common stock.  This means purchasers of the Shares will have no voting rights whatsoever. Each investor is responsible for understanding the  Company’s  governing  documents and can use the communication channels on the Platform to request clarification or additional information.
+        else
+          p.text-indent.pb10 The  type  of  security  being  offered  is  a  debt  security  in  the  form  of  a  Revenue  Share Agreement which contains a promise to repay a sum certain similar to a promissory note (a form of the Revenue Share Agreement is attached as Exhibit D).  These Notes are unsecured so that the  repayment obligation  is  supported only by  the Company’s creditworthiness and not by any specifically  identified  collateral.    As  a  debt  security,  the  Notes  have  no  voting  rights,  which means  that  purchasers  of  the  Notes  will  have  no  ability  to  vote  on  any  matters  relating  to  the Company.
+          p.text-indent.pb10 The  Revenue  Share  Agreement  contain  a  promise  by  the  Company  to  repay  each investor  a  dollar  amount  equal  to  two  times  (2x)  the value  that  such  investor  invested  in  their respective Note, in each case in the manner described below.
+          ul
+            li.pb10 Beginning  with  the  second  full 12-month  financial  reporting  period  following  the completion of  the Offering, the Company will  set  aside  a dollar amount equal  to five  percent  (5%)  of  the  Company’s net  revenue  recorded  during  such  financial reporting  period  (such  amount,  the “ Revenue  Pool” ).    The  size  of  the  Revenue Pool may vary from year to year based on the performance of the Company, but will  always  comprise  five percent  (5%) of the  Company’s net  revenues  for  such year.
+            li.pb10 Beginning  with  the  second  full 12-month  financial  reporting  period  following  the completion  of  the  Offering, unless  the  Company  exercises  its  forbearance  right as provided below, the Company will pay to each investor a dollar amount equal to the product calculated by multiplying (a) the Revenue Pool by (b) a fraction the numerator of which is the individual dollar amount that such investor invested in the Notes and the denominator of which is the aggregate dollar amount of all the Notes sold in the Offering. In this manner, each investor will receive their pro-rata share of the Revenue Pool in each applicable financial reporting period until such time  that each  investor  is paid back  a dollar amount equal to  two  times (2x)  the value that such investor invested in the Notes.
+            li.pb10 The Company has the right to forebear one annual payment of the revenue share amount  upon  notice  to  the  investors.    Consequently,  the  Company  will  have  no repayment  obligation  in  the  first  full  twelve  (12)  month  financial  reporting  period following  the  Offering  and  it  may  also  have  no  repayment  obligation  in  one additional  twelve  (12)  month  financial  reporting  period  which  would  delay  the repayment  of  the  required  amount  to  each  investor.The  Company  may  not exercise this forbearance right more than once.
+            li.pb10 The Company has the right to repay an amount in excess of the Revenue Pool in any  given  period,  provided  that  each  investor  receives  their  pro-rata  share  of such  excess  amount.    The  Company  will  have  no  further  payment  obligations once it has returned  to each  investor  an amount  equal to  twice (2x) the amount that each investor invested in their respective Note.
+          p.text-indent The  form  of  Note  is  attached  as  Exhibit  D.    Each  investor  should  review  this  form  of  Note  to better understand the exact terms that would be applicable to each Note.
+        if values.campaign.security_type == 0
+          p.text-uppercase.m-t-3.m-b-0.pb10 
+            u Common Stock
+          p.text-indent The voting, dividend and liquidation rights of the holders of the Common Stock are subject to and qualified by the rights, powers, and preferences of the holders of the Common Stock set forth in the Company’s charter documents as well as the terms of the Subscription Agreement. The securities in this Offering are non-voting common stock. Dividends upon the capital stock of the Company, if any, subject to the provisions of the Certificate of Incorporation, may be declared by the Board of Directors at any regular or special meeting, pursuant to law. The Company does not anticipate issuing any dividends in the near term.
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u Voting Rights and Limitations
-        p.text-indent The Shares have no voting rights and will be excluded from all voting.  Additionally, the Shares have no liquidation or preference rights. The rights of shareholders may be modified by a change to the Company’s governing documents.
-        p.text-uppercase.m-t-3.m-b-0.pb10 
-          u Restrictions on Transfer of Shares
+        if values.campaign.security_type == 0
+          p.text-indent The Shares have no voting rights and will be excluded from all voting.  Additionally, the Shares have no liquidation or preference rights. The rights of shareholders may be modified by a change to the Company’s governing documents.
+        else
+          p.text-indent The Notes have no voting rights and will be excluded from all voting.  The ability to modify the rights of the Revenue Share Agreement will be set forth in the final form of the Revenue Share Agreement attached to the Subscription and Purchase Agreement. The default is the written consent of the Company and the participants in the Offering holding a majority of the dollar amount raised in the Offering.
+        p.text-uppercase.m-t-3.m-b-0.pb10
+          if values.campaign.security_type == 0 
+            u Restrictions on Transfer of Shares
+          else
+            u Restrictions on Transfer of the Notes
         p.pb10.text-indent Consistent with Subpart E of Regulation Crowdfunding (17 CFR 501), securities issued in this Offering pursuant to section 4(a)(6) of the Securities Act (15 U.S.C. 77d(a)(6)) may not be transferred by any purchaser of such securities during the one-year period beginning when the securities were issued, unless such securities are transferred to a limited group including (a) to the Company, (b) to an accredited investor, (c) as part of an offering registered with the SEC, or (d) to a family member, trust or equivalent.  In connection with any participation in this Offering, each potential investor may be required to agree not to dispose of or otherwise sell or transfer any of the Shares, until there is in effect a registration statement under the Securities Act covering such proposed disposition or if such disposition will not require registration under the Securities Act.
 
       // page 15
@@ -871,15 +868,20 @@ section.formc-review
         p.pb10.text-indent Ability of any principal shareholders to affect the purchasers of the securities being offered:
         p.p-l-2
           +frField('formc.exercise_of_rights', 'textarea')
-        p.text-uppercase.m-t-3.m-b-0.pb10 
-          u Valuation of the Securities
-        p.pb10.text-indent The offering price of the securities in this Offering has been established by the Company and does not necessarily bear any specific relation to the assets, book value or potential earnings of the Company or any other recognized criteria of value. The Shares have not been registered under the Securities Exchange Act of 1934 and have not been traded or quoted on any exchange or quotation system. There is no public market in which shareholders may sell their Shares, and there can be no assurance given that such a market will ever develop. The securities offered hereby are restricted by law and the ability to transfer and interests in the Shares is severely limited.
-        p.pb10.text-indent Method by which the offered securities are valued:
-        p.p-l-2.pb10
-          +frField('campaign.valuation_determination', 'select')
-        p.p-l-2.pb10
-          if values.campaign.valuation_determination == 2
-            +frField('campaign.valuation_determination_other', 'text')
+        if values.campaign.security_type == 0 
+          p.text-uppercase.m-t-3.m-b-0.pb10
+            u Valuation of the Securities
+          p.pb10.text-indent The offering price of the securities in this Offering has been established by the Company and does not necessarily bear any specific relation to the assets, book value or potential earnings of the Company or any other recognized criteria of value. The Shares have not been registered under the Securities Exchange Act of 1934 and have not been traded or quoted on any exchange or quotation system. There is no public market in which shareholders may sell their Shares, and there can be no assurance given that such a market will ever develop. The securities offered hereby are restricted by law and the ability to transfer and interests in the Shares is severely limited.
+          p.pb10.text-indent Method by which the offered securities are valued:
+          p.p-l-2.pb10
+            +frField('campaign.valuation_determination', 'select')
+          p.p-l-2.pb10
+            if values.campaign.valuation_determination == 2
+              +frField('campaign.valuation_determination_other', 'text')
+        else
+          p.text-uppercase.m-t-3.m-b-0.pb10
+            u Valuation of the Securities
+          p.pb10.text-indent The Company has determined the purchase price for the Notes by taking into account its anticipated future revenue.  This purchase price was not based on any independent valuation of the Company or any of its assets.  It should be noted that one of the reasons that the Company chose to offer Revenue Share Agreement is that this type of security avoids the need to determine a valuation for the Company or its assets.  As stated on the Platform, the Intermediary has not provided any investment advice relating to the Offering or the pricing of the Notes.
 
       // page 16
       section.page-formc-review.m-t-1
@@ -1225,11 +1227,28 @@ section.formc-review
         p.text-indent There is the risk that some of the information supplied by the Company may be inaccurate.  The management of the Company has provided all of the information stated in this Material without any third party verifying or investigating such information. The Company makes no express or implied representation or warranty as to the completeness of this information or, in the case of projections, estimates, future plans, or forward looking assumptions or statements, as to their attainability or the accuracy and completeness of the assumptions from which they are derived.  It is expected that each prospective investor will pursue their own independent investigation.  Forward-looking statements are subject to certain risks, trends and uncertainties that could cause actual results to differ materially from those projected.
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u Risks as a Minority Holder
-        p.pb10.text-indent Purchasers of a minority ownership have risks relating to limited control, limited information and limited rights.  Minority owners have no control over the marketability and value of their purchased securities and they may be required to hold onto their minority ownership position for an indefinite period.  Additionally, minority owners must address the following risks:
-        ul
-          li.pb10 Minority owners have no right to participate in any management decisions of the Company or the day-to-day operations. There is the risk that the majority owners make decisions or take actions that a minority owner thinks is bad for the Company.   A minority owner has limited ability to influence the governance and operations of a Company.
-          li.pb10 Minority owners have limited rights to information beyond those filings that are required by law to be made available.  There is the risk that minority owners may be denied immediate information about the Company’s performance or corporate affairs.
-          li.pb10 Minority owners have limited rights, if any, to demand current distributions from an operating business. Majority owners likely have the right and power to avoid making any distributions of profits at their discretion.  There is also the risk that the management of the Company pursues a spending plan that causes the Company not to generate any profits to be distributed.
+        if values.campaign.security_type == 0 
+          p.pb10.text-indent Purchasers of a minority ownership have risks relating to limited control, limited information and limited rights.  Minority owners have no control over the marketability and value of their purchased securities and they may be required to hold onto their minority ownership position for an indefinite period.  Additionally, minority owners must address the following risks:
+          ul
+            li.pb10 Minority owners have no right to participate in any management decisions of the Company or the day-to-day operations. There is the risk that the majority owners make decisions or take actions that a minority owner thinks is bad for the Company.   A minority owner has limited ability to influence the governance and operations of a Company.
+            li.pb10 Minority owners have limited rights to information beyond those filings that are required by law to be made available.  There is the risk that minority owners may be denied immediate information about the Company’s performance or corporate affairs.
+            li.pb10 Minority owners have limited rights, if any, to demand current distributions from an operating business. Majority owners likely have the right and power to avoid making any distributions of profits at their discretion.  There is also the risk that the management of the Company pursues a spending plan that causes the Company not to generate any profits to be distributed.
+            li.pb10 Minority owners have limited rights, if any, to have their interest bought out. There is the risk that a minority owner will want to sell their interest and they will have no right to force the Company to buy them out.  There will also be liquidity risk if there is no secondary market for the Company’s securities.
+            li.pb10 Minority owners have limited input into fundamental corporate changes such as sale of the Company.  There is a risk that a sale could be structured in a way to avoid certain payouts to minority owners, such as a sale of assets over time with the proceeds reinvested in another business.
+            li Minority owners may have interests that are different than shareholder-officers or shareholders that are part of the management team of the Company.  There is the risk that minority owners perceive a conflict of interest if, for example, the managers that are shareholders receive a significant raise.  Additionally, there is the risk that a minority owner will want to remove a manager or board member but have no independent power to do so.
+        else
+          p.pb10.text-indent Purchases of a Revenue Share Agreement are considered debt securities and have risks relating  to  limited  control,  limited  information  and  limited  rights.    Note  holders  have  no  voting power to influence the Company and must address the following risks:
+          ul
+            li.pb10 Note  holders  have  no  right  to  participate  in  any  management  decisions  of  the Company or the day-to-day operations.
+            li.pb10 Note  holders  have  limited  rights  to  information  beyond  those  filings  that  are required by law to be made available.
+            li.pb10 Note holders have limited rights to cause a prepayment of the amounts owed.
+            li.pb10 Note holders have no blocking rights and limited input into fundamental corporate changes  such  as  sale  of  the  Company.    There  is  a  risk  that  a  sale  could  be structured  in  a  way  to  avoid  certain  payouts  to  note holders,  such  as  a  sale  of assets over time with the proceeds reinvested in another business.
+            li.pb10 Note  holders  may  have  interests  that  are  different  than  equity  holders,  some  of whom may  be part of  the management  team of  the Company.   There  is  the  risk that a Note holder may perceive a conflict of interest if, for example, the managers that  are  shareholders  take  any  other  action  that  benefits  them  but  increases  the risk  that  revenue  may  be  impacted  such  that  the  repayment  period  from  the revenue share is extended.
+            li.pb10 The Company may take certain corporate actions that could impact Note holders, particularly if such actions impact the future revenue stream that is supporting the repayment of the Notes. 
+            li.pb10 To  the  extent  that  there  is  funding  that  exceeds  the minimum  amount,  investors may experience an extended payback period as additional investors will be pulling from the same fixed revenue pool.
+            li.pb10 In the event the Company does not generate any or sufficient revenue, investors may  not  receive  any  return  at  all  and/or  may  lose  a  portion  or  all  of  their investment amounts.
+            li.pb10 The return to investors who participate in the Revenue Share Agreement and the future value of the investment will depend on a number of factors which cannot be predicted at this time and which may be beyond the control of the Company.
+
 
       // page 22
       section.page-formc-review.m-t-1
@@ -1239,9 +1258,7 @@ section.formc-review
             +frField('company.name', 'text')
             |  as Issuer
         ul
-          li.pb10 Minority owners have limited rights, if any, to have their interest bought out. There is the risk that a minority owner will want to sell their interest and they will have no right to force the Company to buy them out.  There will also be liquidity risk if there is no secondary market for the Company’s securities.
-          li.pb10 Minority owners have limited input into fundamental corporate changes such as sale of the Company.  There is a risk that a sale could be structured in a way to avoid certain payouts to minority owners, such as a sale of assets over time with the proceeds reinvested in another business.
-          li Minority owners may have interests that are different than shareholder-officers or shareholders that are part of the management team of the Company.  There is the risk that minority owners perceive a conflict of interest if, for example, the managers that are shareholders receive a significant raise.  Additionally, there is the risk that a minority owner will want to remove a manager or board member but have no independent power to do so.
+          
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u Risks Regarding Corporate Actions
         p.pb10 The Company may take certain corporate actions that could impact investors that purchase the Shares.
