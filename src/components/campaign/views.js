@@ -428,7 +428,6 @@ module.exports = {
       'change .country-select': 'changeCountry',
       'change .payment-type-select': 'changePaymentType',
       'change #amount': 'amountRounding',
-      click: 'hideRoundingPopover',
       'keyup .typed-name': 'copyToSignature',
       'keyup #annual_income,#net_worth': 'updateLimitInModal',
       'click button.submit-income-worth': 'updateIncomeWorth',
@@ -456,12 +455,6 @@ module.exports = {
 
     copyToSignature(e) {
       this.$('.signature').text($(e.target).val());
-    },
-
-    hideRoundingPopover(e) {
-      if (this.currentAmountTip == 'rounding' || this.currentAmountTip == 'amount-ok') {
-        $('#amount').popover('hide');
-      }
     },
 
     changePaymentType(e) {
