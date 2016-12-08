@@ -720,7 +720,6 @@ module.exports = {
         this.currentAmountTip = 'rounding';
         $('#amount').popover('show');
         this._updateTotalAmount(e);
-        $('.popover').scrollTo();
       }
     },
 
