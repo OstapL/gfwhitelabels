@@ -176,16 +176,15 @@ section.formc-review
         p.text-xs-center.font-weight-bold.m-b-3 $
           +frField('campaign.minimum_raise', 'text')
           |   MINIMUM OFFERING
-        p.text-xs-center.font-weight-bold OFFERING PRICE: $
-          +frField('campaign.price_per_share', 'text')
-          if values.campaign.security_type == 0          
+        if values.campaign.security_type == 0 
+          p.text-xs-center.font-weight-bold OFFERING PRICE: $
+            +frField('campaign.price_per_share', 'text')
             |  per Share
-            p.text-xs-center.font-weight-bold
-              +frField('campaign.security_type', 'select')
-              |  Offered
-          else
-            |  in Debt Securities
-            p.text-xs-center.font-weight-bold Revenue Share Agreement Offered
+          p.text-xs-center.font-weight-bold
+            +frField('campaign.security_type', 'select')
+            |  Offered
+        else
+          p.text-xs-center.font-weight-bold Revenue Share Agreement Offered
         p.text-xs-center.font-weight-bold $
           +frField('campaign.minimum_increment', 'text')
           |  MINIMUM INVESTMENT
