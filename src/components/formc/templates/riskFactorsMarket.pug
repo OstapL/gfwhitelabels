@@ -35,7 +35,7 @@ section.formc-team-members-director.container.m-b-85
             each v, k in defaultRisks
               +showRiskForm(v, k, 'market_and_customer_risk')
 
-            - var disabled = false
+            - var disabled = false;
             each v, k in values['market_and_customer_risk']
               - if (k != 99)
                 - disabled = true;
