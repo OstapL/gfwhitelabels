@@ -31,7 +31,7 @@ section.formc-team-members-director.container.m-b-85
 
             - var disabled = false;
             each v, k in values['miscellaneous_risk']
-              - if (k != 99)
+              - if (k != 99 && !disabled)
                 - disabled = true;
               - if (!(k < Object.keys(defaultRisks).length) && k != 99)
                 +showRiskForm(v, k, 'miscellaneous_risk')

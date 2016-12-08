@@ -37,7 +37,7 @@ section.formc-team-members-director.container.m-b-85
 
             - var disabled = false;
             each v, k in values['market_and_customer_risk']
-              - if (k != 99)
+              - if (k != 99 && !disabled)
                 - disabled = true;
               - if (!(k < Object.keys(defaultRisks).length) && k != 99)
                 +showRiskForm(v, k, 'market_and_customer_risk')
