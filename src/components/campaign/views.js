@@ -429,7 +429,6 @@ module.exports = {
       'change .country-select': 'changeCountry',
       'change .payment-type-select': 'changePaymentType',
       'change #amount': 'amountRounding',
-      'click': 'hideRoundingPopover',
       'keyup .typed-name': 'copyToSignature',
       'keyup #annual_income,#net_worth': 'updateLimitInModal',
       'click button.submit-income-worth': 'updateIncomeWorth',
@@ -576,12 +575,6 @@ module.exports = {
 
     copyToSignature(e) {
       this.$('.signature').text($(e.target).val());
-    },
-
-    hideRoundingPopover(e) {
-      if (this.currentAmountTip == 'rounding' || this.currentAmountTip == 'amount-ok') {
-        $('#amount').popover('hide');
-      }
     },
 
     changePaymentType(e) {
@@ -733,13 +726,12 @@ module.exports = {
         this.currentAmountTip = 'rounding';
         $('#amount').popover('show');
         this._updateTotalAmount(e);
-        $('.popover').scrollTo();
       }
     },
 
     amountUpdate(e) {
       var amount = parseInt(e.currentTarget.value.replace(/\,/g, ''));
-      $(e.currentTarget).val(amount.toLocaleString('en-US') || 0)
+      $(e.currentTarget).val((amount || '').toLocaleString('en-US'));
 
       if (amount < this.model.campaign.minimum_increment) {
         this.currentAmountTip = 'minimum-investment';
