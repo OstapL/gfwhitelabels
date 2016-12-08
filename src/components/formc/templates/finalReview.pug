@@ -705,11 +705,18 @@ section.formc-review
         p commitments collectively, the issuer would be able to close the transaction on the original target closing date or an earlier date with at least five business days prior notice to the investors; and (5) the funds would be released by the escrow agent to the issuer, less any required fees sent to the Intermediary, and the issuer would issue the securities to the investor.
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u Method for Investor Cancellation of a Commitment 
-        p.text-indent Investors may cancel an investment commitment at any time up until forty-eight (48) hours prior to the applicable closing date.  The process for any such cancellation is for the investor to log onto the Platform and indicate a cancellation by selecting such option in connection with the applicable offering once they have logged into their account and accessed their investor dashboard.  With respect to specific scenarios: (1) if the target minimum offering amount is not met prior to the target closing date, then the Intermediary will automatically cancel all investment commitments and notify each investor of the return of their respective funds, (2) if the issuer reaches the target minimum offering amount prior to the deadline identified in the offering materials, then it may close the offering early (if it provides notice about the new offering deadline at least five business days prior to such new offering deadline) provided that the investor would be able to cancel the investment commitment before the 48-hour period prior to the new offering deadline, (3) if the issuer notifies the investor of a material change to an offering, then the investor must reconfirm their investment commitment after the material change is made to the offering, or such investor’s investment commitment will be cancelled and the committed funds will be returned.
+        p.text-indent Investors may cancel an investment commitment at any time up until forty-eight (48) hours prior to the applicable closing date.  The process for any such cancellation is for the investor to log onto the Platform and indicate a cancellation by selecting such option in connection with the applicable offering once they have logged into their account and accessed their investor dashboard.  With respect to specific scenarios: (1) if the target minimum offering amount is not met prior to the target closing date, then the Intermediary will automatically cancel all investment commitments and notify each investor of the return of their respective funds, (2) if the issuer reaches the target minimum offering amount prior to the deadline identified in the offering materials, then it may close the offering early (if it provides notice about the new offering deadline at least five business days prior to such new offering deadline) 
+          if values.campaign.security_type == 0
+            |  provided that the investor would be able to cancel the investment commitment before the 48-hour period prior to the new offering deadline, (3) if the issuer notifies the investor of a material change to an offering, then the investor must reconfirm their investment commitment after the material change is made to the offering, or such investor’s investment commitment will be cancelled and the committed funds will be returned.
+          else
+            |  with it always being the case that the investor would be able to cancel the investment commitment up until the 48-hour period prior to the new offering deadline, or (3) if the issuer notifies the investor of a material change to an offering, then the investor must reconfirm their investment commitment within five business days of receipt of the notice after the material change is made to the offering, or such investor’s investment commitment will be cancelled and the committed funds will be returned, less any fees incurred, without any accrued interest.
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u Method for Delivering the Securities
-          div 
-            | The issuer will record all investments in book entry form so that no certificates would be delivered. The fully executed Subscription and Purchase Agreement relating to the Offering will serve as a written record of the transaction and will be available on the Platform via the investor dashboard. The investor will also receive email confirmation of the successful closing of the Offering, which will confirm the number of securities purchased and the amount paid.
+          p.text-indent The issuer will record all investments in book entry form so that no certificates would be delivered. The fully executed Subscription and Purchase Agreement relating to the Offering will serve as a written record of the transaction and will be available on the Platform via the investor dashboard. The investor will also receive email confirmation of the successful closing of the Offering
+            if values.campaign.security_type == 0
+              | , which will confirm the number of securities purchased and the amount paid.
+            else
+              | .
             //+frField('formc.method_for_delivering_securities', 'text')
 
       // page 11
@@ -729,14 +736,23 @@ section.formc-review
           u Intermediary Compensation
         p.text-indent The Intermediary will be compensated a dollar amount equal to 
           +frField('company.trans_percent', 'text')
-          | % of the total Offering amount if the Offering is successfully completed and closed.  Such compensation is paid only if the Company’s total Offering proceeds meets or exceeds the target minimum offering amount indicated in this Material. Additionally, the Company reimburses the Intermediary for certain fees that the Intermediary passes through to the Company, such as the costs related to performing background checks and establishing an escrow account.  These fees are one-time fees and are not dependent on the success of the Offering. In total, the Intermediary will receive, directly or indirectly, a dollar amount equal to the sum of all the following: (a) a transaction fee equal to
-          | % of the total amount of monies raised in the Offering for the purchase of securities offered by the Company, payable upon success, (b) a registration and processing fee equal to $
+          | % of the total
+          if values.campaign.security_type == 0
+            |  Offering amount
+          else
+            |  aggregate amount raised in the Offering 
+          |  if the Offering is successfully completed and closed.  Such compensation is paid only if the Company’s total Offering proceeds 
+          if values.campaign.security_type == 0
+            |  meets or exceeds 
+          else
+            |  meet or exceed 
+          | the target minimum offering amount indicated in this Material. Additionally, the Company reimburses the Intermediary for certain fees that the Intermediary passes through to the Company, such as the costs related to performing background checks and establishing an escrow account.  These fees are one-time fees and are not dependent on the success of the Offering. In total, the Intermediary will receive, directly or indirectly, a dollar amount equal to the sum of all the following: (a) a transaction fee equal to
           +frField('company.trans_percent', 'text')
-          | % of the total amount of monies raised in the Offering for the purchase of securities offered by the Company, payable upon success, (b) a registration and processing fee equal to
+          | % of the total amount of monies raised in the Offering for the purchase of securities offered by the Company, payable upon success, (b) a registration and processing fee equal to $
           +frField('company.registration_fee', 'text')
-          | ayable upon registration, (c) a third-party fees equal to $
+          | payable upon registration, (c) a third-party fees equal to $
           +frField('company.party_fees', 'text')
-          | payable upon success and (d) a participation fee equal to
+          | payable upon success and (d) a participation fee equal to $
           +frField('company.fees_to_investor ', 'text')
           | committed to by the investor.
         p.text-uppercase.m-t-3.m-b-0.pb10 
@@ -750,7 +766,29 @@ section.formc-review
           p.small.pb10
             +frField('company.name', 'text')
             |  as Issuer
-        p execution of a Subscription Agreement available on the Platform, which contains, among other things, certain representations, warranties and covenants.  The Company must secure investor commitments that equal or exceed the minimum target amount for the Offering prior to the applicable closing date, or the Offering will be canceled and investor funds committed in connection with the Offering will be returned.  An investor commitment is conditional after being made, but only up until the time that is 48 hours before the applicable closing date.  For the 48-hour period prior to the applicable closing date, investor commitments may not be cancelled by the investor but in certain circumstances may still be returned (e.g. if the target minimum amount is not met).   As a reminder, investors are required to reconfirm their investment commitment after receiving notice of a material change to the Offering.  If an investor takes no action to reconfirm the investment commitment after the Company notifies the investor of a material change, the commitment will be cancelled and funds relating to that Offering returned. 
+        p execution of a Subscription Agreement available on the Platform, which contains, among other things, certain representations, warranties and covenants.  The Company must secure investor commitments that equal or exceed the minimum target amount for the Offering prior to the applicable 
+          if values.campaign.security_type == 0
+            |  closing 
+          else
+            |  deadline
+          |  date, or the Offering will be canceled and investor funds committed in connection with the Offering will be returned.  An investor commitment is conditional after being made, but only up until the time that is 48 hours before the applicable
+          if values.campaign.security_type == 0
+            |  closing 
+          else
+            |  deadline 
+          |  date.  For the 48-hour period prior to the applicable 
+          if values.campaign.security_type == 0
+            |  closing 
+          else
+            |  deadline 
+          |  date, investor commitments may not be cancelled by the investor but in certain circumstances may still be returned (e.g. if the target minimum amount is not met).   As a reminder, investors are required to reconfirm their investment commitment  
+          if values.campaign.security_type == 1
+            |  within five days
+          |  after receiving notice of a material change to the Offering.  If an investor takes no action to reconfirm the investment commitment after the Company notifies the investor of a material change, the commitment will be cancelled and funds relating to that Offering returned
+          if values.campaign.security_type == 0
+            | .
+          else
+            | , less any fees incurred, without any accrued interest. 
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u Jurisdictional Coverage
         p.text-indent Jurisdictions in which the issuer intends to offer the securities include the following: AL, AK, AZ, AR, CA, CO, CT, DE, DC, FL, GA, HI, ID, IL, IN, IA, KS, KY, LA, ME, MD, MA, MI, MN, MS, MO, MT, NE, NV, NH, NJ, NY, NC, ND, OH, OK, OR, PA, RI, SC, SD, TN, TX, UT, VT, WA, WV, WI, WY, WY, PR, GU, VI, NMI, AS
