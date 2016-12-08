@@ -176,16 +176,15 @@ section.formc-review
         p.text-xs-center.font-weight-bold.m-b-3 $
           +frField('campaign.minimum_raise', 'text')
           |   MINIMUM OFFERING
-        p.text-xs-center.font-weight-bold OFFERING PRICE: $
-          +frField('campaign.price_per_share', 'text')
-          if values.campaign.security_type == 0          
+        if values.campaign.security_type == 0 
+          p.text-xs-center.font-weight-bold OFFERING PRICE: $
+            +frField('campaign.price_per_share', 'text')
             |  per Share
-            p.text-xs-center.font-weight-bold
-              +frField('campaign.security_type', 'select')
-              |  Offered
-          else
-            |  in Debt Securities
-            p.text-xs-center.font-weight-bold Revenue Share Agreement Offered
+          p.text-xs-center.font-weight-bold
+            +frField('campaign.security_type', 'select')
+            |  Offered
+        else
+          p.text-xs-center.font-weight-bold Revenue Share Agreement Offered
         p.text-xs-center.font-weight-bold $
           +frField('campaign.minimum_increment', 'text')
           |  MINIMUM INVESTMENT
@@ -416,7 +415,7 @@ section.formc-review
             |  ). If  the  sum  of  the  investment  commitments  does  not equal or exceed this minimum target amount at the Offering deadline, no securities will be sold in the Offering, investment commitments will be cancelled and committed funds will be returned, less  any  fees  incurred,  without  accrued  interest.  There can  be  no  assurance  that  Notes  in  an aggregate  amount  equal  to  the  minimum  target  amount  will  be  subscribed  for  and  therefore there is no guarantee that this Offering will be completed.
           p.text-indent The minimum subscription by an investor is a $
             +editText('minimum_increment')
-            |  investmentin the debt securities offered.  Each investor interested in participating in this Offering must register at 
+            |  investment in the debt securities offered.  Each investor interested in participating in this Offering must register at 
             a(href="www.GrowthFountain.com").link-1 www.GrowthFountain.com.
             |  The website GrowthFountain.com (the 
             u “Platform”
@@ -442,7 +441,7 @@ section.formc-review
           p.small.pb10
             +frField('company.name', 'text')
             |  as Issuer
-        p.pb10  This Material contains significant additional disclosure of investment risks to be reviewed by each potential investor.  Each investor should review all pf the risks related to this Offering prior to making a commitment to invest in the 
+        p.pb10  This Material contains significant additional disclosure of investment risks to be reviewed by each potential investor.  Each investor should review all of the risks related to this Offering prior to making a commitment to invest in the 
           if values.campaign.security_type == 0
             | Shares.
           else
