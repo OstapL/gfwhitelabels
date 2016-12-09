@@ -48,8 +48,18 @@ section.small-section.filter
             a(href="#").pull-xl-right.btn.btn-sm.mr30.text-uppercase.auth-pop create alert
 
           .col-sm-6.col-lg-3.col-xl-2.col-xs-12.text-xs-center
+            - var criterion = {name: 'Name', amount_raised: 'Amount Raised', expiration_date: 'Expiration Date'};
             select.orderby.custom-select
-              option(checked="checked" value="0") Order by
+              option(value="0") Order by
+              each v, k in criterion
+                if k == app.getParams().orderby
+                  option(value=k selected)= v
+                else
+                  option(value=k)= v
+              //- option(value="name") Name
+              //- option(value="amount_raised") Amount Raised
+              //- option(value="expiration_date") Days Left
+
 section.campaing-list
   .container#campaignList
     include _list.pug
@@ -60,14 +70,15 @@ section.pagination
             .col-lg-12
                 nav
                     ul.pagination.pagination-sm
+                        - var orderBy = app.getParams().orderby ? '&orderby=' + app.getParams().orderby : '';
                         li.page-item.active
-                            a(href="/companies?page=1").page-link First
+                            a(href="/companies?page=1" + orderBy).page-link First
                         li.page-item.active
-                            a(href="/companies?page=" + currentPage).page-link= currentPage
+                            a(href="/companies?page=" + currentPage + orderBy).page-link= currentPage
                         li.page-item
-                            a(href="/companies?page=" + (currentPage + 1)).page-link= (currentPage + 1)
+                            a(href="/companies?page=" + (currentPage + 1) + orderBy).page-link= (currentPage + 1)
                         li.page-item
-                            a(href="/companies?page=" + (currentPage + 2)).page-link= (currentPage + 2)
+                            a(href="/companies?page=" + (currentPage + 2) + orderBy).page-link= (currentPage + 2)
                         li.page-item
                             a(href="#" aria-label="Next").page-link
                                 span(aria-hidden="true")
