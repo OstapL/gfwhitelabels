@@ -35,7 +35,7 @@ section.formc-team-members-director.container.m-b-85
           }, fields.last_name))
 
         .row.form-group
-          .col-date#dob
+          .col-date
             label.col-xl-3.col-lg-12.text-xl-right.textlg-left Date of birth
               span.color-red *
             .col-xl-4.col-lg-6.p-r-0
@@ -48,6 +48,7 @@ section.formc-team-members-director.container.m-b-85
               +fieldDateYear("dob", _.extend({
                 class: 'col-xl-4 col-lg-4 col-xs-4 p-r-0 m-d-p-l-10',
                 placeholder: 'YYYY',
+                divId: 'dob',
               }, fields.dob))
         +fieldTextLabel("email", _.extend({
           class1: 'col-xl-3 col-lg-12 text-lg-left text-xl-right ',
@@ -61,8 +62,8 @@ section.formc-team-members-director.container.m-b-85
             .row
               label.col-xl-6.col-lg-12.text-xl-right.text-lg-left.m-b-0.p-t-0 Board Service Start Date
                 span.color-red *
-              #board_service_start_date.col-xl-6.col-lg-12
-                .row
+              .col-xl-6.col-lg-12
+                .row#board_service_start_date
                   +fieldDateMonth("board_service_start_date", _.extend({
                     class: 'col-xl-6 col-lg-6 col-sm-6 col-xs-6 m-d-p-r-5',
                     placeholder: 'MM',
@@ -73,9 +74,8 @@ section.formc-team-members-director.container.m-b-85
                     class: 'col-xl-6 col-lg-6 col-sm-6 col-xs-6 m-d-p-l-5',
                     placeholder: 'YYYY',
                     name: 'board_service_start_date',
-                    label: 'Board Service Start Date',
                   }, fields.board_service_start_date))
-          .col-xl-6.col-lg-6.form-group
+          //.col-xl-6.col-lg-6.form-group
             .row
               label.col-xl-6.col-lg-12.text-xl-right.text-lg-left.m-b-0.p-t-0 Board Service End Date
               #board_service_end_date.col-xl-6.col-lg-12
@@ -103,21 +103,21 @@ section.formc-team-members-director.container.m-b-85
         .row
           .col-xl-6.col-lg-6
             .row
-              label.col-xl-6.col-lg-12.text-xl-right.text-lg-left.m-b-0.p-t-0 Employer Start Date
+              label.col-xl-6.col-lg-12.text-xl-right.text-lg-left.m-b-0.p-t-0 Employment Start Date
                 span.color-red *
-              #employer_start_date.col-xl-6.col-lg-12
-                .row
+              .col-xl-6.col-lg-12
+                .row#employer_start_date
                   +fieldDateMonth("employer_start_date", _.extend({
                     class: 'col-xl-6 col-lg-6 col-sm-6 col-xs-6 m-d-p-r-5',
                     placeholder: 'MM',
                     name: 'employer_start_date',
-                    label: 'Employer Start Date',
+                    label: 'Employment Start Date',
                   }, fields.board_service_start_date))
                   +fieldDateYear("board_service_start_date", _.extend({
                     class: 'col-xl-6 col-lg-6 col-sm-6 col-xs-6 m-d-p-l-5',
                     placeholder: 'YYYY',
                     name: 'employer_start_date',
-                    label: 'Employer Start Date',
+                    label: 'Employment Start Date',
                   }, fields.board_service_start_date))
         .row
           .col-xl-12
