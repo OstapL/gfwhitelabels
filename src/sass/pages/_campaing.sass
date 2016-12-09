@@ -10,6 +10,8 @@
 	
 	.one_drop
 		height: rem(36)
+		&:focus
+			outline: none
 		.bootstrap-select
 			.dropdown-menu 
 				li
@@ -23,14 +25,13 @@
 			border-color: #cccccc
 			border: solid 1px #cccccc
 			border-radius: $one_drop_border_radius
-
+			
 			color: $black_text
 			font-size: rem(12)
 			font-weight: $one_drop_font_weight
 
-			&:hover
-				background: #cccccc
-				border-color: #adadad
+
+				
 
 			.filter-option
 				line-height: 2.1
@@ -59,6 +60,8 @@
 		.dropdown-toggle
 			&:after
 				margin-top: rem(7)
+			&:focus
+				outline: none!important
 		
 
 	// block with create alert btn
