@@ -40,7 +40,7 @@ section(style="background-image: url(" + (values.campaign.header_image_data && v
               h2.font-weight-bold #{ formatHelper.formatPrice(values.campaign.premoney_valuation) }
           else
             .col-lg-2.p-r-0.p-sm-0.text-xs-center.text-lg-left
-              p Percentage Reveue
+              p Percentage Revenue
               h2.font-weight-bold #{ values.campaign.percentage_revenue }%
           .col-lg-2.p-r-0.p-sm-0.text-xs-center.text-lg-left
             p Days Left
@@ -193,13 +193,13 @@ section
 
   section.about-detail.border-bottom
     .container
-      .col-lg-12
+      .col-lg-8.offset-lg-2
         h2#about.dosis.text-uppercase.text-lg-center.text-xs-center.campaign-subheading About #{ values.short_name || values.name }
-        p !{ textHelper.restoreLineBreak(values.description) }
+        p.text-justify !{ textHelper.restoreLineBreak(values.description) }
 
         h2.dosis.our.text-uppercase.text-lg-center.text-xs-center.campaign-subheading Why You Should Invest
-        p !{ textHelper.restoreLineBreak(values.campaign.pitch) }
-      
+        p.text-justify !{ textHelper.restoreLineBreak(values.campaign.pitch) }
+    .container-fluid.p-l-0.p-r-0
       #gallery1.col-lg-12.pt50.photo-gallegy.text-center-flex
         if values.campaign.gallery_group_data
           each v,k in values.campaign.gallery_group_data
@@ -232,7 +232,7 @@ section
           .col-lg-3.no-padding-img
             a(href="/img/values/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
               img(src="/img/default/255x153.png" alt="").img-fluid
-
+    .container
       .row
         .col-lg-12.text-center-flex
           if values.campaign.additional_video
@@ -278,19 +278,19 @@ section
                       i.fa.fa-play-circle-o
                   h3.card-text.text-lg-center Title for Optional Video 3
 
-      .col-lg-12
+      .col-lg-8.offset-lg-2
         h2.dosis.our.text-uppercase.text-lg-center.text-xs-center.campaign-subheading How We Intend to Make Money
-        p !{ textHelper.restoreLineBreak(values.campaign.intended_use_of_proceeds) }
+        p.text-justify !{ textHelper.restoreLineBreak(values.campaign.intended_use_of_proceeds) }
 
         h2.dosis.text-uppercase.text-lg-center.text-xs-center.campaign-subheading Why We are Raising Capital, and What We’ll Do with It
-        p !{ textHelper.restoreLineBreak(values.campaign.business_model) }
+        p.text-justify !{ textHelper.restoreLineBreak(values.campaign.business_model) }
 
       if values.campaign.additional_info
         each v,k in values.campaign.additional_info
           if v && v.title && v.body
-            .col-lg-12
+            .col-lg-8.offset-lg-2
               h2.dosis.our.text-uppercase.text-lg-center.text-xs-center.campaign-subheading #{ v.title }
-              p !{ textHelper.restoreLineBreak(v.body) }
+              p.text-justify !{ textHelper.restoreLineBreak(v.body) }
   if values.campaign.team_members
     section#members
       .container

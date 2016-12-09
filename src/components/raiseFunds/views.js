@@ -400,7 +400,6 @@ module.exports = {
 
   teamMemberAdd: Backbone.View.extend(_.extend({
     urlRoot: raiseCapitalServer + '/campaign/:id/team-members',
-    // doNotExtendModel: true,
     template: require('./templates/teamMemberAdd.pug'),
     events: _.extend({
       'click .delete-member': 'deleteMember',
@@ -429,13 +428,14 @@ module.exports = {
       this.fields = options.fields;
       this.fields.photo_image_id.imgOptions = {
         aspectRatio: 1 / 1,
-        cssClass: 'img-crop',
+        cssClass: 'img-profile-crop',
         showPreview: true,
       };
 
       this.formc = options.formc;
       this.type = options.type;
       this.index = options.index;
+
       this.urlRoot = this.urlRoot.replace(':id', this.model.id);
 
       if (this.index != 'new') {

@@ -3,7 +3,7 @@ if (typeof require.ensure !== `function`) require.ensure = (d, c) => c(require);
 
 module.exports = Backbone.Router.extend({
   routes: {
-    ':id/invest_thanks': 'investmentThankYou',
+    ':id/invest-thanks': 'investmentThankYou',
     'companies': 'list',
     ':id': 'detail',
     ':id/invest': 'investment',
@@ -11,9 +11,9 @@ module.exports = Backbone.Router.extend({
 
   investmentThankYou(id) {
     require.ensure([], () => {
+
       const View = require('./views.js');
       let i = new View.investmentThankYou({
-        el: '#content',
         model: {
           id: 19,
           amount: 10000,
@@ -29,9 +29,6 @@ module.exports = Backbone.Router.extend({
       });
       i.render();
       app.hideLoading();
-      // const a1 = api.makeCacheRequest(investmentServer + '/' + id).then((data) => {
-
-      // });
     });
   },
 
@@ -81,47 +78,15 @@ module.exports = Backbone.Router.extend({
     require.ensure([], () => {
       if (!app.user.is_anonymous()) {
         const View = require('./views.js');
+        let investmentR = api.makeCacheRequest(investmentServer + '/', 'OPTIONS');
+        let companyR = api.makeCacheRequest(raiseCapitalServer + '/' + id);
+        let userR = api.makeCacheRequest(authServer + '/rest-auth/data');
 
-        const a1 = api.makeCacheRequest(investmentServer + '/', 'OPTIONS');
-        const a2 = api.makeCacheRequest(raiseCapitalServer + '/' + id);
-        const a3 = api.makeCacheRequest(authServer + '/rest-auth/data');
-
-        $.when(a1, a2, a3).
-          then((investmentMeta, companyData, userData) => {
-            // investmentMeta = [
-            //   {
-            //     fields: {
-            //       amount: { type: 'int', required: true},
-            //       first_name: { type: 'str', required: true},
-            //       last_name: { type: 'str', required: true},
-            //       country: { type: 'choice', required: true},
-            //       address1: { type: 'str', required: true},
-            //       address2: { type: 'str', required: false},
-            //       zip_code: { type: 'str', required: true},
-            //       city: { type: 'str', required: true},
-            //       state: { type: 'str', required: true},
-            //       payment_method: { type: 'str', required: true},
-            //       name_on_bank_account: { type: 'str', required: true},
-            //       account_number_re: { type: 'str', required: true},
-            //       route_number: { type: 'str', required: true},
-            //       bank_account_type: { type: 'str', required: true},
-            //     }
-            //   }
-            // ];
-            // companyData = [
-            //   {
-            //     id: 1,
-            //     name: 'N!CE',
-            //     campaign: {
-            //       perks: [],
-            //     }
-            //   }
-            // ]
+        $.when(investmentR, companyR, userR).done((investmentMeta, companyData, userData) => {
             const i = new View.investment({
-              el: '#content',
-                model: companyData[0],
-                fields: investmentMeta[0].fields,
-                user: userData[0],
+              model: companyData[0],
+              user: userData[0],
+              fields: investmentMeta[0].fields,
             });
             i.render();
             $('#content').scrollTo();
@@ -133,14 +98,14 @@ module.exports = Backbone.Router.extend({
           );
         }
 
-        if (!window.pdfMake) {
-          ['/js/pdfmake.js', '/js/vfs_fonts.js'].forEach( (uri) => {
-            let script = document.createElement('script');
-            script.type = 'text/javascript';
-            script.src = uri;
-            $('head').append(script);
-          });
-        }
+        // if (!window.pdfMake) {
+        //   ['/js/pdfmake.js', '/js/vfs_fonts.js'].forEach( (uri) => {
+        //     let script = document.createElement('script');
+        //     script.type = 'text/javascript';
+        //     script.src = uri;
+        //     $('head').append(script);
+        //   });
+        // }
     });
   },
 });

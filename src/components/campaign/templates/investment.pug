@@ -9,20 +9,22 @@ include ../../../templates/fields_mixins.pug
     ['Invest in ' + values.name, '']
   ]
 )
+
 mixin fieldInput(name, attr)
   - attr = attr ? attr : fields[name];
   - attr.value = attr.value ? attr.value : values ? values[name] : '';
   div(class=attr.class)
     input(
-            id=attr.id || name
-            name=attr.name || name
-            placeholder=attr.placeholder ? attr.placeholder :attr.label
-            type=attr.type ? attr.type : 'text'
-            class=(attr.help_text ? 'showPopover' : '') 
-            data-content=(attr.help_text ?attr.help_text : '')
-            value=attr.value
-            maxlength = attr.maxlength ? attr.maxlength : false
-            disabled=(attr.disabled ? attr.disabled : false)).form-control
+      id=attr.id || name
+      name=attr.name || name
+      placeholder=attr.placeholder ? attr.placeholder :attr.label
+      type=attr.type ? attr.type : 'text'
+      class=(attr.help_text ? 'showPopover' : '')
+      data-content=(attr.help_text ?attr.help_text : '')
+      value=attr.value
+      maxlength = attr.maxlength ? attr.maxlength : false
+      disabled=(attr.disabled ? attr.disabled : false)
+    ).form-control
 
 .container.investment
   //START LEFT BLOCK
@@ -63,7 +65,7 @@ mixin fieldInput(name, attr)
               span(style="color:red;") $:amount.
             br
             p Please 
-              a(data-toggle="modal" data-target="#income_worth_modal" href="#income_worth_modal").update-income-worth update your annual income and net worth. 
+              a(data-toggle="modal" data-target="#income_worth_modal" href="#income_worth_modal").link-2.update-income-worth update your annual income and net worth.
           div.popover-content-rounding
             i.fa.fa-info-circle
             span Companies can’t issue fractional shares.  The price per share is $#{values.campaign.price_per_share} so investment amounts must be a multiple of $#{values.campaign.price_per_share}.
@@ -77,52 +79,56 @@ mixin fieldInput(name, attr)
           section.personal_information
             h2.text-uppercase.dosis.text-md-center.text-sm-center.text-xs-center.text-lg-left Personal Information
               span.small-text.open-sans Required by United States banking laws. This information is transmitted securely and will never be used for any purpose beyond executing your investment. You only have to do this once.
-            .form-group.row
+            //- div #{user.first_name + ' ' + user.last_name}
+            //-   br
+            //-   | #{user.street_address_1 + (user.street_address_2 ? (' ' + user.street_address_2) : '') + ', ' + user.state + ' ' + user.zip_code + ', ' + user.country} 
+            //-   a(href="#") change
+
+            //.form-group.row.required
+            //  label.col-lg-3.col-md-12.text-lg-right.text-xs-left.pull-xs-left Legal Name
+            //    span.color-red *
+            //  +fieldText("first_name", {'class': 'col-lg-4 m-b-md-25','placeholder':'First Name' })
+            //  +fieldText("last_name", {'class': 'col-lg-4','placeholder':'Last Name' })
+
+            .form-group.row.required
               label.col-lg-3.col-md-12.text-lg-right.text-xs-left.pull-xs-left Legal Name
                 span.color-red *
-              +fieldInput("personal_information_data[first_name]", {'class': 'col-lg-4-5 m-b-md-25 col-md-12','placeholder':'First Name', value: user.first_name, id: 'personal_information_data__first_name__0'})
-              +fieldInput("personal_information_data[last_name]", {'class': 'col-lg-4-5 col-md-12 ','placeholder':'Last Name', value: user.last_name, id: 'personal_information_data__last_name__0' })
+              +nestedText("personal_information_data", "first_name", {
+                'class': 'col-lg-4-5 m-b-md-25 col-md-12',
+                'placeholder':'First Name',
+              }, user)
+              +nestedText("personal_information_data", "last_name", {
+                'class': 'col-lg-4-5 col-md-12 ',
+                'placeholder': 'Last Name',
+              }, user)
             .form-group.row
               label.col-lg-3.text-lg-right.text-xs-left Country
                 span.color-red *
               .col-lg-9
-                - if (!user.country) user.country = 'US';
+                //- if (!user.country) user.country = 'US';
                 select(name="country").custom-select.w-100.country-select
                   each v, k in countries
                     option(value=k selected=(user.country == k)) #{v}
-                  //- option(value="us" selected=(user.country == 'us')) United States
-                  //- option(value="ua" selected=(user.country == 'ua')) UA
-                  //- option(value='ru' selected=(user.country == 'ru')) Russia
+
             +nestedTextLabel("personal_information_data", "street_address_1", {
               class1: 'col-lg-3 col-md-12 text-lg-left text-xl-right',
               class2: 'col-lg-9 col-md-12',
               id: 'personal_information_data__street_address_1__0',            
-              }, user)
-            //- +fieldTextLabel("personal_information_data[street_address_2]", _.extend({
-            //-   class1: 'col-lg-3 col-md-12 text-lg-left text-xl-right',
-            //-   class2: 'col-lg-9 col-md-12',
-            //-   value: user.street_address_2,
-            //-   }, fields.personal_information_data.schema.street_address_2))
+            }, user)
             +nestedTextLabel("personal_information_data", "street_address_2", {
               class1: 'col-lg-3 col-md-12 text-lg-left text-xl-right',
               class2: 'col-lg-9 col-md-12',
-              }, user)
+            }, user)
             // IF USA
             .row.us-fields(style="display:" + (user.country == 'US' ? "display" : "none") + ";")
               input(type="hidden" name="personal_information_data[state]" value=user.state disabled=(user.country != 'US')) 
               input(type="hidden" name="personal_information_data[city]" value=user.city disabled=(user.country != 'US')) 
               .col-lg-7.p-l-2.col-md-12
-                //- +fieldTextLabel("personal_information_data[zip_code]", _.extend({
-                //-   class1: 'col-lg-5 text-lg-left text-xl-right',
-                //-   class2: 'col-lg-7',
-                //-   disabled: (user.country != 'us'),
-                //-   value: user.zip_codem,
-                //-   }, fields.zip_code))
                 +nestedTextLabel("personal_information_data", "zip_code", {
                   class1: 'col-lg-5 text-lg-left text-xl-right',
                   class2: 'col-lg-7',
                   disabled: (user.country != 'US'),
-                  }, user)
+                }, user)
               .col-lg-5.city_states.col-md-12
                 label.col-lg-5.col-md-6.col-sm-6.col-xs-6 City/State
                   span.color-red *
@@ -134,21 +140,15 @@ mixin fieldInput(name, attr)
             .other-countries-fields(style="display:" + (user.country == 'US' ? "none" : "display") + ";")
               .row
                 .col-lg-6.p-l-0.p-r-0
-                  //- +fieldTextLabel("personal_information_data[city]", _.extend({
-                  //-   'class1': 'col-lg-6 text-lg-left text-xl-right',
-                  //-   'class2': 'col-lg-6 p-r-0',
-                  //-   disabled: (user.country == 'us'),
-                  //-   value: user.city,
-                  //-   }, fields.city))
                   +nestedTextLabel("personal_information_data", "city", {
                     'class1': 'col-lg-6 text-lg-left text-xl-right',
                     'class2': 'col-lg-6 p-r-0',
                     disabled: (user.country == 'US'),
                     id: 'personal_information_data__city__0',
-                    }, user)
+                  }, user)
                 .col-lg-6
                   .form-group.row.state.text
-                    label.text-lg-right.col-lg-5(for="state").p-t-0.m-b-0 State/Province/<br>Region
+                    label.text-lg-right.col-lg-5(for="state").p-t-0.m-b-0 State/Province/ Region
                       span.color-red *
                     div.col-lg-7
                       input.form-control(name='personal_information_data[state]' placeholder='State/Province/Region' type="text" value=user.state disabled=(user.country == 'US') id='personal_information_data__state__0')
@@ -160,55 +160,40 @@ mixin fieldInput(name, attr)
                     div.col-lg-6.p-r-0
                       input.form-control(name='personal_information_data[zip_code]' placeholder='Postal Code' type="text" value=user.zip_code disabled=(user.country == 'US') id='personal_information_data__state__0')
                 .col-lg-6
-                  +fieldTextLabel("personal_information_data[phone]", _.extend({
-                    'class1': 'col-lg-5 text-lg-left text-xl-right',
-                    'class2': 'col-lg-7 ', 'type': 'text',
-                    disabled: (user.country == 'US')
-                    }, fields.phone))
+                  +nestedTextLabel(
+                    "personal_information_data", "phone", {
+                      'class1': 'col-lg-5 text-lg-left text-xl-right',
+                      'class2': 'col-lg-7 ',
+                      'type': 'text',
+                      'disabled': (user.country == 'US'),
+                  }, user)
 
           section.payment-information.border-bottom
             h2.text-uppercase.dosis.text-md-center.text-sm-center.text-xs-center.text-lg-left Payment information
             .form-group.row
-              label.col-lg-3.text-lg-right.text-xs-left I Want to Pay Using
-              .col-lg-9
-                select(name="payment_information_type").custom-select.w-100.payment-type-select
-                  option(value="0") Echeck (ACH)
-                  option(value="1") Check
-                  option(value="2") Wire
+              +fieldChoiceLabel('payment_information_type', _.extend({
+                'class1': 'col-lg-3 text-lg-right text-xs-left',
+                'class2': 'col-lg-9 col-md-12',
+                'row': false,
+              }, this.fields.payment_information_type))
             //IF ECHECK
             //- I may need to add a value into the attr object to make sure proper data is populated.
             .echeck-fields.payment-fields
-              //- +fieldTextLabel("payment_information_data[name_on_bank_account]", _.extend({
-              //-   class1: 'col-lg-3 col-md-12 text-lg-left text-xl-right',
-              //-   class2: 'col-lg-9 col-md-12',
-              //-   value: user.name_on_bank_account,
-              //-   }, fields.name_on_bank_account))
               +nestedTextLabel("payment_information_data", "name_on_bank_account", {
-                class1: 'col-lg-3 col-md-12 text-lg-left text-xl-right',
+                class1: 'col-lg-3 col-md-12 text-lg-left text-xl-right p-t-0 m-b-0',
                 class2: 'col-lg-9 col-md-12',
                 id: 'payment_information_data__account_number__0',
                 }, user)
-              //- +fieldTextLabel("payment_information_data[account_number]", _.extend({
-              //-   class1: 'col-lg-3 col-md-12 text-lg-left text-xl-right',
-              //-   class2: 'col-lg-9 col-md-12',
-              //-   value: user.account_number,
-              //-   }, fields.account_number))
               +nestedTextLabel("payment_information_data", "account_number", {
                 class1: 'col-lg-3 col-md-12 text-lg-left text-xl-right',
                 class2: 'col-lg-9 col-md-12',
                 id: 'payment_information_data__routing_number__0'
                 }, user)
-              +fieldTextLabel("payment_information_data[account_number_re]", _.extend({
+              +nestedTextLabel("payment_information_data", "account_number_re", {
                 class1: 'col-lg-3 col-md-12 text-lg-left text-xl-right',
                 class2: 'col-lg-9 col-md-12',
-                value: user.account_number,
                 id: 'payment_information_data__name_on_bank_account__0',
-                }, fields.account_number_re))
-              //- +fieldTextLabel("payment_information_data[routing_number]", _.extend({
-              //-   class1: 'col-lg-3 col-md-12 text-lg-left text-xl-right',
-              //-   class2: 'col-lg-9 col-md-12',
-              //-   value: user.routing_number,
-              //-   }, fields.routing_number))
+                }, user)
               +nestedTextLabel("payment_information_data", "routing_number", {
                 class1: 'col-lg-3 col-md-12 text-lg-left text-xl-right',
                 class2: 'col-lg-9 col-md-12',
@@ -217,10 +202,20 @@ mixin fieldInput(name, attr)
                 label.text-md-right.col-lg-3 Account Type
                 .col-lg-9.radio-input
                   label 
-                    input(type="radio" name="payment_information_data[account_type]" value="0" checked=(user.account_type == 0))
+                    input(
+                      type="radio"
+                      name="payment_information_data[account_type]"
+                      value=0
+                      checked=user.bank_account_type
+                    )
                     |  Checking
                   label 
-                    input(type="radio" name="payment_information_data[account_type]" value="1" checked=(user.account_type == 1))
+                    input(
+                      type="radio"
+                      name="payment_information_data[account_type]"
+                      value=1
+                      checked=!user.bank_account_type
+                    )
                     |  Savings
             // IF CHECK
             .row.check-fields.payment-fields(style="display:none;")
@@ -300,7 +295,7 @@ mixin fieldInput(name, attr)
             h2.text-uppercase.dosis.text-md-center.text-sm-center.text-xs-center.text-lg-left CONFIRMATION OF UNDERSTANDING
             .form-group.row
               .col-lg-2
-                .row
+                div(id='is_reviewed_educational_material').row
                   .col-lg-6.col-md-6.col-sm-6.col-xs-6.text-lg-center
                     label.d-block.label-true-false TRUE
                     input(type="radio" value="true" name="is_reviewed_educational_material").d-block.m-x-auto
@@ -312,7 +307,7 @@ mixin fieldInput(name, attr)
                 label I confirm and represent that (a) I have reviewed the educational material that has been made available on this website, (b) I understand that the entire amount of my investment may be lost and (c) I am in a financial condition to bear the loss of the investment and (d) I represent that I have not exceeded my investment limitations.
             .form-group.row
               .col-lg-2
-                .row
+                div(id='is_understand_restrictions_to_cancel_investment').row
                   .col-lg-6.col-md-6.col-sm-6.col-xs-6.text-lg-center
                     label.d-block.label-true-false TRUE
                     input(type="radio" value="true" name="is_understand_restrictions_to_cancel_investment").d-block.m-x-auto
@@ -324,7 +319,7 @@ mixin fieldInput(name, attr)
                 label I understand that there are restrictions on my ability to cancel an investment commitment and obtain a return of my investment.
             .form-group.row
               .col-lg-2
-                .row
+                div(id='is_understand_difficult_to_resell_purchashed').row
                   .col-lg-6.col-md-6.col-sm-6.col-xs-6.text-lg-center
                     label.d-block.label-true-false TRUE
                     input(type="radio" value="true" name="is_understand_difficult_to_resell_purchashed").d-block.m-x-auto
@@ -336,7 +331,7 @@ mixin fieldInput(name, attr)
                 label I understand that it may be difficult to resell securities purchased on GrowthFountain.
             .form-group.row
               .col-lg-2
-                .row
+                div(id='is_understand_investing_is_risky').row
                   .col-lg-6.col-md-6.col-sm-6.col-xs-6.text-lg-center
                     label.d-block.label-true-false TRUE
                     input(type="radio" value="true" name="is_understand_investing_is_risky").d-block.m-x-auto
@@ -356,12 +351,12 @@ mixin fieldInput(name, attr)
               .row
                 .form-group.row
                   .col-lg-4
-                    input(type="text" placeholder="Type Your Name").form-control.typed-name
+                    input(type="text" placeholder="Type Your Name" value=(user.first_name + ' ' + user.last_name)).form-control.typed-name
                     .help-block Electronically Sign Here
                   .col-lg-4
                     .electronically
                       span.by By:
-                      span.name.signature
+                      span.name.signature #{user.first_name + ' ' + user.last_name }
 
             .form-group.row
               .col-md-12.text-md-center.text-sm-center.text-xs-center
@@ -371,7 +366,6 @@ mixin fieldInput(name, attr)
     //END LEFT BLOCK
     //START RIGHT BLOCK
     .col-lg-4.pull-right
-
       if values.campaign.perks
         h2.text-uppercase.dosis.m-t-0 PERKS
           span.small-text.open-sans Investor Perks are not intended to affect the value of the security and investors should evaluate the merits of each investment without regard to any Investor Perks.
@@ -446,9 +440,10 @@ div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true
       .modal-body
         .container.form-section
           form.col-lg-10.offset-lg-1.border-bottom.update-income-worth
-            div Your current limit is 
-              b $
-                span.current-limit 1000
+            .row
+              | Your current limit is 
+              b.color-green $
+                span.current-limit.color-green 1000
               | .
             .form-group.row.clearfix.required
               label Annual Income
