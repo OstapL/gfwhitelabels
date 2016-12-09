@@ -458,6 +458,7 @@ module.exports = {
         this.urlRoot += '/' + this.role + '/' + this.model.user_id;
       } else {
         this.urlRoot += '/' + this.role;
+        this.model.title = [];
       }
 
       if (this.role == 'director') {
