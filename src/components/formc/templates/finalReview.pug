@@ -906,16 +906,6 @@ section.formc-review
         p.pb10.text-indent The Company intends to apply the proceeds of this Offering substantially as set forth herein, subject to reallocation by management as it deems in the best interests of the Company. The actual use of proceeds of this Offering is subject to the discretion of management and the board of directors, and may include general corporate purposes.
         p
           +frField('formc.intended_use_of_proceeds', 'text')
-        p.text-uppercase.m-t-3.m-b-0.pb10 
-          u Assuming A Minimum Raise
-        p
-          +frField('formc.use_of_net_proceeds_minimum', 'text')
-        p.text-uppercase.m-t-3.m-b-0.pb10 
-          u  Assuming A Maximum Raise
-        if values.campaign.minimum_raise != values.campaign.maximum_raise
-          p.pb10.text-indent In the case that the Offering is oversubscribed and closes with the maximum amount achieved, the Company anticipates using the proceeds in the following manner: 
-          p.pb10
-            +frField('formc.use_of_net_proceeds_maximum', 'text')
         p.pb10.text-indent The following table reflects our anticipated estimated use of proceeds:
         .table-responsive.m-t-1
           table.table.table-bordered
