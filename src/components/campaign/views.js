@@ -431,20 +431,6 @@ module.exports = {
       'keyup .typed-name': 'copyToSignature',
       'keyup #annual_income,#net_worth': 'updateLimitInModal',
       'click button.submit-income-worth': 'updateIncomeWorth',
-      'change #personal :input': 'updateAddress',
-    },
-
-    updateAddress(e) {
-      let address_1 = this.$(':input[name*=street_address_1]').val();
-      let address_2 = this.$(':input[name*=street_address_2]').val();
-      let first_name = this.$(':input[name*=first_name]').val();
-      let last_name = this.$(':input[name*=last_name]').val();
-      let country = this.$(':input[name*=country]').val();
-      let state = this.$(':input:enabled[name*=state]').val();
-      let zip_code = this.$(':input:enabled[name*=zip_code]').val();
-      let city = this.$(':input:enabled[name*=city]').val();
-
-      this.$('#rendered_address').html(first_name + ' ' + last_name + '<br>' + address_1 + ' ' + address_2 + ', ' + city + ', ' + state + ' ' + zip_code + ', ' + country);
     },
 
     updateLimitInModal(e) {

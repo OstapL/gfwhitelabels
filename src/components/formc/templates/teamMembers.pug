@@ -83,7 +83,7 @@ section.create-company-team-add.container
                 if roleCounter < 2
                   #membersMessage.warning-block.warning-team-add.team-member-no-border.text-lg-left.m-b-0
                     i.fa.fa-info-circle 
-                    span.warning-text Please identify the Officers in your company responsible for the following 3 roles. Please note that, if necessary, the same person may be identified with multiple.
+                    span.warning-text Please identify the Officers in your company responsible for the following 3 roles. Please note that, if necessary, the same person may be identified with multiple roles.
             each k,v in requiredRoles
               - var persons = values.team_members.filter(function(el) { return (el.title ? el.title.indexOf(v) != -1: false); })
               for person in persons
