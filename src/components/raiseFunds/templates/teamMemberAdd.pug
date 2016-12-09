@@ -73,6 +73,7 @@ section.team-members.container.m-b-85
         class2: 'col-xl-9 col-lg-12',
         label:  'Where did you attend college?',
         placeholder: 'Name of college or university',
+        value: member.college,
       }, fields.college))
       .row
         .col-lg-6.input-min-width
@@ -81,6 +82,7 @@ section.team-members.container.m-b-85
             class2: 'col-xl-6 col-lg-12',
             label:  'Your LinkedIn link',
             placeholder: 'Your LinkedIn profile',
+            value: member.linkedin,
             }, fields.linkedin))
         .col-lg-6
           +fieldTextLabel("facebook", _.extend({
@@ -88,6 +90,7 @@ section.team-members.container.m-b-85
             class2: 'col-xl-7 col-lg-12',
             label:  'Your Facebook link',
             placeholder: 'Your Facebook profile',
+            value: member.facebook,
             }, fields.facebook))
 
       +teamMemberDropzone("photo_image_id", _.extend({
