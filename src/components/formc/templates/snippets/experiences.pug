@@ -9,7 +9,7 @@ mixin row(value, index)
 
       +fieldNestedTextLabel(name, "employer", value, index, {class1:'col-xl-3 col-lg-12 text-lg-left text-xl-right', class2: 'col-xl-9 col-lg-12'})
       +fieldNestedTextLabel(name, "title", value, index, {class1:'col-xl-3 col-lg-12 m-b-0 p-t-0 text-lg-left text-xl-right', class2: 'col-xl-9 col-lg-12', placeholder: 'Provide short description of the business'})
-      +fieldNestedTextLabel(name, "responsibilities", value, index, {class1:'col-xl-3 col-lg-12 text-lg-left text-xl-right', class2: 'col-xl-9 col-lg-12'})
+      +fieldNestedTextLabel(name, "responsibilities", value, index, {class1:'col-xl-3 col-lg-12 text-lg-left text-xl-right p-t-0 m-b-0', class2: 'col-xl-9 col-lg-12'})
 
       .row
         .col-xl-6.col-lg-6.form-group
@@ -23,7 +23,7 @@ mixin row(value, index)
               
         .col-xl-6.col-lg-6.form-group
           .row
-            label.col-xl-6.col-lg-12.text-xl-right.text-lg-left End Date of Service
+            label.col-xl-6.col-lg-12.text-xl-right.text-lg-left.p-l-2.p-l-lg-1.p-t-0.m-b-0 End Date of Service
               span.color-red *
             .col-xl-6.col-lg-12
               div(id=name + '__' + index + '__' + 'end_date_of_service').row

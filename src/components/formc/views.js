@@ -433,7 +433,7 @@ module.exports = {
           employer: 'Employer',
           employer_principal: 'Employer Principal',
           title: 'Employer\'s Principal Business',
-          responsibilities: 'Responsibilities',
+          responsibilities: 'Title and Responsibilities',
           start_date_of_service: 'Start Date of Service',
           end_date_of_service: 'End Date of Service',
         },
