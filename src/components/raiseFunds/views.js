@@ -409,7 +409,7 @@ module.exports = {
       'click .cancel': 'cancel',
       'click .save': api.submitAction,
       'click .onPreview': onPreviewAction,
-      'change #zip_code': 'changeZipCode',
+      // 'change #zip_code': 'changeZipCode',
     }, leavingConfirmationHelper.events, menuHelper.events, dropzoneHelpers.events),
 
     getSuccessUrl(data) {
@@ -449,13 +449,9 @@ module.exports = {
         };
         this.submitMethod = 'POST';
       }
-
-      this.getCityStateByZipCode = require("helpers/getSityStateByZipCode");
     },
 
     render() {
-      this.usaStates = require('helpers/usa-states');
-
       this.$el.html(
         this.template({
           formc: this.formc,
@@ -464,36 +460,18 @@ module.exports = {
           values: this.model,
           type: this.type,
           index: this.index,
-          // submitMethod: this.submitMethod,
           states: this.usaStates,
+          zipCodeDirective: require('directives/zipcode/index.js'),
         })
       );
 
-      setTimeout(() => { this.createDropzones() } , 1000);
+      this.createDropzones();
 
       delete this.model.progress;
       delete this.model.data;
 
       disableEnterHelper.disableEnter.call(this);
       return this;
-    },
-
-    //TODO: it is reasonable make addresss helper
-    changeZipCode(e) {
-      // if not 5 digit, return
-      if (!e.target.value.match(/\d{5}/))
-        return;
-
-      this.getCityStateByZipCode(e.target.value, ({ success=false, city='', state='' }) => {
-        if (success) {
-          this.$('.js-city-state').text(`${city}, ${state}`);
-          $('form input[name=city]').val(city);
-          this.$('.js-state').val(state);
-          $('form input[name=state]').val(state);
-        } else {
-          console.log('error');
-        }
-      });
     },
 
     cancel(e) {
