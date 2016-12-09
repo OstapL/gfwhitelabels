@@ -395,7 +395,6 @@ module.exports = {
 
   teamMemberAdd: Backbone.View.extend(_.extend({
     urlRoot: raiseCapitalServer + '/campaign/:id/team-members',
-    // doNotExtendModel: true,
     template: require('./templates/teamMemberAdd.pug'),
     events: _.extend({
       'click .delete-member': 'deleteMember',
@@ -444,13 +443,6 @@ module.exports = {
         };
         this.submitMethod = 'POST';
       }
-
-      this.$el.on('keypress', ':input:not(textarea)', function (event) {
-        if (event.keyCode == 13) {
-          event.preventDefault();
-          return false;
-        }
-      });
 
       this.getCityStateByZipCode = require("helpers/getSityStateByZipCode");
     },

@@ -3,6 +3,10 @@ const CROP_IMG_PROFILE_CLASS = 'img-profile-crop';
 
 const nonCropperProps = ['showPreview', 'cssClass'];
 
+
+require('cropperjs/dist/cropper.css');
+const Cropper = require('cropperjs').default;
+
 module.exports = {
 
   showCropper(imgUrl, options, cropData, callback) {
@@ -45,7 +49,6 @@ module.exports = {
       '<div class="form-group">' +
         '<div class="row">' +
           '<div class="crop-image-container col-xl-7 col-lg-7 p-l-2">' +
-            '<img src="' + imgUrl + '" id="cropSrcImage">' +
           '</div>' +
           '<div class="preview-container col-xl-5 col-lg-5 text-xs-center">' +
             '<div class="row">' +
@@ -72,7 +75,6 @@ module.exports = {
       '<div class="form-group">' +
         '<div class="row">' +
           '<div class="crop-image-container">' +
-            '<img src="' + imgUrl + '" id="cropSrcImage">' +
           '</div>' +
         '</div>' +
         '<div class="row">' +
@@ -89,7 +91,7 @@ module.exports = {
 
     //todo
     let modalTemplate =
-      '<div class="modal fade bd-example-modal-lg modal-dropzone ' + (customOptions.cssClass || '') + '"' +
+      '<div class="modal fade cropModal modal-dropzone ' + (customOptions.cssClass || '') + '"' +
           'tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">' +
         '<div class="modal-dialog modal-lg">' +
           '<div class="modal-content">' +
@@ -108,31 +110,49 @@ module.exports = {
     '</div>';
 
 
-    $(document.body).append(modalTemplate);
-    const $modal = $('.bd-example-modal-lg');
-    $modal.modal();
-    $modal.on('hidden.bs.modal', (e) => {
-      $modal.remove();
-    });
+    if($('.cropModal').length == 0) {
 
-    let $cropperOk = $('.cropper-ok');
-    $cropperOk.on('click', function(e) {
-      e.preventDefault();
+      let img = new Image();
 
-      $modal.modal('hide');
+			img.addEventListener("load", function() {
+				const $modal = $('.cropModal');
 
-      if (typeof(callback) === 'function') callback(cropper.getData(true));
+				$modal.on('hidden.bs.modal', (e) => {
+					$modal.remove();
+				});
 
-      return false;
-    });
+				$modal.on('shown.bs.modal', () => {
+          console.log('showed');
+          let $cropperOk = $('.cropper-ok');
+          $cropperOk.on('click', function(e) {
+            e.preventDefault();
 
-    require('cropperjs/dist/cropper.css');
+            $modal.modal('hide');
 
-    const Cropper = require('cropperjs').default;
-    let cropper = new Cropper($('#cropSrcImage')[0], options);
+            if (typeof(callback) === 'function') { 
+              callback(cropper.getData(true));
+            }
 
-    //todo set cropper data
-    cropper.setData(cropData);
+            return false;
+          });
+          options.minContainerHeight = 320;
+
+          let cropper = new Cropper(this, options);
+          //todo set cropper data
+          cropper.setData(cropData);
+          // REMOVE LOADING SPIINER
+        });
+
+
+        // ADD LOADING SPIINER
+        $modal.modal('show');
+			}, false);
+
+			img.src = imgUrl;
+      $('#content').append(modalTemplate);
+			$('.crop-image-container').append(img)
+
+    }
   },
 
 };

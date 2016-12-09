@@ -1,4 +1,5 @@
 const Dropzone = require('dropzone');
+const cropHelper = require('helpers/cropHelper.js');
 
 module.exports = {
 
@@ -49,9 +50,6 @@ module.exports = {
         clickable: '.dropzone__' + name + ' .border-dropzone',
         createImageThumbnails: false,
         addRemoveLinks: false,
-        thumbnail: function (file, dataUrl) {
-          console.log('preview', file, file.xhr, file.xhr.response, file.xhr.responseText);
-        },
 
         previewTemplate: `<div class="dz-details"></div>
           <div class="dz-progress"><span class="dz-upload" data-dz-uploadprogress></span></div>
@@ -177,11 +175,10 @@ module.exports = {
 
         let dataFieldName = this._getDataFieldName(name);
 
-        // delete this.model[name];
+        this.model[name] = null;
         this.model[dataFieldName] = [];
 
         this._notifyServer(name).then((r) => {
-          console.log(r);
           return api.makeRequest(filerServer + '/' + fileId, 'DELETE');
         }).then((r) => {
           console.log(r);
@@ -370,8 +367,8 @@ module.exports = {
         let fieldDataName = this._getDataFieldName(name);
 
         //remove field from model
-        // this.model[name] = null;
-        this.model[fieldDataName] = [{ id: this.model[name].id, urls: [] }];
+        this.model[name] = null;
+        this.model[fieldDataName] = [{ id: null, urls: [] }];
 
         this._notifyServer(name).then((r) => {
           return api.makeRequest(filerServer + '/' + imgId, 'DELETE');
@@ -603,7 +600,6 @@ module.exports = {
       let url = _.last(img.urls);
       let fileName = img.name;
 
-      const cropHelper = require('helpers/cropHelper.js');
       cropHelper.showCropper(url, this.fields[name].imgOptions, this._cropInfo, (imgData) => {
 
         let extPos = fileName.lastIndexOf('.');

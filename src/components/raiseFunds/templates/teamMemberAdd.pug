@@ -15,6 +15,10 @@ section.team-members.container.m-b-85
   - var formcId = formc.id;
   +menu('campaign', 'team-members')
 
+  // SPECIAL HACK FOR CROPPER
+  - this.model = this.member;
+  - this.model.id = formc.campaign_id;
+
   //START RIGHT BLOCK
   .col-xl-8.col-lg-8.col-md-12
     h2.text-uppercase.text-lg-center.text-xs-center.dosis.m-t-0 #{type == 'advisor' ? 'advisor' : 'team member'}
@@ -87,7 +91,6 @@ section.team-members.container.m-b-85
         class2: 'col-xl-9 col-lg-12',
         label:  'Collage',
         placeholder: 'Name of college or university',
-        value: member.email
       }, fields.collage))
       .row
         .col-lg-6.input-min-width
