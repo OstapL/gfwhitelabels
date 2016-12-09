@@ -39,7 +39,11 @@ module.exports = Backbone.Router.extend({
     require.ensure([], () => {
       const View = require('./views.js');
 
-      api.makeCacheRequest(raiseCapitalServer).then((data) => {
+      let params = '?limit=6';
+      let page = parseInt(app.getParams().page);
+      let offset = ((page > 0) ? page : 1) - 1;
+      if (offset) params += '&offset=' + (offset * 6);
+      api.makeCacheRequest(raiseCapitalServer + params).then((data) => {
         let i = new View.list({
           el: '#content',
           collection: data.data,
