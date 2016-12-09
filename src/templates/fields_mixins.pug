@@ -3,8 +3,6 @@ mixin nestedTextLabel(nestedName, name, myAttr, vals)
     vals = vals || values;
     myAttr = _.extend(myAttr, fields[nestedName].schema[name]);
     myAttr.value = vals[name] ? vals[name] : '';
-    console.log(nestedName + '.' + name + ':');
-    console.dir(myAttr);
 
   +fieldTextLabel(
     nestedName + '[' + name + ']',
@@ -16,9 +14,6 @@ mixin nestedText(nestedName, name, myAttr, vals)
     vals = vals || values;
     myAttr = _.extend(myAttr, fields[nestedName].schema[name]);
     myAttr.value = vals[name] ? vals[name] : '';
-    //myAttr.id = nestedName + '__' + name + '__' + '0';
-    console.log(nestedName + '.' + name + ':');
-    console.dir(myAttr);
 
   +fieldText(
     nestedName + '[' + name + ']',

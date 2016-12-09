@@ -8,7 +8,9 @@ mixin investment(i)
 
   .one_table
     .img_column.text-lg-center.text-sm-center
-      img(src=(i.campaign.header_image || "/img/test.png") alt="").img-fluid
+      - var data = i.campaign.header_image_data[0] || { urls: []};
+      - var url = data.urls[0] || "/img/test.png";
+      img(src=url alt="").img-fluid
       span.img_tab #{daysLeft(new Date(), i.campaign.expiration_date) + ' Days Left'}
       p.text-uppercase #{i.company.name}
     .right-columns
@@ -21,7 +23,7 @@ mixin investment(i)
         .col40
           span.light_grey Investment Day
         .col60
-          span.dark_grey #{i.created_date.toLocaleString()}
+          span.dark_grey #{i.created_date.toLocaleDateString() }
       .one_line
         .col40
           span.light_grey Investment ID
@@ -31,7 +33,7 @@ mixin investment(i)
         .col40
           span.light_grey Security
         .col60
-          span.dark_grey #{i.campaign.security_type}
+          span.dark_grey #{i.security_type}
       .one_line
         .col40
           span.light_grey Perks
@@ -51,15 +53,15 @@ mixin investment(i)
     .bottom_column
       .top_descript
         .left_text
-          b #{$formatAmount(i.campaign.amount)}
+          b #{$formatAmount(i.amount)}
           span Raised
         .right_text
-          b #{$formatAmount((i.campaign.minimum_raise))}
+          b #{$formatAmount((i.campaign.minimum_raise || i.campaign.maximum_raise))}
           span Goal
-        p.percents #{percentage(i.campaign.amount, i.campaign.minimum_raise) + '% Funded'}
+        p.percents #{percentage(i.amount, i.campaign.minimum_raise || i.campaign.maximum_raise) + '% Funded'}
         .clear
       .progress_line_container
-        progress(value=i.campaign.amount max=i.campaign.minimum_raise).progress
+        progress(value=i.amount max=(i.campaign.minimum_raise || i.campaign.maximum_raise)).progress
       .text-lg-center
         a(href=(window.location.protocol + '//company.' + window.location.host + '/' + i.company.id)).btn.btn-sm.btn-secondary.text-uppercase view campaign
           i.fa.fa-angle-right
@@ -86,7 +88,6 @@ mixin investment(i)
   };
 
   function daysLeft(today, end) {
-
   var days = Math.ceil((end.valueOf() - today.valueOf()) / ( 1000 * 60 * 60 * 24));
     return days < 10 ? '0' + days : days.toString();
   };

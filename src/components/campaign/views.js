@@ -459,6 +459,7 @@ module.exports = {
         1: 'Check',
         2: 'Wire',
       };
+
       console.dir(this.fields);
       console.dir(this.user);
       console.log('================================');

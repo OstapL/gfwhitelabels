@@ -415,47 +415,39 @@ module.exports = {
 
     initialize(options) {
       this.fields = options.fields;
-      let investment = this.model.data[0];
-      if (investment) {
-        let i = {
-          'amount': 1,
-          'campaign': {
-            'header_image_data': [],
-            'maximum_raise': 1000000,
-            'minimum_raise': 0
-          },
-          'company_id': 2,
-          'created_date': '2016-12-08 00:00:00+00:00',
-          'is_reviewed_educational_material': true,
-          'is_understand_difficult_to_resell_purchashed': true,
-          'is_understand_investing_is_risky': true,
-          'is_understand_restrictions_to_cancel_investment': true,
-          'payment_information_data': {
-            'account_number': 'Account number',
-            'bank_account_type': true,
-            'bank_name': 'Credit Issues',
-            'name_on_bank_account': 'Name of bank account',
-            'routing_number': 'Routing number'
-          },
-          'payment_information_type': 1,
-          'perk': '',
-          'personal_information_data': {
-            'city': 'Odessa',
-            'first_name': 'Ivan',
-            'last_name': 'Petrovich',
-            'state': 'TX',
-            'street_address_1': 'Street 1',
-            'street_address_2': '',
-            'zip_code': '65065'
-          },
-          'signature': {
-            'full_name': 'Ivan Ivanovich'
-          },
-          'status': 0
-        };
 
+      let investmentStub = {
+        id: 12,
+        created_date: new Date(2016, 12, 8),
+        perk: 'this is perk',
+        security_type: 12345,
+        amount_of_shares: 100,
+        cap: 100,
+        percentage_revenue: 200,
+        company: {
+          id: 127,
+          name: 'The best company in the world',
+        },
+        campaign: {
+          header_image_data: [{urls: []}],
+          maximum_raise: 500000,
+          minimum_raise: 250000,
+          expiration_date: new Date(2016, 12, 18),//'2016-12-18 00:00:00+00:00',
+        },
+      };
 
+      let extendProps = _.pick(investmentStub, ['id', 'created_date', 'perk', 'security_type', 'amount_of_shares', 'cap', 'percentage_revenue', 'company']);
 
+      _.each(this.model.data, (investment, idx) => {
+        investment.campaign.expiration_date = investmentStub.campaign.expiration_date;
+        _.extend(investment, extendProps);
+        if (!investment.campaign.minimum_raise || !investment.campaign.maximum_raise) {
+          investment.campaign.minimum_raise = investmentStub.campaign.minimum_raise;
+          investment.campaign.maximum_raise = investment.campaign.maximum_raise;
+        }
+      });
+
+      if (false) {
 
 
 
