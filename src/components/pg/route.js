@@ -1,9 +1,12 @@
-const gaHelper = require('helpers/googleAnalyticsHelper');
-
-module.exports = Backbone.Router.extend(_.extend({
+module.exports = Backbone.Router.extend({
     routes: {
         '': 'mainPage',
         'pg/:name': 'pagePG',
+    },
+
+    execute: function (callback, args, name) {
+        ga('send', 'pageview', "/" + Backbone.history.getPath());
+        if (callback) callback.apply(this, args)
     },
 
     mainPage(id) {
@@ -125,4 +128,4 @@ module.exports = Backbone.Router.extend(_.extend({
             });
         });
     },
-}, gaHelper.methods));
+});

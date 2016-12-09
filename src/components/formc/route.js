@@ -1,7 +1,6 @@
-const gaHelper = require('helpers/googleAnalyticsHelper');
 const View = require('components/formc/views.js');
 
-module.exports = Backbone.Router.extend(_.extend({
+module.exports = Backbone.Router.extend({
   routes: {
     'formc/:id/introduction': 'introduction',
     'formc/:id/team-members/:type/:index': 'teamMemberAdd',
@@ -37,6 +36,7 @@ module.exports = Backbone.Router.extend(_.extend({
       });
       return false;
     }
+    ga('send', 'pageview', "/" + Backbone.history.getPath());
     if (callback) callback.apply(this, args);
     else alert('Not such url');
   },
@@ -503,4 +503,4 @@ module.exports = Backbone.Router.extend(_.extend({
       i.render();
       app.hideLoading();
   },
-}, gaHelper.methods));
+});

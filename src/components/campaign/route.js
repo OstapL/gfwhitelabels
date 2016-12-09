@@ -1,14 +1,17 @@
-const gaHelper = require('helpers/googleAnalyticsHelper');
-
 // Polyfill webpack require.ensure.
 if (typeof require.ensure !== `function`) require.ensure = (d, c) => c(require);    
 
-module.exports = Backbone.Router.extend(_.extend({
+module.exports = Backbone.Router.extend({
   routes: {
     ':id/invest-thanks': 'investmentThankYou',
     'companies': 'list',
     ':id': 'detail',
     ':id/invest': 'investment',
+  },
+
+  execute: function (callback, args, name) {
+    ga('send', 'pageview', "/" + Backbone.history.getPath());
+    if (callback) callback.apply(this, args)
   },
 
   investmentThankYou(id) {
@@ -112,4 +115,4 @@ module.exports = Backbone.Router.extend(_.extend({
         // }
     });
   },
-}, gaHelper.methods));
+});

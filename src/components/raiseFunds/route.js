@@ -1,6 +1,4 @@
-const gaHelper = require('helpers/googleAnalyticsHelper');
-
-module.exports = Backbone.Router.extend(_.extend({
+module.exports = Backbone.Router.extend({
   routes: {
     'company/create': 'company',
     'company/in-review': 'inReview',
@@ -22,6 +20,7 @@ module.exports = Backbone.Router.extend(_.extend({
       });
       return false;
     }
+    ga('send', 'pageview', "/" + Backbone.history.getPath());
     if (callback) callback.apply(this, args);
   },
 
@@ -218,4 +217,4 @@ module.exports = Backbone.Router.extend(_.extend({
     });
   },
    
-}, gaHelper.methods));
+});
