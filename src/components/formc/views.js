@@ -424,7 +424,7 @@ module.exports = {
         email: 'Email',
         dob: 'Date of birth',
         principal_occupation: 'Principal Occupation',
-        employer_principal_businesss: 'Employer and Principal Business',
+        employer_principal_businesss: "Employer's Principal Business",
         responsibilities: 'Title',
         number_of_shares: 'Number of Shares',
         class_of_securities: 'Class of Securities',
