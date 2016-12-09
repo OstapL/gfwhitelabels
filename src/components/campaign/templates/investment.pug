@@ -63,7 +63,7 @@ mixin fieldInput(name, attr)
               span(style="color:red;") $:amount.
             br
             p Please 
-              a(data-toggle="modal" data-target="#income_worth_modal" href="#income_worth_modal").update-income-worth update your annual income and net worth. 
+              a(data-toggle="modal" data-target="#income_worth_modal" href="#income_worth_modal").link-2.update-income-worth update your annual income and net worth. 
           div.popover-content-rounding
             i.fa.fa-info-circle
             span Companies can’t issue fractional shares.  The price per share is $#{values.campaign.price_per_share} so investment amounts must be a multiple of $#{values.campaign.price_per_share}.
@@ -188,7 +188,7 @@ mixin fieldInput(name, attr)
               //-   value: user.name_on_bank_account,
               //-   }, fields.name_on_bank_account))
               +nestedTextLabel("payment_information_data", "name_on_bank_account", {
-                class1: 'col-lg-3 col-md-12 text-lg-left text-xl-right',
+                class1: 'col-lg-3 col-md-12 text-lg-left text-xl-right p-t-0 m-b-0',
                 class2: 'col-lg-9 col-md-12',
                 id: 'payment_information_data__account_number__0',
                 }, user)
@@ -203,7 +203,7 @@ mixin fieldInput(name, attr)
                 id: 'payment_information_data__routing_number__0'
                 }, user)
               +fieldTextLabel("payment_information_data[account_number_re]", _.extend({
-                class1: 'col-lg-3 col-md-12 text-lg-left text-xl-right',
+                class1: 'col-lg-3 col-md-12 text-lg-left text-xl-right p-t-0 m-b-0',
                 class2: 'col-lg-9 col-md-12',
                 value: user.account_number,
                 id: 'payment_information_data__name_on_bank_account__0',
@@ -359,10 +359,9 @@ mixin fieldInput(name, attr)
             .col-lg-12.m-t-2
               .row
                 .form-group.row
-                  .col-lg-4
+                  .col-lg-5
                     input(type="text" placeholder="Type Your Name").form-control.typed-name
-                    .help-block Electronically Sign Here
-                  .col-lg-4
+                  .col-lg-5
                     .electronically
                       span.by By:
                       span.name.signature
@@ -450,15 +449,16 @@ div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true
       .modal-body
         .container.form-section
           form.col-lg-10.offset-lg-1.border-bottom.update-income-worth
-            div Your current limit is 
+            .row
+              | Your current limit is 
               b $
-                span.current-limit 1000
+                span.current-limit.color-green 1000
               | .
             .form-group.row.clearfix.required
-              label Annual Income
+              label.base-font-size.font-weight-bold Annual Income
               input(type="text" placeholder="Annual Income" name="annual_income" value=(user.annual_income * 1000).toLocaleString('en-US'))#annual_income.annual_income.form-control
             .form-group.row.clearfix.required
-              label Net Worth
+              label.base-font-size.font-weight-bold Net Worth
               input(type="text" placeholder="Net Worth" name="net_worth" value=(user.net_worth * 1000).toLocaleString('en-US'))#net_worth.net-worth.form-control
             .form-group.row.clearfix.required.m0
               .row
