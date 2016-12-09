@@ -160,6 +160,7 @@ global.app = app;
 
 // app routers
 app.routers = require('routers');
+app.fields = require('fields');
 app.user.load();
 app.trigger('userReady');
 

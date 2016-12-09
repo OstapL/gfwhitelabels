@@ -66,32 +66,14 @@ section.team-members.container.m-b-85
           value: member.bio,
         }, fields.bio))
 
-      .row.showPopover(data-content="Why do we ask? These affinity based questions can help us share your campaign with potential investors with similar backgrounds.")
-        input(type="hidden" name="city" values=member.city)
-        input(type="hidden" name="state" value=member.state)
-        .col-xl-6.col-lg-6.input-min-width
-          +fieldTextLabel('zip_code', _.extend({
-            'class1': 'col-xl-6 col-lg-12 text-xl-right text-lg-left p-t-0 m-b-0 m-b-lg-1',
-            'class2': 'col-xl-6 col-lg-12',
-            'label': 'Where did you grow up?',
-            'type': 'text',
-            'value': member.zip_code,
-            'placeholder': 'Zip code',
-          }, fields.zip_code))
+      - pug_html += zipCodeDirective(this.fields, this.model, 'teamMember.pug').render().resultHtml;
 
-        .col-xl-5.col-lg-6.col-sm-12.city_states.required.form-group
-          .row
-            label.col-xl-6.col-lg-12.col-xs-6.text-xl-right.text-lg-left City/State
-            .col-xl-6.col-lg-12
-              a(data-toggle="modal" data-target="#city_state_modal" href="#city_state_modal").change_state_city
-                span.input-value.js-city-state #{ member['city'] ? member['city'] : '(City)' }, #{ member['state'] ? member['state'] : '(State)' }
-                  i.fa.fa-pencil-square-o.link-1
       +fieldTextLabel("college", _.extend({
         class1: 'col-xl-3 col-lg-12 text-lg-left text-xl-right',
         class2: 'col-xl-9 col-lg-12',
-        label:  'Collage',
+        label:  'Where did you attend college?',
         placeholder: 'Name of college or university',
-      }, fields.collage))
+      }, fields.college))
       .row
         .col-lg-6.input-min-width
           +fieldTextLabel("linkedin", _.extend({
@@ -149,36 +131,3 @@ section.team-members.container.m-b-85
                 .dropdown-menu(aria-labelledby="dropdownMenuButton")
                   a(href="").dropdown-item Add Advisor
                   a(href="").dropdown-item Add Team Member
-//MODAL
-div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")#city_state_modal.modal.fade
-  div(role="document").modal-dialog
-    .modal-content
-      .modal-header
-        button(type="button" data-dismiss="modal" aria-label="Close").close
-          span(aria-hidden="true")
-            i.fa.fa-times
-        h2.text-xs-center.text-uppercase.dosis.modal-title City/State
-
-      .modal-body
-        .container.form-section
-          .col-lg-10.offset-lg-1.border-bottom
-            .form-group.row.clearfix.required
-              input(type="text" placeholder="City" value=values['city'])#city.js-city.form-control
-            .form-group.row.clearfix.required
-              select(name='state')#state.js-state.form-control.custom-select
-                option(checked='checked', value="") State
-                each state in states
-                  if state.abbreviation == values.state
-                    option(value=state.abbreviation selected)= state.name
-                  else
-                    option(value=state.abbreviation)= state.name
-            .form-group.row.clearfix.required.m-b-2
-              .row
-                .col-lg-12
-                  .col-lg-12.text-xs-center
-                    button(data-dismiss="modal").btn.btn-primary.text-uppercase save
-        .modal-footer
-
-
-if !window.google || !window.google.maps
-  script(src= window.location.protocol + "//maps.google.com/maps/api/js?language=en&key=" + googleMapKey)
