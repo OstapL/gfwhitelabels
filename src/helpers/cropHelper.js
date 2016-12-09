@@ -3,11 +3,13 @@ const CROP_IMG_PROFILE_CLASS = 'img-profile-crop';
 
 const nonCropperProps = ['showPreview', 'cssClass'];
 
+
+require('cropperjs/dist/cropper.css');
+const Cropper = require('cropperjs').default;
+
 module.exports = {
 
   showCropper(imgUrl, options, cropData, callback) {
-    require('cropperjs/dist/cropper.css');
-    const Cropper = require('cropperjs').default;
 
     options = _.extend({
       viewMode: 1,
@@ -31,7 +33,7 @@ module.exports = {
       cropBoxMovable: true,
       cropBoxResizable: true,
       // ready: function() {//fires when image is loaded
-      //
+      //   cropper.enable();
       // }
 
     }, options);
@@ -47,7 +49,6 @@ module.exports = {
       '<div class="form-group">' +
         '<div class="row">' +
           '<div class="crop-image-container col-xl-7 col-lg-7 p-l-2">' +
-            '<img src="' + imgUrl + '" id="cropSrcImage">' +
           '</div>' +
           '<div class="preview-container col-xl-5 col-lg-5 text-xs-center">' +
             '<div class="row">' +
@@ -73,13 +74,12 @@ module.exports = {
     let cropperTemplate =
       '<div class="form-group">' +
         '<div class="row">' +
-          '<div class="crop-image-container col-xl-7 col-lg-7 p-l-2">' +
-            '<img src="' + imgUrl + '" id="cropSrcImage">' +
+          '<div class="crop-image-container">' +
           '</div>' +
         '</div>' +
         '<div class="row">' +
           '<div class="col-xl-12 m-t-3 m-b-0 text-xs-center">' +
-            '<button type="button" class="btn btn-secondary m-r-2 cropper-cancel" data-dismiss="modal">' +
+            '<button type="button" class="btn btn-secondary m-r-2" data-dismiss="modal">' +
               'Cancel' +
             '</button>' +
             '<button type="button" class="btn btn-primary cropper-ok" data-dissmiss="modal">' +
@@ -91,7 +91,7 @@ module.exports = {
 
     //todo
     let modalTemplate =
-      '<div class="modal fade bd-example-modal-lg modal-dropzone ' + (customOptions.cssClass || '') + '"' +
+      '<div class="modal fade cropModal modal-dropzone ' + (customOptions.cssClass || '') + '"' +
           'tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">' +
         '<div class="modal-dialog modal-lg">' +
           '<div class="modal-content">' +
@@ -109,42 +109,50 @@ module.exports = {
       '</div>' +
     '</div>';
 
-    let $modal = $(modalTemplate);
-    let resultData = null;
 
-    const clickButton = (e) => {
-      e.preventDefault();
+    if($('.cropModal').length == 0) {
 
-      $modal.modal('hide');
+      let img = new Image();
 
-      return false;
-    };
+			img.addEventListener("load", function() {
+				const $modal = $('.cropModal');
 
-    $modal.on('hidden.bs.modal', (e) => {
-      $modal.remove();
+				$modal.on('hidden.bs.modal', (e) => {
+					$modal.remove();
+				});
 
-      if (_.isFunction(callback))
-        callback(resultData);
-    });
+				$modal.on('shown.bs.modal', () => {
+          console.log('showed');
+          let $cropperOk = $('.cropper-ok');
+          $cropperOk.on('click', function(e) {
+            e.preventDefault();
 
-    $modal.find('.cropper-ok').on('click', (e) => {
-      resultData = cropper.getData(true);
-      return clickButton(e);
-    });
+            $modal.modal('hide');
 
-    $modal.find('.cropper-cancel').on('click',clickButton);
+            if (typeof(callback) === 'function') { 
+              callback(cropper.getData(true));
+            }
 
-    //show cropper when original image is loaded
-    let $img = $modal.find('#cropSrcImage');
-    $img.on('ready', (e) => {
-      cropper.setData(cropData);
-    });
+            return false;
+          });
+          options.minContainerHeight = 320;
 
-    let cropper = new Cropper($img[0], options);
+          let cropper = new Cropper(this, options);
+          //todo set cropper data
+          cropper.setData(cropData);
+          // REMOVE LOADING SPIINER
+        });
 
-    $(document.body).append($modal);
 
-    $modal.modal();
+        // ADD LOADING SPIINER
+        $modal.modal('show');
+			}, false);
+
+			img.src = imgUrl;
+      $('#content').append(modalTemplate);
+			$('.crop-image-container').append(img)
+
+    }
   },
 
 };
