@@ -2,6 +2,10 @@ include ../../../templates/mixins.pug
 //include ../../../templates/fields_mixins.pug
 
 mixin investment(i)
+  -
+    if (!i.campaign)
+      return;
+
   .one_table
     .img_column.text-lg-center.text-sm-center
       img(src=(i.campaign.header_image || "/img/test.png") alt="").img-fluid

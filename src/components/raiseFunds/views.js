@@ -9,6 +9,7 @@ const leavingConfirmationHelper = require('helpers/leavingConfirmationHelper.js'
 const phoneHelper = require('helpers/phoneHelper.js');
 const validation = require('components/validation/validation.js');
 const menuHelper = require('helpers/menuHelper.js');
+const disableEnterHelper = require('helpers/disableEnterHelper.js');
 
 const submitCampaign = function submitCampaign(e) {
   doCampaignValidation(e, this.model);
@@ -151,6 +152,7 @@ module.exports = {
           states: this.usaStates,
         })
       );
+      disableEnterHelper.disableEnter.call(this);
       return this;
     },
 
@@ -251,6 +253,7 @@ module.exports = {
           this.$('.help-block').prev().scrollTo(5);
         }
       }
+      disableEnterHelper.disableEnter.call(this);
       return this;
     },
   }, leavingConfirmationHelper.methods, menuHelper.methods, addSectionHelper.methods)),
@@ -376,6 +379,8 @@ module.exports = {
         }
       }
 
+      disableEnterHelper.disableEnter.call(this);
+
       return this;
     },
 
@@ -423,13 +428,14 @@ module.exports = {
       this.fields = options.fields;
       this.fields.photo_image_id.imgOptions = {
         aspectRatio: 1 / 1,
-        cssClass: 'img-crop',
+        cssClass: 'img-profile-crop',
         showPreview: true,
       };
 
       this.formc = options.formc;
       this.type = options.type;
       this.index = options.index;
+
       this.urlRoot = this.urlRoot.replace(':id', this.model.id);
 
       if (this.index != 'new') {
@@ -467,6 +473,8 @@ module.exports = {
 
       delete this.model.progress;
       delete this.model.data;
+
+      disableEnterHelper.disableEnter.call(this);
       return this;
     },
 
@@ -525,13 +533,6 @@ module.exports = {
       this.formc = options.formc;
 
       this.urlRoot = this.urlRoot.replace(':id', this.model.id);
-
-      this.$el.on('keypress', ':input:not(textarea)', function (event) {
-        if (event.keyCode == 13) {
-          event.preventDefault();
-          return false;
-        }
-      });
     },
 
     render() {
@@ -552,6 +553,8 @@ module.exports = {
             formc: this.formc,
           })
         );
+
+      disableEnterHelper.disableEnter.call(this);
 
       return this;
     },
@@ -720,6 +723,8 @@ module.exports = {
           $('.security_type_1').show();
         }
         $('#description_determine').parent().parent().hide();
+
+        disableEnterHelper.disableEnter.call(this);
         return this;
       },
   }, leavingConfirmationHelper.methods, menuHelper.methods, dropzoneHelpers.methods, addSectionHelper.methods)),
@@ -767,6 +772,8 @@ module.exports = {
             templates: this.jsonTemplates,
         })
       );
+
+      disableEnterHelper.disableEnter.call(this);
       return this;
     },
 

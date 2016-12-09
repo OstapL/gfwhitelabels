@@ -412,6 +412,7 @@ module.exports = {
   }),
 
   investment: Backbone.View.extend({
+    el: '#content',
     template: require('./templates/investment.pug'),
     templatesOfPdf: {
       revenue_share: require('./templates/agreement/revenue_share.pug'),
@@ -428,10 +429,108 @@ module.exports = {
       'change .country-select': 'changeCountry',
       'change .payment-type-select': 'changePaymentType',
       'change #amount': 'amountRounding',
-      click: 'hideRoundingPopover',
       'keyup .typed-name': 'copyToSignature',
       'keyup #annual_income,#net_worth': 'updateLimitInModal',
       'click button.submit-income-worth': 'updateIncomeWorth',
+    },
+
+
+    initialize(options) {
+      this.fields = options.fields;
+      this.user = options.user;
+      this.user.account_number_re = this.user.account_number;
+
+      this.fields.payment_information_data.schema.account_number_re = { type: 'string', required: true };
+      this.fields.payment_information_data.schema.phone = { type: 'string', required: true };
+      this.fields.payment_information_data.schema.name_on_bank_account.required = true;
+      this.fields.payment_information_data.schema.account_number.required = true;
+      this.fields.payment_information_data.schema.routing_number.required = true;
+
+      this.fields.payment_information_type.validate.choices = {
+        0: 'Echeck (ACH)',
+        1: 'Check',
+        2: 'Wire',
+      };
+      console.dir(this.fields);
+      console.dir(this.user);
+      console.log('================================');
+
+      this.labels = {
+        personal_information_data: {
+          street_address_1: 'Street Address 1',
+          street_address_2: 'Street Address 2',
+          zip_code: 'Zip Code',
+          city: 'City',
+        },
+        payment_information_data: {
+          name_on_bank_account: 'Name On Bank Account',
+          account_number: 'Account Number',
+          account_number_re: 'Account Number Again',
+          routing_number: 'Routing Number',
+        },
+        payment_information_type: 'I Want to Pay Using',
+        amount: 'Amount',
+        street_address_1: 'Street Address 1',
+        street_address_2: 'Street Address 2',
+        zip_code: 'Zip Code',
+        city: 'City',
+        phone: 'Phone',
+        name_on_bank_account: 'Name On Bank Account',
+        account_number: 'Account Number',
+        account_number_re: 'Account Number Again',
+        fee: 'Fee',
+        routing_number: 'Routing Number',
+        is_reviewed_educational_material: 'It',
+        is_understand_restrictions_to_cancel_investment: 'It',
+        is_understand_difficult_to_resell_purchashed: 'It',
+        is_understand_investing_is_risky: 'It',
+      };
+
+      this.assignLabels();
+
+      this.getCityStateByZipCode = require("helpers/getSityStateByZipCode");
+      this.usaStates = require("helpers/usa-states");
+    },
+
+    render() {
+      this.$el.html(
+        this.template({
+          serverUrl: serverUrl,
+          Urls: Urls,
+          fields: this.fields,
+          values: this.model,
+          // user: app.user.toJSON(),
+          user: this.user,
+          states: this.usaStates,
+          countries: countries,
+        })
+      );
+
+      let that = this;
+
+      $('#amount').popover({
+        placement(context, src) {
+          return 'top';
+        },
+        container: '#content',
+        html: true,
+        content(){
+          var content = $('.invest_form').find('.popover-content-' + that.currentAmountTip).html();
+          if (that.currentAmountTip == 'amount-ok' || that.currentAmountTip == 'amount-campaign') {
+            content = content.replace(/\:amount/g, that._amountAllowed().toLocaleString('en-US'));
+          }
+          return content;
+        },
+        trigger: 'manual',
+      }).popover('hide');
+
+      $('#income_worth_modal').on('hidden.bs.modal', function() {
+        $('#amount').keyup();
+      });
+
+      $('span.current-limit').text(this._amountAllowed());
+
+      return this;
     },
 
     updateLimitInModal(e) {
@@ -452,16 +551,11 @@ module.exports = {
         alert('Update failed. Please try again!');
       });
     },
+
     doNotExtendModel: true,
 
     copyToSignature(e) {
       this.$('.signature').text($(e.target).val());
-    },
-
-    hideRoundingPopover(e) {
-      if (this.currentAmountTip == 'rounding' || this.currentAmountTip == 'amount-ok') {
-        $('#amount').popover('hide');
-      }
     },
 
     changePaymentType(e) {
@@ -495,77 +589,11 @@ module.exports = {
       }
       let data = $(e.target).serializeJSON();
       data.amount = data.amount.replace(/\,/g, '');
-      data.doNotExtendModel = true;
       api.submitAction.call(this, e, data);
     },
 
     getSuccessUrl(data) {
-      return data.id + '/invest_thanks';
-    },
-    initialize(options) {
-      this.fields = options.fields;
-      this.user = options.user;
-
-      // stub the annual income and net worth
-      // this.user.annual_income = 50001;
-      // this.user.net_worth = 50001;
-      this.user.accumulated_investment = 0;
-
-      // this.fields.street_address_1 = { type: 'string', required: true};
-      this.fields.street_address_1 = { type: 'string', required: false};
-      this.fields.street_address_2 = { type: 'string', required: false};
-      // this.fields.phone = {type: 'string', required: true};
-      this.fields.phone = {type: 'string', required: false};
-      // this.fields.name_on_bank_account = {type: 'string', required: true};
-      this.fields.name_on_bank_account = {type: 'string', required: false};
-      // this.fields.account_number = {type: 'string', required: true};
-      this.fields.account_number = {type: 'string', required: false};
-      // this.fields.account_number_re = {type: 'string', required: true};
-      this.fields.account_number_re = {type: 'string', required: false};
-      // this.fields.zip_code = {type: 'string', required: true};
-      this.fields.zip_code = {type: 'string', required: false};
-      // this.fields.city = {type: 'string', required: true};
-      this.fields.city = {type: 'string', required: false};
-      this.fields.fee = {type: 'int', required: false};
-      // this.fields.route_number = {type: 'string', required: true};
-      this.fields.routing_number = {type: 'string', required: false};
-
-      // apply oneOf to the radio buttons
-      this.fields.is_reviewed_educational_material.oneOf = ['true'];
-      this.fields.is_understand_restrictions_to_cancel_investment.oneOf = ['true'];
-      this.fields.is_understand_difficult_to_resell_purchashed.oneOf = ['true'];
-      this.fields.is_understand_investing_is_risky.oneOf = ['true'];
-
-      this.labels = {
-        personal_information_data: {
-          street_address_1: 'Street Address 1',
-          street_address_2: 'Street Address 2',
-          zip_code: 'Zip Code',
-          city: 'City',       
-        },
-        payment_information_data: {
-          name_on_bank_account: 'Name On Bank Account',
-          account_number: 'Account Number',
-          account_number_re: 'Account Number Again',
-          routing_number: 'Routing Number',
-        },
-        amount: 'Amount',
-        street_address_1: 'Street Address 1',
-        street_address_2: 'Street Address 2',
-        zip_code: 'Zip Code',
-        city: 'City',
-        phone: 'Phone',
-        name_on_bank_account: 'Name On Bank Account',
-        account_number: 'Account Number',
-        account_number_re: 'Account Number Again',
-        fee: 'Fee',
-        routing_number: 'Routing Number',
-        is_reviewed_educational_material: 'It',
-        is_understand_restrictions_to_cancel_investment: 'It',
-        is_understand_difficult_to_resell_purchashed: 'It',
-        is_understand_investing_is_risky: 'It',
-      };
-      this.assignLabels();
+      return data.id + '/invest-thanks';
     },
 
     openPdf (e) {
@@ -647,48 +675,6 @@ module.exports = {
 
     currentAmountTip: 'amount-campaign',
 
-    render() {
-      this.getCityStateByZipCode = require("helpers/getSityStateByZipCode");
-      this.usaStates = require("helpers/usa-states");
-      this.$el.html(
-          this.template({
-            serverUrl: serverUrl,
-            Urls: Urls,
-            fields: this.fields,
-            values: this.model,
-            // user: app.user.toJSON(),
-            user: this.user,
-            states: this.usaStates,
-            countries: countries,
-          })
-          );
-
-      let that = this;
-      $('#amount').popover({
-        placement(context, src) {
-          return 'top';
-        },
-        container: '#content',
-        html: true,
-        content(){
-          var content = $('.invest_form').find('.popover-content-' + that.currentAmountTip).html();
-          if (that.currentAmountTip == 'amount-ok' || that.currentAmountTip == 'amount-campaign') {
-            content = content.replace(/\:amount/g, that._amountAllowed().toLocaleString('en-US'));
-          }
-          return content;
-        },
-        trigger: 'manual',
-      }).popover('hide');
-
-      $('#income_worth_modal').on('hidden.bs.modal', function() {
-        $('#amount').keyup();
-      });
-
-      $('span.current-limit').text(this._amountAllowed());
-
-      return this;
-    },
-
     _exceedLimit(amount) {
       amount = parseInt(amount || this.$('#amount').val());
       return amount > this._amountAllowed();
@@ -720,13 +706,12 @@ module.exports = {
         this.currentAmountTip = 'rounding';
         $('#amount').popover('show');
         this._updateTotalAmount(e);
-        $('.popover').scrollTo();
       }
     },
 
     amountUpdate(e) {
       var amount = parseInt(e.currentTarget.value.replace(/\,/g, ''));
-      $(e.currentTarget).val(amount.toLocaleString('en-US') || 0)
+      $(e.currentTarget).val((amount || '').toLocaleString('en-US'));
 
       if (amount < this.model.campaign.minimum_increment) {
         this.currentAmountTip = 'minimum-investment';
@@ -781,6 +766,7 @@ module.exports = {
 
   investmentThankYou: Backbone.View.extend({
     template: require('./templates/thankYou.pug'),
+    el: '#content',
     initialize(options) {
       this.company = options.company;
     },

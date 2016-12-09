@@ -10,6 +10,8 @@ const dropzoneHelpers = require('helpers/dropzoneHelpers.js');
 const riskFactorsHelper = require('helpers/riskFactorsHelper.js');
 const validation = require('components/validation/validation.js');
 
+const disableEnterHelper = require('helpers/disableEnterHelper.js');
+
 const labels = {
   title: 'Title for Risk',
   risk: 'Describe Your Risk',
@@ -397,6 +399,7 @@ module.exports = {
           ],
         })
       );
+      disableEnterHelper.disableEnter.call(this);
       return this;
     },
 
@@ -480,6 +483,8 @@ module.exports = {
         })
       );
       this.$el.find('.selectpicker').selectpicker();
+      disableEnterHelper.disableEnter.call(this);
+      return this;
     },
 
     getSuccessUrl(data) {
@@ -541,6 +546,7 @@ module.exports = {
           templates: this.jsonTemplates,
         })
       );
+      disableEnterHelper.disableEnter.call(this);
       return this;
     },
   }, addSectionHelper.methods, menuHelper.methods, yesNoHelper.methods)),
@@ -686,6 +692,7 @@ module.exports = {
 
       this.calculate(null, false);
       setTimeout(() => { this.createDropzones() } , 1000);
+      disableEnterHelper.disableEnter.call(this);
       return this;
     }, 
   }, menuHelper.methods, dropzoneHelpers.methods, addSectionHelper.methods)),
@@ -717,6 +724,7 @@ module.exports = {
 
   riskFactorsMarket: Backbone.View.extend(_.extend({
     urlRoot: formcServer + '/:id' + '/risk-factors-market/:index',
+    riskType: 'market_and_customer_risk',
     events: _.extend({
       'click .submit_formc': submitFormc,
     }, menuHelper.events, riskFactorsHelper.events),
@@ -795,10 +803,6 @@ module.exports = {
       this.assignLabels();
     },
 
-    deleteRisk: riskFactorsHelper.deleteRisk,
-    editRisk: riskFactorsHelper.editRisk,
-    submit: riskFactorsHelper.submitRisk,
-
     render() {
       let template = require('components/formc/templates/riskFactorsMarket.pug');
       this.$el.html(
@@ -813,13 +817,14 @@ module.exports = {
       this.$('textarea').each(function () {
         $(this).css({ height: this.scrollHeight + 'px' });
       });
-
+      disableEnterHelper.disableEnter.call(this);
       return this;
     },
-  }, menuHelper.methods, addSectionHelper.methods)),
+  }, menuHelper.methods, addSectionHelper.methods, riskFactorsHelper.methods)),
 
   riskFactorsFinancial: Backbone.View.extend(_.extend({
     urlRoot: formcServer + '/:id' + '/risk-factors-financial/:index',
+    riskType: 'financial_risk',
     events: _.extend({
       'click .submit_formc': submitFormc,
     }, menuHelper.events, riskFactorsHelper.events),
@@ -906,10 +911,6 @@ module.exports = {
       this.assignLabels();
     },
 
-    deleteRisk: riskFactorsHelper.deleteRisk,
-    editRisk: riskFactorsHelper.editRisk,
-    submit: riskFactorsHelper.submitRisk,
-
     render() {
       let template = require('components/formc/templates/riskFactorsFinancial.pug');
       this.$el.html(
@@ -924,13 +925,14 @@ module.exports = {
       this.$('textarea').each(function () {
         $(this).css({ height: this.scrollHeight + 'px' });
       });
-
+      disableEnterHelper.disableEnter.call(this);
       return this;
     },
-  }, menuHelper.methods, addSectionHelper.methods)),
+  }, menuHelper.methods, addSectionHelper.methods, riskFactorsHelper.methods)),
 
   riskFactorsOperational: Backbone.View.extend(_.extend({
     urlRoot: formcServer + '/:id' + '/risk-factors-operational/:index',
+    riskType: 'operational_risk',
     events: _.extend({
       'click .submit_formc': submitFormc,
     }, menuHelper.events, riskFactorsHelper.events),
@@ -1044,10 +1046,6 @@ module.exports = {
       this.assignLabels();
     },
 
-    deleteRisk: riskFactorsHelper.deleteRisk,
-    editRisk: riskFactorsHelper.editRisk,
-    submit: riskFactorsHelper.submitRisk,
-
     render() {
       let template = require('components/formc/templates/riskFactorsOperational.pug');
       this.$el.html(
@@ -1063,14 +1061,15 @@ module.exports = {
       this.$('textarea').each(function () {
         $(this).css({ height: this.scrollHeight + 'px' });
       });
-
+      disableEnterHelper.disableEnter.call(this);
       return this;
     },
 
-  }, menuHelper.methods, addSectionHelper.methods)),
+  }, menuHelper.methods, addSectionHelper.methods, riskFactorsHelper.methods)),
 
   riskFactorsCompetitive: Backbone.View.extend(_.extend({
     urlRoot: formcServer + '/:id' + '/risk-factors-competitive/:index',
+    riskType: 'competitive_risk',
     events: _.extend({
       'click .submit_formc': submitFormc,
     }, menuHelper.events, riskFactorsHelper.events),
@@ -1129,10 +1128,6 @@ module.exports = {
       this.assignLabels();
     },
 
-    deleteRisk: riskFactorsHelper.deleteRisk,
-    editRisk: riskFactorsHelper.editRisk,
-    submit: riskFactorsHelper.submitRisk,
-
     render() {
       let template = require('components/formc/templates/riskFactorsCompetitive.pug');
       this.$el.html(
@@ -1147,14 +1142,15 @@ module.exports = {
       this.$('textarea').each(function () {
         $(this).css({ height: this.scrollHeight + 'px' });
       });
-
+      disableEnterHelper.disableEnter.call(this);
       return this;
     },
 
-  }, menuHelper.methods, addSectionHelper.methods)),
+  }, menuHelper.methods, addSectionHelper.methods, riskFactorsHelper.methods)),
 
   riskFactorsPersonnel: Backbone.View.extend(_.extend({
     urlRoot: formcServer + '/:id' + '/risk-factors-personnel/:index',
+    riskType: 'personnel_and_third_parties_risk',
     events: _.extend({
       'click .submit_formc': submitFormc,
     }, menuHelper.events, riskFactorsHelper.events),
@@ -1232,10 +1228,6 @@ module.exports = {
       this.assignLabels();
     },
 
-    deleteRisk: riskFactorsHelper.deleteRisk,
-    editRisk: riskFactorsHelper.editRisk,
-    submit: riskFactorsHelper.submitRisk,
-
     render() {
       let template = require('components/formc/templates/riskFactorsPersonnel.pug');
       this.$el.html(
@@ -1250,13 +1242,14 @@ module.exports = {
       this.$('textarea').each(function () {
         $(this).css({ height: this.scrollHeight + 'px' });
       });
-
+      disableEnterHelper.disableEnter.call(this);
       return this;
     },
-  }, menuHelper.methods, addSectionHelper.methods)),
+  }, menuHelper.methods, addSectionHelper.methods, riskFactorsHelper.methods)),
 
   riskFactorsLegal: Backbone.View.extend(_.extend({
     urlRoot: formcServer + '/:id' + '/risk-factors-legal/:index',
+    riskType: 'legal_and_regulatory_risk',
     events: _.extend({
       'click .submit_formc': submitFormc,
     }, menuHelper.events, riskFactorsHelper.events),
@@ -1356,10 +1349,6 @@ module.exports = {
       this.assignLabels();
     },
 
-    deleteRisk: riskFactorsHelper.deleteRisk,
-    editRisk: riskFactorsHelper.editRisk,
-    submit: riskFactorsHelper.submitRisk,
-
     render() {
       let template = require('components/formc/templates/riskFactorsLegal.pug');
       this.$el.html(
@@ -1374,13 +1363,14 @@ module.exports = {
       this.$('textarea').each(function () {
         $(this).css({ height: this.scrollHeight + 'px' });
       });
-
+      disableEnterHelper.disableEnter.call(this);
       return this;
     },
-  }, menuHelper.methods, addSectionHelper.methods)),
+  }, menuHelper.methods, addSectionHelper.methods, riskFactorsHelper.methods)),
 
   riskFactorsMisc: Backbone.View.extend(_.extend({
     urlRoot: formcServer + '/:id' + '/risk-factors-misc/:index',
+    riskType: 'miscellaneous_risk',
     events: _.extend({
       'click .submit_formc': submitFormc,
     }, menuHelper.events, riskFactorsHelper.events),
@@ -1393,10 +1383,6 @@ module.exports = {
       this.labels = labels;
       this.assignLabels();
     },
-
-    deleteRisk: riskFactorsHelper.deleteRisk,
-    editRisk: riskFactorsHelper.editRisk,
-    submit: riskFactorsHelper.submitRisk,
 
     render() {
       let template = require('components/formc/templates/riskFactorsMisc.pug');
@@ -1412,10 +1398,10 @@ module.exports = {
       this.$('textarea').each(function () {
         $(this).css({ height: this.scrollHeight + 'px' });
       });
-
+      disableEnterHelper.disableEnter.call(this);
       return this;
     },
-  }, menuHelper.methods, addSectionHelper.methods)),
+  }, menuHelper.methods, addSectionHelper.methods, riskFactorsHelper.methods)),
 
   financialCondition: Backbone.View.extend(_.extend({
     urlRoot: formcServer + '/:id/financial-condition',
@@ -1471,6 +1457,7 @@ module.exports = {
         })
       );
       setTimeout(() => { this.createDropzones() } , 1000);
+      disableEnterHelper.disableEnter.call(this);
       return this;
     },
   }, menuHelper.methods, yesNoHelper.methods, addSectionHelper.methods, dropzoneHelpers.methods)),
@@ -1657,6 +1644,7 @@ module.exports = {
         })
       );
       $('#security_modal #custom_security_type').parent().parent().hide();
+      disableEnterHelper.disableEnter.call(this);
       return this;
     },
   }, addSectionHelper.methods, menuHelper.methods, yesNoHelper.methods)),
@@ -1700,6 +1688,7 @@ module.exports = {
           values: this.model,
         })
       );
+      disableEnterHelper.disableEnter.call(this);
       return this;
     },
   }, menuHelper.methods, yesNoHelper.methods, addSectionHelper.methods)),
@@ -1790,6 +1779,7 @@ module.exports = {
           values: this.model,
         })
       );
+      disableEnterHelper.disableEnter.call(this);
       return this;
     },
   }),

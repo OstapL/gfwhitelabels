@@ -185,7 +185,7 @@
 				+mt(.2s)
 				&:hover
 					i
-						color: $puerto_rico
+						color: $wild_willow
 			.delete-image
 				i
 					padding: 5px
@@ -207,13 +207,23 @@
 			margin-top: 10px
 			margin-bottom: 5px
 	.all-gallery
+		.col-xl-4
+			padding-left: 0
+			padding-right: 12px
+			&:nth-child(3n)
+				padding-right: 0
+				.delete-image-container
+					right: 0
+
+
+
 		.one-photo
 			margin-top: 25px
-			height: 83px
+			height: 95px
 			overflow: hidden
 			.delete-image-container
 				position: absolute
-				right: 15px
+				right: 12px
 				top: 0
 				.crop-image
 					margin-right: 3px
@@ -225,7 +235,7 @@
 						height: 25px
 					&:hover
 						i
-							color: $puerto_rico
+							color: $wild_willow
 				.delete-image
 					i
 						padding: 5px
@@ -253,7 +263,7 @@
 					text-align: center
 				&:hover
 					i
-						color: $puerto_rico
+						color: $wild_willow
 			.delete-image
 				i
 					padding: 5px
@@ -268,3 +278,8 @@
 
 	.border-dropzone
 		min-height: 150px
+.teamMemberDropzone
+	.one-photo
+		background-color: $alabaster
+		.delete-image-container
+			right: 0

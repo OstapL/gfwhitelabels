@@ -7,7 +7,7 @@ section(style="background-image: url(" + (values.campaign.header_image_data && v
   .js-height-parent.container-fluid
     .home-content
       .home-text.text-lg-center
-        h1.hs-line-14.font-alt.margin-bottom-50.mb-xs-30 #{ values.name }
+        h1.hs-line-14.font-alt.margin-bottom-50.mb-xs-30 #{ values.short_name || values.name }
         .local-scroll
           a(data-toggle="modal" href="#videoModal" data-target="#videoModal").big-icon.link-6.youtube_popup
             i.fa.fa-play-circle-o
@@ -40,7 +40,7 @@ section(style="background-image: url(" + (values.campaign.header_image_data && v
               h2.font-weight-bold #{ formatHelper.formatPrice(values.campaign.premoney_valuation) }
           else
             .col-lg-2.p-r-0.p-sm-0.text-xs-center.text-lg-left
-              p Percentage Reveue
+              p Percentage Revenue
               h2.font-weight-bold #{ values.campaign.percentage_revenue }%
           .col-lg-2.p-r-0.p-sm-0.text-xs-center.text-lg-left
             p Days Left
@@ -135,7 +135,7 @@ section.campaigndetail
     .col-lg-6.right-block-investors.p-l-0.p-sm-0
       .progress_bar_container
         //- span Less than 20% Funded
-        span Less than #{ percentage_raised }% Funded
+        span #{ percentage_raised <= 20 ? 'Less than 20' : percentage_raised }% Funded
         span.pull-right Committed 
           span.committed #{ formatHelper.formatPrice(values.campaign.amount_raised)}
         .clear
@@ -193,19 +193,19 @@ section
 
   section.about-detail.border-bottom
     .container
-      .col-lg-12
-        h2#about.dosis.text-uppercase.text-lg-center.text-xs-center.campaign-subheading About #{ values.name }
-        p !{ textHelper.restoreLineBreak(values.description) }
+      .col-lg-8.offset-lg-2
+        h2#about.dosis.text-uppercase.text-lg-center.text-xs-center.campaign-subheading About #{ values.short_name || values.name }
+        p.text-justify !{ textHelper.restoreLineBreak(values.description) }
 
         h2.dosis.our.text-uppercase.text-lg-center.text-xs-center.campaign-subheading Why You Should Invest
-        p !{ textHelper.restoreLineBreak(values.campaign.pitch) }
-      
+        p.text-justify !{ textHelper.restoreLineBreak(values.campaign.pitch) }
+    .container-fluid.p-l-0.p-r-0
       #gallery1.col-lg-12.pt50.photo-gallegy.text-center-flex
         if values.campaign.gallery_group_data
           each v,k in values.campaign.gallery_group_data
             .col-lg-4.no-padding-img
               a(href=v.urls[v.urls.length - 1] data-size='1440x900' rel="gallery1").fancybox
-                img(src=v.urls[0] alt=values.name).img-fluid.img-responsive
+                img(src=v.urls[0] alt=(values.short_name || values.name)).img-fluid.img-responsive
         else
 
           .col-lg-3.no-padding-img
@@ -232,7 +232,7 @@ section
           .col-lg-3.no-padding-img
             a(href="/img/values/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
               img(src="/img/default/255x153.png" alt="").img-fluid
-
+    .container
       .row
         .col-lg-12.text-center-flex
           if values.campaign.additional_video
@@ -278,19 +278,19 @@ section
                       i.fa.fa-play-circle-o
                   h3.card-text.text-lg-center Title for Optional Video 3
 
-      .col-lg-12
+      .col-lg-8.offset-lg-2
         h2.dosis.our.text-uppercase.text-lg-center.text-xs-center.campaign-subheading How We Intend to Make Money
-        p !{ textHelper.restoreLineBreak(values.campaign.intended_use_of_proceeds) }
+        p.text-justify !{ textHelper.restoreLineBreak(values.campaign.intended_use_of_proceeds) }
 
         h2.dosis.text-uppercase.text-lg-center.text-xs-center.campaign-subheading Why We are Raising Capital, and What We’ll Do with It
-        p !{ textHelper.restoreLineBreak(values.campaign.business_model) }
+        p.text-justify !{ textHelper.restoreLineBreak(values.campaign.business_model) }
 
       if values.campaign.additional_info
         each v,k in values.campaign.additional_info
           if v && v.title && v.body
-            .col-lg-12
+            .col-lg-8.offset-lg-2
               h2.dosis.our.text-uppercase.text-lg-center.text-xs-center.campaign-subheading #{ v.title }
-              p !{ textHelper.restoreLineBreak(v.body) }
+              p.text-justify !{ textHelper.restoreLineBreak(v.body) }
   if values.campaign.team_members
     section#members
       .container
@@ -679,7 +679,7 @@ section
       .col-lg-12.text-lg-center.text-xs-center
         h2
           i.fa.fa-thumbs-up
-          |  I’d Like to Invest in #{ values.name }!
+          |  I’d Like to Invest in #{ values.short_name || values.name }!
         a(href="/" + values.id + "/invest").btn.btn-primary.text-uppercase Invest
 
 div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")#videoModal.modal.fade.video-modal
