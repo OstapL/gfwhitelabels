@@ -212,7 +212,7 @@ describe('Attribute validation', function () {
       college: {
         type: 'string',
         label: 'Where did you attend college',
-        placeholder: 'Collage/University',
+        placeholder: 'College/University',
       },
       linkedin: {
         type: 'url',
