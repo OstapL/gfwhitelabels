@@ -16,10 +16,10 @@ section.create-company-media.container.media-container
   +menu('campaign', 'media')
 
   //START RIGHT BLOCK
-  .col-xl-8.col-lg-8.col-md-12
+  .col-xl-9.col-lg-8.col-md-12
     h2.text-uppercase.dosis.text-lg-center.text-xs-center.dosis.m-t-0.m-b-3 Media
     form.form-section
-      .col-xl-12
+      .col-xl-12.p-r-2.p-l-lg-1.p-sm-0
         +imageDropzone("header_image_image_id", _.extend({
           class1: 'col-xl-3 col-lg-12 text-xs-center text-xl-right',
           class2: 'col-xl-9 col-lg-12 text-xs-center p-sm-0',
@@ -28,7 +28,7 @@ section.create-company-media.container.media-container
           text: 'Drop your photo here or click to upload',
           icon: 'file-image-o',
           label: 'Header Image',
-          help_text: 'This is the image that will appear at the top of your campaign. A minimum size of 1600x400 is recommended.',
+          help_text: 'This is the image that will appear at the top of your campaign. A minimum size of 1600x955 is recommended.',
           data: values.header_image_data[0],
         }, this.fields.header_image_image_id))
         +imageDropzone("list_image_image_id", _.extend({
@@ -39,7 +39,7 @@ section.create-company-media.container.media-container
           text: 'Drop your photo here or click to upload',
           icon: 'file-image-o',
           label: 'Thumbnail Picture',
-          help_text: ' This image entices investors to view your campaign. A minimum size of 1600x400 is recommended.',
+          help_text: ' This image entices investors to view your campaign. A minimum size of 1600x955 is recommended.',
           data: values.list_image_data[0],
         }, this.fields.list_image_image_id))
         .m-b-2
@@ -49,7 +49,7 @@ section.create-company-media.container.media-container
               default: '/img/default/77x45.png',
               text: 'Drop your photo(s) here or click to upload',
               icon: 'file-image-o',
-              help_text: 'We recommend uploading 6 images that represent your service of business. These images will be displayed in a gallery format.',
+              help_text: 'We recommend uploading 6 images (minimum size of 1600x955 is recommended) that represent your service of business. These images will be displayed in a gallery format.',
               data: values.gallery_group_data,
             }, fields.gallery_group_id))
         .row

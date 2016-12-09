@@ -65,7 +65,7 @@ mixin fieldInput(name, attr)
               span(style="color:red;") $:amount.
             br
             p Please 
-              a(data-toggle="modal" data-target="#income_worth_modal" href="#income_worth_modal").update-income-worth update your annual income and net worth. 
+              a(data-toggle="modal" data-target="#income_worth_modal" href="#income_worth_modal").link-2.update-income-worth update your annual income and net worth.
           div.popover-content-rounding
             i.fa.fa-info-circle
             span Companies can’t issue fractional shares.  The price per share is $#{values.campaign.price_per_share} so investment amounts must be a multiple of $#{values.campaign.price_per_share}.
@@ -180,7 +180,7 @@ mixin fieldInput(name, attr)
             //- I may need to add a value into the attr object to make sure proper data is populated.
             .echeck-fields.payment-fields
               +nestedTextLabel("payment_information_data", "name_on_bank_account", {
-                class1: 'col-lg-3 col-md-12 text-lg-left text-xl-right',
+                class1: 'col-lg-3 col-md-12 text-lg-left text-xl-right p-t-0 m-b-0',
                 class2: 'col-lg-9 col-md-12',
                 id: 'payment_information_data__account_number__0',
                 }, user)
@@ -440,7 +440,7 @@ div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true
       .modal-body
         .container.form-section
           form.col-lg-10.offset-lg-1.border-bottom.update-income-worth
-            div Your current limit is 
+            div Your current limit is
               b $
                 span.current-limit 1000
               | .
