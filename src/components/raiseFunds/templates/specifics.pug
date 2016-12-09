@@ -58,7 +58,7 @@ section.campaign-specifics.container.m-b-85
               class1: 'col-xl-3 col-lg-12 text-xl-right text-lg-center',
               class2: 'col-xl-9 col-lg-12 p-l-1 p-r-1',
               text: 'Drop your PPT or PDF here or click to upload',
-              data: values.investor_presentation_file_data[0],
+              data: values.investor_presentation_data[0],
               default: '/img/default/file.png',
               icon: 'file',
           }, fields.investor_presentation_file_id, { label: 'Upload an Investor Presentation'}))
@@ -116,14 +116,14 @@ section.campaign-specifics.container.m-b-85
           .m-t-2
           .row
             .col-xl-6.col-l-65.showPopover(data-content="<div class=''><span>Minimum # of Shares is calculated automatically: </span><br><span class='fraction'><span class='top'>Minimum Total Raise</span><span class='bottom'>Price Per Share</span></span></div>")
-              +fieldTextLabel("tagline", _.extend({
+              +fieldTextLabel("min_number_of_shares", _.extend({
                 class1: 'col-xl-6 col-lg-12 text-xl-right text-lg-left p-t-0 m-b-0 m-b-lg-1',
                 class2: 'col-xl-6 col-lg-12',
                 type: 'text',
                 maxlength: 90,
                 label: 'Minimum № of Shares',
                 disabled: true,
-              }, fields.tagline))
+              }, fields.min_number_of_shares))
             .col-xl-6.showPopover(data-content="<div class=''><span>Maximum # of Shares is calculated automatically: </span><br><span class='fraction'><span class='top'>Maximum Total Raise</span><span class='bottom'>Price Per Share</span></span></div>")
               +fieldTextLabel("max_number_of_shares", _.extend({
                 class1: 'col-xl-5 col-lg-12 text-xl-right text-lg-left p-t-0 m-b-0 m-b-lg-1',
