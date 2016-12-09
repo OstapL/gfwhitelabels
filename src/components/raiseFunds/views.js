@@ -429,7 +429,7 @@ module.exports = {
       this.fields = options.fields;
       this.fields.photo_image_id.imgOptions = {
         aspectRatio: 1 / 1,
-        cssClass: 'img-crop',
+        cssClass: 'img-profile-crop',
         showPreview: true,
       };
 

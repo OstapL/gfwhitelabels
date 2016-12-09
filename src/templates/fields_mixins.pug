@@ -1,12 +1,29 @@
 mixin nestedTextLabel(nestedName, name, myAttr, vals)
-  - vals = vals || values;
-  - _.extend(myAttr, fields[nestedName].schema[name])
-  - myAttr.value = vals[name] ? vals[name] : ''
+  -
+    vals = vals || values;
+    myAttr = _.extend(myAttr, fields[nestedName].schema[name]);
+    myAttr.value = vals[name] ? vals[name] : '';
+    console.log(nestedName + '.' + name + ':');
+    console.dir(myAttr);
+
   +fieldTextLabel(
     nestedName + '[' + name + ']',
     myAttr
   )
 
+mixin nestedText(nestedName, name, myAttr, vals)
+  -
+    vals = vals || values;
+    myAttr = _.extend(myAttr, fields[nestedName].schema[name]);
+    myAttr.value = vals[name] ? vals[name] : '';
+    //myAttr.id = nestedName + '__' + name + '__' + '0';
+    console.log(nestedName + '.' + name + ':');
+    console.dir(myAttr);
+
+  +fieldText(
+    nestedName + '[' + name + ']',
+    myAttr
+  )
 
 mixin prepareNestedField(nestedName, name, value, index, myAttr)
   if value == null
@@ -15,7 +32,6 @@ mixin prepareNestedField(nestedName, name, value, index, myAttr)
   - _.extend(myAttr, attr.schema[name]);
   - myAttr.value = value[name] ? value[name]: '';
   - myAttr.id = nestedName + '__' + index + '__' + name + '';
-
 
 mixin fieldNestedTextLabel(nestedName, name, value, index, myAttr)
   +prepareNestedField(nestedName, name, value, index, myAttr)
@@ -26,7 +42,6 @@ mixin fieldNestedTextLabel(nestedName, name, value, index, myAttr)
     myAttr
   )
 
-
 mixin fieldNestedTextareaLabel(nestedName, name, value, index, myAttr)
   +prepareNestedField(nestedName, name, value, index, myAttr)
   - myAttr.class1 = myAttr.class1 ? myAttr.class1 : 'text-lg-right col-lg-3 col-md-12 text-md-left';
@@ -35,7 +50,6 @@ mixin fieldNestedTextareaLabel(nestedName, name, value, index, myAttr)
     nestedName + '[' + index + '][' + name + ']',
     myAttr
   )
-
 
 mixin fieldNestedChoiceLabel(nestedName, name, value, index, myAttr)
   +prepareNestedField(nestedName, name, value, index, myAttr)
@@ -46,7 +60,6 @@ mixin fieldNestedChoiceLabel(nestedName, name, value, index, myAttr)
     myAttr
   )
 
-
 mixin fieldNestedRadioLabel(nestedName, name, value, index, myAttr)
   +prepareNestedField(nestedName, name, value, index, myAttr)
   - myAttr.class1 = myAttr.class1 ? myAttr.class1 : 'text-lg-right col-lg-3 col-md-12 text-md-left';
@@ -56,7 +69,6 @@ mixin fieldNestedRadioLabel(nestedName, name, value, index, myAttr)
     myAttr
   )
 
-
 mixin fieldNestedDateMonth(nestedName, name, value, index, myAttr)
   +prepareNestedField(nestedName, name, value, index, myAttr)
   - myAttr.class = myAttr.class ? myAttr.class : 'col-lg-6 p-r-0';
@@ -65,7 +77,6 @@ mixin fieldNestedDateMonth(nestedName, name, value, index, myAttr)
     nestedName + '[' + index + '][' + name + ']',
     myAttr
   )
-
 
 mixin fieldNestedDateDay(nestedName, name, value, index, myAttr)
   +prepareNestedField(nestedName, name, value, index, myAttr)
@@ -76,7 +87,6 @@ mixin fieldNestedDateDay(nestedName, name, value, index, myAttr)
     myAttr
   )
 
-
 mixin fieldNestedDateMonth(nestedName, name, value, index, myAttr)
   +prepareNestedField(nestedName, name, value, index, myAttr)
   - myAttr.class = myAttr.class ? myAttr.class : 'col-lg-6 p-r-0';
@@ -85,7 +95,6 @@ mixin fieldNestedDateMonth(nestedName, name, value, index, myAttr)
     nestedName + '[' + index + '][' + name + ']',
     myAttr
   )
-
 
 mixin fieldNestedDateYear(nestedName, name, value, index, myAttr)
   +prepareNestedField(nestedName, name, value, index, myAttr)
@@ -96,7 +105,6 @@ mixin fieldNestedDateYear(nestedName, name, value, index, myAttr)
     myAttr
   )
 
-
 mixin prepareField(name, attr)
   - attr = attr ? attr : fields[name];
   - attr.value = attr.value ? attr.value : values ? values[name] : '';
@@ -105,7 +113,6 @@ mixin prepareField(name, attr)
     - attr.placeholder = attr.label || ''
   if attr.required == true
     - attr.label += '<span class="color-red">*</span>'
-
 
 mixin fieldTextLabel(name, attr)
   +prepareField(name, attr)
@@ -127,7 +134,6 @@ mixin fieldTextLabel(name, attr)
             maxlength = attr.maxlength ? attr.maxlength : false
             disabled=(attr.disabled ? attr.disabled : false)
           ).form-control
-
 
 mixin fieldTextareaLabel(name, attr)
   +prepareField(name, attr)
@@ -163,7 +169,6 @@ mixin fieldText(name, attr)
         maxlength = attr.maxlength ? attr.maxlength : false
         disabled=(attr.disabled ? attr.disabled : false)).form-control
 
-
 mixin fieldChoiceLabel(name, attr)
   +prepareField(name, attr)
   if attr.type == null
@@ -181,6 +186,8 @@ mixin fieldChoiceLabel(name, attr)
 
           each v,k in attr.validate.choices
             option(value=k selected=(k == attr.value ? "selected" : undefined)) #{ v }
+
+
 mixin fieldChoice(name, attr)
   +prepareField(name, attr)
   if attr.type == null
@@ -214,7 +221,6 @@ mixin fieldRadioLabel(name, attr)
               checked=(k == attr.value ? "checked" : undefined)
               value=k)
             | #{ v }
-
 
 mixin fieldDateDay(name, attr)
   +prepareField(name, attr)
@@ -283,7 +289,6 @@ mixin fieldDateMonth(name, attr)
       option(value = "11" selected = (value == '11') ? true : false) Nov
       option(value = "12" selected = (value == '12') ? true : false) Dec
 
-
 mixin fieldDateYear(name, attr)
   - attr.placeholder = attr.placeholder ? attr.placeholder : "YYYY"
   +prepareField(name, attr)
@@ -302,7 +307,6 @@ mixin fieldDateYear(name, attr)
         maxlength=4
         value=value[0]
       ).form-control
-
 
 mixin fileDropzone(name, attr)
     - var textHelper = require('helpers/textHelper.js')
@@ -347,8 +351,6 @@ mixin fileDropzone(name, attr)
                   else
                     img(src='/img/icons/' + icon + '.png' alt=attr.label class="img-file img-" + name)
 
-
-
 mixin fileFolderDropzone(name, attr)
     - var textHelper = require('helpers/textHelper.js')
     - var icon = attr.type
@@ -390,7 +392,6 @@ mixin fileFolderDropzone(name, attr)
                 else
                   .thumb-file-container.text-xl-center
                     img(src='/img/icons/' + icon + '.png' alt=attr.label class="img-file img-" + name)
-
 
 mixin userProfileDropzone(name, attr)
     -
