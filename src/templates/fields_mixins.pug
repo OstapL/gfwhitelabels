@@ -295,7 +295,7 @@ mixin fieldDateYear(name, attr)
   if attr.type == null
     - attr.type = 'dateyear'
 
-  div(class=attr.class + ' ' + (attr.id || name) + (attr.required == true ? ' required ' : ' ') + ' ' + attr.type).date-input
+  div(id=(attr.divId ? attr.divId : '') class=attr.class + ' ' + (attr.id || name) + (attr.required == true ? ' required ' : ' ') + ' ' + attr.type).date-input
     - var value = attr.value ? attr.value.split('-') : values && values[name] ? values[name].split('-') : []
     input(
         id=attr.id || name + '__year'
