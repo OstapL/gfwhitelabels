@@ -8,6 +8,9 @@ module.exports = {
   list: Backbone.View.extend({
     el: '#content',
     template: require('./templates/list.pug'),
+    events: {
+      'change select.orderby': 'orderby',
+    },
     initialize(options) {
       this.collection = options.collection;
     },
@@ -28,6 +31,11 @@ module.exports = {
       this.$el.find('.selectpicker').selectpicker();
       //selectPicker('.selectpicker');
       return this;
+    },
+
+    orderby(e) {
+      let $target = $(e.target);
+      app.routers.navigate('/companies?page=1&orderby=' + $target.val(), { trigger: true });
     },
   }),
 
