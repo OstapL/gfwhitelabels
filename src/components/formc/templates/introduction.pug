@@ -103,6 +103,13 @@ section.formc.introduction.create-company-media.container
 
           div(class=(values.is_paid != true ? 'collapse' : '') id="save-button-block")
             .row
+              .col-xl-12
+                .border-bottom.m-t-2.m-b-3
+              .col-xl-12
+                .warning-block.warning-team-add.text-lg-left
+                  i.fa.fa-info-circle 
+                  span.warning-text Thank you for your payment, you can now complete your Form C.
               .col-lg-12
                 .btn-save.text-lg-right.m-t-2
-                  button(type='submit').btn.btn-primary.text-uppercase save
+                  button(type='submit').btn.btn-primary.text-uppercase save and continue
+                    i.fa.fa-angle-right
