@@ -475,7 +475,7 @@ mixin teamMemberDropzone(name, attr)
       console.log(attr);
     div(
       class='row media-item ' + (attr.class || '') + ' ' + (attr.id || name) +
-        (attr.required == true ? ' required ' : ' ') + ' imageDropzone' +
+        (attr.required == true ? ' required ' : ' ') + ' imageDropzone' + ' teamMemberDropzone' +
         (attr.help_text ? ' showPopover' : '')
       data-content=(attr.help_text ? attr.help_text : '')
     )
@@ -487,11 +487,11 @@ mixin teamMemberDropzone(name, attr)
           div(class="uploading collapse")
             img(alt="activity indicator" src="/img/ajax-loader.gif")
           span
-            div.col-xl-5.col-lg-6.col-md-6.col-sm-6.col-xs-12.text-xs-center.text-md-center.text-lg-center.p-dropzone
+            div.col-xl-6.col-lg-6.col-md-6.col-sm-6.p-r-2.col-xs-12.text-xs-center.text-md-center.text-lg-center.p-dropzone
               a(class='link-1' href="#" onclick="return false")
                 p.drop-photo #{attr.text}
                 i(class="fa fa-" + attr.icon)
-            div(id=name).col-xl-7.col-lg-6.col-md-6.col-sm-6.col-xs-12.img-dropzone.text-xs-center
+            div(id=name).col-xl-6.col-lg-6.col-md-6.col-sm-6.col-xs-12.img-dropzone.text-xs-center
               .row
                 .col-xl-12.one-photo
                   - var id = attr.data.id || 0;
