@@ -707,9 +707,11 @@ module.exports = {
       if (this.model.campaign.security_type == 1) return;
 
       let amount = $(e.target).val();
-      const price_per_share = this.model.campaign.price_per_share;
-      if (amount && amount % price_per_share != 0 && amount >= this.model.campaign.minimum_increment) {
-        amount = Math.ceil(amount / price_per_share) * price_per_share;
+      const pricePerShare = this.model.campaign.price_per_share;
+      const minIncrement = this.model.campaign.minimum_increment;
+
+      if ((amount && pricePerShare) && amount % pricePerShare != 0 && amount >= minIncrement) {
+        amount = Math.ceil(amount / pricePerShare) * pricePerShare;
         $(e.target).val(amount);
         this.currentAmountTip = 'rounding';
         $('#amount').popover('show');
