@@ -451,14 +451,14 @@ div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true
           form.col-lg-10.offset-lg-1.border-bottom.update-income-worth
             .row
               | Your current limit is 
-              b $
+              b.color-green $ 
                 span.current-limit.color-green 1000
               | .
             .form-group.row.clearfix.required
-              label.base-font-size.font-weight-bold Annual Income
+              label Annual Income
               input(type="text" placeholder="Annual Income" name="annual_income" value=(user.annual_income * 1000).toLocaleString('en-US'))#annual_income.annual_income.form-control
             .form-group.row.clearfix.required
-              label.base-font-size.font-weight-bold Net Worth
+              label Net Worth
               input(type="text" placeholder="Net Worth" name="net_worth" value=(user.net_worth * 1000).toLocaleString('en-US'))#net_worth.net-worth.form-control
             .form-group.row.clearfix.required.m0
               .row
