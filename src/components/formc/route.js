@@ -1,6 +1,7 @@
+const gaHelper = require('helpers/googleAnalyticsHelper');
 const View = require('components/formc/views.js');
 
-module.exports = Backbone.Router.extend({
+module.exports = Backbone.Router.extend(_.extend({
   routes: {
     'formc/:id/introduction': 'introduction',
     'formc/:id/team-members/:type/:index': 'teamMemberAdd',
@@ -502,4 +503,4 @@ module.exports = Backbone.Router.extend({
       i.render();
       app.hideLoading();
   },
-});
+}, gaHelper.methods));

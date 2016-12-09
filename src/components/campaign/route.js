@@ -1,7 +1,9 @@
+const gaHelper = require('helpers/googleAnalyticsHelper');
+
 // Polyfill webpack require.ensure.
 if (typeof require.ensure !== `function`) require.ensure = (d, c) => c(require);    
 
-module.exports = Backbone.Router.extend({
+module.exports = Backbone.Router.extend(_.extend({
   routes: {
     ':id/invest-thanks': 'investmentThankYou',
     'companies': 'list',
@@ -110,4 +112,4 @@ module.exports = Backbone.Router.extend({
         // }
     });
   },
-});
+}, gaHelper.methods));

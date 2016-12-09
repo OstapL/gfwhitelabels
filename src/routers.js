@@ -72,16 +72,7 @@ let appRoutes = Backbone.Router.extend({
     _.each(r10.routes, (funcName, path) => {
       this.routes[path] = r10[funcName];
     });
-
-    // return this.bind('all', this._trackPageview);
   },
-
-  // _trackPageview: function() {
-  //   alert('hello');
-  //   var url;
-  //   url = Backbone.history.getFragment();
-  //   return _gaq.push(['_trackPageview', "/" + url]);
-  // },
 
   back: function (e) {
     // Create requirements and do clean up before
@@ -98,12 +89,6 @@ let appRoutes = Backbone.Router.extend({
 app.on('userLoaded', function (data) {
 
   app.routers = new appRoutes();
-  // app.routers.on('route', function (route, params) {
-  //   alert('my here');
-  //   var url;
-  //   url = Backbone.history.getFragment();
-  //   return _gaq.push(['_trackPageview', "/" + url]);
-  // });
   app.user.url = serverUrl + Urls['rest_user_details']();
   Backbone.history.start({ pushState: true });
 

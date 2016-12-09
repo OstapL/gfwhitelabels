@@ -1,4 +1,6 @@
-module.exports = Backbone.Router.extend({
+const gaHelper = require('helpers/googleAnalyticsHelper');
+
+module.exports = Backbone.Router.extend(_.extend({
     routes: {
         '': 'mainPage',
         'pg/:name': 'pagePG',
@@ -123,4 +125,4 @@ module.exports = Backbone.Router.extend({
             });
         });
     },
-});
+}, gaHelper.methods));
