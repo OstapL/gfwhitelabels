@@ -440,9 +440,10 @@ div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true
       .modal-body
         .container.form-section
           form.col-lg-10.offset-lg-1.border-bottom.update-income-worth
-            div Your current limit is
-              b $
-                span.current-limit 1000
+            .row
+              | Your current limit is 
+              b.color-green $
+                span.current-limit.color-green 1000
               | .
             .form-group.row.clearfix.required
               label Annual Income
