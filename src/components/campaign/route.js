@@ -3,7 +3,7 @@ if (typeof require.ensure !== `function`) require.ensure = (d, c) => c(require);
 
 module.exports = Backbone.Router.extend({
   routes: {
-    ':id/invest_thanks': 'investmentThankYou',
+    ':id/invest-thanks': 'investmentThankYou',
     'companies': 'list',
     ':id': 'detail',
     ':id/invest': 'investment',
@@ -11,9 +11,9 @@ module.exports = Backbone.Router.extend({
 
   investmentThankYou(id) {
     require.ensure([], () => {
+
       const View = require('./views.js');
       let i = new View.investmentThankYou({
-        el: '#content',
         model: {
           id: 19,
           amount: 10000,
@@ -29,9 +29,6 @@ module.exports = Backbone.Router.extend({
       });
       i.render();
       app.hideLoading();
-      // const a1 = api.makeCacheRequest(investmentServer + '/' + id).then((data) => {
-
-      // });
     });
   },
 
@@ -85,7 +82,7 @@ module.exports = Backbone.Router.extend({
         let companyR = api.makeCacheRequest(raiseCapitalServer + '/' + id);
         let userR = api.makeCacheRequest(authServer + '/rest-auth/data');
 
-        $.when(investmentR, companyR, userR).then((investmentMeta, companyData, userData) => {
+        $.when(investmentR, companyR, userR).done((investmentMeta, companyData, userData) => {
             const i = new View.investment({
               model: companyData[0],
               user: userData[0],

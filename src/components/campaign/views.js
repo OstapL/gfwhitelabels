@@ -438,38 +438,22 @@ module.exports = {
     initialize(options) {
       this.fields = options.fields;
       this.user = options.user;
+      this.user.account_number_re = this.user.account_number;
 
-      this.fields.account_number_re = { type: 'string', required: true };
+      this.fields.payment_information_data.schema.account_number_re = { type: 'string', required: true };
+      this.fields.payment_information_data.schema.phone = { type: 'string', required: true };
+      this.fields.payment_information_data.schema.name_on_bank_account.required = true;
+      this.fields.payment_information_data.schema.account_number.required = true;
+      this.fields.payment_information_data.schema.routing_number.required = true;
 
-      // // stub the annual income and net worth
-      // // this.user.annual_income = 50001;
-      // // this.user.net_worth = 50001;
-      // this.user.accumulated_investment = 0;
-      //
-      // // this.fields.street_address_1 = { type: 'string', required: true};
-      // this.fields.street_address_1 = { type: 'string', required: false};
-      // this.fields.street_address_2 = { type: 'string', required: false};
-      // // this.fields.phone = {type: 'string', required: true};
-      // this.fields.phone = {type: 'string', required: false};
-      // // this.fields.name_on_bank_account = {type: 'string', required: true};
-      // this.fields.name_on_bank_account = {type: 'string', required: false};
-      // // this.fields.account_number = {type: 'string', required: true};
-      // this.fields.account_number = {type: 'string', required: false};
-      // // this.fields.account_number_re = {type: 'string', required: true};
-      // this.fields.account_number_re = {type: 'string', required: false};
-      // // this.fields.zip_code = {type: 'string', required: true};
-      // this.fields.zip_code = {type: 'string', required: false};
-      // // this.fields.city = {type: 'string', required: true};
-      // this.fields.city = {type: 'string', required: false};
-      // this.fields.fee = {type: 'int', required: false};
-      // // this.fields.route_number = {type: 'string', required: true};
-      // this.fields.routing_number = {type: 'string', required: false};
-      //
-      // // apply oneOf to the radio buttons
-      // this.fields.is_reviewed_educational_material.oneOf = ['true'];
-      // this.fields.is_understand_restrictions_to_cancel_investment.oneOf = ['true'];
-      // this.fields.is_understand_difficult_to_resell_purchashed.oneOf = ['true'];
-      // this.fields.is_understand_investing_is_risky.oneOf = ['true'];
+      this.fields.payment_information_type.validate.choices = {
+        0: 'Echeck (ACH)',
+        1: 'Check',
+        2: 'Wire',
+      };
+      console.dir(this.fields);
+      console.dir(this.user);
+      console.log('================================');
 
       this.labels = {
         personal_information_data: {
@@ -484,6 +468,7 @@ module.exports = {
           account_number_re: 'Account Number Again',
           routing_number: 'Routing Number',
         },
+        payment_information_type: 'I Want to Pay Using',
         amount: 'Amount',
         street_address_1: 'Street Address 1',
         street_address_2: 'Street Address 2',
@@ -505,13 +490,9 @@ module.exports = {
 
       this.getCityStateByZipCode = require("helpers/getSityStateByZipCode");
       this.usaStates = require("helpers/usa-states");
-
     },
 
     render() {
-      console.log(this.model)
-      console.log(this.user)
-
       this.$el.html(
         this.template({
           serverUrl: serverUrl,
@@ -608,12 +589,11 @@ module.exports = {
       }
       let data = $(e.target).serializeJSON();
       data.amount = data.amount.replace(/\,/g, '');
-      data.doNotExtendModel = true;
       api.submitAction.call(this, e, data);
     },
 
     getSuccessUrl(data) {
-      return data.id + '/invest_thanks';
+      return data.id + '/invest-thanks';
     },
 
     openPdf (e) {
@@ -786,6 +766,7 @@ module.exports = {
 
   investmentThankYou: Backbone.View.extend({
     template: require('./templates/thankYou.pug'),
+    el: '#content',
     initialize(options) {
       this.company = options.company;
     },
