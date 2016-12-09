@@ -529,7 +529,7 @@ mixin galleryDropzone(name, attr)
               a(class='link-1' href="#" onclick="return false")
                 p.drop-photo #{attr.text}
                 i(class="icon-gallery fa fa-" + attr.icon) 
-            div.row
+            div
               div(id=name).col-xl-12.all-gallery
                 each v, k in attr.data
                   .col-xl-4.col-lg-4.col-md-4.col-sm-6.col-xs-12.one-photo
