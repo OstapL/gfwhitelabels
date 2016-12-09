@@ -417,6 +417,48 @@ module.exports = {
       this.fields = options.fields;
       let investment = this.model.data[0];
       if (investment) {
+        let i = {
+          'amount': 1,
+          'campaign': {
+            'header_image_data': [],
+            'maximum_raise': 1000000,
+            'minimum_raise': 0
+          },
+          'company_id': 2,
+          'created_date': '2016-12-08 00:00:00+00:00',
+          'is_reviewed_educational_material': true,
+          'is_understand_difficult_to_resell_purchashed': true,
+          'is_understand_investing_is_risky': true,
+          'is_understand_restrictions_to_cancel_investment': true,
+          'payment_information_data': {
+            'account_number': 'Account number',
+            'bank_account_type': true,
+            'bank_name': 'Credit Issues',
+            'name_on_bank_account': 'Name of bank account',
+            'routing_number': 'Routing number'
+          },
+          'payment_information_type': 1,
+          'perk': '',
+          'personal_information_data': {
+            'city': 'Odessa',
+            'first_name': 'Ivan',
+            'last_name': 'Petrovich',
+            'state': 'TX',
+            'street_address_1': 'Street 1',
+            'street_address_2': '',
+            'zip_code': '65065'
+          },
+          'signature': {
+            'full_name': 'Ivan Ivanovich'
+          },
+          'status': 0
+        };
+
+
+
+
+
+
         investment.created_date = new Date(2016, 10, 10);
         investment.id = 123456789;
 

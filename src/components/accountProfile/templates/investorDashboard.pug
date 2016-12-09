@@ -51,15 +51,15 @@ mixin investment(i)
     .bottom_column
       .top_descript
         .left_text
-          b #{$formatAmount(i.campaign.amount_raised)}
+          b #{$formatAmount(i.campaign.amount)}
           span Raised
         .right_text
           b #{$formatAmount((i.campaign.minimum_raise))}
           span Goal
-        p.percents #{percentage(i.campaign.amount_raised, i.campaign.minimum_raise) + '% Funded'}
+        p.percents #{percentage(i.campaign.amount, i.campaign.minimum_raise) + '% Funded'}
         .clear
       .progress_line_container
-        progress(value=i.campaign.amount_raised max=i.campaign.minimum_raise).progress
+        progress(value=i.campaign.amount max=i.campaign.minimum_raise).progress
       .text-lg-center
         a(href=(window.location.protocol + '//company.' + window.location.host + '/' + i.company.id)).btn.btn-sm.btn-secondary.text-uppercase view campaign
           i.fa.fa-angle-right
