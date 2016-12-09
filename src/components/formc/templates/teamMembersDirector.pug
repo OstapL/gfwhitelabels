@@ -75,19 +75,6 @@ section.formc-team-members-director.container.m-b-85
                     name: 'board_service_start_date',
                     label: 'Board Service Start Date',
                   }, fields.board_service_start_date))
-          .col-xl-6.col-lg-6.form-group
-            .row
-              label.col-xl-6.col-lg-12.text-xl-right.text-lg-left.m-b-0.p-t-0 Board Service End Date
-              #board_service_end_date.col-xl-6.col-lg-12
-                .row.showPopover(data-content="If your Board Service has a term, please input the end date.  Otherwise, leave blank")
-                  +fieldDateMonth("board_service_end_date", _.extend({
-                    class: 'col-xl-6 col-lg-6 col-sm-6 col-xs-6 m-d-p-r-5',
-                    placeholder: 'MM',
-                  }, fields.board_service_end_date))
-                  +fieldDateYear("board_service_end_date", _.extend({
-                    class: 'col-xl-6 col-lg-6 col-sm-6 col-xs-6 m-d-p-l-5',
-                  }, fields.board_service_end_date))
-
 
         +fieldTextLabel("principal_occupation", _.extend({
           class1: 'col-xl-3 col-lg-12 text-lg-left text-xl-right p-t-0 m-b-0',
