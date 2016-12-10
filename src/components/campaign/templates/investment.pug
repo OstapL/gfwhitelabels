@@ -350,13 +350,14 @@ mixin fieldInput(name, attr)
             .col-lg-12.m-t-2
               .row
                 .form-group.row
+                  - var fullName = user.first_name + ' ' + user.last_name;
                   .col-lg-4
-                    input(type="text" placeholder="Type Your Name" value=(user.first_name + ' ' + user.last_name)).form-control.typed-name
+                    input(type="text" placeholder="Type Your Name" value=fullName name='signature[full_name]').form-control.typed-name
                     .help-block Electronically Sign Here
                   .col-lg-4
                     .electronically
                       span.by By:
-                      span.name.signature #{user.first_name + ' ' + user.last_name }
+                      span.name.signature #{ fullName }
 
             .form-group.row
               .col-md-12.text-md-center.text-sm-center.text-xs-center
