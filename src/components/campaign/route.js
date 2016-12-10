@@ -9,26 +9,22 @@ module.exports = Backbone.Router.extend({
     ':id/invest': 'investment',
   },
 
+  execute: function (callback, args, name) {
+    ga('send', 'pageview', "/" + Backbone.history.getPath());
+    if (callback) callback.apply(this, args)
+  },
+
   investmentThankYou(id) {
     require.ensure([], () => {
-
-      const View = require('./views.js');
-      let i = new View.investmentThankYou({
-        model: {
-          id: 19,
-          amount: 10000,
-          transaction_id: '1234567',
-          amount_of_shares: 123,
-          perk: 'Perk Content',
-          security: 'Investment Terms Content'
-        },
-        company: {
-          id: 78,
-          name: 'Company Name',
-        },
+      api.makeRequest(investmentServer + '/' + id).done((data) => {
+        data.id = id;
+        const View = require('./views.js');
+        let i = new View.investmentThankYou({
+          model: data,
+        });
+        i.render();
+        app.hideLoading();
       });
-      i.render();
-      app.hideLoading();
     });
   },
 

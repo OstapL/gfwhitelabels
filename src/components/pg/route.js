@@ -4,6 +4,11 @@ module.exports = Backbone.Router.extend({
         'pg/:name': 'pagePG',
     },
 
+    execute: function (callback, args, name) {
+        ga('send', 'pageview', "/" + Backbone.history.getPath());
+        if (callback) callback.apply(this, args)
+    },
+
     mainPage(id) {
         require.ensure([], () => {
             const model = require('components/campaign/models.js');
