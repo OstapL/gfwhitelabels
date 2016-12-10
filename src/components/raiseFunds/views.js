@@ -19,7 +19,7 @@ const submitCampaign = function submitCampaign(e) {
 const postForReview = function postForReview(e) {
   api.makeRequest(raiseCapitalServer + '/company/' + e.target.dataset.companyid + '/post-for-review', 'PUT')
     .then((data) => {
-      api.routers.navigate(
+      app.routers.navigate(
         '/company/in-review',
         { trigger: true, replace: false }
       );
@@ -409,7 +409,7 @@ module.exports = {
       'click .cancel': 'cancel',
       'click .save': api.submitAction,
       'click .onPreview': onPreviewAction,
-      'change #zip_code': 'changeZipCode',
+      // 'change #zip_code': 'changeZipCode',
     }, leavingConfirmationHelper.events, menuHelper.events, dropzoneHelpers.events),
 
     getSuccessUrl(data) {
@@ -449,13 +449,9 @@ module.exports = {
         };
         this.submitMethod = 'POST';
       }
-
-      this.getCityStateByZipCode = require("helpers/getSityStateByZipCode");
     },
 
     render() {
-      this.usaStates = require('helpers/usa-states');
-
       this.$el.html(
         this.template({
           formc: this.formc,
@@ -464,36 +460,18 @@ module.exports = {
           values: this.model,
           type: this.type,
           index: this.index,
-          // submitMethod: this.submitMethod,
           states: this.usaStates,
+          zipCodeDirective: require('directives/zipcode/index.js'),
         })
       );
 
-      setTimeout(() => { this.createDropzones() } , 1000);
+      this.createDropzones();
 
       delete this.model.progress;
       delete this.model.data;
 
       disableEnterHelper.disableEnter.call(this);
       return this;
-    },
-
-    //TODO: it is reasonable make addresss helper
-    changeZipCode(e) {
-      // if not 5 digit, return
-      if (!e.target.value.match(/\d{5}/))
-        return;
-
-      this.getCityStateByZipCode(e.target.value, ({ success=false, city='', state='' }) => {
-        if (success) {
-          this.$('.js-city-state').text(`${city}, ${state}`);
-          $('form input[name=city]').val(city);
-          this.$('.js-state').val(state);
-          $('form input[name=state]').val(state);
-        } else {
-          console.log('error');
-        }
-      });
     },
 
     cancel(e) {
@@ -646,10 +624,10 @@ module.exports = {
       },
 
       formatNumber: function (e) {
-        var valStr = $(e.target).val().replace(/,/g, '');
+        var valStr = $(e.target).val().replace(/[\$\,]/g, '');
         var val = parseInt(valStr);
         if (val) {
-          $(e.target).val(val.toLocaleString('en-US'));
+          $(e.target).val('$' + val.toLocaleString('en-US'));
         }
       },
 
@@ -661,14 +639,22 @@ module.exports = {
       },
 
       calculateNumberOfShares: function (e) {
-        var minRaise = parseInt(this.$('#minimum_raise').val().replace(/,/g, ''));
-        var maxRaise = parseInt(this.$('#maximum_raise').val().replace(/,/g, ''));
-        var pricePerShare = parseInt(this.$('#price_per_share').val().replace(/,/g, ''));
-        var premoneyVal = parseInt(this.$('#premoney_valuation').val().replace(/,/g, ''));
-        this.$('#min_number_of_shares').val((Math.round(minRaise / pricePerShare)).toLocaleString('en-US'));
-        this.$('#max_number_of_shares').val((Math.round(maxRaise / pricePerShare)).toLocaleString('en-US'));
-        this.$('#min_equity_offered').val(Math.round(100 * minRaise / (minRaise + premoneyVal)) + '%');
-        this.$('#max_equity_offered').val(Math.round(100 * maxRaise / (maxRaise + premoneyVal)) + '%');
+        var minRaise = parseInt(this.$('#minimum_raise').val().replace(/[\$\,]/g, ''));
+        var maxRaise = parseInt(this.$('#maximum_raise').val().replace(/[\$\,]/g, ''));
+        var pricePerShare = parseInt(this.$('#price_per_share').val().replace(/[\$\,]/g, ''));
+        var premoneyVal = parseInt(this.$('#premoney_valuation').val().replace(/[\$\,]/g, ''));
+        let min_number_of_shares = Math.round(minRaise / pricePerShare);
+        if (!isFinite(min_number_of_shares)) min_number_of_shares = 0;
+        let max_number_of_shares = Math.round(maxRaise / pricePerShare);
+        if (!isFinite(max_number_of_shares)) max_number_of_shares = 0;
+        let min_equity_offered = Math.round(100 * minRaise / (minRaise + premoneyVal));
+        if (!isFinite(min_equity_offered)) min_equity_offered = 0;
+        let max_equity_offered = Math.round(100 * maxRaise / (maxRaise + premoneyVal));
+        if (!isFinite(max_equity_offered)) max_equity_offered = 0;
+        this.$('#min_number_of_shares').val(min_number_of_shares.toLocaleString('en-US'));
+        this.$('#max_number_of_shares').val(max_number_of_shares.toLocaleString('en-US'));
+        this.$('#min_equity_offered').val(min_equity_offered + '%');
+        this.$('#max_equity_offered').val(max_equity_offered + '%');
       },
 
       getSuccessUrl(data) {

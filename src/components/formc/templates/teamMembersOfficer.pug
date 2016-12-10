@@ -62,11 +62,11 @@ section.formc-team-members-director.container.m-b-85
                 span.color-red *
               .col-xl-9.col-lg-12.showPopover(data-content=" Select all roles that currently apply.")
                 select(name="title[]" multiple="true" title="Responsibilities" data-type="array")#title.form-control.selectpicker.w-100.team-select
-                  option(value=1 data-value-type="number" selected=(values.title == "1") ? true : false ) CEO/President
-                  option(value=2 data-value-type="number" selected=(values.title == "2") ? true : false ) Principal Financial Officer/Treasurer
-                  option(value=3 data-value-type="number" selected=(values.title == "3") ? true : false ) Vice President
-                  option(value=4 data-value-type="number" selected=(values.title == "4") ? true : false ) Secretary
-                  option(value=5 data-value-type="number" selected=(values.title == "5") ? true : false ) Controller/Principal Accounting Officer
+                  option(value=1 data-value-type="number" selected=(values.title.indexOf("1") != -1 ? true : false )) CEO/President
+                  option(value=2 data-value-type="number" selected=(values.title.indexOf("2") != -1 ? true : false )) Principal Financial Officer/Treasurer
+                  option(value=3 data-value-type="number" selected=(values.title.indexOf("3") != -1 ? true : false )) Vice President
+                  option(value=4 data-value-type="number" selected=(values.title.indexOf("4") != -1 ? true : false )) Secretary
+                  option(value=5 data-value-type="number" selected=(values.title.indexOf("5") != -1 ? true : false )) Controller/Principal Accounting Officer
         .row
           .col-xl-6.col-lg-6
             .row

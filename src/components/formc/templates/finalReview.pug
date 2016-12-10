@@ -906,16 +906,6 @@ section.formc-review
         p.pb10.text-indent The Company intends to apply the proceeds of this Offering substantially as set forth herein, subject to reallocation by management as it deems in the best interests of the Company. The actual use of proceeds of this Offering is subject to the discretion of management and the board of directors, and may include general corporate purposes.
         p
           +frField('formc.intended_use_of_proceeds', 'text')
-        p.text-uppercase.m-t-3.m-b-0.pb10 
-          u Assuming A Minimum Raise
-        p
-          +frField('formc.use_of_net_proceeds_minimum', 'text')
-        p.text-uppercase.m-t-3.m-b-0.pb10 
-          u  Assuming A Maximum Raise
-        if values.campaign.minimum_raise != values.campaign.maximum_raise
-          p.pb10.text-indent In the case that the Offering is oversubscribed and closes with the maximum amount achieved, the Company anticipates using the proceeds in the following manner: 
-          p.pb10
-            +frField('formc.use_of_net_proceeds_maximum', 'text')
         p.pb10.text-indent The following table reflects our anticipated estimated use of proceeds:
         .table-responsive.m-t-1
           table.table.table-bordered
@@ -1065,12 +1055,12 @@ section.formc-review
         p.text-indent References to the future financial condition of the Company may contain forward-looking statements. Such forward-looking statements are not guarantees of future performance and involve uncertainties and other factors which may cause the Company’s actual results, performance or achievements to be materially different from any future results, performance or achievements expressed or implied by such forward-looking statements. Actual operating results may be affected by various factors including, without limitation, changes in national economic conditions, competitive market conditions, uncertainties related to government regulation, and actual versus projected timing of events, all of which may cause such actual results to differ materially from what is expressed or forecast in this Material.  For purposes of this section, any reference to the Company includes its predecessors, if any.  The Company's actual results may differ materially from those discussed herein.
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u Prior Operating History
-        if values.formc.financials_condition_choice == '1'
+        if values.formc.financials_condition_choice == 1
           p.pb10.text-indent The following describes the operating history of the issuer with a focus on whether historical results and cash flows are representative of what investors should expect in the future. 
-            +frField('formc.financials_condition_no', 'textarea')
+            +frField('formc.financials_condition_yes', 'textarea')
         else
           p.pb10.text-indent Because the issuer has no operating history, the following provides information on the issuer’s financial milestones and operational, liquidity and other challenges. 
-            +frField('formc.financials_condition_yes', 'textarea')
+            +frField('formc.financials_condition_no', 'textarea')
 
         if values.formc.sold_securities_data.length > 1
           .table-responsive.m-t-1
@@ -1097,9 +1087,9 @@ section.formc-review
                 tr
                   td Accounts Receivable
                   td.text-xs-center
-                    +frField('formc.sold_securities_data[0].cash_and_equivalents', 'text')
+                    +frField('formc.sold_securities_data[0].account_receivable', 'text')
                   td.text-xs-center
-                    +frField('formc.sold_securities_data[1].cash_and_equivalents', 'text')
+                    +frField('formc.sold_securities_data[1].account_receivable', 'text')
                 tr
                   td Short-term Debt
                   td.text-xs-center

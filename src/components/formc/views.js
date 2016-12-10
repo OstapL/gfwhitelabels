@@ -458,6 +458,7 @@ module.exports = {
         this.urlRoot += '/' + this.role + '/' + this.model.user_id;
       } else {
         this.urlRoot += '/' + this.role;
+        this.model.title = [];
       }
 
       if (this.role == 'director') {
@@ -1697,10 +1698,9 @@ module.exports = {
     urlRoot: formcServer + '/:id/final-review',
     initialize(options) {
       this.fields = options.fields;
+      disableEnterHelper.disableEnter.call(this);
     },
     events: {
-      'click .BROKEshow-input': 'showInput',
-      'click .createField': 'createField'
     },
 
     getSuccessUrl() {
@@ -1719,6 +1719,7 @@ module.exports = {
         element = document.createElement('input');
         element.name = target.dataset.name;
         element.value = target.innerHTML;
+        element.onblur = (e) => this.update(e);
       } else if(target.dataset.type == 'select') {
         element = document.createElement('select');
         element.name = target.dataset.name;
@@ -1736,38 +1737,69 @@ module.exports = {
       target.remove();
     },
 
-    showInput: function (event) {
-      event.preventDefault();
-      if ($(event.target).hasClass('noactive')) {
-          return false;
+    update(e) {
+      console.log(this);
+      const val = e.target.value;
+      const name = e.target.name;
+      e.target.setAttribute('id', e.target.name.replace(/\./g, '__'));
+
+      let data = {};
+      let url = '';
+      if(name.indexOf('company.') !== -1) {
+        data[name.split('company.')[1]] = val;
+        url = raiseCapitalServer + '/company/' + this.model.company.id + '/edit';
+      } else if(name.indexOf('campaign.') !== -1) {
+        let fieldName = name.split('campaign.')[1];
+        data[fieldName] = val;
+        if([
+            'pitch',
+            'intended_use_of_proceeds',
+            'business_model',
+            'faq',
+            'additional_info'].indexOf(fieldName) !== -1) {
+          url = raiseCapitalServer + '/campaign/' + this.model.campaign.id + '/general_information';
+        } else if([
+            'minimum_increment',
+            'minimum_raise',
+            'maximum_raise',
+            'length_days',
+            'premoney_valuation',
+            'security_type',
+            'valuation_determination',
+            'valuation_determination_other',
+            'price_per_share',
+          ].indexOf(fieldName) !== -1) {
+          url = raiseCapitalServer + '/campaign/' + this.model.campaign.id + '/specifics';
+        }
       }
-      var $this = $(event.target),
-          inputId = $this.data('name'),
-          $input = $('input' + '#' + inputId);
+      api.makeRequest(url, 'PATCH', data)
+        .then((data) => {
+          let input = document.querySelector('#' + e.target.name.replace(/\./g, '__'));
+          let href =  document.createElement('a');
+          href.innerHTML = val;
+          href.setAttribute('href', '#');
+          href.dataset.name = e.target.name;
+          href.dataset.type = 'text';
+          href.dataset.value = val;
+          href.className = 'createField show-input link-1';
 
-      $this.hide();
+          document.querySelectorAll('[data-name="' + e.target.name + '"]').forEach((el) => {
+            el.innerHTML = val;
+          });
 
-      if ($input.length == 0) {
-        $input = $('<input type="text" id="' + inputId + '" name="' + inputId + '" class="text-input"/>');
-        $this.after($input);
-      }
-
-      $input.fadeIn().focus();
-
-      $('body').on('focusout', '.text-input', function(event) {
-      var $this = $(event.target),
-          value = $this.val(),
-          inputId = $this.attr('id'),
-          $span = $('[data-name="' + inputId + '"]');
-      if (value !== '') {
-          $span.text(value);
-      }
-
-      $this.hide();
-      $span.fadeIn();
-      });
+          input.after(href);
+          input.remove();
+        })
+        .fail((response) => {
+          _(response.responseJSON).each((val, key) => {
+            let errorDiv = document.createElement('div');
+            e.target.classList.add('form-control-danger');
+            errorDiv.className = 'form-control-feedback';
+            errorDiv.innerHTML = val.join(', ');
+            e.target.after(errorDiv);
+          });
+        });
     },
-
 
     render() {
       let template = require('./templates/finalReview.pug');
@@ -1779,7 +1811,8 @@ module.exports = {
           values: this.model,
         })
       );
-      disableEnterHelper.disableEnter.call(this);
+
+      this.$el.on('click', '.createField', (e) => { this.createField(e) });
       return this;
     },
   }),

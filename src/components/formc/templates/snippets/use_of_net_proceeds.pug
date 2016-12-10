@@ -20,17 +20,81 @@ mixin run()
     tbody(class=name + '_container')
       tr
         td.border-t-n.p-l-r-20
-          .pull-left Use of Net Proceeds
+          .pull-left.font-weight-bold Use of Net Proceeds
           .pull-right
             a(href="#" data-section=name data-comp="formc" data-template="use_of_net_proceeds").link-2.add-sectionnew
               i.fa.fa-plus
               |  Add Another
         td.border-b-t-none
         td.border-b-t-none
-
-      if values == null || values.length == 0
+      tr
+        td.border-t-n.d-block.input-w-80
+          | Salaries, Benefits and Wages
+          .pull-right
+            .delete-section-container
+              a(href="#" data-index=index data-section=name).delete-sectionnew
+                i.fa.fa-times
+        td.border-b-t-none.w-25.font-size-12
+          .form-section
+            input(type="text").input-border-bottom.form-control.text-xs-center.min-expense
+        td.border-b-t-none.w-25.font-size-12
+          .form-section
+            input(type="text").input-border-bottom.form-control.text-xs-center.min-expense
+      tr
+        td.border-t-n.d-block.input-w-80
+          | Product Development 
+          .pull-right
+            .delete-section-container
+              a(href="#" data-index=index data-section=name).delete-sectionnew
+                i.fa.fa-times
+        td.border-b-t-none.w-25.font-size-12
+          .form-section
+            input(type="text").input-border-bottom.form-control.text-xs-center.min-expense
+        td.border-b-t-none.w-25.font-size-12
+          .form-section
+            input(type="text").input-border-bottom.form-control.text-xs-center.min-expense
+      tr
+        td.border-t-n.d-block.input-w-80
+          | Marketing 
+          .pull-right
+            .delete-section-container
+              a(href="#" data-index=index data-section=name).delete-sectionnew
+                i.fa.fa-times
+        td.border-b-t-none.w-25.font-size-12
+          .form-section
+            input(type="text").input-border-bottom.form-control.text-xs-center.min-expense
+        td.border-b-t-none.w-25.font-size-12
+          .form-section
+            input(type="text").input-border-bottom.form-control.text-xs-center.min-
+      tr
+        td.border-t-n.d-block.input-w-80
+          | Operations (Data, Hosting, Fees)
+          .pull-right
+            .delete-section-container
+              a(href="#" data-index=index data-section=name).delete-sectionnew
+                i.fa.fa-times
+        td.border-b-t-none.w-25.font-size-12
+          .form-section
+            input(type="text").input-border-bottom.form-control.text-xs-center.min-expense
+        td.border-b-t-none.w-25.font-size-12
+          .form-section
+            input(type="text").input-border-bottom.form-control.text-xs-center.min-expense
+      tr
+        td.border-t-n.d-block.input-w-80
+          | Travel, Conferences and Events 
+          .pull-right
+            .delete-section-container
+              a(href="#" data-index=index data-section=name).delete-sectionnew
+                i.fa.fa-times
+        td.border-b-t-none.w-25.font-size-12
+          .form-section
+            input(type="text").input-border-bottom.form-control.text-xs-center.min-expense
+        td.border-b-t-none.w-25.font-size-12
+          .form-section
+            input(type="text").input-border-bottom.form-control.text-xs-center.min-expense
+      //if values == null || values.length == 0
         +row({}, 0)
-      else
+      //else
         each value, index in values
           +row(value, index)
   else
