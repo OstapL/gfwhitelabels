@@ -449,21 +449,11 @@ module.exports = {
       this.user = options.user;
       this.user.account_number_re = this.user.account_number;
 
-      // this.fields.payment_information_data.schema.account_number_re = { type: 'string', required: true };
-      // this.fields.payment_information_data.schema.phone = { type: 'string', required: true };
-      // this.fields.payment_information_data.schema.name_on_bank_account.required = true;
-      // this.fields.payment_information_data.schema.account_number.required = true;
-      // this.fields.payment_information_data.schema.routing_number.required = true;
-
       this.fields.payment_information_type.validate.choices = {
         0: 'Echeck (ACH)',
         1: 'Check',
         2: 'Wire',
       };
-
-      console.dir(this.fields);
-      console.dir(this.user);
-      console.log('================================');
 
       this.labels = {
         personal_information_data: {
