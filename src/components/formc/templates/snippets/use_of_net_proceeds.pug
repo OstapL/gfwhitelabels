@@ -34,12 +34,13 @@ mixin run()
             .delete-section-container
               a(href="#" data-index=index data-section=name).delete-sectionnew
                 i.fa.fa-times
+          input(type="hidden" name="use_of_net_proceeds[0][title]" value="Salaries, Benefits and Wages")
         td.border-b-t-none.w-25.font-size-12
           .form-section
-            input(type="text").input-border-bottom.form-control.text-xs-center.min-expense
+            input(type="text" name="use_of_net_proceeds[0][min]").input-border-bottom.form-control.text-xs-center.min-expense
         td.border-b-t-none.w-25.font-size-12
           .form-section
-            input(type="text").input-border-bottom.form-control.text-xs-center.min-expense
+            input(type="text" name="use_of_net_proceeds[0][max]").input-border-bottom.form-control.text-xs-center.min-expense
       tr
         td.border-t-n.d-block.input-w-80
           | Product Development 

@@ -165,6 +165,15 @@ app.fields = require('fields');
 app.user.load();
 app.trigger('userReady');
 
+app.breadcrumbs = function(title, subtitle, data) {
+  const template = require('templates/breadcrumbs.pug');
+  return template({
+    title: title,
+    subtitle: subtitle,
+    data: data
+  });
+}
+
 const popoverTemplate = '<div class="popover  divPopover"  role="tooltip"><span class="popover-arrow"></span> <h3 class="popover-title"></h3> <span class="icon-popover"><i class="fa fa-info-circle" aria-hidden="true"></i></span> <span class="popover-content"> XXX </span></div>';
 
 $('body').on('mouseover', 'div.showPopover', function () {
