@@ -11,7 +11,7 @@ mixin investment(i)
       - var data = i.campaign.header_image_data[0] || { urls: []};
       - var url = data.urls[0] || "/img/test.png";
       img(src=url alt="").img-fluid
-      span.img_tab #{daysLeft(new Date(), i.campaign.expiration_date) + ' Days Left'}
+      span.img_tab #{daysLeft(toDate(i.campaign.expiration_date)) + ' Days Left'}
       p.text-uppercase #{i.company.name}
     .right-columns
       .one_line
@@ -23,7 +23,7 @@ mixin investment(i)
         .col40
           span.light_grey Investment Day
         .col60
-          span.dark_grey #{i.created_date.toLocaleDateString() }
+          span.dark_grey #{toDate(i.created_date).toLocaleDateString() }
       .one_line
         .col40
           span.light_grey Investment ID
@@ -87,11 +87,15 @@ mixin investment(i)
     return Math.round((amount / goal) * 100);
   };
 
-  function daysLeft(today, end) {
+  function daysLeft(end) {
+  var today = new Date();
   var days = Math.ceil((end.valueOf() - today.valueOf()) / ( 1000 * 60 * 60 * 24));
     return days < 10 ? '0' + days : days.toString();
   };
 
+  function toDate(dateStr) {
+    return new Date(dateStr);
+  };
 
 +breadcrumbs('investor dashboard', '', 
     [

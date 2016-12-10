@@ -416,37 +416,6 @@ module.exports = {
     initialize(options) {
       this.fields = options.fields;
 
-      // let investmentStub = {
-      //   id: 12,
-      //   created_date: new Date(2016, 12, 8),
-      //   perk: 'this is perk',
-      //   security_type: 12345,
-      //   amount_of_shares: 100,
-      //   cap: 100,
-      //   percentage_revenue: 200,
-      //   company: {
-      //     id: 127,
-      //     name: 'The best company in the world',
-      //   },
-      //   campaign: {
-      //     header_image_data: [{urls: []}],
-      //     maximum_raise: 500000,
-      //     minimum_raise: 250000,
-      //     expiration_date: new Date(2016, 12, 18),//'2016-12-18 00:00:00+00:00',
-      //   },
-      // };
-      //
-      // let extendProps = _.pick(investmentStub, ['id', 'created_date', 'perk', 'security_type', 'amount_of_shares', 'cap', 'percentage_revenue', 'company']);
-      //
-      // _.each(this.model.data, (investment, idx) => {
-      //   investment.campaign.expiration_date = investmentStub.campaign.expiration_date;
-      //   _.extend(investment, extendProps);
-      //   if (!investment.campaign.minimum_raise || !investment.campaign.maximum_raise) {
-      //     investment.campaign.minimum_raise = investmentStub.campaign.minimum_raise;
-      //     investment.campaign.maximum_raise = investment.campaign.maximum_raise;
-      //   }
-      // });
-
       this.render();
     },
 
