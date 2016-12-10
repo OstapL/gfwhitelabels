@@ -435,7 +435,7 @@ module.exports = {
       'click .update-location': 'updateLocation',
       'click .link-2': 'openPdf',
       'change .country-select': 'changeCountry',
-      'change .payment-type-select': 'changePaymentType',
+      'change #payment_information_type': 'changePaymentType',
       'change #amount': 'amountRounding',
       'keyup .typed-name': 'copyToSignature',
       'keyup #annual_income,#net_worth': 'updateLimitInModal',
@@ -448,11 +448,11 @@ module.exports = {
       this.user = options.user;
       this.user.account_number_re = this.user.account_number;
 
-      this.fields.payment_information_data.schema.account_number_re = { type: 'string', required: true };
-      this.fields.payment_information_data.schema.phone = { type: 'string', required: true };
-      this.fields.payment_information_data.schema.name_on_bank_account.required = true;
-      this.fields.payment_information_data.schema.account_number.required = true;
-      this.fields.payment_information_data.schema.routing_number.required = true;
+      // this.fields.payment_information_data.schema.account_number_re = { type: 'string', required: true };
+      // this.fields.payment_information_data.schema.phone = { type: 'string', required: true };
+      // this.fields.payment_information_data.schema.name_on_bank_account.required = true;
+      // this.fields.payment_information_data.schema.account_number.required = true;
+      // this.fields.payment_information_data.schema.routing_number.required = true;
 
       this.fields.payment_information_type.validate.choices = {
         0: 'Echeck (ACH)',
