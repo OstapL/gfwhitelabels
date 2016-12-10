@@ -11,6 +11,7 @@ module.exports = Backbone.Router.extend({
   },
 
   execute: function (callback, args, name) {
+    ga('send', 'pageview', "/" + Backbone.history.getPath());
     if (app.user.is_anonymous()) {
       const pView = require('components/anonymousAccount/views.js');
       require.ensure([], function() {
@@ -20,7 +21,6 @@ module.exports = Backbone.Router.extend({
       });
       return false;
     }
-    ga('send', 'pageview', "/" + Backbone.history.getPath());
     if (callback) callback.apply(this, args);
   },
 
