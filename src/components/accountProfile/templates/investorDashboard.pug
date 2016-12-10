@@ -66,7 +66,7 @@ mixin investment(i)
         a(href=(window.location.protocol + '//company.' + window.location.host + '/' + i.company.id)).btn.btn-sm.btn-secondary.text-uppercase view campaign
           i.fa.fa-angle-right
       .cancel_invest
-        a(href="#").font-weight-bold Cancel investment
+        a(href="#" data-id=(i.id || 0)).cancel-investment.font-weight-bold Cancel investment
     .clear
 
 -
