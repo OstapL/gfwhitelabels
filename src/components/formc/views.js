@@ -1701,6 +1701,7 @@ module.exports = {
       disableEnterHelper.disableEnter.call(this);
     },
     events: {
+      'click .createField': 'createField',
     },
 
     getSuccessUrl() {
@@ -1723,14 +1724,18 @@ module.exports = {
       } else if(target.dataset.type == 'select') {
         element = document.createElement('select');
         element.name = target.dataset.name;
+        element.onblur = (e) => this.update(e);
         let v = target.dataset.name.split('.').reduce((o,i)=>o[i], this.fields);
         v = v.validate.OneOf;
         v.choices.forEach((el, i) => {
           let e = document.createElement('option');
           e.innerHTML = v.labels[i];
           e.value = v.choices[i];
+          if(v.choices[i] == target.dataset.value) {
+            e.setAttribute('selected', true);
+          }
           element.appendChild(e);
-        })
+        });
       }
 
       target.parentElement.insertBefore(element, target);
@@ -1738,18 +1743,29 @@ module.exports = {
     },
 
     update(e) {
-      console.log(this);
       const val = e.target.value;
       const name = e.target.name;
-      e.target.setAttribute('id', e.target.name.replace(/\./g, '__'));
+      const reloadRequiredFields = [
+        'corporate_structure',
+        'maximum_raise',
+        'minimum_raise',
+        'security_type',
+      ];
+
+      e.target.setAttribute(
+        'id', e.target.name.replace(/\./g, '__').replace(/\[/g ,'_').replace(/\]/g, '_')
+      );
 
       let data = {};
       let url = '';
+      let fieldName = '';
+
       if(name.indexOf('company.') !== -1) {
+        fieldName = name.split('company.')[1];
         data[name.split('company.')[1]] = val;
         url = raiseCapitalServer + '/company/' + this.model.company.id + '/edit';
       } else if(name.indexOf('campaign.') !== -1) {
-        let fieldName = name.split('campaign.')[1];
+        fieldName = name.split('campaign.')[1];
         data[fieldName] = val;
         if([
             'pitch',
@@ -1771,15 +1787,54 @@ module.exports = {
           ].indexOf(fieldName) !== -1) {
           url = raiseCapitalServer + '/campaign/' + this.model.campaign.id + '/specifics';
         }
+      } else if(name.indexOf('formc.') !== -1) {
+          fieldName = name.split('formc.')[1];
+          data[fieldName] = val;
+          url = formcServer + '/' + this.model.formc.id + '/final-review';
       }
+
       api.makeRequest(url, 'PATCH', data)
         .then((data) => {
-          let input = document.querySelector('#' + e.target.name.replace(/\./g, '__'));
-          let href =  document.createElement('a');
+
+          if(reloadRequiredFields.indexOf(fieldName) != -1) {
+            window.location.reload();
+            return false;
+          }
+
+          let input = document.querySelector(
+            '#' + e.target.name.replace(/\./g, '__').replace(/\[/g ,'_').replace(/\]/g, '_')
+          );
+          let href = '';
+          /*
+          if(e.target.tagName == 'SELECT') {
+            href = document.createElement('select');
+            let metaData = name.split('.').reduce(function(o,i) { return o[i]; }, this.fields);
+            debugger;
+            if(metaData && metaData.validate && metaData.validate.OneOf) {
+              let options = metaData.validate.OneOf;
+              options.choices.forEach((el, i) => {
+                let option = document.createElement('option');
+                option.value = el;
+                option.innerHTML = options.labels ? options.labels[i] : el;
+                href.insert(option);
+              });
+            }
+            
+          } else {
+            href = document.createElement('a');
+            href.innerHTML = val;
+            href.setAttribute('href', '#');
+          }
+          */
+          href = document.createElement('a');
           href.innerHTML = val;
           href.setAttribute('href', '#');
           href.dataset.name = e.target.name;
-          href.dataset.type = 'text';
+          if(e.target.tagName == 'SELECT') {
+            href.dataset.type = 'select';
+          } else {
+            href.dataset.type = 'text';
+          }
           href.dataset.value = val;
           href.className = 'createField show-input link-1';
 
@@ -1812,7 +1867,6 @@ module.exports = {
         })
       );
 
-      this.$el.on('click', '.createField', (e) => { this.createField(e) });
       return this;
     },
   }),
