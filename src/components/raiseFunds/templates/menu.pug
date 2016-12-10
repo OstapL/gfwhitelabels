@@ -13,7 +13,10 @@ mixin getCompanyUrl(id, section, currentStep, step, name)
             .icon-check
               i.fa.fa-check-circle-o
         if section == 'formc' && values.progress
-          if values.progress[step] == true
+          if values.progress[step] == true 
+            .icon-check
+              i.fa.fa-check-circle-o
+          if formc && formc.progress[step] == true
             .icon-check
               i.fa.fa-check-circle-o
     else
