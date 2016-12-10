@@ -540,7 +540,7 @@ module.exports = {
       let thankYouView = new View.investmentThankYou({
         model: data,
       });
-
+      thankYouView.render();
       app.hideLoading();
     },
 
@@ -779,7 +779,7 @@ module.exports = {
     template: require('./templates/thankYou.pug'),
     el: '#content',
     initialize(options) {
-      this.render();
+      // this.render();
     },
 
     render() {

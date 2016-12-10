@@ -415,8 +415,6 @@ module.exports = {
 
     initialize(options) {
       this.fields = options.fields;
-
-      this.render();
     },
 
     render() {
