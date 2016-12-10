@@ -427,6 +427,7 @@ module.exports = {
       common_stock: require('./templates/agreement/common_stock.pug'),
     },
     urlRoot: investmentServer + '/',
+    doNotExtendModel: true,
     events: {
       // 'submit form.invest_form': api.submitAction,
       'submit form.invest_form': 'submit',
@@ -542,6 +543,17 @@ module.exports = {
       return this;
     },
 
+    _success(data) {
+      this.undelegateEvents();
+
+      const View = require('./views.js');
+      let thankYouView = new View.investmentThankYou({
+        model: data,
+      });
+
+      app.hideLoading();
+    },
+
     updateLimitInModal(e) {
       let annual_income = Number(this.$('#annual_income').val().replace(/\,/g, '')), net_worth = Number(this.$('#net_worth').val().replace(/\,/g, ''));
       this.$('#annual_income').val((annual_income || 0).toLocaleString('en-US'));
@@ -560,8 +572,6 @@ module.exports = {
         alert('Update failed. Please try again!');
       });
     },
-
-    doNotExtendModel: true,
 
     copyToSignature(e) {
       this.$('.signature').text($(e.target).val());
@@ -779,7 +789,7 @@ module.exports = {
     template: require('./templates/thankYou.pug'),
     el: '#content',
     initialize(options) {
-      this.company = options.company;
+      this.render();
     },
 
     render() {
@@ -788,7 +798,6 @@ module.exports = {
           serverUrl: serverUrl,
           Urls: Urls,
           investment: this.model,
-          company: this.company,
         })
       );
       return this;

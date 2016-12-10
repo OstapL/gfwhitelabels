@@ -4,8 +4,8 @@ include ../../../templates/mixins.pug
   [
     ['Home', '/'],
     ['Explore', '/companies'],
-    ['Smartbe', '/' + company.id],
-    ['Invest in ' + company.name, '']
+    ['Smartbe', '/' + investment.company.id],
+    ['Invest in ' + investment.company.name, '']
   ]
 )
 
@@ -13,7 +13,7 @@ include ../../../templates/mixins.pug
   .row
     .col-sm-8.offset-sm-2
       h2.text-xs-center.thankyou-title.m0 
-        i(aria-hidden="true").fa.fa-thumbs-o-up You have invested $#{ investment.amount } in #{ company.name }
+        i(aria-hidden="true").fa.fa-thumbs-o-up You have invested $#{ investment.amount } in #{ investment.company.name }
 
   .row
     .col-sm-8.offset-sm-2.mb50.mt50
@@ -25,7 +25,7 @@ include ../../../templates/mixins.pug
         ul.info-text-block.list-unstyled
           li 
             span Transaction ID:
-            strong #{ investment.transaction_id }
+            strong #{ investment.id }
           li 
             span Amount of Shares:
             strong #{ investment.amount_of_shares }
@@ -34,7 +34,7 @@ include ../../../templates/mixins.pug
             strong #{ investment.perk }
           li 
             span Investment Terms:
-            strong #{ investment.security }
+            strong #{ investment.security_type }
 
         .info-btn-block.pt50
           a(href="account/investor-dashboard").btn.btn-secondary INVESTOR DASHBOARD &nbsp;
