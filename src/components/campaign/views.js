@@ -533,15 +533,8 @@ module.exports = {
       return this;
     },
 
-    _success(data) {
-      this.undelegateEvents();
-
-      const View = require('./views.js');
-      let thankYouView = new View.investmentThankYou({
-        model: data,
-      });
-      thankYouView.render();
-      app.hideLoading();
+    getSuccessUrl(data) {
+      return investmentServer + '/' + data.id + '/invest-thanks';
     },
 
     updateLimitInModal(e) {
