@@ -31,8 +31,9 @@ mixin row(value, index)
 mixin run()
 
   if first_run
+    h3.text-lg-center.text-xs-center.m-t-3.m-b-0 We Need Information for Last 3 Years
     .row
-      b.col-lg-12.m-t-2.m-b-1.m-t-3 Business experience for past three years: Please list your employers, titles and dates of positions held during the past three years with an indication of job responsibilities.
+      b.col-lg-12.m-t-2.m-b-1.m-t-3 If you’ve been at your current employer fewer than 3 years, please provide additional information below:
 
     div(class=(attr.row == 0 ? '' : 'row ') + name + '_block' + (attr.required == true ? ' required ' : ' ') + ' nested')
       div(class=(attr.row == 0 ? '' : 'row ') + name + '_container' + (attr.required == true ? ' required ' : ' ') + ' nested')

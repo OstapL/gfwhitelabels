@@ -31,9 +31,8 @@ mixin row(value, index)
 mixin run()
 
   if first_run
-    h3.text-lg-center.text-xs-center.m-t-0 We Need Information for Last 3 Years
     .row
-      b.col-lg-12.m-b-1 Changed roles within the Company? Please list  all positions and offices with the Company held and the period of time in which you served in the position or office.
+      b.col-lg-12.m-b-1 Previously held a different position with the issuer? Please list them:
 
     div(class=(attr.row == 0 ? '' : 'row ') + name + '_block' + (attr.required == true ? ' required ' : ' ') + ' nested')
       div(class=(attr.row == 0 ? '' : 'row ') + name + '_container' + (attr.required == true ? ' required ' : ' ') + ' nested')
