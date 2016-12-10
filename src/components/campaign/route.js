@@ -9,6 +9,11 @@ module.exports = Backbone.Router.extend({
     ':id/invest': 'investment',
   },
 
+  execute: function (callback, args, name) {
+    ga('send', 'pageview', "/" + Backbone.history.getPath());
+    if (callback) callback.apply(this, args)
+  },
+
   investmentThankYou(id) {
     require.ensure([], () => {
 
