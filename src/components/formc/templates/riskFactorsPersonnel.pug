@@ -70,10 +70,12 @@ section.formc-team-members-director.container.m-b-85
           })
         button(data-method="PATCH" data-concat="false").btn.btn-secondary.btn-sm.text-uppercase.pull-lg-right.m-b-3.add-risk save and Add this Risk
 
-      label
-        - var complete = values.personnel_and_third_parties_risk[99] ? true : false
-        input(type="checkbox" name="complete" disabled=disabled data-previous=String(complete) checked=complete)#complete
-        span None of these risks apply. This page is complete.
+      .form-section
+        .form-group
+          label.d-block
+            - var complete = values.personnel_and_third_parties_risk[99] ? true : false
+            input(type="checkbox" name="complete" disabled=disabled data-previous=String(complete) checked=complete)#complete
+            span.p-l-2 None of these risks apply. This page is complete.
 
       .row.m-t-3
         .col-lg-12.text-md-center.text-sm-center-text-xs-center
