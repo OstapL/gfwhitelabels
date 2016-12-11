@@ -1344,6 +1344,13 @@ section.formc-review
               +frField('formc.legal_and_regulatory_risk[' + k + '].title', 'textarea')
             p
               +frField('formc.legal_and_regulatory_risk[' + k + '].risk', 'textarea')
+        p.text-uppercase.m-t-3.m-b-0.pb10 
+          u MISCELLANEOUS RISK FACTORS
+          for v,k in values.formc.miscellaneous_risk
+            h3
+              +frField('formc.miscellaneous_risk[' + k + '].title', 'textarea')
+            p
+              +frField('formc.miscellaneous_risk[' + k + '].risk', 'textarea')
 
       // page 25
       section.page-formc-review.m-t-1
