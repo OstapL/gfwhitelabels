@@ -64,7 +64,7 @@ module.exports = {
 
       api.makeRequest(url, 'PATCH', formData).then((data) => {
         let $textarea = $(e.target).find('textarea')
-        $textarea.prop('readonly', true).addClass('borderless-textarea').css({ height: $textarea.prop('scrollHeight')+'px' });
+        //$textarea.prop('readonly', true).addClass('borderless-textarea').css({ height: $textarea.prop('scrollHeight')+'px' });
         let $form = $('form[index=' + index + ']');
         if ($form.length > 0) { // find the form    
           $form.find('.risk-button').css({display: 'none'});
