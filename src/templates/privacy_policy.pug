@@ -1,11 +1,4 @@
-include mixins.pug
-
-+breadcrumbs('PRIVACY POLICY', '', 
-    [
-        ['Home', '/'],
-        ['PRIVACY POLICY', ''],
-    ]
-)
+- pug_html += app.breadcrumbs('PRIVACY POLICY', '', [ ['Home', '/'], ['PRIVACY POLICY', ''], ]);
 
 section.text_block.information-page
     .container

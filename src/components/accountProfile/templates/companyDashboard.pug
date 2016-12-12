@@ -1,17 +1,10 @@
-include ../../../templates/mixins.pug
-
 - 'use strict'
 - var fields = { title_risk: { label: 'Title for Risk'} };
 - var fields = { describe: { label: 'Describe Your Risk'} };
 - var campaign = {id: 1};
 - var values = {id: 1};
 
-+breadcrumbs('company dashboard', '', 
-    [
-        ['Home', '/'],
-        ['company dashboard', ''],
-    ]
-)
+- pug_html += app.breadcrumbs('company dashboard', '', [ ['Home', '/'], ['company dashboard', ''],]);
 
 section.formc-team-members-director.container.m-b-85
   //+menu('company', 'companyDashboard')

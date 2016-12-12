@@ -1,11 +1,5 @@
-include ../../../templates/mixins.pug
+- pug_html += app.breadcrumbs('issuer dashboard', '', [ ['Home', '/'], ['issuer dashboard', ''],]);
 
-+breadcrumbs('issuer dashboard', '', 
-    [
-        ['Home', '/'],
-        ['issuer dashboard', ''],
-    ]
-)
 - var amt_raised_in_ks = Math.round(values.campaign.amount_raised/1000).toLocaleString('en-US');
 section.issuer-dashbord-top
   .container

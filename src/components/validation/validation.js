@@ -33,6 +33,14 @@ module.exports = {
       return false;
     }
 
+    // Temp hack for nested fields
+    if(attr.indexOf('__') !== -1) {
+      let t = $('#' + attr).parents('.shown-yes');
+      if(t.length != 0 && t.css('display') == 'none') {
+        t.show();
+      }
+    }
+
     let $el = null;
     let $group = null;
 

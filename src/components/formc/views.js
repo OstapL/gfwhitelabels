@@ -186,19 +186,25 @@ module.exports = {
         let expMonth = form.find('#' + selectors.expMonth);
         let expYear = form.find('#' + selectors.expYear);
         let cvc = form.find('#' + selectors.cvc);
+        let error = 0;
 
+        $('.help-block').remove();
         if (!Stripe.card.validateCardNumber(number.val())) {
           validation.invalidMsg({ $: $, $el: $('#content') }, selectors.number, ['Please, check card number.']);
-          return null;
+          error = 1;
         }
 
         if (!Stripe.card.validateExpiry(expMonth.val(), expYear.val())) {
           validation.invalidMsg({ $: $, $el: $('#content') }, selectors.expDate, ['Please, check expiration date.']);
-          return null;
+          error = 1;
         }
 
         if (!Stripe.card.validateCVC(cvc.val())) {
           validation.invalidMsg({ $: $, $el: $('#content') }, selectors.cvc, ['Please, check CVC.']);
+          error = 1;
+        }
+
+        if(error == 1) {
           return null;
         }
 
@@ -240,6 +246,7 @@ module.exports = {
         if (stripeResponse.error) {
           validation.invalidMsg({ $: $ }, 'form-section', [stripeResponse.error.message]);
           $payBtn.prop('disabled', false); // Re-enable submission
+          $('#certify').scrollTo(20);
           app.hideLoading();
           return;
         }
@@ -321,7 +328,7 @@ module.exports = {
     urlRoot: formcServer + '/:id' + '/team-members',
     events: _.extend({
       'click #submitForm': api.submitAction,
-      'change #full_time_employers,#part_time_employers': 'updateServer',
+      'blur #full_time_employers,#part_time_employers': 'updateEmployees',
       'click .submit_formc': submitFormc,
       'click .delete-member': 'deleteMember',
     }, menuHelper.events),
@@ -368,14 +375,14 @@ module.exports = {
       }
     },
 
-    updateServer(e) {
+    updateEmployees(e) {
       api.makeRequest(
         this.urlRoot.replace(':id', this.model.id),
+        'PUT',
         {
           'full_time_employers': this.el.querySelector('#full_time_employers').value,
           'part_time_employers': this.el.querySelector('#part_time_employers').value,
-        },
-        'PUT'
+        }
       );
     },
 
@@ -423,7 +430,7 @@ module.exports = {
         last_name: 'Last name',
         email: 'Email',
         dob: 'Date of birth',
-        principal_occupation: 'Principal Occupation',
+        principal_occupation: 'Principal Occupation and Name of Employer',
         employer_principal_businesss: "Employer's Principal Business",
         responsibilities: 'Title',
         number_of_shares: 'Number of Shares',
@@ -518,6 +525,7 @@ module.exports = {
 
       this.createIndexes();
       this.buildJsonTemplates('formc');
+      this.formatData();
     },
 
     getSuccessUrl(data) {
@@ -1671,6 +1679,7 @@ module.exports = {
 
     _success(data) {
       app.hideLoading();
+      $('#content').scrollTo();
       return false;
     },
 

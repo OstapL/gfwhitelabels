@@ -1,6 +1,4 @@
 - 'use strict';
-include ../../../templates/mixins.pug
-
 - var percentage_raised = formatHelper.calculateRaisedPercentage(values.campaign.minimum_raise, values.campaign.amount_raised)
 
 section(style="background-image: url(" + (values.campaign.header_image_data && values.campaign.header_image_data[0] ? values.campaign.header_image_data[0].urls[0] : '/img/default.png') + ")")#home.home-section.bg-dark-alfa-70.parallax-2.fixed-height-small.hide-bg-fixed
@@ -63,23 +61,23 @@ if app.getParams().preview == '1'
             .col-lg-6.pull-left.p-l-0.general_information.collapse
               h3.m-b-0.m-t-0 General Information
             .col-lg-6.text-xs-right.m-b-10.p-r-0.general_information.collapse
-              a(href="/campaign/general_information/" + values.id + "?check=1").btn.btn-sm.btn-secondary.text-uppercase.m-t-0 Edit
+              a(href="/campaign/" + (this.model.campaign.id) + "/general_information?check=1").btn.btn-sm.btn-secondary.text-uppercase.m-t-0 Edit
             .col-lg-6.pull-left.p-l-0.media.collapse
               h3.m-b-0.m-t-0 Media 
             .col-lg-6.text-xs-right.m-b-10.p-r-0.media.collapse
-              a(href='/campaign/media/' + values.id + '?check=1').btn.btn-sm.btn-secondary.text-uppercase.m-t-0 Edit
+              a(href='/campaign/' + (this.model.campaign.id) + '/media?check=1').btn.btn-sm.btn-secondary.text-uppercase.m-t-0 Edit
             .col-lg-6.pull-left.p-l-0.team-members.collapse
               h3.m-b-0.m-t-0 Team Members 
             .col-lg-6.text-xs-right.m-b-10.p-r-0.team-members.collapse
-              a(href='/campaign/team-members/' + values.id + '?check=1').btn.btn-sm.btn-secondary.text-uppercase.m-t-0 Edit
+              a(href='/campaign/' + (this.model.campaign.id) + '/team-members?check=1').btn.btn-sm.btn-secondary.text-uppercase.m-t-0 Edit
             .col-lg-6.pull-left.p-l-0.specifics.collapse
               h3.m-b-0.m-t-0 Specifics 
             .col-lg-6.text-xs-right.m-b-10.p-r-0.specifics.collapse
-              a(href='/campaign/specifics/' + values.id + '?check=1').btn.btn-sm.btn-secondary.text-uppercase.m-t-0 Edit
+              a(href='/campaign/' + (this.model.campaign.id) + '/specifics?check=1').btn.btn-sm.btn-secondary.text-uppercase.m-t-0 Edit
             .col-lg-6.pull-left.p-l-0.perks.collapse
               h3.m-b-0.m-t-0 Perks 
             .col-lg-6.text-xs-right.mb30.p-r-0.perks.collapse
-              a(href='/campaign/perks/' + values.id + '?check=1').btn.btn-sm.btn-secondary.text-uppercase.m-t-0 Edit
+              a(href='/campaign/' + (this.model.campaign.id) + '/perks?check=1').btn.btn-sm.btn-secondary.text-uppercase.m-t-0 Edit
         .modal-footer
   div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")#company_publish_confirm.modal.fade
     div(role="document").modal-dialog
@@ -96,8 +94,9 @@ if app.getParams().preview == '1'
               |  Once you submit, you will no longer have the ability to edit your Campaign
               .info-btn-block.mb30
                 a(href="#" data-dismiss="modal").btn.m-t-2.m-r-1.btn-secondary Cancel
-                a(href="/campaign/thankyou/" + values.id).btn.m-t-2.btn-primary.text-uppercase Yes
+                button(this.model.campaign.id)#postForReview.btn.m-t-2.btn-primary.text-uppercase Yes
         .modal-footer
+
   section.edit-campaign.hidden-sm-down
     .edit-campaign-wrap
       .row
@@ -205,33 +204,33 @@ section
           each v,k in values.campaign.gallery_group_data
             .col-lg-4.no-padding-img
               a(href=v.urls[v.urls.length - 1] data-size='1440x900' rel="gallery1").fancybox
-                img(src=v.urls[0] alt=(values.short_name || values.name)).img-fluid.img-responsive
+                img(src=v.urls[0] alt=(values.short_name || values.name)).w-100.img-responsive
         else
 
           .col-lg-3.no-padding-img
             a(href="/img/values/smartbe-intelligent-stroller_1.jpg" data-toggle="modal" data-size='1600x900')
-              img(src="/img/default/255x153.png" alt="").img-fluid
+              img(src="/img/default/255x153.png" alt="").img-fluid.w-100
           .col-lg-3.no-padding-img
             a(href="/img/values/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
-              img(src="/img/default/255x153.png" alt="").img-fluid
+              img(src="/img/default/255x153.png" alt="").img-fluid.w-100
           .col-lg-3.no-padding-img
             a(href="/img/values/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
-              img(src="/img/default/255x153.png" alt="").img-fluid
+              img(src="/img/default/255x153.png" alt="").img-fluid.w-100
           .col-lg-3.no-padding-img
             a(href="/img/values/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
-              img(src="/img/default/255x153.png" alt="").img-fluid
+              img(src="/img/default/255x153.png" alt="").img-fluid.w-100
           .col-lg-3.no-padding-img
             a(href="/img/values/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
-              img(src="/img/default/255x153.png" alt="").img-fluid
+              img(src="/img/default/255x153.png" alt="").img-fluid.w-100
           .col-lg-3.no-padding-img
             a(href="/img/values/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
-              img(src="/img/default/255x153.png" alt="").img-fluid
+              img(src="/img/default/255x153.png" alt="").img-fluid.w-100
           .col-lg-3.no-padding-img
             a(href="/img/values/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
-              img(src="/img/default/255x153.png" alt="").img-fluid
+              img(src="/img/default/255x153.png" alt="").img-fluid.w-100
           .col-lg-3.no-padding-img
             a(href="/img/values/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
-              img(src="/img/default/255x153.png" alt="").img-fluid
+              img(src="/img/default/255x153.png" alt="").img-fluid.w-100
     .container
       .row
         .col-lg-12.text-center-flex
@@ -242,7 +241,7 @@ section
                   .card.card-inverse
                     - var additionalVideo = app.getVideoId(v.link);
                     if additionalVideo && additionalVideo.provider == 'youtube'
-                      img(src="http://img.youtube.com/vi/" + additionalVideo.id + "/0.jpg" alt="" style="width: 338px").card-img
+                      img(src="http://img.youtube.com/vi/" + additionalVideo.id + "/0.jpg" alt="" style="width: 338px").card-img.w-100
                     else if additionalVideo && additionalVideo.provider == 'vimeo'
                       img(src="" alt="" style="width: 338px;" data-vimeo-id=additionalVideo.id).card-img.vimeo-thumbnail
                     else
@@ -455,11 +454,12 @@ section
             a(href="" target="_blank")
               i.fa.fa-file-pdf-o.d-inline-block
               h3.d-inline-block Financials
-          .col-lg-4.row.text-xs-center
-            p Company documents
-            a(href=(values.campaign.investor_presentation ? values.campaign.investor_presentation_data.url : '') target="_blank")
-              i.fa.fa-file-powerpoint-o.d-inline-block
-              h3.d-inline-block Investor Presentation
+          if values.campaign.investor_presentation_data.length > 0
+            .col-lg-4.row.text-xs-center
+              p Company documents
+              a(href=(values.campaign.investor_presentation_data[0].urls ? values.campaign.investor_presentation_data[0].urls[0] : '') target="_blank")
+                i.fa.fa-file-powerpoint-o.d-inline-block
+                h3.d-inline-block Investor Presentation
   section.overview
     .container
       .row
@@ -512,23 +512,24 @@ section
                     p Cap
                     h2.font-weight-bold #{ values.campaign.cap }X
 
-  section#perks.perks
-    - values.campaign.perks = $.map(values.campaign.perks, function(value, index) {return [value];});
-    - values.campaign.perks = values.campaign.perks.filter(function(value) { return value && value.perk; });
-    - values.campaign.perks.sort(function (a, b) { return Number(a.amount) - Number(b.amount); });
-    .container
-      h3.text-lg-center.text-xs-center.campaign-subheading Perks
-      .row
-        .col-lg-12.text-center-flex
-          each v,k in values.campaign.perks
-            if v
-              .col-xl-4.col-xs-12.col-lg-6
-                .jumbotron.jumbotron-fluid
-                  .container
-                    h3.m-t-0.m-b-1 Invest 
-                      span #{ formatHelper.formatPrice(v.amount) }
-                      |  or more
-                    p.text-justify #{ v.perk }
+  if values.campaign.perks.length > 0 && values.campaign.perks[0].amount != ''
+    section#perks.perks
+      - values.campaign.perks = $.map(values.campaign.perks, function(value, index) {return [value];});
+      - values.campaign.perks = values.campaign.perks.filter(function(value) { return value && value.perk; });
+      - values.campaign.perks.sort(function (a, b) { return Number(a.amount) - Number(b.amount); });
+      .container
+        h3.text-lg-center.text-xs-center.campaign-subheading Perks
+        .row
+          .col-lg-12.text-center-flex
+            each v,k in values.campaign.perks
+              if v
+                .col-xl-4.col-xs-12.col-lg-6
+                  .jumbotron.jumbotron-fluid
+                    .container
+                      h3.m-t-0.m-b-1 Invest 
+                        span #{ formatHelper.formatPrice(v.amount) }
+                        |  or more
+                      p.text-justify #{ v.perk }
 
   section(style="display: none").investors-all.border-bottom
     .container
@@ -701,7 +702,10 @@ div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true
 each v,k in values.campaign.additional_video
   if v
     div(id="videoModal-" + k tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true").modal.fade.video-modal
+
       div(role="document").modal-dialog.modal-lg
+        button(type="button", data-dismiss="modal", aria-label="Close").close
+          span(aria-hidden="true") &times;
         .modal-content
           .embed-responsive.embed-responsive-16by9
             - var additionalVideo = app.getVideoId(v.link);

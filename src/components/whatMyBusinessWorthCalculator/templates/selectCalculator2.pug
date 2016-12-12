@@ -1,12 +1,5 @@
-include ../../../templates/mixins.pug
+- pug_html += app.breadcrumbs("What's My Business Worth?", 'Established Business', [ ['Home', '/'], ["What's My Business Worth?", '/calculator/selectYourBusiness'], ["Established Business", ''],]);
 
-+breadcrumbs("What's My Business Worth?", 'Established Business',
-  [
-    ['Home', '/'],
-    ["What's My Business Worth?", '/calculator/selectYourBusiness'],
-    ["Established Business", '']
-  ]
-)
 
 .container.calculator-container
   .row

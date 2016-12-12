@@ -11,7 +11,7 @@ mixin row(value, index)
       +fieldNestedTextLabel(name, "amount_sold", value, index, {class1:'col-xl-3 col-lg-12 text-lg-left text-xl-right', class2: 'col-xl-9 col-lg-12'})
       +fieldNestedTextLabel(name, "exemption_relied_upon", value, index, {class1:'col-xl-3 col-lg-12 text-lg-left text-xl-right m-b-0 p-t-0 m-b-lg-1', class2: 'col-xl-9 col-lg-12'})
       .row.form-group
-        .col-date#offering_date
+        .col-date(id="exempt_offering__" + index + "__offering_date")
           label.col-xl-3.col-lg-12.text-xl-right.textlg-left Maturity Date
             span.color-red *
           .col-xl-4.col-lg-6.p-r-0
