@@ -1,11 +1,4 @@
-include mixins.pug
-
-+breadcrumbs('Terms of Use', '', 
-    [
-        ['Home', '/'],
-        ['Terms of Use', '']
-    ]
-)
+- pug_html += app.breadcrumbs('Terms of Use', '', [ ['Home', '/'], ['Terms of Use', ''], ]);
 
 section.text_block.information-page
     .container
