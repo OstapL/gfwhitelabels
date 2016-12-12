@@ -32,7 +32,7 @@ mixin investment(i)
         .col40
           span.light_grey Security
         .col60
-          span.dark_grey #{i.security_type}
+          span.dark_grey #{i.security_type == 0 ? 'Common Equity' : 'Revenue Share'}
       .one_line
         .col40
           span.light_grey Perks
@@ -89,7 +89,9 @@ mixin investment(i)
   function daysLeft(end) {
   var today = new Date();
   var days = Math.ceil((end.valueOf() - today.valueOf()) / ( 1000 * 60 * 60 * 24));
-    return days < 10 ? '0' + days : days.toString();
+    var res = days < 10 ? '0' + days : days.toString();
+    console.log(res);
+    return res;
   };
 
   function toDate(dateStr) {
