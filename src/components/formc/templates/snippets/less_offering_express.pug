@@ -28,62 +28,62 @@ mixin run()
               |  Add Another
         td.border-b-t-none
         td.border-b-t-none
-      tr
-        td.border-t-n.d-block.input-w-80
-          | Commissions and Broker Expenses
-          .pull-right
-            .delete-section-container
-              a(href="#" data-index=index data-section=name).delete-sectionnew
-                i.fa.fa-times
-          input(type="hidden" name="less_offering_express[0][title]" value="Commissions and Broker Expenses")
-        td.border-b-t-none.w-25.font-size-12
-          .form-section
-            input(type="text" name="less_offering_express[0][min]").input-border-bottom.form-control.text-xs-center.min-expense
-        td.border-b-t-none.w-25.font-size-12
-          .form-section
-            input(type="text" name="less_offering_express[0][max]").input-border-bottom.form-control.text-xs-center.min-expense
-      tr
-        td.border-t-n.d-block.input-w-80
-          | Misc. Offering Costs (Legal)
-          .pull-right
-            .delete-section-container
-              a(href="#" data-index=index data-section=name).delete-sectionnew
-                i.fa.fa-times
-        td.border-b-t-none.w-25.font-size-12
-          .form-section
-            input(type="text").input-border-bottom.form-control.text-xs-center.min-expense
-        td.border-b-t-none.w-25.font-size-12
-          .form-section
-            input(type="text").input-border-bottom.form-control.text-xs-center.min-expense
-      tr
-        td.border-t-n.d-block.input-w-80
-          | Misc. Offering Costs (Marketing)
-          .pull-right
-            .delete-section-container
-              a(href="#" data-index=index data-section=name).delete-sectionnew
-                i.fa.fa-times
-        td.border-b-t-none.w-25.font-size-12
-          .form-section
-            input(type="text").input-border-bottom.form-control.text-xs-center.min-expense
-        td.border-b-t-none.w-25.font-size-12
-          .form-section
-            input(type="text").input-border-bottom.form-control.text-xs-center.min-expense
-      tr
-        td.border-t-n.d-block.input-w-80
-          | Misc. Offering Costs (Admin)
-          .pull-right
-            .delete-section-container
-              a(href="#" data-index=index data-section=name).delete-sectionnew
-                i.fa.fa-times
-        td.border-b-t-none.w-25.font-size-12
-          .form-section
-            input(type="text").input-border-bottom.form-control.text-xs-center.min-expense
-        td.border-b-t-none.w-25.font-size-12
-          .form-section
-            input(type="text").input-border-bottom.form-control.text-xs-center.min-expense
-      //if values == null || values.length == 0
+      //- tr
+      //-   td.border-t-n.d-block.input-w-80
+      //-     | Commissions and Broker Expenses
+      //-     .pull-right
+      //-       .delete-section-container
+      //-         a(href="#" data-index=index data-section=name).delete-sectionnew
+      //-           i.fa.fa-times
+      //-     input(type="hidden" name="less_offering_express[0][title]" value="Commissions and Broker Expenses")
+      //-   td.border-b-t-none.w-25.font-size-12
+      //-     .form-section
+      //-       input(type="text" name="less_offering_express[0][min]").input-border-bottom.form-control.text-xs-center.min-expense
+      //-   td.border-b-t-none.w-25.font-size-12
+      //-     .form-section
+      //-       input(type="text" name="less_offering_express[0][max]").input-border-bottom.form-control.text-xs-center.min-expense
+      //- tr
+      //-   td.border-t-n.d-block.input-w-80
+      //-     | Misc. Offering Costs (Legal)
+      //-     .pull-right
+      //-       .delete-section-container
+      //-         a(href="#" data-index=index data-section=name).delete-sectionnew
+      //-           i.fa.fa-times
+      //-   td.border-b-t-none.w-25.font-size-12
+      //-     .form-section
+      //-       input(type="text").input-border-bottom.form-control.text-xs-center.min-expense
+      //-   td.border-b-t-none.w-25.font-size-12
+      //-     .form-section
+      //-       input(type="text").input-border-bottom.form-control.text-xs-center.min-expense
+      //- tr
+      //-   td.border-t-n.d-block.input-w-80
+      //-     | Misc. Offering Costs (Marketing)
+      //-     .pull-right
+      //-       .delete-section-container
+      //-         a(href="#" data-index=index data-section=name).delete-sectionnew
+      //-           i.fa.fa-times
+      //-   td.border-b-t-none.w-25.font-size-12
+      //-     .form-section
+      //-       input(type="text").input-border-bottom.form-control.text-xs-center.min-expense
+      //-   td.border-b-t-none.w-25.font-size-12
+      //-     .form-section
+      //-       input(type="text").input-border-bottom.form-control.text-xs-center.min-expense
+      //- tr
+      //-   td.border-t-n.d-block.input-w-80
+      //-     | Misc. Offering Costs (Admin)
+      //-     .pull-right
+      //-       .delete-section-container
+      //-         a(href="#" data-index=index data-section=name).delete-sectionnew
+      //-           i.fa.fa-times
+      //-   td.border-b-t-none.w-25.font-size-12
+      //-     .form-section
+      //-       input(type="text").input-border-bottom.form-control.text-xs-center.min-expense
+      //-   td.border-b-t-none.w-25.font-size-12
+      //-     .form-section
+      //-       input(type="text").input-border-bottom.form-control.text-xs-center.min-expense
+      if values == null || values.length == 0
         +row({}, 0)
-      //else
+      else
         each value, index in values
           +row(value, index)
   else
