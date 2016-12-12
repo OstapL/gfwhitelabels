@@ -454,11 +454,12 @@ section
             a(href="" target="_blank")
               i.fa.fa-file-pdf-o.d-inline-block
               h3.d-inline-block Financials
-          .col-lg-4.row.text-xs-center
-            p Company documents
-            a(href=(values.campaign.investor_presentation ? values.campaign.investor_presentation_data.url : '') target="_blank")
-              i.fa.fa-file-powerpoint-o.d-inline-block
-              h3.d-inline-block Investor Presentation
+          if values.campaign.investor_presentation_data.length > 0
+            .col-lg-4.row.text-xs-center
+              p Company documents
+              a(href=(values.campaign.investor_presentation_data[0].urls ? values.campaign.investor_presentation_data[0].urls[0] : '') target="_blank")
+                i.fa.fa-file-powerpoint-o.d-inline-block
+                h3.d-inline-block Investor Presentation
   section.overview
     .container
       .row

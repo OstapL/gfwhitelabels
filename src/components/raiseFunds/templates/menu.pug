@@ -19,6 +19,9 @@ mixin getCompanyUrl(id, section, currentStep, step, name)
           if formc && formc.progress[step] == true
             .icon-check
               i.fa.fa-check-circle-o
+          if campaign && campaign.progress[step] == true
+            .icon-check
+              i.fa.fa-check-circle-o
     else
         a(
           href="#"

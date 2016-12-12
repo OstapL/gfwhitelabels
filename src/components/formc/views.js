@@ -1678,6 +1678,7 @@ module.exports = {
 
     _success(data) {
       app.hideLoading();
+      $('#content').scrollTo();
       return false;
     },
 
