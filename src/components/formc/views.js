@@ -718,12 +718,12 @@ module.exports = {
     submit: api.submitAction,
 
     render() {
-      let template = require('components/formc/templates/riskFactorsInstructions.pug');
+      const template = require('components/formc/templates/riskFactorsInstructions.pug');
       this.$el.html(
         template({
           serverUrl: serverUrl,
           Urls: Urls,
-          campaignId: this.campaign.id,
+          campaignId: this.model.campaign_id,
           values: this.model,
         })
       );

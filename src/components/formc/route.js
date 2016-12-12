@@ -172,13 +172,13 @@ module.exports = Backbone.Router.extend({
 
   riskFactorsInstruction(id) {
 
-    let fieldsR = api.makeCacheRequest(formcServer + '/' + id + '/risk-factors-market', 'OPTIONS');
-    let dataR = api.makeCacheRequest(formcServer + '/' + id + '/risk-factors-market');
+    const fieldsR = api.makeCacheRequest(formcServer + '/' + id + '/risk-factors-market', 'OPTIONS');
+    const dataR = api.makeCacheRequest(formcServer + '/' + id + '/risk-factors-market');
 
     $('#content').scrollTo();
     $.when(fieldsR, dataR).done((fields, data) => {
       data[0].id = id;
-      const i = new View.riskFactorsMarket({
+      const i = new View.riskFactorsInstruction({
         el: '#content',
         model: data[0], 
         fields: fields[0].fields,
