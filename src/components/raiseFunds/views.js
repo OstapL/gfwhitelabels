@@ -12,7 +12,7 @@ const menuHelper = require('helpers/menuHelper.js');
 const disableEnterHelper = require('helpers/disableEnterHelper.js');
 
 const submitCampaign = function submitCampaign(e) {
-  doCampaignValidation(e, this.model);
+  doCampaignValidation.call(this, e, this.model);
 };
 
 
@@ -30,6 +30,10 @@ const doCampaignValidation = function doCampaignValidation(e, data) {
 
   if(data == null) {
     data = this.model;
+  }
+
+  if(data.progress == null) {
+    data.progress  = this.model.progress;
   }
 
   if(
@@ -461,7 +465,6 @@ module.exports = {
           type: this.type,
           index: this.index,
           states: this.usaStates,
-          zipCodeDirective: require('directives/zipcode/index.js'),
         })
       );
 
@@ -686,7 +689,7 @@ module.exports = {
                 formc: this.formc,
               })
         );
-        delete this.model.progress;
+        // delete this.model.progress;
 
         setTimeout(() => { this.createDropzones() } , 1000);
 

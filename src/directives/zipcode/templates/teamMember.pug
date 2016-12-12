@@ -12,7 +12,7 @@
       .col-xl-6.col-lg-12
         a(data-toggle="modal" data-target="#city_state_modal" href="#city_state_modal").change_state_city
           span.input-value.js-city-state #{ values.city ? values.city : '(City)' }, #{ values.state ? values.state : '(State)' }
-            i.fa.fa-pencil-square-o.link-1
+          i.fa.fa-pencil-square-o.link-1
 
 //MODAL
 div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")#city_state_modal.modal.fade

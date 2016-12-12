@@ -200,6 +200,7 @@ module.exports = Backbone.Router.extend({
     const View = require('components/raiseFunds/views.js');
     const companyR = app.makeCacheRequest(authServer + '/user/company');
 
+    $('.modal-backdrop').remove();
     $('body').scrollTo(); 
     $.when(companyR).done((company) => {
       app.hideLoading();
