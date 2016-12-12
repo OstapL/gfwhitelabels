@@ -90,7 +90,7 @@ module.exports = {
     submitCampaign(e) {
 
       api.makeRequest(
-        serverUrl + '/api/campaign/general_information/' + this.model.id,
+        raiseCapitalServer + '/company/' + this.model.id + '/edit',
         'GET'
       ).then(function(data) {
         if(
