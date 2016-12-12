@@ -1,14 +1,6 @@
-include ../../../templates/mixins.pug
 include ../../../templates/fields_mixins.pug
 
-
-+breadcrumbs('form c and electronic signature', '', 
-    [
-        ['', ''],
-        ['', ''],
-        ['', ''],
-    ]
-)
+- pug_html += app.breadcrumbs('form c and electronic signature', '', [ ['', ''], ['', ''], ['', '']]);
 
 section.formc-team-members-director.container.m-b-85
   //START LEFT BLOCK

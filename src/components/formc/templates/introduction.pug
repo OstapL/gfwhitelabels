@@ -1,10 +1,10 @@
 
 - 'use strict'
-include ../../../templates/mixins.pug
 include ../../raiseFunds/templates/menu.pug
 include ../../../templates/fields_mixins.pug
 
-+breadcrumbs('Create Formc', '', [['home', '/'], [ 'Create Formc', page.get_absolute_url], ['Introduction']])
+- pug_html += app.breadcrumbs('Create Form C', '', [ ['Home', '/'], ['Create Form C', '/formc/' + values.id + '/introduction'], ['Introduction', ''], ]);
+
 
 section.formc.introduction.create-company-media.container
   - var campaignId = values.campaign_id;

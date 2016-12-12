@@ -1,13 +1,7 @@
-include ../../../templates/mixins.pug
 // - var campaign = {id: 1};
 // - var values = {id: 1};
 
-+breadcrumbs('Form C Review', '', 
-    [
-        ['Home', '/'],
-        ['Form C Review', ''],
-    ]
-)
+- pug_html += app.breadcrumbs('Form C Review', '', [ ['Home', '/'], ['Form C Review', ''],]);
 
 - var names = {}
 - names.issuer_short_name = 'company.name';

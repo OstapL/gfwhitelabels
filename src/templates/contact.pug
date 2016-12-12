@@ -1,11 +1,4 @@
-include mixins.pug
-
-+breadcrumbs('Contact us', '', 
-  [
-    ['Home', '/'],
-    ['Contacts us', '']
-  ]
-)
+- pug_html += app.breadcrumbs('Contact us', '', [ ['Home', '/'], ['Contacts us', ''], ]);
 
 section.text_block  
   .container
