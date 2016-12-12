@@ -1,14 +1,7 @@
-include ../../../templates/mixins.pug
 include ../../../templates/fields_mixins.pug
 include ../../raiseFunds/templates/menu.pug
 
-+breadcrumbs('form c', '', 
-    [
-        ['Home', '/'],
-        ['FORM C', ''],
-        ['Risk Factors', ''],
-    ]
-)
+- pug_html += app.breadcrumbs('create form c', '', [ ['Home', '/'], ['Create Form C', '/formc/' + values.id + '/introduction'], ['Background Check', ''], ]);
 
 section.formc-team-members-director.container.m-b-85
   - var campaignId = values.campaign_id;

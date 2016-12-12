@@ -1,11 +1,4 @@
-include ../../../templates/mixins.pug
-
-+breadcrumbs('TRUNK CLUB', '', 
-  [
-  ['Home', '/'],
-  ['TRUNK CLUB', '']
-  ]
-)
+- pug_html += app.breadcrumbs('TRUNK CLUB', '', [ ['Home', '/'], ['TRUNK CLUB', ''],]);
 
 .container.text-xs-center
   .row
