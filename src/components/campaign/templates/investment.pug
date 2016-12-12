@@ -1,11 +1,11 @@
 include ../../../templates/mixins.pug
 include ../../../templates/fields_mixins.pug
 
-+breadcrumbs('Invest', '', 
++breadcrumbs('Invest', '',
   [
-    ['Home', '/'], 
-    ['Explore', '/companies'],  
-    [values.name, values.id], 
+    ['Home', '/'],
+    ['Explore', '/companies'],
+    [values.name, values.id],
     ['Invest in ' + values.name, '']
   ]
 )
@@ -60,12 +60,12 @@ mixin fieldInput(name, attr)
           div.popover-content-amount-campaign
             i.fa.fa-info-circle
             p Investors are limited to 12 month investment totals ranging from $2,000 - $100,000 based on income and net worth.
-            p Based on your annual income and net worth, you can invest 
-              span(style="color:red;") only 
-              | up to 
+            p Based on your annual income and net worth, you can invest
+              span(style="color:red;") only
+              | up to
               span(style="color:red;") $:amount.
             br
-            p Please 
+            p Please
               a(data-toggle="modal" data-target="#income_worth_modal" href="#income_worth_modal").link-2.update-income-worth update your annual income and net worth.
           div.popover-content-rounding
             i.fa.fa-info-circle
@@ -82,7 +82,7 @@ mixin fieldInput(name, attr)
               span.small-text.open-sans Required by United States banking laws. This information is transmitted securely and will never be used for any purpose beyond executing your investment. You only have to do this once.
             //- div #{user.first_name + ' ' + user.last_name}
             //-   br
-            //-   | #{user.street_address_1 + (user.street_address_2 ? (' ' + user.street_address_2) : '') + ', ' + user.state + ' ' + user.zip_code + ', ' + user.country} 
+            //-   | #{user.street_address_1 + (user.street_address_2 ? (' ' + user.street_address_2) : '') + ', ' + user.state + ' ' + user.zip_code + ', ' + user.country}
             //-   a(href="#") change
 
             //.form-group.row.required
@@ -114,7 +114,7 @@ mixin fieldInput(name, attr)
             +nestedTextLabel("personal_information_data", "street_address_1", {
               class1: 'col-lg-3 col-md-12 text-lg-left text-xl-right',
               class2: 'col-lg-9 col-md-12',
-              id: 'personal_information_data__street_address_1__0',            
+              id: 'personal_information_data__street_address_1__0',
             }, user)
             +nestedTextLabel("personal_information_data", "street_address_2", {
               class1: 'col-lg-3 col-md-12 text-lg-left text-xl-right',
@@ -122,8 +122,8 @@ mixin fieldInput(name, attr)
             }, user)
             // IF USA
             .row.us-fields(style="display:" + (user.country == 'US' ? "display" : "none") + ";")
-              input(type="hidden" name="personal_information_data[state]" value=user.state disabled=(user.country != 'US')) 
-              input(type="hidden" name="personal_information_data[city]" value=user.city disabled=(user.country != 'US')) 
+              input(type="hidden" name="personal_information_data[state]" value=user.state disabled=(user.country != 'US'))
+              input(type="hidden" name="personal_information_data[city]" value=user.city disabled=(user.country != 'US'))
               .col-lg-7.p-l-2.col-md-12
                 +nestedTextLabel("personal_information_data", "zip_code", {
                   class1: 'col-lg-5 text-lg-left text-xl-right',
@@ -202,7 +202,7 @@ mixin fieldInput(name, attr)
               .form-group.row.radio.check-fields
                 label.text-md-right.col-lg-3 Account Type
                 .col-lg-9.radio-input
-                  label 
+                  label
                     input(
                       type="radio"
                       name="payment_information_data[account_type]"
@@ -210,7 +210,7 @@ mixin fieldInput(name, attr)
                       checked=user.bank_account_type
                     )
                     |  Checking
-                  label 
+                  label
                     input(
                       type="radio"
                       name="payment_information_data[account_type]"
@@ -230,17 +230,17 @@ mixin fieldInput(name, attr)
                         span.font-weight-bold GrowthFountain Capital LLC
                     .row
                       .col-lg-6
-                        span In the Amount of: 
+                        span In the Amount of:
                       .col-lg-6
                         span.font-weight-bold.total-investment-amount $1100
                     .row.m-b-2
                       .col-lg-6
                         span Memo:
                       .col-lg-6
-                        span.font-weight-bold Invest in #{values.name} 
+                        span.font-weight-bold Invest in #{values.name}
                     .row.m-b-2
                       .col-lg-6
-                        span And mail the check to: 
+                        span And mail the check to:
                       .col-lg-6
                         span.font-weight-bold GrowthFountain Capital LLC
                           br
@@ -258,18 +258,18 @@ mixin fieldInput(name, attr)
                         span.font-weight-bold GrowthFountain Capital LLC
                     .row
                       .col-lg-6
-                        span In the Amount of: 
+                        span In the Amount of:
                       .col-lg-6
                         span.font-weight-bold.total-investment-amount $1100
                     .row.m-b-2
                       .col-lg-6
                         span Memo:
                       .col-lg-6
-                        span.font-weight-bold Invest in #{values.name} 
+                        span.font-weight-bold Invest in #{values.name}
                         //- span.help-block (as indicated above)
                     .row.m-b-2
                       .col-lg-6
-                        span Wire Instructions: 
+                        span Wire Instructions:
                       .col-lg-6
                         span.font-weight-bold GrowthFountain Capital LLC
                           br
@@ -284,7 +284,7 @@ mixin fieldInput(name, attr)
 
                           br
                           br
-                          | BofI Federal Bank 
+                          | BofI Federal Bank
                           br
                           | 4350 La Jolla Village Drive, Suite 140
                           br
@@ -303,7 +303,7 @@ mixin fieldInput(name, attr)
                   .col-lg-6.col-md-6.col-sm-6.col-xs-6.text-lg-center
                     label.d-block.label-true-false FALSE
                     input(type="radio" value="false" name="is_reviewed_educational_material").d-block.m-x-auto
-                    
+
               .col-lg-10
                 label I confirm and represent that (a) I have reviewed the educational material that has been made available on this website, (b) I understand that the entire amount of my investment may be lost and (c) I am in a financial condition to bear the loss of the investment and (d) I represent that I have not exceeded my investment limitations.
             .form-group.row
@@ -315,7 +315,7 @@ mixin fieldInput(name, attr)
                   .col-lg-6.col-md-6.col-sm-6.col-xs-6.text-lg-center
                     label.d-block.label-true-false FALSE
                     input(type="radio" value="false" name="is_understand_restrictions_to_cancel_investment").d-block.m-x-auto
-                    
+
               .col-lg-10
                 label I understand that there are restrictions on my ability to cancel an investment commitment and obtain a return of my investment.
             .form-group.row
@@ -327,7 +327,7 @@ mixin fieldInput(name, attr)
                   .col-lg-6.col-md-6.col-sm-6.col-xs-6.text-lg-center
                     label.d-block.label-true-false FALSE
                     input(type="radio" value="false" name="is_understand_difficult_to_resell_purchashed").d-block.m-x-auto
-                    
+
               .col-lg-10
                 label I understand that it may be difficult to resell securities purchased on GrowthFountain.
             .form-group.row
@@ -339,15 +339,15 @@ mixin fieldInput(name, attr)
                   .col-lg-6.col-md-6.col-sm-6.col-xs-6.text-lg-center
                     label.d-block.label-true-false FALSE
                     input(type="radio" value="false" name="is_understand_investing_is_risky").d-block.m-x-auto
-                    
+
               .col-lg-10
                 label I understand that investing in start-ups and small businesses listed on GrowthFountain is very risky, and that I should not invest any funds unless I can afford to lose my entire investment.
             .col-lg-12.m-t-2
               .row
-                span By Signing You Acknowledge and Agree to the 
-                  a(href="#" data-tpl="common_stock").link-2 Subscription Agreement
-                  |  and 
-                  a(href="#" data-tpl="revenue_share").link-2 Participation Agreement
+                span By Signing You Acknowledge and Agree to the
+                  a(href="#" data-path="/pdf-doc/invest/subscription_agreement.pdf" target="_blanc").link-2 Subscription Agreement
+                  |  and
+                  a(href="#" data-path="/pdf-doc/invest/participation_agreement.pdf" target="_blanc").link-2 Participation Agreement
             .col-lg-12.m-t-2
               .row
                 .form-group.row
@@ -375,12 +375,12 @@ mixin fieldInput(name, attr)
           - values.campaign.perks.sort(function (a, b) { return Number(b.amount) - Number(a.amount); });
           each v,k in values.campaign.perks
             a(href="#" data-amount=v.amount).list-group-item.list-group-item-action.perk
-              h3.list-group-item-heading 
+              h3.list-group-item-heading
                 span.text-color-puerto_rico $#{v.amount}
-                |  Investments 
+                |  Investments
                 i.fa.fa-check(style="display:none;")
               p.list-group-item-text.text-justify #{v.perk}
-        
+
       h2.text-uppercase.dosis.text-md-center.text-sm-center.text-xs-center Investment Summary
       .jumbotron.jumbotron-fluid.investment-summary
         .container
@@ -442,7 +442,7 @@ div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true
         .container.form-section
           form.col-lg-10.offset-lg-1.border-bottom.update-income-worth
             .row
-              | Your current limit is 
+              | Your current limit is
               b.color-green $
                 span.current-limit.color-green 1000
               | .
