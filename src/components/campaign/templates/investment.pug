@@ -1,14 +1,15 @@
 include ../../../templates/mixins.pug
 include ../../../templates/fields_mixins.pug
 
-+breadcrumbs('Invest', '', 
-  [
-    ['Home', '/'], 
-    ['Explore', '/companies'],  
-    [values.name, values.id], 
-    ['Invest in ' + values.name, '']
-  ]
-)
+//- +breadcrumbs('Invest', '', 
+//-   [
+//-     ['Home', '/'], 
+//-     ['Explore', '/companies'],  
+//-     [values.name, values.id], 
+//-     ['Invest in ' + values.name, '']
+//-   ]
+//- )
+- pug_html += app.breadcrumbs('Invest', '', [ ['Home', '/'], ['Explore', '/companies'], [values.name, '/' + values.id], ['Invest in ' + values.name, '']]);
 
 mixin fieldInput(name, attr)
   - attr = attr ? attr : fields[name];

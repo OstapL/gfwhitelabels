@@ -3,13 +3,15 @@ include ../../../templates/mixins.pug
 include ../../../templates/fields_mixins.pug
 include menu.pug
 
-+breadcrumbs('Create Campaign', '', 
-    [
-        ['Home', '/'],
-        ['Create campaign', '/campaign/' + values.id + '/general_information'],
-        ['Media', ''],
-    ]
-)
+//- +breadcrumbs('Create Campaign', '', 
+//-     [
+//-         ['Home', '/'],
+//-         ['Create campaign', '/campaign/' + values.id + '/general_information'],
+//-         ['Media', ''],
+//-     ]
+//- )
+- pug_html += app.breadcrumbs('Create Company', '', [ ['Home', '/'], ['Create Company', '/campaign/' + values.id + '/general_information'], ['Media', ''], ]);
+
 section.create-company-media.container.media-container
   - var campaignId = values.id;
   - var formcId = formc.id;

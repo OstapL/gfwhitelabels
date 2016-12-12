@@ -1,11 +1,13 @@
 include ../../../templates/mixins.pug
 
-+breadcrumbs('Capital Raise Calculator ', 'finish',
-  [
-    ['Home', '/'],
-    ["Capital Raise Calculator", '']
-  ]
-)
+//- +breadcrumbs('Capital Raise Calculator ', 'finish',
+//-   [
+//-     ['Home', '/'],
+//-     ["Capital Raise Calculator", '']
+//-   ]
+//- )
+- pug_html += app.breadcrumbs('Capital Raise Calculator', 'finish', [ ['Home', '/'], ["Capital Raise Calculator", '/'],]);
+
 
 .container.calculator-container
 

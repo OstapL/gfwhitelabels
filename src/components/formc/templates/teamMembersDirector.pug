@@ -3,14 +3,14 @@ include ../../../templates/fields_mixins.pug
 
 include ../../raiseFunds/templates/menu.pug
 
-+breadcrumbs('form c', '', 
-    [
-        ['Home', '/'],
-        ['FORM C', ''],
-        ['team members (director)', ''],
-    ]
-)
-
+//- +breadcrumbs('form c', '', 
+//-     [
+//-         ['Home', '/'],
+//-         ['FORM C', ''],
+//-         ['team members (director)', ''],
+//-     ]
+//- )
+- pug_html += app.breadcrumbs('Create Company', '', [ ['Home', '/'], ['Create Formc', '/formc/' + values.id + '/introduction'], ['team members (director)', ''], ]);
 
 section.formc-team-members-director.container.m-b-85
   - var formcId = values.formc_id;

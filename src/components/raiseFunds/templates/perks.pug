@@ -2,13 +2,14 @@
 include ../../../templates/mixins.pug
 include menu.pug
 
-+breadcrumbs('Create Campaign', '', 
-    [
-        ['Home', '/'],
-        ['Create campaign', '/campaign/' + values.id + '/general_information'],
-        ['perks', ''],
-    ]
-)
+//- +breadcrumbs('Create Campaign', '', 
+//-     [
+//-         ['Home', '/'],
+//-         ['Create campaign', '/campaign/' + values.id + '/general_information'],
+//-         ['perks', ''],
+//-     ]
+//- )
+- pug_html += app.breadcrumbs('Create Company', '', [ ['Home', '/'], ['Create Company', '/campaign/' + values.id + '/general_information'], ['perks', ''], ]);
 
 section.create-perks.container
   - var campaignId = values.id;

@@ -1,12 +1,13 @@
 include ../../../templates/mixins.pug
 include fields_final_review.pug
 
-+breadcrumbs('Form C Review', '', 
-    [
-        ['Home', '/'],
-        ['Form C Review', ''],
-    ]
-)
+//- +breadcrumbs('Form C Review', '', 
+//-     [
+//-         ['Home', '/'],
+//-         ['Form C Review', ''],
+//-     ]
+//- )
+- pug_html += app.breadcrumbs('Invest', '', [ ['Home', '/'], ['Form C Review', ''],]);
 
 - var titles = ['', 'CEO/President', 'Principal Financial Officer/Treasurer', 'Vice President', 'Secretary', 'Controller/Principal Accounting Officer', ];
 - var names = {}

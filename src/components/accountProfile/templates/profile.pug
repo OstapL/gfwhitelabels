@@ -1,12 +1,13 @@
 include ../../../templates/mixins.pug
 include ../../../templates/fields_mixins.pug
 
-+breadcrumbs('Profile', '',
-  [
-    ['Home', '/'],
-    ['Profile', '']
-  ]
-)
+//- +breadcrumbs('Profile', '',
+//-   [
+//-     ['Home', '/'],
+//-     ['Profile', '']
+//-   ]
+//- )
+- pug_html += app.breadcrumbs('Profile', '', [ ['Home', '/'], ['Profile', ''],]);
 
 .container.profile.pt-50
   .row

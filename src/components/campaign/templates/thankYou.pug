@@ -1,13 +1,14 @@
 include ../../../templates/mixins.pug
 
-+breadcrumbs('Congratulations!', '', 
-  [
-    ['Home', '/'],
-    ['Explore', '/companies'],
-    ['Smartbe', '/' + investment.company.id],
-    ['Invest in ' + investment.company.name, '']
-  ]
-)
+//- +breadcrumbs('Congratulations!', '', 
+//-   [
+//-     ['Home', '/'],
+//-     ['Explore', '/companies'],
+//-     ['Smartbe', '/' + investment.company.id],
+//-     ['Invest in ' + investment.company.name, '']
+//-   ]
+//- )
+- pug_html += app.breadcrumbs('Invest', '', [ ['Home', '/'], ['Explore', '/companies'], ['Smartbe', '/' + investment.company.id], ['Invest in ' + investment.company.name, '']]);
 
 .container
   .row

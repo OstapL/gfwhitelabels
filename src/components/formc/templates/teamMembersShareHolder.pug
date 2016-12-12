@@ -2,13 +2,14 @@ include ../../../templates/mixins.pug
 include ../../raiseFunds/templates/menu.pug
 include ../../../templates/fields_mixins.pug
 
-+breadcrumbs('form c', '', 
-  [
-    ['Home', '/'],
-    ['FORM C', ''],
-    ['team members (20% voting shareholder)', ''],
-  ]
-)
+//- +breadcrumbs('form c', '', 
+//-   [
+//-     ['Home', '/'],
+//-     ['FORM C', ''],
+//-     ['team members (20% voting shareholder)', ''],
+//-   ]
+//- )
+- pug_html += app.breadcrumbs('Create Company', '', [ ['Home', '/'], ['Create Formc', '/formc/' + values.id + '/introduction'], ['team members (shareholder)', ''], ]);
 
 section.formc-team-members-director.container.m-b-85
   - var formcId = values.formc_id;

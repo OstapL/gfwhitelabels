@@ -97,12 +97,14 @@ mixin investment(i)
     return new Date(dateStr);
   };
 
-+breadcrumbs('investor dashboard', '', 
-    [
-        ['Home', '/'],
-        ['investor dashboard', ''],
-    ]
-)
+//- +breadcrumbs('investor dashboard', '', 
+//-     [
+//-         ['Home', '/'],
+//-         ['investor dashboard', ''],
+//-     ]
+//- )
+- pug_html += app.breadcrumbs('investor dashboard', '', [ ['Home', '/'], ['investor dashboard', ''],]);
+
 
 section.investor-dashboard
   .container

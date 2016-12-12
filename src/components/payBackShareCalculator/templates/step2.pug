@@ -1,12 +1,13 @@
 
 include ../../../templates/mixins.pug
 
-+breadcrumbs('Revenue Share Calculator ', 'step 1', 
-  [
-    ['Home', '/'],
-    ["Revenue Share Calculator", '']
-  ]
-)
+//- +breadcrumbs('Revenue Share Calculator ', 'step 1', 
+//-   [
+//-     ['Home', '/'],
+//-     ["Revenue Share Calculator", '']
+//-   ]
+//- )
+- pug_html += app.breadcrumbs('Revenue Share Calculator', 'step 1', [ ['Home', '/'], ["Revenue Share Calculator", ''],]);
 
 .container.calculator-container
   .row
