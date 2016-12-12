@@ -55,7 +55,8 @@ mixin confirmStatement(name, attr)
   //START LEFT BLOCK
   .row
     .col-lg-8
-      h2.text-uppercase.dosis.m-t-0.text-md-center.text-sm-center.text-xs-center.text-lg-left Investment
+      h2.text-uppercase.dosis.m-t-0.text-md-center.text-sm-center.text-xs-center.text-lg-left
+        | Investment
       .form-section.clearfix
         form(action="POST" data-method="POST").invest_form.clearfix
           input(type="hidden" name="company_id" value=values.id)
@@ -169,14 +170,28 @@ mixin confirmStatement(name, attr)
                     label.text-lg-right.col-lg-5(for="state").p-t-0.m-b-0 State/Province/ Region
                       span.color-red *
                     div.col-lg-7
-                      input.form-control(name='personal_information_data[state]' placeholder='State/Province/Region' type="text" value=user.state disabled=(user.country == 'US') id='personal_information_data__state__0')
+                      input.form-control(
+                        name='personal_information_data[state]'
+                        placeholder='State/Province/Region'
+                        type="text"
+                        value=user.state
+                        disabled=(user.country == 'US')
+                        id='personal_information_data__state__0'
+                      )
               .row
                 .col-lg-6.p-l-0.p-r-0
                   .form-group.row.zip_code.text
                     label.text-lg-right.col-lg-6(for="zip_code") Postal Code
                       span.color-red *
                     div.col-lg-6.p-r-0
-                      input.form-control(name='personal_information_data[zip_code]' placeholder='Postal Code' type="text" value=user.zip_code disabled=(user.country == 'US') id='personal_information_data__state__0')
+                      input(
+                        name='personal_information_data[zip_code]'
+                        placeholder='Postal Code'
+                        type="text"
+                        value=user.zip_code
+                        disabled=(user.country == 'US')
+                        id='personal_information_data__state__0'
+                      ).form-control
                 .col-lg-6
                   +nestedTextLabel(
                     "personal_information_data", "phone", {
@@ -188,7 +203,8 @@ mixin confirmStatement(name, attr)
                   }, user)
 
           section.payment-information.border-bottom
-            h2.text-uppercase.dosis.text-md-center.text-sm-center.text-xs-center.text-lg-left Payment information
+            h2.text-uppercase.dosis.text-md-center.text-sm-center.text-xs-center.text-lg-left
+              | Payment information
             .form-group.row
               +fieldChoiceLabel('payment_information_type', _.extend({
                 'class1': 'col-lg-3 text-lg-right text-xs-left',
@@ -314,10 +330,18 @@ mixin confirmStatement(name, attr)
           section.varification
             h2.text-uppercase.dosis.text-md-center.text-sm-center.text-xs-center.text-lg-left
               | CONFIRMATION OF UNDERSTANDING
-            +confirmStatement('is_reviewed_educational_material', _.extend({}, fields.is_reviewed_educational_material))
-            +confirmStatement('is_understand_restrictions_to_cancel_investment', _.extend({}, fields.is_understand_restrictions_to_cancel_investment))
-            +confirmStatement('is_understand_difficult_to_resell_purchashed', _.extend({}, fields.is_understand_difficult_to_resell_purchashed))
-            +confirmStatement('is_understand_investing_is_risky',_.extend({}, fields.is_understand_investing_is_risky))
+            +confirmStatement('is_reviewed_educational_material',
+              _.extend({}, fields.is_reviewed_educational_material)
+            )
+            +confirmStatement('is_understand_restrictions_to_cancel_investment',
+              _.extend({}, fields.is_understand_restrictions_to_cancel_investment)
+            )
+            +confirmStatement('is_understand_difficult_to_resell_purchashed',
+              _.extend({}, fields.is_understand_difficult_to_resell_purchashed)
+            )
+            +confirmStatement('is_understand_investing_is_risky',
+              _.extend({}, fields.is_understand_investing_is_risky)
+            )
             .col-lg-12.m-t-2
               .row
                 span By Signing You Acknowledge and Agree to the 
@@ -329,7 +353,11 @@ mixin confirmStatement(name, attr)
                 #signature__full_name__0.form-group.row
                   - var fullName = user.first_name + ' ' + user.last_name;
                   .col-lg-5
-                    input(type="text" placeholder="Type Your Name" value=fullName name='signature[full_name]').form-control.typed-name
+                    input(
+                      type="text"
+                      placeholder="Type Your Name"
+                      value=fullName name='signature[full_name]'
+                    ).form-control.typed-name
                   .col-lg-5
                     .electronically
                       span.by By:
@@ -345,10 +373,19 @@ mixin confirmStatement(name, attr)
     .col-lg-4.pull-right
       if values.campaign.perks
         h2.text-uppercase.dosis.m-t-0 PERKS
-          span.small-text.open-sans Investor Perks are not intended to affect the value of the security and investors should evaluate the merits of each investment without regard to any Investor Perks.
+          span.small-text.open-sans
+            | Investor Perks are not intended to affect the value of the security and
+            | investors should evaluate the merits of each investment without regard to any
+            | Investor Perks.
         .list-group.list-group-border-invest.invest-right-margin
-          - values.campaign.perks = Object.keys(values.campaign.perks).map(function(key) { return values.campaign.perks[key]; });
-          - values.campaign.perks.sort(function (a, b) { return Number(b.amount) - Number(a.amount); });
+          -
+            values.campaign.perks = Object.keys(values.campaign.perks).map(function(key) {
+              return values.campaign.perks[key];
+            });
+            values.campaign.perks.sort(function (a, b) {
+              return Number(b.amount) - Number(a.amount);
+            });
+
           each v,k in values.campaign.perks
             a(href="#" data-amount=v.amount).list-group-item.list-group-item-action.perk
               h3.list-group-item-heading 
@@ -363,7 +400,9 @@ mixin confirmStatement(name, attr)
           .col-md-7
             .row
               span Target
-              p.font-weight-bold $#{values.campaign.minimum_raise.toLocaleString('en-US')} - $#{values.campaign.maximum_raise.toLocaleString('en-US')}
+              p.font-weight-bold
+                | $#{values.campaign.minimum_raise.toLocaleString('en-US')} -
+                | $#{values.campaign.maximum_raise.toLocaleString('en-US')}
           .col-md-5
             .row
               span Committed
@@ -376,7 +415,8 @@ mixin confirmStatement(name, attr)
           .col-md-5
             .row
               span Type of security
-              p.font-weight-bold.m-b-0 #{values.campaign.security_type == 0 ? 'Common Equity' : 'Revenue Share'}
+              p.font-weight-bold.m-b-0
+                | #{values.campaign.security_type == 0 ? 'Common Equity' : 'Revenue Share'}
 
 //MODAL
 div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")#city_state_modal.modal.fade

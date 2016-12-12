@@ -429,20 +429,18 @@ module.exports = {
     urlRoot: investmentServer + '/',
     doNotExtendModel: true,
     events: {
-      // 'submit form.invest_form': api.submitAction,
       'submit form.invest_form': 'submit',
-      'keyup #amount': 'amountUpdate',
+      'keyup #amount': 'updateAmount',
+      'change #amount': 'ensureIntegerAmountAccordingShares',
       'keyup .us-fields :input[name*=zip_code]': 'changeZipCode',
       'click .update-location': 'updateLocation',
       'click .link-2': 'openPdf',
       'change .country-select': 'changeCountry',
       'change #payment_information_type': 'changePaymentType',
-      'change #amount': 'amountRounding',
       'keyup .typed-name': 'copyToSignature',
       'keyup #annual_income,#net_worth': 'updateLimitInModal',
       'click button.submit-income-worth': 'updateIncomeWorth',
     },
-
 
     initialize(options) {
       this.fields = options.fields;
@@ -456,7 +454,6 @@ module.exports = {
       };
 
       this.fields.payment_information_data.schema.account_number_re = { required: false };
-
       this.fields.personal_information_data.schema.phone = { required: true };
       this.labels = {
         personal_information_data: {
@@ -493,6 +490,8 @@ module.exports = {
 
       this.getCityStateByZipCode = require("helpers/getSityStateByZipCode");
       this.usaStates = require("helpers/usa-states");
+
+      this.initMaxAllowedAmount();
     },
 
     render() {
@@ -509,6 +508,8 @@ module.exports = {
         })
       );
 
+      this.$amount = this.$el.find('#amount');
+
       let that = this;
 
       $('#amount').popover({
@@ -520,7 +521,7 @@ module.exports = {
         content(){
           var content = $('.invest_form').find('.popover-content-' + that.currentAmountTip).html();
           if (that.currentAmountTip == 'amount-ok' || that.currentAmountTip == 'amount-campaign') {
-            content = content.replace(/\:amount/g, that._amountAllowed().toLocaleString('en-US'));
+            content = content.replace(/\:amount/g, that._maxAllowedAmount.toLocaleString('en-US'));
           }
           return content;
         },
@@ -531,9 +532,69 @@ module.exports = {
         $('#amount').keyup();
       });
 
-      $('span.current-limit').text(this._amountAllowed());
+      $('span.current-limit').text(this._maxAllowedAmount);
 
       return this;
+    },
+
+    currentAmountTip: 'amount-campaign',
+
+    showAmountPopup() {
+
+    },
+
+    maxInvestmentsPerYear(annualIncome, netWorth) {
+      let maxInvestmentsPerYear = (annualIncome >= 100 && netWorth >= 100)
+        ? Math.min(annualIncome, netWorth) * 0.1
+        : Math.min(annualIncome, netWorth) * 0.05;
+
+      maxInvestmentsPerYear = maxInvestmentsPerYear < 2 ? 2 : maxInvestmentsPerYear;
+
+      return maxInvestmentsPerYear * 1000 ;
+    },
+
+    initMaxAllowedAmount() {
+      let annualIncome = this.user.annual_income;
+      let netWorth = this.user.net_worth;
+      let investedOnOtherSites = this.user.invested_on_other_sites;
+      let investedPastYear = this.user.invested_equity_past_year;
+
+      this._maxAllowedAmount = this.maxInvestmentsPerYear(annualIncome, netWorth);
+        - investedOnOtherSites - investedPastYear;
+    },
+
+    roundAmount(e) {
+      // e.preventDefault();
+
+      //revenue share
+      if (this.model.campaign.security_type == 1)
+        return;
+
+      let amount = this.getInt(e.target.value);
+      if (!amount)
+        return;
+
+      let pricePerShare = this.model.campaign.price_per_share;
+      if (!pricePerShare)
+        return;
+
+      let newAmount = Math.ceil(amount / pricePerShare) *  pricePerShare;
+
+      this.$amount.val(this.formatInt(newAmount));
+      this._updateTotalAmount();
+
+      if (newAmount > amount)
+        console.log('TODO: show popup that informes user about amount of shares logic');
+
+      // return false;
+    },
+
+    getInt(value) {
+      return parseInt(value.replace(/\,/g, ''));
+    },
+
+    formatInt(value) {
+      return value.toLocaleString('en-US');
     },
 
     getSuccessUrl(data) {
@@ -678,27 +739,6 @@ module.exports = {
       });
     },
 
-    currentAmountTip: 'amount-campaign',
-
-    _exceedLimit(amount) {
-      amount = parseInt(amount || this.$('#amount').val());
-      return amount > this._amountAllowed();
-    },
-
-    _amountAllowed(annual_income, net_worth) {
-      let maxInvestment;
-      net_worth = (net_worth || this.user.net_worth) * 1000;
-      annual_income = (annual_income || this.user.annual_income) * 1000;
-      if (net_worth >= 100000 && annual_income >= 100000) {
-        maxInvestment = (net_worth < annual_income ? net_worth : annual_income) * .1;
-        maxInvestment = maxInvestment < 100000 ? maxInvestment : 100000;
-      } else {
-        maxInvestment = (net_worth < annual_income ? net_worth : annual_income) * .05;
-        maxInvestment = maxInvestment > 2000 ? maxInvestment : 2000;
-      }
-      return maxInvestment - this.user.accumulated_investment;
-    },
-
     amountRounding(e) {
       // No price per share for revenue share company.
       if (this.model.campaign.security_type == 1) return;
@@ -716,31 +756,28 @@ module.exports = {
       }
     },
 
-    amountUpdate(e) {
-      var amount = parseInt(e.currentTarget.value.replace(/\,/g, ''));
-      $(e.currentTarget).val((amount || '').toLocaleString('en-US'));
+    updateAmount(e) {
 
-      if (amount < this.model.campaign.minimum_increment) {
+      let amount = this.getInt(e.currentTarget.value);
+      if (!amount)
+        return;
+
+      e.currentTarget.value = this.formatInt(amount);
+
+      let minIncrement = this.model.minimum_increment;
+
+      //show proper tooltip
+      if (amount < minIncrement) {
         this.currentAmountTip = 'minimum-investment';
         $('#amount').popover('show');
-      } else if(this._exceedLimit(amount || 0)) {
-        // $('#amount').popover({
-        //   // trigger: 'focus',
-        //   placement(context, src) {
-        //     $(context).addClass('amount-popover');
-        //     return 'top';
-        //   },
-        //   html: true,
-        //   content(){
-        //     var content = $('.invest_form').find('.popover-content-amount-campaign').html();
-        //     return content;
-        //   }
-        // });
+      } else if(amount > this._maxAllowedAmount) {
         this.currentAmountTip = 'amount-campaign';
         $('#amount').popover('show');
-        $('.popover a.update-income-worth').click(function () {
-          $('#amount').popover('hide');
-        });
+        $('.popover a.update-income-worth')
+          .off('click')
+          .on('click', (e) => {
+            $('#amount').popover('hide');
+          });
       } else if (this.currentAmountTip == 'amount-campaign') {
         this.currentAmountTip = 'amount-ok';
         $('#amount').popover('show');
@@ -748,6 +785,7 @@ module.exports = {
         $('#amount').popover('hide');
       }
 
+      //update perks
       let $targetPerk;
       let $perks = this.$('.perk');
       $perks.each((i, el) => {
@@ -756,16 +794,18 @@ module.exports = {
           return false;
         }
       });
-      $perks.removeClass('active').find('i.fa.fa-check').hide();
-      if ($targetPerk) $targetPerk.addClass('active').find('i.fa.fa-check').show();
 
-      this._updateTotalAmount(e);
+      $perks.removeClass('active').find('i.fa.fa-check').hide();
+      if ($targetPerk)
+        $targetPerk.addClass('active').find('i.fa.fa-check').show();
+
+      this._updateTotalAmount();
     },
 
-    _updateTotalAmount(e) {
+    _updateTotalAmount() {
       // Here 10 is the flat rate;
-      const totalAmount = Number(this.$('input[name=amount]').val().replace(/\,/g, '')) + 10;
-      this.$('.total-investment-amount').text('$' + totalAmount.toLocaleString('en-US'));
+      let totalAmount = this.getInt(this.$amount.val()) + 10;
+      this.$el.find('.total-investment-amount').text('$' + this.formatInt(totalAmount));
 
     },
   }),
