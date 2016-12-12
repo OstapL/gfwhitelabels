@@ -26,6 +26,31 @@ mixin fieldInput(name, attr)
       disabled=(attr.disabled ? attr.disabled : false)
     ).form-control
 
+mixin confirmStatement(name, attr)
+  - attr = attr || {};
+  .form-group.row
+    .col-lg-2
+      div(id=(attr.id || name)).row
+        .col-lg-6.col-md-6.col-sm-6.col-xs-6.text-lg-center
+          label.d-block.label-true-false
+            | TRUE
+          input(
+            type="radio"
+            value="true"
+            name=name
+          ).d-block.m-x-auto
+        .col-lg-6.col-md-6.col-sm-6.col-xs-6.text-lg-center
+          label.d-block.label-true-false
+            | FALSE
+          input(
+            type="radio"
+            value="false"
+            name=name
+          ).d-block.m-x-auto
+
+    .col-lg-10
+      label #{attr.label}
+
 .container.investment
   //START LEFT BLOCK
   .row
@@ -80,27 +105,18 @@ mixin fieldInput(name, attr)
           section.personal_information
             h2.text-uppercase.dosis.text-md-center.text-sm-center.text-xs-center.text-lg-left Personal Information
               span.small-text.open-sans Required by United States banking laws. This information is transmitted securely and will never be used for any purpose beyond executing your investment. You only have to do this once.
-            //- div #{user.first_name + ' ' + user.last_name}
-            //-   br
-            //-   | #{user.street_address_1 + (user.street_address_2 ? (' ' + user.street_address_2) : '') + ', ' + user.state + ' ' + user.zip_code + ', ' + user.country} 
-            //-   a(href="#") change
-
-            //.form-group.row.required
-            //  label.col-lg-3.col-md-12.text-lg-right.text-xs-left.pull-xs-left Legal Name
-            //    span.color-red *
-            //  +fieldText("first_name", {'class': 'col-lg-4 m-b-md-25','placeholder':'First Name' })
-            //  +fieldText("last_name", {'class': 'col-lg-4','placeholder':'Last Name' })
-
             .form-group.row.required
               label.col-lg-3.col-md-12.text-lg-right.text-xs-left.pull-xs-left Legal Name
                 span.color-red *
               +nestedText("personal_information_data", "first_name", {
                 'class': 'col-lg-4-5 m-b-md-25 col-md-12',
                 'placeholder':'First Name',
+                'id': 'personal_information_data__first_name__0',
               }, user)
               +nestedText("personal_information_data", "last_name", {
                 'class': 'col-lg-4-5 col-md-12 ',
                 'placeholder': 'Last Name',
+                'id': 'personal_information_data__last_name__0'
               }, user)
             .form-group.row
               label.col-lg-3.text-lg-right.text-xs-left Country
@@ -128,6 +144,7 @@ mixin fieldInput(name, attr)
                 +nestedTextLabel("personal_information_data", "zip_code", {
                   class1: 'col-lg-5 text-lg-left text-xl-right',
                   class2: 'col-lg-7',
+                  id: 'personal_information_data__zip_code__0',
                   disabled: (user.country != 'US'),
                 }, user)
               .col-lg-5.city_states.col-md-12
@@ -166,6 +183,7 @@ mixin fieldInput(name, attr)
                       'class1': 'col-lg-5 text-lg-left text-xl-right',
                       'class2': 'col-lg-7 ',
                       'type': 'text',
+                      'id': 'personal_information_data__phone__0',
                       'disabled': (user.country == 'US'),
                   }, user)
 
@@ -183,25 +201,26 @@ mixin fieldInput(name, attr)
               +nestedTextLabel("payment_information_data", "name_on_bank_account", {
                 class1: 'col-lg-3 col-md-12 text-lg-left text-xl-right p-t-0 m-b-0',
                 class2: 'col-lg-9 col-md-12',
-                id: 'payment_information_data__account_number__0',
+                id: 'payment_information_data__name_on_bank_account__0',
                 }, user)
               +nestedTextLabel("payment_information_data", "account_number", {
                 class1: 'col-lg-3 col-md-12 text-lg-left text-xl-right',
                 class2: 'col-lg-9 col-md-12',
-                id: 'payment_information_data__routing_number__0'
+                id: 'payment_information_data__account_number__0',
                 }, user)
               +nestedTextLabel("payment_information_data", "account_number_re", {
                 class1: 'col-lg-3 col-md-12 text-lg-left text-xl-right',
                 class2: 'col-lg-9 col-md-12',
-                id: 'payment_information_data__name_on_bank_account__0',
+                id: 'payment_information_data__account_number_re__0',
                 }, user)
               +nestedTextLabel("payment_information_data", "routing_number", {
                 class1: 'col-lg-3 col-md-12 text-lg-left text-xl-right',
                 class2: 'col-lg-9 col-md-12',
+                id: 'payment_information_data__routing_number__0',
                 }, user)
               .form-group.row.radio.check-fields
                 label.text-md-right.col-lg-3 Account Type
-                .col-lg-9.radio-input
+                #payment_information_data__account_type__0.col-lg-9.radio-input
                   label 
                     input(
                       type="radio"
@@ -293,55 +312,12 @@ mixin fieldInput(name, attr)
               span.help-block GrowthFountain does not store your bank login credentials
 
           section.varification
-            h2.text-uppercase.dosis.text-md-center.text-sm-center.text-xs-center.text-lg-left CONFIRMATION OF UNDERSTANDING
-            .form-group.row
-              .col-lg-2
-                div(id='is_reviewed_educational_material').row
-                  .col-lg-6.col-md-6.col-sm-6.col-xs-6.text-lg-center
-                    label.d-block.label-true-false TRUE
-                    input(type="radio" value="true" name="is_reviewed_educational_material").d-block.m-x-auto
-                  .col-lg-6.col-md-6.col-sm-6.col-xs-6.text-lg-center
-                    label.d-block.label-true-false FALSE
-                    input(type="radio" value="false" name="is_reviewed_educational_material").d-block.m-x-auto
-                    
-              .col-lg-10
-                label I confirm and represent that (a) I have reviewed the educational material that has been made available on this website, (b) I understand that the entire amount of my investment may be lost and (c) I am in a financial condition to bear the loss of the investment and (d) I represent that I have not exceeded my investment limitations.
-            .form-group.row
-              .col-lg-2
-                div(id='is_understand_restrictions_to_cancel_investment').row
-                  .col-lg-6.col-md-6.col-sm-6.col-xs-6.text-lg-center
-                    label.d-block.label-true-false TRUE
-                    input(type="radio" value="true" name="is_understand_restrictions_to_cancel_investment").d-block.m-x-auto
-                  .col-lg-6.col-md-6.col-sm-6.col-xs-6.text-lg-center
-                    label.d-block.label-true-false FALSE
-                    input(type="radio" value="false" name="is_understand_restrictions_to_cancel_investment").d-block.m-x-auto
-                    
-              .col-lg-10
-                label I understand that there are restrictions on my ability to cancel an investment commitment and obtain a return of my investment.
-            .form-group.row
-              .col-lg-2
-                div(id='is_understand_difficult_to_resell_purchashed').row
-                  .col-lg-6.col-md-6.col-sm-6.col-xs-6.text-lg-center
-                    label.d-block.label-true-false TRUE
-                    input(type="radio" value="true" name="is_understand_difficult_to_resell_purchashed").d-block.m-x-auto
-                  .col-lg-6.col-md-6.col-sm-6.col-xs-6.text-lg-center
-                    label.d-block.label-true-false FALSE
-                    input(type="radio" value="false" name="is_understand_difficult_to_resell_purchashed").d-block.m-x-auto
-                    
-              .col-lg-10
-                label I understand that it may be difficult to resell securities purchased on GrowthFountain.
-            .form-group.row
-              .col-lg-2
-                div(id='is_understand_investing_is_risky').row
-                  .col-lg-6.col-md-6.col-sm-6.col-xs-6.text-lg-center
-                    label.d-block.label-true-false TRUE
-                    input(type="radio" value="true" name="is_understand_investing_is_risky").d-block.m-x-auto
-                  .col-lg-6.col-md-6.col-sm-6.col-xs-6.text-lg-center
-                    label.d-block.label-true-false FALSE
-                    input(type="radio" value="false" name="is_understand_investing_is_risky").d-block.m-x-auto
-                    
-              .col-lg-10
-                label I understand that investing in start-ups and small businesses listed on GrowthFountain is very risky, and that I should not invest any funds unless I can afford to lose my entire investment.
+            h2.text-uppercase.dosis.text-md-center.text-sm-center.text-xs-center.text-lg-left
+              | CONFIRMATION OF UNDERSTANDING
+            +confirmStatement('is_reviewed_educational_material', _.extend({}, fields.is_reviewed_educational_material))
+            +confirmStatement('is_understand_restrictions_to_cancel_investment', _.extend({}, fields.is_understand_restrictions_to_cancel_investment))
+            +confirmStatement('is_understand_difficult_to_resell_purchashed', _.extend({}, fields.is_understand_difficult_to_resell_purchashed))
+            +confirmStatement('is_understand_investing_is_risky',_.extend({}, fields.is_understand_investing_is_risky))
             .col-lg-12.m-t-2
               .row
                 span By Signing You Acknowledge and Agree to the 
@@ -350,7 +326,7 @@ mixin fieldInput(name, attr)
                   a(href="#" data-tpl="revenue_share").link-2 Participation Agreement
             .col-lg-12.m-t-2
               .row
-                .form-group.row
+                #signature__full_name__0.form-group.row
                   - var fullName = user.first_name + ' ' + user.last_name;
                   .col-lg-5
                     input(type="text" placeholder="Type Your Name" value=fullName name='signature[full_name]').form-control.typed-name
