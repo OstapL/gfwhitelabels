@@ -649,10 +649,12 @@ module.exports = {
 
     submit(e) {
       e.preventDefault();
-      if (this._exceedLimit()) {
-        $('.popover').scrollTo();
-        return;
-      }
+      ///!!!
+      console.log('ADD VALIDATION OF MIN/MAX VALUE');
+      // if (this._exceedLimit()) {
+      //   $('.popover').scrollTo();
+      //   return;
+      // }
       let data = $(e.target).serializeJSON();
       data.amount = data.amount.replace(/\,/g, '');
       api.submitAction.call(this, e, data);
