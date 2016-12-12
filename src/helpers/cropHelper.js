@@ -74,7 +74,9 @@ module.exports = {
     let cropperTemplate =
       '<div class="form-group">' +
         '<div class="row">' +
+          '<div class="col-xl-10 offset-xl-1">' +
           '<div class="crop-image-container">' +
+          '</div>' +
           '</div>' +
         '</div>' +
         '<div class="row">' +
