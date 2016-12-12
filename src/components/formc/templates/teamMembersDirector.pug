@@ -46,7 +46,7 @@ section.formc-team-members-director.container.m-b-85
                 class: 'col-xl-4 col-lg-4 col-xs-4 p-r-0 m-d-p-l-5',
               }, fields.dob))
               +fieldDateYear("dob", _.extend({
-                class: 'col-xl-4 col-lg-4 col-xs-4 p-r-0 m-d-p-l-10',
+                class: 'col-xl-4 col-lg-4 col-xs-4 p-r-0 m-d-p-l-10 p-r-lg-1',
                 placeholder: 'YYYY',
                 divId: 'dob',
               }, fields.dob))
@@ -60,7 +60,7 @@ section.formc-team-members-director.container.m-b-85
         .row
           .col-xl-6.col-lg-6.form-group
             .row
-              label.col-xl-6.col-lg-12.text-xl-right.text-lg-left.m-b-0.p-t-0 Board Service Start Date
+              label.col-xl-6.col-lg-12.text-xl-right.text-lg-left.m-b-0.p-t-0.m-b-lg-1 Board Service Start Date
                 span.color-red *
               .col-xl-6.col-lg-12
                 .row#board_service_start_date
@@ -90,20 +90,20 @@ section.formc-team-members-director.container.m-b-85
 
 
         +fieldTextLabel("principal_occupation", _.extend({
-          class1: 'col-xl-3 col-lg-12 text-lg-left text-xl-right p-t-0 m-b-0',
+          class1: 'col-xl-3 col-lg-12 text-lg-left text-xl-right p-t-0 m-b-0 m-b-lg-1',
           class2: 'col-xl-9 col-lg-12',
           placeholder: 'Principal Occupation',
           }, fields.principal_occupation))
 
         +fieldTextLabel("employer_principal_businesss", _.extend({
-          class1: 'col-xl-3 col-lg-12 text-lg-left p-t-0 m-b-0 text-xl-right',
+          class1: 'col-xl-3 col-lg-12 text-lg-left p-t-0 m-b-0 m-b-lg-1 text-xl-right',
           class2: 'col-xl-9 col-lg-12',
           placeholder: 'Provide short description of the business',
           }, fields.employer_principal_businesss))
         .row
           .col-xl-6.col-lg-6
             .row
-              label.col-xl-6.col-lg-12.text-xl-right.text-lg-left.m-b-0.p-t-0 Employment Start Date
+              label.col-xl-6.col-lg-12.text-xl-right.text-lg-left.m-b-0.p-t-0.m-b-lg-1 Employment Start Date
                 span.color-red *
               .col-xl-6.col-lg-12
                 .row#employer_start_date
@@ -114,7 +114,7 @@ section.formc-team-members-director.container.m-b-85
                     label: 'Employment Start Date',
                   }, fields.board_service_start_date))
                   +fieldDateYear("board_service_start_date", _.extend({
-                    class: 'col-xl-6 col-lg-6 col-sm-6 col-xs-6 m-d-p-l-5',
+                    class: 'col-xl-6 col-lg-6 col-sm-6 col-xs-6 m-d-p-l-5 ',
                     placeholder: 'YYYY',
                     name: 'employer_start_date',
                     label: 'Employment Start Date',

@@ -458,6 +458,7 @@ module.exports = {
         this.urlRoot += '/' + this.role + '/' + this.model.user_id;
       } else {
         this.urlRoot += '/' + this.role;
+        this.model.title = [];
       }
 
       if (this.role == 'director') {
@@ -1697,10 +1698,10 @@ module.exports = {
     urlRoot: formcServer + '/:id/final-review',
     initialize(options) {
       this.fields = options.fields;
+      disableEnterHelper.disableEnter.call(this);
     },
     events: {
-      'click .BROKEshow-input': 'showInput',
-      'click .createField': 'createField'
+      'click .createField': 'createField',
     },
 
     getSuccessUrl() {
@@ -1719,55 +1720,141 @@ module.exports = {
         element = document.createElement('input');
         element.name = target.dataset.name;
         element.value = target.innerHTML;
+        element.onblur = (e) => this.update(e);
       } else if(target.dataset.type == 'select') {
         element = document.createElement('select');
         element.name = target.dataset.name;
+        element.onblur = (e) => this.update(e);
         let v = target.dataset.name.split('.').reduce((o,i)=>o[i], this.fields);
         v = v.validate.OneOf;
         v.choices.forEach((el, i) => {
           let e = document.createElement('option');
           e.innerHTML = v.labels[i];
           e.value = v.choices[i];
+          if(v.choices[i] == target.dataset.value) {
+            e.setAttribute('selected', true);
+          }
           element.appendChild(e);
-        })
+        });
       }
 
       target.parentElement.insertBefore(element, target);
       target.remove();
     },
 
-    showInput: function (event) {
-      event.preventDefault();
-      if ($(event.target).hasClass('noactive')) {
-          return false;
+    update(e) {
+      const val = e.target.value;
+      const name = e.target.name;
+      const reloadRequiredFields = [
+        'corporate_structure',
+        'maximum_raise',
+        'minimum_raise',
+        'security_type',
+      ];
+
+      e.target.setAttribute(
+        'id', e.target.name.replace(/\./g, '__').replace(/\[/g ,'_').replace(/\]/g, '_')
+      );
+
+      let data = {};
+      let url = '';
+      let fieldName = '';
+
+      if(name.indexOf('company.') !== -1) {
+        fieldName = name.split('company.')[1];
+        data[name.split('company.')[1]] = val;
+        url = raiseCapitalServer + '/company/' + this.model.company.id + '/edit';
+      } else if(name.indexOf('campaign.') !== -1) {
+        fieldName = name.split('campaign.')[1];
+        data[fieldName] = val;
+        if([
+            'pitch',
+            'intended_use_of_proceeds',
+            'business_model',
+            'faq',
+            'additional_info'].indexOf(fieldName) !== -1) {
+          url = raiseCapitalServer + '/campaign/' + this.model.campaign.id + '/general_information';
+        } else if([
+            'minimum_increment',
+            'minimum_raise',
+            'maximum_raise',
+            'length_days',
+            'premoney_valuation',
+            'security_type',
+            'valuation_determination',
+            'valuation_determination_other',
+            'price_per_share',
+          ].indexOf(fieldName) !== -1) {
+          url = raiseCapitalServer + '/campaign/' + this.model.campaign.id + '/specifics';
+        }
+      } else if(name.indexOf('formc.') !== -1) {
+          fieldName = name.split('formc.')[1];
+          data[fieldName] = val;
+          url = formcServer + '/' + this.model.formc.id + '/final-review';
       }
-      var $this = $(event.target),
-          inputId = $this.data('name'),
-          $input = $('input' + '#' + inputId);
 
-      $this.hide();
+      api.makeRequest(url, 'PATCH', data)
+        .then((data) => {
 
-      if ($input.length == 0) {
-        $input = $('<input type="text" id="' + inputId + '" name="' + inputId + '" class="text-input"/>');
-        $this.after($input);
-      }
+          if(reloadRequiredFields.indexOf(fieldName) != -1) {
+            window.location.reload();
+            return false;
+          }
 
-      $input.fadeIn().focus();
+          let input = document.querySelector(
+            '#' + e.target.name.replace(/\./g, '__').replace(/\[/g ,'_').replace(/\]/g, '_')
+          );
+          let href = '';
+          /*
+          if(e.target.tagName == 'SELECT') {
+            href = document.createElement('select');
+            let metaData = name.split('.').reduce(function(o,i) { return o[i]; }, this.fields);
+            debugger;
+            if(metaData && metaData.validate && metaData.validate.OneOf) {
+              let options = metaData.validate.OneOf;
+              options.choices.forEach((el, i) => {
+                let option = document.createElement('option');
+                option.value = el;
+                option.innerHTML = options.labels ? options.labels[i] : el;
+                href.insert(option);
+              });
+            }
+            
+          } else {
+            href = document.createElement('a');
+            href.innerHTML = val;
+            href.setAttribute('href', '#');
+          }
+          */
+          href = document.createElement('a');
+          href.innerHTML = val;
+          href.setAttribute('href', '#');
+          href.dataset.name = e.target.name;
+          if(e.target.tagName == 'SELECT') {
+            href.dataset.type = 'select';
+          } else {
+            href.dataset.type = 'text';
+          }
+          href.dataset.value = val;
+          href.className = 'createField show-input link-1';
 
-      $('body').on('focusout', '.text-input', function(event) {
-      var $this = $(event.target),
-          value = $this.val(),
-          inputId = $this.attr('id'),
-          $span = $('[data-name="' + inputId + '"]');
-      if (value !== '') {
-          $span.text(value);
-      }
+          document.querySelectorAll('[data-name="' + e.target.name + '"]').forEach((el) => {
+            el.innerHTML = val;
+          });
 
-      $this.hide();
-      $span.fadeIn();
-      });
+          input.after(href);
+          input.remove();
+        })
+        .fail((response) => {
+          _(response.responseJSON).each((val, key) => {
+            let errorDiv = document.createElement('div');
+            e.target.classList.add('form-control-danger');
+            errorDiv.className = 'form-control-feedback';
+            errorDiv.innerHTML = val.join(', ');
+            e.target.after(errorDiv);
+          });
+        });
     },
-
 
     render() {
       let template = require('./templates/finalReview.pug');
@@ -1779,7 +1866,7 @@ module.exports = {
           values: this.model,
         })
       );
-      disableEnterHelper.disableEnter.call(this);
+
       return this;
     },
   }),

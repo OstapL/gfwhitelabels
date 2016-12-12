@@ -96,7 +96,7 @@ module.exports = Backbone.Router.extend({
           fields: values[0].fields,
           model: values[1],
         });
-
+        i.render();
         app.hideLoading();
       }).catch((err) => {
         console.log(err);

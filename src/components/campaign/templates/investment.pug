@@ -4,8 +4,8 @@ include ../../../templates/fields_mixins.pug
 +breadcrumbs('Invest', '', 
   [
     ['Home', '/'], 
-    ['Explore', ''],  
-    [values.name, ''], 
+    ['Explore', '/companies'],  
+    [values.name, values.id], 
     ['Invest in ' + values.name, '']
   ]
 )
@@ -49,6 +49,7 @@ mixin fieldInput(name, attr)
                 class2: 'col-lg-4 col-md-12 input-border-bottom',
                 placeholder: '+ $10',
                 value: '$10',
+                label: 'Fee',
                 disabled: true
                 }, fields.fee))
           .row
@@ -350,13 +351,13 @@ mixin fieldInput(name, attr)
             .col-lg-12.m-t-2
               .row
                 .form-group.row
-                  .col-lg-4
-                    input(type="text" placeholder="Type Your Name" value=(user.first_name + ' ' + user.last_name)).form-control.typed-name
-                    .help-block Electronically Sign Here
-                  .col-lg-4
+                  - var fullName = user.first_name + ' ' + user.last_name;
+                  .col-lg-5
+                    input(type="text" placeholder="Type Your Name" value=fullName name='signature[full_name]').form-control.typed-name
+                  .col-lg-5
                     .electronically
                       span.by By:
-                      span.name.signature #{user.first_name + ' ' + user.last_name }
+                      span.name.signature #{ fullName }
 
             .form-group.row
               .col-md-12.text-md-center.text-sm-center.text-xs-center

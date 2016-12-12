@@ -9,7 +9,7 @@ mixin row(value, index)
           i.fa.fa-times
 
       +fieldNestedTextLabel(name, "amount_sold", value, index, {class1:'col-xl-3 col-lg-12 text-lg-left text-xl-right', class2: 'col-xl-9 col-lg-12'})
-      +fieldNestedTextLabel(name, "exemption_relied_upon", value, index, {class1:'col-xl-3 col-lg-12 text-lg-left text-xl-right m-b-0 p-t-0', class2: 'col-xl-9 col-lg-12'})
+      +fieldNestedTextLabel(name, "exemption_relied_upon", value, index, {class1:'col-xl-3 col-lg-12 text-lg-left text-xl-right m-b-0 p-t-0 m-b-lg-1', class2: 'col-xl-9 col-lg-12'})
       .row.form-group
         .col-date#offering_date
           label.col-xl-3.col-lg-12.text-xl-right.textlg-left Maturity Date
@@ -25,7 +25,7 @@ mixin row(value, index)
             })
             +fieldNestedDateYear(name, "offering_date", value, index, {
               placeholder: 'YYYY', 
-              class: 'col-xl-4 col-lg-4 col-xs-4 p-r-0 m-d-p-l-10',
+              class: 'col-xl-4 col-lg-4 col-xs-4 p-r-0 m-d-p-l-10 p-r-lg-1',
             })
       +fieldNestedTextLabel(name, "securities_offered", value, index, {class1:'col-xl-3 col-lg-12 text-lg-left text-xl-right', class2: 'col-xl-9 col-lg-12'})
       +fieldNestedTextLabel(name, "use_of_proceeds", value, index, {class1:'col-xl-3 col-lg-12 text-lg-left text-xl-right', class2: 'col-xl-9 col-lg-12'})
@@ -48,10 +48,10 @@ mixin run()
                   +row(value, index)
       .col-lg-12
         .row.add-link
-          .col-lg-9.offset-lg-3
+          .col-xl-9.offset-xl-3
             a(href="#" data-section=name data-comp='formc' data-template='exempt_offering').link-2.add-sectionnew
               i.fa.fa-plus
-              |  Add Another Exemption Offering
+              |  Add Another Exempt Offering
 
   else
     +row({}, index)

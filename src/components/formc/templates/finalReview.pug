@@ -377,7 +377,7 @@ section.formc-review
             +frField('campaign.expiration_date', 'text')
             |  (the 
             u “Offering”
-            |  ).  If the sum of the investment commitments does not equal or exceed this minimum target amount at the Offering deadline, no securities will be sold in the Offering, investment commitments will be cancelled and committed funds will be returned. There can be no assurance that the minimum number of the Shares offered will be subscribed for and therefore these if no guarantee that this Offering will be completed.
+            |  ).  If the sum of the investment commitments does not equal or exceed this minimum target amount at the Offering deadline, no securities will be sold in the Offering, investment commitments will be cancelled and committed funds will be returned, less any fees incurred, without accrued interest. There can be no assurance that the minimum number of the Shares offered will be subscribed for and therefore these if no guarantee that this Offering will be completed.
           p.text-indent The minimum subscription by an investor is a $
             +frField('campaign.minimum_increment', 'text')
             |  investment.  Each investor interested in participating in this Offering must register at 
@@ -744,9 +744,7 @@ section.formc-review
           +frField('company.trans_percent', 'text')
           | % of the total amount of monies raised in the Offering for the purchase of securities offered by the Company, payable upon success, (b) a registration and processing fee equal to $
           +frField('company.registration_fee', 'text')
-          | payable upon registration, (c) a third-party fees equal to $
-          +frField('company.party_fees', 'text')
-          | payable upon success and (d) a participation fee equal to $
+          | payable upon registration, and (c) a participation fee equal to $
           +frField('company.fees_to_investor ', 'text')
           | committed to by the investor.
         p.text-uppercase.m-t-3.m-b-0.pb10 
@@ -763,11 +761,7 @@ section.formc-review
         p execution of a Subscription Agreement available on the Platform, which contains, among other things, certain representations, warranties and covenants.  The Company must secure investor commitments that equal or exceed the minimum target amount for the Offering prior to the applicable closing date, or the Offering will be canceled and investor funds committed in connection with the Offering will be returned.  An investor commitment is conditional after being made, but only up until the time that is 48 hours before the applicable closing date.  For the 48-hour period prior to the applicable closing date, investor commitments may not be cancelled by the investor but in certain circumstances may still be returned (e.g. if the target minimum amount is not met).   As a reminder, investors are required to reconfirm their investment commitment  
           if values.campaign.security_type == 1
             |  within five days
-          |  after receiving notice of a material change to the Offering.  If an investor takes no action to reconfirm the investment commitment after the Company notifies the investor of a material change, the commitment will be cancelled and funds relating to that Offering returned
-          if values.campaign.security_type == 0
-            | .
-          else
-            | , less any fees incurred, without any accrued interest. 
+          |  after receiving notice of a material change to the Offering.  If an investor takes no action to reconfirm the investment commitment after the Company notifies the investor of a material change, the commitment will be cancelled and funds relating to that Offering returned, less any fees incurred, without any accrued interest. 
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u Jurisdictional Coverage
         p.text-indent Jurisdictions in which the issuer intends to offer the securities include the following: AL, AK, AZ, AR, CA, CO, CT, DE, DC, FL, GA, HI, ID, IL, IN, IA, KS, KY, LA, ME, MD, MA, MI, MN, MS, MO, MT, NE, NV, NH, NJ, NY, NC, ND, OH, OK, OR, PA, RI, SC, SD, TN, TX, UT, VT, WA, WV, WI, WY, WY, PR, GU, VI, NMI, AS
@@ -906,16 +900,6 @@ section.formc-review
         p.pb10.text-indent The Company intends to apply the proceeds of this Offering substantially as set forth herein, subject to reallocation by management as it deems in the best interests of the Company. The actual use of proceeds of this Offering is subject to the discretion of management and the board of directors, and may include general corporate purposes.
         p
           +frField('formc.intended_use_of_proceeds', 'text')
-        p.text-uppercase.m-t-3.m-b-0.pb10 
-          u Assuming A Minimum Raise
-        p
-          +frField('formc.use_of_net_proceeds_minimum', 'text')
-        p.text-uppercase.m-t-3.m-b-0.pb10 
-          u  Assuming A Maximum Raise
-        if values.campaign.minimum_raise != values.campaign.maximum_raise
-          p.pb10.text-indent In the case that the Offering is oversubscribed and closes with the maximum amount achieved, the Company anticipates using the proceeds in the following manner: 
-          p.pb10
-            +frField('formc.use_of_net_proceeds_maximum', 'text')
         p.pb10.text-indent The following table reflects our anticipated estimated use of proceeds:
         .table-responsive.m-t-1
           table.table.table-bordered
@@ -1065,12 +1049,12 @@ section.formc-review
         p.text-indent References to the future financial condition of the Company may contain forward-looking statements. Such forward-looking statements are not guarantees of future performance and involve uncertainties and other factors which may cause the Company’s actual results, performance or achievements to be materially different from any future results, performance or achievements expressed or implied by such forward-looking statements. Actual operating results may be affected by various factors including, without limitation, changes in national economic conditions, competitive market conditions, uncertainties related to government regulation, and actual versus projected timing of events, all of which may cause such actual results to differ materially from what is expressed or forecast in this Material.  For purposes of this section, any reference to the Company includes its predecessors, if any.  The Company's actual results may differ materially from those discussed herein.
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u Prior Operating History
-        if values.formc.financials_condition_choice == '1'
+        if values.formc.financials_condition_choice == 1
           p.pb10.text-indent The following describes the operating history of the issuer with a focus on whether historical results and cash flows are representative of what investors should expect in the future. 
-            +frField('formc.financials_condition_no', 'textarea')
+            +frField('formc.financials_condition_yes', 'textarea')
         else
           p.pb10.text-indent Because the issuer has no operating history, the following provides information on the issuer’s financial milestones and operational, liquidity and other challenges. 
-            +frField('formc.financials_condition_yes', 'textarea')
+            +frField('formc.financials_condition_no', 'textarea')
 
         if values.formc.sold_securities_data.length > 1
           .table-responsive.m-t-1
@@ -1097,9 +1081,9 @@ section.formc-review
                 tr
                   td Accounts Receivable
                   td.text-xs-center
-                    +frField('formc.sold_securities_data[0].cash_and_equivalents', 'text')
+                    +frField('formc.sold_securities_data[0].account_receivable', 'text')
                   td.text-xs-center
-                    +frField('formc.sold_securities_data[1].cash_and_equivalents', 'text')
+                    +frField('formc.sold_securities_data[1].account_receivable', 'text')
                 tr
                   td Short-term Debt
                   td.text-xs-center
@@ -1360,6 +1344,13 @@ section.formc-review
               +frField('formc.legal_and_regulatory_risk[' + k + '].title', 'textarea')
             p
               +frField('formc.legal_and_regulatory_risk[' + k + '].risk', 'textarea')
+        p.text-uppercase.m-t-3.m-b-0.pb10 
+          u MISCELLANEOUS RISK FACTORS
+          for v,k in values.formc.miscellaneous_risk
+            h3
+              +frField('formc.miscellaneous_risk[' + k + '].title', 'textarea')
+            p
+              +frField('formc.miscellaneous_risk[' + k + '].risk', 'textarea')
 
       // page 25
       section.page-formc-review.m-t-1

@@ -427,6 +427,7 @@ module.exports = {
       common_stock: require('./templates/agreement/common_stock.pug'),
     },
     urlRoot: investmentServer + '/',
+    doNotExtendModel: true,
     events: {
       // 'submit form.invest_form': api.submitAction,
       'submit form.invest_form': 'submit',
@@ -435,7 +436,7 @@ module.exports = {
       'click .update-location': 'updateLocation',
       'click .link-2': 'openPdf',
       'change .country-select': 'changeCountry',
-      'change .payment-type-select': 'changePaymentType',
+      'change #payment_information_type': 'changePaymentType',
       'change #amount': 'amountRounding',
       'keyup .typed-name': 'copyToSignature',
       'keyup #annual_income,#net_worth': 'updateLimitInModal',
@@ -448,20 +449,11 @@ module.exports = {
       this.user = options.user;
       this.user.account_number_re = this.user.account_number;
 
-      this.fields.payment_information_data.schema.account_number_re = { type: 'string', required: true };
-      this.fields.payment_information_data.schema.phone = { type: 'string', required: true };
-      this.fields.payment_information_data.schema.name_on_bank_account.required = true;
-      this.fields.payment_information_data.schema.account_number.required = true;
-      this.fields.payment_information_data.schema.routing_number.required = true;
-
       this.fields.payment_information_type.validate.choices = {
         0: 'Echeck (ACH)',
         1: 'Check',
         2: 'Wire',
       };
-      console.dir(this.fields);
-      console.dir(this.user);
-      console.log('================================');
 
       this.labels = {
         personal_information_data: {
@@ -541,6 +533,10 @@ module.exports = {
       return this;
     },
 
+    getSuccessUrl(data) {
+      return investmentServer + '/' + data.id + '/invest-thanks';
+    },
+
     updateLimitInModal(e) {
       let annual_income = Number(this.$('#annual_income').val().replace(/\,/g, '')), net_worth = Number(this.$('#net_worth').val().replace(/\,/g, ''));
       this.$('#annual_income').val((annual_income || 0).toLocaleString('en-US'));
@@ -559,8 +555,6 @@ module.exports = {
         alert('Update failed. Please try again!');
       });
     },
-
-    doNotExtendModel: true,
 
     copyToSignature(e) {
       this.$('.signature').text($(e.target).val());
@@ -707,9 +701,11 @@ module.exports = {
       if (this.model.campaign.security_type == 1) return;
 
       let amount = $(e.target).val();
-      const price_per_share = this.model.campaign.price_per_share;
-      if (amount && amount % price_per_share != 0 && amount >= this.model.campaign.minimum_increment) {
-        amount = Math.ceil(amount / price_per_share) * price_per_share;
+      const pricePerShare = this.model.campaign.price_per_share;
+      const minIncrement = this.model.campaign.minimum_increment;
+
+      if ((amount && pricePerShare) && amount % pricePerShare != 0 && amount >= minIncrement) {
+        amount = Math.ceil(amount / pricePerShare) * pricePerShare;
         $(e.target).val(amount);
         this.currentAmountTip = 'rounding';
         $('#amount').popover('show');
@@ -776,7 +772,7 @@ module.exports = {
     template: require('./templates/thankYou.pug'),
     el: '#content',
     initialize(options) {
-      this.company = options.company;
+      // this.render();
     },
 
     render() {
@@ -785,7 +781,6 @@ module.exports = {
           serverUrl: serverUrl,
           Urls: Urls,
           investment: this.model,
-          company: this.company,
         })
       );
       return this;

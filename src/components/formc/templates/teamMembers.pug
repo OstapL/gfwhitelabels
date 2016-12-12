@@ -40,16 +40,16 @@ section.create-company-team-add.container
     form.form-section
       .col-lg-12.m-t-1.m-b-2
         b How many emploees do you have?
-      .col-lg-6.required
+      .col-xl-6.col-lg-6.required
         +fieldTextLabel("full_time_employers", _.extend({
-          class1: 'col-lg-4 col-md-12 text-md-left text-xl-right p-t-0 m-b-0',
-          class2: 'col-lg-8 col-md-12',
+          class1: 'col-xl-4 col-lg-12 text-lg-left text-xl-right p-t-0 m-b-0 m-b-lg-1',
+          class2: 'col-xl-8 col-lg-12',
           required: true,
         }, fields.full_time_employers))
-      .col-lg-6.required
+      .col-xl-6.col-lg-6.required
         +fieldTextLabel("part_time_employers", _.extend({
-          class1: 'col-lg-4 col-md-12 text-md-left text-xl-right p-t-0 m-b-0',
-          class2: 'col-lg-8 col-md-12',
+          class1: 'col-xl-4 col-lg-12 text-lg-left text-xl-right p-t-0 m-b-0 m-b-lg-1',
+          class2: 'col-xl-8 col-lg-12',
           required: true,
         }, fields.part_time_employers))
       .col-lg-12.text-lg-center.text-md-center.text-sm-center.text-xs-center.m-t-2.m-b-2
@@ -80,7 +80,7 @@ section.create-company-team-add.container
                   - var persons = values.team_members.filter(function(el) { return (el.title ? el.title.indexOf(v) != -1: false); })
                   if persons.length > 0
                     - roleCounter ++;
-                if roleCounter < 2
+                if roleCounter < 3
                   #membersMessage.warning-block.warning-team-add.team-member-no-border.text-lg-left.m-b-0
                     i.fa.fa-info-circle 
                     span.warning-text Please identify the Officers in your company responsible for the following 3 roles. Please note that, if necessary, the same person may be identified with multiple roles.
@@ -133,3 +133,4 @@ section.create-company-team-add.container
 
       .col-lg-12.text-md-center.text-sm-center.text-xs-center.m-t-3
         button(data-method="PUT")#submitForm.btn.btn-primary.text-uppercase.pull-lg-right Save And Continue
+          i.fa.fa-angle-right

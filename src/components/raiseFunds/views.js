@@ -19,7 +19,7 @@ const submitCampaign = function submitCampaign(e) {
 const postForReview = function postForReview(e) {
   api.makeRequest(raiseCapitalServer + '/company/' + e.target.dataset.companyid + '/post-for-review', 'PUT')
     .then((data) => {
-      api.routers.navigate(
+      app.routers.navigate(
         '/company/in-review',
         { trigger: true, replace: false }
       );

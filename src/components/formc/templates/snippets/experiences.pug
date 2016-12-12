@@ -8,13 +8,13 @@ mixin row(value, index)
           i.fa.fa-times
 
       +fieldNestedTextLabel(name, "employer", value, index, {class1:'col-xl-3 col-lg-12 text-lg-left text-xl-right', class2: 'col-xl-9 col-lg-12'})
-      +fieldNestedTextLabel(name, "title", value, index, {class1:'col-xl-3 col-lg-12 m-b-0 p-t-0 text-lg-left text-xl-right', class2: 'col-xl-9 col-lg-12', placeholder: 'Provide short description of the business'})
-      +fieldNestedTextLabel(name, "responsibilities", value, index, {class1:'col-xl-3 col-lg-12 text-lg-left text-xl-right p-t-0 m-b-0', class2: 'col-xl-9 col-lg-12'})
+      +fieldNestedTextLabel(name, "title", value, index, {class1:'col-xl-3 col-lg-12 m-b-0 p-t-0 m-b-lg-1 text-lg-left text-xl-right', class2: 'col-xl-9 col-lg-12', placeholder: 'Provide short description of the business'})
+      +fieldNestedTextLabel(name, "responsibilities", value, index, {class1:'col-xl-3 col-lg-12 text-lg-left text-xl-right p-t-0 m-b-0 m-b-lg-1', class2: 'col-xl-9 col-lg-12'})
 
       .row
         .col-xl-6.col-lg-6.form-group
           .row
-            label.col-xl-6.col-lg-12.text-xl-right.text-lg-left.p-l-2.p-l-lg-1.p-t-0.m-b-0 Start Date of Service
+            label.col-xl-6.col-lg-12.text-xl-right.text-lg-left.p-l-2.p-l-lg-1.p-t-0.m-b-0.m-b-lg-1 Start Date of Service
             .col-xl-6.col-lg-12
               div(id=name + '__' + index + '__' + 'start_date_of_service').row
                 +fieldNestedDateMonth(name, "start_date_of_service", value, index, {placeholder: 'MM', class: 'col-xl-6 col-lg-6 col-sm-6 col-xs-6 m-d-p-r-5'})
@@ -22,7 +22,7 @@ mixin row(value, index)
               
         .col-xl-6.col-lg-6.form-group
           .row
-            label.col-xl-6.col-lg-12.text-xl-right.text-lg-left.p-l-3.p-l-lg-1.p-t-0.m-b-0 End Date of Service
+            label.col-xl-6.col-lg-12.text-xl-right.text-lg-left.p-l-3.p-l-lg-1.p-t-0.m-b-0.m-b-lg-1 End Date of Service
             .col-xl-6.col-lg-12
               div(id=name + '__' + index + '__' + 'end_date_of_service').row
                 +fieldNestedDateMonth(name, "end_date_of_service", value, index, {placeholder: 'MM', class: 'col-xl-6 col-lg-6 col-sm-6 col-xs-6 m-d-p-r-5'})
@@ -31,8 +31,9 @@ mixin row(value, index)
 mixin run()
 
   if first_run
+    h3.text-lg-center.text-xs-center.m-t-3.m-b-0 We Need Information for Last 3 Years
     .row
-      b.col-lg-12.m-t-2.m-b-1.m-t-3 Business experience for past three years: Please list your employers, titles and dates of positions held during the past three years with an indication of job responsibilities.
+      b.col-lg-12.m-t-2.m-b-1.m-t-3 If you’ve been at your current employer fewer than 3 years, please provide additional information below:
 
     div(class=(attr.row == 0 ? '' : 'row ') + name + '_block' + (attr.required == true ? ' required ' : ' ') + ' nested')
       div(class=(attr.row == 0 ? '' : 'row ') + name + '_container' + (attr.required == true ? ' required ' : ' ') + ' nested')

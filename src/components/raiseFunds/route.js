@@ -202,12 +202,13 @@ module.exports = Backbone.Router.extend({
 
     $('body').scrollTo(); 
     $.when(companyR).done((company) => {
-      if(company.is_approved == 1) {
+      app.hideLoading();
+      // if(company.is_approved == 1) {
+      if(1 == 1) {
         const i = new View.inReview({
           model: company,
         });
         i.render();
-        app.hideLoading();
       } else {
         app.routers.navigate(
           '/company/create',
