@@ -205,33 +205,33 @@ section
           each v,k in values.campaign.gallery_group_data
             .col-lg-4.no-padding-img
               a(href=v.urls[v.urls.length - 1] data-size='1440x900' rel="gallery1").fancybox
-                img(src=v.urls[0] alt=(values.short_name || values.name)).img-fluid.img-responsive
+                img(src=v.urls[0] alt=(values.short_name || values.name)).w-100.img-responsive
         else
 
           .col-lg-3.no-padding-img
             a(href="/img/values/smartbe-intelligent-stroller_1.jpg" data-toggle="modal" data-size='1600x900')
-              img(src="/img/default/255x153.png" alt="").img-fluid
+              img(src="/img/default/255x153.png" alt="").img-fluid.w-100
           .col-lg-3.no-padding-img
             a(href="/img/values/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
-              img(src="/img/default/255x153.png" alt="").img-fluid
+              img(src="/img/default/255x153.png" alt="").img-fluid.w-100
           .col-lg-3.no-padding-img
             a(href="/img/values/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
-              img(src="/img/default/255x153.png" alt="").img-fluid
+              img(src="/img/default/255x153.png" alt="").img-fluid.w-100
           .col-lg-3.no-padding-img
             a(href="/img/values/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
-              img(src="/img/default/255x153.png" alt="").img-fluid
+              img(src="/img/default/255x153.png" alt="").img-fluid.w-100
           .col-lg-3.no-padding-img
             a(href="/img/values/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
-              img(src="/img/default/255x153.png" alt="").img-fluid
+              img(src="/img/default/255x153.png" alt="").img-fluid.w-100
           .col-lg-3.no-padding-img
             a(href="/img/values/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
-              img(src="/img/default/255x153.png" alt="").img-fluid
+              img(src="/img/default/255x153.png" alt="").img-fluid.w-100
           .col-lg-3.no-padding-img
             a(href="/img/values/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
-              img(src="/img/default/255x153.png" alt="").img-fluid
+              img(src="/img/default/255x153.png" alt="").img-fluid.w-100
           .col-lg-3.no-padding-img
             a(href="/img/values/smartbe-intelligent-stroller_1.jpg" data-size='1600x900')
-              img(src="/img/default/255x153.png" alt="").img-fluid
+              img(src="/img/default/255x153.png" alt="").img-fluid.w-100
     .container
       .row
         .col-lg-12.text-center-flex
@@ -242,7 +242,7 @@ section
                   .card.card-inverse
                     - var additionalVideo = app.getVideoId(v.link);
                     if additionalVideo && additionalVideo.provider == 'youtube'
-                      img(src="http://img.youtube.com/vi/" + additionalVideo.id + "/0.jpg" alt="" style="width: 338px").card-img
+                      img(src="http://img.youtube.com/vi/" + additionalVideo.id + "/0.jpg" alt="" style="width: 338px").card-img.w-100
                     else if additionalVideo && additionalVideo.provider == 'vimeo'
                       img(src="" alt="" style="width: 338px;" data-vimeo-id=additionalVideo.id).card-img.vimeo-thumbnail
                     else
@@ -701,7 +701,10 @@ div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true
 each v,k in values.campaign.additional_video
   if v
     div(id="videoModal-" + k tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true").modal.fade.video-modal
+
       div(role="document").modal-dialog.modal-lg
+        button(type="button", data-dismiss="modal", aria-label="Close").close
+          span(aria-hidden="true") &times;
         .modal-content
           .embed-responsive.embed-responsive-16by9
             - var additionalVideo = app.getVideoId(v.link);
