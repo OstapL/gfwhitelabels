@@ -575,7 +575,6 @@ module.exports = {
         less_offering_express: {},
         use_of_net_proceeds: {},
       };
-      // use_of_net_proceeds
       let defaultRows = {
         less_offering_express: ['Commissions and Broker Expenses', 'Misc. Offering Costs (Legal)', 'Misc. Offering Costs (Marketing)', 'Misc. Offering Costs (Admin)'],
         use_of_net_proceeds: ['Salaries, Benefits and Wages', 'Product Development', 'Marketing', 'Operations (Data, Hosting, Fees)', 'Travel, Conferences and Events'],
@@ -588,12 +587,6 @@ module.exports = {
           this.model[key].push({max: 0, min: 0, title: titles[i]});
         }
       }
-      // if (this.model['less_offering_express'].length == 0) {
-      //   this.model['less_offering_express'] = [{max: 0, min: 0, title: 'title1'}, {max: 0, min: 0, title: 'title2'}]
-      // }
-      // if (this.model['use_of_net_proceeds'].length == 0) {
-      //   this.model['use_of_net_proceeds'] = [{max: 0, min: 0, title: 'title1'}, {max: 0, min: 0, title: 'title2'}]
-      // }
       this.assignLabels();
       this.createIndexes();
       this.buildJsonTemplates('formc');
