@@ -3,13 +3,6 @@ include ../../../templates/mixins.pug
 include ../../../templates/fields_mixins.pug
 include menu.pug
 
-//- +breadcrumbs('Create Campaign', '', 
-//-     [
-//-         ['Home', '/'],
-//-         ['Create campaign', '/campaign/' + values.id + '/general_information'],
-//-         ['GENERAL INFORMATION', ''],
-//-     ]
-//- )
 - pug_html += app.breadcrumbs('Create Company', '', [ ['Home', '/'], ['Create Campaign', '/campaign/' + values.id + '/general_information'], ['GENERAL INFORMATION', ''], ]);
 
 section.create-company-general.container.m-b-85

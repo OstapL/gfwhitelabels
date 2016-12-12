@@ -4,12 +4,6 @@ include ../../../templates/mixins.pug
 - var campaign = {id: 1};
 - var values = {id: 1};
 
-//- +breadcrumbs('some company name', '', 
-//-     [
-//-         ['Home', '/'],
-//-         ['some company name', ''],
-//-     ]
-//- )
 - pug_html += app.breadcrumbs('some company name', '', [ ['Home', '/'], ['some company name', ''],]);
 
 section.formc-team-members-director.container.m-b-85

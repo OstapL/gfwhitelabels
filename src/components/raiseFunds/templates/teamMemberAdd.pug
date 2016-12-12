@@ -2,14 +2,7 @@ include ../../../templates/mixins.pug
 include ../../../templates/fields_mixins.pug
 include menu.pug
 
-//- +breadcrumbs('Create Campaign', '', 
-//-     [
-//-         ['Home', '/'],
-//-         ['Create campaign', '/campaign/' + values.id + '/general_information'],
-//-         ['team member (Advisor)', ''],
-//-     ]
-//- )
-- pug_html += app.breadcrumbs('Invest', '', [ ['Home', '/'], ['Create campaign', '/campaign/' + values.id + '/general_information'], ['team member (' + (type == 'advisor' ? 'advisor' : 'team member') + ')', ''],]);
+- pug_html += app.breadcrumbs('Create Campaign', '', [ ['Home', '/'], ['Create campaign', '/campaign/' + values.id + '/general_information'], ['team member (' + (type == 'advisor' ? 'advisor' : 'team member') + ')', ''],]);
 
 
 section.team-members.container.m-b-85
