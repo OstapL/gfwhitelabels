@@ -15,27 +15,35 @@ section.formc-team-members-director.container.m-b-85
 
   //START RIGHT BLOCK
   .col-xl-8.col-lg-8.col-md-12
-    h2.text-uppercase.text-lg-center.text-xs-center.m-t-0.dosis.mb45 related parties
-    p.pb10.col-lg-12 Please describe any transaction or proposed transaction with related parties in the last 12 months in excess of 5% of capital raised in reliance on 4(a)(6) inclusive of current offering.
-    p.pb10.col-lg-12 Related parties is defined as: any director, officer or 20% voting shareholder (no earlier than 120 days prior to this offering for 20%+ shareholder), any promoter (if organized within past three years), or any family member of the foregoing persons.  Family member includes any child, stepchild, grandchild, parent, stepparent, grandparent, spouse or spousal equivalent, sibling, mother-in-law, father-in-law, son-in-law, daughter-in-law, brother-in-law, or sister-in-law of the person, and includes adoptive relationships.  The term “spousal equivalent” means a cohabitant occupying a relationship generally equivalent to that of a spouse.
-    p.col-lg-12 For each related party transaction identified, please disclose the specific person, the relationship to your company and the nature and amount of his or her interest in the transaction.
-    .col-lg-12
-      .border-bottom.m-t-3.m-b-3
-    .col-lg-12
-      b Have you had any transactions with related parties in the past 12 months?
-    form(metod="post" action="").form-section
-      .col-lg-12.form-group.form-section.m-t-2.m-b-0
-        .radio-input.m-b-2.yesno
-          label 
-            input(type="radio" name="transaction_with_related_parties_choice" value="1" checked=values['transaction_with_related_parties_choice'])
-            |  Yes
-          label 
-            input(type="radio" name="transaction_with_related_parties_choice" value="0" checked=!values['transaction_with_related_parties_choice'])
-            |  No
-      .col-xl-12
-        .transaction_with_related_parties_choice.shown-yes.required(style="display:" + (values['transaction_with_related_parties_choice'] ? 'block' : 'none'))
-          |!{ templates.transaction_with_related_parties }
+    .col-xl-12
+      h2.text-uppercase.text-lg-center.text-xs-center.m-t-0.dosis.mb45 related parties
+      .row
+        .col-lg-12 
+          p.pb10 Please describe any transaction or proposed transaction with related parties in the last 12 months in excess of 5% of capital raised in reliance on 4(a)(6) inclusive of current offering.
+        .col-lg-12
+          p.pb10 Related parties is defined as: any director, officer or 20% voting shareholder (no earlier than 120 days prior to this offering for 20%+ shareholder), any promoter (if organized within past three years), or any family member of the foregoing persons.  Family member includes any child, stepchild, grandchild, parent, stepparent, grandparent, spouse or spousal equivalent, sibling, mother-in-law, father-in-law, son-in-law, daughter-in-law, brother-in-law, or sister-in-law of the person, and includes adoptive relationships.  The term “spousal equivalent” means a cohabitant occupying a relationship generally equivalent to that of a spouse.
+        .col-lg-12
+          p For each related party transaction identified, please disclose the specific person, the relationship to your company and the nature and amount of his or her interest in the transaction.
+        .col-lg-12
+          .border-bottom.m-t-3.m-b-3
+        .col-lg-12
+          b Have you had any transactions with related parties in the past 12 months?
+      form(metod="post" action="").form-section
+        .row
+          .col-lg-12.form-group.form-section.m-t-2.m-b-0
+            .radio-input.m-b-2.yesno
+              label 
+                input(type="radio" name="transaction_with_related_parties_choice" value="1" checked=values['transaction_with_related_parties_choice'])
+                |  Yes
+              label 
+                input(type="radio" name="transaction_with_related_parties_choice" value="0" checked=!values['transaction_with_related_parties_choice'])
+                |  No
+        .row
+          .col-xl-12
+            .transaction_with_related_parties_choice.shown-yes.required(style="display:" + (values['transaction_with_related_parties_choice'] ? 'block' : 'none'))
+              |!{ templates.transaction_with_related_parties }
 
-        .row.m-t-3
-          .col-lg-12.text-md-center.text-sm-center.text-xs-center
-            button.btn.btn-primary.text-uppercase.pull-lg-right Save And Continue
+            .row.m-t-3
+              .col-lg-12.text-md-center.text-sm-center.text-xs-center
+                button.btn.btn-primary.text-uppercase.pull-lg-right Save And Continue
+                  i.fa.fa-angle-right

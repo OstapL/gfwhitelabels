@@ -455,12 +455,16 @@ module.exports = {
         2: 'Wire',
       };
 
+      this.fields.payment_information_data.schema.account_number_re = { required: false };
+
+      this.fields.personal_information_data.schema.phone = { required: true };
       this.labels = {
         personal_information_data: {
           street_address_1: 'Street Address 1',
           street_address_2: 'Street Address 2',
           zip_code: 'Zip Code',
           city: 'City',
+          phone: 'Phone',
         },
         payment_information_data: {
           name_on_bank_account: 'Name On Bank Account',
@@ -470,20 +474,19 @@ module.exports = {
         },
         payment_information_type: 'I Want to Pay Using',
         amount: 'Amount',
-        street_address_1: 'Street Address 1',
-        street_address_2: 'Street Address 2',
-        zip_code: 'Zip Code',
-        city: 'City',
-        phone: 'Phone',
-        name_on_bank_account: 'Name On Bank Account',
-        account_number: 'Account Number',
-        account_number_re: 'Account Number Again',
         fee: 'Fee',
-        routing_number: 'Routing Number',
-        is_reviewed_educational_material: 'It',
-        is_understand_restrictions_to_cancel_investment: 'It',
-        is_understand_difficult_to_resell_purchashed: 'It',
-        is_understand_investing_is_risky: 'It',
+        is_reviewed_educational_material: `I confirm and represent that (a) I have reviewed 
+          the educational material that has been made available on this website, (b) I understand 
+          that the entire amount of my investment may be lost and (c) I am in a 
+          financial condition to bear the loss of the investment and (d) I represent that 
+          I have not exceeded my investment limitations.`,
+        is_understand_restrictions_to_cancel_investment: `I understand that there are restrictions 
+          on my ability to cancel an investment commitment and obtain a return of my investment.`,
+        is_understand_difficult_to_resell_purchashed: `I understand that it may be difficult to 
+          resell securities purchased on GrowthFountain.`,
+        is_understand_investing_is_risky: `I understand that investing in start-ups and small 
+          businesses listed on GrowthFountain is very risky, and that I should not invest any 
+          funds unless I can afford to lose my entire investment.`,
       };
 
       this.assignLabels();
