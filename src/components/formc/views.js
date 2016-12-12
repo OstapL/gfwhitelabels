@@ -565,7 +565,7 @@ module.exports = {
 
     initialize(options) {
       this.fields = options.fields;
-      this.fields.proceeds_equal_expenses = {fn: (function (value, attr, fn, model, computed) {
+      this.fields.custom_fn = {fn: (function (value, fn, attr, model, computed) {
         if (!this.calculate(null)) throw 'Total Use of Net Proceeds must be equal to Net Proceeds.';
       }).bind(this)};
       this.campaign = options.campaign;
@@ -576,6 +576,18 @@ module.exports = {
         less_offering_express: {},
         use_of_net_proceeds: {},
       };
+      let defaultRows = {
+        less_offering_express: ['Commissions and Broker Expenses', 'Misc. Offering Costs (Legal)', 'Misc. Offering Costs (Marketing)', 'Misc. Offering Costs (Admin)'],
+        use_of_net_proceeds: ['Salaries, Benefits and Wages', 'Product Development', 'Marketing', 'Operations (Data, Hosting, Fees)', 'Travel, Conferences and Events'],
+      };
+
+      for (let key in defaultRows) {
+        if (this.model[key].length > 0) continue;
+        let titles = defaultRows[key];
+        for (let i = 0; i < titles.length; i++) {
+          this.model[key].push({max: 0, min: 0, title: titles[i]});
+        }
+      }
       this.assignLabels();
       this.createIndexes();
       this.buildJsonTemplates('formc');
