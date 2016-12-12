@@ -1,4 +1,4 @@
-include ../../../templates/mixins.pug
+include ../../../templates/fields_mixins.pug
 include ../../raiseFunds/templates/menu.pug
 include riskFactorsMixins.pug
 
@@ -48,17 +48,17 @@ section.formc-team-members-director.container.m-b-85
       .pb10 In the text box below, please write in full sentences consistent with the sample language provided above.
     .col-lg-12
       form(data-method="PATCH").add-risk-form.clearfix
-        +fieldBlock("title", '', {
-          class1: 'col-lg-3 col-md-12 text-md-left',
+        +fieldTextLabel("title", {
+          class1: 'col-lg-3 col-md-12 text-md-left text-lg-right',
           class2: 'col-lg-9 col-md-12',
-          type: 'text',
           placeholder: 'Title for Risk',
+          label: 'Title for Risk',
           })
-        +fieldBlock("risk", '', {
-          class1: 'col-lg-3 col-md-12 text-md-left',
+        +fieldTextareaLabel("risk", {
+          class1: 'col-lg-3 col-md-12 text-md-left text-lg-right',
           class2: 'col-lg-9 col-md-12 big-textarea',
-          type: 'textarea',
           placeholder: 'Describe Your Risk',
+          label: 'Describe Your Risk'
           })
         button(data-method="PATCH" data-concat="false").btn.btn-secondary.btn-sm.text-uppercase.pull-lg-right.m-b-3.add-risk save and Add this Risk
       .form-section
