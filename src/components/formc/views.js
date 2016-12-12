@@ -430,7 +430,7 @@ module.exports = {
         last_name: 'Last name',
         email: 'Email',
         dob: 'Date of birth',
-        principal_occupation: 'Principal Occupation',
+        principal_occupation: 'Principal Occupation and Name of Employer',
         employer_principal_businesss: "Employer's Principal Business",
         responsibilities: 'Title',
         number_of_shares: 'Number of Shares',
@@ -525,6 +525,7 @@ module.exports = {
 
       this.createIndexes();
       this.buildJsonTemplates('formc');
+      this.formatData();
     },
 
     getSuccessUrl(data) {
