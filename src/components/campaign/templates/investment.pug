@@ -4,8 +4,8 @@ include ../../../templates/fields_mixins.pug
 +breadcrumbs('Invest', '', 
   [
     ['Home', '/'], 
-    ['Explore', ''],  
-    [values.name, ''], 
+    ['Explore', '/companies'],  
+    [values.name, values.id], 
     ['Invest in ' + values.name, '']
   ]
 )
@@ -74,6 +74,7 @@ mixin confirmStatement(name, attr)
                 class2: 'col-lg-4 col-md-12 input-border-bottom',
                 placeholder: '+ $10',
                 value: '$10',
+                label: 'Fee',
                 disabled: true
                 }, fields.fee))
           .row
@@ -327,10 +328,9 @@ mixin confirmStatement(name, attr)
               .row
                 #signature__full_name__0.form-group.row
                   - var fullName = user.first_name + ' ' + user.last_name;
-                  .col-lg-4
+                  .col-lg-5
                     input(type="text" placeholder="Type Your Name" value=fullName name='signature[full_name]').form-control.typed-name
-                    .help-block Electronically Sign Here
-                  .col-lg-4
+                  .col-lg-5
                     .electronically
                       span.by By:
                       span.name.signature #{ fullName }
