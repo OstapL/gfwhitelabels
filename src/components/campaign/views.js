@@ -660,41 +660,32 @@ module.exports = {
       return data.id + '/invest-thanks';
     },
 
+    saveEsign(responseData) {
+      const reqUrl = global.esignServer + '/pdf-doc';
+      const successRoute = this.getSuccessUrl(responseData);
+      const formData = this.getDocMetaData();
+      const data = {
+        type: location.hostname,
+        esign: responseData.signature.full_name,
+        meta_data: formData,
+        template: ['invest/subscription_agreement.pdf', 'invest/participation_agreement.pdf']
+      };
+
+      $.post(reqUrl, data)
+      .done( () => {
+        $('#content').scrollTo();
+        this.undelegateEvents();
+        app.routers.navigate(successRoute, {
+            trigger: true,
+            replace: false
+        });
+      })
+      .fail( (err) => console.log(err));
+    },
+
     openPdf (e) {
       const pathToDoc = e.target.dataset.path;
-      const investor_legal_name = $('#first_name').val() + $('#last_name').val()
-                      || app.user.get('first_name') + app.user.get('last_name');
-      var data = {
-        address_1: $('#street_address_1').val(),
-        address_2: $('#street_address_2').val(),
-        aggregate_inclusive_purchase: $('#total').val(),
-        city: $('#city').val(),
-        investor_total_purchase: $('#amount').val(),
-        investor_legal_name: investor_legal_name,
-        state: $('#state').val(),
-        zip_code: $('#zip_code').val(),
-        Commitment_Date_X: this.getCurrentDate(),
-        fees_to_investor: 10,
-        investor_address: app.user.get('address_1'),
-        investor_city: app.user.get('city'),
-        investor_code: app.user.get('zip_code'),
-        investor_email: app.user.get('email'),
-        Investor_optional_address: app.user.get('address_2'),
-        investor_state: app.user.get('state'),
-        investor_number_purchased: '',
-        Investor_optional_address: '',
-        investor_state: '',
-        issuer_email: '',
-        issuer_legal_name: '',
-        issuer_signer: '',
-        issuer_signer_title: '',
-        jurisdiction_of_organization: '',
-        listing_fee: '',
-        maximum_raise: '',
-        minimum_raise: '',
-        price_per_share: '',
-        registration_fee: '',
-      };
+      var data = this.getDocMetaData();
 
       e.target.href = pathToDoc + '?' + $.param(data);
     },
@@ -729,6 +720,67 @@ module.exports = {
           console.log("error");
         }
       });
+    },
+
+    getDocMetaData () {
+      const investor_legal_name = $('#first_name').val() + $('#last_name').val()
+                      || app.user.get('first_name') + app.user.get('last_name');
+      return {
+        address_1: $('#street_address_1').val(),
+        address_2: $('#street_address_2').val(),
+        aggregate_inclusive_purchase: $('#total').val(),
+        city: $('#city').val(),
+        investor_total_purchase: $('#amount').val(),
+        investor_legal_name: investor_legal_name,
+        state: $('#state').val(),
+        zip_code: $('#zip_code').val(),
+        Commitment_Date_X: this.getCurrentDate(),
+        fees_to_investor: 10,
+        investor_address: app.user.get('address_1'),
+        investor_city: app.user.get('city'),
+        investor_code: app.user.get('zip_code'),
+        investor_email: app.user.get('email'),
+        Investor_optional_address: app.user.get('address_2'),
+        investor_state: app.user.get('state'),
+        investor_number_purchased: '',
+        Investor_optional_address: '',
+        investor_state: '',
+        issuer_email: '',
+        issuer_legal_name: '',
+        issuer_signer: '',
+        issuer_signer_title: '',
+        jurisdiction_of_organization: '',
+        listing_fee: '',
+        maximum_raise: '',
+        minimum_raise: '',
+        price_per_share: '',
+        registration_fee: '',
+      };
+    },
+
+    currentAmountTip: 'amount-campaign',
+
+    _success(data) {
+      this.saveEsign(data);
+    },
+
+    _exceedLimit(amount) {
+      amount = parseInt(amount || this.$('#amount').val());
+      return amount > this._amountAllowed();
+    },
+
+    _amountAllowed(annual_income, net_worth) {
+      let maxInvestment;
+      net_worth = (net_worth || this.user.net_worth) * 1000;
+      annual_income = (annual_income || this.user.annual_income) * 1000;
+      if (net_worth >= 100000 && annual_income >= 100000) {
+        maxInvestment = (net_worth < annual_income ? net_worth : annual_income) * .1;
+        maxInvestment = maxInvestment < 100000 ? maxInvestment : 100000;
+      } else {
+        maxInvestment = (net_worth < annual_income ? net_worth : annual_income) * .05;
+        maxInvestment = maxInvestment > 2000 ? maxInvestment : 2000;
+      }
+      return maxInvestment - this.user.accumulated_investment;
     },
 
     amountRounding(e) {
