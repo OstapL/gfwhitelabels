@@ -243,9 +243,9 @@ section
                     if additionalVideo && additionalVideo.provider == 'youtube'
                       img(src="http://img.youtube.com/vi/" + additionalVideo.id + "/0.jpg" alt="" style="width: 338px").card-img.w-100
                     else if additionalVideo && additionalVideo.provider == 'vimeo'
-                      img(src="" alt="" style="width: 338px;" data-vimeo-id=additionalVideo.id).card-img.vimeo-thumbnail
+                      img(src="" alt="" style="width: 338px;" data-vimeo-id=additionalVideo.id).card-img.w-100.vimeo-thumbnail
                     else
-                      img(src="http://img.youtube.com/vi/" + "/0.jpg" alt="" style="width: 338px").card-img
+                      img(src="http://img.youtube.com/vi/" + "/0.jpg" alt="" style="width: 338px").card-img.w-100
                     .card-img-overlay
                       .card-title
                         a(data-toggle="modal" href="#videoModal-" + k data-target="#videoModal-" + k).small-icon.link-6
