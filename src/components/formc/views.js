@@ -1583,6 +1583,8 @@ module.exports = {
       const sectionName = e.target.dataset.section;
       const template = require('./templates/snippets/outstanding_securities.pug');
 
+      data.amount_authroized = data.amount_authroized.replace(/[\$\,]/g, '');
+      data.amount_outstanding = data.amount_outstanding.replace(/[\$\,]/g, '');
       if (!validation.validate(this.fields.outstanding_securities.schema, data, this)) {
         _(validation.errors).each((errors, key) => {
           validation.invalidMsg(this, key, errors);
