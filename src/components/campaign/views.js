@@ -4,16 +4,6 @@ const textHelper = require('helpers/textHelper');
 let countries = {};
 _.each(require('helpers/countries.json'), (c) => { countries[c.code] = c.name; });
 
-const validateAmount = (amount, min, max) => {
-  amount = Number(amount);
-  if (amount < min)
-    throw 'Minimum investment is $' + min;
-
-  if (amount > max)
-    throw 'Maximum investment is $' + max;
-
-};
-
 module.exports = { 
   list: Backbone.View.extend({
     el: '#content',
@@ -466,12 +456,6 @@ module.exports = {
       this.fields.payment_information_data.schema.account_number_re = { required: false };
       this.fields.personal_information_data.schema.phone = { required: true };
 
-      // var self = this;
-      // this.fields.amount.fn = function checkAmount() {
-      //   if (!self.validateAmount(this.amount))
-      //     return false;
-      // };
-
       this.labels = {
         personal_information_data: {
           street_address_1: 'Street Address 1',
@@ -518,7 +502,6 @@ module.exports = {
           Urls: Urls,
           fields: this.fields,
           values: this.model,
-          // user: app.user.toJSON(),
           user: this.user,
           states: this.usaStates,
           countries: countries,
@@ -551,23 +534,23 @@ module.exports = {
         trigger: 'manual',
       }).popover('hide');
 
-      $('#income_worth_modal').on('hidden.bs.modal', function() {
-        $('#amount').keyup();
+      $('#income_worth_modal').on('hidden.bs.modal', () => {
+        this.$amount.keyup();
       });
 
-      $('span.current-limit').text(this._maxAllowedAmount);
+      $('span.current-limit').text(this._maxAllowedAmount.toLocaleString('en-US'));
 
       return this;
     },
 
-    maxInvestmentsPerYear(annualIncome, netWorth) {
+    maxInvestmentsPerYear(annualIncome, netWorth, investedPastYear, investedOtherSites) {
       let maxInvestmentsPerYear = (annualIncome >= 100 && netWorth >= 100)
         ? Math.min(annualIncome, netWorth) * 0.1
         : Math.min(annualIncome, netWorth) * 0.05;
 
       maxInvestmentsPerYear = maxInvestmentsPerYear < 2 ? 2 : maxInvestmentsPerYear;
 
-      return maxInvestmentsPerYear * 1000 ;
+      return Math.round((maxInvestmentsPerYear * 1000 - investedPastYear - investedOtherSites));
     },
 
     initMaxAllowedAmount() {
@@ -576,8 +559,8 @@ module.exports = {
       let investedOnOtherSites = this.user.invested_on_other_sites;
       let investedPastYear = this.user.invested_equity_past_year;
 
-      this._maxAllowedAmount = this.maxInvestmentsPerYear(annualIncome, netWorth);
-        - investedOnOtherSites - investedPastYear;
+      this._maxAllowedAmount = this.maxInvestmentsPerYear(annualIncome, netWorth,
+          investedPastYear, investedOnOtherSites);
     },
 
     roundAmount(e) {
@@ -621,19 +604,48 @@ module.exports = {
     },
 
     updateLimitInModal(e) {
-      let annual_income = Number(this.$('#annual_income').val().replace(/\,/g, '')), net_worth = Number(this.$('#net_worth').val().replace(/\,/g, ''));
-      this.$('#annual_income').val((annual_income || 0).toLocaleString('en-US'));
-      this.$('#net_worth').val((net_worth || 0).toLocaleString('en-US'));
-      this.$('span.current-limit').text((Math.round(this._amountAllowed(annual_income / 1000, net_worth / 1000))).toLocaleString('en-US'));
+      let annualIncome = Number(this.$('#annual_income').val().replace(/\,/g, '')) || 0,
+          netWorth = Number(this.$('#net_worth').val().replace(/\,/g, '')) || 0;
+
+
+      let investedOnOtherSites = this.user.invested_on_other_sites;
+      let investedPastYear = this.user.invested_equity_past_year;
+
+      this.$('#annual_income').val(annualIncome.toLocaleString('en-US'));
+      this.$('#net_worth').val(netWorth.toLocaleString('en-US'));
+
+      this.$('span.current-limit').text(
+        this.maxInvestmentsPerYear(annualIncome / 1000, netWorth / 1000, investedPastYear, investedOnOtherSites)
+          .toLocaleString('en-US')
+      );
     },
 
     updateIncomeWorth(e) {
-      let net_worth = $(':input[id=net_worth]').val().replace(/\,/g, '') / 1000;
-      let annual_income = $(':input[id=annual_income]').val().replace(/\,/g, '') / 1000;
-      api.makeRequest(authServer + '/rest-auth/data', 'PATCH', {net_worth: net_worth, annual_income: annual_income}).then((data) => {
-        this.user.net_worth = net_worth;
-        this.user.annual_income = annual_income;
-        this.$('#amount').keyup();
+      let netWorth = $('#net_worth')
+        .val()
+        .trim()
+        .replace(/\,/g, '')
+        / 1000;
+
+      let annualIncome = $('#annual_income')
+        .val()
+        .trim()
+        .replace(/\,/g, '') / 1000;
+
+      let data = {
+        net_worth: netWorth,
+        annual_income: annualIncome
+      };
+
+      api.makeRequest(authServer + '/rest-auth/data', 'PATCH', data).done((data) => {
+        this.user.net_worth = netWorth;
+        this.user.annual_income = annualIncome;
+
+        this.initMaxAllowedAmount();
+        $('span.current-limit').text(this._maxAllowedAmount.toLocaleString('en-US'));
+        this.$amount.data('max', this._maxAllowedAmount);
+
+        this.$amount.keyup();
       }).fail((xhr, status, text) => {
         alert('Update failed. Please try again!');
       });
