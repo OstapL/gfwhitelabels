@@ -372,7 +372,7 @@ module.exports = {
         let data = this.$el.find('form').serializeJSON();
         api.deleteEmptyNested.call(this, this.fields, data);
         api.fixDateFields.call(this, this.fields, data);
-        api.fixMoneyField.call(this, this.fields, data);
+        api.fixMoneyFields.call(this, this.fields, data);
         data = _.extend({}, this.model, data);
 
         if (!validation.validate(this.fields, data, this)) {
