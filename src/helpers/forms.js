@@ -193,7 +193,7 @@ module.exports = {
         validation.invalidMsg(this, key, errors);
       });
       this.$('.help-block').prev().scrollTo(5);
-      return;
+      return false;
     } else {
 
       api.makeRequest(url, method, newData).
@@ -222,6 +222,9 @@ module.exports = {
           api.errorAction(this, xhr, status, text, this.fields);
         });
     }
+
+    // Here it means the validation result is true;
+    return true;
   },
 
   successAction: (view, response) => {
