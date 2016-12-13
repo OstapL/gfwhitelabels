@@ -525,7 +525,6 @@ module.exports = {
 
       this.createIndexes();
       this.buildJsonTemplates('formc');
-      this.formatData();
     },
 
     getSuccessUrl(data) {

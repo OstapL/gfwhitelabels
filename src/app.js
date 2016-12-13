@@ -9,7 +9,7 @@ global.Urls = require('./jsreverse.js');
 global.googleAnalyticsId = 'UA-47199302-1';
 require('jquery-serializejson/jquery.serializejson.min.js');
 
-const formatHelper = require('helpers/formatHelper');
+global.formatHelper = require('helpers/formatHelper');
 
 $.fn.scrollTo = function (padding=0) {
   $('html, body').animate({
@@ -57,14 +57,6 @@ Backbone.View.prototype.assignLabels = function() {
     }
   });
 };
-
-Backbone.View.prototype.formatData = function() {
-  _(this.fields).each((el, key) => {
-    if(el.type == 'money') {
-      this.model[key] = formatHelper.formatPrice(this.model[key]);
-    }
-  });
-}
 
 let app = {
   $: jQuery,
@@ -239,6 +231,29 @@ $(window).scroll(function () {
   if (($(window).scrollTop() + $(window).height() >= offsetTopBottomLogo) &&
     !$bottomLogo.hasClass('fade-in')) {
     $bottomLogo.addClass('fade-in');
+  }
+});
+
+
+// Money field auto correction
+$('body').on('keyup', '[type="money"]', function(e) {
+  var valStr = e.target.value.replace(/[\$\,]/g, '');
+  var val = parseInt(valStr);
+  if (val) {
+    e.target.value = '$' + val.toLocaleString('en-US');
+  }
+});
+$('body').on('focus', '[type="money"]', function(e) {
+  var valStr = e.target.value.replace(/[\$\,]/g, '');
+  var val = parseInt(valStr);
+  if (val == 0 || val == NaN) {
+    e.target.value = '';
+  }
+});
+$('body').on('blur', '[type="money"]', function(e) {
+  var valStr = e.target.value.replace(/[\$\,]/g, '');
+  if (e.target.value == '') {
+    e.target.value = 0;
   }
 });
 

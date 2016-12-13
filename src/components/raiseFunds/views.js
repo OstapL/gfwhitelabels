@@ -568,8 +568,8 @@ module.exports = {
       events: _.extend({
         'click #submitForm': api.submitAction,
         'change input[name="security_type"]': 'updateSecurityType',
-        'focus #minimum_raise,#maximum_raise,#minimum_increment,#premoney_valuation,#price_per_share': 'clearZeroAmount',
-        'change #minimum_raise,#maximum_raise,#minimum_increment,#premoney_valuation': 'formatNumber',
+        //'focus #minimum_raise,#maximum_raise,#minimum_increment,#premoney_valuation,#price_per_share': 'clearZeroAmount',
+        //'change #minimum_raise,#maximum_raise,#minimum_increment,#premoney_valuation': 'formatNumber',
         'change #minimum_raise,#maximum_raise,#price_per_share,#premoney_valuation': 'calculateNumberOfShares',
         'click .onPreview': onPreviewAction,
         'click .submit_form': submitCampaign,
@@ -582,7 +582,6 @@ module.exports = {
         // ToDo
         // Hack for undelegate previous events
         for (let k in this.events) {
-          console.log('#content ' + k.split(' ')[1]);
           $('#content ' + k.split(' ')[1]).undelegate();
         }
       },
@@ -611,7 +610,6 @@ module.exports = {
         this.assignLabels();
         this.createIndexes();
         this.buildJsonTemplates('raiseFunds');
-        this.formatData();
 
       },
 
@@ -623,21 +621,6 @@ module.exports = {
         if ((min && max) && !(min < max)) {
           alert("Maximum Raise must be larger than Minimum Raise!");
           e.preventDefault();
-        }
-      },
-
-      formatNumber: function (e) {
-        var valStr = $(e.target).val().replace(/[\$\,]/g, '');
-        var val = parseInt(valStr);
-        if (val) {
-          $(e.target).val('$' + val.toLocaleString('en-US'));
-        }
-      },
-
-      clearZeroAmount: function (e) {
-        let val = parseInt(e.target.value);
-        if(val == 0 || val == NaN) {
-          e.target.value = '';
         }
       },
 

@@ -113,6 +113,9 @@ mixin fieldTextLabel(name, attr)
   +prepareField(name, attr)
   if attr.type == null
     - attr.type = 'text'
+  else if attr.type == 'money'
+    - attr.value = formatHelper.formatPrice(attr.value);  
+
 
   div(class="form-group "  + (attr.row == 0 ? '' : 'row ') + (attr.id || name) + ' ' + (attr.required == true ? ' required ' : ' ') + ' ' + attr.type)
     label(class=attr.class1 for=attr.id)!= attr.label
