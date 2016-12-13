@@ -1,0 +1,56 @@
+include ../../../../templates/fields_mixins.pug
+
+mixin row(value, index)
+  - var index = index;
+  .col-xl-12
+    .col-lg-12(data-index=index class=name + ' addSectionBlock')
+      .delete-section-container
+        a(href="#" data-section=name data-index=index).delete-sectionnew
+          i.fa.fa-times
+
+      +fieldNestedTextLabel(name, "position", value, index, {class1:'col-xl-3 col-lg-12 text-lg-left text-xl-right', class2: 'col-xl-9 col-lg-12'})
+
+      .row
+        .col-xl-6.col-lg-6.form-group
+          .row
+            label.col-xl-6.col-lg-12.text-xl-right.text-lg-left.p-l-2.p-l-lg-1.p-t-0.m-b-0.m-b-lg-1 Start Date of Service
+            .col-xl-6.col-lg-12
+              div(id=name + '__' + index + '__' + 'start_date_of_service').row
+                +fieldNestedDateMonth(name, "start_date_of_service", value, index, {placeholder: 'MM', class: 'col-xl-6 col-lg-6 col-sm-6 col-xs-6 m-d-p-r-5'})
+                +fieldNestedDateYear(name, "start_date_of_service", value, index, {placeholder: 'YYYY', class: 'col-xl-6 col-lg-6 col-sm-6 col-xs-6 m-d-p-l-5'})
+              
+        .col-xl-6.col-lg-6.form-group
+          .row
+            label.col-xl-6.col-lg-12.text-xl-right.text-lg-left.p-l-3.p-l-lg-1.p-t-0.m-b-0.m-b-lg-1 End Date of Service
+            .col-xl-6.col-lg-12
+              div(id=name + '__' + index + '__' + 'end_date_of_service').row
+                +fieldNestedDateMonth(name, "end_date_of_service", value, index, {placeholder: 'MM', class: 'col-xl-6 col-lg-6 col-sm-6 col-xs-6 m-d-p-r-5'})
+                +fieldNestedDateYear(name, "end_date_of_service", value, index, {placeholder: 'YYYY', class: 'col-xl-6 col-lg-6 col-sm-6 col-xs-6 m-d-p-l-5'})
+
+
+mixin run()
+
+  if first_run
+    .row
+      b.col-lg-12.m-b-1 Previously held a different position with the issuer? Please list them:
+
+    div(class=(attr.row == 0 ? '' : 'row ') + name + '_block' + (attr.required == true ? ' required ' : ' ') + ' nested')
+      div(class=(attr.row == 0 ? '' : 'row ') + name + '_container' + (attr.required == true ? ' required ' : ' ') + ' nested')
+
+        if values == null || values.length == 0 || Object.keys(values).length == 0 
+          +row({}, 0)
+
+        else
+          each value, index in values
+            +row(value, index)
+      .col-xl-12
+        .row.add-link
+          .col-xl-9.offset-xl-3
+            a(href="#" data-section=name data-comp='formc' data-template='positions').link-2.add-sectionnew
+              i.fa.fa-plus
+              |  Add position
+  else
+    +row({}, index)
+
+
++run()

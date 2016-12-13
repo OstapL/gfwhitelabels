@@ -1,19 +1,10 @@
-include ../../../templates/mixins.pug
-
-+breadcrumbs('Congratulations!', '', 
-  [
-    ['Home', '/'],
-    ['Explore', Urls['campaign-list']],
-    ['Smartbe', Urls['campaign-detail'](campaign.id)],
-    ['Invest in ' + campaign.company.name, '']
-  ]
-)
+- pug_html += app.breadcrumbs('Invest', '', [ ['Home', '/'], ['Explore', '/companies'], ['Smartbe', '/' + investment.company.id], ['Invest in ' + investment.company.name, '']]);
 
 .container
   .row
     .col-sm-8.offset-sm-2
       h2.text-xs-center.thankyou-title.m0 
-        i(aria-hidden="true").fa.fa-thumbs-o-up You have invested $#{ investment.amount } in #{ campaign.company.name }
+        i(aria-hidden="true").fa.fa-thumbs-o-up You have invested $#{ investment.amount } in #{ investment.company.name }
 
   .row
     .col-sm-8.offset-sm-2.mb50.mt50
@@ -24,18 +15,26 @@ include ../../../templates/mixins.pug
       .result-info-block.m-x-auto
         ul.info-text-block.list-unstyled
           li 
-            span Transaction ID:
-            strong #{ investment.transaction_id }
+            span Transaction ID: &nbsp;
+            strong #{ investment.id }
+          case investment.security_type
+            when 0
+              li
+                span Amount of Shares: &nbsp;
+                strong #{ investment.number_of_shares }
+            when 1
+              li
+                span Cap: &nbsp;
+                strong #{ investment.cap }
+              li
+                span Percentage Revenue: &nbsp;
+                strong #{ investment.percentage_revenue }
           li 
-            span Amount of Shares:
-            strong #{ investment.amount_of_shares }
-          li 
-            span Perks:
+            span Perks: &nbsp;
             strong #{ investment.perk }
           li 
-            span Investment Terms:
-            strong #{ investment.security }
+            a(href="#") Investment Terms
 
         .info-btn-block.pt50
-          a(href="/user/issuer_dashboard/").btn.btn-secondary INVESTOR DASHBOARD &nbsp;
-            i.fa.fa-angle-down
+          a(href="account/investor-dashboard").btn.btn-secondary INVESTOR DASHBOARD &nbsp;
+            i.fa.fa-angle-right

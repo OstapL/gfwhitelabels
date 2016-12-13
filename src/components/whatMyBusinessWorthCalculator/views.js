@@ -4,6 +4,8 @@ import flyPriceFormatter from '../../helpers/flyPriceFormatter';
 import 'bootstrap-slider/dist/bootstrap-slider'
 import 'bootstrap-slider/dist/css/bootstrap-slider.css'
 
+const calculatorValidationHelper = require('helpers/calculatorValidationHelper.js');
+
 let formatPrice = calculatorHelper.formatPrice;
 
 if (!app.cache.whatMyBusinessWorthCalculator) {
@@ -35,11 +37,59 @@ module.exports = {
         }
     }),
 
-    step1: Backbone.View.extend({
+    step1: Backbone.View.extend(_.extend({
         el: '#content',
 
         template: require('./templates/step1.pug'),
-        
+
+        initialize(options) {
+            this.fields = {
+                excessCash: {
+                    required: true,
+                    type: 'integer',
+                    validate: {},
+                },
+                ownCache: {
+                    required: true,
+                    type: 'integer',
+                    validate: {},
+                },
+                projectedRevenueYear: {
+                    required: true,
+                    type: 'integer',
+                    validate: {},
+                },
+                projectedRevenueTwoYears: {
+                    required: true,
+                    type: 'integer',
+                    validate: {},
+                },
+                grossMargin: {
+                    required: true,
+                    type: 'integer',
+                    validate: {},
+                    label: 'Gross Margin',
+                    range: [1, 100],
+                },
+                monthlyOperatingYear: {
+                    required: true,
+                    type: 'integer',
+                    validate: {},
+                },
+            };
+        },
+
+        events: _.extend({
+            'submit form': 'nextStep',
+        }, calculatorValidationHelper.events),
+
+        nextStep(e) {
+            e.preventDefault();
+            if (this.validate(e)) {
+                app.routers.navigate('/calculator/whatmybusinessworth/step-2', {trigger: true});
+            }
+        },
+
         ui() {
             // get inputs by inputmask category
             this.inputPrice = this.$('[data-input-mask="price"]');
@@ -83,19 +133,67 @@ module.exports = {
             
             return this; 
         }
-    }),
+    }, calculatorValidationHelper.methods)),
 
-    step2: Backbone.View.extend({
+    step2: Backbone.View.extend(_.extend({
         el: '#content',
 
         template: require('./templates/step2.pug'),
 
-        events: {
+        events: _.extend({
             // calculate your income
             'submit .js-calc-form': 'doCalculation',
+        }, calculatorValidationHelper.events),
+
+        preinitialize() {
+            $('#content').undelegate();
         },
+
+        initialize(options) {
+            this.fields = {
+                monthlyOperatingTwoYears: {
+                    required: true,
+                    type: 'integer',
+                    validate: {},
+                },
+                workingCapital: {
+                    required: true,
+                    type: 'integer',
+                    validate: {},
+                    label: 'Working Capital',
+                    range: [1, 100],
+                },
+                additionalOperating: {
+                    required: true,
+                    type: 'integer',
+                    validate: {},
+                },
+                capitalExpenditures: {
+                    required: true,
+                    type: 'integer',
+                    validate: {},
+                },
+                taxRate: {
+                    required: true,
+                    type: 'integer',
+                    validate: {},
+                    label: 'Tax Rate',
+                    range: [1, 100],
+                },
+                annualInterest: {
+                    required: true,
+                    type: 'integer',
+                    validate: {},
+                },
+            };
+        },
+
         doCalculation(e) {
             e.preventDefault();
+
+            if (!this.validate(e)) {
+                return;
+            }
 
             // "Baseline Capital Needs" calculations
             this.calculateWithDelta();
@@ -246,7 +344,7 @@ module.exports = {
 
             return this;
         }
-    }),
+    }, calculatorValidationHelper.methods)),
 
     finish: Backbone.View.extend({
         el: '#content',

@@ -1,69 +1,506 @@
+const View = require('components/formc/views.js');
+
 module.exports = Backbone.Router.extend({
   routes: {
-    'formc/introduction': 'introduction',
-    'formc/team-members/:id/add/:type/:index': 'teamMemberAdd',
-    'formc/team-members/:id': 'teamMembers',
-
+    'formc/:id/introduction': 'introduction',
+    'formc/:id/team-members/:type/:index': 'teamMemberAdd',
+    'formc/:id/team-members': 'teamMembers',
+    'formc/:id/related-parties': 'relatedParties',
+    'formc/:id/use-of-proceeds': 'useOfProceeds',
+    'formc/:id/risk-factors-market': 'riskFactorsMarket',
+    'formc/:id/risk-factors-financial': 'riskFactorsFinancial',
+    'formc/:id/risk-factors-operational': 'riskFactorsOperational',
+    'formc/:id/risk-factors-competitive': 'riskFactorsCompetitive',
+    'formc/:id/risk-factors-personnel': 'riskFactorsPersonnel',
+    'formc/:id/risk-factors-legal': 'riskFactorsLegal',
+    'formc/:id/risk-factors-misc': 'riskFactorsMisc',
+    'formc/:id/risk-factors-instruction': 'riskFactorsInstruction',
+    'formc/:id/financial-condition': 'financialCondition',
+    'formc/:id/outstanding-security': 'outstandingSecurity',
+    'formc/:id/background-check': 'backgroundCheck',
+    'formc/:id/final-review': 'finalReview',
+    'formc/:id/final-review-two': 'finalReviewTwo',
+    'formc/:id/formc-elecrtonic-signature': 'electronicSignature',
+    'formc/:id/formc-elecrtonic-signature-company': 'electronicSignatureCompany',
+    'formc/:id/formc-elecrtonic-signature-cik': 'electronicSignatureCik',
+    'formc/:id/formc-elecrtonic-signature-financial-certification': 'electronicSignatureFinancials',
   },
-  introduction() {
-    const View = require('components/formc/views.js');
-    var i = new View.introduction({
-      el: '#content',
-      // fields: meta[0].actions.POST,
-      // model: new Model.model(model[0][0] || {}),
-      fields: {
-        failed_to_comply: {
-          label: "Failed to Comply",
-          required: false,
-          type: 'radio',
-          validate: function(name, attrs, formData) {
 
-          },
-        },
-        cc_number: {
-          label: "Credit Card",
-          required: true,
-          type: 'string',
-        }
-      },
-      model: new Backbone.Model({
-        // failed_to_comply: 'It was the best of times.',
-        failed_to_comply: '',
-      }),
-    });
-    app.hideLoading();
-    i.render();
+  execute: function (callback, args, name) {
+    ga('send', 'pageview', "/" + Backbone.history.getPath());
+    if (app.user.is_anonymous()) {
+      const pView = require('components/anonymousAccount/views.js');
+      require.ensure([], function() {
+        new pView.popupLogin().render(window.location.pathname);
+        app.hideLoading();
+        $('#sign_up').modal();
+      });
+      return false;
+    }
+    if (callback) callback.apply(this, args);
+    else alert('Not such url');
+  },
+
+  introduction(id) {
+
+    let fieldsR = api.makeCacheRequest(formcServer + '/' + id + '/introduction', 'OPTIONS');
+    let dataR = api.makeCacheRequest(formcServer + '/' + id + '/introduction');
+
+    $('#content').scrollTo();
+    $.when(fieldsR, dataR).done((fields, data) => {
+      data[0].id = id;
+      const i = new View.introduction({
+        el: '#content',
+        fields: fields[0].fields, 
+        model: data[0], 
+      });
+      app.hideLoading();
+      i.render();
+    })
   },
   
   teamMembers(id) {
-    const View = require('components/formc/views.js');
     // var i = new View.memberDirector({
-    var i = new View.teamMembers({
-      el: '#content',
-      fields: {},
-      model: new Backbone.Model({
-        members:[],
-      }),
-    });
-    i.render();
-    app.hideLoading();
+    let fieldsR = api.makeCacheRequest(formcServer + '/' + id + '/team-members', 'OPTIONS');
+    let dataR = api.makeCacheRequest(formcServer + '/' + id + '/team-members', 'GET');
+
     $('#content').scrollTo();
+    $.when(fieldsR, dataR).done((fields, data) => {
+      data[0].id = id;
+      const i = new View.teamMembers({
+        el: '#content',
+        fields: fields[0].fields,
+        model: data[0],
+      });
+      i.render();
+      app.hideLoading();
+    }).fail((response, error, status) => {
+      if(response.responseJSON.location) {
+         app.routers.navigate('/formc' + response.responseJSON.location +  '?notPaid=1', { trigger: true, replace: true } );
+      }
+    });
   },
 
-  teamMemberAdd(id, type, index) {
-    const View = require('components/formc/views.js');
+  teamMemberAdd(id, role, user_id) {
 
-    const addForm = new View.teamMemberAdd({
-      el: '#content',
-      model: new Backbone.Model({}),
-      type: type,
-      index: index,
-      fields: {
-        previous_positions: {},
-        experiences: {},
-      },
+    let fieldsR = api.makeCacheRequest(formcServer + '/' + id + '/team-members/' + role, 'OPTIONS');
+    let dataR = api.makeCacheRequest(formcServer + '/' + id + '/team-members', 'GET');
+
+    $('#content').scrollTo();
+    $.when(fieldsR, dataR).done((fields, data) => {
+      if(user_id != 'new') {
+        let t = data[0].team_members.filter(function(el) { return el.user_id == user_id})[0]
+        t.formc_id = id;
+        t.campaign_id = data[0].campaign_id;
+        t.company_id =data[0].company_id;
+        t.progress = data[0].progress;
+        delete t.id;
+        data = t;
+      } else {
+        data = {
+          formc_id: id,
+          campaign_id: data[0].campaign_id,
+          company_id: data[0].company_id,
+          progress: data[0].progress
+        };
+      }
+      const addForm = new View.teamMemberAdd({
+        el: '#content',
+        model: data,
+        role: role,
+        user_id: user_id,
+        fields: fields[0].fields,
+      });
+      addForm.render();
+      app.hideLoading();
+    }).fail((response, error, status) => {
+      if(response.responseJSON.location) {
+         app.routers.navigate('/formc' + response.responseJSON.location +  '?notPaid=1', { trigger: true, replace: true } );
+      }
     });
-    addForm.render();
-    app.hideLoading();
+  },
+
+  relatedParties(id) {
+
+    let fieldsR = api.makeCacheRequest(
+      formcServer + '/' + id + '/related-parties',
+      'OPTIONS'
+    );
+    let dataR = api.makeCacheRequest(
+      formcServer + '/' + id + '/related-parties'
+    );
+
+    $('#content').scrollTo();
+    $.when(fieldsR, dataR).done((fields, data) => {
+      data[0].id = id;
+      const i = new View.relatedParties({
+        fields: fields[0].fields,
+        model: data[0],
+      });
+      i.render();
+      app.hideLoading();
+    }).fail((response, error, status) => {
+      if(response.responseJSON.location) {
+         app.routers.navigate('/formc' + response.responseJSON.location +  '?notPaid=1', { trigger: true, replace: true } );
+      }
+    });
+  },
+
+  useOfProceeds(id) {
+
+    let fieldsR = api.makeCacheRequest(formcServer + '/' + id + '/use-of-proceeds', 'OPTIONS');
+    let dataR = api.makeCacheRequest(formcServer + '/' + id + '/use-of-proceeds');
+    let campaignR = api.makeCacheRequest(authServer + '/user/campaign');
+
+    $('#content').scrollTo();
+    $.when(fieldsR, dataR, campaignR).done((fields, data, campaign) => {
+      data[0].id = id;
+      const i = new View.useOfProceeds({
+        el: '#content',
+        model: data[0],
+        campaign: campaign[0],
+        fields: fields[0].fields,
+      });
+      i.render();
+      app.hideLoading();
+    }).fail((response, error, status) => {
+      if(response.responseJSON.location) {
+         app.routers.navigate('/formc' + response.responseJSON.location +  '?notPaid=1', { trigger: true, replace: true } );
+      }
+    });
+  },
+
+  riskFactorsInstruction(id) {
+
+    const fieldsR = api.makeCacheRequest(formcServer + '/' + id + '/risk-factors-market', 'OPTIONS');
+    const dataR = api.makeCacheRequest(formcServer + '/' + id + '/risk-factors-market');
+
+    $('#content').scrollTo();
+    $.when(fieldsR, dataR).done((fields, data) => {
+      data[0].id = id;
+      const i = new View.riskFactorsInstruction({
+        el: '#content',
+        model: data[0], 
+        fields: fields[0].fields,
+      });
+      i.render();
+      app.hideLoading();
+    }).fail((response, error, status) => {
+      if(response.responseJSON.location) {
+         app.routers.navigate('/formc' + response.responseJSON.location +  '?notPaid=1', { trigger: true, replace: true } );
+      }
+    });
+  },
+
+  riskFactorsMarket(id) {
+
+    let fieldsR = api.makeCacheRequest(formcServer + '/' + id + '/risk-factors-market', 'OPTIONS');
+    let dataR = api.makeCacheRequest(formcServer + '/' + id + '/risk-factors-market');
+
+    $('#content').scrollTo();
+    $.when(fieldsR, dataR).done((fields, data) => {
+      data[0].id = id;
+      const i = new View.riskFactorsMarket({
+        el: '#content',
+        model: data[0], 
+        fields: fields[0].fields,
+      });
+      i.render();
+      app.hideLoading();
+    }).fail((response, error, status) => {
+      if(response.responseJSON.location) {
+         app.routers.navigate('/formc' + response.responseJSON.location +  '?notPaid=1', { trigger: true, replace: true } );
+      }
+    });
+  },
+
+  riskFactorsFinancial(id) {
+
+    let fieldsR = api.makeCacheRequest(formcServer + '/' + id + '/risk-factors-financial', 'OPTIONS');
+    let dataR = api.makeCacheRequest(formcServer + '/' + id + '/risk-factors-financial');
+
+    $('#content').scrollTo();
+    $.when(fieldsR, dataR).done((fields, data) => {
+      data[0].id = id;
+      const i = new View.riskFactorsFinancial({
+        el: '#content',
+        model: data[0], 
+        fields: fields[0].fields,
+      });
+      i.render();
+      app.hideLoading();
+    }).fail((response, error, status) => {
+      if(response.responseJSON.location) {
+         app.routers.navigate('/formc' + response.responseJSON.location +  '?notPaid=1', { trigger: true, replace: true } );
+      }
+    });
+  },
+
+  riskFactorsOperational(id) {
+
+    let fieldsR = api.makeCacheRequest(formcServer + '/' + id + '/risk-factors-operational', 'OPTIONS');
+    let dataR = api.makeCacheRequest(formcServer + '/' + id + '/risk-factors-operational');
+
+    $('#content').scrollTo();
+    $.when(fieldsR, dataR).done((fields, data) => {
+      data[0].id = id;
+      const i = new View.riskFactorsOperational({
+        el: '#content',
+        model: data[0], 
+        fields: fields[0].fields,
+      });
+      i.render();
+      app.hideLoading();
+    }).fail((response, error, status) => {
+      if(response.responseJSON.location) {
+         app.routers.navigate('/formc' + response.responseJSON.location +  '?notPaid=1', { trigger: true, replace: true } );
+      }
+    });
+  },
+
+  riskFactorsCompetitive(id) {
+
+    let fieldsR = api.makeCacheRequest(formcServer + '/' + id + '/risk-factors-competitive', 'OPTIONS');
+    let dataR = api.makeCacheRequest(formcServer + '/' + id + '/risk-factors-competitive');
+
+    $('#content').scrollTo();
+    $.when(fieldsR, dataR).done((fields, data) => {
+      data[0].id = id;
+      const i = new View.riskFactorsCompetitive({
+        el: '#content',
+        model: data[0], 
+        fields: fields[0].fields,
+      });
+      i.render();
+      app.hideLoading();
+    }).fail((response, error, status) => {
+      if(response.responseJSON.location) {
+         app.routers.navigate('/formc' + response.responseJSON.location +  '?notPaid=1', { trigger: true, replace: true } );
+      }
+    });
+  },
+
+  riskFactorsPersonnel(id) {
+
+    let fieldsR = api.makeCacheRequest(formcServer + '/' + id + '/risk-factors-personnel', 'OPTIONS');
+    let dataR = api.makeCacheRequest(formcServer + '/' + id + '/risk-factors-personnel');
+
+    $('#content').scrollTo();
+    $.when(fieldsR, dataR).done((fields, data) => {
+      data[0].id = id;
+      const i = new View.riskFactorsPersonnel({
+        el: '#content',
+        model: data[0], 
+        fields: fields[0].fields,
+      });
+      i.render();
+      app.hideLoading();
+    }).fail((response, error, status) => {
+      if(response.responseJSON.location) {
+         app.routers.navigate('/formc' + response.responseJSON.location +  '?notPaid=1', { trigger: true, replace: true } );
+      }
+    });
+  },
+
+  riskFactorsLegal(id) {
+
+    let fieldsR = api.makeCacheRequest(formcServer + '/' + id + '/risk-factors-legal', 'OPTIONS');
+    let dataR = api.makeCacheRequest(formcServer + '/' + id + '/risk-factors-legal');
+
+    $('#content').scrollTo();
+    $.when(fieldsR, dataR).done((fields, data) => {
+      data[0].id = id;
+      const i = new View.riskFactorsLegal({
+        el: '#content',
+        model: data[0], 
+        fields: fields[0].fields,
+      });
+      i.render();
+      app.hideLoading();
+    }).fail((response, error, status) => {
+      if(response.responseJSON.location) {
+         app.routers.navigate('/formc' + response.responseJSON.location +  '?notPaid=1', { trigger: true, replace: true } );
+      }
+    });
+  },
+
+  riskFactorsMisc(id) {
+
+    let fieldsR = api.makeCacheRequest(formcServer + '/' + id + '/risk-factors-misc', 'OPTIONS');
+    let dataR = api.makeCacheRequest(formcServer + '/' + id + '/risk-factors-misc');
+
+    $('#content').scrollTo();
+    $.when(fieldsR, dataR).done((fields, data) => {
+      data[0].id = id;
+      const i = new View.riskFactorsMisc({
+        el: '#content',
+        model: data[0], 
+        fields: fields[0].fields,
+      });
+      i.render();
+      app.hideLoading();
+    }).fail((response, error, status) => {
+      if(response.responseJSON.location) {
+         app.routers.navigate('/formc' + response.responseJSON.location +  '?notPaid=1', { trigger: true, replace: true } );
+      }
+    });
+  },
+
+  financialCondition(id) {
+    const fieldsR = api.makeRequest(
+      formcServer + '/' + id + '/financial-condition', 
+      'OPTIONS'
+    );
+    const dataR = api.makeRequest(
+      formcServer + '/' + id + '/financial-condition'
+    );
+    const campaignR = api.makeCacheRequest(authServer + '/user/campaign');
+
+    $('#content').scrollTo();
+    $.when(fieldsR, dataR, campaignR).done((fields, data, campaign) => {
+      data[0].id = id;
+      const i = new View.financialCondition({
+        el: '#content',
+        fields: fields[0].fields,
+        model: data[0],
+        campaign: campaign[0],
+      });
+      i.render();
+      app.hideLoading();
+    }).fail((response, error, status) => {
+      if(response.responseJSON.location) {
+         app.routers.navigate('/formc' + response.responseJSON.location +  '?notPaid=1', { trigger: true, replace: true } );
+      }
+    });
+  },
+
+  outstandingSecurity(id) {
+
+    let fieldsR = api.makeCacheRequest(formcServer + '/' + id + '/outstanding-security', 'OPTIONS');
+    let dataR = api.makeCacheRequest(formcServer + '/' + id + '/outstanding-security');
+
+    $('#content').scrollTo();
+    $.when(fieldsR, dataR).done((fields, data) => {
+      data[0].id = id;
+      const i = new View.outstandingSecurity({
+        el: '#content',
+        model: data[0],
+        fields: fields[0].fields,
+      });
+      i.render();
+      app.hideLoading();
+    }).fail((response, error, status) => {
+      if(response.responseJSON.location) {
+         app.routers.navigate('/formc' + response.responseJSON.location +  '?notPaid=1', { trigger: true, replace: true } );
+      }
+    });
+  },
+
+  backgroundCheck(id) {
+
+    let fieldsR = api.makeCacheRequest(formcServer + '/' + id + '/background-check', 'OPTIONS');
+    let dataR = api.makeCacheRequest(formcServer + '/' + id + '/background-check');
+
+    $('#content').scrollTo();
+    $.when(fieldsR, dataR).done((fields, data) => {
+      data[0].id = id;
+      const i = new View.backgroundCheck({
+        el: '#content',
+        model: data[0],
+        fields: fields[0].fields,
+      });
+      i.render();
+      app.hideLoading();
+    }).fail((response, error, status) => {
+      if(response.responseJSON.location) {
+         app.routers.navigate('/formc' + response.responseJSON.location +  '?notPaid=1', { trigger: true, replace: true } );
+      }
+    });
+  },
+
+  finalReview(id) {
+
+    let companyR = api.makeCacheRequest(raiseCapitalServer + '/company', 'OPTIONS');
+    let campaignR = api.makeCacheRequest(raiseCapitalServer + '/campaign', 'OPTIONS');
+    let formcR = api.makeCacheRequest(formcServer + '/' + id + '/final-review', 'OPTIONS');
+    let dataR = api.makeCacheRequest(formcServer + '/' + id + '/final-review');
+
+    $('#content').scrollTo();
+    $.when(companyR, campaignR, formcR, dataR).done((company, campaign, formc, data) => {
+      data[0].id = id;
+      const fields = {
+        company: company[0].fields,
+        campaign: campaign[0].fields,
+        formc: formc[0].fields,
+      };
+      const i = new View.finalReview({
+        el: '#content',
+        model: data[0],
+        fields: fields
+      });
+      i.render();
+      app.hideLoading();
+    }).fail((response, error, status) => {
+      if(response.responseJSON.location) {
+         app.routers.navigate('/formc' + response.responseJSON.location +  '?notPaid=1', { trigger: true, replace: true } );
+      }
+    });
+  },
+
+  finalReviewTwo: function(id) {
+
+    let companyR = api.makeCacheRequest(raiseCapitalServer + '/company', 'OPTIONS');
+    let campaignR = api.makeCacheRequest(raiseCapitalServer + '/campaign', 'OPTIONS');
+    let formcR = api.makeCacheRequest(formcServer + '/' + id + '/final-review', 'OPTIONS');
+    let dataR = api.makeCacheRequest(formcServer + '/' + id + '/final-review');
+
+    $('#content').scrollTo();
+    $.when(companyR, campaignR, formcR, dataR).done((company, campaign, formc, data) => {
+      data[0].id = id;
+      const fields = {
+        company: company[0].fields,
+        campaign: campaign[0].fields,
+        formc: formc[0].fields,
+      };
+      const i = new View.finalReviewTwo({
+        el: '#content',
+        model: data[0],
+        fields: fields
+      });
+      i.render();
+      app.hideLoading();
+    }).fail((response, error, status) => {
+      if(response.responseJSON.location) {
+         app.routers.navigate('/formc' + response.responseJSON.location +  '?notPaid=1', { trigger: true, replace: true } );
+      }
+    });
+  },
+  electronicSignature(id) {
+      let i = new View.electronicSignature({
+        el: '#content',
+      });
+      i.render();
+      app.hideLoading();
+  },
+  electronicSignatureCompany(id) {
+      let i = new View.electronicSignatureCompany({
+        el: '#content',
+      });
+      i.render();
+      app.hideLoading();
+  },
+  electronicSignatureCik(id) {
+      let i = new View.electronicSignatureCik({
+        el: '#content',
+      });
+      i.render();
+      app.hideLoading();
+  },
+  electronicSignatureFinancials(id) {
+      let i = new View.electronicSignatureFinancials({
+        el: '#content',
+      });
+      i.render();
+      app.hideLoading();
   },
 });
