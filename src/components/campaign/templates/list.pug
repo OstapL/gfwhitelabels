@@ -68,7 +68,7 @@ section.pagination
                 nav
                     ul.pagination.pagination-sm
                         - var orderBy = app.getParams().orderby ? '&orderby=' + app.getParams().orderby : '';
-                        if currentPage - 1 >0
+                        if currentPage - 1 > 0
                           li.page-item
                               a(href="/companies?page=" + (currentPage - 1) + orderBy).page-link
                                   span(aria-hidden="true")
