@@ -13,7 +13,6 @@ module.exports = {
     },
     initialize(options) {
       this.collection = options.collection;
-      // this.count = options.count;
     },
 
     render() {
