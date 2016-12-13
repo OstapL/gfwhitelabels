@@ -188,10 +188,6 @@ module.exports = {
       fields = patchFields;
     }
 
-    if (this.fields.custom_fn) {
-      fields.custom_fn = this.fields.custom_fn;
-    }
-    
     if(!validation.validate(fields, newData, this)) {
       _(validation.errors).each((errors, key) => {
         validation.invalidMsg(this, key, errors);
