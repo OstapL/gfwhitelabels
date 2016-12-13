@@ -624,18 +624,32 @@ module.exports = {
       },
 
       calculateNumberOfShares: function (e) {
-        var minRaise = parseInt(this.$('#minimum_raise').val().replace(/[\$\,]/g, ''));
-        var maxRaise = parseInt(this.$('#maximum_raise').val().replace(/[\$\,]/g, ''));
-        var pricePerShare = parseInt(this.$('#price_per_share').val().replace(/[\$\,]/g, ''));
-        var premoneyVal = parseInt(this.$('#premoney_valuation').val().replace(/[\$\,]/g, ''));
+        const minRaise = parseInt(this.$('#minimum_raise').val().replace(/[\$\,]/g, ''));
+        const maxRaise = parseInt(this.$('#maximum_raise').val().replace(/[\$\,]/g, ''));
+        const pricePerShare = parseFloat(this.$('#price_per_share').val().replace(/[\$\,]/g, ''));
+        const premoneyVal = parseFloat(this.$('#premoney_valuation').val().replace(/[\$\,]/g, ''));
         let min_number_of_shares = Math.round(minRaise / pricePerShare);
-        if (!isFinite(min_number_of_shares)) min_number_of_shares = 0;
         let max_number_of_shares = Math.round(maxRaise / pricePerShare);
-        if (!isFinite(max_number_of_shares)) max_number_of_shares = 0;
+
+        if (!isFinite(min_number_of_shares)) { 
+          min_number_of_shares = 0;
+        }
+
+        if (!isFinite(max_number_of_shares)) {
+          max_number_of_shares = 0;
+        }
+
         let min_equity_offered = Math.round(100 * minRaise / (minRaise + premoneyVal));
-        if (!isFinite(min_equity_offered)) min_equity_offered = 0;
         let max_equity_offered = Math.round(100 * maxRaise / (maxRaise + premoneyVal));
-        if (!isFinite(max_equity_offered)) max_equity_offered = 0;
+
+        if (!isFinite(min_equity_offered)) {
+          min_equity_offered = 0;
+        }
+
+        if (!isFinite(max_equity_offered)) {
+          max_equity_offered = 0;
+        }
+
         this.$('#min_number_of_shares').val(min_number_of_shares.toLocaleString('en-US'));
         this.$('#max_number_of_shares').val(max_number_of_shares.toLocaleString('en-US'));
         this.$('#min_equity_offered').val(min_equity_offered + '%');
