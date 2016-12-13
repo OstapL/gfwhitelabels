@@ -253,7 +253,7 @@ $('body').on('focus', '[type="money"]', function(e) {
 $('body').on('blur', '[type="money"]', function(e) {
   var valStr = e.target.value.replace(/[\$\,]/g, '');
   if (e.target.value == '') {
-    e.target.value = 0;
+    e.target.value = '$0';
   }
 });
 
