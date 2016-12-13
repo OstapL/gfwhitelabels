@@ -403,12 +403,12 @@ mixin confirmStatement(name, attr)
           .col-md-5
             .row
               span Committed
-              p.font-weight-bold Not implemented
+              p.font-weight-bold $#{values.campaign.amount_raised}
         .container
           .col-md-7
             .row
               span Offering deadline
-              p.font-weight-bold.m-b-0 Not implemented
+              p.font-weight-bold.m-b-0 #{values.campaign.expiration_date.toLocaleDateString()}
           .col-md-5
             .row
               span Type of security

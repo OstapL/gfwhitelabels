@@ -456,6 +456,32 @@ module.exports = {
       this.fields.payment_information_data.schema.account_number_re = { required: false };
       this.fields.personal_information_data.schema.phone = { required: true };
 
+      const validateAmount = (amount) => {
+        amount = Number(amount);
+        let min = this.model.campaign.minimum_increment;
+        let max = this._maxAllowedAmount;
+
+        if (amount < min) {
+          throw 'Sorry, minimum investment is $' + min;
+        }
+
+        if (amount > max) {
+          throw 'Sorry, your amount if too high, please update your income or change amount’';
+        }
+
+        this.$amount.data('contentselector', 'amount-ok');
+
+        this.$amount.popover('show');
+
+        return true;
+      };
+
+      this.fields.amount.fn = function (value, fn, attr, model, computed) {
+        return validateAmount(this.amount);
+      };
+
+      this.model.campaign.expiration_date = new Date(this.model.campaign.expiration_date);
+
       this.labels = {
         personal_information_data: {
           street_address_1: 'Street Address 1',
@@ -683,12 +709,7 @@ module.exports = {
 
       let data = $(e.target).serializeJSON();
       data.amount = data.amount.replace(/\,/g, '');
-
-      if (this.validateAmount(data.amount))
-        api.submitAction.call(this, e, data);
-      else
-        this.$el.scrollTo();
-        //this.$amount.scrollTo();
+      api.submitAction.call(this, e, data);
     },
 
     getSuccessUrl(data) {
