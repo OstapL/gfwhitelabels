@@ -148,7 +148,7 @@ module.exports = {
     newData = newData || $(e.target).closest('form').serializeJSON({ useIntKeysAsArrayIndex: true });
     api.deleteEmptyNested.call(this, this.fields, newData);
     api.fixDateFields.call(this, this.fields, newData);
-    api.fixMoneyField.call(this, this.fields, newData);
+    api.fixMoneyFields.call(this, this.fields, newData);
 
     // if view already have some data - extend that info
     if(this.hasOwnProperty('model') && !this.doNotExtendModel && method != 'PATCH') {
@@ -326,10 +326,14 @@ module.exports = {
     });
   },
 
-  fixMoneyField(fields, data) {
+  fixMoneyFields(fields, data) {
     _(fields).each((el, key) => {
       if(el.type == 'money') {
         data[key] = formatHelper.unformatPrice(data[key]);
+      } else if(el.type == 'nested' && data[key]) {
+        _.each(data[key], (val, index, list) => {
+          api.fixMoneyFields.call(this, el.schema, data[key][index]);
+       });
       }
     });
   }
