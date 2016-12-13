@@ -17,7 +17,7 @@ module.exports = Backbone.Router.extend({
             const campaigns = new model.collection();
           api.makeCacheRequest(raiseCapitalServer + '?limit=6').then((data) => {
             var html = template({
-                companies: data.data,
+                collection: data,
                 Urls: Urls,
             });
             app.cache[window.location.pathname] = html;
