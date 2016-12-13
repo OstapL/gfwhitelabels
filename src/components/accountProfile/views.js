@@ -340,7 +340,13 @@ module.exports = {
     },
 
     changeAddressManually() {
-      this.cityStateArea.text(`${this.cityField.val()}/${this.stateField.val()}`);
+      let city =  this.cityField.val();
+      let state = this.stateField.val();
+
+      this.$('input[name=city]').val(city);
+      this.$('input[name=state]').val(state);
+
+      this.cityStateArea.text(`${city}/${state}`);
     },
 
     _success(data) {
