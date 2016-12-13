@@ -302,7 +302,7 @@ module.exports = {
 
       this.fields.header_image_image_id = _.extend(this.fields.header_image_image_id, {
         imgOptions: {
-          aspectRatio: 16/9,
+          aspectRatio: 16 / 9.55,
           cssClass : 'img-crop',
           showPreview: false,
         },
@@ -311,7 +311,7 @@ module.exports = {
 
       this.fields.list_image_image_id = _.extend(this.fields.list_image_image_id, {
         imgOptions: {
-          aspectRatio: 16 / 9,
+          aspectRatio: 16 / 9.55,
           cssClass: 'img-crop',
           showPreview: false,
         },
@@ -320,7 +320,7 @@ module.exports = {
 
       this.fields.gallery_group_id = _.extend(this.fields.gallery_group_id, {
         imgOptions: {
-          aspectRatio: 16 / 9,
+          aspectRatio: 16 / 9.55,
           cssClass: 'img-crop',
           showPreview: false,
         },
