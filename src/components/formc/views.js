@@ -566,9 +566,10 @@ module.exports = {
       this.fields = options.fields;
       this.campaign = options.campaign;
 
-      this.fields.custom_fn = {fn: (function (value, fn, attr, model, computed) {
+      // this.fields.custom_fn = {fn: (function (value, fn, attr, model, computed) {
+      this.fields.use_of_net_proceeds.fn = (function (value, fn, attr, model, computed) {
         if (!this.calculate(null)) throw 'Total Use of Net Proceeds must be equal to Net Proceeds.';
-      }).bind(this)};
+      }).bind(this);
 
       this.labels = {
         describe: 'Describe your business plan',
@@ -1582,6 +1583,8 @@ module.exports = {
       const sectionName = e.target.dataset.section;
       const template = require('./templates/snippets/outstanding_securities.pug');
 
+      data.amount_authroized = data.amount_authroized.replace(/[\$\,]/g, '');
+      data.amount_outstanding = data.amount_outstanding.replace(/[\$\,]/g, '');
       if (!validation.validate(this.fields.outstanding_securities.schema, data, this)) {
         _(validation.errors).each((errors, key) => {
           validation.invalidMsg(this, key, errors);
