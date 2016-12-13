@@ -423,6 +423,15 @@ module.exports = {
       this.fields = options.fields;
     },
 
+    filterInvestments() {
+      let active = _.filter(this.model.data, () => {
+
+      });
+      let historical = _.filter(this.model.data, () => {
+
+      });
+    },
+
     render() {
       this.$el.html(this.template({
         active: this.model.data,
