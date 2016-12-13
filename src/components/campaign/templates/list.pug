@@ -68,6 +68,7 @@ section.pagination
                 nav
                     ul.pagination.pagination-sm
                         - var orderBy = app.getParams().orderby ? '&orderby=' + app.getParams().orderby : '';
+                        - var count = collection.count;
                         if currentPage - 1 > 0
                           li.page-item
                               a(href="/companies?page=" + (currentPage - 1) + orderBy).page-link

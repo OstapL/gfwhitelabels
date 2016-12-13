@@ -26,8 +26,7 @@ module.exports = {
       this.$el.append(
         this.template({
           serverUrl: serverUrl,
-          companies: this.collection.data,
-          count: this.collection.count,
+          collection: this.collection,
         })
       );
       this.$el.find('.selectpicker').selectpicker();
