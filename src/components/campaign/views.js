@@ -696,7 +696,7 @@ module.exports = {
         registration_fee: '',
       };
 
-      e.target.src = pathToDoc + '?' + $.param(data);
+      e.target.href = pathToDoc + '?' + $.param(data);
     },
 
     getCurrentDate () {
