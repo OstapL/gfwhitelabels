@@ -1,11 +1,4 @@
-include mixins.pug
-
-+breadcrumbs('IN THE NEWS', '', 
-  [
-    ['Home', '/'],
-    ['In The News', '']
-  ]
-)
+- pug_html += app.breadcrumbs('IN THE NEWS', '', [ ['Home', '/'], ['IN THE NEWS', ''], ]);
 
 section.text_block 
   .container

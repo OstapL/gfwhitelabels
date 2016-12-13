@@ -19,9 +19,9 @@ let userModel = Backbone.Model.extend({
       let userData = localStorage.getItem('user');
       this.set('token', localStorage.getItem('token'));
 
-      if (userData == null || userData.image_data == null) {
+      if (userData == null) {
         this.fetch({
-          url: serverUrl + Urls.rest_user_details(),
+          url: authServer + '/rest-auth/data',
           success: (data) => {
             localStorage.setItem('user', JSON.stringify(this.toJSON()));
             app.trigger('userLoaded', this.toJSON());

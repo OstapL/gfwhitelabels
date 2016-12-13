@@ -1,0 +1,60 @@
+include ../../../../templates/fields_mixins.pug
+
+mixin row(value, index)
+  - var index = index;
+  .col-lg-12.m-t-1
+    .col-lg-12(data-index=index class=name + ' addSectionBlock')
+      .delete-section-container
+        a(href="#" data-section=name data-index=index).delete-sectionnew
+          i.fa.fa-times
+
+      +fieldNestedTextLabel(name, "amount_sold", value, index, {class1:'col-xl-3 col-lg-12 text-lg-left text-xl-right', class2: 'col-xl-9 col-lg-12'})
+      +fieldNestedTextLabel(name, "exemption_relied_upon", value, index, {class1:'col-xl-3 col-lg-12 text-lg-left text-xl-right m-b-0 p-t-0 m-b-lg-1', class2: 'col-xl-9 col-lg-12'})
+      .row.form-group
+        .col-date(id="exempt_offering__" + index + "__offering_date")
+          label.col-xl-3.col-lg-12.text-xl-right.textlg-left Maturity Date
+            span.color-red *
+          .col-xl-4.col-lg-6.p-r-0
+            +fieldNestedDateMonth(name, "offering_date", value, index, {
+              placeholder: 'MM', 
+              class: 'col-xl-4 col-lg-4 col-xs-4 p-l-0 m-d-p-r-5',
+            })
+            +fieldNestedDateDay(name, "offering_date", value, index, {
+              placeholder: 'DD', 
+              class: 'col-xl-4 col-lg-4 col-xs-4 p-r-0 m-d-p-l-5',
+            })
+            +fieldNestedDateYear(name, "offering_date", value, index, {
+              placeholder: 'YYYY', 
+              class: 'col-xl-4 col-lg-4 col-xs-4 p-r-0 m-d-p-l-10 p-r-lg-1',
+            })
+      +fieldNestedTextLabel(name, "securities_offered", value, index, {class1:'col-xl-3 col-lg-12 text-lg-left text-xl-right', class2: 'col-xl-9 col-lg-12'})
+      +fieldNestedTextLabel(name, "use_of_proceeds", value, index, {class1:'col-xl-3 col-lg-12 text-lg-left text-xl-right', class2: 'col-xl-9 col-lg-12'})
+
+mixin run()
+
+  if first_run
+    div(class=(attr.row == 0 ? '' : 'row ') + name + '_block' + (attr.required == true ? ' required ' : ' ') + ' nested')
+      div(class=(attr.row == 0 ? '' : 'row ') + name + '_container' + (attr.required == true ? ' required ' : ' ') + ' nested')
+
+        .row
+          .date-input.required.col-lg-12
+            .col-date.form-group.m-b-0
+
+              if values == null || values.length == 0
+                +row({}, 0)
+
+              else
+                each value, index in values
+                  +row(value, index)
+      .col-lg-12
+        .row.add-link
+          .col-xl-9.offset-xl-3
+            a(href="#" data-section=name data-comp='formc' data-template='exempt_offering').link-2.add-sectionnew
+              i.fa.fa-plus
+              |  Add Another Exempt Offering
+
+  else
+    +row({}, index)
+
+
++run()

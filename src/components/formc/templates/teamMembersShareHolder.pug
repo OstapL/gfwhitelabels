@@ -1,0 +1,67 @@
+include ../../raiseFunds/templates/menu.pug
+include ../../../templates/fields_mixins.pug
+
+- pug_html += app.breadcrumbs('create form c', '', [ ['Home', '/'], ['Create Form C', '/formc/' + values.id + '/introduction'], ['team members (20% voting shareholder)', ''], ]);
+
+section.formc-team-members-director.container.m-b-85
+  - var formcId = values.formc_id;
+  - var campaignId = values.campaign_id;
+  +menu('formc', 'team-members-holder')
+
+  //START RIGHT BLOCK
+  .col-xl-8.col-lg-8.col-md-12
+    h2.text-uppercase.text-lg-center.text-xs-center.m-t-0.dosis Team members (20% voting Shareholder)
+    h3.text-lg-left.text-xs-center.col-lg-12.m-t-1 20%+ Voting Shareholder:
+    p.col-lg-12.m-b-2 No earlier than 120 days prior to the date of this offering, please list beneficial owners of 20% or more of issuer’s outstanding voting equity securities.  To calculate total voting power, include direct/indirect shares, include the right through the exercise of options/warrants/conversion, or if securities are held by a family member, through corporations or partnerships, co-trustee, etc. To calculate outstanding voting equity securities, assume all outstanding options are exercised and all outstanding convertible securities converted.
+
+    form(action="").form-section
+      input(type="hidden" value=0 name="role")
+      .col-xl-12
+        +fieldTextLabel("first_name", _.extend({
+          class1: 'col-xl-3 col-lg-12 text-lg-left text-xl-right ',
+          class2: 'col-xl-9 col-lg-12',
+          }, fields.first_name))
+        +fieldTextLabel("last_name", _.extend({
+          class1: 'col-xl-3 col-lg-12 text-lg-left text-xl-right ',
+          class2: 'col-xl-9 col-lg-12',
+          }, fields.last_name))
+        +fieldTextLabel("email", _.extend({
+          class1: 'col-xl-3 col-lg-12 text-lg-left text-xl-right ',
+          class2: 'col-xl-9 col-lg-12',
+          help_text: 'We will need to contact team members',
+          }, fields.email))
+        .row.form-group
+          .col-date
+            label.col-xl-3.col-lg-12.text-xl-right.textlg-left Date of birth
+              span.color-red *
+            .col-xl-4.col-lg-6.p-r-0
+              +fieldDateMonth("dob", _.extend({
+                class: 'col-xl-4 col-lg-4 col-xs-4 p-l-0 m-d-p-r-5',
+                placeholder: 'MM',
+              }, fields.dob))
+              +fieldDateDay("dob", _.extend({
+                class: 'col-xl-4 col-lg-4 col-xs-4 p-r-0  m-d-p-l-5',
+                placeholder: 'DD',
+              }, fields.dob))
+              +fieldDateYear("dob", _.extend({
+                class: 'col-xl-4 col-lg-4 col-xs-4 p-r-0 m-d-p-l-10',
+                placeholder: 'YYYY',
+                divId: 'dob',
+              }, fields.dob))
+        +fieldTextLabel("number_of_shares", _.extend({
+          class1: 'col-xl-3 col-lg-12 text-lg-left text-xl-right ',
+          class2: 'col-xl-9 col-lg-12',
+          }, fields.number_of_shares))
+        +fieldTextLabel("class_of_securities", _.extend({
+          class1: 'col-xl-3 col-lg-12 text-lg-left text-xl-right ',
+          class2: 'col-xl-9 col-lg-12',
+          }, fields.class_of_securities))
+        +fieldTextLabel("voting_power_percent", _.extend({
+          class1: 'col-xl-3 col-lg-12 text-lg-left text-xl-right m-b-0 p-t-0 m-b-lg-1',
+          class2: 'col-xl-9 col-lg-12',
+          }, fields.voting_power_percent))
+      .col-lg-12.text-md-center.text-sm-center.text-xs-center.m-t-2
+        - console.log(this.values, values);
+        button(type='button' data-method=(values.user_id ? 'PUT' : 'POST'))#submitForm.btn.btn-primary.text-uppercase.pull-lg-right Save
+          i.fa.fa-angle-right
+        a(href='/formc/' + values.formc_id + '/team-members').btn.btn-secondary.text-uppercas.pull-lg-right.m-r-1 Cancel

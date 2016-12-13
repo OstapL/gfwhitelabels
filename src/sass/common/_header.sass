@@ -134,7 +134,40 @@ header.no-overflow
       // show login signin button and set it diff height on mobile devaices
       &.not-log-in-user
         height: 66px
+header.no-overflow-bell
+  overflow: visible
+  nav
+    overflow: visible
 
+    // show profile menu on mobile devaices
+    .list-container.bell-drop.notification-container
+      -webkit-transition-delay: 300ms, 300ms
+      -moz-transition-delay: 300ms, 300ms
+      -ms-transition-delay: 300ms, 300ms
+      -o-transition-delay: 300ms, 300ms
+      transition-delay: 300ms, 300ms
+
+      -webkit-transition: height 0.45s ease-out, opacity 0.25s ease-out, transform 0.25s ease-out, -webkit-transform 0.25s ease-out
+      -moz-transition: height 0.45s ease-out, opacity 0.25s ease-out, transform 0.25s ease-out, -webkit-transform 0.25s ease-out
+      -ms-transition: height 0.45s ease-out, opacity 0.25s ease-out, transform 0.25s ease-out, -webkit-transform 0.25s ease-out
+      -o-transition: height 0.45s ease-out, opacity 0.25s ease-out, transform 0.25s ease-out, -webkit-transform 0.25s ease-out
+      transition: height 0.45s ease-out, opacity 0.25s ease-out, transform 0.25s ease-out, -webkit-transform 0.25s ease-out
+      -webkit-transition: none
+      -moz-transition: none
+      -ms-transition: none
+      -o-transition: none
+      transform: none
+  
+      height: 144px
+      opacity: 1
+
+      background: rgba( $menu_backgound_from, .96)
+      &.submenu 
+        li.title
+          width: 230px
+      // show login signin button and set it diff height on mobile devaices
+      &.not-log-in-user
+        height: 66px
 header
   .navbar-toggleable-md::after
     clear: none
@@ -228,7 +261,7 @@ header
 
      
         &.user-info-drop
-          right: -11px!important
+          right: -17px!important
           left: auto!important
 
         .submenu
@@ -276,25 +309,25 @@ header
 
             color: $icon_header_color
 
-            .count-notific
-              position: absolute
-              top: 3px
-              left: -8px
+          .count-notific
+            position: absolute
+            top: 0
+            left: -6px
               
-              display: block
-              height: 16px
-              width: 16px
+            display: block
+            height: 16px
+            width: 16px
 
-              background: $boulder
-              border-radius: 50%
+            background: $boulder
+            border-radius: 50%
 
-              color: $menu_text_color
+            color: $menu_text_color
 
-              line-height: 1.4
-              text-align: center
-              font-size: 11px
-              letter-spacing: initial
-              font-family: 'Open Sans', sans-serif;
+            line-height: 1.4
+            text-align: center
+            font-size: 11px
+            letter-spacing: initial
+            font-family: 'Open Sans', sans-serif;
 
         .submenu::-webkit-scrollbar
           width: 0
@@ -406,9 +439,8 @@ header
       top: -55%
 
       font-size: 0.6875rem
-
+    
   @media screen and (min-width: 992px)
-
     .nav-item:hover .list-container
       position: absolute
       top: 100%
@@ -441,7 +473,10 @@ header
 
 
   @media screen and (max-width: 991px)
-
+    .navbar-toggleable-md
+      .navbar-nav
+        .nav-item
+          float: left
     .navbar-nav
       padding: 0px 0 0 0
 
@@ -495,7 +530,10 @@ header
       padding: 0
       overflow: hidden
       width: 100%
-
+      .notification-bell
+        a
+          position: relative
+          top: 25%
       .list-container.user-info-drop.notification-container
         -webkit-transform: scale(1.1) translateY(-10px)
         -moz-transform: scale(1.1) translateY(-10px)
@@ -522,7 +560,34 @@ header
         height: 0
         max-height: none
         opacity: 0
+      .list-container.bell-drop.notification-container
+        -webkit-transform: scale(1.1) translateY(-10px)
+        -moz-transform: scale(1.1) translateY(-10px)
+        -ms-transform: scale(1.1) translateY(-10px)
+        -o-transform: scale(1.1) translateY(-10px)
+        transform: scale(1.1) translateY(-10px)
 
+        transition-delay: 200ms, 200ms
+        -webkit-transition-delay: 200ms, 200ms 
+        -moz-transition-delay: 200ms, 200ms
+        -ms-transition-delay: 200ms, 200ms
+        -o-transition-delay: 200ms, 200ms
+
+        -webkit-transition: height 0.45s ease-out, opacity 0.25s ease-out, transform 0.25s ease-out, -webkit-transform 0.25s ease-out
+        -moz-transition: height 0.45s ease-out, opacity 0.25s ease-out, transform 0.25s ease-out, -webkit-transform 0.25s ease-out
+        -ms-transition: height 0.45s ease-out, opacity 0.25s ease-out, transform 0.25s ease-out, -webkit-transform 0.25s ease-out
+        -o-transition: height 0.45s ease-out, opacity 0.25s ease-out, transform 0.25s ease-out, -webkit-transform 0.25s ease-out
+        transition: height 0.45s ease-out, opacity 0.25s ease-out, transform 0.25s ease-out, -webkit-transform 0.25s ease-out
+          
+        position: absolute
+        top: 100%
+          
+        display: block
+        height: 0
+        max-height: none
+        opacity: 0
+        .submenu li.title
+          width: 230px
       #menuProfile
         -webkit-transition: right 0.35s ease-in 100ms
         -moz-transition: right 0.35s ease-in 100ms
@@ -532,7 +597,7 @@ header
 
         position: absolute
         right: 25px
-        width: 21px
+        width: auto
         // padding-top: 25px!important
 
         li.nav-item.user-info

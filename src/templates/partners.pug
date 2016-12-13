@@ -1,11 +1,4 @@
-include mixins.pug
-
-+breadcrumbs('PARTNERS', '', 
-  [
-    ['Home', '/'],
-    ['Partners', '']
-  ]
-)
+- pug_html += app.breadcrumbs('PARTNERS', '', [ ['Home', '/'], ['Partners', ''], ]);
 
 section.text_block 
   .container

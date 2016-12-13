@@ -29,10 +29,6 @@
         margin-right: rem(40)
         input[type="radio"]
           margin-right: rem(10)
-    .explain
-      border-bottom: solid 1px $border_color
-      padding-bottom: rem(25)
-      margin-bottom: rem(45)
       
       label
         color: $black
@@ -53,9 +49,7 @@
     .expiration
       margin-top: rem(25)
       margin-bottom: rem(20)
-      .date-input
-        input
-          max-width: rem(77)
+
   .btn-pay
     text-align: right
     margin-top: rem(45)
@@ -74,8 +68,7 @@
         font-weight: normal
         padding-top: 0
         margin-top: rem(-5)
-  .btn-save
-    padding-top: rem(40)
+
 .use_of_proceeds
   h2
     margin-bottom: 45px
@@ -92,7 +85,7 @@
     .row-gray
       background-color: $alabaster
       td
-        padding: rem(5)
+        padding: rem(5) rem(20)
     .w-50
       width: 50%
     .w-25
@@ -129,4 +122,19 @@
     .icon
       .fa-question-circle
         color: $small-text
-        margin-right: rem(15)
+.risk-panel
+  .added-risk-title
+    background-color: $puerto_rico!important
+    color: $white!important
+    &:after
+      content: '\f00c'
+      font: normal normal normal 12px/1 FontAwesome
+      position: relative
+      left: 10px
+      top: 0
+      background-color: rgba(255,255,255,0.5)
+      color: $white
+      padding: 5px
+      border-radius: 100%
+  .form-control[readonly]
+    background-color: transparent

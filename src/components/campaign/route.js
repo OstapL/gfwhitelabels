@@ -3,55 +3,49 @@ if (typeof require.ensure !== `function`) require.ensure = (d, c) => c(require);
 
 module.exports = Backbone.Router.extend({
   routes: {
-    'api/campaign': 'list',
-    'api/campaign/:id': 'detail',
-    'api/campaign/:id/invest': 'investment',
+    ':id/invest-thanks': 'investmentThankYou',
+    'companies': 'list',
+    ':id': 'detail',
+    ':id/invest': 'investment',
+  },
+
+  execute: function (callback, args, name) {
+    ga('send', 'pageview', "/" + Backbone.history.getPath());
+    if (callback) callback.apply(this, args)
+  },
+
+  investmentThankYou(id) {
+    require.ensure([], () => {
+      api.makeRequest(investmentServer + '/' + id).done((data) => {
+        data.id = id;
+        const View = require('./views.js');
+        let i = new View.investmentThankYou({
+          model: data,
+        });
+        i.render();
+        app.hideLoading();
+      });
+    });
   },
 
   list() {
     require.ensure([], () => {
-      const Model = require('./models.js');
       const View = require('./views.js');
-      const campaigns = new Model.collection();
 
-      campaigns.fetch({
-        success: (collection, response, options) => {
-
-          $('body').scrollTo(); 
-          $('#content').html('');
-          new View.list({
-            collection: collection,
-          }).render();
-
-          /*
-          setTimeout(() => {
-            app.cache[window.location.pathname] = i.$el.html();
-          }, 500);
-
-             let filterView = new CampaignFilterView();
-             filterView.render();
-
-             $('#content').append(_.template($('#campaignListT').html())());
-
-             collection.forEach(function(model) {
-             let campaignView = new CampaignListView({
-             model: model,
-             template: campaignItemListT,
-             });
-             campaignView.render();
-             });
-          */
-          app.hideLoading();
-        },
-        error: (model, response, options) => {
-          // ToDo
-          // Move that check to global check
-          if (response.responseJSON.detail == 'Invalid token.') {
-            localStorage.removeItem('token');
-            localStorage.removeItem('user');
-            window.location.reload();
-          }
-        },
+      let params = '?limit=6';
+      let page = parseInt(app.getParams().page);
+      let offset = ((page > 0) ? page : 1) - 1;
+      if (offset) params += '&offset=' + (offset * 6);
+      let orderBy = app.getParams().orderby;
+      if (orderBy) params += '&orderby=' + orderBy;
+      api.makeCacheRequest(raiseCapitalServer + params).then((data) => {
+        let i = new View.list({
+          el: '#content',
+          collection: data.data,
+        });
+        $('body').scrollTo();
+        i.render();
+        app.hideLoading();
       });
 
     });
@@ -61,7 +55,7 @@ module.exports = Backbone.Router.extend({
     require.ensure([], () => {
       const View = require('./views.js');
 
-      api.makeCacheRequest(Urls['campaign-detail'](id)).
+      api.makeCacheRequest(raiseCapitalServer + "/" + id).
         then((modelData) => {
           let i = new View.detail({
             el: '#content',
@@ -81,23 +75,18 @@ module.exports = Backbone.Router.extend({
   investment(id) {
     require.ensure([], () => {
       if (!app.user.is_anonymous()) {
-        const Model = require('./models.js');
-        //const investModel = require('../investment/models.js');
         const View = require('./views.js');
+        let investmentR = api.makeCacheRequest(investmentServer + '/', 'OPTIONS');
+        let companyR = api.makeCacheRequest(raiseCapitalServer + '/' + id);
+        let userR = api.makeCacheRequest(authServer + '/rest-auth/data');
 
-        var a1 = api.makeCacheRequest(Urls['investment-list'](), 'OPTIONS');
-        var a2 = api.makeCacheRequest(Urls['campaign-detail'](id));
-
-        $.when(a1, a2).
-          then((metaData, campaignModel) => {
-            console.log(metaData, campaignModel);
-            var i = new View.investment({
-              el: '#content',
-                campaignModel: new Model.model(campaignModel[0]),
-                fields: metaData[0].actions.POST
+        $.when(investmentR, companyR, userR).done((investmentMeta, companyData, userData) => {
+            const i = new View.investment({
+              model: companyData[0],
+              user: userData[0],
+              fields: investmentMeta[0].fields,
             });
             i.render();
-            //app.cache[window.location.pathname] = app.views.campaign[id].$el.html();
             $('#content').scrollTo();
             app.hideLoading();
           })
@@ -106,6 +95,15 @@ module.exports = Backbone.Router.extend({
             '/account/login', {trigger: true, replace: true}
           );
         }
+
+        // if (!window.pdfMake) {
+        //   ['/js/pdfmake.js', '/js/vfs_fonts.js'].forEach( (uri) => {
+        //     let script = document.createElement('script');
+        //     script.type = 'text/javascript';
+        //     script.src = uri;
+        //     $('head').append(script);
+        //   });
+        // }
     });
   },
 });
