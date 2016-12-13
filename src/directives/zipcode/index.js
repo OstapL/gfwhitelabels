@@ -10,11 +10,12 @@ const mainElement = '#content';
 
 class GeoCoder {
 
-  constructor(fields, values, template) { 
+  constructor(view, template) { 
     this.overlord = document.querySelector(mainElement);
 
-    this.fields = fields;
-    this.values = values;
+    this.view = view;
+    this.fields = view.fields;
+    this.values = view.model;
     this.template = require('./templates/teamMember.pug');
     this.resultHtml = '';
     if(!window.google || !window.google.maps) {
@@ -31,7 +32,8 @@ class GeoCoder {
     // ToDo
     // Get Rid of jquery 
     // use overlord
-    $(mainElement).on('change', '#zip_code', this.onZipCodeChange);
+    $(mainElement).on('change', '#zip_code', (e) => this.onZipCodeChange.call(this, e));
+    $(mainElement).on('click', '#saveCityState', (e) => this.saveCityState.call(this, e));
   }
 
   render() { 
@@ -73,6 +75,22 @@ class GeoCoder {
         }
       });
     }
+  }
+
+  saveCityState(e) {
+    const city = document.querySelector('#city').value;
+    const state = document.querySelector('#state').value;
+    const data = {
+      'city': city,
+      'state': state
+    };
+
+    document.querySelector('.js-city-state').innerHTML = city + ', ' + state;
+
+    api.makeRequest(this.view.urlRoot.replace(':id', this.values.id), 'PATCH', data)
+      .fail((response) => {
+        console.debug(response);
+      });
   }
 };
 

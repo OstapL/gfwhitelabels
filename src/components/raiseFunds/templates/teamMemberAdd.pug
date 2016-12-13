@@ -61,7 +61,7 @@ section.team-members.container.m-b-85
           value: member.bio,
         }, fields.bio))
 
-      - pug_html += zipCodeDirective(this.fields, this.model, 'teamMember.pug').render().resultHtml;
+      - pug_html += zipCodeDirective(this, 'teamMember.pug').render().resultHtml;
 
       +fieldTextLabel("college", _.extend({
         class1: 'col-xl-3 col-lg-12 text-lg-left text-xl-right',

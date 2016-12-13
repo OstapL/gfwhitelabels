@@ -1,8 +1,6 @@
 - var usaStates = require('consts/usaStates.js');
 
 .row.showPopover(data-content="Why do we ask? These affinity based questions can help us share your campaign with potential investors with similar backgrounds.")
-  input(type="hidden" id="city" name="city" values=values.city)
-  input(type="hidden" id="state" name="state" value=values.state)
   .col-xl-6.col-lg-6.input-min-width
     - pug_html += app.fields.textLabel('zip_code', { class1: 'col-xl-6 col-lg-12 text-xl-right text-lg-left p-t-0 m-b-0 m-b-lg-1', class2: 'col-xl-6 col-lg-12', label: 'Where did you grow up?', value: values.zip_code, schema: this.fields.zip_code, placeholder: 'Zip code', })
 
@@ -41,5 +39,5 @@ div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true
               .row
                 .col-lg-12
                   .col-lg-12.text-xs-center
-                    button(data-dismiss="modal").btn.btn-primary.text-uppercase save
+                    button(data-dismiss="modal")#saveCityState.btn.btn-primary.text-uppercase save
         .modal-footer
