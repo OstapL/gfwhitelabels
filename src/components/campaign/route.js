@@ -42,6 +42,7 @@ module.exports = Backbone.Router.extend({
         let i = new View.list({
           el: '#content',
           collection: data.data,
+          count: data.count[0],
         });
         $('body').scrollTo();
         i.render();

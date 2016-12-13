@@ -13,6 +13,7 @@ module.exports = {
     },
     initialize(options) {
       this.collection = options.collection;
+      this.count = options.count;
     },
 
     render() {
@@ -26,6 +27,7 @@ module.exports = {
         this.template({
           serverUrl: serverUrl,
           companies: this.collection,
+          count: this.count,
         })
       );
       this.$el.find('.selectpicker').selectpicker();
