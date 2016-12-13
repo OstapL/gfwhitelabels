@@ -41,7 +41,7 @@ module.exports = Backbone.Router.extend({
       api.makeCacheRequest(raiseCapitalServer + params).then((data) => {
         let i = new View.list({
           el: '#content',
-          collection: data.data,
+          collection: data,
         });
         $('body').scrollTo();
         i.render();

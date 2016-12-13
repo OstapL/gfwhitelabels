@@ -599,7 +599,8 @@ module.exports = {
       'submit form': 'submit',
       'click .submit_formc': submitFormc,
       'change input[type=radio][name=doc_type]': 'changeDocType',
-      'change .min-expense,.max-expense,.min-use,.max-use': 'calculate',
+      // 'change .min-expense,.max-expense,.min-use,.max-use': 'calculate',
+      'blur .min-expense,.max-expense,.min-use,.max-use': 'calculate',
       'click .add-sectionnew': 'addSectionNew',
       'click .delete-sectionnew': 'deleteRow',
     }, menuHelper.events, dropzoneHelpers.events),
@@ -615,7 +616,7 @@ module.exports = {
 
     _getSum(selector) {
         let values = this.$(selector).map(function (e) {
-          let result = parseInt($(this).val() ? $(this).val().replace(/,/g, '') : 0);
+          let result = parseInt($(this).val() ? $(this).val().replace(/[\$\,]/g, '') : 0);
           return result ? result : 0;
         }).toArray();
         if (values.length == 0) values.push(0);
@@ -625,7 +626,7 @@ module.exports = {
     calculate(e, warning=true) {
       if (e) {
         let $target = $(e.target);
-        $target.val(formatHelper.formatNumber($target.val()));
+        // $target.val(formatHelper.formatNumber($target.val()));
       }
       let minRaise = this.campaign.minimum_raise;
       let maxRaise = this.campaign.maximum_raise;
