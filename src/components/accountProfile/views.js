@@ -5,6 +5,17 @@ const phoneHelper = require('helpers/phoneHelper.js');
 const formatHelper = require('helpers/formatHelper');
 const yesNoHelper = require('helpers/yesNoHelper.js');
 
+// const InvestmentStatus = {
+//   New: 0,
+//   Approved: 1,
+//   CanceledByClient: 2,
+//   CanceledByBank: 3,
+//   CanceledByInkvisitor: 4,
+// };
+
+const activeStatuses = [0, 1];
+const canceledStatuses = [2, 3, 4];
+
 let countries = {};
 _.each(require('helpers/countries.json'), (c) => { countries[c.code] = c.name; });
 
@@ -421,22 +432,27 @@ module.exports = {
 
     initialize(options) {
       this.fields = options.fields;
-    },
 
-    filterInvestments() {
-      let active = _.filter(this.model.data, () => {
+      this.investments = {
+        active: [],
+        historical: [],
+      };
 
-      });
-      let historical = _.filter(this.model.data, () => {
+      let today = new Date();
 
+      _.each(this.model.data, (i) => {
+        i.created_date = new Date(i.created_date);
+        i.campaign.expiration_date = new Date(i.campaign.expiration_date);
+
+        if (_.contains(canceledStatuses, i.status) || i.campaign.expiration_date < today )
+          this.investments.historical.push(i)
+        else
+          this.investments.active.push(i);
       });
     },
 
     render() {
-      this.$el.html(this.template({
-        active: this.model.data,
-        passed: []
-      }));
+      this.$el.html(this.template(this.investments));
     },
 
     cancelInvestment(e) {
