@@ -463,15 +463,14 @@ module.exports = {
           member: this.member,
           values: this.model,
           type: this.type,
-          index: this.index,
-          states: this.usaStates,
+          index: this.index
         })
       );
 
       this.createDropzones();
 
-      delete this.model.progress;
-      delete this.model.data;
+      //delete this.model.progress;
+      //delete this.model.data;
 
       disableEnterHelper.disableEnter.call(this);
       return this;

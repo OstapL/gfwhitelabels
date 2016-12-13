@@ -564,10 +564,12 @@ module.exports = {
 
     initialize(options) {
       this.fields = options.fields;
+      this.campaign = options.campaign;
+
       this.fields.custom_fn = {fn: (function (value, fn, attr, model, computed) {
         if (!this.calculate(null)) throw 'Total Use of Net Proceeds must be equal to Net Proceeds.';
       }).bind(this)};
-      this.campaign = options.campaign;
+
       this.labels = {
         describe: 'Describe your business plan',
         business_plan: 'Please upload your business plan',
@@ -575,6 +577,7 @@ module.exports = {
         less_offering_express: {},
         use_of_net_proceeds: {},
       };
+
       let defaultRows = {
         less_offering_express: ['Commissions and Broker Expenses', 'Misc. Offering Costs (Legal)', 'Misc. Offering Costs (Marketing)', 'Misc. Offering Costs (Admin)'],
         use_of_net_proceeds: ['Salaries, Benefits and Wages', 'Product Development', 'Marketing', 'Operations (Data, Hosting, Fees)', 'Travel, Conferences and Events'],
