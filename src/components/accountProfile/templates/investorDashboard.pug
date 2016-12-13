@@ -62,7 +62,7 @@ mixin investment(i)
       .progress_line_container
         progress(value=i.amount max=(i.campaign.minimum_raise || i.campaign.maximum_raise)).progress
       .text-lg-center
-        a(href=(window.location.protocol + '//company.' + window.location.host + '/' + i.company.id)).btn.btn-sm.btn-secondary.text-uppercase view campaign
+        a(href=('/' + i.company.id)).btn.btn-sm.btn-secondary.text-uppercase view campaign
           i.fa.fa-angle-right
       .cancel_invest
         a(href="#" data-id=(i.id || 0)).cancel-investment.font-weight-bold Cancel investment
