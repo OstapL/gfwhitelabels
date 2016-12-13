@@ -58,7 +58,8 @@ mixin confirmStatement(name, attr)
                 class1: 'col-lg-3 col-md-12 text-lg-left text-xl-right',
                 class2: 'col-lg-4 col-md-12',
                 placeholder: '$',
-                text: "$10 of payment processing fee. Your money will be returned to you if the campaign doesn't reach the target goal ($500,000)."
+                text: "$10 of payment processing fee. Your money will be returned to you if the " +
+                  "campaign doesn't reach the target goal ($500,000)."
                 }, fields.amount))
           .row
             .col-xl-12
@@ -77,23 +78,30 @@ mixin confirmStatement(name, attr)
           // popover content for amount field
           div.popover-content-amount-campaign
             i.fa.fa-info-circle
-            p Investors are limited to 12 month investment totals ranging from $2,000 - $100,000 based on income and net worth.
+            p Investors are limited to 12 month investment totals ranging from $2,000 - $100,000
+             | based on income and net worth.
             p Based on your annual income and net worth, you can invest 
               span(style="color:red;") only 
               | up to 
               span(style="color:red;") $:amount.
             br
             p Please 
-              a(data-toggle="modal" data-target="#income_worth_modal" href="#income_worth_modal").link-2.update-income-worth update your annual income and net worth.
+              a(
+                data-toggle="modal"
+                data-target="#income_worth_modal"
+                href="#income_worth_modal"
+              ).link-2.update-income-worth update your annual income and net worth.
+
           div.popover-content-rounding
             i.fa.fa-info-circle
             span Companies can’t issue fractional shares.  The price per share is $#{values.campaign.price_per_share} so investment amounts must be a multiple of $#{values.campaign.price_per_share}.
-          div.popover-content-minimum-investment
+          div.popover-content-minimum-increment
             i.fa.fa-info-circle
             span The minimum investment is $#{values.campaign.minimum_increment}.
           div.popover-content-amount-ok
             i.fa.fa-info-circle
-            span Base on your updated annual income and net worth, you can invest $:amount.
+            span Base on your updated annual income and net worth, you can invest up to $:amount.
+
 
           section.personal_information
             h2.text-uppercase.dosis.text-md-center.text-sm-center.text-xs-center.text-lg-left Personal Information

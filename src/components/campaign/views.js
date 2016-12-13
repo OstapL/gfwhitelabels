@@ -4,6 +4,16 @@ const textHelper = require('helpers/textHelper');
 let countries = {};
 _.each(require('helpers/countries.json'), (c) => { countries[c.code] = c.name; });
 
+const validateAmount = (amount, min, max) => {
+  amount = Number(amount);
+  if (amount < min)
+    throw 'Minimum investment is $' + min;
+
+  if (amount > max)
+    throw 'Maximum investment is $' + max;
+
+};
+
 module.exports = { 
   list: Backbone.View.extend({
     el: '#content',
@@ -455,6 +465,13 @@ module.exports = {
 
       this.fields.payment_information_data.schema.account_number_re = { required: false };
       this.fields.personal_information_data.schema.phone = { required: true };
+
+      // var self = this;
+      // this.fields.amount.fn = function checkAmount() {
+      //   if (!self.validateAmount(this.amount))
+      //     return false;
+      // };
+
       this.labels = {
         personal_information_data: {
           street_address_1: 'Street Address 1',
@@ -509,20 +526,26 @@ module.exports = {
       );
 
       this.$amount = this.$el.find('#amount');
+      this.$amount.data('contentselector', 'amount-campaign');
+      this.$amount.data('max', this._maxAllowedAmount);
 
-      let that = this;
-
-      $('#amount').popover({
+      this.$amount.popover({
         placement(context, src) {
           return 'top';
         },
         container: '#content',
         html: true,
         content(){
-          var content = $('.invest_form').find('.popover-content-' + that.currentAmountTip).html();
-          if (that.currentAmountTip == 'amount-ok' || that.currentAmountTip == 'amount-campaign') {
-            content = content.replace(/\:amount/g, that._maxAllowedAmount.toLocaleString('en-US'));
+          let $this = $(this);
+          let currentTip = $this.data('contentselector');
+          let max = $this.data('max').toLocaleString('en-US');
+
+          var content = $('.invest_form .popover-content-' + currentTip).html();
+
+          if (currentTip == 'amount-ok' || currentTip == 'amount-campaign') {
+            content = content.replace(/\:amount/g, max);
           }
+
           return content;
         },
         trigger: 'manual',
@@ -535,12 +558,6 @@ module.exports = {
       $('span.current-limit').text(this._maxAllowedAmount);
 
       return this;
-    },
-
-    currentAmountTip: 'amount-campaign',
-
-    showAmountPopup() {
-
     },
 
     maxInvestmentsPerYear(annualIncome, netWorth) {
@@ -583,8 +600,10 @@ module.exports = {
       this.$amount.val(this.formatInt(newAmount));
       this._updateTotalAmount();
 
-      if (newAmount > amount)
-        console.log('TODO: show popup that informes user about amount of shares logic');
+      if (newAmount > amount) {
+        this.$amount.data('contentcontainer', 'content-rounding');
+        this.$amount.popover('show');
+      }
 
       // return false;
     },
@@ -649,15 +668,15 @@ module.exports = {
 
     submit(e) {
       e.preventDefault();
-      ///!!!
-      console.log('ADD VALIDATION OF MIN/MAX VALUE');
-      // if (this._exceedLimit()) {
-      //   $('.popover').scrollTo();
-      //   return;
-      // }
+
       let data = $(e.target).serializeJSON();
       data.amount = data.amount.replace(/\,/g, '');
-      api.submitAction.call(this, e, data);
+
+      if (this.validateAmount(data.amount))
+        api.submitAction.call(this, e, data);
+      else
+        this.$el.scrollTo();
+        //this.$amount.scrollTo();
     },
 
     getSuccessUrl(data) {
@@ -741,21 +760,33 @@ module.exports = {
       });
     },
 
-    amountRounding(e) {
-      // No price per share for revenue share company.
-      if (this.model.campaign.security_type == 1) return;
-
-      let amount = $(e.target).val();
-      const pricePerShare = this.model.campaign.price_per_share;
-      const minIncrement = this.model.campaign.minimum_increment;
-
-      if ((amount && pricePerShare) && amount % pricePerShare != 0 && amount >= minIncrement) {
-        amount = Math.ceil(amount / pricePerShare) * pricePerShare;
-        $(e.target).val(amount);
-        this.currentAmountTip = 'rounding';
-        $('#amount').popover('show');
-        this._updateTotalAmount(e);
+    validateAmount(amount) {
+      amount = Number(amount);
+      let min = this.model.campaign.minimum_increment;
+      let max = this._maxAllowedAmount;
+      if (amount < min) {
+        this.$amount.data('contentselector', 'minimum-increment');
+        this.$amount.popover('show');
+        return false;
       }
+
+      if (amount > max) {
+        this.$amount.data('contentselector', 'amount-campaign');
+        this.$amount.popover('show');
+        $('.popover a.update-income-worth')
+          .off('click')
+          .on('click', (e) => {
+            $('#amount').popover('hide');
+          });
+
+        return false;
+      }
+
+      this.$amount.data('contentselector', 'amount-ok');
+
+      this.$amount.popover('show');
+
+      return true;
     },
 
     updateAmount(e) {
@@ -766,27 +797,14 @@ module.exports = {
 
       e.currentTarget.value = this.formatInt(amount);
 
-      let minIncrement = this.model.minimum_increment;
+      this.validateAmount(amount);
 
-      //show proper tooltip
-      if (amount < minIncrement) {
-        this.currentAmountTip = 'minimum-investment';
-        $('#amount').popover('show');
-      } else if(amount > this._maxAllowedAmount) {
-        this.currentAmountTip = 'amount-campaign';
-        $('#amount').popover('show');
-        $('.popover a.update-income-worth')
-          .off('click')
-          .on('click', (e) => {
-            $('#amount').popover('hide');
-          });
-      } else if (this.currentAmountTip == 'amount-campaign') {
-        this.currentAmountTip = 'amount-ok';
-        $('#amount').popover('show');
-      } else {
-        $('#amount').popover('hide');
-      }
+      this.updatePerks();
 
+      this._updateTotalAmount();
+    },
+
+    updatePerks(amount) {
       //update perks
       let $targetPerk;
       let $perks = this.$('.perk');
@@ -800,8 +818,6 @@ module.exports = {
       $perks.removeClass('active').find('i.fa.fa-check').hide();
       if ($targetPerk)
         $targetPerk.addClass('active').find('i.fa.fa-check').show();
-
-      this._updateTotalAmount();
     },
 
     _updateTotalAmount() {
