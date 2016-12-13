@@ -32,7 +32,7 @@ module.exports = {
   formatNumber: formatNumber,
 
   unformatPrice(price) {
-    return price.replace(/,/g, '').replace('$', '');
+    return price.replace(/[\$\,]/g, '');
   },
 
   months: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],

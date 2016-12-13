@@ -10,10 +10,10 @@ mixin row(value, index)
             i.fa.fa-times
     td.border-b-t-none.w-25.font-size-12
       .form-section
-        input(type="money" value=('$' + value.min) name="use_of_net_proceeds[" + index + "][min]").input-border-bottom.form-control.text-xs-center.min-use
+        input(type="money" value=('$' + (value.min || 0)) name="use_of_net_proceeds[" + index + "][min]").input-border-bottom.form-control.text-xs-center.min-use
     td.border-b-t-none.w-25.font-size-12
       .form-section
-        input(type="money" value=('$' + value.max) name="use_of_net_proceeds[" + index + "][max]").input-border-bottom.form-control.text-xs-center.max-use
+        input(type="money" value=('$' + (value.max || 0)) name="use_of_net_proceeds[" + index + "][max]").input-border-bottom.form-control.text-xs-center.max-use
 
 mixin run()
   if first_run
