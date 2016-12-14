@@ -495,22 +495,22 @@ module.exports = {
         payment_information_type: 'I Want to Pay Using',
         amount: 'Amount',
         fee: 'Fee',
-        is_reviewed_educational_material: `I confirm and represent that (a) I have reviewed 
-          the educational material that has been made available on this website, (b) I understand 
-          that the entire amount of my investment may be lost and (c) I am in a 
-          financial condition to bear the loss of the investment and (d) I represent that 
+        is_reviewed_educational_material: `I confirm and represent that (a) I have reviewed
+          the educational material that has been made available on this website, (b) I understand
+          that the entire amount of my investment may be lost and (c) I am in a
+          financial condition to bear the loss of the investment and (d) I represent that
           I have not exceeded my investment limitations.`,
-        is_understand_restrictions_to_cancel_investment: `I understand that there are restrictions 
+        is_understand_restrictions_to_cancel_investment: `I understand that there are restrictions
           on my ability to cancel an investment commitment and obtain a return of my investment.`,
-        is_understand_difficult_to_resell_purchashed: `I understand that it may be difficult to 
+        is_understand_difficult_to_resell_purchashed: `I understand that it may be difficult to
           resell securities purchased on GrowthFountain.`,
-        is_understand_investing_is_risky: `I understand that investing in start-ups and small 
-          businesses listed on GrowthFountain is very risky, and that I should not invest any 
+        is_understand_investing_is_risky: `I understand that investing in start-ups and small
+          businesses listed on GrowthFountain is very risky, and that I should not invest any
           funds unless I can afford to lose my entire investment.`,
         is_understand_securities_related: `I understand that GrowthFountain performs all securities
-          related activities. I further understand that DCU (Digital Federal Credit Union) (a) does 
-          not participate in the selection or review of any issuers, (b) does not have any responsibility 
-          for the accuracy or completeness of any information provided by any issuer and (c) does not provide 
+          related activities. I further understand that DCU (Digital Federal Credit Union) (a) does
+          not participate in the selection or review of any issuers, (b) does not have any responsibility
+          for the accuracy or completeness of any information provided by any issuer and (c) does not provide
           any investment advice or recommendations.`,
       };
 
@@ -779,7 +779,6 @@ module.exports = {
       });
     },
 
-<<<<<<< HEAD
     getDocMetaData () {
       const investor_legal_name = $('#first_name').val() + $('#last_name').val()
                       || app.user.get('first_name') + app.user.get('last_name');
