@@ -8,6 +8,7 @@ global.formcServer = "https://api-formc.growthfountain.com";
 global.investmentServer = "https://api-investment.growthfountain.com";
 //global.investmentServer = "http://localhost:8003";
 global.filerServer = "https://api-filer.growthfountain.com";
+global.esignServer = 'http://api-esign.growthfountain.com';
 global.teamName = 'Team';
 global.teamTitle = "Meet The Team";
 //global.serverUrl = "http://192.168.99.100:8000";
