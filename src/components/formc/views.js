@@ -12,6 +12,8 @@ const validation = require('components/validation/validation.js');
 
 const disableEnterHelper = require('helpers/disableEnterHelper.js');
 
+const leavingConfirmationHelper = require('helpers/leavingConfirmationHelper2.js');
+
 const labels = {
   title: 'Title for Risk',
   risk: 'Describe Your Risk',
@@ -130,7 +132,7 @@ module.exports = {
       'click .submit_formc': submitFormc,
       'keyup #full-name': 'changeSign',
       'click #pay-btn': 'stripeSubmit',
-    }, menuHelper.events, yesNoHelper.events),
+    }, menuHelper.events, yesNoHelper.events, leavingConfirmationHelper.events),
 
     preinitialize() {
       // ToDo
@@ -322,7 +324,7 @@ module.exports = {
       this.eSignPreview.text(this.eSignFullName.val());
     },
 
-  }, menuHelper.methods, yesNoHelper.methods)),
+  }, menuHelper.methods, yesNoHelper.methods, leavingConfirmationHelper.methods)),
 
   teamMembers: Backbone.View.extend(_.extend({
     urlRoot: formcServer + '/:id' + '/team-members',
@@ -332,7 +334,7 @@ module.exports = {
       'blur #full_time_employers,#part_time_employers': 'updateEmployees',
       'click .submit_formc': submitFormc,
       'click .delete-member': 'deleteMember',
-    }, menuHelper.events),
+    }, menuHelper.events, leavingConfirmationHelper.events),
 
     preinitialize() {
 
@@ -423,7 +425,7 @@ module.exports = {
       return this;
     },
 
-  }, menuHelper.methods, addSectionHelper.methods)),
+  }, menuHelper.methods, addSectionHelper.methods, leavingConfirmationHelper.methods)),
 
   teamMemberAdd: Backbone.View.extend(_.extend({
     urlRoot: formcServer + '/:id/team-members',
@@ -432,7 +434,7 @@ module.exports = {
     events: _.extend({
       'click #submitForm': api.submitAction,
       'click .submit_formc': submitFormc,
-    }, addSectionHelper.events, menuHelper.events),
+    }, addSectionHelper.events, menuHelper.events, leavingConfirmationHelper.events),
 
     initialize(options) {
       this.fields = options.fields;
@@ -512,7 +514,7 @@ module.exports = {
       return '/formc/' + this.model.formc_id + '/team-members';
     },
 
-  }, addSectionHelper.methods, menuHelper.methods)),
+  }, addSectionHelper.methods, menuHelper.methods, leavingConfirmationHelper.methods)),
 
   relatedParties: Backbone.View.extend(_.extend({
     el: '#content',
@@ -521,7 +523,7 @@ module.exports = {
     events: _.extend({
       'submit form': 'submit',
       'click .submit_formc': submitFormc,
-    }, addSectionHelper.events, menuHelper.events, yesNoHelper.events),
+    }, addSectionHelper.events, menuHelper.events, yesNoHelper.events, leavingConfirmationHelper.events),
 
     initialize(options) {
       this.fields = options.fields;
@@ -570,7 +572,7 @@ module.exports = {
       disableEnterHelper.disableEnter.call(this);
       return this;
     },
-  }, addSectionHelper.methods, menuHelper.methods, yesNoHelper.methods)),
+  }, addSectionHelper.methods, menuHelper.methods, yesNoHelper.methods, leavingConfirmationHelper.methods)),
 
   useOfProceeds: Backbone.View.extend(_.extend({
     urlRoot: formcServer + '/:id/use-of-proceeds',
@@ -617,7 +619,7 @@ module.exports = {
       'blur .min-expense,.max-expense,.min-use,.max-use': 'calculate',
       'click .add-sectionnew': 'addSectionNew',
       'click .delete-sectionnew': 'deleteRow',
-    }, menuHelper.events, dropzoneHelpers.events),
+    }, menuHelper.events, dropzoneHelpers.events, leavingConfirmationHelper.events),
 
     deleteRow(e) {
       this.deleteSectionNew(e);
@@ -733,7 +735,7 @@ module.exports = {
       disableEnterHelper.disableEnter.call(this);
       return this;
     }, 
-  }, menuHelper.methods, dropzoneHelpers.methods, addSectionHelper.methods)),
+  }, menuHelper.methods, dropzoneHelpers.methods, addSectionHelper.methods, leavingConfirmationHelper.methods)),
 
   riskFactorsInstruction: Backbone.View.extend(_.extend({
     initialize(options) {
@@ -1447,7 +1449,7 @@ module.exports = {
     events: _.extend({
       'submit form': api.submitAction,
       'click .submit_formc': submitFormc,
-    }, menuHelper.events, yesNoHelper.events, addSectionHelper.events, dropzoneHelpers.events),
+    }, menuHelper.events, yesNoHelper.events, addSectionHelper.events, dropzoneHelpers.events, leavingConfirmationHelper.events),
 
     initialize(options) {
       this.fields = options.fields;
@@ -1498,7 +1500,7 @@ module.exports = {
       disableEnterHelper.disableEnter.call(this);
       return this;
     },
-  }, menuHelper.methods, yesNoHelper.methods, addSectionHelper.methods, dropzoneHelpers.methods)),
+  }, menuHelper.methods, yesNoHelper.methods, addSectionHelper.methods, dropzoneHelpers.methods, leavingConfirmationHelper.methods)),
 
   outstandingSecurity: Backbone.View.extend(_.extend({
     urlRoot: formcServer + '/:id/outstanding-security',
@@ -1508,7 +1510,7 @@ module.exports = {
       'click #submitForm': api.submitAction,
       'click .submit_formc': submitFormc,
       'click .delete-outstanding': 'deleteOutstanding',
-    }, addSectionHelper.events, menuHelper.events, yesNoHelper.events),
+    }, addSectionHelper.events, menuHelper.events, yesNoHelper.events, leavingConfirmationHelper.events),
 
     initialize(options) {
       this.fields = options.fields;
@@ -1687,7 +1689,7 @@ module.exports = {
       disableEnterHelper.disableEnter.call(this);
       return this;
     },
-  }, addSectionHelper.methods, menuHelper.methods, yesNoHelper.methods)),
+  }, addSectionHelper.methods, menuHelper.methods, yesNoHelper.methods, leavingConfirmationHelper.methods)),
 
   backgroundCheck: Backbone.View.extend(_.extend({
     urlRoot: formcServer + '/:id' + '/background-check',
@@ -1717,7 +1719,7 @@ module.exports = {
     events: _.extend({
       'submit form': api.submitAction,
       'click .submit_formc': submitFormc,
-    }, menuHelper.events, yesNoHelper.events),
+    }, menuHelper.events, yesNoHelper.events, leavingConfirmationHelper.events),
 
     render() {
       let template = require('./templates/backgroundCheck.pug');
@@ -1732,7 +1734,7 @@ module.exports = {
       disableEnterHelper.disableEnter.call(this);
       return this;
     },
-  }, menuHelper.methods, yesNoHelper.methods, addSectionHelper.methods)),
+  }, menuHelper.methods, yesNoHelper.methods, addSectionHelper.methods, leavingConfirmationHelper.methods)),
 
   finalReview: Backbone.View.extend({
     urlRoot: formcServer + '/:id/final-review',
