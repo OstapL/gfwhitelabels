@@ -224,7 +224,7 @@ module.exports = {
         var key_day = key + '__day';
         if(data[key_year]) {
           data[key] = data[key_year] + '-' + (data[key_month] ? pad(data[key_month], 2) : '01') + '-' + 
-            (data[key_day] ? pad(data[key_day]) : '01') 
+            (data[key_day] ? pad(data[key_day], 2) : '01') 
         }
         delete data[key_year];
         delete data[key_month];
