@@ -325,9 +325,10 @@ module.exports = {
   }, menuHelper.methods, yesNoHelper.methods)),
 
   teamMembers: Backbone.View.extend(_.extend({
-    urlRoot: formcServer + '/:id' + '/team-members',
+    urlRoot: formcServer + '/:id/team-members',
     events: _.extend({
       'click #submitForm': api.submitAction,
+      'click .inviteAction': 'repeatInvitation',
       'blur #full_time_employers,#part_time_employers': 'updateEmployees',
       'click .submit_formc': submitFormc,
       'click .delete-member': 'deleteMember',
@@ -353,29 +354,37 @@ module.exports = {
     },
 
     deleteMember: function (e) {
-      let memberId = e.currentTarget.dataset.id;
-      let role = e.currentTarget.dataset.role;
+      e.preventDefault();
+      let userId = e.currentTarget.dataset.id;
 
       if (confirm('Are you sure you would like to delete this team member?')) {
         api.makeRequest(
-          this.urlRoot.replace(':id', this.model.id) + '/' + role + '/' + memberId,
-          'DELETE'
+          this.urlRoot.replace(':id', this.model.id) + '/delete',
+          'PUT',
+          {'user_id': userId}
         ).
         then((data) => {
-          this.model.members.splice(memberId, 1);
-          $(e.currentTarget).parent().remove();
-          if (this.model.members.length < 1) {
+          let index = this.model.team_members.findIndex((el) => { return el.user_id == userId });
+          this.model.team_members.splice(index, 1);
+          e.currentTarget.parentElement.parentElement.remove()
+          /*
+           * ToDo
+           * Create right notification error
+           *
+          if (this.model.team_members.length < 1) {
             this.$el.find('.notification').show();
             this.$el.find('.buttons-row').hide();
           } else {
             this.$el.find('.notification').hide();
             this.$el.find('.buttons-row').show();
           }
+          */
         });
       }
     },
 
     updateEmployees(e) {
+      e.preventDefault();
       api.makeRequest(
         this.urlRoot.replace(':id', this.model.id),
         'PUT',
@@ -384,6 +393,18 @@ module.exports = {
           'part_time_employers': this.el.querySelector('#part_time_employers').value,
         }
       );
+    },
+
+    repeatInvitation(e) {
+      e.preventDefault();
+      api.makeRequest(
+        formcServer + '/invitation/repeat',
+        'PUT',
+        {'user_id': e.target.dataset.id}
+      ).then((data) => {
+        e.target.innerHTML = 'sent';
+        e.target.className = 'link-3 invite';
+      });
     },
 
     render() {
@@ -1748,6 +1769,7 @@ module.exports = {
         element.name = target.dataset.name;
         element.value = target.innerHTML;
         element.onblur = (e) => this.update(e);
+        target.parentElement.insertBefore(element, target);
       } else if(target.dataset.type == 'select') {
         element = document.createElement('select');
         element.name = target.dataset.name;
@@ -1763,9 +1785,9 @@ module.exports = {
           }
           element.appendChild(e);
         });
+        target.parentElement.insertBefore(element, target);
       }
 
-      target.parentElement.insertBefore(element, target);
       target.remove();
     },
 
@@ -1777,6 +1799,7 @@ module.exports = {
         'maximum_raise',
         'minimum_raise',
         'security_type',
+        'price_per_share',
       ];
 
       e.target.setAttribute(

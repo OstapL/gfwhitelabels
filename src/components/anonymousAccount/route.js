@@ -8,7 +8,7 @@ module.exports = Backbone.Router.extend({
     'account/google/login/': 'loginGoogle',
     'account/linkedin/login/': 'loginLinkedin',
     'account/finish/login/': 'finishSocialLogin',
-    'account/reset': 'resetPassword',
+    'reset-password/code/:code': 'resetPassword',
     'code/:code': 'membershipConfirmation',
   },
 
@@ -144,36 +144,39 @@ module.exports = Backbone.Router.extend({
       });
   },
 
-  resetPassword: function() {
-      require.ensure([], function() {
-          const view = require('components/anonymousAccount/views.js');
-          let i = new view.reset({
-              el: '#content',
-          });
-          i.render();
-          app.hideLoading();
-      });
+  resetPassword: function(code) {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    $('#content').scrollTo();
+    api.makeRequest(authServer + '/reset-password/code', 'PUT', {
+      'reset_password_code': code,
+    }).done((data) => {
+      localStorage.setItem('token', data.key);
+      window.location = '/account/profile';
+    }).fail((data) => {
+      $('#content').html(
+        '<section class="reset"><div class="container"><div class="col-lg-12"><h2 class="dosis text-uppercase text-sm-center text-xs-center m-t-85"> Your code have been expired. Please request new link </h2></div></div></section>'
+      );
+      app.hideLoading();
+    });
   },
 
 
   membershipConfirmation(code) {
-    require.ensure([], function() {
-      api.makeRequest(formcServer + '/invitation/' + code, 'GET').done((response) => {
+    api.makeRequest(formcServer + '/invitation/' + code, 'GET').done((response) => {
 
-        const data = {
-          company_name: response.company_name,
-          title: response.title,
-          code: code,
-        };
+      const data = {
+        company_name: response.company_name,
+        title: response.title,
+        code: code,
+      };
 
-        const View = require('components/anonymousAccount/views.js');
-        const i = new View.membershipConfirmation(_.extend({
-          el: '#content',
-        }, data));
-        i.render();
-        app.hideLoading();
-      });
-
+      const View = require('components/anonymousAccount/views.js');
+      const i = new View.membershipConfirmation(_.extend({
+        el: '#content',
+      }, data));
+      i.render();
+      app.hideLoading();
     });
   },
 

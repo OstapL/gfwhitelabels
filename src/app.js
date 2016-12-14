@@ -58,6 +58,23 @@ Backbone.View.prototype.assignLabels = function() {
   });
 };
 
+Backbone.View.prototype.checkForm = function() {
+  if(app.getParams().check == '1') {
+    let data = $(e.target).closest('form').serializeJSON({ useIntKeysAsArrayIndex: true });
+    api.deleteEmptyNested.call(this, this.fields, data);
+    api.fixDateFields.call(this, this.fields, data);
+    api.fixMoneyFields.call(this, this.fields, data);
+    data = _.extend({}, this.model, data);
+
+    if (!validation.validate(this.fields, data, this)) {
+      _(validation.errors).each((errors, key) => {
+        validation.invalidMsg(this, key, errors);
+      });
+      this.$('.help-block').prev().scrollTo(5);
+    }
+  }
+};
+
 let app = {
   $: jQuery,
 
