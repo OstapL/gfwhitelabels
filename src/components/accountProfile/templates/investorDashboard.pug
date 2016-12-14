@@ -1,16 +1,23 @@
 //include ../../../templates/fields_mixins.pug
 
-mixin investment(i)
+mixin investment(i, attr)
   -
+    if (!attr)
+      attr = {};
+
     if (!i.campaign)
       return;
 
   .one_table
-    .img_column.text-lg-center.text-sm-center
-      - var data = i.campaign.header_image_data[0] || { urls: []};
-      - var url = data.urls[0] || "/img/test.png";
-      img(src=url alt="").img-fluid
-      span.img_tab #{daysLeft(toDate(i.campaign.expiration_date)) + ' Days Left'}
+    - var data = i.campaign.header_image_data[0] || { urls: []};
+    - var url = data.urls[0] || "/img/test.png";
+    - var background = 'background: url(' + url + ') center center no-repeat; background-size: cover;';
+    .img_column.text-lg-center.text-sm-center(style=background)
+      if attr.active
+        span.img_tab #{daysLeft(i.campaign.expiration_date) + ' Days Left'}
+      else
+        span.successfull.unsuccessfull  Unsuccessfully funded campaign
+        span.end-date  #{i.campaign.expiration_date.toLocaleDateString()}
       p.text-uppercase #{i.company.name}
     .right-columns
       .one_line
@@ -22,7 +29,7 @@ mixin investment(i)
         .col40
           span.light_grey Investment Day
         .col60
-          span.dark_grey #{toDate(i.created_date).toLocaleDateString() }
+          span.dark_grey #{i.created_date.toLocaleDateString() }
       .one_line
         .col40
           span.light_grey Investment ID
@@ -34,9 +41,9 @@ mixin investment(i)
         .col60
           span.dark_grey #{i.security_type == 0 ? 'Common Equity' : 'Revenue Share'}
       .one_line
-        .col40
+        .col40.col-perks
           span.light_grey Perks
-        .col60
+        .col60.col-perks.showPopover(data-content=i.perk)
           span.dark_grey #{i.perk}
     .right_buttons
       h4 Downloadable Files
@@ -61,11 +68,15 @@ mixin investment(i)
         .clear
       .progress_line_container
         progress(value=i.amount max=(i.campaign.minimum_raise || i.campaign.maximum_raise)).progress
-      .text-lg-center
-        a(href=(window.location.protocol + '//company.' + window.location.host + '/' + i.company.id)).btn.btn-sm.btn-secondary.text-uppercase view campaign
+      .text-xs-center
+        a(href=('/' + i.company.id)).btn.btn-sm.btn-secondary.text-uppercase view campaign
           i.fa.fa-angle-right
       .cancel_invest
-        a(href="#" data-id=(i.id || 0)).cancel-investment.font-weight-bold Cancel investment
+        if attr.active
+          a(
+            href="#"
+            data-id=(i.id || 0)
+          ).cancel-investment.font-weight-bold Cancel investment
     .clear
 
 -
@@ -104,10 +115,9 @@ mixin investment(i)
 section.investor-dashboard
   .container
     .col-lg-12
-      if (!active || !active.length) && (!passed || !passed.length)
+      if (!active || !active.length) && (!historical || !historical.length)
         div(role="alert").alert.alert-warning
           strong You have not invested yet
-
       else
         select.orderby.custom-select.pull-right.text-uppercase
           option(checked="checked" value="0") default sorting
@@ -139,7 +149,10 @@ section.investor-dashboard
             )
               .active-investor-dashboard.investor_table
                 each i in active
-                  +investment(i)
+                  +investment(i, { active: true })
+                else
+                  div(role="alert").alert.alert-warning
+                    strong You have no active investments
 
             .tab-pane.fade#historical(
               role="tabpanel"
@@ -147,67 +160,12 @@ section.investor-dashboard
               aria-expanded="false"
             )
               .active-investor-dashboard.investor_table
-                .one_table
-                  .img_column.text-lg-center.text-sm-center
-                    img(src="/img/test.png" alt="").img-fluid
-                    span.successfull  Successfully funded campaign
-                    span.end-date  03.07.2016 End Date
-                    p.text-uppercase Company name
-                  .right-columns
-                    .one_line
-                      .col40
-                        span.light_grey Amount Invested
-                      .col60
-                        span.bold-grey.font-weight-bold $25K
-                    .one_line
-                      .col40
-                        span.light_grey Investment Day
-                      .col60
-                        span.dark_grey 06.15.2016
-                    .one_line
-                      .col40
-                        span.light_grey Investment ID
-                      .col60
-                        span.dark_grey 09879*****
-                    .one_line
-                      .col40
-                        span.light_grey Security
-                      .col60
-                        span.dark_grey Revenue Share
-                    .one_line
-                      .col40
-                        span.light_grey Perks
-                      .col60
-                        span.dark_grey Rewards
-                  .right_buttons
-                    h4 Downloadable Files
-                    ul
-                      li
-                        a(href="#").link-3 Investor Presentation
-                      li
-                        a(href="#").link-3 Form C
-                      li
-                        a(href="#").link-3 Financials
-                      li
-                        a(href="#").link-3 Agreement
-                  .bottom_column
-                    .top_descript
-                      .left_text
-                        b $1,5MM
-                        span Raised
-                      .right_text
-                        b $500K
-                        span Goal
-                      p.percents 150% Funded
-                      .clear
-                    .progress_line_container
-                      progress(value="10" max="100").progress
-                    .text-lg-center
-                      a(href="#").btn.btn-sm.btn-secondary.text-uppercase view campaign
-                        i.fa.fa-angle-right
-                    .cancel_invest
-                      a(href="#").font-weight-bold Cancel investment
-                  .clear
+                each i in historical
+                  +investment(i, {})
+                else
+                  div(role="alert").alert.alert-warning
+                    strong You have no historical investments
+              //
                 .one_table
                   .img_column.text-lg-center.text-sm-center
                     img(src="/img/test.png" alt="").img-fluid

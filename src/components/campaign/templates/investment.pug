@@ -58,7 +58,8 @@ mixin confirmStatement(name, attr)
                 class1: 'col-lg-3 col-md-12 text-lg-left text-xl-right',
                 class2: 'col-lg-4 col-md-12',
                 placeholder: '$',
-                text: "$10 of payment processing fee. Your money will be returned to you if the campaign doesn't reach the target goal ($500,000)."
+                text: "$10 of payment processing fee. Your money will be returned to you if the " +
+                  "campaign doesn't reach the target goal ($500,000)."
                 }, fields.amount))
           .row
             .col-xl-12
@@ -84,16 +85,22 @@ mixin confirmStatement(name, attr)
               span(style="color:red;") $:amount.
             br
             p Please 
-              a(data-toggle="modal" data-target="#income_worth_modal" href="#income_worth_modal").link-2.update-income-worth update your annual income and net worth.
+              a(
+                data-toggle="modal"
+                data-target="#income_worth_modal"
+                href="#income_worth_modal"
+              ).link-2.update-income-worth update your annual income and net worth.
+
           div.popover-content-rounding
             i.fa.fa-info-circle
-            span Companies can’t issue fractional shares.  The price per share is $#{values.campaign.price_per_share} so investment amounts must be a multiple of $#{values.campaign.price_per_share}.
-          div.popover-content-minimum-investment
+            span Companies can’t issue fractional shares. The price per share is $#{values.campaign.price_per_share} so investment amounts must be a multiple of $#{values.campaign.price_per_share}.
+          div.popover-content-minimum-increment
             i.fa.fa-info-circle
             span The minimum investment is $#{values.campaign.minimum_increment}.
           div.popover-content-amount-ok
             i.fa.fa-info-circle
-            span Base on your updated annual income and net worth, you can invest $:amount.
+            span Base on your updated annual income and net worth, you can invest up to $:amount.
+
 
           section.personal_information
             h2.text-uppercase.dosis.text-md-center.text-sm-center.text-xs-center.text-lg-left Personal Information
@@ -259,7 +266,7 @@ mixin confirmStatement(name, attr)
                       .col-lg-6
                         span In the Amount of: 
                       .col-lg-6
-                        span.font-weight-bold.total-investment-amount $1100
+                        span.font-weight-bold.total-investment-amount $10
                     .row.m-b-2
                       .col-lg-6
                         span Memo:
@@ -287,7 +294,7 @@ mixin confirmStatement(name, attr)
                       .col-lg-6
                         span In the Amount of: 
                       .col-lg-6
-                        span.font-weight-bold.total-investment-amount $1100
+                        span.font-weight-bold.total-investment-amount $10
                     .row.m-b-2
                       .col-lg-6
                         span Memo:
@@ -316,8 +323,6 @@ mixin confirmStatement(name, attr)
                           | 4350 La Jolla Village Drive, Suite 140
                           br
                           | San Diego, CA 92122
-            //.col-md-12
-              span.help-block GrowthFountain does not store your bank login credentials
 
           section.varification
             h2.text-uppercase.dosis.text-md-center.text-sm-center.text-xs-center.text-lg-left
@@ -334,6 +339,11 @@ mixin confirmStatement(name, attr)
             +confirmStatement('is_understand_investing_is_risky',
               _.extend({}, fields.is_understand_investing_is_risky)
             )
+            // FOR DCU
+            //.dcu-confirmation
+              +confirmStatement('is_understand_securities_related',
+                _.extend({}, fields.is_understand_securities_related)
+              )
             .col-lg-12.m-t-2
               .row
                 span By Signing You Acknowledge and Agree to the 
@@ -369,6 +379,7 @@ mixin confirmStatement(name, attr)
             | Investor Perks are not intended to affect the value of the security and
             | investors should evaluate the merits of each investment without regard to any
             | Investor Perks.
+
         .list-group.list-group-border-invest.invest-right-margin
           -
             values.campaign.perks = Object.keys(values.campaign.perks).map(function(key) {
@@ -398,12 +409,12 @@ mixin confirmStatement(name, attr)
           .col-md-5
             .row
               span Committed
-              p.font-weight-bold $2,256
+              p.font-weight-bold $#{values.campaign.amount_raised}
         .container
           .col-md-7
             .row
               span Offering deadline
-              p.font-weight-bold.m-b-0 Sep 14, 2016
+              p.font-weight-bold.m-b-0 #{values.campaign.expiration_date.toLocaleDateString()}
           .col-md-5
             .row
               span Type of security
