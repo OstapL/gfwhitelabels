@@ -325,7 +325,7 @@ module.exports = {
   }, menuHelper.methods, yesNoHelper.methods)),
 
   teamMembers: Backbone.View.extend(_.extend({
-    urlRoot: formcServer + '/:id' + '/team-members',
+    urlRoot: formcServer + '/:id/team-members',
     events: _.extend({
       'click #submitForm': api.submitAction,
       'click .inviteAction': 'repeatInvitation',
@@ -354,6 +354,7 @@ module.exports = {
     },
 
     deleteMember: function (e) {
+      e.preventDefault();
       let userId = e.currentTarget.dataset.id;
 
       if (confirm('Are you sure you would like to delete this team member?')) {
@@ -363,20 +364,27 @@ module.exports = {
           {'user_id': userId}
         ).
         then((data) => {
-          this.model.members.splice(userId, 1);
-          $(e.currentTarget).parent().remove();
-          if (this.model.members.length < 1) {
+          let index = this.model.team_members.findIndex((el) => { return el.user_id == userId });
+          this.model.team_members.splice(index, 1);
+          e.currentTarget.parentElement.parentElement.remove()
+          /*
+           * ToDo
+           * Create right notification error
+           *
+          if (this.model.team_members.length < 1) {
             this.$el.find('.notification').show();
             this.$el.find('.buttons-row').hide();
           } else {
             this.$el.find('.notification').hide();
             this.$el.find('.buttons-row').show();
           }
+          */
         });
       }
     },
 
     updateEmployees(e) {
+      e.preventDefault();
       api.makeRequest(
         this.urlRoot.replace(':id', this.model.id),
         'PUT',
