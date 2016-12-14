@@ -11,7 +11,7 @@ mixin isInvited(data)
         | Confirmed 
   else
     td.text-xs-center
-      a(href="#").link-3.invite
+      a(href="#" data-id=data.user_id).link-3.invite.inviteAction
         i.fa.fa-envelope-o 
         | Invite
 
@@ -89,7 +89,7 @@ section.create-company-team-add.container
                     a(href="/formc/" + values.id + "/team-members/" +  roles[person.role[0]].toLowerCase() + '/' + person.user_id).link-1
                       i.fa.fa-pencil-square-o
                   td.text-xl-center
-                    a(href="#" data-id=person.uuid data-role=roles[k]).link-1.delete-member
+                    a(href="#" data-id=person.user_id data-role=roles[k]).link-1.delete-member
                       i.fa.fa-times
                   - roleCounter ++;
               else
@@ -118,7 +118,7 @@ section.create-company-team-add.container
                     a(href="/formc/" + values.id + "/team-members/" + roles[v.role[0]].toLowerCase() + '/' + v.user_id).link-1
                       i.fa.fa-pencil-square-o
                   td.text-xl-center
-                    a(href="#" data-id=v.uuid data-role=roles[v.role]).link-1.delete-member
+                    a(href="#" data-id=v.user_id data-role=roles[v.role]).link-1.delete-member
                       i.fa.fa-times
                 
 

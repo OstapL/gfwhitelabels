@@ -157,6 +157,7 @@ module.exports = {
         })
       );
       disableEnterHelper.disableEnter.call(this);
+      this.checkForm();
       return this;
     },
 
@@ -248,15 +249,8 @@ module.exports = {
           })
       );
 
-      if(app.getParams().check == '1') {
-        var data = this.$el.find('form').serializeJSON();
-        if (!validation.validate(this.fields, data, this)) {
-          _(validation.errors).each((errors, key) => {
-            validation.invalidMsg(this, key, errors);
-          });
-          this.$('.help-block').prev().scrollTo(5);
-        }
-      }
+      this.checkForm();
+
       disableEnterHelper.disableEnter.call(this);
       return this;
     },
@@ -367,23 +361,8 @@ module.exports = {
       );
 
       setTimeout(() => { this.createDropzones() } , 1000);
-
-      if(app.getParams().check == '1') {
-        let data = this.$el.find('form').serializeJSON();
-        api.deleteEmptyNested.call(this, this.fields, data);
-        api.fixDateFields.call(this, this.fields, data);
-        api.fixMoneyFields.call(this, this.fields, data);
-        data = _.extend({}, this.model, data);
-
-        if (!validation.validate(this.fields, data, this)) {
-          _(validation.errors).each((errors, key) => {
-            validation.invalidMsg(this, key, errors);
-          });
-          this.$('.help-block').prev().scrollTo(5);
-        }
-      }
-
       disableEnterHelper.disableEnter.call(this);
+      this.checkForm();
 
       return this;
     },
@@ -468,6 +447,7 @@ module.exports = {
       );
 
       this.createDropzones();
+      this.checkForm();
 
       //delete this.model.progress;
       //delete this.model.data;
@@ -535,6 +515,7 @@ module.exports = {
         );
 
       disableEnterHelper.disableEnter.call(this);
+      this.checkForm();
 
       return this;
     },
@@ -691,15 +672,7 @@ module.exports = {
 
         this.calculateNumberOfShares(null);
 
-        if(app.getParams().check == '1') {
-          var data = this.$el.find('form').serializeJSON();
-          if (!validation.validate(this.fields, data, this)) {
-            _(validation.errors).each((errors, key) => {
-              validation.invalidMsg(this, key, errors);
-            });
-            this.$('.help-block').prev().scrollTo(5);
-          }
-        }
+        this.checkForm();
 
         if (this.company.corporate_structure == 2) {
           this.$('input[name=security_type][value=0]').prop('disabled', true);
