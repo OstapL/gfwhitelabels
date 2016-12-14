@@ -33,6 +33,14 @@ module.exports = {
   detail: Backbone.View.extend({
     template: require('./templates/detail.pug'),
 
+    events: {
+
+    },
+
+    initialize(options) {
+
+    },
+
     getHtml(data) {
       return this.template(data)
     },
@@ -43,7 +51,30 @@ module.exports = {
           model: this.model,
           app: app,
         })
-      )
+      );
+
+      return this;
+    },
+
+  }),
+
+
+  comments: Backbone.View.extend({
+    urlRoot: commentsServer + '/:model/:id',
+    template: require('./templates/comments.pug'),
+    el: '.comments',
+    events: {
+
+    },
+
+    initialize(options) {
+      this.fields = options.fields;
+      this.urlRoot = this.urlRoot.replace(':model', 'company').replace(':id', this.model.id);
+    },
+
+    render() {
+      this.$el.html(this.template(this.model));
+
       return this;
     },
 

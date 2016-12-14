@@ -1,0 +1,181 @@
+mixin detail()
+  - cls = (model.level > 12) ? 'col-lg-10 offset-lg-1' : 'col-lg-' + (12-model.level) + ' offset-lg-' + (model.level)
+
+  div(id='comment_' + model.id class=cls + ' pt30 comment').p-r-0
+  .col-lg-1
+    img(src=app.getThumbnail('55x55', model.user.image_data.thumbnails, '/img/default/77x45.png') alt="").img-circle
+  .col-lg-11
+    .comments-wrap
+      span.name-comments.text-uppercase #{ model.user.first_name } #{ model.user.last_name }
+      if company.owner == model.user.id
+        span.kvalificatio-comments.text-uppercase CEO
+
+      span.date-comments.pull-right #{ model.created }
+      p #{ model.body }
+      .responce
+        li
+          a(href="").link-1 1
+            i.fa.fa-angle-up
+              span |
+        li
+          a(href="" data-id=model.id).link-1.linkresponse Reply
+          span |
+        li
+          a(href="").link-1
+            i.fa.fa-thumbs-up
+
+mixin commentBlock(comment)
+  .col-lg-12.p-r-0
+    .hr
+    .col-lg-1.text-xs-center.text-lg-left
+      img(src="/img/avatar10.jpg" alt="").img-circle
+    .col-lg-11
+      .comments-wrap
+        span.name-comments.text-uppercase maria kravchuk
+
+        span.date-comments.pull-right 2 Days Ago
+        p Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua?
+        .responce
+          li
+            a(href="").link-1 1
+              i.fa.fa-angle-up
+            span |
+          li
+            a(href="").link-1 Responce
+            span |
+          li
+            a(href="").link-1
+              i.fa.fa-thumbs-up
+
+
+
+.col-lg-8.offset-lg-2.pt30.comment-form-div
+  // ask a question
+  form.comment-form.form-section
+    -
+      var parent = 0;
+      var is_related = 0;
+    .col-lg-8
+      input(type="hidden" name="parent" value=parent)
+      input(type="hidden" name="is_related" value=is_related)
+
+      input(type="text" name="body" placeholder="Type your text here..." value='')
+    .col-lg-4.p-r-0.text-xl-right.text-xs-center.p-t-sm-1
+      button(type="submit").btn.btn-primary.text-uppercase.pull-lg-right Submit
+
+  //comments themselves
+  .col-lg-11.offset-lg-1.pt30.p-r-0
+    .col-lg-1.text-xs-center.text-lg-left
+      img(src="/img/avatar10.jpg" alt="").img-circle
+    .col-lg-11
+      .comments-wrap
+        span.name-comments.text-uppercase maria kravchuk
+        span.kvalificatio-comments.text-uppercase CEO
+        span.date-comments.pull-right 2 Days Ago
+        p Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua?
+        .responce
+          li
+            a(href="").link-1 0
+              i.fa.fa-angle-down
+            span |
+          li
+            a(href="").link-1 Responce
+            span |
+          li
+            a(href="").link-1
+              i.fa.fa-thumbs-up
+
+              .container
+                h2#ask.col-lg-12.dosis.text-uppercase.text-lg-center.text-xs-center.campaign-subheading ASK A QUESTION
+                .col-lg-8.offset-lg-2.pt50.comments
+                  //container for comments view
+                  .col-lg-12.p-r-0
+                    .hr
+                    .col-lg-1.text-xs-center.text-lg-left
+                      img(src="/img/avatar10.jpg" alt="").img-circle
+                    .col-lg-11
+                      .comments-wrap
+                        span.name-comments.text-uppercase maria kravchuk
+
+                        span.date-comments.pull-right 2 Days Ago
+                        p Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua?
+                        .responce
+                          li
+                            a(href="").link-1 1
+                              i.fa.fa-angle-up
+                            span |
+                          li
+                            a(href="").link-1 Responce
+                            span |
+                          li
+                            a(href="").link-1
+                              i.fa.fa-thumbs-up
+
+
+
+                  .col-lg-11.offset-lg-1.pt30.p-r-0
+                    .col-lg-1.text-xs-center.text-lg-left
+                      img(src="/img/avatar10.jpg" alt="").img-circle
+                    .col-lg-11
+                      .comments-wrap
+                        span.name-comments.text-uppercase maria kravchuk
+                        span.kvalificatio-comments.text-uppercase CEO
+                        span.date-comments.pull-right 2 Days Ago
+                        p Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua?
+                        .responce
+                          li
+                            a(href="").link-1 0
+                              i.fa.fa-angle-down
+                            span |
+                          li
+                            a(href="").link-1 Responce
+                            span |
+                          li
+                            a(href="").link-1
+                              i.fa.fa-thumbs-up
+                    .col-lg-12.p-r-0
+                      .hr
+                      .col-lg-1.text-xs-center.text-lg-left
+                        img(src="/img/avatar10.jpg" alt="").img-circle
+                      .col-lg-11
+                        .comments-wrap
+                          span.name-comments.text-uppercase maria kravchuk
+
+                          span.date-comments.pull-right 2 Days Ago
+                          p Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua?
+                          .responce
+                            li
+                              a(href="").link-1 1
+                                i.fa.fa-angle-up
+                              span |
+                            li
+                              a(href="").link-1 Responce
+                              span |
+                            li
+                              a(href="").link-1
+                                i.fa.fa-thumbs-up
+
+
+
+                    .col-lg-11.offset-lg-1.pt30.p-r-0
+                      .col-lg-1.text-xs-center.text-lg-left
+                        img(src="/img/avatar10.jpg" alt="").img-circle
+                      .col-lg-11
+                        .comments-wrap
+                          span.name-comments.text-uppercase maria kravchuk
+                          span.kvalificatio-comments.text-uppercase CEO
+                          span.date-comments.pull-right 2 Days Ago
+                          p Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua?
+                          .responce
+                            li
+                              a(href="").link-1 0
+                                i.fa.fa-angle-down
+                              span |
+                            li
+                              a(href="").link-1 Responce
+                              span |
+                            li
+                              a(href="").link-1
+                                i.fa.fa-thumbs-up
+
+

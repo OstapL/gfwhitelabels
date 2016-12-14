@@ -40,6 +40,7 @@ module.exports = {
   }),
 
   detail: Backbone.View.extend({
+    el: '#content',
     template: require('./templates/detail.pug'),
     events: {
       'click .tabs-scroll .nav .nav-link': 'smoothScroll',
@@ -77,6 +78,7 @@ module.exports = {
     initialize(options) {
       $(document).off("scroll", this.onScrollListener);
       $(document).on("scroll", this.onScrollListener);
+
       let params = app.getParams();
       this.edit = false;
       if (params.preview == '1' && this.model.owner == app.user.get('id')) {
@@ -85,6 +87,7 @@ module.exports = {
         this.previous = params.previous;
       }
       this.preview = params.preview ? true : false;
+
     },
 
     submitCampaign(e) {
@@ -178,6 +181,9 @@ module.exports = {
       $link.each(function () {
         var currLink = $(this);
         var refElement = $(currLink.attr("href")).closest('section');
+        if (!refElement || !refElement.length)
+          return;
+
         if (refElement.position().top - $navBar.height() <= scrollPos && refElement.position().top + refElement.height() > scrollPos) {
           $link.removeClass("active");
           currLink.addClass("active");
@@ -299,21 +305,10 @@ module.exports = {
           stickyToggle(sticky, stickyWrapper, $(window));
         });
 
-        this.commentView = require('components/comment/views.js');
+        this.initComments();
 
-        $('#ask').after(
-          new this.commentView.form().getHtml({model: {}})
-        );
-
-        var a1 = api.makeCacheRequest(Urls['comment-list']() + '?company=' + this.model.company.id).
-          then((comments) => {
-            let commentList = new this.commentView.list({
-              el: '.comments',
-              model: this.model.company,
-              collection: comments,
-            }).render();
-          });
       }, 100);
+
       this.$el.find('.perks .col-xl-4 p').equalHeights();
       this.$el.find('.team .auto-height').equalHeights();
       this.$el.find('.card-inverse p').equalHeights();
@@ -347,6 +342,55 @@ module.exports = {
       });
 
       return this;
+    },
+
+    initComments() {
+      const View = require('components/comment/views.js');
+      const urlComments = commentsServer + '/company/' + this.model.id;
+      let optionsR = api.makeRequest(urlComments, 'OPTIONS');
+      let dataR = api.makeRequest(urlComments);
+      //
+      $.when(optionsR, dataR).done((options, data) => {
+        let commentsModel = {
+          data: [
+            {
+              "uid": "c8e5a3ab-3c8a-43a8-8735-b71cb62d9b5a",
+              "role": "GET FROM USER titles field",
+              "message": "Hi, All!!1",
+              "user_id": 26,
+              "children": []
+            },
+            {
+              "uid": "cf7eefd6-76e5-4fe3-aff2-892f4a9e5f95",
+              "role": "GET FROM USER titles field",
+              "message": "Hi, Ben!!1",
+              "user_id": 26,
+              "children": [
+                {
+                  "uid": "2f0656e3-6893-4768-87fb-6f7d47298412",
+                  "role": "GET FROM USER titles field",
+                  "message": "Hi, All & Ben!!1",
+                  "user_id": 26,
+                  "children": [{
+                    "uid": "2f0656e3-6893-4768-87fb-6f7d47298412",
+                    "role": "GET FROM USER titles field",
+                    "message": "Finally!",
+                    "user_id": 1,
+                    "children": []
+                  }]
+                }
+              ]
+            }
+          ],
+        };
+
+        let comments = new View.comments({
+          el: '.comments',
+          model: commentsModel,
+          fields: options.fields,
+        });
+        comments.render();
+      });
     },
 
     readMore(e) {
