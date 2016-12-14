@@ -308,10 +308,15 @@ section
                       p.card-text
                         small.text-muted #{v.title }
                         
-                      a(href=v.linkedin target="_blank").link-1
-                        i.fa.fa-linkedin.more
-                      a(href=v.facebook target="_blank").link-1
-                        i.fa.fa-facebook
+                      if v.linkedin
+                        a(href=v.linkedin target="_blank").link-1
+                          i.fa.fa-linkedin.more
+                      if v.facebook
+                        a(href=v.facebook target="_blank").link-1
+                          i.fa.fa-facebook
+                      if !(v.linedin || v.facebook)
+                        a.link-1(style="visibility:hidden;")
+                          i.fa.fa-linkedin.more
                       p.card-text.text-justify.hide-more-detail !{textHelper.restoreLineBreak(v.bio)}
                         if v.bio.length > 200
                           a(href="#").show-more-members.link-3 Read More

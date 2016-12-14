@@ -63,9 +63,10 @@ const onPreviewAction = function(e) {
   let pathname = location.pathname;
   //this.$el.find('#submitForm').click();
   app.showLoading();
-  window.location = '/' + this.formc.company_id + '?preview=1&previous=' + pathname;
-  setTimeout(() => {
-  }, 500);
+  let data = this.$('form').serializeJSON({ useIntKeysAsArrayIndex: true });
+  if (api.submitAction.call(this, e, data)) {
+    window.location = '/' + this.formc.company_id + '?preview=1&previous=' + pathname;
+  }
 };
 
 
@@ -94,7 +95,7 @@ module.exports = {
       this.campaign = options.campaign;
       this.labels = {
         name: 'Legal Name of Company',
-        short_name: 'Doing business as another name?',
+        short_name: 'Doing Business as Another Name?',
         industry: 'Industry',
         founding_state: 'Jurisdiction of Incorporation / Organization',
         tagline: 'Tagline',

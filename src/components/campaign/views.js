@@ -446,7 +446,7 @@ module.exports = {
       this.fields = options.fields;
       this.user = options.user;
       this.user.account_number_re = this.user.account_number;
-
+      this.fields.is_understand_securities_related = {},
       this.fields.payment_information_type.validate.choices = {
         0: 'Echeck (ACH)',
         1: 'Check',
@@ -511,6 +511,11 @@ module.exports = {
         is_understand_investing_is_risky: `I understand that investing in start-ups and small 
           businesses listed on GrowthFountain is very risky, and that I should not invest any 
           funds unless I can afford to lose my entire investment.`,
+        is_understand_securities_related: `I understand that GrowthFountain performs all securities
+          related activities. I further understand that DCU (Digital Federal Credit Union) (a) does 
+          not participate in the selection or review of any issuers, (b) does not have any responsibility 
+          for the accuracy or completeness of any information provided by any issuer and (c) does not provide 
+          any investment advice or recommendations.`,
       };
 
       this.assignLabels();

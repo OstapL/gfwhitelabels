@@ -134,6 +134,9 @@ module.exports = {
             });
           }
         })
+        if (attr.fn) {
+          this.runRule('fn', attr.fn, name, attr);
+        }
       } else if (fixedRegex.indexOf(attr.type) != -1) {
         try {
           rules.regex(name, attr, data, attr.type);

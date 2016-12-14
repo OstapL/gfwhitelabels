@@ -9,10 +9,10 @@ mixin investment(i, attr)
       return;
 
   .one_table
-    .img_column.text-lg-center.text-sm-center
-      - var data = i.campaign.header_image_data[0] || { urls: []};
-      - var url = data.urls[0] || "/img/test.png";
-      img(src=url alt="").img-fluid
+    - var data = i.campaign.header_image_data[0] || { urls: []};
+    - var url = data.urls[0] || "/img/test.png";
+    - var background = 'background: url(' + url + ') center center no-repeat; background-size: cover;';
+    .img_column.text-lg-center.text-sm-center(style=background)
       if attr.active
         span.img_tab #{daysLeft(i.campaign.expiration_date) + ' Days Left'}
       else
@@ -41,9 +41,9 @@ mixin investment(i, attr)
         .col60
           span.dark_grey #{i.security_type == 0 ? 'Common Equity' : 'Revenue Share'}
       .one_line
-        .col40
+        .col40.col-perks
           span.light_grey Perks
-        .col60
+        .col60.col-perks.showPopover(data-content=i.perk)
           span.dark_grey #{i.perk}
     .right_buttons
       h4 Downloadable Files
@@ -68,7 +68,7 @@ mixin investment(i, attr)
         .clear
       .progress_line_container
         progress(value=i.amount max=(i.campaign.minimum_raise || i.campaign.maximum_raise)).progress
-      .text-lg-center
+      .text-xs-center
         a(href=('/' + i.company.id)).btn.btn-sm.btn-secondary.text-uppercase view campaign
           i.fa.fa-angle-right
       .cancel_invest

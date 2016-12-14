@@ -123,7 +123,7 @@ module.exports = {
         validation.invalidMsg(this, key, errors);
       });
       this.$('.help-block').prev().scrollTo(5);
-      return;
+      return false;
     } else {
 
       api.makeRequest(url, method, newData).
@@ -152,6 +152,9 @@ module.exports = {
           api.errorAction(this, xhr, status, text, this.fields);
         });
     }
+
+    // Here it means the validation result is true;
+    return true;
   },
 
   successAction: (view, response) => {
@@ -255,7 +258,9 @@ module.exports = {
   fixMoneyFields(fields, data) {
     _(fields).each((el, key) => {
       if(el.type == 'money') {
-        data[key] = formatHelper.unformatPrice(data[key]);
+        if (data[key]) {
+          data[key] = formatHelper.unformatPrice(data[key]);
+        }
       } else if(el.type == 'nested' && data[key]) {
         _.each(data[key], (val, index, list) => {
           api.fixMoneyFields.call(this, el.schema, data[key][index]);
