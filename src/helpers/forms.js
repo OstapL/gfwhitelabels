@@ -148,7 +148,7 @@ module.exports = {
     newData = newData || $(e.target).closest('form').serializeJSON({ useIntKeysAsArrayIndex: true });
     api.deleteEmptyNested.call(this, this.fields, newData);
     api.fixDateFields.call(this, this.fields, newData);
-    api.fixMoneyField.call(this, this.fields, newData);
+    api.fixMoneyFields.call(this, this.fields, newData);
 
     // if view already have some data - extend that info
     if(this.hasOwnProperty('model') && !this.doNotExtendModel && method != 'PATCH') {
@@ -188,16 +188,12 @@ module.exports = {
       fields = patchFields;
     }
 
-    if (this.fields.custom_fn) {
-      fields.custom_fn = this.fields.custom_fn;
-    }
-    
     if(!validation.validate(fields, newData, this)) {
       _(validation.errors).each((errors, key) => {
         validation.invalidMsg(this, key, errors);
       });
       this.$('.help-block').prev().scrollTo(5);
-      return;
+      return false;
     } else {
 
       api.makeRequest(url, method, newData).
@@ -226,6 +222,9 @@ module.exports = {
           api.errorAction(this, xhr, status, text, this.fields);
         });
     }
+
+    // Here it means the validation result is true;
+    return true;
   },
 
   successAction: (view, response) => {
@@ -326,10 +325,16 @@ module.exports = {
     });
   },
 
-  fixMoneyField(fields, data) {
+  fixMoneyFields(fields, data) {
     _(fields).each((el, key) => {
       if(el.type == 'money') {
-        data[key] = formatHelper.unformatPrice(data[key]);
+        if (data[key]) {
+          data[key] = formatHelper.unformatPrice(data[key]);
+        }
+      } else if(el.type == 'nested' && data[key]) {
+        _.each(data[key], (val, index, list) => {
+          api.fixMoneyFields.call(this, el.schema, data[key][index]);
+       });
       }
     });
   }

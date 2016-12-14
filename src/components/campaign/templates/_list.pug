@@ -1,7 +1,7 @@
 - var format = require('helpers/formatHelper.js');
 
 .row
-  for company in companies
+  for company in collection.data
     - var percentage_raised = format.calculateRaisedPercentage(company.campaign.minimum_raise, company.campaign.amount_raised);
 
     .col-xl-4.col-lg-6.col-xs-12.col-sm-12.col-md-12

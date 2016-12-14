@@ -564,10 +564,13 @@ module.exports = {
 
     initialize(options) {
       this.fields = options.fields;
-      this.fields.custom_fn = {fn: (function (value, fn, attr, model, computed) {
-        if (!this.calculate(null)) throw 'Total Use of Net Proceeds must be equal to Net Proceeds.';
-      }).bind(this)};
       this.campaign = options.campaign;
+
+      // this.fields.custom_fn = {fn: (function (value, fn, attr, model, computed) {
+      this.fields.use_of_net_proceeds.fn = (function (value, fn, attr, model, computed) {
+        if (!this.calculate(null)) throw 'Total Use of Net Proceeds must be equal to Net Proceeds.';
+      }).bind(this);
+
       this.labels = {
         describe: 'Describe your business plan',
         business_plan: 'Please upload your business plan',
@@ -575,6 +578,7 @@ module.exports = {
         less_offering_express: {},
         use_of_net_proceeds: {},
       };
+
       let defaultRows = {
         less_offering_express: ['Commissions and Broker Expenses', 'Misc. Offering Costs (Legal)', 'Misc. Offering Costs (Marketing)', 'Misc. Offering Costs (Admin)'],
         use_of_net_proceeds: ['Salaries, Benefits and Wages', 'Product Development', 'Marketing', 'Operations (Data, Hosting, Fees)', 'Travel, Conferences and Events'],
@@ -596,7 +600,8 @@ module.exports = {
       'submit form': 'submit',
       'click .submit_formc': submitFormc,
       'change input[type=radio][name=doc_type]': 'changeDocType',
-      'change .min-expense,.max-expense,.min-use,.max-use': 'calculate',
+      // 'change .min-expense,.max-expense,.min-use,.max-use': 'calculate',
+      'blur .min-expense,.max-expense,.min-use,.max-use': 'calculate',
       'click .add-sectionnew': 'addSectionNew',
       'click .delete-sectionnew': 'deleteRow',
     }, menuHelper.events, dropzoneHelpers.events),
@@ -612,7 +617,7 @@ module.exports = {
 
     _getSum(selector) {
         let values = this.$(selector).map(function (e) {
-          let result = parseInt($(this).val() ? $(this).val().replace(/,/g, '') : 0);
+          let result = parseInt($(this).val() ? $(this).val().replace(/[\$\,]/g, '') : 0);
           return result ? result : 0;
         }).toArray();
         if (values.length == 0) values.push(0);
@@ -622,7 +627,7 @@ module.exports = {
     calculate(e, warning=true) {
       if (e) {
         let $target = $(e.target);
-        $target.val(formatHelper.formatNumber($target.val()));
+        // $target.val(formatHelper.formatNumber($target.val()));
       }
       let minRaise = this.campaign.minimum_raise;
       let maxRaise = this.campaign.maximum_raise;
@@ -1578,6 +1583,8 @@ module.exports = {
       const sectionName = e.target.dataset.section;
       const template = require('./templates/snippets/outstanding_securities.pug');
 
+      data.amount_authroized = data.amount_authroized.replace(/[\$\,]/g, '');
+      data.amount_outstanding = data.amount_outstanding.replace(/[\$\,]/g, '');
       if (!validation.validate(this.fields.outstanding_securities.schema, data, this)) {
         _(validation.errors).each((errors, key) => {
           validation.invalidMsg(this, key, errors);
