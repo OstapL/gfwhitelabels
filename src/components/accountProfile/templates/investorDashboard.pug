@@ -41,9 +41,9 @@ mixin investment(i, attr)
         .col60
           span.dark_grey #{i.security_type == 0 ? 'Common Equity' : 'Revenue Share'}
       .one_line
-        .col40
+        .col40.col-perks
           span.light_grey Perks
-        .col60
+        .col60.col-perks.showPopover(data-content=i.perk)
           span.dark_grey #{i.perk}
     .right_buttons
       h4 Downloadable Files
