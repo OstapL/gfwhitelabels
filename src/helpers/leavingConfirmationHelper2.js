@@ -7,7 +7,27 @@ module.exports = {
   
   methods: {
     confirmLeaving(e) {
-      if (!this.isDifferent()) return;
+      // in risk factor page
+      if (window.location.pathname.indexOf('risk-factors') !== -1) {
+        let diff = false;
+        let that = this;
+        // check if existing risk changed
+        $('textarea[index]:not([readonly])').each(function () {
+          let $this = $(this);
+          if ($this.val() != that.model[that.riskType][$this.data('index')].risk) {
+            diff = true;
+          }
+        })
+        // check if new risk fields are empty
+        this.$('form.add-risk-form :input').each(function () {
+          if ($(this).val()) {
+            diff = true;
+          }
+        });
+        if (!diff) return;
+      } else {
+        if (!this.isDifferent()) return;
+      }
       
       if (confirm("You have unsaved changes. Do you really want to leave?")) {
       } else {
@@ -23,8 +43,6 @@ module.exports = {
       api.fixMoneyFields.call(this, this.fields, newData);
       let patchData = {};
       let d = deepDiff(newData, this.model);
-      console.log(JSON.stringify(newData));
-      console.log(JSON.stringify(this.model));
       _(d).forEach((el, i) => {
         if(el.kind == 'E' || el.kind == 'A') {
           if (String(el.lhs) == String(el.rhs)) return;
