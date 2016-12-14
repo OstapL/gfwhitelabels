@@ -63,9 +63,10 @@ const onPreviewAction = function(e) {
   let pathname = location.pathname;
   //this.$el.find('#submitForm').click();
   app.showLoading();
-  window.location = '/' + this.formc.company_id + '?preview=1&previous=' + pathname;
-  setTimeout(() => {
-  }, 500);
+  let data = this.$('form').serializeJSON({ useIntKeysAsArrayIndex: true });
+  if (api.submitAction.call(this, e, data)) {
+    window.location = '/' + this.formc.company_id + '?preview=1&previous=' + pathname;
+  }
 };
 
 
@@ -94,7 +95,7 @@ module.exports = {
       this.campaign = options.campaign;
       this.labels = {
         name: 'Legal Name of Company',
-        short_name: 'Doing business as another name?',
+        short_name: 'Doing Business as Another Name?',
         industry: 'Industry',
         founding_state: 'Jurisdiction of Incorporation / Organization',
         tagline: 'Tagline',
@@ -302,7 +303,7 @@ module.exports = {
 
       this.fields.header_image_image_id = _.extend(this.fields.header_image_image_id, {
         imgOptions: {
-          aspectRatio: 16/9,
+          aspectRatio: 16 / 9.55,
           cssClass : 'img-crop',
           showPreview: false,
         },
@@ -311,7 +312,7 @@ module.exports = {
 
       this.fields.list_image_image_id = _.extend(this.fields.list_image_image_id, {
         imgOptions: {
-          aspectRatio: 16 / 9,
+          aspectRatio: 16 / 9.55,
           cssClass: 'img-crop',
           showPreview: false,
         },
@@ -320,7 +321,7 @@ module.exports = {
 
       this.fields.gallery_group_id = _.extend(this.fields.gallery_group_id, {
         imgOptions: {
-          aspectRatio: 16 / 9,
+          aspectRatio: 16 / 9.55,
           cssClass: 'img-crop',
           showPreview: false,
         },
@@ -372,7 +373,7 @@ module.exports = {
         let data = this.$el.find('form').serializeJSON();
         api.deleteEmptyNested.call(this, this.fields, data);
         api.fixDateFields.call(this, this.fields, data);
-        api.fixMoneyField.call(this, this.fields, data);
+        api.fixMoneyFields.call(this, this.fields, data);
         data = _.extend({}, this.model, data);
 
         if (!validation.validate(this.fields, data, this)) {
@@ -463,15 +464,14 @@ module.exports = {
           member: this.member,
           values: this.model,
           type: this.type,
-          index: this.index,
-          states: this.usaStates,
+          index: this.index
         })
       );
 
       this.createDropzones();
 
-      delete this.model.progress;
-      delete this.model.data;
+      //delete this.model.progress;
+      //delete this.model.data;
 
       disableEnterHelper.disableEnter.call(this);
       return this;
@@ -625,18 +625,32 @@ module.exports = {
       },
 
       calculateNumberOfShares: function (e) {
-        var minRaise = parseInt(this.$('#minimum_raise').val().replace(/[\$\,]/g, ''));
-        var maxRaise = parseInt(this.$('#maximum_raise').val().replace(/[\$\,]/g, ''));
-        var pricePerShare = parseInt(this.$('#price_per_share').val().replace(/[\$\,]/g, ''));
-        var premoneyVal = parseInt(this.$('#premoney_valuation').val().replace(/[\$\,]/g, ''));
+        const minRaise = parseInt(this.$('#minimum_raise').val().replace(/[\$\,]/g, ''));
+        const maxRaise = parseInt(this.$('#maximum_raise').val().replace(/[\$\,]/g, ''));
+        const pricePerShare = parseFloat(this.$('#price_per_share').val().replace(/[\$\,]/g, ''));
+        const premoneyVal = parseFloat(this.$('#premoney_valuation').val().replace(/[\$\,]/g, ''));
         let min_number_of_shares = Math.round(minRaise / pricePerShare);
-        if (!isFinite(min_number_of_shares)) min_number_of_shares = 0;
         let max_number_of_shares = Math.round(maxRaise / pricePerShare);
-        if (!isFinite(max_number_of_shares)) max_number_of_shares = 0;
+
+        if (!isFinite(min_number_of_shares)) { 
+          min_number_of_shares = 0;
+        }
+
+        if (!isFinite(max_number_of_shares)) {
+          max_number_of_shares = 0;
+        }
+
         let min_equity_offered = Math.round(100 * minRaise / (minRaise + premoneyVal));
-        if (!isFinite(min_equity_offered)) min_equity_offered = 0;
         let max_equity_offered = Math.round(100 * maxRaise / (maxRaise + premoneyVal));
-        if (!isFinite(max_equity_offered)) max_equity_offered = 0;
+
+        if (!isFinite(min_equity_offered)) {
+          min_equity_offered = 0;
+        }
+
+        if (!isFinite(max_equity_offered)) {
+          max_equity_offered = 0;
+        }
+
         this.$('#min_number_of_shares').val(min_number_of_shares.toLocaleString('en-US'));
         this.$('#max_number_of_shares').val(max_number_of_shares.toLocaleString('en-US'));
         this.$('#min_equity_offered').val(min_equity_offered + '%');

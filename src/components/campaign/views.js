@@ -25,7 +25,7 @@ module.exports = {
       this.$el.append(
         this.template({
           serverUrl: serverUrl,
-          companies: this.collection,
+          collection: this.collection,
         })
       );
       this.$el.find('.selectpicker').selectpicker();
@@ -447,7 +447,7 @@ module.exports = {
       this.fields = options.fields;
       this.user = options.user;
       this.user.account_number_re = this.user.account_number;
-
+      this.fields.is_understand_securities_related = {},
       this.fields.payment_information_type.validate.choices = {
         0: 'Echeck (ACH)',
         1: 'Check',
@@ -456,6 +456,33 @@ module.exports = {
 
       this.fields.payment_information_data.schema.account_number_re = { required: false };
       this.fields.personal_information_data.schema.phone = { required: true };
+
+      const validateAmount = (amount) => {
+        amount = Number(amount);
+        let min = this.model.campaign.minimum_increment;
+        let max = this._maxAllowedAmount;
+
+        if (amount < min) {
+          throw 'Sorry, minimum investment is $' + min;
+        }
+
+        if (amount > max) {
+          throw 'Sorry, your amount if too high, please update your income or change amount’';
+        }
+
+        this.$amount.data('contentselector', 'amount-ok');
+
+        this.$amount.popover('show');
+
+        return true;
+      };
+
+      this.fields.amount.fn = function (value, fn, attr, model, computed) {
+        return validateAmount(this.amount);
+      };
+
+      this.model.campaign.expiration_date = new Date(this.model.campaign.expiration_date);
+
       this.labels = {
         personal_information_data: {
           street_address_1: 'Street Address 1',
@@ -485,6 +512,11 @@ module.exports = {
         is_understand_investing_is_risky: `I understand that investing in start-ups and small 
           businesses listed on GrowthFountain is very risky, and that I should not invest any 
           funds unless I can afford to lose my entire investment.`,
+        is_understand_securities_related: `I understand that GrowthFountain performs all securities
+          related activities. I further understand that DCU (Digital Federal Credit Union) (a) does 
+          not participate in the selection or review of any issuers, (b) does not have any responsibility 
+          for the accuracy or completeness of any information provided by any issuer and (c) does not provide 
+          any investment advice or recommendations.`,
       };
 
       this.assignLabels();
@@ -502,7 +534,6 @@ module.exports = {
           Urls: Urls,
           fields: this.fields,
           values: this.model,
-          // user: app.user.toJSON(),
           user: this.user,
           states: this.usaStates,
           countries: countries,
@@ -510,48 +541,48 @@ module.exports = {
       );
 
       this.$amount = this.$el.find('#amount');
+      this.$amount.data('contentselector', 'amount-campaign');
+      this.$amount.data('max', this._maxAllowedAmount);
 
-      let that = this;
-
-      $('#amount').popover({
+      this.$amount.popover({
         placement(context, src) {
           return 'top';
         },
         container: '#content',
         html: true,
         content(){
-          var content = $('.invest_form').find('.popover-content-' + that.currentAmountTip).html();
-          if (that.currentAmountTip == 'amount-ok' || that.currentAmountTip == 'amount-campaign') {
-            content = content.replace(/\:amount/g, that._maxAllowedAmount.toLocaleString('en-US'));
+          let $this = $(this);
+          let currentTip = $this.data('contentselector');
+          let max = $this.data('max').toLocaleString('en-US');
+
+          var content = $('.invest_form .popover-content-' + currentTip).html();
+
+          if (currentTip == 'amount-ok' || currentTip == 'amount-campaign') {
+            content = content.replace(/\:amount/g, max);
           }
+
           return content;
         },
         trigger: 'manual',
       }).popover('hide');
 
-      $('#income_worth_modal').on('hidden.bs.modal', function() {
-        $('#amount').keyup();
+      $('#income_worth_modal').on('hidden.bs.modal', () => {
+        this.$amount.keyup();
       });
 
-      $('span.current-limit').text(this._maxAllowedAmount);
+      $('span.current-limit').text(this._maxAllowedAmount.toLocaleString('en-US'));
 
       return this;
     },
 
-    currentAmountTip: 'amount-campaign',
-
-    showAmountPopup() {
-
-    },
-
-    maxInvestmentsPerYear(annualIncome, netWorth) {
+    maxInvestmentsPerYear(annualIncome, netWorth, investedPastYear, investedOtherSites) {
       let maxInvestmentsPerYear = (annualIncome >= 100 && netWorth >= 100)
         ? Math.min(annualIncome, netWorth) * 0.1
         : Math.min(annualIncome, netWorth) * 0.05;
 
       maxInvestmentsPerYear = maxInvestmentsPerYear < 2 ? 2 : maxInvestmentsPerYear;
 
-      return maxInvestmentsPerYear * 1000 ;
+      return Math.round((maxInvestmentsPerYear * 1000 - investedPastYear - investedOtherSites));
     },
 
     initMaxAllowedAmount() {
@@ -560,8 +591,8 @@ module.exports = {
       let investedOnOtherSites = this.user.invested_on_other_sites;
       let investedPastYear = this.user.invested_equity_past_year;
 
-      this._maxAllowedAmount = this.maxInvestmentsPerYear(annualIncome, netWorth);
-        - investedOnOtherSites - investedPastYear;
+      this._maxAllowedAmount = this.maxInvestmentsPerYear(annualIncome, netWorth,
+          investedPastYear, investedOnOtherSites);
     },
 
     roundAmount(e) {
@@ -584,8 +615,10 @@ module.exports = {
       this.$amount.val(this.formatInt(newAmount));
       this._updateTotalAmount();
 
-      if (newAmount > amount)
-        console.log('TODO: show popup that informes user about amount of shares logic');
+      if (newAmount > amount) {
+        this.$amount.data('contentcontainer', 'content-rounding');
+        this.$amount.popover('show');
+      }
 
       // return false;
     },
@@ -603,19 +636,48 @@ module.exports = {
     },
 
     updateLimitInModal(e) {
-      let annual_income = Number(this.$('#annual_income').val().replace(/\,/g, '')), net_worth = Number(this.$('#net_worth').val().replace(/\,/g, ''));
-      this.$('#annual_income').val((annual_income || 0).toLocaleString('en-US'));
-      this.$('#net_worth').val((net_worth || 0).toLocaleString('en-US'));
-      this.$('span.current-limit').text((Math.round(this._amountAllowed(annual_income / 1000, net_worth / 1000))).toLocaleString('en-US'));
+      let annualIncome = Number(this.$('#annual_income').val().replace(/\,/g, '')) || 0,
+          netWorth = Number(this.$('#net_worth').val().replace(/\,/g, '')) || 0;
+
+
+      let investedOnOtherSites = this.user.invested_on_other_sites;
+      let investedPastYear = this.user.invested_equity_past_year;
+
+      this.$('#annual_income').val(annualIncome.toLocaleString('en-US'));
+      this.$('#net_worth').val(netWorth.toLocaleString('en-US'));
+
+      this.$('span.current-limit').text(
+        this.maxInvestmentsPerYear(annualIncome / 1000, netWorth / 1000, investedPastYear, investedOnOtherSites)
+          .toLocaleString('en-US')
+      );
     },
 
     updateIncomeWorth(e) {
-      let net_worth = $(':input[id=net_worth]').val().replace(/\,/g, '') / 1000;
-      let annual_income = $(':input[id=annual_income]').val().replace(/\,/g, '') / 1000;
-      api.makeRequest(authServer + '/rest-auth/data', 'PATCH', {net_worth: net_worth, annual_income: annual_income}).then((data) => {
-        this.user.net_worth = net_worth;
-        this.user.annual_income = annual_income;
-        this.$('#amount').keyup();
+      let netWorth = $('#net_worth')
+        .val()
+        .trim()
+        .replace(/\,/g, '')
+        / 1000;
+
+      let annualIncome = $('#annual_income')
+        .val()
+        .trim()
+        .replace(/\,/g, '') / 1000;
+
+      let data = {
+        net_worth: netWorth,
+        annual_income: annualIncome
+      };
+
+      api.makeRequest(authServer + '/rest-auth/data', 'PATCH', data).done((data) => {
+        this.user.net_worth = netWorth;
+        this.user.annual_income = annualIncome;
+
+        this.initMaxAllowedAmount();
+        $('span.current-limit').text(this._maxAllowedAmount.toLocaleString('en-US'));
+        this.$amount.data('max', this._maxAllowedAmount);
+
+        this.$amount.keyup();
       }).fail((xhr, status, text) => {
         alert('Update failed. Please try again!');
       });
@@ -650,12 +712,7 @@ module.exports = {
 
     submit(e) {
       e.preventDefault();
-      ///!!!
-      console.log('ADD VALIDATION OF MIN/MAX VALUE');
-      // if (this._exceedLimit()) {
-      //   $('.popover').scrollTo();
-      //   return;
-      // }
+
       let data = $(e.target).serializeJSON();
       data.amount = data.amount.replace(/\,/g, '');
       api.submitAction.call(this, e, data);
@@ -742,21 +799,33 @@ module.exports = {
       });
     },
 
-    amountRounding(e) {
-      // No price per share for revenue share company.
-      if (this.model.campaign.security_type == 1) return;
-
-      let amount = $(e.target).val();
-      const pricePerShare = this.model.campaign.price_per_share;
-      const minIncrement = this.model.campaign.minimum_increment;
-
-      if ((amount && pricePerShare) && amount % pricePerShare != 0 && amount >= minIncrement) {
-        amount = Math.ceil(amount / pricePerShare) * pricePerShare;
-        $(e.target).val(amount);
-        this.currentAmountTip = 'rounding';
-        $('#amount').popover('show');
-        this._updateTotalAmount(e);
+    validateAmount(amount) {
+      amount = Number(amount);
+      let min = this.model.campaign.minimum_increment;
+      let max = this._maxAllowedAmount;
+      if (amount < min) {
+        this.$amount.data('contentselector', 'minimum-increment');
+        this.$amount.popover('show');
+        return false;
       }
+
+      if (amount > max) {
+        this.$amount.data('contentselector', 'amount-campaign');
+        this.$amount.popover('show');
+        $('.popover a.update-income-worth')
+          .off('click')
+          .on('click', (e) => {
+            $('#amount').popover('hide');
+          });
+
+        return false;
+      }
+
+      this.$amount.data('contentselector', 'amount-ok');
+
+      this.$amount.popover('show');
+
+      return true;
     },
 
     updateAmount(e) {
@@ -767,27 +836,14 @@ module.exports = {
 
       e.currentTarget.value = this.formatInt(amount);
 
-      let minIncrement = this.model.minimum_increment;
+      this.validateAmount(amount);
 
-      //show proper tooltip
-      if (amount < minIncrement) {
-        this.currentAmountTip = 'minimum-investment';
-        $('#amount').popover('show');
-      } else if(amount > this._maxAllowedAmount) {
-        this.currentAmountTip = 'amount-campaign';
-        $('#amount').popover('show');
-        $('.popover a.update-income-worth')
-          .off('click')
-          .on('click', (e) => {
-            $('#amount').popover('hide');
-          });
-      } else if (this.currentAmountTip == 'amount-campaign') {
-        this.currentAmountTip = 'amount-ok';
-        $('#amount').popover('show');
-      } else {
-        $('#amount').popover('hide');
-      }
+      this.updatePerks();
 
+      this._updateTotalAmount();
+    },
+
+    updatePerks(amount) {
       //update perks
       let $targetPerk;
       let $perks = this.$('.perk');
@@ -801,8 +857,6 @@ module.exports = {
       $perks.removeClass('active').find('i.fa.fa-check').hide();
       if ($targetPerk)
         $targetPerk.addClass('active').find('i.fa.fa-check').show();
-
-      this._updateTotalAmount();
     },
 
     _updateTotalAmount() {

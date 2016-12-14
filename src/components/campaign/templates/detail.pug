@@ -243,9 +243,9 @@ section
                     if additionalVideo && additionalVideo.provider == 'youtube'
                       img(src="http://img.youtube.com/vi/" + additionalVideo.id + "/0.jpg" alt="" style="width: 338px").card-img.w-100
                     else if additionalVideo && additionalVideo.provider == 'vimeo'
-                      img(src="" alt="" style="width: 338px;" data-vimeo-id=additionalVideo.id).card-img.vimeo-thumbnail
+                      img(src="" alt="" style="width: 338px;" data-vimeo-id=additionalVideo.id).card-img.w-100.vimeo-thumbnail
                     else
-                      img(src="http://img.youtube.com/vi/" + "/0.jpg" alt="" style="width: 338px").card-img
+                      img(src="http://img.youtube.com/vi/" + "/0.jpg" alt="" style="width: 338px").card-img.w-100
                     .card-img-overlay
                       .card-title
                         a(data-toggle="modal" href="#videoModal-" + k data-target="#videoModal-" + k).small-icon.link-6
@@ -308,10 +308,15 @@ section
                       p.card-text
                         small.text-muted #{v.title }
                         
-                      a(href=v.linkedin target="_blank").link-1
-                        i.fa.fa-linkedin.more
-                      a(href=v.facebook target="_blank").link-1
-                        i.fa.fa-facebook
+                      if v.linkedin
+                        a(href=v.linkedin target="_blank").link-1
+                          i.fa.fa-linkedin.more
+                      if v.facebook
+                        a(href=v.facebook target="_blank").link-1
+                          i.fa.fa-facebook
+                      if !(v.linedin || v.facebook)
+                        a.link-1(style="visibility:hidden;")
+                          i.fa.fa-linkedin.more
                       p.card-text.text-justify.hide-more-detail !{textHelper.restoreLineBreak(v.bio)}
                         if v.bio.length > 200
                           a(href="#").show-more-members.link-3 Read More
