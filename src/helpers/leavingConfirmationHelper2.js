@@ -23,6 +23,8 @@ module.exports = {
       api.fixMoneyFields.call(this, this.fields, newData);
       let patchData = {};
       let d = deepDiff(newData, this.model);
+      console.log(JSON.stringify(newData));
+      console.log(JSON.stringify(this.model));
       _(d).forEach((el, i) => {
         if(el.kind == 'E' || el.kind == 'A') {
           if (String(el.lhs) == String(el.rhs)) return;

@@ -3,11 +3,6 @@
 const formatHelper = require('helpers/formatHelper');
 const validation = require('components/validation/validation.js');
 const deepDiff = require('deep-diff').diff;
-function pad(n, width, z) {
-  z = z || '0';
-  n = n + '';
-  return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
-}
 
 module.exports = {
   makeCacheRequest(url, type, data) {
@@ -223,8 +218,8 @@ module.exports = {
         var key_month = key + '__month';
         var key_day = key + '__day';
         if(data[key_year]) {
-          data[key] = data[key_year] + '-' + (data[key_month] ? pad(data[key_month], 2) : '01') + '-' + 
-            (data[key_day] ? pad(data[key_day], 2) : '01') 
+          data[key] = data[key_year] + '-' + (data[key_month] || '01') + '-' + 
+            (data[key_day] || '01') 
         }
         delete data[key_year];
         delete data[key_month];
