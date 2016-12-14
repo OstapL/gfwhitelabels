@@ -728,7 +728,7 @@ module.exports = {
         template: ['invest/subscription_agreement.pdf', 'invest/participation_agreement.pdf']
       };
 
-      $.post(reqUrl, data)
+      api.makeRequest(reqUrl, 'POST', data)
       .done( () => {
         $('#content').scrollTo();
         this.undelegateEvents();
