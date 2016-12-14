@@ -80,14 +80,18 @@ class GeoCoder {
   }
 
   saveCityState(e) {
+    this.view.model.city = document.querySelector('#city').value;
+    this.view.model.state = document.querySelector('#state').value;
+
     const data = {
       'city': this.view.model.city,
       'state': this.view.model.state
     };
 
-    document.querySelector('.js-city-state').innerHTML = city + ', ' + state;
+    document.querySelector('.js-city-state').innerHTML = 
+      this.view.model.city + ', ' + this.view.model.state;
 
-    api.makeRequest(this.view.urlRoot.replace(':id', this.values.id), 'PATCH', data)
+    api.makeRequest(this.view.urlRoot.replace(':id', this.view.model.id), 'PATCH', data)
       .fail((response) => {
         console.debug(response);
       });
