@@ -64,8 +64,13 @@ const onPreviewAction = function(e) {
   //this.$el.find('#submitForm').click();
   app.showLoading();
   let data = this.$('form').serializeJSON({ useIntKeysAsArrayIndex: true });
+  if (window.location.href.indexOf('team-members/add') !== -1) {
+    e.target.dataset.method = 'PUT';
+  }
   if (api.submitAction.call(this, e, data)) {
-    window.location = '/' + this.formc.company_id + '?preview=1&previous=' + pathname;
+    setTimeout((function() {
+      window.location = '/' + this.formc.company_id + '?preview=1&previous=' + pathname;
+    }).bind(this), 100);
   }
 };
 
