@@ -12,7 +12,7 @@ let exports = {
       value = {}
     }
     _.extend(myAttr, schema);
-    myAttr.value = value[name] ? value[name]: '';
+    myAttr.value = value.hasOwnProperty(name) ? value[name]: '';
     myAttr.id = nestedName + '__' + index + '__' + name + '';
   },
 
@@ -209,7 +209,7 @@ let exports = {
 
   fieldText(name, attr) {
     const template = require('./templates/fieldText.pug');
-    attr.value = attr.value || '';
+    attr.value = attr.hasOwnProperty('value') ? attr.value : '';
     return template({
       name: name,
       attr: attr,
@@ -296,10 +296,6 @@ let exports = {
 
     this.prepareField(name, attr);
 
-    attr.icon = attr.data.mime
-      ? helpers.mimetypeIcons[attr.data.mime.split('/')[1]]
-      : attr.type;
-
     let nameClass = attr.id || name,
       requiredClass = attr.required ? 'required' : '',
       popoverClass = attr.help_text ? 'showPopover' : '';
@@ -313,8 +309,13 @@ let exports = {
     attr.class2 = attr.class2 || 'col-xl-9 col-lg-12 p-l-1 p-r-1';
     attr.class2 += ` dropzone__${name}`;
 
-    attr.default = attr.default || '/img/default/file.png';
     attr.icon = attr.icon || 'file';
+
+    attr.fileIcon = attr.data.mime
+      ? helpers.mimetypeIcons[attr.data.mime.split('/')[1]]
+      : attr.type;
+
+    attr.default = attr.default || '/img/default/file.png';
     attr.text = attr.text || 'Drop your PDF or DOC here or click to upload';
 
     const template = require('./templates/fileDropzone.pug');
@@ -359,6 +360,8 @@ let exports = {
     attr.class = `row media-item ${attr.class} ${nameClass} ${requiredClass} imageDropzone ${popoverClass}`;
     attr.class1 += attr.required ? ' required' : '';
     attr.class2 += ` dropzone__${name}`;
+    attr.icon = attr.icon || 'file-image-o';
+    attr.text = attr.text || 'Drop your photo here or click to upload';
     const template = require('./templates/imageDropzone.pug');
     return template({
       name: name,
@@ -382,6 +385,8 @@ let exports = {
     attr.class = `row media-item ${attr.class} ${nameClass} ${requiredClass} galleryDropzone ${popoverClass}`;
     attr.class1 += ` ${requiredClass}`;
     attr.class2 += ` dropzone__${name}`;
+    attr.icon = attr.icon || 'file-image-o';
+    attr.text = attr.text || 'Drop your photo(s) here or click to upload';
 
     const template = require('./templates/imagefolderDropzone.pug');
     return template({

@@ -3,6 +3,11 @@ const textHelper = require('helpers/textHelper');
 const companyFees = require('consts/companyFees.json');
 const usaStates = require('helpers/usaStates.js');
 
+const helpers = {
+  text: textHelper,
+  mimetypeIcons: require('helpers/mimetypeIcons.js'),
+};
+
 let countries = {};
 _.each(require('helpers/countries.json'), (c) => { countries[c.code] = c.name; });
 
@@ -61,6 +66,7 @@ module.exports = {
       'hidden.bs.collapse #hidden-article-press' :'onArticlePressCollapse',
       'shown.bs.collapse #hidden-article-press' :'onArticlePressCollapse',
       'click .submit_form': 'submitCampaign',
+      'click .company-documents': 'showDocumentsModal',
     },
 
     onCollapse (e) {
@@ -88,6 +94,10 @@ module.exports = {
         this.previous = params.previous;
       }
       this.preview = params.preview ? true : false;
+
+      this.companyDocs = this.model.formc
+        ? _.union(this.model.formc.fiscal_prior_group_data, this.model.formc.fiscal_recent_group_data)
+        : [];
 
     },
 
@@ -227,6 +237,12 @@ module.exports = {
             '&text=Check out ' + (this.model.short_name || this.model.name) + "'s fundraise on @growthfountain "),'Growth Fountain Campaingn','width=550,height=420');
     },
 
+    showDocumentsModal(e) {
+      e.preventDefault();
+      $('#documents-modal').modal('show');
+      return false;
+    },
+
     render() {
       const socialMediaScripts = require('helpers/shareButtonHelper.js');
       const fancybox = require('components/fancybox/js/jquery.fancybox.js');
@@ -235,6 +251,7 @@ module.exports = {
       this.$el.html(
         this.template({
           serverUrl: serverUrl,
+          companyDocs: this.companyDocs,
           Urls: Urls,
           values: this.model,
           formatHelper: formatHelper,
@@ -242,6 +259,7 @@ module.exports = {
           previous: this.previous,
           preview: this.preview,
           textHelper: textHelper,
+          helpers: helpers,
         })
       );
 
@@ -337,6 +355,8 @@ module.exports = {
           },
         });
       });
+
+      this.$('#documents-modal').modal('hide');
 
       return this;
     },

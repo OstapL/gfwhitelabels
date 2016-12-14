@@ -6,7 +6,6 @@ window.Tether = require('tether');
 global.Bootstrap = require('bootstrap/dist/js/bootstrap.js');
 global.userModel = require('components/accountProfile/model.js');
 global.Urls = require('./jsreverse.js');
-global.googleAnalyticsId = 'UA-47199302-1';
 require('jquery-serializejson/jquery.serializejson.min.js');
 const validation = require('components/validation/validation.js');
 
@@ -222,6 +221,15 @@ let app = {
     });
     return (thumb ? thumb.url : _default || '/img/default/default.png')
   },
+
+  runGoogleAnalytics(id) {
+    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+      new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+      'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer', id);
+  },
+
 };
 
 // Что-то пахнет говнецом
@@ -236,6 +244,7 @@ app.routers = require('routers');
 app.fields = require('fields');
 app.user.load();
 app.trigger('userReady');
+app.runGoogleAnalytics(global.googleAnalyticsId);
 
 app.breadcrumbs = function(title, subtitle, data) {
   const template = require('templates/breadcrumbs.pug');
@@ -436,5 +445,6 @@ $('body').on('click', 'a', function (event) {
       app.trigger('userReady');
       app.trigger('menuReady');
     }
+    app.runGoogleAnalytics(global.googleAnalyticsId);
   }
 });

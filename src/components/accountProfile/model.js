@@ -27,14 +27,15 @@ let userModel = Backbone.Model.extend({
   //   });
   // },
 
-  ensureLoggedIn() {
-    if (app.user.is_anonymous()) {
+  ensureLoggedIn(next) {
+    if (this.is_anonymous()) {
       const pView = require('components/anonymousAccount/views.js');
-      require.ensure([], function() {
-        new pView.popupLogin().render(window.location.pathname);
-        app.hideLoading();
-        $('#sign_up').modal();
+      let v = new pView.popupLogin({
+        next: next || window.location.pathname,
       });
+      v.render();
+      app.hideLoading();
+
       return false;
     }
 

@@ -42,8 +42,13 @@ module.exports = {
       url = serverUrl + url
     } 
 
-    if (type == 'POST' || type == 'PUT' || type == 'PATCH') {
-       data = JSON.stringify(data);
+    if(type == 'POST' || type == 'PUT' || type == 'PATCH') {
+      if (type == 'POST' || type == 'PUT') {
+        data = data || {};
+        data.domain = window.location.host;
+      }
+
+      data = JSON.stringify(data);
     }
 
     let params = _.extend({
@@ -118,6 +123,9 @@ module.exports = {
       })
       fields = patchFields;
     }
+
+    if (method == 'POST' || method == 'PUT')
+      newData.domain = window.location.host;
 
     if(!validation.validate(fields, newData, this)) {
       _(validation.errors).each((errors, key) => {

@@ -326,12 +326,10 @@ module.exports = {
       let $submitBtn = $target.find('#pay-btn');
       $submitBtn.prop('disabled', true);
 
-      var data = $target.serializeJSON({ checkboxUncheckedValue: 'false', useIntKeysAsArrayIndex: true });
+      let data = $target.serializeJSON({ checkboxUncheckedValue: 'false', useIntKeysAsArrayIndex: true });
 
-      // ToDo
-      // Fix this
-      if (data.failed_to_comply_choice == false) {
-        data.failed_to_comply = 'Please explain.';
+      if (data.certify == 0) {
+        delete data.certify;
       }
 
       api.submitAction.call(this, e, data);
@@ -356,7 +354,6 @@ module.exports = {
     }, menuHelper.events, leavingConfirmationHelper.events),
 
     preinitialize() {
-
       // ToDo
       // Hack for undelegate previous events
       for (let k in this.events) {
@@ -369,7 +366,6 @@ module.exports = {
       this.fields = options.fields;
       this.fields.full_time_employers = { label: 'Full Time Employees' };
       this.fields.part_time_employers = { label: 'Part Time Employees' };
-      console.log(this);
     },
 
     _success(data, newData) {
@@ -469,6 +465,14 @@ module.exports = {
       'click #submitForm': api.submitAction,
       'click .submit_formc': submitFormc,
     }, addSectionHelper.events, menuHelper.events, leavingConfirmationHelper.events),
+
+    preinitialize() {
+      // ToDo
+      // Hack for undelegate previous events
+      for (let k in this.events) {
+        $('#content ' + k.split(' ')[1]).undelegate();
+      }
+    },
 
     initialize(options) {
       if(options.user_id != 'new') {
@@ -584,6 +588,14 @@ module.exports = {
       'click .submit_formc': submitFormc,
     }, addSectionHelper.events, menuHelper.events, yesNoHelper.events, leavingConfirmationHelper.events),
 
+    preinitialize() {
+      // ToDo
+      // Hack for undelegate previous events
+      for (let k in this.events) {
+        $('#content ' + k.split(' ')[1]).undelegate();
+      }
+    },
+
     initialize(options) {
       this.model = options.formc;
       this.fields = options.fields;
@@ -641,6 +653,14 @@ module.exports = {
 
   useOfProceeds: Backbone.View.extend(_.extend({
     urlRoot: formcServer + '/:id/use-of-proceeds',
+
+    preinitialize() {
+      // ToDo
+      // Hack for undelegate previous events
+      for (let k in this.events) {
+        $('#content ' + k.split(' ')[1]).undelegate();
+      }
+    },
 
     initialize(options) {
       this.model = options.formc;
@@ -816,6 +836,14 @@ module.exports = {
       this.model = options.formc;
     },
 
+    preinitialize() {
+      // ToDo
+      // Hack for undelegate previous events
+      for (let k in this.events) {
+        $('#content ' + k.split(' ')[1]).undelegate();
+      }
+    },
+
     events: _.extend({
       'submit form': 'submit',
       'click .submit_formc': submitFormc,
@@ -843,6 +871,14 @@ module.exports = {
     events: _.extend({
       'click .submit_formc': submitFormc,
     }, menuHelper.events, riskFactorsHelper.events, leavingConfirmationHelper.events),
+
+    preinitialize() {
+      // ToDo
+      // Hack for undelegate previous events
+      for (let k in this.events) {
+        $('#content ' + k.split(' ')[1]).undelegate();
+      }
+    },
 
     initialize(options) {
       this.model = options.formc;
@@ -944,6 +980,14 @@ module.exports = {
     events: _.extend({
       'click .submit_formc': submitFormc,
     }, menuHelper.events, riskFactorsHelper.events, leavingConfirmationHelper.events),
+
+    preinitialize() {
+      // ToDo
+      // Hack for undelegate previous events
+      for (let k in this.events) {
+        $('#content ' + k.split(' ')[1]).undelegate();
+      }
+    },
 
     initialize(options) {
       this.model = options.formc;
@@ -1053,6 +1097,14 @@ module.exports = {
     events: _.extend({
       'click .submit_formc': submitFormc,
     }, menuHelper.events, riskFactorsHelper.events, leavingConfirmationHelper.events),
+
+    preinitialize() {
+      // ToDo
+      // Hack for undelegate previous events
+      for (let k in this.events) {
+        $('#content ' + k.split(' ')[1]).undelegate();
+      }
+    },
 
     initialize(options) {
       this.model = options.formc;
@@ -1192,6 +1244,14 @@ module.exports = {
       'click .submit_formc': submitFormc,
     }, menuHelper.events, riskFactorsHelper.events, leavingConfirmationHelper.methods),
 
+    preinitialize() {
+      // ToDo
+      // Hack for undelegate previous events
+      for (let k in this.events) {
+        $('#content ' + k.split(' ')[1]).undelegate();
+      }
+    },
+
     initialize(options) {
       this.model = options.formc;
       this.fields = options.fields;
@@ -1273,6 +1333,14 @@ module.exports = {
     events: _.extend({
       'click .submit_formc': submitFormc,
     }, menuHelper.events, riskFactorsHelper.events, leavingConfirmationHelper.events),
+
+    preinitialize() {
+      // ToDo
+      // Hack for undelegate previous events
+      for (let k in this.events) {
+        $('#content ' + k.split(' ')[1]).undelegate();
+      }
+    },
 
     initialize(options) {
       this.model = options.formc;
@@ -1373,6 +1441,14 @@ module.exports = {
     events: _.extend({
       'click .submit_formc': submitFormc,
     }, menuHelper.events, riskFactorsHelper.events, leavingConfirmationHelper.events),
+
+    preinitialize() {
+      // ToDo
+      // Hack for undelegate previous events
+      for (let k in this.events) {
+        $('#content ' + k.split(' ')[1]).undelegate();
+      }
+    },
 
     initialize(options) {
       this.model = options.formc;
@@ -1496,6 +1572,14 @@ module.exports = {
       'click .submit_formc': submitFormc,
     }, menuHelper.events, riskFactorsHelper.events, leavingConfirmationHelper.events),
 
+    preinitialize() {
+      // ToDo
+      // Hack for undelegate previous events
+      for (let k in this.events) {
+        $('#content ' + k.split(' ')[1]).undelegate();
+      }
+    },
+
     initialize(options) {
       this.model = options.formc;
       this.fields = options.fields;
@@ -1532,6 +1616,14 @@ module.exports = {
       'submit form': api.submitAction,
       'click .submit_formc': submitFormc,
     }, menuHelper.events, yesNoHelper.events, addSectionHelper.events, dropzoneHelpers.events, /*leavingConfirmationHelper.events*/),
+
+    preinitialize() {
+      // ToDo
+      // Hack for undelegate previous events
+      for (let k in this.events) {
+        $('#content ' + k.split(' ')[1]).undelegate();
+      }
+    },
 
     initialize(options) {
       this.model = options.formc;
@@ -1599,6 +1691,14 @@ module.exports = {
       'click .submit_formc': submitFormc,
       'click .delete-outstanding': 'deleteOutstanding',
     }, addSectionHelper.events, menuHelper.events, yesNoHelper.events, /*leavingConfirmationHelper.events*/),
+
+    preinitialize() {
+      // ToDo
+      // Hack for undelegate previous events
+      for (let k in this.events) {
+        $('#content ' + k.split(' ')[1]).undelegate();
+      }
+    },
 
     initialize(options) {
       this.model = options.formc;
@@ -1787,6 +1887,14 @@ module.exports = {
 
   backgroundCheck: Backbone.View.extend(_.extend({
     urlRoot: formcServer + '/:id' + '/background-check',
+
+    preinitialize() {
+      // ToDo
+      // Hack for undelegate previous events
+      for (let k in this.events) {
+        $('#content ' + k.split(' ')[1]).undelegate();
+      }
+    },
     initialize(options) {
       this.model = options.formc;
       this.fields = options.fields;
@@ -1833,6 +1941,14 @@ module.exports = {
 
   finalReview: Backbone.View.extend({
     urlRoot: formcServer + '/:id/final-review',
+
+    preinitialize() {
+      // ToDo
+      // Hack for undelegate previous events
+      for (let k in this.events) {
+        $('#content ' + k.split(' ')[1]).undelegate();
+      }
+    },
     initialize(options) {
       this.fields = options.fields;
       disableEnterHelper.disableEnter.call(this);
@@ -2056,6 +2172,14 @@ module.exports = {
   finalReviewTwo: Backbone.View.extend({
     el: '#content',
     template: require('./templates/finalReviewTwo.pug'),
+
+    preinitialize() {
+      // ToDo
+      // Hack for undelegate previous events
+      for (let k in this.events) {
+        $('#content ' + k.split(' ')[1]).undelegate();
+      }
+    },
     initialize(options) {
       this.fields = options.fields;
     },

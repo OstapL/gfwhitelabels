@@ -8,7 +8,7 @@ global.formcServer = "https://api-formc.growthfountain.com";
 global.investmentServer = "https://api-investment.growthfountain.com";
 //global.investmentServer = "http://localhost:8003";
 global.filerServer = "https://api-filer.growthfountain.com";
-global.esignServer = 'http://api-esign.growthfountain.com';
+global.esignServer = 'https://api-esign.growthfountain.com';
 global.commentsServer = "https://api-comments.growthfountain.com";
 global.blogServer = "https://api-blog.growthfountain.com";
 
@@ -30,3 +30,4 @@ global.linkedinClientId = "77hgtbs9rkjk20";
 
 global.googleMapKey = "AIzaSyBpCl9-7bkVISZ0o-AaFCsKzZwGAxalkZU";
 global.stripeKey = "pk_test_Z7YAhlyPtnW7bpd8LJUHTSou";
+global.googleAnalyticsId = 'GTM-NC9XW5D';
