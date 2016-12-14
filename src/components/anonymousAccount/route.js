@@ -8,6 +8,7 @@ module.exports = Backbone.Router.extend({
     'account/google/login/': 'loginGoogle',
     'account/linkedin/login/': 'loginLinkedin',
     'account/finish/login/': 'finishSocialLogin',
+    'account/reset': 'resetForm',
     'reset-password/code/:code': 'resetPassword',
     'code/:code': 'membershipConfirmation',
   },
@@ -144,6 +145,17 @@ module.exports = Backbone.Router.extend({
       });
   },
 
+  resetForm: function() {
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    $('#content').scrollTo();
+
+    const i = new View.reset();
+    i.render();
+    app.hideLoading();
+
+  },
+
   resetPassword: function(code) {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
@@ -152,7 +164,7 @@ module.exports = Backbone.Router.extend({
       'reset_password_code': code,
     }).done((data) => {
       localStorage.setItem('token', data.key);
-      window.location = '/account/profile';
+      window.location = '/account/password/new';
     }).fail((data) => {
       $('#content').html(
         '<section class="reset"><div class="container"><div class="col-lg-12"><h2 class="dosis text-uppercase text-sm-center text-xs-center m-t-85"> Your code have been expired. Please request new link </h2></div></div></section>'
