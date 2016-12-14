@@ -7,8 +7,7 @@ module.exports = {
   
   methods: {
     confirmLeaving(e) {
-      // in risk factor page
-      if (window.location.pathname.indexOf('risk-factors') !== -1) {
+      if (window.location.pathname.indexOf('risk-factors') !== -1) {// in risk factor page
         let diff = false;
         let that = this;
         // check if existing risk changed
