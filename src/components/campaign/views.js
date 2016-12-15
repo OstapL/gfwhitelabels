@@ -780,8 +780,8 @@ module.exports = {
     },
 
     getDocMetaData () {
-      const investor_legal_name = $('#first_name').val() + $('#last_name').val()
-                      || app.user.get('first_name') + app.user.get('last_name');
+      const investor_legal_name = $('#first_name').val() + ' ' + $('#last_name').val()
+                      || app.user.get('first_name') + ' ' + app.user.get('last_name');
       return {
         address_1: $('#street_address_1').val(),
         address_2: $('#street_address_2').val(),
