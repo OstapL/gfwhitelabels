@@ -684,8 +684,13 @@ module.exports = {
     submit(e) {
       e.preventDefault();
 
-      let data = $(e.target).serializeJSON();
+      let data = $(e.target).serializeJSON({ useIntKeysAsArrayIndex: true });
       data.amount = data.amount.replace(/\,/g, '');
+      if(data['payment_information_type'] == '1' || data['payment_information_type'] == 2) {
+        delete data['payment_information_data'];
+        // Temp solution !
+        delete this.fields.payment_information_data;
+      }
       api.submitAction.call(this, e, data);
     },
 
