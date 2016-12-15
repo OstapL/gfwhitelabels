@@ -56,10 +56,9 @@ module.exports = Backbone.Router.extend({
       const View = require('./views.js');
 
       api.makeCacheRequest(raiseCapitalServer + "/" + id).
-        then((modelData) => {
+        then((companyData) => {
           let i = new View.detail({
-            el: '#content',
-            model: modelData,
+            model: companyData,
           });
           i.render();
           if(location.hash && $(location.hash).length) {

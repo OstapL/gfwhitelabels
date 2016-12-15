@@ -40,6 +40,7 @@ module.exports = {
   }),
 
   detail: Backbone.View.extend({
+    el: '#content',
     template: require('./templates/detail.pug'),
     events: {
       'click .tabs-scroll .nav .nav-link': 'smoothScroll',
@@ -57,7 +58,6 @@ module.exports = {
       'click .more-less': 'showMore',
       'hidden.bs.collapse #hidden-article-press' :'onArticlePressCollapse',
       'shown.bs.collapse #hidden-article-press' :'onArticlePressCollapse',
-      'submit .comment-form': 'submitComment',
       'click .submit_form': 'submitCampaign',
     },
 
@@ -77,6 +77,7 @@ module.exports = {
     initialize(options) {
       $(document).off("scroll", this.onScrollListener);
       $(document).on("scroll", this.onScrollListener);
+
       let params = app.getParams();
       this.edit = false;
       if (params.preview == '1' && this.model.owner == app.user.get('id')) {
@@ -85,6 +86,7 @@ module.exports = {
         this.previous = params.previous;
       }
       this.preview = params.preview ? true : false;
+
     },
 
     submitCampaign(e) {
@@ -178,6 +180,9 @@ module.exports = {
       $link.each(function () {
         var currLink = $(this);
         var refElement = $(currLink.attr("href")).closest('section');
+        if (!refElement || !refElement.length)
+          return;
+
         if (refElement.position().top - $navBar.height() <= scrollPos && refElement.position().top + refElement.height() > scrollPos) {
           $link.removeClass("active");
           currLink.addClass("active");
@@ -296,21 +301,10 @@ module.exports = {
           stickyToggle(sticky, stickyWrapper, $(window));
         });
 
-        this.commentView = require('components/comment/views.js');
+        this.initComments();
 
-        $('#ask').after(
-          new this.commentView.form().getHtml({model: {}})
-        );
-
-        var a1 = api.makeCacheRequest(Urls['comment-list']() + '?company=' + this.model.company.id).
-          then((comments) => {
-            let commentList = new this.commentView.list({
-              el: '.comments',
-              model: this.model.company,
-              collection: comments,
-            }).render();
-          });
       }, 100);
+
       this.$el.find('.perks .col-xl-4 p').equalHeights();
       this.$el.find('.team .auto-height').equalHeights();
       this.$el.find('.card-inverse p').equalHeights();
@@ -346,74 +340,61 @@ module.exports = {
       return this;
     },
 
+    initComments() {
+      const View = require('components/comment/views.js');
+      const urlComments = commentsServer + '/company/' + this.model.id;
+      let optionsR = api.makeRequest(urlComments, 'OPTIONS');
+      let dataR = api.makeRequest(urlComments);
+      //
+      // $.when(optionsR, dataR).done((options, data) => {
+        let commentsModel = {
+          id: this.model.id,
+          data: [
+            {
+              "uid": "c8e5a3ab-3c8a-43a8-8735-b71cb62d9b5a",
+              "role": "GET FROM USER titles field",
+              "message": "Hi, All!!1",
+              "user_id": 26,
+              "children": []
+            },
+            {
+              "uid": "cf7eefd6-76e5-4fe3-aff2-892f4a9e5f95",
+              "role": "GET FROM USER titles field",
+              "message": "Hi, Ben!!1",
+              "user_id": 26,
+              "children": [
+                {
+                  "uid": "2f0656e3-6893-4768-87fb-6f7d47298412",
+                  "role": "GET FROM USER titles field",
+                  "message": "Hi, All & Ben!!1",
+                  "user_id": 26,
+                  "children": [{
+                    "uid": "2f0656e3-6893-4768-87fb-6f7d47298412",
+                    "role": "GET FROM USER titles field",
+                    "message": "Finally!",
+                    "user_id": 1,
+                    "children": []
+                  }]
+                }
+              ]
+            }
+          ],
+          count: 2,
+        };
+
+        let comments = new View.comments({
+          model: commentsModel,
+          // fields: options[0].fields,
+        });
+        comments.render();
+      // });
+    },
+
     readMore(e) {
       e.preventDefault();
       $(e.target).parent().addClass('show-more-detail');
     },
 
-    _commentSuccess(data) {
-      this._success = null;
-      this.urlRoot = null;
-      if (data.parent) {
-        $('#comment_' + data.parent).after(
-          new this.commentView.detail().getHtml({
-            model: data,
-            company: this.model.company,
-            app: app,
-          })
-        );
-      } else {
-        $('#comment_' + data.parent).html(
-          new this.commentView.detail().getHtml({
-            company: this.model.company,
-            model: data,
-            app: app,
-          })
-        );
-      }
-      this.$el.find('.comment-form-div').remove();
-      app.hideLoading();
-      app.showLoading = this._showLoading;
-    },
-
-    checkResponse(e) {
-      e.preventDefault();
-      this.$el.find('.comment-form-div').remove();
-      var $el = $(e.currentTarget);
-      $el.parents('.comment').after(
-        new this.commentView.form({
-        }).getHtml({
-          model: {parent: e.currentTarget.dataset.id},
-          company: this.model.company,
-          app: app,
-        })
-      );
-    },
-
-    submitComment(e) {
-      e.preventDefault();
-      var data = $(e.target).serializeJSON();
-      let model = new Backbone.Model();
-      model.urlRoot = serverUrl + Urls['comment-list']();
-      data['company'] = this.model.company.id;
-      model.set(data)
-      if (model.isValid(true)) {
-        model.save().
-          then((data) => {
-            this.$el.find('.alert-warning').remove();
-            this._commentSuccess(data);
-          }).
-          fail((xhr, status, text) => {
-            api.errorAction(this, xhr, status, text, this.fields);
-          });
-      } else {
-        if (this.$('.alert').length) {
-          $('#content').scrollTo();
-        } else {
-          this.$el.find('.has-error').scrollTo();
-        }
-      }
-    }
   }),
 
   investment: Backbone.View.extend({
@@ -439,7 +420,6 @@ module.exports = {
       this.fields = options.fields;
       this.user = options.user;
       this.user.account_number_re = this.user.account_number;
-      this.fields.is_understand_securities_related = {},
       this.fields.payment_information_type.validate.choices = {
         0: 'Echeck (ACH)',
         1: 'Check',
@@ -555,7 +535,7 @@ module.exports = {
 
           return content;
         },
-        trigger: 'manual',
+        trigger: 'focus',
       }).popover('hide');
 
       $('#income_worth_modal').on('hidden.bs.modal', () => {
@@ -855,7 +835,7 @@ module.exports = {
 
       this.validateAmount(amount);
 
-      this.updatePerks();
+      this.updatePerks(amount);
 
       this._updateTotalAmount();
     },
