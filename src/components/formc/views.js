@@ -12,6 +12,8 @@ const validation = require('components/validation/validation.js');
 
 const disableEnterHelper = require('helpers/disableEnterHelper.js');
 
+const leavingConfirmationHelper = require('helpers/leavingConfirmationHelper2.js');
+
 const labels = {
   title: 'Title for Risk',
   risk: 'Describe Your Risk',
@@ -130,7 +132,7 @@ module.exports = {
       'click .submit_formc': submitFormc,
       'keyup #full-name': 'changeSign',
       'click #pay-btn': 'stripeSubmit',
-    }, menuHelper.events, yesNoHelper.events),
+    }, menuHelper.events, yesNoHelper.events, leavingConfirmationHelper.events),
 
     preinitialize() {
       // ToDo
@@ -322,16 +324,17 @@ module.exports = {
       this.eSignPreview.text(this.eSignFullName.val());
     },
 
-  }, menuHelper.methods, yesNoHelper.methods)),
+  }, menuHelper.methods, yesNoHelper.methods, leavingConfirmationHelper.methods)),
 
   teamMembers: Backbone.View.extend(_.extend({
-    urlRoot: formcServer + '/:id' + '/team-members',
+    urlRoot: formcServer + '/:id/team-members',
     events: _.extend({
       'click #submitForm': api.submitAction,
+      'click .inviteAction': 'repeatInvitation',
       'blur #full_time_employers,#part_time_employers': 'updateEmployees',
       'click .submit_formc': submitFormc,
       'click .delete-member': 'deleteMember',
-    }, menuHelper.events),
+    }, menuHelper.events, leavingConfirmationHelper.events),
 
     preinitialize() {
 
@@ -353,29 +356,37 @@ module.exports = {
     },
 
     deleteMember: function (e) {
-      let memberId = e.currentTarget.dataset.id;
-      let role = e.currentTarget.dataset.role;
+      e.preventDefault();
+      let userId = e.currentTarget.dataset.id;
 
       if (confirm('Are you sure you would like to delete this team member?')) {
         api.makeRequest(
-          this.urlRoot.replace(':id', this.model.id) + '/' + role + '/' + memberId,
-          'DELETE'
+          this.urlRoot.replace(':id', this.model.id) + '/delete',
+          'PUT',
+          {'user_id': userId}
         ).
         then((data) => {
-          this.model.members.splice(memberId, 1);
-          $(e.currentTarget).parent().remove();
-          if (this.model.members.length < 1) {
+          let index = this.model.team_members.findIndex((el) => { return el.user_id == userId });
+          this.model.team_members.splice(index, 1);
+          e.currentTarget.parentElement.parentElement.remove()
+          /*
+           * ToDo
+           * Create right notification error
+           *
+          if (this.model.team_members.length < 1) {
             this.$el.find('.notification').show();
             this.$el.find('.buttons-row').hide();
           } else {
             this.$el.find('.notification').hide();
             this.$el.find('.buttons-row').show();
           }
+          */
         });
       }
     },
 
     updateEmployees(e) {
+      e.preventDefault();
       api.makeRequest(
         this.urlRoot.replace(':id', this.model.id),
         'PUT',
@@ -384,6 +395,18 @@ module.exports = {
           'part_time_employers': this.el.querySelector('#part_time_employers').value,
         }
       );
+    },
+
+    repeatInvitation(e) {
+      e.preventDefault();
+      api.makeRequest(
+        formcServer + '/invitation/repeat',
+        'PUT',
+        {'user_id': e.target.dataset.id}
+      ).then((data) => {
+        e.target.innerHTML = 'sent';
+        e.target.className = 'link-3 invite';
+      });
     },
 
     render() {
@@ -410,7 +433,7 @@ module.exports = {
       return this;
     },
 
-  }, menuHelper.methods, addSectionHelper.methods)),
+  }, menuHelper.methods, addSectionHelper.methods, leavingConfirmationHelper.methods)),
 
   teamMemberAdd: Backbone.View.extend(_.extend({
     urlRoot: formcServer + '/:id/team-members',
@@ -419,7 +442,7 @@ module.exports = {
     events: _.extend({
       'click #submitForm': api.submitAction,
       'click .submit_formc': submitFormc,
-    }, addSectionHelper.events, menuHelper.events),
+    }, addSectionHelper.events, menuHelper.events, leavingConfirmationHelper.events),
 
     initialize(options) {
       this.fields = options.fields;
@@ -499,7 +522,7 @@ module.exports = {
       return '/formc/' + this.model.formc_id + '/team-members';
     },
 
-  }, addSectionHelper.methods, menuHelper.methods)),
+  }, addSectionHelper.methods, menuHelper.methods, leavingConfirmationHelper.methods)),
 
   relatedParties: Backbone.View.extend(_.extend({
     el: '#content',
@@ -508,7 +531,7 @@ module.exports = {
     events: _.extend({
       'submit form': 'submit',
       'click .submit_formc': submitFormc,
-    }, addSectionHelper.events, menuHelper.events, yesNoHelper.events),
+    }, addSectionHelper.events, menuHelper.events, yesNoHelper.events, leavingConfirmationHelper.events),
 
     initialize(options) {
       this.fields = options.fields;
@@ -557,7 +580,7 @@ module.exports = {
       disableEnterHelper.disableEnter.call(this);
       return this;
     },
-  }, addSectionHelper.methods, menuHelper.methods, yesNoHelper.methods)),
+  }, addSectionHelper.methods, menuHelper.methods, yesNoHelper.methods, leavingConfirmationHelper.methods)),
 
   useOfProceeds: Backbone.View.extend(_.extend({
     urlRoot: formcServer + '/:id/use-of-proceeds',
@@ -604,7 +627,7 @@ module.exports = {
       'blur .min-expense,.max-expense,.min-use,.max-use': 'calculate',
       'click .add-sectionnew': 'addSectionNew',
       'click .delete-sectionnew': 'deleteRow',
-    }, menuHelper.events, dropzoneHelpers.events),
+    }, menuHelper.events, dropzoneHelpers.events, leavingConfirmationHelper.events),
 
     deleteRow(e) {
       this.deleteSectionNew(e);
@@ -720,7 +743,7 @@ module.exports = {
       disableEnterHelper.disableEnter.call(this);
       return this;
     }, 
-  }, menuHelper.methods, dropzoneHelpers.methods, addSectionHelper.methods)),
+  }, menuHelper.methods, dropzoneHelpers.methods, addSectionHelper.methods, leavingConfirmationHelper.methods)),
 
   riskFactorsInstruction: Backbone.View.extend(_.extend({
     initialize(options) {
@@ -1434,7 +1457,7 @@ module.exports = {
     events: _.extend({
       'submit form': api.submitAction,
       'click .submit_formc': submitFormc,
-    }, menuHelper.events, yesNoHelper.events, addSectionHelper.events, dropzoneHelpers.events),
+    }, menuHelper.events, yesNoHelper.events, addSectionHelper.events, dropzoneHelpers.events, leavingConfirmationHelper.events),
 
     initialize(options) {
       this.fields = options.fields;
@@ -1485,7 +1508,7 @@ module.exports = {
       disableEnterHelper.disableEnter.call(this);
       return this;
     },
-  }, menuHelper.methods, yesNoHelper.methods, addSectionHelper.methods, dropzoneHelpers.methods)),
+  }, menuHelper.methods, yesNoHelper.methods, addSectionHelper.methods, dropzoneHelpers.methods, leavingConfirmationHelper.methods)),
 
   outstandingSecurity: Backbone.View.extend(_.extend({
     urlRoot: formcServer + '/:id/outstanding-security',
@@ -1495,7 +1518,7 @@ module.exports = {
       'click #submitForm': api.submitAction,
       'click .submit_formc': submitFormc,
       'click .delete-outstanding': 'deleteOutstanding',
-    }, addSectionHelper.events, menuHelper.events, yesNoHelper.events),
+    }, addSectionHelper.events, menuHelper.events, yesNoHelper.events, leavingConfirmationHelper.events),
 
     initialize(options) {
       this.fields = options.fields;
@@ -1674,7 +1697,7 @@ module.exports = {
       disableEnterHelper.disableEnter.call(this);
       return this;
     },
-  }, addSectionHelper.methods, menuHelper.methods, yesNoHelper.methods)),
+  }, addSectionHelper.methods, menuHelper.methods, yesNoHelper.methods, leavingConfirmationHelper.methods)),
 
   backgroundCheck: Backbone.View.extend(_.extend({
     urlRoot: formcServer + '/:id' + '/background-check',
@@ -1704,7 +1727,7 @@ module.exports = {
     events: _.extend({
       'submit form': api.submitAction,
       'click .submit_formc': submitFormc,
-    }, menuHelper.events, yesNoHelper.events),
+    }, menuHelper.events, yesNoHelper.events, leavingConfirmationHelper.events),
 
     render() {
       let template = require('./templates/backgroundCheck.pug');
@@ -1719,7 +1742,7 @@ module.exports = {
       disableEnterHelper.disableEnter.call(this);
       return this;
     },
-  }, menuHelper.methods, yesNoHelper.methods, addSectionHelper.methods)),
+  }, menuHelper.methods, yesNoHelper.methods, addSectionHelper.methods, leavingConfirmationHelper.methods)),
 
   finalReview: Backbone.View.extend({
     urlRoot: formcServer + '/:id/final-review',
@@ -1748,6 +1771,7 @@ module.exports = {
         element.name = target.dataset.name;
         element.value = target.innerHTML;
         element.onblur = (e) => this.update(e);
+        target.parentElement.insertBefore(element, target);
       } else if(target.dataset.type == 'select') {
         element = document.createElement('select');
         element.name = target.dataset.name;
@@ -1763,9 +1787,9 @@ module.exports = {
           }
           element.appendChild(e);
         });
+        target.parentElement.insertBefore(element, target);
       }
 
-      target.parentElement.insertBefore(element, target);
       target.remove();
     },
 
@@ -1777,6 +1801,7 @@ module.exports = {
         'maximum_raise',
         'minimum_raise',
         'security_type',
+        'price_per_share',
       ];
 
       e.target.setAttribute(

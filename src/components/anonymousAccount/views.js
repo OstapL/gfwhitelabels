@@ -377,28 +377,29 @@ module.exports = {
   }),
 
   reset: Backbone.View.extend({
+    urlRoot: authServer + '/reset-password/send',
+    el: '#content',
     events: {
-      'submit form': 'submit',
+      'submit form': api.submitAction,
     },
 
     render(){
+      this.fields = {};
+      this.fields.email = {
+        type: 'email',
+        required: true
+      };
       const template = require('./templates/reset.pug');
-      this.$el.html(template({}));
+      this.el.innerHTML = template();
       return this;
     },
 
-    submit(e) {
-      e.preventDefault();
-
-      let email = $(e.currentTarget).find('#email').val();
-      api.makeRequest(authServer + '/rest-auth/reset', {
-        email: email,
-        type: 'POST',
-      }).then((data) => {
-        $('#content').html(
-          '<section class="reset"><div class="container"><div class="col-lg-12"><h2 class="dosis text-uppercase text-sm-center text-xs-center m-t-85">' + data.success + '</h2></div></div></section>'
-        );
-      });
+    _success(data) {
+      app.hideLoading();
+      $('body').scrollTo();
+      $('#content').html(
+        '<section class="reset"><div class="container"><div class="col-lg-12"><h2 class="dosis text-uppercase text-sm-center text-xs-center m-t-85"> We send you email with future instructions </h2></div></div></section>'
+      );
     }
 
   }),

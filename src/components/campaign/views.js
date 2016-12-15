@@ -4,7 +4,7 @@ const textHelper = require('helpers/textHelper');
 let countries = {};
 _.each(require('helpers/countries.json'), (c) => { countries[c.code] = c.name; });
 
-module.exports = { 
+module.exports = {
   list: Backbone.View.extend({
     el: '#content',
     template: require('./templates/list.pug'),
@@ -191,7 +191,6 @@ module.exports = {
 
     shareWithEmail (e) {
       event.preventDefault();
-      // Check out COMPANY NAME's fundraise on GrowthFountain
       let companyName = this.model.name;
       let text = "Check out " + companyName + "'s fundraise on GrowthFountain";
       window.open("mailto:?subject=" + text + "&body=" + text + "%0D%0A" + window.location.href);
@@ -204,7 +203,7 @@ module.exports = {
         href: window.location.href,
         caption: this.model.tagline,
         description: this.model.description,
-        title: this.model.name,
+        title: 'Chechk out ' + this.model.name + "'s fundraise on GrowthFountain.com",
         picture: (this.model.campaign.header_image_data.url ? this.model.campaign.header_image_data.url : null),
       }, function(response){});
     },
@@ -212,7 +211,7 @@ module.exports = {
     shareOnLinkedin(event) {
       event.preventDefault();
       window.open(encodeURI('https://www.linkedin.com/shareArticle?mini=true&url=' + window.location.href +
-            '&title=' + this.model.name +
+        '&title=' + 'Check out ' + this.model.name + "'s fundraise on GrowthFountain.com" +
             '&summary=' + this.model.description +
             '&source=Growth Fountain'),'Growth Fountain Campaign','width=605,height=545');
     },
@@ -220,9 +219,7 @@ module.exports = {
     shareOnTwitter(event) {
       event.preventDefault();
       window.open(encodeURI('https://twitter.com/share?url=' + window.location.href +
-            '&via=' + 'growthfountain' +
-            '&hashtags=investment,fundraising' +
-            '&text=Check out '),'Growth Fountain Campaign','width=550,height=420');
+            '&text=Check out ' + this.model.name + "'s fundraise on @growthfountain "),'Growth Fountain Campaingn','width=550,height=420');
     },
 
     render() {
@@ -358,7 +355,7 @@ module.exports = {
     _commentSuccess(data) {
       this._success = null;
       this.urlRoot = null;
-      if (data.parent) { 
+      if (data.parent) {
         $('#comment_' + data.parent).after(
           new this.commentView.detail().getHtml({
             model: data,
@@ -423,10 +420,6 @@ module.exports = {
   investment: Backbone.View.extend({
     el: '#content',
     template: require('./templates/investment.pug'),
-    templatesOfPdf: {
-      revenue_share: require('./templates/agreement/revenue_share.pug'),
-      common_stock: require('./templates/agreement/common_stock.pug'),
-    },
     urlRoot: investmentServer + '/',
     doNotExtendModel: true,
     events: {
@@ -500,22 +493,22 @@ module.exports = {
         payment_information_type: 'I Want to Pay Using',
         amount: 'Amount',
         fee: 'Fee',
-        is_reviewed_educational_material: `I confirm and represent that (a) I have reviewed 
-          the educational material that has been made available on this website, (b) I understand 
-          that the entire amount of my investment may be lost and (c) I am in a 
-          financial condition to bear the loss of the investment and (d) I represent that 
+        is_reviewed_educational_material: `I confirm and represent that (a) I have reviewed
+          the educational material that has been made available on this website, (b) I understand
+          that the entire amount of my investment may be lost and (c) I am in a
+          financial condition to bear the loss of the investment and (d) I represent that
           I have not exceeded my investment limitations.`,
-        is_understand_restrictions_to_cancel_investment: `I understand that there are restrictions 
+        is_understand_restrictions_to_cancel_investment: `I understand that there are restrictions
           on my ability to cancel an investment commitment and obtain a return of my investment.`,
-        is_understand_difficult_to_resell_purchashed: `I understand that it may be difficult to 
+        is_understand_difficult_to_resell_purchashed: `I understand that it may be difficult to
           resell securities purchased on GrowthFountain.`,
-        is_understand_investing_is_risky: `I understand that investing in start-ups and small 
-          businesses listed on GrowthFountain is very risky, and that I should not invest any 
+        is_understand_investing_is_risky: `I understand that investing in start-ups and small
+          businesses listed on GrowthFountain is very risky, and that I should not invest any
           funds unless I can afford to lose my entire investment.`,
         is_understand_securities_related: `I understand that GrowthFountain performs all securities
-          related activities. I further understand that DCU (Digital Federal Credit Union) (a) does 
-          not participate in the selection or review of any issuers, (b) does not have any responsibility 
-          for the accuracy or completeness of any information provided by any issuer and (c) does not provide 
+          related activities. I further understand that DCU (Digital Federal Credit Union) (a) does
+          not participate in the selection or review of any issuers, (b) does not have any responsibility
+          for the accuracy or completeness of any information provided by any issuer and (c) does not provide
           any investment advice or recommendations.`,
       };
 
@@ -722,49 +715,34 @@ module.exports = {
       return data.id + '/invest-thanks';
     },
 
-    openPdf (e) {
-      const investor_legal_name = $('#first_name').val() + $('#last_name').val()
-                      || app.user.get('first_name') + app.user.get('last_name');
-      var data = {
-        address_1: this.model.address_1,
-        address_2: this.model.address_2,
-        aggregate_inclusive_purchase: this.$('#amount').val() + 10,
-        city: this.model.city,
-        investor_total_purchase: this.$('#amount').val(),
-        investor_legal_name: this.$(':input[name="personal_information_data[first_name]"]').val() + ' ' + this.$(':input[name="personal_information_data[last_name]"]').val(),
-        state: this.model.state,
-        zip_code: this.model.zip_code,
-        Commitment_Date_X: this.getCurrentDate(),
-        fees_to_investor: 10,
-        investor_address: this.$(':input[name="personal_information_data[street_address_1]"]').val(),
-        investor_city: this.$(':input[name="personal_information_data[city]"]').val(),
-        investor_code: this.$(':input[name="personal_information_data[zip_code]"]').val(),
-        investor_email: app.user.get('email'),
-        Investor_optional_address: this.$(':input[name="personal_information_data[street_address_2]"]').val(),
-        investor_state: this.$(':input[name="personal_information_data[state]"]').val(),
-        investor_number_purchased: this.$('#amount').val() / this.model.campaign.price_per_share,
-        issuer_email: '',
-        issuer_legal_name: this.model.name,
-        issuer_signer: '',
-        issuer_signer_title: '',
-        jurisdiction_of_organization: this.model.founding_state,
-        listing_fee: '',
-        maximum_raise: this.model.campaign.maximum_raise,
-        minimum_raise: this.model.campaign.minimum_raise,
-        price_per_share: this.model.campaign.price_per_share,
-        registration_fee: '',
+    saveEsign(responseData) {
+      const reqUrl = global.esignServer + '/pdf-doc';
+      const successRoute = this.getSuccessUrl(responseData);
+      const formData = this.getDocMetaData();
+      const data = {
+        type: location.hostname,
+        esign: responseData.signature.full_name,
+        meta_data: formData,
+        template: ['invest/subscription_agreement.pdf', 'invest/participation_agreement.pdf']
       };
-      const tplName = e.target.dataset.tpl;
-      const tpl = this.templatesOfPdf[tplName];
-      var docTxt = tpl(data);
-      var doc = JSON.parse(docTxt);
 
-      window.pdfMake
-        .createPdf(doc)
-        .download(e.target.text, () => app.hideLoading());
-      
-      app.showLoading()
-      e.preventDefault();
+      api.makeRequest(reqUrl, 'POST', data)
+      .done( () => {
+        $('#content').scrollTo();
+        this.undelegateEvents();
+        app.routers.navigate(successRoute, {
+            trigger: true,
+            replace: false
+        });
+      })
+      .fail( (err) => console.log(err));
+    },
+
+    openPdf (e) {
+      const pathToDoc = e.target.dataset.path;
+      var data = this.getDocMetaData();
+
+      e.target.href = pathToDoc + '?' + $.param(data);
     },
 
     getCurrentDate () {
@@ -797,6 +775,48 @@ module.exports = {
           console.log("error");
         }
       });
+    },
+
+    getDocMetaData () {
+      const investor_legal_name = $('#first_name').val() + $('#last_name').val()
+                      || app.user.get('first_name') + app.user.get('last_name');
+      return {
+        address_1: $('#street_address_1').val(),
+        address_2: $('#street_address_2').val(),
+        aggregate_inclusive_purchase: $('#total').val(),
+        city: $('#city').val(),
+        investor_total_purchase: $('#amount').val(),
+        investor_legal_name: investor_legal_name,
+        state: $('#state').val(),
+        zip_code: $('#zip_code').val(),
+        Commitment_Date_X: this.getCurrentDate(),
+        fees_to_investor: 10,
+        investor_address: app.user.get('address_1'),
+        investor_city: app.user.get('city'),
+        investor_code: app.user.get('zip_code'),
+        investor_email: app.user.get('email'),
+        Investor_optional_address: app.user.get('address_2'),
+        investor_state: app.user.get('state'),
+        investor_number_purchased: '',
+        Investor_optional_address: '',
+        investor_state: '',
+        issuer_email: '',
+        issuer_legal_name: '',
+        issuer_signer: '',
+        issuer_signer_title: '',
+        jurisdiction_of_organization: '',
+        listing_fee: '',
+        maximum_raise: '',
+        minimum_raise: '',
+        price_per_share: '',
+        registration_fee: '',
+      };
+    },
+
+    currentAmountTip: 'amount-campaign',
+
+    _success(data) {
+      this.saveEsign(data);
     },
 
     validateAmount(amount) {

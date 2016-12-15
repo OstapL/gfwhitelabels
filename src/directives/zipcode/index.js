@@ -65,8 +65,10 @@ class GeoCoder {
 
             // Use overlord
             document.querySelector('.js-city-state').innerHTML = city + ', ' + state;
-            document.querySelector('#city').value = city;
-            document.querySelector('#state').value = state;
+            this.view.model.city = city;
+            // document.querySelector('#city').value = city;
+            this.view.model.state = state;
+            // document.querySelector('#state').value = state;
           } else {
             console.debug('error')
           }
@@ -78,16 +80,18 @@ class GeoCoder {
   }
 
   saveCityState(e) {
-    const city = document.querySelector('#city').value;
-    const state = document.querySelector('#state').value;
+    this.view.model.city = document.querySelector('#city').value;
+    this.view.model.state = document.querySelector('#state').value;
+
     const data = {
-      'city': city,
-      'state': state
+      'city': this.view.model.city,
+      'state': this.view.model.state
     };
 
-    document.querySelector('.js-city-state').innerHTML = city + ', ' + state;
+    document.querySelector('.js-city-state').innerHTML = 
+      this.view.model.city + ', ' + this.view.model.state;
 
-    api.makeRequest(this.view.urlRoot.replace(':id', this.values.id), 'PATCH', data)
+    api.makeRequest(this.view.urlRoot.replace(':id', this.view.model.id), 'PATCH', data)
       .fail((response) => {
         console.debug(response);
       });

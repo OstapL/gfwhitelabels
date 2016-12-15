@@ -40,9 +40,15 @@
 			overflow: hidden;
 			position: relative
 			float: left
-			img
+			&:before
+				content: ''
+				background-color: #000
 				width: 100%
 				height: 100%
+				position: absolute
+				left: 0
+				opacity: .4
+
 
 			.img_tab
 				padding: 0 10px
@@ -292,10 +298,9 @@
 	.investor_table
 		.one_table
 			.img_column
-				width: 70%
-				height: auto
+				width: 100%
 				float: none
-				margin: 15px auto
+				margin: 0 auto
 				border: none
 
 				img
@@ -303,14 +308,14 @@
 
 			.right-columns
 				border-left: 1px solid $border-color
-
-			.big_columns
+				width: 100%
 
 			.right-columns.small-column
 				width: 70%
 
 			.right_buttons
-				width: 30%
+				width: 100%
+				border-left: 1px solid $border-color
 
 		.bottom_column
 			width: 100%
@@ -348,34 +353,6 @@
 
 		.tpl-tabs-cont
 			padding: 25px 0
-		.one_table
-			.img_column
-				width: 100%
-				height: auto
-				float: none
-				margin: 15px auto
-				border: none
-
-				img
-					width: 100%
-
-			.right-columns
-				border-left: 1px solid $border-color
-
-				.one_line
-					.col40
-						width: 54%
-
-					.col60
-						width: 46%
-
-			.right-columns.small-column
-				width: 100%
-
-			.right_buttons
-				width: 100%
-				border-left: 1px solid $border-color
-
 		.bottom_column
 			width: 100%
 			border-left: 1px solid $border-color

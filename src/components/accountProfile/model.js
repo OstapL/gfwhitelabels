@@ -42,21 +42,6 @@ let userModel = Backbone.Model.extend({
     }
   },
 
-  // ToDo
-  // Move login function from views/user.js to model
-  /*
-  login: function(cb) {
-      $.ajax({
-          url: serverUrl + Urls['rest_logout'](),
-          success: (data) {
-              localStorage.removeItem('token');
-              localStorage.removeItem('user');
-              cb();
-          }
-      });
-  },
-  */
-
   logout: function () {
     $.ajax({
       type: 'POST',
@@ -68,6 +53,46 @@ let userModel = Backbone.Model.extend({
         window.location = '/';
       },
     });
+  },
+
+  company: null,
+  campaign: null,
+  formc: null,
+
+  getCompanyR() {
+    if(this.company == null) {
+      return app.makeCacheRequest(authServer + '/user/company');
+    } else {
+      return '';
+    }
+  },
+
+  getCompany() {
+    return this.company;
+  },
+
+  getCampaignR() {
+    if(this.campaign == null) {
+      return app.makeCacheRequest(authServer + '/user/campaign');
+    } else {
+      return '';
+    }
+  },
+
+  getCampaign() {
+    return this.campaign;
+  },
+
+  getFormcR() {
+    if(this.formc == null) {
+      return app.makeCacheRequest(authServer + '/user/formc');
+    } else {
+      return '';
+    }
+  },
+
+  getFormc() {
+    return this.formc;
   },
 });
 
