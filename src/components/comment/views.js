@@ -87,6 +87,8 @@ module.exports = {
         }
       }));
 
+      this.$stubs = this.$('.stubs');
+
       return this;
     },
 
@@ -95,10 +97,16 @@ module.exports = {
 
       let $target = $(e.target);
 
-      let $comment = $target.closest('.comment');
+      let $parentComment = $target.closest('.comment');
+
+      let isChild = $parentComment && $parentComment.length;
+
+      let parentId = isChild ? $parentComment.data('id') : null;
+      let level = isChild ? ($parentComment.data('level') + 1) : 0;
+
       let $form = $target.closest('form');
-      let parentId = $comment && $comment.length ? $comment.data('id') : null;
-      let message = $target.closest('.comment-form').find('.text-body').val();
+
+      let message = $form.find('.text-body').val();
 
       if (!message)
         return;
@@ -114,12 +122,12 @@ module.exports = {
       // api.makeRequest(this.urlRoot, 'POST', data).done((newData) => {
       setTimeout(() => {
 
-        //TODO: hide new comment form
-        $form.remove();
+        if (isChild)
+          $form.remove();
+        else
+          $form.find('.text-body').val('');
 
-        let commentStub = parentId == null
-          ? this.$('.comments').find('#comment_empty_0')
-          : this.$('.comments').find('#comment_empty_' + $comment.data('level'));
+        let commentStub = this.$stubs.find('.comment[data-level=' + level + ']');
 
         let newComment = commentStub.clone();
 
@@ -131,7 +139,7 @@ module.exports = {
         //TODO: update parent comment response count
         newComment.find('.link-response-count').text('0')
 
-        newComment.appendTo(this.$('.comments'));
+        newComment.appendTo(isChild ? $parentComment : this.$('.comments'));
         // app.hideLoading();
       }, 500);
       // }).fail((err) => {
@@ -153,12 +161,13 @@ module.exports = {
     showReplyTo(e) {
       e.preventDefault();
 
-      let $newCommentBlock = this.$el.find('.new-comment').clone();
+      let $newCommentBlock = this.$stubs.find('.new-comment').clone();
 
       $newCommentBlock.removeClass('new-comment collapse');
 
-
       $newCommentBlock.appendTo($(e.target).closest('.comment'));
+
+      $newCommentBlock.find('.text-body').focus();
 
       return false;
     },
@@ -168,7 +177,7 @@ module.exports = {
 
       let $link = $(e.target).closest('.link-response-count');
 
-      $link.closest('.comment').find('.comment:first').toggleClass('collapse');
+      $link.closest('.comment').find('.comment').toggleClass('collapse');
 
       let $icon = $link.find('.fa');
       if ($icon.hasClass('fa-angle-up'))
