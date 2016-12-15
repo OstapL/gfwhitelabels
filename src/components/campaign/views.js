@@ -346,7 +346,7 @@ module.exports = {
       let optionsR = api.makeRequest(urlComments, 'OPTIONS');
       let dataR = api.makeRequest(urlComments);
       //
-      $.when(optionsR, dataR).done((options, data) => {
+      // $.when(optionsR, dataR).done((options, data) => {
         let commentsModel = {
           id: this.model.id,
           data: [
@@ -384,10 +384,10 @@ module.exports = {
 
         let comments = new View.comments({
           model: commentsModel,
-          fields: options[0].fields,
+          // fields: options[0].fields,
         });
         comments.render();
-      });
+      // });
     },
 
     readMore(e) {

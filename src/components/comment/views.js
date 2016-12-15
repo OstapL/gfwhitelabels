@@ -64,11 +64,10 @@ module.exports = {
     template: require('./templates/comments.pug'),
     el: '.comments-container',
     events: {
-      'click .ask-question': 'submitQuestion',
+      'click .ask-question, .submit-comment': 'submitComment',
       'click .link-response-count': 'showHideResponses',
       'click .link-reply': 'replyTo',
       'click .link-like': 'likeComment',
-      'click .submit-comment': 'submitComment',
     },
 
     initialize(options) {
@@ -95,85 +94,50 @@ module.exports = {
 
       let $target = $(e.target);
       let $comment = $target.closest('.comment');
+
+      let parentId = $comment && $comment.length ? $comment.data('id') : null;
+      let message = $target.closest('.comment-form').find('.text-body').val();
+
       let data = {
-        parent_id: $comment.data('id'),
-        message: $target.closest('.reply-block').find('textarea').val(),
+        parent_id: parentId,
+        message: message,
       };
 
-      api.makeRequest(this.urlRoot, 'POST', data).done((newData) => {
-        let commentStub = $comment.find('#comment_empty_' + $comment.data('level' + 1))
+      // app.showLoading();
+      // api.makeRequest(this.urlRoot, 'POST', data).done((newData) => {
+      setTimeout(() => {
+
+        //TODO: hide new comment form
+        this.$el.find('.new-comment').addClass('collapse');
+
+        let commentStub = parentId == null
+          ? this.$('.comments').find('#comment_empty_0')
+          : this.$('.comments').find('#comment_empty_' + $comment.data('level'));
+
         let newComment = commentStub.clone();
 
-        newComment.attr('id', newData.new_message_id);
+        // newComment.attr('id', newData.new_message_id);
         newComment.removeClass('collapse');
         newComment.find('.date-comments').text((new Date()).toLocaleDateString());
         newComment.find('p').text(data.message);
-        newComment.find('.link-response-count').text('0&nbsp;')
 
-      }).fail((err) => {
-        alert(err);
-      });
+        //TODO: update parent comment response count
+        newComment.find('.link-response-count').text('0')
 
-
-
-
-      // var data = $(e.target).serializeJSON();
-      // let model = new Backbone.Model();
-      // model.urlRoot = serverUrl + Urls['comment-list']();
-      // data['company'] = this.model.company.id;
-      // model.set(data)
-      // if (model.isValid(true)) {
-      //   model.save().
-      //   then((data) => {
-      //     this.$el.find('.alert-warning').remove();
-      //     this._commentSuccess(data);
-      //   }).
-      //   fail((xhr, status, text) => {
-      //     api.errorAction(this, xhr, status, text, this.fields);
-      //   });
-      // } else {
-      //   if (this.$('.alert').length) {
-      //     $('#content').scrollTo();
-      //   } else {
-      //     this.$el.find('.has-error').scrollTo();
-      //   }
-      // }
+        newComment.appendTo(this.$('.comments'));
+        // app.hideLoading();
+      }, 500);
+      // }).fail((err) => {
+      //   app.hideLoading();
+      //   alert(err);
+      // });
     },
 
-    _commentSuccess(data) {
-      this._success = null;
-      this.urlRoot = null;
-      if (data.parent) {
-        $('#comment_' + data.parent).after(
-          new this.commentView.detail().getHtml({
-            model: data,
-            company: this.model.company,
-            app: app,
-          })
-        );
-      } else {
-        $('#comment_' + data.parent).html(
-          new this.commentView.detail().getHtml({
-            company: this.model.company,
-            model: data,
-            app: app,
-          })
-        );
-      }
-
-      this.$el.find('.comment-form-div').remove();
-      app.hideLoading();
-      app.showLoading = this._showLoading;
-    },
-
-    submitQuestion(e) {
-
-    },
 
     replyTo(e) {
       e.preventDefault();
 
-      this.$el.find('.reply-block').appendTo($(e.target).closest('.comment')).removeClass('collapse');
+      this.$el.find('.new-comment').appendTo($(e.target).closest('.comment')).removeClass('collapse');
 
       return false;
     },
@@ -181,7 +145,15 @@ module.exports = {
     showHideResponses(e) {
       e.preventDefault();
 
-      $(e.target).closest('.comment').find('.comment').first().toggleClass('collapse');
+      let $link = $(e.target).closest('.link-response-count');
+
+      $link.closest('.comment').find('.comment:first').toggleClass('collapse');
+
+      let $icon = $link.find('.fa');
+      if ($icon.hasClass('fa-angle-up'))
+        $icon.removeClass('fa-angle-up').addClass('fa-angle-down');
+      else
+        $icon.removeClass('fa-angle-down').addClass('fa-angle-up');
 
       return false;
     },
