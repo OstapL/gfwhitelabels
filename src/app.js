@@ -80,6 +80,7 @@ let app = {
 
   routers: {},
   cache: {},
+  models: {},
 
   /*
    * Misc Display Functions
