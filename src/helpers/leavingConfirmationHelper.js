@@ -7,6 +7,7 @@ module.exports = {
   
   methods: {
     confirmLeaving(e) {
+      return;
       if (!this.isDifferent()) return;
       
       if (confirm("You have unsaved changes. Do you really want to leave?")) {
