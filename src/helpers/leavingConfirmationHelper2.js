@@ -27,7 +27,7 @@ module.exports = {
         });
         let riskFormData = this.$('form.add-risk-form').serializeJSON();
         if (riskFormData.title || riskFormData.risk) {
-          newData[this.riskType]['-1'] = riskFormData; 
+          newData[this.riskType]['new'] = riskFormData; 
         }
       } else {
         newData = this.$('form').serializeJSON({ useIntKeysAsArrayIndex: true });
