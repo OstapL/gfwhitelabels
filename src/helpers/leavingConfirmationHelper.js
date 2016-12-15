@@ -7,7 +7,6 @@ module.exports = {
   
   methods: {
     confirmLeaving(e) {
-      return;
       if (!this.isDifferent()) return;
       
       if (confirm("You have unsaved changes. Do you really want to leave?")) {
@@ -40,7 +39,7 @@ module.exports = {
       let d = deepDiff(this.model, newData);
       _(d).forEach((el, i) => {
         if(el.kind == 'E' || el.kind == 'A') {
-          if (String(el.lhs) == String(el.rhs)) return;
+          if ((typeof el.lhs != 'undefined') && (typeof el.rhs != 'undefined') && (String(el.lhs) === String(el.rhs))) return;
           patchData[el.path[0]] = newData[el.path[0]];
         } else if(el.kind == 'N' && newData.hasOwnProperty(el.path[0])) {
           // In case if we delete data that was in the model
