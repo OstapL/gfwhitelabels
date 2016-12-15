@@ -758,8 +758,8 @@ module.exports = {
     },
 
     getDocMetaData () {
-      const investor_legal_name = $('#first_name').val() + $('#last_name').val()
-                      || app.user.get('first_name') + app.user.get('last_name');
+      const investor_legal_name = $('#first_name').val() + ' ' + $('#last_name').val()
+                      || app.user.get('first_name') + ' ' + app.user.get('last_name');
       return {
         address_1: $('#street_address_1').val(),
         address_2: $('#street_address_2').val(),
@@ -777,9 +777,7 @@ module.exports = {
         investor_email: app.user.get('email'),
         Investor_optional_address: app.user.get('address_2'),
         investor_state: app.user.get('state'),
-        investor_number_purchased: '',
-        Investor_optional_address: '',
-        investor_state: '',
+        investor_number_purchased: $('#payment_information_data__account_number__0').val(),
         issuer_email: '',
         issuer_legal_name: '',
         issuer_signer: '',
