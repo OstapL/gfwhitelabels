@@ -12,7 +12,7 @@ const validation = require('components/validation/validation.js');
 
 const disableEnterHelper = require('helpers/disableEnterHelper.js');
 
-const leavingConfirmationHelper = require('helpers/leavingConfirmationHelper2.js');
+const leavingConfirmationHelper = require('helpers/leavingConfirmationHelper.js');
 
 const labels = {
   title: 'Title for Risk',
