@@ -43,11 +43,7 @@ section.formc.introduction.create-company-media.container
                 input(type="radio" name="failed_to_comply_choice" value="false" checked=!values['failed_to_comply_choice'] target=".explain")
                 | No
           div(style='display:' + (values['failed_to_comply_choice'] ? 'block' : 'none') + ';').failed_to_comply_choice.explain.shown-yes
-            .form-group.row
-              .col-lg-3.text-lg-right
-                label If Yes, Explain
-              .col-lg-9
-                textarea(rows="3" name="failed_to_comply").form-control= values['failed_to_comply']
+            - pug_html += app.fields.textareaLabel('failed_to_comply', {schema: fields.failed_to_comply, rows:3, placeholder: 'Explain',value: values.failed_to_comply, label: 'If Yes, Explain',})
           if values.is_paid != true
             .payment-block
               .row
