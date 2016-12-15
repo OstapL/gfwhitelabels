@@ -178,7 +178,9 @@ section.formc-review
             +frField('campaign.security_type', 'select')
             |  Offered
         else
-          p.text-xs-center.font-weight-bold Revenue Share Agreement Offered
+          p.text-xs-center.font-weight-bold 
+            +frField('campaign.security_type', 'select') 
+            | Share Agreement Offered
         p.text-xs-center.font-weight-bold $
           +frField('campaign.minimum_increment', 'text')
           |  MINIMUM INVESTMENT
@@ -296,7 +298,7 @@ section.formc-review
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
               p.font-weight-bold Minimum target number of securities being offered:
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
-              +frField('campaign.min_number_of_shares', 'text')
+              - pug_html += Math.round(values.campaign.minimum_raise / values.campaign.price_per_share); 
           .row
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
               p.font-weight-bold Price of security:

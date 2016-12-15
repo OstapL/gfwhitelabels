@@ -79,9 +79,9 @@ mixin confirmStatement(name, attr)
           div.popover-content-amount-campaign
             i.fa.fa-info-circle
             p Investors are limited to 12 month investment totals ranging from $2,000 - $100,000 based on income and net worth.
-            p Based on your annual income and net worth, you can invest 
-              span(style="color:red;") only 
-              | up to 
+            p Based on your annual income and net worth, you can invest
+              span(style="color:red;") only
+              | up to
               span(style="color:red;") $:amount.
             br
             p Please 
@@ -130,7 +130,7 @@ mixin confirmStatement(name, attr)
             +nestedTextLabel("personal_information_data", "street_address_1", {
               class1: 'col-lg-3 col-md-12 text-lg-left text-xl-right',
               class2: 'col-lg-9 col-md-12',
-              id: 'personal_information_data__street_address_1__0',            
+              id: 'personal_information_data__street_address_1__0',
             }, user)
             +nestedTextLabel("personal_information_data", "street_address_2", {
               class1: 'col-lg-3 col-md-12 text-lg-left text-xl-right',
@@ -138,8 +138,8 @@ mixin confirmStatement(name, attr)
             }, user)
             // IF USA
             .row.us-fields(style="display:" + (user.country == 'US' ? "display" : "none") + ";")
-              input(type="hidden" name="personal_information_data[state]" value=user.state disabled=(user.country != 'US')) 
-              input(type="hidden" name="personal_information_data[city]" value=user.city disabled=(user.country != 'US')) 
+              input(type="hidden" name="personal_information_data[state]" value=user.state disabled=(user.country != 'US'))
+              input(type="hidden" name="personal_information_data[city]" value=user.city disabled=(user.country != 'US'))
               .col-lg-7.p-l-2.col-md-12
                 +nestedTextLabel("personal_information_data", "zip_code", {
                   class1: 'col-lg-5 text-lg-left text-xl-right',
@@ -244,7 +244,7 @@ mixin confirmStatement(name, attr)
                       checked=user.bank_account_type
                     )
                     |  Checking
-                  label 
+                  label
                     input(
                       type="radio"
                       name="payment_information_data[account_type]"
@@ -264,17 +264,17 @@ mixin confirmStatement(name, attr)
                         span.font-weight-bold GrowthFountain Capital LLC
                     .row
                       .col-lg-6
-                        span In the Amount of: 
+                        span In the Amount of:
                       .col-lg-6
                         span.font-weight-bold.total-investment-amount $10
                     .row.m-b-2
                       .col-lg-6
                         span Memo:
                       .col-lg-6
-                        span.font-weight-bold Invest in #{values.name} 
+                        span.font-weight-bold Invest in #{values.name}
                     .row.m-b-2
                       .col-lg-6
-                        span And mail the check to: 
+                        span And mail the check to:
                       .col-lg-6
                         span.font-weight-bold GrowthFountain Capital LLC
                           br
@@ -292,18 +292,18 @@ mixin confirmStatement(name, attr)
                         span.font-weight-bold GrowthFountain Capital LLC
                     .row
                       .col-lg-6
-                        span In the Amount of: 
+                        span In the Amount of:
                       .col-lg-6
                         span.font-weight-bold.total-investment-amount $10
                     .row.m-b-2
                       .col-lg-6
                         span Memo:
                       .col-lg-6
-                        span.font-weight-bold Invest in #{values.name} 
+                        span.font-weight-bold Invest in #{values.name}
                         //- span.help-block (as indicated above)
                     .row.m-b-2
                       .col-lg-6
-                        span Wire Instructions: 
+                        span Wire Instructions:
                       .col-lg-6
                         span.font-weight-bold GrowthFountain Capital LLC
                           br
@@ -318,7 +318,7 @@ mixin confirmStatement(name, attr)
 
                           br
                           br
-                          | BofI Federal Bank 
+                          | BofI Federal Bank
                           br
                           | 4350 La Jolla Village Drive, Suite 140
                           br
@@ -347,9 +347,9 @@ mixin confirmStatement(name, attr)
             .col-lg-12.m-t-2
               .row
                 span By Signing You Acknowledge and Agree to the 
-                  a(href="#" data-tpl="common_stock").link-2 Subscription Agreement
-                  |  and 
-                  a(href="#" data-tpl="revenue_share").link-2 Participation Agreement
+                  a(href="#" data-path=esignServer + "/pdf-doc/invest/subscription_agreement.pdf" target="_blanc").link-2 Subscription Agreement
+                  |  and
+                  a(href="#" data-path=esignServer + "/pdf-doc/invest/participation_agreement.pdf" target="_blanc").link-2 Participation Agreement
             .col-lg-12.m-t-2
               .row
                 #signature__full_name__0.form-group.row
@@ -391,12 +391,12 @@ mixin confirmStatement(name, attr)
 
           each v,k in values.campaign.perks
             a(href="#" data-amount=v.amount).list-group-item.list-group-item-action.perk
-              h3.list-group-item-heading 
+              h3.list-group-item-heading
                 span.text-color-puerto_rico $#{v.amount}
-                |  Investments 
+                |  Investments
                 i.fa.fa-check(style="display:none;")
               p.list-group-item-text.text-justify #{v.perk}
-        
+
       h2.text-uppercase.dosis.text-md-center.text-sm-center.text-xs-center Investment Summary
       .jumbotron.jumbotron-fluid.investment-summary
         .container
@@ -461,7 +461,7 @@ div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true
         .container.form-section
           form.col-lg-10.offset-lg-1.border-bottom.update-income-worth
             .row
-              | Your current limit is 
+              | Your current limit is
               b.color-green $
                 span.current-limit.color-green 1000
               | .

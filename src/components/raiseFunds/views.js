@@ -64,8 +64,13 @@ const onPreviewAction = function(e) {
   //this.$el.find('#submitForm').click();
   app.showLoading();
   let data = this.$('form').serializeJSON({ useIntKeysAsArrayIndex: true });
+  if (window.location.href.indexOf('team-members/add') !== -1) {
+    e.target.dataset.method = 'PUT';
+  }
   if (api.submitAction.call(this, e, data)) {
-    window.location = '/' + this.formc.company_id + '?preview=1&previous=' + pathname;
+    setTimeout((function() {
+      window.location = '/' + this.formc.company_id + '?preview=1&previous=' + pathname;
+    }).bind(this), 100);
   }
 };
 
@@ -91,8 +96,9 @@ module.exports = {
 
     initialize(options) {
       this.fields = options.fields;
-      this.formc = options.formc;
-      this.campaign = options.campaign;
+      this.formc = options.formc || {};
+      this.campaign = options.campaign || {};
+      this.model = options.company || {};
       this.labels = {
         name: 'Legal Name of Company',
         short_name: 'Doing Business as Another Name?',
@@ -158,6 +164,7 @@ module.exports = {
         })
       );
       disableEnterHelper.disableEnter.call(this);
+      this.checkForm();
       return this;
     },
 
@@ -213,6 +220,7 @@ module.exports = {
 
     initialize(options) {
       this.fields = options.fields;
+      this.model = options.campaign;
       this.formc = options.formc;
       this.labels = {
         pitch: 'Why Should People Invest?',
@@ -249,15 +257,8 @@ module.exports = {
           })
       );
 
-      if(app.getParams().check == '1') {
-        var data = this.$el.find('form').serializeJSON();
-        if (!validation.validate(this.fields, data, this)) {
-          _(validation.errors).each((errors, key) => {
-            validation.invalidMsg(this, key, errors);
-          });
-          this.$('.help-block').prev().scrollTo(5);
-        }
-      }
+      this.checkForm();
+
       disableEnterHelper.disableEnter.call(this);
       return this;
     },
@@ -297,6 +298,7 @@ module.exports = {
     },
 
     initialize(options) {
+      this.model = options.campaign;
       this.urlRoot = this.urlRoot.replace(':id', this.model.id);
       this.formc = options.formc;
       this.fields = options.fields;
@@ -368,23 +370,8 @@ module.exports = {
       );
 
       setTimeout(() => { this.createDropzones() } , 1000);
-
-      if(app.getParams().check == '1') {
-        let data = this.$el.find('form').serializeJSON();
-        api.deleteEmptyNested.call(this, this.fields, data);
-        api.fixDateFields.call(this, this.fields, data);
-        api.fixMoneyFields.call(this, this.fields, data);
-        data = _.extend({}, this.model, data);
-
-        if (!validation.validate(this.fields, data, this)) {
-          _(validation.errors).each((errors, key) => {
-            validation.invalidMsg(this, key, errors);
-          });
-          this.$('.help-block').prev().scrollTo(5);
-        }
-      }
-
       disableEnterHelper.disableEnter.call(this);
+      this.checkForm();
 
       return this;
     },
@@ -437,6 +424,7 @@ module.exports = {
         showPreview: true,
       };
 
+      this.model = options.campaign;
       this.formc = options.formc;
       this.type = options.type;
       this.index = options.index;
@@ -444,7 +432,7 @@ module.exports = {
       this.urlRoot = this.urlRoot.replace(':id', this.model.id);
 
       if (this.index != 'new') {
-        this.member = this.model.data[this.index];
+        this.member = this.model.team_members[this.index];
         this.urlRoot  += '/' + this.index;
         this.submitMethod = 'PUT';
       } else {
@@ -469,6 +457,7 @@ module.exports = {
       );
 
       this.createDropzones();
+      this.checkForm();
 
       //delete this.model.progress;
       //delete this.model.data;
@@ -498,7 +487,6 @@ module.exports = {
       'click .submit_form': doCampaignValidation,
       'click #postForReview': postForReview,
       'click .onPreview': onPreviewAction,
-      'submit form': 'submit',
     }, menuHelper.events),
 
     preinitialize() {
@@ -512,18 +500,14 @@ module.exports = {
     initialize(options) {
       this.fields = options.fields;
       this.formc = options.formc;
+      this.model = options.campaign;
 
       this.urlRoot = this.urlRoot.replace(':id', this.model.id);
     },
 
     render() {
       let template = require('./templates/teamMembers.pug');
-      // let values = this.model.toJSON();
       let values = this.model;
-
-      if (!Array.isArray(values.data)) {
-        values.data = [];
-      }
 
       this.$el.html(
         template({
@@ -536,6 +520,7 @@ module.exports = {
         );
 
       disableEnterHelper.disableEnter.call(this);
+      this.checkForm();
 
       return this;
     },
@@ -589,6 +574,7 @@ module.exports = {
       initialize(options) {
         this.fields = options.fields;
         this.formc = options.formc;
+        this.model = options.campaign;
         this.company = options.company;
         this.labels = {
           investor_presentation_data: '',
@@ -692,15 +678,7 @@ module.exports = {
 
         this.calculateNumberOfShares(null);
 
-        if(app.getParams().check == '1') {
-          var data = this.$el.find('form').serializeJSON();
-          if (!validation.validate(this.fields, data, this)) {
-            _(validation.errors).each((errors, key) => {
-              validation.invalidMsg(this, key, errors);
-            });
-            this.$('.help-block').prev().scrollTo(5);
-          }
-        }
+        this.checkForm();
 
         if (this.company.corporate_structure == 2) {
           this.$('input[name=security_type][value=0]').prop('disabled', true);
@@ -735,6 +713,7 @@ module.exports = {
     initialize(options) {
       this.fields = options.fields;
       this.formc = options.formc;
+      this.model = options.campaign;
       this.labels = {
         perks: {
           amount: 'If an Investor Invests Over',
