@@ -1,4 +1,3 @@
-'use strict';
 let addSectionHelper = require('helpers/addSectionHelper.js');
 
 import formatHelper from '../../helpers/formatHelper';
@@ -173,6 +172,7 @@ module.exports = {
       if (data.hasOwnProperty('campaign_id') == false) {
         data.campaign_id = this.formc.campaign_id;
       }
+      debugger;
 
       app.routers.navigate(
         '/campaign/' + data.campaign_id + '/general_information',
@@ -403,9 +403,9 @@ module.exports = {
       'click .onPreview': onPreviewAction,
       // 'change #zip_code': 'changeZipCode',
     }, leavingConfirmationHelper.events, menuHelper.events, dropzoneHelpers.events),
-
-    getSuccessUrl(data) {
-      return '/campaign/' + this.model.id + '/team-members';
+    
+    _success(data) {
+      window.location = '/campaign/' + this.model.id + '/team-members';
     },
 
     preinitialize() {
