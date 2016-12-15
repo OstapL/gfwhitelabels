@@ -1,4 +1,3 @@
-'use strict';
 let addSectionHelper = require('helpers/addSectionHelper.js');
 
 import formatHelper from '../../helpers/formatHelper';
@@ -173,6 +172,7 @@ module.exports = {
       if (data.hasOwnProperty('campaign_id') == false) {
         data.campaign_id = this.formc.campaign_id;
       }
+      debugger;
 
       app.routers.navigate(
         '/campaign/' + data.campaign_id + '/general_information',

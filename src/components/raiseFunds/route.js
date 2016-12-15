@@ -7,9 +7,24 @@ function getOCCF(optionsR, viewName, params = {}) {
     .done((options, company, campaign, formc) => {
 
       params.fields = options[0].fields;
-      params.company = app.models.company = app.models.company || company[0];
-      params.campaign = app.models.campaign = app.models.campaign || campaign[0];
-      params.formc = app.models.formc = app.models.formc || formc[0];
+      // ToDo
+      // This how we can avoid empty response
+      if(company == '') {
+        params.company = app.user.company;
+        params.campaign = app.user.campaign;
+        params.formc = app.user.formc;
+      }
+      else {
+        if(Object.keys(company[0]).length > 0) {
+          params.company = app.user.company = app.user.company || company[0];
+          params.campaign = app.user.campaign = app.user.campaign || campaign[0];
+          params.formc = app.user.formc = app.user.formc || formc[0];
+        } else {
+          params.company = {};
+          params.campaign = {};
+          params.formc = {};
+        }
+      }
 
       if(typeof viewName == 'string') {
         new View[viewName](Object.assign({}, params)).render();

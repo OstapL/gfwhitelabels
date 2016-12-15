@@ -37,12 +37,12 @@ section.formc.introduction.create-company-media.container
               span.color-red *
             .form-group
               label
-                input(type="radio" name="failed_to_comply_choice" value="true" checked=values['failed_to_comply_choice'] target=".explain")
+                input(type="radio" name="failed_to_comply_choice" value=1 checked=values['failed_to_comply_choice'] == 1 target=".explain")
                 | Yes
               label
-                input(type="radio" name="failed_to_comply_choice" value="false" checked=!values['failed_to_comply_choice'] target=".explain")
+                input(type="radio" name="failed_to_comply_choice" value=0 checked=values['failed_to_comply_choice'] == 0 target=".explain")
                 | No
-          div(style='display:' + (values['failed_to_comply_choice'] ? 'block' : 'none') + ';').failed_to_comply_choice.explain.shown-yes
+          div(style='display:' + (values['failed_to_comply_choice']  == 1? 'block' : 'none') + ';').failed_to_comply_choice.explain.shown-yes
             .form-group.row
               .col-lg-3.text-lg-right
                 label If Yes, Explain

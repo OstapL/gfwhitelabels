@@ -128,6 +128,8 @@ module.exports = {
 
       api.makeRequest(url, method, newData).
         then((responseData) => {
+          // ToDo
+          // Do we really need this ?!
           _.extend(this.model, newData);
           app.showLoading();
 

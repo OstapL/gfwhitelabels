@@ -143,6 +143,7 @@ module.exports = {
     },
 
     initialize(options) {
+      this.model = options.formc;
       this.fields = options.fields;
 
       if(this.model.is_paid === false) {
@@ -350,9 +351,11 @@ module.exports = {
     },
 
     initialize(options) {
+      this.model = options.formc;
       this.fields = options.fields;
       this.fields.full_time_employers = { label: 'Full Time Employees' };
       this.fields.part_time_employers = { label: 'Part Time Employees' };
+      console.log(this);
     },
 
     deleteMember: function (e) {
@@ -445,6 +448,22 @@ module.exports = {
     }, addSectionHelper.events, menuHelper.events, leavingConfirmationHelper.events),
 
     initialize(options) {
+      if(options.user_id != 'new') {
+        let t = options.formc.team_members.filter(function(el) { return el.user_id == options.user_id})[0]
+        t.formc_id = options.formc.id;
+        t.campaign_id = options.formc.campaign_id;
+        t.company_id = options.formc.company_id;
+        t.progress = options.formc.progress;
+        delete t.id;
+        this.model = t;
+      } else {
+        this.model = {
+          formc_id: options.formc.id,
+          campaign_id: options.formc.campaign_id,
+          company_id: options.formc.company_id,
+          progress: options.formc.progress
+        };
+      }
       this.fields = options.fields;
       this.role = options.role;
 
@@ -534,6 +553,7 @@ module.exports = {
     }, addSectionHelper.events, menuHelper.events, yesNoHelper.events, leavingConfirmationHelper.events),
 
     initialize(options) {
+      this.model = options.formc;
       this.fields = options.fields;
 
       this.labels = {
@@ -586,6 +606,7 @@ module.exports = {
     urlRoot: formcServer + '/:id/use-of-proceeds',
 
     initialize(options) {
+      this.model = options.formc;
       this.fields = options.fields;
       this.campaign = options.campaign;
 
@@ -747,6 +768,7 @@ module.exports = {
 
   riskFactorsInstruction: Backbone.View.extend(_.extend({
     initialize(options) {
+      this.model = options.formc;
     },
 
     events: _.extend({
@@ -778,6 +800,7 @@ module.exports = {
     }, menuHelper.events, riskFactorsHelper.events),
 
     initialize(options) {
+      this.model = options.formc;
       this.fields = options.fields;
       this.fields.title = { label: 'Title for Risk' };
       this.fields.risk = { label: 'Describe Your Risk' };
@@ -878,6 +901,7 @@ module.exports = {
     }, menuHelper.events, riskFactorsHelper.events),
 
     initialize(options) {
+      this.model = options.formc;
       this.fields = options.fields;
       this.fields.title = { label: 'Title for Risk' };
       this.fields.risk = { label: 'Describe Your Risk' };
@@ -986,6 +1010,7 @@ module.exports = {
     }, menuHelper.events, riskFactorsHelper.events),
 
     initialize(options) {
+      this.model = options.formc;
       this.fields = options.fields;
       this.fields.title = { label: 'Title for Risk' };
       this.fields.risk = { label: 'Describe Your Risk' };
@@ -1123,6 +1148,7 @@ module.exports = {
     }, menuHelper.events, riskFactorsHelper.events),
 
     initialize(options) {
+      this.model = options.formc;
       this.fields = options.fields;
       this.fields.title = { label: 'Title for Risk' };
       this.fields.risk = { label: 'Describe Your Risk' };
@@ -1204,6 +1230,7 @@ module.exports = {
     }, menuHelper.events, riskFactorsHelper.events),
 
     initialize(options) {
+      this.model = options.formc;
       this.fields = options.fields;
       this.fields.title = { label: 'Title for Risk' };
       this.fields.risk = { label: 'Describe Your Risk' };
@@ -1303,6 +1330,7 @@ module.exports = {
     }, menuHelper.events, riskFactorsHelper.events),
 
     initialize(options) {
+      this.model = options.formc;
       this.fields = options.fields;
       this.fields.title = { label: 'Title for Risk' };
       this.fields.risk = { label: 'Describe Your Risk' };
@@ -1424,6 +1452,7 @@ module.exports = {
     }, menuHelper.events, riskFactorsHelper.events),
 
     initialize(options) {
+      this.model = options.formc;
       this.fields = options.fields;
       this.fields.title = { label: 'Title for Risk' };
       this.fields.risk = { label: 'Describe Your Risk' };
@@ -1460,6 +1489,7 @@ module.exports = {
     }, menuHelper.events, yesNoHelper.events, addSectionHelper.events, dropzoneHelpers.events, leavingConfirmationHelper.events),
 
     initialize(options) {
+      this.model = options.formc;
       this.fields = options.fields;
       this.campaign = options.campaign;
       this.labels = {
@@ -1521,6 +1551,7 @@ module.exports = {
     }, addSectionHelper.events, menuHelper.events, yesNoHelper.events, leavingConfirmationHelper.events),
 
     initialize(options) {
+      this.model = options.formc;
       this.fields = options.fields;
       this.fields.business_loans_or_debt_choice.validate = {};
       this.fields.business_loans_or_debt_choice.validate.choices = {
@@ -1702,6 +1733,7 @@ module.exports = {
   backgroundCheck: Backbone.View.extend(_.extend({
     urlRoot: formcServer + '/:id' + '/background-check',
     initialize(options) {
+      this.model = options.formc;
       this.fields = options.fields;
       this.labels = {
         company_or_director_subjected_to: 'If Yes, Explain',
