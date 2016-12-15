@@ -88,7 +88,7 @@ module.exports = {
       'click #postForReview': postForReview,
       'change #website': appendHttpIfNecessary,
       'change #website,#twitter,#facebook,#instagram,#linkedin': 'appendHttpsIfNecessary',
-    }, leavingConfirmationHelper.events, phoneHelper.events, menuHelper.events),
+    }, /*leavingConfirmationHelper.events,*/ phoneHelper.events, menuHelper.events),
 
     appendHttpsIfNecessary(e) {
       appendHttpIfNecessary(e, true);
