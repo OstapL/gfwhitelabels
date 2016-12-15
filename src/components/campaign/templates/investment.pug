@@ -150,7 +150,7 @@ mixin confirmStatement(name, attr)
               .col-lg-5.city_states.col-md-12
                 label.col-lg-5.col-md-6.col-sm-6.col-xs-6 City/State
                   span.color-red *
-                .col-lg-7.col-md-6.col-sm-6.col-xs-6
+                .col-lg-7.col-md-6.col-sm-6.col-xs-6.p-l-0
                   span(data-toggle="modal" data-target="#city_state_modal" href="#city_state_modal").change_state_city
                     span.input-value.js-city-state #{user.city}, #{user.state}
                     i.fa.fa-pencil-square-o
@@ -344,11 +344,12 @@ mixin confirmStatement(name, attr)
               +confirmStatement('is_understand_securities_related',
                 _.extend({}, fields.is_understand_securities_related)
               )
+            input(type='hidden' value='1' name='is_understand_securities_related')
             .col-lg-12.m-t-2
               .row
                 span By Signing You Acknowledge and Agree to the 
                   a(href="#" data-path=esignServer + "/pdf-doc/invest/subscription_agreement.pdf" target="_blanc").link-2 Subscription Agreement
-                  |  and
+                  |  and 
                   a(href="#" data-path=esignServer + "/pdf-doc/invest/participation_agreement.pdf" target="_blanc").link-2 Participation Agreement
             .col-lg-12.m-t-2
               .row
@@ -358,12 +359,12 @@ mixin confirmStatement(name, attr)
                     input(
                       type="text"
                       placeholder="Type Your Name"
-                      value=fullName name='signature[full_name]'
+                      name='signature[full_name]'
                     ).form-control.typed-name
                   .col-lg-5
                     .electronically
                       span.by By:
-                      span.name.signature #{ fullName }
+                      span.name.signature
 
             .form-group.row
               .col-md-12.text-md-center.text-sm-center.text-xs-center

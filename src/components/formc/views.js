@@ -12,7 +12,7 @@ const validation = require('components/validation/validation.js');
 
 const disableEnterHelper = require('helpers/disableEnterHelper.js');
 
-const leavingConfirmationHelper = require('helpers/leavingConfirmationHelper2.js');
+const leavingConfirmationHelper = require('helpers/leavingConfirmationHelper.js');
 
 const labels = {
   title: 'Title for Risk',
@@ -797,7 +797,7 @@ module.exports = {
     riskType: 'market_and_customer_risk',
     events: _.extend({
       'click .submit_formc': submitFormc,
-    }, menuHelper.events, riskFactorsHelper.events),
+    }, menuHelper.events, riskFactorsHelper.events, leavingConfirmationHelper.events),
 
     initialize(options) {
       this.model = options.formc;
@@ -891,14 +891,14 @@ module.exports = {
       disableEnterHelper.disableEnter.call(this);
       return this;
     },
-  }, menuHelper.methods, addSectionHelper.methods, riskFactorsHelper.methods)),
+  }, menuHelper.methods, addSectionHelper.methods, riskFactorsHelper.methods, leavingConfirmationHelper.methods)),
 
   riskFactorsFinancial: Backbone.View.extend(_.extend({
     urlRoot: formcServer + '/:id' + '/risk-factors-financial/:index',
     riskType: 'financial_risk',
     events: _.extend({
       'click .submit_formc': submitFormc,
-    }, menuHelper.events, riskFactorsHelper.events),
+    }, menuHelper.events, riskFactorsHelper.events, leavingConfirmationHelper.events),
 
     initialize(options) {
       this.model = options.formc;
@@ -1000,14 +1000,14 @@ module.exports = {
       disableEnterHelper.disableEnter.call(this);
       return this;
     },
-  }, menuHelper.methods, addSectionHelper.methods, riskFactorsHelper.methods)),
+  }, menuHelper.methods, addSectionHelper.methods, riskFactorsHelper.methods, leavingConfirmationHelper.methods)),
 
   riskFactorsOperational: Backbone.View.extend(_.extend({
     urlRoot: formcServer + '/:id' + '/risk-factors-operational/:index',
     riskType: 'operational_risk',
     events: _.extend({
       'click .submit_formc': submitFormc,
-    }, menuHelper.events, riskFactorsHelper.events),
+    }, menuHelper.events, riskFactorsHelper.events, leavingConfirmationHelper.events),
 
     initialize(options) {
       this.model = options.formc;
@@ -1138,14 +1138,14 @@ module.exports = {
       return this;
     },
 
-  }, menuHelper.methods, addSectionHelper.methods, riskFactorsHelper.methods)),
+  }, menuHelper.methods, addSectionHelper.methods, riskFactorsHelper.methods, leavingConfirmationHelper.methods)),
 
   riskFactorsCompetitive: Backbone.View.extend(_.extend({
     urlRoot: formcServer + '/:id' + '/risk-factors-competitive/:index',
     riskType: 'competitive_risk',
     events: _.extend({
       'click .submit_formc': submitFormc,
-    }, menuHelper.events, riskFactorsHelper.events),
+    }, menuHelper.events, riskFactorsHelper.events, leavingConfirmationHelper.methods),
 
     initialize(options) {
       this.model = options.formc;
@@ -1220,14 +1220,14 @@ module.exports = {
       return this;
     },
 
-  }, menuHelper.methods, addSectionHelper.methods, riskFactorsHelper.methods)),
+  }, menuHelper.methods, addSectionHelper.methods, riskFactorsHelper.methods, leavingConfirmationHelper.methods)),
 
   riskFactorsPersonnel: Backbone.View.extend(_.extend({
     urlRoot: formcServer + '/:id' + '/risk-factors-personnel/:index',
     riskType: 'personnel_and_third_parties_risk',
     events: _.extend({
       'click .submit_formc': submitFormc,
-    }, menuHelper.events, riskFactorsHelper.events),
+    }, menuHelper.events, riskFactorsHelper.events, leavingConfirmationHelper.events),
 
     initialize(options) {
       this.model = options.formc;
@@ -1320,14 +1320,14 @@ module.exports = {
       disableEnterHelper.disableEnter.call(this);
       return this;
     },
-  }, menuHelper.methods, addSectionHelper.methods, riskFactorsHelper.methods)),
+  }, menuHelper.methods, addSectionHelper.methods, riskFactorsHelper.methods, leavingConfirmationHelper.methods)),
 
   riskFactorsLegal: Backbone.View.extend(_.extend({
     urlRoot: formcServer + '/:id' + '/risk-factors-legal/:index',
     riskType: 'legal_and_regulatory_risk',
     events: _.extend({
       'click .submit_formc': submitFormc,
-    }, menuHelper.events, riskFactorsHelper.events),
+    }, menuHelper.events, riskFactorsHelper.events, leavingConfirmationHelper.events),
 
     initialize(options) {
       this.model = options.formc;
@@ -1442,14 +1442,14 @@ module.exports = {
       disableEnterHelper.disableEnter.call(this);
       return this;
     },
-  }, menuHelper.methods, addSectionHelper.methods, riskFactorsHelper.methods)),
+  }, menuHelper.methods, addSectionHelper.methods, riskFactorsHelper.methods, leavingConfirmationHelper.methods)),
 
   riskFactorsMisc: Backbone.View.extend(_.extend({
     urlRoot: formcServer + '/:id' + '/risk-factors-misc/:index',
     riskType: 'miscellaneous_risk',
     events: _.extend({
       'click .submit_formc': submitFormc,
-    }, menuHelper.events, riskFactorsHelper.events),
+    }, menuHelper.events, riskFactorsHelper.events, leavingConfirmationHelper.events),
 
     initialize(options) {
       this.model = options.formc;
@@ -1478,7 +1478,7 @@ module.exports = {
       disableEnterHelper.disableEnter.call(this);
       return this;
     },
-  }, menuHelper.methods, addSectionHelper.methods, riskFactorsHelper.methods)),
+  }, menuHelper.methods, addSectionHelper.methods, riskFactorsHelper.methods, leavingConfirmationHelper.methods)),
 
   financialCondition: Backbone.View.extend(_.extend({
     urlRoot: formcServer + '/:id/financial-condition',
