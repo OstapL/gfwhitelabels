@@ -65,8 +65,9 @@ module.exports = {
     el: '.comments-container',
     events: {
       'click .ask-question, .submit-comment': 'submitComment',
+      'click .cancel-comment': 'cancelComment',
       'click .link-response-count': 'showHideResponses',
-      'click .link-reply': 'replyTo',
+      'click .link-reply': 'showReplyTo',
       'click .link-like': 'likeComment',
     },
 
@@ -93,10 +94,16 @@ module.exports = {
       e.preventDefault();
 
       let $target = $(e.target);
-      let $comment = $target.closest('.comment');
 
+      let $comment = $target.closest('.comment');
+      let $form = $target.closest('form');
       let parentId = $comment && $comment.length ? $comment.data('id') : null;
       let message = $target.closest('.comment-form').find('.text-body').val();
+
+      if (!message)
+        return;
+
+      $target.prop('disabled', true);
 
       let data = {
         parent_id: parentId,
@@ -108,7 +115,7 @@ module.exports = {
       setTimeout(() => {
 
         //TODO: hide new comment form
-        this.$el.find('.new-comment').addClass('collapse');
+        $form.remove();
 
         let commentStub = parentId == null
           ? this.$('.comments').find('#comment_empty_0')
@@ -133,11 +140,25 @@ module.exports = {
       // });
     },
 
-
-    replyTo(e) {
+    cancelComment(e) {
       e.preventDefault();
 
-      this.$el.find('.new-comment').appendTo($(e.target).closest('.comment')).removeClass('collapse');
+      let $form = $(e.target).closest('form');
+      if (!$form.hasClass('new-comment'))
+        $form.remove();
+
+      return false;
+    },
+
+    showReplyTo(e) {
+      e.preventDefault();
+
+      let $newCommentBlock = this.$el.find('.new-comment').clone();
+
+      $newCommentBlock.removeClass('new-comment collapse');
+
+
+      $newCommentBlock.appendTo($(e.target).closest('.comment'));
 
       return false;
     },
