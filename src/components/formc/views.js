@@ -867,7 +867,7 @@ module.exports = {
     riskType: 'financial_risk',
     events: _.extend({
       'click .submit_formc': submitFormc,
-    }, menuHelper.events, riskFactorsHelper.events),
+    }, menuHelper.events, riskFactorsHelper.events, leavingConfirmationHelper.events),
 
     initialize(options) {
       this.fields = options.fields;
@@ -968,7 +968,7 @@ module.exports = {
       disableEnterHelper.disableEnter.call(this);
       return this;
     },
-  }, menuHelper.methods, addSectionHelper.methods, riskFactorsHelper.methods)),
+  }, menuHelper.methods, addSectionHelper.methods, riskFactorsHelper.methods, leavingConfirmationHelper.methods)),
 
   riskFactorsOperational: Backbone.View.extend(_.extend({
     urlRoot: formcServer + '/:id' + '/risk-factors-operational/:index',
