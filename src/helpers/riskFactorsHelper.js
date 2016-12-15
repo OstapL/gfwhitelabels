@@ -23,7 +23,7 @@ module.exports = {
           $textarea.val(this.defaultRisks[index].risk);
           let $panel = this.$('.risk-panel[index=' + index + ']');
           $panel.find('a').removeClass('added-risk-title');
-          $textarea.prop('readonly', true).addClass('borderless-textarea').css({ height: $textarea.prop('scrollHeight')+'px' });
+          $textarea.prop('readonly', true).removeClass('added').addClass('borderless-textarea unadded').css({ height: $textarea.prop('scrollHeight')+'px' });
         } else {
           let $section = $('.risk-panel[index=' + index + ']');
           $section.remove();
@@ -44,7 +44,7 @@ module.exports = {
       $form.find('.risk-button').css({display: 'none'});
       $form.find('.editing-state').css({display: 'inline-block'});
       $form.find('.added-span').text('');
-      $('textarea[index=' + index + ']').attr('readonly', false).removeClass('borderless-textarea').css({height: ''});
+      $('textarea[index=' + index + ']').attr('readonly', false).removeClass('borderless-textarea unadded added').addClass('editing').css({height: ''});
     },
 
     submitRisk(e) {
@@ -63,8 +63,8 @@ module.exports = {
       let formData = $(e.target).serializeJSON({ useIntKeysAsArrayIndex: true });
 
       api.makeRequest(url, 'PATCH', formData).then((data) => {
-        let $textarea = $(e.target).find('textarea')
-        //$textarea.prop('readonly', true).addClass('borderless-textarea').css({ height: $textarea.prop('scrollHeight')+'px' });
+        let $textarea = $(e.target).find('textarea');
+        $textarea.prop('readonly', true).removeClass('editing').addClass('borderless-textarea added').css({ height: $textarea.prop('scrollHeight')+'px' });
         let $form = $('form[index=' + index + ']');
         if ($form.length > 0) { // find the form    
           $form.find('.risk-button').css({display: 'none'});
