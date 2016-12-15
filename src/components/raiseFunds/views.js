@@ -96,8 +96,9 @@ module.exports = {
 
     initialize(options) {
       this.fields = options.fields;
-      this.formc = options.formc;
-      this.campaign = options.campaign;
+      this.formc = options.formc || {};
+      this.campaign = options.campaign || {};
+      this.model = options.company || {};
       this.labels = {
         name: 'Legal Name of Company',
         short_name: 'Doing Business as Another Name?',
@@ -219,6 +220,7 @@ module.exports = {
 
     initialize(options) {
       this.fields = options.fields;
+      this.model = options.campaign;
       this.formc = options.formc;
       this.labels = {
         pitch: 'Why Should People Invest?',
@@ -296,6 +298,7 @@ module.exports = {
     },
 
     initialize(options) {
+      this.model = options.campaign;
       this.urlRoot = this.urlRoot.replace(':id', this.model.id);
       this.formc = options.formc;
       this.fields = options.fields;
@@ -421,6 +424,7 @@ module.exports = {
         showPreview: true,
       };
 
+      this.model = options.campaign;
       this.formc = options.formc;
       this.type = options.type;
       this.index = options.index;
@@ -428,7 +432,7 @@ module.exports = {
       this.urlRoot = this.urlRoot.replace(':id', this.model.id);
 
       if (this.index != 'new') {
-        this.member = this.model.data[this.index];
+        this.member = this.model.team_members[this.index];
         this.urlRoot  += '/' + this.index;
         this.submitMethod = 'PUT';
       } else {
@@ -483,7 +487,6 @@ module.exports = {
       'click .submit_form': doCampaignValidation,
       'click #postForReview': postForReview,
       'click .onPreview': onPreviewAction,
-      'submit form': 'submit',
     }, menuHelper.events),
 
     preinitialize() {
@@ -497,18 +500,14 @@ module.exports = {
     initialize(options) {
       this.fields = options.fields;
       this.formc = options.formc;
+      this.model = options.campaign;
 
       this.urlRoot = this.urlRoot.replace(':id', this.model.id);
     },
 
     render() {
       let template = require('./templates/teamMembers.pug');
-      // let values = this.model.toJSON();
       let values = this.model;
-
-      if (!Array.isArray(values.data)) {
-        values.data = [];
-      }
 
       this.$el.html(
         template({
@@ -575,6 +574,7 @@ module.exports = {
       initialize(options) {
         this.fields = options.fields;
         this.formc = options.formc;
+        this.model = options.campaign;
         this.company = options.company;
         this.labels = {
           investor_presentation_data: '',
@@ -713,6 +713,7 @@ module.exports = {
     initialize(options) {
       this.fields = options.fields;
       this.formc = options.formc;
+      this.model = options.campaign;
       this.labels = {
         perks: {
           amount: 'If an Investor Invests Over',

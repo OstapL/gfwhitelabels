@@ -3,8 +3,7 @@ module.exports = Backbone.Router.extend({
     'account/profile': 'accountProfile',
     'account/logout': 'logout',
     'account/change-password': 'changePassword',
-    'reset/password/confirm/': 'setNewPassword',
-    // 'account/new-password': 'setNewPassword',
+    'account/password/new': 'setNewPassword',
     'account/investor-dashboard': 'investorDashboard',
     'account/company-dashboard': 'companyDashboard',
     'account/company-dashboard-first': 'companyDashboardFirst',
@@ -72,17 +71,13 @@ module.exports = Backbone.Router.extend({
   },
 
   setNewPassword: function() {
-    require.ensure([], function() {
-      const View = require('components/accountProfile/views.js');
-      let model = new userModel({id: app.user.pk});
-      model.baseUrl = '/api/password/reset';
-      let i = new View.setNewPassword({
-        el: '#content',
-        model: model,
-      });
-      i.render();
-      app.hideLoading();
+    $('body').scrollTo();
+    const View = require('components/accountProfile/views.js');
+    const i = new View.setNewPassword({
+      el: '#content',
     });
+    i.render();
+    app.hideLoading();
   },
 
   investorDashboard() {

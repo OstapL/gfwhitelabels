@@ -28,7 +28,7 @@ div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true
             .form-group.row.clearfix.required
               input(type="text" placeholder="City" value=values.city)#city.js-city.form-control
             .form-group.row.clearfix.required
-              select(name='state')#state.js-state.form-control.custom-select
+              select#state.js-state.form-control.custom-select
                 option(checked='checked', value="") State
                 each state in usaStates
                   if state.abbreviation == values.state

@@ -80,6 +80,7 @@ let app = {
 
   routers: {},
   cache: {},
+  models: {},
 
   /*
    * Misc Display Functions
@@ -125,7 +126,7 @@ let app = {
       var id;
 
       if (provider == 'youtube') {
-        id = url.match(/https:\/\/(?:www.)?([^\&]*).com\/.*v=(.*)/)[2];
+        id = url.match(/https:\/\/(?:www.)?(\w*).com\/.*v=([^\&]*)/)[2];
       } else if (provider == 'youtu') {
         provider = 'youtube';
         id = url.match(/https:\/\/(?:www.)?(\w*).be\/(.*)/)[2];

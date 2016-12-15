@@ -399,7 +399,7 @@ module.exports = {
   }),
 
   setNewPassword: Backbone.View.extend({
-    urlRoot: authServer + Urls.rest_password_reset_confirm(),
+    urlRoot: authServer + '/reset-password/do',
     events: {
         'submit form': api.submitAction,
     },
@@ -408,17 +408,9 @@ module.exports = {
       return '/account/profile';
     },
 
-    /*_success(data) {
-      // Do the login in here too.
-    },*/
-
     render(){
-      const params = app.getParams();
       let template = require('./templates/setNewPassword.pug');
-      this.$el.html(template({
-        uid: params.uid,
-        token: params.token,
-      }));
+      this.$el.html(template());
       return this;
     },
   }),

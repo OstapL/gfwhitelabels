@@ -378,6 +378,7 @@ module.exports = {
 
   reset: Backbone.View.extend({
     urlRoot: authServer + '/reset-password/send',
+    el: '#content',
     events: {
       'submit form': api.submitAction,
     },
@@ -389,7 +390,7 @@ module.exports = {
         required: true
       };
       const template = require('./templates/reset.pug');
-      this.$el.html(template({}));
+      this.el.innerHTML = template();
       return this;
     },
 
