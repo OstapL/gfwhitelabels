@@ -6,9 +6,10 @@ window.Tether = require('tether');
 global.Bootstrap = require('bootstrap/dist/js/bootstrap.js');
 global.userModel = require('components/accountProfile/model.js');
 global.Urls = require('./jsreverse.js');
+global.googleAnalyticsId = 'UA-47199302-1';
 require('jquery-serializejson/jquery.serializejson.min.js');
 
-// require('sass/mixins_all.sass');
+global.formatHelper = require('helpers/formatHelper');
 
 $.fn.scrollTo = function (padding=0) {
   $('html, body').animate({
@@ -37,11 +38,41 @@ Backbone.sync = function (method, model, options) {
     //xhr.setRequestHeader('X-CSRFToken', getCSRF());
     let token = localStorage.getItem('token');
     if (token !== null && token !== '') {
-      xhr.setRequestHeader('Authorization', 'Token ' + token);
+      xhr.setRequestHeader('Authorization', token);
     }
   };
 
   return oldSync(method, model, options);
+};
+
+Backbone.View.prototype.assignLabels = function() {
+  _(this.fields).each((el, key) => {
+    if(el.type == 'nested') {
+      _(el.schema).each((subel, subkey) => {
+        if(this.labels[key])
+          subel.label = this.labels[key][subkey];
+      });
+    } else {
+      el.label = this.labels[key];
+    }
+  });
+};
+
+Backbone.View.prototype.checkForm = function() {
+  if(app.getParams().check == '1') {
+    let data = $(e.target).closest('form').serializeJSON({ useIntKeysAsArrayIndex: true });
+    api.deleteEmptyNested.call(this, this.fields, data);
+    api.fixDateFields.call(this, this.fields, data);
+    api.fixMoneyFields.call(this, this.fields, data);
+    data = _.extend({}, this.model, data);
+
+    if (!validation.validate(this.fields, data, this)) {
+      _(validation.errors).each((errors, key) => {
+        validation.invalidMsg(this, key, errors);
+      });
+      this.$('.help-block').prev().scrollTo(5);
+    }
+  }
 };
 
 let app = {
@@ -49,6 +80,7 @@ let app = {
 
   routers: {},
   cache: {},
+  models: {},
 
   /*
    * Misc Display Functions
@@ -77,7 +109,9 @@ let app = {
     return _.chain(location.search.slice(1).split('&'))
       .map(function (item) {
         if (item) {
-          return item.split('=');
+          let arr = item.split('=');
+          arr[1] = decodeURIComponent(arr[1]);
+          return arr;
         }
       })
       .compact()
@@ -101,11 +135,23 @@ let app = {
       } else {
         console.log(url, 'Takes a YouTube or Vimeo URL');
       }
-      
+
       return {id: id, provider: provider};
     } catch (err) {
       console.log(url, 'Takes a YouTube or Vimeo URL');
     }
+  },
+
+  getVideoUrl(videoInfo) {
+    var provider = videoInfo && videoInfo.provider ? videoInfo.provider : '';
+
+    if (provider == 'youtube')
+      return '//www.youtube.com/embed/' + videoInfo.id + '?rel=0';
+
+    if (provider == 'vimeo')
+      return '//player.vimeo.com/video/' + videoInfo.id;
+
+    return '//www.youtube.com/embed/?rel=0';
   },
 
   getThumbnail: function(size, thumbnails, _default) {
@@ -125,8 +171,18 @@ global.app = app;
 
 // app routers
 app.routers = require('routers');
+app.fields = require('fields');
 app.user.load();
 app.trigger('userReady');
+
+app.breadcrumbs = function(title, subtitle, data) {
+  const template = require('templates/breadcrumbs.pug');
+  return template({
+    title: title,
+    subtitle: subtitle,
+    data: data
+  });
+}
 
 const popoverTemplate = '<div class="popover  divPopover"  role="tooltip"><span class="popover-arrow"></span> <h3 class="popover-title"></h3> <span class="icon-popover"><i class="fa fa-info-circle" aria-hidden="true"></i></span> <span class="popover-content"> XXX </span></div>';
 
@@ -172,6 +228,19 @@ $('body').on('focus', 'textarea.showPopover', function () {
   }
 });
 
+$('body').on('focus', 'i.showPopover', function () {
+  var $el = $(this);
+  if ($el.attr('aria-describedby') == null) {
+    $(this).popover({
+      html: true,
+      template: popoverTemplate.replace('divPopover', 'textareaPopover'),
+      placement: 'top',
+      trigger: 'hover',
+    });
+    $(this).popover('show');
+  }
+});
+
 // show bottom logo while scrolling page
 $(window).scroll(function () {
   var $bottomLogo = $('#fade_in_logo');
@@ -180,6 +249,29 @@ $(window).scroll(function () {
   if (($(window).scrollTop() + $(window).height() >= offsetTopBottomLogo) &&
     !$bottomLogo.hasClass('fade-in')) {
     $bottomLogo.addClass('fade-in');
+  }
+});
+
+
+// Money field auto correction
+$('body').on('keyup', '[type="money"]', function(e) {
+  var valStr = e.target.value.replace(/[\$\,]/g, '');
+  var val = parseInt(valStr);
+  if (val) {
+    e.target.value = '$' + val.toLocaleString('en-US');
+  }
+});
+$('body').on('focus', '[type="money"]', function(e) {
+  var valStr = e.target.value.replace(/[\$\,]/g, '');
+  var val = parseInt(valStr);
+  if (val == 0 || val == NaN) {
+    e.target.value = '';
+  }
+});
+$('body').on('blur', '[type="money"]', function(e) {
+  var valStr = e.target.value.replace(/[\$\,]/g, '');
+  if (e.target.value == '') {
+    e.target.value = '$0';
   }
 });
 
@@ -214,7 +306,14 @@ $('body').on('click', '.user-info', function () {
 
   return false;
 });
+$('body').on('click', '.notification-bell', function () {
+  if ($('.navbar-toggler:visible').length !== 0) {
+    $('html').removeClass('show-menu');
+    $('header').toggleClass('no-overflow-bell');
+  }
 
+  return false;
+});
 $('body').on('click', '#menuList .nav-item', function (event) {
   var href = $(event.target).attr('href');
 

@@ -1,13 +1,4 @@
-
-include ../../../templates/mixins.pug
-
-+breadcrumbs('Established Business Valuation Calculator', 'Step 2',
-  [
-    ['Home', '/'],
-    ["What's My Business Worth?", '/calculator/selectYourBusiness'],
-    ["Established Business Valuation Calculator", '']
-  ]
-)
+- pug_html += app.breadcrumbs('Established Business Valuation Calculator', 'Step 2', [ ['Home', '/'], ["What's My Business Worth?", '/calculator/selectYourBusiness'], ["Established Business Valuation Calculator", ''],]);
 
 .container.calculator-container
   .row
@@ -20,9 +11,9 @@ include ../../../templates/mixins.pug
         li
           a(href="/calculator/establishedBusiness/step-2").current.btn.text-uppercase step 2
         li
-          a(href="/calculator/establishedBusiness/step-3").btn.text-uppercase step 3
+          a(href="/calculator/establishedBusiness/step-3").next.btn.text-uppercase step 3
         li
-          a(href="/calculator/establishedBusiness/finish").btn.text-uppercase Finish
+          a(href="/calculator/establishedBusiness/finish").next.btn.text-uppercase Finish
 
   .row
     .offset-lg-3.col-lg-6
@@ -34,10 +25,10 @@ include ../../../templates/mixins.pug
 
   .row
     .offset-lg-3.col-lg-6
-      form(method="post" action="")
+      form(method="post" action="").form-section
         .form-body.clearfix
           .form-group.row
-            label(for="revenue").col-lg-12 Revenue
+            label(for="revenue").col-lg-12.font-weight-normal Revenue
 
             .col-lg-12
               input(
@@ -47,10 +38,11 @@ include ../../../templates/mixins.pug
                 autocomplete='off'
                 data-input-mask='price',
                 data-model-value='revenue',
+                name="revenue",
                 data-current-value= data.revenue)#revenue.form-control.js-field
 
           .form-group.row
-            label(for="goodsCost").col-lg-12 Cost of Goods Sold
+            label(for="goodsCost").col-lg-12.font-weight-normal Cost of Goods Sold
 
             .col-lg-12
               input(
@@ -60,11 +52,15 @@ include ../../../templates/mixins.pug
                 autocomplete='off'
                 data-input-mask='price',
                 data-model-value='goodsCost',
+                name="goodsCost",
                 data-current-value= data.goodsCost)#goodsCost.form-control.js-field
 
           .form-group.row
-            label(for="operatingExpense").col-lg-12 SG&A, and other Operating Expenses&nbsp;&nbsp;
-              i(aria-hidden="true",data-toggle="tooltip",data-original-title="<b>Selling, General & Administrative Operating Expense.</b> The sum of all direct and indirect selling expenses and all general and administrative expenses of a company").fa.fa-question-circle.text-muted
+            label(for="operatingExpense").col-lg-12.font-weight-normal SG&A, and other Operating Expenses&nbsp;&nbsp;
+              div.d-inline-block
+                div.showPopover(data-content="<u>Selling, General & Administrative Operating Expense.</u> The sum of all direct and indirect selling expenses and all general and administrative expenses of a company")
+                  i(aria-hidden="true").fa.fa-question-circle.text-muted
+
             .col-lg-12
               input(
                 value= formatPrice(data.operatingExpense),
@@ -73,11 +69,14 @@ include ../../../templates/mixins.pug
                 autocomplete='off'
                 data-input-mask='price',
                 data-model-value='operatingExpense',
+                name="operatingExpense",
                 data-current-value= data.operatingExpense)#operatingExpense.form-control.js-field
 
           .form-group.row
-            label(for="oneTimeExpenses").col-lg-12 One Time (Extraordinary) Expenses&nbsp;&nbsp;
-              i(aria-hidden="true",data-toggle="tooltip",data-original-title="<b>One Time (Extraordinary) Expenses.</b> A rare, infrequent event which financial analysts separate out of the income statement in order to avoid distorting the 'regular' earnings reported by a company. They can include things like adverse legal, regulatory or tax issues, storm damage or restructuring charges.").fa.fa-question-circle.text-muted
+            label(for="oneTimeExpenses").col-lg-12.font-weight-normal One Time (Extraordinary) Expenses&nbsp;&nbsp;
+              div.d-inline-block
+                div.showPopover(data-content="<u>One Time (Extraordinary) Expenses.</u> A rare, infrequent event which financial analysts separate out of the income statement in order to avoid distorting the 'regular' earnings reported by a company. They can include things like adverse legal, regulatory or tax issues, storm damage or restructuring charges.")
+                  i(aria-hidden="true").fa.fa-question-circle.text-muted
 
             .col-lg-12
               input(
@@ -87,11 +86,15 @@ include ../../../templates/mixins.pug
                 autocomplete='off'
                 data-input-mask='price',
                 data-model-value='oneTimeExpenses',
+                name="oneTimeExpenses",
                 data-current-value= data.oneTimeExpenses)#oneTimeExpenses.form-control.js-field
 
           .form-group.row
-            label(for="depreciationAmortization").col-lg-12 Depreciation  & Amortization&nbsp;&nbsp;
-              i(aria-hidden="true",data-toggle="tooltip",data-original-title="<b>Depreciation</b><br/>The allocation of the cost of assets to periods in which the assets are used.<br/><br/><b>Amoritization</b><br/>To write off the cost of an asset gradually.").fa.fa-question-circle.text-muted
+            label(for="depreciationAmortization").col-lg-12.font-weight-normal Depreciation  & Amortization&nbsp;&nbsp;
+              div.d-inline-block
+                div.showPopover(data-content="<u>Depreciation</u><br/>The allocation of the cost of assets to periods in which the assets are used.<br/><br/><u>Amoritization</u><br/>To write off the cost of an asset gradually.")
+                  i(aria-hidden="true").fa.fa-question-circle.text-muted
+
 
             .col-lg-12
               input(
@@ -101,10 +104,11 @@ include ../../../templates/mixins.pug
                 autocomplete='off'
                 data-input-mask='price',
                 data-model-value='depreciationAmortization',
+                name="depreciationAmortization"
                 data-current-value= data.depreciationAmortization)#depreciationAmortization.form-control.js-field
 
           .form-group.row
-            label(for="interestPaid").col-lg-12 Interest Paid
+            label(for="interestPaid").col-lg-12.font-weight-normal Interest Paid
 
             .col-lg-12
               input(
@@ -114,10 +118,11 @@ include ../../../templates/mixins.pug
                 autocomplete='off'
                 data-input-mask='price',
                 data-model-value='interestPaid',
+                name="interestPaid",
                 data-current-value= data.interestPaid)#interestPaid.form-control.js-field
 
           .form-group.row
-            label(for="taxesPaid").col-lg-12 Taxes Paid
+            label(for="taxesPaid").col-lg-12.font-weight-normal Taxes Paid
 
             .col-lg-12
               input(
@@ -127,6 +132,7 @@ include ../../../templates/mixins.pug
                 autocomplete='off'
                 data-input-mask='price',
                 data-model-value='taxesPaid',
+                name="taxesPaid"
                 data-current-value= data.taxesPaid)#taxesPaid.form-control.js-field
 
           .form-group.row.clearfix.m0
@@ -135,5 +141,5 @@ include ../../../templates/mixins.pug
 
             .col-xs-6.mt30
               .controls
-                a(href='/calculator/establishedBusiness/step-3').btn.btn-primary.pull-right.text-uppercase Next
+                button.btn.btn-primary.pull-right.text-uppercase Next
                 // add class .pointer-events-none to disable all events for this button

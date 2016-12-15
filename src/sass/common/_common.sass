@@ -1,6 +1,7 @@
 .display-partners
 	display: $display_partnres!important
-
+.dcu-confirmation
+	display: $display_dcu_confirmation!important
 // цвет заголовков на странице education.pug
 .heading-education
 	color: $color_heading_education
@@ -42,7 +43,6 @@
 			padding-left: rem(20)
 			li 
 				margin-bottom: rem(15)
-
 
 .position-relative
 	position: relative
@@ -155,6 +155,19 @@
 		textarea
 			min-height: 170px
 			width: 100%
+.big-textarea
+		textarea
+			min-height: 170px
+			width: 100%
+textarea.big-textarea
+	min-height: 170px
+
+.letter-spacing-normal
+	letter-spacing: normal
+
+//
+.base-font-size
+	font-size: $font-size-base
 
 .color-green
 	color: $wild_willow

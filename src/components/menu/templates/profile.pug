@@ -1,4 +1,25 @@
 if user.token != ""
+
+  //li.nav-item.notification.notification-bell.text-center.drop-container
+    a(href="#").nav-link.notification.bell-drop-li
+      i.fa.fa-bell-o
+      span.count-notific 2
+
+    .list-container.notification-container.bell-drop
+      ul.submenu.list-unstyled 
+        li.clearfix.title.nav-link
+          span.pull-left
+            b 2 pending 
+            |  comments
+          a(href="#").pull-right  view all
+
+        li.clearfix.nav-link
+          span.pull-left Maria Kravchuk wrote...
+          i.pull-right just now
+
+        li.clearfix.nav-link
+          span.pull-left Maria Kravchuk wrote...
+          i.pull-right just now
   li.nav-item.user-info
     a.nav-link.notification.user-info-name
       span
@@ -14,10 +35,12 @@ if user.token != ""
       ul.submenu.list-unstyled 
         li
           a(href="/account/profile").nav-link Profile
-        li
+        //li
           a(href="/dashboard/issue-dashboard").nav-link Issuer Dashboard
+        //li
+          a(href="/company/78/company-dashboard-first").nav-link TRUNK CLUB 
         li
-          a(href="/pg/investor_dashboard").nav-link Investor Dashboard
+          a(href="/account/investor-dashboard").nav-link Investor Dashboard
         li
           a(href="/account/logout").nav-link Logout
     

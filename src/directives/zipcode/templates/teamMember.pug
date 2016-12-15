@@ -1,0 +1,43 @@
+- var usaStates = require('consts/usaStates.js');
+
+.row.showPopover(data-content="Why do we ask? These affinity based questions can help us share your campaign with potential investors with similar backgrounds.")
+  .col-xl-6.col-lg-6.input-min-width
+    - pug_html += app.fields.textLabel('zip_code', { class1: 'col-xl-6 col-lg-12 text-xl-right text-lg-left p-t-0 m-b-0 m-b-lg-1', class2: 'col-xl-6 col-lg-12', label: 'Where did you grow up?', value: values.zip_code, schema: this.fields.zip_code, placeholder: 'Zip code', })
+
+  .col-xl-6.col-lg-6.col-sm-12.city_states.required.form-group
+    .row
+      label.col-xl-5.col-lg-12.col-xs-6.text-xl-right.text-lg-left City/State
+      .col-xl-7.col-lg-12
+        a(data-toggle="modal" data-target="#city_state_modal" href="#city_state_modal").change_state_city
+          span.input-value.js-city-state #{ values.city ? values.city : '(City)' }, #{ values.state ? values.state : '(State)' }
+          i.fa.fa-pencil-square-o.link-1
+
+//MODAL
+div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")#city_state_modal.modal.fade
+  div(role="document").modal-dialog
+    .modal-content
+      .modal-header
+        button(type="button" data-dismiss="modal" aria-label="Close").close
+          span(aria-hidden="true")
+            i.fa.fa-times
+        h2.text-xs-center.text-uppercase.dosis.modal-title City/State
+
+      .modal-body
+        .container.form-section
+          .col-lg-10.offset-lg-1.border-bottom
+            .form-group.row.clearfix.required
+              input(type="text" placeholder="City" value=values.city)#city.js-city.form-control
+            .form-group.row.clearfix.required
+              select#state.js-state.form-control.custom-select
+                option(checked='checked', value="") State
+                each state in usaStates
+                  if state.abbreviation == values.state
+                    option(value=state.abbreviation selected)= state.name
+                  else
+                    option(value=state.abbreviation)= state.name
+            .form-group.row.clearfix.required.m-b-2
+              .row
+                .col-lg-12
+                  .col-lg-12.text-xs-center
+                    button(data-dismiss="modal")#saveCityState.btn.btn-primary.text-uppercase save
+        .modal-footer

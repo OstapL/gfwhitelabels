@@ -1,0 +1,23 @@
+- pug_html += app.breadcrumbs('TRUNK CLUB', '', [ ['Home', '/'], ['TRUNK CLUB', ''],]);
+
+.container.text-xs-center
+  .row
+    .col-xl-12
+      h2.text-xs-center.thankyou-title.m0.letter-spacing-normal 
+        i(aria-hidden="true").fa.fa-check-square-o.color-green
+        |  We are reviewing your campaign!
+
+  .row
+    .col-xl-8.offset-xl-2.mb30.mt30
+      hr
+  
+  .row
+    .col-xl-12
+      .result-info-block.m-x-auto.text-xs-center
+      p We need to review Your campaign
+        br
+        | Thank you for submitting a campaign.
+        br
+        | We will review and contact you shortly.
+      .info-btn-block.m-t-3
+        a(href="/api/campaign/78").btn.btn-secondary PREVIEW

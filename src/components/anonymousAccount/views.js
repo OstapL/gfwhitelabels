@@ -4,9 +4,9 @@ module.exports = {
   // TODO
   // To do refactoring
   popupLogin: Backbone.View.extend({
-    urlRoot: Urls.rest_login(),
+    urlRoot: authServer + '/rest-auth/login',
     events: {
-      'submit .login-form': 'loginSubmit',
+      'submit .login-form': api.submitAction,
       'submit .signup-form': 'signupSubmit',
       'click .btn-google': 'loginGoogle',
       'click .btn-linkedin': 'loginLinkedin',
@@ -22,16 +22,6 @@ module.exports = {
       } else {
         alert('Server return no authentication data');
       }
-    },
-
-    loginSubmit(e) {
-      this.urlRoot = Urls.rest_login();
-      api.submitAction.call(this, e); 
-    },
-
-    signupSubmit(e) {
-      this.urlRoot = Urls.rest_register();
-      api.submitAction.call(this, e); 
     },
 
     loginGoogle() {
@@ -117,7 +107,7 @@ module.exports = {
   }),
 
   login: Backbone.View.extend({
-    urlRoot: Urls.rest_login(),
+    urlRoot: authServer + '/rest-auth/login',
     events: {
       'submit .login-form': api.submitAction,
       'click .btn-google': 'loginGoogle',
@@ -132,7 +122,6 @@ module.exports = {
     },
 
     render() {
-      this.model.urlRoot = serverUrl + Urls['rest_login']();
       $('#content').scrollTo();
       let template = require('./templates/login.pug');
       this.$el.html(
@@ -146,6 +135,7 @@ module.exports = {
     _success(data) {
       if(data.hasOwnProperty('key')) {
         localStorage.setItem('token', data.key);
+        localStorage.setItem('user', JSON.stringify(data));
         setTimeout(function() {
           window.location = app.getParams().next ? app.getParams().next : 
                 '/account/profile';
@@ -233,149 +223,251 @@ module.exports = {
   }),
 
   signup: Backbone.View.extend({
-    urlRoot: Urls.rest_register(),
+    urlRoot: authServer + '/rest-auth/registration',
     events: {
-        'submit .signup-form': api.submitAction,
-        'click .btn-google': 'loginGoogle',
-        'click .btn-linkedin': 'loginLinkedin',
-        'click .btn-facebook': 'loginFacebook'
+      'submit .signup-form': api.submitAction,
+      'click .btn-google': 'loginGoogle',
+      'click .btn-linkedin': 'loginLinkedin',
+      'click .btn-facebook': 'loginFacebook',
     },
 
     initialize(options) {
-        this.fields = options.fields;
-        this.fields.checkbox1.messageRequired = 'You must agree to the terms ' +
-          'before creating an account';
-        this.hello = require('hellojs');
-        this.socialAuth = require('./social-auth.js');
+      this.fields = options.fields;
+      this.fields.checkbox1.messageRequired = 'You must agree to the terms ' +
+        'before creating an account';
+      this.hello = require('hellojs');
+      this.socialAuth = require('./social-auth.js');
     },
 
     render() {
-        let template = require('./templates/signup.pug');
-        this.$el.html(
-            template({
-                register_fields: this.register_fields,
-            })
-        );
-        return this;
+      const template = require('./templates/signup.pug');
+      this.$el.html(
+          template({
+              register_fields: this.register_fields,
+          })
+      );
+      return this;
     },
 
     _success(data) {
-        if(data.hasOwnProperty('key')) {
-            localStorage.removeItem('user');
-            localStorage.setItem('token', data.key);
+      if(data.hasOwnProperty('key')) {
+          localStorage.removeItem('user');
+          localStorage.setItem('token', data.key);
 
-            delete this.model.password1;
-            delete this.model.password2;
-            delete this.model.key;
+          delete this.model.password1;
+          delete this.model.password2;
+          delete this.model.key;
 
-            window.location = app.getParams().next ? app.getParams().next : '/account/profile';
-        } else {
-            validation.invalidMsg(                                 
-              this, '', 'Server return no authentication data'
-            );
-        }
+          window.location = app.getParams().next ? app.getParams().next : '/account/profile';
+      } else {
+          validation.invalidMsg(                                 
+            this, '', 'Server return no authentication data'
+          );
+      }
     },
 
-    loginGoogle() {
+    _ensureAgreedWithRules() {
+      let data = {};
+      let cb = this.el.querySelector('#agree-rules');
 
-        var self = this;
+      if (cb.checked)
+        data.checkbox1 = cb.value;
 
-        self.hello('google').login({
-            scope: 'profile,email'}).then(
-            function (e) {
-                var sendToken = self.socialAuth.sendToken('google', e.authResponse.access_token);
+      if (!validation.validate({checkbox1: this.fields.checkbox1}, data, this)) {
+        _(validation.errors).each((errors, key) => {
+          validation.invalidMsg(this, key, errors);
+        });
 
-                $.when(sendToken).done(function (data) {
+        return false;
+      }
 
-                    localStorage.setItem('token', data.key);
-                    window.location = '/account/profile';
-                }).fail(function (data) {
-                    api.errorAction(self, data);
-                });
-            },
-            function (e) {
-                // TODO: notificate user about reason of error;
-                app.routers.navigate(
-                    '/account/login', {trigger: true, replace: true}
-                );
-            });
+      return true;
     },
-    loginFacebook() {
 
-        var self = this;
+    loginGoogle(e) {
 
-        self.hello('facebook').login({
-            scope: 'public_profile,email'}).then(
-            function (e) {
-                var sendToken = self.socialAuth.sendToken('facebook', e.authResponse.access_token);
+      if (!this._ensureAgreedWithRules()) {
+        e.preventDefault();
+        return false;
+      }
 
-                $.when(sendToken).done(function (data) {
-                    localStorage.setItem('token', data.key);
-                    window.location = '/account/profile';
-                }).fail(function (data) {
-                    api.errorAction(self, data);
-                });
-            },
-            function (e) {
+      var self = this;
 
-                // TODO: notificate user about reason of error;
-                app.routers.navigate(
-                    '/account/login', {trigger: true, replace: true}
-                );
-            });
+      self.hello('google').login({
+          scope: 'profile,email'}).then(
+          function (e) {
+              var sendToken = self.socialAuth.sendToken('google', e.authResponse.access_token);
+
+              $.when(sendToken).done(function (data) {
+
+                  localStorage.setItem('token', data.key);
+                  window.location = '/account/profile';
+              }).fail(function (data) {
+                  api.errorAction(self, data);
+              });
+          },
+          function (e) {
+              // TODO: notificate user about reason of error;
+              app.routers.navigate(
+                  '/account/login', {trigger: true, replace: true}
+              );
+          });
 
     },
-    loginLinkedin() {
 
-        var self = this;
+    loginFacebook(e) {
 
-        self.hello('linkedin').login({
-            scope: 'r_basicprofile,r_emailaddress',}).then(
-            function (e) {
-                var sendToken = self.socialAuth.sendToken('linkedin', e.authResponse.access_token);
+      if (!this._ensureAgreedWithRules()) {
+        e.preventDefault();
+        return false;
+      }
 
-                $.when(sendToken).done(function (data) {
-                    localStorage.setItem('token', data.key);
-                    window.location = '/account/profile';
-                }).fail(function (data) {
-                    api.errorAction(self, data);
-                });
-            },
-            function (e) {
+      var self = this;
 
-                // TODO: notificate user about reason of error;
-                app.routers.navigate(
-                    '/account/login', {trigger: true, replace: true}
-                );
-            });
+      self.hello('facebook').login({
+          scope: 'public_profile,email'}).then(
+          function (e) {
+              var sendToken = self.socialAuth.sendToken('facebook', e.authResponse.access_token);
 
+              $.when(sendToken).done(function (data) {
+                  localStorage.setItem('token', data.key);
+                  window.location = '/account/profile';
+              }).fail(function (data) {
+                  api.errorAction(self, data);
+              });
+          },
+          function (e) {
+
+              // TODO: notificate user about reason of error;
+              app.routers.navigate(
+                  '/account/login', {trigger: true, replace: true}
+              );
+          });
+    },
+
+    loginLinkedin(e) {
+
+      if (!this._ensureAgreedWithRules()) {
+        e.preventDefault();
+        return false;
+      }
+
+      var self = this;
+
+      self.hello('linkedin').login({
+          scope: 'r_basicprofile,r_emailaddress',}).then(
+          function (e) {
+              var sendToken = self.socialAuth.sendToken('linkedin', e.authResponse.access_token);
+
+              $.when(sendToken).done(function (data) {
+                  localStorage.setItem('token', data.key);
+                  window.location = '/account/profile';
+              }).fail(function (data) {
+                  api.errorAction(self, data);
+              });
+          },
+          function (e) {
+
+              // TODO: notificate user about reason of error;
+              app.routers.navigate(
+                  '/account/login', {trigger: true, replace: true}
+              );
+          });
     }
   }),
 
   reset: Backbone.View.extend({
+    urlRoot: authServer + '/reset-password/send',
+    el: '#content',
     events: {
-      'submit form': 'submit',
+      'submit form': api.submitAction,
     },
 
     render(){
-      let template = require('./templates/reset.pug');
-      this.$el.html(template({}));
+      this.fields = {};
+      this.fields.email = {
+        type: 'email',
+        required: true
+      };
+      const template = require('./templates/reset.pug');
+      this.el.innerHTML = template();
       return this;
     },
 
-    submit(e) {
-      e.preventDefault();
-
-      let email = $(e.currentTarget).find('#email').val();
-      api.makeRequest(Urls.rest_password_reset(), {
-        email: email,
-        type: 'POST',
-      }).then((data) => {
-        $('#content').html(
-          '<section class="reset"><div class="container"><div class="col-lg-12"><h2 class="dosis text-uppercase text-sm-center text-xs-center m-t-85">' + data.success + '</h2></div></div></section>'
-        );
-      });
+    _success(data) {
+      app.hideLoading();
+      $('body').scrollTo();
+      $('#content').html(
+        '<section class="reset"><div class="container"><div class="col-lg-12"><h2 class="dosis text-uppercase text-sm-center text-xs-center m-t-85"> We send you email with future instructions </h2></div></div></section>'
+      );
     }
 
   }),
+
+  membershipConfirmation: Backbone.View.extend({
+    urlRoot: formcServer + '/invitation',
+
+    template: require('./templates/confirmation.pug'),
+
+    events: {
+      'click .btn-confirm': 'confirmMembership',
+      'click .btn-cancel': 'cancelMembership',
+    },
+
+    initialize(options) {
+      this.code = options.code;
+      this.title = options.title;
+      this.company_name = options.company_name;
+    },
+
+    render() {
+      this.$el.html(
+        this.template({
+          title: this.title,
+          company_name: this.company_name,
+          code: this.code,
+        })
+      );
+
+      return this;
+    },
+
+    getSuccessUrl() {
+      return '/account/profile';
+    },
+
+    confirmMembership(e) {
+      e.preventDefault();
+
+      api.makeRequest(
+          this.urlRoot,
+          'PUT',
+          {
+            'activation_code': this.code,
+          }
+      ).then((data) => {
+        localStorage.setItem('token', data.token);
+        setTimeout(() => {
+          window.location = this.next ? this.next : '/account/profile';
+        }, 200);
+      }).fail((xhr, status, text) => {
+        api.errorAction(this, xhr, status, text, this.fields);
+      });
+
+      return false;
+    },
+
+    cancelMembership(e) {
+      e.preventDefault();
+
+      $('#content').scrollTo();
+      app.routers.navigate(
+        'account/profile',
+        { trigger: true, replace: false }
+      );
+
+      return false;
+    },
+  }),
+
 };
