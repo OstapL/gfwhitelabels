@@ -537,8 +537,17 @@ module.exports = {
       return this;
     },
 
-    getSuccessUrl(data) {
-      return '/formc/' + this.model.formc_id + '/team-members';
+    _success(data, newData) {
+      window.location = '/formc/' + this.model.formc_id + '/team-members';
+      /*
+      this.model.team_members.push(newData);
+      this.undelegateEvents();
+      app.routers.navigate(
+        '/formc/' + this.model.id + '/team-members',
+        { trigger: true, replace: false }
+      );
+      //return '/campaign/' + this.model.id + '/team-members';
+      */
     },
 
   }, addSectionHelper.methods, menuHelper.methods, leavingConfirmationHelper.methods)),
