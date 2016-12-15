@@ -420,7 +420,6 @@ module.exports = {
       this.fields = options.fields;
       this.user = options.user;
       this.user.account_number_re = this.user.account_number;
-      this.fields.is_understand_securities_related = {},
       this.fields.payment_information_type.validate.choices = {
         0: 'Echeck (ACH)',
         1: 'Check',
@@ -536,7 +535,7 @@ module.exports = {
 
           return content;
         },
-        trigger: 'manual',
+        trigger: 'focus',
       }).popover('hide');
 
       $('#income_worth_modal').on('hidden.bs.modal', () => {
@@ -836,7 +835,7 @@ module.exports = {
 
       this.validateAmount(amount);
 
-      this.updatePerks();
+      this.updatePerks(amount);
 
       this._updateTotalAmount();
     },
