@@ -342,8 +342,8 @@ module.exports = {
     initComments() {
       const View = require('components/comment/views.js');
       const urlComments = commentsServer + '/company/' + this.model.id;
-      let optionsR = api.makeRequest(urlComments, 'OPTIONS');
-      let dataR = api.makeRequest(urlComments);
+      // let optionsR = api.makeRequest(urlComments, 'OPTIONS');
+      // let dataR = api.makeRequest(urlComments);
       //
       // $.when(optionsR, dataR).done((options, data) => {
         let commentsModel = {

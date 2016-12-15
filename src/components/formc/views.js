@@ -194,7 +194,7 @@ module.exports = {
       'click .submit_formc': submitFormc,
       'keyup #full-name': 'changeSign',
       'click #pay-btn': 'stripeSubmit',
-    }, menuHelper.events, yesNoHelper.events, leavingConfirmationHelper.events),
+    }, menuHelper.events, yesNoHelper.events, /*leavingConfirmationHelper.events*/),
 
     preinitialize() {
       // ToDo
