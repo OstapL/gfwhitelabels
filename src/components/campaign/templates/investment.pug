@@ -358,12 +358,12 @@ mixin confirmStatement(name, attr)
                     input(
                       type="text"
                       placeholder="Type Your Name"
-                      value=fullName name='signature[full_name]'
+                      name='signature[full_name]'
                     ).form-control.typed-name
                   .col-lg-5
                     .electronically
                       span.by By:
-                      span.name.signature #{ fullName }
+                      span.name.signature
 
             .form-group.row
               .col-md-12.text-md-center.text-sm-center.text-xs-center
