@@ -521,7 +521,7 @@ module.exports = {
 
       disableEnterHelper.disableEnter.call(this);
       this.checkForm();
-
+      this.$el.find('.team-add-item').equalHeights();
       return this;
     },
 
