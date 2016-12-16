@@ -50,14 +50,7 @@ const labels = {
 
 const submitFormc = function submitFormc(e) {
   e.preventDefault();
-  doFormcValidation(e, formcHelpers.formcCalcProgress(this.model));
-};
-
-const doFormcValidation = function doFormcValidation(e, progress) {
-
-  if(progress == null) {
-    progress = formcHelpers.formcCalcProgress(this.model);
-  }
+  let progress = formcHelpers.formcCalcProgress(this.model);
 
   if(
       progress.introduction == true &&

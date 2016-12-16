@@ -1,6 +1,7 @@
 let addSectionHelper = require('helpers/addSectionHelper.js');
 
 import formatHelper from '../../helpers/formatHelper';
+const raiseHelpers = require('./helpers.js');
 const appendHttpIfNecessary = formatHelper.appendHttpIfNecessary;
 
 const dropzoneHelpers = require('helpers/dropzoneHelpers.js');
@@ -11,40 +12,18 @@ const menuHelper = require('helpers/menuHelper.js');
 const disableEnterHelper = require('helpers/disableEnterHelper.js');
 
 const submitCampaign = function submitCampaign(e) {
-  doCampaignValidation.call(this, e, this.model);
-};
-
-
-const postForReview = function postForReview(e) {
-  api.makeRequest(raiseCapitalServer + '/company/' + e.target.dataset.companyid + '/post-for-review', 'PUT')
-    .then((data) => {
-      app.routers.navigate(
-        '/company/in-review',
-        { trigger: true, replace: false }
-      );
-    });
-};
-
-const doCampaignValidation = function doCampaignValidation(e, data) {
-
-  if(data == null) {
-    data = this.model;
-  }
-
-  if(data.progress == null) {
-    data.progress  = this.model.progress;
-  }
+  let progress = raiseHelpers.calcProgress(this.model);
 
   if(
-      data.progress.general_information == true &&
-      data.progress.media == true &&
-      data.progress.specifics == true &&
-      data.progress['team-members'] == true
+      progress.general_information == true &&
+      progress.media == true &&
+      progress.specifics == true &&
+      progress['team-members'] == true
   ) {
     $('#company_publish_confirm').modal('show');
   } else {
     var errors = {};
-    _(data.progress).each((d, k) => {
+    _(progress).each((d, k) => {
       if(k != 'perks') {
         if(d == false)  {
           $('#company_publish .'+k).removeClass('collapse');
@@ -57,10 +36,21 @@ const doCampaignValidation = function doCampaignValidation(e, data) {
   }
 };
 
+
+const postForReview = function postForReview(e) {
+  api.makeRequest(raiseCapitalServer + '/company/' + e.target.dataset.companyid + '/post-for-review', 'PUT')
+    .then((data) => {
+      $('.modal-backdrop').remove();
+      app.routers.navigate(
+        '/formc/' + app.user.formc.id + '/introduction',
+        { trigger: true, replace: false }
+      );
+    });
+};
+
 const onPreviewAction = function(e) {
   e.preventDefault();
   let pathname = location.pathname;
-  //this.$el.find('#submitForm').click();
   app.showLoading();
   let data = this.$('form').serializeJSON({ useIntKeysAsArrayIndex: true });
   if (window.location.href.indexOf('team-members/add') !== -1) {
@@ -214,6 +204,11 @@ module.exports = {
       }
     },
 
+    _success(data, newData) {
+      raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
+      return 1;
+    },
+
     getSuccessUrl(data) {
       return '/campaign/' + this.model.id  + '/media';
     },
@@ -278,6 +273,11 @@ module.exports = {
       }, leavingConfirmationHelper.events, menuHelper.events,
         addSectionHelper.events, dropzoneHelpers.events
     ),
+
+    _success(data, newData) {
+      raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
+      return 1;
+    },
 
     getSuccessUrl(data) {
       return '/campaign/' + this.model.id + '/team-members';
@@ -395,7 +395,7 @@ module.exports = {
     template: require('./templates/teamMemberAdd.pug'),
     events: _.extend({
       'click .delete-member': 'deleteMember',
-      'click .submit_form': doCampaignValidation,
+      'click .submit_form': submitCampaign,
       'click #postForReview': postForReview,
       'change #linkedin,#facebook': 'appendHttpsIfNecessary',
       'click .cancel': 'cancel',
@@ -484,7 +484,7 @@ module.exports = {
     urlRoot: raiseCapitalServer + '/campaign/:id/team-members',
     events: _.extend({
       'click .delete-member': 'deleteMember',
-      'click .submit_form': doCampaignValidation,
+      'click .submit_form': submitCampaign,
       'click #postForReview': postForReview,
       'click .onPreview': onPreviewAction,
     }, menuHelper.events),
@@ -643,6 +643,11 @@ module.exports = {
         this.$('#max_equity_offered').val(max_equity_offered + '%');
       },
 
+      _success(data, newData) {
+        raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
+        return 1;
+      },
+
       getSuccessUrl(data) {
         return '/campaign/' + this.model.id + '/perks';
       },
@@ -743,7 +748,9 @@ module.exports = {
     },
 
     _success(data) {
+      raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
       app.hideLoading();
+      return 0;
     }
 
   }, leavingConfirmationHelper.methods, menuHelper.methods, addSectionHelper.methods)),
