@@ -40,11 +40,13 @@ const submitCampaign = function submitCampaign(e) {
 const postForReview = function postForReview(e) {
   api.makeRequest(raiseCapitalServer + '/company/' + e.target.dataset.companyid + '/post-for-review', 'PUT')
     .then((data) => {
-      $('.modal-backdrop').remove();
-      app.routers.navigate(
-        '/formc/' + app.user.formc.id + '/introduction',
-        { trigger: true, replace: false }
-      );
+      $('#company_publish_confirm').modal('hide');
+      setTimeout(() => {
+        app.routers.navigate(
+          '/formc/' + app.user.formc.id + '/introduction',
+          { trigger: true, replace: false }
+        );
+      }, 500);
     });
 };
 
