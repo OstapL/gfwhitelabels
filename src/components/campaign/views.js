@@ -670,10 +670,13 @@ module.exports = {
         type: location.hostname,
         esign: responseData.signature.full_name,
         meta_data: formData,
-        template: ['invest/subscription_agreement.pdf', 'invest/participation_agreement.pdf']
+        template: [
+          this.getSubscriptionAgreementPath(),
+          'invest/participation_agreement.pdf'
+        ]
       };
 
-      api.makeRequest(reqUrl, 'POST', data)
+      $.post(reqUrl, data)
       .done( () => {
         $('#content').scrollTo();
         this.undelegateEvents();
@@ -686,10 +689,22 @@ module.exports = {
     },
 
     openPdf (e) {
-      const pathToDoc = e.target.dataset.path;
+      var pathToDoc = e.target.dataset.path;
       var data = this.getDocMetaData();
-
+      const isSubscriptionAgreement = pathToDoc.indexOf('subscription_agreement');
+      
+      if (isSubscriptionAgreement !== -1) {
+        pathToDoc = global.esignServer + '/pdf-doc/';
+        pathToDoc += this.getSubscriptionAgreementPath();
+      }
+      
       e.target.href = pathToDoc + '?' + $.param(data);
+    },
+
+    getSubscriptionAgreementPath () {
+      return this.model.campaign.security_type === 0 ?
+      'invest/subscription_agreement_common_stok.pdf' :
+      'invest/subscription_agreement_revenue_share.pdf';
     },
 
     getCurrentDate () {
@@ -725,36 +740,41 @@ module.exports = {
     },
 
     getDocMetaData () {
+      this.model.owner = this.model.owner || {};
+
+      const formData = $('form.invest_form').serializeJSON();
+      const issuer_legal_name = this.model.owner.first_name + ' ' + this.model.owner.last_name;
       const investor_legal_name = $('#first_name').val() + ' ' + $('#last_name').val()
                       || app.user.get('first_name') + ' ' + app.user.get('last_name');
       return {
-        address_1: $('#street_address_1').val(),
-        address_2: $('#street_address_2').val(),
-        aggregate_inclusive_purchase: $('#total').val(),
-        city: $('#city').val(),
-        investor_total_purchase: $('#amount').val(),
-        investor_legal_name: investor_legal_name,
-        state: $('#state').val(),
-        zip_code: $('#zip_code').val(),
-        Commitment_Date_X: this.getCurrentDate(),
         fees_to_investor: 10,
+        trans_percent: '6%',
+        listing_fee: '$500',
+        Commitment_Date_X: this.getCurrentDate(),
+        city: formData.personal_information_data.city,
+        state: formData.personal_information_data.state,
+        zip_code: formData.personal_information_data.zip_code,
+        address_1: formData.personal_information_data.street_address_1,
+        address_2: formData.personal_information_data.street_address_2 || ' ',
+        aggregate_inclusive_purchase: formData.total_amount,
+        investor_number_purchased: formData.payment_information_data.account_number,
+        investor_total_purchase: formData.amount,
+        investor_legal_name: investor_legal_name,
         investor_address: app.user.get('address_1'),
         investor_city: app.user.get('city'),
         investor_code: app.user.get('zip_code'),
         investor_email: app.user.get('email'),
-        Investor_optional_address: app.user.get('address_2'),
+        Investor_optional_address: app.user.get('address_2') || ' ',
         investor_state: app.user.get('state'),
-        investor_number_purchased: $('#payment_information_data__account_number__0').val(),
-        issuer_email: '',
-        issuer_legal_name: '',
-        issuer_signer: '',
-        issuer_signer_title: '',
-        jurisdiction_of_organization: '',
-        listing_fee: '',
-        maximum_raise: '',
-        minimum_raise: '',
-        price_per_share: '',
-        registration_fee: '',
+        jurisdiction_of_organization: this.model.jurisdiction_of_organization, 
+        maximum_raise: this.model.campaign.maximum_raise,
+        minimum_raise: this.model.campaign.minimum_raise,
+        price_per_share: this.model.campaign.price_per_share,
+        issuer_email: this.model.owner.email,
+        issuer_legal_name: issuer_legal_name,
+        issuer_signer: null,
+        issuer_signer_title: null,
+        registration_fee: null,
       };
     },
 
@@ -884,7 +904,9 @@ module.exports = {
     _updateTotalAmount() {
       // Here 10 is the flat rate;
       let totalAmount = this.getInt(this.$amount.val()) + 10;
-      this.$el.find('.total-investment-amount').text('$' + this.formatInt(totalAmount));
+      let formattedTotalAmount = '$' + this.formatInt(totalAmount)
+      this.$el.find('.total-investment-amount').text(formattedTotalAmount);
+      this.$el.find('[name=total_amount]').val(formattedTotalAmount);
 
     },
   }),

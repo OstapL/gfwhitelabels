@@ -31,7 +31,7 @@ const updateRaiseCapitalMenu = function(progress) {
   _(progress).each((v,k) => {
     let el = null;
     if(v == false) {
-      el = document.querySelector('#menu_f_' + k + ' .icon-check');
+      el = document.querySelector('#menu_c_' + k + ' .icon-check');
       if(el != null) {
         el.remove();
       }
@@ -39,8 +39,8 @@ const updateRaiseCapitalMenu = function(progress) {
       if(k != 'perks') {
         complited ++;
       }
-      if(document.querySelector('#menu_f_' + k + ' .icon-check') == null) {
-        document.querySelector('#menu_f_' + k).innerHTML += ' <div class="icon-check"><i class="fa fa-check-circle-o"></i></div>';
+      if(document.querySelector('#menu_c_' + k + ' .icon-check') == null) {
+        document.querySelector('#menu_c_' + k).innerHTML += ' <div class="icon-check"><i class="fa fa-check-circle-o"></i></div>';
       }
     }
   });

@@ -181,7 +181,7 @@ section.formc-review
         else
           p.text-xs-center.font-weight-bold 
             +frField('campaign.security_type', 'select') 
-            | Share Agreement Offered
+            |  Agreement Offered
         p.text-xs-center.font-weight-bold $
           +frField('campaign.minimum_increment', 'text')
           |  MINIMUM INVESTMENT
@@ -325,7 +325,10 @@ section.formc-review
               if values.campaign.minimum_raise == values.campaign.maximum_raise
                 | First Come First Served
               else
-                | Not Applicable
+                if values.campaign.security_type == 0
+                  | Not Applicable
+                else
+                  | First Come First Serve
           .row
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
               p.font-weight-bold Maximum amount of offering:
@@ -399,8 +402,8 @@ section.formc-review
             +editSelect('corporate_structure')
             |  (the “Company” also referred to as an “issuer"), is offering a Revenue Share Agreement similar to a promissory note in the form attached hereto as Exhibit D (each, a “Note” and collectively, the “
             u Notes
-            | ”) in increments of 
-            +editText('price_per_share')
+            | ”) minimum investment of 
+            +editText('minimum_increment')
             |   targeting a maximum aggregate offering price of $
             +editText('maximum_raise')
           p.pb10.text-indent The Company has established a minimum aggregate offering price of $ 
@@ -548,8 +551,6 @@ section.formc-review
                       +frField('formc.team_members[' + k + '].last_name', 'text')
                     td.text-xs-center
                       +frField('formc.team_members[' + k + '].start_date', 'text')
-                      br
-                      +frField('formc.team_members[' + k + '].board_service_end_date', 'text')
                     td.text-xs-center
                       +frField('formc.team_members[' + k + '].title', 'text')
                       br
@@ -679,17 +680,11 @@ section.formc-review
         p.text-indent If a potential investor is interested in participating in the Offering, such investor must first open an account with the Intermediary by registering at www.GrowthFountain.com.  During such registration process, the Intermediary may request financial information to determine investor’s eligibility and may require the acceptance of certain terms and conditions applicable to investor’s use of the Platform. In addition, prior to communicating any investment commitment, each investor must (a) consent to electronic delivery of materials, (b) provide a representation that such investor has reviewed the educational material available from the Intermediary delivered pursuant to Rule 302 of Regulation Crowdfunding, (c) provide a representation that such investor understands that the entire investment amount may be lost and that such investor could bear such loss, (d) complete a questionnaire demonstrating such investor’s understanding that there are limitations on cancelling an investment commitment and that it may be difficult to resell securities acquired in this Offering.  Each potential investor is subject to investment limitations established by the Securities Act (15 USC 77d(a)(6)(B)) and Regulation Crowdfunding (17 CFR 227.100(a)(2)).
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u Offering Process After Registration
-        p.text-indent Each Offering is listed on the Platform for a minimum of twenty-one (21) days and the Offering period may extend beyond such twenty-one days if set forth in the Material 
+        p.text-indent
           if values.campaign.security_type == 0
-            |  or 
+            | Each Offering is listed on the Platform for a minimum of twenty-one (21) days and the Offering period may extend beyond such twenty-one days if set forth in the Material or each investor is properly notified. During that period (or later if the investor is notified of a change), the Company must aggregate investor commitments that are equal to or greater than the Offering minimum target amount. The process generally involves the following steps: (1) an investor registered on the Platform identifies a desired offering and communicates an investment commitment to purchase securities in such offering by completing a subscription agreement; (2) the Intermediary confirms the investor’s eligibility to participate in the Offering; and then has the subscription agreement countersigned by the issuer; (3) the investor transfers the funds required to purchase the offered securities to the Intermediary’s designated third-party FDIC insured depositoryescrow agent; (4) once the targeted minimum offering amount is achieved or exceeded through investor commitments collectively, the issuer would be able to close the transaction on the original target closing date or an earlier date with at least five business days prior notice to the investors; and (5) the subscription agreement will be countersigned by the issuer; and (6) the funds would be released by the third-party depositoryescrow agent to the issuer, less any required fees sent to the Intermediary, and the issuer would issue the securities to the investor.
           else
-            | and   
-          | each investor is properly notified.  During that period (or later if the investor is notified of a change), the Company must aggregate investor commitments that are equal to or greater than the 
-          if values.campaign.security_type == 0
-            |  Offering
-          else
-            |  Offering’s 
-          |  minimum target amount.  The process generally involves the following steps: (1) an investor registered on the Platform identifies a desired offering and communicates an investment commitment to purchase securities in such offering by completing a subscription agreement; (2) the Intermediary confirms the investor’s eligibility to participate in the Offering and then has the subscription agreement countersigned by the issuer; (3) the investor transfers the funds required to purchase the offered securities to the Intermediary’s designated escrow agent; (4) once the targeted minimum offering amount is achieved or exceeded through investor
+            | Each Offering is listed on the Platform for a minimum of twenty-one (21) days and the Offering period may extend beyond such twenty-one days if set forth in the Material and each investor is properly notified.  During that period (or later if the investor is notified of a change), the Company must aggregate investor commitments that are equal to or greater than the Offering’s   minimum target amount.  The process generally involves the following steps: (1) an investor registered on the Platform identifies a desired offering and communicates an investment commitment to purchase securities in such offering by completing a subscription agreement; (2) the Intermediary confirms the investor’s eligibility to participate in the Offering and then has the subscription agreement countersigned by the issuer; (3) the investor transfers the funds required to purchase the offered securities to the Intermediary’s designated escrow agent; (4) once the targeted minimum offering amount is achieved or exceeded through investor
 
       // page 10
       section.page-formc-review.m-t-1
@@ -698,12 +693,11 @@ section.formc-review
           p.small.pb10
             +frField('company.name', 'text')
             |  as Issuer
-        p commitments collectively, the issuer would be able to close the transaction on the original target closing date or an earlier date with at least five business days prior notice to the investors; and (5) the funds would be released by the escrow agent to the issuer, less any required fees sent to the Intermediary, and the issuer would issue the securities to the investor.
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u Method for Investor Cancellation of a Commitment 
         p.text-indent Investors may cancel an investment commitment at any time up until forty-eight (48) hours prior to the applicable closing date.  The process for any such cancellation is for the investor to log onto the Platform and indicate a cancellation by selecting such option in connection with the applicable offering once they have logged into their account and accessed their investor dashboard.  With respect to specific scenarios: (1) if the target minimum offering amount is not met prior to the target closing date, then the Intermediary will automatically cancel all investment commitments and notify each investor of the return of their respective funds, (2) if the issuer reaches the target minimum offering amount prior to the deadline identified in the offering materials, then it may close the offering early (if it provides notice about the new offering deadline at least five business days prior to such new offering deadline) 
           if values.campaign.security_type == 0
-            |  provided that the investor would be able to cancel the investment commitment before the 48-hour period prior to the new offering deadline, (3) if the issuer notifies the investor of a material change to an offering, then the investor must reconfirm their investment commitment after the material change is made to the offering, or such investor’s investment commitment will be cancelled and the committed funds will be returned.
+            |  provided that the investor would be able to cancel the investment commitment before the 48-hour period prior to the new offering deadline, (3) if the issuer notifies the investor of a material change to an offering, then the investor must reconfirm their investment commitment after the material change is made to the offering, or such investor’s investment commitment will be cancelled and the committed funds will be returned. In any situation where a return of investor commitments is triggered, such funds will be returned without any accrued interest and less any fees incurred.
           else
             |  with it always being the case that the investor would be able to cancel the investment commitment up until the 48-hour period prior to the new offering deadline, or (3) if the issuer notifies the investor of a material change to an offering, then the investor must reconfirm their investment commitment within five business days of receipt of the notice after the material change is made to the offering, or such investor’s investment commitment will be cancelled and the committed funds will be returned, less any fees incurred, without any accrued interest.
         p.text-uppercase.m-t-3.m-b-0.pb10 
@@ -737,13 +731,21 @@ section.formc-review
             |  Offering amount
           else
             |  aggregate amount raised in the Offering 
-          |  if the Offering is successfully completed and closed.  Such compensation is paid only if the Company’s total Offering proceeds meet or exceed the target minimum offering amount indicated in this Material. Additionally, the Company reimburses the Intermediary for certain fees that the Intermediary passes through to the Company, such as the costs related to performing background checks and establishing an escrow account.  These fees are one-time fees and are not dependent on the success of the Offering. In total, the Intermediary will receive, directly or indirectly, a dollar amount equal to the sum of all the following: (a) a transaction fee equal to
+          |  if the Offering is successfully completed and closed.  Such compensation is paid only if the Company’s total Offering proceeds meet or exceed the target minimum offering amount indicated in this Material. Additionally, the Company reimburses the Intermediary for certain fees that the Intermediary passes through to the Company, such as the costs related to performing background checks and establishing 
+          if values.campaign.security_type == 0
+            | a depository account for the benefit of investorsn escrow account.
+          else
+            | an escrow account.
+          |  These fees are one-time fees and are not dependent on the success of the Offering. In total, the Intermediary will receive, directly or indirectly, a dollar amount equal to the sum of all the following: (a) a transaction fee equal to
           +frField('company.trans_percent', 'text')
           | % of the total amount of monies raised in the Offering for the purchase of securities offered by the Company, payable upon success, (b) a registration and processing fee equal to $
           +frField('company.registration_fee', 'text')
           | payable upon registration, and (c) a participation fee equal to $
           +frField('company.fees_to_investor ', 'text')
           | committed to by the investor.
+          if values.campaign.security_type == 0
+            |  Participation fees that are attributable to each investor are not included in any calculation of total Offering amount.
+
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u Conditional Commitment
         p.pb10.text-indent Purchase of the securities offered in this Offering shall be made pursuant to the 
