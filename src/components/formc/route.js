@@ -1,7 +1,6 @@
 const View = require('components/formc/views.js');
 const formcHelpers = require('./helpers.js');
 
-
 function getOCCF(optionsR, viewName, params = {}) {
   $('#content').scrollTo();
   params.el = '#content';
