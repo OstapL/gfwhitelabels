@@ -69,11 +69,31 @@ module.exports = {
       'click .link-response-count': 'showHideResponses',
       'click .link-reply': 'showReplyTo',
       'click .link-like': 'likeComment',
+      'click .link-edit': 'editComment',
+      'click .link-delete': 'deleteComment',
     },
 
     initialize(options) {
       this.fields = options.fields;
       this.urlRoot = this.urlRoot.replace(':model', 'company').replace(':id', this.model.id);
+    },
+
+    getComment(uid) {
+
+      function findComment(comments, uid) {
+        for(let c in comments) {
+          if (c.uid == uid)
+            return c;
+
+          let found = findComment(c.children, uid);
+          if (found)
+            return found;
+        }
+
+        return null;
+      }
+
+      return findComment(this.model.data, uid);
     },
 
     render() {
@@ -118,9 +138,9 @@ module.exports = {
         message: message,
       };
 
-      // app.showLoading();
-      // api.makeRequest(this.urlRoot, 'POST', data).done((newData) => {
-      setTimeout(() => {
+      app.showLoading();
+      api.makeRequest(this.urlRoot, 'POST', data).done((newData) => {
+      // setTimeout(() => {
         $target.prop('disabled', false);
 
         if (isChild)
@@ -141,20 +161,20 @@ module.exports = {
         newComment.find('.link-response-count').text('0');
 
         newComment.appendTo(isChild ? $parentComment : this.$('.comments'));
-        // app.hideLoading();
-      }, 500);
-      // }).fail((err) => {
-      //   $target.prop('disabled', false);
-      //   app.hideLoading();
-      //   alert(err);
-      // });
+        app.hideLoading();
+      // }, 500);
+      }).fail((err) => {
+        $target.prop('disabled', false);
+        app.hideLoading();
+        alert(err);
+      });
     },
 
     cancelComment(e) {
       e.preventDefault();
 
       let $form = $(e.target).closest('form');
-      if (!$form.hasClass('new-comment'))
+      if (!$form.hasClass('edit-comment'))
         $form.remove();
 
       return false;
@@ -163,9 +183,9 @@ module.exports = {
     showReplyTo(e) {
       e.preventDefault();
 
-      let $newCommentBlock = this.$stubs.find('.new-comment').clone();
+      let $newCommentBlock = this.$stubs.find('.edit-comment').clone();
 
-      $newCommentBlock.removeClass('new-comment collapse');
+      $newCommentBlock.removeClass('edit-comment collapse');
 
       $newCommentBlock.appendTo($(e.target).closest('.comment'));
 
@@ -194,6 +214,36 @@ module.exports = {
       e.preventDefault();
 
       console.log('Likes are not implemented')
+
+      return false;
+    },
+
+    editComment(e) {
+      e.preventDefault();
+
+      let $target = $(e.target);
+
+      let $comment = $target.closest('.comment');
+      let level = $comment.data('level');
+      let uid = $comment.data('id');
+
+      let comment = this.findComment(uid);
+      let commentText = comment.message;
+
+      // let $editCommentBlock = this.$stubs.find('.edit-comment').clone();
+      // $editCommentBlock.removeClass('edit-comment collapse');
+      // $editCommentBlock.find('.text-body')
+      //
+      // $comment.find('p').text().addClass('collapse').after($editCommentBlock);
+
+
+      return false;
+    },
+
+    deleteComment(e) {
+      e.preventDefault();
+
+
 
       return false;
     },
