@@ -12,7 +12,7 @@ const validation = require('components/validation/validation.js');
 
 const disableEnterHelper = require('helpers/disableEnterHelper.js');
 
-const leavingConfirmationHelper = require('helpers/leavingConfirmationHelper2.js');
+const leavingConfirmationHelper = require('helpers/leavingConfirmationHelper.js');
 
 const labels = {
   title: 'Title for Risk',
@@ -50,7 +50,7 @@ const labels = {
 const submitFormc = function submitFormc(e) {
   e.preventDefault();
   let $form = this.$el.find('form');
-  var data = $form.serializeJSON();
+  var data = $form.serializeJSON({ checkboxUncheckedValue: 'false', useIntKeysAsArrayIndex: true });
 
   _.extend(this.model, data);
   data = _.extend({}, this.model);
@@ -132,7 +132,7 @@ module.exports = {
       'click .submit_formc': submitFormc,
       'keyup #full-name': 'changeSign',
       'click #pay-btn': 'stripeSubmit',
-    }, menuHelper.events, yesNoHelper.events, leavingConfirmationHelper.events),
+    }, menuHelper.events, yesNoHelper.events, /*leavingConfirmationHelper.events*/),
 
     preinitialize() {
       // ToDo
@@ -143,6 +143,7 @@ module.exports = {
     },
 
     initialize(options) {
+      this.model = options.formc;
       this.fields = options.fields;
 
       if(this.model.is_paid === false) {
@@ -350,9 +351,11 @@ module.exports = {
     },
 
     initialize(options) {
+      this.model = options.formc;
       this.fields = options.fields;
       this.fields.full_time_employers = { label: 'Full Time Employees' };
       this.fields.part_time_employers = { label: 'Part Time Employees' };
+      console.log(this);
     },
 
     deleteMember: function (e) {
@@ -445,6 +448,22 @@ module.exports = {
     }, addSectionHelper.events, menuHelper.events, leavingConfirmationHelper.events),
 
     initialize(options) {
+      if(options.user_id != 'new') {
+        let t = options.formc.team_members.filter(function(el) { return el.user_id == options.user_id})[0]
+        t.formc_id = options.formc.id;
+        t.campaign_id = options.formc.campaign_id;
+        t.company_id = options.formc.company_id;
+        t.progress = options.formc.progress;
+        delete t.id;
+        this.model = t;
+      } else {
+        this.model = {
+          formc_id: options.formc.id,
+          campaign_id: options.formc.campaign_id,
+          company_id: options.formc.company_id,
+          progress: options.formc.progress
+        };
+      }
       this.fields = options.fields;
       this.role = options.role;
 
@@ -518,8 +537,17 @@ module.exports = {
       return this;
     },
 
-    getSuccessUrl(data) {
-      return '/formc/' + this.model.formc_id + '/team-members';
+    _success(data, newData) {
+      window.location = '/formc/' + this.model.formc_id + '/team-members';
+      /*
+      this.model.team_members.push(newData);
+      this.undelegateEvents();
+      app.routers.navigate(
+        '/formc/' + this.model.id + '/team-members',
+        { trigger: true, replace: false }
+      );
+      //return '/campaign/' + this.model.id + '/team-members';
+      */
     },
 
   }, addSectionHelper.methods, menuHelper.methods, leavingConfirmationHelper.methods)),
@@ -534,6 +562,7 @@ module.exports = {
     }, addSectionHelper.events, menuHelper.events, yesNoHelper.events, leavingConfirmationHelper.events),
 
     initialize(options) {
+      this.model = options.formc;
       this.fields = options.fields;
 
       this.labels = {
@@ -586,6 +615,7 @@ module.exports = {
     urlRoot: formcServer + '/:id/use-of-proceeds',
 
     initialize(options) {
+      this.model = options.formc;
       this.fields = options.fields;
       this.campaign = options.campaign;
 
@@ -747,6 +777,7 @@ module.exports = {
 
   riskFactorsInstruction: Backbone.View.extend(_.extend({
     initialize(options) {
+      this.model = options.formc;
     },
 
     events: _.extend({
@@ -775,9 +806,10 @@ module.exports = {
     riskType: 'market_and_customer_risk',
     events: _.extend({
       'click .submit_formc': submitFormc,
-    }, menuHelper.events, riskFactorsHelper.events),
+    }, menuHelper.events, riskFactorsHelper.events, leavingConfirmationHelper.events),
 
     initialize(options) {
+      this.model = options.formc;
       this.fields = options.fields;
       this.fields.title = { label: 'Title for Risk' };
       this.fields.risk = { label: 'Describe Your Risk' };
@@ -868,16 +900,17 @@ module.exports = {
       disableEnterHelper.disableEnter.call(this);
       return this;
     },
-  }, menuHelper.methods, addSectionHelper.methods, riskFactorsHelper.methods)),
+  }, menuHelper.methods, addSectionHelper.methods, riskFactorsHelper.methods, leavingConfirmationHelper.methods)),
 
   riskFactorsFinancial: Backbone.View.extend(_.extend({
     urlRoot: formcServer + '/:id' + '/risk-factors-financial/:index',
     riskType: 'financial_risk',
     events: _.extend({
       'click .submit_formc': submitFormc,
-    }, menuHelper.events, riskFactorsHelper.events),
+    }, menuHelper.events, riskFactorsHelper.events, leavingConfirmationHelper.events),
 
     initialize(options) {
+      this.model = options.formc;
       this.fields = options.fields;
       this.fields.title = { label: 'Title for Risk' };
       this.fields.risk = { label: 'Describe Your Risk' };
@@ -976,16 +1009,17 @@ module.exports = {
       disableEnterHelper.disableEnter.call(this);
       return this;
     },
-  }, menuHelper.methods, addSectionHelper.methods, riskFactorsHelper.methods)),
+  }, menuHelper.methods, addSectionHelper.methods, riskFactorsHelper.methods, leavingConfirmationHelper.methods)),
 
   riskFactorsOperational: Backbone.View.extend(_.extend({
     urlRoot: formcServer + '/:id' + '/risk-factors-operational/:index',
     riskType: 'operational_risk',
     events: _.extend({
       'click .submit_formc': submitFormc,
-    }, menuHelper.events, riskFactorsHelper.events),
+    }, menuHelper.events, riskFactorsHelper.events, leavingConfirmationHelper.events),
 
     initialize(options) {
+      this.model = options.formc;
       this.fields = options.fields;
       this.fields.title = { label: 'Title for Risk' };
       this.fields.risk = { label: 'Describe Your Risk' };
@@ -1113,16 +1147,17 @@ module.exports = {
       return this;
     },
 
-  }, menuHelper.methods, addSectionHelper.methods, riskFactorsHelper.methods)),
+  }, menuHelper.methods, addSectionHelper.methods, riskFactorsHelper.methods, leavingConfirmationHelper.methods)),
 
   riskFactorsCompetitive: Backbone.View.extend(_.extend({
     urlRoot: formcServer + '/:id' + '/risk-factors-competitive/:index',
     riskType: 'competitive_risk',
     events: _.extend({
       'click .submit_formc': submitFormc,
-    }, menuHelper.events, riskFactorsHelper.events),
+    }, menuHelper.events, riskFactorsHelper.events, leavingConfirmationHelper.methods),
 
     initialize(options) {
+      this.model = options.formc;
       this.fields = options.fields;
       this.fields.title = { label: 'Title for Risk' };
       this.fields.risk = { label: 'Describe Your Risk' };
@@ -1194,16 +1229,17 @@ module.exports = {
       return this;
     },
 
-  }, menuHelper.methods, addSectionHelper.methods, riskFactorsHelper.methods)),
+  }, menuHelper.methods, addSectionHelper.methods, riskFactorsHelper.methods, leavingConfirmationHelper.methods)),
 
   riskFactorsPersonnel: Backbone.View.extend(_.extend({
     urlRoot: formcServer + '/:id' + '/risk-factors-personnel/:index',
     riskType: 'personnel_and_third_parties_risk',
     events: _.extend({
       'click .submit_formc': submitFormc,
-    }, menuHelper.events, riskFactorsHelper.events),
+    }, menuHelper.events, riskFactorsHelper.events, leavingConfirmationHelper.events),
 
     initialize(options) {
+      this.model = options.formc;
       this.fields = options.fields;
       this.fields.title = { label: 'Title for Risk' };
       this.fields.risk = { label: 'Describe Your Risk' };
@@ -1293,16 +1329,17 @@ module.exports = {
       disableEnterHelper.disableEnter.call(this);
       return this;
     },
-  }, menuHelper.methods, addSectionHelper.methods, riskFactorsHelper.methods)),
+  }, menuHelper.methods, addSectionHelper.methods, riskFactorsHelper.methods, leavingConfirmationHelper.methods)),
 
   riskFactorsLegal: Backbone.View.extend(_.extend({
     urlRoot: formcServer + '/:id' + '/risk-factors-legal/:index',
     riskType: 'legal_and_regulatory_risk',
     events: _.extend({
       'click .submit_formc': submitFormc,
-    }, menuHelper.events, riskFactorsHelper.events),
+    }, menuHelper.events, riskFactorsHelper.events, leavingConfirmationHelper.events),
 
     initialize(options) {
+      this.model = options.formc;
       this.fields = options.fields;
       this.fields.title = { label: 'Title for Risk' };
       this.fields.risk = { label: 'Describe Your Risk' };
@@ -1414,16 +1451,17 @@ module.exports = {
       disableEnterHelper.disableEnter.call(this);
       return this;
     },
-  }, menuHelper.methods, addSectionHelper.methods, riskFactorsHelper.methods)),
+  }, menuHelper.methods, addSectionHelper.methods, riskFactorsHelper.methods, leavingConfirmationHelper.methods)),
 
   riskFactorsMisc: Backbone.View.extend(_.extend({
     urlRoot: formcServer + '/:id' + '/risk-factors-misc/:index',
     riskType: 'miscellaneous_risk',
     events: _.extend({
       'click .submit_formc': submitFormc,
-    }, menuHelper.events, riskFactorsHelper.events),
+    }, menuHelper.events, riskFactorsHelper.events, leavingConfirmationHelper.events),
 
     initialize(options) {
+      this.model = options.formc;
       this.fields = options.fields;
       this.fields.title = { label: 'Title for Risk' };
       this.fields.risk = { label: 'Describe Your Risk' };
@@ -1449,7 +1487,7 @@ module.exports = {
       disableEnterHelper.disableEnter.call(this);
       return this;
     },
-  }, menuHelper.methods, addSectionHelper.methods, riskFactorsHelper.methods)),
+  }, menuHelper.methods, addSectionHelper.methods, riskFactorsHelper.methods, leavingConfirmationHelper.methods)),
 
   financialCondition: Backbone.View.extend(_.extend({
     urlRoot: formcServer + '/:id/financial-condition',
@@ -1460,6 +1498,7 @@ module.exports = {
     }, menuHelper.events, yesNoHelper.events, addSectionHelper.events, dropzoneHelpers.events, leavingConfirmationHelper.events),
 
     initialize(options) {
+      this.model = options.formc;
       this.fields = options.fields;
       this.campaign = options.campaign;
       this.labels = {
@@ -1521,6 +1560,7 @@ module.exports = {
     }, addSectionHelper.events, menuHelper.events, yesNoHelper.events, leavingConfirmationHelper.events),
 
     initialize(options) {
+      this.model = options.formc;
       this.fields = options.fields;
       this.fields.business_loans_or_debt_choice.validate = {};
       this.fields.business_loans_or_debt_choice.validate.choices = {
@@ -1702,6 +1742,7 @@ module.exports = {
   backgroundCheck: Backbone.View.extend(_.extend({
     urlRoot: formcServer + '/:id' + '/background-check',
     initialize(options) {
+      this.model = options.formc;
       this.fields = options.fields;
       this.labels = {
         company_or_director_subjected_to: 'If Yes, Explain',

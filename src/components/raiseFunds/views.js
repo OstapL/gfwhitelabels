@@ -1,4 +1,3 @@
-'use strict';
 let addSectionHelper = require('helpers/addSectionHelper.js');
 
 import formatHelper from '../../helpers/formatHelper';
@@ -88,7 +87,7 @@ module.exports = {
       'click #postForReview': postForReview,
       'change #website': appendHttpIfNecessary,
       'change #website,#twitter,#facebook,#instagram,#linkedin': 'appendHttpsIfNecessary',
-    }, leavingConfirmationHelper.events, phoneHelper.events, menuHelper.events),
+    }, /*leavingConfirmationHelper.events,*/ phoneHelper.events, menuHelper.events),
 
     appendHttpsIfNecessary(e) {
       appendHttpIfNecessary(e, true);
@@ -173,6 +172,7 @@ module.exports = {
       if (data.hasOwnProperty('campaign_id') == false) {
         data.campaign_id = this.formc.campaign_id;
       }
+      debugger;
 
       app.routers.navigate(
         '/campaign/' + data.campaign_id + '/general_information',
@@ -403,9 +403,9 @@ module.exports = {
       'click .onPreview': onPreviewAction,
       // 'change #zip_code': 'changeZipCode',
     }, leavingConfirmationHelper.events, menuHelper.events, dropzoneHelpers.events),
-
-    getSuccessUrl(data) {
-      return '/campaign/' + this.model.id + '/team-members';
+    
+    _success(data) {
+      window.location = '/campaign/' + this.model.id + '/team-members';
     },
 
     preinitialize() {
@@ -521,7 +521,7 @@ module.exports = {
 
       disableEnterHelper.disableEnter.call(this);
       this.checkForm();
-
+      this.$el.find('.team-add-item').equalHeights();
       return this;
     },
 

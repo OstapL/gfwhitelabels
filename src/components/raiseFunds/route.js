@@ -1,5 +1,57 @@
 const View = require('components/raiseFunds/views.js');
 
+const isBoolean = function(val) {
+  return val == 0 || val == 1 || val == true || val == false;
+}
+
+const raiseCapitalCalcProgress = function(data) {
+	return {
+		'general_information': 
+      data.pitch.length > 5 &&
+      data.intended_use_of_proceeds.length > 5 &&
+      data.business_model.length > 5,
+		'media':
+				data.header_image_image_id != null &&
+				data.list_image_image_id != null &&
+				data.gallery_group_data.length > 0,
+		'specifics': 
+		  data.minimum_raise >= 25000 &&
+			data.maximum_raise <= 1000000 &&
+			data.minimum_increment >= 100 &&
+			data.length_days >= 60 &&
+      data.investor_presentation_file_id != null &&
+      isBoolean(data.security_type),
+		'team-members': data.team_members.length > 0,
+		'perks': data.perks.length > 0
+  }
+};
+
+const updateRaiseCapitalMenu = function(progress) {
+  let complited = 0;
+  _(progress).each((v,k) => {
+    let el = null;
+    if(v == false) {
+      el = document.querySelector('#menu_f_' + k + ' .icon-check');
+      if(el != null) {
+        el.remove();
+      }
+    } else {
+      if(k != 'perks') {
+        complited ++;
+      }
+      if(document.querySelector('#menu_f_' + k + ' .icon-check') == null) {
+        document.querySelector('#menu_f_' + k).innerHTML += ' <div class="icon-check"><i class="fa fa-check-circle-o"></i></div>';
+      }
+    }
+  });
+  
+  if(complited == 4) {
+    document.querySelectorAll('#form_c a.disabled').forEach((v, i) => {
+      v.className = v.className.replace('disabled', '');
+    });
+  }
+};
+
 function getOCCF(optionsR, viewName, params = {}) {
   $('#content').scrollTo();
   params.el = '#content';
@@ -7,9 +59,24 @@ function getOCCF(optionsR, viewName, params = {}) {
     .done((options, company, campaign, formc) => {
 
       params.fields = options[0].fields;
-      params.company = app.models.company = app.models.company || company[0];
-      params.campaign = app.models.campaign = app.models.campaign || campaign[0];
-      params.formc = app.models.formc = app.models.formc || formc[0];
+      // ToDo
+      // This how we can avoid empty response
+      if(company == '') {
+        params.company = app.user.company;
+        params.campaign = app.user.campaign;
+        params.formc = app.user.formc;
+      }
+      else {
+        if(Object.keys(company[0]).length > 0) {
+          params.company = app.user.company = app.user.company || company[0];
+          params.campaign = app.user.campaign = app.user.campaign || campaign[0];
+          params.formc = app.user.formc = app.user.formc || formc[0];
+        } else {
+          params.company = {};
+          params.campaign = {};
+          params.formc = {};
+        }
+      }
 
       if(typeof viewName == 'string') {
         new View[viewName](Object.assign({}, params)).render();
@@ -18,6 +85,7 @@ function getOCCF(optionsR, viewName, params = {}) {
         viewName();
       }
 
+      updateRaiseCapitalMenu(raiseCapitalCalcProgress(app.user.campaign));
     }).fail(function(xhr, response, error) {
       api.errorAction.call(this, $('#content'), xhr, response, error);
     });

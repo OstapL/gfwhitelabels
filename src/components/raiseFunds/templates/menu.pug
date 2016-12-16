@@ -3,28 +3,16 @@ mixin getCompanyUrl(id, section, currentStep, step, name)
     if id || currentStep == step
       a(
           href='/' + section + '/' + id + '/' + step
+          id="menu_f_" + step
           class="list-group-item list-group-item-action " + (currentStep == step ? 'active' : '') + 
           ((section == 'formc' && (values.is_paid == false || values.is_approved == false) ) ? 'disabled' : '')) #{ name }
-        if step == 'company'
+        if step == 'company' && values.id
           .icon-check
             i.fa.fa-check-circle-o
-        if section == 'campaign' && values.progress
-          if values.progress[step] == true
-            .icon-check
-              i.fa.fa-check-circle-o
-        if section == 'formc' && values.progress
-          if values.progress[step] == true 
-            .icon-check
-              i.fa.fa-check-circle-o
-          if formc && formc.progress[step] == true
-            .icon-check
-              i.fa.fa-check-circle-o
-          if campaign && campaign.progress[step] == true
-            .icon-check
-              i.fa.fa-check-circle-o
     else
         a(
           href="#"
+          id="menu_f_" + step
           class="list-group-item list-group-item-action disabled" 
         ) #{ name }
 

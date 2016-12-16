@@ -25,8 +25,8 @@ mixin row(value, index)
 mixin run()
 
   if first_run
-    div(class=(attr.row == 0 ? '' : 'row ') + name + '_block' + (attr.required == true ? ' required ' : ' ') + ' nested')
-      div(class=(attr.row == 0 ? '' : 'row ') + name + '_container' + (attr.required == true ? ' required ' : ' ') + ' nested')
+    div(class=(attr.row == 0 ? '' : 'row ') + name + '_block' + (attr.required == true ? ' requiredNested ' : ' ') + ' nested')
+      div(class=(attr.row == 0 ? '' : 'row ') + name + '_container' + (attr.required == true ? ' requiredNested ' : ' ') + ' nested')
 
         if values == null || values.length == 0
           +row({}, 0)
