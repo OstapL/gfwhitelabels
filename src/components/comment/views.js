@@ -121,6 +121,7 @@ module.exports = {
       // app.showLoading();
       // api.makeRequest(this.urlRoot, 'POST', data).done((newData) => {
       setTimeout(() => {
+        $target.prop('disabled', false);
 
         if (isChild)
           $form.remove();
@@ -137,12 +138,13 @@ module.exports = {
         newComment.find('p').text(data.message);
 
         //TODO: update parent comment response count
-        newComment.find('.link-response-count').text('0')
+        newComment.find('.link-response-count').text('0');
 
         newComment.appendTo(isChild ? $parentComment : this.$('.comments'));
         // app.hideLoading();
       }, 500);
       // }).fail((err) => {
+      //   $target.prop('disabled', false);
       //   app.hideLoading();
       //   alert(err);
       // });
