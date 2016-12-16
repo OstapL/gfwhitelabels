@@ -2,7 +2,7 @@ const isBoolean = function(val) {
   return val == 0 || val == 1 || val == true || val == false;
 }
 
-module.exports = {
+let exports = {
   calcProgress: function(data) {
     return {
       'general_information': 
@@ -50,4 +50,60 @@ module.exports = {
       });
     }
   },
+
+  submitCampaign: function submitCampaign(e) {
+    let progress = exports.calcProgress(app.user.campaign);
+
+    if(
+        progress.general_information == true &&
+        progress.media == true &&
+        progress.specifics == true &&
+        progress['team-members'] == true
+    ) {
+      $('#company_publish_confirm').modal('show');
+    } else {
+      var errors = {};
+      _(progress).each((d, k) => {
+        if(k != 'perks') {
+          if(d == false)  {
+            $('#company_publish .'+k).removeClass('collapse');
+          } else {
+            $('#company_publish .'+k).addClass('collapse');
+          }
+        }
+      });
+      $('#company_publish').modal('toggle');
+    }
+  },
+
+  postForReview: function postForReview(e) {
+    api.makeRequest(raiseCapitalServer + '/company/' + e.target.dataset.companyid + '/post-for-review', 'PUT')
+      .then((data) => {
+        $('#company_publish_confirm').modal('hide');
+        setTimeout(() => {
+          app.routers.navigate(
+            '/formc/' + app.user.formc.id + '/introduction',
+            { trigger: true, replace: false }
+          );
+        }, 500);
+      });
+  },
+
+  onPreviewAction: function(e) {
+    e.preventDefault();
+    let pathname = location.pathname;
+    app.showLoading();
+    let data = this.$('form').serializeJSON({ useIntKeysAsArrayIndex: true });
+    if (window.location.href.indexOf('team-members/add') !== -1) {
+      e.target.dataset.method = 'PUT';
+    }
+    if (api.submitAction.call(this, e, data)) {
+      setTimeout((function() {
+        window.location = '/' + this.formc.company_id + '?preview=1&previous=' + pathname;
+      }).bind(this), 100);
+    }
+  }
 };
+
+module.exports = exports;
+

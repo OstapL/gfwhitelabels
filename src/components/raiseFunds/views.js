@@ -1,4 +1,4 @@
-let addSectionHelper = require('helpers/addSectionHelper.js');
+const addSectionHelper = require('helpers/addSectionHelper.js');
 
 import formatHelper from '../../helpers/formatHelper';
 const raiseHelpers = require('./helpers.js');
@@ -11,61 +11,6 @@ const validation = require('components/validation/validation.js');
 const menuHelper = require('helpers/menuHelper.js');
 const disableEnterHelper = require('helpers/disableEnterHelper.js');
 
-const submitCampaign = function submitCampaign(e) {
-  let progress = raiseHelpers.calcProgress(this.model);
-
-  if(
-      progress.general_information == true &&
-      progress.media == true &&
-      progress.specifics == true &&
-      progress['team-members'] == true
-  ) {
-    $('#company_publish_confirm').modal('show');
-  } else {
-    var errors = {};
-    _(progress).each((d, k) => {
-      if(k != 'perks') {
-        if(d == false)  {
-          $('#company_publish .'+k).removeClass('collapse');
-        } else {
-          $('#company_publish .'+k).addClass('collapse');
-        }
-      }
-    });
-    $('#company_publish').modal('toggle');
-  }
-};
-
-
-const postForReview = function postForReview(e) {
-  api.makeRequest(raiseCapitalServer + '/company/' + e.target.dataset.companyid + '/post-for-review', 'PUT')
-    .then((data) => {
-      $('#company_publish_confirm').modal('hide');
-      setTimeout(() => {
-        app.routers.navigate(
-          '/formc/' + app.user.formc.id + '/introduction',
-          { trigger: true, replace: false }
-        );
-      }, 500);
-    });
-};
-
-const onPreviewAction = function(e) {
-  e.preventDefault();
-  let pathname = location.pathname;
-  app.showLoading();
-  let data = this.$('form').serializeJSON({ useIntKeysAsArrayIndex: true });
-  if (window.location.href.indexOf('team-members/add') !== -1) {
-    e.target.dataset.method = 'PUT';
-  }
-  if (api.submitAction.call(this, e, data)) {
-    setTimeout((function() {
-      window.location = '/' + this.formc.company_id + '?preview=1&previous=' + pathname;
-    }).bind(this), 100);
-  }
-};
-
-
 module.exports = {
   company: Backbone.View.extend(_.extend({
     urlRoot: raiseCapitalServer + '/company',
@@ -74,9 +19,9 @@ module.exports = {
       'click #submitForm': api.submitAction,
       'keyup #zip_code': 'changeZipCode',
       'click .update-location': 'updateLocation',
-      'click .onPreview': onPreviewAction,
-      'click .submit_form': submitCampaign,
-      'click #postForReview': postForReview,
+      'click .onPreview': raiseHelpers.onPreviewAction,
+      'click .submit_form': raiseHelpers.submitCampaign,
+      'click #postForReview': raiseHelpers.postForReview,
       'change #website': appendHttpIfNecessary,
       'change #website,#twitter,#facebook,#instagram,#linkedin': 'appendHttpsIfNecessary',
     }, /*leavingConfirmationHelper.events,*/ phoneHelper.events, menuHelper.events),
@@ -164,7 +109,6 @@ module.exports = {
       if (data.hasOwnProperty('campaign_id') == false) {
         data.campaign_id = this.formc.campaign_id;
       }
-      debugger;
 
       app.routers.navigate(
         '/campaign/' + data.campaign_id + '/general_information',
@@ -192,9 +136,9 @@ module.exports = {
     template: require('./templates/generalInformation.pug'),
     events: _.extend({
         'click #submitForm': api.submitAction,
-        'click .onPreview': onPreviewAction,
-        'click .submit_form': submitCampaign,
-        'click #postForReview': postForReview,
+        'click .onPreview': raiseHelpers.onPreviewAction,
+        'click .submit_form': raiseHelpers.submitCampaign,
+        'click #postForReview': raiseHelpers.postForReview,
       }, addSectionHelper.events, leavingConfirmationHelper.events, menuHelper.events),
 
     preinitialize() {
@@ -269,9 +213,9 @@ module.exports = {
         'click #submitForm': api.submitAction,
         'change #video,.additional-video-link': 'updateVideo',
         'change .press_link': 'appendHttpIfNecessary',
-        'click .submit_form': submitCampaign,
-        'click #postForReview': postForReview,
-        'click .onPreview': onPreviewAction,
+        'click .submit_form': raiseHelpers.submitCampaign,
+        'click #postForReview': raiseHelpers.postForReview,
+        'click .onPreview': raiseHelpers.onPreviewAction,
       }, leavingConfirmationHelper.events, menuHelper.events,
         addSectionHelper.events, dropzoneHelpers.events
     ),
@@ -397,12 +341,12 @@ module.exports = {
     template: require('./templates/teamMemberAdd.pug'),
     events: _.extend({
       'click .delete-member': 'deleteMember',
-      'click .submit_form': submitCampaign,
-      'click #postForReview': postForReview,
+      'click .submit_form': raiseHelpers.submitCampaign,
+      'click #postForReview': raiseHelpers.postForReview,
       'change #linkedin,#facebook': 'appendHttpsIfNecessary',
       'click .cancel': 'cancel',
       'click .save': api.submitAction,
-      'click .onPreview': onPreviewAction,
+      'click .onPreview': raiseHelpers.onPreviewAction,
       // 'change #zip_code': 'changeZipCode',
     }, leavingConfirmationHelper.events, menuHelper.events, dropzoneHelpers.events),
     
@@ -486,9 +430,9 @@ module.exports = {
     urlRoot: raiseCapitalServer + '/campaign/:id/team-members',
     events: _.extend({
       'click .delete-member': 'deleteMember',
-      'click .submit_form': submitCampaign,
-      'click #postForReview': postForReview,
-      'click .onPreview': onPreviewAction,
+      'click .submit_form': raiseHelpers.submitCampaign,
+      'click #postForReview': raiseHelpers.postForReview,
+      'click .onPreview': raiseHelpers.onPreviewAction,
     }, menuHelper.events),
 
     preinitialize() {
@@ -558,9 +502,9 @@ module.exports = {
         //'focus #minimum_raise,#maximum_raise,#minimum_increment,#premoney_valuation,#price_per_share': 'clearZeroAmount',
         //'change #minimum_raise,#maximum_raise,#minimum_increment,#premoney_valuation': 'formatNumber',
         'change #minimum_raise,#maximum_raise,#price_per_share,#premoney_valuation': 'calculateNumberOfShares',
-        'click .onPreview': onPreviewAction,
-        'click .submit_form': submitCampaign,
-        'click #postForReview': postForReview,
+        'click .onPreview': raiseHelpers.onPreviewAction,
+        'click .submit_form': raiseHelpers.submitCampaign,
+        'click #postForReview': raiseHelpers.postForReview,
         'click .submit-specifics': 'checkMinMaxRaise',
         'change #valuation_determination': 'valuationDetermine',
       }, leavingConfirmationHelper.events, menuHelper.events, dropzoneHelpers.events),
@@ -704,9 +648,9 @@ module.exports = {
     urlRoot: raiseCapitalServer + '/campaign/:id/perks',
     events: _.extend({
         'click #submitForm': api.submitAction,
-        'click .onPreview': onPreviewAction,
-        'click .submit_form': submitCampaign,
-        'click #postForReview': postForReview,
+        'click .onPreview': raiseHelpers.onPreviewAction,
+        'click .submit_form': raiseHelpers.submitCampaign,
+        'click #postForReview': raiseHelpers.postForReview,
     }, leavingConfirmationHelper.events, menuHelper.events, addSectionHelper.events),
 
     preinitialize() {
