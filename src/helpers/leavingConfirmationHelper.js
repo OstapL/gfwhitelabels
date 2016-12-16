@@ -48,11 +48,13 @@ module.exports = {
             newData[el.path[0]].forEach((arr, i) => {
               newArr.push(arr);
             });
-          } else {
+          } else if (el.path[0] instanceof Object) {
             var newArr = {};
             for (let p in el.path[0]) {
               newArr[p] = el.path[0][p];
             }
+          } else {
+            // console.log(el);
           }
           patchData[el.path[0]] = newArr;
         }
