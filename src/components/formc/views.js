@@ -176,6 +176,11 @@ module.exports = {
       return this;
     },
 
+    _success(data, newData) {
+      formcHelpers.updateFormcMenu(formcHelpers.formcCalcProgress(app.user.formc));
+      return 1;
+    },
+
     getSuccessUrl() {
       return '/formc/' + this.model.id + '/team-members';
     },
@@ -348,16 +353,21 @@ module.exports = {
       }
     },
 
-    getSuccessUrl(data) {
-      return '/formc/' + this.model.id + '/related-parties';
-    },
-
     initialize(options) {
       this.model = options.formc;
       this.fields = options.fields;
       this.fields.full_time_employers = { label: 'Full Time Employees' };
       this.fields.part_time_employers = { label: 'Part Time Employees' };
       console.log(this);
+    },
+
+    _success(data, newData) {
+      formcHelpers.updateFormcMenu(formcHelpers.formcCalcProgress(app.user.formc));
+      return 1;
+    },
+
+    getSuccessUrl(data) {
+      return '/formc/' + this.model.id + '/related-parties';
     },
 
     deleteMember: function (e) {
@@ -581,10 +591,6 @@ module.exports = {
       this.buildJsonTemplates('formc');
     },
 
-    getSuccessUrl(data) {
-      return '/formc/' + this.model.id + '/use-of-proceeds';
-    },
-
     submit(e) {
       e.preventDefault();
       let data = $(e.target).serializeJSON({ useIntKeysAsArrayIndex: true });
@@ -610,6 +616,15 @@ module.exports = {
       );
       disableEnterHelper.disableEnter.call(this);
       return this;
+    },
+
+    _success(data, newData) {
+      formcHelpers.updateFormcMenu(formcHelpers.formcCalcProgress(app.user.formc));
+      return 1;
+    },
+
+    getSuccessUrl(data) {
+      return '/formc/' + this.model.id + '/use-of-proceeds';
     },
   }, addSectionHelper.methods, menuHelper.methods, yesNoHelper.methods, leavingConfirmationHelper.methods)),
 
@@ -664,6 +679,11 @@ module.exports = {
     deleteRow(e) {
       this.deleteSectionNew(e);
       this.calculate(null);
+    },
+
+    _success(data, newData) {
+      formcHelpers.updateFormcMenu(formcHelpers.formcCalcProgress(app.user.formc));
+      return 1;
     },
 
     getSuccessUrl() {
@@ -1528,6 +1548,11 @@ module.exports = {
       this.buildJsonTemplates('formc', {campaign: this.campaign});
     },
 
+    _success(data, newData) {
+      formcHelpers.updateFormcMenu(formcHelpers.formcCalcProgress(app.user.formc));
+      return 1;
+    },
+
     getSuccessUrl() {
       return '/formc/' + this.model.id + '/outstanding-security';
     },
@@ -1713,6 +1738,11 @@ module.exports = {
       );
     },
 
+    _success(data, newData) {
+      formcHelpers.updateFormcMenu(formcHelpers.formcCalcProgress(app.user.formc));
+      return 1;
+    },
+
     getSuccessUrl() {
       return '/formc/' + this.model.id + '/background-check';
     },
@@ -1795,6 +1825,11 @@ module.exports = {
     },
     events: {
       'click .createField': 'createField',
+    },
+
+    _success(data, newData) {
+      formcHelpers.updateFormcMenu(formcHelpers.formcCalcProgress(app.user.formc));
+      return 1;
     },
 
     getSuccessUrl() {

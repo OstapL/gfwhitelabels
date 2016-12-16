@@ -26,8 +26,8 @@ module.exports = {
       'introduction': data.certify == true && isBoolean(data.failed_to_comply_choice),
       'team-members': haveRequiredMembers(data.team_members),
       'related-parties':
-          isBoolean(data.transaction_with_related_parties_choice) == 0 ||
-          (isBoolean(data.transaction_with_related_parties_choice) == 1 &&
+          data.transaction_with_related_parties_choice == 0 ||
+          (data.transaction_with_related_parties_choice == 1 &&
               data.transaction_with_related_parties.length > 0),
       'use-of-proceeds': 
         data.intended_use_of_proceeds.length > 0 &&
@@ -45,21 +45,23 @@ module.exports = {
           Object.keys(data.legal_and_regulatory_risk).length > 0,
       'risk-factors-misc': Object.keys(data.miscellaneous_risk).length > 0,
       'financial-condition': 
-          (isBoolean(data.financials_condition_choice) &&
-           data.financials_condition_yes.length > 0) ||
-          (isBoolean(data.financials_condition_choice) &&
+          (data.financials_condition_choice ||  
+           data.financials_condition_yes.length > 0) &&
+          (data.financials_condition_choice ||
            data.financials_condition_no.length > 0
           ) && data.fiscal_recent_group_data.length > 0 &&
           data.fiscal_prior_group_data.length > 0 &&
           data.sold_securities_data.length == 2 && 
-          (app.user.campaign.maximum_raise <= 100000 &&
+          (
+           (app.user.campaign.maximum_raise <= 100000 &&
            sold_securities_data[0]['total_income'] > 0 &&
            sold_securities_data[0]['taxable_income'] > 0 &&
            sold_securities_data[0]['total_tax'] > 0 &&
            sold_securities_data[1]['total_income'] > 0 &&
            sold_securities_data[1]['taxable_income'] > 0 &&
            sold_securities_data[1]['total_tax'] > 0) ||
-          app.user.campaign.maximum_raise > 100000,
+           app.user.campaign.maximum_raise > 100000
+          ),
       'outstanding-security':
         (
          data.business_loans_or_debt_choice == false || 
@@ -75,10 +77,12 @@ module.exports = {
         data.exercise_of_rights.length > 0 &&
         data.risks_to_purchasers.length > 0, 
       'background-check': 
-        isBoolean(data.company_or_director_subjected_to_choice) || 
         (
-          isBoolean(data.company_or_director_subjected_to_choice) &&
+         data.company_or_director_subjected_to_choice == 0 || 
+         (
+          data.company_or_director_subjected_to_choice == 1 &&
           data.company_or_director_subjected_to.length > 0
+         )
         ) &&
         data.material_information.length > 0 &&
         data.descrption_material_information.length > 0
