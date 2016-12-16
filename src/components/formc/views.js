@@ -47,72 +47,10 @@ const labels = {
   },
 };
 
-const isBoolean = function(val) {
-  return val == 0 || val == 1 || val == true || val == false;
-}
-
-const calcProgress = function(data) {
-	let progress = {
-		'introduction': data.get('certify') == true &&
-      isBoolean(data.failed_to_comply_choice),
-		//'team-members': team_member_progress,
-		'related-parties':
-				isBoolean(data.transaction_with_related_parties_choice) == 0 ||
-				(isBoolean(data.transaction_with_related_parties_choice) == 1 &&
-						data.transaction_with_related_parties.length > 0),
-		'use-of-proceeds': 
-		  data.intended_use_of_proceeds.length > 0 &&
-			data.less_offering_express.length > 0 &&
-			data.use_of_net_proceeds.length > 0 &&
-			data.business_plan_file_id != null,
-		'risk-factors-market':
-				Object.keys(data.market_and_customer_risk).length > 0,
-		'risk-factors-financial': Object.keys(data.financial_risk).length > 0,
-		'risk-factors-operational': Object.keys(data.operational_risk).length > 0,
-		'risk-factors-competitive': Object.keys(data.competitive_risk).length > 0,
-		'risk-factors-personnel':
-				Object.keys(data.personnel_and_third_parties_risk).length > 0,
-		'risk-factors-legal':
-				Object.keys(data.legal_and_regulatory_risk).length > 0,
-		'risk-factors-misc': Object.keys(data.miscellaneous_risk).length > 0,
-		'financial-condition': 
-				(isBoolean(data.financials_condition_choice) &&
-				 data.financials_condition_yes.length > 0) ||
-				(isBoolean(data.financials_condition_choice) &&
-				 data.financials_condition_no.length > 0
-				) && data.fiscal_recent_group_data.length > 0 &&
-				data.fiscal_prior_group_data.length > 0 &&
-				data.sold_securities_data.length == 2 && 
-				(app.user.campaign.maximum_raise <= 100000 &&
-				 sold_securities_data[0]['total_income'] > 0 &&
-				 sold_securities_data[0]['taxable_income'] > 0 &&
-				 sold_securities_data[0]['total_tax'] > 0 &&
-				 sold_securities_data[1]['total_income'] > 0 &&
-				 sold_securities_data[1]['taxable_income'] > 0 &&
-				 sold_securities_data[1]['total_tax'] > 0) ||
-				app.user.campaign.maximum_raise > 100000,
-		'outstanding-security':
-	    data.rights_of_securities.length > 0 &&
-			data.terms_of_securities.length > 0 &&
-			data.security_differences.length > 0 &&
-			data.exercise_of_rights.length > 0 &&
-			data.risks_to_purchasers.length > 0, 
-		'background-check': 
-			isBoolean(data.company_or_director_subjected_to_choice) || 
-			(
-        isBoolean(data.company_or_director_subjected_to_choice) &&
-			  data.company_or_director_subjected_to.length > 0
-      ) &&
-			data.material_information.length > 0 &&
-			data.descrption_material_information.length > 0
-  }
-  return  progress;
-};
-
 const submitFormc = function submitFormc(e) {
   e.preventDefault();
   let $form = this.$el.find('form');
-  var data = $form.serializeJSON();
+  var data = $form.serializeJSON({ checkboxUncheckedValue: 'false', useIntKeysAsArrayIndex: true });
 
   _.extend(this.model, data);
   data = _.extend({}, this.model);
