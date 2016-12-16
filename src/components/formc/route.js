@@ -37,12 +37,12 @@ const formcCalcProgress = function(data) {
 				data.fiscal_prior_group_data.length > 0 &&
 				data.sold_securities_data.length == 2 && 
 				(app.user.campaign.maximum_raise <= 100000 &&
-				 sold_securities_data[0]['total_income'] > 0 &&
-				 sold_securities_data[0]['taxable_income'] > 0 &&
-				 sold_securities_data[0]['total_tax'] > 0 &&
-				 sold_securities_data[1]['total_income'] > 0 &&
-				 sold_securities_data[1]['taxable_income'] > 0 &&
-				 sold_securities_data[1]['total_tax'] > 0) ||
+				 data.sold_securities_data[0]['total_income'] > 0 &&
+				 data.sold_securities_data[0]['taxable_income'] > 0 &&
+				 data.sold_securities_data[0]['total_tax'] > 0 &&
+				 data.sold_securities_data[1]['total_income'] > 0 &&
+				 data.sold_securities_data[1]['taxable_income'] > 0 &&
+				 data.sold_securities_data[1]['total_tax'] > 0) ||
 				app.user.campaign.maximum_raise > 100000,
 		'outstanding-security':
 	    data.rights_of_securities.length > 0 &&
