@@ -404,7 +404,8 @@ module.exports = {
     events: {
       'submit form.invest_form': 'submit',
       'keyup #amount': 'updateAmount',
-      'change #amount': 'ensureIntegerAmountAccordingShares',
+      'change #amount': 'roundAmount',
+      'focusout #amount': 'triggerAmountChange',
       'keyup .us-fields :input[name*=zip_code]': 'changeZipCode',
       'click .update-location': 'updateLocation',
       'click .link-2': 'openPdf',
@@ -413,6 +414,7 @@ module.exports = {
       'keyup .typed-name': 'copyToSignature',
       'keyup #annual_income,#net_worth': 'updateLimitInModal',
       'click button.submit-income-worth': 'updateIncomeWorth',
+      'click': 'hidePopover',
     },
 
     initialize(options) {
@@ -496,6 +498,7 @@ module.exports = {
       this.usaStates = require("helpers/usa-states");
 
       this.initMaxAllowedAmount();
+      this.amountTimeout = null;
     },
 
     render() {
@@ -511,6 +514,18 @@ module.exports = {
         })
       );
 
+      this.initAmountPopover();
+
+      $('#income_worth_modal').on('hidden.bs.modal', () => {
+        this.$amount.keyup();
+      });
+
+      $('span.current-limit').text(this._maxAllowedAmount.toLocaleString('en-US'));
+
+      return this;
+    },
+
+    initAmountPopover() {
       this.$amount = this.$el.find('#amount');
       this.$amount.data('contentselector', 'amount-campaign');
       this.$amount.data('max', this._maxAllowedAmount);
@@ -534,72 +549,21 @@ module.exports = {
 
           return content;
         },
-        trigger: 'focus',
+        trigger: 'manual',
       }).popover('hide');
-
-      $('#income_worth_modal').on('hidden.bs.modal', () => {
-        this.$amount.keyup();
-      });
-
-      $('span.current-limit').text(this._maxAllowedAmount.toLocaleString('en-US'));
-
-      return this;
     },
 
-    maxInvestmentsPerYear(annualIncome, netWorth, investedPastYear, investedOtherSites) {
-      let maxInvestmentsPerYear = (annualIncome >= 100 && netWorth >= 100)
-        ? Math.min(annualIncome, netWorth) * 0.1
-        : Math.min(annualIncome, netWorth) * 0.05;
-
-      maxInvestmentsPerYear = maxInvestmentsPerYear < 2 ? 2 : maxInvestmentsPerYear;
-
-      return Math.round((maxInvestmentsPerYear * 1000 - investedPastYear - investedOtherSites));
+    triggerAmountChange(e) {
+      setTimeout(() => {
+        this.$amount.trigger('change');
+      }, 500);
     },
 
-    initMaxAllowedAmount() {
-      let annualIncome = this.user.annual_income;
-      let netWorth = this.user.net_worth;
-      let investedOnOtherSites = this.user.invested_on_other_sites;
-      let investedPastYear = this.user.invested_equity_past_year;
-
-      this._maxAllowedAmount = this.maxInvestmentsPerYear(annualIncome, netWorth,
-          investedPastYear, investedOnOtherSites);
-    },
-
-    roundAmount(e) {
-      // e.preventDefault();
-
-      //revenue share
-      if (this.model.campaign.security_type == 1)
+    hidePopover(e) {
+      if (e.target == this.$amount[0])
         return;
 
-      let amount = this.getInt(e.target.value);
-      if (!amount)
-        return;
-
-      let pricePerShare = this.model.campaign.price_per_share;
-      if (!pricePerShare)
-        return;
-
-      let newAmount = Math.ceil(amount / pricePerShare) *  pricePerShare;
-
-      this.$amount.val(this.formatInt(newAmount));
-      this._updateTotalAmount();
-
-      if (newAmount > amount) {
-        this.$amount.data('contentcontainer', 'content-rounding');
-        this.$amount.popover('show');
-      }
-
-      // return false;
-    },
-
-    getInt(value) {
-      return parseInt(value.replace(/\,/g, ''));
-    },
-
-    formatInt(value) {
-      return value.toLocaleString('en-US');
+      this.$amount.popover('hide');
     },
 
     getSuccessUrl(data) {
@@ -794,8 +758,6 @@ module.exports = {
       };
     },
 
-    currentAmountTip: 'amount-campaign',
-
     _success(data) {
       this.saveEsign(data);
     },
@@ -827,6 +789,65 @@ module.exports = {
       this.$amount.popover('show');
 
       return true;
+    },
+
+    maxInvestmentsPerYear(annualIncome, netWorth, investedPastYear, investedOtherSites) {
+      let maxInvestmentsPerYear = (annualIncome >= 100 && netWorth >= 100)
+        ? Math.min(annualIncome, netWorth) * 0.1
+        : Math.min(annualIncome, netWorth) * 0.05;
+
+      maxInvestmentsPerYear = maxInvestmentsPerYear < 2 ? 2 : maxInvestmentsPerYear;
+
+      return Math.round((maxInvestmentsPerYear * 1000 - investedPastYear - investedOtherSites));
+    },
+
+    initMaxAllowedAmount() {
+      let annualIncome = this.user.annual_income;
+      let netWorth = this.user.net_worth;
+      let investedOnOtherSites = this.user.invested_on_other_sites;
+      let investedPastYear = this.user.invested_equity_past_year;
+
+      this._maxAllowedAmount = this.maxInvestmentsPerYear(annualIncome, netWorth,
+        investedPastYear, investedOnOtherSites);
+    },
+
+    getInt(value) {
+      return parseInt(value.replace(/\,/g, ''));
+    },
+
+    formatInt(value) {
+      return value.toLocaleString('en-US');
+    },
+
+    roundAmount(e) {
+      // e.preventDefault();
+
+      //revenue share
+      if (this.model.campaign.security_type == 1)
+        return;
+
+      let amount = this.getInt(e.target.value);
+      if (!amount)
+        return;
+
+      if (!this.validateAmount(amount))
+        return;
+
+      let pricePerShare = this.model.campaign.price_per_share;
+      if (!pricePerShare)
+        return;
+
+      let newAmount = Math.ceil(amount / pricePerShare) *  pricePerShare;
+
+      this.$amount.val(this.formatInt(newAmount));
+      this._updateTotalAmount();
+
+      if (newAmount > amount) {
+        this.$amount.data('contentselector', 'rounding');
+        this.$amount.popover('show');
+      }
+
+      // return false;
     },
 
     updateAmount(e) {
