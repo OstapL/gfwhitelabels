@@ -128,7 +128,11 @@ module.exports = {
 
       api.makeRequest(url, method, newData).
         then((responseData) => {
-          _.extend(this.model, newData);
+          // ToDo
+          // Do we really need this ?!
+          if(method != 'POST') {
+            _.extend(this.model, newData);
+          }
           app.showLoading();
 
           // ToDo
@@ -138,7 +142,7 @@ module.exports = {
           $('.popover').popover('hide');
 
           if (typeof this._success == 'function') {
-            this._success(responseData);
+            this._success(responseData, newData);
           } else {
             $('#content').scrollTo();
             this.undelegateEvents();

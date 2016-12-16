@@ -383,7 +383,7 @@ module.exports = {
       'submit form': api.submitAction,
     },
 
-    render(){
+    render() {
       this.fields = {};
       this.fields.email = {
         type: 'email',

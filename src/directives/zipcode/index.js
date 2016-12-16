@@ -66,9 +66,9 @@ class GeoCoder {
             // Use overlord
             document.querySelector('.js-city-state').innerHTML = city + ', ' + state;
             this.view.model.city = city;
-            // document.querySelector('#city').value = city;
             this.view.model.state = state;
-            // document.querySelector('#state').value = state;
+            document.querySelector('#city').value = city;
+            document.querySelector('#state').value = state;
           } else {
             console.debug('error')
           }
