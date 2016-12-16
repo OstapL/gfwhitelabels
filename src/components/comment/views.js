@@ -65,8 +65,9 @@ module.exports = {
     el: '.comments-container',
     events: {
       'click .ask-question, .submit-comment': 'submitComment',
+      'click .cancel-comment': 'cancelComment',
       'click .link-response-count': 'showHideResponses',
-      'click .link-reply': 'replyTo',
+      'click .link-reply': 'showReplyTo',
       'click .link-like': 'likeComment',
     },
 
@@ -86,6 +87,8 @@ module.exports = {
         }
       }));
 
+      this.$stubs = this.$('.stubs');
+
       return this;
     },
 
@@ -93,10 +96,22 @@ module.exports = {
       e.preventDefault();
 
       let $target = $(e.target);
-      let $comment = $target.closest('.comment');
 
-      let parentId = $comment && $comment.length ? $comment.data('id') : null;
-      let message = $target.closest('.comment-form').find('.text-body').val();
+      let $parentComment = $target.closest('.comment');
+
+      let isChild = $parentComment && $parentComment.length;
+
+      let parentId = isChild ? $parentComment.data('id') : null;
+      let level = isChild ? ($parentComment.data('level') + 1) : 0;
+
+      let $form = $target.closest('form');
+
+      let message = $form.find('.text-body').val();
+
+      if (!message)
+        return;
+
+      $target.prop('disabled', true);
 
       let data = {
         parent_id: parentId,
@@ -106,13 +121,14 @@ module.exports = {
       // app.showLoading();
       // api.makeRequest(this.urlRoot, 'POST', data).done((newData) => {
       setTimeout(() => {
+        $target.prop('disabled', false);
 
-        //TODO: hide new comment form
-        this.$el.find('.new-comment').addClass('collapse');
+        if (isChild)
+          $form.remove();
+        else
+          $form.find('.text-body').val('');
 
-        let commentStub = parentId == null
-          ? this.$('.comments').find('#comment_empty_0')
-          : this.$('.comments').find('#comment_empty_' + $comment.data('level'));
+        let commentStub = this.$stubs.find('.comment[data-level=' + level + ']');
 
         let newComment = commentStub.clone();
 
@@ -122,22 +138,38 @@ module.exports = {
         newComment.find('p').text(data.message);
 
         //TODO: update parent comment response count
-        newComment.find('.link-response-count').text('0')
+        newComment.find('.link-response-count').text('0');
 
-        newComment.appendTo(this.$('.comments'));
+        newComment.appendTo(isChild ? $parentComment : this.$('.comments'));
         // app.hideLoading();
       }, 500);
       // }).fail((err) => {
+      //   $target.prop('disabled', false);
       //   app.hideLoading();
       //   alert(err);
       // });
     },
 
-
-    replyTo(e) {
+    cancelComment(e) {
       e.preventDefault();
 
-      this.$el.find('.new-comment').appendTo($(e.target).closest('.comment')).removeClass('collapse');
+      let $form = $(e.target).closest('form');
+      if (!$form.hasClass('new-comment'))
+        $form.remove();
+
+      return false;
+    },
+
+    showReplyTo(e) {
+      e.preventDefault();
+
+      let $newCommentBlock = this.$stubs.find('.new-comment').clone();
+
+      $newCommentBlock.removeClass('new-comment collapse');
+
+      $newCommentBlock.appendTo($(e.target).closest('.comment'));
+
+      $newCommentBlock.find('.text-body').focus();
 
       return false;
     },
@@ -147,7 +179,7 @@ module.exports = {
 
       let $link = $(e.target).closest('.link-response-count');
 
-      $link.closest('.comment').find('.comment:first').toggleClass('collapse');
+      $link.closest('.comment').find('.comment').toggleClass('collapse');
 
       let $icon = $link.find('.fa');
       if ($icon.hasClass('fa-angle-up'))

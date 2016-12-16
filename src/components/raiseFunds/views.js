@@ -87,7 +87,7 @@ module.exports = {
       'click #postForReview': postForReview,
       'change #website': appendHttpIfNecessary,
       'change #website,#twitter,#facebook,#instagram,#linkedin': 'appendHttpsIfNecessary',
-    }, leavingConfirmationHelper.events, phoneHelper.events, menuHelper.events),
+    }, /*leavingConfirmationHelper.events,*/ phoneHelper.events, menuHelper.events),
 
     appendHttpsIfNecessary(e) {
       appendHttpIfNecessary(e, true);
@@ -521,7 +521,7 @@ module.exports = {
 
       disableEnterHelper.disableEnter.call(this);
       this.checkForm();
-
+      this.$el.find('.team-add-item').equalHeights();
       return this;
     },
 

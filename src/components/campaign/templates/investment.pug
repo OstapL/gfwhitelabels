@@ -75,6 +75,7 @@ mixin confirmStatement(name, attr)
             label.col-lg-3.text-lg-right.p-t-0.total-investment-label Total
             .col-lg-4
               span.p-l-1.total-investment-amount $10
+              input(type="hidden" name="total_amount" value="$10")
           // popover content for amount field
           div.popover-content-amount-campaign
             i.fa.fa-info-circle
@@ -99,7 +100,7 @@ mixin confirmStatement(name, attr)
             span The minimum investment is $#{values.campaign.minimum_increment}.
           div.popover-content-amount-ok
             i.fa.fa-info-circle
-            span Base on your updated annual income and net worth, you can invest up to $:amount.
+            span Based on your updated annual income and net worth, you can invest up to $:amount.
 
 
           section.personal_information
