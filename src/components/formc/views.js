@@ -1,5 +1,6 @@
 'use strict';
 
+const formcHelpers = require('./helpers.js');
 const formatHelper = require('../../helpers/formatHelper');
 
 const menuHelper = require('helpers/menuHelper.js');
@@ -91,26 +92,27 @@ const doFormcValidation = function doFormcValidation(e, data) {
     data = this.model;
   }
 
+  let progress = formcHelpers.formcCalcProgress(data);
   if(
-      data.progress.introduction == true &&
-      data.progress["team-members"] == true &&
-      data.progress["related-parties"] == true &&
-      data.progress["use-of-proceeds"] == true &&
-      data.progress["risk-factors-market"] == true &&
-      data.progress["risk-factors-financial"] == true &&
-      data.progress["risk-factors-operational"] == true &&
-      data.progress["risk-factors-competitive"] == true &&
-      data.progress["risk-factors-personnel"] == true &&
-      data.progress["risk-factors-legal"] == true &&
-      data.progress["risk-factors-misc"] == true &&
-      data.progress["financial-condition"] == true &&
-      data.progress["outstanding-security"] == true &&
-      data.progress["background-check"] == true
+      progress.introduction == true &&
+      progress["team-members"] == true &&
+      progress["related-parties"] == true &&
+      progress["use-of-proceeds"] == true &&
+      progress["risk-factors-market"] == true &&
+      progress["risk-factors-financial"] == true &&
+      progress["risk-factors-operational"] == true &&
+      progress["risk-factors-competitive"] == true &&
+      progress["risk-factors-personnel"] == true &&
+      progress["risk-factors-legal"] == true &&
+      progress["risk-factors-misc"] == true &&
+      progress["financial-condition"] == true &&
+      progress["outstanding-security"] == true &&
+      progress["background-check"] == true
   ) {
     $('#formc_publish_confirm').modal('show');
   } else {
-    var errors = {};
-    _(data.progress).each((d, k) => {
+    let errors = {};
+    _(progress).each((d, k) => {
       if(k != 'perks') {
         if(d == false)  {
           $('#formc_publish .'+k).removeClass('collapse');
