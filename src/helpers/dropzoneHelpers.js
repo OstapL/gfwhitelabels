@@ -462,12 +462,12 @@ module.exports = {
       };
 
       const cropNext = (resetCropping) => {
-        if (!cropQueue.length)
-          return;
-
         cropping = resetCropping ? false : cropping;
 
         if (cropping)
+          return;
+
+        if (!cropQueue.length)
           return;
 
         let imgId = cropQueue.shift();

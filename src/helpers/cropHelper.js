@@ -135,18 +135,22 @@ module.exports = {
 
             $modal.modal('hide');
 
-            if (typeof(callback) === 'function') { 
+            if (typeof(callback) === 'function')
               callback(cropper.getData(true));
-            }
 
             return false;
           });
 
           $modal.find('.cropper-cancel').on('click', (e) => {
             _closeModal = true;
+
+            if (typeof(callback) === 'function')
+              callback();
           });
           $modal.find('.close').on('click', (e) => {
             _closeModal = true;
+            if (typeof(callback) === 'function')
+              callback();
           });
 
           options.minContainerHeight = 320;
