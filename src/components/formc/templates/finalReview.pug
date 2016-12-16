@@ -55,10 +55,11 @@ include fields_final_review.pug
 - names.pat_risk = 'formc.personnel_and_third_parties_risk.0.risk'
 - names.lar_risk_title = 'formc.legal_and_regulatory_risk.0.title'
 - names.lar_risk = 'formc.legal_and_regulatory_risk.0.risk'
-
+- names.intended_use_of_proceeds = 'formc.intended_use_of_proceeds'
 - names.material_information= 'formc.material_information'
 - names.descrption_material_information= 'formc.descrption_material_information'
-
+- names.financials_condition_yes= 'financials_condition_yes'
+- names.financials_condition_no= 'financials_condition_no'
 - names.use_of_net_proceeds_minimum= 'formc.use_of_net_proceeds_minimum'
 - names.use_of_net_proceeds_maximum= 'formc.use_of_net_proceeds_maximum'
 - function  getData(name) {
@@ -516,7 +517,7 @@ section.formc-review
             +frField('company.name', 'text')
             |  as Issuer
         h2.text-uppercase.text-xs-center.font-weight-bold#management_material_persons.letter-spacing-normal.m-b-3 MANAGEMENT & MATERIAL PERSONS
-        p.text-indent Specific biographical information on each of the Company’s officers and members of its Board of Directors of is attached as Exhibit C.  Exhibit C contaisns information on the last three years of employment and supplements the information summarized below.  The Company has confirmed that no officer, director or 20% shareholder 
+        p.text-indent Specific biographical information on each of the Company’s officers and members of its Board of Directors of is attached as Exhibit C.  Exhibit C contains information on the last three years of employment and supplements the information summarized below.  The Company has confirmed that no officer, director or 20% shareholder 
           if values.campaign.security_type == 0
             |  would cause a violation of Rule 503(a) of the Crowdfunding Regulations (17 CFR §227.503).
           else
