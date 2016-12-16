@@ -325,7 +325,10 @@ section.formc-review
               if values.campaign.minimum_raise == values.campaign.maximum_raise
                 | First Come First Served
               else
-                | Not Applicable
+                if values.campaign.security_type == 0
+                  | Not Applicable
+                else
+                  | First Come First Serve
           .row
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
               p.font-weight-bold Maximum amount of offering:
