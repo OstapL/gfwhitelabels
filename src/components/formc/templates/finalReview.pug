@@ -1298,54 +1298,54 @@ section.formc-review
             +frField('company.name', 'text')
             |  as Issuer
         h2.text-uppercase.text-xs-center.font-weight-bold.letter-spacing-normal.m-b-3 ISSUER-SPECIFIC RISK FACTORS
-        p.text-uppercase.m-t-0.m-b-0.pb10 
+        p.text-uppercase.m-t-0.m-b-1.pb10 
           u MARKET AND CUSTOMER RISK FACTORS
           each v,k in values.formc.market_and_customer_risk
-            h3
+            h3.m-t-0
               +frField('formc.market_and_customer_risk[' + k + '].title', 'textarea')
-            p
+            p.m-b-2
               +frField('formc.market_and_customer_risk[' + k + '].risk', 'textarea')
-        p.text-uppercase.m-t-3.m-b-0.pb10 
+        p.text-uppercase.m-t-3.m-b-1.pb10 
           u FINANCIAL RISK FACTORS
           each v,k in values.formc.financial_risk
-            h3
+            h3.m-t-0
               +frField('formc.financial_risk[' + k + '].title', 'textarea')
-            p
+            p.m-b-2
               +frField('formc.financial_risk[' + k + '].risk', 'textarea')
-        p.text-uppercase.m-t-3.m-b-0.pb10 
+        p.text-uppercase.m-t-3.m-b-1.pb10 
           u OPERATIONAL RISK FACTORS
           each v,k in values.formc.operational_risk
-            h3
+            h3.m-t-0
               +frField('formc.operational_risk[' + k + '].title', 'textarea')
-            p
+            p.m-b-2
               +frField('formc.operational_risk[' + k + '].risk', 'textarea')
-        p.text-uppercase.m-t-3.m-b-0.pb10 
+        p.text-uppercase.m-t-3.m-b-1.pb10 
           u COMPETITIVE RISK FACTORS
           each v,k in values.formc.competitive_risk
-            h3
+            h3.m-t-0
               +frField('formc.competitive_risk[' + k + '].title', 'textarea')
-            p
+            p.m-b-2
               +frField('formc.competitive_risk[' + k + '].risk', 'textarea')
-        p.text-uppercase.m-t-3.m-b-0.pb10 
+        p.text-uppercase.m-t-3.m-b-1.pb10 
           u PERSONNEL AND THIRD PARTY RISK FACTORS
           each v,k in values.formc.personnel_and_third_parties_risk
-            h3
+            h3.m-t-0
               +frField('formc.personnel_and_third_parties_risk[' + k + '].title', 'textarea')
-            p
+            p.m-b-2
               +frField('formc.personnel_and_third_parties_risk[' + k + '].risk', 'textarea')
-        p.text-uppercase.m-t-3.m-b-0.pb10 
+        p.text-uppercase.m-t-3.m-b-1.pb10 
           u LEGAL AND REGULATORY RISK FACTORS
           for v,k in values.formc.legal_and_regulatory_risk
-            h3
+            h3.m-t-0
               +frField('formc.legal_and_regulatory_risk[' + k + '].title', 'textarea')
-            p
+            p.m-b-2
               +frField('formc.legal_and_regulatory_risk[' + k + '].risk', 'textarea')
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u MISCELLANEOUS RISK FACTORS
           for v,k in values.formc.miscellaneous_risk
-            h3
+            h3.m-t-0
               +frField('formc.miscellaneous_risk[' + k + '].title', 'textarea')
-            p
+            p.m-b-2
               +frField('formc.miscellaneous_risk[' + k + '].risk', 'textarea')
 
       // page 25
