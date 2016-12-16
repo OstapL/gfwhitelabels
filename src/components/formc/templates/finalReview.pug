@@ -55,10 +55,11 @@ include fields_final_review.pug
 - names.pat_risk = 'formc.personnel_and_third_parties_risk.0.risk'
 - names.lar_risk_title = 'formc.legal_and_regulatory_risk.0.title'
 - names.lar_risk = 'formc.legal_and_regulatory_risk.0.risk'
-
+- names.intended_use_of_proceeds = 'formc.intended_use_of_proceeds'
 - names.material_information= 'formc.material_information'
 - names.descrption_material_information= 'formc.descrption_material_information'
-
+- names.financials_condition_yes= 'financials_condition_yes'
+- names.financials_condition_no= 'financials_condition_no'
 - names.use_of_net_proceeds_minimum= 'formc.use_of_net_proceeds_minimum'
 - names.use_of_net_proceeds_maximum= 'formc.use_of_net_proceeds_maximum'
 - function  getData(name) {
@@ -460,7 +461,7 @@ section.formc-review
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u Changes Are Possible In Certain Circumstances
         p.pb10.text-indent The Company reserves the right to modify any of the terms of the Offering at any time before the Offering closes. However, if any material changes are made, each investor will be notified and will be required to reconfirm their investment commitment within 5 days of such notice or their entire investment commitment shall be cancelled. Investors are also given the right to terminate an investment at any time prior to 48 hours from a notified closing date.  Additional
-          | details on the procedures involved with this Offering are contained later in this Material.  Additional information relating to this Offering, including communication channels allowing investors to pose questions and receive answers, is available through the Intermediary on the Platform at https://growthfountain.com/#{ values.company.id }
+          |  details on the procedures involved with this Offering are contained later in this Material.  Additional information relating to this Offering, including communication channels allowing investors to pose questions and receive answers, is available through the Intermediary on the Platform at https://growthfountain.com/#{ values.company.id }
 
       // page 5
       section.page-formc-review.m-t-1
@@ -516,7 +517,7 @@ section.formc-review
             +frField('company.name', 'text')
             |  as Issuer
         h2.text-uppercase.text-xs-center.font-weight-bold#management_material_persons.letter-spacing-normal.m-b-3 MANAGEMENT & MATERIAL PERSONS
-        p.text-indent Specific biographical information on each of the Company’s officers and members of its Board of Directors of is attached as Exhibit C.  Exhibit C contaisns information on the last three years of employment and supplements the information summarized below.  The Company has confirmed that no officer, director or 20% shareholder 
+        p.text-indent Specific biographical information on each of the Company’s officers and members of its Board of Directors of is attached as Exhibit C.  Exhibit C contains information on the last three years of employment and supplements the information summarized below.  The Company has confirmed that no officer, director or 20% shareholder 
           if values.campaign.security_type == 0
             |  would cause a violation of Rule 503(a) of the Crowdfunding Regulations (17 CFR §227.503).
           else
@@ -760,7 +761,7 @@ section.formc-review
           |  after receiving notice of a material change to the Offering.  If an investor takes no action to reconfirm the investment commitment after the Company notifies the investor of a material change, the commitment will be cancelled and funds relating to that Offering returned, less any fees incurred, without any accrued interest. 
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u Jurisdictional Coverage
-        p.text-indent Jurisdictions in which the issuer intends to offer the securities include the following: AL, AK, AZ, AR, CA, CO, CT, DE, DC, FL, GA, HI, ID, IL, IN, IA, KS, KY, LA, ME, MD, MA, MI, MN, MS, MO, MT, NE, NV, NH, NJ, NY, NC, ND, OH, OK, OR, PA, RI, SC, SD, TN, TX, UT, VT, WA, WV, WI, WY, WY, PR, GU, VI, NMI, AS
+        p.text-indent Jurisdictions in which the issuer intends to offer the securities include the following: AL, AK, AZ, AR, CA, CO, CT, DE, DC, FL, GA, HI, ID, IL, IN, IA, KS, KY, LA, ME, MD, MA, MI, MN, MS, MO, MT, NE, NV, NH, NJ, NY, NC, ND, OH, OK, OR, PA, RI, SC, SD, TN, TX, UT, VT, WA, WV, WI, WY, PR, GU, VI, NMI, AS
         p Canadian Jurisdictions: AB, BC, MB, NB, NL, NS, ON, PE, QC, SK, YT, Canada [Federal Level]
 
       // page 13
