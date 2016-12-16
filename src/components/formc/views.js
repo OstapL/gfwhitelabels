@@ -50,49 +50,15 @@ const labels = {
 
 const submitFormc = function submitFormc(e) {
   e.preventDefault();
-  let $form = this.$el.find('form');
-  var data = $form.serializeJSON({ checkboxUncheckedValue: 'false', useIntKeysAsArrayIndex: true });
-
-  _.extend(this.model, data);
-  data = _.extend({}, this.model);
-
-  // ToDo
-  // Refactor code
-  if(this.hasOwnProperty('index')) {
-    data.index = this.index;
-  };
-
-  this.$('.help-block').remove();
-  if (!validation.validate(this.fields, data, this)) {
-    _(validation.errors).each((errors, key) => {
-      validation.invalidMsg(this, key, errors);
-    });
-    this.$('.help-block').scrollTo(45);
-    return;
-  } else {
-    let url = this.urlRoot.replace(/:id/, data.id);
-    let type = 'PUT';
-    delete data.id;
-
-    api.makeRequest(url, type, data).
-      then((data) => {
-
-        data.progress = this.model.progress;
-
-        doFormcValidation(e, data);
-    }, (error) => {
-      doFormcValidation(null, this.model);
-    });
-  }
+  doFormcValidation(e, formcHelpers.formcCalcProgress(this.model));
 };
 
-const doFormcValidation = function doFormcValidation(e, data) {
+const doFormcValidation = function doFormcValidation(e, progress) {
 
-  if(data == null) {
-    data = this.model;
+  if(progress == null) {
+    progress = formcHelpers.formcCalcProgress(this.model);
   }
 
-  let progress = formcHelpers.formcCalcProgress(data);
   if(
       progress.introduction == true &&
       progress["team-members"] == true &&
