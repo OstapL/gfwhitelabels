@@ -45,11 +45,13 @@ module.exports = {
           Object.keys(data.legal_and_regulatory_risk).length > 0,
       'risk-factors-misc': Object.keys(data.miscellaneous_risk).length > 0,
       'financial-condition': 
-          (data.financials_condition_choice ||  
-           data.financials_condition_yes.length > 0) &&
-          (data.financials_condition_choice ||
+        (
+          (data.financials_condition_choice == 1 &&
+           data.financials_condition_yes.length > 0) || 
+          (data.financials_condition_choice == 0 &&
            data.financials_condition_no.length > 0
-          ) && data.fiscal_recent_group_data.length > 0 &&
+          )
+        ) && data.fiscal_recent_group_data.length > 0 &&
           data.fiscal_prior_group_data.length > 0 &&
           data.sold_securities_data.length == 2 && 
           (
