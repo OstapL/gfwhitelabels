@@ -4,24 +4,28 @@ const isBoolean = function(val) {
 
 let exports = {
   calcProgress: function(data) {
-    return {
-      'general_information': 
-        data.pitch.length > 5 &&
-        data.intended_use_of_proceeds.length > 5 &&
-        data.business_model.length > 5,
-      'media':
-        data.header_image_image_id != null &&
-        data.list_image_image_id != null &&
-        data.gallery_group_data.length > 0,
-      'specifics': 
-        data.minimum_raise >= 25000 &&
-        data.maximum_raise <= 1000000 &&
-        data.minimum_increment >= 100 &&
-        data.length_days >= 60 &&
-        data.investor_presentation_file_id != null &&
-        isBoolean(data.security_type),
-      'team-members': data.team_members.length > 0,
-      'perks': data.perks.length > 0
+    try {
+      return {
+        'general_information': 
+          data.pitch.length > 5 &&
+          data.intended_use_of_proceeds.length > 5 &&
+          data.business_model.length > 5,
+        'media':
+          data.header_image_image_id != null &&
+          data.list_image_image_id != null &&
+          data.gallery_group_data.length > 0,
+        'specifics': 
+          data.minimum_raise >= 25000 &&
+          data.maximum_raise <= 1000000 &&
+          data.minimum_increment >= 100 &&
+          data.length_days >= 60 &&
+          data.investor_presentation_file_id != null &&
+          isBoolean(data.security_type),
+        'team-members': data.team_members.length > 0,
+        'perks': data.perks.length > 0
+      }
+    } catch(e) {
+      return {};
     }
   },
 
