@@ -342,10 +342,10 @@ module.exports = {
     initComments() {
       const View = require('components/comment/views.js');
       const urlComments = commentsServer + '/company/' + this.model.id;
-      // let optionsR = api.makeRequest(urlComments, 'OPTIONS');
-      // let dataR = api.makeRequest(urlComments);
-      //
-      // $.when(optionsR, dataR).done((options, data) => {
+      let optionsR = api.makeRequest(urlComments, 'OPTIONS');
+      let dataR = api.makeRequest(urlComments);
+
+      $.when(optionsR, dataR).done((options, data) => {
         let commentsModel = {
           id: this.model.id,
           data: [
@@ -380,13 +380,15 @@ module.exports = {
           ],
           count: 2,
         };
+        data[0].id = this.model.id;
 
         let comments = new View.comments({
-          model: commentsModel,
-          // fields: options[0].fields,
+          // model: commentsModel,
+          model: data[0],
+          fields: options[0].fields,
         });
         comments.render();
-      // });
+      });
     },
 
     readMore(e) {
