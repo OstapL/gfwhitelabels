@@ -93,6 +93,7 @@ module.exports = {
     },
 
     submitComment(e) {
+      debugger;
       e.preventDefault();
 
       let $target = $(e.target);
@@ -101,7 +102,7 @@ module.exports = {
 
       let isChild = $parentComment && $parentComment.length;
 
-      let parentId = isChild ? $parentComment.data('id') : null;
+      let parentId = isChild ? $parentComment.data('id') : "null";
       let level = isChild ? ($parentComment.data('level') + 1) : 0;
 
       let $form = $target.closest('form');
@@ -118,9 +119,9 @@ module.exports = {
         message: message,
       };
 
-      // app.showLoading();
-      // api.makeRequest(this.urlRoot, 'POST', data).done((newData) => {
-      setTimeout(() => {
+      app.showLoading();
+      api.makeRequest(this.urlRoot, 'POST', data).done((newData) => {
+      //setTimeout(() => {
         $target.prop('disabled', false);
 
         if (isChild)
@@ -141,13 +142,13 @@ module.exports = {
         newComment.find('.link-response-count').text('0');
 
         newComment.appendTo(isChild ? $parentComment : this.$('.comments'));
-        // app.hideLoading();
-      }, 500);
-      // }).fail((err) => {
-      //   $target.prop('disabled', false);
-      //   app.hideLoading();
-      //   alert(err);
-      // });
+        app.hideLoading();
+      //}, 500);
+      }).fail((err) => {
+         $target.prop('disabled', false);
+         app.hideLoading();
+         alert(err);
+      });
     },
 
     cancelComment(e) {
