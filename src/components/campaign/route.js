@@ -10,7 +10,7 @@ module.exports = Backbone.Router.extend({
   },
 
   execute: function (callback, args, name) {
-    ga('send', 'pageview', "/" + Backbone.history.getPath());
+    //ga('send', 'pageview', "/" + Backbone.history.getPath());
     if (callback) callback.apply(this, args)
   },
 
