@@ -10,6 +10,7 @@ global.investmentServer = "https://api-investment.growthfountain.com";
 global.filerServer = "https://api-filer.growthfountain.com";
 global.esignServer = 'http://api-esign.growthfountain.com';
 global.commentsServer = "https://api-comments.growthfountain.com";
+global.blogServer = "https://api-blog.growthfountain.com";
 
 global.teamName = 'Team';
 global.teamTitle = "Meet The Team";
