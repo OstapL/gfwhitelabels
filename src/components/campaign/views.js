@@ -752,6 +752,7 @@ module.exports = {
         fees_to_investor: 10,
         trans_percent: '6%',
         listing_fee: '$500',
+        registration_fee: '$500',
         Commitment_Date_X: this.getCurrentDate(),
         city: formData.personal_information_data.city,
         state: formData.personal_information_data.state,
@@ -768,7 +769,7 @@ module.exports = {
         investor_email: app.user.get('email'),
         Investor_optional_address: app.user.get('address_2') || ' ',
         investor_state: app.user.get('state'),
-        jurisdiction_of_organization: this.model.jurisdiction_of_organization, 
+        jurisdiction_of_organization: this.model.founding_state, 
         maximum_raise: this.model.campaign.maximum_raise,
         minimum_raise: this.model.campaign.minimum_raise,
         price_per_share: this.model.campaign.price_per_share,
@@ -776,7 +777,6 @@ module.exports = {
         issuer_legal_name: issuer_legal_name,
         issuer_signer: null,
         issuer_signer_title: null,
-        registration_fee: null,
       };
     },
 
