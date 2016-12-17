@@ -667,7 +667,7 @@ module.exports = {
       const successRoute = this.getSuccessUrl(responseData);
       const formData = this.getDocMetaData();
       const data = {
-        type: location.hostname,
+        type: 1,
         esign: responseData.signature.full_name,
         meta_data: formData,
         template: [
