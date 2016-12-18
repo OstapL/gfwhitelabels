@@ -90,6 +90,7 @@ module.exports = {
 
     events: _.extend({
       'submit form': 'submit',
+      'click .link-2': 'openPdf',
       'click .submit_formc': submitFormc,
       'keyup #full-name': 'changeSign',
       'click #pay-btn': 'stripeSubmit',
@@ -135,9 +136,58 @@ module.exports = {
       return this;
     },
 
+    saveEsign(responseData) {
+      const reqUrl = global.esignServer + '/pdf-doc';
+      const formData = this.getDocMetaData();
+      const data = {
+        type: 2,
+        esign: responseData.signature.full_name,
+        meta_data: formData,
+        template: 'formc/funding_portal_listing_agreement.pdf'
+      };
+
+      $.post(reqUrl, data)
+        .fail( (err) => console.log(err));
+    },
+
+    openPdf (e) {
+      var pathToDoc = e.target.dataset.path;
+      var data = this.getDocMetaData();
+      e.target.href = pathToDoc + '?' + $.param(data);
+    },
+
+    getDocMetaData () {
+      this.model.owner = this.model.owner || {};
+
+      const formData = app.user.formc;
+      const issuer_legal_name = this.model.owner.first_name + ' ' + this.model.owner.last_name;
+      
+      return {
+        trans_percent: '6%',
+        registration_fee: '$500',
+        commitment_date_x: this.getCurrentDate(),
+        zip_code: formData.zip_code,
+        address_1: formData.address_1,
+        address_2: formData.address_2,
+        issuer_email: this.issuer_email,
+        issuer_legal_name: formData.legal_issuer_name,
+        issuer_signer: formData.issuer_signer,
+        nonrefundable_fees: formData.nonrefundable_fees,
+        party_fees: formData.party_fees,
+        amendment_fee: formData.amendment_fee,
+        withdrawal_fee: formData.withdrawal_fee,
+      };
+    },
+
     _success(data, newData) {
+      this.saveEsign(data);
       formcHelpers.updateFormcMenu(formcHelpers.formcCalcProgress(app.user.formc));
       return 1;
+    },
+
+    getCurrentDate () {
+        const date = new Date();
+        return date.getMonth() + '/' + date.getDate() + '/' + date.getFullYear();
     },
 
     getSuccessUrl() {
