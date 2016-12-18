@@ -1,5 +1,6 @@
 'use strict';
 
+const formcHelpers = require('./helpers.js');
 const formatHelper = require('../../helpers/formatHelper');
 
 const menuHelper = require('helpers/menuHelper.js');
@@ -49,68 +50,28 @@ const labels = {
 
 const submitFormc = function submitFormc(e) {
   e.preventDefault();
-  let $form = this.$el.find('form');
-  var data = $form.serializeJSON({ checkboxUncheckedValue: 'false', useIntKeysAsArrayIndex: true });
-
-  _.extend(this.model, data);
-  data = _.extend({}, this.model);
-
-  // ToDo
-  // Refactor code
-  if(this.hasOwnProperty('index')) {
-    data.index = this.index;
-  };
-
-  this.$('.help-block').remove();
-  if (!validation.validate(this.fields, data, this)) {
-    _(validation.errors).each((errors, key) => {
-      validation.invalidMsg(this, key, errors);
-    });
-    this.$('.help-block').scrollTo(45);
-    return;
-  } else {
-    let url = this.urlRoot.replace(/:id/, data.id);
-    let type = 'PUT';
-    delete data.id;
-
-    api.makeRequest(url, type, data).
-      then((data) => {
-
-        data.progress = this.model.progress;
-
-        doFormcValidation(e, data);
-    }, (error) => {
-      doFormcValidation(null, this.model);
-    });
-  }
-};
-
-const doFormcValidation = function doFormcValidation(e, data) {
-
-  if(data == null) {
-    data = this.model;
-  }
+  let progress = formcHelpers.formcCalcProgress(this.model);
 
   if(
-      data.progress.introduction == true &&
-      data.progress["team-members"] == true &&
-      data.progress["related-parties"] == true &&
-      data.progress["use-of-proceeds"] == true &&
-      data.progress["risk-factors-market"] == true &&
-      data.progress["risk-factors-financial"] == true &&
-      data.progress["risk-factors-operational"] == true &&
-      data.progress["risk-factors-competitive"] == true &&
-      data.progress["risk-factors-personnel"] == true &&
-      data.progress["risk-factors-legal"] == true &&
-      data.progress["risk-factors-misc"] == true &&
-      data.progress["financial-condition"] == true &&
-      data.progress["outstanding-security"] == true &&
-      data.progress["background-check"] == true
+      progress.introduction == true &&
+      progress["team-members"] == true &&
+      progress["related-parties"] == true &&
+      progress["use-of-proceeds"] == true &&
+      progress["risk-factors-market"] == true &&
+      progress["risk-factors-financial"] == true &&
+      progress["risk-factors-operational"] == true &&
+      progress["risk-factors-competitive"] == true &&
+      progress["risk-factors-personnel"] == true &&
+      progress["risk-factors-legal"] == true &&
+      progress["risk-factors-misc"] == true &&
+      progress["financial-condition"] == true &&
+      progress["outstanding-security"] == true &&
+      progress["background-check"] == true
   ) {
     $('#formc_publish_confirm').modal('show');
   } else {
-    var errors = {};
-    _(data.progress).each((d, k) => {
+    let errors = {};
+    _(progress).each((d, k) => {
       if(k != 'perks') {
         if(d == false)  {
           $('#formc_publish .'+k).removeClass('collapse');
@@ -172,6 +133,11 @@ module.exports = {
       this.eSignPreview = eSignForm.find('.electronically .name');
 
       return this;
+    },
+
+    _success(data, newData) {
+      formcHelpers.updateFormcMenu(formcHelpers.formcCalcProgress(app.user.formc));
+      return 1;
     },
 
     getSuccessUrl() {
@@ -346,16 +312,21 @@ module.exports = {
       }
     },
 
-    getSuccessUrl(data) {
-      return '/formc/' + this.model.id + '/related-parties';
-    },
-
     initialize(options) {
       this.model = options.formc;
       this.fields = options.fields;
       this.fields.full_time_employers = { label: 'Full Time Employees' };
       this.fields.part_time_employers = { label: 'Part Time Employees' };
       console.log(this);
+    },
+
+    _success(data, newData) {
+      formcHelpers.updateFormcMenu(formcHelpers.formcCalcProgress(app.user.formc));
+      return 1;
+    },
+
+    getSuccessUrl(data) {
+      return '/formc/' + this.model.id + '/related-parties';
     },
 
     deleteMember: function (e) {
@@ -579,10 +550,6 @@ module.exports = {
       this.buildJsonTemplates('formc');
     },
 
-    getSuccessUrl(data) {
-      return '/formc/' + this.model.id + '/use-of-proceeds';
-    },
-
     submit(e) {
       e.preventDefault();
       let data = $(e.target).serializeJSON({ useIntKeysAsArrayIndex: true });
@@ -608,6 +575,15 @@ module.exports = {
       );
       disableEnterHelper.disableEnter.call(this);
       return this;
+    },
+
+    _success(data, newData) {
+      formcHelpers.updateFormcMenu(formcHelpers.formcCalcProgress(app.user.formc));
+      return 1;
+    },
+
+    getSuccessUrl(data) {
+      return '/formc/' + this.model.id + '/use-of-proceeds';
     },
   }, addSectionHelper.methods, menuHelper.methods, yesNoHelper.methods, leavingConfirmationHelper.methods)),
 
@@ -662,6 +638,11 @@ module.exports = {
     deleteRow(e) {
       this.deleteSectionNew(e);
       this.calculate(null);
+    },
+
+    _success(data, newData) {
+      formcHelpers.updateFormcMenu(formcHelpers.formcCalcProgress(app.user.formc));
+      return 1;
     },
 
     getSuccessUrl() {
@@ -1495,7 +1476,7 @@ module.exports = {
     events: _.extend({
       'submit form': api.submitAction,
       'click .submit_formc': submitFormc,
-    }, menuHelper.events, yesNoHelper.events, addSectionHelper.events, dropzoneHelpers.events, leavingConfirmationHelper.events),
+    }, menuHelper.events, yesNoHelper.events, addSectionHelper.events, dropzoneHelpers.events, /*leavingConfirmationHelper.events*/),
 
     initialize(options) {
       this.model = options.formc;
@@ -1524,6 +1505,11 @@ module.exports = {
 
       this.createIndexes();
       this.buildJsonTemplates('formc', {campaign: this.campaign});
+    },
+
+    _success(data, newData) {
+      formcHelpers.updateFormcMenu(formcHelpers.formcCalcProgress(app.user.formc));
+      return 1;
     },
 
     getSuccessUrl() {
@@ -1557,7 +1543,7 @@ module.exports = {
       'click #submitForm': api.submitAction,
       'click .submit_formc': submitFormc,
       'click .delete-outstanding': 'deleteOutstanding',
-    }, addSectionHelper.events, menuHelper.events, yesNoHelper.events, leavingConfirmationHelper.events),
+    }, addSectionHelper.events, menuHelper.events, yesNoHelper.events, /*leavingConfirmationHelper.events*/),
 
     initialize(options) {
       this.model = options.formc;
@@ -1711,6 +1697,11 @@ module.exports = {
       );
     },
 
+    _success(data, newData) {
+      formcHelpers.updateFormcMenu(formcHelpers.formcCalcProgress(app.user.formc));
+      return 1;
+    },
+
     getSuccessUrl() {
       return '/formc/' + this.model.id + '/background-check';
     },
@@ -1793,6 +1784,11 @@ module.exports = {
     },
     events: {
       'click .createField': 'createField',
+    },
+
+    _success(data, newData) {
+      formcHelpers.updateFormcMenu(formcHelpers.formcCalcProgress(app.user.formc));
+      return 1;
     },
 
     getSuccessUrl() {

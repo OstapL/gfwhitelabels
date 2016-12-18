@@ -343,10 +343,10 @@ module.exports = {
     initComments() {
       const View = require('components/comment/views.js');
       const urlComments = commentsServer + '/company/' + this.model.id;
-      // let optionsR = api.makeRequest(urlComments, 'OPTIONS');
-      // let dataR = api.makeRequest(urlComments);
-      //
-      // $.when(optionsR, dataR).done((options, data) => {
+      let optionsR = api.makeRequest(urlComments, 'OPTIONS');
+      let dataR = api.makeRequest(urlComments);
+
+      $.when(optionsR, dataR).done((options, data) => {
         let commentsModel = {
           id: this.model.id,
           data: [
@@ -381,13 +381,15 @@ module.exports = {
           ],
           count: 2,
         };
+        data[0].id = this.model.id;
 
         let comments = new View.comments({
-          model: commentsModel,
-          // fields: options[0].fields,
+          // model: commentsModel,
+          model: data[0],
+          fields: options[0].fields,
         });
         comments.render();
-      // });
+      });
     },
 
     readMore(e) {
@@ -405,7 +407,8 @@ module.exports = {
     events: {
       'submit form.invest_form': 'submit',
       'keyup #amount': 'updateAmount',
-      'change #amount': 'ensureIntegerAmountAccordingShares',
+      'change #amount': 'roundAmount',
+      'focusout #amount': 'triggerAmountChange',
       'keyup .us-fields :input[name*=zip_code]': 'changeZipCode',
       'click .update-location': 'updateLocation',
       'click .link-2': 'openPdf',
@@ -414,6 +417,7 @@ module.exports = {
       'keyup .typed-name': 'copyToSignature',
       'keyup #annual_income,#net_worth': 'updateLimitInModal',
       'click button.submit-income-worth': 'updateIncomeWorth',
+      'click': 'hidePopover',
     },
 
     initialize(options) {
@@ -497,6 +501,7 @@ module.exports = {
       this.usaStates = require("helpers/usa-states");
 
       this.initMaxAllowedAmount();
+      this.amountTimeout = null;
     },
 
     render() {
@@ -512,6 +517,18 @@ module.exports = {
         })
       );
 
+      this.initAmountPopover();
+
+      $('#income_worth_modal').on('hidden.bs.modal', () => {
+        this.$amount.keyup();
+      });
+
+      $('span.current-limit').text(this._maxAllowedAmount.toLocaleString('en-US'));
+
+      return this;
+    },
+
+    initAmountPopover() {
       this.$amount = this.$el.find('#amount');
       this.$amount.data('contentselector', 'amount-campaign');
       this.$amount.data('max', this._maxAllowedAmount);
@@ -535,72 +552,21 @@ module.exports = {
 
           return content;
         },
-        trigger: 'focus',
+        trigger: 'manual',
       }).popover('hide');
-
-      $('#income_worth_modal').on('hidden.bs.modal', () => {
-        this.$amount.keyup();
-      });
-
-      $('span.current-limit').text(this._maxAllowedAmount.toLocaleString('en-US'));
-
-      return this;
     },
 
-    maxInvestmentsPerYear(annualIncome, netWorth, investedPastYear, investedOtherSites) {
-      let maxInvestmentsPerYear = (annualIncome >= 100 && netWorth >= 100)
-        ? Math.min(annualIncome, netWorth) * 0.1
-        : Math.min(annualIncome, netWorth) * 0.05;
-
-      maxInvestmentsPerYear = maxInvestmentsPerYear < 2 ? 2 : maxInvestmentsPerYear;
-
-      return Math.round((maxInvestmentsPerYear * 1000 - investedPastYear - investedOtherSites));
+    triggerAmountChange(e) {
+      setTimeout(() => {
+        this.$amount.trigger('change');
+      }, 500);
     },
 
-    initMaxAllowedAmount() {
-      let annualIncome = this.user.annual_income;
-      let netWorth = this.user.net_worth;
-      let investedOnOtherSites = this.user.invested_on_other_sites;
-      let investedPastYear = this.user.invested_equity_past_year;
-
-      this._maxAllowedAmount = this.maxInvestmentsPerYear(annualIncome, netWorth,
-          investedPastYear, investedOnOtherSites);
-    },
-
-    roundAmount(e) {
-      // e.preventDefault();
-
-      //revenue share
-      if (this.model.campaign.security_type == 1)
+    hidePopover(e) {
+      if (e.target == this.$amount[0])
         return;
 
-      let amount = this.getInt(e.target.value);
-      if (!amount)
-        return;
-
-      let pricePerShare = this.model.campaign.price_per_share;
-      if (!pricePerShare)
-        return;
-
-      let newAmount = Math.ceil(amount / pricePerShare) *  pricePerShare;
-
-      this.$amount.val(this.formatInt(newAmount));
-      this._updateTotalAmount();
-
-      if (newAmount > amount) {
-        this.$amount.data('contentcontainer', 'content-rounding');
-        this.$amount.popover('show');
-      }
-
-      // return false;
-    },
-
-    getInt(value) {
-      return parseInt(value.replace(/\,/g, ''));
-    },
-
-    formatInt(value) {
-      return value.toLocaleString('en-US');
+      this.$amount.popover('hide');
     },
 
     getSuccessUrl(data) {
@@ -704,13 +670,16 @@ module.exports = {
       const successRoute = this.getSuccessUrl(responseData);
       const formData = this.getDocMetaData();
       const data = {
-        type: location.hostname,
+        type: 1,
         esign: responseData.signature.full_name,
         meta_data: formData,
-        template: ['invest/subscription_agreement.pdf', 'invest/participation_agreement.pdf']
+        template: [
+          this.getSubscriptionAgreementPath(),
+          'invest/participation_agreement.pdf'
+        ]
       };
 
-      api.makeRequest(reqUrl, 'POST', data)
+      $.post(reqUrl, data)
       .done( () => {
         $('#content').scrollTo();
         this.undelegateEvents();
@@ -723,10 +692,22 @@ module.exports = {
     },
 
     openPdf (e) {
-      const pathToDoc = e.target.dataset.path;
+      var pathToDoc = e.target.dataset.path;
       var data = this.getDocMetaData();
-
+      const isSubscriptionAgreement = pathToDoc.indexOf('subscription_agreement');
+      
+      if (isSubscriptionAgreement !== -1) {
+        pathToDoc = global.esignServer + '/pdf-doc/';
+        pathToDoc += this.getSubscriptionAgreementPath();
+      }
+      
       e.target.href = pathToDoc + '?' + $.param(data);
+    },
+
+    getSubscriptionAgreementPath () {
+      return this.model.campaign.security_type === 0 ?
+      'invest/subscription_agreement_common_stok.pdf' :
+      'invest/subscription_agreement_revenue_share.pdf';
     },
 
     getCurrentDate () {
@@ -762,40 +743,43 @@ module.exports = {
     },
 
     getDocMetaData () {
+      this.model.owner = this.model.owner || {};
+
+      const formData = $('form.invest_form').serializeJSON();
+      const issuer_legal_name = this.model.owner.first_name + ' ' + this.model.owner.last_name;
       const investor_legal_name = $('#first_name').val() + ' ' + $('#last_name').val()
                       || app.user.get('first_name') + ' ' + app.user.get('last_name');
       return {
-        address_1: $('#street_address_1').val(),
-        address_2: $('#street_address_2').val(),
-        aggregate_inclusive_purchase: $('#total').val(),
-        city: $('#city').val(),
-        investor_total_purchase: $('#amount').val(),
-        investor_legal_name: investor_legal_name,
-        state: $('#state').val(),
-        zip_code: $('#zip_code').val(),
-        Commitment_Date_X: this.getCurrentDate(),
         fees_to_investor: 10,
+        trans_percent: '6%',
+        listing_fee: '$500',
+        registration_fee: '$500',
+        Commitment_Date_X: this.getCurrentDate(),
+        city: formData.personal_information_data.city,
+        state: formData.personal_information_data.state,
+        zip_code: formData.personal_information_data.zip_code,
+        address_1: formData.personal_information_data.street_address_1,
+        address_2: formData.personal_information_data.street_address_2 || ' ',
+        aggregate_inclusive_purchase: formData.total_amount,
+        investor_number_purchased: formData.payment_information_data.account_number,
+        investor_total_purchase: formData.amount,
+        investor_legal_name: investor_legal_name,
         investor_address: app.user.get('address_1'),
         investor_city: app.user.get('city'),
         investor_code: app.user.get('zip_code'),
         investor_email: app.user.get('email'),
-        Investor_optional_address: app.user.get('address_2'),
+        Investor_optional_address: app.user.get('address_2') || ' ',
         investor_state: app.user.get('state'),
-        investor_number_purchased: $('#payment_information_data__account_number__0').val(),
-        issuer_email: '',
-        issuer_legal_name: '',
-        issuer_signer: '',
-        issuer_signer_title: '',
-        jurisdiction_of_organization: '',
-        listing_fee: '',
-        maximum_raise: '',
-        minimum_raise: '',
-        price_per_share: '',
-        registration_fee: '',
+        jurisdiction_of_organization: this.model.founding_state, 
+        maximum_raise: this.model.campaign.maximum_raise,
+        minimum_raise: this.model.campaign.minimum_raise,
+        price_per_share: this.model.campaign.price_per_share,
+        issuer_email: this.model.owner.email,
+        issuer_legal_name: issuer_legal_name,
+        issuer_signer: null,
+        issuer_signer_title: null,
       };
     },
-
-    currentAmountTip: 'amount-campaign',
 
     _success(data) {
       this.saveEsign(data);
@@ -828,6 +812,65 @@ module.exports = {
       this.$amount.popover('show');
 
       return true;
+    },
+
+    maxInvestmentsPerYear(annualIncome, netWorth, investedPastYear, investedOtherSites) {
+      let maxInvestmentsPerYear = (annualIncome >= 100 && netWorth >= 100)
+        ? Math.min(annualIncome, netWorth) * 0.1
+        : Math.min(annualIncome, netWorth) * 0.05;
+
+      maxInvestmentsPerYear = maxInvestmentsPerYear < 2 ? 2 : maxInvestmentsPerYear;
+
+      return Math.round((maxInvestmentsPerYear * 1000 - investedPastYear - investedOtherSites));
+    },
+
+    initMaxAllowedAmount() {
+      let annualIncome = this.user.annual_income;
+      let netWorth = this.user.net_worth;
+      let investedOnOtherSites = this.user.invested_on_other_sites;
+      let investedPastYear = this.user.invested_equity_past_year;
+
+      this._maxAllowedAmount = this.maxInvestmentsPerYear(annualIncome, netWorth,
+        investedPastYear, investedOnOtherSites);
+    },
+
+    getInt(value) {
+      return parseInt(value.replace(/\,/g, ''));
+    },
+
+    formatInt(value) {
+      return value.toLocaleString('en-US');
+    },
+
+    roundAmount(e) {
+      // e.preventDefault();
+
+      //revenue share
+      if (this.model.campaign.security_type == 1)
+        return;
+
+      let amount = this.getInt(e.target.value);
+      if (!amount)
+        return;
+
+      if (!this.validateAmount(amount))
+        return;
+
+      let pricePerShare = this.model.campaign.price_per_share;
+      if (!pricePerShare)
+        return;
+
+      let newAmount = Math.ceil(amount / pricePerShare) *  pricePerShare;
+
+      this.$amount.val(this.formatInt(newAmount));
+      this._updateTotalAmount();
+
+      if (newAmount > amount) {
+        this.$amount.data('contentselector', 'rounding');
+        this.$amount.popover('show');
+      }
+
+      // return false;
     },
 
     updateAmount(e) {
@@ -864,7 +907,9 @@ module.exports = {
     _updateTotalAmount() {
       // Here 10 is the flat rate;
       let totalAmount = this.getInt(this.$amount.val()) + 10;
-      this.$el.find('.total-investment-amount').text('$' + this.formatInt(totalAmount));
+      let formattedTotalAmount = '$' + this.formatInt(totalAmount)
+      this.$el.find('.total-investment-amount').text(formattedTotalAmount);
+      this.$el.find('[name=total_amount]').val(formattedTotalAmount);
 
     },
   }),

@@ -8,6 +8,7 @@ global.userModel = require('components/accountProfile/model.js');
 global.Urls = require('./jsreverse.js');
 global.googleAnalyticsId = 'UA-47199302-1';
 require('jquery-serializejson/jquery.serializejson.min.js');
+const validation = require('components/validation/validation.js');
 
 document.title = pageTitle;
 // require('sass/mixins_all.sass');
@@ -65,13 +66,7 @@ Backbone.View.prototype.assignLabels = function() {
 
 Backbone.View.prototype.checkForm = function() {
   if(app.getParams().check == '1') {
-    let data = $(e.target).closest('form').serializeJSON({ useIntKeysAsArrayIndex: true });
-    api.deleteEmptyNested.call(this, this.fields, data);
-    api.fixDateFields.call(this, this.fields, data);
-    api.fixMoneyFields.call(this, this.fields, data);
-    data = _.extend({}, this.model, data);
-
-    if (!validation.validate(this.fields, data, this)) {
+    if (!validation.validate(this.fields, this.model, this)) {
       _(validation.errors).each((errors, key) => {
         validation.invalidMsg(this, key, errors);
       });
