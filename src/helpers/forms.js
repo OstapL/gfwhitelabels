@@ -141,9 +141,12 @@ module.exports = {
           // this.undelegateEvents();
           $('.popover').popover('hide');
 
+          let defaultAction  = 1;
           if (typeof this._success == 'function') {
-            this._success(responseData, newData);
-          } else {
+            defaultAction = this._success(responseData, newData);
+          } 
+          
+          if(defaultAction == 1) {
             $('#content').scrollTo();
             this.undelegateEvents();
             app.routers.navigate(

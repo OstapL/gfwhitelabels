@@ -39,6 +39,15 @@ mixin comment(comment, level)
           li
             a(href="").link-1.link-like
               i.fa.fa-thumbs-up
+          li.pull-lg-right
+            a(href="#").link1.link-edit
+              i.fa.fa-pencil-square-o
+              | Edit
+          li.pull-lg-right
+            a(href="#").link1.link-delete
+              i.fa.fa-times
+              | Delete
+
 
     if comment.children && comment.children.length
       each childComment in comment.children
@@ -74,7 +83,7 @@ h2#ask.col-lg-12.dosis.text-uppercase.text-lg-center.text-xs-center.campaign-sub
     "children": []
   }, 1)
 
-  form.comment-form.form-section.new-comment.collapse
+  form.comment-form.form-section.edit-comment.collapse
     .col-lg-12.p-r-1.m-t-1
       textarea(placeholder="Type your text here").text-body.col-lg-12
     .col-lg-12.p-r-1.m-t-1text-xl-right

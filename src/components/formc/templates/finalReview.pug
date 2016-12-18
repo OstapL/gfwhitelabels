@@ -181,7 +181,7 @@ section.formc-review
         else
           p.text-xs-center.font-weight-bold 
             +frField('campaign.security_type', 'select') 
-            | Share Agreement Offered
+            |  Agreement Offered
         p.text-xs-center.font-weight-bold $
           +frField('campaign.minimum_increment', 'text')
           |  MINIMUM INVESTMENT
@@ -325,7 +325,10 @@ section.formc-review
               if values.campaign.minimum_raise == values.campaign.maximum_raise
                 | First Come First Served
               else
-                | Not Applicable
+                if values.campaign.security_type == 0
+                  | Not Applicable
+                else
+                  | First Come First Serve
           .row
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
               p.font-weight-bold Maximum amount of offering:
@@ -399,8 +402,8 @@ section.formc-review
             +editSelect('corporate_structure')
             |  (the “Company” also referred to as an “issuer"), is offering a Revenue Share Agreement similar to a promissory note in the form attached hereto as Exhibit D (each, a “Note” and collectively, the “
             u Notes
-            | ”) in increments of 
-            +editText('price_per_share')
+            | ”) minimum investment of 
+            +editText('minimum_increment')
             |   targeting a maximum aggregate offering price of $
             +editText('maximum_raise')
           p.pb10.text-indent The Company has established a minimum aggregate offering price of $ 
@@ -548,8 +551,6 @@ section.formc-review
                       +frField('formc.team_members[' + k + '].last_name', 'text')
                     td.text-xs-center
                       +frField('formc.team_members[' + k + '].start_date', 'text')
-                      br
-                      +frField('formc.team_members[' + k + '].board_service_end_date', 'text')
                     td.text-xs-center
                       +frField('formc.team_members[' + k + '].title', 'text')
                       br
