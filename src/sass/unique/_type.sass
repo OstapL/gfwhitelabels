@@ -84,7 +84,7 @@ h1
 		line-height: rem(24)
 h2
 	font-size: rem(24)
-	letter-spacing: rem(2.4)
+	letter-spacing: normal
 	margin-top: rem(50)
 	margin-bottom: rem(30)
 	.small-text
@@ -95,9 +95,14 @@ h2
 		padding-top: rem(5)
 		text-transform: initial
 		line-height: rem(14)
+	&.text-uppercase
+		letter-spacing: rem(2.4)
+	&.font-weight-bold
+		letter-spacing: rem(2.4)
+
 h3
 	font-size: rem(18)
-	letter-spacing: rem(1.8)
+	letter-spacing: normal
 	margin-top: rem(50)
 	margin-bottom: rem(25)
 	.small-text
@@ -108,9 +113,11 @@ h3
 		padding-top: rem(5)
 		text-transform: initial
 		line-height: rem(14)
+	&.font-weight-bold
+		letter-spacing: rem(1.8)
 h4
 	font-size: rem(14)
-	letter-spacing: rem(1.4)
+	letter-spacing: normal
 	.small-text
 		font-size: rem(11)
 		letter-spacing: rem(.25)
@@ -119,6 +126,8 @@ h4
 		padding-top: rem(5)
 		text-transform: initial
 		line-height: rem(14)
+	&.font-weight-bold
+		letter-spacing: rem(1.4)
 h5
 	font-size: rem(12)
 	letter-spacing: rem(1)
