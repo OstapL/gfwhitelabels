@@ -136,12 +136,12 @@ module.exports = {
       return this;
     },
 
-    saveEsign(responseData) {
+    saveEsign() {
       const reqUrl = global.esignServer + '/pdf-doc';
       const formData = this.getDocMetaData();
       const data = {
         type: 2,
-        esign: responseData.signature.full_name,
+        esign: formData.issuer_signer,
         meta_data: formData,
         template: 'formc/funding_portal_listing_agreement.pdf'
       };
@@ -157,25 +157,23 @@ module.exports = {
     },
 
     getDocMetaData () {
-      this.model.owner = this.model.owner || {};
-
-      const formData = app.user.formc;
-      const issuer_legal_name = this.model.owner.first_name + ' ' + this.model.owner.last_name;
+      const formData = this.$el.find('form').serializeJSON();
+      const issuer_legal_name = app.user.get('first_name') + ' ' + app.user.get('last_name');
       
       return {
         trans_percent: '6%',
+        nonrefundable_fees: '$50',
         registration_fee: '$500',
+        amendment_fee: '$200',
         commitment_date_x: this.getCurrentDate(),
-        zip_code: formData.zip_code,
-        address_1: formData.address_1,
-        address_2: formData.address_2,
-        issuer_email: this.issuer_email,
-        issuer_legal_name: formData.legal_issuer_name,
-        issuer_signer: formData.issuer_signer,
-        nonrefundable_fees: formData.nonrefundable_fees,
-        party_fees: formData.party_fees,
-        amendment_fee: formData.amendment_fee,
-        withdrawal_fee: formData.withdrawal_fee,
+        zip_code: app.user.get('zip_code'),
+        address_1: app.user.get(' address_1'),
+        address_2: app.user.get(' address_2'),
+        issuer_email: app.user.get('email'),
+        issuer_legal_name: issuer_legal_name,
+        issuer_signer: formData.full_name,
+        party_fees: '',
+        withdrawal_fee: '',
       };
     },
 
