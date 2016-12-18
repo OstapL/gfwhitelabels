@@ -774,7 +774,7 @@ module.exports = {
         price_per_share: this.model.campaign.price_per_share,
         issuer_email: this.model.owner.email,
         issuer_legal_name: issuer_legal_name,
-        issuer_signer: null,
+        issuer_signer: formData.signature.full_name,
         issuer_signer_title: null,
       };
     },
