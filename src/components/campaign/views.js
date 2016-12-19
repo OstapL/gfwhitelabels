@@ -445,10 +445,6 @@ module.exports = {
           throw 'Sorry, your amount if too high, please update your income or change amount’';
         }
 
-        this.$amount.data('contentselector', 'amount-ok');
-
-        this.$amount.popover('show');
-
         return true;
       };
 
@@ -552,13 +548,149 @@ module.exports = {
           return content;
         },
         trigger: 'manual',
+        delay: 50,
       }).popover('hide');
+    },
+
+    updateAmountPopover(contentSelector, force) {
+      let currentSelector = this.$amount.data('contentselector');
+
+      if (force || currentSelector !== 'rounding') {
+        this.$amount.data('contentselector', contentSelector);
+      }
+
+      this.$amount.popover('show');
     },
 
     triggerAmountChange(e) {
       setTimeout(() => {
         this.$amount.trigger('change');
-      }, 500);
+      }, 600);
+    },
+
+    validateAmount(amount) {
+      amount = Number(amount);
+      let min = this.model.campaign.minimum_increment;
+      let max = this._maxAllowedAmount;
+      if (amount < min) {
+        this.updateAmountPopover('minimum-increment', true);
+        return false;
+      }
+
+      if (amount > max) {
+        this.updateAmountPopover('amount-campaign', true);
+        $('.popover a.update-income-worth')
+          .off('click')
+          .on('click', (e) => {
+            this.$amount.popover('hide');
+          });
+
+        return false;
+      }
+
+      this.updateAmountPopover('amount-ok', true);
+
+      return true;
+    },
+
+    maxInvestmentsPerYear(annualIncome, netWorth, investedPastYear, investedOtherSites) {
+      let maxInvestmentsPerYear = (annualIncome >= 100 && netWorth >= 100)
+        ? Math.min(annualIncome, netWorth) * 0.1
+        : Math.min(annualIncome, netWorth) * 0.05;
+
+      maxInvestmentsPerYear = maxInvestmentsPerYear < 2 ? 2 : maxInvestmentsPerYear;
+
+      return Math.round((maxInvestmentsPerYear * 1000 - investedPastYear - investedOtherSites));
+    },
+
+    initMaxAllowedAmount() {
+      let annualIncome = this.user.annual_income;
+      let netWorth = this.user.net_worth;
+      let investedOnOtherSites = this.user.invested_on_other_sites;
+      let investedPastYear = this.user.invested_equity_past_year;
+
+      this._maxAllowedAmount = this.maxInvestmentsPerYear(annualIncome, netWorth,
+        investedPastYear, investedOnOtherSites);
+    },
+
+    getInt(value) {
+      return parseInt(value.replace(/\,/g, ''));
+    },
+
+    formatInt(value) {
+      return value.toLocaleString('en-US');
+    },
+
+    roundAmount(e) {
+      // e.preventDefault();
+
+      //revenue share
+      if (this.model.campaign.security_type == 1)
+        return;
+
+      let amount = this.getInt(e.target.value);
+      if (!amount)
+        return;
+
+      if (!this.validateAmount(amount))
+        return;
+
+      let pricePerShare = this.model.campaign.price_per_share;
+      if (!pricePerShare)
+        return;
+
+      let newAmount = Math.ceil(amount / pricePerShare) *  pricePerShare;
+
+      this.$amount.val(this.formatInt(newAmount));
+      this._updateTotalAmount();
+
+      if (newAmount > amount) {
+        this.updateAmountPopover('rounding', true);
+      }
+
+      // return false;
+    },
+
+    updateAmount(e) {
+
+      let amount = this.getInt(e.currentTarget.value);
+      if (!amount)
+        return;
+
+      e.currentTarget.value = this.formatInt(amount);
+
+      this.$amount.data('rounded', false);
+
+      this.validateAmount(amount);
+
+      this.updatePerks(amount);
+
+      this._updateTotalAmount();
+    },
+
+    updatePerks(amount) {
+      //update perks
+      let $targetPerk;
+      let $perks = this.$('.perk');
+      $perks.each((i, el) => {
+        if(parseInt(el.dataset.amount) <= amount) {
+          $targetPerk = $(el);
+          return false;
+        }
+      });
+
+      $perks.removeClass('active').find('i.fa.fa-check').hide();
+      if ($targetPerk)
+        $targetPerk.addClass('active').find('i.fa.fa-check').show();
+    },
+
+    _updateTotalAmount() {
+      // Here 10 is the flat rate;
+      let totalAmount = this.getInt(this.$amount.val()) + 10;
+      let formattedTotalAmount = '$' + this.formatInt(totalAmount)
+      this.$el.find('.total-investment-amount').text(formattedTotalAmount);
+      this.$el.find('[name=total_amount]').val(formattedTotalAmount);
+
     },
 
     hidePopover(e) {
@@ -783,135 +915,7 @@ module.exports = {
       this.saveEsign(data);
     },
 
-    validateAmount(amount) {
-      amount = Number(amount);
-      let min = this.model.campaign.minimum_increment;
-      let max = this._maxAllowedAmount;
-      if (amount < min) {
-        this.$amount.data('contentselector', 'minimum-increment');
-        this.$amount.popover('show');
-        return false;
-      }
-
-      if (amount > max) {
-        this.$amount.data('contentselector', 'amount-campaign');
-        this.$amount.popover('show');
-        $('.popover a.update-income-worth')
-          .off('click')
-          .on('click', (e) => {
-            $('#amount').popover('hide');
-          });
-
-        return false;
-      }
-
-      this.$amount.data('contentselector', 'amount-ok');
-
-      this.$amount.popover('show');
-
-      return true;
-    },
-
-    maxInvestmentsPerYear(annualIncome, netWorth, investedPastYear, investedOtherSites) {
-      let maxInvestmentsPerYear = (annualIncome >= 100 && netWorth >= 100)
-        ? Math.min(annualIncome, netWorth) * 0.1
-        : Math.min(annualIncome, netWorth) * 0.05;
-
-      maxInvestmentsPerYear = maxInvestmentsPerYear < 2 ? 2 : maxInvestmentsPerYear;
-
-      return Math.round((maxInvestmentsPerYear * 1000 - investedPastYear - investedOtherSites));
-    },
-
-    initMaxAllowedAmount() {
-      let annualIncome = this.user.annual_income;
-      let netWorth = this.user.net_worth;
-      let investedOnOtherSites = this.user.invested_on_other_sites;
-      let investedPastYear = this.user.invested_equity_past_year;
-
-      this._maxAllowedAmount = this.maxInvestmentsPerYear(annualIncome, netWorth,
-        investedPastYear, investedOnOtherSites);
-    },
-
-    getInt(value) {
-      return parseInt(value.replace(/\,/g, ''));
-    },
-
-    formatInt(value) {
-      return value.toLocaleString('en-US');
-    },
-
-    roundAmount(e) {
-      // e.preventDefault();
-
-      //revenue share
-      if (this.model.campaign.security_type == 1)
-        return;
-
-      let amount = this.getInt(e.target.value);
-      if (!amount)
-        return;
-
-      if (!this.validateAmount(amount))
-        return;
-
-      let pricePerShare = this.model.campaign.price_per_share;
-      if (!pricePerShare)
-        return;
-
-      let newAmount = Math.ceil(amount / pricePerShare) *  pricePerShare;
-
-      this.$amount.val(this.formatInt(newAmount));
-      this._updateTotalAmount();
-
-      if (newAmount > amount) {
-        this.$amount.data('contentselector', 'rounding');
-        this.$amount.popover('show');
-      }
-
-      // return false;
-    },
-
-    updateAmount(e) {
-
-      let amount = this.getInt(e.currentTarget.value);
-      if (!amount)
-        return;
-
-      e.currentTarget.value = this.formatInt(amount);
-
-      this.validateAmount(amount);
-
-      this.updatePerks(amount);
-
-      this._updateTotalAmount();
-    },
-
-    updatePerks(amount) {
-      //update perks
-      let $targetPerk;
-      let $perks = this.$('.perk');
-      $perks.each((i, el) => {
-        if(parseInt(el.dataset.amount) <= amount) {
-          $targetPerk = $(el);
-          return false;
-        }
-      });
-
-      $perks.removeClass('active').find('i.fa.fa-check').hide();
-      if ($targetPerk)
-        $targetPerk.addClass('active').find('i.fa.fa-check').show();
-    },
-
-    _updateTotalAmount() {
-      // Here 10 is the flat rate;
-      let totalAmount = this.getInt(this.$amount.val()) + 10;
-      let formattedTotalAmount = '$' + this.formatInt(totalAmount)
-      this.$el.find('.total-investment-amount').text(formattedTotalAmount);
-      this.$el.find('[name=total_amount]').val(formattedTotalAmount);
-
-    },
   }),
-
 
   investmentThankYou: Backbone.View.extend({
     template: require('./templates/thankYou.pug'),
