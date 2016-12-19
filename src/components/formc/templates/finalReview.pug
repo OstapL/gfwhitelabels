@@ -237,16 +237,17 @@ section.formc-review
               p.font-weight-bold Voting rights:
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
               p No
-          .row
-            .col-lg-6.col-md-6.col-sm-6.col-xs-12
-              p.font-weight-bold Minimum target number of securities being offered:
-            .col-lg-6.col-md-6.col-sm-6.col-xs-12
-              - pug_html += Math.round(values.campaign.minimum_raise / values.campaign.price_per_share); 
-          .row
-            .col-lg-6.col-md-6.col-sm-6.col-xs-12
-              p.font-weight-bold Price of security:
-            .col-lg-6.col-md-6.col-sm-6.col-xs-12
-              +frField('campaign.price_per_share', 'text')
+          if values.campaign.security_type == 0
+            .row
+              .col-lg-6.col-md-6.col-sm-6.col-xs-12
+                p.font-weight-bold Minimum target number of securities being offered:
+              .col-lg-6.col-md-6.col-sm-6.col-xs-12
+                | #{ Math.round(values.campaign.minimum_raise / values.campaign.price_per_share) }
+            .row
+              .col-lg-6.col-md-6.col-sm-6.col-xs-12
+                p.font-weight-bold Price of security:
+              .col-lg-6.col-md-6.col-sm-6.col-xs-12
+                +frField('campaign.price_per_share', 'text')
           .row
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
               p.font-weight-bold Minimum target amount of offering:
@@ -280,7 +281,8 @@ section.formc-review
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
               p.font-weight-bold Deadline to reach target amount:
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
-              +frField('campaign.expiration_date', 'text')
+              +frField('campaign.length_days', 'select')
+              | from filing date
 
       // page 3
       section.page-formc-review.m-t-1
