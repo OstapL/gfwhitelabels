@@ -4,26 +4,27 @@ module.exports = Backbone.Router.extend({
         'pg/:name': 'pagePG',
     },
 
+    execute: function (callback, args, name) {
+        // ga('send', 'pageview', "/" + Backbone.history.getPath());
+        if (callback) callback.apply(this, args)
+    },
+
     mainPage(id) {
         require.ensure([], () => {
             const model = require('components/campaign/models.js');
             const template = require('templates/mainPage.pug');
 
             const campaigns = new model.collection();
-            campaigns.fetch({
-                data: {limit: 6},
-                success: (collection, response, options) => {
-                    var html = template({
-                        campaigns: collection.toJSON(),
-                        collection: collection,
-                        Urls: Urls,
-                    });
-                    app.cache[window.location.pathname] = html;
-                    $('#content').html(html);
-                    $('body').scrollTo();
-                    app.hideLoading();
-                }
+          api.makeCacheRequest(raiseCapitalServer + '?limit=6').then((data) => {
+            var html = template({
+                collection: data,
+                Urls: Urls,
             });
+            app.cache[window.location.pathname] = html;
+            $('#content').html(html);
+            $('body').scrollTo();
+            app.hideLoading();
+          });
 
         });
     },
@@ -39,6 +40,7 @@ module.exports = Backbone.Router.extend({
             $('body').scrollTo();
             app.hideLoading();
             $('.show-input').on('click', function(event) {
+              event.preventDefault();
               if ($(event.target).hasClass('noactive')) {
                   return false;
                 }
@@ -70,7 +72,7 @@ module.exports = Backbone.Router.extend({
                 $this.hide();
                 $span.fadeIn();
             });
-            if (['education', 'terms_of_use', 'privacy_policy'].indexOf(name) != -1) {
+            if (['education', 'terms_of_use', 'privacy_policy','formc_review_first'].indexOf(name) != -1) {
                 require('components/sticky-kit/js/sticky-kit.js');
                 $('.sticky-side-menu').stick_in_parent()
                 .on('sticky_kit:bottom', function(e) {
@@ -94,7 +96,7 @@ module.exports = Backbone.Router.extend({
             $('body').scrollTo();
             app.hideLoading();
             
-            if (['education', 'terms_of_use', 'privacy_policy'].indexOf(name) != -1) {
+            if (['education', 'terms_of_use', 'privacy_policy', 'advertising'].indexOf(name) != -1) {
                 require('components/sticky-kit/js/sticky-kit.js');
                 $('.sticky-side-menu').stick_in_parent()
                 .on('sticky_kit:bottom', function(e) {

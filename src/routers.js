@@ -7,6 +7,7 @@ const raiseFunds = require('components/raiseFunds/route');
 const anonymousAccount = require('components/anonymousAccount/route');
 const accountProfile = require('components/accountProfile/route');
 const establishedBusinessCalc = require('components/establishedBusinessCalculator/route');
+const formc = require('components/formc/route');
 
 Backbone.Router.execute = function (callback, args, name) {
   console.log('asdfasfdasd ', callback, args, name);
@@ -65,7 +66,11 @@ let appRoutes = Backbone.Router.extend({
     });
     let r9  = new establishedBusinessCalc;
     _.each(r9.routes, (funcName, path) => {
-      this.routes[path] = r8[funcName];
+      this.routes[path] = r9[funcName];
+    });
+    let r10  = new formc;
+    _.each(r10.routes, (funcName, path) => {
+      this.routes[path] = r10[funcName];
     });
   },
 

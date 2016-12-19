@@ -1,9 +1,16 @@
 const formatHelper = require('helpers/formatHelper');
+const textHelper = require('helpers/textHelper');
 
-module.exports = { 
+let countries = {};
+_.each(require('helpers/countries.json'), (c) => { countries[c.code] = c.name; });
+
+module.exports = {
   list: Backbone.View.extend({
     el: '#content',
     template: require('./templates/list.pug'),
+    events: {
+      'change select.orderby': 'orderby',
+    },
     initialize(options) {
       this.collection = options.collection;
     },
@@ -18,7 +25,6 @@ module.exports = {
       this.$el.append(
         this.template({
           serverUrl: serverUrl,
-          campaigns: this.collection.toJSON(),
           collection: this.collection,
         })
       );
@@ -26,14 +32,21 @@ module.exports = {
       //selectPicker('.selectpicker');
       return this;
     },
+
+    orderby(e) {
+      let $target = $(e.target);
+      app.routers.navigate('/companies?page=1&orderby=' + $target.val(), { trigger: true });
+    },
   }),
 
   detail: Backbone.View.extend({
+    el: '#content',
     template: require('./templates/detail.pug'),
     events: {
       'click .tabs-scroll .nav .nav-link': 'smoothScroll',
-      'click .list-group-item-action': 'toggleActiveAccordionTab',
-      'click .email-share': 'sharWithEmail',
+      'hide.bs.collapse .panel': 'onCollapse',
+      'show.bs.collapse .panel': 'onCollapse',
+      'click .email-share': 'shareWithEmail',
       'click .linkedin-share': 'shareOnLinkedin',
       'click .facebook-share': 'shareOnFacebook',
       'click .twitter-share': 'shareOnTwitter',
@@ -45,12 +58,26 @@ module.exports = {
       'click .more-less': 'showMore',
       'hidden.bs.collapse #hidden-article-press' :'onArticlePressCollapse',
       'shown.bs.collapse #hidden-article-press' :'onArticlePressCollapse',
-      'submit .comment-form': 'submitComment',
       'click .submit_form': 'submitCampaign',
     },
+
+    onCollapse (e) {
+      let $elem = $(e.currentTarget);
+      let $icon = $elem.find('.fa');
+      let $a = $elem.find('a.list-group-item-action');
+      if (e.type === 'show') {
+        $a.addClass('active');
+        $icon.removeClass('fa-angle-down').addClass('fa-angle-up');
+      } else if (e.type === 'hide') {
+        $a.removeClass('active');
+        $icon.removeClass('fa-angle-up').addClass('fa-angle-down');
+      }
+    },
+
     initialize(options) {
       $(document).off("scroll", this.onScrollListener);
       $(document).on("scroll", this.onScrollListener);
+
       let params = app.getParams();
       this.edit = false;
       if (params.preview == '1' && this.model.owner == app.user.get('id')) {
@@ -59,12 +86,13 @@ module.exports = {
         this.previous = params.previous;
       }
       this.preview = params.preview ? true : false;
+
     },
 
     submitCampaign(e) {
 
       api.makeRequest(
-        serverUrl + '/api/campaign/general_information/' + this.model.id,
+        raiseCapitalServer + '/company/' + this.model.id + '/edit',
         'GET'
       ).then(function(data) {
         if(
@@ -146,21 +174,6 @@ module.exports = {
       });
     },
 
-    toggleActiveAccordionTab(e) {
-      let $elem = $(e.target);
-      let $icon = $elem.find('.fa');
-
-      if ($elem.is('.active')) {
-        $icon.removeClass('fa-angle-up').addClass('fa-angle-down');
-      } else {
-        // remove active state of all other panels
-        $elem.closest('.custom-accordion').find('.list-group-item-action').removeClass('active')
-          .find('.fa').removeClass('fa-angle-up').addClass('fa-angle-down');
-          $icon.removeClass('fa-angle-down').addClass('fa-angle-up');
-      }
-      $elem.toggleClass('active');
-    },
-
     onScrollListener() {
       var scrollPos = $(window).scrollTop(),
       $navBar = $('.navbar.navbar-default'),
@@ -168,6 +181,9 @@ module.exports = {
       $link.each(function () {
         var currLink = $(this);
         var refElement = $(currLink.attr("href")).closest('section');
+        if (!refElement || !refElement.length)
+          return;
+
         if (refElement.position().top - $navBar.height() <= scrollPos && refElement.position().top + refElement.height() > scrollPos) {
           $link.removeClass("active");
           currLink.addClass("active");
@@ -178,11 +194,9 @@ module.exports = {
       });
     },
 
-    sharWithEmail (e) {
+    shareWithEmail (e) {
       event.preventDefault();
-      // Check out COMPANY NAME's fundraise on GrowthFountain
-      let companyName = this.model.company.name;
-      let text = "Check out " + companyName + "'s fundraise on GrowthFountain";
+      let text = "Check out " + (this.model.short_name || this.model.name) + "'s fundraise on GrowthFountain";
       window.open("mailto:?subject=" + text + "&body=" + text + "%0D%0A" + window.location.href);
     },
 
@@ -191,27 +205,25 @@ module.exports = {
       FB.ui({
         method: 'share',
         href: window.location.href,
-        caption: this.model.company.tagline,
-        description: this.model.company.description,
-        title: this.model.company.name,
-        picture: (this.model.header_image_data ? this.model.header_image_data.url : null),
+        caption: this.model.tagline,
+        description: this.model.description,
+        title: 'Check out ' + (this.model.short_name || this.model.name) + "'s fundraise on GrowthFountain.com",
+        picture: (this.model.campaign.header_image_data.url ? this.model.campaign.header_image_data.url : null),
       }, function(response){});
     },
 
     shareOnLinkedin(event) {
       event.preventDefault();
       window.open(encodeURI('https://www.linkedin.com/shareArticle?mini=true&url=' + window.location.href +
-            '&title=' + this.model.company.name +
-            '&summary=' + this.model.company.description +
-            '&source=Growth Fountain'),'Growth Fountain Campaingn','width=605,height=545');
+        '&title=' + 'Check out ' + (this.model.short_name || this.model.name) + "'s fundraise on GrowthFountain.com" +
+            '&summary=' + this.model.description +
+            '&source=Growth Fountain'),'Growth Fountain Campaign','width=605,height=545');
     },
 
     shareOnTwitter(event) {
       event.preventDefault();
       window.open(encodeURI('https://twitter.com/share?url=' + window.location.href +
-            '&via=' + 'growthfountain' +
-            '&hashtags=investment,fundraising' +
-            '&text=Check out '),'Growth Fountain Campaingn','width=550,height=420');
+            '&text=Check out ' + (this.model.short_name || this.model.name) + "'s fundraise on @growthfountain "),'Growth Fountain Campaingn','width=550,height=420');
     },
 
     render() {
@@ -228,6 +240,7 @@ module.exports = {
           edit: this.edit,
           previous: this.previous,
           preview: this.preview,
+          textHelper: textHelper,
         })
       );
 
@@ -288,21 +301,10 @@ module.exports = {
           stickyToggle(sticky, stickyWrapper, $(window));
         });
 
-        this.commentView = require('components/comment/views.js');
+        this.initComments();
 
-        $('#ask').after(
-          new this.commentView.form().getHtml({model: {}})
-        );
-
-        var a1 = api.makeCacheRequest(Urls['comment-list']() + '?company=' + this.model.company.id).
-          then((comments) => {
-            let commentList = new this.commentView.list({
-              el: '.comments',
-              model: this.model.company,
-              collection: comments,
-            }).render();
-          });
       }, 100);
+
       this.$el.find('.perks .col-xl-4 p').equalHeights();
       this.$el.find('.team .auto-height').equalHeights();
       this.$el.find('.card-inverse p').equalHeights();
@@ -338,92 +340,387 @@ module.exports = {
       return this;
     },
 
+    initComments() {
+      const View = require('components/comment/views.js');
+      const urlComments = commentsServer + '/company/' + this.model.id;
+      let optionsR = api.makeRequest(urlComments, 'OPTIONS');
+      let dataR = api.makeRequest(urlComments);
+
+      $.when(optionsR, dataR).done((options, data) => {
+        let commentsModel = {
+          id: this.model.id,
+          data: [
+            {
+              "uid": "c8e5a3ab-3c8a-43a8-8735-b71cb62d9b5a",
+              "role": "GET FROM USER titles field",
+              "message": "Hi, All!!1",
+              "user_id": 26,
+              "children": []
+            },
+            {
+              "uid": "cf7eefd6-76e5-4fe3-aff2-892f4a9e5f95",
+              "role": "GET FROM USER titles field",
+              "message": "Hi, Ben!!1",
+              "user_id": 26,
+              "children": [
+                {
+                  "uid": "2f0656e3-6893-4768-87fb-6f7d47298412",
+                  "role": "GET FROM USER titles field",
+                  "message": "Hi, All & Ben!!1",
+                  "user_id": 26,
+                  "children": [{
+                    "uid": "2f0656e3-6893-4768-87fb-6f7d47298412",
+                    "role": "GET FROM USER titles field",
+                    "message": "Finally!",
+                    "user_id": 1,
+                    "children": []
+                  }]
+                }
+              ]
+            }
+          ],
+          count: 2,
+        };
+        data[0].id = this.model.id;
+
+        let comments = new View.comments({
+          // model: commentsModel,
+          model: data[0],
+          fields: options[0].fields,
+        });
+        comments.render();
+      });
+    },
+
     readMore(e) {
       e.preventDefault();
       $(e.target).parent().addClass('show-more-detail');
     },
 
-    _commentSuccess(data) {
-      this._success = null;
-      this.urlRoot = null;
-      if (data.parent) { 
-        $('#comment_' + data.parent).after(
-          new this.commentView.detail().getHtml({
-            model: data,
-            company: this.model.company,
-            app: app,
-          })
-        );
-      } else {
-        $('#comment_' + data.parent).html(
-          new this.commentView.detail().getHtml({
-            company: this.model.company,
-            model: data,
-            app: app,
-          })
-        );
-      }
-      this.$el.find('.comment-form-div').remove();
-      app.hideLoading();
-      app.showLoading = this._showLoading;
-    },
-
-    checkResponse(e) {
-      e.preventDefault();
-      this.$el.find('.comment-form-div').remove();
-      var $el = $(e.currentTarget);
-      $el.parents('.comment').after(
-        new this.commentView.form({
-        }).getHtml({
-          model: {parent: e.currentTarget.dataset.id},
-          company: this.model.company,
-          app: app,
-        })
-      );
-    },
-
-    submitComment(e) {
-      e.preventDefault();
-      var data = $(e.target).serializeJSON();
-      let model = new Backbone.Model();
-      model.urlRoot = serverUrl + Urls['comment-list']();
-      data['company'] = this.model.company.id;
-      model.set(data)
-      if (model.isValid(true)) {
-        model.save().
-          then((data) => {
-            this.$el.find('.alert-warning').remove();
-            this._commentSuccess(data);
-          }).
-          fail((xhr, status, text) => {
-            api.errorAction(this, xhr, status, text, this.fields);
-          });
-      } else {
-        if (this.$('.alert').length) {
-          $('#content').scrollTo();
-        } else {
-          this.$el.find('.has-error').scrollTo();
-        }
-      }
-    }
   }),
 
   investment: Backbone.View.extend({
+    el: '#content',
     template: require('./templates/investment.pug'),
-    urlRoot: serverUrl + Urls['investment_list'](),
+    urlRoot: investmentServer + '/',
+    doNotExtendModel: true,
     events: {
-      'submit form': api.submitAction,
-      'keyup #amount': 'amountUpdate',
-      'keyup #zip_code': 'changeZipCode',
-      'click .update-location': 'updateLocation'
+      'submit form.invest_form': 'submit',
+      'keyup #amount': 'updateAmount',
+      'change #amount': 'roundAmount',
+      'focusout #amount': 'triggerAmountChange',
+      'keyup .us-fields :input[name*=zip_code]': 'changeZipCode',
+      'click .update-location': 'updateLocation',
+      'click .link-2': 'openPdf',
+      'change .country-select': 'changeCountry',
+      'change #payment_information_type': 'changePaymentType',
+      'keyup .typed-name': 'copyToSignature',
+      'keyup #annual_income,#net_worth': 'updateLimitInModal',
+      'click button.submit-income-worth': 'updateIncomeWorth',
+      'click': 'hidePopover',
     },
+
     initialize(options) {
-      this.campaignModel = options.campaignModel;
       this.fields = options.fields;
+      this.user = options.user;
+      this.user.account_number_re = this.user.account_number;
+      this.fields.payment_information_type.validate.choices = {
+        0: 'Echeck (ACH)',
+        1: 'Check',
+        2: 'Wire',
+      };
+
+      this.fields.payment_information_data.schema.account_number_re = { required: false };
+      this.fields.personal_information_data.schema.phone = { required: true };
+
+      const validateAmount = (amount) => {
+        amount = Number(amount);
+        let min = this.model.campaign.minimum_increment;
+        let max = this._maxAllowedAmount;
+
+        if (amount < min) {
+          throw 'Sorry, minimum investment is $' + min;
+        }
+
+        if (amount > max) {
+          throw 'Sorry, your amount if too high, please update your income or change amount’';
+        }
+
+        this.$amount.data('contentselector', 'amount-ok');
+
+        this.$amount.popover('show');
+
+        return true;
+      };
+
+      this.fields.amount.fn = function (value, fn, attr, model, computed) {
+        return validateAmount(this.amount);
+      };
+
+      this.model.campaign.expiration_date = new Date(this.model.campaign.expiration_date);
+
+      this.labels = {
+        personal_information_data: {
+          street_address_1: 'Street Address 1',
+          street_address_2: 'Street Address 2',
+          zip_code: 'Zip Code',
+          city: 'City',
+          phone: 'Phone',
+        },
+        payment_information_data: {
+          name_on_bank_account: 'Name On Bank Account',
+          account_number: 'Account Number',
+          account_number_re: 'Account Number Again',
+          routing_number: 'Routing Number',
+        },
+        payment_information_type: 'I Want to Pay Using',
+        amount: 'Amount',
+        fee: 'Fee',
+        is_reviewed_educational_material: `I confirm and represent that (a) I have reviewed
+          the educational material that has been made available on this website, (b) I understand
+          that the entire amount of my investment may be lost and (c) I am in a
+          financial condition to bear the loss of the investment and (d) I represent that
+          I have not exceeded my investment limitations.`,
+        is_understand_restrictions_to_cancel_investment: `I understand that there are restrictions
+          on my ability to cancel an investment commitment and obtain a return of my investment.`,
+        is_understand_difficult_to_resell_purchashed: `I understand that it may be difficult to
+          resell securities purchased on GrowthFountain.`,
+        is_understand_investing_is_risky: `I understand that investing in start-ups and small
+          businesses listed on GrowthFountain is very risky, and that I should not invest any
+          funds unless I can afford to lose my entire investment.`,
+        is_understand_securities_related: `I understand that GrowthFountain performs all securities
+          related activities. I further understand that DCU (Digital Federal Credit Union) (a) does
+          not participate in the selection or review of any issuers, (b) does not have any responsibility
+          for the accuracy or completeness of any information provided by any issuer and (c) does not provide
+          any investment advice or recommendations.`,
+      };
+
+      this.assignLabels();
+
+      this.getCityStateByZipCode = require("helpers/getSityStateByZipCode");
+      this.usaStates = require("helpers/usa-states");
+
+      this.initMaxAllowedAmount();
+      this.amountTimeout = null;
+    },
+
+    render() {
+      this.$el.html(
+        this.template({
+          serverUrl: serverUrl,
+          Urls: Urls,
+          fields: this.fields,
+          values: this.model,
+          user: this.user,
+          states: this.usaStates,
+          countries: countries,
+        })
+      );
+
+      this.initAmountPopover();
+
+      $('#income_worth_modal').on('hidden.bs.modal', () => {
+        this.$amount.keyup();
+      });
+
+      $('span.current-limit').text(this._maxAllowedAmount.toLocaleString('en-US'));
+
+      return this;
+    },
+
+    initAmountPopover() {
+      this.$amount = this.$el.find('#amount');
+      this.$amount.data('contentselector', 'amount-campaign');
+      this.$amount.data('max', this._maxAllowedAmount);
+
+      this.$amount.popover({
+        placement(context, src) {
+          return 'top';
+        },
+        container: '#content',
+        html: true,
+        content(){
+          let $this = $(this);
+          let currentTip = $this.data('contentselector');
+          let max = $this.data('max').toLocaleString('en-US');
+
+          var content = $('.invest_form .popover-content-' + currentTip).html();
+
+          if (currentTip == 'amount-ok' || currentTip == 'amount-campaign') {
+            content = content.replace(/\:amount/g, max);
+          }
+
+          return content;
+        },
+        trigger: 'manual',
+      }).popover('hide');
+    },
+
+    triggerAmountChange(e) {
+      setTimeout(() => {
+        this.$amount.trigger('change');
+      }, 500);
+    },
+
+    hidePopover(e) {
+      if (e.target == this.$amount[0])
+        return;
+
+      this.$amount.popover('hide');
+    },
+
+    getSuccessUrl(data) {
+      return investmentServer + '/' + data.id + '/invest-thanks';
+    },
+
+    updateLimitInModal(e) {
+      let annualIncome = Number(this.$('#annual_income').val().replace(/\,/g, '')) || 0,
+          netWorth = Number(this.$('#net_worth').val().replace(/\,/g, '')) || 0;
+
+
+      let investedOnOtherSites = this.user.invested_on_other_sites;
+      let investedPastYear = this.user.invested_equity_past_year;
+
+      this.$('#annual_income').val(annualIncome.toLocaleString('en-US'));
+      this.$('#net_worth').val(netWorth.toLocaleString('en-US'));
+
+      this.$('span.current-limit').text(
+        this.maxInvestmentsPerYear(annualIncome / 1000, netWorth / 1000, investedPastYear, investedOnOtherSites)
+          .toLocaleString('en-US')
+      );
+    },
+
+    updateIncomeWorth(e) {
+      let netWorth = $('#net_worth')
+        .val()
+        .trim()
+        .replace(/\,/g, '')
+        / 1000;
+
+      let annualIncome = $('#annual_income')
+        .val()
+        .trim()
+        .replace(/\,/g, '') / 1000;
+
+      let data = {
+        net_worth: netWorth,
+        annual_income: annualIncome
+      };
+
+      api.makeRequest(authServer + '/rest-auth/data', 'PATCH', data).done((data) => {
+        this.user.net_worth = netWorth;
+        this.user.annual_income = annualIncome;
+
+        this.initMaxAllowedAmount();
+        $('span.current-limit').text(this._maxAllowedAmount.toLocaleString('en-US'));
+        this.$amount.data('max', this._maxAllowedAmount);
+
+        this.$amount.keyup();
+      }).fail((xhr, status, text) => {
+        alert('Update failed. Please try again!');
+      });
+    },
+
+    copyToSignature(e) {
+      this.$('.signature').text($(e.target).val());
+    },
+
+    changePaymentType(e) {
+      let val = $(e.target).val();
+      this.$('.payment-fields').hide();
+      if (val == 0) {
+        $('.echeck-fields').show();
+      } else if (val == 1) {
+        $('.check-fields').show();
+      } else if (val == 2) {
+        $('.wire-fields').show();
+      }
+    },
+
+    changeCountry(e) {
+      let val = $(e.target).val();
+      if (val == 'US') {
+        $('.us-fields').show().find(':input').prop('disabled', false);
+        $('.other-countries-fields').hide().find(':input').prop('disabled', true);
+      } else {
+        $('.us-fields').hide().find(':input').prop('disabled', true);
+        $('.other-countries-fields').show().find(':input').prop('disabled', false);
+      }
+    },
+
+    submit(e) {
+      e.preventDefault();
+
+      let data = $(e.target).serializeJSON({ useIntKeysAsArrayIndex: true });
+      data.amount = data.amount.replace(/\,/g, '');
+      if(data['payment_information_type'] == '1' || data['payment_information_type'] == 2) {
+        delete data['payment_information_data'];
+        // Temp solution !
+        delete this.fields.payment_information_data;
+      }
+      api.submitAction.call(this, e, data);
+    },
+
+    getSuccessUrl(data) {
+      return data.id + '/invest-thanks';
+    },
+
+    saveEsign(responseData) {
+      const reqUrl = global.esignServer + '/pdf-doc';
+      const successRoute = this.getSuccessUrl(responseData);
+      const formData = this.getDocMetaData();
+      const data = {
+        type: 1,
+        esign: responseData.signature.full_name,
+        meta_data: formData,
+        template: [
+          this.getSubscriptionAgreementPath(),
+          'invest/participation_agreement.pdf'
+        ]
+      };
+
+      $.post(reqUrl, data)
+      .done( () => {
+        $('#content').scrollTo();
+        this.undelegateEvents();
+        app.routers.navigate(successRoute, {
+            trigger: true,
+            replace: false
+        });
+      })
+      .fail( (err) => console.log(err));
+    },
+
+    openPdf (e) {
+      var pathToDoc = e.target.dataset.path;
+      var data = this.getDocMetaData();
+      const isSubscriptionAgreement = pathToDoc.indexOf('subscription_agreement');
+      
+      if (isSubscriptionAgreement !== -1) {
+        pathToDoc = global.esignServer + '/pdf-doc/';
+        pathToDoc += this.getSubscriptionAgreementPath();
+      }
+      
+      e.target.href = pathToDoc + '?' + $.param(data);
+    },
+
+    getSubscriptionAgreementPath () {
+      return this.model.campaign.security_type === 0 ?
+      'invest/subscription_agreement_common_stok.pdf' :
+      'invest/subscription_agreement_revenue_share.pdf';
+    },
+
+    getCurrentDate () {
+        const date = new Date();
+        return date.getMonth() + '/' + date.getDate() + '/' + date.getFullYear();
     },
 
     updateLocation(e) {
-      this.$('.js-city-state').text(this.$('.js-city').val() + ', ' + this.$('.js-state').val());
+      let city = this.$('.js-city').val();
+      let state = this.$('.js-state').val();
+      this.$('.js-city-state').text(city + ', ' + state);
+      this.$('.us-fields input[name*=city]').val(city);
+      this.$('.us-fields input[name*=state]').val(state);
     },
 
     changeZipCode(e) {
@@ -435,71 +732,193 @@ module.exports = {
         // this.zipCodeField.closest('div').find('.help-block').remove();
         if (success) {
           this.$('.js-city-state').text(`${city}, ${state}`);
-          // this.$('#city').val(city);
           this.$('.js-city').val(city);
-          // this.$('#state').val(city);
           this.$('.js-state').val(state);
-
+          this.$('.us-fields input[name*=city]').val(city);
+          this.$('.us-fields input[name*=state]').val(state);
         } else {
           console.log("error");
         }
       });
     },
 
-    render() {
-      this.getCityStateByZipCode = require("helpers/getSityStateByZipCode");
-      this.usaStates = require("helpers/usa-states");
-      this.$el.html(
-          this.template({
-            serverUrl: serverUrl,
-            Urls: Urls,
-            fields: this.fields,
-            campaignModel: this.campaignModel,
-            campaign: this.campaignModel.toJSON(),
-            user: app.user.toJSON(),
-            states: this.usaStates
-          })
-          );
-      return this;
+    getDocMetaData () {
+      this.model.owner = this.model.owner || {};
+
+      const formData = $('form.invest_form').serializeJSON();
+      const issuer_legal_name = this.model.owner.first_name + ' ' + this.model.owner.last_name;
+      const investor_legal_name = formData.personal_information_data.first_name + ' ' + formData.personal_information_data.last_name;
+      return {
+        fees_to_investor: 10,
+        trans_percent: '6%',
+        listing_fee: '$500',
+        registration_fee: '$500',
+        Commitment_Date_X: this.getCurrentDate(),
+        city: formData.personal_information_data.city,
+        state: formData.personal_information_data.state,
+        zip_code: formData.personal_information_data.zip_code,
+        address_1: formData.personal_information_data.street_address_1,
+        address_2: formData.personal_information_data.street_address_2 || ' ',
+        aggregate_inclusive_purchase: formData.total_amount,
+        investor_number_purchased: formData.payment_information_data.account_number,
+        investor_total_purchase: formData.amount,
+        investor_legal_name: investor_legal_name,
+        investor_address: app.user.get('address_1'),
+        investor_city: app.user.get('city'),
+        investor_code: app.user.get('zip_code'),
+        investor_email: app.user.get('email'),
+        Investor_optional_address: app.user.get('address_2') || ' ',
+        investor_state: app.user.get('state'),
+        jurisdiction_of_organization: this.model.founding_state, 
+        maximum_raise: this.model.campaign.maximum_raise,
+        minimum_raise: this.model.campaign.minimum_raise,
+        price_per_share: this.model.campaign.price_per_share,
+        issuer_email: this.model.owner.email,
+        issuer_legal_name: issuer_legal_name,
+        issuer_signer: formData.signature.full_name,
+        issuer_signer_title: null,
+      };
     },
 
-    amountUpdate(e) {
-      var amount = parseInt(e.currentTarget.value);
-      if(amount >= 5000) {
+    _success(data) {
+      this.saveEsign(data);
+    },
 
-        $('#amount').popover({
-          // trigger: 'focus',
-          placement(context, src) {
-            $(context).addClass('amount-popover');
-            return 'top';
-          },
-          html: true,
-          content(){
-            var content = $('.invest_form').find('.popover-content-amount-campaign').html();
-            return content;
-          }
-        });
-
-          $('#amount').popover('show');
-        } else {
-          $('#amount').popover('dispose');
-        }
-
-        this.$('.perk').each((i, el) => {
-          if(parseInt(el.dataset.from) <= amount) {
-            $('.perk').removeClass('active');
-            $('.perk .fa-check').remove();
-            el.classList.add('active');
-            $(el).find('.list-group-item-heading').append('<i class="fa fa-check"></i>');
-          }
-        });
+    validateAmount(amount) {
+      amount = Number(amount);
+      let min = this.model.campaign.minimum_increment;
+      let max = this._maxAllowedAmount;
+      if (amount < min) {
+        this.$amount.data('contentselector', 'minimum-increment');
+        this.$amount.popover('show');
+        return false;
       }
+
+      if (amount > max) {
+        this.$amount.data('contentselector', 'amount-campaign');
+        this.$amount.popover('show');
+        $('.popover a.update-income-worth')
+          .off('click')
+          .on('click', (e) => {
+            $('#amount').popover('hide');
+          });
+
+        return false;
+      }
+
+      this.$amount.data('contentselector', 'amount-ok');
+
+      this.$amount.popover('show');
+
+      return true;
+    },
+
+    maxInvestmentsPerYear(annualIncome, netWorth, investedPastYear, investedOtherSites) {
+      let maxInvestmentsPerYear = (annualIncome >= 100 && netWorth >= 100)
+        ? Math.min(annualIncome, netWorth) * 0.1
+        : Math.min(annualIncome, netWorth) * 0.05;
+
+      maxInvestmentsPerYear = maxInvestmentsPerYear < 2 ? 2 : maxInvestmentsPerYear;
+
+      return Math.round((maxInvestmentsPerYear * 1000 - investedPastYear - investedOtherSites));
+    },
+
+    initMaxAllowedAmount() {
+      let annualIncome = this.user.annual_income;
+      let netWorth = this.user.net_worth;
+      let investedOnOtherSites = this.user.invested_on_other_sites;
+      let investedPastYear = this.user.invested_equity_past_year;
+
+      this._maxAllowedAmount = this.maxInvestmentsPerYear(annualIncome, netWorth,
+        investedPastYear, investedOnOtherSites);
+    },
+
+    getInt(value) {
+      return parseInt(value.replace(/\,/g, ''));
+    },
+
+    formatInt(value) {
+      return value.toLocaleString('en-US');
+    },
+
+    roundAmount(e) {
+      // e.preventDefault();
+
+      //revenue share
+      if (this.model.campaign.security_type == 1)
+        return;
+
+      let amount = this.getInt(e.target.value);
+      if (!amount)
+        return;
+
+      if (!this.validateAmount(amount))
+        return;
+
+      let pricePerShare = this.model.campaign.price_per_share;
+      if (!pricePerShare)
+        return;
+
+      let newAmount = Math.ceil(amount / pricePerShare) *  pricePerShare;
+
+      this.$amount.val(this.formatInt(newAmount));
+      this._updateTotalAmount();
+
+      if (newAmount > amount) {
+        this.$amount.data('contentselector', 'rounding');
+        this.$amount.popover('show');
+      }
+
+      // return false;
+    },
+
+    updateAmount(e) {
+
+      let amount = this.getInt(e.currentTarget.value);
+      if (!amount)
+        return;
+
+      e.currentTarget.value = this.formatInt(amount);
+
+      this.validateAmount(amount);
+
+      this.updatePerks(amount);
+
+      this._updateTotalAmount();
+    },
+
+    updatePerks(amount) {
+      //update perks
+      let $targetPerk;
+      let $perks = this.$('.perk');
+      $perks.each((i, el) => {
+        if(parseInt(el.dataset.amount) <= amount) {
+          $targetPerk = $(el);
+          return false;
+        }
+      });
+
+      $perks.removeClass('active').find('i.fa.fa-check').hide();
+      if ($targetPerk)
+        $targetPerk.addClass('active').find('i.fa.fa-check').show();
+    },
+
+    _updateTotalAmount() {
+      // Here 10 is the flat rate;
+      let totalAmount = this.getInt(this.$amount.val()) + 10;
+      let formattedTotalAmount = '$' + this.formatInt(totalAmount)
+      this.$el.find('.total-investment-amount').text(formattedTotalAmount);
+      this.$el.find('[name=total_amount]').val(formattedTotalAmount);
+
+    },
   }),
+
 
   investmentThankYou: Backbone.View.extend({
     template: require('./templates/thankYou.pug'),
+    el: '#content',
     initialize(options) {
-      this.campaignModel = options.campaignModel;
+      // this.render();
     },
 
     render() {
@@ -508,7 +927,6 @@ module.exports = {
           serverUrl: serverUrl,
           Urls: Urls,
           investment: this.model,
-          campaign: this.campaignModel.attributes,
         })
       );
       return this;

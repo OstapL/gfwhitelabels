@@ -9,47 +9,37 @@
     <!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'><![endif]-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
     <!-- Favicons -->
-    <link rel="shortcut icon" type="image/png" href="/img/logo.png">
-    <link rel="apple-touch-icon" href="images/apple-touch-icon.png">
-    <link rel="apple-touch-icon" sizes="72x72" href="images/apple-touch-icon-72x72.png">
-    <link rel="apple-touch-icon" sizes="114x114" href="images/apple-touch-icon-114x114.png">
+    <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon">
     <!-- CSS -->
 
     <link rel="stylesheet" href="/css/main2.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
 
-    <script>
-    if (!Array.prototype.find) {
-      Array.prototype.find = function(predicate) {
-        if (this === null) {
-          throw new TypeError('Array.prototype.find called on null or undefined');
-        }
-        if (typeof predicate !== 'function') {
-          throw new TypeError('predicate must be a function');
-        }
-        var list = Object(this);
-        var length = list.length >>> 0;
-        var thisArg = arguments[1];
-        var value;
-
-        for (var i = 0; i < length; i++) {
-          value = list[i];
-          if (predicate.call(thisArg, value, i, list)) {
-            return value;
-          }
-        }
-        return undefined;
-      };
-    }
-    </script>
+		<!-- Google Tag Manager -->
+		<script>
+			(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+			new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+			j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+			'https://www.googletagmanager.com/gtm.js?id='+i+dl+ '&gtm_auth=Gp064W3aSXcXjsClBYV7QA&gtm_preview=env-2&gtm_cookies_win=x';f.parentNode.insertBefore(j,f);
+			})(window,document,'script','dataLayer','GTM-NC9XW5D');
+		</script>
     
     <!--[if lt IE 9]>
-      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/html5shiv/3.7.3/html5shiv.js"></script>
+    <script type="text/javascript" src="https://raw.githubusercontent.com/es-shims/es5-shim/master/es5-shim.js"></script>
     <![endif]-->
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/es6-shim/0.35.1/es6-shim.min.js"></script>
 
   </head>
 
   <body class="appear-animate"> 
+	  <!-- Google Tag Manager (noscript) -->
+		<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NC9XW5D&gtm_auth=Gp064W3aSXcXjsClBYV7QA&gtm_preview=env-2&gtm_cookies_win=x"
+		height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+		<!-- End Google Tag Manager (noscript) -->
+
+		<!-- End Google Tag Manager -->
+
     <!-- Page Loader -->
     <div class="loader_overlay">
       <div class="loader">Loading...</div>
@@ -72,14 +62,12 @@
             <ul class="nav navbar-nav" id="menuNotification">
             </ul>
         </div>
-
         <div class="wrap-toggle-menu">
-          <button class=" navbar-toggler hidden-lg-up" type="button" data-toggle="collapse" id="toggle_mobile_menu">
-            <!-- <i class="fa fa-bars"></i> -->
-            <span></span>
-          </button>
+        <button class=" navbar-toggler hidden-lg-up" type="button" data-toggle="collapse" id="toggle_mobile_menu">
+          <!-- <i class="fa fa-bars"></i> -->
+          <span></span>
+        </button>
         </div>
-
         <div class="mobile-menu full-height" id="">
           <ul class="nav navbar-nav pull-left" id="menuList">
           </ul>
@@ -102,6 +90,6 @@
       </footer>
       <div class="hidden"></div>
 
-
+      <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
     </body>
 </html>

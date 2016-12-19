@@ -1,187 +1,125 @@
-include ../../../templates/mixins.pug
-include menu.pug
+include ../../../templates/fields_mixins.pug
+include ../../raiseFunds/templates/menu.pug
 
-- 'use strict'
-- var fields = { first_name: { label: 'First Name'} };
-- var fields = { last_name: { label: 'Last Name'} };
-- var fields = { email: { label: 'Email Address'} };
-- var fields = { principal_occupation: { label: 'Principal Occupation'} };
-- var fields = { employer_and_principal: { label: 'Employer and Principal Business'} };
-- var fields = { position: { label: 'Position'} };
-- var fields = { employer: { label: 'Employer'} };
-- var fields = { employers_principal: { label: 'Employer’s Principal Business'} };
-- var fields = { title: { label: 'Title'} };
-- var fields = { responsibilities: { label: 'Responsibilities'} };
-
-+breadcrumbs('form c', '', 
-    [
-        ['Home', '/'],
-        ['FORM C', ''],
-        ['team members (director)', ''],
-    ]
-)
+- pug_html += app.breadcrumbs('create form c', '', [ ['Home', '/'], ['Create Form C', '/formc/' + values.id + '/introduction'], ['team members (director)', ''], ]);
 
 section.formc-team-members-director.container.m-b-85
-  +menu('formc')
+  - var formcId = values.formc_id;
+  - var campaignId = values.campaign_id;
+  +menu('formc', 'team-members-director')
 
   //START RIGHT BLOCK
-  .col-lg-8
-    h2.text-uppercase.text-lg-center.text-xs-center.m-t-0.dosis Team members (director)
-    form(metod="post" action="").form-section
-      +fieldBlock("first_name", '', {
-        class1: 'col-lg-3 col-md-12 text-md-left',
-        class2: 'col-lg-9 col-md-12',
-        type: 'text',
-        placeholder: 'First Name',
-        })
-      +fieldBlock("last_name", '', {
-        class1: 'col-lg-3 col-md-12 text-md-left',
-        class2: 'col-lg-9 col-md-12',
-        type: 'text',
-        placeholder: 'Last Name',
-        })
-      +fieldBlock("email", '', {
-        class1: 'col-lg-3 col-md-12 text-md-left',
-        class2: 'col-lg-9 col-md-12',
-        type: 'text',
-        placeholder: 'Email Address',
-        })
-      .row
-        .col-lg-6.col-md-12
-          .col-lg-6.text-lg-right.text-md-left.p-t-0
-            label.p-t-0.m-b-0 Board Service Start Date
+  .col-xl-8.col-lg-8.col-md-12.team-member-formc
+    h2.text-uppercase.text-lg-center.text-xs-center.m-t-0.dosis.mb50 Team members (director)
+    form.form-section
+      input(type="hidden" value=1 name="role")
+      .col-xl-12
+        +fieldTextLabel("first_name", _.extend({
+          class1: 'col-xl-3 col-lg-12 text-lg-left text-xl-right ',
+          class2: 'col-xl-9 col-lg-12',
+          }, fields.first_name))
+        +fieldTextLabel("last_name", _.extend({
+          class1: 'col-xl-3 col-lg-12 text-lg-left text-xl-right ',
+          class2: 'col-xl-9 col-lg-12',
+          label: 'Last name',
+          placeholder: 'Last Name',
+          }, fields.last_name))
 
-          .col-lg-6.p-r-0
+        .row.form-group
+          .col-date
+            label.col-xl-3.col-lg-12.text-xl-right.textlg-left Date of birth
+              span.color-red *
+            .col-xl-4.col-lg-6.p-r-0
+              +fieldDateMonth("dob", _.extend({
+                class: 'col-xl-4 col-lg-4 col-xs-4 p-l-0  m-d-p-r-5',
+              }, fields.dob))
+              +fieldDateDay("dob", _.extend({
+                class: 'col-xl-4 col-lg-4 col-xs-4 p-r-0 m-d-p-l-5',
+              }, fields.dob))
+              +fieldDateYear("dob", _.extend({
+                class: 'col-xl-4 col-lg-4 col-xs-4 p-r-0 m-d-p-l-10 p-r-lg-1',
+                placeholder: 'YYYY',
+                divId: 'dob',
+              }, fields.dob))
+        +fieldTextLabel("email", _.extend({
+          class1: 'col-xl-3 col-lg-12 text-lg-left text-xl-right ',
+          class2: 'col-xl-9 col-lg-12',
+          label: 'Email Address',
+          help_text: 'We will need to contact team members',
+          placeholder: 'Email Address',
+          }, fields.email))
+        .row
+          .col-xl-6.col-lg-6.form-group
             .row
-              .col-lg-6.p-r-0
-                input(type="number"  placeholder="MM").form-control
-              .col-lg-6.p-r-0
-                input(type="number"  placeholder="YYYY").form-control
-        .col-lg-6.p-l-0.col-md-12.form-group
-          .col-lg-6.text-lg-right.text-md-left.p-t-0
-            label.p-t-0.m-b-0 Board Service Start Date
-
-          .col-lg-6
+              label.col-xl-6.col-lg-12.text-xl-right.text-lg-left.m-b-0.p-t-0.m-b-lg-1 Board Service Start Date
+                span.color-red *
+              .col-xl-6.col-lg-12
+                .row#board_service_start_date
+                  +fieldDateMonth("board_service_start_date", _.extend({
+                    class: 'col-xl-6 col-lg-6 col-sm-6 col-xs-6 m-d-p-r-5',
+                    placeholder: 'MM',
+                    name: 'board_service_start_date',
+                    label: 'Board Service Start Date',
+                  }, fields.board_service_start_date))
+                  +fieldDateYear("board_service_start_date", _.extend({
+                    class: 'col-xl-6 col-lg-6 col-sm-6 col-xs-6 m-d-p-l-5',
+                    placeholder: 'YYYY',
+                    name: 'board_service_start_date',
+                  }, fields.board_service_start_date))
+          //.col-xl-6.col-lg-6.form-group
             .row
-              .col-lg-6.p-r-0
-                input(type="number"  placeholder="MM").form-control
-              .col-lg-6.p-r-0
-                input(type="number"  placeholder="YYYY").form-control
-      +fieldBlock("principal_occupation", '', {
-        class1: 'col-lg-3 col-md-12 text-md-left ',
-        class2: 'col-lg-9 col-md-12',
-        type: 'text',
-        placeholder: 'Principal Occupation',
-        })
-      +fieldBlock("employer_and_principal", '', {
-        class1: 'col-lg-3 col-md-12 text-md-left p-t-0 m-b-0',
-        class2: 'col-lg-9 col-md-12',
-        type: 'text',
-        placeholder: 'Employer and Principal Business',
-        })
-      .row
-        .col-lg-6.col-md-12
-          .col-lg-6.text-lg-right.text-md-left.p-t-0
-            label.p-t-0.m-b-0 Employer Start Date
+              label.col-xl-6.col-lg-12.text-xl-right.text-lg-left.m-b-0.p-t-0 Board Service End Date
+              #board_service_end_date.col-xl-6.col-lg-12
+                .row.showPopover(data-content="If your Board Service has a term, please input the end date.  Otherwise, leave blank")
+                  +fieldDateMonth("board_service_end_date", _.extend({
+                    class: 'col-xl-6 col-lg-6 col-sm-6 col-xs-6 m-d-p-r-5',
+                    placeholder: 'MM',
+                  }, fields.board_service_end_date))
+                  +fieldDateYear("board_service_end_date", _.extend({
+                    class: 'col-xl-6 col-lg-6 col-sm-6 col-xs-6 m-d-p-l-5',
+                  }, fields.board_service_end_date))
 
-          .col-lg-6.p-r-0
+
+        +fieldTextLabel("principal_occupation", _.extend({
+          class1: 'col-xl-3 col-lg-12 text-lg-left text-xl-right p-t-0 m-b-0 m-b-lg-1',
+          class2: 'col-xl-9 col-lg-12',
+          placeholder: 'Principal Occupation and Name of Employer',
+          }, fields.principal_occupation))
+
+        +fieldTextLabel("employer_principal_businesss", _.extend({
+          class1: 'col-xl-3 col-lg-12 text-lg-left p-t-0 m-b-0 m-b-lg-1 text-xl-right',
+          class2: 'col-xl-9 col-lg-12',
+          placeholder: 'Provide short description of the business',
+          }, fields.employer_principal_businesss))
+        .row
+          .col-xl-6.col-lg-6
             .row
-              .col-lg-6.p-r-0
-                input(type="number"  placeholder="MM").form-control
-              .col-lg-6.p-r-0
-                input(type="number"  placeholder="YYYY").form-control
-      .border-bottom.m-t-3.m-b-3
-      h3.text-lg-center.text-xs-center.m-t-0 We Need Information for Last 3 Years
-      .row
-        b.col-lg-12.m-b-3 Changed roles within the Company? Please list  all positions and offices with the Company held and the period of time in which you served in the position or office.
-      +fieldBlock("position", '', {
-        class1: 'col-lg-3 col-md-12 text-md-left m-b-0',
-        class2: 'col-lg-9 col-md-12',
-        type: 'text',
-        placeholder: 'Position',
-        })
-      .row
-        .col-lg-6.col-md-12
-          .col-lg-6.text-lg-right.text-md-left.p-t-0
-            label.p-t-0.m-b-0 Start Date of Service
+              label.col-xl-6.col-lg-12.text-xl-right.text-lg-left.m-b-0.p-t-0.m-b-lg-1 Employment Start Date
+                span.color-red *
+              .col-xl-6.col-lg-12
+                .row#employer_start_date
+                  +fieldDateMonth("employer_start_date", _.extend({
+                    class: 'col-xl-6 col-lg-6 col-sm-6 col-xs-6 m-d-p-r-5',
+                    placeholder: 'MM',
+                    name: 'employer_start_date',
+                    label: 'Employment Start Date',
+                  }, fields.board_service_start_date))
+                  +fieldDateYear("board_service_start_date", _.extend({
+                    class: 'col-xl-6 col-lg-6 col-sm-6 col-xs-6 m-d-p-l-5 ',
+                    placeholder: 'YYYY',
+                    name: 'employer_start_date',
+                    label: 'Employment Start Date',
+                  }, fields.board_service_start_date))
+        .row
+          .col-xl-12
+            .border-bottom.m-t-3.m-b-3
+            
+        |!{ templates.positions }
+        |!{ templates.experiences }
 
-          .col-lg-6.p-r-0
-            .row
-              .col-lg-6.p-r-0
-                input(type="number"  placeholder="MM").form-control
-              .col-lg-6.p-r-0
-                input(type="number"  placeholder="YYYY").form-control
-        .col-lg-6.p-l-0.col-md-12.form-group
-          .col-lg-6.text-lg-right.text-md-left.p-t-0
-            label.p-t-0.m-b-0.p-l-2 End Date of Service
-
-          .col-lg-6
-            .row
-              .col-lg-6.p-r-0
-                input(type="number"  placeholder="MM").form-control
-              .col-lg-6.p-r-0
-                input(type="number"  placeholder="YYYY").form-control
-      .row.previous_positions
-      .row.add-link
-        .col-lg-9.offset-1.pull-right
-          a(href="#" data-section="previous_positions").link-2.add-section
-            i.fa.fa-plus
-            |  Add Previous Position within tne Company
-      .row
-        b.col-lg-12.m-t-2.m-b-3 Business experience for past three years: Please list your employers, titles and dates of positions held during the past three years with an indication of job responsibilities.
-      +fieldBlock("employer", '', {
-        class1: 'col-lg-3 col-md-12 text-md-left m-b-0',
-        class2: 'col-lg-9 col-md-12',
-        type: 'text',
-        placeholder: 'Employer',
-        })
-      +fieldBlock("employers_principal", '', {
-        class1: 'col-lg-3 col-md-12 text-md-left p-t-0 m-b-0',
-        class2: 'col-lg-9 col-md-12',
-        type: 'text',
-        placeholder: 'Employer’s Principal Business',
-        })
-      +fieldBlock("title", '', {
-        class1: 'col-lg-3 col-md-12 text-md-left  m-b-0',
-        class2: 'col-lg-9 col-md-12',
-        type: 'text',
-        placeholder: 'Title',
-        })
-      +fieldBlock("responsibilities", '', {
-        class1: 'col-lg-3 col-md-12 text-md-left  m-b-0',
-        class2: 'col-lg-9 col-md-12',
-        type: 'text',
-        placeholder: 'Responsibilities',
-        })
-      .row
-        .col-lg-6.col-md-12
-          .col-lg-6.text-lg-right.text-md-left.p-t-0
-            label.p-t-0.m-b-0 Start Date of Service
-
-          .col-lg-6.p-r-0
-            .row
-              .col-lg-6.p-r-0
-                input(type="number"  placeholder="MM").form-control
-              .col-lg-6.p-r-0
-                input(type="number"  placeholder="YYYY").form-control
-        .col-lg-6.p-l-0.col-md-12.form-group
-          .col-lg-6.text-lg-right.text-md-left.p-t-0
-            label.p-t-0.m-b-0.p-l-2 End Date of Service
-
-          .col-lg-6
-            .row
-              .col-lg-6.p-r-0
-                input(type="number"  placeholder="MM").form-control
-              .col-lg-6.p-r-0
-                input(type="number"  placeholder="YYYY").form-control
-      .experiences
-      .row.add-link
-        .col-lg-9.offset-1.pull-right
-          a(href="#" data-section="experiences").link-2.add-section
-            i.fa.fa-plus
-            |  Add Work Experience
-
-      .row.m-t-3
-        .col-lg-12.text-md-center.text-sm-center-text-xs-center
-          //- a(href="/company/create").btn.btn-primary.text-uppercase.pull-lg-right Save
-          button.btn.btn-primary.text-uppercase.pull-lg-right Save
+        .row.m-t-3
+          .col-xl-12
+            .text-md-center.text-sm-center.text-xs-center
+              button(type='button' data-method=(values.user_id ? 'PUT' : 'POST'))#submitForm.btn.btn-primary.text-uppercase.pull-lg-right Save
+                i.fa.fa-angle-right
+              a(href='/formc/' + values.formc_id + '/team-members').btn.btn-secondary.text-uppercas.pull-lg-right.m-r-1 Cancel

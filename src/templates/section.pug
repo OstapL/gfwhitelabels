@@ -41,20 +41,23 @@ else if attr.type == 'position'
             .col-lg-6.p-r-0
                 .row
                     .col-lg-6.p-r-0
-                        input(type="number"  placeholder="MM").form-control
-                    .col-lg-6.p-r-0
-                        input(type="number"  placeholder="YYYY").form-control
-        .col-lg-6.p-l-0.col-md-12.form-group
-            .col-lg-6.text-lg-right.text-md-left.p-t-0
-                label.p-t-0.m-b-0.p-l-2 End Date of Service
-            .col-lg-6
-                .row
-                    .col-lg-6.p-r-0
-                        input(type="number"  placeholder="MM").form-control
-                    .col-lg-6.p-r-0
-                        input(type="number"  placeholder="YYYY").form-control
+                        .row
+                            .col-lg-6.p-r-0
+                                input(type="number"  placeholder="MM").form-control
+                            .col-lg-6.p-r-0
+                                input(type="number"  placeholder="YYYY").form-control
+                .col-lg-6.p-l-0.col-md-12.form-group
+                    .col-lg-6.text-lg-right.text-md-left.p-t-0
+                        label.p-t-0.m-b-0.p-l-2 End Date of Service
+                    .col-lg-6
+                        .row
+                            .col-lg-6.p-r-0
+                                input(type="number"  placeholder="MM").form-control
+                            .col-lg-6.p-r-0
+                            input(type="number"  placeholder="YYYY").form-control
 else if attr.type == 'experience'
-    div(class='index_' + indexCounter)
+    div(class='index_' + indexCounter+ ' ' + (k.required == true ? ' required ' : ' '))
+        .col-lg-12
         +fieldBlock("employer", '', {
             class1: 'col-lg-3 col-md-12 text-md-left m-b-0',
             class2: 'col-lg-9 col-md-12',
@@ -83,7 +86,6 @@ else if attr.type == 'experience'
             .col-lg-6.col-md-12
               .col-lg-6.text-lg-right.text-md-left.p-t-0
                 label.p-t-0.m-b-0 Start Date of Service
-
               .col-lg-6.p-r-0
                 .row
                   .col-lg-6.p-r-0
@@ -124,5 +126,6 @@ else
                         placeholder=k.placeholder ? k.placeholder : k.label
                         maxLength=k.maxLength ? k.maxLength : ''
                         data-index=indexCounter
+                        type=k.inputType ? k.inputType : ''
                     )
 - counter ++

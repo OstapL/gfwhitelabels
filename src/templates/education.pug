@@ -1,11 +1,4 @@
-include mixins.pug
-
-+breadcrumbs('EDUCATION', '', 
-    [
-        ['Home', '/'],
-        ['EDUCATION', '']
-    ]
-)
+- pug_html += app.breadcrumbs('EDUCATION', '', [ ['Home', '/'], ['EDUCATION', ''], ]);
 
 section.text_block.information-page
     .container
