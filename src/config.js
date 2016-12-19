@@ -12,7 +12,7 @@ global.esignServer = 'http://api-esign.growthfountain.com';
 global.commentsServer = "https://api-comments.growthfountain.com";
 global.blogServer = "https://api-blog.growthfountain.com";
 
-global.teamName = 'Growthfountain Team';
+global.teamName = 'GrowthFountain Team';
 global.teamTitle = "Meet The Team";
 global.pageTitle ="Crowdfunding | Digital Federal Credit Union";
 //global.serverUrl = "http://192.168.99.100:8000";
