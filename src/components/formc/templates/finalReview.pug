@@ -1,7 +1,10 @@
 include fields_final_review.pug
 
-- pug_html += app.breadcrumbs('Form C Review', '', [ ['Home', '/'], ['Form C Review', ''],]);
+#{ app.breadcrumbs('Form C Review', '', [ ['Home', '/'], ['Form C Review', '']]) }
 
+- fields.formc.outstanding_securities.schema.voting_right.validate.OneOf = {};
+- fields.formc.outstanding_securities.schema.voting_right.validate.OneOf.labels = ['No', 'Yes'];
+- fields.formc.outstanding_securities.schema.voting_right.validate.OneOf.choices = [false, true];
 - var titles = ['', 'CEO/President', 'Principal Financial Officer/Treasurer', 'Vice President', 'Secretary', 'Controller/Principal Accounting Officer', ];
 - var names = {}
 
@@ -739,7 +742,7 @@ section.formc-review
                   td
                     +frField('formc.outstanding_securities[' + k + '].amount_outstanding', 'text')
                   td
-                    +frField('formc.outstanding_securities[' + k + '].voting_right', 'text')
+                    +frField('formc.outstanding_securities[' + k + '].voting_right', 'select')
               
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u Description of Securities, Material Terms and Other Rights:

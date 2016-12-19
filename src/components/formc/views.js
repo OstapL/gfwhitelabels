@@ -1835,7 +1835,7 @@ module.exports = {
     },
 
     _success(data, newData) {
-      formcHelpers.updateFormcMenu(formcHelpers.formcCalcProgress(app.user.formc));
+      // formcHelpers.updateFormcMenu(formcHelpers.formcCalcProgress(app.user.formc));
       return 1;
     },
 
@@ -1872,6 +1872,12 @@ module.exports = {
           }
           element.appendChild(e);
         });
+        target.parentElement.insertBefore(element, target);
+      } else if(target.dataset.type == 'textarea') {
+        element = document.createElement('textarea');
+        element.name = target.dataset.name;
+        element.innerHTML = target.innerHTML;
+        element.onblur = (e) => this.update(e);
         target.parentElement.insertBefore(element, target);
       }
 
