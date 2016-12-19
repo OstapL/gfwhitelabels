@@ -23,9 +23,8 @@ if user.token != ""
   li.nav-item.user-info
     a.nav-link.notification.user-info-name
       span
-        - console.log(user)
-        if user.image
-          img(src=app.getThumbnail('55x55', user.image_data.thumbnails))#user-thumbnail.img-fluid.img-circle
+        if user.image_data[0]
+          img(src=user.image_data[0].urls[0])#user-thumbnail.img-fluid.img-circle
         else
           i.fa.fa-user
             
