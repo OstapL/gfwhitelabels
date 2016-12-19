@@ -90,6 +90,7 @@ module.exports = {
 
     events: _.extend({
       'submit form': 'submit',
+      'click .link-2': 'openPdf',
       'click .submit_formc': submitFormc,
       'keyup #full-name': 'changeSign',
       'click #pay-btn': 'stripeSubmit',
@@ -135,9 +136,56 @@ module.exports = {
       return this;
     },
 
+    saveEsign() {
+      const reqUrl = global.esignServer + '/pdf-doc';
+      const formData = this.getDocMetaData();
+      const data = {
+        type: 2,
+        esign: formData.issuer_signer,
+        meta_data: formData,
+        template: 'formc/funding_portal_listing_agreement.pdf'
+      };
+
+      $.post(reqUrl, data)
+        .fail( (err) => console.log(err));
+    },
+
+    openPdf (e) {
+      var pathToDoc = e.target.dataset.path;
+      var data = this.getDocMetaData();
+      e.target.href = pathToDoc + '?' + $.param(data);
+    },
+
+    getDocMetaData () {
+      const formData = this.$el.find('form').serializeJSON();
+      const issuer_legal_name = app.user.get('first_name') + ' ' + app.user.get('last_name');
+      
+      return {
+        trans_percent: '6%',
+        nonrefundable_fees: '$50',
+        registration_fee: '$500',
+        amendment_fee: '$200',
+        commitment_date_x: this.getCurrentDate(),
+        zip_code: app.user.get('zip_code'),
+        address_1: app.user.get(' address_1'),
+        address_2: app.user.get(' address_2'),
+        issuer_email: app.user.get('email'),
+        issuer_legal_name: issuer_legal_name,
+        issuer_signer: formData.full_name,
+        party_fees: '',
+        withdrawal_fee: '',
+      };
+    },
+
     _success(data, newData) {
+      this.saveEsign(data);
       formcHelpers.updateFormcMenu(formcHelpers.formcCalcProgress(app.user.formc));
       return 1;
+    },
+
+    getCurrentDate () {
+        const date = new Date();
+        return date.getMonth() + '/' + date.getDate() + '/' + date.getFullYear();
     },
 
     getSuccessUrl() {
