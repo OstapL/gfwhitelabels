@@ -747,8 +747,7 @@ module.exports = {
 
       const formData = $('form.invest_form').serializeJSON();
       const issuer_legal_name = this.model.owner.first_name + ' ' + this.model.owner.last_name;
-      const investor_legal_name = $('#first_name').val() + ' ' + $('#last_name').val()
-                      || app.user.get('first_name') + ' ' + app.user.get('last_name');
+      const investor_legal_name = formData.personal_information_data.first_name + ' ' + formData.personal_information_data.last_name;
       return {
         fees_to_investor: 10,
         trans_percent: '6%',
@@ -776,7 +775,7 @@ module.exports = {
         price_per_share: this.model.campaign.price_per_share,
         issuer_email: this.model.owner.email,
         issuer_legal_name: issuer_legal_name,
-        issuer_signer: null,
+        issuer_signer: formData.signature.full_name,
         issuer_signer_title: null,
       };
     },
