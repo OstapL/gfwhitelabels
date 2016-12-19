@@ -20,7 +20,7 @@ mixin comment(comment, level)
     .col-lg-1
       img(src=avatar alt="").img-circle
     .col-lg-11
-      .comments-wrap.col-lg-12
+      .comments-wrap.col-lg-12.p-r-0
         span.name-comments.text-uppercase #{ userName }
         if company.owner == comment.user_id
           span.kvalificatio-comments.text-uppercase CEO
@@ -30,23 +30,28 @@ mixin comment(comment, level)
         div.responce
           if level <= 0
             li
+              i.fa.fa-comment-o.p-r-5
               a(href="").link-1.link-response-count #{ comment.children.length }
                 i.fa.fa-angle-up
-                  span |
-            li
+            li.reply
+              span.reply-left |
               a(href="").link-1.link-reply Reply
-              span |
+              span.reply-right |
           li
             a(href="").link-1.link-like
-              i.fa.fa-thumbs-up
-          li.pull-lg-right
+              i.fa.fa-heart
+                
+          li.pull-right
             a(href="#").link1.link-edit
-              i.fa.fa-pencil-square-o
+              i.fa.fa-pencil-square-o.p-r-5
               | Edit
-          li.pull-lg-right
+          li.pull-right
+            span.p-5 |
+          li.pull-right
             a(href="#").link1.link-delete
-              i.fa.fa-times
+              i.fa.fa-times.p-r-5
               | Delete
+              
 
 
     if comment.children && comment.children.length
