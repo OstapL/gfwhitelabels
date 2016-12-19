@@ -588,7 +588,7 @@ module.exports = {
         return false;
       }
 
-      this.updateAmountPopover('amount-ok');
+      this.updateAmountPopover('amount-ok', true);
 
       return true;
     },
