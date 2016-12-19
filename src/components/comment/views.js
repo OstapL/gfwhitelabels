@@ -1,64 +1,6 @@
-module.exports = { 
-  form: Backbone.View.extend({
-    template: require('./templates/form.pug'),
+const moment = require('moment');
 
-    getHtml(data) {
-      return this.template(data)
-    },
-
-    render() {
-      this.$el.html(
-        this.template({model: this.model})
-      )
-    },
-
-  }),
-
-  list: Backbone.View.extend({
-    template: require('./templates/list.pug'),
-
-    render() {
-      this.$el.html(
-        this.template({
-          app: app,
-          company: this.model,
-          comments: this.collection,
-        })
-      )
-      return this;
-    },
-
-  }),
-
-  detail: Backbone.View.extend({
-    template: require('./templates/detail.pug'),
-
-    events: {
-
-    },
-
-    initialize(options) {
-
-    },
-
-    getHtml(data) {
-      return this.template(data)
-    },
-
-    render() {
-      this.$el.html(
-        this.template({
-          model: this.model,
-          app: app,
-        })
-      );
-
-      return this;
-    },
-
-  }),
-
-
+module.exports = {
   comments: Backbone.View.extend({
     urlRoot: commentsServer + '/:model/:id',
     template: require('./templates/comments.pug'),
@@ -99,12 +41,7 @@ module.exports = {
     render() {
       this.$el.html(this.template({
         comments: this.model.data,
-        company: {
-          owner: 1,
-        },
-        users: {
-          1: 'Vladimir Chagin',
-        }
+        datetimeHelper: moment,
       }));
 
       this.$stubs = this.$('.stubs');
@@ -142,13 +79,23 @@ module.exports = {
 
       app.showLoading();
       api.makeRequest(this.urlRoot, 'POST', data).done((newData) => {
-      // setTimeout(() => {
         $target.prop('disabled', false);
+        // let newCommentModel = {
+        //   children: [],
+        //   message: message,
+        //   uid: newData.new_message_id,
+        //   user_id: '',
+        // };
 
-        if (isChild)
+        if (isChild) {
           $form.remove();
-        else
+          // let parentComment = this.getComment(parentId);
+          // if (parentComment)
+          //   parentComment.children.push(newCommentModel);
+        } else {
+          // this.model.data.push(newCommentModel);
           $form.find('.text-body').val('');
+        }
 
         let commentStub = this.$stubs.find('.comment[data-level=' + level + ']');
 
@@ -164,7 +111,6 @@ module.exports = {
 
         newComment.appendTo(isChild ? $parentComment : this.$('.comments'));
         app.hideLoading();
-      // }, 500);
       }).fail((err) => {
         $target.prop('disabled', false);
         app.hideLoading();
@@ -223,29 +169,11 @@ module.exports = {
     editComment(e) {
       e.preventDefault();
 
-      let $target = $(e.target);
-
-      let $comment = $target.closest('.comment');
-      let level = $comment.data('level');
-      let uid = $comment.data('id');
-
-      let comment = this.findComment(uid);
-      let commentText = comment.message;
-
-      // let $editCommentBlock = this.$stubs.find('.edit-comment').clone();
-      // $editCommentBlock.removeClass('edit-comment collapse');
-      // $editCommentBlock.find('.text-body')
-      //
-      // $comment.find('p').text().addClass('collapse').after($editCommentBlock);
-
-
       return false;
     },
 
     deleteComment(e) {
       e.preventDefault();
-
-
 
       return false;
     },
