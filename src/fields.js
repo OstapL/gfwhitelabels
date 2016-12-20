@@ -11,6 +11,10 @@ function prepareField(name, attr) {
   }
 }
 
+const helpers = {
+  date: require('./helpers/dateHelper.js'),
+  format: require('./helpers/formatHelper.js'),
+};
 
 module.exports = {
   textLabel(name, attr) {
@@ -42,5 +46,15 @@ module.exports = {
     attr.value = attr.value && attr.value.indexOf('-') != -1 ? attr.value.split('-')[0] : '';
     //const template = require('./templates/dateYear.pug');
     return template(attr);
-  }
+  },
+
+  investment(i, attr) {
+    attr = attr || {};
+    const template =  require('./templates/dashboardInvestment.pug');
+    return template({
+      i: i,
+      attr: attr,
+      helpers: helpers
+    });
+  },
 }
