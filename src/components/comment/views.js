@@ -58,6 +58,7 @@ module.exports = {
         comments: this.model.data,
         helpers: helpers,
         owner_id: this.model.owner_id,
+        company_id: this.model.id,
       }));
 
       this.$stubs = this.$('.stubs');
@@ -127,8 +128,9 @@ module.exports = {
             id: app.user.get('id'),
             image_data: app.user.get('image_data'),
             role: {
-              company_name: '',
-              role: [''],
+              company_name: app.user.get('company_name'),
+              company_id: app.user.get('company_id'),
+              role: app.user.get('role'),
             },
           },
         };
@@ -148,6 +150,7 @@ module.exports = {
 
         let newCommentHtml = app.fields.comment(newCommentModel, level, {
           owner_id: this.model.owner_id,
+          company_id: this.model.id,
         });
         $(newCommentHtml).appendTo(isChild ? $parentComment : this.$('.comments'));
 
