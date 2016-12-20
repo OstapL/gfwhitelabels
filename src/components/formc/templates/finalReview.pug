@@ -1,67 +1,13 @@
 include fields_final_review.pug
 
-- pug_html += app.breadcrumbs('Form C Review', '', [ ['Home', '/'], ['Form C Review', ''],]);
+#{ app.breadcrumbs('Form C Review', '', [ ['Home', '/'], ['Form C Review', '']]) }
 
+- fields.formc.outstanding_securities.schema.voting_right.validate.OneOf = {};
+- fields.formc.outstanding_securities.schema.voting_right.validate.OneOf.labels = ['No', 'Yes'];
+- fields.formc.outstanding_securities.schema.voting_right.validate.OneOf.choices = [false, true];
 - var titles = ['', 'CEO/President', 'Principal Financial Officer/Treasurer', 'Vice President', 'Secretary', 'Controller/Principal Accounting Officer', ];
 - var names = {}
-- names.issuer_short_name = 'company.name';
-- names.issuer_legal_name = 'company.name';
-- names.jurisdiction_of_organization = 'company.founding_state';
-- names.website = 'company.website'
-- names.corporate_structure = 'company.corporate_structure'
-- names.maximum_raise = 'campaign.maximum_raise'
-- names.minimum_raise = 'campaign.minimum_raise'
-- names.price_per_share = 'campaign.price_per_share'
-- names.security_type = 'campaign.security_type'
-- names.minimum_increment = 'campaign.minimum_increment'
-- names.founding_date = 'company.founding_date'
-- names.address_1 = 'company.address_1'
-- names.address_2 = 'company.address_2'
-- names.city = 'company.city'
-- names.state = 'company.state'
-- names.zip_code = 'company.zip_code'
-- names.min_number_of_shares = 'campaign.min_number_of_shares'
-- names.max_number_of_shares = 'campaign.max_number_of_shares'
-- names.close_date = 'campaign.expiration_date'
-- names.pitch = 'campaign.pitch'
-- names.business_model = 'campaign.business_model'
-- names.description = 'company.description'
-- names.full_time_employee = 'formc.full_time_employers'
-- names.part_time_employee = 'formc.part_time_employers'
 
-- names.specified_person = 'formc.transaction_with_related_parties.0.specified_person'
-- names.relationship_to_issuer = 'formc.transaction_with_related_parties.0.relationship_to_issuer'
-- names.nature_of_interest = 'formc.transaction_with_related_parties.0.nature_of_interest'
-- names.amount_of_interest = 'formc.transaction_with_related_parties.0.amount_of_interest'
-
-- names.security_differences = 'formc.security_differences'
-- names.rights_of_securities_being = 'formc.rights_of_securities'
-- names.principal_shareholders_affect = 'formc.exercise_of_rights'
-
-- names.intended_use_of_proceeds = 'formc.intended_use_of_proceeds'
-
-- names.mac_risk_title = 'formc.market_and_customer_risk.0.title'
-- names.mac_risk = 'formc.market_and_customer_risk.0.risk'
-
-- names.mac_risk_title = 'formc.market_and_customer_risk.0.title'
-- names.mac_risk = 'formc.market_and_customer_risk.0.risk'
-- names.fin_risk_title = 'formc.financial_risk.0.title'
-- names.fin_risk = 'formc.financial_risk.0.risk'
-- names.ops_risk_title = 'formc.operational_risk.0.title'
-- names.ops_risk = 'formc.operational_risk.0.risk'
-- names.com_risk_title = 'formc.competitive_risk.0.title'
-- names.com_risk = 'formc.competitive_risk.0.risk'
-- names.pat_risk_title = 'formc.personnel_and_third_parties_risk.0.title'
-- names.pat_risk = 'formc.personnel_and_third_parties_risk.0.risk'
-- names.lar_risk_title = 'formc.legal_and_regulatory_risk.0.title'
-- names.lar_risk = 'formc.legal_and_regulatory_risk.0.risk'
-- names.intended_use_of_proceeds = 'formc.intended_use_of_proceeds'
-- names.material_information= 'formc.material_information'
-- names.descrption_material_information= 'formc.descrption_material_information'
-- names.financials_condition_yes= 'financials_condition_yes'
-- names.financials_condition_no= 'financials_condition_no'
-- names.use_of_net_proceeds_minimum= 'formc.use_of_net_proceeds_minimum'
-- names.use_of_net_proceeds_maximum= 'formc.use_of_net_proceeds_maximum'
 - function  getData(name) {
 -     if(name == null) alert('name not found')
 -    if(name.indexOf('.') == -1) {
@@ -294,16 +240,17 @@ section.formc-review
               p.font-weight-bold Voting rights:
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
               p No
-          .row
-            .col-lg-6.col-md-6.col-sm-6.col-xs-12
-              p.font-weight-bold Minimum target number of securities being offered:
-            .col-lg-6.col-md-6.col-sm-6.col-xs-12
-              - pug_html += Math.round(values.campaign.minimum_raise / values.campaign.price_per_share); 
-          .row
-            .col-lg-6.col-md-6.col-sm-6.col-xs-12
-              p.font-weight-bold Price of security:
-            .col-lg-6.col-md-6.col-sm-6.col-xs-12
-              +frField('campaign.price_per_share', 'text')
+          if values.campaign.security_type == 0
+            .row
+              .col-lg-6.col-md-6.col-sm-6.col-xs-12
+                p.font-weight-bold Minimum target number of securities being offered:
+              .col-lg-6.col-md-6.col-sm-6.col-xs-12
+                | #{ Math.round(values.campaign.minimum_raise / values.campaign.price_per_share) }
+            .row
+              .col-lg-6.col-md-6.col-sm-6.col-xs-12
+                p.font-weight-bold Price of security:
+              .col-lg-6.col-md-6.col-sm-6.col-xs-12
+                +frField('campaign.price_per_share', 'text')
           .row
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
               p.font-weight-bold Minimum target amount of offering:
@@ -337,7 +284,8 @@ section.formc-review
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
               p.font-weight-bold Deadline to reach target amount:
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
-              +frField('campaign.expiration_date', 'text')
+              +frField('campaign.length_days', 'select')
+              | from filing date
 
       // page 3
       section.page-formc-review.m-t-1
@@ -359,7 +307,7 @@ section.formc-review
             | !{' '}
             +frField('company.corporate_structure', 'select')
             |  (the “Company”), is offering up to 
-            +frField('campaign.max_number_of_shares', 'text')
+            b #{ Math.round(values.campaign.maximum_raise / values.campaign.price_per_share) }
             |   shares of 
             +frField('campaign.security_type', 'select')
             |  (the 
@@ -367,9 +315,9 @@ section.formc-review
             |  at an offering price of $
             +frField('campaign.price_per_share', 'text')
             |  per Share for a maximum aggregate offering price of $
-            +frField('campaign.minimum_raise', 'text').
+            +frField('campaign.maximum_raise', 'text').
           p.pb10.text-indent The Company has established a minimum offering of at least 
-            +frField('campaign.min_number_of_shares', 'text')
+            b #{ Math.round(values.campaign.minimum_raise / values.campaign.price_per_share) }
             |  Shares for a minimum aggregate offering price of $
             +frField('campaign.minimum_raise', 'text')
             |  prior to 
@@ -794,7 +742,7 @@ section.formc-review
                   td
                     +frField('formc.outstanding_securities[' + k + '].amount_outstanding', 'text')
                   td
-                    +frField('formc.outstanding_securities[' + k + '].voting_right', 'text')
+                    +frField('formc.outstanding_securities[' + k + '].voting_right', 'select')
               
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u Description of Securities, Material Terms and Other Rights:
@@ -921,120 +869,18 @@ section.formc-review
                   br
                   |  Proceeds
             tbody
-              tr
-                td Commissions and 
-                  br
-                  |  Broker Expenses
-                td.text-xs-center
-                  a(href="#" class="show-input" data-name="amount_1").link-1 $28,000
-                td.text-xs-center
-                  a(href="#" class="show-input" data-name="proceeds_1").link-1 7.00%
-                td.text-xs-center
-                  a(href="#" class="show-input" data-name="amount_2").link-1 $70,000
-                td.text-xs-center
-                  a(href="#" class="show-input" data-name="proceeds_2").link-1 7.00%
-              tr
-                td Misc. Offering Costs 
-                  br
-                  | (Legal)
-                td.text-xs-center
-                  a(href="#" class="show-input" data-name="amount_1_1").link-1 $4,500
-                td.text-xs-center
-                  a(href="#" class="show-input" data-name="proceeds_1_1").link-1 1.13%
-                td.text-xs-center
-                  a(href="#" class="show-input" data-name="amount_2_1").link-1 $4,500
-                td.text-xs-center
-                  a(href="#" class="show-input" data-name="proceeds_2_1").link-1 0.45%
-              tr
-                td Misc. Offering Costs 
-                  br
-                  | (Marketing)
-                td.text-xs-center
-                  a(href="#" class="show-input" data-name="amount_1_2").link-1 $12,000
-                td.text-xs-center
-                  a(href="#" class="show-input" data-name="proceeds_1_2").link-1 3.75%
-                td.text-xs-center
-                  a(href="#" class="show-input" data-name="amount_2_2").link-1 $12,000
-                td.text-xs-center
-                  a(href="#" class="show-input" data-name="proceeds_2_2").link-1 1.50%
-              tr
-                td Misc. Offering Costs 
-                  br
-                  | (Admin)
-                td.text-xs-center
-                  a(href="#" class="show-input" data-name="amount_1_3").link-1 $17,000
-                td.text-xs-center
-                  a(href="#" class="show-input" data-name="proceeds_1_3").link-1 4.25%
-                td.text-xs-center
-                  a(href="#" class="show-input" data-name="amount_2_3").link-1 $20,000
-                td.text-xs-center
-                  a(href="#" class="show-input" data-name="proceeds_2_3").link-1 2.00%
-              tr
-                td Salaries, Benefits and
-                  br
-                  | Wages
-                td.text-xs-center
-                  a(href="#" class="show-input" data-name="amount_1_4").link-1 $100,500
-                td.text-xs-center
-                  a(href="#" class="show-input" data-name="proceeds_1_4").link-1 25.13%
-                td.text-xs-center
-                  a(href="#" class="show-input" data-name="amount_2_4").link-1 $335,500
-                td.text-xs-center
-                  a(href="#" class="show-input" data-name="proceeds_2_4").link-1 33.55%
-              tr
-                td Product Development
-                td.text-xs-center
-                  a(href="#" class="show-input" data-name="amount_1_5").link-1 $125,000
-                td.text-xs-center
-                  a(href="#" class="show-input" data-name="proceeds_1_5").link-1 31.25%
-                td.text-xs-center
-                  a(href="#" class="show-input" data-name="amount_2_5").link-1 $250,000
-                td.text-xs-center
-                  a(href="#" class="show-input" data-name="proceeds_2_5").link-1 25.00%
-              tr
-                td Marketing
-                td.text-xs-center
-                  a(href="#" class="show-input" data-name="amount_1_6").link-1 $75,000
-                td.text-xs-center
-                  a(href="#" class="show-input" data-name="proceeds_1_6").link-1 18.75%
-                td.text-xs-center
-                  a(href="#" class="show-input" data-name="amount_2_6").link-1 $200,000
-                td.text-xs-center
-                  a(href="#" class="show-input" data-name="proceeds_2_6").link-1 20.00%
-              tr
-                td Operations (Data,
-                  br
-                  | Hosting, Fees)
-                td.text-xs-center
-                  a(href="#" class="show-input" data-name="amount_1_7").link-1 $25,000
-                td.text-xs-center
-                  a(href="#" class="show-input" data-name="proceeds_1_7").link-1 6.25%
-                td.text-xs-center
-                  a(href="#" class="show-input" data-name="amount_2_7").link-1 $75,000
-                td.text-xs-center
-                  a(href="#" class="show-input" data-name="proceeds_2_7").link-1 7.50%
-              tr
-                td Travel, Conferences
-                  br
-                  | and Events
-                td.text-xs-center
-                  a(href="#" class="show-input" data-name="amount_1_8").link-1 $10,000
-                td.text-xs-center
-                  a(href="#" class="show-input" data-name="proceeds_1_8").link-1 2.50%
-                td.text-xs-center
-                  a(href="#" class="show-input" data-name="amount_2_8").link-1 $30,000
-                td.text-xs-center
-                  a(href="#" class="show-input" data-name="proceeds_2_8").link-1 3.00%
-              tr.bg-grey.font-weight-bold
-                td.text-xs-center.text-uppercase Total
-                td.text-xs-center
-                  a(href="#" class="show-input" data-name="total-amount_1").link-1 $400,000
-                td.text-xs-center
-                  a(href="#" class="show-input" data-name="total_proceeds_1").link-1 100.00%
-                td.text-xs-center
-                  a(href="#" class="show-input" data-name="total-amount_2").link-1 $1,000,000
-                td.text-xs-center
-                  a(href="#" class="show-input" data-name="total_proceeds_2").link-1 100.00%
+              for v,k in values.formc.less_offering_express
+                tr
+                  td.text-xs-center
+                    +frField('formc.less_offering_express[' + k + '].title', 'text') #{ v.title }
+                  td.text-xs-center
+                    +frField('formc.less_offering_express[' + k + '].min', 'text') #{ v.min }
+                  td.text-xs-center
+                    | #{ (values.campaign.minimum_raise / parseFloat(v.min)).toFixed(2) }%
+                  td.text-xs-center
+                    +frField('formc.less_offering_express[' + k + '].max', 'text') #{ v.max }
+                  td.text-xs-center
+                    | 7%
 
       // page 18
       section.page-formc-review.m-t-1

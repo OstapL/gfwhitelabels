@@ -37,10 +37,10 @@ mixin frfieldNestedTextLabel(nestedName, name, value, index, myAttr)
 mixin frField(name, type)
   - var value = ggetData(name)
   if type == 'select'
-    - schemaName = name;
+    - var schemaName = name;
     if name.indexOf('[') !== -1
       - schemaName = name.replace(/\[\d+\]/, '.schema')
-    - valuesList = schemaName.split('.').reduce(function(o,i) { return o[i]; }, fields);
+    - var valuesList = schemaName.split('.').reduce(function(o,i) { return o[i]; }, fields);
     if valuesList && valuesList.validate && valuesList.validate.OneOf
       - console.log(name, type, valuesList);
       - valuesList = valuesList.validate.OneOf;
@@ -53,5 +53,4 @@ mixin frField(name, type)
     href="#"
     data-name=name
     data-type=type || 'text'
-    data-value=ggetData(name)
     ).createField.show-input.link-1 #{ value }
