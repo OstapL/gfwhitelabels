@@ -59,12 +59,9 @@ mixin comment(comment, level)
               i.fa.fa-times.p-r-5
               | Delete
               
-
-
     if comment.children && comment.children.length
       each childComment in comment.children
         +comment(childComment, level + 1)
-
 
 h2#ask.col-lg-12.dosis.text-uppercase.text-lg-center.text-xs-center.campaign-subheading ASK A QUESTION
 .col-lg-8.offset-lg-2.pt30.comment-form-div
@@ -73,7 +70,6 @@ h2#ask.col-lg-12.dosis.text-uppercase.text-lg-center.text-xs-center.campaign-sub
       input(type="text" name="body" placeholder="Type your text here..." value='').text-body
     .col-lg-4.p-r-0.text-xl-right.text-xs-center.p-t-sm-1
       button(type="button").btn.btn-primary.text-uppercase.pull-lg-right.ask-question Submit
-
 
 .col-lg-8.offset-lg-2.pt50.comments
   each c in comments
@@ -96,8 +92,9 @@ h2#ask.col-lg-12.dosis.text-uppercase.text-lg-center.text-xs-center.campaign-sub
   }, 1)
 
   form.comment-form.form-section.edit-comment.collapse
-    .col-lg-12.p-r-1.m-t-1
-      textarea(placeholder="Type your text here").text-body.col-lg-12
-    .col-lg-12.p-r-1.m-t-1text-xl-right
-      button(type="button").btn.btn-primary.text-uppercase.pull-lg-right.submit-comment Submit
-      button(type="button").btn.btn-secondary.text-uppercase.pull-lg-right.cancel-comment Cancel
+    .col-lg-11.offset-lg-1.m-t-2.p-r-0.p-l-3.form-group
+      .border-bottom.m-t-0.mb30
+      textarea(placeholder="Type your text here").form-control.big-textarea.text-body.col-lg-12
+    .col-lg-12.p-r-0.text-xl-right
+      button(type="button").btn.btn-sm.btn-secondary.text-uppercase.m-r-2.cancel-comment Cancel
+      button(type="button").btn.btn-sm.btn-primary.text-uppercase.submit-comment Submit
