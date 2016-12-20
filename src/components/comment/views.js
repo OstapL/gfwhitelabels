@@ -37,7 +37,8 @@ module.exports = {
     getComment(uid) {
 
       function findComment(comments, uid) {
-        for(let c in comments) {
+        for (let idx = 0; idx < comments.length; idx += 1) {
+          let c = comments[idx];
           if (c.uid == uid)
             return c;
 
@@ -137,7 +138,7 @@ module.exports = {
           if (parentComment) {
             parentComment.children.push(newCommentModel);
             //update parent comment response count
-            $parentComment.find('.response:first .link-response-count').text(parentComment.children.length);
+            $parentComment.find('.comment-actions:first .link-response-count > .count').text(parentComment.children.length);
           }
         } else {
           this.model.data.push(newCommentModel);

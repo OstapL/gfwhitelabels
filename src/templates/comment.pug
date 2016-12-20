@@ -30,11 +30,12 @@ div(id=id class=cssClass data-level=level data-id=comment.uid).p-r-0.p-t-0
 
       span.date-comments.pull-right #{ passedTime }
       p #{ comment.message }
-      div.responce
+      div.responce.comment-actions
         if level <= 0
           li
             i.fa.fa-comment-o.p-r-5
-            a(href="#").link-1.link-response-count #{ comment.children.length }
+            a(href="#").link-1.link-response-count
+              span.count #{ comment.children.length }
               i.fa.fa-angle-up
           li.reply
             span.reply-left |
