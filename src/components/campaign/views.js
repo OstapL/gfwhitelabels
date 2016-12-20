@@ -346,41 +346,8 @@ module.exports = {
       let dataR = api.makeRequest(urlComments);
 
       $.when(optionsR, dataR).done((options, data) => {
-        let commentsModel = {
-          id: this.model.id,
-          data: [
-            {
-              "uid": "c8e5a3ab-3c8a-43a8-8735-b71cb62d9b5a",
-              "role": "GET FROM USER titles field",
-              "message": "Hi, All!!1",
-              "user_id": 26,
-              "children": []
-            },
-            {
-              "uid": "cf7eefd6-76e5-4fe3-aff2-892f4a9e5f95",
-              "role": "GET FROM USER titles field",
-              "message": "Hi, Ben!!1",
-              "user_id": 26,
-              "children": [
-                {
-                  "uid": "2f0656e3-6893-4768-87fb-6f7d47298412",
-                  "role": "GET FROM USER titles field",
-                  "message": "Hi, All & Ben!!1",
-                  "user_id": 26,
-                  "children": [{
-                    "uid": "2f0656e3-6893-4768-87fb-6f7d47298412",
-                    "role": "GET FROM USER titles field",
-                    "message": "Finally!",
-                    "user_id": 1,
-                    "children": []
-                  }]
-                }
-              ]
-            }
-          ],
-          count: 2,
-        };
         data[0].id = this.model.id;
+        data[0].owner_id = this.model.owner_id;
 
         let comments = new View.comments({
           // model: commentsModel,

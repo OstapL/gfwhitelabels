@@ -645,8 +645,10 @@ module.exports = {
       this.campaign = options.campaign;
 
       // this.fields.custom_fn = {fn: (function (value, fn, attr, model, computed) {
-      this.fields.use_of_net_proceeds.fn = (function (value, fn, attr, model, computed) {
-        if (!this.calculate(null)) throw 'Total Use of Net Proceeds must be equal to Net Proceeds.';
+      this.fields.less_offering_express.fn = this.fields.use_of_net_proceeds.fn = (function (value, fn, attr, model, computed) {
+        if (!this.calculate(null)) {
+          throw 'Total Use of Net Proceeds must be equal to Net Proceeds.';
+        }
       }).bind(this);
 
       this.labels = {
@@ -743,7 +745,8 @@ module.exports = {
         } else {
           $('.max-net-proceeds,.max-total-use').addClass('red');
         }
-        this.$('.max-total-use').popover(result ? 'hide' : 'show');
+        this.$('.min-total-use').popover(minEqual ? 'hide' : 'show');
+        this.$('.max-total-use').popover(maxEqual ? 'hide' : 'show');
       }
       return result;
     },
@@ -788,9 +791,9 @@ module.exports = {
           campaignId: this.campaign.id,
         })
       );
-      this.$('.max-total-use').popover({
+      this.$('.max-total-use,.min-total-use').popover({
         html: true,
-        template: '<div class="popover" role="tooltip" style="border-color:red;"><div class="popover-arrow" style="border-right-color:red;"></div><h3 class="popover-title"></h3><div class="popover-content" style="color:red;"></div></div>'
+        template: '<div class="popover" role="tooltip" style="border-color:red;width:170px;"><div class="popover-arrow" style="border-right-color:red;"></div><h3 class="popover-title"></h3><div class="popover-content" style="color:red;"></div></div>'
       });
 
       this.$('.min-expense,.max-expense,.min-use,.max-use').each(function (idx, elem) {
