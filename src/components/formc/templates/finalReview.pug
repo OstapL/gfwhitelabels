@@ -2,6 +2,14 @@ include fields_final_review.pug
 
 #{ app.breadcrumbs('Form C Review', '', [ ['Home', '/'], ['Form C Review', '']]) }
 
+- fields.formc.team_members = {};
+- fields.formc.team_members.schema = {};
+- fields.formc.team_members.schema.title = {};
+- fields.formc.team_members.schema.title.validate = {};
+- fields.formc.team_members.schema.title.validate.OneOf = {};
+- fields.formc.team_members.schema.title.validate.OneOf.choices = [0, 1, 2, 3, 4, 5];
+- fields.formc.team_members.schema.title.validate.OneOf.labels = ['', 'CEO/President','Principal Financial Officer/Treasurer','Vice President','Secretary','Controller/Principal Accounting Officer',];
+
 - fields.formc.outstanding_securities.schema.voting_right.validate.OneOf = {};
 - fields.formc.outstanding_securities.schema.voting_right.validate.OneOf.labels = ['No', 'Yes'];
 - fields.formc.outstanding_securities.schema.voting_right.validate.OneOf.choices = [false, true];
@@ -320,8 +328,7 @@ section.formc-review
             b #{ Math.round(values.campaign.minimum_raise / values.campaign.price_per_share) }
             |  Shares for a minimum aggregate offering price of $
             +frField('campaign.minimum_raise', 'text')
-            |  prior to 
-            +frField('campaign.expiration_date', 'text')
+              |  prior to #{ values.campaign.expiration_date }
             |  (the 
             u “Offering”
             |  ).  If the sum of the investment commitments does not equal or exceed this minimum target amount at the Offering deadline, no securities will be sold in the Offering, investment commitments will be cancelled and committed funds will be returned, less any fees incurred, without accrued interest. There can be no assurance that the minimum number of the Shares offered will be subscribed for and therefore these if no guarantee that this Offering will be completed.
@@ -342,26 +349,25 @@ section.formc-review
           p.pb10.text-indent This offering material, including all the exhibits attached hereto (collectively, the 
             u “Material”
             |  ) describes the terms relating to an offer and sale of debt securities to qualified investors consistent with the rules and regulations of Regulation Crowdfunding (17 CFR §227). 
-            +editText('issuer_legal_name')
+            +frField('company.issuer_legal_name')
             |  , a 
-            +editSelect('jurisdiction_of_organization')
+            +frField('company.founding_state')
             | !{' '}
-            +editSelect('corporate_structure')
+            +frField('company.corporate_structure')
             |  (the “Company” also referred to as an “issuer"), is offering a Revenue Share Agreement similar to a promissory note in the form attached hereto as Exhibit D (each, a “Note” and collectively, the “
             u Notes
             | ”) minimum investment of 
-            +editText('minimum_increment')
+            +frField('campaign.minimum_increment')
             |   targeting a maximum aggregate offering price of $
-            +editText('maximum_raise')
+            +frField('campaign.maximum_raise')
           p.pb10.text-indent The Company has established a minimum aggregate offering price of $ 
-            +editText('minimum_raise')
-            |  prior to 
-            +editText('close_date')
+            +frField('campaign.minimum_raise')
+            |  prior to  #{ values.campaign.expiration_date }
             |  (the 
             u “Offering”
             |  ). If  the  sum  of  the  investment  commitments  does  not equal or exceed this minimum target amount at the Offering deadline, no securities will be sold in the Offering, investment commitments will be cancelled and committed funds will be returned, less  any  fees  incurred,  without  accrued  interest.  There can  be  no  assurance  that  Notes  in  an aggregate  amount  equal  to  the  minimum  target  amount  will  be  subscribed  for  and  therefore there is no guarantee that this Offering will be completed.
           p.text-indent The minimum subscription by an investor is a $
-            +editText('minimum_increment')
+            +frField('campaign.minimum_increment')
             |  investment in the debt securities offered.  Each investor interested in participating in this Offering must register at 
             a(href="www.GrowthFountain.com").link-1 www.GrowthFountain.com.
             |  The website GrowthFountain.com (the 
@@ -499,7 +505,8 @@ section.formc-review
                     td.text-xs-center
                       +frField('formc.team_members[' + k + '].start_date', 'text')
                     td.text-xs-center
-                      +frField('formc.team_members[' + k + '].title', 'text')
+                      each vv,kk in v.title
+                        +frField('formc.team_members[' + k + '].title[' + kk + ']', 'select')
                       br
                       +frField('formc.team_members[' + k + '].responsibilities', 'text')
         p.text-uppercase.m-t-3.m-b-0.pb10 
@@ -845,7 +852,7 @@ section.formc-review
         h2.text-uppercase.text-xs-center.font-weight-bold#use_of_proceeds.letter-spacing-normal.m-b-3 USE OF PROCEEDS
         p.pb10.text-indent The Company intends to apply the proceeds of this Offering substantially as set forth herein, subject to reallocation by management as it deems in the best interests of the Company. The actual use of proceeds of this Offering is subject to the discretion of management and the board of directors, and may include general corporate purposes.
         p
-          +frField('formc.intended_use_of_proceeds', 'text')
+          +frField('formc.intended_use_of_proceeds', 'textarea')
         p.pb10.text-indent The following table reflects our anticipated estimated use of proceeds:
         .table-responsive.m-t-1
           table.table.table-bordered
