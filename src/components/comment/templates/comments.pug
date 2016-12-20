@@ -8,12 +8,18 @@ mixin comment(comment, level)
       : 'col-lg-' + (12 - level) + ' offset-lg-' + level;
     cssClass += ' pt30 comment ';// + (topLevel ? '' : 'collapse');
 
+    //var avatar = comment.user.image_data[0];
     var avatar = '/img/avatar1.jpg';
-    var userName = users[comment.user_id] || 'Anonymous';
+
+    //var userName = comment.user.first_name + ' ' + comment.user.last_name;
+    var userName = 'Anonymous';
     var id = comment.uid
       ? 'comment_' + comment.uid
       : 'comment_empty_' + level;
 
+    //var passedTime = datetimeHelper.fromNow(comment.user_create_date);
+    var passedTime = 'one day ago';
+    comment.user = comment.user || {};
 
   div(id=id class=cssClass data-level=level data-id=comment.uid).p-r-0.p-t-0
     .border-bottom.m-t-1.m-b-1
@@ -22,10 +28,11 @@ mixin comment(comment, level)
     .col-lg-11
       .comments-wrap.col-lg-12.p-r-0
         span.name-comments.text-uppercase #{ userName }
-        if company.owner == comment.user_id
-          span.kvalificatio-comments.text-uppercase CEO
 
-        span.date-comments.pull-right #{ comment.created }
+        //if comment.user.title
+          span.kvalificatio-comments.text-uppercase #{ comment.user.title }
+
+        span.date-comments.pull-right #{ passedTime }
         p #{ comment.message }
         div.responce
           if level <= 0
@@ -40,8 +47,8 @@ mixin comment(comment, level)
           li
             a(href="").link-1.link-like
               i.fa.fa-heart
-                
-          li.pull-right
+        //
+          li.pull-lg-right
             a(href="#").link1.link-edit
               i.fa.fa-pencil-square-o.p-r-5
               | Edit
