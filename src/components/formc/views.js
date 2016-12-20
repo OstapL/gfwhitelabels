@@ -644,8 +644,10 @@ module.exports = {
       this.campaign = options.campaign;
 
       // this.fields.custom_fn = {fn: (function (value, fn, attr, model, computed) {
-      this.fields.use_of_net_proceeds.fn = (function (value, fn, attr, model, computed) {
-        if (!this.calculate(null)) throw 'Total Use of Net Proceeds must be equal to Net Proceeds.';
+      this.fields.less_offering_express.fn = this.fields.use_of_net_proceeds.fn = (function (value, fn, attr, model, computed) {
+        if (!this.calculate(null)) {
+          throw 'Total Use of Net Proceeds must be equal to Net Proceeds.';
+        }
       }).bind(this);
 
       this.labels = {

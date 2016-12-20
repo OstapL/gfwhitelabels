@@ -265,7 +265,7 @@ module.exports = {
   fixMoneyFields(fields, data) {
     _(fields).each((el, key) => {
       if(el.type == 'money') {
-        if (data[key]) {
+        if (data && data[key]) {
           data[key] = formatHelper.unformatPrice(data[key]);
         }
       } else if(el.type == 'nested' && data[key]) {
