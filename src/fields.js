@@ -163,6 +163,15 @@ let exports = {
     });
   },
 
+  comment(c, l) {
+    const template = require('./templates/comment.pug');
+    return template({
+      comment: c,
+      level: l,
+      helpers: helpers,
+    })
+  },
+
 };
 
 module.exports = exports;
