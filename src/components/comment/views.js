@@ -1,4 +1,13 @@
-const moment = require('moment');
+const helpers = {
+  date: require('helpers/dateHelper.js'),
+};
+
+function initDates(c) {
+  c.created_date = new Date(c.created_date);
+  _.each(c.children, (ch) => {
+    initDates(ch);
+  });
+};
 
 module.exports = {
   comments: Backbone.View.extend({
@@ -6,6 +15,7 @@ module.exports = {
     template: require('./templates/comments.pug'),
     el: '.comments-container',
     events: {
+      'keydown .text-body': 'keydownHandler',
       'click .ask-question, .submit-comment': 'submitComment',
       'click .cancel-comment': 'cancelComment',
       'click .link-response-count': 'showHideResponses',
@@ -18,6 +28,10 @@ module.exports = {
     initialize(options) {
       this.fields = options.fields;
       this.urlRoot = this.urlRoot.replace(':model', 'company').replace(':id', this.model.id);
+      //init dates
+      _.each(this.model.data, (c) => {
+        initDates(c);
+      });
     },
 
     getComment(uid) {
@@ -41,12 +55,32 @@ module.exports = {
     render() {
       this.$el.html(this.template({
         comments: this.model.data,
-        datetimeHelper: moment,
+        helpers: helpers,
       }));
 
       this.$stubs = this.$('.stubs');
 
       return this;
+    },
+
+    keydownHandler(e) {
+      let $target = $(e.target);
+
+      switch(e.which) {
+        case 13: {
+          return $target.is('input')
+            ? this.submitComment(e)
+            : void(0);
+        }
+        case 27: {
+          return $target.is('textarea')
+            ? this.cancelComment(e)
+            : void(0);
+        }
+        default: {
+          break;
+        }
+      }
     },
 
     submitComment(e) {
@@ -80,36 +114,39 @@ module.exports = {
       app.showLoading();
       api.makeRequest(this.urlRoot, 'POST', data).done((newData) => {
         $target.prop('disabled', false);
-        // let newCommentModel = {
-        //   children: [],
-        //   message: message,
-        //   uid: newData.new_message_id,
-        //   user_id: '',
-        // };
+        let newCommentModel = {
+          children: [],
+          message: message,
+          uid: newData.new_message_id,
+          created_date: new Date(),
+          user: {
+            first_name: app.user.get('first_name'),
+            last_name: app.user.get('last_name'),
+            id: app.user.get('id'),
+            image_data: app.user.get('image_data'),
+            role: {
+              company_name: '',
+              role: ['get user role in company'],//todo: get user role in company
+            },
+          },
+        };
 
         if (isChild) {
           $form.remove();
-          // let parentComment = this.getComment(parentId);
-          // if (parentComment)
-          //   parentComment.children.push(newCommentModel);
+          let parentComment = this.getComment(parentId);
+          if (parentComment) {
+            parentComment.children.push(newCommentModel);
+            //update parent comment response count
+            $parentComment.find('.response:first .link-response-count').text(parentComment.children.length);
+          }
         } else {
-          // this.model.data.push(newCommentModel);
+          this.model.data.push(newCommentModel);
           $form.find('.text-body').val('');
         }
 
-        let commentStub = this.$stubs.find('.comment[data-level=' + level + ']');
+        let newCommentHtml = app.fields.comment(newCommentModel, level);
+        $(newCommentHtml).appendTo(isChild ? $parentComment : this.$('.comments'));
 
-        let newComment = commentStub.clone();
-
-        // newComment.attr('id', newData.new_message_id);
-        newComment.removeClass('collapse');
-        newComment.find('.date-comments').text((new Date()).toLocaleDateString());
-        newComment.find('p').text(data.message);
-
-        //TODO: update parent comment response count
-        newComment.find('.link-response-count').text('0');
-
-        newComment.appendTo(isChild ? $parentComment : this.$('.comments'));
         app.hideLoading();
       }).fail((err) => {
         $target.prop('disabled', false);
@@ -121,9 +158,13 @@ module.exports = {
     cancelComment(e) {
       e.preventDefault();
 
-      let $form = $(e.target).closest('form');
-      if (!$form.hasClass('edit-comment'))
-        $form.remove();
+      let target = $(e.target);
+
+      //escape pressed on input with ask question
+      if (target.is('input'))
+        return false;
+
+      $(e.target).closest('form').remove();
 
       return false;
     },

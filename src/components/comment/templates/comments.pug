@@ -1,71 +1,3 @@
-mixin comment(comment, level)
-  -
-    level = level || 0;
-    var topLevel = level <= 0;
-
-    var cssClass = level > 12
-      ? 'col-lg-10 offset-lg-1'
-      : 'col-lg-' + (12 - level) + ' offset-lg-' + level;
-    cssClass += ' pt30 comment ';// + (topLevel ? '' : 'collapse');
-
-    //var avatar = comment.user.image_data[0];
-    var avatar = '/img/avatar1.jpg';
-
-    //var userName = comment.user.first_name + ' ' + comment.user.last_name;
-    var userName = 'Anonymous';
-    var id = comment.uid
-      ? 'comment_' + comment.uid
-      : 'comment_empty_' + level;
-
-    //var passedTime = datetimeHelper.fromNow(comment.user_create_date);
-    var passedTime = 'one day ago';
-    comment.user = comment.user || {};
-
-  div(id=id class=cssClass data-level=level data-id=comment.uid).p-r-0.p-t-0
-    .border-bottom.m-t-1.m-b-1
-    .col-lg-1
-      img(src=avatar alt="").img-circle
-    .col-lg-11
-      .comments-wrap.col-lg-12.p-r-0
-        span.name-comments.text-uppercase #{ userName }
-
-        //if comment.user.title
-          span.kvalificatio-comments.text-uppercase #{ comment.user.title }
-
-        span.date-comments.pull-right #{ passedTime }
-        p #{ comment.message }
-        div.responce
-          if level <= 0
-            li
-              i.fa.fa-comment-o.p-r-5
-              a(href="").link-1.link-response-count #{ comment.children.length }
-                i.fa.fa-angle-up
-            li.reply
-              span.reply-left |
-              a(href="").link-1.link-reply Reply
-              span.reply-right |
-          li
-            a(href="").link-1.link-like
-              i.fa.fa-heart
-        //
-          li.pull-lg-right
-            a(href="#").link1.link-edit
-              i.fa.fa-pencil-square-o.p-r-5
-              | Edit
-          li.pull-right
-            span.p-5 |
-          li.pull-right
-            a(href="#").link1.link-delete
-              i.fa.fa-times.p-r-5
-              | Delete
-              
-
-
-    if comment.children && comment.children.length
-      each childComment in comment.children
-        +comment(childComment, level + 1)
-
-
 h2#ask.col-lg-12.dosis.text-uppercase.text-lg-center.text-xs-center.campaign-subheading ASK A QUESTION
 .col-lg-8.offset-lg-2.pt30.comment-form-div
   form.comment-form.form-section
@@ -77,23 +9,25 @@ h2#ask.col-lg-12.dosis.text-uppercase.text-lg-center.text-xs-center.campaign-sub
 
 .col-lg-8.offset-lg-2.pt50.comments
   each c in comments
-    +comment(c, 0)
+    - pug_html += app.fields.comment(c, 0)
+
+-
+  var emptyComment = {
+    uid: '',
+    message: '',
+    children: [],
+    user: {
+      first_name: '',
+      last_name: '',
+      id: 0,
+      role: { company_name: '', role: [] },
+      image_data: [],
+    },
+  };
 
 .stubs.collapse
-  +comment({
-    uid: '',
-    role: '',
-    'message': '',
-    "user_id": app.user.get('id'),
-    "children": []
-  }, 0)
-  +comment({
-    uid: '',
-    role: '',
-    'message': '',
-    "user_id": app.user.get('id'),
-    "children": []
-  }, 1)
+  - pug_html += app.fields.comment(emptyComment, 0)
+  - pug_html += app.fields.comment(emptyComment, 1)
 
   form.comment-form.form-section.edit-comment.collapse
     .col-lg-12.p-r-1.m-t-1
