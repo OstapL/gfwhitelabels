@@ -57,6 +57,7 @@ module.exports = {
       this.$el.html(this.template({
         comments: this.model.data,
         helpers: helpers,
+        owner_id: this.model.owner_id,
       }));
 
       this.$stubs = this.$('.stubs');
@@ -127,7 +128,7 @@ module.exports = {
             image_data: app.user.get('image_data'),
             role: {
               company_name: '',
-              role: ['get user role in company'],//todo: get user role in company
+              role: [''],
             },
           },
         };
@@ -145,7 +146,9 @@ module.exports = {
           $form.find('.text-body').val('');
         }
 
-        let newCommentHtml = app.fields.comment(newCommentModel, level);
+        let newCommentHtml = app.fields.comment(newCommentModel, level, {
+          owner_id: this.model.owner_id,
+        });
         $(newCommentHtml).appendTo(isChild ? $parentComment : this.$('.comments'));
 
         app.hideLoading();

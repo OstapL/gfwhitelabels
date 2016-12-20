@@ -8,27 +8,17 @@ h2#ask.col-lg-12.dosis.text-uppercase.text-lg-center.text-xs-center.campaign-sub
 
 
 .col-lg-8.offset-lg-2.pt50.comments
-  each c in comments
-    - pug_html += app.fields.comment(c, 0)
+  -
+    var options = {
+      owner_id: owner_id,
+      level: 0,
+    };
 
--
-  var emptyComment = {
-    uid: '',
-    message: '',
-    children: [],
-    user: {
-      first_name: '',
-      last_name: '',
-      id: 0,
-      role: { company_name: '', role: [] },
-      image_data: [],
-    },
-  };
+  each c in comments
+    - pug_html += app.fields.comment(c, 0, options)
 
 .stubs.collapse
-  - pug_html += app.fields.comment(emptyComment, 0)
-  - pug_html += app.fields.comment(emptyComment, 1)
-
+  //- todo: move this to fields
   form.comment-form.form-section.edit-comment.collapse
     .col-lg-12.p-r-1.m-t-1
       textarea(placeholder="Type your text here").text-body.col-lg-12

@@ -1,5 +1,7 @@
 -
   level = level || 0;
+  console.log(level);
+  var owner_id = attr.owner_id;
 
   var cssClass = level > 12
   ? 'col-lg-10 offset-lg-1'
@@ -15,7 +17,7 @@
   ? 'comment_' + comment.uid
   : 'comment_empty_' + level;
 
-  var passedTime = helpers.date.fromNow(comment.created_date);
+  var passedTime = attr.helpers.date.fromNow(comment.created_date);
 
 div(id=id class=cssClass data-level=level data-id=comment.uid).p-r-0.p-t-0
   .border-bottom.m-t-1.m-b-1
@@ -24,9 +26,12 @@ div(id=id class=cssClass data-level=level data-id=comment.uid).p-r-0.p-t-0
   .col-lg-11
     .comments-wrap.col-lg-12.p-r-0
       span.name-comments.text-uppercase #{ userName }
-
-      if comment.user.role.role.length
-        span.kvalificatio-comments.text-uppercase #{ comment.user.role.role[0] }
+      if owner_id == comment.user.id
+        -
+          var role = comment.user.role && comment.user.role.role && comment.user.role.role.length
+            ? comment.user.role.role.join(', ')
+            : 'CEO';
+        span.kvalificatio-comments.text-uppercase #{ role }
 
       span.date-comments.pull-right #{ passedTime }
       p #{ comment.message }
@@ -57,7 +62,6 @@ div(id=id class=cssClass data-level=level data-id=comment.uid).p-r-0.p-t-0
           | Delete
 
 
-
   if comment.children && comment.children.length
     each childComment in comment.children
-      - pug_html += app.fields.comment(childComment, level + 1)
+      - pug_html += app.fields.comment(childComment, level + 1, attr)
