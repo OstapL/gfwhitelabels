@@ -80,4 +80,19 @@ module.exports = {
     l.href = href;
     return l.protocol + '//' +l.host;
   },
+
+  formatAmount(amount) {
+    if (amount < 1000)
+      return '$' + amount;
+
+    if (amount < 1000000)
+      return '$' + Math.round(amount/1000) + 'K';
+
+    if (amount < 1000000000)
+      return '$' + (amount/1000000).toFixed(3) + 'M';
+
+    return '$' + (amount / 1000000000).toFixed(2) + 'MM';
+  },
+
+
 };

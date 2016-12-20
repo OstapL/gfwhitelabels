@@ -1,3 +1,8 @@
+const helpers = {
+  date: require('./helpers/dateHelper.js'),
+  format: require('./helpers/formatHelper.js'),
+};
+
 let exports = {
   prepareNestedField(nestedName, name, value, index, myAttr, schema) {
     if(value == null) {
@@ -9,30 +14,30 @@ let exports = {
     myAttr.id = nestedName + '__' + index + '__' + name + '';
   },
 
-  /* 
-   * VLAD: я не знаю где это используется 
-  nestedTextLabel(nestedName, name, myAttr, vals) {
-    vals = vals || values;
-    myAttr = _.extend(myAttr, fields[nestedName].schema[name]);
-    myAttr.value = vals[name] ? vals[name] : '';
+  /*
+   * VLAD: я не знаю где это используется
+   nestedTextLabel(nestedName, name, myAttr, vals) {
+   vals = vals || values;
+   myAttr = _.extend(myAttr, fields[nestedName].schema[name]);
+   myAttr.value = vals[name] ? vals[name] : '';
 
-    return this.textLabel(
-      nestedName + '[' + name + ']',
-      myAttr
-    )
-  },
+   return this.textLabel(
+   nestedName + '[' + name + ']',
+   myAttr
+   )
+   },
 
-  nestedText(nestedName, name, myAttr, vals) {
-    vals = vals || values;
-    myAttr = _.extend(myAttr, fields[nestedName].schema[name]);
-    myAttr.value = vals[name] ? vals[name] : '';
+   nestedText(nestedName, name, myAttr, vals) {
+   vals = vals || values;
+   myAttr = _.extend(myAttr, fields[nestedName].schema[name]);
+   myAttr.value = vals[name] ? vals[name] : '';
 
-    return this.fieldText(
-      nestedName + '[' + name + ']',
-      myAttr
-    )
-  },
-  */
+   return this.fieldText(
+   nestedName + '[' + name + ']',
+   myAttr
+   )
+   },
+   */
 
   nestedTextLabel(nestedName, name, value, index, myAttr, schema) {
     this.prepareNestedField(nestedName, name, value, index, myAttr, schema);
@@ -146,7 +151,18 @@ let exports = {
     attr.value = attr.value && attr.value.indexOf('-') != -1 ? attr.value.split('-')[0] : '';
     //const template = require('./templates/dateYear.pug');
     return template(attr);
-  }
-}
+  },
 
-module.exports = exports; 
+  investment(i, attr) {
+    attr = attr || {};
+    const template =  require('./templates/dashboardInvestment.pug');
+    return template({
+      i: i,
+      attr: attr,
+      helpers: helpers
+    });
+  },
+
+};
+
+module.exports = exports;
