@@ -191,12 +191,24 @@ let exports = {
 
   fieldText(name, attr) {
     const template = require('./templates/fieldText.pug');
+    attr.value = attr.value || '';
     return template({
       name: name,
       attr: attr,
-    })
+    });
   },
 
+  fieldChoiceLabel(name, attr) {
+    this.prepareField(name, attr);
+    attr.type = attr.type || 'select';
+
+    const template = require('./templates/fieldChoiceLabel.pug');
+
+    return template({
+      name: name,
+      attr: attr,
+    });
+  },
 };
 
 module.exports = exports;

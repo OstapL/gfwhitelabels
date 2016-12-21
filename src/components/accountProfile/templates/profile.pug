@@ -6,7 +6,6 @@ include ../../../templates/fields_mixins.pug
   .row
     aside.col-xl-3.col-lg-3.m-b-1
       form(method="post" action="").form.form-section
-        - var values = user;
         h3.m-t-0.m-b-1.profile-user-name.text-xs-center #{user.first_name + ' ' + user.last_name}
         -
           pug_html += app.fields.userProfileDropzone('image_image_id', _.extend({
@@ -60,31 +59,41 @@ include ../../../templates/fields_mixins.pug
                       .form-group.row.required
                         label.col-lg-3.text-lg-right.text-xs-left Legal Name
                           span.color-red *
-                          console
-                        //-
+                        -
                           pug_html += app.fields.fieldText('first_name', {
                             'class': 'col-lg-4 m-b-md-25',
                             'placeholder': 'First Name',
+                            'value': user.first_name,
                           });
                           pug_html += app.fields.fieldText('last_name', {
                             'class': 'col-lg-4',
                             'placeholder': 'Last Name',
+                            'value': user.last_name,
                           });
+                      -
+                        pug_html += app.fields.fieldChoiceLabel('country', _.extend({
+                            class1: 'col-lg-3 text-lg-right text-xs-left',
+                            class2: 'col-lg-8',
+                            empty: { '': 'Choose Country' },
+                            value: user.country,
+                          }, fields.country));
 
-                        +fieldText("first_name", {'class': 'col-lg-4 m-b-md-25','placeholder':'First Name' })
-                        +fieldText("last_name", {'class': 'col-lg-4','placeholder':'Last Name' })
-
-                      +fieldChoiceLabel("country", _.extend({
-                        class1: 'col-lg-3 text-lg-right text-xs-left',
-                        class2: 'col-lg-8',
-                        empty: {'': 'Choose Country'},
-                      }, fields.country))
-                      +fieldTextLabel("street_address_1", _.extend({'class1': 'col-lg-3 text-lg-right text-xs-left', 'class2': 'col-lg-8 ', 'type': 'text'}, fields.street_address_1))
-                      +fieldTextLabel("street_address_2", _.extend({'class1': 'col-lg-3 text-lg-right text-xs-left', 'class2': 'col-lg-8 ', 'type': 'text'}, fields.street_address_2))
+                      +fieldTextLabel("street_address_1", _.extend({
+                        'class1': 'col-lg-3 text-lg-right text-xs-left',
+                        'class2': 'col-lg-8 ',
+                        'type': 'text',
+                        'value': user.street_address_1,
+                      }, fields.street_address_1))
+                      +fieldTextLabel("street_address_2", _.extend({
+                        'class1': 'col-lg-3 text-lg-right text-xs-left',
+                        'class2': 'col-lg-8 ',
+                        'type': 'text',
+                        'value': user.street_address_2,
+                      }, fields.street_address_2))
 
                       .us-row(style="display:" + (user.country == 'US' ? 'block' : 'none'))
-                        input(type="hidden" name="city" values=values['city'] disabled=((user.country=='US') ? false : true))
-                        input(type="hidden" name="state" value=values['state'] disabled=((user.country=='US') ? false : true))
+                        input(type="hidden" name="city" value=user.city disabled=((user.country=='US') ? false : true))
+                        input(type="hidden" name="state" value=user.state disabled=((user.country=='US') ? false : true))
                         .row
                           .col-md-12.col-lg-6
                             +fieldTextLabel('zip_code', _.extend({
@@ -98,8 +107,13 @@ include ../../../templates/fields_mixins.pug
                             .row
                               label.col-lg-5.col-xs-6.text-lg-right.text-xs-left City/State
                               .col-lg-7.col-xs-6
-                                a(data-toggle="modal" data-target="#city_state_modal" href="#city_state_modal").change_state_city
-                                  span.input-value.js-city-state #{ values['city'] ? values['city'] : '(City)' }, #{ values['state'] ? values['state'] : '(State)' }
+                                a(
+                                  data-toggle="modal"
+                                  data-target="#city_state_modal"
+                                  href="#city_state_modal"
+                                ).change_state_city
+                                  span.input-value.js-city-state
+                                    | #{ user.city || '(City)' }, #{ user.state || '(State)' }
                                   i.fa.fa-pencil-square-o.link-1
                         .row
                           .col-xl-6.us-phone
@@ -139,7 +153,12 @@ include ../../../templates/fields_mixins.pug
                           .form-group.row.zip_code.text
                             label.text-lg-right.col-lg-6(for="zip_code") Postal Code
                             div.col-lg-6
-                              input.form-control(name='zip_code1' placeholder='Postal Code' type="text" value=user.zip_code)
+                              input.form-control(
+                                name='zip_code1'
+                                placeholder='Postal Code'
+                                type="text"
+                                value=user.zip_code
+                              )
                         .col-lg-5.foreign-country-phone
                           if user.country != 'US'
                             +fieldTextLabel('phone', _.extend({
@@ -291,10 +310,10 @@ include ../../../templates/fields_mixins.pug
                           span.color-red *
                         .col-lg-9.radio-input
                           label
-                            input(type="radio" name='bank_account_type' checked=!values['bank_account_type'] value=0)
+                            input(type="radio" name='bank_account_type' checked=!user.bank_account_type value=0)
                             |  Checking
                           label
-                            input(type="radio" name='bank_account_type' checked=values['bank_account_type'] value=1)
+                            input(type="radio" name='bank_account_type' checked=user.bank_account_type value=1)
                             |  Savings
                       
                       //+fieldTextLabel('annual_income', _.extend({'class1': 'col-lg-3 text-lg-right text-xs-left', 'class2': 'col-lg-8 ', 'type': 'text', 'value': user.annual_income}, fields.annual_income))
@@ -326,12 +345,12 @@ div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true
         .container.form-section
           .col-lg-10.offset-lg-1.border-bottom
             .form-group.row.clearfix.required
-              input(type="text" placeholder="City" value=values['city'])#city.js-city.form-control
+              input(type="text" placeholder="City" value=user.city)#city.js-city.form-control
             .form-group.row.clearfix.required
               select(name='state')#state.js-state.form-control.custom-select
                 option(checked='checked', value="") State
                 each state in states
-                  if state.abbreviation == values.state
+                  if state.abbreviation == user.state
                     option(value=state.abbreviation selected)= state.name
                   else
                     option(value=state.abbreviation)= state.name
