@@ -844,37 +844,44 @@ module.exports = {
       this.model.owner = this.model.owner || {};
 
       const formData = $('form.invest_form').serializeJSON();
-      const issuer_legal_name = this.model.owner.first_name + ' ' + this.model.owner.last_name;
+      const issuer_signer = this.model.owner.first_name + ' ' + this.model.owner.last_name;
       const investor_legal_name = formData.personal_information_data.first_name + ' ' + formData.personal_information_data.last_name;
       return {
         fees_to_investor: 10,
-        trans_percent: '6%',
-        listing_fee: '$500',
-        registration_fee: '$500',
-        Commitment_Date_X: this.getCurrentDate(),
-        city: formData.personal_information_data.city,
-        state: formData.personal_information_data.state,
-        zip_code: formData.personal_information_data.zip_code,
-        address_1: formData.personal_information_data.street_address_1,
-        address_2: formData.personal_information_data.street_address_2 || ' ',
-        aggregate_inclusive_purchase: formData.total_amount,
-        investor_number_purchased: formData.payment_information_data.account_number,
-        investor_total_purchase: formData.amount,
-        investor_legal_name: investor_legal_name,
-        investor_address: app.user.get('address_1'),
-        investor_city: app.user.get('city'),
-        investor_code: app.user.get('zip_code'),
-        investor_email: app.user.get('email'),
-        Investor_optional_address: app.user.get('address_2') || ' ',
-        investor_state: app.user.get('state'),
+        trans_percent: 6,
+        // listing_fee: '$500',
+        registration_fee: 500,
+        commitment_date_x: this.getCurrentDate(),
+
+        // campaign
+        issuer_legal_name: this.model.name,
+        city: this.model.city,
+        state: this.model.state,
+        zip_code: this.model.zip_code,
+        address_1: this.model.address_1,
+        address_2: this.model.address_2,
         jurisdiction_of_organization: this.model.founding_state, 
+        jurisdiction_of_incorporation: this.model.founding_state, 
         maximum_raise: this.model.campaign.maximum_raise,
         minimum_raise: this.model.campaign.minimum_raise,
         price_per_share: this.model.campaign.price_per_share,
+        
+        // owner of campaign
         issuer_email: this.model.owner.email,
-        issuer_legal_name: issuer_legal_name,
-        issuer_signer: formData.signature.full_name,
-        issuer_signer_title: null,
+        issuer_signer: issuer_signer,
+        // issuer_signer_title: null,
+
+        // investor
+        investor_legal_name: investor_legal_name,
+        agregate_inclusive_purchase: formData.total_amount,
+        investment_amount: formData.amount,
+        investor_address: formData.personal_information_data.street_address_1,
+        investor_optional_address: formData.personal_information_data.street_address_2,
+        investor_code: formData.personal_information_data.zip_code,
+        investor_city: formData.personal_information_data.city,
+        investor_state: formData.personal_information_data.state,
+        investor_email: app.user.get('email'),
+        investor_number_purchased: null,
       };
     },
 
