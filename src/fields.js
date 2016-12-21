@@ -198,6 +198,23 @@ let exports = {
     });
   },
 
+  fieldTextLabel(name, attr) {
+    this.prepareField(name, attr);
+    attr.type = attr.type || 'text';
+    attr.value = attr.type == 'money'
+      ? helpers.format.formatPrice(attr.value)
+      : attr.value
+
+    console.log(name);
+    console.log(attr);
+
+    const template = require('./templates/fieldTextLabel.pug');
+    return template({
+      name: name,
+      attr: attr,
+    })
+  },
+
   fieldChoiceLabel(name, attr) {
     this.prepareField(name, attr);
     attr.type = attr.type || 'select';
