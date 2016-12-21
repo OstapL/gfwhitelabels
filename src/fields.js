@@ -124,7 +124,7 @@ let exports = {
 
   textLabel(name, attr) {
     attr.name = name;
-    prepareField(name, attr);
+    this.prepareField(name, attr);
     if(attr.hasOwnProperty('class1') == false) { attr.class1 = 'col-xl-3 col-lg-12 text-lg-left text-xl-right'};
     if(attr.hasOwnProperty('class2') == false) { attr.class2 = 'col-xl-9 col-lg-12' };
     const template = require('./templates/textLabel.pug');
@@ -132,7 +132,7 @@ let exports = {
   },
   textareaLabel(name, attr) {
     attr.name = name;
-    prepareField(name, attr);
+    this.prepareField(name, attr);
     if(attr.hasOwnProperty('class1') == false) { attr.class1 = 'col-xl-3 col-lg-12 text-lg-left text-xl-right'};
     if(attr.hasOwnProperty('class2') == false) { attr.class2 = 'col-xl-9 col-lg-12' };
     const template = require('./templates/textareaLabel.pug');
