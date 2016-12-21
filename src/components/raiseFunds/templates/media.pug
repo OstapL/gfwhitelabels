@@ -55,12 +55,7 @@ section.create-company-media.container.media-container
         .row.m-b-2.recommended.p-sm-0.main-video-block
           .p-sm-0.video-container
             .col-xl-7.col-lg-6
-              //+fieldTextLabel("video", _.extend({
-                class1: 'col-xl-5 col-lg-12 p-sm-0 text-xl-right text-lg-left',
-                class2: 'col-xl-7 col-lg-12 p-sm-0',
-                help_text: 'You Tube or Vimeo links only please.',
-                }, fields.video))
-              - pug_html += app.fields.textLabel('video', {class1:'col-xl-5 col-lg-12 p-sm-0 text-xl-right text-lg-left', class2:'col-xl-7 col-lg-12 p-sm-0', schema: fields.video, value: values.video,})
+              - pug_html += app.fields.textLabel('video', {class1:'col-xl-5 col-lg-12 p-t-0 m-b-0 p-sm-0 text-xl-right text-lg-left', class2:'col-xl-7 col-lg-12 p-sm-0', schema: fields.video, value: values.video,})
               
             #video_source.col-xl-5.col-lg-6.p-sm-0
               .embed-responsive.embed-responsive-16by9
