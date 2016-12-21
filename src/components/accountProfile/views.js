@@ -466,9 +466,8 @@ module.exports = {
       if (!confirm('Are you sure?'))
         return false;
 
-      // api.makeRequest(investmentServer + '/' + id + '/decline', 'PUT').done((response) => {
-
-      setTimeout(() => {
+      api.makeRequest(investmentServer + '/' + id + '/decline', 'PUT').done((response) => {
+        console.log(response);
         let investment = this.investments.active.splice(idx, 1)[0];
         investment.status = 2;
         this.investments.historical.push(investment);
@@ -482,11 +481,10 @@ module.exports = {
           historicalInvestmentsBlock.empty();
 
         historicalInvestmentsBlock.append(app.fields.investment(investment));
-      }, 200);
 
-      // }).fail((err) => {
-      //   alert(err.error);
-      // });
+      }).fail((err) => {
+        alert(err.error);
+      });
     },
   }),
 
