@@ -3,7 +3,7 @@
 mixin showRisk(name, index, title, risk)
   form(data-method="PATCH" data-index=(index) index=index)
     input(type="hidden" name="title" value=title)
-    textarea(name="risk" readonly index=index).form-control.big-textarea.borderless-textarea #{ values[name].hasOwnProperty(index) ? values[name][index].risk : risk }
+    textarea(name="risk" readonly index=index data-index=index class="form-control big-textarea borderless-textarea " + (values[name].hasOwnProperty(index) ? "added" : "unadded")) #{ values[name].hasOwnProperty(index) ? values[name][index].risk : risk }
     .text-md-center.text-lg-right
       button(style="display: " + (values[name].hasOwnProperty(index) ? 'inline-block' : 'none') + ';' data-index=index).btn.btn-secondary.btn-sm.m-t-1.edit-risk.risk-button.added-state  Edit risk
       button(style="display: " + (values[name].hasOwnProperty(index) ? 'inline-block' : 'none') + ';' data-index=index).btn.btn-secondary.btn-sm.m-t-1.delete.risk-button.added-state  Delete risk

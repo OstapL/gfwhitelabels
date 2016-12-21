@@ -399,7 +399,7 @@ module.exports = {
   }),
 
   setNewPassword: Backbone.View.extend({
-    urlRoot: authServer + Urls.rest_password_reset_confirm(),
+    urlRoot: authServer + '/reset-password/do',
     events: {
         'submit form': api.submitAction,
     },
@@ -408,17 +408,9 @@ module.exports = {
       return '/account/profile';
     },
 
-    /*_success(data) {
-      // Do the login in here too.
-    },*/
-
     render(){
-      const params = app.getParams();
       let template = require('./templates/setNewPassword.pug');
-      this.$el.html(template({
-        uid: params.uid,
-        token: params.token,
-      }));
+      this.$el.html(template());
       return this;
     },
   }),
@@ -445,7 +437,7 @@ module.exports = {
         i.campaign.expiration_date = new Date(i.campaign.expiration_date);
 
         if (_.contains(canceledStatuses, i.status) || i.campaign.expiration_date < today )
-          this.investments.historical.push(i)
+          this.investments.historical.push(i);
         else
           this.investments.active.push(i);
       });
@@ -458,18 +450,41 @@ module.exports = {
     cancelInvestment(e) {
       e.preventDefault();
 
-      let id = $(e.target).data('id');
+      let $target = $(e.target);
+      let id = $target.data('id');
 
       if (!id)
         return false;
 
+      let idx = _.findIndex(this.investments.active, (i) => {
+        return i.id == id;
+      });
+
+      if (idx < 0)
+        return console.error(`Investment doesn't exist: ${id}`);
+
       if (!confirm('Are you sure?'))
         return false;
 
-      alert('Not implemented');
-      // api.makeRequest(investmentServer + '/' + id + 'decline', 'PUT').done((response) => {
-      //
-      // });
+      api.makeRequest(investmentServer + '/' + id + '/decline', 'PUT').done((response) => {
+        console.log(response);
+        let investment = this.investments.active.splice(idx, 1)[0];
+        investment.status = 2;
+        this.investments.historical.push(investment);
+
+        let activeInvestmentBlock = $target.closest('.one_table');
+        activeInvestmentBlock.remove();
+
+        let historicalInvestmentsBlock = this.$el.find('#historical .investor_table');
+
+        if (this.investments.historical.length === 1)
+          historicalInvestmentsBlock.empty();
+
+        historicalInvestmentsBlock.append(app.fields.investment(investment));
+
+      }).fail((err) => {
+        alert(err.error);
+      });
     },
   }),
 

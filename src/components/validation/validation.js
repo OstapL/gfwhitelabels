@@ -133,7 +133,7 @@ module.exports = {
               this.runRules(attr, name + '.' + index + '.' + subname);
             });
           }
-        })
+        });
         if (attr.fn) {
           this.runRule('fn', attr.fn, name, attr);
         }

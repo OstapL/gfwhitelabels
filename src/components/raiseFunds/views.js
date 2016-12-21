@@ -1,7 +1,7 @@
-'use strict';
-let addSectionHelper = require('helpers/addSectionHelper.js');
+const addSectionHelper = require('helpers/addSectionHelper.js');
 
 import formatHelper from '../../helpers/formatHelper';
+const raiseHelpers = require('./helpers.js');
 const appendHttpIfNecessary = formatHelper.appendHttpIfNecessary;
 
 const dropzoneHelpers = require('helpers/dropzoneHelpers.js');
@@ -11,70 +11,6 @@ const validation = require('components/validation/validation.js');
 const menuHelper = require('helpers/menuHelper.js');
 const disableEnterHelper = require('helpers/disableEnterHelper.js');
 
-const submitCampaign = function submitCampaign(e) {
-  doCampaignValidation.call(this, e, this.model);
-};
-
-
-const postForReview = function postForReview(e) {
-  api.makeRequest(raiseCapitalServer + '/company/' + e.target.dataset.companyid + '/post-for-review', 'PUT')
-    .then((data) => {
-      app.routers.navigate(
-        '/company/in-review',
-        { trigger: true, replace: false }
-      );
-    });
-};
-
-const doCampaignValidation = function doCampaignValidation(e, data) {
-
-  if(data == null) {
-    data = this.model;
-  }
-
-  if(data.progress == null) {
-    data.progress  = this.model.progress;
-  }
-
-  if(
-      data.progress.general_information == true &&
-      data.progress.media == true &&
-      data.progress.specifics == true &&
-      data.progress['team-members'] == true
-  ) {
-    $('#company_publish_confirm').modal('show');
-  } else {
-    var errors = {};
-    _(data.progress).each((d, k) => {
-      if(k != 'perks') {
-        if(d == false)  {
-          $('#company_publish .'+k).removeClass('collapse');
-        } else {
-          $('#company_publish .'+k).addClass('collapse');
-        }
-      }
-    });
-    $('#company_publish').modal('toggle');
-  }
-};
-
-const onPreviewAction = function(e) {
-  e.preventDefault();
-  let pathname = location.pathname;
-  //this.$el.find('#submitForm').click();
-  app.showLoading();
-  let data = this.$('form').serializeJSON({ useIntKeysAsArrayIndex: true });
-  if (window.location.href.indexOf('team-members/add') !== -1) {
-    e.target.dataset.method = 'PUT';
-  }
-  if (api.submitAction.call(this, e, data)) {
-    setTimeout((function() {
-      window.location = '/' + this.formc.company_id + '?preview=1&previous=' + pathname;
-    }).bind(this), 100);
-  }
-};
-
-
 module.exports = {
   company: Backbone.View.extend(_.extend({
     urlRoot: raiseCapitalServer + '/company',
@@ -83,12 +19,12 @@ module.exports = {
       'click #submitForm': api.submitAction,
       'keyup #zip_code': 'changeZipCode',
       'click .update-location': 'updateLocation',
-      'click .onPreview': onPreviewAction,
-      'click .submit_form': submitCampaign,
-      'click #postForReview': postForReview,
+      'click .onPreview': raiseHelpers.onPreviewAction,
+      'click .submit_form': raiseHelpers.submitCampaign,
+      'click #postForReview': raiseHelpers.postForReview,
       'change #website': appendHttpIfNecessary,
       'change #website,#twitter,#facebook,#instagram,#linkedin': 'appendHttpsIfNecessary',
-    }, leavingConfirmationHelper.events, phoneHelper.events, menuHelper.events),
+    }, /*leavingConfirmationHelper.events,*/ phoneHelper.events, menuHelper.events),
 
     appendHttpsIfNecessary(e) {
       appendHttpIfNecessary(e, true);
@@ -96,8 +32,9 @@ module.exports = {
 
     initialize(options) {
       this.fields = options.fields;
-      this.formc = options.formc;
-      this.campaign = options.campaign;
+      this.formc = options.formc || {};
+      this.campaign = options.campaign || {};
+      this.model = options.company || {};
       this.labels = {
         name: 'Legal Name of Company',
         short_name: 'Doing Business as Another Name?',
@@ -199,9 +136,9 @@ module.exports = {
     template: require('./templates/generalInformation.pug'),
     events: _.extend({
         'click #submitForm': api.submitAction,
-        'click .onPreview': onPreviewAction,
-        'click .submit_form': submitCampaign,
-        'click #postForReview': postForReview,
+        'click .onPreview': raiseHelpers.onPreviewAction,
+        'click .submit_form': raiseHelpers.submitCampaign,
+        'click #postForReview': raiseHelpers.postForReview,
       }, addSectionHelper.events, leavingConfirmationHelper.events, menuHelper.events),
 
     preinitialize() {
@@ -213,12 +150,18 @@ module.exports = {
       }
     },
 
+    _success(data, newData) {
+      raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
+      return 1;
+    },
+
     getSuccessUrl(data) {
       return '/campaign/' + this.model.id  + '/media';
     },
 
     initialize(options) {
       this.fields = options.fields;
+      this.model = options.campaign;
       this.formc = options.formc;
       this.labels = {
         pitch: 'Why Should People Invest?',
@@ -270,12 +213,17 @@ module.exports = {
         'click #submitForm': api.submitAction,
         'change #video,.additional-video-link': 'updateVideo',
         'change .press_link': 'appendHttpIfNecessary',
-        'click .submit_form': submitCampaign,
-        'click #postForReview': postForReview,
-        'click .onPreview': onPreviewAction,
+        'click .submit_form': raiseHelpers.submitCampaign,
+        'click #postForReview': raiseHelpers.postForReview,
+        'click .onPreview': raiseHelpers.onPreviewAction,
       }, leavingConfirmationHelper.events, menuHelper.events,
         addSectionHelper.events, dropzoneHelpers.events
     ),
+
+    _success(data, newData) {
+      raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
+      return 1;
+    },
 
     getSuccessUrl(data) {
       return '/campaign/' + this.model.id + '/team-members';
@@ -296,6 +244,7 @@ module.exports = {
     },
 
     initialize(options) {
+      this.model = options.campaign;
       this.urlRoot = this.urlRoot.replace(':id', this.model.id);
       this.formc = options.formc;
       this.fields = options.fields;
@@ -392,17 +341,17 @@ module.exports = {
     template: require('./templates/teamMemberAdd.pug'),
     events: _.extend({
       'click .delete-member': 'deleteMember',
-      'click .submit_form': doCampaignValidation,
-      'click #postForReview': postForReview,
+      'click .submit_form': raiseHelpers.submitCampaign,
+      'click #postForReview': raiseHelpers.postForReview,
       'change #linkedin,#facebook': 'appendHttpsIfNecessary',
       'click .cancel': 'cancel',
       'click .save': api.submitAction,
-      'click .onPreview': onPreviewAction,
+      'click .onPreview': raiseHelpers.onPreviewAction,
       // 'change #zip_code': 'changeZipCode',
     }, leavingConfirmationHelper.events, menuHelper.events, dropzoneHelpers.events),
-
-    getSuccessUrl(data) {
-      return '/campaign/' + this.model.id + '/team-members';
+    
+    _success(data) {
+      window.location = '/campaign/' + this.model.id + '/team-members';
     },
 
     preinitialize() {
@@ -421,6 +370,7 @@ module.exports = {
         showPreview: true,
       };
 
+      this.model = options.campaign;
       this.formc = options.formc;
       this.type = options.type;
       this.index = options.index;
@@ -428,7 +378,7 @@ module.exports = {
       this.urlRoot = this.urlRoot.replace(':id', this.model.id);
 
       if (this.index != 'new') {
-        this.member = this.model.data[this.index];
+        this.member = this.model.team_members[this.index];
         this.urlRoot  += '/' + this.index;
         this.submitMethod = 'PUT';
       } else {
@@ -480,10 +430,9 @@ module.exports = {
     urlRoot: raiseCapitalServer + '/campaign/:id/team-members',
     events: _.extend({
       'click .delete-member': 'deleteMember',
-      'click .submit_form': doCampaignValidation,
-      'click #postForReview': postForReview,
-      'click .onPreview': onPreviewAction,
-      'submit form': 'submit',
+      'click .submit_form': raiseHelpers.submitCampaign,
+      'click #postForReview': raiseHelpers.postForReview,
+      'click .onPreview': raiseHelpers.onPreviewAction,
     }, menuHelper.events),
 
     preinitialize() {
@@ -497,18 +446,14 @@ module.exports = {
     initialize(options) {
       this.fields = options.fields;
       this.formc = options.formc;
+      this.model = options.campaign;
 
       this.urlRoot = this.urlRoot.replace(':id', this.model.id);
     },
 
     render() {
       let template = require('./templates/teamMembers.pug');
-      // let values = this.model.toJSON();
       let values = this.model;
-
-      if (!Array.isArray(values.data)) {
-        values.data = [];
-      }
 
       this.$el.html(
         template({
@@ -522,7 +467,7 @@ module.exports = {
 
       disableEnterHelper.disableEnter.call(this);
       this.checkForm();
-
+      this.$el.find('.team-add-item').equalHeights();
       return this;
     },
 
@@ -557,9 +502,9 @@ module.exports = {
         //'focus #minimum_raise,#maximum_raise,#minimum_increment,#premoney_valuation,#price_per_share': 'clearZeroAmount',
         //'change #minimum_raise,#maximum_raise,#minimum_increment,#premoney_valuation': 'formatNumber',
         'change #minimum_raise,#maximum_raise,#price_per_share,#premoney_valuation': 'calculateNumberOfShares',
-        'click .onPreview': onPreviewAction,
-        'click .submit_form': submitCampaign,
-        'click #postForReview': postForReview,
+        'click .onPreview': raiseHelpers.onPreviewAction,
+        'click .submit_form': raiseHelpers.submitCampaign,
+        'click #postForReview': raiseHelpers.postForReview,
         'click .submit-specifics': 'checkMinMaxRaise',
         'change #valuation_determination': 'valuationDetermine',
       }, leavingConfirmationHelper.events, menuHelper.events, dropzoneHelpers.events),
@@ -575,6 +520,7 @@ module.exports = {
       initialize(options) {
         this.fields = options.fields;
         this.formc = options.formc;
+        this.model = options.campaign;
         this.company = options.company;
         this.labels = {
           investor_presentation_data: '',
@@ -643,6 +589,11 @@ module.exports = {
         this.$('#max_equity_offered').val(max_equity_offered + '%');
       },
 
+      _success(data, newData) {
+        raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
+        return 1;
+      },
+
       getSuccessUrl(data) {
         return '/campaign/' + this.model.id + '/perks';
       },
@@ -697,9 +648,9 @@ module.exports = {
     urlRoot: raiseCapitalServer + '/campaign/:id/perks',
     events: _.extend({
         'click #submitForm': api.submitAction,
-        'click .onPreview': onPreviewAction,
-        'click .submit_form': submitCampaign,
-        'click #postForReview': postForReview,
+        'click .onPreview': raiseHelpers.onPreviewAction,
+        'click .submit_form': raiseHelpers.submitCampaign,
+        'click #postForReview': raiseHelpers.postForReview,
     }, leavingConfirmationHelper.events, menuHelper.events, addSectionHelper.events),
 
     preinitialize() {
@@ -713,6 +664,7 @@ module.exports = {
     initialize(options) {
       this.fields = options.fields;
       this.formc = options.formc;
+      this.model = options.campaign;
       this.labels = {
         perks: {
           amount: 'If an Investor Invests Over',
@@ -742,7 +694,9 @@ module.exports = {
     },
 
     _success(data) {
+      raiseHelpers.updateMenu(raiseHelpers.calcProgress(app.user.campaign));
       app.hideLoading();
+      return 0;
     }
 
   }, leavingConfirmationHelper.methods, menuHelper.methods, addSectionHelper.methods)),

@@ -1,6 +1,8 @@
 'use strict';
 
+const formcHelpers = require('./helpers.js');
 const formatHelper = require('../../helpers/formatHelper');
+const roles = ['Shareholder', 'Director', 'Officer'];
 
 const menuHelper = require('helpers/menuHelper.js');
 const addSectionHelper = require('helpers/addSectionHelper.js');
@@ -11,6 +13,8 @@ const riskFactorsHelper = require('helpers/riskFactorsHelper.js');
 const validation = require('components/validation/validation.js');
 
 const disableEnterHelper = require('helpers/disableEnterHelper.js');
+
+const leavingConfirmationHelper = require('helpers/leavingConfirmationHelper.js');
 
 const labels = {
   title: 'Title for Risk',
@@ -47,68 +51,28 @@ const labels = {
 
 const submitFormc = function submitFormc(e) {
   e.preventDefault();
-  let $form = this.$el.find('form');
-  var data = $form.serializeJSON();
-
-  _.extend(this.model, data);
-  data = _.extend({}, this.model);
-
-  // ToDo
-  // Refactor code
-  if(this.hasOwnProperty('index')) {
-    data.index = this.index;
-  };
-
-  this.$('.help-block').remove();
-  if (!validation.validate(this.fields, data, this)) {
-    _(validation.errors).each((errors, key) => {
-      validation.invalidMsg(this, key, errors);
-    });
-    this.$('.help-block').scrollTo(45);
-    return;
-  } else {
-    let url = this.urlRoot.replace(/:id/, data.id);
-    let type = 'PUT';
-    delete data.id;
-
-    api.makeRequest(url, type, data).
-      then((data) => {
-
-        data.progress = this.model.progress;
-
-        doFormcValidation(e, data);
-    }, (error) => {
-      doFormcValidation(null, this.model);
-    });
-  }
-};
-
-const doFormcValidation = function doFormcValidation(e, data) {
-
-  if(data == null) {
-    data = this.model;
-  }
+  let progress = formcHelpers.formcCalcProgress(this.model);
 
   if(
-      data.progress.introduction == true &&
-      data.progress["team-members"] == true &&
-      data.progress["related-parties"] == true &&
-      data.progress["use-of-proceeds"] == true &&
-      data.progress["risk-factors-market"] == true &&
-      data.progress["risk-factors-financial"] == true &&
-      data.progress["risk-factors-operational"] == true &&
-      data.progress["risk-factors-competitive"] == true &&
-      data.progress["risk-factors-personnel"] == true &&
-      data.progress["risk-factors-legal"] == true &&
-      data.progress["risk-factors-misc"] == true &&
-      data.progress["financial-condition"] == true &&
-      data.progress["outstanding-security"] == true &&
-      data.progress["background-check"] == true
+      progress.introduction == true &&
+      progress["team-members"] == true &&
+      progress["related-parties"] == true &&
+      progress["use-of-proceeds"] == true &&
+      progress["risk-factors-market"] == true &&
+      progress["risk-factors-financial"] == true &&
+      progress["risk-factors-operational"] == true &&
+      progress["risk-factors-competitive"] == true &&
+      progress["risk-factors-personnel"] == true &&
+      progress["risk-factors-legal"] == true &&
+      progress["risk-factors-misc"] == true &&
+      progress["financial-condition"] == true &&
+      progress["outstanding-security"] == true &&
+      progress["background-check"] == true
   ) {
     $('#formc_publish_confirm').modal('show');
   } else {
-    var errors = {};
-    _(data.progress).each((d, k) => {
+    let errors = {};
+    _(progress).each((d, k) => {
       if(k != 'perks') {
         if(d == false)  {
           $('#formc_publish .'+k).removeClass('collapse');
@@ -127,10 +91,11 @@ module.exports = {
 
     events: _.extend({
       'submit form': 'submit',
+      'click .link-2': 'openPdf',
       'click .submit_formc': submitFormc,
       'keyup #full-name': 'changeSign',
       'click #pay-btn': 'stripeSubmit',
-    }, menuHelper.events, yesNoHelper.events),
+    }, menuHelper.events, yesNoHelper.events, /*leavingConfirmationHelper.events*/),
 
     preinitialize() {
       // ToDo
@@ -141,6 +106,7 @@ module.exports = {
     },
 
     initialize(options) {
+      this.model = options.formc;
       this.fields = options.fields;
 
       if(this.model.is_paid === false) {
@@ -169,6 +135,58 @@ module.exports = {
       this.eSignPreview = eSignForm.find('.electronically .name');
 
       return this;
+    },
+
+    saveEsign() {
+      const reqUrl = global.esignServer + '/pdf-doc';
+      const formData = this.getDocMetaData();
+      const data = {
+        type: 2,
+        esign: formData.issuer_signer,
+        meta_data: formData,
+        template: 'formc/funding_portal_listing_agreement.pdf'
+      };
+
+      $.post(reqUrl, data)
+        .fail( (err) => console.log(err));
+    },
+
+    openPdf (e) {
+      var pathToDoc = e.target.dataset.path;
+      var data = this.getDocMetaData();
+      e.target.href = pathToDoc + '?' + $.param(data);
+    },
+
+    getDocMetaData () {
+      const formData = this.$el.find('form').serializeJSON();
+      const issuer_legal_name = app.user.get('first_name') + ' ' + app.user.get('last_name');
+      debugger;
+      return {
+        trans_percent: 6,
+        nonrefundable_fees: 50,
+        registration_fee: 500,
+        amendment_fee: 200,
+        commitment_date_x: this.getCurrentDate(),
+        zip_code: app.user.company.zip_code,
+        address_1: app.user.company.address_1,
+        address_2: app.user.company.address_2,
+        issuer_legal_name: app.user.company.name,
+        issuer_email: app.user.get('email'),
+        issuer_signer: formData.full_name,
+        // party_fees: '',
+        // withdrawal_fee: '',
+      };
+    },
+
+    _success(data, newData) {
+      this.saveEsign(data);
+      formcHelpers.updateFormcMenu(formcHelpers.formcCalcProgress(app.user.formc));
+      return 1;
+    },
+
+    getCurrentDate () {
+        const date = new Date();
+        return (date.getMonth() + 1) + '/' + date.getDate() + '/' + date.getFullYear();
     },
 
     getSuccessUrl() {
@@ -322,7 +340,7 @@ module.exports = {
       this.eSignPreview.text(this.eSignFullName.val());
     },
 
-  }, menuHelper.methods, yesNoHelper.methods)),
+  }, menuHelper.methods, yesNoHelper.methods, leavingConfirmationHelper.methods)),
 
   teamMembers: Backbone.View.extend(_.extend({
     urlRoot: formcServer + '/:id/team-members',
@@ -332,7 +350,7 @@ module.exports = {
       'blur #full_time_employers,#part_time_employers': 'updateEmployees',
       'click .submit_formc': submitFormc,
       'click .delete-member': 'deleteMember',
-    }, menuHelper.events),
+    }, menuHelper.events, leavingConfirmationHelper.events),
 
     preinitialize() {
 
@@ -343,14 +361,21 @@ module.exports = {
       }
     },
 
-    getSuccessUrl(data) {
-      return '/formc/' + this.model.id + '/related-parties';
-    },
-
     initialize(options) {
+      this.model = options.formc;
       this.fields = options.fields;
       this.fields.full_time_employers = { label: 'Full Time Employees' };
       this.fields.part_time_employers = { label: 'Part Time Employees' };
+      console.log(this);
+    },
+
+    _success(data, newData) {
+      formcHelpers.updateFormcMenu(formcHelpers.formcCalcProgress(app.user.formc));
+      return 1;
+    },
+
+    getSuccessUrl(data) {
+      return '/formc/' + this.model.id + '/related-parties';
     },
 
     deleteMember: function (e) {
@@ -416,7 +441,7 @@ module.exports = {
           Urls: Urls,
           fields: this.fields,
           values: this.model,
-          roles: ['Shareholder', 'Director', 'Officer'],
+          roles: roles,
           titles: [
             '',
             'CEO/President',
@@ -431,7 +456,7 @@ module.exports = {
       return this;
     },
 
-  }, menuHelper.methods, addSectionHelper.methods)),
+  }, menuHelper.methods, addSectionHelper.methods, leavingConfirmationHelper.methods)),
 
   teamMemberAdd: Backbone.View.extend(_.extend({
     urlRoot: formcServer + '/:id/team-members',
@@ -440,9 +465,25 @@ module.exports = {
     events: _.extend({
       'click #submitForm': api.submitAction,
       'click .submit_formc': submitFormc,
-    }, addSectionHelper.events, menuHelper.events),
+    }, addSectionHelper.events, menuHelper.events, leavingConfirmationHelper.events),
 
     initialize(options) {
+      if(options.user_id != 'new') {
+        let t = options.formc.team_members.filter(function(el) { return el.user_id == options.user_id})[0]
+        t.formc_id = options.formc.id;
+        t.campaign_id = options.formc.campaign_id;
+        t.company_id = options.formc.company_id;
+        t.progress = options.formc.progress;
+        delete t.id;
+        this.model = t;
+      } else {
+        this.model = {
+          formc_id: options.formc.id,
+          campaign_id: options.formc.campaign_id,
+          company_id: options.formc.company_id,
+          progress: options.formc.progress
+        };
+      }
       this.fields = options.fields;
       this.role = options.role;
 
@@ -516,11 +557,20 @@ module.exports = {
       return this;
     },
 
-    getSuccessUrl(data) {
-      return '/formc/' + this.model.formc_id + '/team-members';
+    _success(data, newData) {
+      window.location = '/formc/' + this.model.formc_id + '/team-members';
+      /*
+      this.model.team_members.push(newData);
+      this.undelegateEvents();
+      app.routers.navigate(
+        '/formc/' + this.model.id + '/team-members',
+        { trigger: true, replace: false }
+      );
+      //return '/campaign/' + this.model.id + '/team-members';
+      */
     },
 
-  }, addSectionHelper.methods, menuHelper.methods)),
+  }, addSectionHelper.methods, menuHelper.methods, leavingConfirmationHelper.methods)),
 
   relatedParties: Backbone.View.extend(_.extend({
     el: '#content',
@@ -529,9 +579,10 @@ module.exports = {
     events: _.extend({
       'submit form': 'submit',
       'click .submit_formc': submitFormc,
-    }, addSectionHelper.events, menuHelper.events, yesNoHelper.events),
+    }, addSectionHelper.events, menuHelper.events, yesNoHelper.events, leavingConfirmationHelper.events),
 
     initialize(options) {
+      this.model = options.formc;
       this.fields = options.fields;
 
       this.labels = {
@@ -546,10 +597,6 @@ module.exports = {
 
       this.createIndexes();
       this.buildJsonTemplates('formc');
-    },
-
-    getSuccessUrl(data) {
-      return '/formc/' + this.model.id + '/use-of-proceeds';
     },
 
     submit(e) {
@@ -578,18 +625,30 @@ module.exports = {
       disableEnterHelper.disableEnter.call(this);
       return this;
     },
-  }, addSectionHelper.methods, menuHelper.methods, yesNoHelper.methods)),
+
+    _success(data, newData) {
+      formcHelpers.updateFormcMenu(formcHelpers.formcCalcProgress(app.user.formc));
+      return 1;
+    },
+
+    getSuccessUrl(data) {
+      return '/formc/' + this.model.id + '/use-of-proceeds';
+    },
+  }, addSectionHelper.methods, menuHelper.methods, yesNoHelper.methods, leavingConfirmationHelper.methods)),
 
   useOfProceeds: Backbone.View.extend(_.extend({
     urlRoot: formcServer + '/:id/use-of-proceeds',
 
     initialize(options) {
+      this.model = options.formc;
       this.fields = options.fields;
       this.campaign = options.campaign;
 
       // this.fields.custom_fn = {fn: (function (value, fn, attr, model, computed) {
-      this.fields.use_of_net_proceeds.fn = (function (value, fn, attr, model, computed) {
-        if (!this.calculate(null)) throw 'Total Use of Net Proceeds must be equal to Net Proceeds.';
+      this.fields.less_offering_express.fn = this.fields.use_of_net_proceeds.fn = (function (value, fn, attr, model, computed) {
+        if (!this.calculate(null)) {
+          throw 'Total Use of Net Proceeds must be equal to Net Proceeds.';
+        }
       }).bind(this);
 
       this.labels = {
@@ -625,11 +684,16 @@ module.exports = {
       'blur .min-expense,.max-expense,.min-use,.max-use': 'calculate',
       'click .add-sectionnew': 'addSectionNew',
       'click .delete-sectionnew': 'deleteRow',
-    }, menuHelper.events, dropzoneHelpers.events),
+    }, menuHelper.events, dropzoneHelpers.events, leavingConfirmationHelper.events),
 
     deleteRow(e) {
       this.deleteSectionNew(e);
       this.calculate(null);
+    },
+
+    _success(data, newData) {
+      formcHelpers.updateFormcMenu(formcHelpers.formcCalcProgress(app.user.formc));
+      return 1;
     },
 
     getSuccessUrl() {
@@ -681,7 +745,8 @@ module.exports = {
         } else {
           $('.max-net-proceeds,.max-total-use').addClass('red');
         }
-        this.$('.max-total-use').popover(result ? 'hide' : 'show');
+        this.$('.min-total-use').popover(minEqual ? 'hide' : 'show');
+        this.$('.max-total-use').popover(maxEqual ? 'hide' : 'show');
       }
       return result;
     },
@@ -726,9 +791,9 @@ module.exports = {
           campaignId: this.campaign.id,
         })
       );
-      this.$('.max-total-use').popover({
+      this.$('.max-total-use,.min-total-use').popover({
         html: true,
-        template: '<div class="popover" role="tooltip" style="border-color:red;"><div class="popover-arrow" style="border-right-color:red;"></div><h3 class="popover-title"></h3><div class="popover-content" style="color:red;"></div></div>'
+        template: '<div class="popover" role="tooltip" style="border-color:red;width:170px;"><div class="popover-arrow" style="border-right-color:red;"></div><h3 class="popover-title"></h3><div class="popover-content" style="color:red;"></div></div>'
       });
 
       this.$('.min-expense,.max-expense,.min-use,.max-use').each(function (idx, elem) {
@@ -741,10 +806,11 @@ module.exports = {
       disableEnterHelper.disableEnter.call(this);
       return this;
     }, 
-  }, menuHelper.methods, dropzoneHelpers.methods, addSectionHelper.methods)),
+  }, menuHelper.methods, dropzoneHelpers.methods, addSectionHelper.methods, leavingConfirmationHelper.methods)),
 
   riskFactorsInstruction: Backbone.View.extend(_.extend({
     initialize(options) {
+      this.model = options.formc;
     },
 
     events: _.extend({
@@ -773,9 +839,10 @@ module.exports = {
     riskType: 'market_and_customer_risk',
     events: _.extend({
       'click .submit_formc': submitFormc,
-    }, menuHelper.events, riskFactorsHelper.events),
+    }, menuHelper.events, riskFactorsHelper.events, leavingConfirmationHelper.events),
 
     initialize(options) {
+      this.model = options.formc;
       this.fields = options.fields;
       this.fields.title = { label: 'Title for Risk' };
       this.fields.risk = { label: 'Describe Your Risk' };
@@ -866,16 +933,17 @@ module.exports = {
       disableEnterHelper.disableEnter.call(this);
       return this;
     },
-  }, menuHelper.methods, addSectionHelper.methods, riskFactorsHelper.methods)),
+  }, menuHelper.methods, addSectionHelper.methods, riskFactorsHelper.methods, leavingConfirmationHelper.methods)),
 
   riskFactorsFinancial: Backbone.View.extend(_.extend({
     urlRoot: formcServer + '/:id' + '/risk-factors-financial/:index',
     riskType: 'financial_risk',
     events: _.extend({
       'click .submit_formc': submitFormc,
-    }, menuHelper.events, riskFactorsHelper.events),
+    }, menuHelper.events, riskFactorsHelper.events, leavingConfirmationHelper.events),
 
     initialize(options) {
+      this.model = options.formc;
       this.fields = options.fields;
       this.fields.title = { label: 'Title for Risk' };
       this.fields.risk = { label: 'Describe Your Risk' };
@@ -974,16 +1042,17 @@ module.exports = {
       disableEnterHelper.disableEnter.call(this);
       return this;
     },
-  }, menuHelper.methods, addSectionHelper.methods, riskFactorsHelper.methods)),
+  }, menuHelper.methods, addSectionHelper.methods, riskFactorsHelper.methods, leavingConfirmationHelper.methods)),
 
   riskFactorsOperational: Backbone.View.extend(_.extend({
     urlRoot: formcServer + '/:id' + '/risk-factors-operational/:index',
     riskType: 'operational_risk',
     events: _.extend({
       'click .submit_formc': submitFormc,
-    }, menuHelper.events, riskFactorsHelper.events),
+    }, menuHelper.events, riskFactorsHelper.events, leavingConfirmationHelper.events),
 
     initialize(options) {
+      this.model = options.formc;
       this.fields = options.fields;
       this.fields.title = { label: 'Title for Risk' };
       this.fields.risk = { label: 'Describe Your Risk' };
@@ -1111,16 +1180,17 @@ module.exports = {
       return this;
     },
 
-  }, menuHelper.methods, addSectionHelper.methods, riskFactorsHelper.methods)),
+  }, menuHelper.methods, addSectionHelper.methods, riskFactorsHelper.methods, leavingConfirmationHelper.methods)),
 
   riskFactorsCompetitive: Backbone.View.extend(_.extend({
     urlRoot: formcServer + '/:id' + '/risk-factors-competitive/:index',
     riskType: 'competitive_risk',
     events: _.extend({
       'click .submit_formc': submitFormc,
-    }, menuHelper.events, riskFactorsHelper.events),
+    }, menuHelper.events, riskFactorsHelper.events, leavingConfirmationHelper.methods),
 
     initialize(options) {
+      this.model = options.formc;
       this.fields = options.fields;
       this.fields.title = { label: 'Title for Risk' };
       this.fields.risk = { label: 'Describe Your Risk' };
@@ -1192,16 +1262,17 @@ module.exports = {
       return this;
     },
 
-  }, menuHelper.methods, addSectionHelper.methods, riskFactorsHelper.methods)),
+  }, menuHelper.methods, addSectionHelper.methods, riskFactorsHelper.methods, leavingConfirmationHelper.methods)),
 
   riskFactorsPersonnel: Backbone.View.extend(_.extend({
     urlRoot: formcServer + '/:id' + '/risk-factors-personnel/:index',
     riskType: 'personnel_and_third_parties_risk',
     events: _.extend({
       'click .submit_formc': submitFormc,
-    }, menuHelper.events, riskFactorsHelper.events),
+    }, menuHelper.events, riskFactorsHelper.events, leavingConfirmationHelper.events),
 
     initialize(options) {
+      this.model = options.formc;
       this.fields = options.fields;
       this.fields.title = { label: 'Title for Risk' };
       this.fields.risk = { label: 'Describe Your Risk' };
@@ -1291,16 +1362,17 @@ module.exports = {
       disableEnterHelper.disableEnter.call(this);
       return this;
     },
-  }, menuHelper.methods, addSectionHelper.methods, riskFactorsHelper.methods)),
+  }, menuHelper.methods, addSectionHelper.methods, riskFactorsHelper.methods, leavingConfirmationHelper.methods)),
 
   riskFactorsLegal: Backbone.View.extend(_.extend({
     urlRoot: formcServer + '/:id' + '/risk-factors-legal/:index',
     riskType: 'legal_and_regulatory_risk',
     events: _.extend({
       'click .submit_formc': submitFormc,
-    }, menuHelper.events, riskFactorsHelper.events),
+    }, menuHelper.events, riskFactorsHelper.events, leavingConfirmationHelper.events),
 
     initialize(options) {
+      this.model = options.formc;
       this.fields = options.fields;
       this.fields.title = { label: 'Title for Risk' };
       this.fields.risk = { label: 'Describe Your Risk' };
@@ -1412,16 +1484,17 @@ module.exports = {
       disableEnterHelper.disableEnter.call(this);
       return this;
     },
-  }, menuHelper.methods, addSectionHelper.methods, riskFactorsHelper.methods)),
+  }, menuHelper.methods, addSectionHelper.methods, riskFactorsHelper.methods, leavingConfirmationHelper.methods)),
 
   riskFactorsMisc: Backbone.View.extend(_.extend({
     urlRoot: formcServer + '/:id' + '/risk-factors-misc/:index',
     riskType: 'miscellaneous_risk',
     events: _.extend({
       'click .submit_formc': submitFormc,
-    }, menuHelper.events, riskFactorsHelper.events),
+    }, menuHelper.events, riskFactorsHelper.events, leavingConfirmationHelper.events),
 
     initialize(options) {
+      this.model = options.formc;
       this.fields = options.fields;
       this.fields.title = { label: 'Title for Risk' };
       this.fields.risk = { label: 'Describe Your Risk' };
@@ -1447,7 +1520,7 @@ module.exports = {
       disableEnterHelper.disableEnter.call(this);
       return this;
     },
-  }, menuHelper.methods, addSectionHelper.methods, riskFactorsHelper.methods)),
+  }, menuHelper.methods, addSectionHelper.methods, riskFactorsHelper.methods, leavingConfirmationHelper.methods)),
 
   financialCondition: Backbone.View.extend(_.extend({
     urlRoot: formcServer + '/:id/financial-condition',
@@ -1455,9 +1528,10 @@ module.exports = {
     events: _.extend({
       'submit form': api.submitAction,
       'click .submit_formc': submitFormc,
-    }, menuHelper.events, yesNoHelper.events, addSectionHelper.events, dropzoneHelpers.events),
+    }, menuHelper.events, yesNoHelper.events, addSectionHelper.events, dropzoneHelpers.events, /*leavingConfirmationHelper.events*/),
 
     initialize(options) {
+      this.model = options.formc;
       this.fields = options.fields;
       this.campaign = options.campaign;
       this.labels = {
@@ -1485,6 +1559,11 @@ module.exports = {
       this.buildJsonTemplates('formc', {campaign: this.campaign});
     },
 
+    _success(data, newData) {
+      formcHelpers.updateFormcMenu(formcHelpers.formcCalcProgress(app.user.formc));
+      return 1;
+    },
+
     getSuccessUrl() {
       return '/formc/' + this.model.id + '/outstanding-security';
     },
@@ -1506,7 +1585,7 @@ module.exports = {
       disableEnterHelper.disableEnter.call(this);
       return this;
     },
-  }, menuHelper.methods, yesNoHelper.methods, addSectionHelper.methods, dropzoneHelpers.methods)),
+  }, menuHelper.methods, yesNoHelper.methods, addSectionHelper.methods, dropzoneHelpers.methods, leavingConfirmationHelper.methods)),
 
   outstandingSecurity: Backbone.View.extend(_.extend({
     urlRoot: formcServer + '/:id/outstanding-security',
@@ -1516,9 +1595,10 @@ module.exports = {
       'click #submitForm': api.submitAction,
       'click .submit_formc': submitFormc,
       'click .delete-outstanding': 'deleteOutstanding',
-    }, addSectionHelper.events, menuHelper.events, yesNoHelper.events),
+    }, addSectionHelper.events, menuHelper.events, yesNoHelper.events, /*leavingConfirmationHelper.events*/),
 
     initialize(options) {
+      this.model = options.formc;
       this.fields = options.fields;
       this.fields.business_loans_or_debt_choice.validate = {};
       this.fields.business_loans_or_debt_choice.validate.choices = {
@@ -1669,6 +1749,11 @@ module.exports = {
       );
     },
 
+    _success(data, newData) {
+      formcHelpers.updateFormcMenu(formcHelpers.formcCalcProgress(app.user.formc));
+      return 1;
+    },
+
     getSuccessUrl() {
       return '/formc/' + this.model.id + '/background-check';
     },
@@ -1695,11 +1780,12 @@ module.exports = {
       disableEnterHelper.disableEnter.call(this);
       return this;
     },
-  }, addSectionHelper.methods, menuHelper.methods, yesNoHelper.methods)),
+  }, addSectionHelper.methods, menuHelper.methods, yesNoHelper.methods, leavingConfirmationHelper.methods)),
 
   backgroundCheck: Backbone.View.extend(_.extend({
     urlRoot: formcServer + '/:id' + '/background-check',
     initialize(options) {
+      this.model = options.formc;
       this.fields = options.fields;
       this.labels = {
         company_or_director_subjected_to: 'If Yes, Explain',
@@ -1725,7 +1811,7 @@ module.exports = {
     events: _.extend({
       'submit form': api.submitAction,
       'click .submit_formc': submitFormc,
-    }, menuHelper.events, yesNoHelper.events),
+    }, menuHelper.events, yesNoHelper.events, leavingConfirmationHelper.events),
 
     render() {
       let template = require('./templates/backgroundCheck.pug');
@@ -1740,7 +1826,7 @@ module.exports = {
       disableEnterHelper.disableEnter.call(this);
       return this;
     },
-  }, menuHelper.methods, yesNoHelper.methods, addSectionHelper.methods)),
+  }, menuHelper.methods, yesNoHelper.methods, addSectionHelper.methods, leavingConfirmationHelper.methods)),
 
   finalReview: Backbone.View.extend({
     urlRoot: formcServer + '/:id/final-review',
@@ -1750,6 +1836,11 @@ module.exports = {
     },
     events: {
       'click .createField': 'createField',
+    },
+
+    _success(data, newData) {
+      // formcHelpers.updateFormcMenu(formcHelpers.formcCalcProgress(app.user.formc));
+      return 1;
     },
 
     getSuccessUrl() {
@@ -1786,6 +1877,13 @@ module.exports = {
           element.appendChild(e);
         });
         target.parentElement.insertBefore(element, target);
+      } else if(target.dataset.type == 'textarea') {
+        element = document.createElement('textarea');
+        element.name = target.dataset.name;
+        element.className = 'big-textarea w-100';
+        element.innerHTML = target.innerHTML;
+        element.onblur = (e) => this.update(e);
+        target.parentElement.insertBefore(element, target);
       }
 
       target.remove();
@@ -1800,6 +1898,7 @@ module.exports = {
         'minimum_raise',
         'security_type',
         'price_per_share',
+        'length_days',
       ];
 
       e.target.setAttribute(
@@ -1809,6 +1908,8 @@ module.exports = {
       let data = {};
       let url = '';
       let fieldName = '';
+      let updateModel = app.user.company;
+      let method = 'PATCH';
 
       if(name.indexOf('company.') !== -1) {
         fieldName = name.split('company.')[1];
@@ -1817,37 +1918,45 @@ module.exports = {
       } else if(name.indexOf('campaign.') !== -1) {
         fieldName = name.split('campaign.')[1];
         data[fieldName] = val;
-        if([
-            'pitch',
-            'intended_use_of_proceeds',
-            'business_model',
-            'faq',
-            'additional_info'].indexOf(fieldName) !== -1) {
-          url = raiseCapitalServer + '/campaign/' + this.model.campaign.id + '/general_information';
-        } else if([
-            'minimum_increment',
-            'minimum_raise',
-            'maximum_raise',
-            'length_days',
-            'premoney_valuation',
-            'security_type',
-            'valuation_determination',
-            'valuation_determination_other',
-            'price_per_share',
-          ].indexOf(fieldName) !== -1) {
-          url = raiseCapitalServer + '/campaign/' + this.model.campaign.id + '/specifics';
-        }
+        url = raiseCapitalServer + '/campaign/' + this.model.campaign.id + '/general_information';
+        updateModel = app.user.campaign;
       } else if(name.indexOf('formc.') !== -1) {
-          fieldName = name.split('formc.')[1];
+        fieldName = name.split('formc.')[1];
+        url = formcServer + '/' + this.model.formc.id + '/final-review';
+
+        if(fieldName.indexOf('[') !== -1) {
+          let names = fieldName.split('.');
+          fieldName = names[0].split('[')[0];
+          let index = names[0].split('[')[1].replace(']', '');
+          app.user.formc[fieldName][index][names[1]] = val;
+          data[fieldName] = app.user.formc[fieldName];
+          if(fieldName == 'team_members') {
+            url = formcServer + '/' + this.model.formc.id + '/team-members/' +
+              roles[app.user.formc.team_members[index].role[0]].toLocaleLowerCase() + '/' + 
+              app.user.formc.team_members[index].user_id;
+            data = app.user.formc.team_members[index];
+            method = 'PUT';
+          } 
+          /* else if(fieldName.indexOf('risk') !== -1) {
+            url = formcServer + '/' + this.model.formc.id + '/' + fieldName + '/' +
+              roles[app.user.formc.team_members[index].role[0]].toLocaleLowerCase() + '/' + 
+              app.user.formc.team_members[index].user_id;
+          }
+          */
+        } else {
           data[fieldName] = val;
-          url = formcServer + '/' + this.model.formc.id + '/final-review';
+        }
+
+        updateModel = app.user.formc;
       }
 
-      api.makeRequest(url, 'PATCH', data)
-        .then((data) => {
+      api.makeRequest(url, method, data)
+        .then((responseData) => {
+
+          _.extend(updateModel, data);
 
           if(reloadRequiredFields.indexOf(fieldName) != -1) {
-            window.location.reload();
+            this.render();
             return false;
           }
 
@@ -1880,11 +1989,13 @@ module.exports = {
           href.innerHTML = val;
           href.setAttribute('href', '#');
           href.dataset.name = e.target.name;
+
           if(e.target.tagName == 'SELECT') {
             href.dataset.type = 'select';
           } else {
             href.dataset.type = 'text';
           }
+
           href.dataset.value = val;
           href.className = 'createField show-input link-1';
 
@@ -1913,7 +2024,11 @@ module.exports = {
           serverUrl: serverUrl,
           Urls: Urls,
           fields: this.fields,
-          values: this.model,
+          values: {
+            company: app.user.company,
+            campaign: app.user.campaign,
+            formc: app.user.formc
+          }
         })
       );
 

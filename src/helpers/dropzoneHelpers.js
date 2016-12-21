@@ -412,39 +412,44 @@ module.exports = {
       };
 
       this._initializeDropzone(name, dzOptions, (data) => {
-        //image actions
-        let url = data[0].urls[0];
         let imgId = data[0].id;
+        let url = data[0].urls[0];
+        // this._cropImageWithDefaults(imgId, name, (cropData) => {
+        //   let url = cropData.urls[0];
+        //   let imgId = cropData.id;
+        //   onCrop(cropData);
 
-        //update ui and bind events
-        let imgActionsBlock = $(
-          '<div class="delete-image-container">' +
+          //update ui and bind events
+          let imgActionsBlock = $(
+            '<div class="delete-image-container">' +
             '<a class="crop-image" data-imageid="' + imgId + '">' +
-              '<i class="fa fa-crop"></i>' +
+            '<i class="fa fa-crop"></i>' +
             '</a>' +
             '<a class="delete-image" data-imageid="' + imgId + '">' +
-              '<i class="fa fa-times"></i>' +
+            '<i class="fa fa-times"></i>' +
             '</a>' +
-          '</div>');
+            '</div>');
 
-        imgActionsBlock.find('a.crop-image')
+          imgActionsBlock.find('a.crop-image')
           // .data('imageid', imgId)
-          .on('click', cropImage);
+            .on('click', cropImage);
 
-        imgActionsBlock.find('a.delete-image')
+          imgActionsBlock.find('a.delete-image')
           // .data('imageid', imgId)
-          .on('click', deleteImage);
+            .on('click', deleteImage);
 
-        let imgContainer = $('.dropzone__' + name + ' .one-photo');
+          let imgContainer = $('.dropzone__' + name + ' .one-photo');
 
-        //remove buttons container if present
-        imgContainer.find('.delete-image-container').remove();
+          //remove buttons container if present
+          imgContainer.find('.delete-image-container').remove();
 
-        imgContainer.find('img.img-' + name).attr('src', url);
+          imgContainer.find('img.img-' + name).attr('src', url);
 
-        imgContainer.prepend(imgActionsBlock);
+          imgContainer.prepend(imgActionsBlock);
 
-        this._cropImage(imgId, name, onCrop);
+          //here we are cropping origin image, so we have to use imgId
+          this._cropImage(imgId, name, onCrop);
+        // });
       });
 
       $('.dropzone__' + name + ' a.delete-image').on('click', deleteImage);
@@ -462,12 +467,12 @@ module.exports = {
       };
 
       const cropNext = (resetCropping) => {
-        if (!cropQueue.length)
-          return;
-
         cropping = resetCropping ? false : cropping;
 
         if (cropping)
+          return;
+
+        if (!cropQueue.length)
           return;
 
         let imgId = cropQueue.shift();
@@ -554,28 +559,33 @@ module.exports = {
       };
 
       this._initializeDropzone(name, dzOptions, (data, file) => {
-
-        let url = data[0].urls[0];
         let imageId = data[0].id;
+        let url = data[0].urls[0];
+        // this.originImageId = imageId;
+        //
+        // this._cropImageWithDefaults(imageId, name, (cropData) => {
+        //   onCrop(cropData)
+        //   let url = cropData.urls[0];
 
-        let imageBlock = $('<div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-xs-12 one-photo">' +
-          '<div class="delete-image-container">' +
+          let imageBlock = $('<div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-xs-12 one-photo">' +
+            '<div class="delete-image-container">' +
             '<a class="crop-image" href="#" data-imageid="' + imageId + '">' +
-              '<i class="fa fa-crop"></i>' +
+            '<i class="fa fa-crop"></i>' +
             '</a>' +
             '<a class="delete-image" href="#" data-imageid="' + imageId + '">' +
-              '<i class="fa fa-times"></i>' +
+            '<i class="fa fa-times"></i>' +
             '</a>' +
-          '</div>' +
-          '<img class="w-100 img-' + name + '" src="' + url + '">' +
-        '</div>');
+            '</div>' +
+            '<img class="w-100 img-' + name + '" src="' + url + '">' +
+            '</div>');
 
-        imageBlock.find('a.delete-image').on('click', deleteImage);
-        imageBlock.find('a.crop-image').on('click', cropImage);
+          imageBlock.find('a.delete-image').on('click', deleteImage);
+          imageBlock.find('a.crop-image').on('click', cropImage);
 
-        $('.dropzone__' + name + ' .all-gallery').append(imageBlock);
+          $('.dropzone__' + name + ' .all-gallery').append(imageBlock);
 
-        enqueueImage(imageId);
+          enqueueImage(imageId);
+        // });
       });
 
       //attach remove item handlers
@@ -624,6 +634,39 @@ module.exports = {
 
         api.makeRequest(filerServer + '/crop', 'PUT', reqData, reqOptions).done(callback);
       });
+    },
+
+    //TODO: refactor due to same code in _cropImage
+    _cropImageWithDefaults(imgId, name, callback) {
+      let dataFieldName = this._getDataFieldName(name);
+      let imgModel = this.model[dataFieldName];
+
+      let img = _.find(imgModel, (i) => {
+        return i.id == imgId;
+      });
+
+      let url = _.last(img.urls);
+      let fileName = img.name;
+
+      let imgData = {
+        x: 0,
+        y: 0,
+        width: 1600,
+        height: 900,
+        id: img.id,
+        file_name: fileName,
+      };
+
+      let extPos = fileName.lastIndexOf('.');
+      fileName = fileName.substring(0, extPos) +
+        imgData.width + 'x' + imgData.height + fileName.substring(extPos);
+
+      let reqOptions = {
+        contentType: 'application/json; charset=utf-8',
+      };
+
+      api.makeRequest(filerServer + '/crop', 'PUT', imgData, reqOptions).done(callback);
+
     },
 
   },

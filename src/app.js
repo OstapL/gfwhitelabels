@@ -8,8 +8,10 @@ global.userModel = require('components/accountProfile/model.js');
 global.Urls = require('./jsreverse.js');
 global.googleAnalyticsId = 'UA-47199302-1';
 require('jquery-serializejson/jquery.serializejson.min.js');
+const validation = require('components/validation/validation.js');
 
 global.formatHelper = require('helpers/formatHelper');
+
 
 $.fn.scrollTo = function (padding=0) {
   $('html, body').animate({
@@ -60,13 +62,7 @@ Backbone.View.prototype.assignLabels = function() {
 
 Backbone.View.prototype.checkForm = function() {
   if(app.getParams().check == '1') {
-    let data = $(e.target).closest('form').serializeJSON({ useIntKeysAsArrayIndex: true });
-    api.deleteEmptyNested.call(this, this.fields, data);
-    api.fixDateFields.call(this, this.fields, data);
-    api.fixMoneyFields.call(this, this.fields, data);
-    data = _.extend({}, this.model, data);
-
-    if (!validation.validate(this.fields, data, this)) {
+    if (!validation.validate(this.fields, this.model, this)) {
       _(validation.errors).each((errors, key) => {
         validation.invalidMsg(this, key, errors);
       });
@@ -80,6 +76,7 @@ let app = {
 
   routers: {},
   cache: {},
+  models: {},
 
   /*
    * Misc Display Functions
@@ -125,7 +122,7 @@ let app = {
       var id;
 
       if (provider == 'youtube') {
-        id = url.match(/https:\/\/(?:www.)?([^\&]*).com\/.*v=(.*)/)[2];
+        id = url.match(/https:\/\/(?:www.)?(\w*).com\/.*v=([^\&]*)/)[2];
       } else if (provider == 'youtu') {
         provider = 'youtube';
         id = url.match(/https:\/\/(?:www.)?(\w*).be\/(.*)/)[2];

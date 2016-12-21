@@ -10,7 +10,7 @@ module.exports = Backbone.Router.extend({
   },
 
   execute: function (callback, args, name) {
-    ga('send', 'pageview', "/" + Backbone.history.getPath());
+    //ga('send', 'pageview', "/" + Backbone.history.getPath());
     if (callback) callback.apply(this, args)
   },
 
@@ -56,10 +56,9 @@ module.exports = Backbone.Router.extend({
       const View = require('./views.js');
 
       api.makeCacheRequest(raiseCapitalServer + "/" + id).
-        then((modelData) => {
+        then((companyData) => {
           let i = new View.detail({
-            el: '#content',
-            model: modelData,
+            model: companyData,
           });
           i.render();
           if(location.hash && $(location.hash).length) {

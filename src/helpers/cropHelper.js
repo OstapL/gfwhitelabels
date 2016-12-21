@@ -61,7 +61,7 @@ module.exports = {
         '</div>' +
         '<div class="row">' +
           '<div class="col-xl-12 m-t-3 m-b-2 text-xs-center">' +
-            '<button type="button" class="btn btn-secondary m-r-2" data-dismiss="modal">' +
+            '<button type="button" class="btn btn-secondary m-r-2 cropper-cancel" data-dismiss="modal">' +
               'Cancel' +
             '</button>' +
             '<button type="button" class="btn btn-primary cropper-ok" data-dissmiss="modal">' +
@@ -81,7 +81,7 @@ module.exports = {
         '</div>' +
         '<div class="row">' +
           '<div class="col-xl-12 m-t-3 m-b-0 text-xs-center">' +
-            '<button type="button" class="btn btn-secondary m-r-2" data-dismiss="modal">' +
+            '<button type="button" class="btn btn-secondary m-r-2 cropper-cancel" data-dismiss="modal">' +
               'Cancel' +
             '</button>' +
             '<button type="button" class="btn btn-primary cropper-ok" data-dissmiss="modal">' +
@@ -95,7 +95,7 @@ module.exports = {
     let modalTemplate =
       '<div class="modal fade cropModal modal-dropzone ' + (customOptions.cssClass || '') + '"' +
           'tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">' +
-        '<div class="modal-dialog modal-lg">' +
+        '<div class="modal-dialog modal-lg" role="document">' +
           '<div class="modal-content">' +
             '<div class="modal-header">' +
               '<button type="button" class="close" data-dismiss="modal" aria-label="Close">' +
@@ -119,24 +119,40 @@ module.exports = {
 			img.addEventListener("load", function() {
 				const $modal = $('.cropModal');
 
+        let _closeModal = false;
+
 				$modal.on('hidden.bs.modal', (e) => {
 					$modal.remove();
 				});
 
 				$modal.on('shown.bs.modal', () => {
-          console.log('showed');
-          let $cropperOk = $('.cropper-ok');
-          $cropperOk.on('click', function(e) {
+
+          let $cropperOk = $modal.find('.cropper-ok');
+
+          $cropperOk.on('click', (e) => {
             e.preventDefault();
+            _closeModal = true;
 
             $modal.modal('hide');
 
-            if (typeof(callback) === 'function') { 
+            if (typeof(callback) === 'function')
               callback(cropper.getData(true));
-            }
 
             return false;
           });
+
+          $modal.find('.cropper-cancel').on('click', (e) => {
+            _closeModal = true;
+
+            if (typeof(callback) === 'function')
+              callback();
+          });
+          $modal.find('.close').on('click', (e) => {
+            _closeModal = true;
+            if (typeof(callback) === 'function')
+              callback();
+          });
+
           options.minContainerHeight = 320;
 
           let cropper = new Cropper(this, options);
@@ -145,6 +161,14 @@ module.exports = {
           // REMOVE LOADING SPIINER
         });
 
+        $modal.on('hide.bs.modal', (e) => {
+          //it looks like modal doesn't have option preventing from close on click outside modal
+          if (_closeModal)
+            return;
+
+          e.preventDefault();
+          return false;
+        });
 
         // ADD LOADING SPIINER
         $modal.modal('show');

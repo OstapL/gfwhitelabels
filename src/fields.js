@@ -1,18 +1,127 @@
-function prepareField(name, attr) {
-  if(attr.schema) {
-    attr = _.extend(attr, attr.schema)
-    delete attr.schema;
-  }
-  if(attr.placeholder == null || attr.placeholder == "") {
-    attr.placeholder = attr.label || '';
-  }
-  if(attr.required == true) {
-    attr.label += '<span class="color-red">*</span>';
-  }
-}
+const helpers = {
+  date: require('./helpers/dateHelper.js'),
+  format: require('./helpers/formatHelper.js'),
+};
 
+let exports = {
+  prepareNestedField(nestedName, name, value, index, myAttr, schema) {
+    if(value == null) {
+      console.log('value for ' + name + ' is null ')
+      value = {}
+    }
+    _.extend(myAttr, schema);
+    myAttr.value = value[name] ? value[name]: '';
+    myAttr.id = nestedName + '__' + index + '__' + name + '';
+  },
 
-module.exports = {
+  /*
+   * VLAD: я не знаю где это используется
+   nestedTextLabel(nestedName, name, myAttr, vals) {
+   vals = vals || values;
+   myAttr = _.extend(myAttr, fields[nestedName].schema[name]);
+   myAttr.value = vals[name] ? vals[name] : '';
+
+   return this.textLabel(
+   nestedName + '[' + name + ']',
+   myAttr
+   )
+   },
+
+   nestedText(nestedName, name, myAttr, vals) {
+   vals = vals || values;
+   myAttr = _.extend(myAttr, fields[nestedName].schema[name]);
+   myAttr.value = vals[name] ? vals[name] : '';
+
+   return this.fieldText(
+   nestedName + '[' + name + ']',
+   myAttr
+   )
+   },
+   */
+
+  nestedTextLabel(nestedName, name, value, index, myAttr, schema) {
+    this.prepareNestedField(nestedName, name, value, index, myAttr, schema);
+    myAttr.class1 = myAttr.class1 ? myAttr.class1 : 'text-lg-right col-lg-3 col-md-12 text-md-left';
+    myAttr.class2 = myAttr.class2 ? myAttr.class2 : 'col-lg-9 col-md-12';
+    return this.textLabel(
+      nestedName + '[' + index + '][' + name + ']',
+      myAttr
+    )
+  },
+
+  nestedTextareaLabel(nestedName, name, value, index, myAttr, schema) {
+    this.prepareNestedField(nestedName, name, value, index, myAttr, schema);
+    myAttr.class1 = myAttr.class1 ? myAttr.class1 : 'text-lg-right col-lg-3 col-md-12 text-md-left';
+    myAttr.class2 = myAttr.class2 ? myAttr.class2 : 'col-lg-9 col-md-12';
+    return this.textareaLabel(
+      nestedName + '[' + index + '][' + name + ']',
+      myAttr
+    )
+  },
+
+  nestedChoiceLabel(nestedName, name, value, index, myAttr, schema) {
+    this.prepareNestedField(nestedName, name, value, index, myAttr, schema);
+    myAttr.class1 = myAttr.class1 ? myAttr.class1 : 'text-lg-right col-lg-3 col-md-12 text-md-left';
+    myAttr.class2 = myAttr.class2 ? myAttr.class2 : 'col-lg-9 col-md-12';
+    return this.choiceLabel(
+      nestedName + '[' + index + '][' + name + ']',
+      myAttr
+    )
+  },
+
+  nestedRadioLabel(nestedName, name, value, index, myAttr, schema) {
+    this.prepareNestedField(nestedName, name, value, index, myAttr, schema);
+    myAttr.class1 = myAttr.class1 ? myAttr.class1 : 'text-lg-right col-lg-3 col-md-12 text-md-left';
+    myAttr.class2 = myAttr.class2 ? myAttr.class2 : 'col-lg-9 col-md-12';
+    return this.radioLabel(
+      nestedName + '[' + index + '][' + name + ']',
+      myAttr
+    )
+  },
+
+  nestedDateDay(nestedName, name, value, index, myAttr, schema) {
+    this.prepareNestedField(nestedName, name, value, index, myAttr, schema);
+    myAttr.class = myAttr.class ? myAttr.class : 'col-lg-6 p-r-0';
+    myAttr.id = myAttr.id + '__day'
+    return this.dateDay(
+      nestedName + '[' + index + '][' + name + ']',
+      myAttr
+    )
+  },
+
+  nestedDateMonth(nestedName, name, value, index, myAttr, schema) {
+    this.prepareNestedField(nestedName, name, value, index, myAttr, schema);
+    myAttr.class = myAttr.class ? myAttr.class : 'col-lg-6 p-r-0';
+    myAttr.id = myAttr.id + '__month'
+    return this.dateMonth(
+      nestedName + '[' + index + '][' + name + ']',
+      myAttr
+    )
+  },
+
+  nestedDateYear(nestedName, name, value, index, myAttr, schema) {
+    this.prepareNestedField(nestedName, name, value, index, myAttr, schema);
+    myAttr.class = myAttr.class ? myAttr.class : 'col-lg-6 p-r-0';
+    myAttr.id = myAttr.id + '__year'
+    return this.dateYear(
+      nestedName + '[' + index + '][' + name + ']',
+      myAttr
+    )
+  },
+
+  prepareField(name, attr) {
+    if(attr.schema) {
+      attr = _.extend(attr, attr.schema)
+      delete attr.schema;
+    }
+    if(attr.placeholder == null || attr.placeholder == "") {
+      attr.placeholder = attr.label || '';
+    }
+    if(attr.required == true) {
+      attr.label += '<span class="color-red">*</span>';
+    }
+  },
+
   textLabel(name, attr) {
     attr.name = name;
     prepareField(name, attr);
@@ -52,5 +161,81 @@ module.exports = {
     attr.value = attr.value && attr.value.indexOf('-') != -1 ? attr.value.split('-')[0] : '';
     //const template = require('./templates/dateYear.pug');
     return template(attr);
-  }
-}
+  },
+
+  investment(i, attr) {
+    attr = attr || {};
+    const template =  require('./templates/dashboardInvestment.pug');
+    return template({
+      i: i,
+      attr: attr,
+      helpers: helpers
+    });
+  },
+
+  comment(c, level, attr) {
+    const template = require('./templates/comment.pug');
+    attr = attr || {};
+    if (!attr.helpers)
+      attr.helpers = helpers;
+
+    return template({
+      comment: c,
+      level: level,
+      attr: attr,
+    });
+  },
+
+  userProfileDropzone(name, attr) {
+    let noimg = '/img/default/Default_photo.png';
+    attr.data = attr.data || {};
+    attr.data.urls = attr.data.urls || [noimg];
+
+    const template = require('./templates/userProfileDropzone.pug');
+    return template({
+      name: name,
+      attr: attr,
+      noimg: noimg,
+    });
+  },
+
+  fieldText(name, attr) {
+    const template = require('./templates/fieldText.pug');
+    attr.value = attr.value || '';
+    return template({
+      name: name,
+      attr: attr,
+    });
+  },
+
+  fieldTextLabel(name, attr) {
+    this.prepareField(name, attr);
+    attr.type = attr.type || 'text';
+    attr.value = attr.type == 'money'
+      ? helpers.format.formatPrice(attr.value)
+      : attr.value
+
+    console.log(name);
+    console.log(attr);
+
+    const template = require('./templates/fieldTextLabel.pug');
+    return template({
+      name: name,
+      attr: attr,
+    })
+  },
+
+  fieldChoiceLabel(name, attr) {
+    this.prepareField(name, attr);
+    attr.type = attr.type || 'select';
+
+    const template = require('./templates/fieldChoiceLabel.pug');
+
+    return template({
+      name: name,
+      attr: attr,
+    });
+  },
+};
+
+module.exports = exports;

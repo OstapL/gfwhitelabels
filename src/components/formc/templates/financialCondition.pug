@@ -18,12 +18,12 @@ section.formc-team-members-director.container.m-b-85
         .form-group.form-section.m-t-2.m-b-0
           .radio-input.m-b-1.yesno
             label 
-              input(type="radio" name="financials_condition_choice" value=1 checked=(values['financials_condition_choice']))
+              input(type="radio" name="financials_condition_choice" value=1 checked=(values['financials_condition_choice'] == true))
               |  Yes
             label 
-              input(type="radio" name="financials_condition_choice" value=0 checked=(!values['financials_condition_choice']))
+              input(type="radio" name="financials_condition_choice" value=0 checked=(values['financials_condition_choice'] == false))
               |  No
-        .financials_condition_choice.shown-yes(style="display:" + (values['financials_condition_choice'] ? 'block' : 'none') + ";")
+        .financials_condition_choice.shown-yes(style="display:" + (values['financials_condition_choice'] == true ? 'block' : 'none') + ";")
           .col-lg-12
             +fieldTextareaLabel("financials_condition_yes", _.extend({
               class1: '',

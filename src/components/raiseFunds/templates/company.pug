@@ -64,12 +64,12 @@ section.create-company.container.m-b-85
         .row.form-group
           .col-xl-6.col-lg-6.col-l-65
             - pug_html += app.fields.textLabel('zip_code', {class1:'col-xl-6 col-lg-12 text-lg-left text-xl-right', class2:'col-xl-6 col-lg-12', schema: fields.zip_code, value: values.zip_code,})
-          .col-xl-5.col-lg-6.col-sm-12.city_states.required.sity-state-error
+          .col-xl-6.col-lg-6.col-sm-12.city_states.required.sity-state-error
             input(type='hidden' name='state' value=values.state)#state
             input(type='hidden' name='city' value=values.city)#city
 
-            label.col-xl-6.col-lg-12.col-sm-6.col-xs-6.text-xl-right.text-lg-left.p-l-0 City/State
-            .col-xl-6.col-lg-12.col-sm-6.col-xs-6
+            label.col-xl-5.col-lg-12.col-sm-6.col-xs-6.text-xl-right.text-lg-left.p-l-0 City/State
+            .col-xl-7.col-lg-12.col-sm-6.col-xs-6
               a(data-toggle="modal" data-target="#city_state_modal" href="#city_state_modal").change_state_city
                 span.input-value.js-city-state= (values.city ? values.city : "(city)") + ", " + (values.state ? values.state : "(state)") 
                 i.fa.fa-pencil-square-o.link-1

@@ -3,28 +3,16 @@ mixin getCompanyUrl(id, section, currentStep, step, name)
     if id || currentStep == step
       a(
           href='/' + section + '/' + id + '/' + step
+          id="menu_" + section.substr(0, 1) + "_" + step
           class="list-group-item list-group-item-action " + (currentStep == step ? 'active' : '') + 
           ((section == 'formc' && (values.is_paid == false || values.is_approved == false) ) ? 'disabled' : '')) #{ name }
-        if step == 'company'
+        if step == 'company' && values.id
           .icon-check
             i.fa.fa-check-circle-o
-        if section == 'campaign' && values.progress
-          if values.progress[step] == true
-            .icon-check
-              i.fa.fa-check-circle-o
-        if section == 'formc' && values.progress
-          if values.progress[step] == true 
-            .icon-check
-              i.fa.fa-check-circle-o
-          if formc && formc.progress[step] == true
-            .icon-check
-              i.fa.fa-check-circle-o
-          if campaign && campaign.progress[step] == true
-            .icon-check
-              i.fa.fa-check-circle-o
     else
         a(
           href="#"
+          id="menu_f_" + step
           class="list-group-item list-group-item-action disabled" 
         ) #{ name }
 
@@ -33,6 +21,7 @@ mixin getRiskFactorsItem(id, section, currentStep, step, name)
   if id || currentStep == step
       a(
         href=prefix + id + "/" + step
+        id="menu_f_" + step
         class="list-group-item list-group-item-action " + (currentStep == step ? 'active' : '') +
           ((section == 'formc' && values.is_paid == false ) ? 'disabled' : '')
       ) #{ name }
@@ -139,12 +128,13 @@ mixin menu(currentSection, currentStep)
             .row
               button(type="button").btn.btn-primary.text-uppercase.m-t-2.submit_formc submit form c
       else
-        .row
-          .col-lg-12.text-xs-center
-            .row
-              button(type="button").btn.btn-secondary.text-uppercase.m-t-2.onPreview preview
-            .row
-              button(type="button").btn.btn-primary.text-uppercase.m-t-2.submit_form submit campaign
+        if values.id
+          .row
+            .col-lg-12.text-xs-center
+              .row
+                button(type="button").btn.btn-secondary.text-uppercase.m-t-2.onPreview preview
+              .row
+                button(type="button").btn.btn-primary.text-uppercase.m-t-2.submit_form submit campaign
         
       .row
         .education-link-wrap
@@ -295,5 +285,5 @@ mixin menu(currentSection, currentStep)
                   |  Once you submit, we'll generate the form c document and you'll have the opportunity to review prior to final submission.
                   .info-btn-block.mb30
                     a(href="#" data-dismiss="modal").btn.m-t-2.m-r-1.btn-secondary Cancel
-                    a(href="/" + values.id + "/final-review").btn.m-t-2.btn-primary.text-uppercase Yes
+                    a(href="/" + values.company_id).btn.m-t-2.btn-primary.text-uppercase Yes
             .modal-footer

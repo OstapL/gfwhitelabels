@@ -128,7 +128,11 @@ module.exports = {
 
       api.makeRequest(url, method, newData).
         then((responseData) => {
-          _.extend(this.model, newData);
+          // ToDo
+          // Do we really need this ?!
+          if(method != 'POST') {
+            _.extend(this.model, newData);
+          }
           app.showLoading();
 
           // ToDo
@@ -137,9 +141,12 @@ module.exports = {
           // this.undelegateEvents();
           $('.popover').popover('hide');
 
+          let defaultAction  = 1;
           if (typeof this._success == 'function') {
-            this._success(responseData);
-          } else {
+            defaultAction = this._success(responseData, newData);
+          } 
+          
+          if(defaultAction == 1) {
             $('#content').scrollTo();
             this.undelegateEvents();
             app.routers.navigate(
@@ -236,6 +243,7 @@ module.exports = {
     _(fields).each((el, key) => {
       if(el.type == 'nested') {
         if(Array.isArray(data[key])) {
+          data[key] = data[key].filter(function(el) { return el !== null;})
           data[key].forEach((el, i) => {
             let emptyValues = 0;
             _(el).each((val, subkey) => {
@@ -258,7 +266,7 @@ module.exports = {
   fixMoneyFields(fields, data) {
     _(fields).each((el, key) => {
       if(el.type == 'money') {
-        if (data[key]) {
+        if (data && data[key]) {
           data[key] = formatHelper.unformatPrice(data[key]);
         }
       } else if(el.type == 'nested' && data[key]) {

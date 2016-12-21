@@ -1,0 +1,27 @@
+h2#ask.col-lg-12.dosis.text-uppercase.text-lg-center.text-xs-center.campaign-subheading ASK A QUESTION
+.col-lg-8.offset-lg-2.pt30.comment-form-div
+  form.comment-form.form-section
+    .col-lg-8
+      input(type="text" name="body" placeholder="Type your text here..." value='').text-body
+    .col-lg-4.p-r-0.text-xl-right.text-xs-center.p-t-sm-1
+      button(type="button").btn.btn-primary.text-uppercase.pull-lg-right.ask-question Submit
+
+
+.col-lg-8.offset-lg-2.pt50.comments
+  -
+    var options = {
+      owner_id: owner_id,
+      company_id: company_id,
+    };
+
+  each c in comments
+    - pug_html += app.fields.comment(c, 0, options)
+
+.stubs.collapse
+  //- todo: move this to fields
+  form.comment-form.form-section.edit-comment.collapse
+    .col-lg-12.p-r-1.m-t-1
+      textarea(placeholder="Type your text here").text-body.col-lg-12
+    .col-lg-12.p-r-1.m-t-1text-xl-right
+      button(type="button").btn.btn-primary.text-uppercase.pull-lg-right.submit-comment Submit
+      button(type="button").btn.btn-secondary.text-uppercase.pull-lg-right.cancel-comment Cancel

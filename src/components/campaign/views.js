@@ -4,7 +4,7 @@ const textHelper = require('helpers/textHelper');
 let countries = {};
 _.each(require('helpers/countries.json'), (c) => { countries[c.code] = c.name; });
 
-module.exports = { 
+module.exports = {
   list: Backbone.View.extend({
     el: '#content',
     template: require('./templates/list.pug'),
@@ -40,6 +40,7 @@ module.exports = {
   }),
 
   detail: Backbone.View.extend({
+    el: '#content',
     template: require('./templates/detail.pug'),
     events: {
       'click .tabs-scroll .nav .nav-link': 'smoothScroll',
@@ -57,7 +58,6 @@ module.exports = {
       'click .more-less': 'showMore',
       'hidden.bs.collapse #hidden-article-press' :'onArticlePressCollapse',
       'shown.bs.collapse #hidden-article-press' :'onArticlePressCollapse',
-      'submit .comment-form': 'submitComment',
       'click .submit_form': 'submitCampaign',
     },
 
@@ -77,6 +77,7 @@ module.exports = {
     initialize(options) {
       $(document).off("scroll", this.onScrollListener);
       $(document).on("scroll", this.onScrollListener);
+
       let params = app.getParams();
       this.edit = false;
       if (params.preview == '1' && this.model.owner == app.user.get('id')) {
@@ -85,6 +86,7 @@ module.exports = {
         this.previous = params.previous;
       }
       this.preview = params.preview ? true : false;
+
     },
 
     submitCampaign(e) {
@@ -178,6 +180,9 @@ module.exports = {
       $link.each(function () {
         var currLink = $(this);
         var refElement = $(currLink.attr("href")).closest('section');
+        if (!refElement || !refElement.length)
+          return;
+
         if (refElement.position().top - $navBar.height() <= scrollPos && refElement.position().top + refElement.height() > scrollPos) {
           $link.removeClass("active");
           currLink.addClass("active");
@@ -190,8 +195,7 @@ module.exports = {
 
     shareWithEmail (e) {
       event.preventDefault();
-      let companyName = this.model.name;
-      let text = "Check out " + companyName + "'s fundraise on GrowthFountain";
+      let text = "Check out " + (this.model.short_name || this.model.name) + "'s fundraise on GrowthFountain";
       window.open("mailto:?subject=" + text + "&body=" + text + "%0D%0A" + window.location.href);
     },
 
@@ -202,7 +206,7 @@ module.exports = {
         href: window.location.href,
         caption: this.model.tagline,
         description: this.model.description,
-        title: 'Chechk out ' + this.model.name + "'s fundraise on GrowthFountain.com",
+        title: 'Check out ' + (this.model.short_name || this.model.name) + "'s fundraise on GrowthFountain.com",
         picture: (this.model.campaign.header_image_data.url ? this.model.campaign.header_image_data.url : null),
       }, function(response){});
     },
@@ -210,7 +214,7 @@ module.exports = {
     shareOnLinkedin(event) {
       event.preventDefault();
       window.open(encodeURI('https://www.linkedin.com/shareArticle?mini=true&url=' + window.location.href +
-        '&title=' + 'Check out ' + this.model.name + "'s fundraise on GrowthFountain.com" +
+        '&title=' + 'Check out ' + (this.model.short_name || this.model.name) + "'s fundraise on GrowthFountain.com" +
             '&summary=' + this.model.description +
             '&source=Growth Fountain'),'Growth Fountain Campaign','width=605,height=545');
     },
@@ -218,7 +222,7 @@ module.exports = {
     shareOnTwitter(event) {
       event.preventDefault();
       window.open(encodeURI('https://twitter.com/share?url=' + window.location.href +
-            '&text=Check out ' + this.model.name + "'s fundraise on @growthfountain "),'Growth Fountain Campaingn','width=550,height=420');
+            '&text=Check out ' + (this.model.short_name || this.model.name) + "'s fundraise on @growthfountain "),'Growth Fountain Campaingn','width=550,height=420');
     },
 
     render() {
@@ -296,21 +300,10 @@ module.exports = {
           stickyToggle(sticky, stickyWrapper, $(window));
         });
 
-        this.commentView = require('components/comment/views.js');
+        this.initComments();
 
-        $('#ask').after(
-          new this.commentView.form().getHtml({model: {}})
-        );
-
-        var a1 = api.makeCacheRequest(Urls['comment-list']() + '?company=' + this.model.company.id).
-          then((comments) => {
-            let commentList = new this.commentView.list({
-              el: '.comments',
-              model: this.model.company,
-              collection: comments,
-            }).render();
-          });
       }, 100);
+
       this.$el.find('.perks .col-xl-4 p').equalHeights();
       this.$el.find('.team .auto-height').equalHeights();
       this.$el.find('.card-inverse p').equalHeights();
@@ -346,89 +339,42 @@ module.exports = {
       return this;
     },
 
+    initComments() {
+      const View = require('components/comment/views.js');
+      const urlComments = commentsServer + '/company/' + this.model.id;
+      let optionsR = api.makeRequest(urlComments, 'OPTIONS');
+      let dataR = api.makeRequest(urlComments);
+
+      $.when(optionsR, dataR).done((options, data) => {
+        data[0].id = this.model.id;
+        data[0].owner_id = this.model.owner_id;
+
+        let comments = new View.comments({
+          // model: commentsModel,
+          model: data[0],
+          fields: options[0].fields,
+        });
+        comments.render();
+      });
+    },
+
     readMore(e) {
       e.preventDefault();
       $(e.target).parent().addClass('show-more-detail');
     },
 
-    _commentSuccess(data) {
-      this._success = null;
-      this.urlRoot = null;
-      if (data.parent) { 
-        $('#comment_' + data.parent).after(
-          new this.commentView.detail().getHtml({
-            model: data,
-            company: this.model.company,
-            app: app,
-          })
-        );
-      } else {
-        $('#comment_' + data.parent).html(
-          new this.commentView.detail().getHtml({
-            company: this.model.company,
-            model: data,
-            app: app,
-          })
-        );
-      }
-      this.$el.find('.comment-form-div').remove();
-      app.hideLoading();
-      app.showLoading = this._showLoading;
-    },
-
-    checkResponse(e) {
-      e.preventDefault();
-      this.$el.find('.comment-form-div').remove();
-      var $el = $(e.currentTarget);
-      $el.parents('.comment').after(
-        new this.commentView.form({
-        }).getHtml({
-          model: {parent: e.currentTarget.dataset.id},
-          company: this.model.company,
-          app: app,
-        })
-      );
-    },
-
-    submitComment(e) {
-      e.preventDefault();
-      var data = $(e.target).serializeJSON();
-      let model = new Backbone.Model();
-      model.urlRoot = serverUrl + Urls['comment-list']();
-      data['company'] = this.model.company.id;
-      model.set(data)
-      if (model.isValid(true)) {
-        model.save().
-          then((data) => {
-            this.$el.find('.alert-warning').remove();
-            this._commentSuccess(data);
-          }).
-          fail((xhr, status, text) => {
-            api.errorAction(this, xhr, status, text, this.fields);
-          });
-      } else {
-        if (this.$('.alert').length) {
-          $('#content').scrollTo();
-        } else {
-          this.$el.find('.has-error').scrollTo();
-        }
-      }
-    }
   }),
 
   investment: Backbone.View.extend({
     el: '#content',
     template: require('./templates/investment.pug'),
-    templatesOfPdf: {
-      revenue_share: require('./templates/agreement/revenue_share.pug'),
-      common_stock: require('./templates/agreement/common_stock.pug'),
-    },
     urlRoot: investmentServer + '/',
     doNotExtendModel: true,
     events: {
       'submit form.invest_form': 'submit',
       'keyup #amount': 'updateAmount',
-      'change #amount': 'ensureIntegerAmountAccordingShares',
+      'change #amount': 'roundAmount',
+      'focusout #amount': 'triggerAmountChange',
       'keyup .us-fields :input[name*=zip_code]': 'changeZipCode',
       'click .update-location': 'updateLocation',
       'click .link-2': 'openPdf',
@@ -437,13 +383,13 @@ module.exports = {
       'keyup .typed-name': 'copyToSignature',
       'keyup #annual_income,#net_worth': 'updateLimitInModal',
       'click button.submit-income-worth': 'updateIncomeWorth',
+      'click': 'hidePopover',
     },
 
     initialize(options) {
       this.fields = options.fields;
       this.user = options.user;
       this.user.account_number_re = this.user.account_number;
-      this.fields.is_understand_securities_related = {},
       this.fields.payment_information_type.validate.choices = {
         0: 'Echeck (ACH)',
         1: 'Check',
@@ -465,10 +411,6 @@ module.exports = {
         if (amount > max) {
           throw 'Sorry, your amount if too high, please update your income or change amount’';
         }
-
-        this.$amount.data('contentselector', 'amount-ok');
-
-        this.$amount.popover('show');
 
         return true;
       };
@@ -496,22 +438,22 @@ module.exports = {
         payment_information_type: 'I Want to Pay Using',
         amount: 'Amount',
         fee: 'Fee',
-        is_reviewed_educational_material: `I confirm and represent that (a) I have reviewed 
-          the educational material that has been made available on this website, (b) I understand 
-          that the entire amount of my investment may be lost and (c) I am in a 
-          financial condition to bear the loss of the investment and (d) I represent that 
+        is_reviewed_educational_material: `I confirm and represent that (a) I have reviewed
+          the educational material that has been made available on this website, (b) I understand
+          that the entire amount of my investment may be lost and (c) I am in a
+          financial condition to bear the loss of the investment and (d) I represent that
           I have not exceeded my investment limitations.`,
-        is_understand_restrictions_to_cancel_investment: `I understand that there are restrictions 
+        is_understand_restrictions_to_cancel_investment: `I understand that there are restrictions
           on my ability to cancel an investment commitment and obtain a return of my investment.`,
-        is_understand_difficult_to_resell_purchashed: `I understand that it may be difficult to 
+        is_understand_difficult_to_resell_purchashed: `I understand that it may be difficult to
           resell securities purchased on GrowthFountain.`,
-        is_understand_investing_is_risky: `I understand that investing in start-ups and small 
-          businesses listed on GrowthFountain is very risky, and that I should not invest any 
+        is_understand_investing_is_risky: `I understand that investing in start-ups and small
+          businesses listed on GrowthFountain is very risky, and that I should not invest any
           funds unless I can afford to lose my entire investment.`,
         is_understand_securities_related: `I understand that GrowthFountain performs all securities
-          related activities. I further understand that DCU (Digital Federal Credit Union) (a) does 
-          not participate in the selection or review of any issuers, (b) does not have any responsibility 
-          for the accuracy or completeness of any information provided by any issuer and (c) does not provide 
+          related activities. I further understand that DCU (Digital Federal Credit Union) (a) does
+          not participate in the selection or review of any issuers, (b) does not have any responsibility
+          for the accuracy or completeness of any information provided by any issuer and (c) does not provide
           any investment advice or recommendations.`,
       };
 
@@ -521,6 +463,7 @@ module.exports = {
       this.usaStates = require("helpers/usa-states");
 
       this.initMaxAllowedAmount();
+      this.amountTimeout = null;
     },
 
     render() {
@@ -536,6 +479,18 @@ module.exports = {
         })
       );
 
+      this.initAmountPopover();
+
+      $('#income_worth_modal').on('hidden.bs.modal', () => {
+        this.$amount.keyup();
+      });
+
+      $('span.current-limit').text(this._maxAllowedAmount.toLocaleString('en-US'));
+
+      return this;
+    },
+
+    initAmountPopover() {
       this.$amount = this.$el.find('#amount');
       this.$amount.data('contentselector', 'amount-campaign');
       this.$amount.data('max', this._maxAllowedAmount);
@@ -560,15 +515,49 @@ module.exports = {
           return content;
         },
         trigger: 'manual',
+        delay: 50,
       }).popover('hide');
+    },
 
-      $('#income_worth_modal').on('hidden.bs.modal', () => {
-        this.$amount.keyup();
-      });
+    updateAmountPopover(contentSelector, force) {
+      let currentSelector = this.$amount.data('contentselector');
 
-      $('span.current-limit').text(this._maxAllowedAmount.toLocaleString('en-US'));
+      if (force || currentSelector !== 'rounding') {
+        this.$amount.data('contentselector', contentSelector);
+      }
 
-      return this;
+      this.$amount.popover('show');
+    },
+
+    triggerAmountChange(e) {
+      setTimeout(() => {
+        this.$amount.trigger('change');
+      }, 600);
+    },
+
+    validateAmount(amount) {
+      amount = Number(amount);
+      let min = this.model.campaign.minimum_increment;
+      let max = this._maxAllowedAmount;
+      if (amount < min) {
+        this.updateAmountPopover('minimum-increment', true);
+        return false;
+      }
+
+      if (amount > max) {
+        this.updateAmountPopover('amount-campaign', true);
+        $('.popover a.update-income-worth')
+          .off('click')
+          .on('click', (e) => {
+            this.$amount.popover('hide');
+          });
+
+        return false;
+      }
+
+      this.updateAmountPopover('amount-ok');
+
+      return true;
     },
 
     maxInvestmentsPerYear(annualIncome, netWorth, investedPastYear, investedOtherSites) {
@@ -588,7 +577,15 @@ module.exports = {
       let investedPastYear = this.user.invested_equity_past_year;
 
       this._maxAllowedAmount = this.maxInvestmentsPerYear(annualIncome, netWorth,
-          investedPastYear, investedOnOtherSites);
+        investedPastYear, investedOnOtherSites);
+    },
+
+    getInt(value) {
+      return parseInt(value.replace(/\,/g, ''));
+    },
+
+    formatInt(value) {
+      return value.toLocaleString('en-US');
     },
 
     roundAmount(e) {
@@ -602,6 +599,9 @@ module.exports = {
       if (!amount)
         return;
 
+      if (!this.validateAmount(amount))
+        return;
+
       let pricePerShare = this.model.campaign.price_per_share;
       if (!pricePerShare)
         return;
@@ -612,19 +612,59 @@ module.exports = {
       this._updateTotalAmount();
 
       if (newAmount > amount) {
-        this.$amount.data('contentcontainer', 'content-rounding');
-        this.$amount.popover('show');
+        this.updateAmountPopover('rounding', true);
       }
 
       // return false;
     },
 
-    getInt(value) {
-      return parseInt(value.replace(/\,/g, ''));
+    updateAmount(e) {
+
+      let amount = this.getInt(e.currentTarget.value);
+      if (!amount)
+        return;
+
+      e.currentTarget.value = this.formatInt(amount);
+
+      this.$amount.data('rounded', false);
+
+      this.validateAmount(amount);
+
+      this.updatePerks(amount);
+
+      this._updateTotalAmount();
     },
 
-    formatInt(value) {
-      return value.toLocaleString('en-US');
+    updatePerks(amount) {
+      //update perks
+      let $targetPerk;
+      let $perks = this.$('.perk');
+      $perks.each((i, el) => {
+        if(parseInt(el.dataset.amount) <= amount) {
+          $targetPerk = $(el);
+          return false;
+        }
+      });
+
+      $perks.removeClass('active').find('i.fa.fa-check').hide();
+      if ($targetPerk)
+        $targetPerk.addClass('active').find('i.fa.fa-check').show();
+    },
+
+    _updateTotalAmount() {
+      // Here 10 is the flat rate;
+      let totalAmount = this.getInt(this.$amount.val()) + 10;
+      let formattedTotalAmount = '$' + this.formatInt(totalAmount)
+      this.$el.find('.total-investment-amount').text(formattedTotalAmount);
+      this.$el.find('[name=total_amount]').val(formattedTotalAmount);
+
+    },
+
+    hidePopover(e) {
+      if (e.target == this.$amount[0])
+        return;
+
+      this.$amount.popover('hide');
     },
 
     getSuccessUrl(data) {
@@ -709,8 +749,13 @@ module.exports = {
     submit(e) {
       e.preventDefault();
 
-      let data = $(e.target).serializeJSON();
+      let data = $(e.target).serializeJSON({ useIntKeysAsArrayIndex: true });
       data.amount = data.amount.replace(/\,/g, '');
+      if(data['payment_information_type'] == '1' || data['payment_information_type'] == 2) {
+        delete data['payment_information_data'];
+        // Temp solution !
+        delete this.fields.payment_information_data;
+      }
       api.submitAction.call(this, e, data);
     },
 
@@ -718,54 +763,54 @@ module.exports = {
       return data.id + '/invest-thanks';
     },
 
-    openPdf (e) {
-      const investor_legal_name = $('#first_name').val() + $('#last_name').val()
-                      || app.user.get('first_name') + app.user.get('last_name');
-      var data = {
-        address_1: this.model.address_1,
-        address_2: this.model.address_2,
-        aggregate_inclusive_purchase: this.$('#amount').val() + 10,
-        city: this.model.city,
-        investor_total_purchase: this.$('#amount').val(),
-        investor_legal_name: this.$(':input[name="personal_information_data[first_name]"]').val() + ' ' + this.$(':input[name="personal_information_data[last_name]"]').val(),
-        state: this.model.state,
-        zip_code: this.model.zip_code,
-        Commitment_Date_X: this.getCurrentDate(),
-        fees_to_investor: 10,
-        investor_address: this.$(':input[name="personal_information_data[street_address_1]"]').val(),
-        investor_city: this.$(':input[name="personal_information_data[city]"]').val(),
-        investor_code: this.$(':input[name="personal_information_data[zip_code]"]').val(),
-        investor_email: app.user.get('email'),
-        Investor_optional_address: this.$(':input[name="personal_information_data[street_address_2]"]').val(),
-        investor_state: this.$(':input[name="personal_information_data[state]"]').val(),
-        investor_number_purchased: this.$('#amount').val() / this.model.campaign.price_per_share,
-        issuer_email: '',
-        issuer_legal_name: this.model.name,
-        issuer_signer: '',
-        issuer_signer_title: '',
-        jurisdiction_of_organization: this.model.founding_state,
-        listing_fee: '',
-        maximum_raise: this.model.campaign.maximum_raise,
-        minimum_raise: this.model.campaign.minimum_raise,
-        price_per_share: this.model.campaign.price_per_share,
-        registration_fee: '',
+    saveEsign(responseData) {
+      const reqUrl = global.esignServer + '/pdf-doc';
+      const successRoute = this.getSuccessUrl(responseData);
+      const formData = this.getDocMetaData();
+      const data = {
+        type: 1,
+        esign: responseData.signature.full_name,
+        meta_data: formData,
+        template: [
+          this.getSubscriptionAgreementPath(),
+          'invest/participation_agreement.pdf'
+        ]
       };
-      const tplName = e.target.dataset.tpl;
-      const tpl = this.templatesOfPdf[tplName];
-      var docTxt = tpl(data);
-      var doc = JSON.parse(docTxt);
 
-      window.pdfMake
-        .createPdf(doc)
-        .download(e.target.text, () => app.hideLoading());
+      $.post(reqUrl, data)
+      .done( () => {
+        $('#content').scrollTo();
+        this.undelegateEvents();
+        app.routers.navigate(successRoute, {
+            trigger: true,
+            replace: false
+        });
+      })
+      .fail( (err) => console.log(err));
+    },
+
+    openPdf (e) {
+      var pathToDoc = e.target.dataset.path;
+      var data = this.getDocMetaData();
+      const isSubscriptionAgreement = pathToDoc.indexOf('subscription_agreement');
       
-      app.showLoading()
-      e.preventDefault();
+      if (isSubscriptionAgreement !== -1) {
+        pathToDoc = global.esignServer + '/pdf-doc/';
+        pathToDoc += this.getSubscriptionAgreementPath();
+      }
+      
+      e.target.href = pathToDoc + '?' + $.param(data);
+    },
+
+    getSubscriptionAgreementPath () {
+      return this.model.campaign.security_type === 0 ?
+      'invest/subscription_agreement_common_stok.pdf' :
+      'invest/subscription_agreement_revenue_share.pdf';
     },
 
     getCurrentDate () {
         const date = new Date();
-        return date.getMonth() + '/' + date.getDate() + '/' + date.getFullYear();
+        return (date.getMonth() + 1) + '/' + date.getDate() + '/' + date.getFullYear();
     },
 
     updateLocation(e) {
@@ -795,74 +840,56 @@ module.exports = {
       });
     },
 
-    validateAmount(amount) {
-      amount = Number(amount);
-      let min = this.model.campaign.minimum_increment;
-      let max = this._maxAllowedAmount;
-      if (amount < min) {
-        this.$amount.data('contentselector', 'minimum-increment');
-        this.$amount.popover('show');
-        return false;
-      }
+    getDocMetaData () {
+      this.model.owner = this.model.owner || {};
 
-      if (amount > max) {
-        this.$amount.data('contentselector', 'amount-campaign');
-        this.$amount.popover('show');
-        $('.popover a.update-income-worth')
-          .off('click')
-          .on('click', (e) => {
-            $('#amount').popover('hide');
-          });
+      const formData = $('form.invest_form').serializeJSON();
+      const issuer_signer = this.model.owner.first_name + ' ' + this.model.owner.last_name;
+      const investor_legal_name = formData.personal_information_data.first_name + ' ' + formData.personal_information_data.last_name;
+      return {
+        fees_to_investor: 10,
+        trans_percent: 6,
+        // listing_fee: '$500',
+        registration_fee: 500,
+        commitment_date_x: this.getCurrentDate(),
 
-        return false;
-      }
+        // campaign
+        issuer_legal_name: this.model.name,
+        city: this.model.city,
+        state: this.model.state,
+        zip_code: this.model.zip_code,
+        address_1: this.model.address_1,
+        address_2: this.model.address_2,
+        jurisdiction_of_organization: this.model.founding_state, 
+        jurisdiction_of_incorporation: this.model.founding_state, 
+        maximum_raise: this.model.campaign.maximum_raise,
+        minimum_raise: this.model.campaign.minimum_raise,
+        price_per_share: this.model.campaign.price_per_share,
+        
+        // owner of campaign
+        issuer_email: this.model.owner.email,
+        issuer_signer: issuer_signer,
+        // issuer_signer_title: null,
 
-      this.$amount.data('contentselector', 'amount-ok');
-
-      this.$amount.popover('show');
-
-      return true;
+        // investor
+        investor_legal_name: investor_legal_name,
+        aggregate_inclusive_purchase: formData.total_amount.split('$').join(''),
+        investment_amount: formData.amount.split('$').join(''),
+        investor_address: formData.personal_information_data.street_address_1,
+        investor_optional_address: formData.personal_information_data.street_address_2,
+        investor_code: formData.personal_information_data.zip_code,
+        investor_city: formData.personal_information_data.city,
+        investor_state: formData.personal_information_data.state,
+        investor_email: app.user.get('email'),
+        investor_number_purchased: 'empty',
+      };
     },
 
-    updateAmount(e) {
-
-      let amount = this.getInt(e.currentTarget.value);
-      if (!amount)
-        return;
-
-      e.currentTarget.value = this.formatInt(amount);
-
-      this.validateAmount(amount);
-
-      this.updatePerks();
-
-      this._updateTotalAmount();
+    _success(data) {
+      this.saveEsign(data);
     },
 
-    updatePerks(amount) {
-      //update perks
-      let $targetPerk;
-      let $perks = this.$('.perk');
-      $perks.each((i, el) => {
-        if(parseInt(el.dataset.amount) <= amount) {
-          $targetPerk = $(el);
-          return false;
-        }
-      });
-
-      $perks.removeClass('active').find('i.fa.fa-check').hide();
-      if ($targetPerk)
-        $targetPerk.addClass('active').find('i.fa.fa-check').show();
-    },
-
-    _updateTotalAmount() {
-      // Here 10 is the flat rate;
-      let totalAmount = this.getInt(this.$amount.val()) + 10;
-      this.$el.find('.total-investment-amount').text('$' + this.formatInt(totalAmount));
-
-    },
   }),
-
 
   investmentThankYou: Backbone.View.extend({
     template: require('./templates/thankYou.pug'),
