@@ -9,14 +9,14 @@ section.create-company-team-add.container
 
   //START RIGHT BLOCK
   .col-xl-8.col-lg-8.col-md-12
-    h2.text-uppercase.text-lg-center.text-xs-center.dosis.m-t-0 team members
+    h2.text-uppercase.text-lg-center.text-xs-center.dosis.m-t-0.m-b-3 team members
     form.form-section
       div(style='display: ' + (values.team_members.length < 1 ? 'block' : 'none')).form-group.text-lg-center.notification
         .col-lg-12
           .warning-block.text-lg-left
             i.fa.fa-info-circle 
             span.warning-text You have to add at least 1 team member to proceed.
-      .col-lg-12.text-lg-center.text-md-center.text-sm-center.text-xs-center.m-t-2.m-b-2
+      .col-lg-12.text-lg-center.text-md-center.text-sm-center.text-xs-center.m-b-2
         a(href='/campaign/' + values.id + '/team-members/add/member/new').btn.text-uppercase.m-r-3 
           i.fa.fa-plus
           |  ADD TEAM MEMBER 
