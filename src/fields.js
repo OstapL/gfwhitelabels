@@ -176,6 +176,27 @@ let exports = {
     });
   },
 
+  userProfileDropzone(name, attr) {
+    let noimg = '/img/default/Default_photo.png';
+    attr.data = attr.data || {};
+    attr.data.urls = attr.data.urls || [noimg];
+
+    const template = require('./templates/userProfileDropzone.pug');
+    return template({
+      name: name,
+      attr: attr,
+      noimg: noimg,
+    });
+  },
+
+  fieldText(name, attr) {
+    const template = require('./templates/fieldText.pug');
+    return template({
+      name: name,
+      attr: attr,
+    })
+  },
+
 };
 
 module.exports = exports;

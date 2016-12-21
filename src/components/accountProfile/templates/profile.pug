@@ -8,13 +8,14 @@ include ../../../templates/fields_mixins.pug
       form(method="post" action="").form.form-section
         - var values = user;
         h3.m-t-0.m-b-1.profile-user-name.text-xs-center #{user.first_name + ' ' + user.last_name}
-        +userProfileDropzone("image_image_id", _.extend({
-          thumbSize: '255x135',
-          default: '/img/default/255x153.png',
-          icon: 'camera',
-          text: 'Drop your profile photo here or click to upload',
-          data: user.image_data[0],
-        }, fields.image))
+        -
+          pug_html += app.fields.userProfileDropzone('image_image_id', _.extend({
+            thumbSize: '255x135',
+            default: '/img/default/255x153.png',
+            icon: 'camera',
+            text: 'Drop your profile photo here or click to upload',
+            data: user.image_data[0],
+          }, fields.image));
       .row.m-t-2
         .col-xl-12.p-l-0.p-r-0
           .profile-type-user
@@ -59,6 +60,17 @@ include ../../../templates/fields_mixins.pug
                       .form-group.row.required
                         label.col-lg-3.text-lg-right.text-xs-left Legal Name
                           span.color-red *
+                          console
+                        //-
+                          pug_html += app.fields.fieldText('first_name', {
+                            'class': 'col-lg-4 m-b-md-25',
+                            'placeholder': 'First Name',
+                          });
+                          pug_html += app.fields.fieldText('last_name', {
+                            'class': 'col-lg-4',
+                            'placeholder': 'Last Name',
+                          });
+
                         +fieldText("first_name", {'class': 'col-lg-4 m-b-md-25','placeholder':'First Name' })
                         +fieldText("last_name", {'class': 'col-lg-4','placeholder':'Last Name' })
 
