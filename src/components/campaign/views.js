@@ -810,7 +810,7 @@ module.exports = {
 
     getCurrentDate () {
         const date = new Date();
-        return date.getMonth() + '/' + date.getDate() + '/' + date.getFullYear();
+        return (date.getMonth() + 1) + '/' + date.getDate() + '/' + date.getFullYear();
     },
 
     updateLocation(e) {
@@ -873,15 +873,15 @@ module.exports = {
 
         // investor
         investor_legal_name: investor_legal_name,
-        agregate_inclusive_purchase: formData.total_amount,
-        investment_amount: formData.amount,
+        aggregate_inclusive_purchase: formData.total_amount.split('$').join(''),
+        investment_amount: formData.amount.split('$').join(''),
         investor_address: formData.personal_information_data.street_address_1,
         investor_optional_address: formData.personal_information_data.street_address_2,
         investor_code: formData.personal_information_data.zip_code,
         investor_city: formData.personal_information_data.city,
         investor_state: formData.personal_information_data.state,
         investor_email: app.user.get('email'),
-        investor_number_purchased: null,
+        investor_number_purchased: 'empty',
       };
     },
 
