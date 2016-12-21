@@ -176,6 +176,56 @@ let exports = {
     });
   },
 
+  userProfileDropzone(name, attr) {
+    let noimg = '/img/default/Default_photo.png';
+    attr.data = attr.data || {};
+    attr.data.urls = attr.data.urls || [noimg];
+
+    const template = require('./templates/userProfileDropzone.pug');
+    return template({
+      name: name,
+      attr: attr,
+      noimg: noimg,
+    });
+  },
+
+  fieldText(name, attr) {
+    const template = require('./templates/fieldText.pug');
+    attr.value = attr.value || '';
+    return template({
+      name: name,
+      attr: attr,
+    });
+  },
+
+  fieldTextLabel(name, attr) {
+    this.prepareField(name, attr);
+    attr.type = attr.type || 'text';
+    attr.value = attr.type == 'money'
+      ? helpers.format.formatPrice(attr.value)
+      : attr.value
+
+    console.log(name);
+    console.log(attr);
+
+    const template = require('./templates/fieldTextLabel.pug');
+    return template({
+      name: name,
+      attr: attr,
+    })
+  },
+
+  fieldChoiceLabel(name, attr) {
+    this.prepareField(name, attr);
+    attr.type = attr.type || 'select';
+
+    const template = require('./templates/fieldChoiceLabel.pug');
+
+    return template({
+      name: name,
+      attr: attr,
+    });
+  },
 };
 
 module.exports = exports;
