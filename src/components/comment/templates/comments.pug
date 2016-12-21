@@ -20,8 +20,10 @@ h2#ask.col-lg-12.dosis.text-uppercase.text-lg-center.text-xs-center.campaign-sub
 .stubs.collapse
   //- todo: move this to fields
   form.comment-form.form-section.edit-comment.collapse
-    .col-lg-12.p-r-1.m-t-1
-      textarea(placeholder="Type your text here").text-body.col-lg-12
-    .col-lg-12.p-r-1.m-t-1text-xl-right
-      button(type="button").btn.btn-primary.text-uppercase.pull-lg-right.submit-comment Submit
-      button(type="button").btn.btn-secondary.text-uppercase.pull-lg-right.cancel-comment Cancel
+    .col-lg-11.offset-lg-1.m-t-2.p-r-0.p-l-3.form-group
+      .border-bottom.m-t-0.mb30
+      textarea(placeholder="Type your text here").form-control.big-textarea.text-body.col-lg-12
+    .col-lg-12.p-r-0.text-xl-right
+      button(type="button").btn.btn-sm.btn-secondary.text-uppercase.m-r-2.cancel-comment Cancel
+      button(type="button").btn.btn-sm.btn-primary.text-uppercase.submit-comment Submit
+      
