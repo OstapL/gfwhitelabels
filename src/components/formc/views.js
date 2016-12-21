@@ -160,21 +160,21 @@ module.exports = {
     getDocMetaData () {
       const formData = this.$el.find('form').serializeJSON();
       const issuer_legal_name = app.user.get('first_name') + ' ' + app.user.get('last_name');
-      
+      debugger;
       return {
-        trans_percent: '6%',
-        nonrefundable_fees: '$50',
-        registration_fee: '$500',
-        amendment_fee: '$200',
+        trans_percent: 6,
+        nonrefundable_fees: 50,
+        registration_fee: 500,
+        amendment_fee: 200,
         commitment_date_x: this.getCurrentDate(),
-        zip_code: app.user.get('zip_code'),
-        address_1: app.user.get(' address_1'),
-        address_2: app.user.get(' address_2'),
+        zip_code: app.user.company.zip_code,
+        address_1: app.user.company.address_1,
+        address_2: app.user.company.address_2,
+        issuer_legal_name: app.user.company.name,
         issuer_email: app.user.get('email'),
-        issuer_legal_name: issuer_legal_name,
         issuer_signer: formData.full_name,
-        party_fees: '',
-        withdrawal_fee: '',
+        // party_fees: '',
+        // withdrawal_fee: '',
       };
     },
 
@@ -186,7 +186,7 @@ module.exports = {
 
     getCurrentDate () {
         const date = new Date();
-        return date.getMonth() + '/' + date.getDate() + '/' + date.getFullYear();
+        return (date.getMonth() + 1) + '/' + date.getDate() + '/' + date.getFullYear();
     },
 
     getSuccessUrl() {
