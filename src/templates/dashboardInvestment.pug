@@ -67,9 +67,9 @@
       a(href=('/' + i.company.id)).btn.btn-sm.btn-secondary.text-uppercase view campaign
         i.fa.fa-angle-right
     .cancel_invest
-      if attr.active
+      if attr.active && i.status == 0
         a(
-        href="#"
-        data-id=(i.id || 0)
+          href="#"
+          data-id=(i.id || 0)
         ).cancel-investment.font-weight-bold Cancel investment
   .clear
