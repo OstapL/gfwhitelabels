@@ -243,6 +243,7 @@ module.exports = {
     _(fields).each((el, key) => {
       if(el.type == 'nested') {
         if(Array.isArray(data[key])) {
+          data[key] = data[key].filter(function(el) { return el !== null;})
           data[key].forEach((el, i) => {
             let emptyValues = 0;
             _(el).each((val, subkey) => {
