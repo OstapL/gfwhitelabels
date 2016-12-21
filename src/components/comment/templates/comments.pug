@@ -1,59 +1,3 @@
-mixin comment(comment, level)
-  -
-    level = level || 0;
-    var topLevel = level <= 0;
-
-    var cssClass = level > 12
-      ? 'col-lg-10 offset-lg-1'
-      : 'col-lg-' + (12 - level) + ' offset-lg-' + level;
-    cssClass += ' pt30 comment ';// + (topLevel ? '' : 'collapse');
-
-    var avatar = '/img/avatar1.jpg';
-    var userName = users[comment.user_id] || 'Anonymous';
-    var id = comment.uid
-      ? 'comment_' + comment.uid
-      : 'comment_empty_' + level;
-
-
-  div(id=id class=cssClass data-level=level data-id=comment.uid).p-r-0.p-t-0
-    .border-bottom.m-t-1.m-b-1
-    .col-lg-1
-      img(src=avatar alt="").img-circle
-    .col-lg-11
-      .comments-wrap.col-lg-12
-        span.name-comments.text-uppercase #{ userName }
-        if company.owner == comment.user_id
-          span.kvalificatio-comments.text-uppercase CEO
-
-        span.date-comments.pull-right #{ comment.created }
-        p #{ comment.message }
-        div.responce
-          if level <= 0
-            li
-              a(href="").link-1.link-response-count #{ comment.children.length }
-                i.fa.fa-angle-up
-                  span |
-            li
-              a(href="").link-1.link-reply Reply
-              span |
-          li
-            a(href="").link-1.link-like
-              i.fa.fa-thumbs-up
-          li.pull-lg-right
-            a(href="#").link1.link-edit
-              i.fa.fa-pencil-square-o
-              | Edit
-          li.pull-lg-right
-            a(href="#").link1.link-delete
-              i.fa.fa-times
-              | Delete
-
-
-    if comment.children && comment.children.length
-      each childComment in comment.children
-        +comment(childComment, level + 1)
-
-
 h2#ask.col-lg-12.dosis.text-uppercase.text-lg-center.text-xs-center.campaign-subheading ASK A QUESTION
 .col-lg-8.offset-lg-2.pt30.comment-form-div
   form.comment-form.form-section
@@ -64,25 +8,17 @@ h2#ask.col-lg-12.dosis.text-uppercase.text-lg-center.text-xs-center.campaign-sub
 
 
 .col-lg-8.offset-lg-2.pt50.comments
+  -
+    var options = {
+      owner_id: owner_id,
+      company_id: company_id,
+    };
+
   each c in comments
-    +comment(c, 0)
+    - pug_html += app.fields.comment(c, 0, options)
 
 .stubs.collapse
-  +comment({
-    uid: '',
-    role: '',
-    'message': '',
-    "user_id": app.user.get('id'),
-    "children": []
-  }, 0)
-  +comment({
-    uid: '',
-    role: '',
-    'message': '',
-    "user_id": app.user.get('id'),
-    "children": []
-  }, 1)
-
+  //- todo: move this to fields
   form.comment-form.form-section.edit-comment.collapse
     .col-lg-12.p-r-1.m-t-1
       textarea(placeholder="Type your text here").text-body.col-lg-12
