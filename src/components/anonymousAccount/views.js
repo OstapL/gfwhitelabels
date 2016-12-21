@@ -398,7 +398,7 @@ module.exports = {
       app.hideLoading();
       $('body').scrollTo();
       $('#content').html(
-        '<section class="reset"><div class="container"><div class="col-lg-12"><h2 class="dosis text-uppercase text-sm-center text-xs-center m-t-85"> We send you email with future instructions </h2></div></div></section>'
+        '<section class="reset"><div class="container"><div class="col-lg-12"><h2 class="dosis text-uppercase text-sm-center text-xs-center m-t-85"> Please check your email for instructions. </h2></div></div></section>'
       );
     }
 
