@@ -1,6 +1,7 @@
 include fields_final_review.pug
+- var customFields = require('../fields.js');
 
-#{ app.breadcrumbs('Form C Review', '', [ ['Home', '/'], ['Form C Review', '']]) }
+- pug_html += app.breadcrumbs('Form C Review', '', [ ['Home', '/'], ['Form C Review', '']]);
 
 - fields.formc.team_members = {};
 - fields.formc.team_members.schema = {};
@@ -12,39 +13,9 @@ include fields_final_review.pug
 
 - fields.formc.outstanding_securities.schema.voting_right.validate.OneOf = {};
 - fields.formc.outstanding_securities.schema.voting_right.validate.OneOf.labels = ['No', 'Yes'];
-- fields.formc.outstanding_securities.schema.voting_right.validate.OneOf.choices = [false, true];
+- fields.formc.outstanding_securities.schema.voting_right.validate.OneOf.choices = [0, 1];
+
 - var titles = ['', 'CEO/President', 'Principal Financial Officer/Treasurer', 'Vice President', 'Secretary', 'Controller/Principal Accounting Officer', ];
-- var names = {}
-
-- function  getData(name) {
--     if(name == null) alert('name not found')
--    if(name.indexOf('.') == -1) {
--      return values[name];                                                           
--    } else {
--       try {
--           return name.split('.').reduce(function(o,i) { return o[i]; }, values);                            
--       } catch(e) { 
--          return ''; 
--       }
--    }                                                                              
--  }
-- function  getSelectData(name) {
--   var data = getData(name);
--    if(name.indexOf('.') == -1) {
--      return fields[name].choices[data];                                                           
--    } else {                                                                       
--      var f = name.split('.').reduce(function(o,i) { return o[i]; }, fields);                            
--      return f.validate.choices[data];
--    }                                                                              
--  }
-
-mixin editText(currentName)
-  if names[currentName] == null
-    - alert(' no name ' + currentName);
-  a(href="#" class="show-input" data-name=currentName data-type=names[currentName].split('.')[0]).link-1 #{getData(names[currentName])}
-
-mixin editSelect(currentName)
-  a(href="#" class="show-select" data-name=currentName).link-1 #{getSelectData(names[currentName])}
 
 section.formc-review
   .container
@@ -743,7 +714,7 @@ section.formc-review
               each v,k in values.formc.outstanding_securities
                 tr
                   td
-                    +frField('formc.outstanding_securities[' + k + '].security_type', 'select')
+                    - pug_html += customFields.outstandingSecurityType(k, values.formc.outstanding_securities[k], fields.formc);
                   td
                     +frField('formc.outstanding_securities[' + k + '].amount_authroized', 'text')
                   td
@@ -1379,27 +1350,24 @@ section.formc-review
         p.pb10
           each v,k in values.formc.team_members
             if v.role[0] == 2
-              +frField('formc.team_members[' + k + '].first_name', 'text')
-              +frField('formc.team_members[' + k + '].last_name', 'text')
-              .table-responsive.m-t-1
-                table.table.table-bordered
-                  theader
-                    tr.bg-grey
-                      th.text-xs-center Employer
-                      th.text-xs-center Principal Business
-                      th.text-xs-center Title
-                      th.text-xs-center Responsibilities
-                      th.text-xs-center Start Date
-                      th.text-xs-center End Date
-                  tbody
-                    if v.experiences
+              if v.experiences && v.experiences.length > 0
+                +frField('formc.team_members[' + k + '].first_name', 'text')
+                +frField('formc.team_members[' + k + '].last_name', 'text')
+                .table-responsive.m-t-0
+                  table.table.table-bordered
+                    theader
+                      tr.bg-grey
+                        th.text-xs-center Employer
+                        th.text-xs-center Principal Business
+                        th.text-xs-center Responsibilities
+                        th.text-xs-center Start Date
+                        th.text-xs-center End Date
+                    tbody
                       each v1,k1 in v.experiences
                         if v1
                           tr
                             td
                               +frField('formc.team_members[' + k + '].experiences[' + k1 + '].employer', 'text')
-                            td
-                              +frField('formc.team_members[' + k + '].experiences[' + k1 + '].title', 'text')
                             td
                               +frField('formc.team_members[' + k + '].experiences[' + k1 + '].title', 'text')
                             td
@@ -1408,35 +1376,68 @@ section.formc-review
                               +frField('formc.team_members[' + k + '].experiences[' + k1 + '].start_date_of_service', 'text')
                             td
                               +frField('formc.team_members[' + k + '].experiences[' + k1 + '].end_date_of_service', 'text')
+              if v.positions && v.positions.length > 0
+                .table-responsive.m-t-0
+                  table.table.table-bordered
+                    theader
+                      tr.bg-grey
+                        th.text-xs-center Position
+                        th.text-xs-center Start Date of Service
+                        th.text-xs-center End Date of Service
+                    tbody
+                      each v1,k1 in v.positions
+                        if v1
+                          tr
+                            td
+                              +frField('formc.team_members[' + k + '].experiences[' + k1 + '].position', 'text')
+                            td
+                              +frField('formc.team_members[' + k + '].experiences[' + k1 + '].start_date_of_service', 'text')
+                            td
+                              +frField('formc.team_members[' + k + '].experiences[' + k1 + '].end_date_of_service', 'text')
         p.pb10.text-indent Employment information from previous employers over the last three years for each of the Company’s directors is as follows:
         p.pb10
           each v,k in values.formc.team_members
             if v.role[0] == 1
-              +frField('formc.team_members[' + k + '].first_name', 'text')
-              +frField('formc.team_members[' + k + '].last_name', 'text')
-              .table-responsive.m-t-1
-                table.table.table-bordered
-                  theader
-                    tr.bg-grey
-                      th.text-xs-center Employer
-                      th.text-xs-center Principal Business
-                      th.text-xs-center Title
-                      th.text-xs-center Responsibilities
-                      th.text-xs-center Start Date
-                      th.text-xs-center End Date
-                  tbody
-                    if v.experiences
+              if v.experiences && v.experiences.length > 0
+                +frField('formc.team_members[' + k + '].first_name', 'text')
+                +frField('formc.team_members[' + k + '].last_name', 'text')
+                .table-responsive.m-t-0
+                  table.table.table-bordered
+                    theader
+                      tr.bg-grey
+                        th.text-xs-center Employer
+                        th.text-xs-center Principal Business
+                        th.text-xs-center Responsibilities
+                        th.text-xs-center Start Date
+                        th.text-xs-center End Date
+                    tbody
                       each v1,k1 in v.experiences
                         if v1
                           tr
                             td
                               +frField('formc.team_members[' + k + '].experiences[' + k1 + '].employer', 'text')
                             td
-                              +frField('formc.team_members[' + k + '].experiences[' + k1 + '].employer_principal', 'text')
-                            td
                               +frField('formc.team_members[' + k + '].experiences[' + k1 + '].title', 'text')
                             td
                               +frField('formc.team_members[' + k + '].experiences[' + k1 + '].responsibilities', 'text')
+                            td
+                              +frField('formc.team_members[' + k + '].experiences[' + k1 + '].start_date_of_service', 'text')
+                            td
+                              +frField('formc.team_members[' + k + '].experiences[' + k1 + '].end_date_of_service', 'text')
+              if v.positions && v.positions.length > 0
+                .table-responsive.m-t-0
+                  table.table.table-bordered
+                    theader
+                      tr.bg-grey
+                        th.text-xs-center Position
+                        th.text-xs-center Start Date of Service
+                        th.text-xs-center End Date of Service
+                    tbody
+                      each v1,k1 in v.positions
+                        if v1
+                          tr
+                            td
+                              +frField('formc.team_members[' + k + '].experiences[' + k1 + '].position', 'text')
                             td
                               +frField('formc.team_members[' + k + '].experiences[' + k1 + '].start_date_of_service', 'text')
                             td

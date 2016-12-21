@@ -49,10 +49,10 @@ mixin frField(name, type)
         if valuesList.choices.indexOf(value.toString()) != -1
           - value = valuesList.labels[valuesList.choices.indexOf(value.toString())]
         else
-          - value = valuesList.labels[valuesList.choices.indexOf(parseFloat(value))]
+          - value = valuesList.labels[valuesList.choices.indexOf(parseFloat(+value))]
   a(
     href="#"
     data-name=name
     data-type=type || 'text'
-    data-value=(type == 'select' ? ggetData(name) : '')
+    data-value=(type == 'select' ? ggetData(name) : " ")
     ).createField.show-input.link-1 #{ value }
