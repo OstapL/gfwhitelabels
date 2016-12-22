@@ -232,7 +232,8 @@ let exports = {
   fieldChoiceLabel(name, attr) {
     this.prepareField(name, attr);
     attr.type = attr.type || 'select';
-
+    attr.class1 = attr.class1 || 'col-xl-3 col-lg-12 text-lg-left text-xl-right';
+    attr.class2 = attr.class2 || 'col-xl-9 col-lg-12';
     const template = require('./templates/fieldChoiceLabel.pug');
 
     return template({
