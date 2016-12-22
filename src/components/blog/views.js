@@ -8,9 +8,10 @@ const disableEnterHelper = require('helpers/disableEnterHelper.js');
 
 module.exports = {
   list: Backbone.View.extend(_.extend({
+    el: '#content',
     template: require('./templates/list.pug'),
     events: _.extend({
-    })
+    }),
 
     initialize(options) {
     },
@@ -18,7 +19,7 @@ module.exports = {
     render() {
       this.el.innerHTML = 
         this.template({
-          objects: this.model.data,
+          values: this.model.data,
           count: this.model.count,
         });
       return this;
@@ -27,9 +28,10 @@ module.exports = {
   })),
 
   detail: Backbone.View.extend(_.extend({
+    el: '#content',
     template: require('./templates/detail.pug'),
     events: _.extend({
-    })
+    }),
 
     initialize(options) {
     },
@@ -37,8 +39,7 @@ module.exports = {
     render() {
       this.el.innerHTML = 
         this.template({
-          objects: this.model.data,
-          count: this.model.count,
+          values: this.model,
         });
       return this;
     },
@@ -46,9 +47,10 @@ module.exports = {
   })),
 
   createEdit: Backbone.View.extend(_.extend({
+    el: '#content',
     template: require('./templates/createEdit.pug'),
     events: _.extend({
-    })
+    }),
 
     initialize(options) {
     },
@@ -56,7 +58,7 @@ module.exports = {
     render() {
       this.el.innerHTML = 
         this.template({
-          object: this.model,
+          values: this.model,
         });
       return this;
     },
