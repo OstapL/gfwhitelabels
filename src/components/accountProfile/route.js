@@ -11,7 +11,7 @@ module.exports = Backbone.Router.extend({
     'account/after-complete-dashboard': 'afterCompleteDashboard',
     'account/after-final-submit-dashboard': 'afterFinalDashboard',
     'account/after-submitting-goverment-dashboard': 'afterSubmittingGovermentDashboard',
-    'dashboard/issue-dashboard': 'issueDashboard',
+    'dashboard/issuer-dashboard': 'issueDashboard',
   },
 
   execute: function (callback, args, name) {

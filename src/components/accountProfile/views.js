@@ -626,7 +626,24 @@ module.exports = {
     shareWithGooglePlus(e) {
       event.preventDefault();
     },
+    initComments() {
+      const View = require('components/comment/views.js');
+      const urlComments = commentsServer + '/company/' + this.model.id;
+      let optionsR = api.makeRequest(urlComments, 'OPTIONS');
+      let dataR = api.makeRequest(urlComments);
 
+      $.when(optionsR, dataR).done((options, data) => {
+        data[0].id = this.model.id;
+        data[0].owner_id = this.model.owner_id;
+
+        let comments = new View.comments({
+          // model: commentsModel,
+          model: data[0],
+          fields: options[0].fields,
+        });
+        comments.render();
+      });
+    },
     render(){
       const socialMediaScripts = require('helpers/shareButtonHelper.js');
       const template = require('./templates/issuerDashboard.pug');
@@ -639,6 +656,7 @@ module.exports = {
       );
 
       socialMediaScripts.facebook();
+      setTimeout(() => { this.initComments(); },100);
 
       const socket = require('socket.io-client')('http://localhost:3000');
       socket.on('connect', function () {
