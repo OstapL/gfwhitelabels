@@ -1,4 +1,10 @@
-div(class="form-group "  + (row == 0 ? '' : 'row ') + (id || name) + ' ' + (required == true ? ' required ' : ' ') + ' ' + type)
+-
+  var cssClass = 'form-group '  +
+    (row == 0 ? ' ' : 'row ') +
+    (id || name) +
+    (required == true ? ' required ' : ' ') +
+    type;
+div(class=cssClass)
   label(class=class1 for=id)!= label
   div(class=class2)
       textarea(

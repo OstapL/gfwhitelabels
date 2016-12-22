@@ -7,8 +7,9 @@ mixin row(value, index)
     .delete-section-container
       a(href="#" data-section=name data-index=index).delete-sectionnew
         i.fa.fa-times
+  - console.log(fields[name])
+    | !{app.fields.nestedTextareaLabel(name, 'title', value, index, {help_text: 'Is there anything else you want to tell your potential investors? Received any accolades? Patents? Major contracts? Distributors, etc?'})}
 
-    +fieldNestedTextLabel(name, 'title', value, index, {class1:'col-xl-3 col-lg-12 text-lg-left text-xl-right', class2: 'col-xl-9 col-lg-12', help_text: 'Is there anything else you want to tell your potential investors? Received any accolades? Patents? Major contracts? Distributors, etc?'})
     +fieldNestedTextareaLabel(name, 'body', value, index, {class1:'col-xl-3 col-lg-12 text-lg-left text-xl-right', class2: 'col-xl-9 col-lg-12'})
 
 mixin run()
