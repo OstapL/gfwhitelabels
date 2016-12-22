@@ -65,10 +65,10 @@ module.exports = {
     },
 
     changeCountry(e) {
-      const usClass1 = 'col-lg-6 text-lg-right text-xs-left ';
-      const usClass2 = 'col-lg-6 ';
-      const foreignClass1 = 'col-lg-5 text-xl-right text-lg-left ';
-      const foreignClass2 = 'col-lg-7 ';
+      const usClass1 = 'col-xl-6 text-xl-right text-lg-left ';
+      const usClass2 = 'col-xl-6 ';
+      const foreignClass1 = 'col-xl-5 text-xl-right text-lg-left ';
+      const foreignClass2 = 'col-xl-7';
 
       let $target = $(e.target);
       let country = $target.val();
@@ -257,7 +257,7 @@ module.exports = {
     },
 
     changeCountry(e) {
-      const usClass1 = 'col-lg-6 text-lg-right text-xs-left ';
+      const usClass1 = 'col-lg-6 text-xl-right text-lg-left ';
       const usClass2 = 'col-lg-6 ';
       const foreignClass1 = 'col-lg-5 text-xl-right text-lg-left ';
       const foreignClass2 = 'col-lg-7 ';

@@ -57,7 +57,7 @@
 	}
 	.profile-tabs.nav-tabs {
 		margin-bottom: rem(15);
-		margin-left: rem(110);
+		margin-left: rem(120);
 		
 		li.nav-item a.nav-link {
 			border-radius: rem(20);
@@ -211,6 +211,9 @@
 				display: inline-block;
 				float: none;
 			}
+		}
+		.profile-tabs.nav-tabs {
+			margin-left: 0px
 		}
 	}
 
