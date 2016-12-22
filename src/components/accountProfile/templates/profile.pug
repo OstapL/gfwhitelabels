@@ -3,7 +3,7 @@
 
 .container.profile.pt-50
   .row
-    aside.col-xl-3.col-lg-3.m-b-1
+    aside.col-xl-3.col-lg-4.m-b-1
       form(method="post" action="").form.form-section
         h3.m-t-0.m-b-1.profile-user-name.text-xs-center #{user.first_name + ' ' + user.last_name}
         -
@@ -15,21 +15,21 @@
             data: user.image_data[0],
           }, fields.image));
       .row.m-t-2
-        .col-xl-12.p-l-0.p-r-0
+        .col-xl-12.col-lg-12.col-md-6.offset-md-3.col-xs-8.offset-xs-2.p-l-0.p-r-0
           .profile-type-user
             span.user-type Shareholder
             .user-company
               | in
               a(href="/api/campaign/147").link-3  NETFLIX
               |  company.
-        .col-xl-12.p-l-0.p-r-0
+        .col-xl-12.col-lg-12.col-md-6.offset-md-3.col-xs-8.offset-xs-2.p-l-0.p-r-0
           hr
-        .col-lg-12.text-xl-left.p-l-0.p-r-0
+        .col-xl-12.col-lg-12.col-md-6.offset-md-3.col-xs-8.offset-xs-2.p-l-0.p-r-0.text-xl-left
           a(href="/account/change-password").link-3 
             i.fa.fa-lock
             |  Need to change your password?
 
-    .col-xl-9.col-lg-9
+    .col-xl-8.col-lg-8
       ul.nav.nav-tabs.profile-tabs
         li(aria-expanded="false").nav-item
           a(
@@ -49,44 +49,40 @@
       .tab-content.profile-tabs-content.mt30
 
         div(aria-expanded="true")#account_info.tab-pane.fade.active.in
-          .row
+          div
             section.form-section.clearfix
               form(method="post" action="").form
                 .form-body.clearfix
                   .col-xs-12
                     section.right-block
                       .form-group.row.required
-                        label.col-lg-3.text-lg-right.text-xs-left Legal Name
+                        label.col-xl-3.text-lg-right.text-xs-left Legal Name
                           span.color-red *
-                        -
-                          pug_html += app.fields.fieldText('first_name', {
-                            'class': 'col-lg-4 m-b-md-25',
-                            'placeholder': 'First Name',
-                            'value': user.first_name,
-                          });
-                          pug_html += app.fields.fieldText('last_name', {
-                            'class': 'col-lg-4',
-                            'placeholder': 'Last Name',
-                            'value': user.last_name,
-                          });
+                        .col-xl-9
+                          .row
+                            -
+                              pug_html += app.fields.fieldText('first_name', {
+                                'class': 'col-lg-6 m-b-md-25',
+                                'placeholder': 'First Name',
+                                'value': user.first_name,
+                              });
+                              pug_html += app.fields.fieldText('last_name', {
+                                'class': 'col-lg-6',
+                                'placeholder': 'Last Name',
+                                'value': user.last_name,
+                              });
                       -
                         pug_html += app.fields.fieldChoiceLabel('country', _.extend({
-                            'class1': 'col-lg-3 text-lg-right text-xs-left',
-                            'class2': 'col-lg-8',
                             'empty': { '': 'Choose Country' },
                             'value': user.country,
                           }, fields.country));
 
-                        pug_html += app.fields.fieldTextLabel('street_address_1', _.extend({
-                            'class1': 'col-lg-3 text-lg-right text-xs-left',
-                            'class2': 'col-lg-8 ',
+                        pug_html += app.fields.textLabel('street_address_1', _.extend({
                             'type': 'text',
                             'value': user.street_address_1,
                           }, fields.street_address_1))
 
-                        pug_html += app.fields.fieldTextLabel('street_address_2', _.extend({
-                            'class1': 'col-lg-3 text-lg-right text-xs-left',
-                            'class2': 'col-lg-8 ',
+                        pug_html += app.fields.textLabel('street_address_2', _.extend({
                             'type': 'text',
                             'value': user.street_address_2,
                           }, fields.street_address_2))
@@ -95,20 +91,20 @@
                         input(type="hidden" name="city" value=user.city disabled=((user.country=='US') ? false : true))
                         input(type="hidden" name="state" value=user.state disabled=((user.country=='US') ? false : true))
                         .row
-                          .col-md-12.col-lg-6
+                          .col-xl-6.col-lg-6
                             //if user.country == 'US'
                             -
-                              pug_html += app.fields.fieldTextLabel('zip_code', _.extend({
-                                  'class1': 'col-lg-6 text-lg-right text-xs-left',
-                                  'class2': 'col-lg-6',
+                              pug_html += app.fields.textLabel('zip_code', _.extend({
+                                  'class1': 'col-xl-6 col-lg-12 text-xl-right text-lg-left',
+                                  'class2': 'col-xl-6 col-lg-12 input-min-width',
                                   'type': 'text',
                                   'value': user.zip_code,
                                 }, fields.zip_code))
 
-                          .col-lg-5.city_states.required
+                          .col-xl-6.col-lg-6.city_states.required
                             .row
-                              label.col-lg-5.col-xs-6.text-lg-right.text-xs-left City/State
-                              .col-lg-7.col-xs-6
+                              label.col-xl-5.col-lg-12.col-md-6.col-sm-6.col-xs-6.text-xl-right.text-lg-left City/State
+                              .col-xl-7.col-lg-12.col-md-6.col-sm-6.col-xs-6
                                 a(
                                   data-toggle="modal"
                                   data-target="#city_state_modal"
@@ -118,30 +114,30 @@
                                     | #{ user.city || '(City)' }, #{ user.state || '(State)' }
                                   i.fa.fa-pencil-square-o.link-1
                         .row
-                          .col-xl-6.us-phone
+                          .col-xl-6.col-lg-6.us-phone
                             if user.country == 'US'
                               -
-                                pug_html += app.fields.fieldTextLabel('phone', _.extend({
-                                    'class1': 'col-lg-6 text-lg-right text-xs-left',
-                                    'class2': 'col-lg-6',
+                                pug_html += app.fields.textLabel('phone', _.extend({
+                                    'class1': 'col-xl-6 col-lg-12 text-xl-right text-lg-left',
+                                    'class2': 'col-xl-6 col-lg-12',
                                     'type': 'text',
                                     'value': user.phone,
                                   }, fields.phone));
 
                       .row.foreign-country-row(style="display:" + (user.country == 'US' ? 'none' : 'block'))
-                        .col-lg-6
+                        .col-xl-6.col-lg-6
                           -
-                            pug_html += app.fields.fieldTextLabel('city', _.extend({
-                                'class1': 'col-lg-6 text-lg-right text-xs-left',
-                                'class2': 'col-lg-6 ',
+                            pug_html += app.fields.textLabel('city', _.extend({
+                                'class1': 'col-xl-6 col-lg-12 text-xl-right text-lg-left',
+                                'class2': 'col-xl-6 col-lg-12 input-min-width',
                                 'type': 'text',
                                 'value': user.city,
                               }, fields.city))
-                        .col-lg-5
+                        .col-xl-6.col-lg-6
                           -
-                            pug_html += app.fields.fieldTextLabel('state', _.extend({
-                                'class1': 'text-lg-right col-lg-5 p-t-0 m-b-0',
-                                'class2': 'col-lg-7',
+                            pug_html += app.fields.textLabel('state', _.extend({
+                                'class1': 'text-lg-right col-xl-5 p-t-0 m-b-0 m-b-lg-1',
+                                'class2': 'col-xl-7 input-min-width',
                                 'type': 'text',
                                 'label': 'State/Province/ Region',
                                 'placeholder': 'State/Province/Region',
@@ -149,60 +145,60 @@
                               }))
 
                       .row.foreign-country-row(style="display:" + (user.country == 'US' ? 'none' : 'block'))
-                        .col-lg-6
+                        .col-xl-6.col-lg-6
                           //if user.country != 'US'
                           -
-                            pug_html += app.fields.fieldTextLabel('zip_code', _.extend({
-                                'class1': 'col-lg-6 text-lg-right text-xs-left',
-                                'class2': 'col-lg-6',
+                            pug_html += app.fields.textLabel('zip_code', _.extend({
+                                'class1': 'col-xl-6 col-lg-12 text-xl-right text-lg-left',
+                                'class2': 'col-xl-6 col-lg-12 input-min-width',
                                 'type': 'text',
                                 'value': user.zip_code,
                               }, fields.zip_code, { 'label': 'Postal Code' }))
-                        .col-lg-5.foreign-country-phone
+                        .col-xl-5.col-lg-6.foreign-country-phone
                           if user.country != 'US'
                             -
-                              pug_html += app.fields.fieldTextLabel('phone', _.extend({
-                                  'class1': 'col-lg-5 text-xl-right text-lg-left',
-                                  'class2': 'col-lg-7 ',
+                              pug_html += app.fields.textLabel('phone', _.extend({
+                                  'class1': 'col-xl-6 col-lg-12 text-xl-right text-lg-left',
+                                  'class2': 'col-xl-6 col-lg-12 input-min-width',
                                   'type': 'text',
                                   'value': user.phone,
                                 }, fields.phone))
-                      
-                      .col-xl-11.p-r-0
-                        .border-bottom.m-t-2.m-b-3
+                      .row
+                        .col-xl-12
+                          .border-bottom.m-t-2.m-b-3
                       .row.m-b-0
-                        .col-xl-6.col-lg-6.col-l-65
+                        .col-xl-6.col-lg-6
                           -
-                            pug_html += app.fields.fieldTextLabel("twitter", _.extend({
+                            pug_html += app.fields.textLabel("twitter", _.extend({
                                 'class1': 'col-xl-6 col-lg-12 text-lg-left text-xl-right',
-                                'class2': 'col-xl-6 col-lg-12',
+                                'class2': 'col-xl-6 col-lg-12 input-min-width',
                                 'type': 'text',
                               }, fields.twitter))
                         .col-xl-6.col-lg-6
                           -
-                            pug_html += app.fields.fieldTextLabel("facebook", _.extend({
-                                'class1': 'col-xl-4 col-lg-12 text-lg-left text-xl-right',
-                                'class2': 'col-xl-6 col-lg-12',
+                            pug_html += app.fields.textLabel("facebook", _.extend({
+                                'class1': 'col-xl-5 col-lg-12 text-lg-left text-xl-right',
+                                'class2': 'col-xl-7 col-lg-12',
                                 'type': 'text',
                               }, fields.facebook))
                       .row.m-b-0
-                        .col-xl-6.col-lg-6.col-l-65
+                        .col-xl-6.col-lg-6
                           -
-                            pug_html += app.fields.fieldTextLabel("instagram", _.extend({
+                            pug_html += app.fields.textLabel("instagram", _.extend({
                                 'class1': 'col-xl-6 col-lg-12 text-lg-left text-xl-right',
-                                'class2': 'col-xl-6 col-lg-12',
+                                'class2': 'col-xl-6 col-lg-12 input-min-width',
                                 'type': 'text',
                               }, fields.instagram))
                         .col-xl-6.col-lg-6
                           -
-                            pug_html += app.fields.fieldTextLabel("linkedin", _.extend({
-                                'class1': 'col-xl-4 col-lg-12 text-lg-left text-xl-right',
-                                'class2': 'col-xl-6 col-lg-12',
+                            pug_html += app.fields.textLabel("linkedin", _.extend({
+                                'class1': 'col-xl-5 col-lg-12 text-lg-left text-xl-right',
+                                'class2': 'col-xl-7 col-lg-12',
                                 'type': 'text',
                               }, fields.linkedin))
 
                       .form-group.row.clearfix.m0
-                        .col-lg-11.text-xs-center.m-t-2
+                        .col-lg-12.text-xs-center.m-t-2
                           .controls
                             button(
                               type="button"
@@ -210,32 +206,32 @@
                             )#save-account-info.btn.btn-primary.pull-lg-right SAVE
 
         div(aria-expanded="true")#financial_info.tab-pane.fade
-          .row
-            section.form-section.clearfix.col-xl-12
+          div
+            section.form-section.clearfix
               form(method="post" action="")
                 .form-body.clearfix
                   
-                  .col-xs-12
+                  .col-xl-12
                     section.right-block
                       .form-group.row
-                        .col-lg-11
+                        .col-lg-12
                           .warning-block.m-b-0
                             i.fa.fa-exclamation-triangle
                             span.warning-text
                               | Please confirm your identity and investor status. We are required by the SEC to review this information in order to determine how much you can invest and what offerings will be available to you.
                       .form-group.row.bootstrap-slider-custom
-                        .col-xl-11
+                        .col-xl-12
                           label.m-b-2 My Net Worth
-                        .col-xl-11
+                        .col-xl-12
                           input(
                           type='text'
                           name="net_worth"
                           data-slider-value=user.net_worth
                           ).form-control.slider-net-worth
                       .form-group.row.bootstrap-slider-custom
-                        .col-xl-11
+                        .col-xl-12
                           label.m-b-2.m-t-1 My Annual Income
-                        .col-xl-11
+                        .col-xl-12
                           input(
                           type='text'
                           name="annual_income"
@@ -309,7 +305,7 @@
                               type="checkbox"
                               checked=!user.accredited_investor_choice
                             ).col-xl-1.investor-risk-agree#not-qualify
-                            span.font-weight-normal.col-xl-10.p-l-0.d-block I do not qualify.
+                            span.font-weight-normal.col-xl-11.p-l-0.d-block I do not qualify.
                             input(
                               type="hidden"
                               name="accredited_investor_choice"
@@ -320,47 +316,38 @@
                         .col-sm-11
                           hr.m-b-3.m-t-1
                       -
-                        pug_html += app.fields.fieldTextLabel('bank_name', _.extend({
-                            'class1': 'col-lg-3 text-lg-right text-xs-left',
-                            'class2': 'col-lg-8 ',
+                        pug_html += app.fields.textLabel('bank_name', _.extend({
                             'type': 'text',
                             'value': user.bank_name
                           }, fields.bank_name))
 
-                        pug_html += app.fields.fieldTextLabel('name_on_bank_account', _.extend({
-                            'class1': 'col-lg-3 text-lg-right text-xs-left',
-                            'class2': 'col-lg-8 ',
+                        pug_html += app.fields.textLabel('name_on_bank_account', _.extend({
                             'type': 'text',
                             'value': user.name_on_bank_account
                           }, fields.name_on_bank_account))
 
-                        pug_html += app.fields.fieldTextLabel('account_number', _.extend({
-                            'class1': 'col-lg-3 text-lg-right text-xs-left',
-                            'class2': 'col-lg-8 ',
+                        pug_html += app.fields.textLabel('account_number', _.extend({
                             'help_text': '<img src="/img/routing-number-on-check.png">',
                             'type': 'text',
                             'value': user.account_number
                           }, fields.account_number))
 
-                        pug_html += app.fields.fieldTextLabel('account_number_re', _.extend({
-                            'class1': 'col-lg-3 text-lg-right text-xs-left m-b-0 p-t-0',
-                            'class2': 'col-lg-8 ',
+                        pug_html += app.fields.textLabel('account_number_re', _.extend({
+                            'class1': 'col-xl-3 col-lg-12 text-xl-right text-lg-left m-b-0 p-t-0 m-b-lg-1',
                             'type': 'text',
                             'value': user.account_number_re
                           }, fields.account_number_re))
 
-                        pug_html += app.fields.fieldTextLabel('routing_number', _.extend({
-                            'class1': 'col-lg-3 text-lg-right text-xs-left',
-                            'class2': 'col-lg-8 ',
+                        pug_html += app.fields.textLabel('routing_number', _.extend({
                             'help_text': '<img src="/img/routing-number-on-check.png">',
                             'type': 'text',
                             'value': user.routing_number
                           }, fields.routing_number))
 
                       .form-group.row.radio.requried
-                        label.text-md-right.col-lg-3 Account Type
+                        label.text-xl-right.text-lg-left.col-xl-3.col-lg-12 Account Type
                           span.color-red *
-                        .col-lg-9.radio-input
+                        .col-xl-9.col-lg-12.radio-input
                           label
                             input(type="radio" name='bank_account_type' checked=!user.bank_account_type value=0)
                             |  Checking
@@ -369,7 +356,7 @@
                             |  Savings
 
                       .form-group.row.clearfix.m0
-                        .col-lg-11.mt30.text-xs-center
+                        .col-lg-12.mt30.text-xs-center
                           .controls
                             button(
                               type="button"
