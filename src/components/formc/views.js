@@ -1889,6 +1889,7 @@ module.exports = {
         element.onblur = (e) => this.update(e);
         target.parentElement.insertBefore(element, target);
       }
+      element.focus();
 
       target.remove();
     },
@@ -1979,7 +1980,8 @@ module.exports = {
             let metaData = app.valByKeyReplaceArray(this.fields, e.target.name);
             realVal = app.fieldChoiceList(metaData, val);
           } else if(e.target.tagName == "TEXTAREA") {
-            href.dataset.type = "textarea"
+            href.dataset.type = "textarea";
+            realVal = realVal.replace(/\n/g, '<br>');
           } else {
             href.dataset.type = 'text';
           }
@@ -1987,12 +1989,12 @@ module.exports = {
           href.innerHTML = realVal;
           if(e.target.tagName == 'SELECT') {
             href.dataset.value = val;
-          }
+          } 
           href.className = 'createField show-input link-1';
 
           document.querySelectorAll('[data-name="' + e.target.name + '"]').forEach((sameElement) => {
             if(sameElement.tagName == 'SELECT') {
-              sameElement.value = val;
+              sameElement.value = val
             } else {
               sameElement.innerHTML = realVal;
             }
