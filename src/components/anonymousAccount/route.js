@@ -175,6 +175,12 @@ module.exports = Backbone.Router.extend({
 
 
   membershipConfirmation(code) {
+    if(localStorage.getItem('token') !== null) {
+      localStorage.removeItem('token', '');
+      localStorage.removeItem('user');
+      setInterval(() => window.location.reload(), 100);
+    }
+
     api.makeRequest(formcServer + '/invitation/' + code, 'GET').done((response) => {
 
       const data = {
