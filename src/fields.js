@@ -12,9 +12,6 @@ let exports = {
     _.extend(myAttr, schema);
     myAttr.value = value[name] ? value[name]: '';
     myAttr.id = nestedName + '__' + index + '__' + name + '';
-    console.log('testtt')
-    console.log(myAttr)
-    console.log(schema)
   },
 
   /*
@@ -44,8 +41,8 @@ let exports = {
 
   nestedTextLabel(nestedName, name, value, index, myAttr, schema) {
     this.prepareNestedField(nestedName, name, value, index, myAttr, schema);
-    myAttr.class1 = myAttr.class1 ? myAttr.class1 : 'col-xl-3 col-lg-12 text-lg-left text-xl-right';
-    myAttr.class2 = myAttr.class2 ? myAttr.class2 : 'col-xl-9 col-lg-12';
+    myAttr.class1 = myAttr.class1 || 'col-xl-3 col-lg-12 text-lg-left text-xl-right';
+    myAttr.class2 = myAttr.class2 || 'col-xl-9 col-lg-12';
     return this.textLabel(
       nestedName + '[' + index + '][' + name + ']',
       myAttr
@@ -56,7 +53,6 @@ let exports = {
     this.prepareNestedField(nestedName, name, value, index, myAttr, schema);
     myAttr.class1 = myAttr.class1 ? myAttr.class1 : 'text-lg-right col-lg-3 col-md-12 text-md-left';
     myAttr.class2 = myAttr.class2 ? myAttr.class2 : 'col-lg-9 col-md-12';
-    console.log(myAttr)
     return this.textareaLabel(
       nestedName + '[' + index + '][' + name + ']',
       myAttr
