@@ -15,7 +15,7 @@ h2#ask.col-lg-12.dosis.text-uppercase.text-lg-center.text-xs-center.campaign-sub
     };
 
   each c in comments
-    - pug_html += app.fields.comment(c, 0, options)
+    | !{ app.fields.comment(c, 0, options) }
 
 .stubs.collapse
   //- todo: move this to fields

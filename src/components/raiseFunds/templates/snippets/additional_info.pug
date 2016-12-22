@@ -1,16 +1,12 @@
-include ../../../../templates/fields_mixins.pug
-
 mixin row(value, index)
   - var index = index;
-
   .col-xl-12(data-index=index class=name + ' addSectionBlock')
     .delete-section-container
       a(href="#" data-section=name data-index=index).delete-sectionnew
         i.fa.fa-times
-  - console.log(fields[name])
-    | !{app.fields.nestedTextareaLabel(name, 'title', value, index, {help_text: 'Is there anything else you want to tell your potential investors? Received any accolades? Patents? Major contracts? Distributors, etc?'})}
+    | !{app.fields.nestedTextareaLabel(name, 'title', value, index, {help_text: 'Is there anything else you want to tell your potential investors? Received any accolades? Patents? Major contracts? Distributors, etc?' }, attr.schema.title)}
 
-    +fieldNestedTextareaLabel(name, 'body', value, index, {class1:'col-xl-3 col-lg-12 text-lg-left text-xl-right', class2: 'col-xl-9 col-lg-12'})
+    | !{app.fields.nestedTextareaLabel(name, 'body', value, index, {class1:'col-xl-3 col-lg-12 text-lg-left text-xl-right', class2: 'col-xl-9 col-lg-12'}, attr.schema.body)}
 
 mixin run()
 
