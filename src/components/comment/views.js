@@ -104,7 +104,8 @@ module.exports = {
           return;
 
         $relatedBlock = this.$stubs.find('.related-role').clone();
-        $form.append($relatedBlock);
+        //$form.append($relatedBlock);
+        $target.after($relatedBlock);
         $relatedBlock.show();
       } else {
         if(!hasRelatedBlock)
