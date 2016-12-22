@@ -959,7 +959,10 @@ section.formc-review
           u Results of Operations
         p.pb10.text-indent The following is a description of the financial condition of the Company, including any items that have had a material impact on the Company, for each year when financial statements are provided.  This discussion also includes an identification of any known material changes or trends in the financial condition and results of operations of the Company during any time period subsequent to the period for which financial statements are provided.
         p.pb10.p-l-2
-          +frField('formc.financials_condition_yes', 'textarea')
+          if values.formc.financials_condition_choice == 1
+            +frField('formc.financials_condition_yes', 'textarea')
+          else
+            +frField('formc.financials_condition_no', 'textarea')
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u Material Indebtedness
         if values.formc.business_loans_or_debt_choice == '0'
