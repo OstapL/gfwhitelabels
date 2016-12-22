@@ -6,7 +6,7 @@ mixin row(value, index)
         i.fa.fa-times
     | !{app.fields.nestedTextareaLabel(name, 'title', value, index, {help_text: 'Is there anything else you want to tell your potential investors? Received any accolades? Patents? Major contracts? Distributors, etc?' }, attr.schema.title)}
 
-    | !{app.fields.nestedTextareaLabel(name, 'body', value, index, {class1:'col-xl-3 col-lg-12 text-lg-left text-xl-right', class2: 'col-xl-9 col-lg-12'}, attr.schema.body)}
+    | !{app.fields.nestedTextareaLabel(name, 'body', value, index, attr.schema.body)}
 
 mixin run()
 
