@@ -1343,9 +1343,7 @@ section.formc-review
         h2.text-uppercase.text-xs-center.font-weight-bold.letter-spacing-normal.m-b-3#financial_statements EXHIBIT B: FINANCIAL STATEMENTS for most recent fiscal year
         if values.formc.fiscal_recent_group_data.length > 0
           p
-            for v,k in values.formc.fiscal_recent_group_data
-              a(href=v.urls[0] target="_blank").link-1 #{ v.urls[0].substr(0, 20) }
-              br 
+            | !{ app.fields.fileFolderDropzone('fiscal_recent_group_data', { data: values.formc.fiscal_recent_group_data, value: values.formc.fiscal_recent_group_id, label: "Upload financials for most recent fiscal year", schema: fields.formc.fiscal_recent_group_id}) }
         h2.text-uppercase.text-xs-center.font-weight-bold.letter-spacing-normal.m-b-3 EXHIBIT B: FINANCIAL STATEMENTS for prior fiscal year
         if values.formc.fiscal_prior_group_data.length > 0
           p

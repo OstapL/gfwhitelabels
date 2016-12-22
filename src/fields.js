@@ -130,6 +130,7 @@ let exports = {
     const template = require('./templates/textLabel.pug');
     return template(attr);
   },
+
   textareaLabel(name, attr) {
     attr.name = name;
     this.prepareField(name, attr);
@@ -163,6 +164,8 @@ let exports = {
     return template(attr);
   },
 
+  // Fixme 
+  // Что это за название филда такое ? и шаблон с целым dashboard ?
   investment(i, attr) {
     attr = attr || {};
     const template =  require('./templates/dashboardInvestment.pug');
@@ -215,9 +218,6 @@ let exports = {
       ? helpers.format.formatPrice(attr.value)
       : attr.value
 
-    console.log(name);
-    console.log(attr);
-
     const template = require('./templates/fieldTextLabel.pug');
     return template({
       name: name,
@@ -235,6 +235,42 @@ let exports = {
       name: name,
       attr: attr,
     });
+  },
+
+  fileFolderDropzone(name, attr) {
+    /* Requeired:
+     * data: values.fiscal_recent_group_data,
+     * value: values.fiscal_recent_group_id,
+     * label: "Upload financials for most recent fiscal year",
+     *
+     * Options:
+     * schema: fields.fiscal_recent_group_id,
+     * classMain, class1, class2
+     * required, id, icon, type, help_text
+     */
+
+    attr.name = name;
+    this.prepareField(name, attr);
+
+    const template = require('./templates/fileFolderDropzone.pug');
+
+    if(attr.hasOwnProperty('class1') == false) { 
+      attr.class1 = 'col-xl-3 col-lg-12 text-xl-right text-lg-left';
+    }
+
+    if(attr.hasOwnProperty('class2') == false) { 
+      attr.class2 = 'col-xl-9 col-lg-12 p-l-1 p-r-1';
+    }
+
+    if(attr.hasOwnProperty('icon') == false) { 
+      attr.icon = 'file';
+    }
+
+    if(attr.hasOwnProperty('text') == false) { 
+      attr.text = 'Drop your PDF or DOC here or click to upload';
+    }
+
+    return template(attr);
   },
 };
 
