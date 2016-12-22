@@ -367,7 +367,10 @@ $('body').on('click', 'a', function (event) {
   var href = event.currentTarget.getAttribute('href');
   if (href == window.location.pathname) {
     window.location.reload();
-  } else if (href && href != '' && href.substr(0, 1) != '#' &&
+  } else if (href && href == '#')  {
+    event.preventDefault();
+  } else if(href && href != '' &&
+    href.substr(0, 1) != '#' &&
     href.substr(0, 4) != 'http' &&
     href.substr(0, 3) != 'ftp' &&
     href.substr(0, 7) != 'mailto:' &&

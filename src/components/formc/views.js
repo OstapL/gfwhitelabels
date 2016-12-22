@@ -1885,7 +1885,7 @@ module.exports = {
         element = document.createElement('textarea');
         element.name = target.dataset.name;
         element.className = 'big-textarea w-100';
-        element.innerHTML = target.innerHTML;
+        element.innerHTML = target.innerHTML.replace(/\<br\>/g, "\n");
         element.onblur = (e) => this.update(e);
         target.parentElement.insertBefore(element, target);
       }
@@ -1940,13 +1940,14 @@ module.exports = {
               app.user.formc.team_members[index].user_id;
             data = app.user.formc.team_members[index];
             method = 'PUT';
+          } else if(fieldName.indexOf('risk') !== -1) {
+            let riskName = fieldName.split('.')[0];
+            let riskVar = name.split('.')[2];
+            app.user.formc[fieldName][riskVar] = val;
+            url = formcServer + '/' + this.model.formc.id + '/risk-factors-' + fieldName.split('_')[0] + '/' + index;
+            app.user.formc[fieldName][index]
+            data = app.user.formc[fieldName][index];
           }
-          /* else if(fieldName.indexOf('risk') !== -1) {
-            url = formcServer + '/' + this.model.formc.id + '/' + fieldName + '/' +
-              roles[app.user.formc.team_members[index].role[0]].toLocaleLowerCase() + '/' + 
-              app.user.formc.team_members[index].user_id;
-          }
-          */
         } else {
           data[fieldName] = val;
         }
@@ -1977,6 +1978,8 @@ module.exports = {
             href.dataset.type = 'select';
             let metaData = app.valByKeyReplaceArray(this.fields, e.target.name);
             realVal = app.fieldChoiceList(metaData, val);
+          } else if(e.target.tagName == "TEXTAREA") {
+            href.dataset.type = "textarea"
           } else {
             href.dataset.type = 'text';
           }
@@ -2023,6 +2026,8 @@ module.exports = {
           }
         })
       );
+
+      $('body').on('click', '.createField', (e) => this.createField(e));
 
       return this;
     },
