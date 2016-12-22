@@ -41,8 +41,8 @@ let exports = {
 
   nestedTextLabel(nestedName, name, value, index, myAttr, schema) {
     this.prepareNestedField(nestedName, name, value, index, myAttr, schema);
-    myAttr.class1 = myAttr.class1 ? myAttr.class1 : 'col-xl-3 col-lg-12 text-lg-left text-xl-right';
-    myAttr.class2 = myAttr.class2 ? myAttr.class2 : 'col-xl-9 col-lg-12';
+    myAttr.class1 = myAttr.class1 || 'col-xl-3 col-lg-12 text-lg-left text-xl-right';
+    myAttr.class2 = myAttr.class2 || 'col-xl-9 col-lg-12';
     return this.textLabel(
       nestedName + '[' + index + '][' + name + ']',
       myAttr
@@ -125,8 +125,8 @@ let exports = {
   textLabel(name, attr) {
     attr.name = name;
     this.prepareField(name, attr);
-    if(attr.hasOwnProperty('class1') == false) { attr.class1 = 'col-xl-3 col-lg-12 text-lg-left text-xl-right'};
-    if(attr.hasOwnProperty('class2') == false) { attr.class2 = 'col-xl-9 col-lg-12' };
+    attr.class1 = attr.class1 || 'col-xl-3 col-lg-12 text-lg-left text-xl-right';
+    attr.class2 = attr.class2 || 'col-xl-9 col-lg-12';
     const template = require('./templates/textLabel.pug');
     return template(attr);
   },
@@ -134,33 +134,36 @@ let exports = {
   textareaLabel(name, attr) {
     attr.name = name;
     this.prepareField(name, attr);
-    if(attr.hasOwnProperty('class1') == false) { attr.class1 = 'col-xl-3 col-lg-12 text-lg-left text-xl-right'};
-    if(attr.hasOwnProperty('class2') == false) { attr.class2 = 'col-xl-9 col-lg-12' };
+    attr.class1 = attr.class1 || 'col-xl-3 col-lg-12 text-lg-left text-xl-right';
+    attr.class2 = attr.class2 || 'col-xl-9 col-lg-12';
     const template = require('./templates/textareaLabel.pug');
     return template(attr);
   },
 
   dateDay(name, attr) {
     attr.name = name;
-    prepareField(name, attr);
+    this.prepareField(name, attr);
     attr.value = attr.value && attr.value.indexOf('-') != -1 ? attr.value.split('-')[2] : '';
-    //const template = require('./templates/dateDay.pug');
+    attr.class1 = attr.class1 || 'col-xl-4 col-lg-4 col-xs-4 p-r-0 m-d-p-l-5';
+    const template = require('./templates/dateDay.pug');
     return template(attr);
   },
 
   dateMonth(name, attr) {
     attr.name = name;
-    prepareField(name, attr);
+    this.prepareField(name, attr);
     attr.value = attr.value && attr.value.indexOf('-') != -1 ? attr.value.split('-')[1] : '';
-    //const template = require('./templates/dateMonth.pug');
+    attr.class1 = attr.class1 || 'col-xl-4 col-lg-4 col-xs-4 p-l-0  m-d-p-r-5';
+    const template = require('./templates/dateMonth.pug');
     return template(attr);
   },
 
   dateYear(name, attr) {
     attr.name = name;
-    prepareField(name, attr);
+    this.prepareField(name, attr);
     attr.value = attr.value && attr.value.indexOf('-') != -1 ? attr.value.split('-')[0] : '';
-    //const template = require('./templates/dateYear.pug');
+    attr.class1 = attr.class1 || 'col-xl-4 col-lg-4 col-xs-4 p-r-0 p-r-lg-1 m-d-p-l-10';
+    const template = require('./templates/dateYear.pug');
     return template(attr);
   },
 
@@ -228,7 +231,8 @@ let exports = {
   fieldChoiceLabel(name, attr) {
     this.prepareField(name, attr);
     attr.type = attr.type || 'select';
-
+    attr.class1 = attr.class1 || 'col-xl-3 col-lg-12 text-lg-left text-xl-right';
+    attr.class2 = attr.class2 || 'col-xl-9 col-lg-12';
     const template = require('./templates/fieldChoiceLabel.pug');
 
     return template({

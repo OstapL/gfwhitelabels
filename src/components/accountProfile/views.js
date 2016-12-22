@@ -65,10 +65,10 @@ module.exports = {
     },
 
     changeCountry(e) {
-      const usClass1 = 'col-lg-6 text-lg-right text-xs-left ';
-      const usClass2 = 'col-lg-6 ';
-      const foreignClass1 = 'col-lg-5 text-xl-right text-lg-left ';
-      const foreignClass2 = 'col-lg-7 ';
+      const usClass1 = 'col-xl-6 text-xl-right text-lg-left ';
+      const usClass2 = 'col-xl-6 ';
+      const foreignClass1 = 'col-xl-5 text-xl-right text-lg-left ';
+      const foreignClass2 = 'col-xl-7';
 
       let $target = $(e.target);
       let country = $target.val();
@@ -257,7 +257,7 @@ module.exports = {
     },
 
     changeCountry(e) {
-      const usClass1 = 'col-lg-6 text-lg-right text-xs-left ';
+      const usClass1 = 'col-lg-6 text-xl-right text-lg-left ';
       const usClass2 = 'col-lg-6 ';
       const foreignClass1 = 'col-lg-5 text-xl-right text-lg-left ';
       const foreignClass2 = 'col-lg-7 ';
@@ -626,7 +626,24 @@ module.exports = {
     shareWithGooglePlus(e) {
       event.preventDefault();
     },
+    initComments() {
+      const View = require('components/comment/views.js');
+      const urlComments = commentsServer + '/company/' + this.model.id;
+      let optionsR = api.makeRequest(urlComments, 'OPTIONS');
+      let dataR = api.makeRequest(urlComments);
 
+      $.when(optionsR, dataR).done((options, data) => {
+        data[0].id = this.model.id;
+        data[0].owner_id = this.model.owner_id;
+
+        let comments = new View.comments({
+          // model: commentsModel,
+          model: data[0],
+          fields: options[0].fields,
+        });
+        comments.render();
+      });
+    },
     render(){
       const socialMediaScripts = require('helpers/shareButtonHelper.js');
       const template = require('./templates/issuerDashboard.pug');
@@ -639,6 +656,7 @@ module.exports = {
       );
 
       socialMediaScripts.facebook();
+      setTimeout(() => { this.initComments(); },100);
 
       const socket = require('socket.io-client')('http://localhost:3000');
       socket.on('connect', function () {

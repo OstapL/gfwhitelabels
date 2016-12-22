@@ -24,17 +24,9 @@ div(id=id class=cssClass data-level=level data-id=comment.uid).p-r-0.p-t-0
     .comments-wrap.col-lg-12.p-r-0
       span.name-comments.text-uppercase #{ userName }
       -
-        var title = '';
-        console.log(comment.user)
-        _.each(comment.user.role.role, function(role, idx) {
-          console.log(comment.user);
-          console.log(attr);
-          if (comment.user.role.company_id == attr.company_id) {
-            title += role;
-          if (idx < comment.user.role.role.length - 1)
-            title += ', ';
-          }
-        });
+        var title = comment.user.role.company_id == attr.company_id
+          ? comment.user.role.role.join(', ')
+          : (comment.related || '');
 
       if title
         span.kvalificatio-comments.text-uppercase #{ title }
