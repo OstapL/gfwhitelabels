@@ -6,7 +6,7 @@ module.exports = {
   },
 
   fromNow(dateFrom) {
-    return moment().from(dateFrom);
+    return moment(dateFrom).from(moment());
   },
 
 };
