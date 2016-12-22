@@ -166,7 +166,7 @@ module.exports = {
         nonrefundable_fees: 50,
         registration_fee: 500,
         amendment_fee: 200,
-        commitment_date_x: this.getCurrentDate(),
+        commencement_date_x: this.getCurrentDate(),
         zip_code: app.user.company.zip_code,
         address_1: app.user.company.address_1,
         address_2: app.user.company.address_2,
