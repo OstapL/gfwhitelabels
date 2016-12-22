@@ -246,7 +246,7 @@ let exports = {
      * Options:
      * schema: fields.fiscal_recent_group_id,
      * classMain, class1, class2
-     * required, id, icon, type, help_text
+     * required, id, icon, type, help_text, default
      */
 
     attr.name = name;
