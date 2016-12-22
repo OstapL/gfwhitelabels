@@ -142,25 +142,28 @@ let exports = {
 
   dateDay(name, attr) {
     attr.name = name;
-    prepareField(name, attr);
+    this.prepareField(name, attr);
     attr.value = attr.value && attr.value.indexOf('-') != -1 ? attr.value.split('-')[2] : '';
-    //const template = require('./templates/dateDay.pug');
+    attr.class1 = attr.class1 || 'col-xl-4 col-lg-4 col-xs-4 p-r-0 m-d-p-l-5';
+    const template = require('./templates/dateDay.pug');
     return template(attr);
   },
 
   dateMonth(name, attr) {
     attr.name = name;
-    prepareField(name, attr);
+    this.prepareField(name, attr);
     attr.value = attr.value && attr.value.indexOf('-') != -1 ? attr.value.split('-')[1] : '';
-    //const template = require('./templates/dateMonth.pug');
+    attr.class1 = attr.class1 || 'col-xl-4 col-lg-4 col-xs-4 p-l-0  m-d-p-r-5';
+    const template = require('./templates/dateMonth.pug');
     return template(attr);
   },
 
   dateYear(name, attr) {
     attr.name = name;
-    prepareField(name, attr);
+    this.prepareField(name, attr);
     attr.value = attr.value && attr.value.indexOf('-') != -1 ? attr.value.split('-')[0] : '';
-    //const template = require('./templates/dateYear.pug');
+    attr.class1 = attr.class1 || 'col-xl-4 col-lg-4 col-xs-4 p-r-0 p-r-lg-1 m-d-p-l-10';
+    const template = require('./templates/dateYear.pug');
     return template(attr);
   },
 
