@@ -115,8 +115,25 @@ module.exports = {
 
     },
 
+    _ensureUserLoggedIn(e) {
+      if (app.user.is_anonymous()) {
+        const pView = require('components/anonymousAccount/views.js');
+        require.ensure([], function() {
+          new pView.popupLogin().render(window.location.pathname);
+          app.hideLoading();
+          $('#sign_up').modal();
+        });
+        return false;
+      }
+
+      return true;
+    },
+
     submitComment(e) {
       e.preventDefault();
+
+      if (!this._ensureUserLoggedIn(e))
+        return false;
 
       let $target = $(e.target);
 
