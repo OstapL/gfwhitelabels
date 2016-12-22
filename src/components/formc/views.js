@@ -2,6 +2,7 @@
 
 const formcHelpers = require('./helpers.js');
 const formatHelper = require('../../helpers/formatHelper');
+const formatNumber = require('../../helpers/formatNumber');
 const roles = ['Shareholder', 'Director', 'Officer'];
 
 const menuHelper = require('helpers/menuHelper.js');

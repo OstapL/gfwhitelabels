@@ -1,4 +1,5 @@
 const formatHelper = require('helpers/formatHelper');
+const formatNumber = require('helpers/formatNumber');
 const textHelper = require('helpers/textHelper');
 
 let countries = {};
@@ -846,6 +847,10 @@ module.exports = {
       const formData = $('form.invest_form').serializeJSON();
       const issuer_signer = this.model.owner.first_name + ' ' + this.model.owner.last_name;
       const investor_legal_name = formData.personal_information_data.first_name + ' ' + formData.personal_information_data.last_name;
+      const investment_amount = parseInt( formData.amount.replace(/\D/g, '') );
+      const investor_number_purchased = investment_amount / this.model.campaign.price_per_share;
+      const aggregate_inclusive_purchase = formData.total_amount.replace(/\D/g, '');
+
       return {
         fees_to_investor: 10,
         trans_percent: 6,
@@ -862,9 +867,9 @@ module.exports = {
         address_2: this.model.address_2,
         jurisdiction_of_organization: this.model.founding_state, 
         jurisdiction_of_incorporation: this.model.founding_state, 
-        maximum_raise: this.model.campaign.maximum_raise,
-        minimum_raise: this.model.campaign.minimum_raise,
-        price_per_share: this.model.campaign.price_per_share,
+        maximum_raise: formatNumber( this.model.campaign.maximum_raise ),
+        minimum_raise: formatNumber( this.model.campaign.minimum_raise ),
+        price_per_share: formatNumber( this.model.campaign.price_per_share ),
         
         // owner of campaign
         issuer_email: this.model.owner.email,
@@ -873,15 +878,15 @@ module.exports = {
 
         // investor
         investor_legal_name: investor_legal_name,
-        aggregate_inclusive_purchase: formData.total_amount.split('$').join(''),
-        investment_amount: formData.amount.split('$').join(''),
+        aggregate_inclusive_purchase: formatNumber( aggregate_inclusive_purchase ),
+        investment_amount: formatNumber( investment_amount ),
         investor_address: formData.personal_information_data.street_address_1,
         investor_optional_address: formData.personal_information_data.street_address_2,
         investor_code: formData.personal_information_data.zip_code,
         investor_city: formData.personal_information_data.city,
         investor_state: formData.personal_information_data.state,
         investor_email: app.user.get('email'),
-        investor_number_purchased: 'empty',
+        investor_number_purchased: investor_number_purchased,
       };
     },
 
