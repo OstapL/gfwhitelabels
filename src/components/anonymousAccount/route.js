@@ -178,7 +178,8 @@ module.exports = Backbone.Router.extend({
     if(localStorage.getItem('token') !== null) {
       localStorage.removeItem('token', '');
       localStorage.removeItem('user');
-      setInterval(() => window.location.reload(), 100);
+      setInterval(() => window.location.reload(), 300);
+      return false;
     }
 
     api.makeRequest(formcServer + '/invitation/' + code, 'GET').done((response) => {
@@ -194,6 +195,12 @@ module.exports = Backbone.Router.extend({
         el: '#content',
       }, data));
       i.render();
+      app.hideLoading();
+    })
+    .fail((response) => {
+      $('#content').html(
+        '<section class="reset"><div class="container"><div class="col-lg-12"><h2 class="dosis text-uppercase text-sm-center text-xs-center m-t-85"> Your code have been expired. Please request new invitation link </h2></div></div></section>'
+      );
       app.hideLoading();
     });
   },
