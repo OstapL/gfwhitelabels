@@ -12,6 +12,9 @@ let exports = {
     _.extend(myAttr, schema);
     myAttr.value = value[name] ? value[name]: '';
     myAttr.id = nestedName + '__' + index + '__' + name + '';
+    console.log('testtt')
+    console.log(myAttr)
+    console.log(schema)
   },
 
   /*
@@ -53,6 +56,7 @@ let exports = {
     this.prepareNestedField(nestedName, name, value, index, myAttr, schema);
     myAttr.class1 = myAttr.class1 ? myAttr.class1 : 'text-lg-right col-lg-3 col-md-12 text-md-left';
     myAttr.class2 = myAttr.class2 ? myAttr.class2 : 'col-lg-9 col-md-12';
+    console.log(myAttr)
     return this.textareaLabel(
       nestedName + '[' + index + '][' + name + ']',
       myAttr
@@ -125,8 +129,8 @@ let exports = {
   textLabel(name, attr) {
     attr.name = name;
     this.prepareField(name, attr);
-    if(attr.hasOwnProperty('class1') == false) { attr.class1 = 'col-xl-3 col-lg-12 text-lg-left text-xl-right'};
-    if(attr.hasOwnProperty('class2') == false) { attr.class2 = 'col-xl-9 col-lg-12' };
+    attr.class1 = attr.class1 || 'col-xl-3 col-lg-12 text-lg-left text-xl-right';
+    attr.class2 = attr.class2 || 'col-xl-9 col-lg-12';
     const template = require('./templates/textLabel.pug');
     return template(attr);
   },
@@ -134,8 +138,8 @@ let exports = {
   textareaLabel(name, attr) {
     attr.name = name;
     this.prepareField(name, attr);
-    if(attr.hasOwnProperty('class1') == false) { attr.class1 = 'col-xl-3 col-lg-12 text-lg-left text-xl-right'};
-    if(attr.hasOwnProperty('class2') == false) { attr.class2 = 'col-xl-9 col-lg-12' };
+    attr.class1 = attr.class1 || 'col-xl-3 col-lg-12 text-lg-left text-xl-right';
+    attr.class2 = attr.class2 || 'col-xl-9 col-lg-12';
     const template = require('./templates/textareaLabel.pug');
     return template(attr);
   },
