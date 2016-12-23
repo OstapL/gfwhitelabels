@@ -22,11 +22,12 @@ module.exports = Backbone.Router.extend({
   },
 
   list() {
-    api.makeCacheRequest(blogServer + '/').
+    api.makeCacheRequest(blogServer + '/', 'GET').
       then((data) => {
-        const i = View.list({
+        new View.list({
           model: data
-        });
+        }).render();
+        app.hideLoading();
       });
   },
 
@@ -37,18 +38,20 @@ module.exports = Backbone.Router.extend({
     }
     $.when(r).
       then((data) => {
-        const i = View.list({
+        new View.createEdit({
           model: data
         }).render();
+        app.hideLoading();
       });
   },
 
   detail(id) {
     api.makeCacheRequest(blogServer + '/' + id).
       then((data) => {
-        const i = View.list({
+        new View.detail({
           model: data
-        });
+        }).render();
+        app.hideLoading();
       });
   },
    
