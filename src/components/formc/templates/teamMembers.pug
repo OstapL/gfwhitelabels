@@ -34,17 +34,23 @@ section.create-company-team-add.container
       .col-lg-12.m-t-1.m-b-2
         b How many emploees do you have?
       .col-xl-6.col-lg-6.required
-        +fieldTextLabel("full_time_employers", _.extend({
-          class1: 'col-xl-4 col-lg-12 text-lg-left text-xl-right p-t-0 m-b-0 m-b-lg-1',
-          class2: 'col-xl-8 col-lg-12',
+        - 
+          pug_html += app.fields.textLabel('full_time_employers', {
+          class1:'col-xl-4 col-lg-12 text-lg-left text-xl-right p-t-0 m-b-0 m-b-lg-1',
+          class2: 'col-xl-8 col-lg-12', 
+          schema: fields.full_time_employers,
+          value: values.full_time_employers,
           required: true,
-        }, fields.full_time_employers))
+          })
       .col-xl-6.col-lg-6.required
-        +fieldTextLabel("part_time_employers", _.extend({
-          class1: 'col-xl-4 col-lg-12 text-lg-left text-xl-right p-t-0 m-b-0 m-b-lg-1',
-          class2: 'col-xl-8 col-lg-12',
+        - 
+          pug_html += app.fields.textLabel('part_time_employers', {
+          class1:'col-xl-4 col-lg-12 text-lg-left text-xl-right p-t-0 m-b-0 m-b-lg-1',
+          class2: 'col-xl-8 col-lg-12', 
+          schema: fields.part_time_employers,
+          value: values.part_time_employers,
           required: true,
-        }, fields.part_time_employers))
+          })
       .col-lg-12.text-lg-center.text-md-center.text-sm-center.text-xs-center.m-t-2.m-b-2
         a(href='/formc/' + values.id + '/team-members/director/new').btn.text-uppercase.m-r-3 
           i.fa.fa-plus
