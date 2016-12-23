@@ -5,6 +5,11 @@ const phoneHelper = require('helpers/phoneHelper.js');
 const formatHelper = require('helpers/formatHelper');
 const yesNoHelper = require('helpers/yesNoHelper.js');
 
+const helpers = {
+  date: require('helpers/dateHelper.js'),
+  format: formatHelper,
+  phone: phoneHelper,
+};
 // const InvestmentStatus = {
 //   New: 0,
 //   Approved: 1,
@@ -568,10 +573,20 @@ module.exports = {
   }),
 
   issuerDashboard: Backbone.View.extend({
+    template: require('./templates/issuerDashboard.pug'),
+    events: {
+      'click .linkedin-share': 'shareOnLinkedIn',
+      'click .facebook-share': 'shareOnFaceBook',
+      'click .twitter-share': 'shareOnTwitter',
+      'click .email-share': 'shareWithEmail',
+      'click .google-plus-share': 'shareWithGooglePlus',
+      'click .cancel-campaign': 'cancelCampaign',
+    },
+
     initialize(options) {
       this.model.description = "Something long comes from here. Something long comes from here. Something long comes from here. Something long comes from here. Something long comes from here. ";
-      this.model.thumbnail = '/img/smartbe-intelligent-stroller.jpg',
-      this.model.campaign = {
+      this.model.thumbnail = '/img/smartbe-intelligent-stroller.jpg';
+      this.model.campaign = _.extend({
         minimum_raise: 80000,
         amount_raised: 20000,
         starting_date: "2016-04-04",
@@ -579,14 +594,38 @@ module.exports = {
         investors: 333,
         views: 123456,
         interactions: 4567,
-      }
+      }, this.model.campaign);
+
+      this.company = options.company;
+
+
     },
-    events: {
-      'click .linkedin-share': 'shareOnLinkedIn',
-      'click .facebook-share': 'shareOnFaceBook',
-      'click .twitter-share': 'shareOnTwitter',
-      'click .email-share': 'shareWithEmail',
-      'click .google-plus-share': 'shareWithGooglePlus',
+
+    render(){
+      const socialMediaScripts = require('helpers/shareButtonHelper.js');
+
+      this.$el.html(
+        this.template({
+          values: this.model,
+          company: this.company,
+          helpers: helpers,
+        })
+      );
+
+      socialMediaScripts.facebook();
+      setTimeout(() => { this.initComments(); },100);
+
+      // const socket = require('socket.io-client')('http://localhost:3000');
+      // socket.on('connect', function () {
+      //   socket.emit('newUser', app.user.id, function (data) {
+      //     console.log(data);
+      //   });
+      // });
+      // socket.on('notification', function(msg){
+      //   console.log(msg);
+      //   $('.notification-container ul').append($('<li>').html('<a>' + msg + '</a>'));
+      // });
+      return this;
     },
 
     shareOnLinkedIn(e) {
@@ -628,6 +667,15 @@ module.exports = {
       event.preventDefault();
     },
 
+    cancelCampaign(e) {
+      e.preventDefault();
+      if(!confirm('Are you sure?')) {
+        return;
+      }
+
+      console.log('CANCEL CAMPAIGN NOT IMPLEMENTED');
+    },
+
     initComments() {
       const View = require('components/comment/views.js');
       const urlComments = commentsServer + '/company/' + this.model.id;
@@ -647,33 +695,6 @@ module.exports = {
         });
         comments.render();
       });
-    },
-
-    render(){
-      const socialMediaScripts = require('helpers/shareButtonHelper.js');
-      const template = require('./templates/issuerDashboard.pug');
-
-      this.$el.html(
-        template({
-          values: this.model,
-          formatHelper: formatHelper,
-        })
-      );
-
-      socialMediaScripts.facebook();
-      setTimeout(() => { this.initComments(); },100);
-
-      // const socket = require('socket.io-client')('http://localhost:3000');
-      // socket.on('connect', function () {
-      //   socket.emit('newUser', app.user.id, function (data) {
-      //     console.log(data);
-      //   });
-      // });
-      // socket.on('notification', function(msg){
-      //   console.log(msg);
-      //   $('.notification-container ul').append($('<li>').html('<a>' + msg + '</a>'));
-      // });
-      return this;
     },
   }),
 

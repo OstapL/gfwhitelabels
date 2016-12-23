@@ -150,16 +150,16 @@ module.exports = Backbone.Router.extend({
   },
   issuerDashboard: function() {
     app.makeCacheRequest(authServer + '/user/company').done((company) => {
-      console.log(company);
-      return app.makeCacheRequest(raiseCapitalServer + '/' + company.id);
-    }).done((detail) => {
-      const View = require('components/accountProfile/views.js');
-      let i = new View.issuerDashboard({
-        el: '#content',
-        model: detail,
-      });
-      i.render();
-      app.hideLoading();
+      app.makeCacheRequest(raiseCapitalServer + '/' + company.id).done((detail) => {
+        const View = require('components/accountProfile/views.js');
+        let i = new View.issuerDashboard({
+          el: '#content',
+          model: detail,
+          company: company,
+        });
+        i.render();
+        app.hideLoading();
+      });;
     });
     //
     // require.ensure([], function() {
