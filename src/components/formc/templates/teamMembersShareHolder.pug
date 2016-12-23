@@ -17,30 +17,53 @@ section.formc-team-members-director.container.m-b-85
     form(action="").form-section
       input(type="hidden" value=0 name="role")
       .col-xl-12
-        - pug_html += app.fields.textLabel('first_name', {schema: fields.first_name, value: values.first_name,})
-        - pug_html += app.fields.textLabel('last_name', {schema: fields.last_name, value: values.last_name,})
-        - pug_html += app.fields.textLabel('email', {schema: fields.email, value: values.email, help_text: 'We will need to contact team members',})
+        - 
+          pug_html += app.fields.textLabel('first_name', {
+          schema: fields.first_name, 
+          value: values.first_name,})
+        - 
+          pug_html += app.fields.textLabel('last_name', {
+          schema: fields.last_name, 
+          value: values.last_name,})
+        - 
+          pug_html += app.fields.textLabel('email', {
+          schema: fields.email, 
+          value: values.email, 
+          help_text: 'We will need to contact team members',})
         .row.form-group
           .col-date
             label.col-xl-3.col-lg-12.text-xl-right.textlg-left Date of birth
               span.color-red *
             .col-xl-4.col-lg-6.p-r-0
-              +fieldDateMonth("dob", _.extend({
-                class: 'col-xl-4 col-lg-4 col-xs-4 p-l-0 m-d-p-r-5',
-                placeholder: 'MM',
-              }, fields.dob))
-              +fieldDateDay("dob", _.extend({
-                class: 'col-xl-4 col-lg-4 col-xs-4 p-r-0  m-d-p-l-5',
-                placeholder: 'DD',
-              }, fields.dob))
-              +fieldDateYear("dob", _.extend({
-                class: 'col-xl-4 col-lg-4 col-xs-4 p-r-0 m-d-p-l-10',
-                placeholder: 'YYYY',
-                divId: 'dob',
-              }, fields.dob))
-        - pug_html += app.fields.textLabel('number_of_shares', {schema: fields.number_of_shares, value: values.number_of_shares,})
-        - pug_html += app.fields.textLabel('class_of_securities', {schema: fields.class_of_securities, value: values.class_of_securities,})
-        - pug_html += app.fields.textLabel('voting_power_percent', {schema: fields.voting_power_percent, value: values.voting_power_percent,})
+              - 
+                pug_html += app.fields.dateMonth('dob', _.extend({
+                'empty': { '': 'Choose' },
+                'value': values.dob,
+                }, fields.dob));
+              - 
+                pug_html += app.fields.dateDay('dob', _.extend({
+                'empty': { '': 'Choose' },
+                'value': values.dob,
+                }, fields.dob));
+              - 
+                pug_html += app.fields.dateYear('dob', _.extend({
+                'value': values.dob,
+                'placeholder': 'YYYY',
+                'divId': 'dob',
+                }, fields.dob));
+
+        - 
+          pug_html += app.fields.textLabel('number_of_shares', {
+          schema: fields.number_of_shares, 
+          value: values.number_of_shares,})
+        - 
+          pug_html += app.fields.textLabel('class_of_securities', {
+          schema: fields.class_of_securities, 
+          value: values.class_of_securities,})
+        - 
+          pug_html += app.fields.textLabel('voting_power_percent', {
+          schema: fields.voting_power_percent, 
+          value: values.voting_power_percent,})
       .col-lg-12.text-md-center.text-sm-center.text-xs-center.m-t-2
         - console.log(this.values, values);
         button(type='button' data-method=(values.user_id ? 'PUT' : 'POST'))#submitForm.btn.btn-primary.text-uppercase.pull-lg-right Save
