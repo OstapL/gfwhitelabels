@@ -135,7 +135,7 @@ let exports = {
     attr.name = name;
     this.prepareField(name, attr);
     attr.class1 = attr.class1 || 'col-xl-3 col-lg-12 text-lg-left text-xl-right';
-    attr.class2 = attr.class2 || 'col-xl-9 col-lg-12';
+    attr.class2 = attr.class2 || 'col-xl-9 col-lg-12 big-textarea';
     const template = require('./templates/textareaLabel.pug');
     return template(attr);
   },
@@ -213,7 +213,7 @@ let exports = {
       attr: attr,
     });
   },
-
+  // уже не нужен
   fieldTextLabel(name, attr) {
     this.prepareField(name, attr);
     attr.type = attr.type || 'text';
@@ -241,7 +241,7 @@ let exports = {
     });
   },
 
-  fileFolderDropzone(name, attr) {
+  fileFolderDropzone(name, attr, schema) {
     /* Requeired:
      * data: values.fiscal_recent_group_data,
      * value: values.fiscal_recent_group_id,
@@ -252,7 +252,7 @@ let exports = {
      * classMain, class1, class2
      * required, id, icon, type, help_text, default
      */
-
+    _.extend(attr, schema)
     attr.name = name;
     this.prepareField(name, attr);
 
@@ -267,7 +267,7 @@ let exports = {
     }
 
     if(attr.hasOwnProperty('icon') == false) { 
-      attr.icon = 'file';
+      attr.icons = 'file';
     }
 
     if(attr.hasOwnProperty('text') == false) { 
