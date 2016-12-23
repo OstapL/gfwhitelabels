@@ -8,8 +8,8 @@ mixin row(value, index)
       a(href="#" data-section=name data-index=index).delete-sectionnew
         i.fa.fa-times
 
-    +fieldNestedTextLabel(name, 'question', value, index, {class1:'col-xl-3 col-lg-12 text-lg-left text-xl-right', class2: 'col-xl-9 col-lg-12', help_text: 'Create your own Q&A section. What questions do you frequently recieve or what would you want investors to know ?'})
-    +fieldNestedTextareaLabel(name, 'answer', value, index, {class1:'col-xl-3 col-lg-12 text-lg-left text-xl-right', class2: 'col-xl-9 col-lg-12'})
+    | !{app.fields.nestedTextLabel(name, 'question', value, index, {help_text:'Create your own Q&A section. What questions do you frequently recieve or what would you want investors to know ?'}, attr.schema.question)}
+    | !{app.fields.nestedTextareaLabel(name, 'answer', value, index, attr.schema.answer)}
 
 mixin run()
 

@@ -1,0 +1,10 @@
+- var format = require('helpers/formatHelper.js');
+
+section.campaing-list
+  .container#blogList
+
+    .row
+      for post in values
+        h2 #{ post.title }
+        p #{ post.body.substr(0, 120) }
+        a(href="/blog/" + post.id) read more

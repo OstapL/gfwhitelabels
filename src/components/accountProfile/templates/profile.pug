@@ -1,36 +1,33 @@
-include ../../../templates/fields_mixins.pug
 
 - pug_html += app.breadcrumbs('Profile', '', [ ['Home', '/'], ['Profile', ''],]);
 
 .container.profile.pt-50
   .row
-    aside.col-xl-3.col-lg-3.m-b-1
+    aside.col-xl-3.col-lg-4.m-b-1
       form(method="post" action="").form.form-section
-        - var values = user;
         h3.m-t-0.m-b-1.profile-user-name.text-xs-center #{user.first_name + ' ' + user.last_name}
-        +userProfileDropzone("image_image_id", _.extend({
-          thumbSize: '255x135',
-          default: '/img/default/255x153.png',
-          icon: 'camera',
-          text: 'Drop your profile photo here or click to upload',
-          data: user.image_data[0],
-        }, fields.image))
+        -
+          pug_html += app.fields.userProfileDropzone('image_image_id', _.extend({
+            thumbSize: '255x135',
+            default: '/img/default/255x153.png',
+            icon: 'camera',
+            text: 'Drop your profile photo here or click to upload',
+            data: user.image_data[0],
+          }, fields.image));
       .row.m-t-2
-        .col-xl-12.p-l-0.p-r-0
+        .col-xl-12.col-lg-12.col-md-6.offset-md-3.col-xs-8.offset-xs-2.offset-xl-0.offset-lg-0.p-l-0.p-r-0
           .profile-type-user
             span.user-type Shareholder
             .user-company
               | in
               a(href="/api/campaign/147").link-3  NETFLIX
               |  company.
-        .col-xl-12.p-l-0.p-r-0
           hr
-        .col-lg-12.text-xl-left.p-l-0.p-r-0
           a(href="/account/change-password").link-3 
             i.fa.fa-lock
             |  Need to change your password?
 
-    .col-xl-9.col-lg-9
+    .col-xl-8.col-lg-8
       ul.nav.nav-tabs.profile-tabs
         li(aria-expanded="false").nav-item
           a(
@@ -50,154 +47,189 @@ include ../../../templates/fields_mixins.pug
       .tab-content.profile-tabs-content.mt30
 
         div(aria-expanded="true")#account_info.tab-pane.fade.active.in
-          .row
+          div
             section.form-section.clearfix
               form(method="post" action="").form
                 .form-body.clearfix
                   .col-xs-12
                     section.right-block
                       .form-group.row.required
-                        label.col-lg-3.text-lg-right.text-xs-left Legal Name
+                        label.col-xl-3.text-lg-right.text-xs-left Legal Name
                           span.color-red *
-                        +fieldText("first_name", {'class': 'col-lg-4 m-b-md-25','placeholder':'First Name' })
-                        +fieldText("last_name", {'class': 'col-lg-4','placeholder':'Last Name' })
+                        .col-xl-9
+                          .row
+                            -
+                              pug_html += app.fields.fieldText('first_name', {
+                                'class': 'col-lg-6 m-b-md-25',
+                                'placeholder': 'First Name',
+                                'value': user.first_name,
+                              });
+                              pug_html += app.fields.fieldText('last_name', {
+                                'class': 'col-lg-6',
+                                'placeholder': 'Last Name',
+                                'value': user.last_name,
+                              });
+                      -
+                        pug_html += app.fields.fieldChoiceLabel('country', _.extend({
+                            'empty': { '': 'Choose Country' },
+                            'value': user.country,
+                          }, fields.country));
 
-                      +fieldChoiceLabel("country", _.extend({
-                        class1: 'col-lg-3 text-lg-right text-xs-left',
-                        class2: 'col-lg-8',
-                        empty: {'': 'Choose Country'},
-                      }, fields.country))
-                      +fieldTextLabel("street_address_1", _.extend({'class1': 'col-lg-3 text-lg-right text-xs-left', 'class2': 'col-lg-8 ', 'type': 'text'}, fields.street_address_1))
-                      +fieldTextLabel("street_address_2", _.extend({'class1': 'col-lg-3 text-lg-right text-xs-left', 'class2': 'col-lg-8 ', 'type': 'text'}, fields.street_address_2))
+                        pug_html += app.fields.textLabel('street_address_1', _.extend({
+                            'type': 'text',
+                            'value': user.street_address_1,
+                          }, fields.street_address_1))
+
+                        pug_html += app.fields.textLabel('street_address_2', _.extend({
+                            'type': 'text',
+                            'value': user.street_address_2,
+                          }, fields.street_address_2))
 
                       .us-row(style="display:" + (user.country == 'US' ? 'block' : 'none'))
-                        input(type="hidden" name="city" values=values['city'] disabled=((user.country=='US') ? false : true))
-                        input(type="hidden" name="state" value=values['state'] disabled=((user.country=='US') ? false : true))
+                        input(type="hidden" name="city" value=user.city disabled=((user.country=='US') ? false : true))
+                        input(type="hidden" name="state" value=user.state disabled=((user.country=='US') ? false : true))
                         .row
-                          .col-md-12.col-lg-6
-                            +fieldTextLabel('zip_code', _.extend({
-                              'class1': 'col-lg-6 text-lg-right text-xs-left',
-                              'class2': 'col-lg-6',
-                              'type': 'text',
-                              'value': user.zip_code,
-                            }, fields.zip_code))
+                          .col-xl-6.col-lg-6
+                            //if user.country == 'US'
+                            -
+                              pug_html += app.fields.textLabel('zip_code', _.extend({
+                                  'class1': 'col-xl-6 col-lg-12 text-xl-right text-lg-left',
+                                  'class2': 'col-xl-6 col-lg-12 input-min-width',
+                                  'type': 'text',
+                                  'value': user.zip_code,
+                                }, fields.zip_code))
 
-                          .col-lg-5.city_states.required
+                          .col-xl-6.col-lg-6.city_states.required
                             .row
-                              label.col-lg-5.col-xs-6.text-lg-right.text-xs-left City/State
-                              .col-lg-7.col-xs-6
-                                a(data-toggle="modal" data-target="#city_state_modal" href="#city_state_modal").change_state_city
-                                  span.input-value.js-city-state #{ values['city'] ? values['city'] : '(City)' }, #{ values['state'] ? values['state'] : '(State)' }
+                              label.col-xl-5.col-lg-12.col-md-6.col-sm-6.col-xs-6.text-xl-right.text-lg-left City/State
+                              .col-xl-7.col-lg-12.col-md-6.col-sm-6.col-xs-6
+                                a(
+                                  data-toggle="modal"
+                                  data-target="#city_state_modal"
+                                  href="#city_state_modal"
+                                ).change_state_city
+                                  span.input-value.js-city-state
+                                    | #{ user.city || '(City)' }, #{ user.state || '(State)' }
                                   i.fa.fa-pencil-square-o.link-1
                         .row
-                          .col-xl-6.us-phone
+                          .col-xl-6.col-lg-6.us-phone
                             if user.country == 'US'
-                              +fieldTextLabel('phone', _.extend({
-                                'class1': 'col-lg-6 text-lg-right text-xs-left',
-                                'class2': 'col-lg-6',
+                              -
+                                pug_html += app.fields.textLabel('phone', _.extend({
+                                    'class1': 'col-xl-6 col-lg-12 text-xl-right text-lg-left',
+                                    'class2': 'col-xl-6 col-lg-12 input-min-width',
+                                    'type': 'text',
+                                    'value': user.phone,
+                                  }, fields.phone));
+
+                      .row.foreign-country-row(style="display:" + (user.country == 'US' ? 'none' : 'block'))
+                        .col-xl-6.col-lg-6
+                          -
+                            pug_html += app.fields.textLabel('city', _.extend({
+                                'class1': 'col-xl-6 col-lg-12 text-xl-right text-lg-left',
+                                'class2': 'col-xl-6 col-lg-12 input-min-width',
                                 'type': 'text',
-                                'value': user.phone,
-                              }, fields.phone))
+                                'value': user.city,
+                              }, fields.city))
+                        .col-xl-6.col-lg-6
+                          -
+                            pug_html += app.fields.textLabel('state', _.extend({
+                                'class1': 'text-lg-right col-xl-5 p-t-0 m-b-0 m-b-lg-1',
+                                'class2': 'col-xl-7 input-min-width',
+                                'type': 'text',
+                                'label': 'State/Province/ Region',
+                                'placeholder': 'State/Province/Region',
+                                'value': user.state,
+                              }))
 
                       .row.foreign-country-row(style="display:" + (user.country == 'US' ? 'none' : 'block'))
-                        .col-lg-6
-                          +fieldTextLabel('city', _.extend({
-                            'class1': 'col-lg-6 text-lg-right text-xs-left',
-                            'class2': 'col-lg-6 ',
-                            'type': 'text',
-                            'value': user.city,
-                          }, fields.city))
-                        .col-lg-5
-                          +fieldTextLabel('state', _.extend({
-                            'class1': 'text-lg-right col-lg-5 p-t-0 m-b-0',
-                            'class2': 'col-lg-7',
-                            'type': 'text',
-                            'label': 'State/Province/ Region',
-                            'placeholder': 'State/Province/Region',
-                            'value': user.state,
-                          }))
-
-                          //.form-group.row.state.text
-                          //  label.text-lg-right.col-lg-5(for="state").p-t-0.m-b-0 State/Province/ Region
-                          //  div.col-lg-7
-                          //    input.form-control(name='state' placeholder='State/Province/Region' type="text" value=user.state)
-
-                      .row.foreign-country-row(style="display:" + (user.country == 'US' ? 'none' : 'block'))
-                        .col-lg-6
-                          .form-group.row.zip_code.text
-                            label.text-lg-right.col-lg-6(for="zip_code") Postal Code
-                            div.col-lg-6
-                              input.form-control(name='zip_code1' placeholder='Postal Code' type="text" value=user.zip_code)
-                        .col-lg-5.foreign-country-phone
+                        .col-xl-6.col-lg-6
+                          //if user.country != 'US'
+                          -
+                            pug_html += app.fields.textLabel('zip_code', _.extend({
+                                'class1': 'col-xl-6 col-lg-12 text-xl-right text-lg-left',
+                                'class2': 'col-xl-6 col-lg-12 input-min-width',
+                                'type': 'text',
+                                'value': user.zip_code,
+                              }, fields.zip_code, { 'label': 'Postal Code' }))
+                        .col-xl-5.col-lg-6.foreign-country-phone
                           if user.country != 'US'
-                            +fieldTextLabel('phone', _.extend({
-                              'class1': 'col-lg-5 text-xl-right text-lg-left',
-                              'class2': 'col-lg-7 ',
-                              'type': 'text',
-                              'value': user.phone,
-                            }, fields.phone))
-                      
-                      .col-xl-11.p-r-0
-                        .border-bottom.m-t-2.m-b-3
+                            -
+                              pug_html += app.fields.textLabel('phone', _.extend({
+                                  'class1': 'col-xl-6 col-lg-12 text-xl-right text-lg-left',
+                                  'class2': 'col-xl-6 col-lg-12 input-min-width',
+                                  'type': 'text',
+                                  'value': user.phone,
+                                }, fields.phone))
+                      .row
+                        .col-xl-12
+                          .border-bottom.m-t-2.m-b-3
                       .row.m-b-0
-                        .col-xl-6.col-lg-6.col-l-65
-                          +fieldTextLabel("twitter", _.extend({
-                            class1: 'col-xl-6 col-lg-12 text-lg-left text-xl-right', 
-                            class2: 'col-xl-6 col-lg-12', 
-                            type: 'text',
-                            }, fields.twitter))
                         .col-xl-6.col-lg-6
-                          +fieldTextLabel("facebook", _.extend({
-                            class1: 'col-xl-4 col-lg-12 text-lg-left text-xl-right', 
-                            class2: 'col-xl-6 col-lg-12', 
-                            type: 'text',
-                            }, fields.facebook))
+                          -
+                            pug_html += app.fields.textLabel("twitter", _.extend({
+                                'class1': 'col-xl-6 col-lg-12 text-lg-left text-xl-right',
+                                'class2': 'col-xl-6 col-lg-12 input-min-width',
+                                'type': 'text',
+                              }, fields.twitter))
+                        .col-xl-6.col-lg-6
+                          -
+                            pug_html += app.fields.textLabel("facebook", _.extend({
+                                'class1': 'col-xl-5 col-lg-12 text-lg-left text-xl-right',
+                                'class2': 'col-xl-7 col-lg-12',
+                                'type': 'text',
+                              }, fields.facebook))
                       .row.m-b-0
-                        .col-xl-6.col-lg-6.col-l-65
-                          +fieldTextLabel("instagram", _.extend({
-                            class1: 'col-xl-6 col-lg-12 text-lg-left text-xl-right', 
-                            class2: 'col-xl-6 col-lg-12', 
-                            type: 'text',
-                            }, fields.instagram))
                         .col-xl-6.col-lg-6
-                          +fieldTextLabel("linkedin", _.extend({
-                            class1: 'col-xl-4 col-lg-12 text-lg-left text-xl-right', 
-                            class2: 'col-xl-6 col-lg-12', 
-                            type: 'text',
-                            }, fields.linkedin))
+                          -
+                            pug_html += app.fields.textLabel("instagram", _.extend({
+                                'class1': 'col-xl-6 col-lg-12 text-lg-left text-xl-right',
+                                'class2': 'col-xl-6 col-lg-12 input-min-width',
+                                'type': 'text',
+                              }, fields.instagram))
+                        .col-xl-6.col-lg-6
+                          -
+                            pug_html += app.fields.textLabel("linkedin", _.extend({
+                                'class1': 'col-xl-5 col-lg-12 text-lg-left text-xl-right',
+                                'class2': 'col-xl-7 col-lg-12',
+                                'type': 'text',
+                              }, fields.linkedin))
 
                       .form-group.row.clearfix.m0
-                        .col-lg-11.text-xs-center.m-t-2
+                        .col-lg-12.text-xs-center.m-t-2
                           .controls
-                            button(type="button" data-method="PATCH")#save-account-info.btn.btn-primary.pull-lg-right SAVE
+                            button(
+                              type="button"
+                              data-method="PATCH"
+                            )#save-account-info.btn.btn-primary.pull-lg-right SAVE
 
         div(aria-expanded="true")#financial_info.tab-pane.fade
-          .row
-            section.form-section.clearfix.col-xl-12
+          div
+            section.form-section.clearfix
               form(method="post" action="")
                 .form-body.clearfix
                   
-                  .col-xs-12
+                  .col-xl-12
                     section.right-block
                       .form-group.row
-                        .col-lg-11
+                        .col-lg-12
                           .warning-block.m-b-0
                             i.fa.fa-exclamation-triangle
                             span.warning-text
                               | Please confirm your identity and investor status. We are required by the SEC to review this information in order to determine how much you can invest and what offerings will be available to you.
                       .form-group.row.bootstrap-slider-custom
-                        .col-xl-11
+                        .col-xl-12
                           label.m-b-2 My Net Worth
-                        .col-xl-11
+                        .col-xl-12
                           input(
                           type='text'
                           name="net_worth"
                           data-slider-value=user.net_worth
                           ).form-control.slider-net-worth
                       .form-group.row.bootstrap-slider-custom
-                        .col-xl-11
+                        .col-xl-12
                           label.m-b-2.m-t-1 My Annual Income
-                        .col-xl-11
+                        .col-xl-12
                           input(
                           type='text'
                           name="annual_income"
@@ -213,85 +245,121 @@ include ../../../templates/fields_mixins.pug
 
                       .form-group.m-t-1
                         label.accredited_investor.shown-yes
-                          input(type="checkbox" data-name="accredited_investor_1m" value='1' checked=user.accredited_investor_1m).col-xl-1.investor-1m.investor-item-checkbox
-                          input(type="hidden" name="accredited_investor_1m" value=String(user.accredited_investor_1m))
-                          span.font-weight-normal.col-xl-10.p-l-0 I am an Accredited Investor because my net worth, or joint net worth with my spouse, exceeds $1 million excluding my primary residence.
+                          input(
+                            type="checkbox"
+                            data-name="accredited_investor_1m"
+                            value='1'
+                            checked=user.accredited_investor_1m
+                          ).col-xl-1.investor-1m.investor-item-checkbox
+                          input(
+                            type="hidden"
+                            name="accredited_investor_1m"
+                            value=String(user.accredited_investor_1m)
+                          )
+                          span.font-weight-normal.col-xl-10.p-l-0
+                            | I am an Accredited Investor because my net worth, or joint net worth with my spouse, exceeds $1 million excluding my primary residence.
                         label.accredited_investor.shown-yes
-                          input(type="checkbox" data-name="accredited_investor_200k" value='1' checked=user.accredited_investor_200k).col-xl-1.investor-200k.investor-item-checkbox
-                          input(type="hidden" name="accredited_investor_200k" value=String(user.accredited_investor_200k))
+                          input(
+                            type="checkbox"
+                            data-name="accredited_investor_200k"
+                            value='1'
+                            checked=user.accredited_investor_200k
+                          ).col-xl-1.investor-200k.investor-item-checkbox
+                          input(
+                            type="hidden"
+                            name="accredited_investor_200k"
+                            value=String(user.accredited_investor_200k)
+                          )
                           span.font-weight-normal.col-xl-10.p-l-0 I am an Accredited Investor because my annual income exceeds $200,000 or my joint annual income with my spouse exceeds $300,000 for each of the past two (2) years and expect the same this year
                         label.accredited_investor.shown-yes
-                          input(type="checkbox" data-name="accredited_investor_5m" value='1' checked=user.accredited_investor_5m).col-xl-1.investor-entity.investor-item-checkbox
-                          input(type="hidden" name="accredited_investor_5m" value=String(user.accredited_investor_5m))
+                          input(
+                            type="checkbox"
+                            data-name="accredited_investor_5m"
+                            value='1'
+                            checked=user.accredited_investor_5m
+                          ).col-xl-1.investor-entity.investor-item-checkbox
+                          input(
+                            type="hidden"
+                            name="accredited_investor_5m"
+                            value=String(user.accredited_investor_5m)
+                          )
                           span.font-weight-normal.col-xl-10.p-l-0 I am an Accredited Investor because I am authorized to invest on behalf of an entity with at least $5M in assets or an entity where all of the owners are Accredited Investors.
                         label.accredited_investor.shown-yes
-                          input(type="checkbox" data-name="accredited_investor_poor" value='1' checked=user.accredited_investor_poor).col-xl-1.investor-risk-agree.investor-item-checkbox
-                          input(type="hidden" name="accredited_investor_poor" value=String(user.accredited_investor_poor))
+                          input(
+                            type="checkbox"
+                            data-name="accredited_investor_poor"
+                            value='1'
+                            checked=user.accredited_investor_poor
+                          ).col-xl-1.investor-risk-agree.investor-item-checkbox
+                          input(
+                            type="hidden"
+                            name="accredited_investor_poor"
+                            value=String(user.accredited_investor_poor)
+                          )
                           span.font-weight-normal.col-xl-10.p-l-0 I am an Accredited Investor because I am authorized to invest on behalf of a trust with at least $5M in assets and I acknowledge that I have sufficient knowledge to evaluate the merits and risks of private offerings. 
                         .row
                           label.accredited_investor.shown-yes.col-xl-12
-                            input(type="checkbox" checked=!user.accredited_investor_choice).col-xl-1.investor-risk-agree#not-qualify
-                            span.font-weight-normal.col-xl-10.p-l-0.d-block I do not qualify.
-                            input(type="hidden" name="accredited_investor_choice" value=String(user.accredited_investor_choice))
+                            input(
+                              type="checkbox"
+                              checked=!user.accredited_investor_choice
+                            ).col-xl-1.investor-risk-agree#not-qualify
+                            span.font-weight-normal.col-xl-11.p-l-0.d-block I do not qualify.
+                            input(
+                              type="hidden"
+                              name="accredited_investor_choice"
+                              value=String(user.accredited_investor_choice)
+                            )
  
                       .row
                         .col-sm-11
                           hr.m-b-3.m-t-1
-                      +fieldTextLabel('bank_name', _.extend({
-                        'class1': 'col-lg-3 text-lg-right text-xs-left',
-                        'class2': 'col-lg-8 ',
-                        'type': 'text',
-                        'value': user.bank_name
-                      }, fields.bank_name))
+                      -
+                        pug_html += app.fields.textLabel('bank_name', _.extend({
+                            'type': 'text',
+                            'value': user.bank_name
+                          }, fields.bank_name))
 
-                      +fieldTextLabel('name_on_bank_account', _.extend({
-                        'class1': 'col-lg-3 text-lg-right text-xs-left',
-                        'class2': 'col-lg-8 ',
-                        'type': 'text',
-                        'value': user.name_on_bank_account
-                        }, fields.name_on_bank_account))
+                        pug_html += app.fields.textLabel('name_on_bank_account', _.extend({
+                            'type': 'text',
+                            'value': user.name_on_bank_account
+                          }, fields.name_on_bank_account))
 
-                      +fieldTextLabel('account_number', _.extend({
-                        'class1': 'col-lg-3 text-lg-right text-xs-left',
-                        'class2': 'col-lg-8 ',
-                        'help_text': '<img src="/img/routing-number-on-check.png">',
-                        'type': 'text',
-                        'value': user.account_number
-                      }, fields.account_number))
+                        pug_html += app.fields.textLabel('account_number', _.extend({
+                            'help_text': '<img src="/img/routing-number-on-check.png">',
+                            'type': 'text',
+                            'value': user.account_number
+                          }, fields.account_number))
 
-                      +fieldTextLabel('account_number_re', _.extend({
-                        'class1': 'col-lg-3 text-lg-right text-xs-left m-b-0 p-t-0',
-                        'class2': 'col-lg-8 ',
-                        'type': 'text',
-                        'value': user.account_number_re
-                      }, fields.account_number_re))
+                        pug_html += app.fields.textLabel('account_number_re', _.extend({
+                            'class1': 'col-xl-3 col-lg-12 text-xl-right text-lg-left m-b-0 p-t-0 m-b-lg-1',
+                            'type': 'text',
+                            'value': user.account_number_re
+                          }, fields.account_number_re))
 
-                      +fieldTextLabel('routing_number', _.extend({
-                        'class1': 'col-lg-3 text-lg-right text-xs-left',
-                        'class2': 'col-lg-8 ',
-                        'help_text': '<img src="/img/routing-number-on-check.png">',
-                        'type': 'text',
-                        'value': user.routing_number
-                      }, fields.routing_number))
+                        pug_html += app.fields.textLabel('routing_number', _.extend({
+                            'help_text': '<img src="/img/routing-number-on-check.png">',
+                            'type': 'text',
+                            'value': user.routing_number
+                          }, fields.routing_number))
 
                       .form-group.row.radio.requried
-                        label.text-md-right.col-lg-3 Account Type
+                        label.text-xl-right.text-lg-left.col-xl-3.col-lg-12 Account Type
                           span.color-red *
-                        .col-lg-9.radio-input
+                        .col-xl-9.col-lg-12.radio-input
                           label
-                            input(type="radio" name='bank_account_type' checked=!values['bank_account_type'] value=0)
+                            input(type="radio" name='bank_account_type' checked=!user.bank_account_type value=0)
                             |  Checking
                           label
-                            input(type="radio" name='bank_account_type' checked=values['bank_account_type'] value=1)
+                            input(type="radio" name='bank_account_type' checked=user.bank_account_type value=1)
                             |  Savings
-                      
-                      //+fieldTextLabel('annual_income', _.extend({'class1': 'col-lg-3 text-lg-right text-xs-left', 'class2': 'col-lg-8 ', 'type': 'text', 'value': user.annual_income}, fields.annual_income))
-                      //+fieldTextLabel('net_worth', _.extend({'class1': 'col-lg-3 text-lg-right text-xs-left', 'class2': 'col-lg-8 ', 'type': 'text', 'value': user.net_worth}, fields.net_worth))
 
                       .form-group.row.clearfix.m0
-                        .col-lg-11.mt30.text-xs-center
+                        .col-lg-12.mt30.text-xs-center
                           .controls
-                            button(type="button" data-method="PATCH")#save-financial-info.btn.btn-primary.pull-lg-right SAVE
+                            button(
+                              type="button"
+                              data-method="PATCH"
+                            )#save-financial-info.btn.btn-primary.pull-lg-right SAVE
 
   .popover-content-ssn
     i.fa.fa-info-circle
@@ -314,12 +382,12 @@ div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true
         .container.form-section
           .col-lg-10.offset-lg-1.border-bottom
             .form-group.row.clearfix.required
-              input(type="text" placeholder="City" value=values['city'])#city.js-city.form-control
+              input(type="text" placeholder="City" value=user.city)#city.js-city.form-control
             .form-group.row.clearfix.required
               select(name='state')#state.js-state.form-control.custom-select
                 option(checked='checked', value="") State
                 each state in states
-                  if state.abbreviation == values.state
+                  if state.abbreviation == user.state
                     option(value=state.abbreviation selected)= state.name
                   else
                     option(value=state.abbreviation)= state.name
