@@ -355,6 +355,7 @@ module.exports = {
           // model: commentsModel,
           model: data[0],
           fields: options[0].fields,
+          cssClass: 'col-lg-8 offset-lg-2 pt50',
         });
         comments.render();
       });

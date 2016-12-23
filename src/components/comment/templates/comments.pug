@@ -6,8 +6,7 @@ if attr.allowQuestion
         input(type="text" name="body" placeholder="Type your text here..." value='').w-100.text-body
       .col-lg-3.p-r-0.text-xl-right.text-xs-center.p-t-sm-1
         button(type="button").btn.btn-primary.text-uppercase.pull-lg-right.ask-question Submit
-
-.col-lg-8.offset-lg-2.pt50
+div(class=(attr.cssClass || ''))
   .comments
     -
       var options = _.extend({
