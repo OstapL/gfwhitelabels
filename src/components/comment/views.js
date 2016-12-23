@@ -31,6 +31,11 @@ module.exports = {
 
     initialize(options) {
       this.fields = options.fields;
+
+      this.options =
+      this.allowQuestion = _.isBoolean(options.allowQuestion) ? options.allowQuestion : true;
+      this.allowResponse = _.isBoolean(options.allowResponse) ? options.allowResponse : true;
+
       this.urlRoot = this.urlRoot.replace(':model', 'company').replace(':id', this.model.id);
       //init dates
       _.each(this.model.data, (c) => {
@@ -63,6 +68,10 @@ module.exports = {
         helpers: helpers,
         owner_id: this.model.owner_id,
         company_id: this.model.id,
+        attr: {
+          allowQuestion: this.allowQuestion,
+          allowResponse: this.allowResponse,
+        }
       }));
 
       this.$stubs = this.$('.stubs');

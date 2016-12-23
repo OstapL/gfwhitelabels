@@ -1,22 +1,22 @@
-h2#ask.col-lg-12.dosis.text-uppercase.text-lg-center.text-xs-center.campaign-subheading ASK A QUESTION
-.col-lg-8.offset-lg-2.pt30.comment-form-div
-  form.comment-form.form-section
-    .col-lg-9
-      input(type="text" name="body" placeholder="Type your text here..." value='').w-100.text-body
-    .col-lg-3.p-r-0.text-xl-right.text-xs-center.p-t-sm-1
-      button(type="button").btn.btn-primary.text-uppercase.pull-lg-right.ask-question Submit
+if attr.allowQuestion
+  h2#ask.col-lg-12.dosis.text-uppercase.text-lg-center.text-xs-center.campaign-subheading ASK A QUESTION
+  .col-lg-8.offset-lg-2.pt30.comment-form-div
+    form.comment-form.form-section
+      .col-lg-9
+        input(type="text" name="body" placeholder="Type your text here..." value='').w-100.text-body
+      .col-lg-3.p-r-0.text-xl-right.text-xs-center.p-t-sm-1
+        button(type="button").btn.btn-primary.text-uppercase.pull-lg-right.ask-question Submit
 
+.col-lg-8.offset-lg-2.pt50
+  .comments
+    -
+      var options = _.extend({
+        owner_id: owner_id,
+        company_id: company_id,
+      }, attr);
 
-
-.col-lg-8.offset-lg-2.pt50.comments
-  -
-    var options = {
-      owner_id: owner_id,
-      company_id: company_id,
-    };
-
-  each c in comments
-    | !{ app.fields.comment(c, 0, options) }
+    each c in comments
+      | !{ app.fields.comment(c, 0, options) }
 
 .stubs.collapse
   .row

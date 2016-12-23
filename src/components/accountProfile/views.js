@@ -642,6 +642,7 @@ module.exports = {
           // model: commentsModel,
           model: data[0],
           fields: options[0].fields,
+          allowQuestion: false,
         });
         comments.render();
       });
