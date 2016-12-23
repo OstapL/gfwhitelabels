@@ -1,3 +1,5 @@
+- var formatHelper = require('helpers/formatHelper.js');
+
 - function ggetData(name) {
 -   if(name.indexOf('.') == -1) {
 -       return values[name];                                                           
@@ -52,6 +54,8 @@ mixin frField(name, type)
           - value = valuesList.labels[valuesList.choices.indexOf(parseFloat(+value))]
   if type == 'textarea'
     - value = value.replace(/\n/g, "<br />")
+  if type == 'money'
+    - value = formatHelper.formatPrice(value)
   a(
     href="#"
     data-name=name

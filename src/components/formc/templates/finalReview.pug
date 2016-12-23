@@ -9,8 +9,8 @@ include fields_final_review.pug
 - fields.formc.team_members.schema.title = {};
 - fields.formc.team_members.schema.title.validate = {};
 - fields.formc.team_members.schema.title.validate.OneOf = {};
-- fields.formc.team_members.schema.title.validate.OneOf.choices = [0, 1, 2, 3, 4, 5];
-- fields.formc.team_members.schema.title.validate.OneOf.labels = ['', 'CEO/President','Principal Financial Officer/Treasurer','Vice President','Secretary','Controller/Principal Accounting Officer',];
+- fields.formc.team_members.schema.title.validate.OneOf.choices = [1, 2, 3, 4, 5];
+- fields.formc.team_members.schema.title.validate.OneOf.labels = ['CEO/President','Principal Financial Officer/Treasurer','Vice President','Secretary','Controller/Principal Accounting Officer'];
 
 - fields.formc.outstanding_securities.schema.voting_right.validate.OneOf = {};
 - fields.formc.outstanding_securities.schema.voting_right.validate.OneOf.labels = ['No', 'Yes'];
@@ -91,14 +91,14 @@ section.formc-review
         p.text-xs-center.m-b-1
           +frField('company.website', 'text')
         
-        p.text-xs-center.font-weight-bold $
-          +frField('campaign.maximum_raise', 'text')
+        p.text-xs-center.font-weight-bold 
+          +frField('campaign.maximum_raise', 'money')
           |   MAXIMUM OFFERING
-        p.text-xs-center.font-weight-bold.m-b-3 $
-          +frField('campaign.minimum_raise', 'text')
+        p.text-xs-center.font-weight-bold.m-b-3 
+          +frField('campaign.minimum_raise', 'money')
           |   MINIMUM OFFERING
         if values.campaign.security_type == 0 
-          p.text-xs-center.font-weight-bold OFFERING PRICE: $
+          p.text-xs-center.font-weight-bold OFFERING PRICE: 
             +frField('campaign.price_per_share', 'text')
             |  per Share
           p.text-xs-center.font-weight-bold
@@ -108,8 +108,8 @@ section.formc-review
           p.text-xs-center.font-weight-bold 
             +frField('campaign.security_type', 'select') 
             |  Agreement Offered
-        p.text-xs-center.font-weight-bold $
-          +frField('campaign.minimum_increment', 'text')
+        p.text-xs-center.font-weight-bold 
+          +frField('campaign.minimum_increment', 'money')
           |  MINIMUM INVESTMENT
 
         p.text-uppercase.text-xs-center.m-t-3.m-b-2 
@@ -259,7 +259,7 @@ section.formc-review
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
               p.font-weight-bold Maximum amount of offering:
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
-              +frField('campaign.maximum_raise', 'text')
+              +frField('campaign.maximum_raise', 'money')
           .row
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
               p.font-weight-bold Deadline to reach target amount:
@@ -292,20 +292,20 @@ section.formc-review
             +frField('campaign.security_type', 'select')
             |  (the 
             u “Shares”)
-            |  at an offering price of $
+            |  at an offering price of 
             +frField('campaign.price_per_share', 'text')
-            |  per Share for a maximum aggregate offering price of $
-            +frField('campaign.maximum_raise', 'text').
+            |  per Share for a maximum aggregate offering price of 
+            +frField('campaign.maximum_raise', 'money').
           p.pb10.text-indent The Company has established a minimum offering of at least 
             b #{ Math.round(values.campaign.minimum_raise / values.campaign.price_per_share) }
-            |  Shares for a minimum aggregate offering price of $
-            +frField('campaign.minimum_raise', 'text')
+            |  Shares for a minimum aggregate offering price of 
+            +frField('campaign.minimum_raise', 'money')
               |  prior to #{ values.campaign.expiration_date }
             |  (the 
             u “Offering”
             |  ).  If the sum of the investment commitments does not equal or exceed this minimum target amount at the Offering deadline, no securities will be sold in the Offering, investment commitments will be cancelled and committed funds will be returned, less any fees incurred, without accrued interest. There can be no assurance that the minimum number of the Shares offered will be subscribed for and therefore these if no guarantee that this Offering will be completed.
-          p.text-indent The minimum subscription by an investor is a $
-            +frField('campaign.minimum_increment', 'text')
+          p.text-indent The minimum subscription by an investor is a 
+            +frField('campaign.minimum_increment', 'money')
             |  investment.  Each investor interested in participating in this Offering must register at 
             a(href="www.GrowthFountain.com").link-1 www.GrowthFountain.com.
             |  The website GrowthFountain.com (the 
@@ -330,16 +330,16 @@ section.formc-review
             u Notes
             | ”) minimum investment of 
             +frField('campaign.minimum_increment')
-            |   targeting a maximum aggregate offering price of $
-            +frField('campaign.maximum_raise')
-          p.pb10.text-indent The Company has established a minimum aggregate offering price of $ 
-            +frField('campaign.minimum_raise')
+            |   targeting a maximum aggregate offering price of 
+            +frField('campaign.maximum_raise', 'money')
+          p.pb10.text-indent The Company has established a minimum aggregate offering price of  
+            +frField('campaign.minimum_raise', 'money')
             |  prior to  #{ values.campaign.expiration_date }
             |  (the 
             u “Offering”
             |  ). If  the  sum  of  the  investment  commitments  does  not equal or exceed this minimum target amount at the Offering deadline, no securities will be sold in the Offering, investment commitments will be cancelled and committed funds will be returned, less  any  fees  incurred,  without  accrued  interest.  There can  be  no  assurance  that  Notes  in  an aggregate  amount  equal  to  the  minimum  target  amount  will  be  subscribed  for  and  therefore there is no guarantee that this Offering will be completed.
-          p.text-indent The minimum subscription by an investor is a $
-            +frField('campaign.minimum_increment')
+          p.text-indent The minimum subscription by an investor is a 
+            +frField('campaign.minimum_increment', 'money')
             |  investment in the debt securities offered.  Each investor interested in participating in this Offering must register at 
             a(href="www.GrowthFountain.com").link-1 www.GrowthFountain.com.
             |  The website GrowthFountain.com (the 
@@ -494,7 +494,6 @@ section.formc-review
             tbody
               each v,k in values.formc.team_members
                 if v.role[0] == 1
-                  - console.log(v, k)
                   if v.experiences
                     each v1,k1 in v.experiences
                       tr
@@ -595,7 +594,7 @@ section.formc-review
         h2.text-uppercase.text-xs-center.font-weight-bold#procedure_purchasing_securities.letter-spacing-normal.m-b-3 PROCEDURE FOR PURCHASING SECURITIES
         p.text-uppercase.m-t-0.m-b-0.pb10 
           u Minimum Commitment and Closing Date
-        p.text-indent To participate in this Offering, each investor must purchase securities in a minimum dollar amount equal to $
+        p.text-indent To participate in this Offering, each investor must purchase securities in a minimum dollar amount equal to 
           +frField('campaign.minimum_increment', 'text')
           - var deadline = new Date();
           - deadline.setDate(deadline.getDate() + values.campaign.length_days);
@@ -661,8 +660,8 @@ section.formc-review
           else
             | an escrow account.
           |  These fees are one-time fees and are not dependent on the success of the Offering. In total, the Intermediary will receive, directly or indirectly, a dollar amount equal to the sum of all the following: (a) a transaction fee equal to 
-          | #{ fees.trans_percent }% of the total amount of monies raised in the Offering for the purchase of securities offered by the Company, payable upon success, (b) a registration and processing fee equal to $
-          | #{ fees.registration_fee } payable upon registration, and (c) a participation fee equal to $
+          | #{ fees.trans_percent }% of the total amount of monies raised in the Offering for the purchase of securities offered by the Company, payable upon success, (b) a registration and processing fee equal to 
+          | #{ fees.registration_fee } payable upon registration, and (c) a participation fee equal to 
           | #{ fees.fees_to_investor } committed to by the investor.
           if values.campaign.security_type == 0
             |  Participation fees that are attributable to each investor are not included in any calculation of total Offering amount.
@@ -843,18 +842,42 @@ section.formc-review
                   br
                   |  Proceeds
             tbody
+              tr
+                td.border-t-n.p-l-r-20
+                  .pull-left.font-weight-bold Less: Offering Expenses
+                td(colspan=2).text-xs-center
+                  +frField('campaign.minimum_raise', 'money')
+                td(colspan=2).text-xs-center
+                  +frField('campaign.maximum_raise', 'money')
               for v,k in values.formc.less_offering_express
                 tr
                   td.text-xs-center
-                    +frField('formc.less_offering_express[' + k + '].title', 'text') #{ v.title }
+                    +frField('formc.less_offering_express[' + k + '].title', 'text')
                   td.text-xs-center
-                    +frField('formc.less_offering_express[' + k + '].min', 'text') #{ v.min }
+                    +frField('formc.less_offering_express[' + k + '].min', 'text')
                   td.text-xs-center
-                    | #{ (values.campaign.minimum_raise / parseFloat(v.min)).toFixed(2) }%
+                    | #{ ((parseFloat(v.min) * 100) / values.campaign.minimum_raise).toFixed(2) }%
                   td.text-xs-center
-                    +frField('formc.less_offering_express[' + k + '].max', 'text') #{ v.max }
+                    +frField('formc.less_offering_express[' + k + '].max', 'text')
                   td.text-xs-center
-                    | 7%
+                    | #{ ((parseFloat(v.max) * 100) / values.campaign.maximum_raise).toFixed(2) }%
+              tr
+                td.border-t-n.p-l-r-20
+                  .pull-left.font-weight-bold Use of Net Proceeds
+                td.border-b-t-none
+                td.border-b-t-none
+              for v,k in values.formc.use_of_net_proceeds
+                tr
+                  td.text-xs-center
+                    +frField('formc.use_of_net_proceeds[' + k + '].title', 'text')
+                  td.text-xs-center
+                    +frField('formc.use_of_net_proceeds[' + k + '].min', 'text')
+                  td.text-xs-center
+                    | #{ ((parseFloat(v.min) * 100) / values.campaign.minimum_raise).toFixed(2) }%
+                  td.text-xs-center
+                    +frField('formc.use_of_net_proceeds[' + k + '].max', 'text')
+                  td.text-xs-center
+                    | #{ ((parseFloat(v.max) * 100) / values.campaign.maximum_raise).toFixed(2) }%
 
       // page 18
       section.page-formc-review.m-t-1
@@ -886,67 +909,67 @@ section.formc-review
                 tr
                   td Total Assets
                   td.text-xs-center
-                    +frField('formc.sold_securities_data[0].total_assets', 'text')
+                    +frField('formc.sold_securities_data[0].total_assets', 'money')
                   td.text-xs-center
-                    +frField('formc.sold_securities_data[1].total_assets', 'text')
+                    +frField('formc.sold_securities_data[1].total_assets', 'money')
                 tr
                   td Cash & Cash Equivalents
                   td.text-xs-center
-                    +frField('formc.sold_securities_data[0].cash_and_equivalents', 'text')
+                    +frField('formc.sold_securities_data[0].cash_and_equivalents', 'money')
 
                   td.text-xs-center
-                    +frField('formc.sold_securities_data[1].cash_and_equivalents', 'text')
+                    +frField('formc.sold_securities_data[1].cash_and_equivalents', 'money')
                 tr
                   td Accounts Receivable
                   td.text-xs-center
-                    +frField('formc.sold_securities_data[0].account_receivable', 'text')
+                    +frField('formc.sold_securities_data[0].account_receivable', 'money')
                   td.text-xs-center
-                    +frField('formc.sold_securities_data[1].account_receivable', 'text')
+                    +frField('formc.sold_securities_data[1].account_receivable', 'money')
                 tr
                   td Short-term Debt
                   td.text-xs-center
-                    +frField('formc.sold_securities_data[0].short_term_debt', 'text')
+                    +frField('formc.sold_securities_data[0].short_term_debt', 'money')
                   td.text-xs-center
-                    +frField('formc.sold_securities_data[1].short_term_debt', 'text')
+                    +frField('formc.sold_securities_data[1].short_term_debt', 'money')
                 tr
                   td Long-term Debt
                   td.text-xs-center
-                    +frField('formc.sold_securities_data[0].long_term_debt', 'text')
+                    +frField('formc.sold_securities_data[0].long_term_debt', 'money')
                   td.text-xs-center
-                    +frField('formc.sold_securities_data[1].long_term_debt', 'text')
+                    +frField('formc.sold_securities_data[1].long_term_debt', 'money')
                 tr
                   td Revenues/Sales
                   td.text-xs-center
-                    +frField('formc.sold_securities_data[0].revenues_sales', 'text')
+                    +frField('formc.sold_securities_data[0].revenues_sales', 'money')
                   td.text-xs-center
-                    +frField('formc.sold_securities_data[1].revenues_sales', 'text')
+                    +frField('formc.sold_securities_data[1].revenues_sales', 'money')
                 tr
                   td Cost of Goods Sold
                   td.text-xs-center
-                    +frField('formc.sold_securities_data[0].cost_of_goods_sold', 'text')
+                    +frField('formc.sold_securities_data[0].cost_of_goods_sold', 'money')
                   td.text-xs-center
-                    +frField('formc.sold_securities_data[1].cost_of_goods_sold', 'text')
+                    +frField('formc.sold_securities_data[1].cost_of_goods_sold', 'money')
 
                 if values.campaign.maximum_raise <= 100000
                   tr
                     td Total income
                     td.text-xs-center
-                      +frField('formc.sold_securities_data[0].total_income', 'text')
+                      +frField('formc.sold_securities_data[0].total_income', 'money')
                     td.text-xs-center
-                      +frField('formc.sold_securities_data[1].total_income', 'text')
+                      +frField('formc.sold_securities_data[1].total_income', 'money')
                   tr
                     td Taxes Paid
                     td.text-xs-center
-                      +frField('formc.sold_securities_data[0].total_tax', 'text')
+                      +frField('formc.sold_securities_data[0].total_tax', 'money')
                     td.text-xs-center
-                      +frField('formc.sold_securities_data[1].total_tax', 'text')
+                      +frField('formc.sold_securities_data[1].total_tax', 'money')
 
                   tr
                     td Net Income
                     td.text-xs-center
-                      +frField('formc.sold_securities_data[0].taxable_income', 'text')
+                      +frField('formc.sold_securities_data[0].taxable_income', 'money')
                     td.text-xs-center
-                      +frField('formc.sold_securities_data[1].taxable_income', 'text')
+                      +frField('formc.sold_securities_data[1].taxable_income', 'money')
 
       // page 19
       section.page-formc-review.m-t-1
@@ -987,6 +1010,7 @@ section.formc-review
                       +frField('formc.business_loans_or_debt[' + k + '].outstanding_amount', 'text')
                     td.text-xs-center
                       +frField('formc.business_loans_or_debt[' + k + '].interest_rate', 'text')
+                      | %
                     td.text-xs-center
                       +frField('formc.business_loans_or_debt[' + k + '].maturity_date', 'text')
                     td.text-xs-center
@@ -1309,7 +1333,7 @@ section.formc-review
         p.pb10.text-indent The issuer may terminate its reporting obligations in the future in accordance with Rule 202(b) of Regulation Crowdfunding (§ 227.202(b)). The issuer must continue to comply with the ongoing reporting requirements until one of the following conditions is met:
         ul
           li.pb10 the issuer is required to file reports under Section 13(a) or Section 15(d) of the Exchange Act;
-          li.pb10 the issuer has filed at least one annual report pursuant to Regulation Crowdfunding and has fewer than 300 holders of record and has total assets that do not exceed $10,000,000;
+          li.pb10 the issuer has filed at least one annual report pursuant to Regulation Crowdfunding and has fewer than 300 holders of record and has total assets that do not exceed 10,000,000;
           li.pb10 the issuer has filed at least three annual reports pursuant to Regulation Crowdfunding;
           li the issuer or another party repurchases all of the securities issued in reliance on Section 4(a)(6) of the Securities Act, including any payment in full of debt securities or any complete redemption of redeemable securities; or the issuer liquidates or dissolves its business in accordance with state law.
         p.text-uppercase.m-t-3.m-b-0.pb10 
@@ -1401,11 +1425,11 @@ section.formc-review
                         if v1
                           tr
                             td
-                              +frField('formc.team_members[' + k + '].experiences[' + k1 + '].position', 'text')
+                              +frField('formc.team_members[' + k + '].positions[' + k1 + '].position', 'text')
                             td
-                              +frField('formc.team_members[' + k + '].experiences[' + k1 + '].start_date_of_service', 'text')
+                              +frField('formc.team_members[' + k + '].positions[' + k1 + '].start_date_of_service', 'text')
                             td
-                              +frField('formc.team_members[' + k + '].experiences[' + k1 + '].end_date_of_service', 'text')
+                              +frField('formc.team_members[' + k + '].positions[' + k1 + '].end_date_of_service', 'text')
         p.pb10.text-indent Employment information from previous employers over the last three years for each of the Company’s directors is as follows:
         p.pb10
           each v,k in values.formc.team_members
@@ -1449,11 +1473,11 @@ section.formc-review
                         if v1
                           tr
                             td
-                              +frField('formc.team_members[' + k + '].experiences[' + k1 + '].position', 'text')
+                              +frField('formc.team_members[' + k + '].positions[' + k1 + '].position', 'text')
                             td
-                              +frField('formc.team_members[' + k + '].experiences[' + k1 + '].start_date_of_service', 'text')
+                              +frField('formc.team_members[' + k + '].positions[' + k1 + '].start_date_of_service', 'text')
                             td
-                              +frField('formc.team_members[' + k + '].experiences[' + k1 + '].end_date_of_service', 'text')
+                              +frField('formc.team_members[' + k + '].positions[' + k1 + '].end_date_of_service', 'text')
       if values.campaign.security_type == 1 
         section.page-formc-review.m-t-1
           .top-intro
@@ -1484,7 +1508,7 @@ section.formc-review
               b Repayment Promise.
               |  For value received, the Company hereby promises to pay to the Investor in lawful money of the United States of America and in immediately available funds, the  Total Repayment  Amount  (as  defined  below)  in  the  manner  set  forth  in  this  Agreement.Investor   hereby   agrees  to   accept  the   Total  Repayment  Amount as   consideration   for  the Investment Amount (as defined below) consistent with the terms of this Agreement.   The parties agree  that  the  term
               b  “Investment  Amount” 
-              | shall  mean  that  dollar  amount  committed  to  the Company  by the  Investor in the Offering  equal to $[INVESTMENT].   The parties  further agree that the term 
+              | shall  mean  that  dollar  amount  committed  to  the Company  by the  Investor in the Offering  equal to [INVESTMENT].   The parties  further agree that the term 
               b  “Total Repayment Amount” 
               | shall mean that dollar amount that is equal to a multiple of  two  times  (2x)  the  amount  of  the  Investment  Amount.    Investor  acknowledges  that  Investor may have paid certain fees to participate in the Offering and that such fees are not included in any calculation of the Investment Amount or the Total Repayment amount.
             li.pb10
@@ -1495,7 +1519,7 @@ section.formc-review
               b “Available  Revenue  Pool” 
               | shall  mean that dollar  amount  equal to  five  percent  (5%)  of  the gross revenue  of  the  Company  in  such  Fiscal  Year  of  determination,  including all  of  the  Company’s cash  receipts  from  all  sales  of  any  kind  without  any  deduction  or  offset  of  any  kind.    For  any Fiscal Year of determination, the term “Revenue Share Payment” shall mean that dollar amount that  is  equal  to  the  product  of  (a)  the  Available  Revenue  Pool  calculated  for  such  Fiscal  Year multiplied  by  (b)  the  Proportionate  Share  (as  defined  below).   The  parties  agree  that  the  term 
               b “Proportionate  Share” 
-              | shall  mean a fraction, the  numerator  of  which is the  Investment Amount, and  the  denominator  of  which  is  the  total  dollar  amount  committed  to  the  Company  in  the Offering by all participants in the Offering equal to $[TOTAL RAISE]. 
+              | shall  mean a fraction, the  numerator  of  which is the  Investment Amount, and  the  denominator  of  which  is  the  total  dollar  amount  committed  to  the  Company  in  the Offering by all participants in the Offering equal to [TOTAL RAISE]. 
         section.page-formc-review.m-t-1
           .top-intro
             p.small.text-xs-left.font-weight-bold FORM C Offering Material for
@@ -1505,7 +1529,7 @@ section.formc-review
           ol(start="4")
             li.pb10
               b Annual Payments from Available Revenue Pool.
-              |  Except as otherwise provided in this Agreement and only until the Total Repayment Amount has been paid, for any Fiscal Year  of  determination,  if  the  Available  Revenue  Pool  exceeds  five  hundred  dollars  ($500)  in  such Fiscal Year, then the Company shall pay the Revenue Share Payment to the Investor on or prior to the  date  that  is  sixty  days  after  the  end  of  such  Fiscal  Year.   The  Company  shall  have  no obligation  to  make  Revenue  Share  Payments  under  this  Agreement  in  the  Company’s  first  full Fiscal Year occurring immediately after the Issuance Date, it being understood that the Company shall have a minimum of twelve (12) months after the Issuance Date in which no Revenue Share Payment is due.  Consequently, unless the Company exercises the forbearance right described in Section  5  of  this  Agreement,  the  Company  will  begin  making  Revenue  Share  Payments  to  the Investor  within  sixty  days  after  the  conclusion  of  the  Company’s  second  full  Fiscal  Year occurring immediately after the Issuance Date.
+              |  Except as otherwise provided in this Agreement and only until the Total Repayment Amount has been paid, for any Fiscal Year  of  determination,  if  the  Available  Revenue  Pool  exceeds  five  hundred  dollars  (500)  in  such Fiscal Year, then the Company shall pay the Revenue Share Payment to the Investor on or prior to the  date  that  is  sixty  days  after  the  end  of  such  Fiscal  Year.   The  Company  shall  have  no obligation  to  make  Revenue  Share  Payments  under  this  Agreement  in  the  Company’s  first  full Fiscal Year occurring immediately after the Issuance Date, it being understood that the Company shall have a minimum of twelve (12) months after the Issuance Date in which no Revenue Share Payment is due.  Consequently, unless the Company exercises the forbearance right described in Section  5  of  this  Agreement,  the  Company  will  begin  making  Revenue  Share  Payments  to  the Investor  within  sixty  days  after  the  conclusion  of  the  Company’s  second  full  Fiscal  Year occurring immediately after the Issuance Date.
             li.pb10
               b One-Time Payment Forbearance.
               |  In any single Fiscal Year and not in any other Fiscal Year, the Company  may  in its sole discretion  forbear the annual payment  of the Revenue Share  Payment  due  for  such  Fiscal  Year  upon  notice  to  Investor,  it  being  understood  that  such forbearance shall allow the Company to refrain from making the Revenue Share Payment for such Fiscal Year that the Company would otherwise be required to pay.  After the Company exercises the  forbearance  right  contained  in  this  Agreement,  it  may  never  use  such  right  again.    For  the avoidance of doubt, the Company may use the forbearance right contained in this Agreement only once,  and  it  in  no  way  relieves  the  Company  from  the  obligation  to  repay  the  Total  Repayment Amount.
@@ -1540,7 +1564,7 @@ section.formc-review
               |  The  Investor  is  not  entitled,  as  a  holder  of  this instrument, to vote or receive dividends or be deemed the holder of capital stock of the Company for  any  purpose,  nor  will  anything  contained  herein  be  construed  to  confer  on  the  Investor,  as such, any  of the  rights  of  a stockholder  of the  Company  or any  right to  vote  for the  election  of directors  or  upon  any  matter  submitted  to  stockholders  at  any  meeting  thereof,  or  to  give  or withhold  consent  to  any  corporate  action  or  to  receive  notice  of  meetings,  or  to  receive subscription rights or otherwise.
             li.pb10
               b Availability of Financial Information.
-              |  The Company agrees to timely file all tax returns  (federal,  state  and  local)  required  to  be  filed  by  it.   For  so  long  as  the  Total  Repayment Amount  remains  outstanding,  the  Company  will  make  available  to  Investor,  via  the  Company’s website or otherwise, a copy of the Company’s federal tax returns within thirty days of filing such return.  The Company warrants that all such tax returns made available will be true and correct in all  material  respects.The  Company  may,  at  its  sole  discretion,  substitute  audited  financial statements  or  unaudited  financial  statements  signed  by  an  independent  accountant for  the  tax returns  required in this Agreement, in  each  case  prepared in accordance with generally  accepted accounting principles applied  on  a  consistent basis throughout the periods indicated and in  each case certified by an officer of the Company.  In connection with the end of each Fiscal Year, the Company shall send to the Investor and each Holder a copy  of the financial statements prepared for such Fiscal year within sixty days of the end of such Fiscal Year.  The Company is obligated to file, and will file, an annual report electronically with the SEC annually and post the report on its  website  at  [WEBSITE].  The  Company  will  continue  to  comply  with  the  ongoing  reporting requirements  of the Act  until: (1) the Company is required to  file  reports under  Section 13(a)  or Section 15(d) of the Securities and  Exchange Act; (2) the Company has filed at least one annual report  pursuant  to  Regulation  Crowdfunding  and  has  fewer  than  300  holders  of  record  and  has total  assets  that  do  not  exceed  $10,000,000;  (3)  the  Company  has  filed  at  least  three  annual reports pursuant to  Regulation Crowdfunding;  (4) the Company  or another party  repurchases all of  the  securities  issued  in  reliance  on  the  4(a)(6)  exemption  of  the  Act;  or  (5)  the  Company liquidates or dissolves its business in accordance with state law.
+              |  The Company agrees to timely file all tax returns  (federal,  state  and  local)  required  to  be  filed  by  it.   For  so  long  as  the  Total  Repayment Amount  remains  outstanding,  the  Company  will  make  available  to  Investor,  via  the  Company’s website or otherwise, a copy of the Company’s federal tax returns within thirty days of filing such return.  The Company warrants that all such tax returns made available will be true and correct in all  material  respects.The  Company  may,  at  its  sole  discretion,  substitute  audited  financial statements  or  unaudited  financial  statements  signed  by  an  independent  accountant for  the  tax returns  required in this Agreement, in  each  case  prepared in accordance with generally  accepted accounting principles applied  on  a  consistent basis throughout the periods indicated and in  each case certified by an officer of the Company.  In connection with the end of each Fiscal Year, the Company shall send to the Investor and each Holder a copy  of the financial statements prepared for such Fiscal year within sixty days of the end of such Fiscal Year.  The Company is obligated to file, and will file, an annual report electronically with the SEC annually and post the report on its  website  at  [WEBSITE].  The  Company  will  continue  to  comply  with  the  ongoing  reporting requirements  of the Act  until: (1) the Company is required to  file  reports under  Section 13(a)  or Section 15(d) of the Securities and  Exchange Act; (2) the Company has filed at least one annual report  pursuant  to  Regulation  Crowdfunding  and  has  fewer  than  300  holders  of  record  and  has total  assets  that  do  not  exceed  10,000,000;  (3)  the  Company  has  filed  at  least  three  annual reports pursuant to  Regulation Crowdfunding;  (4) the Company  or another party  repurchases all of  the  securities  issued  in  reliance  on  the  4(a)(6)  exemption  of  the  Act;  or  (5)  the  Company liquidates or dissolves its business in accordance with state law.
         section.page-formc-review.m-t-1
           .top-intro
             p.small.text-xs-left.font-weight-bold FORM C Offering Material for

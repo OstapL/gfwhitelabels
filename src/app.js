@@ -120,9 +120,38 @@ let app = {
       return values[keyString];
     } else {
       try {
-        return keyString.split('.').reduce(function(o,i) {
-          if(i.indexOf('[') != -1) { 
-            i = i.split('['); k = i[0]; i = i[1].replace(']', ''); return o[k][i];
+        return keyString.split('.').reduce(function(o, i, currentIndex, array) {
+          if(i.indexOf('[') != -1) {
+            i = i.split('[');
+            let k = i[0];
+            i = i[1].replace(']', '');
+            return o[k][i];
+          }
+          return o[i];
+        }, obj);
+      } catch(e) { 
+        console.debug('no name ' + keyString); return ''; 
+      }
+    }
+  },
+
+  setValByKey(obj, keyString, val) {
+    if(keyString.indexOf('.') == -1) {
+      return values[keyString];
+    } else {
+      try {
+        return keyString.split('.').reduce(function(o, i, currentIndex, arr) {
+          if(i.indexOf('[') != -1) {
+            i = i.split('[');
+            let k = i[0];
+            i = i[1].replace(']', '');
+            if(currentIndex == arr.length - 1) {
+              o[k][i] = val;
+            }
+            return o[k][i];
+          }
+          if(currentIndex == arr.length - 1) {
+            o[i] = val;
           }
           return o[i];
         }, obj);
@@ -135,6 +164,7 @@ let app = {
   valByKeyReplaceArray(obj, keyString) {
     if(keyString.indexOf('[') !== -1) {
       keyString = keyString.replace(/\[\d+\]/, '.schema');
+      keyString = keyString.replace(/\[\d+\]/g, '');
     }
     return app.valByKey(obj, keyString);
   },

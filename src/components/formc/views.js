@@ -1854,10 +1854,19 @@ module.exports = {
 
       let target = event.target;
       let element = '';
-      if(target.dataset.type == 'text') {
+      if(target.dataset.type == 'text' || target.dataset.type == 'money') {
         element = document.createElement('input');
         element.name = target.dataset.name;
-        element.value = target.innerHTML;
+
+        if(target.dataset.type == 'money') {
+          //element.value = formatHelper.unformatPrice(target.innerHTML);
+          element.value = target.innerHTML;
+        } else {
+          element.value = target.innerHTML;
+        }
+
+        element.type = target.dataset.type;
+        element.dataset.type = target.dataset.type;
         element.onblur = (e) => this.update(e);
         target.parentElement.insertBefore(element, target);
       } else if(target.dataset.type == 'select') {
@@ -1865,12 +1874,7 @@ module.exports = {
         element.name = target.dataset.name;
         element.onblur = (e) => this.update(e);
 
-        let fName = target.dataset.name;
-        if(fName.indexOf('[') !== -1) {
-           fName = fName.replace(/\[\d+\]/, '.schema')
-        }
-
-        let v = app.valByKeyReplaceArray(this.fields, fName).validate.OneOf;
+        let v = app.valByKeyReplaceArray(this.fields, target.dataset.name).validate.OneOf;
         v.choices.forEach((el, i) => {
           let e = document.createElement('option');
           e.innerHTML = v.labels[i];
@@ -1895,7 +1899,10 @@ module.exports = {
     },
 
     update(e) {
-      const val = e.target.value;
+      let val = e.target.value;
+      if(e.target.dataset.type == 'money') {
+        val = formatHelper.unformatPrice(val);
+      }
       const name = e.target.name;
       const reloadRequiredFields = [
         'corporate_structure',
@@ -1905,6 +1912,7 @@ module.exports = {
         'price_per_share',
         'length_days',
       ];
+
 
       e.target.setAttribute(
         'id', e.target.name.replace(/\./g, '__').replace(/\[/g ,'_').replace(/\]/g, '_')
@@ -1933,8 +1941,8 @@ module.exports = {
           let names = fieldName.split('.');
           fieldName = names[0].split('[')[0];
           let index = names[0].split('[')[1].replace(']', '');
-          app.user.formc[fieldName][index][names[1]] = val;
-          data[fieldName] = app.user.formc[fieldName];
+          app.setValByKey(app.user, name, val);
+
           if(fieldName == 'team_members') {
             url = formcServer + '/' + this.model.formc.id + '/team-members/' +
               roles[app.user.formc.team_members[index].role[0]].toLocaleLowerCase() + '/' + 
@@ -1948,6 +1956,8 @@ module.exports = {
             url = formcServer + '/' + this.model.formc.id + '/risk-factors-' + fieldName.split('_')[0] + '/' + index;
             app.user.formc[fieldName][index]
             data = app.user.formc[fieldName][index];
+          } else {
+            data[names[0].replace(/\[\d+\]/, '')] = app.user.formc[names[0].replace(/\[\d+\]/, '')];
           }
         } else {
           data[fieldName] = val;
@@ -1984,12 +1994,16 @@ module.exports = {
             realVal = realVal.replace(/\n/g, '<br>');
           } else {
             href.dataset.type = 'text';
+            if(e.target.dataset.type == 'money') {
+              realVal = formatHelper.formatPrice(realVal);
+            }
           }
 
           href.innerHTML = realVal;
           if(e.target.tagName == 'SELECT') {
             href.dataset.value = val;
           } 
+
           href.className = 'createField show-input link-1';
 
           document.querySelectorAll('[data-name="' + e.target.name + '"]').forEach((sameElement) => {
