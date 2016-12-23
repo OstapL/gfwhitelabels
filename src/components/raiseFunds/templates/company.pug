@@ -65,9 +65,6 @@ section.create-company.container.m-b-85
             label.col-xl-3.col-lg-12.text-xl-right.textlg-left.m-b-0.p-t-0.m-b-lg-1 Date of Organization
               span.color-red *
             .col-xl-4.col-lg-6.p-r-0
-              //+fieldDateMonth("founding_date", _.extend({
-                class: 'col-xl-4 col-lg-4 col-xs-4 p-l-0  m-d-p-r-5',
-                }, fields.dob))
               - 
                 pug_html += app.fields.dateMonth('founding_date', _.extend({
                 'empty': { '': 'Choose' },
@@ -78,13 +75,6 @@ section.create-company.container.m-b-85
                 'empty': { '': 'Choose' },
                 'value': values.founding_date,
                 }, fields.founding_date));
-              //+fieldDateDay("founding_date", _.extend({
-                class: 'col-xl-4 col-lg-4 col-xs-4 p-r-0 m-d-p-l-5',
-                }, fields.founding_date))
-              //+fieldDateYear("founding_date", _.extend({
-                class: 'col-xl-4 col-lg-4 col-xs-4 p-r-0 p-r-lg-1 m-d-p-l-10',
-                placeholder: 'YYYY',
-               }, fields.founding_date))
               - 
                 pug_html += app.fields.dateYear('founding_date', _.extend({
                 'value': values.founding_date,

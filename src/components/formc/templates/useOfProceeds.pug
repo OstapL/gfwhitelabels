@@ -58,14 +58,10 @@ section.formc.use_of_proceeds.create-company-media.container
 
       .col-lg-12.create-perks.doc
         .img-ppt
-          +fileDropzone("business_plan_file_id", _.extend({
-            class1: 'col-xl-3 col-lg-12 text-xl-right text-lg-left',
-            class2: 'col-xl-9 col-lg-12 p-l-1 p-r-1',
-            text: 'Drop your PDF or DOC here or click to upload',
-            icon: 'file',
+          -
+            pug_html += app.fields.fileDropzone('business_plan_file_id',{
             data: values.business_plan_data[0] || [],
-            default: '/img/default/file.png',
-          }, fields.business_plan_file_id))
+            }, fields.business_plan_file_id);
       
       .col-lg-12.text-lg-right.m-t-2.text-xs-center.text-sm-center
         //- a(href="#").btn.btn-primary.text-uppercase save

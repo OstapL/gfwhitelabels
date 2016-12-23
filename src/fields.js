@@ -135,7 +135,7 @@ let exports = {
     attr.name = name;
     this.prepareField(name, attr);
     attr.class1 = attr.class1 || 'col-xl-3 col-lg-12 text-lg-left text-xl-right';
-    attr.class2 = attr.class2 || 'col-xl-9 col-lg-12';
+    attr.class2 = attr.class2 || 'col-xl-9 col-lg-12 big-textarea';
     const template = require('./templates/textareaLabel.pug');
     return template(attr);
   },
@@ -213,7 +213,7 @@ let exports = {
       attr: attr,
     });
   },
-
+  // уже не нужен
   fieldTextLabel(name, attr) {
     this.prepareField(name, attr);
     attr.type = attr.type || 'text';
@@ -241,7 +241,7 @@ let exports = {
     });
   },
 
-  fileFolderDropzone(name, attr) {
+  fileFolderDropzone(name, attr, schema) {
     /* Requeired:
      * data: values.fiscal_recent_group_data,
      * value: values.fiscal_recent_group_id,
@@ -252,7 +252,7 @@ let exports = {
      * classMain, class1, class2
      * required, id, icon, type, help_text, default
      */
-
+    _.extend(attr, schema)
     attr.name = name;
     this.prepareField(name, attr);
 
@@ -264,6 +264,44 @@ let exports = {
 
     if(attr.hasOwnProperty('class2') == false) { 
       attr.class2 = 'col-xl-9 col-lg-12 p-l-1 p-r-1';
+    }
+
+    if(attr.hasOwnProperty('icon') == false) { 
+      attr.icons = 'file';
+    }
+
+    if(attr.hasOwnProperty('text') == false) { 
+      attr.text = 'Drop your PDF or DOC here or click to upload';
+    }
+
+    return template(attr);
+  },
+  fileDropzone(name, attr, schema) {
+    /* Requeired:
+     * data: values.fiscal_recent_group_data,
+     * value: values.fiscal_recent_group_id,
+     * label: "Upload financials for most recent fiscal year",
+     *
+     * Options:
+     * schema: fields.fiscal_recent_group_id,
+     * classMain, class1, class2
+     * required, id, icon, type, help_text, default
+     */
+    _.extend(attr, schema)
+    attr.name = name;
+    this.prepareField(name, attr);
+
+    const template = require('./templates/fileDropzone.pug');
+
+    if(attr.hasOwnProperty('class1') == false) { 
+      attr.class1 = 'col-xl-3 col-lg-12 text-xl-right text-lg-left';
+    }
+
+    if(attr.hasOwnProperty('class2') == false) { 
+      attr.class2 = 'col-xl-9 col-lg-12 p-l-1 p-r-1';
+    }
+    if(attr.hasOwnProperty('default') == false) { 
+      attr.default = '/img/default/file.png';
     }
 
     if(attr.hasOwnProperty('icon') == false) { 
