@@ -3,7 +3,7 @@ const helpers = {
 };
 
 const yesNoHelper = require('helpers/yesNoHelper.js');
-// const validation = require('componenets/validation/validation.js');
+// const validation = require('components/validation/validation.js');
 
 function initDates(c) {
   c.created_date = new Date(c.created_date);
@@ -91,7 +91,7 @@ module.exports = {
     },
 
     keyupHandler(e) {
-      if (this.isRelatedToCompany)
+      if (this.model.id == app.user.get('role').company_id)
         return;
 
       let $target = $(e.target);
@@ -192,6 +192,7 @@ module.exports = {
         } else {
           this.model.data.push(newCommentModel);
           $form.find('.text-body').val('');
+          this.keyupHandler(e);//remove related role checkbox
         }
 
         let newCommentHtml = app.fields.comment(newCommentModel, level, {
@@ -225,11 +226,18 @@ module.exports = {
     showReplyTo(e) {
       e.preventDefault();
 
-      let $newCommentBlock = this.$stubs.find('.edit-comment').clone();
+      let $commentBlock = $(e.target).closest('.comment');
+
+      let $newCommentBlock = $commentBlock.find('.comment-form');
+      if ($newCommentBlock && $newCommentBlock.length) {
+        return false;
+      }
+
+      $newCommentBlock = this.$stubs.find('.edit-comment').clone();
 
       $newCommentBlock.removeClass('edit-comment collapse');
 
-      $newCommentBlock.appendTo($(e.target).closest('.comment'));
+      $newCommentBlock.appendTo($commentBlock);
 
       $newCommentBlock.find('.text-body').focus();
 
