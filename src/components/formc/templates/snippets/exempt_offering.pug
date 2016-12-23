@@ -8,27 +8,22 @@ mixin row(value, index)
         a(href="#" data-section=name data-index=index).delete-sectionnew
           i.fa.fa-times
 
-      +fieldNestedTextLabel(name, "amount_sold", value, index, {class1:'col-xl-3 col-lg-12 text-lg-left text-xl-right', class2: 'col-xl-9 col-lg-12'})
-      +fieldNestedTextLabel(name, "exemption_relied_upon", value, index, {class1:'col-xl-3 col-lg-12 text-lg-left text-xl-right m-b-0 p-t-0 m-b-lg-1', class2: 'col-xl-9 col-lg-12'})
+      | !{app.fields.nestedTextLabel(name, 'amount_sold', value, index, attr.schema.amount_sold)}
+
+      | !{app.fields.nestedTextLabel(name, 'exemption_relied_upon', value, index, {class1:'col-xl-3 col-lg-12 text-lg-left text-xl-right m-b-0 p-t-0 m-b-lg-1',}, attr.schema.exemption_relied_upon)}
       .row.form-group
         .col-date(id="exempt_offering__" + index + "__offering_date")
           label.col-xl-3.col-lg-12.text-xl-right.textlg-left Maturity Date
             span.color-red *
           .col-xl-4.col-lg-6.p-r-0
-            +fieldNestedDateMonth(name, "offering_date", value, index, {
-              placeholder: 'MM', 
-              class: 'col-xl-4 col-lg-4 col-xs-4 p-l-0 m-d-p-r-5',
-            })
-            +fieldNestedDateDay(name, "offering_date", value, index, {
-              placeholder: 'DD', 
-              class: 'col-xl-4 col-lg-4 col-xs-4 p-r-0 m-d-p-l-5',
-            })
-            +fieldNestedDateYear(name, "offering_date", value, index, {
-              placeholder: 'YYYY', 
-              class: 'col-xl-4 col-lg-4 col-xs-4 p-r-0 m-d-p-l-10 p-r-lg-1',
-            })
-      +fieldNestedTextLabel(name, "securities_offered", value, index, {class1:'col-xl-3 col-lg-12 text-lg-left text-xl-right', class2: 'col-xl-9 col-lg-12'})
-      +fieldNestedTextLabel(name, "use_of_proceeds", value, index, {class1:'col-xl-3 col-lg-12 text-lg-left text-xl-right', class2: 'col-xl-9 col-lg-12'})
+            | !{app.fields.nestedDateMonth(name, 'offering_date', value, index, attr.schema.offering_date)}
+
+            | !{app.fields.nestedDateDay(name, 'offering_date', value, index, attr.schema.offering_date)}
+
+            | !{app.fields.nestedDateYear(name, 'offering_date', value, index, {placeholder: 'YYYY',}, attr.schema.offering_date)}
+
+      | !{app.fields.nestedTextLabel(name, 'securities_offered', value, index, attr.schema.securities_offered)}
+      | !{app.fields.nestedTextLabel(name, 'use_of_proceeds', value, index, attr.schema.use_of_proceeds)}
 
 mixin run()
 
