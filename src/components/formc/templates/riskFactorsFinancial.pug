@@ -48,19 +48,18 @@ section.formc-team-members-director.container.m-b-85
         li.pb10 Are there financing sources that you are dependent upon which represent risk?
       .pb10 In the text box below, please write in full sentences consistent with the sample language provided above.
     .col-lg-12
-      form(data-method="PATCH").add-risk-form.clearfix
-        +fieldTextLabel("title", {
-          class1: 'col-lg-3 col-md-12 text-md-left text-lg-right',
-          class2: 'col-lg-9 col-md-12',
-          placeholder: 'Title for Risk',
-          label: 'Title for Risk',
-          })
-        +fieldTextareaLabel("risk", {
-          class1: 'col-lg-3 col-md-12 text-md-left text-lg-right',
+      form(data-method="PATCH").form-section.add-risk-form.clearfix
+        - 
+          pug_html += app.fields.textLabel('title', {
+          schema: fields.title, 
+          value: values.title,})
+        - 
+          pug_html += app.fields.textareaLabel('risk', {
+          schema: fields.risk,
           class2: 'col-lg-9 col-md-12 big-textarea',
-          placeholder: 'Describe Your Risk',
-          label: 'Describe Your Risk'
-          })
+          placeholder: 'Describe Your Risk', 
+          value: values.risk,})
+          
         button(data-method="PATCH" data-concat="false").btn.btn-secondary.btn-sm.text-uppercase.pull-lg-right.m-b-3.add-risk save and Add this Risk
 
       .form-section
