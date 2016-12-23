@@ -1,8 +1,8 @@
 'use strict';
 
+const companyFees = require('consts/companyFees.json');
 const formcHelpers = require('./helpers.js');
 const formatHelper = require('../../helpers/formatHelper');
-const formatNumber = require('../../helpers/formatNumber');
 const roles = ['Shareholder', 'Director', 'Officer'];
 
 const menuHelper = require('helpers/menuHelper.js');
@@ -162,10 +162,10 @@ module.exports = {
       const formData = this.$el.find('form').serializeJSON();
       const issuer_legal_name = app.user.get('first_name') + ' ' + app.user.get('last_name');
       return {
-        trans_percent: 6,
-        nonrefundable_fees: 50,
-        registration_fee: 500,
-        amendment_fee: 200,
+        trans_percent: companyFees.trans_percent,
+        registration_fee: companyFees.registration_fee,
+        nonrefundable_fees: companyFees.nonrefundable_fees,
+        amendment_fee: companyFees.amendment_fee,
         commencement_date_x: this.getCurrentDate(),
         zip_code: app.user.company.zip_code,
         address_1: app.user.company.address_1,

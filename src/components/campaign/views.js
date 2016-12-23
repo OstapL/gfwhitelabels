@@ -1,6 +1,7 @@
 const formatHelper = require('helpers/formatHelper');
-const formatNumber = require('helpers/formatNumber');
 const textHelper = require('helpers/textHelper');
+const companyFees = require('consts/companyFees.json');
+const usaStates = require('helpers/usa-states.js');
 
 let countries = {};
 _.each(require('helpers/countries.json'), (c) => { countries[c.code] = c.name; });
@@ -852,11 +853,11 @@ module.exports = {
       const aggregate_inclusive_purchase = formData.total_amount.replace(/\D/g, '');
 
       return {
-        fees_to_investor: 10,
-        trans_percent: 6,
-        // listing_fee: '$500',
-        registration_fee: 500,
+        fees_to_investor: companyFees.fees_to_investor,
+        trans_percent: companyFees.trans_percent,
+        registration_fee: companyFees.registration_fee,
         commitment_date_x: this.getCurrentDate(),
+        // listing_fee: '$500',
 
         // campaign
         issuer_legal_name: this.model.name,
@@ -865,11 +866,10 @@ module.exports = {
         zip_code: this.model.zip_code,
         address_1: this.model.address_1,
         address_2: this.model.address_2,
-        jurisdiction_of_organization: this.model.founding_state, 
-        jurisdiction_of_incorporation: this.model.founding_state, 
-        maximum_raise: formatNumber( this.model.campaign.maximum_raise ),
-        minimum_raise: formatNumber( this.model.campaign.minimum_raise ),
-        price_per_share: formatNumber( this.model.campaign.price_per_share ),
+        jurisdiction_of_organization: usaStates.getFullState(this.model.founding_state),  
+        maximum_raise: formatHelper.formatNumber( this.model.campaign.maximum_raise ),
+        minimum_raise: formatHelper.formatNumber( this.model.campaign.minimum_raise ),
+        price_per_share: formatHelper.formatNumber( this.model.campaign.price_per_share ),
         
         // owner of campaign
         issuer_email: this.model.owner.email,
@@ -878,8 +878,8 @@ module.exports = {
 
         // investor
         investor_legal_name: investor_legal_name,
-        aggregate_inclusive_purchase: formatNumber( aggregate_inclusive_purchase ),
-        investment_amount: formatNumber( investment_amount ),
+        aggregate_inclusive_purchase: formatHelper.formatNumber( aggregate_inclusive_purchase ),
+        investment_amount: formatHelper.formatNumber( investment_amount ),
         investor_address: formData.personal_information_data.street_address_1,
         investor_optional_address: formData.personal_information_data.street_address_2,
         investor_code: formData.personal_information_data.zip_code,
