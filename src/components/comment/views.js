@@ -35,6 +35,7 @@ module.exports = {
       this.options =
       this.allowQuestion = _.isBoolean(options.allowQuestion) ? options.allowQuestion : true;
       this.allowResponse = _.isBoolean(options.allowResponse) ? options.allowResponse : true;
+      this.cssClass = _.isString(options.cssClass) ? options.cssClass : '';
 
       this.urlRoot = this.urlRoot.replace(':model', 'company').replace(':id', this.model.id);
       //init dates
@@ -71,6 +72,7 @@ module.exports = {
         attr: {
           allowQuestion: this.allowQuestion,
           allowResponse: this.allowResponse,
+          cssClass: this.cssClass,
         }
       }));
 
