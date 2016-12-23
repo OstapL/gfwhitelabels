@@ -1,7 +1,7 @@
 const formatHelper = require('helpers/formatHelper');
 const textHelper = require('helpers/textHelper');
 const companyFees = require('consts/companyFees.json');
-const usaStates = require('helpers/usa-states.js');
+const usaStates = require('helpers/usaStates.js');
 
 let countries = {};
 _.each(require('helpers/countries.json'), (c) => { countries[c.code] = c.name; });
@@ -462,7 +462,7 @@ module.exports = {
       this.assignLabels();
 
       this.getCityStateByZipCode = require("helpers/getSityStateByZipCode");
-      this.usaStates = require("helpers/usa-states");
+      this.usaStates = usaStates;
 
       this.initMaxAllowedAmount();
       this.amountTimeout = null;
