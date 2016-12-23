@@ -1,8 +1,8 @@
 - var textHelper = require('helpers/textHelper.js')
 - var icon = type
 - var mimetypeIcons = require('helpers/mimetypeIcons.js');
-if !data || !Array.isArray(data)
-  - data = [];
+if !data || !Array.isArray(data.urls)
+  - data = {urls: []};
 div(
   class='row media-item ' + classMain + ' ' + (id || name) +
     (required == true ? ' required ' : ' ') + ' fileDropzone' +
@@ -24,6 +24,7 @@ div(
         div.col-lg-7.col-md-7.col-sm-7.col-xs-7.p-r-0.p-l-0.img-dropzone.text-xs-center
           .file-scroll
             .thumb-file-container.col-xl-12
+              // - debugger;
               if data.mime
                 .delete-file-container
                   a(href="#" class="delete-file" data-fileid=data.id)

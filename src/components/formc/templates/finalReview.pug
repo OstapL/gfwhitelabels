@@ -1352,9 +1352,12 @@ section.formc-review
             |  as Issuer
         h2.text-uppercase.text-xs-center.font-weight-bold.letter-spacing-normal.m-b-3#business_plan EXHIBIT A: BUSINESS PLAN
         if values.formc.business_plan_data.length > 0
-          p
-            for v,k in values.formc.business_plan_data[0].urls
-              a(href=v target="_blank").link-1 #{ v.substr(0, 20) }
+          - 
+            pug_html += app.fields.fileDropzone('business_plan_file_id', {
+              data: values.formc.business_plan_data, 
+              schema: fields.formc.business_plan_file_id,
+              label: 'Your business plan'
+            })
 
       // page 32
       section.page-formc-review.m-t-1
@@ -1365,8 +1368,7 @@ section.formc-review
             |  as Issuer
         h2.text-uppercase.text-xs-center.font-weight-bold.letter-spacing-normal.m-b-3#financial_statements EXHIBIT B: FINANCIAL STATEMENTS for most recent fiscal year
         if values.formc.fiscal_recent_group_data.length > 0
-          p
-            | !{ app.fields.fileFolderDropzone('fiscal_recent_group_data', { data: values.formc.fiscal_recent_group_data, value: values.formc.fiscal_recent_group_id, label: "Upload financials for most recent fiscal year", schema: fields.formc.fiscal_recent_group_id}) }
+          | !{ app.fields.fileFolderDropzone('fiscal_recent_group_data', { data: values.formc.fiscal_recent_group_data, value: values.formc.fiscal_recent_group_id, label: "Upload financials for most recent fiscal year", schema: fields.formc.fiscal_recent_group_id}) }
         h2.text-uppercase.text-xs-center.font-weight-bold.letter-spacing-normal.m-b-3 EXHIBIT B: FINANCIAL STATEMENTS for prior fiscal year
         if values.formc.fiscal_prior_group_data.length > 0
           p

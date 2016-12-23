@@ -276,7 +276,8 @@ let exports = {
 
     return template(attr);
   },
-  fileDropzone(name, attr, schema) {
+
+  fileDropzone(name, attr) {
     /* Requeired:
      * data: values.fiscal_recent_group_data,
      * value: values.fiscal_recent_group_id,
@@ -287,11 +288,15 @@ let exports = {
      * classMain, class1, class2
      * required, id, icon, type, help_text, default
      */
-    _.extend(attr, schema)
+
     attr.name = name;
     this.prepareField(name, attr);
 
     const template = require('./templates/fileDropzone.pug');
+
+    if(Array.isArray(attr.data)) {
+      attr.data = attr.data[0];
+    }
 
     if(attr.hasOwnProperty('class1') == false) { 
       attr.class1 = 'col-xl-3 col-lg-12 text-xl-right text-lg-left';
