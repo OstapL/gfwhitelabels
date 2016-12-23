@@ -35,7 +35,7 @@ div(id=id class=cssClass data-level=level data-id=comment.uid).p-r-0.p-t-0
       p #{ comment.message }
       div.responce.comment-actions
         if level <= 0
-          li
+          li.icon-comment
             i.fa.fa-comment-o.p-r-5
             a(href="#").link-1.link-response-count
               span.count #{ comment.children.length }
@@ -43,7 +43,7 @@ div(id=id class=cssClass data-level=level data-id=comment.uid).p-r-0.p-t-0
           li.reply
             span.reply-left |
             a(href="#").link-1.link-reply Reply
-              span.reply-right |
+            span.reply-right |
         //li
           a(href="#").link-1.link-like
             i.fa.fa-heart
