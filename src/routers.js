@@ -8,9 +8,9 @@ const anonymousAccount = require('components/anonymousAccount/route');
 const accountProfile = require('components/accountProfile/route');
 const establishedBusinessCalc = require('components/establishedBusinessCalculator/route');
 const formc = require('components/formc/route');
+const blog = require('components/blog/route');
 
 Backbone.Router.execute = function (callback, args, name) {
-  console.log('asdfasfdasd ', callback, args, name);
   if (name == '/company/create' && !app.user.is_anonymouse()) {
     const template = require('components/anonymousAccount/templates/popupLogin.pug');
     require.ensure([], function() {
@@ -71,6 +71,10 @@ let appRoutes = Backbone.Router.extend({
     let r10  = new formc;
     _.each(r10.routes, (funcName, path) => {
       this.routes[path] = r10[funcName];
+    });
+    let r11  = new blog;
+    _.each(r11.routes, (funcName, path) => {
+      this.routes[path] = r11[funcName];
     });
   },
 

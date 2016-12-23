@@ -1,10 +1,11 @@
 h2#ask.col-lg-12.dosis.text-uppercase.text-lg-center.text-xs-center.campaign-subheading ASK A QUESTION
 .col-lg-8.offset-lg-2.pt30.comment-form-div
   form.comment-form.form-section
-    .col-lg-8
-      input(type="text" name="body" placeholder="Type your text here..." value='').text-body
-    .col-lg-4.p-r-0.text-xl-right.text-xs-center.p-t-sm-1
+    .col-lg-9
+      input(type="text" name="body" placeholder="Type your text here..." value='').w-100.text-body
+    .col-lg-3.p-r-0.text-xl-right.text-xs-center.p-t-sm-1
       button(type="button").btn.btn-primary.text-uppercase.pull-lg-right.ask-question Submit
+
 
 
 .col-lg-8.offset-lg-2.pt50.comments
@@ -15,13 +16,38 @@ h2#ask.col-lg-12.dosis.text-uppercase.text-lg-center.text-xs-center.campaign-sub
     };
 
   each c in comments
-    - pug_html += app.fields.comment(c, 0, options)
+    | !{ app.fields.comment(c, 0, options) }
 
 .stubs.collapse
+  .row
+    .related-role.form-group.m-b-0
+      .col-xl-12.p-l-0
+        label.yesno
+          input(
+            type='checkbox'
+            data-name='related'
+            checked=false
+          ).related-cb
+          span.font-weight-normal.p-l-1
+            | I am speaking on behalf of the company
+      div(style="display: none;").form-group.m-b-0.related.shown-yes
+        .col-lg-2.p-l-0
+          span.font-weight-bold
+            | I am an:
+        .col-lg-9.radio-input.p-l-0
+          label
+            input(type="radio" name="related" value="Employee" selected=false)
+            | Employee
+          label
+            input(type="radio" name="related" value="Promoter" selected=false)
+            | Promoter
+
   //- todo: move this to fields
   form.comment-form.form-section.edit-comment.collapse
-    .col-lg-12.p-r-1.m-t-1
-      textarea(placeholder="Type your text here").text-body.col-lg-12
-    .col-lg-12.p-r-1.m-t-1text-xl-right
-      button(type="button").btn.btn-primary.text-uppercase.pull-lg-right.submit-comment Submit
-      button(type="button").btn.btn-secondary.text-uppercase.pull-lg-right.cancel-comment Cancel
+    .col-lg-11.offset-lg-1.m-t-2.p-r-0.p-l-3.form-group
+      .border-bottom.m-t-0.mb30
+      textarea(placeholder="Type your text here").form-control.big-textarea.text-body.col-lg-12
+    .col-lg-12.p-r-0.text-xl-right
+      button(type="button").btn.btn-sm.btn-secondary.text-uppercase.m-r-2.cancel-comment Cancel
+      button(type="button").btn.btn-sm.btn-primary.text-uppercase.submit-comment Submit
+      

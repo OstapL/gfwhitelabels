@@ -61,7 +61,7 @@ module.exports = {
         '</div>' +
         '<div class="row">' +
           '<div class="col-xl-12 m-t-3 m-b-2 text-xs-center">' +
-            '<button type="button" class="btn btn-secondary m-r-2" data-dismiss="modal">' +
+            '<button type="button" class="btn btn-secondary m-r-2 cropper-cancel" data-dismiss="modal">' +
               'Cancel' +
             '</button>' +
             '<button type="button" class="btn btn-primary cropper-ok" data-dissmiss="modal">' +

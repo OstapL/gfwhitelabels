@@ -16,79 +16,97 @@ section.create-company.container.m-b-85
     h2.text-uppercase.text-lg-center.text-xs-center.m-t-0.dosis Company
     form.form-section
       .col-xl-12
-        +fieldTextLabel("name", _.extend({
-          class1: 'col-xl-3 col-lg-12 p-t-0 text-lg-left text-xl-right m-b-0 m-b-lg-1',
-          class2: 'col-xl-9 col-lg-12',
-          placeholder: 'Company Legal Name',
-          }, fields.name))
-        +fieldTextLabel("short_name", _.extend({
-          class1: 'col-xl-3 col-lg-12 p-t-0 text-lg-left text-xl-right m-b-0',
-          class2: 'col-xl-9 col-lg-12',
-          placeholder: 'Short Name',
-          }, fields.short_name))
-        +fieldChoiceLabel("industry", _.extend({
-          class1: 'col-xl-3 col-lg-12 text-lg-left text-xl-right',
-          class2: 'col-xl-9 col-lg-12',
-          empty: {'': 'Choose Industry'},
-          }, fields.industry))
-        +fieldChoiceLabel("founding_state", _.extend({
-          class1: 'col-xl-3 col-lg-12 p-t-0 m-b-0 m-b-lg-1 big-label-text text-lg-left text-xl-right',
-          class2: 'col-xl-9 col-lg-12',
-          empty: {'': 'Choose State'},
-          }, fields.founding_state))
-        +fieldTextLabel("tagline", _.extend({
-          class1: 'col-xl-3 col-lg-12 text-lg-left text-xl-right',
-          class2: 'col-xl-9 col-lg-12',
-          type: 'text',
+        - 
+          pug_html += app.fields.textLabel('name', {
+          class1:'col-xl-3 col-lg-12 p-t-0 text-lg-left text-xl-right m-b-0 m-b-lg-1', 
+          schema: fields.name, 
+          placeholder: 'Company Legal Name', 
+          value: values.name,
+          })
+
+        - 
+          pug_html += app.fields.textLabel('short_name', {
+          class1: 'col-xl-3 col-lg-12 p-t-0 text-lg-left text-xl-right m-b-0 m-b-lg-1', 
+          schema: fields.short_name, 
+          placeholder: 'Short Name', 
+          value: values.short_name,})
+        -
+          pug_html += app.fields.fieldChoiceLabel('industry', _.extend({
+              'empty': { '': 'Choose Industry' },
+              'value': values.industry,
+            }, fields.industry));
+        -
+          pug_html += app.fields.fieldChoiceLabel('founding_state', _.extend({
+              'empty': { '': 'Choose State' },
+              'class1': 'col-xl-3 col-lg-12 p-t-0 m-b-0 m-b-lg-1 big-label-text text-lg-left text-xl-right',
+              'value': values.founding_state,
+            }, fields.founding_state));
+
+        - 
+          pug_html += app.fields.textLabel('tagline', {
+          schema: fields.tagline, 
           placeholder: 'Your Company Slogan',
-          maxlength: 90,
-          }, fields.tagline))
-        +fieldTextareaLabel("description", _.extend({
-          class1: 'col-xl-3 col-lg-12 text-lg-left text-xl-right',
-          class2: 'col-xl-9 col-lg-12',
-          type: 'textarea',
+          value: values.tagline,})
+
+        - 
+          pug_html += app.fields.textareaLabel('description', {
+          schema: fields.description, 
           placeholder: 'Your Company Description',
-          help_text: 'Explain what your company does in a way that everyone  will understand.<br />  “If you can’t explain it simply, you don’t understand it well enough.” – Albert Einstein',
-          }, fields.description))
-        .row.form-group
-          label.col-xl-3.col-lg-12.text-xl-right.textlg-left.m-b-0.p-t-0.m-b-lg-1 Corporate Structure
-            span.color-red *
-          .col-xl-9.col-lg-12.showPopover(data-content="C-corps can choose to issue Common Equity or a Revenue Share. LLC’s can only issue a Revenue Share")
-            +fieldChoice("corporate_structure", _.extend({
-                empty: {'': 'Choose'},
-            }, fields.corporate_structure))
+          help_text: 'Explain what your company does in a way that everyone  will understand.<br />  “If you can’t explain it simply, you don’t understand it well enough.” – Albert Einstein', value: values.description,})
+
+        -
+          pug_html += app.fields.fieldChoiceLabel('corporate_structure', _.extend({
+              empty: { '': 'Choose' },
+              'class1': 'col-xl-3 col-lg-12 text-xl-right text-lg-left m-b-0 p-t-0 m-b-lg-1',
+              'value': values.corporate_structure,
+            }, fields.corporate_structure));
         .row.form-group
           .col-date#founding_date
             label.col-xl-3.col-lg-12.text-xl-right.textlg-left.m-b-0.p-t-0.m-b-lg-1 Date of Organization
               span.color-red *
             .col-xl-4.col-lg-6.p-r-0
-              +fieldDateMonth("founding_date", _.extend({
+              //+fieldDateMonth("founding_date", _.extend({
                 class: 'col-xl-4 col-lg-4 col-xs-4 p-l-0  m-d-p-r-5',
-              }, fields.dob))
-              +fieldDateDay("founding_date", _.extend({
+                }, fields.dob))
+              - 
+                pug_html += app.fields.dateMonth('founding_date', _.extend({
+                'empty': { '': 'Choose' },
+                'value': values.founding_date,
+                }, fields.founding_date));
+              - 
+                pug_html += app.fields.dateDay('founding_date', _.extend({
+                'empty': { '': 'Choose' },
+                'value': values.founding_date,
+                }, fields.founding_date));
+              //+fieldDateDay("founding_date", _.extend({
                 class: 'col-xl-4 col-lg-4 col-xs-4 p-r-0 m-d-p-l-5',
-              }, fields.founding_date))
-              +fieldDateYear("founding_date", _.extend({
+                }, fields.founding_date))
+              //+fieldDateYear("founding_date", _.extend({
                 class: 'col-xl-4 col-lg-4 col-xs-4 p-r-0 p-r-lg-1 m-d-p-l-10',
                 placeholder: 'YYYY',
-              }, fields.founding_date))
+               }, fields.founding_date))
+              - 
+                pug_html += app.fields.dateYear('founding_date', _.extend({
+                'value': values.founding_date,
+                'placeholder': 'YYYY',
+                }, fields.founding_date));
         .border-bottom.m-t-3.m-b-3
-        +fieldTextLabel("address_1", _.extend({
-          class1: 'col-xl-3 col-lg-12 text-lg-left text-xl-right',
-          class2: 'col-xl-9 col-lg-12',
-          type: 'text',
-          }, fields.address_1))
-        +fieldTextLabel("address_2", _.extend({
-          class1: 'col-xl-3 col-lg-12 text-lg-left text-xl-right',
-          class2: 'col-xl-9 col-lg-12',
-          type: 'text',
-          }, fields.address_2))
+        - 
+          pug_html += app.fields.textLabel('address_1', {
+          schema: fields.address_1, 
+          value: values.address_1,})
+        - 
+          pug_html += app.fields.textLabel('address_2', {
+          schema: fields.address_2, 
+          value: values.address_2,})
         .row.form-group
           .col-xl-6.col-lg-6.col-l-65
-            +fieldTextLabel("zip_code", _.extend({
-              class1: 'col-xl-6 col-lg-12 text-xl-right text-lg-left',
-              class2: 'col-xl-6 col-lg-12',
-              }, fields.zip_code))
+            - 
+              pug_html += app.fields.textLabel('zip_code', {
+              class1:'col-xl-6 col-lg-12 text-lg-left text-xl-right', 
+              class2:'col-xl-6 col-lg-12', 
+              schema: fields.zip_code, 
+              value: values.zip_code,})
           .col-xl-6.col-lg-6.col-sm-12.city_states.required.sity-state-error
             input(type='hidden' name='state' value=values.state)#state
             input(type='hidden' name='city' value=values.city)#city
@@ -100,45 +118,50 @@ section.create-company.container.m-b-85
                 i.fa.fa-pencil-square-o.link-1
         .row.m-b-0
           .col-xl-6.col-lg-6.col-l-65
-            +fieldTextLabel("phone", _.extend({
-              class1: 'col-xl-6 col-lg-12 text-lg-left text-xl-right',
-              class2: 'col-xl-6 col-lg-12', 
-              type: 'text',
-              }, fields.phone))
+            - 
+              pug_html += app.fields.textLabel('phone', {
+              class1:'col-xl-6 col-lg-12 text-lg-left text-xl-right', 
+              class2:'col-xl-6 col-lg-12', 
+              schema: fields.phone, 
+              value: values.phone,})
           .col-xl-6.col-lg-6
-            +fieldTextLabel("website", _.extend({
-              class1: 'col-xl-5 col-lg-12 text-lg-left text-xl-right',
-              class2: 'col-xl-7 col-lg-12', 
-              type: 'text',
-              placeholder: 'http://www.',
-              }, fields.website))
+            - 
+              pug_html += app.fields.textLabel('website', {
+              class1:'col-xl-5 col-lg-12 text-lg-left text-xl-right', 
+              class2:'col-xl-7 col-lg-12', 
+              schema: fields.website, 
+              value: values.website,})
         .border-bottom.m-t-2.m-b-3
         .row.m-b-0
           .col-xl-6.col-lg-6.col-l-65
-            +fieldTextLabel("twitter", _.extend({
-              class1: 'col-xl-6 col-lg-12 text-lg-left text-xl-right', 
-              class2: 'col-xl-6 col-lg-12', 
-              type: 'text',
-              }, fields.twitter))
+            - 
+              pug_html += app.fields.textLabel('twitter', {
+              class1:'col-xl-6 col-lg-12 text-lg-left text-xl-right', 
+              class2:'col-xl-6 col-lg-12', 
+              schema: fields.twitter, 
+              value: values.twitter,})
           .col-xl-6.col-lg-6
-            +fieldTextLabel("facebook", _.extend({
-              class1: 'col-xl-5 col-lg-12 text-lg-left text-xl-right', 
-              class2: 'col-xl-7 col-lg-12', 
-              type: 'text',
-              }, fields.facebook))
+            - 
+              pug_html += app.fields.textLabel('facebook', {
+              class1:'col-xl-5 col-lg-12 text-lg-left text-xl-right', 
+              class2:'col-xl-7 col-lg-12', 
+              schema: fields.facebook, 
+              value: values.facebook,})
         .row.m-b-0
           .col-lg-6.col-l-65
-            +fieldTextLabel("instagram", _.extend({
-              class1: 'col-xl-6 col-lg-12 text-lg-left text-xl-right', 
-              class2: 'col-xl-6 col-lg-12', 
-              type: 'text',
-              }, fields.instagram))
+            - 
+              pug_html += app.fields.textLabel('instagram', {
+              class1:'col-xl-6 col-lg-12 text-lg-left text-xl-right', 
+              class2:'col-xl-6 col-lg-12', 
+              schema: fields.instagram, 
+              value: values.instagram,})
           .col-lg-6
-            +fieldTextLabel("linkedin", _.extend({
-              class1: 'col-xl-5 col-lg-12 text-lg-left text-xl-right', 
-              class2: 'col-xl-7 col-lg-12', 
-              type: 'text',
-              }, fields.linkedin))
+            - 
+              pug_html += app.fields.textLabel('linkedin', {
+              class1:'col-xl-5 col-lg-12 text-lg-left text-xl-right', 
+              class2:'col-xl-7 col-lg-12', 
+              schema: fields.linkedin, 
+              value: values.linkedin,})
         .row.m-t-2.pull-lg-right.text-md-center.text-sm-center.text-xs-center
           .col-xl-12
             button(type="button")#submitForm.btn.btn-primary.text-uppercase save and continue

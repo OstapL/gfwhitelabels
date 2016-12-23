@@ -31,23 +31,11 @@ section.formc-team-members-director.container.m-b-85
               input(type="radio" name="company_or_director_subjected_to_choice" value="false" checked=(values['company_or_director_subjected_to_choice'] == 0) target=".transactions-past-year-container")
               |  No
         .m-b-3.company_or_director_subjected_to_choice.shown-yes(style="display:" + (values['company_or_director_subjected_to_choice']  == 1? 'block' : 'none'))
-          +fieldTextareaLabel("company_or_director_subjected_to", _.extend({
-            class1: 'col-lg-3 col-md-12 text-md-left text-xl-right',
-            class2: 'col-lg-9 col-md-12',
-            placeholder: 'Explain',
-          }, fields.company_or_director_subjected_to))
+          - pug_html += app.fields.textareaLabel('company_or_director_subjected_to', {schema: fields.company_or_director_subjected_to, placeholder: 'Explain',value: values.company_or_director_subjected_to,})
         .row.pb10
           b.col-lg-12 In addition to the information expressly required to be included in this Form, include:
-        +fieldTextareaLabel("material_information", _.extend({
-          class1: 'col-lg-12 col-md-12 text-md-left text-xl-left',
-          class2: 'col-lg-12 col-md-12 big-textarea',
-          placeholder: 'Description',
-        }, fields.material_information))
-        +fieldTextareaLabel("descrption_material_information", _.extend({
-          class1: 'col-lg-12 col-md-12 text-md-left text-xl-left',
-          class2: 'col-lg-12 col-md-12 big-textarea',
-          placeholder: 'Description',
-        }, fields.descrption_material_information))
+        - pug_html += app.fields.textareaLabel('material_information', {class1: 'col-lg-12 col-md-12 text-md-left text-xl-left', class2: 'col-lg-12 col-md-12 big-textarea', schema: fields.material_information, placeholder: 'Description',value: values.material_information,})
+        - pug_html += app.fields.textareaLabel('descrption_material_information', {class1: 'col-lg-12 col-md-12 text-md-left text-xl-left', class2: 'col-lg-12 col-md-12 big-textarea', schema: fields.descrption_material_information, placeholder: 'Description',value: values.descrption_material_information,})
         .border-bottom.m-t-3.m-b-3
         h3.pb10.m-b-0 The issuer must continue to comply with the ongoing reporting requirements until:
         ol
