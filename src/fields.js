@@ -276,7 +276,7 @@ let exports = {
 
     return template(attr);
   },
-  fileDropzone(name, attr) {
+  fileDropzone(name, attr, schema) {
     /* Requeired:
      * data: values.fiscal_recent_group_data,
      * value: values.fiscal_recent_group_id,
@@ -287,7 +287,7 @@ let exports = {
      * classMain, class1, class2
      * required, id, icon, type, help_text, default
      */
-
+    _.extend(attr, schema)
     attr.name = name;
     this.prepareField(name, attr);
 
@@ -299,6 +299,9 @@ let exports = {
 
     if(attr.hasOwnProperty('class2') == false) { 
       attr.class2 = 'col-xl-9 col-lg-12 p-l-1 p-r-1';
+    }
+    if(attr.hasOwnProperty('default') == false) { 
+      attr.default = '/img/default/file.png';
     }
 
     if(attr.hasOwnProperty('icon') == false) { 
