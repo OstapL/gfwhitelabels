@@ -155,7 +155,7 @@ module.exports = {
 
     render() {
       this.getCityStateByZipCode = require("helpers/getSityStateByZipCode");
-      this.usaStates = require("helpers/usa-states.js");
+      this.usaStates = require("helpers/usaStates.js");
 
       this.$el.html(
         this.template({
