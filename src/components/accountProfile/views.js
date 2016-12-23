@@ -591,8 +591,8 @@ module.exports = {
         amount_raised: 20000,
         starting_date: "2016-04-04",
         expiration_date: "2017-02-04",
-        investors: 333,
-        views: 123456,
+        investors: 0,
+        views: 0,
         interactions: 4567,
       }, this.model.campaign);
 
@@ -613,7 +613,7 @@ module.exports = {
       );
 
       socialMediaScripts.facebook();
-      setTimeout(() => { this.initComments(); },100);
+      this.initComments();
 
       // const socket = require('socket.io-client')('http://localhost:3000');
       // socket.on('connect', function () {
@@ -687,13 +687,24 @@ module.exports = {
         data[0].owner_id = this.model.owner_id;
 
         let comments = new View.comments({
-          // model: commentsModel,
           model: data[0],
           fields: options[0].fields,
           allowQuestion: false,
           cssClass: 'col-lg-8 pt50',
         });
         comments.render();
+
+        let commentsCount = 0;
+
+        function countComments(comments) {
+          commentsCount += comments.length;
+          _.each(comments, (c) => {
+            countComments(c.children);
+          });
+        }
+
+        countComments(data[0].data);
+        $('.interactions-count').text(commentsCount);
       });
     },
   }),

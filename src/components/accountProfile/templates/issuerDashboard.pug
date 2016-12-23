@@ -60,7 +60,7 @@ section.issuer-dashbord-top
             .number
               span(
                 data-counter="counterup"
-                data-value=values.campaign.views) #{(Math.round(values.campaign.views/100)/10).toLocaleString('en-US')}K
+                data-value=values.campaign.views) #{(Math.round(values.campaign.views/100)/10).toLocaleString('en-US')}
             .desc Page Views
 
       .col-md-2.col-sm-6
@@ -71,7 +71,7 @@ section.issuer-dashbord-top
             .number
               span(
                 data-counter="counterup"
-                data-value=values.campaign.interactions) #{values.campaign.interactions.toLocaleString('en-US')}
+                data-value=values.campaign.interactions).interactions-count #{values.campaign.interactions.toLocaleString('en-US')}
             .desc New Interactions
 
       .col-md-7.col-sm-7.p-r-0
