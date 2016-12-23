@@ -7,7 +7,7 @@ div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true
             i.fa.fa-times
         h2.text-xs-center.text-uppercase.dosis.modal-title Sign up
         p.text-xs-center Have an account? 
-          a(href="#" onclick="$('#sign_up').modal('hide');$('#sign_in').modal()").link-3
+          a(href="#" onclick="$('#sign_up').modal('hide');$('#sign_in').modal()").link-3.link-show-login
             | Log In
       .modal-body
         .container.form-section
@@ -69,7 +69,7 @@ div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true
               i.fa.fa-times
           h2.dosis.text-uppercase.text-sm-center.text-xs-center.mt50 Log in
           p.small-text.text-xs-center New to GrowthFountain? 
-            a(href="#" onclick="$('#sign_in').modal('hide');$('#sign_up').modal()").link-3 Sign up
+            a(href="#" onclick="$('#sign_in').modal('hide');$('#sign_up').modal()").link-3.link-show-sign-up Sign up
         .modal-body
           .form-section
             form.login-form.col-lg-10.offset-lg-1.border-bottom

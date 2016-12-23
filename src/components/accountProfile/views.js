@@ -566,7 +566,8 @@ module.exports = {
       return this;
     },
   }),
-  issueDashboard: Backbone.View.extend({
+
+  issuerDashboard: Backbone.View.extend({
     initialize(options) {
       this.model.description = "Something long comes from here. Something long comes from here. Something long comes from here. Something long comes from here. Something long comes from here. ";
       this.model.thumbnail = '/img/smartbe-intelligent-stroller.jpg',
@@ -626,6 +627,7 @@ module.exports = {
     shareWithGooglePlus(e) {
       event.preventDefault();
     },
+
     initComments() {
       const View = require('components/comment/views.js');
       const urlComments = commentsServer + '/company/' + this.model.id;
@@ -640,10 +642,12 @@ module.exports = {
           // model: commentsModel,
           model: data[0],
           fields: options[0].fields,
+          allowQuestion: false,
         });
         comments.render();
       });
     },
+
     render(){
       const socialMediaScripts = require('helpers/shareButtonHelper.js');
       const template = require('./templates/issuerDashboard.pug');
@@ -658,16 +662,16 @@ module.exports = {
       socialMediaScripts.facebook();
       setTimeout(() => { this.initComments(); },100);
 
-      const socket = require('socket.io-client')('http://localhost:3000');
-      socket.on('connect', function () {
-        socket.emit('newUser', app.user.id, function (data) {
-          console.log(data);
-        });
-      });
-      socket.on('notification', function(msg){
-        console.log(msg);
-        $('.notification-container ul').append($('<li>').html('<a>' + msg + '</a>'));
-      });
+      // const socket = require('socket.io-client')('http://localhost:3000');
+      // socket.on('connect', function () {
+      //   socket.emit('newUser', app.user.id, function (data) {
+      //     console.log(data);
+      //   });
+      // });
+      // socket.on('notification', function(msg){
+      //   console.log(msg);
+      //   $('.notification-container ul').append($('<li>').html('<a>' + msg + '</a>'));
+      // });
       return this;
     },
   }),
