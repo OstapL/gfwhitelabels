@@ -21,17 +21,32 @@ section.formc-team-members-director.container.m-b-85
       p.col-lg-12.m-t-1 Pursuant to the requirements of Sections 4(a)(6) and 4A of the Securities Act of 1933 and Regulation Crowdfunding (§ 227.100-503), this Form C has been signed by the following persons in the capacities and on the dates indicated.
       .col-lg-12.m-t-2.investment
         .form-group.row
-          +fieldText("name", {'class': 'col-xl-4 m-b-md-25','placeholder':'Type your name here' })
+          - 
+            pug_html += app.fields.fieldText('name', {
+            schema: fields.name,
+            class: 'col-xl-4 m-b-md-25',
+            placeholder:'Type your name here'
+            value: values.name,})
           .col-xl-4
             .electronically
               span.by By:
               span.name Maria Kravchuk
         .row
           .form-group
-            +fieldText("title", {'class': 'col-xl-8','placeholder':'Title' })
+            - 
+              pug_html += app.fields.fieldText('title', {
+              schema: fields.title,
+              class: 'col-xl-4 m-b-md-25',
+              placeholder:'Title'
+              value: values.title,})
         .row
           .form-group
-            +fieldText("date", {'class': 'col-xl-8','placeholder':'Date' })
+            - 
+              pug_html += app.fields.fieldText('date', {
+              schema: fields.date,
+              class: 'col-xl-8',
+              placeholder:'Date'
+              value: values.date,})
         .row
           .col-lg-12.text-md-center.text-sm-center-text-xs-center.m-t-3
             a(href="#").btn.btn-primary.text-uppercase.pull-lg-right submit
