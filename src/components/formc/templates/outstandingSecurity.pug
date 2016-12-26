@@ -35,23 +35,34 @@ section.formc-team-members-director.container.m-b-85
         .row
           .col-lg-12
             .border-bottom.m-t-3.m-b-3 
-        +fieldTextareaLabel("rights_of_securities", _.extend({
-          class1: 'col-lg-12 col-md-12  text-md-left  text-xl-left',
-          class2: 'col-lg-12 col-md-12 big-textarea',
-          placeholder: 'Description',
-        }, fields.rights_of_securities))
-        +fieldTextareaLabel("terms_of_securities", _.extend({
-          class1: 'col-lg-12 col-md-12  text-md-left  text-xl-left',
-          class2: 'col-lg-12 col-md-12 big-textarea',
-        }, fields.terms_of_securities))
-        +fieldTextareaLabel("security_differences", _.extend({
-          class1: 'col-lg-12 col-md-12  text-md-left  text-xl-left',
-          class2: 'col-lg-12 col-md-12 big-textarea',
-        }, fields.security_differences))
-        +fieldTextareaLabel("exercise_of_rights", _.extend({
-          class1: 'col-lg-12 col-md-12  text-md-left  text-xl-left',
-          class2: 'col-lg-12 col-md-12 big-textarea',
-        }, fields.exercise_of_rights))
+        - 
+          pug_html += app.fields.textareaLabel('rights_of_securities', {
+          schema: fields.rights_of_securities,
+          class1: 'col-xl-12 text-xl-left',
+          class2: 'col-xl-12 big-textarea',
+          placeholder: 'Description', 
+          value: values.rights_of_securities,})
+
+        - 
+          pug_html += app.fields.textareaLabel('terms_of_securities', {
+          schema: fields.terms_of_securities,
+          class1: 'col-xl-12 text-xl-left',
+          class2: 'col-xl-12 big-textarea',
+          value: values.terms_of_securities,})
+
+        - 
+          pug_html += app.fields.textareaLabel('security_differences', {
+          schema: fields.security_differences,
+          class1: 'col-xl-12 text-xl-left',
+          class2: 'col-xl-12 big-textarea',
+          value: values.security_differences,})
+
+        - 
+          pug_html += app.fields.textareaLabel('exercise_of_rights', {
+          schema: fields.exercise_of_rights,
+          class1: 'col-xl-12 text-xl-left',
+          class2: 'col-xl-12 big-textarea',
+          value: values.exercise_of_rights,})
         
         .row.form-group.form-section.required
           .col-lg-12
@@ -89,28 +100,37 @@ section.formc-team-members-director.container.m-b-85
               class1: 'col-lg-12 p-t-0',
               class2: 'col-lg-12',
             }, fields.outstanding_securities.schema.security_type))
-            +fieldTextLabel("custom_security_type", _.extend({
+            
+            - 
+              pug_html += app.fields.textLabel('custom_security_type', {
+              schema: fields.outstanding_securities.schema.custom_security_type,
               class1: 'col-lg-12',
-              class2: 'col-lg-12',
-            }, fields.outstanding_securities.schema.custom_security_type))
-            +fieldTextareaLabel("terms_and_rights", _.extend({
+              class2: 'col-lg-12', 
+              value: values.custom_security_type,})
+
+            - 
+              pug_html += app.fields.textareaLabel('terms_and_rights', {
+              schema: fields.outstanding_securities.schema.terms_and_rights,
               class1: 'col-lg-12',
               class2: 'col-lg-12 big-textarea',
-              placeholder: 'Description'
-            }, fields.outstanding_securities.schema.terms_and_rights))
+              placeholder: 'Description', 
+              value: values.terms_and_rights,})
+
             .row
               .col-lg-6
-                +fieldTextLabel("amount_authroized", _.extend({
+                - 
+                  pug_html += app.fields.textLabel('amount_authroized', {
+                  schema: fields.outstanding_securities.schema.amount_authroized,
                   class1: 'col-lg-12',
-                  class2: 'col-lg-12',
-                  label: 'Amount Authorized',
-                  }, fields.outstanding_securities.schema.amount_authroized))
+                  class2: 'col-lg-12', 
+                  value: values.amount_authroized,})
               .col-lg-6
-                +fieldTextLabel("amount_outstanding", _.extend({
+                - 
+                  pug_html += app.fields.textLabel('amount_outstanding', {
+                  schema: fields.outstanding_securities.schema.amount_outstanding,
                   class1: 'col-lg-12',
-                  class2: 'col-lg-12',
-                  label: 'Amount Outstanding',
-                  }, fields.outstanding_securities.schema.amount_outstanding))
+                  class2: 'col-lg-12', 
+                  value: values.amount_outstanding,})
             .row.form-group.m-b-0
               +fieldRadioLabel("voting_right", _.extend({
                 class1: 'col-lg-3',
