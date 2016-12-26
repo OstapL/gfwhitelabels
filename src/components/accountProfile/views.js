@@ -166,6 +166,7 @@ module.exports = {
         this.template({
           serverUrl: serverUrl,
           user: this.model,
+          roleInfo: app.user.getRoleInfo(),
           fields: this.fields,
           states: this.usaStates,
         })

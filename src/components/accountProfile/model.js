@@ -41,6 +41,17 @@ let userModel = Backbone.Model.extend({
     return true;
   },
 
+  getRoleInfo() {
+    let role = this.get('role');
+    role.role = role.role || [];
+
+    return {
+      companyName: role.company_name || '',
+      companyId: role.company_id || 0,
+      role: role.role.join(', ') || '',
+    };
+  },
+
   get_full_name: function () {
     return this.get('first_name') + ' ' + this.get('last_name');
   },

@@ -16,11 +16,11 @@ mixin row(value, index)
           label.col-xl-3.col-lg-12.text-xl-right.textlg-left Maturity Date
             span.color-red *
           .col-xl-4.col-lg-6.p-r-0
-            | !{app.fields.nestedDateMonth(name, 'offering_date', value, index, attr.schema.offering_date)}
+            | !{app.fields.nestedDateMonth(name, 'offering_date', value, index, attr.schema.offering_date, {placeholder: 'MM',})}
 
-            | !{app.fields.nestedDateDay(name, 'offering_date', value, index, attr.schema.offering_date)}
+            | !{app.fields.nestedDateDay(name, 'offering_date', value, index, attr.schema.offering_date, {placeholder: 'DD',})}
 
-            | !{app.fields.nestedDateYear(name, 'offering_date', value, index, {placeholder: 'YYYY',}, attr.schema.offering_date)}
+            | !{app.fields.nestedDateYear(name, 'offering_date', value, index, attr.schema.offering_date, {placeholder: 'YYYY',})}
 
       | !{app.fields.nestedTextLabel(name, 'securities_offered', value, index, attr.schema.securities_offered)}
       | !{app.fields.nestedTextLabel(name, 'use_of_proceeds', value, index, attr.schema.use_of_proceeds)}

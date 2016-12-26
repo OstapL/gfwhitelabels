@@ -19,11 +19,11 @@ mixin row(value, index)
           label.col-xl-3.col-lg-12.text-xl-right.textlg-left Maturity Date
             span.color-red *
           .col-xl-4.col-lg-6.p-r-0
-            | !{app.fields.nestedDateMonth(name, 'maturity_date', value, index, attr.schema.maturity_date)}
+            | !{app.fields.nestedDateMonth(name, 'maturity_date', value, index, attr.schema.maturity_date, {placeholder: 'MM',})}
 
-            | !{app.fields.nestedDateDay(name, 'maturity_date', value, index, attr.schema.maturity_date)}
+            | !{app.fields.nestedDateDay(name, 'maturity_date', value, index, attr.schema.maturity_date, {placeholder: 'DD',})}
 
-            | !{app.fields.nestedDateYear(name, 'maturity_date', value, index, {placeholder: 'YYYY'}, attr.schema.maturity_date)}
+            | !{app.fields.nestedDateYear(name, 'maturity_date', value, index, attr.schema.maturity_date, {placeholder: 'YYYY',})}
 
       | !{app.fields.nestedTextLabel(name, 'other_material_terms', value, index, {class1:'col-xl-3 col-lg-12 text-lg-left text-xl-right m-b-0 p-t-0 m-b-lg-1',}, attr.schema.other_material_terms)}
 
