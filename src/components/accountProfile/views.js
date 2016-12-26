@@ -481,8 +481,14 @@ module.exports = {
         investment.status = 2;
         this.investments.historical.push(investment);
 
-        let activeInvestmentBlock = $target.closest('.one_table');
-        activeInvestmentBlock.remove();
+        $target.closest('.one_table').remove();
+
+        if (this.investments.active.length <= 0)
+          $('#active .investor_table')
+            .append(
+              '<div role="alert" class="alert alert-warning">' +
+                '<strong>You have no active investments</strong>' +
+              '</div>');
 
         let historicalInvestmentsBlock = this.$el.find('#historical .investor_table');
 
