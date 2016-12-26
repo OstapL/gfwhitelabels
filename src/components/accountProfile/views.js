@@ -623,7 +623,24 @@ module.exports = {
       );
 
       socialMediaScripts.facebook();
+
       this.initComments();
+
+      try {
+        let script = document.createElement('script');
+        script.type = 'text/javascript';
+        script.src = '/js/graf/graf.js';
+        $(document.head).append(script);
+
+        script = document.createElement('script');
+        script.type = 'text/javascript';
+        script.src = '/js/graph_data.js'
+        $(document.head).append(script);
+      } catch(err){
+        console.log(err);
+      }
+
+
 
       // const socket = require('socket.io-client')('http://localhost:3000');
       // socket.on('connect', function () {
