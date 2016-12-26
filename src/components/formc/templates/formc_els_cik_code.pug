@@ -23,11 +23,12 @@ section.formc-team-members-director.container.m-b-85
       .col-lg-12
         p.pb10 We need to obtain certain information from you to submit your completed Form C to the SEC.
       .col-xl-12.m-t-3
-        +fieldTextLabel("ein", _.extend({
+        - 
+          pug_html += app.fields.textLabel('ein', {
+          schema: fields.ein,
           class1: 'col-xl-3 col-lg-12 text-lg-left text-xl-right p-t-0 m-b-0',
-          class2: 'col-xl-9 col-lg-12',
-          placeholder: 'EIN',
-          }, fields.ein))
+          placeholder: 'EIN', 
+          value: values.ein,})
       .row
         .col-xl-12
           .yesno.yes-no
@@ -48,16 +49,19 @@ section.formc-team-members-director.container.m-b-85
               label.col-xl-6.col-lg-12.text-xl-right.text-lg-left.m-b-0.p-t-0 Please enter your fiscal year end
               #board_service_start_date.col-xl-6.col-lg-12
                 .row
-                  +fieldDateMonth("fiscal_year_end", _.extend({
-                    class: 'col-xl-6 col-lg-6 col-sm-6 col-xs-6 m-d-p-r-5',
-                    placeholder: 'MM',
-                    name: 'fiscal_year_end',
-                  }, fields.fiscal_year_end))
-                  +fieldDateYear("fiscal_year_end", _.extend({
-                    class: 'col-xl-6 col-lg-6 col-sm-6 col-xs-6 m-d-p-l-5',
-                    placeholder: 'YYYY',
-                    name: 'fiscal_year_end',
-                  }, fields.fiscal_year_end))
+                  - 
+                    pug_html += app.fields.dateMonth('fiscal_year_end', {
+                    'empty': { '': 'Choose' },
+                    'class1': 'col-xl-6 col-lg-6 col-sm-6 col-xs-6 m-d-p-r-5',
+                    'value': values.fiscal_year_end,
+                    }, fields.fiscal_year_end);
+                  - 
+                    pug_html += app.fields.dateYear('fiscal_year_end', {
+                    'value': values.fiscal_year_end,
+                    'class1': 'col-xl-6 col-lg-6 col-sm-6 col-xs-6 m-d-p-l-5',
+                    'placeholder': 'YYYY',
+                    'divId': 'dob',
+                    }, fields.fiscal_year_end);
 
       .row
         .col-xl-12
@@ -73,17 +77,24 @@ section.formc-team-members-director.container.m-b-85
                   input(type="radio").m-r-1
                   | No
       .col-xl-12
-        +fieldTextLabel("type_name", _.extend({
-            class1: 'col-xl-3 col-lg-12 text-lg-left text-xl-right p-t-0 m-b-0',
-            class2: 'col-xl-9 col-lg-12',
-            placeholder: 'Name',
-          }, fields.type_name))
+        - 
+          pug_html += app.fields.textLabel('type_name', {
+          schema: fields.type_name,
+          class1: 'col-xl-3 col-lg-12 text-lg-left text-xl-right p-t-0 m-b-0 m-b-lg-1',
+          placeholder: 'Name', 
+          value: values.type_name,})
+
       .col-xl-12.m-t-1
         p By Signing You Acknowledge and Agree to the 
           a(href="#").link-2 Delegation and Authorization Letter
       .col-lg-12.m-t-2.investment
         .form-group.row
-          +fieldText("name", {'class': 'col-xl-4 m-b-md-25','placeholder':'Type your name here' })
+          - 
+            pug_html += app.fields.fieldText('name', {
+            schema: fields.name,
+            class: 'col-xl-4 m-b-md-25',
+            placeholder: 'Type your name here', 
+            value: values.name,})
           .col-xl-4
             .electronically
               span.by By:
