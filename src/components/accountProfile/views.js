@@ -385,6 +385,9 @@ module.exports = {
       $('.image_image_id').siblings('h3').text(fullName);
 
       $('#content').scrollTo();
+
+      //switch to financial info tab
+      this.$('.profile-tabs a[href="#financial_info"]').tab('show');
     },
 
   }, phoneHelper.methods, dropzoneHelpers.methods, yesNoHelper.methods)),
