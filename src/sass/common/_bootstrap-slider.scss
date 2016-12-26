@@ -65,13 +65,15 @@
 		}
 
 	}
+	
 
 	.slider-tick-container {
 		.slider-tick {
 
 			width: 1px;
 			margin-left: 0px!important;
-
+			height: 15px;
+			top: 5px;
 			background: $btstr_slider_other_nandle_block_bg;
 			border-radius: 0;
 		}
@@ -86,3 +88,13 @@
 		// }
 	}
 }
+	.custom-annual-income {
+		.slider.slider-horizontal {
+		.slider-tick-label-container {
+			.slider-tick-label:last-child {
+				margin-left: -40px!important;
+			}
+		}
+	}
+	}
+

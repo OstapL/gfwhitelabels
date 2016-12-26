@@ -14,7 +14,7 @@
             text: 'Drop your profile photo here or click to upload',
             data: user.image_data[0],
           }, fields.image));
-      .row.m-t-2
+      .row.m-t-2.m-b-2
         .col-xl-12.col-lg-12.col-md-6.offset-md-3.col-xs-8.offset-xs-2.offset-xl-0.offset-lg-0.p-l-0.p-r-0
           if roleInfo.companyId
             .profile-type-user
@@ -231,7 +231,7 @@
                       .form-group.row.bootstrap-slider-custom
                         .col-xl-12
                           label.m-b-2.m-t-1 My Annual Income
-                        .col-xl-12
+                        .col-xl-12.custom-annual-income
                           input(
                           type='text'
                           name="annual_income"
@@ -323,6 +323,7 @@
 
                         pug_html += app.fields.textLabel('name_on_bank_account', _.extend({
                             'type': 'text',
+                            'class1': 'col-xl-3 col-lg-12 text-xl-right text-lg-left m-b-0 p-t-0 m-b-lg-1',
                             'value': user.name_on_bank_account
                           }, fields.name_on_bank_account))
 
