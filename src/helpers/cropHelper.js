@@ -12,10 +12,10 @@ module.exports = {
   showCropper(imgUrl, options, cropData, callback) {
 
     options = _.extend({
-      viewMode: 1,
+      viewMode: 0,
       dragMode: 'crop',
       aspectRatio: 1,
-      // data: {}, //prev stored cropper data. We may need it when we allow user to change img cropping
+      data: {}, //prev stored cropper data. We may need it when we allow user to change img cropping
       preview: '.img-preview',
       responsive: true, //re-render cropper on window resize
       checkCrossOrigin: false, //need for reloading cached images
@@ -29,7 +29,8 @@ module.exports = {
       rotatable: false,
       scalable: true, //scale an image
       zoomable: false,
-      // zoomOnTouch: false,
+      minContainerWidth: 100,
+      zoomOnTouch: false,
       cropBoxMovable: true,
       cropBoxResizable: true,
       // ready: function() {//fires when image is loaded
@@ -46,18 +47,19 @@ module.exports = {
     });
 
     let cropperTemplateWithPreview =
-      '<div class="form-group">' +
-        '<div class="row">' +
-          '<div class="crop-image-container col-xl-7 col-lg-7 p-l-2">' +
+      '<div class="row">' +
+        '<div class="col-xl-7 col-lg-7 col-md-7 col-sm-7">' +
+            '<div class="crop-image-container ">' +
           '</div>' +
-          '<div class="preview-container col-xl-5 col-lg-5 text-xs-center">' +
-            '<div class="row">' +
-              '<div class="img-preview" style="width: 150px; height: 150px; overflow: hidden; margin: auto;"></div>' +
-            '</div>' +
-            '<div class="row">' +
-              '<div class="img-preview mini" style="width: 50px; height: 50px; overflow: hidden; margin: auto;"></div>' +
-            '</div>' +
+        '</div>' +
+        '<div class="preview-container col-xl-5 col-lg-5 col-md-5 col-sm-5 hidden-xs-down text-xs-center p-r-0">' +
+          '<div class="row">' +
+            '<div class="img-preview" style="width: 150px; height: 150px; overflow: hidden; margin: auto;"></div>' +
           '</div>' +
+          '<div class="row">' +
+            '<div class="img-preview mini" style="width: 50px; height: 50px; overflow: hidden; margin: auto;"></div>' +
+          '</div>' +
+        '</div>' +
         '</div>' +
         '<div class="row">' +
           '<div class="col-xl-12 m-t-3 m-b-2 text-xs-center">' +
@@ -75,8 +77,8 @@ module.exports = {
       '<div class="form-group">' +
         '<div class="row">' +
           '<div class="col-xl-10 offset-xl-1">' +
-          '<div class="crop-image-container">' +
-          '</div>' +
+            '<div class="crop-image-container">' +
+            '</div>' +
           '</div>' +
         '</div>' +
         '<div class="row">' +
@@ -95,7 +97,7 @@ module.exports = {
     let modalTemplate =
       '<div class="modal fade cropModal modal-dropzone ' + (customOptions.cssClass || '') + '"' +
           'tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">' +
-        '<div class="modal-dialog modal-lg" role="document">' +
+        '<div class="modal-dialog" role="document">' +
           '<div class="modal-content">' +
             '<div class="modal-header">' +
               '<button type="button" class="close" data-dismiss="modal" aria-label="Close">' +
@@ -153,7 +155,7 @@ module.exports = {
               callback();
           });
 
-          options.minContainerHeight = 320;
+          options.minContainerHeight = 100;
 
           let cropper = new Cropper(this, options);
           //todo set cropper data
