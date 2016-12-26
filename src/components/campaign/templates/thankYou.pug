@@ -30,9 +30,10 @@
               li
                 span Percentage Revenue: &nbsp;
                 strong #{ investment.percentage_revenue }
-          li 
-            span Perks: &nbsp;
-            strong #{ investment.perk }
+          if investment.perk
+            li
+              span Perks: &nbsp;
+              strong #{ investment.perk }
 
         .info-btn-block.pt50
           a(href="account/investor-dashboard").btn.btn-secondary INVESTOR DASHBOARD &nbsp;
