@@ -24,18 +24,18 @@ section.formc-team-members-director.container.m-b-85
           label.col-xl-3.col-lg-12.text-xl-right.textlg-left.p-t-0.m-b-0 Date of Most Recent Tax Return
             span.color-red *
           .col-xl-4.col-lg-6.p-r-0
-            - 
+            //- 
               pug_html += app.fields.dateMonth('dob', _.extend({
               'empty': { '': 'Choose' },
               'value': values.dob,
               }, fields.dob));
 
-            - 
+            //- 
               pug_html += app.fields.dateDay('dob', _.extend({
               'empty': { '': 'Choose' },
               'value': values.dob,
               }, fields.dob));
-            - 
+            //- 
               pug_html += app.fields.dateYear('dob', _.extend({
               'value': values.dob,
               'placeholder': 'YYYY',
@@ -58,7 +58,7 @@ section.formc-team-members-director.container.m-b-85
             |  field for the fiscal year ended.
       .col-lg-12.investment.m-t-2
         .form-group.row
-          - 
+          //- 
             pug_html += app.fields.fieldText('name', {
             schema: fields.name,
             class: 'col-xl-4 m-b-md-25',
@@ -69,7 +69,7 @@ section.formc-team-members-director.container.m-b-85
               span.by By:
               span.name Maria Kravchuk
         .row.form-group
-          - 
+          //- 
             pug_html += app.fields.fieldText('title', {
             schema: fields.title,
             class: 'col-xl-4 m-b-md-25',
