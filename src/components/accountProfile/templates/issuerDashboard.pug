@@ -85,11 +85,10 @@ section.issuer-dashbord-top
             style="width:" + percentage_raised + "%").circle_progress
             i.fa.fa-circle-o
           - var now = new Date();
-          if values.campaign.amount_raised > 0
-            span(style="left:" + percentage_raised + "%").text_position
-              | #{now.toLocaleString('en-US', { month: "short" })} #{ now.getDate() }
-              br
-              | #{ helpers.format.formatAmount(values.campaign.amount_raised) } Raised
+          span(style="left:" + percentage_raised + "%").text_position
+            | #{now.toLocaleString('en-US', { month: "short" })} #{ now.getDate() }
+            br
+            | #{ helpers.format.formatAmount(values.campaign.amount_raised) } Raised
         .progress_description
           -
             var starting_date = helpers.date.getStartDate(values.campaign.expiration_date, values.campaign.length_days);
