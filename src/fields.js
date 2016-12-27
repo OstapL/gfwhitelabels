@@ -239,6 +239,19 @@ let exports = {
       name: name,
       attr: attr,
     });
+  },  
+
+  radioLabel(name, attr) {
+    this.prepareField(name, attr);
+    attr.type = attr.type || 'radio';
+    attr.class1 = attr.class1 || 'col-xl-3 text-xl-right text-lg-left';
+    attr.class2 = attr.class2 || 'col-xl-9';
+    const template = require('./templates/radioLabel.pug');
+
+    return template({
+      name: name,
+      attr: attr,
+    });
   },
 
   fileFolderDropzone(name, attr, schema) {
