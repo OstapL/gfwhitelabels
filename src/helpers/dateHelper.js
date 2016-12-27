@@ -6,7 +6,11 @@ module.exports = {
   },
 
   fromNow(dateFrom) {
-    return moment().from(dateFrom);
+    return moment(dateFrom).from(moment());
+  },
+
+  getStartDate(expirationDate, durationInDays) {
+    return moment(expirationDate, 'YYYY-MM-DD').subtract(durationInDays, 'days').format('YYYY-MM-DD');
   },
 
 };

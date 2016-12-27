@@ -1,5 +1,6 @@
 'use strict';
 
+const companyFees = require('consts/companyFees.json');
 const formcHelpers = require('./helpers.js');
 const formatHelper = require('../../helpers/formatHelper');
 const roles = ['Shareholder', 'Director', 'Officer'];
@@ -93,7 +94,7 @@ module.exports = {
       'submit form': 'submit',
       'click .link-2': 'openPdf',
       'click .submit_formc': submitFormc,
-      'keyup #full-name': 'changeSign',
+      'keyup #full_name': 'changeSign',
       'click #pay-btn': 'stripeSubmit',
     }, menuHelper.events, yesNoHelper.events, /*leavingConfirmationHelper.events*/),
 
@@ -131,7 +132,7 @@ module.exports = {
 
       let eSignForm = this.$('.electronically-sign');
       this.eSignCompanyName = eSignForm.find('#company-name');
-      this.eSignFullName = eSignForm.find('#full-name');
+      this.eSignFullName = eSignForm.find('#full_name');
       this.eSignPreview = eSignForm.find('.electronically .name');
 
       return this;
@@ -160,14 +161,16 @@ module.exports = {
     getDocMetaData () {
       const formData = this.$el.find('form').serializeJSON();
       const issuer_legal_name = app.user.get('first_name') + ' ' + app.user.get('last_name');
-      debugger;
+      
       return {
-        trans_percent: 6,
-        nonrefundable_fees: 50,
-        registration_fee: 500,
-        amendment_fee: 200,
-        commitment_date_x: this.getCurrentDate(),
+        trans_percent: companyFees.trans_percent,
+        registration_fee: companyFees.registration_fee,
+        nonrefundable_fees: companyFees.nonrefundable_fees,
+        amendment_fee: companyFees.amendment_fee,
+        commencement_date_x: this.getCurrentDate(),
         zip_code: app.user.company.zip_code,
+        city: app.user.company.city,
+        state: app.user.company.state,
         address_1: app.user.company.address_1,
         address_2: app.user.company.address_2,
         issuer_legal_name: app.user.company.name,
@@ -1855,18 +1858,27 @@ module.exports = {
 
       let target = event.target;
       let element = '';
-      if(target.dataset.type == 'text') {
+      if(target.dataset.type == 'text' || target.dataset.type == 'money') {
         element = document.createElement('input');
         element.name = target.dataset.name;
-        element.value = target.innerHTML;
+
+        if(target.dataset.type == 'money') {
+          //element.value = formatHelper.unformatPrice(target.innerHTML);
+          element.value = target.innerHTML;
+        } else {
+          element.value = target.innerHTML;
+        }
+
+        element.type = target.dataset.type;
+        element.dataset.type = target.dataset.type;
         element.onblur = (e) => this.update(e);
         target.parentElement.insertBefore(element, target);
       } else if(target.dataset.type == 'select') {
         element = document.createElement('select');
         element.name = target.dataset.name;
         element.onblur = (e) => this.update(e);
-        let v = target.dataset.name.split('.').reduce((o,i)=>o[i], this.fields);
-        v = v.validate.OneOf;
+
+        let v = app.valByKeyReplaceArray(this.fields, target.dataset.name).validate.OneOf;
         v.choices.forEach((el, i) => {
           let e = document.createElement('option');
           e.innerHTML = v.labels[i];
@@ -1881,16 +1893,20 @@ module.exports = {
         element = document.createElement('textarea');
         element.name = target.dataset.name;
         element.className = 'big-textarea w-100';
-        element.innerHTML = target.innerHTML;
+        element.innerHTML = target.innerHTML.replace(/\<br\>/g, "\n");
         element.onblur = (e) => this.update(e);
         target.parentElement.insertBefore(element, target);
       }
+      element.focus();
 
       target.remove();
     },
 
     update(e) {
-      const val = e.target.value;
+      let val = e.target.value;
+      if(e.target.dataset.type == 'money') {
+        val = formatHelper.unformatPrice(val);
+      }
       const name = e.target.name;
       const reloadRequiredFields = [
         'corporate_structure',
@@ -1900,6 +1916,7 @@ module.exports = {
         'price_per_share',
         'length_days',
       ];
+
 
       e.target.setAttribute(
         'id', e.target.name.replace(/\./g, '__').replace(/\[/g ,'_').replace(/\]/g, '_')
@@ -1928,21 +1945,24 @@ module.exports = {
           let names = fieldName.split('.');
           fieldName = names[0].split('[')[0];
           let index = names[0].split('[')[1].replace(']', '');
-          app.user.formc[fieldName][index][names[1]] = val;
-          data[fieldName] = app.user.formc[fieldName];
+          app.setValByKey(app.user, name, val);
+
           if(fieldName == 'team_members') {
             url = formcServer + '/' + this.model.formc.id + '/team-members/' +
               roles[app.user.formc.team_members[index].role[0]].toLocaleLowerCase() + '/' + 
               app.user.formc.team_members[index].user_id;
             data = app.user.formc.team_members[index];
             method = 'PUT';
-          } 
-          /* else if(fieldName.indexOf('risk') !== -1) {
-            url = formcServer + '/' + this.model.formc.id + '/' + fieldName + '/' +
-              roles[app.user.formc.team_members[index].role[0]].toLocaleLowerCase() + '/' + 
-              app.user.formc.team_members[index].user_id;
+          } else if(fieldName.indexOf('risk') !== -1) {
+            let riskName = fieldName.split('.')[0];
+            let riskVar = name.split('.')[2];
+            app.user.formc[fieldName][riskVar] = val;
+            url = formcServer + '/' + this.model.formc.id + '/risk-factors-' + fieldName.split('_')[0] + '/' + index;
+            app.user.formc[fieldName][index]
+            data = app.user.formc[fieldName][index];
+          } else {
+            data[names[0].replace(/\[\d+\]/, '')] = app.user.formc[names[0].replace(/\[\d+\]/, '')];
           }
-          */
         } else {
           data[fieldName] = val;
         }
@@ -1964,43 +1984,38 @@ module.exports = {
             '#' + e.target.name.replace(/\./g, '__').replace(/\[/g ,'_').replace(/\]/g, '_')
           );
           let href = '';
-          /*
-          if(e.target.tagName == 'SELECT') {
-            href = document.createElement('select');
-            let metaData = name.split('.').reduce(function(o,i) { return o[i]; }, this.fields);
-            debugger;
-            if(metaData && metaData.validate && metaData.validate.OneOf) {
-              let options = metaData.validate.OneOf;
-              options.choices.forEach((el, i) => {
-                let option = document.createElement('option');
-                option.value = el;
-                option.innerHTML = options.labels ? options.labels[i] : el;
-                href.insert(option);
-              });
-            }
-            
-          } else {
-            href = document.createElement('a');
-            href.innerHTML = val;
-            href.setAttribute('href', '#');
-          }
-          */
           href = document.createElement('a');
-          href.innerHTML = val;
           href.setAttribute('href', '#');
           href.dataset.name = e.target.name;
 
+          let realVal = val;
           if(e.target.tagName == 'SELECT') {
             href.dataset.type = 'select';
+            let metaData = app.valByKeyReplaceArray(this.fields, e.target.name);
+            realVal = app.fieldChoiceList(metaData, val);
+          } else if(e.target.tagName == "TEXTAREA") {
+            href.dataset.type = "textarea";
+            realVal = realVal.replace(/\n/g, '<br>');
           } else {
             href.dataset.type = 'text';
+            if(e.target.dataset.type == 'money') {
+              realVal = formatHelper.formatPrice(realVal);
+            }
           }
 
-          href.dataset.value = val;
+          href.innerHTML = realVal;
+          if(e.target.tagName == 'SELECT') {
+            href.dataset.value = val;
+          } 
+
           href.className = 'createField show-input link-1';
 
-          document.querySelectorAll('[data-name="' + e.target.name + '"]').forEach((el) => {
-            el.innerHTML = val;
+          document.querySelectorAll('[data-name="' + e.target.name + '"]').forEach((sameElement) => {
+            if(sameElement.tagName == 'SELECT') {
+              sameElement.value = val
+            } else {
+              sameElement.innerHTML = realVal;
+            }
           });
 
           input.after(href);
@@ -2031,6 +2046,8 @@ module.exports = {
           }
         })
       );
+
+      $('body').on('click', '.createField', (e) => this.createField(e));
 
       return this;
     },

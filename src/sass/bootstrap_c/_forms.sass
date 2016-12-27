@@ -67,6 +67,7 @@ select.form-control
 
 	.border-dropzone.dropzone-profile
 		border-top: none
+		display: block
 	.user-photo-wrap
 		background-color: $alabaster
 		img
@@ -100,8 +101,16 @@ select.form-control
 		label
 			padding-top: 0
 		.city_states
+			label
+				padding-top: 6px
+			margin-bottom: 20px
 			.change_state_city
-				//left: 0
+				top: 0
+	@media screen and (max-width: 380px)
+		.change_state_city
+			.input-value
+				max-width: 120px!important
+
 
 	@media screen and (min-width:992px)
 		// date of birth field
