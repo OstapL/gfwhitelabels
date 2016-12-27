@@ -727,7 +727,7 @@ module.exports = {
           model: data[0],
           fields: options[0].fields,
           allowQuestion: false,
-          cssClass: 'col-lg-8 pt50',
+          cssClass: 'col-lg-8',
         });
         comments.render();
 
