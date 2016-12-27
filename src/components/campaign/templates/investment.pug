@@ -54,23 +54,25 @@ mixin confirmStatement(name, attr)
           input(type="hidden" name="company_id" value=values.id)
           .row
             .col-xl-12
-              +fieldTextLabel("amount", _.extend({
-                class1: 'col-lg-3 col-md-12 text-lg-left text-xl-right',
-                class2: 'col-lg-4 col-md-12',
-                placeholder: '$',
-                text: "$10 of payment processing fee. Your money will be returned to you if the " +
-                  "campaign doesn't reach the target goal ($500,000)."
-                }, fields.amount))
+              -
+                pug_html += app.fields.fieldTextLabel("amount", _.extend({
+                    class1: 'col-lg-3 col-md-12 text-lg-left text-xl-right',
+                    class2: 'col-lg-4 col-md-12',
+                    placeholder: '$',
+                    text: "$10 of payment processing fee. Your money will be returned to you if the " +
+                      "campaign doesn't reach the target goal ($500,000).",
+                  }, fields.amount));
           .row
             .col-xl-12
-              +fieldTextLabel("fee", _.extend({
-                class1: 'col-lg-3 col-md-12 text-lg-left text-xl-right',
-                class2: 'col-lg-4 col-md-12 input-border-bottom',
-                placeholder: '+ $10',
-                value: '$10',
-                label: 'Fee',
-                disabled: true
-                }, fields.fee))
+              -
+                pug_html += app.fields.fieldTextLabel("fee", _.extend({
+                    class1: 'col-lg-3 col-md-12 text-lg-left text-xl-right',
+                    class2: 'col-lg-4 col-md-12 input-border-bottom',
+                    placeholder: '+ $10',
+                    value: '$10',
+                    label: 'Fee',
+                    disabled: true,
+                  }, fields.fee));
           .row
             label.col-lg-3.text-lg-right.p-t-0.total-investment-label Total
             .col-lg-4
