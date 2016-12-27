@@ -166,6 +166,7 @@ module.exports = {
           serverUrl: serverUrl,
           user: this.model,
           roleInfo: app.user.getRoleInfo(),
+          company: app.user.get('company'),
           fields: this.fields,
           states: this.usaStates,
         })
@@ -611,8 +612,6 @@ module.exports = {
     },
 
     render(){
-      // const socialMediaScripts = require('helpers/shareButtonHelper.js');
-
       this.$el.html(
         this.template({
           values: this.model,
@@ -620,8 +619,6 @@ module.exports = {
           helpers: helpers,
         })
       );
-
-      // socialMediaScripts.facebook();
 
       this.initComments();
 
