@@ -338,19 +338,14 @@ let exports = {
       attr.thumbSize = '255x135';
     }
 
-    if(attr.hasOwnProperty('thumbSize') == false) { 
-      attr.thumbSize = '255x135';
-    }
 
     if(attr.hasOwnProperty('icon') == false) { 
       attr.icon = 'camera';
     }
 
-
     if(attr.hasOwnProperty('text') == false) { 
       attr.text = 'Drop your photo here or click to upload';
     }
-
 
     const template = require('./templates/teamMemberDropzone.pug');
     return template({
