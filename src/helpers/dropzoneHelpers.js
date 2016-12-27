@@ -413,18 +413,19 @@ module.exports = {
 
       this._initializeDropzone(name, dzOptions, (data) => {
         let imgId = data[0].id;
-
-        this._cropImageWithDefaults(imgId, name, (cropData) => {
-          let url = cropData.urls[0];
-          onCrop(cropData);
+        let url = data[0].urls[0];
+        // this._cropImageWithDefaults(imgId, name, (cropData) => {
+        //   let url = cropData.urls[0];
+        //   let imgId = cropData.id;
+        //   onCrop(cropData);
 
           //update ui and bind events
           let imgActionsBlock = $(
             '<div class="delete-image-container">' +
-            '<a class="crop-image" data-imageid="' + cropData.id + '">' +
+            '<a class="crop-image" data-imageid="' + imgId + '">' +
             '<i class="fa fa-crop"></i>' +
             '</a>' +
-            '<a class="delete-image" data-imageid="' + cropData.id + '">' +
+            '<a class="delete-image" data-imageid="' + imgId + '">' +
             '<i class="fa fa-times"></i>' +
             '</a>' +
             '</div>');
@@ -448,7 +449,7 @@ module.exports = {
 
           //here we are cropping origin image, so we have to use imgId
           this._cropImage(imgId, name, onCrop);
-        });
+        // });
       });
 
       $('.dropzone__' + name + ' a.delete-image').on('click', deleteImage);
@@ -559,11 +560,12 @@ module.exports = {
 
       this._initializeDropzone(name, dzOptions, (data, file) => {
         let imageId = data[0].id;
-        this.originImageId = imageId;
-
-        this._cropImageWithDefaults(imageId, name, (cropData) => {
-          onCrop(cropData)
-          let url = cropData.urls[0];
+        let url = data[0].urls[0];
+        // this.originImageId = imageId;
+        //
+        // this._cropImageWithDefaults(imageId, name, (cropData) => {
+        //   onCrop(cropData)
+        //   let url = cropData.urls[0];
 
           let imageBlock = $('<div class="col-xl-4 col-lg-4 col-md-4 col-sm-6 col-xs-12 one-photo">' +
             '<div class="delete-image-container">' +
@@ -583,7 +585,7 @@ module.exports = {
           $('.dropzone__' + name + ' .all-gallery').append(imageBlock);
 
           enqueueImage(imageId);
-        });
+        // });
       });
 
       //attach remove item handlers

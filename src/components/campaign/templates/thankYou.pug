@@ -1,11 +1,11 @@
-- pug_html += app.breadcrumbs('Invest', '', [ ['Home', '/'], ['Explore', '/companies'], ['Smartbe', '/' + investment.company_id], ['Invest in ' + investment.company_id, '']]);
-
+| !{app.breadcrumbs('Invest', '', [ ['Home', '/'], ['Explore', '/companies'], ['Smartbe', '/' + investment.company_id], ['Invest in ' + investment.company_id, '']])}
+- console.log(investment);
 .container
   .row
     .col-sm-8.offset-sm-2
       h2.text-xs-center.thankyou-title.m0 
         i(aria-hidden="true").color-green.fa.fa-thumbs-o-up 
-        | You have invested $#{ investment.amount } in #{ investment.company_id }
+        | You have invested $#{ investment.amount } in #{ investment.company_name }
 
   .row
     .col-sm-8.offset-sm-2.mb50.mt50
@@ -18,7 +18,7 @@
           li 
             span Transaction ID: &nbsp;
             strong #{ investment.id }
-          case investment.security_type
+          case investment.payment_information_type
             when 0
               li
                 span Amount of Shares: &nbsp;
@@ -30,9 +30,10 @@
               li
                 span Percentage Revenue: &nbsp;
                 strong #{ investment.percentage_revenue }
-          li 
-            span Perks: &nbsp;
-            strong #{ investment.perk }
+          if investment.perk
+            li
+              span Perks: &nbsp;
+              strong #{ investment.perk }
 
         .info-btn-block.pt50
           a(href="account/investor-dashboard").btn.btn-secondary INVESTOR DASHBOARD &nbsp;

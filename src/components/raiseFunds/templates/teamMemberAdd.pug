@@ -1,5 +1,4 @@
 - var zipCodeDirective = require('directives/zipcode/index.js');
-include ../../../templates/fields_mixins.pug
 include menu.pug
 
 - pug_html += app.breadcrumbs('Create Campaign', '', [ ['Home', '/'], ['Create campaign', '/campaign/' + values.id + '/general_information'], ['team member (' + (type == 'advisor' ? 'advisor' : 'team member') + ')', ''],]);
@@ -16,116 +15,75 @@ section.team-members.container.m-b-85
 
   //START RIGHT BLOCK
   .col-xl-8.col-lg-8.col-md-12
-    h2.text-uppercase.text-lg-center.text-xs-center.dosis.m-t-0 #{type == 'advisor' ? 'advisor' : 'team member'}
+    h2.text-uppercase.text-lg-center.text-xs-center.dosis.m-t-0.m-b-3 #{type == 'advisor' ? 'advisor' : 'team member'}
 
     form.form-section.col-xl-12
-      +fieldTextLabel("first_name", _.extend({
-        class1: 'col-xl-3 col-lg-12 text-lg-left text-xl-right ',
-        class2: 'col-xl-9 col-lg-12',
-        label: 'First name',
-        value: member.first_name
-      }, fields.first_name))
-      +fieldTextLabel("last_name", _.extend({
-        class1: 'col-xl-3 col-lg-12 text-lg-left text-xl-right ',
-        class2: 'col-xl-9 col-lg-12',
-        label: 'Last name',
-        value: member.last_name
-      }, fields.last_name))
-      +fieldTextLabel("email", _.extend({
-        class1: 'col-xl-3 col-lg-12 text-lg-left text-xl-right ',
-        class2: 'col-xl-9 col-lg-12',
-        label: 'Email',
-        value: member.email
-      }, fields.email))
+      - 
+        pug_html += app.fields.textLabel('first_name', {
+        schema: fields.first_name, 
+        value: member.first_name, 
+        label: 'First name',})
+      - 
+        pug_html += app.fields.textLabel('last_name', {
+        schema: fields.last_name, 
+        value: member.last_name, 
+        label: 'Last name',})
+      - 
+        pug_html += app.fields.textLabel('email', {
+        schema: fields.email, 
+        value: member.email, 
+        label: 'Email',})
       if type == 'advisor'
-        +fieldTextLabel("title", _.extend({
-          class1: 'col-xl-3 col-lg-12 text-lg-left text-xl-right ',
-          class2: 'col-xl-9 col-lg-12',
-          label: 'Title',
-          readonly: true,
-          value: 'Advisor',
-        }, fields.title))
+        - 
+          pug_html += app.fields.textLabel('title', {
+          schema: fields.title, 
+          value: 'Advisor', 
+          label: 'Title', 
+          readonly: true,})
       else
-        +fieldTextLabel("title", _.extend({
-          class1: 'col-xl-3 col-lg-12 text-lg-left text-xl-right ',
-          class2: 'col-xl-9 col-lg-12',
-          label: 'Title',
-          value: member.title
-        }, fields.title))
-
-      +fieldTextareaLabel("bio", _.extend({
-          class1: 'col-xl-3 col-lg-12 text-lg-left text-xl-right ',
-          class2: 'col-xl-9 col-lg-12 big-textarea',
-          placeholder: "At least 150 characters",
-          label: 'Bio',
-          value: member.bio,
-        }, fields.bio))
-
+        - 
+          pug_html += app.fields.textLabel('title', {
+          schema: fields.title, 
+          value: member.title, 
+          label: 'Title',})
+      - 
+        pug_html += app.fields.textareaLabel('bio', {
+        class2: 'col-xl-9 col-lg-12 big-textarea', 
+        schema: fields.bio, 
+        placeholder: 'At least 150 characters', value: member.bio, label: 'Bio',})
       - pug_html += zipCodeDirective(this, 'teamMember.pug').render().resultHtml;
-
-      +fieldTextLabel("college", _.extend({
-        class1: 'col-xl-3 col-lg-12 text-lg-left text-xl-right p-t-0 m-b-0 p-l-lg-1 m-b-lg-1',
-        class2: 'col-xl-9 col-lg-12',
-        label:  'Where did you attend college?',
-        placeholder: 'Name of college or university',
-        value: member.college,
-      }, fields.college))
+      - 
+        pug_html += app.fields.textLabel('college', {
+        class1: 'col-xl-3 col-lg-12 p-t-0 text-lg-left text-xl-right m-b-0 m-b-lg-1', 
+        schema: fields.college, 
+        value: member.college, 
+        label:  'Where did you attend college?', 
+        placeholder: 'Name of college or university',})
       .row
         .col-lg-6.input-min-width
-          +fieldTextLabel("linkedin", _.extend({
-            class1: 'col-xl-6 col-lg-12 text-lg-left text-xl-right p-l-3 p-t-0 m-b-0 p-l-lg-1 m-b-lg-1',
-            class2: 'col-xl-6 col-lg-12',
-            label:  'Your LinkedIn link',
-            placeholder: 'Your LinkedIn profile',
-            value: member.linkedin,
-            }, fields.linkedin))
+          - 
+            pug_html += app.fields.textLabel('linkedin', {
+            class1:'col-xl-6 col-lg-12 text-lg-left text-xl-right p-l-3 p-t-0 m-b-0 p-l-lg-1 m-b-lg-1', 
+            class2:'col-xl-6 col-lg-12', 
+            schema: fields.linkedin, 
+            value: member.linkedin, 
+            label:  'Your LinkedIn link', 
+            placeholder: 'Your LinkedIn profile',})
         .col-lg-6
-          +fieldTextLabel("facebook", _.extend({
-            class1: 'col-xl-5 col-lg-12 text-lg-left text-xl-right p-t-0 m-b-0 m-b-lg-1',
-            class2: 'col-xl-7 col-lg-12',
-            label:  'Your Facebook link',
-            placeholder: 'Your Facebook profile',
-            value: member.facebook,
-            }, fields.facebook))
+          - 
+            pug_html += app.fields.textLabel('facebook', {
+            class1:'col-xl-5 col-lg-12 text-lg-left text-xl-right p-t-0 m-b-0 m-b-lg-1', 
+            class2:'col-xl-7 col-lg-12', 
+            schema: fields.facebook, 
+            value: member.facebook, 
+            label:  'Your Facebook link', 
+            placeholder: 'Your Facebook profile',})
+      -
+        pug_html += app.fields.teamMemberDropzone('photo_image_id', {
+            data: member.photo_data[0],
+            help_text: 'This image entices investors to view your campaign. A minimum size of 1600x955 is recommended.',
+          }, fields.photo_image_id);
 
-      +teamMemberDropzone("photo_image_id", _.extend({
-          class1: 'col-xl-3 col-lg-12 text-lg-left text-xl-right ',
-          class2: 'col-xl-9 col-lg-12',
-          thumbSize: '255x135',
-          default: '/img/default/255x153.png',
-          icon: 'camera',
-          label: 'Profile Picture',
-          help_text: 'This image entices investors to view your campaign. A minimum size of 1600x955 is recommended.',
-          text: 'Drop your photo here or click to upload',
-          data: member.photo_data[0],
-        }, fields.photo_image_id))
-      //.row.dropzone__photo.media-item
-        .col-lg-3.p-r-12.col-md-12.text-md-center.text-sm-center.text-xs-center
-          .pull-lg-right.font-weight-bold  Photo
-        div(style="position:relative;").clearfix
-          div(style="line-height:115px;text-align:center;position:absolute;width:100%;height:100%;left:0;right:0;top:0;bottom:0;z-index:1;display:none;background-color:rgba(255,255,255,0.8);").uploading
-            img(alt="activity indicator" src="/img/ajax-loader.gif" style="position:absolute;margin:auto;top:0;left:0;right:0;bottom:0;")
-          span
-            .col-lg-9.text-lg-center
-              .border-dropzone.col-lg-12.gallery
-                .col-lg-6.col-md-5.col-sm-5.col-xs-5.p-dropzone.text-md-center.text-sm-center.text-xs-center.p-dropzone
-                  div(href="#")
-                    p.drop-photo Drop your photo here or click to upload
-                    i.fa.fa-camera
-                .col-lg-6.col-md-7.col-sm-7.col-xs-7.text-lg-center.p-dropzone
-                  img(src=member.photo).img-fluid.img-circle.img-photo
       .col-lg-12.text-lg-right.p-r-0.p-t-2.text-md-center.text-sm-center.text-xs-center
         button.btn.btn-secondary.text-uppercase.m-r-3.cancel cancel
         button(data-method=index == 'new' ? 'POST' : 'PUT').btn.btn-primary.text-uppercase.pull-lg-right.save Save
-          //
-            .col-lg-6.p-r-0
-              .dropdown.pull-right
-                button(type="submit"
-                id="dropdownMenuButton"
-                data-toggle="dropdown"
-                aria-haspopup="true"
-                aria-expanded="false"
-                ).btn.btn-lg.btn-primary.text-uppercase.dropdown-toggle Save and add other
-                .dropdown-menu(aria-labelledby="dropdownMenuButton")
-                  a(href="").dropdown-item Add Advisor
-                  a(href="").dropdown-item Add Team Member

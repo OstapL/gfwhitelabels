@@ -1,6 +1,7 @@
 module.exports = {
   events: {
     'click .yesno input:radio': 'onRadioButtonChange',
+    'click .yesno input:checkbox': 'onCheckboxChange',
   },
   methods: {
     onRadioButtonChange(e) {
@@ -13,6 +14,19 @@ module.exports = {
       } else {
         this.$('.' + name + '.shown-yes').show();
         this.$('.' + name + '.shown-no').hide();
+      }
+    },
+
+    onCheckboxChange(e) {
+      let $cb = $(e.target);
+      const name = $cb.data('name');
+
+      if ($cb.is(':checked')) {
+        this.$('.' + name + '.shown-yes').show();
+        this.$('.' + name + '.shown-no').hide();
+      } else {
+        this.$('.' + name + '.shown-yes').hide();
+        this.$('.' + name + '.shown-no').show();
       }
     },
   },

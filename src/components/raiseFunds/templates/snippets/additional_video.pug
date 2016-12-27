@@ -9,25 +9,16 @@ mixin row(value, index)
           i.fa.fa-times
       .row.showPopover(data-content="You Tube or Vimeo links only please.")
         .col-xl-7.col-lg-6.videoInteractive.text-xl-right.text-lg-left
-          +fieldNestedTextLabel(name, 'headline', value, index, {
-            class1: 'col-xl-5 col-lg-12 p-t-0 m-b-0 m-b-lg-1',
-            class2: 'col-xl-7 col-lg-12',
-            placeholder: 'Title',
-          })
-          +fieldNestedTextLabel(name, 'link', value, index, {
-            class1: 'col-xl-5 col-lg-12',
-            class2: 'col-xl-7 col-lg-12 additional-video-link',
-            placeholder: 'http://www.',
-          })
           
-
+          | !{app.fields.nestedTextLabel(name, 'headline', value, index,{class1: 'col-xl-5 col-lg-12 p-t-0 m-b-0 m-b-lg-1', class2: 'col-xl-7 col-lg-12', placeholder: 'Title',}, attr.schema.headline)}
+          | !{app.fields.nestedTextLabel(name, 'link', value, index,{class1: 'col-xl-5 col-lg-12', class2: 'col-xl-7 col-lg-12 additional-video-link', placeholder: 'http://www.',}, attr.schema.link)}
+          
         .col-xl-5.col-lg-6
           .embed-responsive.embed-responsive-16by9 
             -
               var additionalVideo = app.getVideoId(values && values[index] ? values[index].link : null);
               var src = app.getVideoUrl(additionalVideo);
             iframe.embed-responsive-item(src=src allowfullscreen="true")
-
 
 mixin run()
   if first_run

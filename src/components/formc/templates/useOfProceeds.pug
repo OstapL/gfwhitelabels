@@ -50,22 +50,18 @@ section.formc.use_of_proceeds.create-company-media.container
                 td.w-50 Total Use of Net Proceeds
                   .pull-right.icon.showPopover(data-content="Minimum and maximum total use of net proceeds is calculated automatically: <br>  Total Use of Net Proceeds = Sum (A+B+C)")
                     i.fa.fa-question-circle
-                td.w-25.text-lg-center.font-size-12.min-total-use
-                td.w-25.text-lg-center.font-size-12.max-total-use(data-content="<i class='fa fa-exclamation-circle'></i>Total Use of Net Proceeds must be equal to Net Proceeds." data-placement="right" data-toggle="popover" data-container="body")
+                td.w-25.text-lg-center.font-size-12.min-total-use(data-content="<i class='fa fa-exclamation-circle'></i>Minimum Total Use of Net Proceeds must be equal to Minimum Net Proceeds." data-placement="bottom" data-toggle="popover" data-container="body" data-trigger="manual")
+                td.w-25.text-lg-center.font-size-12.max-total-use(data-content="<i class='fa fa-exclamation-circle'></i>Maximum Total Use of Net Proceeds must be equal to Miaximum Net Proceeds." data-placement="bottom" data-toggle="popover" data-container="body" data-trigger="manual")
       .col-lg-12
         .border-bottom.m-b-3
         h3.text-xs-center Business Plan
 
       .col-lg-12.create-perks.doc
         .img-ppt
-          +fileDropzone("business_plan_file_id", _.extend({
-            class1: 'col-xl-3 col-lg-12 text-xl-right text-lg-left',
-            class2: 'col-xl-9 col-lg-12 p-l-1 p-r-1',
-            text: 'Drop your PDF or DOC here or click to upload',
-            icon: 'file',
+          -
+            pug_html += app.fields.fileDropzone('business_plan_file_id',{
             data: values.business_plan_data[0] || [],
-            default: '/img/default/file.png',
-          }, fields.business_plan_file_id))
+            }, fields.business_plan_file_id);
       
       .col-lg-12.text-lg-right.m-t-2.text-xs-center.text-sm-center
         //- a(href="#").btn.btn-primary.text-uppercase save

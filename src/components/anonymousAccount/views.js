@@ -3,6 +3,159 @@ const validation = require('components/validation/validation.js');
 module.exports = {
   // TODO
   // To do refactoring
+
+  // popupLogin1: Backbone.View.extend({
+  //   urlRoot: authServer + '/rest-auth/login',
+  //   template : require('./templates/popupLogin.pug'),
+  //   events: {
+  //     'click .link-show-sign-in': 'switchToSignIn',
+  //     'click .link-show-sign-up': 'switchToSignUp',
+  //
+  //     'submit .login-form': 'login',
+  //     'submit .signup-form': 'signupSubmit',
+  //     'click .btn-google': 'loginGoogle',
+  //     'click .btn-linkedin': 'loginLinkedin',
+  //     'click .btn-facebook': 'loginFacebook',
+  //
+  //     //modal events
+  //     'hide.bs.modal #sign_in': '',
+  //     'hidden.bs.modal #sign_in': '',
+  //     'hide.bs.modal #sign_up': '',
+  //     'hidden.bs.modal #sign_up': '',
+  //   },
+  //
+  //   initialize(options) {
+  //     this.onSucces = options.onSucces;
+  //     this.successUrl = options.successUrl;
+  //   },
+  //
+  //   _success(data) {
+  //     if(data.hasOwnProperty('key')) {
+  //       localStorage.setItem('token', data.key);
+  //       setTimeout(() => {
+  //         window.location = this.next ? this.next : '/account/profile';
+  //       }, 200);
+  //     } else {
+  //       alert('Server return no authentication data');
+  //     }
+  //   },
+  //
+  //
+  //   closeModal(e) {
+  //
+  //   },
+  //
+  //   switchToSignIn(e) {
+  //
+  //   },
+  //
+  //   switchToSignUp(e) {
+  //     $('#sign_in').modal('hide');
+  //     $('#sign_up').modal();
+  //   },
+  //
+  //   login(e) {
+  //     let $form = $(e.target).closest('form');
+  //     let data = $form.serializeJSON({ useIntKeysAsArrayIndex: true });
+  //
+  //   },
+  //
+  //   loginGoogle() {
+  //     this.hello('google').login({scope: 'profile,email'}).
+  //     then((e) => {
+  //         var sendToken = this.socialAuth.sendToken('google', e.authResponse.access_token);
+  //
+  //         $.when(sendToken).done(function (data) {
+  //           localStorage.setItem('token', data.key);
+  //           window.location = '/account/profile';
+  //         }).fail(function (data) {
+  //           api.errorAction(this, data);
+  //         });
+  //       },
+  //       function (e) {
+  //         // TODO: notificate user about reason of error;
+  //         app.routers.navigate(
+  //           '/account/login', {trigger: true, replace: true}
+  //         );
+  //       });
+  //   },
+  //
+  //   loginFacebook: function() {
+  //
+  //     var self = this;
+  //
+  //     self.hello('facebook').login({
+  //       scope: 'public_profile,email'}).then(
+  //       function (e) {
+  //         var sendToken = self.socialAuth.sendToken('facebook', e.authResponse.access_token);
+  //
+  //         $.when(sendToken).done(function (data) {
+  //           localStorage.setItem('token', data.key);
+  //           window.location = '/account/profile';
+  //         }).fail(function (data) {
+  //           api.errorAction(self, data);
+  //         });
+  //       },
+  //       function (e) {
+  //
+  //         // TODO: notificate user about reason of error;
+  //         app.routers.navigate(
+  //           '/account/login',
+  //           {trigger: true, replace: true}
+  //         );
+  //       });
+  //   },
+  //
+  //   loginLinkedin: function() {
+  //
+  //     this.hello('linkedin').login({
+  //       scope: 'r_basicprofile,r_emailaddress',}).then(
+  //       function (e) {
+  //         var sendToken = self.socialAuth.sendToken('linkedin', e.authResponse.access_token);
+  //
+  //         $.when(sendToken).done(function (data) {
+  //           localStorage.setItem('token', data.key);
+  //           window.location = '/account/profile';
+  //         }).fail(function (data) {
+  //           api.errorAction(self, data);
+  //         });
+  //       },
+  //       function (e) {
+  //
+  //         // TODO: notificate user about reason of error;
+  //         app.routers.navigate(
+  //           '/account/login',
+  //           {trigger: true, replace: true}
+  //         );
+  //       });
+  //   },
+  //
+  //   render() {
+  //     this.$el.html(
+  //       this.template()
+  //     );
+  //
+  //     $('body').append(this.$el);
+  //
+  //     setTimeout(() => {
+  //       this._initModal();
+  //     }, 100);
+  //
+  //     return this;
+  //   },
+  //
+  //   _initModal() {
+  //     this.$signUp = $('#sign_up');
+  //     this.$signIn = $('#sign_in');
+  //
+  //     this.$signIn.on('');
+  //     this.$signUp.on('');
+  //
+  //     $('#sign_up').modal();
+  //   },
+  //
+  // }),
+
   popupLogin: Backbone.View.extend({
     urlRoot: authServer + '/rest-auth/login',
     events: {
@@ -398,7 +551,7 @@ module.exports = {
       app.hideLoading();
       $('body').scrollTo();
       $('#content').html(
-        '<section class="reset"><div class="container"><div class="col-lg-12"><h2 class="dosis text-uppercase text-sm-center text-xs-center m-t-85"> We send you email with future instructions </h2></div></div></section>'
+        '<section class="reset"><div class="container"><div class="col-lg-12"><h2 class="dosis text-uppercase text-sm-center text-xs-center m-t-85"> Please check your email for instructions. </h2></div></div></section>'
       );
     }
 

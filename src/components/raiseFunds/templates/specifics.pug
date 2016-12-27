@@ -21,40 +21,22 @@ section.campaign-specifics.container.m-b-85
                 span.warning-text You get to set two fundraising goals: the minimum you're willing to accept and the  maximum you're willing to accept.  If you don't reach your minimum fundraising goal, all money will be returned to the investors.
         .row
           .col-lg-6
-            +fieldTextLabel("minimum_raise", _.extend({
-              class1: 'col-xl-6 col-lg-12 text-xl-right text-lg-left m-b-0 p-t-0 m-b-lg-1', 
-              class2: 'col-xl-6 col-l-65 col-lg-12', 
-              type: 'text',
-              placeholder: '$',
-              }, fields.minimum_raise))
+            - pug_html += app.fields.textLabel('minimum_raise', {class1:'col-xl-6 col-lg-12 text-xl-right text-lg-left m-b-0 p-t-0 m-b-lg-1', class2:'col-xl-6 col-l-65 col-lg-12', schema: fields.minimum_raise, value: values.minimum_raise, placeholder: '$',})
           .col-lg-6
-            +fieldTextLabel("maximum_raise", _.extend({
-              class1: 'col-xl-5 col-lg-12 text-xl-right text-lg-left m-b-0 p-t-0 m-b-lg-1', 
-              class2: 'col-xl-7 col-lg-12', 
-              type: 'text',
-              placeholder: '$',
-              help_text: 'Important Information About the Amount of Your Raise. <br><br>The requirement is based upon your Maximum Raise Amount: <br><br><u>“If $100,000 or less”</u><br>Financials have to be signed by CEO and total <br>income, taxable income and total tax reflected on <br>federal return must be included. If reviewed or <br>audited financials available, they must be provided <br>instead. <br><br><u>“If $100,001-$500,000”</u><br>Financials have to be signed by independent <br>accountant. If audited financials available, they <br>must be provided instead. <br><br><u>“If $500,001-$1,000,000”</u><br>Financials have to be signed by an independent <br>auditor UNLESS this is your first reliance on <br>Regulation Crowdfunding, in which case financials <br>must be signed by an independent accountant. <br>If audited statements are available, they must be <br>provided here.',
-              }, fields.maximum_raise))
+            - pug_html += app.fields.textLabel('maximum_raise', {class1:'col-xl-5 col-lg-12 text-xl-right text-lg-left m-b-0 p-t-0 m-b-lg-1', class2:'col-xl-7 col-lg-12', schema: fields.maximum_raise, value: values.maximum_raise, placeholder: '$', help_text: 'Important Information About the Amount of Your Raise. <br><br>The requirement is based upon your Maximum Raise Amount: <br><br><u>“If $100,000 or less”</u><br>Financials have to be signed by CEO and total <br>income, taxable income and total tax reflected on <br>federal return must be included. If reviewed or <br>audited financials available, they must be provided <br>instead. <br><br><u>“If $100,001-$500,000”</u><br>Financials have to be signed by independent <br>accountant. If audited financials available, they <br>must be provided instead. <br><br><u>“If $500,001-$1,000,000”</u><br>Financials have to be signed by an independent <br>auditor UNLESS this is your first reliance on <br>Regulation Crowdfunding, in which case financials <br>must be signed by an independent accountant. <br>If audited statements are available, they must be <br>provided here.',})
 
-        +fieldTextLabel("minimum_increment", _.extend({
-           class1: 'col-xl-3 col-lg-12 text-xl-right text-lg-left m-b-0 p-t-0 m-b-lg-1',
-           class2: 'col-xl-9 col-lg-12',
-           type: 'text',
-           placeholder: '$  People can invest this amount or more  ',
-           }, fields.minimum_increment))
+        - pug_html += app.fields.textLabel('minimum_increment', {class1:'col-xl-3 col-lg-12 text-xl-right text-lg-left m-b-0 p-t-0 m-b-lg-1', schema: fields.minimum_increment, value: values.minimum_increment, placeholder: '$  People can invest this amount or more',})
         +fieldChoiceLabel('length_days', _.extend({
           class1: 'col-xl-3 col-lg-12 text-xl-right text-lg-left m-b-0 p-t-0 m-b-lg-1',
           class2: 'col-xl-9 col-lg-12',
         }, fields.length_days))
         .text-lg-right.img-ppt.m-b-3
-          +fileDropzone("investor_presentation_file_id", _.extend({
-              class1: 'col-xl-3 col-lg-12 text-xl-right text-lg-center',
-              class2: 'col-xl-9 col-lg-12 p-l-1 p-r-1',
-              text: 'Drop your PPT or PDF here or click to upload',
-              data: values.investor_presentation_data[0],
-              default: '/img/default/file.png',
-              icon: 'file',
-          }, fields.investor_presentation_file_id, { label: 'Upload an Investor Presentation'}))
+          -
+            pug_html += app.fields.fileDropzone('investor_presentation_file_id',{
+            data: values.investor_presentation_data[0] || [],
+            label: 'Upload an Investor Presentation',
+            }, fields.investor_presentation_file_id);
+            
         .row
           .col-xl-12
             .border-bottom
@@ -85,11 +67,7 @@ section.campaign-specifics.container.m-b-85
                     a(href="/calculator/establishedBusiness/intro" target="_blank").dropdown-item Established Business Valuation
                     a(href="/calculator/selectCalculator" target="_blank").dropdown-item New Startup Valuation
             .col-xl-5.col-lg-5.col-sm-6.pull-lg-right.pull-md-left
-              +fieldTextLabel("premoney_valuation", _.extend({
-                class1: 'col-xl-4 col-lg-12 text-xl-right text-lg-left m-b-0 p-t-0 p-l-0 m-b-lg-1 p-l-lg-1',
-                class2: 'col-xl-8 col-lg-12',
-                placeholder: '$',
-              }, fields.premoney_valuation))
+              - pug_html += app.fields.textLabel('premoney_valuation', {class1:'col-xl-4 col-lg-12 text-xl-right text-lg-left m-b-0 p-t-0 p-l-0 m-b-lg-1 p-l-lg-1', class2: 'col-xl-8 col-lg-12', schema: fields.premoney_valuation, value: values.premoney_valuation, placeholder: '$',})
           +fieldChoiceLabel("valuation_determination", _.extend({
               class1: 'col-xl-3 col-lg-12 text-xl-right text-lg-left big-label-text m-b-0 m-b-lg-1',
               class2: 'col-xl-9 col-lg-12',
@@ -100,63 +78,28 @@ section.campaign-specifics.container.m-b-85
               class2: 'col-xl-9 col-lg-12',
               help_text: 'How are the securities being offered being valued? Include examples of methods for how such securities may be valued by the issuer in the future, including during subsequent corporate actions.'
             }, fields.valuation_determination))
-          +fieldTextLabel("price_per_share", _.extend({
-            class1: 'col-xl-3 col-lg-12 text-xl-right text-lg-left',
-            class2: 'col-xl-9 col-lg-12',
-            placeholder: '$',
-            help_text: 'Why do we ask? If you’ve issued shares in the past, you’ll have to calculate this in coordination with the current terms of your offering. If this is your first share issuance, we recommend something easy, like $1 per share.',
-          }, fields.price_per_share))
+          - pug_html += app.fields.textLabel('price_per_share', {schema: fields.price_per_share, value: values.price_per_share, placeholder: '$', help_text: 'Why do we ask? If you’ve issued shares in the past, you’ll have to calculate this in coordination with the current terms of your offering. If this is your first share issuance, we recommend something easy, like $1 per share.',})
           .m-t-2
           .row
             .col-xl-6.col-l-65.showPopover(data-content="<div class=''><span>Minimum # of Shares is calculated automatically: </span><br><span class='fraction'><span class='top'>Minimum Total Raise</span><span class='bottom'>Price Per Share</span></span></div>")
-              +fieldTextLabel("min_number_of_shares", _.extend({
-                class1: 'col-xl-6 col-lg-12 text-xl-right text-lg-left p-t-0 m-b-0 m-b-lg-1',
-                class2: 'col-xl-6 col-lg-12',
-                type: 'text',
-                maxlength: 90,
-                label: 'Minimum № of Shares',
-                disabled: true,
-              }, fields.min_number_of_shares))
+              - pug_html += app.fields.textLabel('min_number_of_shares', {class1:'col-xl-6 col-lg-12 text-xl-right text-lg-left p-t-0 m-b-0 m-b-lg-1', class2:'col-xl-6 col-lg-12', schema: fields.min_number_of_shares, value: values.min_number_of_shares, label: 'Minimum № of Shares', maxlength: 90, disabled: true,})
+
             .col-xl-6.showPopover(data-content="<div class=''><span>Maximum # of Shares is calculated automatically: </span><br><span class='fraction'><span class='top'>Maximum Total Raise</span><span class='bottom'>Price Per Share</span></span></div>")
-              +fieldTextLabel("max_number_of_shares", _.extend({
-                class1: 'col-xl-5 col-lg-12 text-xl-right text-lg-left p-t-0 m-b-0 m-b-lg-1',
-                class2: 'col-xl-7 col-lg-12',
-                type: 'text',
-                maxlength: 90,
-                label: 'Maximum № of Shares',
-                disabled: true,
-              }, fields.max_number_of_shares))
+              - pug_html += app.fields.textLabel('max_number_of_shares', {class1:'col-xl-5 col-lg-12 text-xl-right text-lg-left p-t-0 m-b-0 m-b-lg-1', class2:'col-xl-7 col-lg-12', schema: fields.max_number_of_shares, value: values.max_number_of_shares, label: 'Maximum № of Shares', maxlength: 90, disabled: true,})
           .row
             .col-xl-6.col-l-65.showPopover(data-content="<div class=''><span>Minimum Equity Offered is calculated automatically: </span><br><span class='fraction'><span class='top'>Minimum Total Raise</span><span class='bottom'>Minimum Total Raise+Pre-Money Valuation</span></span></div>")
-              +fieldTextLabel("min_equity_offered", _.extend({
-                class1: 'col-xl-6 col-lg-12 text-xl-right text-lg-left p-t-0 m-b-0 m-b-lg-1',
-                class2: 'col-xl-6 col-lg-12',
-                type: 'text',
-                maxlength: 90,
-                label: 'Minimum Equity Offered',
-                disabled: true,
-              }, fields.min_equity_offered))
+              - pug_html += app.fields.textLabel('min_equity_offered', {class1:'col-xl-6 col-lg-12 text-xl-right text-lg-left p-t-0 m-b-0 m-b-lg-1', class2:'col-xl-6 col-lg-12', schema: fields.min_equity_offered, value: values.min_equity_offered, label: 'Minimum Equity Offered', maxlength: 90, disabled: true,})
 
             .col-xl-6.showPopover(data-content="<div class=''><span>Maximum Equity Offered is calculated automatically: </span><br><span class='fraction'><span class='top'>Maximum Total Raise</span><span class='bottom'>Maximum Total Raise+Pre-Money Valuation</span></span></div>")
-              +fieldTextLabel("max_equity_offered", _.extend({
-                class1: 'col-xl-5 col-lg-12 text-xl-right text-lg-left p-t-0 m-b-0 m-b-lg-1',
-                class2: 'col-xl-7 col-lg-12',
-                type: 'text',
-                maxlength: 90,
-                label: 'Maximum Equity Offered',
-                disabled: true,
-              }, fields.max_equity_offered))
+              - pug_html += app.fields.textLabel('max_equity_offered', {class1:'col-xl-5 col-lg-12 text-xl-right text-lg-left p-t-0 m-b-0 m-b-lg-1', class2:'col-xl-7 col-lg-12', schema: fields.max_equity_offered, value: values.max_equity_offered, label: 'Maximum Equity Offered', maxlength: 90, disabled: true,})
 
         div(style=(values.security_type == 1 ? '' :  "display: none")).security_type_list.security_type_1
           .row.m-t-2
-            .col-xl-6
-              .form-group.row.min_equity_offered.required
-                label(for="min_equity_offered").col-xl-6.col-lg-12.text-xl-right.text-lg-left Percentage Revenue
-                .col-xl-6.col-lg-12.col-l-65
-                  input(name="min_equity_offered" placeholder="$" type="text" value="5%" disabled).form-control
-
-            .col-xl-6
-              .form-group.row.max_equity_offered.required
+            .col-xl-6.min_equity_offered
+              - pug_html += app.fields.textLabel('min_equity_offered', {class1: 'col-xl-6 col-lg-12 text-xl-right text-lg-left', class2:'col-xl-6 col-lg-12 col-l-65', schema: fields.min_equity_offered, value: '5%', label: 'Percentage Revenue', disabled: true,})
+            .col-xl-6.max_equity_offered
+              - pug_html += app.fields.textLabel('max_equity_offered', {class1: 'col-xl-5 col-lg-12 text-xl-right text-lg-left', class2:'col-xl-7 col-lg-12 col-l-65', schema: fields.max_equity_offered, value: '2X', label: 'Cap', disabled: true,})
+              //.form-group.row.max_equity_offered.required
                 label(for="max_equity_offered").col-xl-5.col-lg-12.text-xl-right.text-lg-left Cap
                 .col-xl-7.col-lg-12
                   input(name="max_equity_offered" placeholder="$" type="text" value="2X" disabled).form-control
@@ -177,13 +120,15 @@ section.campaign-specifics.container.m-b-85
           
           .col-xl-9.offset-xl-3
             h4.m-t-1.font-weight-bold.letter-spacing-normal Here’s how Revenue Share works:
-            ol.simple-list.mb45
+            ol.simple-list
               li.p-b-1 Share 5% of your company's revenue with investors annually, until;
               li.p-b-1 You have paid investors back two times the invested amount (distributions are capped at (2x) the investment amount, at which point the contract is deemed fulfilled);
               li.p-b-1 No distributions are required until the second full calendar year and the company is allowed one year of forbearance as needed;
               li In the event of default, investors become general unsecured creditors (senior to equity).
-        
-        .col-xl-12.border-top.m-t-2
+        .row
+          .col-xl-12
+            .border-bottom.m-t-2
+        .col-xl-12
           h3 Here some important things to remember about the campaign process.
           ol(type="1")
             li.pb10.text-justify Investors will have the ability to cancel their investment commitment until 48 hours prior to the deadline you’ve selected.

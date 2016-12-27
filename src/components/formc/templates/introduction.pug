@@ -1,13 +1,10 @@
 
 - 'use strict'
 include ../../raiseFunds/templates/menu.pug
-include ../../../templates/fields_mixins.pug
 
-- pug_html += app.breadcrumbs('Create Form C', '', [ ['Home', '/'], ['Create Form C', '/formc/' + values.id + '/introduction'], ['Introduction', ''], ]);
-
+| !{app.breadcrumbs('Create Form C', '', [ ['Home', '/'], ['Create Form C', '/formc/' + values.id + '/introduction'], ['Introduction', ''], ])}
 
 section.formc.introduction.create-company-media.container
-  - var campaignId = values.campaign_id;
   +menu('formc', 'introduction')
   .col-lg-8
     h2.text-uppercase.text-lg-center.text-xs-center.dosis.m-t-0.mb-50 introduction
@@ -42,6 +39,7 @@ section.formc.introduction.create-company-media.container
               label
                 input(type="radio" name="failed_to_comply_choice" value=0 checked=values['failed_to_comply_choice'] == 0 target=".explain")
                 | No
+
           div(style='display:' + (values['failed_to_comply_choice']  == 1? 'block' : 'none') + ';').failed_to_comply_choice.explain.shown-yes
             .form-group.row
               .col-lg-3.text-lg-right
@@ -72,13 +70,18 @@ section.formc.introduction.create-company-media.container
                     .col-lg-5.text-lg-right
                       label Expiration
                     .col-lg-7
-                      +fieldDateMonth("card_exp_month", _.extend({
-                      class: 'col-xl-6 p-l-0',
-                      }, fields.card_exp_month))
-                      +fieldDateYear("card_exp_date_year", _.extend({
-                      class: 'col-xl-6 p-r-0',
-                      placeholder: 'YYYY',
-                      }, fields.card_exp_date_year))
+                      - 
+                        pug_html += app.fields.dateMonth('card_exp_month', _.extend({
+                        'empty': { '': 'Choose' },
+                        'class1': 'col-xl-6 p-l-0',
+                        'value': values.card_exp_month,
+                        }, fields.card_exp_month));
+                      - 
+                        pug_html += app.fields.dateYear('card_exp_date_year', _.extend({
+                        'value': values.card_exp_date_year,
+                        'class1': 'col-xl-6 p-r-0',
+                        'placeholder': 'YYYY',
+                        }, fields.card_exp_date_year));
                   .col-xl-5.p-r-0
                     .col-lg-5
                       label CVV Code
@@ -92,7 +95,14 @@ section.formc.introduction.create-company-media.container
                     .col-lg-12
                       h3.m-t-0.text-lg-center.m-b-2 Electronically Sign
                     .form-group.row
-                      +fieldText('full_name', _.extend({ 'id': 'full-name', 'placeholder': 'Type your name', 'class': 'col-xl-6', 'help_text': 'Type name (it signs on right)'}, fields.full_name))
+                      - 
+                        pug_html += app.fields.fieldText('full_name', {
+                        class:'col-xl-6', 
+                        schema: fields.full_name, 
+                        placeholder: 'Type your name', 
+                        value: values.full_name,
+                        help_text: 'Type name (it signs on right)',
+                        })
                       .col-xl-6
                         .electronically
                           span.by By:

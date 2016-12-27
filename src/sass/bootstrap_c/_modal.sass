@@ -75,6 +75,7 @@
 		.modal-body
 			padding: rem(10) rem(0)
 	[id^="videoModal"]
+		top: 30%!important
 		.modal-dialog
 			margin: auto
 			width: 100%
@@ -93,6 +94,7 @@
 		    color: $white
 		    font-size: rem(33)
 .modal-dropzone
+	top: 15%
 	.modal-dialog
 		max-width: 640px
 		.modal-header
@@ -100,10 +102,8 @@
 				font-size: rem(30)
 		.img-preview
 			position: relative
-			left: 7%
 			border-radius: 100%
 			&.mini
-				left: 7%
 				top: 20px
 		.cropper-view-box
 			border-radius: 100%
@@ -114,10 +114,7 @@
 			background-color: $elm
 		.cropper-line
 			background-color: transparent
-		.cropper-canvas
-			img
-				height: 100%!important
-				width: 100%!important
+
 	&.img-crop
 		.modal-dialog
 			max-width: 760px

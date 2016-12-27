@@ -1,69 +1,25 @@
-module.exports = { 
-  form: Backbone.View.extend({
-    template: require('./templates/form.pug'),
+const helpers = {
+  date: require('helpers/dateHelper.js'),
+};
 
-    getHtml(data) {
-      return this.template(data)
-    },
+const yesNoHelper = require('helpers/yesNoHelper.js');
+// const validation = require('components/validation/validation.js');
 
-    render() {
-      this.$el.html(
-        this.template({model: this.model})
-      )
-    },
+function initDates(c) {
+  c.created_date = new Date(c.created_date);
+  _.each(c.children, (ch) => {
+    initDates(ch);
+  });
+};
 
-  }),
-
-  list: Backbone.View.extend({
-    template: require('./templates/list.pug'),
-
-    render() {
-      this.$el.html(
-        this.template({
-          app: app,
-          company: this.model,
-          comments: this.collection,
-        })
-      )
-      return this;
-    },
-
-  }),
-
-  detail: Backbone.View.extend({
-    template: require('./templates/detail.pug'),
-
-    events: {
-
-    },
-
-    initialize(options) {
-
-    },
-
-    getHtml(data) {
-      return this.template(data)
-    },
-
-    render() {
-      this.$el.html(
-        this.template({
-          model: this.model,
-          app: app,
-        })
-      );
-
-      return this;
-    },
-
-  }),
-
-
-  comments: Backbone.View.extend({
+module.exports = {
+  comments: Backbone.View.extend(_.extend({
     urlRoot: commentsServer + '/:model/:id',
     template: require('./templates/comments.pug'),
     el: '.comments-container',
-    events: {
+    events: _.extend({
+      'keydown .text-body': 'keydownHandler',
+      'keyup .text-body': 'keyupHandler',
       'click .ask-question, .submit-comment': 'submitComment',
       'click .cancel-comment': 'cancelComment',
       'click .link-response-count': 'showHideResponses',
@@ -71,17 +27,28 @@ module.exports = {
       'click .link-like': 'likeComment',
       'click .link-edit': 'editComment',
       'click .link-delete': 'deleteComment',
-    },
+    }, yesNoHelper.events),
 
     initialize(options) {
       this.fields = options.fields;
+
+      this.options =
+      this.allowQuestion = _.isBoolean(options.allowQuestion) ? options.allowQuestion : true;
+      this.allowResponse = _.isBoolean(options.allowResponse) ? options.allowResponse : true;
+      this.cssClass = _.isString(options.cssClass) ? options.cssClass : '';
+
       this.urlRoot = this.urlRoot.replace(':model', 'company').replace(':id', this.model.id);
+      //init dates
+      _.each(this.model.data, (c) => {
+        initDates(c);
+      });
     },
 
     getComment(uid) {
 
       function findComment(comments, uid) {
-        for(let c in comments) {
+        for (let idx = 0; idx < comments.length; idx += 1) {
+          let c = comments[idx];
           if (c.uid == uid)
             return c;
 
@@ -99,11 +66,13 @@ module.exports = {
     render() {
       this.$el.html(this.template({
         comments: this.model.data,
-        company: {
-          owner: 1,
-        },
-        users: {
-          1: 'Vladimir Chagin',
+        helpers: helpers,
+        owner_id: this.model.owner_id,
+        company_id: this.model.id,
+        attr: {
+          allowQuestion: this.allowQuestion,
+          allowResponse: this.allowResponse,
+          cssClass: this.cssClass,
         }
       }));
 
@@ -112,8 +81,56 @@ module.exports = {
       return this;
     },
 
+    keydownHandler(e) {
+      let $target = $(e.target);
+
+      switch(e.which) {
+        case 13: {
+          return $target.is('input')
+            ? this.submitComment(e)
+            : void(0);
+        }
+        case 27: {
+          return $target.is('textarea')
+            ? this.cancelComment(e)
+            : void(0);
+        }
+        default: {
+          break;
+        }
+      }
+    },
+
+    keyupHandler(e) {
+      if (this.model.id == app.user.get('role').company_id)
+        return;
+
+      let $target = $(e.target);
+      let $form = $target.closest('form');
+      let $relatedBlock = $form.find('.related-role');
+
+      let hasRelatedBlock = $relatedBlock && $relatedBlock.length;
+      if ($target.val()) {
+        if (hasRelatedBlock)
+          return;
+
+        $relatedBlock = this.$stubs.find('.related-role').clone();
+        //$form.append($relatedBlock);
+        $target.after($relatedBlock);
+        $relatedBlock.show();
+      } else {
+        if(!hasRelatedBlock)
+          return;
+        $relatedBlock.remove();
+      }
+
+    },
+
     submitComment(e) {
       e.preventDefault();
+
+      if (!app.user.ensureLoggedIn(e))
+        return false;
 
       let $target = $(e.target);
 
@@ -125,9 +142,7 @@ module.exports = {
       let level = isChild ? ($parentComment.data('level') + 1) : 0;
 
       let $form = $target.closest('form');
-
       let message = $form.find('.text-body').val();
-
       if (!message)
         return;
 
@@ -140,31 +155,64 @@ module.exports = {
         model_name: 'company',
       };
 
+      let relatedCb = $form.find('.related-cb');
+      if (relatedCb.is(':checked')) {
+        let relatedRole = $form.find('input[name=related]:checked').val();
+        if (!relatedRole) {
+          // validation.invalidMsg(this, );
+          alert('Please, select role');
+          return;
+        }
+        data.related = relatedRole;
+      }
+
       app.showLoading();
       api.makeRequest(this.urlRoot, 'POST', data).done((newData) => {
-      // setTimeout(() => {
         $target.prop('disabled', false);
+        let role = app.user.get('role');
 
-        if (isChild)
+        let newCommentModel = {
+          related: data.related,
+          children: [],
+          message: message,
+          uid: newData.new_message_id,
+          created_date: new Date(),
+          user: {
+            first_name: app.user.get('first_name'),
+            last_name: app.user.get('last_name'),
+            id: app.user.get('id'),
+            image_data: app.user.get('image_data'),
+            role: role,
+            // role: {
+            //   company_name: role.company_name,
+            //   // company_id: role.company_id,
+            //   company_id: this.model.id,
+            //   role: role.role,
+            // },
+          },
+        };
+
+        if (isChild) {
           $form.remove();
-        else
+          let parentComment = this.getComment(parentId);
+          if (parentComment) {
+            parentComment.children.push(newCommentModel);
+            //update parent comment response count
+            $parentComment.find('.comment-actions:first .link-response-count > .count').text(parentComment.children.length);
+          }
+        } else {
+          this.model.data.push(newCommentModel);
           $form.find('.text-body').val('');
+          this.keyupHandler(e);//remove related role checkbox
+        }
 
-        let commentStub = this.$stubs.find('.comment[data-level=' + level + ']');
+        let newCommentHtml = app.fields.comment(newCommentModel, level, {
+          owner_id: this.model.owner_id,
+          company_id: this.model.id,
+        });
+        $(newCommentHtml).appendTo(isChild ? $parentComment : this.$('.comments'));
 
-        let newComment = commentStub.clone();
-
-        // newComment.attr('id', newData.new_message_id);
-        newComment.removeClass('collapse');
-        newComment.find('.date-comments').text((new Date()).toLocaleDateString());
-        newComment.find('p').text(data.message);
-
-        //TODO: update parent comment response count
-        newComment.find('.link-response-count').text('0');
-
-        newComment.appendTo(isChild ? $parentComment : this.$('.comments'));
         app.hideLoading();
-      // }, 500);
       }).fail((err) => {
         $target.prop('disabled', false);
         app.hideLoading();
@@ -175,9 +223,13 @@ module.exports = {
     cancelComment(e) {
       e.preventDefault();
 
-      let $form = $(e.target).closest('form');
-      if (!$form.hasClass('edit-comment'))
-        $form.remove();
+      let target = $(e.target);
+
+      //escape pressed on input with ask question
+      if (target.is('input'))
+        return false;
+
+      $(e.target).closest('form').remove();
 
       return false;
     },
@@ -185,11 +237,18 @@ module.exports = {
     showReplyTo(e) {
       e.preventDefault();
 
-      let $newCommentBlock = this.$stubs.find('.edit-comment').clone();
+      let $commentBlock = $(e.target).closest('.comment');
+
+      let $newCommentBlock = $commentBlock.find('.comment-form');
+      if ($newCommentBlock && $newCommentBlock.length) {
+        return false;
+      }
+
+      $newCommentBlock = this.$stubs.find('.edit-comment').clone();
 
       $newCommentBlock.removeClass('edit-comment collapse');
 
-      $newCommentBlock.appendTo($(e.target).closest('.comment'));
+      $newCommentBlock.appendTo($commentBlock);
 
       $newCommentBlock.find('.text-body').focus();
 
@@ -223,29 +282,11 @@ module.exports = {
     editComment(e) {
       e.preventDefault();
 
-      let $target = $(e.target);
-
-      let $comment = $target.closest('.comment');
-      let level = $comment.data('level');
-      let uid = $comment.data('id');
-
-      let comment = this.findComment(uid);
-      let commentText = comment.message;
-
-      // let $editCommentBlock = this.$stubs.find('.edit-comment').clone();
-      // $editCommentBlock.removeClass('edit-comment collapse');
-      // $editCommentBlock.find('.text-body')
-      //
-      // $comment.find('p').text().addClass('collapse').after($editCommentBlock);
-
-
       return false;
     },
 
     deleteComment(e) {
       e.preventDefault();
-
-
 
       return false;
     },
@@ -264,5 +305,5 @@ module.exports = {
         );
     },
 
-  }),
+  }, yesNoHelper.methods)),
 };

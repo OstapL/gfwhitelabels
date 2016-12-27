@@ -14,40 +14,46 @@ section.formc-team-members-director.container.m-b-85
     form.form-section
       input(name="role" type="hidden" value=2)
       .col-xl-12
-        +fieldTextLabel("first_name", _.extend({
-          class1: 'col-xl-3 col-lg-12 text-lg-left text-xl-right ',
-          class2: 'col-xl-9 col-lg-12',
-          }, fields.first_name))
-        +fieldTextLabel("last_name", _.extend({
-          class1: 'col-xl-3 col-lg-12 text-lg-left text-xl-right ',
-          class2: 'col-xl-9 col-lg-12',
-          }, fields.last_name))
-        +fieldTextLabel("email", _.extend({
-          class1: 'col-xl-3 col-lg-12 text-lg-left text-xl-right ',
-          class2: 'col-xl-9 col-lg-12',
-          help_text: 'We will need to contact team members',
-          }, fields.email))
+        - 
+          pug_html += app.fields.textLabel('first_name', {
+          schema: fields.first_name, 
+          value: values.first_name,})
+        - 
+          pug_html += app.fields.textLabel('last_name', {
+          schema: fields.last_name, 
+          value: values.last_name,})
+        - 
+          pug_html += app.fields.textLabel('email', {
+          schema: fields.email, 
+          value: values.email, 
+          placeholder: 'Email Address', 
+          help_text: 'We will need to contact team members',})
         .row.form-group
           .col-date
             label.col-xl-3.col-lg-12.text-xl-right.textlg-left Date of birth
               span.color-red *
             .col-xl-4.col-lg-6.p-r-0
-              +fieldDateMonth("dob", _.extend({
-                class: 'col-xl-4 col-lg-4 col-xs-4 p-l-0  m-d-p-r-5',
-              }, fields.dob))
-              +fieldDateDay("dob", _.extend({
-                class: 'col-xl-4 col-lg-4 col-xs-4 p-r-0 m-d-p-l-5',
-              }, fields.dob))
-              +fieldDateYear("dob", _.extend({
-                class: 'col-xl-4 col-lg-4 col-xs-4 p-r-0 m-d-p-l-10',
-                placeholder: 'YYYY',
-                divId: 'dob',
-              }, fields.dob))
-        +fieldTextLabel("responsibilities", _.extend({
-          class1: 'col-xl-3 col-lg-12 text-lg-left text-xl-right ',
-          class2: 'col-xl-9 col-lg-12',
-          label: '',
-          }, fields.responsibilities))
+              - 
+                pug_html += app.fields.dateMonth('dob', _.extend({
+                'empty': { '': 'Choose' },
+                'value': values.dob,
+                }, fields.dob));
+              - 
+                pug_html += app.fields.dateDay('dob', _.extend({
+                'empty': { '': 'Choose' },
+                'value': values.dob,
+                }, fields.dob));
+              - 
+                pug_html += app.fields.dateYear('dob', _.extend({
+                'value': values.dob,
+                'placeholder': 'YYYY',
+                'divId': 'dob',
+                }, fields.dob));
+
+        - 
+          pug_html += app.fields.textLabel('responsibilities', {
+          schema: fields.responsibilities, 
+          value: values.responsibilities,})
         .filter.p-t-0.p-b-0.m-b-2
           .one_drop.m-t-2
             .row.form-group
@@ -67,18 +73,18 @@ section.formc-team-members-director.container.m-b-85
                 span.color-red *
               .col-xl-6.col-lg-12
                 #start_date.row
-                  +fieldDateMonth("start_date", _.extend({
-                    class: 'col-xl-6 col-lg-6 col-sm-6 col-xs-6 m-d-p-r-5',
-                    placeholder: 'MM',
-                    name: 'start_date',
-                    label: 'Start Date',
-                  }, fields.start_date))
-                  +fieldDateYear("start_date", _.extend({
-                    class: 'col-xl-6 col-lg-6 col-sm-6 col-xs-6 m-d-p-l-5',
-                    placeholder: 'YYYY',
-                    name: 'start_date',
-                    label: 'Start Date',
-                  }, fields.start_date)) 
+                  - 
+                    pug_html += app.fields.dateMonth('start_date', _.extend({
+                    'empty': { '': 'Choose' },
+                    'class1': 'col-xl-6 col-lg-6 col-sm-6 col-xs-6 m-d-p-r-5',
+                    'value': values.start_date,
+                    }, fields.start_date));
+                  - 
+                    pug_html += app.fields.dateYear('start_date', _.extend({
+                    'value': values.start_date,
+                    'class1': 'col-xl-6 col-lg-6 col-sm-6 col-xs-6 m-d-p-l-5',
+                    'placeholder': 'YYYY',
+                    }, fields.start_date));
         
         .border-bottom.m-t-3.m-b-3
         |!{ templates.positions }

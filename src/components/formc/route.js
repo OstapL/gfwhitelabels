@@ -195,6 +195,11 @@ module.exports = Backbone.Router.extend({
 
     $('#content').scrollTo();
     $.when(companyR, campaignR, formcR, dataR).done((company, campaign, formc, data) => {
+
+      app.user.company = data[0].company;
+      app.user.campaign = data[0].campaign;
+      app.user.formc = data[0].formc;
+
       data[0].id = id;
       const fields = {
         company: company[0].fields,

@@ -377,7 +377,6 @@
 		input
 			border: none
 			border-bottom: solid 1px $gallery
-			width: 100%
 			outline: none
 			padding: rem(6) rem(10)
 
@@ -400,27 +399,42 @@
 		//margin-right: 15px
 	.comments-wrap
 		display: inline-block
-
+		.p-r-5
+			padding-right: 5px
+		.p-5
+			padding: 5px
+		.icon-comment
+			color: $small-text
+		.reply
+			margin: 0 10px
+			.reply-right
+				padding-left: 10px
+				color: $small-text
+			.reply-left
+				padding-right: 10px
+				color: $small-text
 		.name-comments
 			font-size: rem(14)
 			letter-spacing: rem(2.8)
 			color: $black
 		.kvalificatio-comments
-			padding: rem(3) rem(18)
-			background-color: $red
+			font-size: rem(11)
+			font-weight: bold
 			color: $white
-			border-radius: rem(2)
+			background-color: $sandy-brown
+			padding: rem(5) rem(18)
+			border-radius: 2px
 			margin-left: rem(10) 
+			text-transform: capitalize
 		.date-comments
 			font-size: rem(11)
 			color: $small-text
 		.responce
 		
 			li
-				padding-left: rem(5)
+				//padding-left: rem(5)
+
 				display: inline-block
-				i
-					margin-right: rem(5)
 		p
 			margin-bottom: rem(5)
 			margin-top: rem(10)
@@ -429,7 +443,7 @@
 		margin-bottom: 0
 		letter-spacing: rem(1)
 	i
-		color: $wild_willow
+		color: $campaign-like-color
 	.btn
 		margin-top: rem(50)
 @media only screen and (max-width : 992px)
@@ -440,4 +454,35 @@
 		padding-right: 0!important
 	.tabs-scroll
 		display: none
+	.top-info
+		.top-info-wrap
+			.top-info-wrap-item
+				h2
+					margin-bottom: rem(25)
+	.campaigndetail
+		.share
+			margin-bottom: rem(20)
+		.right-block-investors
+			h2
+				margin-bottom: rem(20)
+	.document
+		h3
+			margin-bottom: rem(25)
+	.comments
+		img
+			margin-bottom: 20px
+		.comments-wrap
+			display: block
+			.kvalificatio-comments
+				margin-left: 0
+	.comment-form
+		.btn.m-r-2
+			margin-right: 1rem!important
+@media only screen and (max-width : 640px)
+	#members
+		.hide-more-detail
+			height: 88px
+	.p-xs-0
+		padding-left: 0!important
+		padding-right: 0!important
 

@@ -24,16 +24,23 @@ section.formc-team-members-director.container.m-b-85
           label.col-xl-3.col-lg-12.text-xl-right.textlg-left.p-t-0.m-b-0 Date of Most Recent Tax Return
             span.color-red *
           .col-xl-4.col-lg-6.p-r-0
-            +fieldDateMonth("dob", _.extend({
-              class: 'col-xl-4 col-lg-4 col-xs-4 p-l-0  m-d-p-r-5',
-            }, fields.dob))
-            +fieldDateDay("dob", _.extend({
-              class: 'col-xl-4 col-lg-4 col-xs-4 p-r-0 m-d-p-l-5',
-            }, fields.dob))
-            +fieldDateYear("dob", _.extend({
-              class: 'col-xl-4 col-lg-4 col-xs-4 p-r-0 m-d-p-l-10',
-              placeholder: 'YYYY',
-            }, fields.dob)) 
+            //- 
+              pug_html += app.fields.dateMonth('dob', _.extend({
+              'empty': { '': 'Choose' },
+              'value': values.dob,
+              }, fields.dob));
+
+            //- 
+              pug_html += app.fields.dateDay('dob', _.extend({
+              'empty': { '': 'Choose' },
+              'value': values.dob,
+              }, fields.dob));
+            //- 
+              pug_html += app.fields.dateYear('dob', _.extend({
+              'value': values.dob,
+              'placeholder': 'YYYY',
+              'divId': 'dob',
+              }, fields.dob)); 
       .col-lg-12.m-t-1
         p.m-b-3 A principal executive officer must provide the following certification:
       .col-lg-12
@@ -51,13 +58,23 @@ section.formc-team-members-director.container.m-b-85
             |  field for the fiscal year ended.
       .col-lg-12.investment.m-t-2
         .form-group.row
-          +fieldText("name", {'class': 'col-xl-4 m-b-md-25','placeholder':'Type your name here' })
+          //- 
+            pug_html += app.fields.fieldText('name', {
+            schema: fields.name,
+            class: 'col-xl-4 m-b-md-25',
+            placeholder:'Type your name here'
+            value: values.name,})
           .col-xl-4
             .electronically
               span.by By:
               span.name Maria Kravchuk
         .row.form-group
-          +fieldText("title", {'class': 'col-xl-8','placeholder':'Title' })
+          //- 
+            pug_html += app.fields.fieldText('title', {
+            schema: fields.title,
+            class: 'col-xl-4 m-b-md-25',
+            placeholder:'Title'
+            value: values.title,})
       
       .col-lg-12.text-md-center.text-sm-center-text-xs-center.m-t-2
         a(href="#").btn.btn-primary.text-uppercase.pull-lg-right submit
