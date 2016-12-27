@@ -332,7 +332,8 @@ let exports = {
 
     return template(attr);
   },
-    teamMemberDropzone(name, attr) {
+
+  teamMemberDropzone(name, attr) {
     let noimg = '/img/default/Default_photo.png';
     if (!attr.data)
         attr.data = {};

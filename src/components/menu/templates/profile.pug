@@ -34,11 +34,9 @@ if user.token != ""
       ul.submenu.list-unstyled 
         li
           a(href="/account/profile").nav-link Profile
-        if user.role.company_id
+        if user.company && user.company.name
           li
-            a(href="/dashboard/issuer-dashboard").nav-link Issuer Dashboard
-        //li
-          a(href="/company/78/company-dashboard-first").nav-link TRUNK CLUB 
+            a(href="/dashboard/issuer-dashboard").nav-link #{user.company.name}
         li
           a(href="/account/investor-dashboard").nav-link Investor Dashboard
         li

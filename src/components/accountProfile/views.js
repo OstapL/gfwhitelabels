@@ -166,6 +166,7 @@ module.exports = {
           serverUrl: serverUrl,
           user: this.model,
           roleInfo: app.user.getRoleInfo(),
+          company: app.user.get('company'),
           fields: this.fields,
           states: this.usaStates,
         })
