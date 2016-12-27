@@ -334,40 +334,69 @@ let exports = {
   },
 
   teamMemberDropzone(name, attr) {
-    let noimg = '/img/default/Default_photo.png';
-    if (!attr.data)
-        attr.data = {};
-      if (!attr.data.urls)
-        attr.data.urls = [];
+    attr.data = attr.data || {};
+    attr.data.urls = attr.data.urls || [];
 
-    if(attr.hasOwnProperty('class1') == false) { 
-      attr.class1 = 'col-xl-3 col-lg-12 text-lg-left text-xl-right';
-    }
-
-    if(attr.hasOwnProperty('class2') == false) { 
-      attr.class2 = 'col-xl-9 col-lg-12';
-    }
-
-    if(attr.hasOwnProperty('thumbSize') == false) { 
-      attr.thumbSize = '255x135';
-    }
-
-
-    if(attr.hasOwnProperty('icon') == false) { 
-      attr.icon = 'camera';
-    }
-
-    if(attr.hasOwnProperty('text') == false) { 
-      attr.text = 'Drop your photo here or click to upload';
-    }
+    attr.class1 = attr.class1 || 'col-xl-3 col-lg-12 text-lg-left text-xl-right';
+    attr.class2 = attr.class2 || 'col-xl-9 col-lg-12';
+    attr.thumbSize = attr.thumbSize || '255x135';
+    attr.icon = attr.icon || 'camera';
+    attr.text = attr.text || 'Drop your photo here or click to upload';
 
     const template = require('./templates/teamMemberDropzone.pug');
     return template({
       name: name,
       attr: attr,
-      noimg: noimg,
+      noimg: '/img/default/Default_photo.png',
     });
   },
+
+  imageDropzone(name, attr, schema) {
+    attr.data = attr.data || {};
+    attr.data.urls = attr.data.urls || [];
+
+    _.extend(attr, schema);
+
+    this.prepareField(name, attr);
+    attr.class = attr.class || '';
+    let nameClass = attr.id || name,
+      requiredClass = attr.required ? 'required' : '',
+      popoverClass = attr.help_text ? 'showPopover' : '';
+
+    attr.class = `row media-item ${attr.class} ${nameClass} ${requiredClass} imageDropzone ${popoverClass}`;
+    attr.class1 += attr.required ? ' required' : '';
+    attr.class2 += ` dropzone__${name}`;
+    const template = require('./templates/imageDropzone.pug');
+    return template({
+      name: name,
+      attr: attr,
+    });
+  },
+
+  galleryDropzone(name, attr, schema) {
+    attr.data = attr.data || {};
+    attr.data.urls = attr.data.urls || [];
+
+    _.extend(attr, schema);
+
+    this.prepareField(name, attr)
+
+    attr.class = attr.class || '';
+    let nameClass = attr.id || name,
+      requiredClass = attr.required ? 'required' : '',
+      popoverClass = attr.help_text ? 'showPopover' : '';
+
+    attr.class = `row media-item ${attr.class} ${nameClass} ${requiredClass} galleryDropzone ${popoverClass}`;
+    attr.class1 += ` ${requiredClass}`;
+    attr.class2 += ` dropzone__${name}`;
+
+    const template = require('./templates/imagefolderDropzone.pug');
+    return template({
+      name: name,
+      attr: attr,
+    });
+  },
+
 };
 
 module.exports = exports;
