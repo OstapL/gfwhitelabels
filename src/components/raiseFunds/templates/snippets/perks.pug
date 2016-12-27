@@ -8,7 +8,7 @@ mixin row(value, index)
       a(href="#" data-section=name data-index=index).delete-sectionnew
         i.fa.fa-times
 
-    | !{app.fields.nestedTextLabel(name, 'amount', value, index, {class1:'col-xl-3 col-lg-12 text-lg-left text-xl-right m-b-0 p-t-0 m-b-lg-1', help_text:'Create your own Q&A section. What questions do you frequently recieve or what would you want investors to know ?'}, attr.schema.amount)}
+    | !{app.fields.nestedTextLabel(name, 'amount', value, index, {class1:'col-xl-3 col-lg-12 text-lg-left text-xl-right m-b-0 p-t-0 m-b-lg-1'}, attr.schema.amount)}
     | !{app.fields.nestedTextareaLabel(name, 'perk', value, index,{class2:'col-xl-9 col-lg-12 perks-textarea'}, attr.schema.perk)}
 
 mixin run()
