@@ -68,8 +68,11 @@ let userModel = Backbone.Model.extend({
           url: authServer + '/rest-auth/data-mini',
           success: (data) => {
             localStorage.setItem('user', JSON.stringify(this.toJSON()));
-            app.trigger('userLoaded', this.toJSON());
-            //app.routers.mainPage(); // TODO: FIX THAT !!!
+            this.getCompanyR().done((companyD) => {
+              this.set('company', companyD || null);
+              app.trigger('userLoaded', this.toJSON());
+              //app.routers.mainPage(); // TODO: FIX THAT !!!
+            });
           },
           error: (model, xhr, status) => {
             localStorage.removeItem('token');
