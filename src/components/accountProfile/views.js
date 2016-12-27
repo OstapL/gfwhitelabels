@@ -166,6 +166,7 @@ module.exports = {
           serverUrl: serverUrl,
           user: this.model,
           roleInfo: app.user.getRoleInfo(),
+          company: app.user.get('company'),
           fields: this.fields,
           states: this.usaStates,
         })
@@ -611,8 +612,6 @@ module.exports = {
     },
 
     render(){
-      // const socialMediaScripts = require('helpers/shareButtonHelper.js');
-
       this.$el.html(
         this.template({
           values: this.model,
@@ -620,8 +619,6 @@ module.exports = {
           helpers: helpers,
         })
       );
-
-      // socialMediaScripts.facebook();
 
       this.initComments();
 
@@ -730,7 +727,7 @@ module.exports = {
           model: data[0],
           fields: options[0].fields,
           allowQuestion: false,
-          cssClass: 'col-lg-8 pt50',
+          cssClass: 'col-lg-8',
         });
         comments.render();
 
