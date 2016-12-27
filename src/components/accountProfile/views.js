@@ -629,7 +629,7 @@ module.exports = {
       try {
         let script = document.createElement('script');
         script.type = 'text/javascript';
-        script.src = '/js/graf/graf.js';
+        script.src = '/js/graph/graph.js';
         $(document.head).append(script);
 
         script = document.createElement('script');
