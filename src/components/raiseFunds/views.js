@@ -523,12 +523,11 @@ module.exports = {
         this.model = options.campaign;
         this.company = options.company;
         this.labels = {
-          investor_presentation_data: '',
           minimum_raise: 'Our Minimum Total Raise is',
           maximum_raise: 'Our Maximum Total Raise is',
           minimum_increment: 'The Minimum investment is',
           length_days: 'Length of the Campaign',
-          investor_presentation: 'Upload an Investor Presentation',
+          investor_presentation_file_id: 'Upload an Investor Presentation',
           premoney_valuation: 'Pre-Money Valuation',
           price_per_share: 'Price Per Share',
           min_number_of_shares: 'Minimum № of Shares',
