@@ -1,13 +1,10 @@
 
 - 'use strict'
 include ../../raiseFunds/templates/menu.pug
-include ../../../templates/fields_mixins.pug
 
-- pug_html += app.breadcrumbs('Create Form C', '', [ ['Home', '/'], ['Create Form C', '/formc/' + values.id + '/introduction'], ['Introduction', ''], ]);
-
+| !{app.breadcrumbs('Create Form C', '', [ ['Home', '/'], ['Create Form C', '/formc/' + values.id + '/introduction'], ['Introduction', ''], ])}
 
 section.formc.introduction.create-company-media.container
-  - var campaignId = values.campaign_id;
   +menu('formc', 'introduction')
   .col-lg-8
     h2.text-uppercase.text-lg-center.text-xs-center.dosis.m-t-0.mb-50 introduction

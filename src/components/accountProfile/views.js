@@ -481,8 +481,14 @@ module.exports = {
         investment.status = 2;
         this.investments.historical.push(investment);
 
-        let activeInvestmentBlock = $target.closest('.one_table');
-        activeInvestmentBlock.remove();
+        $target.closest('.one_table').remove();
+
+        if (this.investments.active.length <= 0)
+          $('#active .investor_table')
+            .append(
+              '<div role="alert" class="alert alert-warning">' +
+                '<strong>You have no active investments</strong>' +
+              '</div>');
 
         let historicalInvestmentsBlock = this.$el.find('#historical .investor_table');
 
@@ -617,7 +623,24 @@ module.exports = {
       );
 
       socialMediaScripts.facebook();
+
       this.initComments();
+
+      try {
+        let script = document.createElement('script');
+        script.type = 'text/javascript';
+        script.src = '/js/graf/graf.js';
+        $(document.head).append(script);
+
+        script = document.createElement('script');
+        script.type = 'text/javascript';
+        script.src = '/js/graph_data.js'
+        $(document.head).append(script);
+      } catch(err){
+        console.log(err);
+      }
+
+
 
       // const socket = require('socket.io-client')('http://localhost:3000');
       // socket.on('connect', function () {
