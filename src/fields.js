@@ -319,6 +319,46 @@ let exports = {
 
     return template(attr);
   },
+    teamMemberDropzone(name, attr) {
+    let noimg = '/img/default/Default_photo.png';
+    if (!attr.data)
+        attr.data = {};
+      if (!attr.data.urls)
+        attr.data.urls = [];
+
+    if(attr.hasOwnProperty('class1') == false) { 
+      attr.class1 = 'col-xl-3 col-lg-12 text-lg-left text-xl-right';
+    }
+
+    if(attr.hasOwnProperty('class2') == false) { 
+      attr.class2 = 'col-xl-9 col-lg-12';
+    }
+
+    if(attr.hasOwnProperty('thumbSize') == false) { 
+      attr.thumbSize = '255x135';
+    }
+
+    if(attr.hasOwnProperty('thumbSize') == false) { 
+      attr.thumbSize = '255x135';
+    }
+
+    if(attr.hasOwnProperty('icon') == false) { 
+      attr.icon = 'camera';
+    }
+
+
+    if(attr.hasOwnProperty('text') == false) { 
+      attr.text = 'Drop your photo here or click to upload';
+    }
+
+
+    const template = require('./templates/teamMemberDropzone.pug');
+    return template({
+      name: name,
+      attr: attr,
+      noimg: noimg,
+    });
+  },
 };
 
 module.exports = exports;
