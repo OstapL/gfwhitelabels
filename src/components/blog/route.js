@@ -22,7 +22,7 @@ module.exports = Backbone.Router.extend({
   },
 
   list() {
-      api.makeCacheRequest(blogServer + '/blog', 'GET').
+      api.makeCacheRequest(blogServer + '/', 'GET').
         then((data) => {
           new View.list({
             model: data
@@ -46,7 +46,7 @@ module.exports = Backbone.Router.extend({
   },
 
   detail(id) {
-      api.makeCacheRequest(blogServer + '/blog/' + id, 'GET').
+      api.makeCacheRequest(blogServer + '/' + id, 'GET').
         then((data) => {
           new View.detail({
             model: data
