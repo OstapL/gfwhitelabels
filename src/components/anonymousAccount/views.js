@@ -162,9 +162,9 @@ module.exports = {
     events: {
       'submit .login-form': api.submitAction,
       'submit .signup-form': 'signupSubmit',
-      // 'click .btn-google': 'loginGoogle',
-      // 'click .btn-linkedin': 'loginLinkedin',
-      // 'click .btn-facebook': 'loginFacebook',
+      'click .btn-google': 'loginGoogle',
+      'click .btn-linkedin': 'loginLinkedin',
+      'click .btn-facebook': 'loginFacebook',
     },
 
     _success(data) {

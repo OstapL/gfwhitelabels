@@ -15,7 +15,7 @@ var helloApp = {
         return $.ajax({
             method: 'POST',
             url: authServer+'/rest-auth/'+network+'/',
-            data: {access_token: token},
+            data: {access_token: token, domain: window.location.host},
         });
     }
 }
