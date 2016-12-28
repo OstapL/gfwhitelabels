@@ -81,10 +81,10 @@ section.formc-team-members-director.container.m-b-85
         .form-group.form-section.m-t-2.m-b-0
           .radio-input.m-b-1.yesno
             label 
-              input(type="radio" name="sold_securities_choice" value="true" checked=(values['sold_securities_choice']) target=".previous-security-container")
+              input(type="radio" name="sold_securities_choice" value="1" checked=(values['sold_securities_choice'] == 1) target=".previous-security-container")
               |  Yes
             label 
-              input(type="radio" name="sold_securities_choice" value="false" checked=(!values['sold_securities_choice']) target=".previous-security-container")
+              input(type="radio" name="sold_securities_choice" value="0" checked=(values['sold_securities_choice'] == 0) target=".previous-security-container")
               |  No
         .sold_securities_choice.shown-yes(style="display:" + (values['sold_securities_choice'] ? 'block' : 'none'))
           - 
