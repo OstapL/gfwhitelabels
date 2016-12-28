@@ -1,4 +1,3 @@
-include ../../../../templates/fields_mixins.pug
 
 mixin row(value, index)
   - var index = index;
@@ -7,8 +6,7 @@ mixin row(value, index)
       .delete-section-container
         a(href="#" data-section=name data-index=index).delete-sectionnew
           i.fa.fa-times
-
-      +fieldNestedTextLabel(name, "position", value, index, {class1:'col-xl-3 col-lg-12 text-lg-left text-xl-right', class2: 'col-xl-9 col-lg-12'})
+      | !{app.fields.nestedTextLabel(name, 'position', value, index, attr.schema.position)}
 
       .row
         .col-xl-6.col-lg-6.form-group
@@ -16,16 +14,21 @@ mixin row(value, index)
             label.col-xl-6.col-lg-12.text-xl-right.text-lg-left.p-l-2.p-l-lg-1.p-t-0.m-b-0.m-b-lg-1 Start Date of Service
             .col-xl-6.col-lg-12
               div(id=name + '__' + index + '__' + 'start_date_of_service').row
-                +fieldNestedDateMonth(name, "start_date_of_service", value, index, {placeholder: 'MM', class: 'col-xl-6 col-lg-6 col-sm-6 col-xs-6 m-d-p-r-5'})
-                +fieldNestedDateYear(name, "start_date_of_service", value, index, {placeholder: 'YYYY', class: 'col-xl-6 col-lg-6 col-sm-6 col-xs-6 m-d-p-l-5'})
+                
+                | !{app.fields.nestedDateMonth(name, 'start_date_of_service', value, index, {class1:'col-xl-6 col-lg-6 col-sm-6 col-xs-6 m-d-p-r-5'}, attr.schema.start_date_of_service)}
+                | !{app.fields.nestedDateYear(name, 'start_date_of_service', value, index, {class1:'col-xl-6 col-lg-6 col-sm-6 col-xs-6 m-d-p-l-5', placeholder: 'YYYY',}, attr.schema.start_date_of_service)}
+
               
         .col-xl-6.col-lg-6.form-group
           .row
             label.col-xl-6.col-lg-12.text-xl-right.text-lg-left.p-l-3.p-l-lg-1.p-t-0.m-b-0.m-b-lg-1 End Date of Service
             .col-xl-6.col-lg-12
               div(id=name + '__' + index + '__' + 'end_date_of_service').row
-                +fieldNestedDateMonth(name, "end_date_of_service", value, index, {placeholder: 'MM', class: 'col-xl-6 col-lg-6 col-sm-6 col-xs-6 m-d-p-r-5'})
-                +fieldNestedDateYear(name, "end_date_of_service", value, index, {placeholder: 'YYYY', class: 'col-xl-6 col-lg-6 col-sm-6 col-xs-6 m-d-p-l-5'})
+
+
+
+                | !{app.fields.nestedDateMonth(name, 'end_date_of_service', value, index, {class1:'col-xl-6 col-lg-6 col-sm-6 col-xs-6 m-d-p-r-5'}, attr.schema.end_date_of_service)}
+                | !{app.fields.nestedDateYear(name, 'end_date_of_service', value, index, {class1:'col-xl-6 col-lg-6 col-sm-6 col-xs-6 m-d-p-l-5', placeholder: 'YYYY',}, attr.schema.end_date_of_service)}
 
 
 mixin run()

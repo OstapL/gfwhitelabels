@@ -1,5 +1,6 @@
 'use strict';
 
+const companyFees = require('consts/companyFees.json');
 const formcHelpers = require('./helpers.js');
 const formatHelper = require('../../helpers/formatHelper');
 const roles = ['Shareholder', 'Director', 'Officer'];
@@ -93,7 +94,7 @@ module.exports = {
       'submit form': 'submit',
       'click .link-2': 'openPdf',
       'click .submit_formc': submitFormc,
-      'keyup #full-name': 'changeSign',
+      'keyup #full_name': 'changeSign',
       'click #pay-btn': 'stripeSubmit',
     }, menuHelper.events, yesNoHelper.events, /*leavingConfirmationHelper.events*/),
 
@@ -131,7 +132,7 @@ module.exports = {
 
       let eSignForm = this.$('.electronically-sign');
       this.eSignCompanyName = eSignForm.find('#company-name');
-      this.eSignFullName = eSignForm.find('#full-name');
+      this.eSignFullName = eSignForm.find('#full_name');
       this.eSignPreview = eSignForm.find('.electronically .name');
 
       return this;
@@ -160,13 +161,16 @@ module.exports = {
     getDocMetaData () {
       const formData = this.$el.find('form').serializeJSON();
       const issuer_legal_name = app.user.get('first_name') + ' ' + app.user.get('last_name');
+      
       return {
-        trans_percent: 6,
-        nonrefundable_fees: 50,
-        registration_fee: 500,
-        amendment_fee: 200,
+        trans_percent: companyFees.trans_percent,
+        registration_fee: companyFees.registration_fee,
+        nonrefundable_fees: companyFees.nonrefundable_fees,
+        amendment_fee: companyFees.amendment_fee,
         commencement_date_x: this.getCurrentDate(),
         zip_code: app.user.company.zip_code,
+        city: app.user.company.city,
+        state: app.user.company.state,
         address_1: app.user.company.address_1,
         address_2: app.user.company.address_2,
         issuer_legal_name: app.user.company.name,
@@ -352,7 +356,6 @@ module.exports = {
     }, menuHelper.events, leavingConfirmationHelper.events),
 
     preinitialize() {
-
       // ToDo
       // Hack for undelegate previous events
       for (let k in this.events) {
@@ -365,7 +368,6 @@ module.exports = {
       this.fields = options.fields;
       this.fields.full_time_employers = { label: 'Full Time Employees' };
       this.fields.part_time_employers = { label: 'Part Time Employees' };
-      console.log(this);
     },
 
     _success(data, newData) {
@@ -465,6 +467,14 @@ module.exports = {
       'click #submitForm': api.submitAction,
       'click .submit_formc': submitFormc,
     }, addSectionHelper.events, menuHelper.events, leavingConfirmationHelper.events),
+
+    preinitialize() {
+      // ToDo
+      // Hack for undelegate previous events
+      for (let k in this.events) {
+        $('#content ' + k.split(' ')[1]).undelegate();
+      }
+    },
 
     initialize(options) {
       if(options.user_id != 'new') {
@@ -580,6 +590,14 @@ module.exports = {
       'click .submit_formc': submitFormc,
     }, addSectionHelper.events, menuHelper.events, yesNoHelper.events, leavingConfirmationHelper.events),
 
+    preinitialize() {
+      // ToDo
+      // Hack for undelegate previous events
+      for (let k in this.events) {
+        $('#content ' + k.split(' ')[1]).undelegate();
+      }
+    },
+
     initialize(options) {
       this.model = options.formc;
       this.fields = options.fields;
@@ -637,6 +655,14 @@ module.exports = {
 
   useOfProceeds: Backbone.View.extend(_.extend({
     urlRoot: formcServer + '/:id/use-of-proceeds',
+
+    preinitialize() {
+      // ToDo
+      // Hack for undelegate previous events
+      for (let k in this.events) {
+        $('#content ' + k.split(' ')[1]).undelegate();
+      }
+    },
 
     initialize(options) {
       this.model = options.formc;
@@ -812,6 +838,14 @@ module.exports = {
       this.model = options.formc;
     },
 
+    preinitialize() {
+      // ToDo
+      // Hack for undelegate previous events
+      for (let k in this.events) {
+        $('#content ' + k.split(' ')[1]).undelegate();
+      }
+    },
+
     events: _.extend({
       'submit form': 'submit',
       'click .submit_formc': submitFormc,
@@ -839,6 +873,14 @@ module.exports = {
     events: _.extend({
       'click .submit_formc': submitFormc,
     }, menuHelper.events, riskFactorsHelper.events, leavingConfirmationHelper.events),
+
+    preinitialize() {
+      // ToDo
+      // Hack for undelegate previous events
+      for (let k in this.events) {
+        $('#content ' + k.split(' ')[1]).undelegate();
+      }
+    },
 
     initialize(options) {
       this.model = options.formc;
@@ -940,6 +982,14 @@ module.exports = {
     events: _.extend({
       'click .submit_formc': submitFormc,
     }, menuHelper.events, riskFactorsHelper.events, leavingConfirmationHelper.events),
+
+    preinitialize() {
+      // ToDo
+      // Hack for undelegate previous events
+      for (let k in this.events) {
+        $('#content ' + k.split(' ')[1]).undelegate();
+      }
+    },
 
     initialize(options) {
       this.model = options.formc;
@@ -1049,6 +1099,14 @@ module.exports = {
     events: _.extend({
       'click .submit_formc': submitFormc,
     }, menuHelper.events, riskFactorsHelper.events, leavingConfirmationHelper.events),
+
+    preinitialize() {
+      // ToDo
+      // Hack for undelegate previous events
+      for (let k in this.events) {
+        $('#content ' + k.split(' ')[1]).undelegate();
+      }
+    },
 
     initialize(options) {
       this.model = options.formc;
@@ -1188,6 +1246,14 @@ module.exports = {
       'click .submit_formc': submitFormc,
     }, menuHelper.events, riskFactorsHelper.events, leavingConfirmationHelper.methods),
 
+    preinitialize() {
+      // ToDo
+      // Hack for undelegate previous events
+      for (let k in this.events) {
+        $('#content ' + k.split(' ')[1]).undelegate();
+      }
+    },
+
     initialize(options) {
       this.model = options.formc;
       this.fields = options.fields;
@@ -1269,6 +1335,14 @@ module.exports = {
     events: _.extend({
       'click .submit_formc': submitFormc,
     }, menuHelper.events, riskFactorsHelper.events, leavingConfirmationHelper.events),
+
+    preinitialize() {
+      // ToDo
+      // Hack for undelegate previous events
+      for (let k in this.events) {
+        $('#content ' + k.split(' ')[1]).undelegate();
+      }
+    },
 
     initialize(options) {
       this.model = options.formc;
@@ -1369,6 +1443,14 @@ module.exports = {
     events: _.extend({
       'click .submit_formc': submitFormc,
     }, menuHelper.events, riskFactorsHelper.events, leavingConfirmationHelper.events),
+
+    preinitialize() {
+      // ToDo
+      // Hack for undelegate previous events
+      for (let k in this.events) {
+        $('#content ' + k.split(' ')[1]).undelegate();
+      }
+    },
 
     initialize(options) {
       this.model = options.formc;
@@ -1492,6 +1574,14 @@ module.exports = {
       'click .submit_formc': submitFormc,
     }, menuHelper.events, riskFactorsHelper.events, leavingConfirmationHelper.events),
 
+    preinitialize() {
+      // ToDo
+      // Hack for undelegate previous events
+      for (let k in this.events) {
+        $('#content ' + k.split(' ')[1]).undelegate();
+      }
+    },
+
     initialize(options) {
       this.model = options.formc;
       this.fields = options.fields;
@@ -1528,6 +1618,14 @@ module.exports = {
       'submit form': api.submitAction,
       'click .submit_formc': submitFormc,
     }, menuHelper.events, yesNoHelper.events, addSectionHelper.events, dropzoneHelpers.events, /*leavingConfirmationHelper.events*/),
+
+    preinitialize() {
+      // ToDo
+      // Hack for undelegate previous events
+      for (let k in this.events) {
+        $('#content ' + k.split(' ')[1]).undelegate();
+      }
+    },
 
     initialize(options) {
       this.model = options.formc;
@@ -1595,6 +1693,14 @@ module.exports = {
       'click .submit_formc': submitFormc,
       'click .delete-outstanding': 'deleteOutstanding',
     }, addSectionHelper.events, menuHelper.events, yesNoHelper.events, /*leavingConfirmationHelper.events*/),
+
+    preinitialize() {
+      // ToDo
+      // Hack for undelegate previous events
+      for (let k in this.events) {
+        $('#content ' + k.split(' ')[1]).undelegate();
+      }
+    },
 
     initialize(options) {
       this.model = options.formc;
@@ -1783,6 +1889,14 @@ module.exports = {
 
   backgroundCheck: Backbone.View.extend(_.extend({
     urlRoot: formcServer + '/:id' + '/background-check',
+
+    preinitialize() {
+      // ToDo
+      // Hack for undelegate previous events
+      for (let k in this.events) {
+        $('#content ' + k.split(' ')[1]).undelegate();
+      }
+    },
     initialize(options) {
       this.model = options.formc;
       this.fields = options.fields;
@@ -1829,6 +1943,14 @@ module.exports = {
 
   finalReview: Backbone.View.extend({
     urlRoot: formcServer + '/:id/final-review',
+
+    preinitialize() {
+      // ToDo
+      // Hack for undelegate previous events
+      for (let k in this.events) {
+        $('#content ' + k.split(' ')[1]).undelegate();
+      }
+    },
     initialize(options) {
       this.fields = options.fields;
       disableEnterHelper.disableEnter.call(this);
@@ -1854,10 +1976,19 @@ module.exports = {
 
       let target = event.target;
       let element = '';
-      if(target.dataset.type == 'text') {
+      if(target.dataset.type == 'text' || target.dataset.type == 'money') {
         element = document.createElement('input');
         element.name = target.dataset.name;
-        element.value = target.innerHTML;
+
+        if(target.dataset.type == 'money') {
+          //element.value = formatHelper.unformatPrice(target.innerHTML);
+          element.value = target.innerHTML;
+        } else {
+          element.value = target.innerHTML;
+        }
+
+        element.type = target.dataset.type;
+        element.dataset.type = target.dataset.type;
         element.onblur = (e) => this.update(e);
         target.parentElement.insertBefore(element, target);
       } else if(target.dataset.type == 'select') {
@@ -1865,12 +1996,7 @@ module.exports = {
         element.name = target.dataset.name;
         element.onblur = (e) => this.update(e);
 
-        let fName = target.dataset.name;
-        if(fName.indexOf('[') !== -1) {
-           fName = fName.replace(/\[\d+\]/, '.schema')
-        }
-
-        let v = app.valByKeyReplaceArray(this.fields, fName).validate.OneOf;
+        let v = app.valByKeyReplaceArray(this.fields, target.dataset.name).validate.OneOf;
         v.choices.forEach((el, i) => {
           let e = document.createElement('option');
           e.innerHTML = v.labels[i];
@@ -1889,12 +2015,16 @@ module.exports = {
         element.onblur = (e) => this.update(e);
         target.parentElement.insertBefore(element, target);
       }
+      element.focus();
 
       target.remove();
     },
 
     update(e) {
-      const val = e.target.value;
+      let val = e.target.value;
+      if(e.target.dataset.type == 'money') {
+        val = formatHelper.unformatPrice(val);
+      }
       const name = e.target.name;
       const reloadRequiredFields = [
         'corporate_structure',
@@ -1904,6 +2034,7 @@ module.exports = {
         'price_per_share',
         'length_days',
       ];
+
 
       e.target.setAttribute(
         'id', e.target.name.replace(/\./g, '__').replace(/\[/g ,'_').replace(/\]/g, '_')
@@ -1932,8 +2063,8 @@ module.exports = {
           let names = fieldName.split('.');
           fieldName = names[0].split('[')[0];
           let index = names[0].split('[')[1].replace(']', '');
-          app.user.formc[fieldName][index][names[1]] = val;
-          data[fieldName] = app.user.formc[fieldName];
+          app.setValByKey(app.user, name, val);
+
           if(fieldName == 'team_members') {
             url = formcServer + '/' + this.model.formc.id + '/team-members/' +
               roles[app.user.formc.team_members[index].role[0]].toLocaleLowerCase() + '/' + 
@@ -1947,6 +2078,8 @@ module.exports = {
             url = formcServer + '/' + this.model.formc.id + '/risk-factors-' + fieldName.split('_')[0] + '/' + index;
             app.user.formc[fieldName][index]
             data = app.user.formc[fieldName][index];
+          } else {
+            data[names[0].replace(/\[\d+\]/, '')] = app.user.formc[names[0].replace(/\[\d+\]/, '')];
           }
         } else {
           data[fieldName] = val;
@@ -1979,20 +2112,25 @@ module.exports = {
             let metaData = app.valByKeyReplaceArray(this.fields, e.target.name);
             realVal = app.fieldChoiceList(metaData, val);
           } else if(e.target.tagName == "TEXTAREA") {
-            href.dataset.type = "textarea"
+            href.dataset.type = "textarea";
+            realVal = realVal.replace(/\n/g, '<br>');
           } else {
             href.dataset.type = 'text';
+            if(e.target.dataset.type == 'money') {
+              realVal = formatHelper.formatPrice(realVal);
+            }
           }
 
           href.innerHTML = realVal;
           if(e.target.tagName == 'SELECT') {
             href.dataset.value = val;
-          }
+          } 
+
           href.className = 'createField show-input link-1';
 
           document.querySelectorAll('[data-name="' + e.target.name + '"]').forEach((sameElement) => {
             if(sameElement.tagName == 'SELECT') {
-              sameElement.value = val;
+              sameElement.value = val
             } else {
               sameElement.innerHTML = realVal;
             }
@@ -2036,6 +2174,14 @@ module.exports = {
   finalReviewTwo: Backbone.View.extend({
     el: '#content',
     template: require('./templates/finalReviewTwo.pug'),
+
+    preinitialize() {
+      // ToDo
+      // Hack for undelegate previous events
+      for (let k in this.events) {
+        $('#content ' + k.split(' ')[1]).undelegate();
+      }
+    },
     initialize(options) {
       this.fields = options.fields;
     },

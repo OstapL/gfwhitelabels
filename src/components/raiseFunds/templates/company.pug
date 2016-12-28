@@ -1,9 +1,6 @@
-include ../../../templates/fields_mixins.pug
 include menu.pug
 
-
 - pug_html += app.breadcrumbs('Create Company', '', [ ['Home', '/'], ['Create Company', ''], ['Company', ''], ]);
-
 
 section.create-company.container.m-b-85
   - var campaignId = campaign.id;
@@ -65,9 +62,6 @@ section.create-company.container.m-b-85
             label.col-xl-3.col-lg-12.text-xl-right.textlg-left.m-b-0.p-t-0.m-b-lg-1 Date of Organization
               span.color-red *
             .col-xl-4.col-lg-6.p-r-0
-              //+fieldDateMonth("founding_date", _.extend({
-                class: 'col-xl-4 col-lg-4 col-xs-4 p-l-0  m-d-p-r-5',
-                }, fields.dob))
               - 
                 pug_html += app.fields.dateMonth('founding_date', _.extend({
                 'empty': { '': 'Choose' },
@@ -78,13 +72,6 @@ section.create-company.container.m-b-85
                 'empty': { '': 'Choose' },
                 'value': values.founding_date,
                 }, fields.founding_date));
-              //+fieldDateDay("founding_date", _.extend({
-                class: 'col-xl-4 col-lg-4 col-xs-4 p-r-0 m-d-p-l-5',
-                }, fields.founding_date))
-              //+fieldDateYear("founding_date", _.extend({
-                class: 'col-xl-4 col-lg-4 col-xs-4 p-r-0 p-r-lg-1 m-d-p-l-10',
-                placeholder: 'YYYY',
-               }, fields.founding_date))
               - 
                 pug_html += app.fields.dateYear('founding_date', _.extend({
                 'value': values.founding_date,
@@ -99,7 +86,7 @@ section.create-company.container.m-b-85
           pug_html += app.fields.textLabel('address_2', {
           schema: fields.address_2, 
           value: values.address_2,})
-        .row.form-group
+        .row
           .col-xl-6.col-lg-6.col-l-65
             - 
               pug_html += app.fields.textLabel('zip_code', {
@@ -111,8 +98,8 @@ section.create-company.container.m-b-85
             input(type='hidden' name='state' value=values.state)#state
             input(type='hidden' name='city' value=values.city)#city
 
-            label.col-xl-5.col-lg-12.col-sm-6.col-xs-6.text-xl-right.text-lg-left.p-l-0 City/State
-            .col-xl-7.col-lg-12.col-sm-6.col-xs-6
+            label.col-xl-5.col-lg-12.col-sm-6.col-xs-3.text-xl-right.text-lg-left.p-l-0 City/State
+            .col-xl-7.col-lg-12.col-sm-6.col-xs-9
               a(data-toggle="modal" data-target="#city_state_modal" href="#city_state_modal").change_state_city
                 span.input-value.js-city-state= (values.city ? values.city : "(city)") + ", " + (values.state ? values.state : "(state)") 
                 i.fa.fa-pencil-square-o.link-1

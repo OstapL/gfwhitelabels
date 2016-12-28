@@ -4,7 +4,7 @@ mixin row(value, index)
     .delete-section-container
       a(href="#" data-section=name data-index=index).delete-sectionnew
         i.fa.fa-times
-    | !{app.fields.nestedTextareaLabel(name, 'title', value, index, {help_text: 'Is there anything else you want to tell your potential investors? Received any accolades? Patents? Major contracts? Distributors, etc?' }, attr.schema.title)}
+    | !{app.fields.nestedTextLabel(name, 'title', value, index, {help_text: 'Is there anything else you want to tell your potential investors? Received any accolades? Patents? Major contracts? Distributors, etc?' }, attr.schema.title)}
 
     | !{app.fields.nestedTextareaLabel(name, 'body', value, index, attr.schema.body)}
 

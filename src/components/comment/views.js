@@ -3,7 +3,7 @@ const helpers = {
 };
 
 const yesNoHelper = require('helpers/yesNoHelper.js');
-// const validation = require('componenets/validation/validation.js');
+// const validation = require('components/validation/validation.js');
 
 function initDates(c) {
   c.created_date = new Date(c.created_date);
@@ -31,6 +31,12 @@ module.exports = {
 
     initialize(options) {
       this.fields = options.fields;
+
+      this.options =
+      this.allowQuestion = _.isBoolean(options.allowQuestion) ? options.allowQuestion : true;
+      this.allowResponse = _.isBoolean(options.allowResponse) ? options.allowResponse : true;
+      this.cssClass = _.isString(options.cssClass) ? options.cssClass : '';
+
       this.urlRoot = this.urlRoot.replace(':model', 'company').replace(':id', this.model.id);
       //init dates
       _.each(this.model.data, (c) => {
@@ -63,6 +69,11 @@ module.exports = {
         helpers: helpers,
         owner_id: this.model.owner_id,
         company_id: this.model.id,
+        attr: {
+          allowQuestion: this.allowQuestion,
+          allowResponse: this.allowResponse,
+          cssClass: this.cssClass,
+        }
       }));
 
       this.$stubs = this.$('.stubs');
@@ -91,7 +102,7 @@ module.exports = {
     },
 
     keyupHandler(e) {
-      if (this.isRelatedToCompany)
+      if (this.model.id == app.user.get('role').company_id)
         return;
 
       let $target = $(e.target);
@@ -115,24 +126,10 @@ module.exports = {
 
     },
 
-    _ensureUserLoggedIn(e) {
-      if (app.user.is_anonymous()) {
-        const pView = require('components/anonymousAccount/views.js');
-        require.ensure([], function() {
-          new pView.popupLogin().render(window.location.pathname);
-          app.hideLoading();
-          $('#sign_up').modal();
-        });
-        return false;
-      }
-
-      return true;
-    },
-
     submitComment(e) {
       e.preventDefault();
 
-      if (!this._ensureUserLoggedIn(e))
+      if (!app.user.ensureLoggedIn(e))
         return false;
 
       let $target = $(e.target);
@@ -206,6 +203,7 @@ module.exports = {
         } else {
           this.model.data.push(newCommentModel);
           $form.find('.text-body').val('');
+          this.keyupHandler(e);//remove related role checkbox
         }
 
         let newCommentHtml = app.fields.comment(newCommentModel, level, {
@@ -239,11 +237,18 @@ module.exports = {
     showReplyTo(e) {
       e.preventDefault();
 
-      let $newCommentBlock = this.$stubs.find('.edit-comment').clone();
+      let $commentBlock = $(e.target).closest('.comment');
+
+      let $newCommentBlock = $commentBlock.find('.comment-form');
+      if ($newCommentBlock && $newCommentBlock.length) {
+        return false;
+      }
+
+      $newCommentBlock = this.$stubs.find('.edit-comment').clone();
 
       $newCommentBlock.removeClass('edit-comment collapse');
 
-      $newCommentBlock.appendTo($(e.target).closest('.comment'));
+      $newCommentBlock.appendTo($commentBlock);
 
       $newCommentBlock.find('.text-body').focus();
 

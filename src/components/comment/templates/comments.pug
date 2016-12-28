@@ -1,22 +1,21 @@
-h2#ask.col-lg-12.dosis.text-uppercase.text-lg-center.text-xs-center.campaign-subheading ASK A QUESTION
-.col-lg-8.offset-lg-2.pt30.comment-form-div
-  form.comment-form.form-section
-    .col-lg-9
-      input(type="text" name="body" placeholder="Type your text here..." value='').w-100.text-body
-    .col-lg-3.p-r-0.text-xl-right.text-xs-center.p-t-sm-1
-      button(type="button").btn.btn-primary.text-uppercase.pull-lg-right.ask-question Submit
+if attr.allowQuestion
+  h2#ask.col-lg-12.dosis.text-uppercase.text-lg-center.text-xs-center.campaign-subheading ASK A QUESTION
+  .col-lg-8.offset-lg-2.col-md-12.offset-md-0.col-sm-12.offset-sm-0.col-xs-12.offset-xs-0.pt30.comment-form-div
+    form.comment-form.form-section
+      .col-lg-9
+        input(type="text" name="body" placeholder="Type your text here..." value='').w-100.text-body
+      .col-lg-3.p-r-0.text-xl-right.text-xs-center.p-t-sm-1
+        button(type="button").btn.btn-primary.text-uppercase.pull-lg-right.ask-question Submit
+div(class=(attr.cssClass || ''))
+  .comments
+    -
+      var options = _.extend({
+        owner_id: owner_id,
+        company_id: company_id,
+      }, attr);
 
-
-
-.col-lg-8.offset-lg-2.pt50.comments
-  -
-    var options = {
-      owner_id: owner_id,
-      company_id: company_id,
-    };
-
-  each c in comments
-    | !{ app.fields.comment(c, 0, options) }
+    each c in comments
+      | !{ app.fields.comment(c, 0, options) }
 
 .stubs.collapse
   .row
@@ -35,10 +34,10 @@ h2#ask.col-lg-12.dosis.text-uppercase.text-lg-center.text-xs-center.campaign-sub
           span.font-weight-bold
             | I am an:
         .col-lg-9.radio-input.p-l-0
-          label
+          label.p-t-0.m-b-0
             input(type="radio" name="related" value="Employee" selected=false)
             | Employee
-          label
+          label.p-t-0.m-b-0
             input(type="radio" name="related" value="Promoter" selected=false)
             | Promoter
 
@@ -47,7 +46,7 @@ h2#ask.col-lg-12.dosis.text-uppercase.text-lg-center.text-xs-center.campaign-sub
     .col-lg-11.offset-lg-1.m-t-2.p-r-0.p-l-3.form-group
       .border-bottom.m-t-0.mb30
       textarea(placeholder="Type your text here").form-control.big-textarea.text-body.col-lg-12
-    .col-lg-12.p-r-0.text-xl-right
+    .col-lg-12.p-r-0.text-xl-right.text-lg-right.text-xs-center.p-xs-0
       button(type="button").btn.btn-sm.btn-secondary.text-uppercase.m-r-2.cancel-comment Cancel
       button(type="button").btn.btn-sm.btn-primary.text-uppercase.submit-comment Submit
       

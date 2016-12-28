@@ -1,4 +1,3 @@
-include ../../../templates/fields_mixins.pug
 include ../../raiseFunds/templates/menu.pug
 
 - pug_html += app.breadcrumbs('create form c', '', [ ['Home', '/'], ['Create Form C', '/formc/' + values.id + '/introduction'], ['FINANCIAL CONDITION', ''], ]);
@@ -24,20 +23,28 @@ section.formc-team-members-director.container.m-b-85
               input(type="radio" name="financials_condition_choice" value=0 checked=(values['financials_condition_choice'] == false))
               |  No
         .financials_condition_choice.shown-yes(style="display:" + (values['financials_condition_choice'] == true ? 'block' : 'none') + ";")
-          .col-lg-12
-            +fieldTextareaLabel("financials_condition_yes", _.extend({
-              class1: '',
-              class2: 'big-textarea',
-              placeholder: "Describe your historical results",
-            }, fields.financials_condition_yes))
+          .row
+            .col-lg-12
+              - 
+                pug_html += app.fields.textareaLabel('financials_condition_yes', {
+                    schema: fields.financials_condition_yes,
+                    class1: 'col-xl-12',
+                    class2: 'col-xl-12 big-textarea',
+                    placeholder: "Describe your historical results",
+                    value: values.financials_condition_yes,
+                  });
 
         .financials_condition_choice.shown-no(style="display:" + (values['financials_condition_choice'] ? 'none' : 'block') + ";")
-          .col-lg-12
-            +fieldTextareaLabel("financials_condition_no", _.extend({
-              class1: '',
-              class2: 'big-textarea',
-              placeholder: "Describe your financial condition",
-            }, fields.financials_condition_no))
+          .row
+            .col-lg-12
+              - 
+                pug_html += app.fields.textareaLabel('financials_condition_no', {
+                  schema: fields.financials_condition_no,
+                  class1: 'col-xl-12',
+                  class2: 'col-xl-12 big-textarea',
+                  placeholder: "Describe your financial condition",
+                  value: values.financials_condition_no,
+                });
       .col-lg-12
         p.m-t-1.m-b-2 Companies are limited to raising $1 million in any 12-month period.
         p.pb10 You will be required to file a complete set of financial statements, including balance sheet, income statement, statement of cash flows and statement of changes in owners equity and notes to the financial statements. They must be prepared in accordance with U.S. generally accepted accounting principles and must cover the two most recently completed fiscal years or the period(s) since inception, if shorter. If the financial statements are not audited, they must be labeled as “unaudited.” You must provide these financial statements even if you have no operating history.
@@ -80,33 +87,24 @@ section.formc-team-members-director.container.m-b-85
               input(type="radio" name="sold_securities_choice" value="false" checked=(!values['sold_securities_choice']) target=".previous-security-container")
               |  No
         .sold_securities_choice.shown-yes(style="display:" + (values['sold_securities_choice'] ? 'block' : 'none'))
-          +fieldTextLabel("sold_securities_amount", _.extend({
-            class1: 'col-xl-12 text-xl-left',
-            class2: 'col-xl-12',
-          }, fields.sold_securities_amount))
+          - 
+            pug_html += app.fields.textLabel('sold_securities_amount', {
+              class1:'col-xl-12 text-xl-left',
+              class2: 'col-xl-12',
+              schema: fields.sold_securities_amount,
+              value: values.sold_securities_amount,
+            })
         .img-ppt
-          +fileFolderDropzone("fiscal_recent_group_id", _.extend({
-            class1: 'col-xl-3 col-lg-12 text-xl-right text-lg-left',
-            class2: 'col-xl-9 col-lg-12 p-l-1 p-r-1',
-            text: 'Drop your PDF or DOC here or click to upload',
-            icon: 'file',
-            data: values.fiscal_recent_group_data,
-            value: values.fiscal_recent_group_id,
-            label: "Upload financials for most recent fiscal year",
-            default: '/img/icons/file.png',
-          }, fields.fiscal_recent_group_id))
+          -
+            pug_html += app.fields.fileFolderDropzone('fiscal_recent_group_id',{
+                data: values.fiscal_recent_group_data,
+              }, fields.fiscal_recent_group_id);
 
         .img-ppt
-          +fileFolderDropzone("fiscal_prior_group_id", _.extend({
-            class1: 'col-xl-3 col-lg-12 text-xl-right text-lg-left',
-            class2: 'col-xl-9 col-lg-12 p-l-1 p-r-1',
-            text: 'Drop your PDF or DOC here or click to upload',
-            icon: 'file',
-            data: values.fiscal_prior_group_data,
-            value: values.fiscal_prior_group_id,
-            label: "Upload financials for prior fiscal year",
-            default: '/img/icons/file.png',
-          }, fields.fiscal_prior_group_id))
+          -
+            pug_html += app.fields.fileFolderDropzone('fiscal_prior_group_id',{
+                data: values.fiscal_prior_group_data,
+              }, fields.fiscal_prior_group_id);
 
       |!{ templates.sold_securities_data }
       .col-lg-12.m-t-2

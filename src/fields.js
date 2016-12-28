@@ -1,6 +1,8 @@
 const helpers = {
   date: require('./helpers/dateHelper.js'),
   format: require('./helpers/formatHelper.js'),
+  text: require('helpers/textHelper.js'),
+  mimetypeIcons: require('helpers/mimetypeIcons.js'),//TODO: add resolve method and make resolveIconHelper
 };
 
 let exports = {
@@ -135,7 +137,7 @@ let exports = {
     attr.name = name;
     this.prepareField(name, attr);
     attr.class1 = attr.class1 || 'col-xl-3 col-lg-12 text-lg-left text-xl-right';
-    attr.class2 = attr.class2 || 'col-xl-9 col-lg-12';
+    attr.class2 = attr.class2 || 'col-xl-9 col-lg-12 big-textarea';
     const template = require('./templates/textareaLabel.pug');
     return template(attr);
   },
@@ -213,7 +215,7 @@ let exports = {
       attr: attr,
     });
   },
-
+  // уже не нужен
   fieldTextLabel(name, attr) {
     this.prepareField(name, attr);
     attr.type = attr.type || 'text';
@@ -239,43 +241,155 @@ let exports = {
       name: name,
       attr: attr,
     });
+  },  
+
+  radioLabel(name, attr) {
+    this.prepareField(name, attr);
+    attr.type = attr.type || 'radio';
+    attr.class1 = attr.class1 || 'col-xl-3 text-xl-right text-lg-left';
+    attr.class2 = attr.class2 || 'col-xl-9';
+    const template = require('./templates/radioLabel.pug');
+
+    return template({
+      name: name,
+      attr: attr,
+    });
   },
 
-  fileFolderDropzone(name, attr) {
-    /* Requeired:
-     * data: values.fiscal_recent_group_data,
-     * value: values.fiscal_recent_group_id,
-     * label: "Upload financials for most recent fiscal year",
-     *
-     * Options:
-     * schema: fields.fiscal_recent_group_id,
-     * classMain, class1, class2
-     * required, id, icon, type, help_text, default
-     */
+  fileFolderDropzone(name, attr, schema) {
+    attr.data = attr.data || {};
+    attr.data.urls = attr.data.urls || [];
 
-    attr.name = name;
+    _.extend(attr, schema);
+
     this.prepareField(name, attr);
 
+    attr.class = attr.class || '';
+    let nameClass = attr.id || name,
+      requiredClass = attr.required ? 'required' : '',
+      popoverClass = attr.help_text ? 'showPopover' : '';
+
+    attr.class = `row media-item ${attr.class} ${nameClass} ${requiredClass} fileFolderDropzone ${popoverClass}`;
+
+    attr.class1 = attr.class1 || 'col-xl-3 col-lg-12 text-xl-right text-lg-left';
+    attr.class1 += ` ${requiredClass}`;
+
+    attr.class2 = attr.class2 || 'col-xl-9 col-lg-12 p-l-1 p-r-1';
+    attr.class2 += ` dropzone__${name}`;
+
+    attr.icon = attr.icon || 'file';
+    attr.text = attr.text || 'Drop your PDF or DOC here or click to upload';
+
     const template = require('./templates/fileFolderDropzone.pug');
-
-    if(attr.hasOwnProperty('class1') == false) { 
-      attr.class1 = 'col-xl-3 col-lg-12 text-xl-right text-lg-left';
-    }
-
-    if(attr.hasOwnProperty('class2') == false) { 
-      attr.class2 = 'col-xl-9 col-lg-12 p-l-1 p-r-1';
-    }
-
-    if(attr.hasOwnProperty('icon') == false) { 
-      attr.icon = 'file';
-    }
-
-    if(attr.hasOwnProperty('text') == false) { 
-      attr.text = 'Drop your PDF or DOC here or click to upload';
-    }
-
-    return template(attr);
+    return template({
+      name: name,
+      attr: attr,
+      helpers: helpers,
+    });
   },
+
+  fileDropzone(name, attr, schema) {
+    attr.data = attr.data || {};
+    attr.data.urls = attr.data.urls || [];
+
+    _.extend(attr, schema);
+
+    this.prepareField(name, attr);
+
+    attr.icon = attr.data.mime
+      ? helpers.mimetypeIcons[attr.data.mime.split('/')[1]]
+      : attr.type;
+
+    let nameClass = attr.id || name,
+      requiredClass = attr.required ? 'required' : '',
+      popoverClass = attr.help_text ? 'showPopover' : '';
+
+    attr.class = attr.class || '';
+    attr.class = `row media-item ${attr.class} ${nameClass} ${requiredClass} fileDropzone ${popoverClass}`;
+
+    attr.class1 = attr.class1 || 'col-xl-3 col-lg-12 text-xl-right text-lg-left';
+    attr.class1 += ` ${requiredClass}`;
+
+    attr.class2 = attr.class2 || 'col-xl-9 col-lg-12 p-l-1 p-r-1';
+    attr.class2 += ` dropzone__${name}`;
+
+    attr.default = attr.default || '/img/default/file.png';
+    attr.icon = attr.icon || 'file';
+    attr.text = attr.text || 'Drop your PDF or DOC here or click to upload';
+
+    const template = require('./templates/fileDropzone.pug');
+    return template({
+      name: name,
+      attr: attr,
+      helpers: helpers,
+    });
+
+  },
+
+  teamMemberDropzone(name, attr) {
+    attr.data = attr.data || {};
+    attr.data.urls = attr.data.urls || [];
+
+    attr.class1 = attr.class1 || 'col-xl-3 col-lg-12 text-lg-left text-xl-right';
+    attr.class2 = attr.class2 || 'col-xl-9 col-lg-12';
+    attr.thumbSize = attr.thumbSize || '255x135';
+    attr.icon = attr.icon || 'camera';
+    attr.text = attr.text || 'Drop your photo here or click to upload';
+
+    const template = require('./templates/teamMemberDropzone.pug');
+    return template({
+      name: name,
+      attr: attr,
+      noimg: '/img/default/Default_photo.png',
+    });
+  },
+
+  imageDropzone(name, attr, schema) {
+    attr.data = attr.data || {};
+    attr.data.urls = attr.data.urls || [];
+
+    _.extend(attr, schema);
+
+    this.prepareField(name, attr);
+    attr.class = attr.class || '';
+    let nameClass = attr.id || name,
+      requiredClass = attr.required ? 'required' : '',
+      popoverClass = attr.help_text ? 'showPopover' : '';
+
+    attr.class = `row media-item ${attr.class} ${nameClass} ${requiredClass} imageDropzone ${popoverClass}`;
+    attr.class1 += attr.required ? ' required' : '';
+    attr.class2 += ` dropzone__${name}`;
+    const template = require('./templates/imageDropzone.pug');
+    return template({
+      name: name,
+      attr: attr,
+    });
+  },
+
+  galleryDropzone(name, attr, schema) {
+    attr.data = attr.data || {};
+    attr.data.urls = attr.data.urls || [];
+
+    _.extend(attr, schema);
+
+    this.prepareField(name, attr)
+
+    attr.class = attr.class || '';
+    let nameClass = attr.id || name,
+      requiredClass = attr.required ? 'required' : '',
+      popoverClass = attr.help_text ? 'showPopover' : '';
+
+    attr.class = `row media-item ${attr.class} ${nameClass} ${requiredClass} galleryDropzone ${popoverClass}`;
+    attr.class1 += ` ${requiredClass}`;
+    attr.class2 += ` dropzone__${name}`;
+
+    const template = require('./templates/imagefolderDropzone.pug');
+    return template({
+      name: name,
+      attr: attr,
+    });
+  },
+
 };
 
 module.exports = exports;

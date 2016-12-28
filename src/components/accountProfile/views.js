@@ -1,9 +1,13 @@
-const dropzone = require('dropzone');
-const dropzoneHelpers = require('helpers/dropzoneHelpers.js');
 const validation = require('components/validation/validation.js');
-const phoneHelper = require('helpers/phoneHelper.js');
-const formatHelper = require('helpers/formatHelper');
-const yesNoHelper = require('helpers/yesNoHelper.js');
+
+const helpers = {
+  date: require('helpers/dateHelper.js'),
+  format: require('helpers/formatHelper.js'),
+  phone: require('helpers/phoneHelper.js'),
+  social: require('helpers/socialNetworksHelper.js'),
+  dropzone: require('helpers/dropzoneHelpers.js'),
+  yesNo: require('helpers/yesNoHelper.js'),
+};
 
 // const InvestmentStatus = {
 //   New: 0,
@@ -41,7 +45,7 @@ module.exports = {
       'change .investor-item-checkbox': 'changeAccreditedInvestorItem',
       'change #twitter,#facebook,#instagram,#linkedin': 'appendHttpsIfNecessary',
       // 'change input[name=accredited_investor]': 'changeAccreditedInvestor',
-    }, phoneHelper.events, dropzoneHelpers.events, yesNoHelper.events),
+    }, helpers.phone.events, helpers.dropzone.events, helpers.yesNo.events),
 
     changeAccreditedInvestorItem(e) {
       let $target = $(e.target);
@@ -155,12 +159,14 @@ module.exports = {
 
     render() {
       this.getCityStateByZipCode = require("helpers/getSityStateByZipCode");
-      this.usaStates = require("helpers/usa-states.js");
+      this.usaStates = require("helpers/usaStates.js");
 
       this.$el.html(
         this.template({
           serverUrl: serverUrl,
           user: this.model,
+          roleInfo: app.user.getRoleInfo(),
+          company: app.user.get('company'),
           fields: this.fields,
           states: this.usaStates,
         })
@@ -202,7 +208,7 @@ module.exports = {
     },
 
     appendHttpsIfNecessary(e) {
-      formatHelper.appendHttpIfNecessary(e, true);
+      helpers.format.appendHttpIfNecessary(e, true);
     },
 
     _initSliders() {
@@ -379,9 +385,12 @@ module.exports = {
       $('.image_image_id').siblings('h3').text(fullName);
 
       $('#content').scrollTo();
+
+      //switch to financial info tab
+      this.$('.profile-tabs a[href="#financial_info"]').tab('show');
     },
 
-  }, phoneHelper.methods, dropzoneHelpers.methods, yesNoHelper.methods)),
+  }, helpers.phone.methods, helpers.dropzone.methods, helpers.yesNo.methods)),
 
   changePassword: Backbone.View.extend({
     urlRoot: authServer + '/rest-auth/password/change',
@@ -472,8 +481,14 @@ module.exports = {
         investment.status = 2;
         this.investments.historical.push(investment);
 
-        let activeInvestmentBlock = $target.closest('.one_table');
-        activeInvestmentBlock.remove();
+        $target.closest('.one_table').remove();
+
+        if (this.investments.active.length <= 0)
+          $('#active .investor_table')
+            .append(
+              '<div role="alert" class="alert alert-warning">' +
+                '<strong>You have no active investments</strong>' +
+              '</div>');
 
         let historicalInvestmentsBlock = this.$el.find('#historical .investor_table');
 
@@ -566,66 +581,138 @@ module.exports = {
       return this;
     },
   }),
-  issueDashboard: Backbone.View.extend({
-    initialize(options) {
-      this.model.description = "Something long comes from here. Something long comes from here. Something long comes from here. Something long comes from here. Something long comes from here. ";
-      this.model.thumbnail = '/img/smartbe-intelligent-stroller.jpg',
-      this.model.campaign = {
-        minimum_raise: 80000,
-        amount_raised: 20000,
-        starting_date: "2016-04-04",
-        expiration_date: "2017-02-04",
-        investors: 333,
-        views: 123456,
-        interactions: 4567,
-      }
-    },
+
+  issuerDashboard: Backbone.View.extend({
+    template: require('./templates/issuerDashboard.pug'),
     events: {
       'click .linkedin-share': 'shareOnLinkedIn',
       'click .facebook-share': 'shareOnFaceBook',
       'click .twitter-share': 'shareOnTwitter',
       'click .email-share': 'shareWithEmail',
       'click .google-plus-share': 'shareWithGooglePlus',
+      'click .cancel-campaign': 'cancelCampaign',
+    },
+
+    initialize(options) {
+      this.model.description = "Something long comes from here. Something long comes from here. Something long comes from here. Something long comes from here. Something long comes from here. ";
+      this.model.thumbnail = '/img/smartbe-intelligent-stroller.jpg';
+      this.model.campaign = _.extend({
+        minimum_raise: 80000,
+        amount_raised: 20000,
+        starting_date: "2016-04-04",
+        expiration_date: "2017-02-04",
+        investors: 0,
+        views: 0,
+        interactions: 4567,
+      }, this.model.campaign);
+
+      this.company = options.company;
+
+      helpers.social.init();
+    },
+
+    render(){
+      this.$el.html(
+        this.template({
+          values: this.model,
+          company: this.company,
+          helpers: helpers,
+        })
+      );
+
+      this.initComments();
+
+      try {
+        let script = document.createElement('script');
+        script.type = 'text/javascript';
+        script.src = '/js/graph/graph.js';
+        $(document.head).append(script);
+
+        script = document.createElement('script');
+        script.type = 'text/javascript';
+        script.src = '/js/graph_data.js'
+        $(document.head).append(script);
+      } catch(err){
+        console.log(err);
+      }
+
+
+
+      // const socket = require('socket.io-client')('http://localhost:3000');
+      // socket.on('connect', function () {
+      //   socket.emit('newUser', app.user.id, function (data) {
+      //     console.log(data);
+      //   });
+      // });
+      // socket.on('notification', function(msg){
+      //   console.log(msg);
+      //   $('.notification-container ul').append($('<li>').html('<a>' + msg + '</a>'));
+      // });
+      return this;
     },
 
     shareOnLinkedIn(e) {
-      event.preventDefault();
-      window.open(encodeURI('https://www.linkedin.com/shareArticle?mini=true&url=' + 'http://growthfountain.com/' + this.model.id +
-        '&title=' + this.model.name +
-        '&summary=' + this.model.description +
-        '&source=Growth Fountain'),'Growth Fountain Campaign','width=605,height=545');
+      e.preventDefault();
+
+      helpers.social.linkedIn.share({
+        href: 'http://growthfountain.com/' + this.model.id,
+        title: this.model.name,
+        description: this.model.description,
+      });
     },
 
     shareOnFaceBook(e) {
-      event.preventDefault();
-      FB.ui({
-        method: 'share',
+      e.preventDefault();
+
+      helpers.social.facebook.share({
         href: 'http://growthfountain.com/' + this.model.id,
         caption: this.model.tagline,
-        description: this.model.description,
         title: this.model.name,
-        picture: null,
-      }, function(response){});
+        description: this.model.description,
+        picture: this.model.campaign.header_image_data[0].urls[0],
+      });
+
     },
 
     shareOnTwitter(e) {
-      event.preventDefault();
-      window.open(encodeURI('https://twitter.com/share?url=' + 'http://growthfountain.com/' + this.model.id +
-        '&via=' + 'growthfountain' +
-        '&hashtags=investment,fundraising' +
-        '&text=Check out '),'Growth Fountain Campaign','width=550,height=420');
+      e.preventDefault();
+
+      helpers.social.twitter.share({
+        href: 'http://growthfountain.com/' + this.model.id,
+        hashtags: ['investment', 'fundraising'],
+        text: 'Check out ',
+      });
     },
 
     shareWithEmail(e) {
-      event.preventDefault();
-      let companyName = this.model.name;
-      let text = "Check out " + companyName + "'s fundraise on GrowthFountain";
-      window.open("mailto:?subject=" + text + "&body=" + text + "%0D%0A" + 'http://growthfountain.com/' + this.model.id);
+      e.preventDefault();
+
+      let text = "Check out " + this.model.name + "'s fundraise on GrowthFountain";
+
+      helpers.social.email.share({
+        subject: text,
+        message: text,
+        href: 'http://growthfountain.com/' + this.model.id,
+      });
     },
 
     shareWithGooglePlus(e) {
-      event.preventDefault();
+      e.preventDefault();
+
+      helpers.social.googlePlus.share({
+        href: 'http://growthfountain.com/' + this.model.id,
+      });
     },
+
+    cancelCampaign(e) {
+      e.preventDefault();
+      if(!confirm('Are you sure?')) {
+        return;
+      }
+
+      console.log('CANCEL CAMPAIGN NOT IMPLEMENTED');
+    },
+
     initComments() {
       const View = require('components/comment/views.js');
       const urlComments = commentsServer + '/company/' + this.model.id;
@@ -637,38 +724,25 @@ module.exports = {
         data[0].owner_id = this.model.owner_id;
 
         let comments = new View.comments({
-          // model: commentsModel,
           model: data[0],
           fields: options[0].fields,
+          allowQuestion: false,
+          cssClass: 'col-lg-8',
         });
         comments.render();
-      });
-    },
-    render(){
-      const socialMediaScripts = require('helpers/shareButtonHelper.js');
-      const template = require('./templates/issuerDashboard.pug');
 
-      this.$el.html(
-        template({
-          values: this.model,
-          formatHelper: formatHelper,
-        })
-      );
+        let commentsCount = 0;
 
-      socialMediaScripts.facebook();
-      setTimeout(() => { this.initComments(); },100);
+        function countComments(comments) {
+          commentsCount += comments.length;
+          _.each(comments, (c) => {
+            countComments(c.children);
+          });
+        }
 
-      const socket = require('socket.io-client')('http://localhost:3000');
-      socket.on('connect', function () {
-        socket.emit('newUser', app.user.id, function (data) {
-          console.log(data);
-        });
+        countComments(data[0].data);
+        $('.interactions-count').text(commentsCount);
       });
-      socket.on('notification', function(msg){
-        console.log(msg);
-        $('.notification-container ul').append($('<li>').html('<a>' + msg + '</a>'));
-      });
-      return this;
     },
   }),
 
