@@ -15,13 +15,7 @@ module.exports = Backbone.Router.extend({
   },
 
   execute: function (callback, args, name) {
-    if (app.user.is_anonymous() && name !== 'logout') {
-      const pView = require('components/anonymousAccount/views.js');
-      require.ensure([], function() {
-        new pView.popupLogin().render(window.location.pathname);
-        app.hideLoading();
-        $('#sign_up').modal();
-      });
+    if (name !== 'logout' && !app.user.ensureLoggedIn(window.location.pathname)) {
       return false;
     }
     if (callback) callback.apply(this, args);
