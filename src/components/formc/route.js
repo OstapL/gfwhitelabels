@@ -81,17 +81,13 @@ module.exports = Backbone.Router.extend({
 
   execute: function (callback, args, name) {
     //ga('send', 'pageview', "/" + Backbone.history.getPath());
-    if (app.user.is_anonymous()) {
-      const pView = require('components/anonymousAccount/views.js');
-      require.ensure([], function() {
-        new pView.popupLogin().render(window.location.pathname);
-        app.hideLoading();
-        $('#sign_up').modal();
-      });
+    if (!app.user.ensureLoggedIn(window.location.pathname))
       return false;
-    }
-    if (callback) callback.apply(this, args);
-    else alert('Not such url');
+
+    if (callback)
+      callback.apply(this, args);
+    else
+      alert('Not such url');
   },
 
   introduction(id) {
