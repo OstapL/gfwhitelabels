@@ -6,32 +6,32 @@ div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true
           span(aria-hidden="true")
             i.fa.fa-times
         h2.text-xs-center.text-uppercase.dosis.modal-title Sign up
-        p.text-xs-center Have an account? 
-          a(href="#" onclick="$('#sign_up').modal('hide');$('#sign_in').modal()").link-3.link-show-login
+        p.text-xs-center Have an account? &nbsp;
+          a(href="#").link-3.link-show-login
             | Log In
       .modal-body
         .container.form-section
           form.signup-form.col-lg-10.offset-lg-1
             .form-group.row.clearfix.required
               input(type="text"
-                placeholder="First name"
-                name="first_name").form-control
+              placeholder="First name"
+              name="first_name").form-control
             .form-group.row.clearfix.required
               input(type="text"
-                placeholder="Last name"
-                name="last_name").form-control
+              placeholder="Last name"
+              name="last_name").form-control
             .form-group.row.clearfix.required
               input(type="email"
-                placeholder="E-mail"
-                name="email").form-control
+              placeholder="E-mail"
+              name="email").form-control
             .form-group.row.clearfix.required
               input(type="password"
-                placeholder="Password"
-                name="password1").form-control
+              placeholder="Password"
+              name="password1").form-control
             .form-group.row.clearfix.required
               input(type="password"
-                placeholder="Re-enter password"
-                name="password2").form-control
+              placeholder="Re-enter password"
+              name="password2").form-control
             .form-group.row.clearfix.required
               .row
                 .col-lg-12
@@ -39,7 +39,7 @@ div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true
                     input(type="checkbox" name="checkbox1" value="1")
                     span.label-text I agree to the
                       a(href="/pg/terms_of_use" target="_blank").link-3  Terms of Use
-                      | , 
+                      | ,
                       a(href="/pg/privacy_policy" target="_blank").link-3  Privacy Policy
                       |  and
                       a(href="/pg/electronic_signature" target="_blank").link-3  Electronic Signature and Electronic Delivery of Documentation.
@@ -68,8 +68,8 @@ div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true
             span(aria-hidden="true")
               i.fa.fa-times
           h2.dosis.text-uppercase.text-sm-center.text-xs-center.mt50 Log in
-          p.small-text.text-xs-center New to GrowthFountain? 
-            a(href="#" onclick="$('#sign_in').modal('hide');$('#sign_up').modal()").link-3.link-show-sign-up Sign up
+          p.small-text.text-xs-center New to GrowthFountain? &nbsp;
+            a(href="#").link-3.link-show-sign-up Sign up
         .modal-body
           .form-section
             form.login-form.col-lg-10.offset-lg-1
