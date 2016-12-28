@@ -11,18 +11,9 @@ const formc = require('components/formc/route');
 const blog = require('components/blog/route');
 
 Backbone.Router.execute = function (callback, args, name) {
-  if (name == '/company/create' && !app.user.is_anonymouse()) {
-    const template = require('components/anonymousAccount/templates/popupLogin.pug');
-    require.ensure([], function() {
-      $('body').append(
-        template({
-          next: name,
-        })
-      );
-      $('#sign_up').modal();
-    });
+  if (name == '/company/create' && !app.user.ensureLoggedIn(name))
     return false;
-  }
+
   if (callback) callback.apply(this, args);
 };
 
