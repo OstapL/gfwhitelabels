@@ -706,11 +706,7 @@ module.exports = {
 
     cancelCampaign(e) {
       e.preventDefault();
-      if(!confirm('Are you sure?')) {
-        return;
-      }
-
-      console.log('CANCEL CAMPAIGN NOT IMPLEMENTED');
+      alert('Please, call us 646-759-8228');
     },
 
     initComments() {
