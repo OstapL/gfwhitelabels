@@ -28,7 +28,7 @@ let userModel = Backbone.Model.extend({
   // },
 
   ensureLoggedIn(next) {
-    if (app.user.is_anonymous()) {
+    if (this.is_anonymous()) {
       const pView = require('components/anonymousAccount/views.js');
       require.ensure([], function() {
         new pView.popupLogin().render(next || window.location.pathname);
