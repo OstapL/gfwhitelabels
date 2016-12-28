@@ -86,7 +86,7 @@ section.formc-team-members-director.container.m-b-85
             label 
               input(type="radio" name="sold_securities_choice" value="0" checked=(values['sold_securities_choice'] == 0) target=".previous-security-container")
               |  No
-        .sold_securities_choice.shown-yes(style="display:" + (values['sold_securities_choice'] ? 'block' : 'none'))
+        .sold_securities_choice.shown-yes(style="display:" + (values['sold_securities_choice'] == 1? 'block' : 'none'))
           - 
             pug_html += app.fields.textLabel('sold_securities_amount', {
               class1:'col-xl-12 text-xl-left',
