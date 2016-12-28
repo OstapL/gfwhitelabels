@@ -2,6 +2,7 @@
 
 const formcHelpers = require('./helpers.js');
 const formatHelper = require('../../helpers/formatHelper');
+const roles = ['Shareholder', 'Director', 'Officer'];
 
 const menuHelper = require('helpers/menuHelper.js');
 const addSectionHelper = require('helpers/addSectionHelper.js');
@@ -159,21 +160,20 @@ module.exports = {
     getDocMetaData () {
       const formData = this.$el.find('form').serializeJSON();
       const issuer_legal_name = app.user.get('first_name') + ' ' + app.user.get('last_name');
-      
       return {
-        trans_percent: '6%',
-        nonrefundable_fees: '$50',
-        registration_fee: '$500',
-        amendment_fee: '$200',
-        commitment_date_x: this.getCurrentDate(),
-        zip_code: app.user.get('zip_code'),
-        address_1: app.user.get(' address_1'),
-        address_2: app.user.get(' address_2'),
+        trans_percent: 6,
+        nonrefundable_fees: 50,
+        registration_fee: 500,
+        amendment_fee: 200,
+        commencement_date_x: this.getCurrentDate(),
+        zip_code: app.user.company.zip_code,
+        address_1: app.user.company.address_1,
+        address_2: app.user.company.address_2,
+        issuer_legal_name: app.user.company.name,
         issuer_email: app.user.get('email'),
-        issuer_legal_name: issuer_legal_name,
         issuer_signer: formData.full_name,
-        party_fees: '',
-        withdrawal_fee: '',
+        // party_fees: '',
+        // withdrawal_fee: '',
       };
     },
 
@@ -185,7 +185,7 @@ module.exports = {
 
     getCurrentDate () {
         const date = new Date();
-        return date.getMonth() + '/' + date.getDate() + '/' + date.getFullYear();
+        return (date.getMonth() + 1) + '/' + date.getDate() + '/' + date.getFullYear();
     },
 
     getSuccessUrl() {
@@ -440,7 +440,7 @@ module.exports = {
           Urls: Urls,
           fields: this.fields,
           values: this.model,
-          roles: ['Shareholder', 'Director', 'Officer'],
+          roles: roles,
           titles: [
             '',
             'CEO/President',
@@ -644,8 +644,10 @@ module.exports = {
       this.campaign = options.campaign;
 
       // this.fields.custom_fn = {fn: (function (value, fn, attr, model, computed) {
-      this.fields.use_of_net_proceeds.fn = (function (value, fn, attr, model, computed) {
-        if (!this.calculate(null)) throw 'Total Use of Net Proceeds must be equal to Net Proceeds.';
+      this.fields.less_offering_express.fn = this.fields.use_of_net_proceeds.fn = (function (value, fn, attr, model, computed) {
+        if (!this.calculate(null)) {
+          throw 'Total Use of Net Proceeds must be equal to Net Proceeds.';
+        }
       }).bind(this);
 
       this.labels = {
@@ -742,7 +744,8 @@ module.exports = {
         } else {
           $('.max-net-proceeds,.max-total-use').addClass('red');
         }
-        this.$('.max-total-use').popover(result ? 'hide' : 'show');
+        this.$('.min-total-use').popover(minEqual ? 'hide' : 'show');
+        this.$('.max-total-use').popover(maxEqual ? 'hide' : 'show');
       }
       return result;
     },
@@ -787,9 +790,9 @@ module.exports = {
           campaignId: this.campaign.id,
         })
       );
-      this.$('.max-total-use').popover({
+      this.$('.max-total-use,.min-total-use').popover({
         html: true,
-        template: '<div class="popover" role="tooltip" style="border-color:red;"><div class="popover-arrow" style="border-right-color:red;"></div><h3 class="popover-title"></h3><div class="popover-content" style="color:red;"></div></div>'
+        template: '<div class="popover" role="tooltip" style="border-color:red;width:170px;"><div class="popover-arrow" style="border-right-color:red;"></div><h3 class="popover-title"></h3><div class="popover-content" style="color:red;"></div></div>'
       });
 
       this.$('.min-expense,.max-expense,.min-use,.max-use').each(function (idx, elem) {
@@ -1835,7 +1838,7 @@ module.exports = {
     },
 
     _success(data, newData) {
-      formcHelpers.updateFormcMenu(formcHelpers.formcCalcProgress(app.user.formc));
+      // formcHelpers.updateFormcMenu(formcHelpers.formcCalcProgress(app.user.formc));
       return 1;
     },
 
@@ -1861,8 +1864,13 @@ module.exports = {
         element = document.createElement('select');
         element.name = target.dataset.name;
         element.onblur = (e) => this.update(e);
-        let v = target.dataset.name.split('.').reduce((o,i)=>o[i], this.fields);
-        v = v.validate.OneOf;
+
+        let fName = target.dataset.name;
+        if(fName.indexOf('[') !== -1) {
+           fName = fName.replace(/\[\d+\]/, '.schema')
+        }
+
+        let v = app.valByKeyReplaceArray(this.fields, fName).validate.OneOf;
         v.choices.forEach((el, i) => {
           let e = document.createElement('option');
           e.innerHTML = v.labels[i];
@@ -1872,6 +1880,13 @@ module.exports = {
           }
           element.appendChild(e);
         });
+        target.parentElement.insertBefore(element, target);
+      } else if(target.dataset.type == 'textarea') {
+        element = document.createElement('textarea');
+        element.name = target.dataset.name;
+        element.className = 'big-textarea w-100';
+        element.innerHTML = target.innerHTML.replace(/\<br\>/g, "\n");
+        element.onblur = (e) => this.update(e);
         target.parentElement.insertBefore(element, target);
       }
 
@@ -1887,6 +1902,7 @@ module.exports = {
         'minimum_raise',
         'security_type',
         'price_per_share',
+        'length_days',
       ];
 
       e.target.setAttribute(
@@ -1896,6 +1912,8 @@ module.exports = {
       let data = {};
       let url = '';
       let fieldName = '';
+      let updateModel = app.user.company;
+      let method = 'PATCH';
 
       if(name.indexOf('company.') !== -1) {
         fieldName = name.split('company.')[1];
@@ -1904,37 +1922,46 @@ module.exports = {
       } else if(name.indexOf('campaign.') !== -1) {
         fieldName = name.split('campaign.')[1];
         data[fieldName] = val;
-        if([
-            'pitch',
-            'intended_use_of_proceeds',
-            'business_model',
-            'faq',
-            'additional_info'].indexOf(fieldName) !== -1) {
-          url = raiseCapitalServer + '/campaign/' + this.model.campaign.id + '/general_information';
-        } else if([
-            'minimum_increment',
-            'minimum_raise',
-            'maximum_raise',
-            'length_days',
-            'premoney_valuation',
-            'security_type',
-            'valuation_determination',
-            'valuation_determination_other',
-            'price_per_share',
-          ].indexOf(fieldName) !== -1) {
-          url = raiseCapitalServer + '/campaign/' + this.model.campaign.id + '/specifics';
-        }
+        url = raiseCapitalServer + '/campaign/' + this.model.campaign.id + '/general_information';
+        updateModel = app.user.campaign;
       } else if(name.indexOf('formc.') !== -1) {
-          fieldName = name.split('formc.')[1];
+        fieldName = name.split('formc.')[1];
+        url = formcServer + '/' + this.model.formc.id + '/final-review';
+
+        if(fieldName.indexOf('[') !== -1) {
+          let names = fieldName.split('.');
+          fieldName = names[0].split('[')[0];
+          let index = names[0].split('[')[1].replace(']', '');
+          app.user.formc[fieldName][index][names[1]] = val;
+          data[fieldName] = app.user.formc[fieldName];
+          if(fieldName == 'team_members') {
+            url = formcServer + '/' + this.model.formc.id + '/team-members/' +
+              roles[app.user.formc.team_members[index].role[0]].toLocaleLowerCase() + '/' + 
+              app.user.formc.team_members[index].user_id;
+            data = app.user.formc.team_members[index];
+            method = 'PUT';
+          } else if(fieldName.indexOf('risk') !== -1) {
+            let riskName = fieldName.split('.')[0];
+            let riskVar = name.split('.')[2];
+            app.user.formc[fieldName][riskVar] = val;
+            url = formcServer + '/' + this.model.formc.id + '/risk-factors-' + fieldName.split('_')[0] + '/' + index;
+            app.user.formc[fieldName][index]
+            data = app.user.formc[fieldName][index];
+          }
+        } else {
           data[fieldName] = val;
-          url = formcServer + '/' + this.model.formc.id + '/final-review';
+        }
+
+        updateModel = app.user.formc;
       }
 
-      api.makeRequest(url, 'PATCH', data)
-        .then((data) => {
+      api.makeRequest(url, method, data)
+        .then((responseData) => {
+
+          _.extend(updateModel, data);
 
           if(reloadRequiredFields.indexOf(fieldName) != -1) {
-            window.location.reload();
+            this.render();
             return false;
           }
 
@@ -1942,41 +1969,33 @@ module.exports = {
             '#' + e.target.name.replace(/\./g, '__').replace(/\[/g ,'_').replace(/\]/g, '_')
           );
           let href = '';
-          /*
-          if(e.target.tagName == 'SELECT') {
-            href = document.createElement('select');
-            let metaData = name.split('.').reduce(function(o,i) { return o[i]; }, this.fields);
-            debugger;
-            if(metaData && metaData.validate && metaData.validate.OneOf) {
-              let options = metaData.validate.OneOf;
-              options.choices.forEach((el, i) => {
-                let option = document.createElement('option');
-                option.value = el;
-                option.innerHTML = options.labels ? options.labels[i] : el;
-                href.insert(option);
-              });
-            }
-            
-          } else {
-            href = document.createElement('a');
-            href.innerHTML = val;
-            href.setAttribute('href', '#');
-          }
-          */
           href = document.createElement('a');
-          href.innerHTML = val;
           href.setAttribute('href', '#');
           href.dataset.name = e.target.name;
+
+          let realVal = val;
           if(e.target.tagName == 'SELECT') {
             href.dataset.type = 'select';
+            let metaData = app.valByKeyReplaceArray(this.fields, e.target.name);
+            realVal = app.fieldChoiceList(metaData, val);
+          } else if(e.target.tagName == "TEXTAREA") {
+            href.dataset.type = "textarea"
           } else {
             href.dataset.type = 'text';
           }
-          href.dataset.value = val;
+
+          href.innerHTML = realVal;
+          if(e.target.tagName == 'SELECT') {
+            href.dataset.value = val;
+          }
           href.className = 'createField show-input link-1';
 
-          document.querySelectorAll('[data-name="' + e.target.name + '"]').forEach((el) => {
-            el.innerHTML = val;
+          document.querySelectorAll('[data-name="' + e.target.name + '"]').forEach((sameElement) => {
+            if(sameElement.tagName == 'SELECT') {
+              sameElement.value = val;
+            } else {
+              sameElement.innerHTML = realVal;
+            }
           });
 
           input.after(href);
@@ -2000,9 +2019,15 @@ module.exports = {
           serverUrl: serverUrl,
           Urls: Urls,
           fields: this.fields,
-          values: this.model,
+          values: {
+            company: app.user.company,
+            campaign: app.user.campaign,
+            formc: app.user.formc
+          }
         })
       );
+
+      $('body').on('click', '.createField', (e) => this.createField(e));
 
       return this;
     },

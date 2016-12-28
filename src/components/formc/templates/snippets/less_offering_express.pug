@@ -85,7 +85,8 @@ mixin run()
         +row({}, 0)
       else
         each value, index in values
-          +row(value, index)
+          if value
+            +row(value, index)
   else
     +row({}, index)
 

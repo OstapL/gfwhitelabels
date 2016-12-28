@@ -10,6 +10,10 @@ global.googleAnalyticsId = 'UA-47199302-1';
 require('jquery-serializejson/jquery.serializejson.min.js');
 const validation = require('components/validation/validation.js');
 
+document.title = pageTitle;
+// require('sass/mixins_all.sass');
+
+
 global.formatHelper = require('helpers/formatHelper');
 
 
@@ -115,6 +119,42 @@ let app = {
       .value();
   },
 
+  valByKey(obj, keyString) {
+    if(keyString.indexOf('.') == -1) {
+      return values[keyString];
+    } else {
+      try {
+        return keyString.split('.').reduce(function(o,i) {
+          if(i.indexOf('[') != -1) { 
+            i = i.split('['); k = i[0]; i = i[1].replace(']', ''); return o[k][i];
+          }
+          return o[i];
+        }, obj);
+      } catch(e) { 
+        console.debug('no name ' + keyString); return ''; 
+      }
+    }
+  },
+
+  valByKeyReplaceArray(obj, keyString) {
+    if(keyString.indexOf('[') !== -1) {
+      keyString = keyString.replace(/\[\d+\]/, '.schema');
+    }
+    return app.valByKey(obj, keyString);
+  },
+
+  fieldChoiceList(metaData, currentValue) {
+    let resultVal = '';
+    metaData = metaData.validate.OneOf;
+    if(metaData.labels) {
+      return metaData.labels[metaData.choices.indexOf(currentValue.toString())]
+         || metaData.labels[metaData.choices.indexOf(parseFloat(currentValue))];
+    } else {
+      return metaData.choices.indexOf(currentValue.toString())
+        || metaData.choices.indexOf(parseFloat(currentValue));
+    }
+  },
+
   getVideoId(url) {
     try {
       var provider = url.match(/https:\/\/(:?www.)?(\w*)/)[2];
@@ -194,6 +234,7 @@ $('body').on('mouseover', 'div.showPopover', function () {
     $(this).popover('show');
   }
 });
+
 $('body').on('mouseout', 'div.showPopover', function () {
     //$(this).popover('hide');
 });
@@ -257,6 +298,7 @@ $('body').on('keyup', '[type="money"]', function(e) {
     e.target.value = '$' + val.toLocaleString('en-US');
   }
 });
+
 $('body').on('focus', '[type="money"]', function(e) {
   var valStr = e.target.value.replace(/[\$\,]/g, '');
   var val = parseInt(valStr);
@@ -264,6 +306,7 @@ $('body').on('focus', '[type="money"]', function(e) {
     e.target.value = '';
   }
 });
+
 $('body').on('blur', '[type="money"]', function(e) {
   var valStr = e.target.value.replace(/[\$\,]/g, '');
   if (e.target.value == '') {
@@ -302,6 +345,7 @@ $('body').on('click', '.user-info', function () {
 
   return false;
 });
+
 $('body').on('click', '.notification-bell', function () {
   if ($('.navbar-toggler:visible').length !== 0) {
     $('html').removeClass('show-menu');
@@ -310,6 +354,7 @@ $('body').on('click', '.notification-bell', function () {
 
   return false;
 });
+
 $('body').on('click', '#menuList .nav-item', function (event) {
   var href = $(event.target).attr('href');
 
@@ -326,7 +371,10 @@ $('body').on('click', 'a', function (event) {
   var href = event.currentTarget.getAttribute('href');
   if (href == window.location.pathname) {
     window.location.reload();
-  } else if (href && href != '' && href.substr(0, 1) != '#' &&
+  } else if (href && href == '#')  {
+    event.preventDefault();
+  } else if(href && href != '' &&
+    href.substr(0, 1) != '#' &&
     href.substr(0, 4) != 'http' &&
     href.substr(0, 3) != 'ftp' &&
     href.substr(0, 7) != 'mailto:' &&

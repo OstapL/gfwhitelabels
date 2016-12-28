@@ -382,7 +382,6 @@
 		input
 			border: none
 			border-bottom: solid 1px $gallery
-			width: 100%
 			outline: none
 			padding: rem(6) rem(10)
 
@@ -405,27 +404,38 @@
 		//margin-right: 15px
 	.comments-wrap
 		display: inline-block
-
+		.p-r-5
+			padding-right: 5px
+		.p-5
+			padding: 5px
+		.reply
+			margin: 0 10px
+			.reply-right
+				padding-left: 10px
+			.reply-left
+				padding-right: 10px
 		.name-comments
 			font-size: rem(14)
 			letter-spacing: rem(2.8)
 			color: $black
 		.kvalificatio-comments
-			padding: rem(3) rem(18)
-			background-color: $red
+			font-size: rem(11)
+			font-weight: bold
 			color: $white
-			border-radius: rem(2)
+			background-color: $sandy-brown
+			padding: rem(5) rem(18)
+			border-radius: 2px
 			margin-left: rem(10) 
+			text-transform: capitalize
 		.date-comments
 			font-size: rem(11)
 			color: $small-text
 		.responce
 		
 			li
-				padding-left: rem(5)
+				//padding-left: rem(5)
+
 				display: inline-block
-				i
-					margin-right: rem(5)
 		p
 			margin-bottom: rem(5)
 			margin-top: rem(10)
@@ -435,6 +445,7 @@
 		letter-spacing: rem(1)
 	i
 		color: $campaign-like-color
+
 	.btn
 		margin-top: rem(50)
 @media only screen and (max-width : 992px)

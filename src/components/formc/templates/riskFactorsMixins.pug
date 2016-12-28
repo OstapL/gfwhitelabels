@@ -1,5 +1,3 @@
-
-
 mixin showRisk(name, index, title, risk)
   form(data-method="PATCH" data-index=(index) index=index)
     input(type="hidden" name="title" value=title)
@@ -16,9 +14,8 @@ mixin showRiskForm(v, k, field)
 
   .panel.panel-default.risk-panel(index=k)
     .panel-heading(role="tab" id=("heading-" + k))
-      a(data-toggle="collapsing"
+      a(
       data-parent="#accordion-risk" 
-      href="#collapse-" + k
       aria-expanded="false"
       aria-controls="collapse-" + k
       class=("list-group-item-action active" + (values[field].hasOwnProperty(k) ? ' added-risk-title' : ''))

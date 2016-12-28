@@ -81,9 +81,13 @@ mixin confirmStatement(name, attr)
             i.fa.fa-info-circle
             p Investors are limited to 12 month investment totals ranging from $2,000 - $100,000 based on income and net worth.
             p Based on your annual income and net worth, you can invest
-              span(style="color:red;") only
+              span.color-red
+                = ' '
+                | only
+                = ' '
               | up to
-              span(style="color:red;") $:amount.
+              = ' '
+              span.color-red $:amount.
             br
             p Please 
               a(
@@ -341,7 +345,7 @@ mixin confirmStatement(name, attr)
               _.extend({}, fields.is_understand_investing_is_risky)
             )
             // FOR DCU
-            //.dcu-confirmation
+            .dcu-confirmation
               +confirmStatement('is_understand_securities_related',
                 _.extend({}, fields.is_understand_securities_related)
               )

@@ -1,6 +1,6 @@
 .home-section.hidden-sm-down
   section.main-page-slider
-    div(data-ride="carousel" data-interval="30000")#carousel-main.carousel.carousel-main
+    div(data-ride="carousel" data-interval="2500")#carousel-main.carousel.carousel-main
       ol.carousel-indicators
         li(data-target="#carousel-main" data-slide-to="0").active
         li(data-target="#carousel-main" data-slide-to="1")
@@ -18,7 +18,7 @@
                   h2.mt15.mb15.letter-spacing-normal Start investing locally
                   a(href="/pg/education").link-2 Understand the Risks
                 .col-lg-12.mt45.m-t-m-10
-                  a(href=Urls['campaign-list']()).btn.btn-lg.btn-primary.m-r-2 invest
+                  a(href="/companies").btn.btn-lg.btn-primary.m-r-2 invest
                   a(href="/company/create").btn.btn-lg.btn-primary RAISE CAPITAL
 
         .carousel-item.t40
@@ -32,7 +32,7 @@
                   h2.mt15.mb15.letter-spacing-normal Start investing locally
                   a(href="/pg/education").link-2 Understand the Risks
                 .col-lg-12.text-lg-right.mt45.m-t-m-10
-                  a(href=Urls['campaign-list']()).btn.btn-lg.btn-primary.m-r-3 invest
+                  a(href="/companies").btn.btn-lg.btn-primary.m-r-3 invest
                   a(href="#").btn.btn-lg.btn-primary raise capital
         .carousel-item.t40
           img(src="/img/slide_3.jpg" alt="...").img-fluid
@@ -45,7 +45,7 @@
                   h2.mt15.mb15.letter-spacing-normal Start investing locally
                   a(href="/pg/education").link-2 Understand the Risks
                 .col-lg-12.text-lg-left.mt45.m-t-m-10
-                  a(href=Urls['campaign-list']()).btn.btn-lg.btn-primary.m-r-3 invest
+                  a(href="/companies").btn.btn-lg.btn-primary.m-r-3 invest
                   a(href="/company/create").btn.btn-lg.btn-primary raise capital
 
     a(href="#carousel-main"
@@ -70,15 +70,22 @@ section(style="background: url(/img/slide_3.jpg) center center no-repeat; backgr
             .col-lg-12.m-t-1.m-b-2
               a(href="/pg/education").link-2 Understand the Risks
             .col-lg-12
-              a(href=Urls['campaign-list']()).btn.btn-lg.btn-primary.m-r-3 invest
+              a(href="/companies").btn.btn-lg.btn-primary.m-r-3 invest
               span.hidden-xs  
                 a(href="/company/create").btn.btn-lg.btn-primary RAISE CAPITAL
 section.home-wrap-text-block.top-block
   div(style="background: url(/img/dcu-bg-under-banner.jpg) top center;  background-attachment: fixed;").opasity-blocks.hide-bg-fixed
     .container.text-lg-center.text-xs-center.text-sm-center
       .col-lg-12.mt45.mb45
-        p.mb25 DCU (Digital Federal Credit Union) is not a registered broker/dealer, nor is it affiliated with GrowthFountain LLC, GrowthFountain Capital LLC, or the issuers of securities on this site.  Neither DCU nor its officers, directors, or employees make any warranty, express or implied, of any kind whatsoever related to the adequacy, accuracy, or completeness of any information on this site or the use of information on this site.  DCU does not give investment advice or recommendations for any investment offered on this platform and no communication, through this web site or otherwise, should be construed as such. 
-        h3.font-weight-bold.m0 Not NCUA Insured  | Not Credit Union Guaranteed | May Lose Value
+        p.mb25 DCU (Digital Federal Credit Union) is not a registered broker/dealer, nor is it affiliated with GrowthFountain LLC, GrowthFountain Capital LLC, or the issuers of securities on this site.  Neither DCU nor its officers, directors, or employees make any warranty, express or implied, of any kind whatsoever related to the adequacy, accuracy, or completeness of any information on this site or the use of information on this site.  DCU does not give investment advice or recommendations for any investment offered on this platform and no communication, through this web site or otherwise, should be construed as such.
+        .col-xl-10.offset-xl-1
+          .col-xl-4.p-l-0.p-r-0.border
+            h3.font-weight-bold.m0.letter-spacing-normal.padding-5 Not NCUA Insured
+          .col-xl-4.p-l-0.p-r-0.border
+            h3.font-weight-bold.m0.letter-spacing-normal.padding-5 Not Credit Union Guaranteed
+          .col-xl-4.p-l-0.p-r-0.border
+            h3.font-weight-bold.m0.letter-spacing-normal.padding-5 May Lose Value
+
 
 section.campaing-list.m-t-85
   .container#campaignList
@@ -88,7 +95,7 @@ section.campaing-list.m-t-85
     include ../components/campaign/templates/_list.pug
 
     .col-lg-12.text-lg-center.text-md-center.text-xs-center
-      a(href="/api/campaign").link-4 See All
+      a(href="/companies").link-4 See All
 
 section(style="background: url(/img/dcu-bg-bottom-block.jpg) top center no-repeat; background-size: cover; background-attachment: fixed;").home-wrap-text-block.hide-bg-fixed.m-t-3
   .opasity-block
@@ -110,7 +117,7 @@ section.home-what-is
           .embed-responsive.embed-responsive-16by9.boxshadow
             iframe(
               embed-responsive-item="true" 
-              src="https://player.vimeo.com/video/170651597?title=0&amp;byline=0&amp;portrait=0" 
+              src="https://player.vimeo.com/video/196334693?title=0&amp;byline=0&amp;portrait=0" 
               data-webkitallowfullscreen="" 
               data-mozallowfullscreen="" 
               data-allowfullscreen="")

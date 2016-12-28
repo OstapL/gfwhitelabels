@@ -57,13 +57,13 @@
 		overflow: hidden
 		min-height: rem(85)
 		padding: rem(5) rem(10) rem(5) rem(5)
-		background: $light_grey
+		background: $issuer-dashboard-bgc
 		margin-bottom: rem(25)
 		.visual
 			float: left
 			i
 				font-size: rem(48)
-				color: $small-text
+				color: $white
 				opacity: .15
 			.fa-bar-chart
 				position: absolute
@@ -83,10 +83,10 @@
 			text-align: right
 			.number
 				font-size: rem(18)
-				color: $small-text
+				color: $white
 			.desc
 				font-size: rem(12)
-				color: $small-text
+				color: $white
 
 	.tpl-progress
 		position: relative
@@ -140,6 +140,7 @@
 			line-height: rem(16)
 			color: $small-text
 			font-size: rem(12)
+			text-transform: uppercase
 
 		span
 			font-size: rem(11)
@@ -231,6 +232,9 @@
 	line-height: 1.5
 	border: 2px solid #53575b
 	margin-left: 4px
+	font-weight: bold
+	letter-spacing: normal
+	text-transform: capitalize
 
 .portlet>.portlet-title
 	text-align: left
@@ -262,120 +266,6 @@
 	padding: 0 20px
 	color: $grey
 // all investors questions
-.investors-dashbord-comment
-	.comments-list
-		border: rem(1) solid $border_color
-		padding: rem(15) rem(9) 0 rem(9)
-		::-webkit-scrollbar
-			width: rem(5)
-			background: transparent
-		::-webkit-scrollbar-thumb
-			border-width: rem(1) rem(1) rem(1) rem(2)
-			border-color: #1a1c1d
-			background-color: #929292
-		::-webkit-scrollbar-thumb:hover
-			border-width: rem(1) rem(1) rem(1) rem(2)
-			border-color: #1c1f22
-			background-color: rgba(146,146,146, 0.6)
-		::-webkit-scrollbar-track
-			border-width: 0
-		::-webkit-scrollbar-track:hover
-			border-left: none
-		.all-comments
-			height: rem(367)
-			overflow-y: auto
-			margin-top: rem(15)
-			.one-comment
-				padding: 23px 6px 18px 15px
-				margin-right: 6px
-				.user-photo
-					margin-top: 2px
-					float: left
-					img
-						width: 54px
-						height: 54px
-				.text-and-name
-					margin-left: 70px
-					.name-date
-						h6
-							letter-spacing: rem(2.8)
-							margin-bottom: rem(5)
-						span
-							font-size: rem(11)
-							color: $small-text
-
-					.comment-text
-						float: left
-						padding-top: 5px
-						p
-							line-height: rem(18)
-							letter-spacing: 0.02rem
-					.actions
-						text-align: right
-						opacity: 0
-						.pending
-							float: left
-							color: $blue
-						a
-							margin: 0 4px
-				&:hover
-					background: $light_grey
-					.text-and-name
-						.actions
-							opacity: 1
-
-		.add-comment
-			margin-left: rem(10)
-			margin-top: rem(8)
-			.user-photo
-				margin-top: rem(2)
-				float: left
-				img
-					width: rem(54)
-					height: rem(54)
-			.text-and-name
-				margin-left: rem(70)
-				.name-date
-					h6
-						letter-spacing: rem(2.8)
-						margin-bottom: 0
-						line-height: rem(11)
-					span
-						font-size: rem(11)
-						color: $small-text
-				.comment-text
-					float: left
-					padding-top: rem(10)
-					p
-						line-height: rem(18)
-						letter-spacing: 0.02rem
-				.actions
-					margin-top: 9px
-					span
-						padding: 0 5px
-
-		.form-add-comment
-			border-top: solid 1px $border_color
-			margin-top: rem(10)
-			.form-group
-				text-align: right
-				margin-bottom: 0
-			.row
-				padding-left: rem(15)
-				padding-right: rem(15)
-				textarea
-					max-width: 538px
-					height: 137px
-					float: right
-					resize: none
-					margin-top: rem(30)
-					margin-bottom: 20px
-			.btn
-				margin-bottom: 20px
-	.line-dashboard
-		border-top: solid 1px $border_color
-		margin-top: 50px
-		margin-bottom: 50px
 .danger-zone-dashboard
 	.row
 		.col-lg-3
