@@ -1,9 +1,7 @@
 const helpers = {
   date: require('helpers/dateHelper.js'),
+  yesNo: require('helpers/yesNoHelper.js'),
 };
-
-const yesNoHelper = require('helpers/yesNoHelper.js');
-// const validation = require('components/validation/validation.js');
 
 function initDates(c) {
   c.created_date = new Date(c.created_date);
@@ -27,12 +25,11 @@ module.exports = {
       'click .link-like': 'likeComment',
       'click .link-edit': 'editComment',
       'click .link-delete': 'deleteComment',
-    }, yesNoHelper.events),
+    }, helpers.yesNo.events),
 
     initialize(options) {
       this.fields = options.fields;
 
-      this.options =
       this.allowQuestion = _.isBoolean(options.allowQuestion) ? options.allowQuestion : true;
       this.allowResponse = _.isBoolean(options.allowResponse) ? options.allowResponse : true;
       this.cssClass = _.isString(options.cssClass) ? options.cssClass : '';
@@ -305,5 +302,5 @@ module.exports = {
         );
     },
 
-  }, yesNoHelper.methods)),
+  }, helpers.yesNo.methods)),
 };

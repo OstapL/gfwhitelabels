@@ -24,9 +24,11 @@ div(id=id class=cssClass data-level=level data-id=comment.uid).p-r-0.p-t-0
     .comments-wrap.col-lg-12.p-r-0.p-xs-0
       span.name-comments.text-uppercase #{ userName }
       -
-        var title = comment.user.role.company_id == attr.company_id
-          ? comment.user.role.role.join(', ')
-          : (comment.related || '');
+        var title = (comment.user.id == attr.owner_id)
+          ? 'FOUNDER'
+          : (comment.user.role.company_id == attr.company_id)
+            ? comment.user.role.role.join(', ')
+            : (comment.related || '');
 
       if title
         span.kvalificatio-comments #{ title }
