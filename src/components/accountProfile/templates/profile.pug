@@ -14,15 +14,22 @@
             text: 'Drop your profile photo here or click to upload',
             data: user.image_data[0],
           }, fields.image));
-      .row.m-t-2
+      .row.m-t-2.m-b-2
         .col-xl-12.col-lg-12.col-md-6.offset-md-3.col-xs-8.offset-xs-2.offset-xl-0.offset-lg-0.p-l-0.p-r-0
-          .profile-type-user
-            span.user-type Shareholder
-            .user-company
-              | in
-              a(href="/api/campaign/147").link-3  NETFLIX
-              |  company.
-          hr
+          if roleInfo && roleInfo.role && roleInfo.companyId
+            .profile-type-user
+              span.user-type #{roleInfo.role}
+              .user-company
+                | in
+                a(href="/dashboard/issuer-dashboard").link-3  #{roleInfo.companyName}
+                |  company.
+          else if company && company.name
+            .profile-type-user
+              //span.user-type
+              .user-company
+                a(href="/dashboard/issuer-dashboard").link-3  #{company.name}
+                |  company.
+            hr
           a(href="/account/change-password").link-3 
             i.fa.fa-lock
             |  Need to change your password?
@@ -146,7 +153,7 @@
                         .col-xl-6.col-lg-6
                           //if user.country != 'US'
                           -
-                            pug_html += app.fields.textLabel('zip_code', _.extend({
+                            pug_html += app.fields.textLabel('zip_code1', _.extend({
                                 'class1': 'col-xl-6 col-lg-12 text-xl-right text-lg-left',
                                 'class2': 'col-xl-6 col-lg-12 input-min-width',
                                 'type': 'text',
@@ -201,7 +208,8 @@
                             button(
                               type="button"
                               data-method="PATCH"
-                            )#save-account-info.btn.btn-primary.pull-lg-right SAVE
+                            )#save-account-info.btn.btn-primary.pull-lg-right Save and Continue
+                              i.fa.fa-angle-right
 
         div(aria-expanded="true")#financial_info.tab-pane.fade
           div
@@ -229,7 +237,7 @@
                       .form-group.row.bootstrap-slider-custom
                         .col-xl-12
                           label.m-b-2.m-t-1 My Annual Income
-                        .col-xl-12
+                        .col-xl-12.custom-annual-income
                           input(
                           type='text'
                           name="annual_income"
@@ -238,7 +246,7 @@
                       .radio-input
                         p.font-weight-bold.d-inline-block.m-b-1.m-t-1 Are you an Accredited Investor?&nbsp;
                           div.d-inline-block
-                            div.showPopover(data-content="An accredited investor is a natural person who has individual net worth, or joint net worth with the persons spouse, that exceeds $1mm at the time of the purchase, excluding the value of the primary residence of such person; or a natural person with income exceeding $200k in each of the two most recent years or joint income with a spouse exceeding $300k for those years and a reasonable expectation of the same income level in the current year.")
+                            div.showPopover.hidden-xs-down(data-content="An accredited investor is a natural person who has individual net worth, or joint net worth with the persons spouse, that exceeds $1mm at the time of the purchase, excluding the value of the primary residence of such person; or a natural person with income exceeding $200k in each of the two most recent years or joint income with a spouse exceeding $300k for those years and a reasonable expectation of the same income level in the current year.")
                               i(aria-hidden="true").fa.fa-question-circle.text-muted
                             
                           
@@ -321,6 +329,7 @@
 
                         pug_html += app.fields.textLabel('name_on_bank_account', _.extend({
                             'type': 'text',
+                            'class1': 'col-xl-3 col-lg-12 text-xl-right text-lg-left m-b-0 p-t-0 m-b-lg-1',
                             'value': user.name_on_bank_account
                           }, fields.name_on_bank_account))
 

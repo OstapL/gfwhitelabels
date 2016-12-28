@@ -2,9 +2,9 @@ import './styles/style.sass'
 import calculatorHelper from '../../helpers/calculatorHelpers';
 import flyPriceFormatter from '../../helpers/flyPriceFormatter';
 import lookupData from '../../helpers/capitalraiseCalculatorData';
-import '../../js/graf/graf.js';
-import '../../js/graf/jquery.flot.categories.js';
-import '../../js/graf/jquery.flot.growraf';
+import '../../js/graph/graph.js';
+import '../../js/graph/jquery.flot.categories.js';
+import '../../js/graph/jquery.flot.growraf';
 
 const calculatorValidationHelper = require('helpers/calculatorValidationHelper.js');
 

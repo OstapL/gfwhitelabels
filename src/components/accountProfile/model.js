@@ -41,6 +41,17 @@ let userModel = Backbone.Model.extend({
     return true;
   },
 
+  getRoleInfo() {
+    let role = this.get('role');
+    role.role = role.role || [];
+
+    return {
+      companyName: role.company_name || '',
+      companyId: role.company_id || 0,
+      role: role.role.join(', ') || '',
+    };
+  },
+
   get_full_name: function () {
     return this.get('first_name') + ' ' + this.get('last_name');
   },
@@ -57,8 +68,11 @@ let userModel = Backbone.Model.extend({
           url: authServer + '/rest-auth/data-mini',
           success: (data) => {
             localStorage.setItem('user', JSON.stringify(this.toJSON()));
-            app.trigger('userLoaded', this.toJSON());
-            //app.routers.mainPage(); // TODO: FIX THAT !!!
+            this.getCompanyR().done((companyD) => {
+              this.set('company', companyD || null);
+              app.trigger('userLoaded', this.toJSON());
+              //app.routers.mainPage(); // TODO: FIX THAT !!!
+            });
           },
           error: (model, xhr, status) => {
             localStorage.removeItem('token');

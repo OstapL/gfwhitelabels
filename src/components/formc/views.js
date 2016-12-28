@@ -94,7 +94,7 @@ module.exports = {
       'submit form': 'submit',
       'click .link-2': 'openPdf',
       'click .submit_formc': submitFormc,
-      'keyup #full-name': 'changeSign',
+      'keyup #full_name': 'changeSign',
       'click #pay-btn': 'stripeSubmit',
     }, menuHelper.events, yesNoHelper.events, /*leavingConfirmationHelper.events*/),
 
@@ -132,7 +132,7 @@ module.exports = {
 
       let eSignForm = this.$('.electronically-sign');
       this.eSignCompanyName = eSignForm.find('#company-name');
-      this.eSignFullName = eSignForm.find('#full-name');
+      this.eSignFullName = eSignForm.find('#full_name');
       this.eSignPreview = eSignForm.find('.electronically .name');
 
       return this;

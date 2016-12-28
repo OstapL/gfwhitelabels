@@ -28,14 +28,14 @@ html.show-menu
     -o-transition: height 0.35s ease-in 200ms
     transition: height 0.35s ease-in 200ms
 
-    #menuProfile
-      -webkit-transition: right 0.45s ease-in 200ms
-      -moz-transition: right 0.45s ease-in 200ms
-      -ms-transition: right 0.45s ease-in 200ms
-      -o-transition: right 0.45s ease-in 200ms
-      transition: right 0.45s ease-in 200ms
+    //#menuProfile
+      //-webkit-transition: right 0.45s ease-in 200ms
+      //-moz-transition: right 0.45s ease-in 200ms
+      //-ms-transition: right 0.45s ease-in 200ms
+      //-o-transition: right 0.45s ease-in 200ms
+      //transition: right 0.45s ease-in 200ms
 
-      right: -90px
+      //right: -90px
 
     button.navbar-toggler
       span 
@@ -115,18 +115,18 @@ header.no-overflow
       -o-transition-delay: 300ms, 300ms
       transition-delay: 300ms, 300ms
 
-      -webkit-transition: height 0.45s ease-out, opacity 0.25s ease-out, transform 0.25s ease-out, -webkit-transform 0.25s ease-out
-      -moz-transition: height 0.45s ease-out, opacity 0.25s ease-out, transform 0.25s ease-out, -webkit-transform 0.25s ease-out
-      -ms-transition: height 0.45s ease-out, opacity 0.25s ease-out, transform 0.25s ease-out, -webkit-transform 0.25s ease-out
-      -o-transition: height 0.45s ease-out, opacity 0.25s ease-out, transform 0.25s ease-out, -webkit-transform 0.25s ease-out
-      transition: height 0.45s ease-out, opacity 0.25s ease-out, transform 0.25s ease-out, -webkit-transform 0.25s ease-out
+      -webkit-transition: height 0.35s ease-out, opacity 0.25s ease-out, transform 0.25s ease-out, -webkit-transform 0.25s ease-out
+      -moz-transition: height 0.35s ease-out, opacity 0.25s ease-out, transform 0.25s ease-out, -webkit-transform 0.25s ease-out
+      -ms-transition: height 0.35s ease-out, opacity 0.25s ease-out, transform 0.25s ease-out, -webkit-transform 0.25s ease-out
+      -o-transition: height 0.35s ease-out, opacity 0.25s ease-out, transform 0.25s ease-out, -webkit-transform 0.25s ease-out
+      transition: height 0.35s ease-out, opacity 0.25s ease-out, transform 0.25s ease-out, -webkit-transform 0.25s ease-out
       -webkit-transition: none
       -moz-transition: none
       -ms-transition: none
       -o-transition: none
       transform: none
   
-      height: 144px
+      height: auto
       opacity: 1
 
       background: rgba( $menu_backgound_from, .96)
@@ -211,6 +211,9 @@ header
   .navbar-nav
     height: $navbar_height
     padding: 0
+    .user-info
+      span
+        color: rgba($menu_text_color, 0.7)
 
     @media screen and (min-width: 992px)
       li.nav-item > a.nav-link,
@@ -261,7 +264,7 @@ header
 
      
         &.user-info-drop
-          right: -17px!important
+          right: -15px!important
           left: auto!important
 
         .submenu
@@ -599,13 +602,16 @@ header
         transition: right 0.35s ease-in 100ms
 
         position: absolute
-        right: 25px
+        right: 15px
         width: auto
         // padding-top: 25px!important
 
         li.nav-item.user-info
           margin-left: 0!important
-          min-width: 35px 
+          min-width: 35px
+          img
+            width: 35px
+            height: 35px
 
           a.user-info-name
             +centered
@@ -708,7 +714,6 @@ header
 
     .navbar-brand
       float: none
-      margin-right: 0
       margin-left: rem(-25)
 
     .wrap-toggle-menu

@@ -1,15 +1,14 @@
-const dropzone = require('dropzone');
-const dropzoneHelpers = require('helpers/dropzoneHelpers.js');
 const validation = require('components/validation/validation.js');
-const phoneHelper = require('helpers/phoneHelper.js');
-const formatHelper = require('helpers/formatHelper');
-const yesNoHelper = require('helpers/yesNoHelper.js');
 
 const helpers = {
   date: require('helpers/dateHelper.js'),
-  format: formatHelper,
-  phone: phoneHelper,
+  format: require('helpers/formatHelper.js'),
+  phone: require('helpers/phoneHelper.js'),
+  social: require('helpers/socialNetworksHelper.js'),
+  dropzone: require('helpers/dropzoneHelpers.js'),
+  yesNo: require('helpers/yesNoHelper.js'),
 };
+
 // const InvestmentStatus = {
 //   New: 0,
 //   Approved: 1,
@@ -46,7 +45,7 @@ module.exports = {
       'change .investor-item-checkbox': 'changeAccreditedInvestorItem',
       'change #twitter,#facebook,#instagram,#linkedin': 'appendHttpsIfNecessary',
       // 'change input[name=accredited_investor]': 'changeAccreditedInvestor',
-    }, phoneHelper.events, dropzoneHelpers.events, yesNoHelper.events),
+    }, helpers.phone.events, helpers.dropzone.events, helpers.yesNo.events),
 
     changeAccreditedInvestorItem(e) {
       let $target = $(e.target);
@@ -166,6 +165,8 @@ module.exports = {
         this.template({
           serverUrl: serverUrl,
           user: this.model,
+          roleInfo: app.user.getRoleInfo(),
+          company: app.user.get('company'),
           fields: this.fields,
           states: this.usaStates,
         })
@@ -207,7 +208,7 @@ module.exports = {
     },
 
     appendHttpsIfNecessary(e) {
-      formatHelper.appendHttpIfNecessary(e, true);
+      helpers.format.appendHttpIfNecessary(e, true);
     },
 
     _initSliders() {
@@ -384,9 +385,12 @@ module.exports = {
       $('.image_image_id').siblings('h3').text(fullName);
 
       $('#content').scrollTo();
+
+      //switch to financial info tab
+      this.$('.profile-tabs a[href="#financial_info"]').tab('show');
     },
 
-  }, phoneHelper.methods, dropzoneHelpers.methods, yesNoHelper.methods)),
+  }, helpers.phone.methods, helpers.dropzone.methods, helpers.yesNo.methods)),
 
   changePassword: Backbone.View.extend({
     urlRoot: authServer + '/rest-auth/password/change',
@@ -477,8 +481,14 @@ module.exports = {
         investment.status = 2;
         this.investments.historical.push(investment);
 
-        let activeInvestmentBlock = $target.closest('.one_table');
-        activeInvestmentBlock.remove();
+        $target.closest('.one_table').remove();
+
+        if (this.investments.active.length <= 0)
+          $('#active .investor_table')
+            .append(
+              '<div role="alert" class="alert alert-warning">' +
+                '<strong>You have no active investments</strong>' +
+              '</div>');
 
         let historicalInvestmentsBlock = this.$el.find('#historical .investor_table');
 
@@ -598,12 +608,10 @@ module.exports = {
 
       this.company = options.company;
 
-
+      helpers.social.init();
     },
 
     render(){
-      const socialMediaScripts = require('helpers/shareButtonHelper.js');
-
       this.$el.html(
         this.template({
           values: this.model,
@@ -612,8 +620,23 @@ module.exports = {
         })
       );
 
-      socialMediaScripts.facebook();
       this.initComments();
+
+      try {
+        let script = document.createElement('script');
+        script.type = 'text/javascript';
+        script.src = '/js/graph/graph.js';
+        $(document.head).append(script);
+
+        script = document.createElement('script');
+        script.type = 'text/javascript';
+        script.src = '/js/graph_data.js'
+        $(document.head).append(script);
+      } catch(err){
+        console.log(err);
+      }
+
+
 
       // const socket = require('socket.io-client')('http://localhost:3000');
       // socket.on('connect', function () {
@@ -629,42 +652,56 @@ module.exports = {
     },
 
     shareOnLinkedIn(e) {
-      event.preventDefault();
-      window.open(encodeURI('https://www.linkedin.com/shareArticle?mini=true&url=' + 'http://growthfountain.com/' + this.model.id +
-        '&title=' + this.model.name +
-        '&summary=' + this.model.description +
-        '&source=Growth Fountain'),'Growth Fountain Campaign','width=605,height=545');
+      e.preventDefault();
+
+      helpers.social.linkedIn.share({
+        href: 'http://growthfountain.com/' + this.model.id,
+        title: this.model.name,
+        description: this.model.description,
+      });
     },
 
     shareOnFaceBook(e) {
-      event.preventDefault();
-      FB.ui({
-        method: 'share',
+      e.preventDefault();
+
+      helpers.social.facebook.share({
         href: 'http://growthfountain.com/' + this.model.id,
         caption: this.model.tagline,
-        description: this.model.description,
         title: this.model.name,
-        picture: null,
-      }, function(response){});
+        description: this.model.description,
+        picture: this.model.campaign.header_image_data[0].urls[0],
+      });
+
     },
 
     shareOnTwitter(e) {
-      event.preventDefault();
-      window.open(encodeURI('https://twitter.com/share?url=' + 'http://growthfountain.com/' + this.model.id +
-        '&via=' + 'growthfountain' +
-        '&hashtags=investment,fundraising' +
-        '&text=Check out '),'Growth Fountain Campaign','width=550,height=420');
+      e.preventDefault();
+
+      helpers.social.twitter.share({
+        href: 'http://growthfountain.com/' + this.model.id,
+        hashtags: ['investment', 'fundraising'],
+        text: 'Check out ',
+      });
     },
 
     shareWithEmail(e) {
-      event.preventDefault();
-      let companyName = this.model.name;
-      let text = "Check out " + companyName + "'s fundraise on GrowthFountain";
-      window.open("mailto:?subject=" + text + "&body=" + text + "%0D%0A" + 'http://growthfountain.com/' + this.model.id);
+      e.preventDefault();
+
+      let text = "Check out " + this.model.name + "'s fundraise on GrowthFountain";
+
+      helpers.social.email.share({
+        subject: text,
+        message: text,
+        href: 'http://growthfountain.com/' + this.model.id,
+      });
     },
 
     shareWithGooglePlus(e) {
-      event.preventDefault();
+      e.preventDefault();
+
+      helpers.social.googlePlus.share({
+        href: 'http://growthfountain.com/' + this.model.id,
+      });
     },
 
     cancelCampaign(e) {
@@ -690,7 +727,7 @@ module.exports = {
           model: data[0],
           fields: options[0].fields,
           allowQuestion: false,
-          cssClass: 'col-lg-8 pt50',
+          cssClass: 'col-lg-8',
         });
         comments.render();
 

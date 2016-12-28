@@ -2,8 +2,8 @@ import './styles/style.sass'
 //import 'jquery.inputmask/dist/jquery.inputmask.bundle.js';
 import calculatorHelper from '../../helpers/calculatorHelpers';
 import flyPriceFormatter from '../../helpers/flyPriceFormatter';
-import '../../js/graf/graf.js';
-import '../../js/graf/jquery.flot.growraf';
+import '../../js/graph/graph.js';
+import '../../js/graph/jquery.flot.growraf';
 
 const settings = calculatorHelper.settings;
 

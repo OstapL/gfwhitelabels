@@ -85,11 +85,10 @@ section.issuer-dashbord-top
             style="width:" + percentage_raised + "%").circle_progress
             i.fa.fa-circle-o
           - var now = new Date();
-          if values.campaign.amount_raised > 0
-            span(style="left:" + percentage_raised + "%").text_position
-              | #{now.toLocaleString('en-US', { month: "short" })} #{ now.getDate() }
-              br
-              | #{ helpers.format.formatAmount(values.campaign.amount_raised) } Raised
+          span(style="left:" + percentage_raised + "%").text_position
+            | #{now.toLocaleString('en-US', { month: "short" })} #{ now.getDate() }
+            br
+            | #{ helpers.format.formatAmount(values.campaign.amount_raised) } Raised
         .progress_description
           -
             var starting_date = helpers.date.getStartDate(values.campaign.expiration_date, values.campaign.length_days);
@@ -108,7 +107,7 @@ section.issuer-dashbord-top
         a(href="/" + values.id).btn-sm.btn.btn-secondary.text-uppercase view Campaign
           i(aria-hidden="true").fa.fa-angle-right
     .col-lg-12.border-bottom-50
-section.grafic-dashboard.collapse
+section.grafic-dashboard
   .container
     .row
       .col-md-12
@@ -184,7 +183,7 @@ section.investors-dashbord-comment
   .container
     .row
       .col-xl-10
-        h2.dosis.text-uppercase.m-t-0 Investor question & answer
+        h2.dosis.text-uppercase.m-t-0.m-b-0 Investor question & answer
       .comments-container
 
 section.danger-zone-dashboard
@@ -204,6 +203,4 @@ section.danger-zone-dashboard
           p.m-t-1.m-b-1 Click here to cancel your offering.
       .col-lg-12
         a(href="#").btn.danger-cancel.text-uppercase.cancel-campaign cancel campaign
-            
-//script(src="/js/graf/graf.js" type="text/javascript")
-//script(src="/js/graph_data.js" type="text/javascript")
+
