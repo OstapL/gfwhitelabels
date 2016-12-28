@@ -21,5 +21,3 @@ team.pug
 
 mainPage.pug
 	line 22 - изменил название в адресе картинки с logo.png на logo_jd.png
-
-
