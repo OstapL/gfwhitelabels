@@ -10,10 +10,12 @@ div(class=attr.class data-content=(attr.help_text || ''))
         div.col-lg-5.col-md-5.col-sm-5.col-xs-5.text-xs-center.text-md-center.text-lg-center.p-dropzone
           a(class='link-1' href="#" onclick="return false")
             p.drop-photo #{attr.text}
+            - console.log(attr.icon);
             i(class="fa fa-" + attr.icon)
         div.col-lg-7.col-md-7.col-sm-7.col-xs-7.p-r-0.p-l-0.img-dropzone.text-xs-center.all-file-scroll
           .file-scroll
             each v,k in attr.data
+              - console.log(v.mime);
               - var icon = v.mime ? helpers.mimetypeIcons[v.mime.split('/')[1]] : attr.type;
               .thumb-file-container
                 .delete-file-container(style="position: absolute;")
@@ -23,4 +25,4 @@ div(class=attr.class data-content=(attr.help_text || ''))
                 a(class=("link-file a-" + name) target="_blank" href=v.urls[0] title=v.name) #{ helpers.text.shortenFileName(v.name) }
             else
               .thumb-file-container.text-xl-center
-                img(src='/img/icons/' + icon + '.png' alt=attr.label class="img-file img-" + name)
+                img(src='/img/icons/' + attr.type + '.png' alt=attr.label class="img-file img-" + name)

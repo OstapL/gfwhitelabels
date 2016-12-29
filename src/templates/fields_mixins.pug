@@ -2,7 +2,7 @@ mixin nestedTextLabel(nestedName, name, myAttr, vals)
   -
     vals = vals || values;
     myAttr = _.extend(myAttr, fields[nestedName].schema[name]);
-    myAttr.value = vals[name] ? vals[name] : '';
+    myAttr.value = vals.hasOwnProperty(name) ? vals[name] : '';
 
   +fieldTextLabel(
     nestedName + '[' + name + ']',
@@ -13,7 +13,7 @@ mixin nestedText(nestedName, name, myAttr, vals)
   -
     vals = vals || values;
     myAttr = _.extend(myAttr, fields[nestedName].schema[name]);
-    myAttr.value = vals[name] ? vals[name] : '';
+    myAttr.value = vals.hasOwnProperty(name) ? vals[name] : '';
 
   +fieldText(
     nestedName + '[' + name + ']',
@@ -25,7 +25,7 @@ mixin prepareNestedField(nestedName, name, value, index, myAttr)
     - console.log('value for ' + name + ' is null ')
     - value = {}
   - _.extend(myAttr, attr.schema[name]);
-  - myAttr.value = value[name] ? value[name]: '';
+  - myAttr.value = value.hasOwnProperty(name) ? value[name]: '';
   - myAttr.id = nestedName + '__' + index + '__' + name + '';
 
 mixin fieldNestedTextLabel(nestedName, name, value, index, myAttr)
@@ -93,7 +93,7 @@ mixin fieldNestedDateYear(nestedName, name, value, index, myAttr)
 
 mixin prepareField(name, attr)
   - attr = attr ? attr : fields[name];
-  - attr.value = attr.value ? attr.value : values ? values[name] : '';
+  - attr.value = attr.hasOwnProperty('value') ? attr.value : values ? values[name] : '';
 
   if attr.placeholder == null || attr.placeholder == ''
     - attr.placeholder = attr.label || ''
@@ -145,7 +145,7 @@ mixin fieldTextareaLabel(name, attr)
 
 mixin fieldText(name, attr)
     - attr = attr ? attr : fields[name];
-    - attr.value = attr.value ? attr.value : values ? values[name] : '';
+    - attr.value = attr.hasOwnProperty('value') ? attr.value : values ? values[name] : '';
     div(class=attr.class)
         input(
         id=attr.id || name

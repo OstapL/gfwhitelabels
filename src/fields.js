@@ -12,7 +12,7 @@ let exports = {
       value = {}
     }
     _.extend(myAttr, schema);
-    myAttr.value = value[name] ? value[name]: '';
+    myAttr.value = value.hasOwnProperty(name) ? value[name]: '';
     myAttr.id = nestedName + '__' + index + '__' + name + '';
   },
 
@@ -145,7 +145,7 @@ let exports = {
   dateDay(name, attr) {
     attr.name = name;
     this.prepareField(name, attr);
-    attr.value = attr.value && attr.value.indexOf('-') != -1 ? attr.value.split('-')[2] : '';
+    attr.value = attr.hasOwnProperty('value') && attr.value.indexOf('-') != -1 ? attr.value.split('-')[2] : '';
     attr.class1 = attr.class1 || 'col-xl-4 col-lg-4 col-xs-4 p-r-0 m-d-p-l-5';
     const template = require('./templates/dateDay.pug');
     return template(attr);
@@ -154,7 +154,7 @@ let exports = {
   dateMonth(name, attr) {
     attr.name = name;
     this.prepareField(name, attr);
-    attr.value = attr.value && attr.value.indexOf('-') != -1 ? attr.value.split('-')[1] : '';
+    attr.value = attr.hasOwnProperty('value') && attr.value.indexOf('-') != -1 ? attr.value.split('-')[1] : '';
     attr.class1 = attr.class1 || 'col-xl-4 col-lg-4 col-xs-4 p-l-0  m-d-p-r-5';
     const template = require('./templates/dateMonth.pug');
     return template(attr);
@@ -163,7 +163,7 @@ let exports = {
   dateYear(name, attr) {
     attr.name = name;
     this.prepareField(name, attr);
-    attr.value = attr.value && attr.value.indexOf('-') != -1 ? attr.value.split('-')[0] : '';
+    attr.value = attr.hasOwnProperty('value') && attr.value.indexOf('-') != -1 ? attr.value.split('-')[0] : '';
     attr.class1 = attr.class1 || 'col-xl-4 col-lg-4 col-xs-4 p-r-0 p-r-lg-1 m-d-p-l-10';
     const template = require('./templates/dateYear.pug');
     return template(attr);
@@ -209,7 +209,7 @@ let exports = {
 
   fieldText(name, attr) {
     const template = require('./templates/fieldText.pug');
-    attr.value = attr.value || '';
+    attr.value = attr.hasOwnProperty('value') ? attr.value : '';
     return template({
       name: name,
       attr: attr,
@@ -296,10 +296,6 @@ let exports = {
 
     this.prepareField(name, attr);
 
-    attr.icon = attr.data.mime
-      ? helpers.mimetypeIcons[attr.data.mime.split('/')[1]]
-      : attr.type;
-
     let nameClass = attr.id || name,
       requiredClass = attr.required ? 'required' : '',
       popoverClass = attr.help_text ? 'showPopover' : '';
@@ -313,8 +309,13 @@ let exports = {
     attr.class2 = attr.class2 || 'col-xl-9 col-lg-12 p-l-1 p-r-1';
     attr.class2 += ` dropzone__${name}`;
 
-    attr.default = attr.default || '/img/default/file.png';
     attr.icon = attr.icon || 'file';
+
+    attr.fileIcon = attr.data.mime
+      ? helpers.mimetypeIcons[attr.data.mime.split('/')[1]]
+      : attr.type;
+
+    attr.default = attr.default || '/img/default/file.png';
     attr.text = attr.text || 'Drop your PDF or DOC here or click to upload';
 
     const template = require('./templates/fileDropzone.pug');

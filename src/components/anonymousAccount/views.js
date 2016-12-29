@@ -1,5 +1,10 @@
 const validation = require('components/validation/validation.js');
 
+const auth = {
+  hello: require('hellojs'),
+  social: require('./social-auth.js'),
+};
+
 module.exports = {
   // TODO
   // To do refactoring
@@ -158,114 +163,140 @@ module.exports = {
 
   popupLogin: Backbone.View.extend({
     urlRoot: authServer + '/rest-auth/login',
+    template: require('./templates/popupLogin.pug'),
     events: {
       'submit .login-form': api.submitAction,
       'submit .signup-form': 'signupSubmit',
-      'click .btn-google': 'loginGoogle',
-      'click .btn-linkedin': 'loginLinkedin',
-      'click .btn-facebook': 'loginFacebook',
+      'click .btn-social-network': 'loginWithSocialNetwork',
+      'click .link-show-login': 'switchToLogin',
+      'click .link-show-sign-up': 'switchToSignup',
+    },
+
+    initialize(options) {
+      this.fields = {
+        checkbox1: {
+          type: 'boolean',
+          validate:{
+            OneOf: {
+              choices:[ true,"1" ],
+              labels:[]
+            },
+            choices:{}
+          },
+          required: true,
+          messageRequired: "You must agree to the terms before creating an account"
+        }
+      };
+      this.next = options.next || window.location.pathname;
+    },
+
+    render() {
+      $('#content').scrollTo();
+      this.$el.html(
+        this.template()
+      );
+
+      $('body').append(this.$el);
+
+      $('#sign_in').modal('hide');
+      $('#sign_up').modal('show');
+
+      return this;
+    },
+
+    _ensureAgreedWithRules() {
+      let data = {};
+      let cb = this.el.querySelector('#agree-rules');
+
+      if (cb.checked)
+        data.checkbox1 = cb.value;
+
+      if (!validation.validate({checkbox1: this.fields.checkbox1}, data, this)) {
+        _(validation.errors).each((errors, key) => {
+          validation.invalidMsg(this, key, errors);
+        });
+
+        return false;
+      }
+
+      return true;
+    },
+
+    switchToLogin(e) {
+      e.preventDefault();
+
+      $('#sign_up').modal('hide');
+      $('#sign_in').modal();
+
+      return false;
+    },
+
+    switchToSignup(e) {
+      e.preventDefault();
+
+      $('#sign_in').modal('hide');
+      $('#sign_up').modal();
+
+      return false;
     },
 
     _success(data) {
       if(data.hasOwnProperty('key')) {
         localStorage.setItem('token', data.key);
         setTimeout(() => {
-          window.location = this.next ? this.next : '/account/profile';
+          window.location = this.next || '/account/profile';
         }, 200);
       } else {
         alert('Server return no authentication data');
       }
     },
 
-    loginGoogle() {
-      this.hello('google').login({scope: 'profile,email'}).
-        then((e) => {
-          var sendToken = this.socialAuth.sendToken('google', e.authResponse.access_token);
+    loginWithSocialNetwork(e) {
+      e.preventDefault();
 
-          $.when(sendToken).done(function (data) {
-            localStorage.setItem('token', data.key);
-            window.location = '/account/profile';
-          }).fail(function (data) {
-            api.errorAction(this, data);
-          });
-        },
-        function (e) {
-          // TODO: notificate user about reason of error;
-          app.routers.navigate(
-            '/account/login', {trigger: true, replace: true}
-          );
-        });
+      if (!this._ensureAgreedWithRules())
+        return false;
+
+      const network = $(e.target).data('network');
+
+      app.showLoading();
+      auth.social.login(network).then((cancelled) => {
+        if (cancelled) {
+          app.hideLoading();
+          return;
+        }
+
+        $('#sign_up').modal('hide');
+        $('#sign_in').modal('hide');
+
+        app.hideLoading();
+
+        setTimeout(() => {
+          window.location = '/account/profile';
+        }, 100);
+
+      }).catch((err) => {
+        app.hideLoading();
+        api.errorAction(this, err);
+      });
+
+      return false;
     },
 
-    loginFacebook: function() {
-
-      var self = this;
-
-      self.hello('facebook').login({
-        scope: 'public_profile,email'}).then(
-          function (e) {
-              var sendToken = self.socialAuth.sendToken('facebook', e.authResponse.access_token);
-
-              $.when(sendToken).done(function (data) {
-                  localStorage.setItem('token', data.key);
-                  window.location = '/account/profile';
-              }).fail(function (data) {
-                  api.errorAction(self, data);
-              });
-          },
-          function (e) {
-
-              // TODO: notificate user about reason of error;
-              app.routers.navigate(
-                  '/account/login',
-                  {trigger: true, replace: true}
-              );
-          });
-    },
-
-    loginLinkedin: function() {
-
-      this.hello('linkedin').login({
-        scope: 'r_basicprofile,r_emailaddress',}).then(
-        function (e) {
-          var sendToken = self.socialAuth.sendToken('linkedin', e.authResponse.access_token);
-
-          $.when(sendToken).done(function (data) {
-            localStorage.setItem('token', data.key);
-            window.location = '/account/profile';
-          }).fail(function (data) {
-            api.errorAction(self, data);
-          });
-        },
-        function (e) {
-
-          // TODO: notificate user about reason of error;
-          app.routers.navigate(
-            '/account/login',
-            {trigger: true, replace: true}
-            );
-        });
-    },
-
-    render(next) {
-      const template = require('./templates/popupLogin.pug');
-      $('#content').scrollTo();
-      this.next = next;
-      this.$el.html(
-        template()
-      );
-      $('body').append(this.$el);
-      return this;
-    },
+    signupSubmit(e) {
+      this.urlRoot = authServer + '/rest-auth/registration';
+      api.submitAction.call(this, e);
+    }
   }),
 
   login: Backbone.View.extend({
     urlRoot: authServer + '/rest-auth/login',
+    template: require('./templates/login.pug'),
     events: {
       'submit .login-form': api.submitAction,
-      'click .btn-google': 'loginGoogle',
-      'click .btn-linkedin': 'loginLinkedin',
-      'click .btn-facebook': 'loginFacebook',
+      // 'click .btn-google': 'loginGoogle',
+      // 'click .btn-linkedin': 'loginLinkedin',
+      // 'click .btn-facebook': 'loginFacebook',
     },
 
     initialize(options) {
@@ -276,9 +307,9 @@ module.exports = {
 
     render() {
       $('#content').scrollTo();
-      let template = require('./templates/login.pug');
+
       this.$el.html(
-        template({
+        this.template({
           fields: this.fields,
         })
       );
@@ -298,80 +329,80 @@ module.exports = {
       }
     },
 
-    loginGoogle() {
-      this.hello('google').login({
-        scope: 'profile,email'}).
-        then((e) => {
-          var sendToken = this.socialAuth.sendToken('google', e.authResponse.access_token);
-
-          $.when(sendToken).done(function (data) {
-            localStorage.setItem('token', data.key);
-            window.location = '/account/profile';
-          }).fail(function (data) {
-            api.errorAction(this, data);
-          });
-        },
-        function (e) {
-          // TODO: notificate user about reason of error;
-          app.routers.navigate(
-            '/account/login', {trigger: true, replace: true}
-          );
-        });
-    },
-
-    loginFacebook: function() {
-
-            var self = this;
-
-            self.hello('facebook').login({
-                scope: 'public_profile,email'}).then(
-                function (e) {
-                    var sendToken = self.socialAuth.sendToken('facebook', e.authResponse.access_token);
-
-                    $.when(sendToken).done(function (data) {
-                        localStorage.setItem('token', data.key);
-                        window.location = '/account/profile';
-                    }).fail(function (data) {
-                        api.errorAction(self, data);
-                    });
-                },
-                function (e) {
-
-                    // TODO: notificate user about reason of error;
-                    app.routers.navigate(
-                        '/account/login',
-                        {trigger: true, replace: true}
-                    );
-                });
-
-    },
-
-    loginLinkedin: function() {
-
-            var self = this;
-
-            self.hello('linkedin').login({
-                scope: 'r_basicprofile,r_emailaddress',}).then(
-                function (e) {
-                    var sendToken = self.socialAuth.sendToken('linkedin', e.authResponse.access_token);
-
-                    $.when(sendToken).done(function (data) {
-                        localStorage.setItem('token', data.key);
-                        window.location = '/account/profile';
-                    }).fail(function (data) {
-                        api.errorAction(self, data);
-                    });
-                },
-                function (e) {
-
-                    // TODO: notificate user about reason of error;
-                    app.routers.navigate(
-                        '/account/login',
-                        {trigger: true, replace: true}
-                    );
-                });
-
-    }
+    // loginGoogle() {
+    //   this.hello('google').login({
+    //     scope: 'profile,email'}).
+    //     then((e) => {
+    //       var sendToken = this.socialAuth.sendToken('google', e.authResponse.access_token);
+    //
+    //       $.when(sendToken).done(function (data) {
+    //         localStorage.setItem('token', data.key);
+    //         window.location = '/account/profile';
+    //       }).fail(function (data) {
+    //         api.errorAction(this, data);
+    //       });
+    //     },
+    //     function (e) {
+    //       // TODO: notificate user about reason of error;
+    //       app.routers.navigate(
+    //         '/account/login', {trigger: true, replace: true}
+    //       );
+    //     });
+    // },
+    //
+    // loginFacebook: function() {
+    //
+    //         var self = this;
+    //
+    //         self.hello('facebook').login({
+    //             scope: 'public_profile,email'}).then(
+    //             function (e) {
+    //                 var sendToken = self.socialAuth.sendToken('facebook', e.authResponse.access_token);
+    //
+    //                 $.when(sendToken).done(function (data) {
+    //                     localStorage.setItem('token', data.key);
+    //                     window.location = '/account/profile';
+    //                 }).fail(function (data) {
+    //                     api.errorAction(self, data);
+    //                 });
+    //             },
+    //             function (e) {
+    //
+    //                 // TODO: notificate user about reason of error;
+    //                 app.routers.navigate(
+    //                     '/account/login',
+    //                     {trigger: true, replace: true}
+    //                 );
+    //             });
+    //
+    // },
+    //
+    // loginLinkedin: function() {
+    //
+    //         var self = this;
+    //
+    //         self.hello('linkedin').login({
+    //             scope: 'r_basicprofile,r_emailaddress',}).then(
+    //             function (e) {
+    //                 var sendToken = self.socialAuth.sendToken('linkedin', e.authResponse.access_token);
+    //
+    //                 $.when(sendToken).done(function (data) {
+    //                     localStorage.setItem('token', data.key);
+    //                     window.location = '/account/profile';
+    //                 }).fail(function (data) {
+    //                     api.errorAction(self, data);
+    //                 });
+    //             },
+    //             function (e) {
+    //
+    //                 // TODO: notificate user about reason of error;
+    //                 app.routers.navigate(
+    //                     '/account/login',
+    //                     {trigger: true, replace: true}
+    //                 );
+    //             });
+    //
+    // }
 
   }),
 
@@ -388,6 +419,7 @@ module.exports = {
       this.fields = options.fields;
       this.fields.checkbox1.messageRequired = 'You must agree to the terms ' +
         'before creating an account';
+
       this.hello = require('hellojs');
       this.socialAuth = require('./social-auth.js');
     },
@@ -520,7 +552,6 @@ module.exports = {
               });
           },
           function (e) {
-
               // TODO: notificate user about reason of error;
               app.routers.navigate(
                   '/account/login', {trigger: true, replace: true}
@@ -532,6 +563,7 @@ module.exports = {
   reset: Backbone.View.extend({
     urlRoot: authServer + '/reset-password/send',
     el: '#content',
+    template: require('./templates/reset.pug'),
     events: {
       'submit form': api.submitAction,
     },
@@ -542,8 +574,11 @@ module.exports = {
         type: 'email',
         required: true
       };
-      const template = require('./templates/reset.pug');
-      this.el.innerHTML = template();
+      this.fields.domain = {
+        type: 'text',
+        required: true
+      };
+      this.el.innerHTML = this.template();
       return this;
     },
 
