@@ -221,7 +221,6 @@ module.exports = {
     loginFacebook: function() {
 
       var self = this;
-
       self.hello('facebook').login({
         scope: 'public_profile,email'}).then(
           function (e) {
@@ -284,6 +283,11 @@ module.exports = {
 
       return this;
     },
+
+    signupSubmit(e) {
+      this.urlRoot = authServer + '/rest-auth/registration';
+      api.submitAction.call(this, e);
+    }
   }),
 
   login: Backbone.View.extend({
@@ -548,7 +552,6 @@ module.exports = {
               });
           },
           function (e) {
-
               // TODO: notificate user about reason of error;
               app.routers.navigate(
                   '/account/login', {trigger: true, replace: true}

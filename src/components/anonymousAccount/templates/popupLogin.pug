@@ -32,6 +32,9 @@ div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true
               input(type="password"
               placeholder="Re-enter password"
               name="password2").form-control
+              input(type="hidden"
+              value=window.location.host
+              name="domain")
             .form-group.row.clearfix.required
               .row
                 .col-lg-12

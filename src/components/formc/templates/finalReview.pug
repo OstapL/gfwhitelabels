@@ -161,6 +161,8 @@ section.formc-review
               | !{' '}
               +frField('company.city', 'text')
               | !{' '}
+              +frField('company.state', 'select')
+              | !{' '}
               +frField('company.zip_code', 'text')
           .row
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
@@ -490,8 +492,8 @@ section.formc-review
             theader
               tr.bg-grey
                 th.text-xs-center.w-30 Director Name
-                th.text-xs-center.w-30 Dates of Board Service (Year Begin – Year End)
-                th.text-xs-center.w-40 Principal Occupation + Employer & Title
+                th.text-xs-center.w-30 Dates of Board Service (Year Begin)
+                th.text-xs-center.w-40 Principal Occupation + Employer & Start Date
             tbody
               each v,k in values.formc.team_members
                 if v.role[0] == 1
