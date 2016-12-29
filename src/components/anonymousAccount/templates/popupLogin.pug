@@ -39,7 +39,7 @@ div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true
               .row
                 .col-lg-12
                   label
-                    input(type="checkbox" name="checkbox1" value="1")
+                    input(type="checkbox" name="checkbox1" value="1")#agree-rules
                     span.label-text I agree to the
                       a(href="/pg/terms_of_use" target="_blank").link-3  Terms of Use
                       | ,
@@ -51,13 +51,13 @@ div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true
                 .col-lg-12.border-bottom.or
                   span or
             .social-btn
-              button.btn.btn-block.btn-facebook.text-uppercase
+              button(data-network="facebook").btn.btn-block.btn-social-network.btn-facebook.text-uppercase
                 i.fa.fa-facebook
                 |  SIGN UP with Facebook
-              button.btn.btn-block.btn-linkedin.text-uppercase
+              button(data-network="linkedin").btn.btn-block.btn-social-network.btn-linkedin.text-uppercase
                 i.fa.fa-linkedin
                 |  SIGN UP with linkedin
-              button.btn.btn-block.btn-google.text-uppercase
+              button(data-network="google").btn.btn-block.btn-social-network.btn-google.text-uppercase
                 i.fa.fa-google-plus
                 |  SIGN UP with Google
         .modal-footer

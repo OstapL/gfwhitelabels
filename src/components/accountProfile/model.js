@@ -30,11 +30,12 @@ let userModel = Backbone.Model.extend({
   ensureLoggedIn(next) {
     if (this.is_anonymous()) {
       const pView = require('components/anonymousAccount/views.js');
-      require.ensure([], () => {
-        let v = new pView.popupLogin();
-        v.render(next || window.location.pathname);
-        app.hideLoading();
+      let v = new pView.popupLogin({
+        next: next || window.location.pathname,
       });
+      v.render();
+      app.hideLoading();
+
       return false;
     }
 
