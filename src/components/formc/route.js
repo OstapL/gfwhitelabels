@@ -29,6 +29,11 @@ function getOCCF(optionsR, viewName, params = {}) {
         }
       }
 
+      if(params.company.is_approved != 5) {
+        app.routers.navigate('/campaign/' + params.campaign.id +  '/general_information', { trigger: true, replace: true } );
+        return false;
+      }
+
       if(params.formc.is_paid == false && viewName != 'introduction') {
         app.routers.navigate('/formc/' + params.formc.id +  '/introduction?notPaid=1', { trigger: true, replace: true } );
         return false;

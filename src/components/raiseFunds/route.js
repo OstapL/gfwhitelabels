@@ -7,7 +7,9 @@ function getOCCF(optionsR, viewName, params = {}) {
   $.when(optionsR, app.user.getCompanyR(), app.user.getCampaignR(), app.user.getFormcR())
     .done((options, company, campaign, formc) => {
 
-      params.fields = options[0].fields;
+      if(options) {
+        params.fields = options[0].fields;
+      }
       // ToDo
       // This how we can avoid empty response
       if(company == '') {
@@ -101,14 +103,20 @@ module.exports = Backbone.Router.extend({
   inReview() {
     app.showLoading();
 
-    $('.modal-backdrop').remove();
+    $('#company_publish_confirm').modal('hide', 0);
     let fn = function() {
+      $('body').scrollTo();
       app.hideLoading();
       if(app.user.company.is_approved == 1) {
         const i = new View.inReview({
-          model: company,
+          model: app.user.company,
         });
         i.render();
+      } else if(app.user.company.is_approved == 5) {
+        app.routers.navigate(
+          '/formc/' + app.user.formc.id + '/introduction',
+          { trigger: true, replace: false }
+        );
       } else {
         app.routers.navigate(
           '/company/create',
