@@ -10,7 +10,8 @@ div(class=attr.class data-content=(attr.help_text|| ''))
         div.col-xl-4.offset-xl-4.text-xs-center.dropzone-text.p-l-0.p-r-0
           a(class='link-1' href="#" onclick="return false")
             p.drop-photo #{attr.text}
-            i(class="icon-gallery fa fa-" + attr.icon)
+            .icon-gallery
+              i(class=" fa fa-" + attr.icon)
         div.row
           div(id=name).col-xl-12.all-gallery
             each v, k in attr.data
