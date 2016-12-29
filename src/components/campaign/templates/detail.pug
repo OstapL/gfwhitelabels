@@ -454,9 +454,17 @@ section
               h3.d-inline-block  Form C
           .col-lg-4.text-xs-center
             p Company documents
-            a(href="" target="_blank")
+            a(href="#" target="_blank").showPopover.company-documents
               i.fa.fa-file-pdf-o.d-inline-block
               h3.d-inline-block Financials
+            div.popover-content-company-documents
+              div.company-documents-content
+                each doc in companyDocs
+                  li
+                    a(href=doc.urls[0] target="_blank").nav-link #{doc.name}
+                else
+                  p No company documents
+
           if values.campaign.investor_presentation_data.length > 0
             .col-lg-4.row.text-xs-center
               p Company documents
