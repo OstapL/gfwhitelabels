@@ -296,10 +296,6 @@ let exports = {
 
     this.prepareField(name, attr);
 
-    attr.icon = attr.data.mime
-      ? helpers.mimetypeIcons[attr.data.mime.split('/')[1]]
-      : attr.type;
-
     let nameClass = attr.id || name,
       requiredClass = attr.required ? 'required' : '',
       popoverClass = attr.help_text ? 'showPopover' : '';
@@ -313,8 +309,13 @@ let exports = {
     attr.class2 = attr.class2 || 'col-xl-9 col-lg-12 p-l-1 p-r-1';
     attr.class2 += ` dropzone__${name}`;
 
-    attr.default = attr.default || '/img/default/file.png';
     attr.icon = attr.icon || 'file';
+
+    attr.fileIcon = attr.data.mime
+      ? helpers.mimetypeIcons[attr.data.mime.split('/')[1]]
+      : attr.type;
+
+    attr.default = attr.default || '/img/default/file.png';
     attr.text = attr.text || 'Drop your PDF or DOC here or click to upload';
 
     const template = require('./templates/fileDropzone.pug');
