@@ -236,6 +236,7 @@ module.exports = {
       this.$el.html(
         this.template({
           serverUrl: serverUrl,
+          companyDocs: this.model.campaign.gallery_group_data,  //data is stubbed///!!!
           Urls: Urls,
           values: this.model,
           formatHelper: formatHelper,
@@ -337,6 +338,14 @@ module.exports = {
             $('.vimeo-thumbnail[data-vimeo-id=' + id + ']').attr('src', thumbnailUrl);
           },
         });
+      });
+
+      this.$('.company-documents').popover({
+        container: '#content',
+        html: true,
+        content: this.$('.popover-content-company-documents').html(),
+        placement: 'bottom',
+        trigger: 'focus',
       });
 
       return this;
