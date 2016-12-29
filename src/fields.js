@@ -360,6 +360,8 @@ let exports = {
     attr.class = `row media-item ${attr.class} ${nameClass} ${requiredClass} imageDropzone ${popoverClass}`;
     attr.class1 += attr.required ? ' required' : '';
     attr.class2 += ` dropzone__${name}`;
+    attr.icon = attr.icon || 'file-image-o';
+    attr.text = attr.text || 'Drop your photo here or click to upload';
     const template = require('./templates/imageDropzone.pug');
     return template({
       name: name,
@@ -383,6 +385,8 @@ let exports = {
     attr.class = `row media-item ${attr.class} ${nameClass} ${requiredClass} galleryDropzone ${popoverClass}`;
     attr.class1 += ` ${requiredClass}`;
     attr.class2 += ` dropzone__${name}`;
+    attr.icon = attr.icon || 'file-image-o';
+    attr.text = attr.text || 'Drop your photo(s) here or click to upload';
 
     const template = require('./templates/imagefolderDropzone.pug');
     return template({
