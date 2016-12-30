@@ -95,6 +95,10 @@ module.exports = {
       }
       this.preview = params.preview ? true : false;
 
+      this.companyDocs = this.model.formc
+        ? _.union(this.model.formc.fiscal_prior_group_data, this.model.formc.fiscal_recent_group_data)
+        : [];
+
     },
 
     submitCampaign(e) {
@@ -247,7 +251,7 @@ module.exports = {
       this.$el.html(
         this.template({
           serverUrl: serverUrl,
-          companyDocs: this.model.campaign.gallery_group_data,  //data is stubbed///!!!
+          companyDocs: this.companyDocs,
           Urls: Urls,
           values: this.model,
           formatHelper: formatHelper,
