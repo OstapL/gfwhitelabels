@@ -536,7 +536,7 @@ module.exports = {
           max_equity_offered: 'Maximum Equity Offered',
           security_type: 'Security Type',
           valuation_determination: 'How did you determine your valuation?',
-          valuation_determination_other: 'Description',
+          valuation_determination_other: 'Please explain',
         };
         this.assignLabels();
         this.createIndexes();
