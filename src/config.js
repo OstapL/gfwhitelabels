@@ -30,3 +30,4 @@ global.linkedinClientId = "77hgtbs9rkjk20";
 
 global.googleMapKey = "AIzaSyBpCl9-7bkVISZ0o-AaFCsKzZwGAxalkZU";
 global.stripeKey = "pk_test_Z7YAhlyPtnW7bpd8LJUHTSou";
+global.googleAnalyticsId = 'GTM-NC9XW5D';
