@@ -405,10 +405,6 @@ module.exports = {
 
       $('#content').scrollTo();
 
-      // if ($("#financial_info").hasClass("active")) {
-      //   setTimeout(function() {
-      //   }, 100);
-      // }
       //switch to financial info tab
       // this.$('.profile-tabs a[href="#financial_info"]').tab('show');
     },
