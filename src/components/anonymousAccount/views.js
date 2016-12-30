@@ -169,9 +169,9 @@ module.exports = {
 
       'submit #sign-up-form': 'signupSubmit',
       'click #sign-up-form .btn-social-network': 'loginWithSocialNetwork',
-      'click #sign-up-form .link-show-login': 'switchToLogin',
-      'click #sign-up-form .link-show-sign-up': 'switchToSignup',
 
+      'click .link-show-login': 'switchToLogin',
+      'click .link-show-sign-up': 'switchToSignup',
     },
 
     initialize(options) {
