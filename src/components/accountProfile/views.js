@@ -381,7 +381,12 @@ module.exports = {
     },
 
     _success(data) {
+      if ($("#financial_info").hasClass("active")) {
+        app.routers.navigate("/", {trigger: true});
+        return;
+      }
       app.hideLoading();
+
 
       //todo: this is bad solution
       this.model.first_name = this.el.querySelector('#first_name').value;
