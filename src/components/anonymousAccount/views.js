@@ -164,11 +164,14 @@ module.exports = {
     urlRoot: authServer + '/rest-auth/login',
     template: require('./templates/popupLogin.pug'),
     events: {
-      'submit .login-form': api.submitAction,
-      'submit .signup-form': 'signupSubmit',
-      'click .btn-social-network': 'loginWithSocialNetwork',
-      'click .link-show-login': 'switchToLogin',
-      'click .link-show-sign-up': 'switchToSignup',
+      'click #sign-in-form .btn-login': 'signinSubmit',
+      'click #sign-in-form .reset-password-link': 'resetPassword',
+
+      'submit #sign-up-form': 'signupSubmit',
+      'click #sign-up-form .btn-social-network': 'loginWithSocialNetwork',
+      'click #sign-up-form .link-show-login': 'switchToLogin',
+      'click #sign-up-form .link-show-sign-up': 'switchToSignup',
+
     },
 
     initialize(options) {
@@ -197,8 +200,10 @@ module.exports = {
 
       $('body').append(this.$el);
 
-      $('#sign_in').modal('hide');
-      $('#sign_up').modal('show');
+      this.$signIn = $('#sign_in');
+      this.$signUp = $('#sign_up');
+
+      this.$signIn.modal('show');
 
       return this;
     },
@@ -224,8 +229,8 @@ module.exports = {
     switchToLogin(e) {
       e.preventDefault();
 
-      $('#sign_up').modal('hide');
-      $('#sign_in').modal();
+      this.$signUp.modal('hide');
+      this.$signIn.modal();
 
       return false;
     },
@@ -233,13 +238,17 @@ module.exports = {
     switchToSignup(e) {
       e.preventDefault();
 
-      $('#sign_in').modal('hide');
-      $('#sign_up').modal();
+      this.$signIn.modal('hide');
+      this.$signUp.modal();
 
       return false;
     },
 
     _success(data) {
+
+      this.$signIn.modal('hide');
+      this.$signUp.modal('hide');
+
       if(data.hasOwnProperty('key')) {
         localStorage.setItem('token', data.key);
         setTimeout(() => {
@@ -283,8 +292,29 @@ module.exports = {
     },
 
     signupSubmit(e) {
+      console.log('signup submit');
       this.urlRoot = authServer + '/rest-auth/registration';
-      api.submitAction.call(this, e);
+      let data = $(e.target).closest('form').serializeJSON({ useIntKeysAsArrayIndex: true });
+      api.submitAction.call(this, e, data);
+    },
+
+    signinSubmit(e) {
+      console.log('signin submit');
+      let data = $(e.target).closest('form').serializeJSON({ useIntKeysAsArrayIndex: true });
+      data.checkbox1 = 1;
+      api.submitAction.call(this, e, data);
+    },
+
+    resetPassword(e) {
+      e.preventDefault();
+
+      setTimeout(() => {
+        window.location = '/account/reset';
+      }, 100);
+
+      this.$signIn.modal('hide');
+
+      return false;
     }
   }),
 
