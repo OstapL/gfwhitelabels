@@ -312,7 +312,7 @@ section
                       if v.facebook
                         a(href=v.facebook target="_blank").link-1
                           i.fa.fa-facebook
-                      if !(v.linedin || v.facebook)
+                      if !(v.linkedin || v.facebook)
                         a.link-1(style="visibility:hidden;")
                           i.fa.fa-linkedin.more
                       p.card-text.text-justify.hide-more-detail !{textHelper.restoreLineBreak(v.bio)}
