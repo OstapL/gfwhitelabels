@@ -35,7 +35,3 @@ global.stripeKey = "pk_test_Z7YAhlyPtnW7bpd8LJUHTSou";
 // comming soon text
 global.commingSoon = 1;
 global.googleAnalyticsId = 'GTM-TFQMMJB';
-
-module.exports = {
-  googleAnalyticsId: googleAnalyticsId
-};
