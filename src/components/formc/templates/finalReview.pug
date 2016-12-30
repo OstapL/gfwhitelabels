@@ -1,4 +1,5 @@
 include fields_final_review.pug
+- var formatHelper = require('helpers/formatHelper.js');
 - var customFields = require('../fields.js');
 - var fees = require('consts/companyFees.json');
 
@@ -98,7 +99,7 @@ section.formc-review
           +frField('campaign.minimum_raise', 'money')
           |   MINIMUM OFFERING
         if values.campaign.security_type == 0 
-          p.text-xs-center.font-weight-bold OFFERING PRICE: 
+          p.text-xs-center.font-weight-bold OFFERING PRICE: $ 
             +frField('campaign.price_per_share', 'text')
             |  per Share
           p.text-xs-center.font-weight-bold
@@ -159,6 +160,8 @@ section.formc-review
               +frField('company.address_2', 'text')
               | !{' '}
               +frField('company.city', 'text')
+              | !{' '}
+              +frField('company.state', 'select')
               | !{' '}
               +frField('company.zip_code', 'text')
           .row
@@ -229,7 +232,7 @@ section.formc-review
             .row
               .col-lg-6.col-md-6.col-sm-6.col-xs-12
                 p.font-weight-bold Price of security:
-              .col-lg-6.col-md-6.col-sm-6.col-xs-12
+              .col-lg-6.col-md-6.col-sm-6.col-xs-12 $
                 +frField('campaign.price_per_share', 'text')
           .row
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
@@ -287,17 +290,17 @@ section.formc-review
             | !{' '}
             +frField('company.corporate_structure', 'select')
             |  (the “Company”), is offering up to 
-            b #{ Math.round(values.campaign.maximum_raise / values.campaign.price_per_share) }
+            b #{ formatHelper.formatPrice(Math.round(values.campaign.maximum_raise / values.campaign.price_per_share)) }
             |   shares of 
             +frField('campaign.security_type', 'select')
             |  (the 
             u “Shares”)
-            |  at an offering price of 
+            |  at an offering price of $
             +frField('campaign.price_per_share', 'text')
             |  per Share for a maximum aggregate offering price of 
             +frField('campaign.maximum_raise', 'money').
           p.pb10.text-indent The Company has established a minimum offering of at least 
-            b #{ Math.round(values.campaign.minimum_raise / values.campaign.price_per_share) }
+            b #{ formatHelper.formatPrice(Math.round(values.campaign.minimum_raise / values.campaign.price_per_share)) }
             |  Shares for a minimum aggregate offering price of 
             +frField('campaign.minimum_raise', 'money')
               |  prior to #{ values.campaign.expiration_date }
@@ -489,8 +492,8 @@ section.formc-review
             theader
               tr.bg-grey
                 th.text-xs-center.w-30 Director Name
-                th.text-xs-center.w-30 Dates of Board Service (Year Begin – Year End)
-                th.text-xs-center.w-40 Principal Occupation + Employer & Title
+                th.text-xs-center.w-30 Dates of Board Service (Year Begin)
+                th.text-xs-center.w-40 Principal Occupation + Employer & Start Date
             tbody
               each v,k in values.formc.team_members
                 if v.role[0] == 1

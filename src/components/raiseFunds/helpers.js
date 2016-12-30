@@ -11,6 +11,7 @@ let exports = {
           data.intended_use_of_proceeds.length > 5 &&
           data.business_model.length > 5,
         'media':
+          data.video != '' &&
           data.header_image_image_id != null &&
           data.list_image_image_id != null &&
           data.gallery_group_data.length > 0,
@@ -81,16 +82,30 @@ let exports = {
   },
 
   postForReview: function postForReview(e) {
-    api.makeRequest(raiseCapitalServer + '/company/' + e.target.dataset.companyid + '/post-for-review', 'PUT')
-      .then((data) => {
-        $('#company_publish_confirm').modal('hide');
-        setTimeout(() => {
-          app.routers.navigate(
-            '/formc/' + app.user.formc.id + '/introduction',
-            { trigger: true, replace: false }
-          );
-        }, 500);
-      });
+    $('#company_publish_confirm').modal('hide', 0);
+    if(app.user.company.is_approved < 1) {
+      api.makeRequest(raiseCapitalServer + '/company/' + e.target.dataset.companyid + '/post-for-review', 'PUT')
+        .then((data) => {
+          app.user.company.is_approved = 1;
+          $('#company_publish_confirm').modal('hide');
+          setTimeout(() => {
+            app.routers.navigate(
+              '/company/in-review',
+              { trigger: true, replace: false }
+            );
+          }, 500);
+        });
+    } else if(app.user.company.is_approved == 1) {
+      app.routers.navigate(
+        '/company/in-review',
+        { trigger: true, replace: false }
+      );
+    } else {
+      app.routers.navigate(
+        '/formc/' + app.user.formc.id + '/introduction',
+        { trigger: true, replace: false }
+      );
+    }
   },
 
   onPreviewAction: function(e) {

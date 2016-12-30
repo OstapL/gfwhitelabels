@@ -9,20 +9,14 @@ module.exports = Backbone.Router.extend({
     },
 
   execute: function (callback, args, name) {
-      if (app.user.is_anonymous() && name == 'createEdit') {
-            const pView = require('components/anonymousAccount/views.js');
-            require.ensure([], function() {
-              new pView.popupLogin().render(window.location.pathname);
-              app.hideLoading();
-              $('#sign_up').modal();
-            });
-            return false;
-          }
-     if (callback) callback.apply(this, args);
+    if (!app.user.ensureLoggedIn(window.location.pathname) && name == 'createEdit')
+      return false;
+
+    if (callback) callback.apply(this, args);
   },
 
   list() {
-      api.makeCacheRequest(blogServer + '/blog', 'GET').
+      api.makeCacheRequest(blogServer + '/', 'GET').
         then((data) => {
           new View.list({
             model: data
@@ -46,7 +40,7 @@ module.exports = Backbone.Router.extend({
   },
 
   detail(id) {
-      api.makeCacheRequest(blogServer + '/blog/' + id, 'GET').
+      api.makeCacheRequest(blogServer + '/' + id, 'GET').
         then((data) => {
           new View.detail({
             model: data
