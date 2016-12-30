@@ -126,8 +126,18 @@ module.exports = {
       });
 
       // this.fields.account_number.required = true;
-      this.fields.account_number_re = {};
+      this.fields.account_number = _.extend(this.fields.account_number, {
+        type: 'password',
+        fn: function(value, attr, fn, model, computed) {
+          if (this.account_number != this.account_number_re)
+            throw `Account number fields don't match`;
+        },
+      });
 
+      this.model.account_number_re = this.model.account_number;
+      this.fields.account_number_re = {
+        type: 'password',
+      };
       this.labels = {
         country: 'Country',
         street_address_1: 'Street address 1',
