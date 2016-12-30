@@ -497,24 +497,19 @@ section.formc-review
             tbody
               each v,k in values.formc.team_members
                 if v.role[0] == 1
-                  if v.experiences
-                    each v1,k1 in v.experiences
-                      tr
-                        td.text-xs-center
-                          +frField('formc.team_members[' + k + '].first_name', 'text')
-                          br
-                          +frField('formc.team_members[' + k + '].last_name', 'text')
-                        td.text-xs-center
-                          +frField('formc.team_members[' + k + '].experiences[' + k1 + '].start_date_of_service', 'text')
-                          br
-                          +frField('formc.team_members[' + k + '].experiences[' + k1 + '].end_date_of_service', 'text')
-                        td.text-xs-center
-                          +frField('formc.team_members[' + k + '].principal_occupation', 'text')
-                          br
-                          +frField('formc.team_members[' + k + '].experiences[' + k1 + '].employer', 'text')
-                          br
-                          +frField('formc.team_members[' + k + '].experiences[' + k1 + '].responsibilities', 'text')
-            
+                  tr
+                    td.text-xs-center
+                      +frField('formc.team_members[' + k + '].first_name', 'text')
+                      br
+                      +frField('formc.team_members[' + k + '].last_name', 'text')
+                    td.text-xs-center
+                      +frField('formc.team_members[' + k + '].board_service_start_date', 'text')
+                    td.text-xs-center
+                      +frField('formc.team_members[' + k + '].principal_occupation', 'text')
+                      br
+                      +frField('formc.team_members[' + k + '].employer_principal_businesss', 'text')
+                      br
+                      +frField('formc.team_members[' + k + '].employer_start_date', 'text')
 
       // page 7
       section.page-formc-review.m-t-1
@@ -852,35 +847,63 @@ section.formc-review
                   +frField('campaign.minimum_raise', 'money')
                 td(colspan=2).text-xs-center
                   +frField('campaign.maximum_raise', 'money')
+              - var minSum = 0, minP = 0,  maxSum = 0, maxP = 0;
               for v,k in values.formc.less_offering_express
                 tr
                   td.text-xs-center
                     +frField('formc.less_offering_express[' + k + '].title', 'text')
                   td.text-xs-center
                     +frField('formc.less_offering_express[' + k + '].min', 'text')
+                    - minSum += values.formc.less_offering_express[k].min
                   td.text-xs-center
                     | #{ ((parseFloat(v.min) * 100) / values.campaign.minimum_raise).toFixed(2) }%
+                    - minP += ((parseFloat(v.min) * 100) / values.campaign.minimum_raise)
                   td.text-xs-center
                     +frField('formc.less_offering_express[' + k + '].max', 'text')
+                    - maxSum += values.formc.less_offering_express[k].max
                   td.text-xs-center
                     | #{ ((parseFloat(v.max) * 100) / values.campaign.maximum_raise).toFixed(2) }%
+                    - maxP += ((parseFloat(v.max) * 100) / values.campaign.maximum_raise)
               tr
                 td.border-t-n.p-l-r-20
                   .pull-left.font-weight-bold Use of Net Proceeds
-                td.border-b-t-none
-                td.border-b-t-none
+                td.text-xs-center
+                  | #{ formatHelper.formatPrice(minSum) }
+                td.text-xs-center
+                  | #{ minP.toFixed(2) }%
+                td.text-xs-center
+                  | #{ formatHelper.formatPrice(maxSum) }
+                td.text-xs-center
+                  | #{ maxP.toFixed(2) }%
+
+              - var minSum = 0, minP = 0,  maxSum = 0, maxP = 0;
               for v,k in values.formc.use_of_net_proceeds
                 tr
                   td.text-xs-center
                     +frField('formc.use_of_net_proceeds[' + k + '].title', 'text')
                   td.text-xs-center
                     +frField('formc.use_of_net_proceeds[' + k + '].min', 'text')
+                    - minSum += values.formc.use_of_net_proceeds[k].min
                   td.text-xs-center
                     | #{ ((parseFloat(v.min) * 100) / values.campaign.minimum_raise).toFixed(2) }%
+                    - minP += ((parseFloat(v.min) * 100) / values.campaign.minimum_raise)
                   td.text-xs-center
                     +frField('formc.use_of_net_proceeds[' + k + '].max', 'text')
+                    - maxSum += values.formc.use_of_net_proceeds[k].max
                   td.text-xs-center
                     | #{ ((parseFloat(v.max) * 100) / values.campaign.maximum_raise).toFixed(2) }%
+                    - maxP += ((parseFloat(v.max) * 100) / values.campaign.maximum_raise)
+              tr
+                td.border-t-n.p-l-r-20
+                  .pull-left.font-weight-bold Total Use of Net Proceeds
+                td.text-xs-center
+                  | #{ formatHelper.formatPrice(minSum) }
+                td.text-xs-center
+                  | #{ minP.toFixed(2) }%
+                td.text-xs-center
+                  | #{ formatHelper.formatPrice(maxSum) }
+                td.text-xs-center
+                  | #{ maxP.toFixed(2) }%
 
       // page 18
       section.page-formc-review.m-t-1
@@ -1415,6 +1438,7 @@ section.formc-review
                             td
                               +frField('formc.team_members[' + k + '].experiences[' + k1 + '].end_date_of_service', 'text')
               if v.positions && v.positions.length > 0
+                h4 Previously held positions with the issuer
                 .table-responsive.m-t-0
                   table.table.table-bordered
                     theader
