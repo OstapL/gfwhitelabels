@@ -401,7 +401,7 @@ module.exports = {
       $('#content').scrollTo();
 
       //switch to financial info tab
-      this.$('.profile-tabs a[href="#financial_info"]').tab('show');
+      // this.$('.profile-tabs a[href="#financial_info"]').tab('show');
     },
 
   }, helpers.phone.methods, helpers.dropzone.methods, helpers.yesNo.methods)),
