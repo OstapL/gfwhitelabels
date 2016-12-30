@@ -108,15 +108,11 @@ section.create-company-team-add.container
                   td.text-xl-center &nbsp;
             each v,k in values.team_members
               - v.title = v.title ? v.title : [];
-              if (v.title[0] != 1 && v.title[0] != 2 && v.title[0] != 5)
+              if (v.role.indexOf('0') != -11 && v.role.indexOf('1') != -1)
                 tr
                   td 
-                    if v.title[0]
-                      each r in v.title
-                        | #{ titles[r] } 
-                    else
-                      each r in v.role
-                        | #{ roles[r] } 
+                    each r in v.role
+                      | #{ roles[r] },
                   td.text-xs-center #{ v.first_name + ' ' + v.last_name }
                   +isInvited(v)
                   td.text-xl-center
