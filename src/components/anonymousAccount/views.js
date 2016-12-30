@@ -164,7 +164,7 @@ module.exports = {
     urlRoot: authServer + '/rest-auth/login',
     template: require('./templates/popupLogin.pug'),
     events: {
-      'click #sign-in-form .btn-login': 'signinSubmit',
+      'submit #sign-in-form': 'signinSubmit',
       'click #sign-in-form .reset-password-link': 'resetPassword',
 
       'submit #sign-up-form': 'signupSubmit',
@@ -292,14 +292,13 @@ module.exports = {
     },
 
     signupSubmit(e) {
-      console.log('signup submit');
-      this.urlRoot = authServer + '/rest-auth/registration';
+      this.urlRoot = `${authServer}/rest-auth/registration`;
       let data = $(e.target).closest('form').serializeJSON({ useIntKeysAsArrayIndex: true });
       api.submitAction.call(this, e, data);
     },
 
     signinSubmit(e) {
-      console.log('signin submit');
+      this.urlRoot = `${authServer}/rest-auth/login`;
       let data = $(e.target).closest('form').serializeJSON({ useIntKeysAsArrayIndex: true });
       data.checkbox1 = 1;
       api.submitAction.call(this, e, data);
