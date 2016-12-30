@@ -445,5 +445,6 @@ $('body').on('click', 'a', function (event) {
       app.trigger('userReady');
       app.trigger('menuReady');
     }
+    app.runGoogleAnalytics(global.googleAnalyticsId);
   }
 });
