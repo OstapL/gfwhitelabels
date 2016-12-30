@@ -130,8 +130,15 @@ mixin menu(currentSection, currentStep)
             .col-lg-12.text-xs-center
               .row
                 button(type="button").btn.btn-secondary.text-uppercase.m-t-2.onPreview preview
-              .row
-                button(type="button").btn.btn-primary.text-uppercase.m-t-2.submit_form submit campaign
+              if app.user.company.is_approved == 0
+                .row
+                  button(type="button").btn.btn-primary.text-uppercase.m-t-2.submit_form submit campaign
+              else if app.user.company.is_approved != 5 
+                .row
+                  button(type="button").btn.btn-primary.text-uppercase.m-t-2.submit_form One more submit campaign
+              else
+                .row
+                  a(href="/formc/" + app.user.formc.id + "/introduction").btn.btn-primary.text-uppercase.m-t-2 Open Form C
         
       .row
         .education-link-wrap.m-b-3
