@@ -86,6 +86,7 @@ let exports = {
     if(app.user.company.is_approved < 1) {
       api.makeRequest(raiseCapitalServer + '/company/' + e.target.dataset.companyid + '/post-for-review', 'PUT')
         .then((data) => {
+          app.user.company.is_approved = 1;
           $('#company_publish_confirm').modal('hide');
           setTimeout(() => {
             app.routers.navigate(

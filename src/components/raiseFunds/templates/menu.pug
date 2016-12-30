@@ -1,20 +1,20 @@
 mixin getCompanyUrl(id, section, currentStep, step, name)
-    - var prefix = '/' + section + '/';
-    if id || currentStep == step
-      a(
-          href='/' + section + '/' + id + '/' + step
-          id="menu_" + section.substr(0, 1) + "_" + step
-          class="list-group-item list-group-item-action " + (currentStep == step ? 'active' : '') + 
-          ((section == 'formc' && (values.is_paid == false || values.is_approved == false) ) ? 'disabled' : '')) #{ name }
-        if step == 'company' && values.id
-          .icon-check
-            i.fa.fa-check-circle-o
-    else
-        a(
-          href="#"
-          id="menu_f_" + step
-          class="list-group-item list-group-item-action disabled" 
-        ) #{ name }
+  if id || currentStep == step
+    -
+      var linkHref = '/' + section + '/' + id + '/' + step;
+      var linkId = 'menu_' + section.substr(0, 1) + '_' + step;
+      var activeClass = currentStep == step ? 'active ' : '',
+          disabledClass = (section == 'formc' && (!values.is_paid || !values.is_approved)) ? 'disabled ' : '';
+      var linkClass = 'list-group-item list-group-item-action ' + activeClass + disabledClass;
+
+    a(href=linkHref id=linkId class=linkClass) #{ name }
+      if step == 'company' && values.id
+        .icon-check
+          i.fa.fa-check-circle-o
+  else
+    -
+      var linkId = 'menu_f_' + step;
+    a(href="#" id=linkId class="list-group-item list-group-item-action disabled") #{ name }
 
 mixin getRiskFactorsItem(id, section, currentStep, step, name)
   - var prefix = '/' + section + '/';
@@ -30,7 +30,8 @@ mixin getRiskFactorsItem(id, section, currentStep, step, name)
         href="#"
         class="list-group-item list-group-item-action disabled" 
       ) #{ name }
-        
+
+
 mixin menu(currentSection, currentStep)
     .col-lg-4.col-xl-3.create_compaign
       .jumbotron.jumbotron-fluid.row
@@ -119,7 +120,7 @@ mixin menu(currentSection, currentStep)
                     +getCompanyUrl(formcId || values.id, 'formc', currentStep, 'financial-condition', 'Financial Condition')
                     +getCompanyUrl(formcId || values.id, 'formc', currentStep, 'outstanding-security', 'Outstanding Security')
                     +getCompanyUrl(formcId || values.id, 'formc', currentStep, 'background-check', 'Background Check')
-      if currentSection == 'formc' || values.is_approved == true
+      if currentSection == 'formc'
         .row
           .col-lg-12.text-xs-center
             .row
@@ -130,11 +131,18 @@ mixin menu(currentSection, currentStep)
             .col-lg-12.text-xs-center
               .row
                 button(type="button").btn.btn-secondary.text-uppercase.m-t-2.onPreview preview
-              .row
-                button(type="button").btn.btn-primary.text-uppercase.m-t-2.submit_form submit campaign
+              if app.user.company.is_approved == 0
+                .row
+                  button(type="button").btn.btn-primary.text-uppercase.m-t-2.submit_form submit campaign
+              else if app.user.company.is_approved != 5 
+                .row
+                  button.btn.btn-primary.text-uppercase.m-t-2.disabled Campaign in review
+              else
+                .row
+                  a(href="/formc/" + app.user.formc.id + "/introduction").btn.btn-primary.text-uppercase.m-t-2 Open Form C
         
       .row
-        .education-link-wrap
+        .education-link-wrap.m-b-3
           .jumbotron.jumbotron-fluid
             h4.font-weight-bold.text-uppercase
               i.fa.fa-book

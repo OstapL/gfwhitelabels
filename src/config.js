@@ -33,4 +33,5 @@ global.googleMapKey = "AIzaSyBpCl9-7bkVISZ0o-AaFCsKzZwGAxalkZU";
 global.stripeKey = "pk_test_Z7YAhlyPtnW7bpd8LJUHTSou";
 
 // comming soon text
-global.commingSoon = 1
+global.commingSoon = 1;
+global.googleAnalyticsId = 'GTM-TFQMMJB';
