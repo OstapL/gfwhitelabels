@@ -137,6 +137,10 @@ module.exports = {
       this.model.account_number_re = this.model.account_number;
       this.fields.account_number_re = {
         type: 'password',
+        fn: function(value, attr, fn, model, computed) {
+          if (this.account_number != this.account_number_re)
+            throw `Account number fields don't match`;
+        },
       };
       this.labels = {
         country: 'Country',
