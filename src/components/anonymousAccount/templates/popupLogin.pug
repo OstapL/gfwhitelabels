@@ -11,7 +11,7 @@ div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true
             | Log In
       .modal-body
         .container.form-section
-          form.signup-form.col-lg-10.offset-lg-1
+          form#sign-up-form.signup-form.col-lg-10.offset-lg-1
             .form-group.row.clearfix.required
               input(type="text"
               placeholder="First name"
@@ -75,7 +75,7 @@ div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true
             a(href="#").link-3.link-show-sign-up Sign up
         .modal-body
           .form-section
-            form.login-form.col-lg-10.offset-lg-1
+            form#sign-in-form.login-form.col-lg-10.offset-lg-1
               .col-lg-12
                 .form-group.row.clearfix.required
                   input(type="email"
@@ -87,10 +87,10 @@ div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true
                   name="password").form-control
               .col-lg-12
                 .row.forgot
-                  a(href="/account/reset").link-3 Forgot your password?
+                  a(href="#").reset-password-link.link-3 Forgot your password?
               .col-lg-12
                 .row.text-sm-center.text-xs-center
-                  button(type="submit").btn.btn-primary.text-uppercase Log in
+                  button(type="submit").btn.btn-primary.btn-login.text-uppercase Log in
             //-
               .col-lg-12.border-bottom.or
                 span or
