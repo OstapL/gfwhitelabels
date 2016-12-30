@@ -471,7 +471,7 @@ section.formc-review
                 th.text-xs-center.w-40 Title and Responsibilities
             tbody
               each v,k in values.formc.team_members
-                if v.role[0] == 2
+                if v.role.indexOf('2') != -1 
                   tr
                     td.text-xs-center
                       +frField('formc.team_members[' + k + '].first_name', 'text')
@@ -496,7 +496,7 @@ section.formc-review
                 th.text-xs-center.w-40 Principal Occupation + Employer & Start Date
             tbody
               each v,k in values.formc.team_members
-                if v.role[0] == 1
+                if v.role.indexOf('1') != -1
                   tr
                     td.text-xs-center
                       +frField('formc.team_members[' + k + '].first_name', 'text')
@@ -531,7 +531,7 @@ section.formc-review
                 th.text-xs-center % of Voting Power
             tbody
               each v,k in values.formc.team_members
-                if v.role[0] == 0
+                if v.role.indexOf('0') != -1
                   tr
                     td.text-xs-center
                       +frField('formc.team_members[' + k + '].first_name', 'text')
@@ -1410,7 +1410,7 @@ section.formc-review
         p.pb10.text-indent Employment information from previous employers over the last three years for each of the Company’s officers is as follows:
         p.pb10
           each v,k in values.formc.team_members
-            if v.role[0] == 2
+            if v.role.indexOf('2') != -1
               if v.experiences && v.experiences.length > 0
                 +frField('formc.team_members[' + k + '].first_name', 'text')
                 +frField('formc.team_members[' + k + '].last_name', 'text')
@@ -1459,7 +1459,7 @@ section.formc-review
         p.pb10.text-indent Employment information from previous employers over the last three years for each of the Company’s directors is as follows:
         p.pb10
           each v,k in values.formc.team_members
-            if v.role[0] == 1
+            if v.role.indexOf('1') != -1
               if v.experiences && v.experiences.length > 0
                 +frField('formc.team_members[' + k + '].first_name', 'text')
                 +frField('formc.team_members[' + k + '].last_name', 'text')
