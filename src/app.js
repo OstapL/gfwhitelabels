@@ -222,6 +222,15 @@ let app = {
     });
     return (thumb ? thumb.url : _default || '/img/default/default.png')
   },
+
+  runGoogleAnalytics(id) {
+    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl+ '&gtm_auth=Gp064W3aSXcXjsClBYV7QA&gtm_preview=env-2&gtm_cookies_win=x';f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer',id);
+  },
+
 };
 
 // Что-то пахнет говнецом
@@ -236,6 +245,7 @@ app.routers = require('routers');
 app.fields = require('fields');
 app.user.load();
 app.trigger('userReady');
+app.runGoogleAnalytics(global.googleAnalyticsId);
 
 app.breadcrumbs = function(title, subtitle, data) {
   const template = require('templates/breadcrumbs.pug');
