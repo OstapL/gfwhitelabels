@@ -58,7 +58,7 @@
             section.form-section.clearfix
               form(method="post" action="").form
                 .form-body.clearfix
-                  .col-xs-12
+                  .col-xs-12.p-xs-0
                     section.right-block
                       .form-group.row.required
                         label.col-xl-3.text-lg-right.text-xs-left Legal Name
@@ -216,7 +216,7 @@
               form(method="post" action="")
                 .form-body.clearfix
                   
-                  .col-xl-12
+                  .col-xl-12.p-xs-0
                     section.right-block
                       .form-group.row
                         .col-lg-12
@@ -310,7 +310,7 @@
                               type="checkbox"
                               checked=!user.accredited_investor_choice
                             ).col-xl-1.investor-risk-agree#not-qualify
-                            span.font-weight-normal.col-xl-11.p-l-0.d-block I do not qualify.
+                            span.font-weight-normal.col-xl-11.p-l-0 I do not qualify.
                             input(
                               type="hidden"
                               name="accredited_investor_choice"
