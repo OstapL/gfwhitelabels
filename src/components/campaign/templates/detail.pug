@@ -610,7 +610,7 @@ section
     if values.campaign.faq && Object.keys(values.campaign.faq).length > 0 && values.campaign.faq[0].question != '' 
       .container
         h2#faq.col-lg-12.dosis.text-uppercase.text-lg-center.text-xs-center.campaign-subheading FAQ
-        .col-lg-8.offset-lg-2
+        .col-lg-8.offset-lg-2.p-xs-0
           div(role="tablist" aria-multiselectable="true").accordion
             - var counter = 0
             each v,k in values.campaign.faq
