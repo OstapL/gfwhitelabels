@@ -324,11 +324,11 @@ section.formc-review
           p.pb10.text-indent This offering material, including all the exhibits attached hereto (collectively, the 
             u “Material”
             |  ) describes the terms relating to an offer and sale of debt securities to qualified investors consistent with the rules and regulations of Regulation Crowdfunding (17 CFR §227). 
-            +frField('company.issuer_legal_name')
+            +frField('company.name')
             |  , a 
-            +frField('company.founding_state')
+            +frField('company.founding_state', 'select')
             | !{' '}
-            +frField('company.corporate_structure')
+            +frField('company.corporate_structure', 'select')
             |  (the “Company” also referred to as an “issuer"), is offering a Revenue Share Agreement similar to a promissory note in the form attached hereto as Exhibit D (each, a “Note” and collectively, the “
             u Notes
             | ”) minimum investment of 
@@ -607,7 +607,9 @@ section.formc-review
           if values.campaign.security_type == 0
             | Each Offering is listed on the Platform for a minimum of twenty-one (21) days and the Offering period may extend beyond such twenty-one days if set forth in the Material or each investor is properly notified. During that period (or later if the investor is notified of a change), the Company must aggregate investor commitments that are equal to or greater than the Offering minimum target amount. The process generally involves the following steps: (1) an investor registered on the Platform identifies a desired offering and communicates an investment commitment to purchase securities in such offering by completing a subscription agreement; (2) the Intermediary confirms the investor’s eligibility to participate in the Offering; (3) the investor transfers the funds required to purchase the offered securities to the Intermediary’s designated third-party FDIC insured depository (4) once the targeted minimum offering amount is achieved or exceeded through investor commitments collectively, the issuer would be able to close the transaction on the original target closing date or an earlier date with at least five business days prior notice to the investors; and (5) the subscription agreement will be countersigned by the issuer; and (6) the funds would be released by the third-party depository to the issuer, less any required fees sent to the Intermediary, and the issuer would issue the securities to the investor.
           else
-            | Each Offering is listed on the Platform for a minimum of twenty-one (21) days and the Offering period may extend beyond such twenty-one days if set forth in the Material and each investor is properly notified.  During that period (or later if the investor is notified of a change), the Company must aggregate investor commitments that are equal to or greater than the Offering’s   minimum target amount.  The process generally involves the following steps: (1) an investor registered on the Platform identifies a desired offering and communicates an investment commitment to purchase securities in such offering by completing a subscription agreement; (2) the Intermediary confirms the investor’s eligibility to participate in the Offering and then has the subscription agreement countersigned by the issuer; (3) the investor transfers the funds required to purchase the offered securities to the Intermediary’s designated escrow agent; (4) once the targeted minimum offering amount is achieved or exceeded through investor
+            | Each Offering is listed on the Platform for a minimum of twenty-one (21) days and the Offering period may extend beyond such twenty-one days if set forth in the Material and each investor is properly notified.  During that period (or later if the investor is notified of a change), the Company must aggregate investor commitments that are equal to or greater than the Offering’s   minimum target amount.  The process generally involves the following steps: (1) an investor registered on
+            | the Platform identifies a desired offering and communicates an investment commitment to purchase securities in such offering by completing a subscription agreement; (2) the Intermediary confirms the investor’s eligibility to participate in the Offering and then has the subscription agreement countersigned by the issuer; (3) the investor transfers the funds required to purchase the offered securities to the Intermediary’s designated escrow agent; (4) once the targeted minimum
+            | offering amount is achieved or exceeded through investor  commitments collectively, the issuer would be able to close the transaction on the original target closing date or an earlier date with at least five business days prior notice to the investors; and (5) the funds would be released by the escrow agent to the issuer, less any required fees sent to the intermediary, and the issuer would issue the securities to the investor
 
       // page 10
       section.page-formc-review.m-t-1
@@ -801,8 +803,8 @@ section.formc-review
             +frField('company.name', 'text')
             |  as Issuer
         if values.campaign.valuation_determination == '0'
-          p.pb10.text-indent The price of each Share was determined by the Company in good faith based on its own assessment of its current position and the benchmarking reference range determined by the use of certain business calculators provided by the Intermediary.  Such calculators use the data provided by the Company and do not reflect any advice or recommendation on the part of the Intermediary.  In working with the calculators, the Company considered its current capital structure, including current debt and cash, and assembled an income statement from the last twelve months including an estimate of net income and EBITDA.  The Company also made projections for the next twelve months along with a similar estimate of net income and EBITDA.
-          p.pb10.text-indent The Company then looked at potential peers that trade in public markets and considered a variety of metrics, including but not limited to Price/Sales, Enterprise Value/EBITDA and Price/Equity.  The Company applied a 20% liquidity discount to publically traded peers and utilized an average of different valuation metrics to derive a benchmarking range for the Company’s ultimate value.
+          // p.pb10.text-indent The price of each Share was determined by the Company in good faith based on its own assessment of its current position and the benchmarking reference range determined by the use of certain business calculators provided by the Intermediary.  Such calculators use the data provided by the Company and do not reflect any advice or recommendation on the part of the Intermediary.  In working with the calculators, the Company considered its current capital structure, including current debt and cash, and assembled an income statement from the last twelve months including an estimate of net income and EBITDA.  The Company also made projections for the next twelve months along with a similar estimate of net income and EBITDA.
+          // p.pb10.text-indent The Company then looked at potential peers that trade in public markets and considered a variety of metrics, including but not limited to Price/Sales, Enterprise Value/EBITDA and Price/Equity.  The Company applied a 20% liquidity discount to publically traded peers and utilized an average of different valuation metrics to derive a benchmarking range for the Company’s ultimate value.
         if values.campaign.valuation_determination == '1'
           p.pb10.text-indent The price of each Share was determined by the Company in good faith based on its own assessment of its current position and by taking a variety of quantitative and qualitative considerations into account.  Quantitatively, the Company considered revenue and operating profit, both one year from now and five years from now along with an analysis of the Company’s existing capital structure and available cash.  The Company then assessed where publicly traded peer were being valued in the markets.  After considering several different valuation metrics, including Price/Sales and Enterprise Value/EBIT, the Company discounted its valuation by its cost of capital.  The, for qualitative factors, the Company considered the type of industry that it is in and applied a discount rate appropriate for such industry.  Finally, the Company applied a liquidity discount which resulted in a post-money valuation which takes into consideration the money projected to be raised in order to derive the valuation contained in this Material.
 
@@ -842,7 +844,7 @@ section.formc-review
             tbody
               tr
                 td.border-t-n.p-l-r-20
-                  .pull-left.font-weight-bold Less: Offering Expenses
+                  .pull-left.font-weight-bold Total Proceeds
                 td(colspan=2).text-xs-center
                   +frField('campaign.minimum_raise', 'money')
                 td(colspan=2).text-xs-center
@@ -866,7 +868,7 @@ section.formc-review
                     - maxP += ((parseFloat(v.max) * 100) / values.campaign.maximum_raise)
               tr
                 td.border-t-n.p-l-r-20
-                  .pull-left.font-weight-bold Use of Net Proceeds
+                  .pull-left.font-weight-bold Less: Offering Expenses
                 td.text-xs-center
                   | #{ formatHelper.formatPrice(minSum) }
                 td.text-xs-center
@@ -918,10 +920,8 @@ section.formc-review
           u Prior Operating History
         if values.formc.financials_condition_choice == 1
           p.pb10.text-indent The following describes the operating history of the issuer with a focus on whether historical results and cash flows are representative of what investors should expect in the future. 
-            +frField('formc.financials_condition_yes', 'textarea')
         else
           p.pb10.text-indent Because the issuer has limited operating history, the following provides information on the issuer’s financial milestones and operational, liquidity and other challenges. 
-            +frField('formc.financials_condition_no', 'textarea')
 
         if values.formc.sold_securities_data.length > 1
           .table-responsive.m-t-1
