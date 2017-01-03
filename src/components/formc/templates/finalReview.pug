@@ -324,11 +324,11 @@ section.formc-review
           p.pb10.text-indent This offering material, including all the exhibits attached hereto (collectively, the 
             u “Material”
             |  ) describes the terms relating to an offer and sale of debt securities to qualified investors consistent with the rules and regulations of Regulation Crowdfunding (17 CFR §227). 
-            +frField('company.issuer_legal_name')
+            +frField('company.name')
             |  , a 
-            +frField('company.founding_state')
+            +frField('company.founding_state', 'select')
             | !{' '}
-            +frField('company.corporate_structure')
+            +frField('company.corporate_structure', 'select')
             |  (the “Company” also referred to as an “issuer"), is offering a Revenue Share Agreement similar to a promissory note in the form attached hereto as Exhibit D (each, a “Note” and collectively, the “
             u Notes
             | ”) minimum investment of 
