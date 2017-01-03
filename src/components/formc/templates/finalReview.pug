@@ -842,7 +842,7 @@ section.formc-review
             tbody
               tr
                 td.border-t-n.p-l-r-20
-                  .pull-left.font-weight-bold Less: Offering Expenses
+                  .pull-left.font-weight-bold Total Proceeds
                 td(colspan=2).text-xs-center
                   +frField('campaign.minimum_raise', 'money')
                 td(colspan=2).text-xs-center
@@ -866,7 +866,7 @@ section.formc-review
                     - maxP += ((parseFloat(v.max) * 100) / values.campaign.maximum_raise)
               tr
                 td.border-t-n.p-l-r-20
-                  .pull-left.font-weight-bold Use of Net Proceeds
+                  .pull-left.font-weight-bold Less: Offering Expenses
                 td.text-xs-center
                   | #{ formatHelper.formatPrice(minSum) }
                 td.text-xs-center
