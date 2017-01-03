@@ -326,12 +326,12 @@ module.exports = {
       let $submitBtn = $target.find('#pay-btn');
       $submitBtn.prop('disabled', true);
 
-      var data = $target.serializeJSON({ checkboxUncheckedValue: 'false', useIntKeysAsArrayIndex: true });
+      var data = $target.serializeJSON({ checkboxUncheckedValue: 0, useIntKeysAsArrayIndex: true });
 
       // ToDo
       // Fix this
-      if (data.failed_to_comply_choice == false) {
-        data.failed_to_comply = 'Please explain.';
+      if (data.certify == 0) {
+        delete data.certify;
       }
 
       api.submitAction.call(this, e, data);
