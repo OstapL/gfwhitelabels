@@ -55,13 +55,28 @@ module.exports = {
           data.fiscal_prior_group_data.length > 0 &&
           data.sold_securities_data.length == 2 && 
           (
+           data.sold_securities_data.length == 2 &&
+           data.sold_securities_data[0].hasOwnProperty('total_assets') == 1 &&
+           data.sold_securities_data[1].hasOwnProperty('total_assets') == 1 &&
+           data.sold_securities_data[0].hasOwnProperty('cash_and_equivalents') == 1 &&
+           data.sold_securities_data[1].hasOwnProperty('cash_and_equivalents') == 1 &&
+           data.sold_securities_data[0].hasOwnProperty('account_receivable') == 1 &&
+           data.sold_securities_data[1].hasOwnProperty('account_receivable') == 1 &&
+           data.sold_securities_data[0].hasOwnProperty('short_term_debt') == 1 &&
+           data.sold_securities_data[1].hasOwnProperty('short_term_debt') == 1 &&
+           data.sold_securities_data[0].hasOwnProperty('long_term_debt') == 1 &&
+           data.sold_securities_data[1].hasOwnProperty('long_term_debt') == 1 &&
+           data.sold_securities_data[0].hasOwnProperty('revenues_sales') == 1 &&
+           data.sold_securities_data[1].hasOwnProperty('revenues_sales') == 1 &&
+           data.sold_securities_data[0].hasOwnProperty('cost_of_goods_sold') == 1 &&
+           data.sold_securities_data[1].hasOwnProperty('cost_of_goods_sold') == 1 &&
            (app.user.campaign.maximum_raise <= 100000 &&
-           data.sold_securities_data[0]['total_income'] != '' &&
-           data.sold_securities_data[0]['taxable_income'] != '' &&
-           data.sold_securities_data[0]['total_tax'] != '' &&
-           data.sold_securities_data[1]['total_income'] != '' &&
-           data.sold_securities_data[1]['taxable_income'] != '' &&
-           data.sold_securities_data[1]['total_tax'] != '') ||
+           data.sold_securities_data[0].hasOwnProperty('total_income') == 1 &&
+           data.sold_securities_data[0].hasOwnProperty('taxable_income') == 1 &&
+           data.sold_securities_data[0].hasOwnProperty('total_tax') == 1 &&
+           data.sold_securities_data[1].hasOwnProperty('total_income') == 1 &&
+           data.sold_securities_data[1].hasOwnProperty('taxable_income') == 1 &&
+           data.sold_securities_data[1].hasOwnProperty('total_tax') == 1) ||
            app.user.campaign.maximum_raise > 100000
           ),
       'outstanding-security':
