@@ -381,6 +381,9 @@ module.exports = {
     },
 
     _success(data) {
+      app.routers.navigate("/", {trigger: true});
+      return 0;
+
       if ($("#financial_info").hasClass("active")) {
         app.routers.navigate("/", {trigger: true});
         return;
