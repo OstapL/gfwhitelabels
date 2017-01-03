@@ -510,7 +510,7 @@ module.exports = {
     },
 
     getSuccessUrl() {
-      return '/account/profile';
+      return '/';
     },
 
     confirmMembership(e) {
