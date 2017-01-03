@@ -661,8 +661,8 @@ section.formc-review
             | an escrow account.
           |  These fees are one-time fees and are not dependent on the success of the Offering. In total, the Intermediary will receive, directly or indirectly, a dollar amount equal to the sum of all the following: (a) a transaction fee equal to 
           | #{ fees.trans_percent }% of the total amount of monies raised in the Offering for the purchase of securities offered by the Company, payable upon success, (b) a registration and processing fee equal to 
-          | #{ fees.registration_fee } payable upon registration, and (c) a participation fee equal to 
-          | #{ fees.fees_to_investor } committed to by the investor.
+          | $#{ fees.registration_fee } payable upon registration, and (c) a participation fee equal to 
+          | $#{ fees.fees_to_investor } committed to by the investor.
           if values.campaign.security_type == 0
             |  Participation fees that are attributable to each investor are not included in any calculation of total Offering amount.
 
