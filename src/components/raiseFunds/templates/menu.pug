@@ -4,7 +4,7 @@ mixin getCompanyUrl(id, section, currentStep, step, name)
       var linkHref = '/' + section + '/' + id + '/' + step;
       var linkId = 'menu_' + section.substr(0, 1) + '_' + step;
       var activeClass = currentStep == step ? 'active ' : '',
-          disabledClass = (section == 'formc' && (!values.is_paid || !values.is_approved)) ? 'disabled ' : '';
+          disabledClass = (section == 'formc' && (!app.user.formc.is_paid || app.user.company.is_approved != 5)) ? 'disabled ' : '';
       var linkClass = 'list-group-item list-group-item-action ' + activeClass + disabledClass;
 
     a(href=linkHref id=linkId class=linkClass) #{ name }
