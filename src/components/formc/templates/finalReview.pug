@@ -984,18 +984,18 @@ section.formc-review
                     td.text-xs-center
                       +frField('formc.sold_securities_data[1].total_income', 'money')
                   tr
-                    td Taxes Paid
+                    td Tabable income
+                    td.text-xs-center
+                      +frField('formc.sold_securities_data[0].taxable_income', 'money')
+                    td.text-xs-center
+                      +frField('formc.sold_securities_data[1].taxable_income', 'money')
+                  tr
+                    td Total tax
                     td.text-xs-center
                       +frField('formc.sold_securities_data[0].total_tax', 'money')
                     td.text-xs-center
                       +frField('formc.sold_securities_data[1].total_tax', 'money')
 
-                  tr
-                    td Net Income
-                    td.text-xs-center
-                      +frField('formc.sold_securities_data[0].taxable_income', 'money')
-                    td.text-xs-center
-                      +frField('formc.sold_securities_data[1].taxable_income', 'money')
 
       // page 19
       section.page-formc-review.m-t-1
