@@ -29,6 +29,7 @@ module.exports = {
   },
 
   makeRequest(url, type, data, options) {
+    options = options || {};
     // We can pass type as a string
     // or we can pass dict with type and data
     if (typeof type === 'object') {
@@ -55,7 +56,7 @@ module.exports = {
       type: type,
       data: data,
       dataType: 'json',
-      contentType: "application/x-www-form-urlencoded",// "application/json; charset=utf-8",
+      contentType: "application/x-www-form-urlencoded",
       beforeSend: function (xhr) {
         let token = localStorage.getItem('token');
         if (token !== null && token !== '') {
