@@ -742,8 +742,16 @@ module.exports = {
       });
     },
 
+    getSignature () {
+      const investForm = document.forms.invest_form;
+      const inputSignature = investForm.elements['signature[full_name]'];
+      const signature = inputSignature.value;
+      return signature;
+    },
+
     copyToSignature(e) {
-      this.$('.signature').text($(e.target).val());
+      const signature = this.getSignature();
+      this.$('.signature').text(signature);
     },
 
     changePaymentType(e) {
@@ -792,7 +800,8 @@ module.exports = {
       const formData = this.getDocMetaData();
       const data = {
         type: 1,
-        esign: responseData.signature.full_name,
+        object_id: responseData.id,
+        esign: this.getSignature(),
         meta_data: formData,
         template: [
           this.getSubscriptionAgreementPath(),
@@ -800,7 +809,10 @@ module.exports = {
         ]
       };
 
-      $.post(reqUrl, data)
+      app.makeRequest(reqUrl, 'POST', data, {
+        contentType: 'application/json; charset=utf-8',
+        crossDomain: true,
+      })
       .done( () => {
         $('#content').scrollTo();
         this.undelegateEvents();

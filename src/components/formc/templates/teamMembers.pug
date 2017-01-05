@@ -108,19 +108,19 @@ section.create-company-team-add.container
                   td.text-xl-center &nbsp;
             each v,k in values.team_members
               - v.title = v.title ? v.title : [];
-              if (v.role.indexOf('0') != -11 && v.role.indexOf('1') != -1)
-                tr
-                  td 
-                    each r in v.role
-                      | #{ roles[r] },
-                  td.text-xs-center #{ v.first_name + ' ' + v.last_name }
-                  +isInvited(v)
-                  td.text-xl-center
-                    a(href="/formc/" + values.id + "/team-members/" + roles[v.role[0]].toLowerCase() + '/' + v.user_id).link-1
-                      i.fa.fa-pencil-square-o
-                  td.text-xl-center
-                    a(href="#" data-id=v.user_id data-role=roles[v.role]).link-1.delete-member
-                      i.fa.fa-times
+              for role,kk in v.role
+                if role != -1
+                  tr
+                    td 
+                      | #{ roles[role] }
+                    td.text-xs-center #{ v.first_name + ' ' + v.last_name }
+                    +isInvited(v)
+                    td.text-xl-center
+                      a(href="/formc/" + values.id + "/team-members/" + roles[role].toLowerCase() + '/' + v.user_id).link-1
+                        i.fa.fa-pencil-square-o
+                    td.text-xl-center
+                      a(href="#" data-id=v.user_id data-role=roles[v.role]).link-1.delete-member
+                        i.fa.fa-times
                 
 
       div(style="display: " +  (values.team_members.length >= 1 ? 'block' : 'none')).col-lg-12.pull-lg-right.p-r-0
