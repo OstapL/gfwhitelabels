@@ -482,7 +482,7 @@ module.exports = {
 
     openAgreement(e) {
       debugger;
-      const userId = app.user.get('id') || 81;
+      const userId = app.user.get('id');
       const objectId = e.target.dataset.objectId;
       const securityType = e.target.dataset.securityType;
       const subscriptionAgreementLink = userDocuments.getUserDocumentsByType(userId, objectId, securityType);
