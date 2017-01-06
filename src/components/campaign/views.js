@@ -1,6 +1,7 @@
 const formatHelper = require('helpers/formatHelper');
 const textHelper = require('helpers/textHelper');
 const companyFees = require('consts/companyFees.json');
+const typeOfDocuments = require('consts/typeOfDocuments.json');
 const usaStates = require('helpers/usaStates.js');
 
 const helpers = {
@@ -798,16 +799,19 @@ module.exports = {
       const reqUrl = global.esignServer + '/pdf-doc';
       const successRoute = this.getSuccessUrl(responseData);
       const formData = this.getDocMetaData();
-      const data = {
-        type: 1,
+      const subscriptionAgreementPath = this.getSubscriptionAgreementPath();
+      const participationAgreementPath = 'invest/participation_agreement.pdf';
+      const data = [{
+        type: typeOfDocuments[participationAgreementPath],
         object_id: responseData.id,
-        esign: this.getSignature(),
         meta_data: formData,
-        template: [
-          this.getSubscriptionAgreementPath(),
-          'invest/participation_agreement.pdf'
-        ]
-      };
+        template: participationAgreementPath
+      }, {
+        type: typeOfDocuments[subscriptionAgreementPath],
+        object_id: responseData.id,
+        meta_data: formData,
+        template: subscriptionAgreementPath
+      }];
 
       app.makeRequest(reqUrl, 'POST', data, {
         contentType: 'application/json; charset=utf-8',
@@ -886,6 +890,8 @@ module.exports = {
       const aggregate_inclusive_purchase = formData.total_amount.replace(/\D/g, '');
 
       return {
+        signature: this.getSignature(),
+
         fees_to_investor: companyFees.fees_to_investor,
         trans_percent: companyFees.trans_percent,
         registration_fee: companyFees.registration_fee,
