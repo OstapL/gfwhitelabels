@@ -1377,7 +1377,7 @@ section.formc-review
         if values.formc.business_plan_data.length > 0
           - 
             pug_html += app.fields.fileDropzone('business_plan_file_id', {
-              data: values.formc.business_plan_data, 
+              data: values.formc.business_plan_data[0], 
               schema: fields.formc.business_plan_file_id,
               label: 'Your business plan'
             })
