@@ -1,5 +1,6 @@
 .slider.slider-horizontal {
-	width:99.7%!important;
+	width:100%!important;
+	margin-bottom: 0px!important;
 
 	.slider-track {
 		height: 15px!important;
@@ -10,6 +11,7 @@
 	.tooltip.top {
 		margin-top: rem(20);
 		opacity: 1;
+		z-index: 1;
 
 		.tooltip-inner {
 			color: $black_text;
@@ -43,14 +45,35 @@
 
 		background: $btstr_slider_nandle_block_bg;
 	}
+	.slider-tick-label-container {
+		.slider-tick-label {
+			position: absolute;
+			top: -15px;
+			font-size: 11px;
+			color: $small-text;
+			margin-left: -15px!important;
+			text-align: left!important;
 
+		}
+		.slider-tick-label:first-child {
+			margin-left: 0px!important;
+
+		}
+		.slider-tick-label:last-child {
+			margin-left: -30px!important;
+			
+		}
+
+	}
+	
 
 	.slider-tick-container {
 		.slider-tick {
 
 			width: 1px;
-			margin-left: 0;
-
+			margin-left: 0px!important;
+			height: 15px;
+			top: 5px;
 			background: $btstr_slider_other_nandle_block_bg;
 			border-radius: 0;
 		}
@@ -65,3 +88,13 @@
 		// }
 	}
 }
+	.custom-annual-income {
+		.slider.slider-horizontal {
+		.slider-tick-label-container {
+			.slider-tick-label:last-child {
+				margin-left: -40px!important;
+			}
+		}
+	}
+	}
+

@@ -1,0 +1,56 @@
+
+mixin row(value, index)
+  div
+    .col-lg-12(data-index=index class=name + ' addSectionBlock')
+      .delete-section-container
+        a(href="#" data-section=name data-index=index).delete-sectionnew
+          i.fa.fa-times
+      | !{app.fields.nestedTextLabel(name, 'employer', value, index, attr.schema.employer)}
+      | !{app.fields.nestedTextLabel(name, 'title', value, index, {class1:'col-xl-3 col-lg-12 text-lg-left text-xl-right m-b-0 p-t-0',placeholder: 'Provide short description of the business'}, attr.schema.title)}
+      | !{app.fields.nestedTextLabel(name, 'responsibilities', value, index, {class1:'col-xl-3 col-lg-12 text-lg-left text-xl-right m-b-0 p-t-0'}, attr.schema.responsibilities)}
+
+      .row
+        .col-xl-6.col-lg-6.form-group
+          .row
+            label.col-xl-6.col-lg-12.text-xl-right.text-lg-left.p-l-2.p-l-lg-1.p-t-0.m-b-0.m-b-lg-1 Start Date of Service
+            .col-xl-6.col-lg-12
+              div(id=name + '__' + index + '__' + 'start_date_of_service').row
+                | !{app.fields.nestedDateMonth(name, 'start_date_of_service', value, index, {class1:'col-xl-6 col-lg-6 col-sm-6 col-xs-6 m-d-p-r-5'}, attr.schema.start_date_of_service)}
+                | !{app.fields.nestedDateYear(name, 'start_date_of_service', value, index, {class1:'col-xl-6 col-lg-6 col-sm-6 col-xs-6 m-d-p-l-5', placeholder: 'YYYY',}, attr.schema.start_date_of_service)}
+                
+              
+        .col-xl-6.col-lg-6.form-group
+          .row
+            label.col-xl-6.col-lg-12.text-xl-right.text-lg-left.p-l-3.p-l-lg-1.p-t-0.m-b-0.m-b-lg-1 End Date of Service
+            .col-xl-6.col-lg-12
+              div(id=name + '__' + index + '__' + 'end_date_of_service').row
+                | !{app.fields.nestedDateMonth(name, 'end_date_of_service', value, index, {class1:'col-xl-6 col-lg-6 col-sm-6 col-xs-6 m-d-p-r-5'}, attr.schema.end_date_of_service)}
+                | !{app.fields.nestedDateYear(name, 'end_date_of_service', value, index, {class1:'col-xl-6 col-lg-6 col-sm-6 col-xs-6 m-d-p-l-5', placeholder: 'YYYY',}, attr.schema.end_date_of_service)}
+                
+
+mixin run()
+
+  if first_run
+    h3.text-lg-center.text-xs-center.m-t-3.m-b-0 We Need Information for Last 3 Years
+    .row
+      p.font-weight-bold.col-lg-12.m-t-2.m-b-1.m-t-3 If you’ve been at your current employer fewer than 3 years, please provide additional information below:
+
+    div(class=(attr.row == 0 ? '' : 'row ') + name + '_block' + (attr.required == true ? ' required ' : ' ') + ' nested')
+      div(class=(attr.row == 0 ? '' : '') + name + '_container' + (attr.required == true ? ' required ' : ' ') + ' nested')
+
+        if values == null || values.length == 0 || Object.keys(values).length == 0 
+          +row({}, 0)
+
+        else
+          each value, index in values
+            +row(value, index)
+    .row.add-link
+      .col-xl-9.offset-xl-3
+        a(href="#" data-section=name data-comp='formc' data-template="experiences").link-2.add-sectionnew
+          i.fa.fa-plus
+          |  Add Work Experience
+
+  else
+    +row({}, index)
+
++run()

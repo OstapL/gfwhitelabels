@@ -8,9 +8,6 @@ select.form-control
 // стили общие, но есть дополнения которие используются в файле profile, invest
 
 .form-section// каждая форма будет в таком контейнере
-	.required
-		label
-			color: $black_bg
 	img
 		max-width: 100%// будет перенесен в файл общих стилей - использовать клас бутстрапа .img-fluid
 	.radio
@@ -28,7 +25,7 @@ select.form-control
 		@include calc-rem(14)
 
 		font-weight: 700
-		color: $small-text
+		color: $black_bg
 		padding-top: 6px 
 
 		&.thin-label 
@@ -57,31 +54,64 @@ select.form-control
 		i 
 	.border-dropzone
 		border: dashed 1px $small-text
-		max-height: 800px
+		display: inline-block
 		cursor: pointer
 		+mt(.2s)
 		&.gallery
 			min-height: 155px
-	
+		
 		.p-dropzone
 			position: relative
-			left: 20px
 			top: 30px
 			color: $small-text
-		.img-dropzone
-			img
-				width: 100%
+
+	.border-dropzone.dropzone-profile
+		border-top: none
+		display: block
+	.user-photo-wrap
+		background-color: $alabaster
+		img
+			border-radius: 100%
+			width: 145px
+			height: 145px
+			margin-top: 10px
+			margin-bottom: 10px
 
 	.active-border
 		border: dashed 1px $link-1-hover
 
 	.dragging-over
 		border: dashed 1px $dragging-hover-border
+
+	// класс для инпутов только с border-bottom 
+	.input-border-bottom
+		border: none
+		border-bottom: solid 1px $border-color
+		outline: none
+		padding: 0 rem(10)
+
 	
 	// для label где много текста пример на странице создания компании 
 	.big-label-text
 		position: relative
 		top: rem(-15)
+	@media screen and (max-width: 1200px)
+		.big-label-text
+			top: 0
+		label
+			padding-top: 0
+		.city_states
+			label
+				padding-top: 6px
+			margin-bottom: 20px
+			.change_state_city
+				top: 0
+	@media screen and (max-width: 380px)
+		.change_state_city
+			.input-value
+				max-width: 120px!important
+
+
 	@media screen and (min-width:992px)
 		// date of birth field
 		.dob label
@@ -93,7 +123,6 @@ select.form-control
 
 	textarea
 		min-height: 38px
-		max-width: 554px
 		&.contacts-textarea
 			min-height: rem(95)
 
@@ -173,13 +202,14 @@ select.form-control
 			.input-value
 				@include ellipsis()
 				display: inline-block
-				max-width: 120px
+				max-width: 150px
 				text-decoration: underline
 				text-transform: capitalize
 
 			i
 				margin-left: 8px
 				color: $small-text
+				vertical-align: super
 				+mt(.2s)
 				&:hover
 					color: $link-1-hover

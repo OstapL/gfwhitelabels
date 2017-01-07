@@ -1,273 +1,131 @@
+const View = require('components/raiseFunds/views.js');
+const raiseHelper = require('./helpers.js');
+
+function getOCCF(optionsR, viewName, params = {}) {
+  $('#content').scrollTo();
+  params.el = '#content';
+  $.when(optionsR, app.user.getCompanyR(), app.user.getCampaignR(), app.user.getFormcR())
+    .done((options, company, campaign, formc) => {
+
+      if(options) {
+        params.fields = options[0].fields;
+      }
+      // ToDo
+      // This how we can avoid empty response
+      if(company == '') {
+        params.company = app.user.company;
+        params.campaign = app.user.campaign;
+        params.formc = app.user.formc;
+      }
+      else {
+        if(Object.keys(company[0]).length > 0) {
+          params.company = app.user.company = app.user.company || company[0];
+          params.campaign = app.user.campaign = app.user.campaign || campaign[0];
+          params.formc = app.user.formc = app.user.formc || formc[0];
+        } else {
+          params.company = {};
+          params.campaign = {};
+          params.formc = {};
+        }
+      }
+
+      if(typeof viewName == 'string') {
+        new View[viewName](Object.assign({}, params)).render();
+        app.hideLoading();
+      } else {
+        viewName();
+      }
+
+      raiseHelper.updateMenu(raiseHelper.calcProgress(app.user.campaign));
+    }).fail(function(xhr, response, error) {
+      api.errorAction.call(this, $('#content'), xhr, response, error);
+    });
+};
+
 module.exports = Backbone.Router.extend({
   routes: {
     'company/create': 'company',
-    'campaign/general_information/:id': 'generalInformation',
-    'campaign/media/:id': 'media',
-    'campaign/team-members/:id/add/:type/:index': 'teamMembersAdd',
-    'campaign/team-members/:id': 'teamMembers',
-    'campaign/specifics/:id': 'specifics',
-    'campaign/perks/:id': 'perks',
-    'campaign/thankyou/:id': 'thankyou',
+    'company/in-review': 'inReview',
+    'campaign/:id/general_information': 'generalInformation',
+    'campaign/:id/media': 'media',
+    'campaign/:id/team-members/add/:type/:index': 'teamMembersAdd',
+    'campaign/:id/team-members': 'teamMembers',
+    'campaign/:id/specifics': 'specifics',
+    'campaign/:id/perks': 'perks',
   },
 
   execute: function (callback, args, name) {
-    if (app.user.is_anonymous()) {
-      const pView = require('components/anonymousAccount/views.js');
-      require.ensure([], function() {
-        new pView.popupLogin().render(window.location.pathname);
-        app.hideLoading();
-        $('#sign_up').modal();
-      });
+    //ga('send', 'pageview', "/" + Backbone.history.getPath());
+    if (!app.user.ensureLoggedIn(window.location.pathname))
       return false;
-    }
+
     if (callback) callback.apply(this, args);
   },
 
   company() {
-    if (!app.user.is_anonymous()) {
-      const Model = require('components/company/models.js');
-      const View = require('components/raiseFunds/views.js');
-
-      // ToDo
-      // Rebuild this
-      var a1 = app.makeCacheRequest(Urls['company-list'](), 'OPTIONS');
-      var a2 = app.makeCacheRequest(Urls['company-list']());
-
-      $.when(a1, a2).done((meta, model) => {
-        app.makeRequest(Urls['campaign-list']() + '/general_information')
-        .then((campaignData) => {
-          //console.log('campaignis', metaData, modelData, campaignData[0]);
-          $('body').scrollTo(); 
-          var i = new View.company({
-            el: '#content',
-            fields: meta[0].actions.POST,
-            // model: new Model.model(model[0][0] || {}),
-            model: model[0][0] || {},
-            campaign: campaignData[0] || {},
-          });
-
-          // ToDo
-          // Check if campaign are exists already
-          app.hideLoading();
-          i.render();
-          //app.views.campaign[id].render();
-          //app.cache[window.location.pathname] = i.$el.html();
-
-        }).fail(function(xhr, response, error) {
-          api.errorAction.call(this, $('#content'), xhr, response, error);
-        });
-      })
-    } else {
-      app.routers.navigate(
-          '/account/login', {trigger: true, replace: true}
-      );
-    }
+    const optionsR = app.makeCacheRequest(raiseCapitalServer + '/company', 'OPTIONS');
+    getOCCF(optionsR, 'company', {});
   },
 
   generalInformation (id) {
-    if (!app.user.is_anonymous()) {
-      const Model = require('components/campaign/models.js');
-      const View = require('components/raiseFunds/views.js');
-
-      if (id === null) {
-        alert('please set up id or company_id');
-        console.log('not goinng anywhere');
-        return;
-      }
-      $('body').scrollTo(); 
-
-      var a1 = app.makeCacheRequest(Urls['campaign-list']() + '/general_information/' + id, 'OPTIONS');
-      var a2 = app.makeCacheRequest(Urls['campaign-list']() + '/general_information/' + id);
-
-      $.when(a1, a2).done((meta, model) => {
-        var i = new View.generalInformation({
-          el: '#content',
-            fields: meta[0].actions.PUT,
-            // model: new Model.model(model[0])
-            model: model[0]
-        });
-
-        i.render();
-        //app.views.campaign[id].render();
-        //app.cache[window.location.pathname] = i.$el.html();
-
-        app.hideLoading();
-      }).fail((xhr, error) =>  {
-        api.errorAction($('#content'), xhr, error);
-      });
-    } else {
-      app.routers.navigate(
-        '/account/login', {trigger: true, replace: true}
-      );
-    }
+    const optionsR = app.makeCacheRequest(raiseCapitalServer + '/campaign/' + id + '/general_information', 'OPTIONS');
+    getOCCF(optionsR, 'generalInformation', {});
   },
 
   media(id) {
-    if (!app.user.is_anonymous()) {
-      $('body').scrollTo(); 
-      const Model = require('components/campaign/models.js');
-      const View = require('components/raiseFunds/views.js');
-
-      var a1 = app.makeCacheRequest(Urls['campaign-list']() + '/media/' + id, 'OPTIONS');
-      var a2 = app.makeCacheRequest(Urls['campaign-list']() + '/media/' + id);
-
-      $.when(a1, a2).done((meta, model) => {
-        var i = new View.media({
-          el: '#content',
-            fields: meta[0].actions.PUT,
-            // model: new Model.model(model[0])
-            model: model[0],
-        });
-        i.render();
-        //app.views.campaign[id].render();
-        //app.cache[window.location.pathname] = i.$el.html();
-
-        app.hideLoading();
-      });
-    } else {
-      app.routers.navigate(
-        '/account/login', {trigger: true, replace: true}
-      );
-    }
+    const optionsR = app.makeCacheRequest(raiseCapitalServer + '/campaign/' + id + '/media', 'OPTIONS');
+    getOCCF(optionsR, 'media', {});
   },
 
   teamMembers(id) {
-    if (!app.user.is_anonymous()) {
-      $('body').scrollTo(); 
-      const Model = require('components/campaign/models.js');
-      const View = require('components/raiseFunds/views.js');
-
-      var a2 = app.makeCacheRequest(Urls['campaign-list']() + '/team_members/' + id);
-
-      $.when(a2).done((model) => {
-        var i = new View.teamMembers({
-          el: '#content',
-          // model: new Model.model(model),
-          model: model,
-        });
-        i.render();
-        //app.views.campaign[id].render();
-        //app.cache[window.location.pathname] = i.$el.html();
-
-        app.hideLoading();
-      });
-    } else {
-      app.routers.navigate(
-        '/account/login', {trigger: true, replace: true}
-      );
-    }
+    const optionsR = app.makeCacheRequest(raiseCapitalServer + '/campaign/' + id + '/team-members', 'OPTIONS');
+    getOCCF(optionsR, 'teamMembers', {});
   },
 
   teamMembersAdd(id, type, index) {
-    if (!app.user.is_anonymous()) {
-      $('body').scrollTo(); 
-      const Model = require('components/campaign/models.js');
-      const View = require('components/raiseFunds/views.js');
-
-      var a2 = app.makeCacheRequest(Urls['campaign-list']() + '/team_members/' + id);
-      $.when(a2).done((model) => {
-        const addForm = new View.teamMemberAdd({
-          el: '#content',
-          // model: new Model.model(model),
-          model: model,
-          type: type,
-          index: index,
-        });
-        addForm.render();
-        app.hideLoading();
-      });
-
-    } else {
-      app.routers.navigate(
-        '/account/login', {trigger: true, replace: true}
-      );
-    }
+    const optionsR = app.makeCacheRequest(raiseCapitalServer + '/campaign/' + id + '/team-members', 'OPTIONS');
+    getOCCF(optionsR, 'teamMemberAdd', {
+      type: type,
+      index: index,
+    });
   },
 
   specifics(id) {
-    if (!app.user.is_anonymous()) {
-      $('body').scrollTo(); 
-      const Model = require('components/campaign/models.js');
-      const View = require('components/raiseFunds/views.js');
-
-      var a1 = app.makeCacheRequest(Urls['campaign-list']() + '/specifics/' + id, 'OPTIONS');
-      var a2 = app.makeCacheRequest(Urls['campaign-list']() + '/specifics/' + id);
-
-      $.when(a1, a2).done((meta, model) => {
-        var i = new View.specifics({
-          el: '#content',
-          fields: meta[0].actions.PUT,
-          // model: new Model.model(model[0]),
-          model: model[0],
-        });
-        i.render();
-        //app.views.campaign[id].render();
-        //app.cache[window.location.pathname] = i.$el.html();
-
-        app.hideLoading();
-      }).fail((xhr, error) =>  {
-        app.defaultSaveActions.error.error($('#content'), error);
-        app.hideLoading();
-      });
-    } else {
-      app.routers.navigate(
-        '/account/login', {trigger: true, replace: true}
-      );
-    }
+    const optionsR = app.makeCacheRequest(raiseCapitalServer + '/campaign/' + id + '/specifics', 'OPTIONS');
+    getOCCF(optionsR, 'specifics', {});
   },
 
   perks(id) {
-    if (!app.user.is_anonymous()) {
-      $('body').scrollTo(); 
-      const Model = require('components/campaign/models.js');
-      const View = require('components/raiseFunds/views.js');
-
-      var a1 = app.makeCacheRequest(Urls['campaign-list']() + '/perks/' + id, 'OPTIONS');
-      var a2 = app.makeCacheRequest(Urls['campaign-list']() + '/perks/' + id);
-
-      $.when(a1, a2).done((meta, model) => {
-        var i = new View.perks({
-          el: '#content',
-          fields: meta[0].actions.PUT,
-          // model: new Model.model(model[0]),
-          model: model[0],
-        });
-        i.render();
-        //app.views.campaign[id].render();
-        //app.cache[window.location.pathname] = i.$el.html();
-
-        app.hideLoading();
-      });
-    } else {
-      app.routers.navigate(
-        '/account/login', {trigger: true, replace: true}
-      );
-    }
+    const optionsR = app.makeCacheRequest(raiseCapitalServer + '/campaign/' + id + '/perks', 'OPTIONS');
+    getOCCF(optionsR, 'perks', {});
   },    
 
-  thankyou(id) {
-    if (!app.user.is_anonymous()) {
-      app.showLoading();
-      $('body').scrollTo(); 
-      const Model = require('components/campaign/models.js');
-      const View = require('components/raiseFunds/views.js');
+  inReview() {
+    app.showLoading();
 
-      var a2 = app.makeCacheRequest(Urls['campaign-detail'](id));
-
-      $.when(a2).done((campaign) => {
-        var i = new View.thankYou({
-          model: campaign,
+    $('#company_publish_confirm').modal('hide', 0);
+    let fn = function() {
+      $('body').scrollTo();
+      app.hideLoading();
+      if(app.user.company.is_approved == 1) {
+        const i = new View.inReview({
+          model: app.user.company,
         });
         i.render();
-        //app.views.campaign[id].render();
-        //app.cache[window.location.pathname] = i.$el.html();
+      } else if(app.user.company.is_approved == 5) {
+        app.routers.navigate(
+          '/formc/' + app.user.formc.id + '/introduction',
+          { trigger: true, replace: false }
+        );
+      } else {
+        app.routers.navigate(
+          '/company/create',
+          { trigger: true, replace: false }
+        );
+      }
+    };
 
-        app.hideLoading();
-      });
-    } else {
-      app.routers.navigate(
-        '/account/login', {trigger: true, replace: true}
-      );
-    }
-  },    
+    getOCCF('', fn);
+  },
+   
 });

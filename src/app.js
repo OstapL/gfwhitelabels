@@ -7,8 +7,10 @@ global.Bootstrap = require('bootstrap/dist/js/bootstrap.js');
 global.userModel = require('components/accountProfile/model.js');
 global.Urls = require('./jsreverse.js');
 require('jquery-serializejson/jquery.serializejson.min.js');
+const validation = require('components/validation/validation.js');
 
-// require('sass/mixins_all.sass');
+global.formatHelper = require('helpers/formatHelper');
+
 
 $.fn.scrollTo = function (padding=0) {
   $('html, body').animate({
@@ -37,11 +39,35 @@ Backbone.sync = function (method, model, options) {
     //xhr.setRequestHeader('X-CSRFToken', getCSRF());
     let token = localStorage.getItem('token');
     if (token !== null && token !== '') {
-      xhr.setRequestHeader('Authorization', 'Token ' + token);
+      xhr.setRequestHeader('Authorization', token);
     }
   };
 
   return oldSync(method, model, options);
+};
+
+Backbone.View.prototype.assignLabels = function() {
+  _(this.fields).each((el, key) => {
+    if(el.type == 'nested') {
+      _(el.schema).each((subel, subkey) => {
+        if(this.labels[key])
+          subel.label = this.labels[key][subkey];
+      });
+    } else {
+      el.label = this.labels[key];
+    }
+  });
+};
+
+Backbone.View.prototype.checkForm = function() {
+  if(app.getParams().check == '1') {
+    if (!validation.validate(this.fields, this.model, this)) {
+      _(validation.errors).each((errors, key) => {
+        validation.invalidMsg(this, key, errors);
+      });
+      this.$('.help-block').prev().scrollTo(5);
+    }
+  }
 };
 
 let app = {
@@ -49,6 +75,7 @@ let app = {
 
   routers: {},
   cache: {},
+  models: {},
 
   /*
    * Misc Display Functions
@@ -77,12 +104,80 @@ let app = {
     return _.chain(location.search.slice(1).split('&'))
       .map(function (item) {
         if (item) {
-          return item.split('=');
+          let arr = item.split('=');
+          arr[1] = decodeURIComponent(arr[1]);
+          return arr;
         }
       })
       .compact()
       .object()
       .value();
+  },
+
+  valByKey(obj, keyString) {
+    if(keyString.indexOf('.') == -1) {
+      return values[keyString];
+    } else {
+      try {
+        return keyString.split('.').reduce(function(o, i, currentIndex, array) {
+          if(i.indexOf('[') != -1) {
+            i = i.split('[');
+            let k = i[0];
+            i = i[1].replace(']', '');
+            return o[k][i];
+          }
+          return o[i];
+        }, obj);
+      } catch(e) { 
+        console.debug('no name ' + keyString); return ''; 
+      }
+    }
+  },
+
+  setValByKey(obj, keyString, val) {
+    if(keyString.indexOf('.') == -1) {
+      return values[keyString];
+    } else {
+      try {
+        return keyString.split('.').reduce(function(o, i, currentIndex, arr) {
+          if(i.indexOf('[') != -1) {
+            i = i.split('[');
+            let k = i[0];
+            i = i[1].replace(']', '');
+            if(currentIndex == arr.length - 1) {
+              o[k][i] = val;
+            }
+            return o[k][i];
+          }
+          if(currentIndex == arr.length - 1) {
+            o[i] = val;
+          }
+          return o[i];
+        }, obj);
+      } catch(e) { 
+        console.debug('no name ' + keyString); return ''; 
+      }
+    }
+  },
+
+  valByKeyReplaceArray(obj, keyString) {
+    if(keyString.indexOf('[') !== -1) {
+      keyString = keyString.replace(/\[\d+\]/, '.schema');
+      keyString = keyString.replace(/\[\d+\]/g, '');
+    }
+    return app.valByKey(obj, keyString);
+  },
+
+  fieldChoiceList(metaData, currentValue) {
+    let resultVal = '';
+    metaData = metaData.validate.OneOf;
+    if(metaData.labels) {
+      return metaData.labels[metaData.choices.indexOf(currentValue.toString())]
+         || metaData.labels[metaData.choices.indexOf(parseFloat(currentValue))];
+    } else {
+      return metaData.choices.indexOf(currentValue.toString())
+        || metaData.choices.indexOf(parseFloat(currentValue));
+    }
   },
 
   getVideoId(url) {
@@ -92,17 +187,32 @@ let app = {
       var id;
 
       if (provider == 'youtube') {
-        id = url.match(/https:\/\/(?:www.)?(\w*).com\/.*v=(.*)/)[2];
+        id = url.match(/https:\/\/(?:www.)?(\w*).com\/.*v=([^\&]*)/)[2];
+      } else if (provider == 'youtu') {
+        provider = 'youtube';
+        id = url.match(/https:\/\/(?:www.)?(\w*).be\/(.*)/)[2];
       } else if (provider == 'vimeo') {
         id = url.match(/https:\/\/(?:www.)?(\w*).com\/(\d*)/)[2];
       } else {
         console.log(url, 'Takes a YouTube or Vimeo URL');
       }
-      
+
       return {id: id, provider: provider};
     } catch (err) {
       console.log(url, 'Takes a YouTube or Vimeo URL');
     }
+  },
+
+  getVideoUrl(videoInfo) {
+    var provider = videoInfo && videoInfo.provider ? videoInfo.provider : '';
+
+    if (provider == 'youtube')
+      return '//www.youtube.com/embed/' + videoInfo.id + '?rel=0';
+
+    if (provider == 'vimeo')
+      return '//player.vimeo.com/video/' + videoInfo.id;
+
+    return '//www.youtube.com/embed/?rel=0';
   },
 
   getThumbnail: function(size, thumbnails, _default) {
@@ -111,6 +221,15 @@ let app = {
     });
     return (thumb ? thumb.url : _default || '/img/default/default.png')
   },
+
+  runGoogleAnalytics(id) {
+    (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+      new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+      'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer', id);
+  },
+
 };
 
 // Что-то пахнет говнецом
@@ -122,8 +241,19 @@ global.app = app;
 
 // app routers
 app.routers = require('routers');
+app.fields = require('fields');
 app.user.load();
 app.trigger('userReady');
+app.runGoogleAnalytics(global.googleAnalyticsId);
+
+app.breadcrumbs = function(title, subtitle, data) {
+  const template = require('templates/breadcrumbs.pug');
+  return template({
+    title: title,
+    subtitle: subtitle,
+    data: data
+  });
+}
 
 const popoverTemplate = '<div class="popover  divPopover"  role="tooltip"><span class="popover-arrow"></span> <h3 class="popover-title"></h3> <span class="icon-popover"><i class="fa fa-info-circle" aria-hidden="true"></i></span> <span class="popover-content"> XXX </span></div>';
 
@@ -139,6 +269,7 @@ $('body').on('mouseover', 'div.showPopover', function () {
     $(this).popover('show');
   }
 });
+
 $('body').on('mouseout', 'div.showPopover', function () {
     //$(this).popover('hide');
 });
@@ -169,6 +300,19 @@ $('body').on('focus', 'textarea.showPopover', function () {
   }
 });
 
+$('body').on('focus', 'i.showPopover', function () {
+  var $el = $(this);
+  if ($el.attr('aria-describedby') == null) {
+    $(this).popover({
+      html: true,
+      template: popoverTemplate.replace('divPopover', 'textareaPopover'),
+      placement: 'top',
+      trigger: 'hover',
+    });
+    $(this).popover('show');
+  }
+});
+
 // show bottom logo while scrolling page
 $(window).scroll(function () {
   var $bottomLogo = $('#fade_in_logo');
@@ -177,6 +321,31 @@ $(window).scroll(function () {
   if (($(window).scrollTop() + $(window).height() >= offsetTopBottomLogo) &&
     !$bottomLogo.hasClass('fade-in')) {
     $bottomLogo.addClass('fade-in');
+  }
+});
+
+
+// Money field auto correction
+$('body').on('keyup', '[type="money"]', function(e) {
+  var valStr = e.target.value.replace(/[\$\,]/g, '');
+  var val = parseInt(valStr);
+  if (val) {
+    e.target.value = '$' + val.toLocaleString('en-US');
+  }
+});
+
+$('body').on('focus', '[type="money"]', function(e) {
+  var valStr = e.target.value.replace(/[\$\,]/g, '');
+  var val = parseInt(valStr);
+  if (val == 0 || val == NaN) {
+    e.target.value = '';
+  }
+});
+
+$('body').on('blur', '[type="money"]', function(e) {
+  var valStr = e.target.value.replace(/[\$\,]/g, '');
+  if (e.target.value == '') {
+    e.target.value = '$0';
   }
 });
 
@@ -212,6 +381,15 @@ $('body').on('click', '.user-info', function () {
   return false;
 });
 
+$('body').on('click', '.notification-bell', function () {
+  if ($('.navbar-toggler:visible').length !== 0) {
+    $('html').removeClass('show-menu');
+    $('header').toggleClass('no-overflow-bell');
+  }
+
+  return false;
+});
+
 $('body').on('click', '#menuList .nav-item', function (event) {
   var href = $(event.target).attr('href');
 
@@ -228,7 +406,10 @@ $('body').on('click', 'a', function (event) {
   var href = event.currentTarget.getAttribute('href');
   if (href == window.location.pathname) {
     window.location.reload();
-  } else if (href && href != '' && href.substr(0, 1) != '#' &&
+  } else if (href && href == '#')  {
+    event.preventDefault();
+  } else if(href && href != '' &&
+    href.substr(0, 1) != '#' &&
     href.substr(0, 4) != 'http' &&
     href.substr(0, 3) != 'ftp' &&
     href.substr(0, 7) != 'mailto:' &&
@@ -264,5 +445,6 @@ $('body').on('click', 'a', function (event) {
       app.trigger('userReady');
       app.trigger('menuReady');
     }
+    app.runGoogleAnalytics(global.googleAnalyticsId);
   }
 });
