@@ -407,6 +407,8 @@ module.exports = {
         params: {
           file_name: name,
           crop: true,
+          width: 800,
+          height: 600
           // rename: ''
         },
         acceptedFiles: 'image/*',
