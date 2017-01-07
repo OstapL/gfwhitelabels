@@ -444,7 +444,17 @@ module.exports = {
 
       this.model.campaign.expiration_date = new Date(this.model.campaign.expiration_date);
 
+      this.fields.country = {
+        validate: {
+          OneOf: {
+            choices: _.keys(countries),
+          },
+          choices: countries,
+        }
+      };
+
       this.labels = {
+        country: 'Country',
         personal_information_data: {
           street_address_1: 'Street Address 1',
           street_address_2: 'Street Address 2',
