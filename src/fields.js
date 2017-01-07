@@ -111,6 +111,15 @@ let exports = {
     )
   },
 
+  nestedText(nestedName, name, value, index, myAttr, schema) {
+    console.log(arguments);
+    this.prepareNestedField(nestedName, name, value, index, myAttr, schema);
+    return this.fieldText(
+      `${nestedName}[${index}][${name}]`,
+      myAttr
+    );
+  },
+
   prepareField(name, attr) {
     if(attr.schema) {
       attr = _.extend(attr, attr.schema)
