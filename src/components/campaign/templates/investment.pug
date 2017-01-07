@@ -115,34 +115,56 @@ mixin confirmStatement(name, attr)
             .form-group.row.required
               label.col-lg-3.col-md-12.text-lg-right.text-xs-left.pull-xs-left Legal Name
                 span.color-red *
-              +nestedText("personal_information_data", "first_name", {
-                'class': 'col-lg-4-5 m-b-md-25 col-md-12',
-                'placeholder':'First Name',
-                'id': 'personal_information_data__first_name__0',
-              }, user)
-              +nestedText("personal_information_data", "last_name", {
-                'class': 'col-lg-4-5 col-md-12 ',
-                'placeholder': 'Last Name',
-                'id': 'personal_information_data__last_name__0'
-              }, user)
-            .form-group.row
-              label.col-lg-3.text-lg-right.text-xs-left Country
-                span.color-red *
-              .col-lg-9
-                //- if (!user.country) user.country = 'US';
-                select(name="country").custom-select.w-100.country-select
-                  each v, k in countries
-                    option(value=k selected=(user.country == k)) #{v}
+              -
+                pug_html += app.fields.nestedText(
+                  'personal_information_data',
+                  'first_name',
+                  user,
+                  0, {
+                    'placeholder': 'First Name',
+                    'class': 'col-lg-4-5 m-b-md-25 col-md-12',
+                    'id': 'personal_information_data__first_name__0',
+                  }, fields.personal_information_data.schema.first_name);
 
-            +nestedTextLabel("personal_information_data", "street_address_1", {
-              class1: 'col-lg-3 col-md-12 text-lg-left text-xl-right',
-              class2: 'col-lg-9 col-md-12',
-              id: 'personal_information_data__street_address_1__0',
-            }, user)
-            +nestedTextLabel("personal_information_data", "street_address_2", {
-              class1: 'col-lg-3 col-md-12 text-lg-left text-xl-right',
-              class2: 'col-lg-9 col-md-12',
-            }, user)
+                pug_html += app.fields.nestedText(
+                  'personal_information_data',
+                  'last_name',
+                  user,
+                  0, {
+                    'class': 'col-lg-4-5 col-md-12 ',
+                    'placeholder': 'Last Name',
+                    'id': 'personal_information_data__last_name__0',
+                  }, fields.personal_information_data.schema.last_name);
+            -
+              pug_html += app.fields.fieldChoiceLabel('country', _.extend({
+                'class1': 'col-lg-3 text-lg-right text-xs-left',
+                'class2': 'col-lg-9',
+                'required': true,
+                'empty': { '': 'Choose Country' },
+                'value': user.country,
+              }, fields.country));
+            -
+              pug_html += app.fields.nestedTextLabel(
+                'personal_information_data',
+                'street_address_1',
+                user,
+                0, {
+                  class1: 'col-lg-3 col-md-12 text-lg-left text-xl-right',
+                  class2: 'col-lg-9 col-md-12',
+                  id: 'personal_information_data__street_address_1__0',
+                },
+                fields.personal_information_data.schema.street_address_1);
+            -
+              pug_html += app.fields.nestedTextLabel(
+                'personal_information_data',
+                'street_address_2',
+                user,
+                0, {
+                  class1: 'col-lg-3 col-md-12 text-lg-left text-xl-right',
+                  class2: 'col-lg-9 col-md-12',
+                },
+                fields.personal_information_data.schema.street_address_2);
+
             // IF USA
             .row.us-fields(style="display:" + (user.country == 'US' ? "display" : "none") + ";")
               input(type="hidden" name="personal_information_data[state]" value=user.state disabled=(user.country != 'US'))
