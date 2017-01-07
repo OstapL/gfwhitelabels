@@ -13,20 +13,20 @@ section.formc-team-members-director.container.m-b-85
 
 
   //START RIGHT BLOCK
-  .col-lg-8
+  .col-lg-8.p-xs-0
     h2.text-uppercase.text-lg-center.text-xs-center.m-t-0.dosis.m-b-3 risk factors (LEGAL AND REGULATORY)
-    .col-lg-12
+    .col-lg-12.p-xs-0
       p.pb10.pb10.text-justify Please review the following statements that relate to common legal and regulatory risk factors. If any of these statements reflect potential risks for your company, then you should edit and add such statement so that they are personalized to your company. Please note that the rules
         b 
           u require you to add specificity
         |  to each risk statement to ensure that an investor understands how the risk applies to your business.  
-    .col-sm-12.m-t-2
+    .col-sm-12.m-t-2.p-xs-0
       .warning-block.m-t-1
         i.fa.fa-info-circle 
         span.warning-text You are free use any statement that applies to your business, provided that in each case you customize the final language to be specific to your company.
     .form-section
       section.risks
-        .col-lg-12
+        .col-lg-12.p-xs-0
           #accordion-risk.pannel-group.accordion.accordion-risk(role="tablist" aria-multiselectable="true")
             each v, k in defaultRisks
               +showRiskForm(v, k, 'legal_and_regulatory_risk')
@@ -38,7 +38,7 @@ section.formc-team-members-director.container.m-b-85
               - if (!(k < Object.keys(defaultRisks).length) && k != 99)
                 +showRiskForm(v, k, 'legal_and_regulatory_risk')
 
-    .col-lg-12.m-t-3
+    .col-lg-12.m-t-3.p-xs-0
       p.pb10
         b In the text box below, please include those legal and regulatory risks that are specific to your business. 
         |  In brainstorming the proper risks to disclose, you can reference the language above or consider the following questions for guidance:
@@ -48,7 +48,7 @@ section.formc-team-members-director.container.m-b-85
         li.pb10 Are there related party transactions that could pose a legal risk?
         li.pb10 Are there specific regulations that could apply to your business in the future?
       .pb10 In the text box below, please write in full sentences consistent with the sample language provided above. 
-    .col-lg-12
+    .col-lg-12.p-xs-0
       form(data-method="PATCH").form-section.add-risk-form.clearfix
         - 
           pug_html += app.fields.textLabel('title', {
@@ -70,6 +70,6 @@ section.formc-team-members-director.container.m-b-85
             span.p-l-2 None of these risks apply. This page is complete.
 
       .row.m-t-3
-        .col-lg-12.text-md-center.text-sm-center-text-xs-center
-          a(href="/formc/" + values.id + "/risk-factors-misc").btn.btn-primary.text-uppercase.pull-lg-right next
+        .col-lg-12.text-lg-right.text-sm-center.text-xs-center
+          a(href="/formc/" + values.id + "/risk-factors-misc").btn.btn-primary.text-uppercase next
             i.fa.fa-angle-right

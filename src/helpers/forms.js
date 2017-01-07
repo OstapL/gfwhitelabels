@@ -29,6 +29,7 @@ module.exports = {
   },
 
   makeRequest(url, type, data, options) {
+    options = options || {};
     // We can pass type as a string
     // or we can pass dict with type and data
     if (typeof type === 'object') {
@@ -42,6 +43,11 @@ module.exports = {
     } 
 
     if(type == 'POST' || type == 'PUT' || type == 'PATCH') {
+      if (type == 'POST' || type == 'PUT') {
+        data = data || {};
+        data.domain = window.location.host;
+      }
+
       data = JSON.stringify(data);
     }
 
@@ -50,7 +56,7 @@ module.exports = {
       type: type,
       data: data,
       dataType: 'json',
-      contentType: "application/x-www-form-urlencoded",// "application/json; charset=utf-8",
+      contentType: "application/x-www-form-urlencoded",
       beforeSend: function (xhr) {
         let token = localStorage.getItem('token');
         if (token !== null && token !== '') {
@@ -117,6 +123,9 @@ module.exports = {
       })
       fields = patchFields;
     }
+
+    if (method == 'POST' || method == 'PUT')
+      newData.domain = window.location.host;
 
     if(!validation.validate(fields, newData, this)) {
       _(validation.errors).each((errors, key) => {

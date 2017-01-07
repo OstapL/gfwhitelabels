@@ -1,4 +1,5 @@
 include fields_final_review.pug
+- var formatHelper = require('helpers/formatHelper.js');
 - var customFields = require('../fields.js');
 - var fees = require('consts/companyFees.json');
 
@@ -63,7 +64,7 @@ section.formc-review
           li
             a(href='#revenue_share_agreement').d-inline-block.w-100 EXHIBIT D: FORM OF REVENUE SHARE AGREEMENT
 
-      .col-lg-12.text-xs-center.m-t-1
+      .col-lg-12.text-xs-center.m-t-1.no-print
         a(data-toggle="modal" data-target="#formc_review_popup" href="#formc_review_popup").btn.btn-primary submit Form C
 
     .col-xl-9
@@ -98,8 +99,8 @@ section.formc-review
           +frField('campaign.minimum_raise', 'money')
           |   MINIMUM OFFERING
         if values.campaign.security_type == 0 
-          p.text-xs-center.font-weight-bold OFFERING PRICE: 
-            +frField('campaign.price_per_share', 'text')
+          p.text-xs-center.font-weight-bold OFFERING PRICE: $ 
+            +frField('campaign.price_per_share', 'money')
             |  per Share
           p.text-xs-center.font-weight-bold
             +frField('campaign.security_type', 'select')
@@ -159,6 +160,8 @@ section.formc-review
               +frField('company.address_2', 'text')
               | !{' '}
               +frField('company.city', 'text')
+              | !{' '}
+              +frField('company.state', 'select')
               | !{' '}
               +frField('company.zip_code', 'text')
           .row
@@ -229,13 +232,13 @@ section.formc-review
             .row
               .col-lg-6.col-md-6.col-sm-6.col-xs-12
                 p.font-weight-bold Price of security:
-              .col-lg-6.col-md-6.col-sm-6.col-xs-12
-                +frField('campaign.price_per_share', 'text')
+              .col-lg-6.col-md-6.col-sm-6.col-xs-12 $
+                +frField('campaign.price_per_share', 'money')
           .row
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
               p.font-weight-bold Minimum target amount of offering:
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
-              +frField('campaign.minimum_raise', 'text')
+              +frField('campaign.minimum_raise', 'money')
           .row
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
               p.font-weight-bold Oversubscription allowed:
@@ -248,13 +251,7 @@ section.formc-review
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
               p.font-weight-bold Allocation method of oversubscription:
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
-              if values.campaign.security_type == 1
-                | Not Applicable
-              else
-                | First Come First Serve
-              //if values.campaign.minimum_raise == values.campaign.maximum_raise
-                | First Come First Served
-              //else
+              | First Come First Serve
           .row
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
               p.font-weight-bold Maximum amount of offering:
@@ -287,17 +284,17 @@ section.formc-review
             | !{' '}
             +frField('company.corporate_structure', 'select')
             |  (the “Company”), is offering up to 
-            b #{ Math.round(values.campaign.maximum_raise / values.campaign.price_per_share) }
+            b #{ formatHelper.formatPrice(Math.round(values.campaign.maximum_raise / values.campaign.price_per_share)) }
             |   shares of 
             +frField('campaign.security_type', 'select')
             |  (the 
             u “Shares”)
-            |  at an offering price of 
-            +frField('campaign.price_per_share', 'text')
+            |  at an offering price of $
+            +frField('campaign.price_per_share', 'money')
             |  per Share for a maximum aggregate offering price of 
             +frField('campaign.maximum_raise', 'money').
           p.pb10.text-indent The Company has established a minimum offering of at least 
-            b #{ Math.round(values.campaign.minimum_raise / values.campaign.price_per_share) }
+            b #{ formatHelper.formatPrice(Math.round(values.campaign.minimum_raise / values.campaign.price_per_share)) }
             |  Shares for a minimum aggregate offering price of 
             +frField('campaign.minimum_raise', 'money')
               |  prior to #{ values.campaign.expiration_date }
@@ -321,15 +318,15 @@ section.formc-review
           p.pb10.text-indent This offering material, including all the exhibits attached hereto (collectively, the 
             u “Material”
             |  ) describes the terms relating to an offer and sale of debt securities to qualified investors consistent with the rules and regulations of Regulation Crowdfunding (17 CFR §227). 
-            +frField('company.issuer_legal_name')
+            +frField('company.name')
             |  , a 
-            +frField('company.founding_state')
+            +frField('company.founding_state', 'select')
             | !{' '}
-            +frField('company.corporate_structure')
+            +frField('company.corporate_structure', 'select')
             |  (the “Company” also referred to as an “issuer"), is offering a Revenue Share Agreement similar to a promissory note in the form attached hereto as Exhibit D (each, a “Note” and collectively, the “
             u Notes
             | ”) minimum investment of 
-            +frField('campaign.minimum_increment')
+            +frField('campaign.minimum_increment', 'money')
             |   targeting a maximum aggregate offering price of 
             +frField('campaign.maximum_raise', 'money')
           p.pb10.text-indent The Company has established a minimum aggregate offering price of  
@@ -468,7 +465,7 @@ section.formc-review
                 th.text-xs-center.w-40 Title and Responsibilities
             tbody
               each v,k in values.formc.team_members
-                if v.role[0] == 2
+                if v.role.indexOf('2') != -1 
                   tr
                     td.text-xs-center
                       +frField('formc.team_members[' + k + '].first_name', 'text')
@@ -489,29 +486,24 @@ section.formc-review
             theader
               tr.bg-grey
                 th.text-xs-center.w-30 Director Name
-                th.text-xs-center.w-30 Dates of Board Service (Year Begin – Year End)
-                th.text-xs-center.w-40 Principal Occupation + Employer & Title
+                th.text-xs-center.w-30 Dates of Board Service (Year Begin)
+                th.text-xs-center.w-40 Principal Occupation + Employer & Start Date
             tbody
               each v,k in values.formc.team_members
-                if v.role[0] == 1
-                  if v.experiences
-                    each v1,k1 in v.experiences
-                      tr
-                        td.text-xs-center
-                          +frField('formc.team_members[' + k + '].first_name', 'text')
-                          br
-                          +frField('formc.team_members[' + k + '].last_name', 'text')
-                        td.text-xs-center
-                          +frField('formc.team_members[' + k + '].experiences[' + k1 + '].start_date_of_service', 'text')
-                          br
-                          +frField('formc.team_members[' + k + '].experiences[' + k1 + '].end_date_of_service', 'text')
-                        td.text-xs-center
-                          +frField('formc.team_members[' + k + '].principal_occupation', 'text')
-                          br
-                          +frField('formc.team_members[' + k + '].experiences[' + k1 + '].employer', 'text')
-                          br
-                          +frField('formc.team_members[' + k + '].experiences[' + k1 + '].responsibilities', 'text')
-            
+                if v.role.indexOf('1') != -1
+                  tr
+                    td.text-xs-center
+                      +frField('formc.team_members[' + k + '].first_name', 'text')
+                      br
+                      +frField('formc.team_members[' + k + '].last_name', 'text')
+                    td.text-xs-center
+                      +frField('formc.team_members[' + k + '].board_service_start_date', 'text')
+                    td.text-xs-center
+                      +frField('formc.team_members[' + k + '].principal_occupation', 'text')
+                      br
+                      +frField('formc.team_members[' + k + '].employer_principal_businesss', 'text')
+                      br
+                      +frField('formc.team_members[' + k + '].employer_start_date', 'text')
 
       // page 7
       section.page-formc-review.m-t-1
@@ -533,7 +525,7 @@ section.formc-review
                 th.text-xs-center % of Voting Power
             tbody
               each v,k in values.formc.team_members
-                if v.role[0] == 0
+                if v.role.indexOf('0') != -1
                   tr
                     td.text-xs-center
                       +frField('formc.team_members[' + k + '].first_name', 'text')
@@ -609,7 +601,9 @@ section.formc-review
           if values.campaign.security_type == 0
             | Each Offering is listed on the Platform for a minimum of twenty-one (21) days and the Offering period may extend beyond such twenty-one days if set forth in the Material or each investor is properly notified. During that period (or later if the investor is notified of a change), the Company must aggregate investor commitments that are equal to or greater than the Offering minimum target amount. The process generally involves the following steps: (1) an investor registered on the Platform identifies a desired offering and communicates an investment commitment to purchase securities in such offering by completing a subscription agreement; (2) the Intermediary confirms the investor’s eligibility to participate in the Offering; (3) the investor transfers the funds required to purchase the offered securities to the Intermediary’s designated third-party FDIC insured depository (4) once the targeted minimum offering amount is achieved or exceeded through investor commitments collectively, the issuer would be able to close the transaction on the original target closing date or an earlier date with at least five business days prior notice to the investors; and (5) the subscription agreement will be countersigned by the issuer; and (6) the funds would be released by the third-party depository to the issuer, less any required fees sent to the Intermediary, and the issuer would issue the securities to the investor.
           else
-            | Each Offering is listed on the Platform for a minimum of twenty-one (21) days and the Offering period may extend beyond such twenty-one days if set forth in the Material and each investor is properly notified.  During that period (or later if the investor is notified of a change), the Company must aggregate investor commitments that are equal to or greater than the Offering’s   minimum target amount.  The process generally involves the following steps: (1) an investor registered on the Platform identifies a desired offering and communicates an investment commitment to purchase securities in such offering by completing a subscription agreement; (2) the Intermediary confirms the investor’s eligibility to participate in the Offering and then has the subscription agreement countersigned by the issuer; (3) the investor transfers the funds required to purchase the offered securities to the Intermediary’s designated escrow agent; (4) once the targeted minimum offering amount is achieved or exceeded through investor
+            | Each Offering is listed on the Platform for a minimum of twenty-one (21) days and the Offering period may extend beyond such twenty-one days if set forth in the Material and each investor is properly notified.  During that period (or later if the investor is notified of a change), the Company must aggregate investor commitments that are equal to or greater than the Offering’s   minimum target amount.  The process generally involves the following steps: (1) an investor registered on
+            | the Platform identifies a desired offering and communicates an investment commitment to purchase securities in such offering by completing a subscription agreement; (2) the Intermediary confirms the investor’s eligibility to participate in the Offering and then has the subscription agreement countersigned by the issuer; (3) the investor transfers the funds required to purchase the offered securities to the Intermediary’s designated escrow agent; (4) once the targeted minimum
+            | offering amount is achieved or exceeded through investor  commitments collectively, the issuer would be able to close the transaction on the original target closing date or an earlier date with at least five business days prior notice to the investors; and (5) the funds would be released by the escrow agent to the issuer, less any required fees sent to the intermediary, and the issuer would issue the securities to the investor
 
       // page 10
       section.page-formc-review.m-t-1
@@ -661,8 +655,8 @@ section.formc-review
             | an escrow account.
           |  These fees are one-time fees and are not dependent on the success of the Offering. In total, the Intermediary will receive, directly or indirectly, a dollar amount equal to the sum of all the following: (a) a transaction fee equal to 
           | #{ fees.trans_percent }% of the total amount of monies raised in the Offering for the purchase of securities offered by the Company, payable upon success, (b) a registration and processing fee equal to 
-          | #{ fees.registration_fee } payable upon registration, and (c) a participation fee equal to 
-          | #{ fees.fees_to_investor } committed to by the investor.
+          | $#{ fees.registration_fee } payable upon registration, and (c) a participation fee equal to 
+          | $#{ fees.fees_to_investor } committed to by the investor.
           if values.campaign.security_type == 0
             |  Participation fees that are attributable to each investor are not included in any calculation of total Offering amount.
 
@@ -720,8 +714,11 @@ section.formc-review
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u Description of Securities, Material Terms and Other Rights:
         each v,k in values.formc.outstanding_securities
-          p.pb10
-            if values.formc.outstanding_securities[k].security_type == 5
+          if values.formc.outstanding_securities[k].security_type == 5
+            p.pb10
+              b 
+                +frField('formc.outstanding_securities[' + k + '].custom_security_type', 'text')
+              |: 
               +frField('formc.outstanding_securities[' + k + '].terms_and_rights', 'text')
 
       // page 14
@@ -803,8 +800,8 @@ section.formc-review
             +frField('company.name', 'text')
             |  as Issuer
         if values.campaign.valuation_determination == '0'
-          p.pb10.text-indent The price of each Share was determined by the Company in good faith based on its own assessment of its current position and the benchmarking reference range determined by the use of certain business calculators provided by the Intermediary.  Such calculators use the data provided by the Company and do not reflect any advice or recommendation on the part of the Intermediary.  In working with the calculators, the Company considered its current capital structure, including current debt and cash, and assembled an income statement from the last twelve months including an estimate of net income and EBITDA.  The Company also made projections for the next twelve months along with a similar estimate of net income and EBITDA.
-          p.pb10.text-indent The Company then looked at potential peers that trade in public markets and considered a variety of metrics, including but not limited to Price/Sales, Enterprise Value/EBITDA and Price/Equity.  The Company applied a 20% liquidity discount to publically traded peers and utilized an average of different valuation metrics to derive a benchmarking range for the Company’s ultimate value.
+          // p.pb10.text-indent The price of each Share was determined by the Company in good faith based on its own assessment of its current position and the benchmarking reference range determined by the use of certain business calculators provided by the Intermediary.  Such calculators use the data provided by the Company and do not reflect any advice or recommendation on the part of the Intermediary.  In working with the calculators, the Company considered its current capital structure, including current debt and cash, and assembled an income statement from the last twelve months including an estimate of net income and EBITDA.  The Company also made projections for the next twelve months along with a similar estimate of net income and EBITDA.
+          // p.pb10.text-indent The Company then looked at potential peers that trade in public markets and considered a variety of metrics, including but not limited to Price/Sales, Enterprise Value/EBITDA and Price/Equity.  The Company applied a 20% liquidity discount to publically traded peers and utilized an average of different valuation metrics to derive a benchmarking range for the Company’s ultimate value.
         if values.campaign.valuation_determination == '1'
           p.pb10.text-indent The price of each Share was determined by the Company in good faith based on its own assessment of its current position and by taking a variety of quantitative and qualitative considerations into account.  Quantitatively, the Company considered revenue and operating profit, both one year from now and five years from now along with an analysis of the Company’s existing capital structure and available cash.  The Company then assessed where publicly traded peer were being valued in the markets.  After considering several different valuation metrics, including Price/Sales and Enterprise Value/EBIT, the Company discounted its valuation by its cost of capital.  The, for qualitative factors, the Company considered the type of industry that it is in and applied a discount rate appropriate for such industry.  Finally, the Company applied a liquidity discount which resulted in a post-money valuation which takes into consideration the money projected to be raised in order to derive the valuation contained in this Material.
 
@@ -844,40 +841,68 @@ section.formc-review
             tbody
               tr
                 td.border-t-n.p-l-r-20
-                  .pull-left.font-weight-bold Less: Offering Expenses
+                  .pull-left.font-weight-bold Total Proceeds
                 td(colspan=2).text-xs-center
                   +frField('campaign.minimum_raise', 'money')
                 td(colspan=2).text-xs-center
                   +frField('campaign.maximum_raise', 'money')
+              - var minSum = 0, minP = 0,  maxSum = 0, maxP = 0;
               for v,k in values.formc.less_offering_express
                 tr
                   td.text-xs-center
                     +frField('formc.less_offering_express[' + k + '].title', 'text')
                   td.text-xs-center
                     +frField('formc.less_offering_express[' + k + '].min', 'text')
+                    - minSum += values.formc.less_offering_express[k].min
                   td.text-xs-center
                     | #{ ((parseFloat(v.min) * 100) / values.campaign.minimum_raise).toFixed(2) }%
+                    - minP += ((parseFloat(v.min) * 100) / values.campaign.minimum_raise)
                   td.text-xs-center
                     +frField('formc.less_offering_express[' + k + '].max', 'text')
+                    - maxSum += values.formc.less_offering_express[k].max
                   td.text-xs-center
                     | #{ ((parseFloat(v.max) * 100) / values.campaign.maximum_raise).toFixed(2) }%
+                    - maxP += ((parseFloat(v.max) * 100) / values.campaign.maximum_raise)
               tr
                 td.border-t-n.p-l-r-20
-                  .pull-left.font-weight-bold Use of Net Proceeds
-                td.border-b-t-none
-                td.border-b-t-none
+                  .pull-left.font-weight-bold Less: Offering Expenses
+                td.text-xs-center
+                  | #{ formatHelper.formatPrice(minSum) }
+                td.text-xs-center
+                  | #{ minP.toFixed(2) }%
+                td.text-xs-center
+                  | #{ formatHelper.formatPrice(maxSum) }
+                td.text-xs-center
+                  | #{ maxP.toFixed(2) }%
+
+              - var minSum = 0, minP = 0,  maxSum = 0, maxP = 0;
               for v,k in values.formc.use_of_net_proceeds
                 tr
                   td.text-xs-center
                     +frField('formc.use_of_net_proceeds[' + k + '].title', 'text')
                   td.text-xs-center
                     +frField('formc.use_of_net_proceeds[' + k + '].min', 'text')
+                    - minSum += values.formc.use_of_net_proceeds[k].min
                   td.text-xs-center
                     | #{ ((parseFloat(v.min) * 100) / values.campaign.minimum_raise).toFixed(2) }%
+                    - minP += ((parseFloat(v.min) * 100) / values.campaign.minimum_raise)
                   td.text-xs-center
                     +frField('formc.use_of_net_proceeds[' + k + '].max', 'text')
+                    - maxSum += values.formc.use_of_net_proceeds[k].max
                   td.text-xs-center
                     | #{ ((parseFloat(v.max) * 100) / values.campaign.maximum_raise).toFixed(2) }%
+                    - maxP += ((parseFloat(v.max) * 100) / values.campaign.maximum_raise)
+              tr
+                td.border-t-n.p-l-r-20
+                  .pull-left.font-weight-bold Total Use of Net Proceeds
+                td.text-xs-center
+                  | #{ formatHelper.formatPrice(minSum) }
+                td.text-xs-center
+                  | #{ minP.toFixed(2) }%
+                td.text-xs-center
+                  | #{ formatHelper.formatPrice(maxSum) }
+                td.text-xs-center
+                  | #{ maxP.toFixed(2) }%
 
       // page 18
       section.page-formc-review.m-t-1
@@ -892,10 +917,8 @@ section.formc-review
           u Prior Operating History
         if values.formc.financials_condition_choice == 1
           p.pb10.text-indent The following describes the operating history of the issuer with a focus on whether historical results and cash flows are representative of what investors should expect in the future. 
-            +frField('formc.financials_condition_yes', 'textarea')
         else
-          p.pb10.text-indent Because the issuer has no operating history, the following provides information on the issuer’s financial milestones and operational, liquidity and other challenges. 
-            +frField('formc.financials_condition_no', 'textarea')
+          p.pb10.text-indent Because the issuer has limited operating history, the following provides information on the issuer’s financial milestones and operational, liquidity and other challenges. 
 
         if values.formc.sold_securities_data.length > 1
           .table-responsive.m-t-1
@@ -958,18 +981,18 @@ section.formc-review
                     td.text-xs-center
                       +frField('formc.sold_securities_data[1].total_income', 'money')
                   tr
-                    td Taxes Paid
+                    td Tabable income
+                    td.text-xs-center
+                      +frField('formc.sold_securities_data[0].taxable_income', 'money')
+                    td.text-xs-center
+                      +frField('formc.sold_securities_data[1].taxable_income', 'money')
+                  tr
+                    td Total tax
                     td.text-xs-center
                       +frField('formc.sold_securities_data[0].total_tax', 'money')
                     td.text-xs-center
                       +frField('formc.sold_securities_data[1].total_tax', 'money')
 
-                  tr
-                    td Net Income
-                    td.text-xs-center
-                      +frField('formc.sold_securities_data[0].taxable_income', 'money')
-                    td.text-xs-center
-                      +frField('formc.sold_securities_data[1].taxable_income', 'money')
 
       // page 19
       section.page-formc-review.m-t-1
@@ -1384,7 +1407,7 @@ section.formc-review
         p.pb10.text-indent Employment information from previous employers over the last three years for each of the Company’s officers is as follows:
         p.pb10
           each v,k in values.formc.team_members
-            if v.role[0] == 2
+            if v.role.indexOf('2') != -1
               if v.experiences && v.experiences.length > 0
                 +frField('formc.team_members[' + k + '].first_name', 'text')
                 +frField('formc.team_members[' + k + '].last_name', 'text')
@@ -1412,6 +1435,7 @@ section.formc-review
                             td
                               +frField('formc.team_members[' + k + '].experiences[' + k1 + '].end_date_of_service', 'text')
               if v.positions && v.positions.length > 0
+                h4 Previously held positions with the issuer
                 .table-responsive.m-t-0
                   table.table.table-bordered
                     theader
@@ -1432,7 +1456,7 @@ section.formc-review
         p.pb10.text-indent Employment information from previous employers over the last three years for each of the Company’s directors is as follows:
         p.pb10
           each v,k in values.formc.team_members
-            if v.role[0] == 1
+            if v.role.indexOf('1') != -1
               if v.experiences && v.experiences.length > 0
                 +frField('formc.team_members[' + k + '].first_name', 'text')
                 +frField('formc.team_members[' + k + '].last_name', 'text')

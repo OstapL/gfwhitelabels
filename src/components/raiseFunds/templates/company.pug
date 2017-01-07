@@ -9,10 +9,10 @@ section.create-company.container.m-b-85
   +menu('company', 'create')
 
   //START RIGHT BLOCK
-  .col-xl-8.col-lg-8.col-md-12
+  .col-xl-8.col-lg-8.col-md-12.p-sm-0
     h2.text-uppercase.text-lg-center.text-xs-center.m-t-0.dosis Company
     form.form-section
-      .col-xl-12
+      .col-xl-12.p-sm-0
         - 
           pug_html += app.fields.textLabel('name', {
           class1:'col-xl-3 col-lg-12 p-t-0 text-lg-left text-xl-right m-b-0 m-b-lg-1', 
@@ -50,13 +50,13 @@ section.create-company.container.m-b-85
           schema: fields.description, 
           placeholder: 'Your Company Description',
           help_text: 'Explain what your company does in a way that everyone  will understand.<br />  “If you can’t explain it simply, you don’t understand it well enough.” – Albert Einstein', value: values.description,})
-
-        -
-          pug_html += app.fields.fieldChoiceLabel('corporate_structure', _.extend({
-              empty: { '': 'Choose' },
-              'class1': 'col-xl-3 col-lg-12 text-xl-right text-lg-left m-b-0 p-t-0 m-b-lg-1',
-              'value': values.corporate_structure,
-            }, fields.corporate_structure));
+        .showPopover(data-content="C-corps can choose to issue Common Equity or a Revenue Share. LLC’s can only issue a Revenue Share")
+          -
+            pug_html += app.fields.fieldChoiceLabel('corporate_structure', _.extend({
+                empty: { '': 'Choose' },
+                'class1': 'col-xl-3 col-lg-12 text-xl-right text-lg-left m-b-0 p-t-0 m-b-lg-1',
+                'value': values.corporate_structure,
+              }, fields.corporate_structure));
         .row.form-group
           .col-date#founding_date
             label.col-xl-3.col-lg-12.text-xl-right.textlg-left.m-b-0.p-t-0.m-b-lg-1 Date of Organization

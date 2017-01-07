@@ -126,8 +126,22 @@ module.exports = {
       });
 
       // this.fields.account_number.required = true;
-      this.fields.account_number_re = {};
+      this.fields.account_number = _.extend(this.fields.account_number, {
+        type: 'password',
+        fn: function(value, attr, fn, model, computed) {
+          if (this.account_number != this.account_number_re)
+            throw `Account number fields don't match`;
+        },
+      });
 
+      this.model.account_number_re = this.model.account_number;
+      this.fields.account_number_re = {
+        type: 'password',
+        fn: function(value, attr, fn, model, computed) {
+          if (this.account_number != this.account_number_re)
+            throw `Account number fields don't match`;
+        },
+      };
       this.labels = {
         country: 'Country',
         street_address_1: 'Street address 1',
@@ -141,10 +155,10 @@ module.exports = {
         routing_number: 'Routing Number',
         annual_income: 'My Annual Income',
         net_worth: 'My Net Worth',
-        twitter: 'Twitter',
-        facebook: 'Facebook',
-        instagram: 'Instagram',
-        linkedin: 'LinkedIn',
+        twitter: 'Your Twitter link',
+        facebook: 'Your Facebook link',
+        instagram: 'Your Instagram link',
+        linkedin: 'Your LinkedIn link',
         bank_name: 'Bank Name',
         name_on_bank_account: 'Name on Bank Account',
       };
@@ -367,7 +381,15 @@ module.exports = {
     },
 
     _success(data) {
+      app.routers.navigate("/", {trigger: true});
+      return 0;
+
+      if ($("#financial_info").hasClass("active")) {
+        app.routers.navigate("/", {trigger: true});
+        return;
+      }
       app.hideLoading();
+
 
       //todo: this is bad solution
       this.model.first_name = this.el.querySelector('#first_name').value;
@@ -387,7 +409,7 @@ module.exports = {
       $('#content').scrollTo();
 
       //switch to financial info tab
-      this.$('.profile-tabs a[href="#financial_info"]').tab('show');
+      // this.$('.profile-tabs a[href="#financial_info"]').tab('show');
     },
 
   }, helpers.phone.methods, helpers.dropzone.methods, helpers.yesNo.methods)),
@@ -706,11 +728,7 @@ module.exports = {
 
     cancelCampaign(e) {
       e.preventDefault();
-      if(!confirm('Are you sure?')) {
-        return;
-      }
-
-      console.log('CANCEL CAMPAIGN NOT IMPLEMENTED');
+      alert('Please, call us 646-759-8228');
     },
 
     initComments() {

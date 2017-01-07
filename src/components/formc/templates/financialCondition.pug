@@ -8,10 +8,10 @@ section.formc-team-members-director.container.m-b-85
 
 
   //START RIGHT BLOCK
-  .col-lg-8
+  .col-lg-8.p-xs-0
     h2.text-uppercase.text-lg-center.text-xs-center.m-t-0.dosis.mb45 financial condition
     form(action="").form-section
-      .col-lg-12
+      .col-lg-12.p-xs-0
         b Does the issuer have an operating history?
           span.color-red *
         .form-group.form-section.m-t-2.m-b-0
@@ -45,7 +45,7 @@ section.formc-team-members-director.container.m-b-85
                   placeholder: "Describe your financial condition",
                   value: values.financials_condition_no,
                 });
-      .col-lg-12
+      .col-lg-12.p-xs-0
         p.m-t-1.m-b-2 Companies are limited to raising $1 million in any 12-month period.
         p.pb10 You will be required to file a complete set of financial statements, including balance sheet, income statement, statement of cash flows and statement of changes in owners equity and notes to the financial statements. They must be prepared in accordance with U.S. generally accepted accounting principles and must cover the two most recently completed fiscal years or the period(s) since inception, if shorter. If the financial statements are not audited, they must be labeled as “unaudited.” You must provide these financial statements even if you have no operating history.
         p.m-t-1.m-b-2 If your aggregate offering is:
@@ -75,18 +75,18 @@ section.formc-team-members-director.container.m-b-85
         p.m-b-2 For an offering conducted in the first 120 days of a fiscal year, the financial statements provided may be for the two fiscal years prior to the issuer’s most recently completed fiscal year; however, financial statements for the two most recently completed fiscal years must be provided if they are otherwise available. If more than 120 days have passed since the end of the issuer’s most recently completed fiscal year, the financial statements provided must be for the issuer’s two most recently completed fi scal years. If the 120th day falls on a Saturday, Sunday, or holiday, the next business day shall be considered the 120th day for purposes of determining the age of the financial statements.
         p An issuer may elect to delay complying with any new or revised financial accounting standard until the date that a company that is not an issuer (as defined under section 2(a) of the Sarbanes-Oxley Act of 2002) is required to comply with such new or revised accounting standard, if such standard also applies to companies that are not issuers. Issuers electing such extension of time accommodation must disclose it at the time the issuer files its offering statement and apply the election to all standards. Issuers electing not to use this accommodation must forgo this accommodation for all financial accounting standards and may not elect to rely on this accommodation in any future filings.
         .border-bottom.m-t-3.m-b-3
-      .col-lg-12
+      .col-lg-12.p-xs-0
         b Have you previously sold securities in reliance on Regulation Crowdfunding?
           span.color-red *
         .form-group.form-section.m-t-2.m-b-0
           .radio-input.m-b-1.yesno
             label 
-              input(type="radio" name="sold_securities_choice" value="true" checked=(values['sold_securities_choice']) target=".previous-security-container")
+              input(type="radio" name="sold_securities_choice" value="1" checked=(values['sold_securities_choice'] == 1) target=".previous-security-container")
               |  Yes
             label 
-              input(type="radio" name="sold_securities_choice" value="false" checked=(!values['sold_securities_choice']) target=".previous-security-container")
+              input(type="radio" name="sold_securities_choice" value="0" checked=(values['sold_securities_choice'] == 0) target=".previous-security-container")
               |  No
-        .sold_securities_choice.shown-yes(style="display:" + (values['sold_securities_choice'] ? 'block' : 'none'))
+        .sold_securities_choice.shown-yes(style="display:" + (values['sold_securities_choice'] == 1? 'block' : 'none'))
           - 
             pug_html += app.fields.textLabel('sold_securities_amount', {
               class1:'col-xl-12 text-xl-left',
@@ -107,7 +107,7 @@ section.formc-team-members-director.container.m-b-85
               }, fields.fiscal_prior_group_id);
 
       |!{ templates.sold_securities_data }
-      .col-lg-12.m-t-2
-        .text-md-center.text-sm-center-text-xs-center
-          button.btn.btn-primary.text-uppercase.pull-lg-right save and continue
+      .col-lg-12.m-t-2.p-xs-0
+        .text-lg-right.text-sm-center.text-xs-center
+          button.btn.btn-primary.text-uppercase save and continue
             i.fa.fa-angle-right

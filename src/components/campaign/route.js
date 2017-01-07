@@ -10,11 +10,16 @@ module.exports = Backbone.Router.extend({
   },
 
   execute: function (callback, args, name) {
-    //ga('send', 'pageview', "/" + Backbone.history.getPath());
-    if (callback) callback.apply(this, args)
+    if (callback)
+      callback.apply(this, args);
+    else
+      alert('Not such url');
   },
 
   investmentThankYou(id) {
+    if (!app.user.ensureLoggedIn(window.location.pathname))
+      return false;
+
     require.ensure([], () => {
       api.makeRequest(investmentServer + '/' + id).done((data) => {
         data.id = id;
@@ -72,6 +77,9 @@ module.exports = Backbone.Router.extend({
   },
 
   investment(id) {
+    if (!app.user.ensureLoggedIn(window.location.pathname))
+      return false;
+
     require.ensure([], () => {
       if (!app.user.is_anonymous()) {
         const View = require('./views.js');
