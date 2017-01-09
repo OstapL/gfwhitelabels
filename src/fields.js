@@ -196,19 +196,6 @@ let exports = {
     });
   },
 
-  comment(c, level, attr) {
-    const template = require('./templates/comment.pug');
-    attr = attr || {};
-    if (!attr.helpers)
-      attr.helpers = helpers;
-
-    return template({
-      comment: c,
-      level: level,
-      attr: attr,
-    });
-  },
-
   userProfileDropzone(name, attr) {
     let noimg = '/img/default/Default_photo.png';
     attr.data = attr.data || {};
