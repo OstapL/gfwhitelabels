@@ -184,18 +184,6 @@ let exports = {
     return template(attr);
   },
 
-  // Fixme 
-  // Что это за название филда такое ? и шаблон с целым dashboard ?
-  investment(i, attr) {
-    attr = attr || {};
-    const template =  require('./templates/dashboardInvestment.pug');
-    return template({
-      i: i,
-      attr: attr,
-      helpers: helpers
-    });
-  },
-
   userProfileDropzone(name, attr) {
     let noimg = '/img/default/Default_photo.png';
     attr.data = attr.data || {};

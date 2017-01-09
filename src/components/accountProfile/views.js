@@ -7,6 +7,7 @@ const helpers = {
   social: require('helpers/socialNetworksHelper.js'),
   dropzone: require('helpers/dropzoneHelpers.js'),
   yesNo: require('helpers/yesNoHelper.js'),
+  fields: require('./fields.js'),
 };
 
 // const InvestmentStatus = {
@@ -475,7 +476,10 @@ module.exports = {
     },
 
     render() {
-      this.$el.html(this.template(this.investments));
+      this.$el.html(this.template({
+        investments: this.investments,
+        helpers: helpers,
+      }));
     },
 
     cancelInvestment(e) {
@@ -517,7 +521,7 @@ module.exports = {
         if (this.investments.historical.length === 1)
           historicalInvestmentsBlock.empty();
 
-        historicalInvestmentsBlock.append(app.fields.investment(investment));
+        historicalInvestmentsBlock.append(helpers.fields.investment(investment, {}, helpers));
 
       }).fail((err) => {
         alert(err.error);
