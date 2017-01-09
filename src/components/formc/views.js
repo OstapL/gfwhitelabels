@@ -1747,7 +1747,7 @@ module.exports = {
           securities_offered: 'Securities Offered',
         },
         business_loans_or_debt: {
-          maturity_date: 'Maturity Date',
+          maturity_date: 'Date of Offering',
           outstanding_amount: 'Outstanding Amount',
           interest_rate: 'Interest Rate',
           other_material_terms: 'Other Material Terms',
