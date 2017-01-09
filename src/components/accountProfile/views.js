@@ -119,11 +119,25 @@ module.exports = {
       this.fields = options.fields;
 
       this.fields.image_image_id = _.extend(this.fields.image_image_id, {
-        imgOptions: {
-          aspectRatio: 1 / 1,
-          cssClass : 'img-profile-crop',
-          showPreview: true,
-        }
+        crop: {
+          control: {
+            aspectRatio: 1 / 1,
+          },
+          cropper: {
+            cssClass : 'img-profile-crop',
+            preview: true,
+          },
+          auto: {
+            width: 600,
+            height: 600,
+          }
+        },
+
+        // imgOptions: {
+        //   aspectRatio: 1 / 1,
+        //   cssClass : 'img-profile-crop',
+        //   showPreview: true,
+        // },
       });
 
       // this.fields.account_number.required = true;

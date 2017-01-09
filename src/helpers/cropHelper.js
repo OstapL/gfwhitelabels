@@ -1,15 +1,12 @@
 const CROP_IMG_CLASS = 'img-crop';
 const CROP_IMG_PROFILE_CLASS = 'img-profile-crop';
 
-const nonCropperProps = ['showPreview', 'cssClass'];
-
-
 require('cropperjs/dist/cropper.css');
 const Cropper = require('cropperjs').default;
 
 module.exports = {
 
-  showCropper(imgUrl, options, cropData, callback) {
+  showCropper(imgUrl, options={}, cropData, callback) {
 
     options = _.extend({
       viewMode: 0,
@@ -37,14 +34,10 @@ module.exports = {
       //   cropper.enable();
       // }
 
-    }, options);
+    }, options.control);
 
-    //extract non cropper options
-    let customOptions = {};
-    _.each(nonCropperProps, (prop) => {
-      customOptions[prop] = options[prop];
-      delete options[prop];
-    });
+    const cssClass = options.cropper && options.cropper.cssClass ? options.cropper.cssClass : '';
+    const showPreview = options.cropper && options.cropper.preview;
 
     let cropperTemplateWithPreview =
       '<div class="row">' +
@@ -95,7 +88,7 @@ module.exports = {
 
     //todo
     let modalTemplate =
-      '<div class="modal fade cropModal modal-dropzone ' + (customOptions.cssClass || '') + '"' +
+      '<div class="modal fade cropModal modal-dropzone ' + cssClass + '"' +
           'tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">' +
         '<div class="modal-dialog" role="document">' +
           '<div class="modal-content">' +
@@ -106,7 +99,7 @@ module.exports = {
               '<h4 class="modal-title" id="exampleModalLabel"></h4>' +
             '</div>' +
           '<div class="modal-body">' +
-            (customOptions.showPreview ? cropperTemplateWithPreview : cropperTemplate) +
+            (showPreview ? cropperTemplateWithPreview : cropperTemplate) +
           '</div>' +
           '<div class="modal-footer "></div>' +
         '</div>' +

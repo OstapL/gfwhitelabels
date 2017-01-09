@@ -6,6 +6,10 @@ const helpers = {
   text: require('./textHelper.js'),
 };
 
+const url = (file) => {
+  return `${bucketServer}/${file}`;
+};
+
 module.exports = {
 
   events: {
@@ -97,7 +101,18 @@ module.exports = {
 
       };
 
-      let dropbox = new Dropzone('.dropzone__' + name, _.extend(defaultOptions, options));
+      options = _.extend(defaultOptions, options);
+
+      const f = this.fields[name];
+      let autoCropParams = _.contains(['image', 'imagefolder'], f.type)
+        ? f.crop && f.crop.auto
+          ? _.extend({ crop: true }, f.crop.auto)
+          : null
+        : null;
+
+      _.extend(options.params, autoCropParams);
+
+      let dropbox = new Dropzone('.dropzone__' + name, options);
 
       $('.dropzone__' + name).addClass('dropzone');
 
@@ -142,9 +157,10 @@ module.exports = {
       return this._notifyServer(name);
     },
 
-    _notifyServer(name) {
+    _notifyServer(name, extra) {
       let dataFieldName = this._getDataFieldName(name);
       let data = _.pick(this.model, [name, dataFieldName]);
+      data = _.extend(data, extra);
 
       return app.makeRequest(this.urlRoot.replace(':id', this.model.id), 'PATCH', data);
     },
@@ -202,7 +218,7 @@ module.exports = {
         let iconPath = helpers.icons.resolveIconPath(data[0].mime)
 
         let fileName = data[0].name;
-        let url = data[0].urls[0];
+        let url = app.getFilerUrl(data[0].urls[0]);
         let id = data[0].id;
 
         let fileBlock = $('<div class="delete-file-container" style="position: absolute;">' +
@@ -292,7 +308,7 @@ module.exports = {
         let iconPath = helpers.icons.resolveIconPath(data[0].mime, 'file');
 
         let fieldDataName = this._getDataFieldName(name);
-        let url = data[0].urls[0];
+        let url = app.getFilerUrl(data[0].urls[0]);
 
         let fileBlock = $('<div class="thumb-file-container">' +
           '<div class="delete-file-container" style="position: absolute;">' +
@@ -346,7 +362,7 @@ module.exports = {
         else
           model[0].urls[0] = imgData.urls[0];
 
-        $('.img-' + name).attr('src', imgData.urls[0]);
+        $('.img-' + name).attr('src', app.getFilerUrl(imgData.urls[0]));
 
         if (_.isFunction(this.onImageCrop))
           this.onImageCrop(name);
@@ -407,9 +423,6 @@ module.exports = {
         paramName: name,
         params: {
           file_name: name,
-          crop: true,
-          width: 800,
-          height: 600
           // rename: ''
         },
         acceptedFiles: 'image/*',
@@ -417,43 +430,38 @@ module.exports = {
 
       this._initializeDropzone(name, dzOptions, (data) => {
         let imgId = data[0].id;
-        let url = data[0].urls[0];
-        // this._cropImageWithDefaults(imgId, name, (cropData) => {
-        //   let url = cropData.urls[0];
-        //   let imgId = cropData.id;
-        //   onCrop(cropData);
+        let url = app.getFilerUrl(data[0].urls[0]);
 
-          //update ui and bind events
-          let imgActionsBlock = $(
-            '<div class="delete-image-container">' +
-            '<a class="crop-image" data-imageid="' + imgId + '">' +
-            '<i class="fa fa-crop"></i>' +
-            '</a>' +
-            '<a class="delete-image" data-imageid="' + imgId + '">' +
-            '<i class="fa fa-times"></i>' +
-            '</a>' +
-            '</div>');
+        //update ui and bind events
+        let imgActionsBlock = $(
+          '<div class="delete-image-container">' +
+          '<a class="crop-image" data-imageid="' + imgId + '">' +
+          '<i class="fa fa-crop"></i>' +
+          '</a>' +
+          '<a class="delete-image" data-imageid="' + imgId + '">' +
+          '<i class="fa fa-times"></i>' +
+          '</a>' +
+          '</div>');
 
-          imgActionsBlock.find('a.crop-image')
-          // .data('imageid', imgId)
-            .on('click', cropImage);
+        imgActionsBlock.find('a.crop-image')
+        // .data('imageid', imgId)
+          .on('click', cropImage);
 
-          imgActionsBlock.find('a.delete-image')
-          // .data('imageid', imgId)
-            .on('click', deleteImage);
+        imgActionsBlock.find('a.delete-image')
+        // .data('imageid', imgId)
+          .on('click', deleteImage);
 
-          let imgContainer = $('.dropzone__' + name + ' .one-photo');
+        let imgContainer = $('.dropzone__' + name + ' .one-photo');
 
-          //remove buttons container if present
-          imgContainer.find('.delete-image-container').remove();
+        //remove buttons container if present
+        imgContainer.find('.delete-image-container').remove();
 
-          imgContainer.find('img.img-' + name).attr('src', url);
+        imgContainer.find('img.img-' + name).attr('src', url);
 
-          imgContainer.prepend(imgActionsBlock);
+        imgContainer.prepend(imgActionsBlock);
 
-          //here we are cropping origin image, so we have to use imgId
-          this._cropImage(imgId, name, onCrop);
-        // });
+        //here we are cropping origin image, so we have to use imgId
+        this._cropImage(imgId, name, onCrop);
       });
 
       $('.dropzone__' + name + ' a.delete-image').on('click', deleteImage);
@@ -544,7 +552,7 @@ module.exports = {
           img.urls[0] = imgData.urls[0];
         }
 
-        $('a.crop-image[data-imageid=' + img.id + ']').closest('.one-photo').find('img').attr('src', imgData.urls[0]);
+        $('a.crop-image[data-imageid=' + img.id + ']').closest('.one-photo').find('img').attr('src', app.getFilerUrl(imgData.urls[0]));
 
         this._notifyServer(name);
 
@@ -564,7 +572,7 @@ module.exports = {
 
       this._initializeDropzone(name, dzOptions, (data, file) => {
         let imageId = data[0].id;
-        let url = data[0].urls[0];
+        let url = app.getFilerUrl(data[0].urls[0]);
         // this.originImageId = imageId;
         //
         // this._cropImageWithDefaults(imageId, name, (cropData) => {
@@ -604,9 +612,11 @@ module.exports = {
     },
 
     _cropImage(imgId, name, callback) {
+      const f = this.fields[name];
+      const m = this.model;
 
       let dataFieldName = this._getDataFieldName(name);
-      let imgModel = this.model[dataFieldName];
+      let imgModel = m[dataFieldName];
 
       let img = _.find(imgModel, (i) => {
         return i.id == imgId;
@@ -617,7 +627,9 @@ module.exports = {
       let url = _.last(img.urls);
       let fileName = img.name;
 
-      helpers.crop.showCropper(url, this.fields[name].imgOptions, this._cropInfo, (imgData) => {
+      let options = f.crop ? _(f.crop).pick('control, cropper') : {};
+
+      helpers.crop.showCropper(url, options, this._cropInfo, (imgData) => {
         if (!imgData)
           return callback(imgData);
 

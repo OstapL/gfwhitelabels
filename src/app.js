@@ -230,6 +230,10 @@ let app = {
     })(window,document,'script','dataLayer', id);
   },
 
+  getFilerUrl(file) {
+    return `${bucketServer}/${file}`;
+  }
+
 };
 
 // Что-то пахнет говнецом
