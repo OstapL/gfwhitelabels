@@ -1,3 +1,4 @@
+global.cookies = require('cookies-js');
 global.config = require('config');
 global.$ = global.jQuery = require('jquery');
 global._ = require('underscore');
@@ -10,7 +11,6 @@ require('jquery-serializejson/jquery.serializejson.min.js');
 const validation = require('components/validation/validation.js');
 
 global.formatHelper = require('helpers/formatHelper');
-
 
 $.fn.scrollTo = function (padding=0) {
   $('html, body').animate({
