@@ -1,0 +1,76 @@
+-
+  function percentage(amount, goal) {
+    return Math.round((amount / goal) * 100);
+  };
+
+.one_table
+  -
+    var data = i.campaign.header_image_data[0] || { urls: []};
+    var url = data.urls[0] || "/img/test.png";
+    var background = 'background: url(' + url + ') center center no-repeat; background-size: cover;';
+  .img_column.text-lg-center.text-sm-center(style=background)
+    if attr.active
+      span.img_tab #{helpers.date.daysLeft(i.campaign.expiration_date) + ' Days Left'}
+    else
+      span.successfull.unsuccessfull  Unsuccessfully funded campaign
+      span.end-date  #{i.campaign.expiration_date.toLocaleDateString()}
+    p.text-uppercase.dosis #{i.company.name}
+  .right-columns
+    .one_line
+      .col40
+        span.light_grey Amount Invested
+      .col60
+        span.bold-grey.font-weight-bold #{helpers.format.formatAmount(i.amount)}
+    .one_line
+      .col40
+        span.light_grey Investment Day
+      .col60
+        span.dark_grey #{i.created_date.toLocaleDateString() }
+    .one_line
+      .col40
+        span.light_grey Investment ID
+      .col60
+        span.dark_grey #{i.id}
+    .one_line
+      .col40
+        span.light_grey Security
+      .col60
+        span.dark_grey #{i.security_type == 0 ? 'Common Equity' : 'Revenue Share'}
+    .one_line
+      .col40.col-perks
+        span.light_grey Perks
+      .col60.col-perks.showPopover(data-content=i.perk)
+        span.dark_grey #{i.perk}
+  .right_buttons
+    h4 Downloadable Files
+    ul
+      li
+        a(href="#" ).link-3 Investor Presentation
+      li
+        a(href="#").link-3 Form C
+      li
+        a(href="#").link-3 Financials
+      li
+        a(href="#").link-3 Agreement
+  .bottom_column
+    .top_descript
+      .left_text
+        b #{helpers.format.formatAmount(i.amount)}
+        span Raised
+      .right_text
+        b #{helpers.format.formatAmount((i.campaign.minimum_raise || i.campaign.maximum_raise))}
+        span Goal
+      p.percents #{percentage(i.amount, i.campaign.minimum_raise || i.campaign.maximum_raise) + '% Funded'}
+      .clear
+    .progress_line_container
+      progress(value=i.amount max=(i.campaign.minimum_raise || i.campaign.maximum_raise)).progress
+    .text-xs-center
+      a(href=('/' + i.company.id)).btn.btn-sm.btn-secondary.text-uppercase view campaign
+        i.fa.fa-angle-right
+    .cancel_invest
+      if attr.active && i.status == 0
+        a(
+          href="#"
+          data-id=(i.id || 0)
+        ).cancel-investment.font-weight-bold Cancel investment
+  .clear

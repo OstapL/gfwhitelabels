@@ -1,4 +1,3 @@
-include ../../../templates/fields_mixins.pug
 
 - pug_html += app.breadcrumbs('Invest', '', [ ['Home', '/'], ['Explore', '/companies'], [values.name, '/' + values.id], ['Invest in ' + values.name, '']]);
 
@@ -46,18 +45,18 @@ mixin confirmStatement(name, attr)
 .container.investment
   //START LEFT BLOCK
   .row
-    .col-lg-8
+    .col-xl-8.col-lg-7
       h2.text-uppercase.dosis.m-t-0.text-md-center.text-sm-center.text-xs-center.text-lg-left
         | Investment
       .form-section.clearfix
-        form(action="POST" data-method="POST").invest_form.clearfix
+        form(action="POST" data-method="POST" name="invest_form").invest_form.clearfix
           input(type="hidden" name="company_id" value=values.id)
           .row
             .col-xl-12
               -
                 pug_html += app.fields.fieldTextLabel("amount", _.extend({
-                    class1: 'col-lg-3 col-md-12 text-lg-left text-xl-right',
-                    class2: 'col-lg-4 col-md-12',
+                    class1: 'col-xl-3 col-lg-4 text-md-left text-lg-right text-xl-right',
+                    class2: 'col-xl-4 col-lg-8',
                     placeholder: '$',
                     text: "$10 of payment processing fee. Your money will be returned to you if the " +
                       "campaign doesn't reach the target goal ($500,000).",
@@ -66,16 +65,16 @@ mixin confirmStatement(name, attr)
             .col-xl-12
               -
                 pug_html += app.fields.fieldTextLabel("fee", _.extend({
-                    class1: 'col-lg-3 col-md-12 text-lg-left text-xl-right',
-                    class2: 'col-lg-4 col-md-12 input-border-bottom',
+                    class1: 'col-xl-3 col-lg-4 text-md-left text-lg-right text-xl-right',
+                    class2: 'col-xl-4 col-lg-8 input-border-bottom',
                     placeholder: '+ $10',
                     value: '$10',
                     label: 'Fee',
                     disabled: true,
                   }, fields.fee));
           .row
-            label.col-lg-3.text-lg-right.p-t-0.total-investment-label Total
-            .col-lg-4
+            label.col-xl-3.col-lg-4.text-md-left.text-lg-right.text-xl-right.p-t-0.total-investment-label Total
+            .col-xl-xlcol-lg-8
               span.p-l-1.total-investment-amount $10
               input(type="hidden" name="total_amount" value="$10")
           // popover content for amount field
@@ -115,67 +114,96 @@ mixin confirmStatement(name, attr)
             .form-group.row.required
               label.col-lg-3.col-md-12.text-lg-right.text-xs-left.pull-xs-left Legal Name
                 span.color-red *
-              +nestedText("personal_information_data", "first_name", {
-                'class': 'col-lg-4-5 m-b-md-25 col-md-12',
-                'placeholder':'First Name',
-                'id': 'personal_information_data__first_name__0',
-              }, user)
-              +nestedText("personal_information_data", "last_name", {
-                'class': 'col-lg-4-5 col-md-12 ',
-                'placeholder': 'Last Name',
-                'id': 'personal_information_data__last_name__0'
-              }, user)
-            .form-group.row
-              label.col-lg-3.text-lg-right.text-xs-left Country
-                span.color-red *
-              .col-lg-9
-                //- if (!user.country) user.country = 'US';
-                select(name="country").custom-select.w-100.country-select
-                  each v, k in countries
-                    option(value=k selected=(user.country == k)) #{v}
+              -
+                pug_html += app.fields.nestedText(
+                  'personal_information_data',
+                  'first_name',
+                  user,
+                  0, {
+                    'placeholder': 'First Name',
+                    'class': 'col-lg-4-5 m-b-md-25 col-md-12',
+                    'id': 'personal_information_data__first_name__0',
+                  }, fields.personal_information_data.schema.first_name);
 
-            +nestedTextLabel("personal_information_data", "street_address_1", {
-              class1: 'col-lg-3 col-md-12 text-lg-left text-xl-right',
-              class2: 'col-lg-9 col-md-12',
-              id: 'personal_information_data__street_address_1__0',
-            }, user)
-            +nestedTextLabel("personal_information_data", "street_address_2", {
-              class1: 'col-lg-3 col-md-12 text-lg-left text-xl-right',
-              class2: 'col-lg-9 col-md-12',
-            }, user)
+                pug_html += app.fields.nestedText(
+                  'personal_information_data',
+                  'last_name',
+                  user,
+                  0, {
+                    'class': 'col-lg-4-5 col-md-12 ',
+                    'placeholder': 'Last Name',
+                    'id': 'personal_information_data__last_name__0',
+                  }, fields.personal_information_data.schema.last_name);
+            -
+              pug_html += app.fields.fieldChoiceLabel('country', _.extend({
+                'class2': 'col-xl-9 col-lg-12 country-select',
+                'required': true,
+                'empty': { '': 'Choose Country' },
+                'value': user.country,
+              }, fields.country));
+            -
+              pug_html += app.fields.nestedTextLabel(
+                'personal_information_data',
+                'street_address_1',
+                user,
+                0, {
+                  id: 'personal_information_data__street_address_1__0',
+                },
+                fields.personal_information_data.schema.street_address_1);
+            -
+              pug_html += app.fields.nestedTextLabel(
+                'personal_information_data',
+                'street_address_2',
+                user,
+                0, {
+                },
+                fields.personal_information_data.schema.street_address_2);
+
             // IF USA
             .row.us-fields(style="display:" + (user.country == 'US' ? "display" : "none") + ";")
               input(type="hidden" name="personal_information_data[state]" value=user.state disabled=(user.country != 'US'))
               input(type="hidden" name="personal_information_data[city]" value=user.city disabled=(user.country != 'US'))
-              .col-lg-7.p-l-2.col-md-12
-                +nestedTextLabel("personal_information_data", "zip_code", {
-                  class1: 'col-lg-5 text-lg-left text-xl-right',
-                  class2: 'col-lg-7',
-                  id: 'personal_information_data__zip_code__0',
-                  disabled: (user.country != 'US'),
-                }, user)
-              .col-lg-5.city_states.col-md-12
-                label.col-lg-5.col-md-6.col-sm-6.col-xs-6 City/State
+              .col-xl-7.col-lg-6.p-r-xl-0
+                -
+                  pug_html += app.fields.nestedTextLabel(
+                    'personal_information_data',
+                    'zip_code',
+                    user,
+                    0, {
+                      class1: 'col-xl-5 col-lg-12 text-lg-left text-xl-right',
+                      class2: 'col-xl-7 col-lg-12',
+                      id: 'personal_information_data__zip_code__0',
+                      disabled: (user.country != 'US'),
+                    },
+                    fields.personal_information_data.schema.zip_code);
+              .col-xl-5.col-lg-6.city_states.col-md-12
+                label.col-xl-5.col-md-6.col-sm-6.col-xs-6.p-l-0 City/State
                   span.color-red *
-                .col-lg-7.col-md-6.col-sm-6.col-xs-6.p-l-0
+                .col-xl-7.col-lg-12.col-md-6.col-sm-6.col-xs-6.p-l-0
                   span(data-toggle="modal" data-target="#city_state_modal" href="#city_state_modal").change_state_city
                     span.input-value.js-city-state #{user.city}, #{user.state}
                     i.fa.fa-pencil-square-o
             // IF OTHER COUNTRY
             .other-countries-fields(style="display:" + (user.country == 'US' ? "none" : "display") + ";")
               .row
-                .col-lg-6.p-l-0.p-r-0
-                  +nestedTextLabel("personal_information_data", "city", {
-                    'class1': 'col-lg-6 text-lg-left text-xl-right',
-                    'class2': 'col-lg-6 p-r-0',
-                    disabled: (user.country == 'US'),
-                    id: 'personal_information_data__city__0',
-                  }, user)
+                .col-lg-6.p-xl-0
+                  -
+                    pug_html += app.fields.nestedTextLabel(
+                      'personal_information_data',
+                      'city',
+                      user,
+                      0, {
+                        class1: 'col-xl-6 col-lg-12 text-lg-left text-xl-right m-b-lg-1',
+                        class2: 'col-xl-6 col-lg-12 p-r-xl-0',
+                        id: 'personal_information_data__city__0',
+                        disabled: (user.country != 'US'),
+                      },
+                      fields.personal_information_data.schema.city);
                 .col-lg-6
                   .form-group.row.state.text
-                    label.text-lg-right.col-lg-5(for="state").p-t-0.m-b-0 State/Province/ Region
+                    label.text-xl-right.text-lg-left.col-xl-5.col-lg-12(for="state").p-t-0.m-b-0.m-b-lg-1 State/Province/ Region
                       span.color-red *
-                    div.col-lg-7
+                    div.col-xl-7.col-lg-12
                       input.form-control(
                         name='personal_information_data[state]'
                         placeholder='State/Province/Region'
@@ -185,11 +213,11 @@ mixin confirmStatement(name, attr)
                         id='personal_information_data__state__0'
                       )
               .row
-                .col-lg-6.p-l-0.p-r-0
+                .col-lg-6.p-xl-0
                   .form-group.row.zip_code.text
-                    label.text-lg-right.col-lg-6(for="zip_code") Postal Code
+                    label.text-xl-right.text-lg-left.col-xl-6.col-lg-12(for="zip_code") Postal Code
                       span.color-red *
-                    div.col-lg-6.p-r-0
+                    div.col-xl-6.col-lg-12.p-r-xl-0
                       input(
                         name='personal_information_data[zip_code]'
                         placeholder='Postal Code'
@@ -199,47 +227,73 @@ mixin confirmStatement(name, attr)
                         id='personal_information_data__state__0'
                       ).form-control
                 .col-lg-6
-                  +nestedTextLabel(
-                    "personal_information_data", "phone", {
-                      'class1': 'col-lg-5 text-lg-left text-xl-right',
-                      'class2': 'col-lg-7 ',
-                      'type': 'text',
-                      'id': 'personal_information_data__phone__0',
-                      'disabled': (user.country == 'US'),
-                  }, user)
+                  -
+                    pug_html += app.fields.nestedTextLabel(
+                      'personal_information_data',
+                      'phone',
+                      user,
+                      0, {
+                        class1: 'col-xl-5 col-lg-12 text-lg-left text-xl-right',
+                        class2: 'col-xl-7 col-lg-12',
+                        id: 'personal_information_data__phone__0',
+                        disabled: (user.country != 'US'),
+                      },
+                      fields.personal_information_data.schema.phone);
 
           section.payment-information.border-bottom
             h2.text-uppercase.dosis.text-md-center.text-sm-center.text-xs-center.text-lg-left
               | Payment information
             .form-group.row
-              +fieldChoiceLabel('payment_information_type', _.extend({
-                'class1': 'col-lg-3 text-lg-right text-xs-left',
-                'class2': 'col-lg-9 col-md-12',
-                'row': false,
-              }, this.fields.payment_information_type))
+              -
+                pug_html += app.fields.fieldChoiceLabel('payment_information_type', _.extend({
+                  'required': true,
+                  'row': false,
+                }, this.fields.payment_information_type));
             //IF ECHECK
             //- I may need to add a value into the attr object to make sure proper data is populated.
             .echeck-fields.payment-fields
-              +nestedTextLabel("payment_information_data", "name_on_bank_account", {
-                class1: 'col-lg-3 col-md-12 text-lg-left text-xl-right p-t-0 m-b-0',
-                class2: 'col-lg-9 col-md-12',
-                id: 'payment_information_data__name_on_bank_account__0',
-                }, user)
-              +nestedTextLabel("payment_information_data", "account_number", {
-                class1: 'col-lg-3 col-md-12 text-lg-left text-xl-right',
-                class2: 'col-lg-9 col-md-12',
-                id: 'payment_information_data__account_number__0',
-                }, user)
-              +nestedTextLabel("payment_information_data", "account_number_re", {
-                class1: 'col-lg-3 col-md-12 text-lg-left text-xl-right',
-                class2: 'col-lg-9 col-md-12',
-                id: 'payment_information_data__account_number_re__0',
-                }, user)
-              +nestedTextLabel("payment_information_data", "routing_number", {
-                class1: 'col-lg-3 col-md-12 text-lg-left text-xl-right',
-                class2: 'col-lg-9 col-md-12',
-                id: 'payment_information_data__routing_number__0',
-                }, user)
+
+              -
+                pug_html += app.fields.nestedTextLabel(
+                  'payment_information_data',
+                  'name_on_bank_account',
+                  user,
+                  0, {
+                    class1: 'col-xl-3 col-lg-12 text-lg-left text-xl-right p-t-0 m-b-0 m-b-lg-1',
+                    id: 'payment_information_data__name_on_bank_account__0',
+                  },
+                  fields.payment_information_data.schema.name_on_bank_account);
+
+              -
+                pug_html += app.fields.nestedTextLabel(
+                  'payment_information_data',
+                  'account_number',
+                  user,
+                  0, {
+                    id: 'payment_information_data__account_number__0',
+                  },
+                  fields.payment_information_data.schema.account_number);
+
+              -
+                pug_html += app.fields.nestedTextLabel(
+                  'payment_information_data',
+                  'account_number_re',
+                  user,
+                  0, {
+                    id: 'payment_information_data__account_number_re__0',
+                    class1: 'col-lg-3 col-md-12 text-lg-left text-xl-right p-t-0 m-b-0',
+                  },
+                  fields.payment_information_data.schema.account_number_re);
+
+              -
+                pug_html += app.fields.nestedTextLabel(
+                  'payment_information_data',
+                  'routing_number',
+                  user,
+                  0, {
+                    id: 'payment_information_data__routing_number__0',
+                  },
+                  fields.payment_information_data.schema.routing_number);
               .form-group.row.radio.check-fields
                 label.text-md-right.col-lg-3 Account Type
                 #payment_information_data__account_type__0.col-lg-9.radio-input
@@ -362,13 +416,13 @@ mixin confirmStatement(name, attr)
               .row
                 #signature__full_name__0.form-group.row
                   - var fullName = user.first_name + ' ' + user.last_name;
-                  .col-lg-5
+                  .col-xl-5.col-lg-6.col-md-6
                     input(
                       type="text"
                       placeholder="Type Your Name"
                       name='signature[full_name]'
                     ).form-control.typed-name
-                  .col-lg-5
+                  .col-xl-5.col-lg-6.col-md-6
                     .electronically
                       span.by By:
                       span.name.signature
@@ -380,7 +434,7 @@ mixin confirmStatement(name, attr)
                   type="submit").btn.btn-primary.pull-lg-right.text-uppercase invest
     //END LEFT BLOCK
     //START RIGHT BLOCK
-    .col-lg-4.pull-right
+    .col-xl-4.col-lg-5.pull-right
       if values.campaign.perks
         h2.text-uppercase.dosis.m-t-0 PERKS
           span.small-text.open-sans

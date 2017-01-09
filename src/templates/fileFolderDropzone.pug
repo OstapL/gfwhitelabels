@@ -15,14 +15,14 @@ div(class=attr.class data-content=(attr.help_text || ''))
         div.col-lg-7.col-md-7.col-sm-7.col-xs-7.p-r-0.p-l-0.img-dropzone.text-xs-center.all-file-scroll
           .file-scroll
             each v,k in attr.data
-              - console.log(v.mime);
-              - var icon = v.mime ? helpers.mimetypeIcons[v.mime.split('/')[1]] : attr.type;
+              - var icon = helpers.icons.resolveIconPath(v.mime, attr.type);
               .thumb-file-container
                 .delete-file-container(style="position: absolute;")
                   a(href="#" class="delete-file" data-fileid=v.id)
                     i.fa.fa-times
-                img(src='/img/icons/' + icon + '.png' alt=attr.label class="img-file img-" + name)
+                img(src=icon alt=attr.label class="img-file img-" + name)
                 a(class=("link-file a-" + name) target="_blank" href=v.urls[0] title=v.name) #{ helpers.text.shortenFileName(v.name) }
             else
               .thumb-file-container.text-xl-center
-                img(src='/img/icons/' + attr.type + '.png' alt=attr.label class="img-file img-" + name)
+                - var iconPath = helpers.icons.resolveIconPath(null, attr.type);
+                img(src=iconPath alt=attr.label class="img-file img-" + name)

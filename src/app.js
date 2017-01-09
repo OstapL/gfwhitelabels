@@ -6,7 +6,6 @@ window.Tether = require('tether');
 global.Bootstrap = require('bootstrap/dist/js/bootstrap.js');
 global.userModel = require('components/accountProfile/model.js');
 global.Urls = require('./jsreverse.js');
-global.googleAnalyticsId = 'UA-47199302-1';
 require('jquery-serializejson/jquery.serializejson.min.js');
 const validation = require('components/validation/validation.js');
 
@@ -225,11 +224,15 @@ let app = {
 
   runGoogleAnalytics(id) {
     (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+      new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
     j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    'https://www.googletagmanager.com/gtm.js?id='+i+dl+ '&gtm_auth=Gp064W3aSXcXjsClBYV7QA&gtm_preview=env-2&gtm_cookies_win=x';f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer',id);
+      'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer', id);
   },
+
+  getFilerUrl(file) {
+    return `${bucketServer}/${file}`;
+  }
 
 };
 
@@ -446,5 +449,6 @@ $('body').on('click', 'a', function (event) {
       app.trigger('userReady');
       app.trigger('menuReady');
     }
+    app.runGoogleAnalytics(global.googleAnalyticsId);
   }
 });

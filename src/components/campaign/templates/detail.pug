@@ -610,7 +610,7 @@ section
     if values.campaign.faq && Object.keys(values.campaign.faq).length > 0 && values.campaign.faq[0].question != '' 
       .container
         h2#faq.col-lg-12.dosis.text-uppercase.text-lg-center.text-xs-center.campaign-subheading FAQ
-        .col-lg-8.offset-lg-2
+        .col-lg-8.offset-lg-2.p-xs-0
           div(role="tablist" aria-multiselectable="true").accordion
             - var counter = 0
             each v,k in values.campaign.faq
@@ -660,19 +660,22 @@ div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true
           iframe.embed-responsive-item(src="//www.youtube.com/embed/?rel=0" allowfullscreen="true")
 
 div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")#documents-modal.modal.fade.document-modal
-  div(role="document").modal-dialog.modal-lg
-    button(type="button", data-dismiss="modal", aria-label="Close").close
-      span(aria-hidden="true") &times;
+  div().modal-dialog
     .modal-content.company-documents-content
-      each doc in companyDocs
-        - console.log(doc)
-        - var icon = doc.mime ? helpers.mimetypeIcons[doc.mime.split('/')[1]] : 'file';
-        - icon = icon || 'file';
-        .thumb-file-container
-          img(src='/img/icons/' + icon + '.png' alt=doc.name class="img-file")
-          a(class="link-file" target="_blank" href=doc.urls[0] title=doc.name) #{ helpers.text.shortenFileName(doc.name) }
-      else
-        p No company documents
+      .modal-header
+        button(type="button" data-dismiss="modal" aria-label="Close").close
+          span(aria-hidden="true")
+            i.fa.fa-times
+        h2.text-uppercase.text-xs-center.m-t-2.m-b-2 FINANCIALS
+      .modal-body.container.p-l-3.p-r-3.text-xs-center
+        each doc in companyDocs
+          - var iconPath = helpers.icons.resolveIconPath(doc.mime, 'file');
+          .thumb-file-container
+            img(src=iconPath alt=doc.name class="img-file")
+            .row
+              a(class="link-file" target="_blank" href=doc.urls[0] title=doc.name) #{ helpers.text.shortenFileName(doc.name) }
+        else
+          p No company documents
 
 
 each v,k in values.campaign.additional_video

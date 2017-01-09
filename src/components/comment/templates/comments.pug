@@ -1,12 +1,13 @@
 if attr.allowQuestion
   h2#ask.col-lg-12.dosis.text-uppercase.text-lg-center.text-xs-center.campaign-subheading ASK A QUESTION
-  .col-lg-8.offset-lg-2.col-md-12.offset-md-0.col-sm-12.offset-sm-0.col-xs-12.offset-xs-0.pt30.comment-form-div
+  .col-lg-8.offset-lg-2.col-md-12.offset-md-0.col-sm-12.offset-sm-0.col-xs-12.offset-xs-0.pt30.p-xs-0.comment-form-div
     form.comment-form.form-section
       .col-lg-9
         input(type="text" name="body" placeholder="Type your text here..." value='').w-100.text-body
       .col-lg-3.p-r-0.text-xl-right.text-xs-center.p-t-sm-1
         button(type="button").btn.btn-primary.text-uppercase.pull-lg-right.ask-question Submit
-div(class=(attr.cssClass || ''))
+
+div(class=(attr.cssClass || '')).p-xs-0
   .comments
     -
       var options = _.extend({
@@ -15,7 +16,7 @@ div(class=(attr.cssClass || ''))
       }, attr);
 
     each c in comments
-      | !{ app.fields.comment(c, 0, options) }
+      | !{ helpers.fields.comment(c, 0, options, helpers) }
 
 .stubs.collapse
   .row
@@ -43,7 +44,7 @@ div(class=(attr.cssClass || ''))
 
   //- todo: move this to fields
   form.comment-form.form-section.edit-comment.collapse
-    .col-lg-11.offset-lg-1.m-t-2.p-r-0.p-l-3.form-group
+    .col-lg-11.offset-lg-1.m-t-2.p-r-0.p-l-3.p-xs-0.form-group
       .border-bottom.m-t-0.mb30
       textarea(placeholder="Type your text here").form-control.big-textarea.text-body.col-lg-12
     .col-lg-12.p-r-0.text-xl-right.text-lg-right.text-xs-center.p-xs-0

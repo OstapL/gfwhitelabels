@@ -1,4 +1,3 @@
-include ../../../templates/fields_mixins.pug
 include ../../raiseFunds/templates/menu.pug
 
 - pug_html += app.breadcrumbs('create form c', '', [ ['Home', '/'], ['Create Form C', '/formc/' + values.id + '/introduction'], ['Outstanding Security', ''], ]);
@@ -14,20 +13,26 @@ section.formc-team-members-director.container.m-b-85
     form(action="").form-section
       input(name="outstanding_securities_choice" type="hidden" value="false")
       .col-lg-12
-        +fieldRadioLabel("business_loans_or_debt_choice", _.extend({
+        -
+          pug_html += app.fields.radioLabel('business_loans_or_debt_choice',{
+          value: values.business_loans_or_debt_choice,
           class1: 'bold',
           class2: 'form-section col-lg-12 yesno',
           class3: 'm-b-1',
-        }, fields.business_loans_or_debt_choice))
+          schema: fields.business_loans_or_debt_choice,
+          });
         .business_loans_or_debt_choice.shown-yes(style="display:" + (values['business_loans_or_debt_choice'] ? 'block' : 'none') + ";")
           |!{ templates.business_loans_or_debt }
 
         .m-t-0
-          +fieldRadioLabel("exempt_offering_choice", _.extend({
+          -
+            pug_html += app.fields.radioLabel('exempt_offering_choice',{
+            value: values.exempt_offering_choice,
             class1: 'bold',
             class2: 'form-section col-lg-12 yesno',
-            class3: '',
-          }, fields.exempt_offering_choice))
+            class3: 'm-b-1',
+            schema: fields.exempt_offering_choice,
+            });
         .exempt_offering_choice.shown-yes(style="display:" + (values['exempt_offering_choice'] ? 'block' : 'none') + ";")
           | !{ templates.exempt_offering }
 
@@ -95,11 +100,13 @@ section.formc-team-members-director.container.m-b-85
 
       .modal-body.p-t-0
         form(data-section='outstanding_securities')#security_model_form.modal-form
-          .form-section    
-            +fieldChoiceLabel("security_type", _.extend({
+          .form-section
+            -
+              pug_html += app.fields.fieldChoiceLabel('security_type', _.extend({
+              'value': security_type,
               class1: 'col-lg-12 p-t-0',
               class2: 'col-lg-12',
-            }, fields.outstanding_securities.schema.security_type))
+              }, fields.outstanding_securities.schema.security_type));
             
             - 
               pug_html += app.fields.textLabel('custom_security_type', {
@@ -132,10 +139,13 @@ section.formc-team-members-director.container.m-b-85
                   class2: 'col-lg-12', 
                   value: values.amount_outstanding,})
             .row.form-group.m-b-0
-              +fieldRadioLabel("voting_right", _.extend({
+              -
+                pug_html += app.fields.radioLabel('voting_right',{
+                value: values.voting_right,
                 class1: 'col-lg-3',
                 class2: 'col-lg-9',
-              }, fields.outstanding_securities.schema.voting_right))
+                schema: fields.outstanding_securities.schema.voting_right,
+                });
             .row.m-b-0
               .col-lg-12.text-lg-center.text-md-center.text-xs-center
                 button.update-location.btn.btn-primary.text-uppercase.pull-lg-right.add-outstanding Save And Continue

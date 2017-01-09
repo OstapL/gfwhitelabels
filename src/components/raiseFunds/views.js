@@ -250,29 +250,67 @@ module.exports = {
       this.fields = options.fields;
 
       this.fields.header_image_image_id = _.extend(this.fields.header_image_image_id, {
-        imgOptions: {
-          aspectRatio: 16 / 9.55,
-          cssClass : 'img-crop',
-          showPreview: false,
+        crop: {
+          control: {
+            aspectRatio: 16 / 9.55,
+          },
+          cropper: {
+            cssClass : 'img-crop',
+            // preview: false,
+          },
+          auto: {
+            width: 1600,
+            height: 955,
+          }
         },
-
+        // imgOptions: {
+        //   aspectRatio: 16 / 9.55,
+        //   cssClass : 'img-crop',
+        //   showPreview: false,
+        // },
       });
 
       this.fields.list_image_image_id = _.extend(this.fields.list_image_image_id, {
-        imgOptions: {
-          aspectRatio: 16 / 9.55,
-          cssClass: 'img-crop',
-          showPreview: false,
+        crop: {
+          control:  {
+            aspectRatio: 16 / 9.55,
+          },
+          cropper: {
+            cssClass: 'img-crop',
+            // preview: false,
+          },
+          auto: {
+            width: 1600,
+            height: 955,
+          }
         },
 
+        // imgOptions: {
+        //   aspectRatio: 16 / 9.55,
+        //   cssClass: 'img-crop',
+        //   showPreview: false,
+        // },
       });
 
       this.fields.gallery_group_id = _.extend(this.fields.gallery_group_id, {
-        imgOptions: {
-          aspectRatio: 16 / 9.55,
-          cssClass: 'img-crop',
-          showPreview: false,
+        crop: {
+          control: {
+            aspectRatio: 16 / 9.55,
+          },
+          cropper: {
+            cssClass: 'img-crop',
+            // preview: false,
+          },
+          auto: {
+            width: 1600,
+            height: 955,
+          }
         },
+        // imgOptions: {
+        //   aspectRatio: 16 / 9.55,
+        //   cssClass: 'img-crop',
+        //   showPreview: false,
+        // },
         fn: function checkNotEmpty(value, attr, fn, model, computed) {
           if(!this.gallery_group_data || !this.gallery_group_data.length) {
             throw 'Please upload at least 1 image';
@@ -364,11 +402,26 @@ module.exports = {
 
     initialize(options) {
       this.fields = options.fields;
-      this.fields.photo_image_id.imgOptions = {
-        aspectRatio: 1 / 1,
-        cssClass: 'img-profile-crop',
-        showPreview: true,
-      };
+      this.fields.photo_image_id = _.extend(this.fields.photo_image_id, {
+        crop: {
+          control:  {
+            aspectRatio: 1 / 1,
+          },
+          cropper: {
+            cssClass: 'img-profile-crop',
+            preview: true,
+          },
+          auto: {
+            width: 800,
+            height: 800,
+          },
+        },
+        // imgOptions: {
+        //   aspectRatio: 1 / 1,
+        //   cssClass: 'img-profile-crop',
+        //   showPreview: true,
+        // },
+      });
 
       this.model = options.campaign;
       this.formc = options.formc;
@@ -536,7 +589,7 @@ module.exports = {
           max_equity_offered: 'Maximum Equity Offered',
           security_type: 'Security Type',
           valuation_determination: 'How did you determine your valuation?',
-          valuation_determination_other: 'Description',
+          valuation_determination_other: 'Please explain',
         };
         this.assignLabels();
         this.createIndexes();

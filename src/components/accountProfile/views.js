@@ -7,6 +7,7 @@ const helpers = {
   social: require('helpers/socialNetworksHelper.js'),
   dropzone: require('helpers/dropzoneHelpers.js'),
   yesNo: require('helpers/yesNoHelper.js'),
+  fields: require('./fields.js'),
 };
 
 // const InvestmentStatus = {
@@ -118,11 +119,25 @@ module.exports = {
       this.fields = options.fields;
 
       this.fields.image_image_id = _.extend(this.fields.image_image_id, {
-        imgOptions: {
-          aspectRatio: 1 / 1,
-          cssClass : 'img-profile-crop',
-          showPreview: true,
-        }
+        crop: {
+          control: {
+            aspectRatio: 1 / 1,
+          },
+          cropper: {
+            cssClass : 'img-profile-crop',
+            preview: true,
+          },
+          auto: {
+            width: 600,
+            height: 600,
+          }
+        },
+
+        // imgOptions: {
+        //   aspectRatio: 1 / 1,
+        //   cssClass : 'img-profile-crop',
+        //   showPreview: true,
+        // },
       });
 
       // this.fields.account_number.required = true;
@@ -155,10 +170,10 @@ module.exports = {
         routing_number: 'Routing Number',
         annual_income: 'My Annual Income',
         net_worth: 'My Net Worth',
-        twitter: 'Twitter',
-        facebook: 'Facebook',
-        instagram: 'Instagram',
-        linkedin: 'LinkedIn',
+        twitter: 'Your Twitter link',
+        facebook: 'Your Facebook link',
+        instagram: 'Your Instagram link',
+        linkedin: 'Your LinkedIn link',
         bank_name: 'Bank Name',
         name_on_bank_account: 'Name on Bank Account',
       };
@@ -381,7 +396,15 @@ module.exports = {
     },
 
     _success(data) {
+      app.routers.navigate("/", {trigger: true});
+      return 0;
+
+      if ($("#financial_info").hasClass("active")) {
+        app.routers.navigate("/", {trigger: true});
+        return;
+      }
       app.hideLoading();
+
 
       //todo: this is bad solution
       this.model.first_name = this.el.querySelector('#first_name').value;
@@ -401,7 +424,7 @@ module.exports = {
       $('#content').scrollTo();
 
       //switch to financial info tab
-      this.$('.profile-tabs a[href="#financial_info"]').tab('show');
+      // this.$('.profile-tabs a[href="#financial_info"]').tab('show');
     },
 
   }, helpers.phone.methods, helpers.dropzone.methods, helpers.yesNo.methods)),
@@ -467,7 +490,10 @@ module.exports = {
     },
 
     render() {
-      this.$el.html(this.template(this.investments));
+      this.$el.html(this.template({
+        investments: this.investments,
+        helpers: helpers,
+      }));
     },
 
     cancelInvestment(e) {
@@ -509,7 +535,7 @@ module.exports = {
         if (this.investments.historical.length === 1)
           historicalInvestmentsBlock.empty();
 
-        historicalInvestmentsBlock.append(app.fields.investment(investment));
+        historicalInvestmentsBlock.append(helpers.fields.investment(investment, {}, helpers));
 
       }).fail((err) => {
         alert(err.error);

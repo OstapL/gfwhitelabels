@@ -5,7 +5,7 @@ const usaStates = require('helpers/usaStates.js');
 
 const helpers = {
   text: textHelper,
-  mimetypeIcons: require('helpers/mimetypeIcons.js'),
+  icons: require('helpers/iconsHelper.js'),
 };
 
 let countries = {};
@@ -94,6 +94,10 @@ module.exports = {
         this.previous = params.previous;
       }
       this.preview = params.preview ? true : false;
+
+      this.companyDocs = this.model.formc
+        ? _.union(this.model.formc.fiscal_prior_group_data, this.model.formc.fiscal_recent_group_data)
+        : [];
 
     },
 
@@ -247,7 +251,7 @@ module.exports = {
       this.$el.html(
         this.template({
           serverUrl: serverUrl,
-          companyDocs: this.model.campaign.gallery_group_data,  //data is stubbed///!!!
+          companyDocs: this.companyDocs,
           Urls: Urls,
           values: this.model,
           formatHelper: formatHelper,
@@ -440,7 +444,17 @@ module.exports = {
 
       this.model.campaign.expiration_date = new Date(this.model.campaign.expiration_date);
 
+      this.fields.country = {
+        validate: {
+          OneOf: {
+            choices: _.keys(countries),
+          },
+          choices: countries,
+        }
+      };
+
       this.labels = {
+        country: 'Country',
         personal_information_data: {
           street_address_1: 'Street Address 1',
           street_address_2: 'Street Address 2',
@@ -738,8 +752,16 @@ module.exports = {
       });
     },
 
+    getSignature () {
+      const investForm = document.forms.invest_form;
+      const inputSignature = investForm.elements['signature[full_name]'];
+      const signature = inputSignature.value;
+      return signature;
+    },
+
     copyToSignature(e) {
-      this.$('.signature').text($(e.target).val());
+      const signature = this.getSignature();
+      this.$('.signature').text(signature);
     },
 
     changePaymentType(e) {
@@ -788,7 +810,8 @@ module.exports = {
       const formData = this.getDocMetaData();
       const data = {
         type: 1,
-        esign: responseData.signature.full_name,
+        object_id: responseData.id,
+        esign: this.getSignature(),
         meta_data: formData,
         template: [
           this.getSubscriptionAgreementPath(),
@@ -796,7 +819,10 @@ module.exports = {
         ]
       };
 
-      $.post(reqUrl, data)
+      app.makeRequest(reqUrl, 'POST', data, {
+        contentType: 'application/json; charset=utf-8',
+        crossDomain: true,
+      })
       .done( () => {
         $('#content').scrollTo();
         this.undelegateEvents();

@@ -345,7 +345,7 @@ module.exports = {
         localStorage.setItem('user', JSON.stringify(data));
         setTimeout(function() {
           window.location = app.getParams().next ? app.getParams().next : 
-                '/account/profile';
+                '/';
         }, 200);
       } else {
         validation.invalidMsg(form, '', 'Server return no authentication data');
@@ -510,7 +510,7 @@ module.exports = {
     },
 
     getSuccessUrl() {
-      return '/account/profile';
+      return '/';
     },
 
     confirmMembership(e) {

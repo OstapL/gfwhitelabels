@@ -1,7 +1,7 @@
 
 mixin row(value, index)
   .col-xl-12
-    .col-lg-12(data-index=index class=name + ' addSectionBlock')
+    div(data-index=index class=name + ' addSectionBlock')
       .delete-section-container
         a(href="#" data-section=name data-index=index).delete-sectionnew
           i.fa.fa-times
@@ -14,7 +14,7 @@ mixin run()
 
   if first_run
     div(class=(attr.row == 0 ? '' : 'row ') + name + '_block' + (attr.required == true ? ' required ' : ' ') + ' nested')
-      div(class=(attr.row == 0 ? '' : 'row ') + name + '_container' + (attr.required == true ? ' required ' : ' ') + ' nested')
+      div(class=(attr.row == 0 ? '' : ' ') + name + '_container' + (attr.required == true ? ' required ' : ' ') + ' nested')
 
         if values == null || values.length == 0
           +row({}, 0)
