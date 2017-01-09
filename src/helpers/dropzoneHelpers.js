@@ -1,5 +1,10 @@
 const Dropzone = require('dropzone');
-const cropHelper = require('helpers/cropHelper.js');
+
+const helpers = {
+  crop: require('./cropHelper.js'),
+  icons: require('./iconsHelper.js'),
+  text: require('./textHelper.js'),
+};
 
 module.exports = {
 
@@ -194,9 +199,7 @@ module.exports = {
       };
 
       this._initializeDropzone(name, dzOptions, (data) => {
-        let textHelper = require('helpers/textHelper.js');
-        let mimetypeIcons = require('helpers/mimetypeIcons.js');
-        let icon = mimetypeIcons[data[0].mime.split('/')[1]];
+        let iconPath = helpers.icons.resolveIconPath(data[0].mime)
 
         let fileName = data[0].name;
         let url = data[0].urls[0];
@@ -207,11 +210,11 @@ module.exports = {
               '<i class="fa fa-times"></i>' +
             '</a>' +
           '</div>' +
-          '<img class="img-file img-' + name + '" src="/img/icons/' + icon + '.png" />' +
+          '<img class="img-file img-' + name + '" src="' + iconPath + '" />' +
           '<div class="row">' +
           '<a class="link-file a-' + name + '" target="_blank" ' +
             'href="' + url + '" title="' + fileName +'">' +
-              textHelper.shortenFileName(fileName) + '</a>' +
+              helpers.text.shortenFileName(fileName) + '</a>' +
           '</div>'
           );
 
@@ -286,9 +289,7 @@ module.exports = {
       };
 
       this._initializeDropzone(name, dzOptions, (data, file) => {
-        let textHelper = require('helpers/textHelper.js');
-        let mimetypeIcons = require('helpers/mimetypeIcons.js');
-        let icon = mimetypeIcons[data[0].mime.split('/')[1]];
+        let iconPath = helpers.icons.resolveIconPath(data[0].mime, 'file');
 
         let fieldDataName = this._getDataFieldName(name);
         let url = data[0].urls[0];
@@ -299,10 +300,10 @@ module.exports = {
           '<i class="fa fa-times"></i>' +
           '</a>' +
           '</div>' +
-          '<img class="img-file img-' + name + '" src="/img/icons/' + icon + '.png" />' +
+          '<img class="img-file img-' + name + '" src="' + iconPath + '" />' +
           '<a class="link-file a-' + name + '" target="_blank" ' +
           'href="' + url + '" title="' + data[0].name +'">' +
-          textHelper.shortenFileName(data[0].name) + '</a>' +
+          helpers.text.shortenFileName(data[0].name) + '</a>' +
           '</div>');
 
         let $link = fileBlock.find('a.delete-file');
@@ -616,7 +617,7 @@ module.exports = {
       let url = _.last(img.urls);
       let fileName = img.name;
 
-      cropHelper.showCropper(url, this.fields[name].imgOptions, this._cropInfo, (imgData) => {
+      helpers.crop.showCropper(url, this.fields[name].imgOptions, this._cropInfo, (imgData) => {
         if (!imgData)
           return callback(imgData);
 

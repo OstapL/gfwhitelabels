@@ -5,7 +5,7 @@ const usaStates = require('helpers/usaStates.js');
 
 const helpers = {
   text: textHelper,
-  mimetypeIcons: require('helpers/mimetypeIcons.js'),
+  icons: require('helpers/iconsHelper.js'),
 };
 
 let countries = {};
