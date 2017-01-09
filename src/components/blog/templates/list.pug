@@ -66,7 +66,7 @@ section.text_block
               article 
                 figure
                   p
-                    img(src="#{ post.image_data.urls }").img-fluid
+                    img(src="#{ post.image_data.urls[0] }").img-fluid
                   figcaption
                     h3.dosis.text-uppercase.blog-item-title #{ post.title }
                     .blog-info

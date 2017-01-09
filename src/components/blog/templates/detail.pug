@@ -71,7 +71,7 @@ section.text_block
                     .row
                         .col-lg-12
                             .blog-img
-                                img(src="#{ values.image_data.urls }").img-fluid
+                                img(src="#{ values.image_data.urls[0] }").img-fluid
 
                             .blog-text
                                 p !{ values.body }
