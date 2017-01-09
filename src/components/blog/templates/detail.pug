@@ -71,10 +71,10 @@ section.text_block
                     .row
                         .col-lg-12
                             .blog-img
-                                img(src="/img/pages/bt1.png").img-fluid
+                                img(src="#{ values.image_data.urls[0] }").img-fluid
 
                             .blog-text
-                                p #{ values.body }
+                                p !{ values.body }
 
                             .blog-info.mt25
                                 ul.list-inline.list-unstyled.m0

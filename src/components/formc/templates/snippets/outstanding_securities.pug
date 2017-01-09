@@ -20,10 +20,10 @@ mixin row(value, index)
           | #{securityType}
           .collapse
       td
-          | #{parseInt(value.amount_authroized).toLocaleString('en-US')}
+          | #{value.amount_authroized}
           .collapse
       td
-          | #{parseInt(value.amount_outstanding).toLocaleString('en-US')}
+          | #{value.amount_outstanding}
           .collapse
       td
           | #{Number(value.voting_right) ? 'Yes' : 'No'}
