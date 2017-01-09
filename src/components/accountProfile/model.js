@@ -58,10 +58,16 @@ let userModel = Backbone.Model.extend({
   },
 
   load: function () {
+    const ONE_HOURS = 1000 * 60 * 60;
+    const token = localStorage.getItem('token');
     // if we have a token we can get information about user
-    if (localStorage.getItem('token') !== null) {
+    if (token !== null) {
       let userData = localStorage.getItem('user');
-      this.set('token', localStorage.getItem('token'));
+      this.set('token', token);
+      cookies.set('token', token, {
+        domaine: global.esignServer,
+        expires: ONE_HOURS
+      });
 
       // if (userData == null) {
       if (1 == 1) {
