@@ -119,20 +119,18 @@ mixin confirmStatement(name, attr)
                   'personal_information_data',
                   'first_name',
                   user,
-                  0, {
+                  -1, {
                     'placeholder': 'First Name',
                     'class': 'col-lg-4-5 m-b-md-25 col-md-12',
-                    'id': 'personal_information_data__first_name__0',
                   }, fields.personal_information_data.schema.first_name);
 
                 pug_html += app.fields.nestedText(
                   'personal_information_data',
                   'last_name',
                   user,
-                  0, {
+                  -1, {
                     'class': 'col-lg-4-5 col-md-12 ',
                     'placeholder': 'Last Name',
-                    'id': 'personal_information_data__last_name__0',
                   }, fields.personal_information_data.schema.last_name);
             -
               pug_html += app.fields.fieldChoiceLabel('country', _.extend({
@@ -146,8 +144,7 @@ mixin confirmStatement(name, attr)
                 'personal_information_data',
                 'street_address_1',
                 user,
-                0, {
-                  id: 'personal_information_data__street_address_1__0',
+                -1, {
                 },
                 fields.personal_information_data.schema.street_address_1);
             -
@@ -155,7 +152,7 @@ mixin confirmStatement(name, attr)
                 'personal_information_data',
                 'street_address_2',
                 user,
-                0, {
+                -1, {
                 },
                 fields.personal_information_data.schema.street_address_2);
 
@@ -169,10 +166,9 @@ mixin confirmStatement(name, attr)
                     'personal_information_data',
                     'zip_code',
                     user,
-                    0, {
+                    -1, {
                       class1: 'col-xl-5 col-lg-12 text-lg-left text-xl-right',
                       class2: 'col-xl-7 col-lg-12',
-                      id: 'personal_information_data__zip_code__0',
                       disabled: (user.country != 'US'),
                     },
                     fields.personal_information_data.schema.zip_code);
@@ -192,10 +188,9 @@ mixin confirmStatement(name, attr)
                       'personal_information_data',
                       'city',
                       user,
-                      0, {
+                      -1, {
                         class1: 'col-xl-6 col-lg-12 text-lg-left text-xl-right m-b-lg-1',
                         class2: 'col-xl-6 col-lg-12 p-r-xl-0',
-                        id: 'personal_information_data__city__0',
                         disabled: (user.country != 'US'),
                       },
                       fields.personal_information_data.schema.city);
@@ -210,7 +205,6 @@ mixin confirmStatement(name, attr)
                         type="text"
                         value=user.state
                         disabled=(user.country == 'US')
-                        id='personal_information_data__state__0'
                       )
               .row
                 .col-lg-6.p-xl-0
@@ -232,10 +226,9 @@ mixin confirmStatement(name, attr)
                       'personal_information_data',
                       'phone',
                       user,
-                      0, {
+                      -1, {
                         class1: 'col-xl-5 col-lg-12 text-lg-left text-xl-right',
                         class2: 'col-xl-7 col-lg-12',
-                        id: 'personal_information_data__phone__0',
                         disabled: (user.country != 'US'),
                       },
                       fields.personal_information_data.schema.phone);
@@ -258,9 +251,8 @@ mixin confirmStatement(name, attr)
                   'payment_information_data',
                   'name_on_bank_account',
                   user,
-                  0, {
+                  -1, {
                     class1: 'col-xl-3 col-lg-12 text-lg-left text-xl-right p-t-0 m-b-0 m-b-lg-1',
-                    id: 'payment_information_data__name_on_bank_account__0',
                   },
                   fields.payment_information_data.schema.name_on_bank_account);
 
@@ -269,8 +261,7 @@ mixin confirmStatement(name, attr)
                   'payment_information_data',
                   'account_number',
                   user,
-                  0, {
-                    id: 'payment_information_data__account_number__0',
+                  -1, {
                   },
                   fields.payment_information_data.schema.account_number);
 
@@ -279,8 +270,7 @@ mixin confirmStatement(name, attr)
                   'payment_information_data',
                   'account_number_re',
                   user,
-                  0, {
-                    id: 'payment_information_data__account_number_re__0',
+                  -1, {
                     class1: 'col-lg-3 col-md-12 text-lg-left text-xl-right p-t-0 m-b-0',
                   },
                   fields.payment_information_data.schema.account_number_re);
@@ -290,8 +280,7 @@ mixin confirmStatement(name, attr)
                   'payment_information_data',
                   'routing_number',
                   user,
-                  0, {
-                    id: 'payment_information_data__routing_number__0',
+                  -1, {
                   },
                   fields.payment_information_data.schema.routing_number);
               .form-group.row.radio.check-fields
@@ -338,6 +327,8 @@ mixin confirmStatement(name, attr)
                         span And mail the check to:
                       .col-lg-6
                         span.font-weight-bold GrowthFountain Capital LLC
+                          br
+                          | c/o Bofl Federal Bank
                           br
                           | 79 Madison Ave, 5th Floor
                           br
@@ -471,7 +462,7 @@ mixin confirmStatement(name, attr)
           .col-md-5
             .row
               span Committed
-              p.font-weight-bold $#{values.campaign.amount_raised}
+              p.font-weight-bold $#{values.campaign.amount_raised.toLocaleString('en-US')}
         .container
           .col-md-7
             .row
