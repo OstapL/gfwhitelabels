@@ -66,14 +66,14 @@ section.text_block
               article 
                 figure
                   p
-                    img(src="#{ post.image_data.urls[0] }").img-fluid
+                    img(src=post.image_data.urls).img-fluid
                   figcaption
                     h3.dosis.text-uppercase.blog-item-title #{ post.title }
                     .blog-info
                       span.author.text-muted #{ post.author_id } 
                       span.date-blog.text-muted #{ post.created }
                     p 
-                      | !{ post.body.replace(/(<([^>]+)>)/ig," ").substr(0, 120) }
+                      | !{ post.body.replace(/(<([^>]+)>)/ig," ").substr(0, 120) + '...' }
                     .btn-blog-block
                       a(href="/blog/" + post.id).btn.btn-md.btn-secondary.text-uppercase read more &nbsp;
                         i.fa.fa-angle-right

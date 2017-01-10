@@ -595,6 +595,11 @@ module.exports = {
         this.createIndexes();
         this.buildJsonTemplates('raiseFunds');
 
+        this.fields.dependies = {
+          'minimum_raise': 'maximum_raise',
+          'maximum_raise': 'minimum_raise'
+        };
+
       },
 
       checkMinMaxRaise(e) {

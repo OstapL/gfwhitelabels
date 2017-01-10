@@ -1,4 +1,5 @@
 const validation = require('components/validation/validation.js');
+const userDocuments = require('helpers/userDocuments.js');
 
 const helpers = {
   date: require('helpers/dateHelper.js'),
@@ -466,6 +467,7 @@ module.exports = {
     el: '#content',
     events: {
       'click .cancel-investment': 'cancelInvestment',
+      'click .agreement-link': 'openAgreement',
     },
 
     initialize(options) {
@@ -494,6 +496,13 @@ module.exports = {
         investments: this.investments,
         helpers: helpers,
       }));
+    },
+
+    openAgreement(e) {
+      const objectId = e.target.dataset.objectId;
+      const securityType = e.target.dataset.securityType;
+      const subscriptionAgreementLink = userDocuments.getUserDocumentsByType(objectId, securityType);
+      e.target.href = subscriptionAgreementLink;
     },
 
     cancelInvestment(e) {
