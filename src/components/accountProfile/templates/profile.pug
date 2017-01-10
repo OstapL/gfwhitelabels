@@ -361,6 +361,23 @@
                           label
                             input(type="radio" name='bank_account_type' checked=user.bank_account_type value=1)
                             |  Savings
+                      .row
+                        .col-xl-12
+                          p.m-b-1 In order to pay you any dividends or revenue share, regulations require GrowthFountain to collect your Taxpayer Identification Number.  Don’t worry we keep this information safe, secure and encrypted on a separate server.
+                          -
+                            pug_html += app.fields.textLabel('social_security', _.extend({
+                              'type': 'text',
+                              placeholder: 'Social Security #',
+                              class1: 'col-xl-3 col-lg-12 text-xl-right text-lg-left m-b-0 p-t-0 m-b-lg-1',
+                              label: 'Social Security number (SSN) or Tax ID (ITIN/EIN)',
+                              'value': user.social_security
+                            }, fields.social_security))
+                          -
+                            pug_html += app.fields.textLabel('social_security_re', _.extend({
+                              'type': 'text',
+                              label: 'Re-Enter',
+                              'value': user.social_security_re
+                            }, fields.social_security_re))
 
                       .form-group.row.clearfix.m0
                         .col-lg-12.mt30.text-xs-center
