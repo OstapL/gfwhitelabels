@@ -231,6 +231,9 @@ let app = {
   },
 
   getFilerUrl(file) {
+    if (file.startsWith('http://') || file.startsWith('https://'))
+      return file;
+
     return `${bucketServer}/${file}`;
   }
 
