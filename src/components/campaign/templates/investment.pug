@@ -205,7 +205,6 @@ mixin confirmStatement(name, attr)
                         type="text"
                         value=user.state
                         disabled=(user.country == 'US')
-                        id='personal_information_data__state__0'
                       )
               .row
                 .col-lg-6.p-xl-0
@@ -463,7 +462,7 @@ mixin confirmStatement(name, attr)
           .col-md-5
             .row
               span Committed
-              p.font-weight-bold $#{values.campaign.amount_raised}
+              p.font-weight-bold $#{values.campaign.amount_raised.toLocaleString('en-US')}
         .container
           .col-md-7
             .row
