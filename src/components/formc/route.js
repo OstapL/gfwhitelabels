@@ -102,7 +102,7 @@ module.exports = Backbone.Router.extend({
   },
   
   teamMembers(id) {
-    const optionsR = api.makeCacheRequest(formcServer + '/' + id + '/team-members', 'OPTIONS');
+    const optionsR = api.makeCacheRequest(formcServer + '/' + id + '/team-members/employers', 'OPTIONS');
     getOCCF(optionsR, 'teamMembers', {});
   },
 
