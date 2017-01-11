@@ -22,6 +22,8 @@ class GeoCoder {
     //   this.template = require('./templates/non_usa.pug');
     // }
     this.resultHtml = '';
+    // fix me
+    // as script loads async we can add multiple google api scripts
     if(!window.google || !window.google.maps) {
       let p = document.createElement("script");
       p.type = "text/javascript";

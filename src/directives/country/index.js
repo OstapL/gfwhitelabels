@@ -28,6 +28,7 @@ class CountryBlock {
     let html = this.template({
       fields: this.view.fields,
       user: this.view.model,
+      view: this.view,
       snippets: {
         us: this.usBlock,
         nonUs: this.nonUsBlock,
@@ -41,9 +42,9 @@ class CountryBlock {
 
   onCountryChange(e) {
     const v = this.view;
+    const isUS = e.target.value === 'US';
 
-    v.model.country = e.target.value;
-    let $row = v.model.country == 'US'
+    let $row = isUS
       ? $(`.foreign-country-row`)
       : $(`.us-row`);
 
@@ -51,13 +52,12 @@ class CountryBlock {
       return;
 
     let args = {
+      view: v,
       fields: v.fields,
       user: v.model,
     };
 
-    $row.first().after(v.model.country == 'US'
-        ? this.usBlock(args)
-        : this.nonUsBlock(args))
+    $row.first().after(isUS ? this.usBlock(args) : this.nonUsBlock(args));
 
     $row.remove();
   }

@@ -16,7 +16,7 @@
 
 if user.country == 'US'
   -
-    pug_html += snippets.us({user: user, fields: fields});
+    pug_html += snippets.us({view: view, user: user, fields: fields});
 else
   -
-    pug_html += snippets.nonUs({user: user, fields: fields });
+    pug_html += snippets.nonUs({view: view, user: user, fields: fields });

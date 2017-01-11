@@ -39,7 +39,6 @@ module.exports = {
       'click #save-financial-info': api.submitAction,
       'focus #ssn' : 'showSSNPopover',
       'focuseout #ssn' : 'hideSSNPopover',
-      'keyup #zip_code': 'changeZipCode',
       'change .js-city': 'changeAddressManually',
       'change .js-state': 'changeAddressManually',
       'change #country': 'changeCountry',
@@ -292,52 +291,6 @@ module.exports = {
       });
     },
 
-    changeCountry(e) {
-      const usClass1 = 'col-lg-6 text-xl-right text-lg-left ';
-      const usClass2 = 'col-lg-6 ';
-      const foreignClass1 = 'col-lg-5 text-xl-right text-lg-left ';
-      const foreignClass2 = 'col-lg-7 ';
-
-      let $target = $(e.target);
-      let country = $target.val();
-
-      let $foreignCountryRow = $('.foreign-country-row');
-      let $foreignCountryPhoneContainer = $foreignCountryRow.find('.foreign-country-phone');
-      let $foreignCountryPhoneField = $foreignCountryPhoneContainer.find('.phone');
-
-      let $usRow = $('.us-row');
-      let $usPhoneContainer = $usRow.find('.us-phone');
-      let $usPhonePhoneField = $usPhoneContainer.find('.phone');
-
-      if (country == 'US') {
-        $foreignCountryRow.hide();
-        $foreignCountryPhoneField.appendTo($usPhoneContainer);
-
-        $foreignCountryPhoneField.find('label')
-          .removeClass(foreignClass1)
-          .addClass(usClass1);
-
-        $foreignCountryPhoneField.find('div')
-          .removeClass(foreignClass2)
-          .addClass(usClass2);
-
-        $usRow.show();
-      } else {
-        $usRow.hide();
-        $usPhonePhoneField.appendTo($foreignCountryPhoneContainer);
-
-        $usPhonePhoneField.find('label')
-          .removeClass(usClass1)
-          .addClass(foreignClass1);
-
-        $usPhonePhoneField.find('div')
-          .removeClass(usClass2)
-          .addClass(foreignClass2);
-
-        $foreignCountryRow.show();
-      }
-    },
-
     showSSNPopover(event){
       $('#ssn').popover({
         trigger: 'focus',
@@ -357,26 +310,6 @@ module.exports = {
 
     hideSSNPopover(event){
       $('#ssn').popover('hide');
-    },
-
-    changeZipCode(e) {
-      // if not 5 digit, return
-      if (e.target.value.length < 5) return;
-      if (!e.target.value.match(/\d{5}/)) return;
-      this.getCityStateByZipCode(e.target.value, ({ success=false, city='', state='' }) => {
-        if (success) {
-          this.$('.js-city-state').text(`${city}, ${state}`);
-          // this.$('#city').val(city);
-          this.$('.js-city').val(city);
-          $('form input[name=city]').val(city);
-          // this.$('#state').val(city);
-          this.$('.js-state').val(state);
-          $('form input[name=state]').val(state);
-
-        } else {
-          console.log('error');
-        }
-      });
     },
 
     resetAddressValues() {
