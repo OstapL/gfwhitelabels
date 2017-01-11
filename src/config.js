@@ -8,9 +8,11 @@ global.formcServer = "https://api-formc-dev.growthfountain.com";
 global.investmentServer = "https://api-investment-dev.growthfountain.com";
 //global.investmentServer = "http://localhost:8003";
 global.filerServer = "https://api-filer-dev.growthfountain.com";
-global.esignServer = 'https://api-esign-dev.growthfountain.com';
+// global.esignServer = 'https://api-esign-dev.growthfountain.com';
+global.esignServer = 'https://api-esign.growthfountain.com';
 global.commentsServer = "https://api-comments-dev.growthfountain.com";
 global.blogServer = "https://api-blog-dev.growthfountain.com";
+global.bucketServer = "http://growthfountain-storage.s3-website-us-west-1.amazonaws.com";
 
 global.teamName = 'Team';
 global.teamTitle = "Meet The Team";

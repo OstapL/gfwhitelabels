@@ -1,5 +1,8 @@
+-
+  var countryDirective = require('directives/country/index.js');
+  var ssnDirective = require('directives/ssn/index.js');
 
-- pug_html += app.breadcrumbs('Profile', '', [ ['Home', '/'], ['Profile', ''],]);
+  pug_html += app.breadcrumbs('Profile', '', [ ['Home', '/'], ['Profile', ''],]);
 
 .container.profile.pt-50
   .row
@@ -77,98 +80,7 @@
                                 'placeholder': 'Last Name',
                                 'value': user.last_name,
                               });
-                      -
-                        pug_html += app.fields.fieldChoiceLabel('country', _.extend({
-                            'empty': { '': 'Choose Country' },
-                            'value': user.country,
-                          }, fields.country));
-
-                        pug_html += app.fields.textLabel('street_address_1', _.extend({
-                            'type': 'text',
-                            'value': user.street_address_1,
-                          }, fields.street_address_1))
-
-                        pug_html += app.fields.textLabel('street_address_2', _.extend({
-                            'type': 'text',
-                            'value': user.street_address_2,
-                          }, fields.street_address_2))
-
-                      .us-row(style="display:" + (user.country == 'US' ? 'block' : 'none'))
-                        input(type="hidden" name="city" value=user.city disabled=((user.country=='US') ? false : true))
-                        input(type="hidden" name="state" value=user.state disabled=((user.country=='US') ? false : true))
-                        .row
-                          .col-xl-6.col-lg-6
-                            //if user.country == 'US'
-                            -
-                              pug_html += app.fields.textLabel('zip_code', _.extend({
-                                  'class1': 'col-xl-6 col-lg-12 text-xl-right text-lg-left',
-                                  'class2': 'col-xl-6 col-lg-12 input-min-width',
-                                  'type': 'text',
-                                  'value': user.zip_code,
-                                }, fields.zip_code))
-
-                          .col-xl-6.col-lg-6.city_states.required
-                            .row
-                              label.col-xl-5.col-lg-12.col-md-6.col-sm-6.col-xs-6.text-xl-right.text-lg-left City/State
-                              .col-xl-7.col-lg-12.col-md-6.col-sm-6.col-xs-6
-                                a(
-                                  data-toggle="modal"
-                                  data-target="#city_state_modal"
-                                  href="#city_state_modal"
-                                ).change_state_city
-                                  span.input-value.js-city-state
-                                    | #{ user.city || '(City)' }, #{ user.state || '(State)' }
-                                  i.fa.fa-pencil-square-o.link-1
-                        .row
-                          .col-xl-6.col-lg-6.us-phone
-                            if user.country == 'US'
-                              -
-                                pug_html += app.fields.textLabel('phone', _.extend({
-                                    'class1': 'col-xl-6 col-lg-12 text-xl-right text-lg-left',
-                                    'class2': 'col-xl-6 col-lg-12 input-min-width',
-                                    'type': 'text',
-                                    'value': user.phone,
-                                  }, fields.phone));
-
-                      .row.foreign-country-row(style="display:" + (user.country == 'US' ? 'none' : 'block'))
-                        .col-xl-6.col-lg-6
-                          -
-                            pug_html += app.fields.textLabel('city', _.extend({
-                                'class1': 'col-xl-6 col-lg-12 text-xl-right text-lg-left',
-                                'class2': 'col-xl-6 col-lg-12 input-min-width',
-                                'type': 'text',
-                                'value': user.city,
-                              }, fields.city))
-                        .col-xl-6.col-lg-6
-                          -
-                            pug_html += app.fields.textLabel('state', _.extend({
-                                'class1': 'text-lg-right col-xl-5 p-t-0 m-b-0 m-b-lg-1',
-                                'class2': 'col-xl-7 input-min-width',
-                                'type': 'text',
-                                'label': 'State/Province/ Region',
-                                'placeholder': 'State/Province/Region',
-                                'value': user.state,
-                              }))
-
-                      .row.foreign-country-row(style="display:" + (user.country == 'US' ? 'none' : 'block'))
-                        .col-xl-6.col-lg-6
-                          //if user.country != 'US'
-                          -
-                            pug_html += app.fields.textLabel('zip_code1', _.extend({
-                                'class1': 'col-xl-6 col-lg-12 text-xl-right text-lg-left',
-                                'class2': 'col-xl-6 col-lg-12 input-min-width',
-                                'type': 'text',
-                                'value': user.zip_code,
-                              }, fields.zip_code, { 'label': 'Postal Code' }))
-                        .col-xl-5.col-lg-6.foreign-country-phone
-                          if user.country != 'US'
-                            -
-                              pug_html += app.fields.textLabel('phone', _.extend({
-                                  'class1': 'col-xl-6 col-lg-12 text-xl-right text-lg-left',
-                                  'class2': 'col-xl-6 col-lg-12 input-min-width',
-                                  'type': 'text',
-                                  'value': user.phone,
-                                }, fields.phone))
+                      | !{ countryDirective(this).render() }
                       .row
                         .col-xl-12
                           .border-bottom.m-t-2.m-b-3
@@ -363,21 +275,8 @@
                             |  Savings
                       .row
                         .col-xl-12
-                          p.m-b-1 In order to pay you any dividends or revenue share, regulations require GrowthFountain to collect your Taxpayer Identification Number.  Don’t worry we keep this information safe, secure and encrypted on a separate server.
                           -
-                            pug_html += app.fields.textLabel('social_security', _.extend({
-                              'type': 'text',
-                              placeholder: 'Social Security #',
-                              class1: 'col-xl-3 col-lg-12 text-xl-right text-lg-left m-b-0 p-t-0 m-b-lg-1',
-                              label: 'Social Security number (SSN) or Tax ID (ITIN/EIN)',
-                              'value': user.social_security
-                            }, fields.social_security))
-                          -
-                            pug_html += app.fields.textLabel('social_security_re', _.extend({
-                              'type': 'text',
-                              label: 'Re-Enter',
-                              'value': user.social_security_re
-                            }, fields.social_security_re))
+                            pug_html += ssnDirective(this).render();
 
                       .form-group.row.clearfix.m0
                         .col-lg-12.mt30.text-xs-center
@@ -387,12 +286,6 @@
                               data-method="PATCH"
                             )#save-financial-info.btn.btn-primary.pull-lg-right SAVE
 
-  .popover-content-ssn
-    i.fa.fa-info-circle
-    span Why do we need this? I know it seems terribly invasive but we are required to obtain your socialsecurity number for two reasons,
-    p 1) regulators require we comply with know your customer and anti-money laundering rules and;
-    p 2) companies will need to provide you with tax information based on your investment.
-    p Don’t worry, we’re obsessive about your privacy.
 
 //MODAL
 div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")#city_state_modal.modal.fade

@@ -16,12 +16,14 @@ class GeoCoder {
     this.view = view;
     this.fields = view.fields;
     this.values = view.model;
-    if(forUSA == 1) {
+    // if(forUSA == 1) {
       this.template = require('./templates/usa.pug');
-    } else {
-      this.template = require('./templates/non_usa.pug');
-    }
+    // } else {
+    //   this.template = require('./templates/non_usa.pug');
+    // }
     this.resultHtml = '';
+    // fix me
+    // as script loads async we can add multiple google api scripts
     if(!window.google || !window.google.maps) {
       let p = document.createElement("script");
       p.type = "text/javascript";
@@ -48,6 +50,10 @@ class GeoCoder {
     });
     this.$resultHtml = $(this.resultHtml);
     this.attacheEvents();
+
+    if (this.values.zip_code)
+      setTimeout(() => { $('#zip_code').trigger('change'); }, 50);
+
     return this;
   }
 

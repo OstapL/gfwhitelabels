@@ -6,6 +6,7 @@ if attr.allowQuestion
         input(type="text" name="body" placeholder="Type your text here..." value='').w-100.text-body
       .col-lg-3.p-r-0.text-xl-right.text-xs-center.p-t-sm-1
         button(type="button").btn.btn-primary.text-uppercase.pull-lg-right.ask-question Submit
+
 div(class=(attr.cssClass || '')).p-xs-0
   .comments
     -
@@ -15,7 +16,7 @@ div(class=(attr.cssClass || '')).p-xs-0
       }, attr);
 
     each c in comments
-      | !{ app.fields.comment(c, 0, options) }
+      | !{ helpers.fields.comment(c, 0, options, helpers) }
 
 .stubs.collapse
   .row

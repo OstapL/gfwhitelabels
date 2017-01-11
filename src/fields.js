@@ -1,8 +1,8 @@
 const helpers = {
   date: require('./helpers/dateHelper.js'),
   format: require('./helpers/formatHelper.js'),
-  text: require('helpers/textHelper.js'),
-  mimetypeIcons: require('helpers/mimetypeIcons.js'),//TODO: add resolve method and make resolveIconHelper
+  text: require('./helpers/textHelper.js'),
+  icons: require('./helpers/iconsHelper.js'),
 };
 
 let exports = {
@@ -197,31 +197,6 @@ let exports = {
     return template(attr);
   },
 
-  // Fixme 
-  // Что это за название филда такое ? и шаблон с целым dashboard ?
-  investment(i, attr) {
-    attr = attr || {};
-    const template =  require('./templates/dashboardInvestment.pug');
-    return template({
-      i: i,
-      attr: attr,
-      helpers: helpers
-    });
-  },
-
-  comment(c, level, attr) {
-    const template = require('./templates/comment.pug');
-    attr = attr || {};
-    if (!attr.helpers)
-      attr.helpers = helpers;
-
-    return template({
-      comment: c,
-      level: level,
-      attr: attr,
-    });
-  },
-
   userProfileDropzone(name, attr) {
     let noimg = '/img/default/Default_photo.png';
     attr.data = attr.data || {};
@@ -339,9 +314,7 @@ let exports = {
 
     attr.icon = attr.icon || 'file';
 
-    attr.fileIcon = attr.data.mime
-      ? helpers.mimetypeIcons[attr.data.mime.split('/')[1]]
-      : attr.type;
+    attr.fileIcon = helpers.icons.resolveIconPath(attr.data.mime, 'file');
 
     attr.default = attr.default || '/img/default/file.png';
     attr.text = attr.text || 'Drop your PDF or DOC here or click to upload';

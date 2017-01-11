@@ -230,6 +230,13 @@ let app = {
     })(window,document,'script','dataLayer', id);
   },
 
+  getFilerUrl(file) {
+    if (file.startsWith('http://') || file.startsWith('https://'))
+      return file;
+
+    return `${bucketServer}/${file}`;
+  }
+
 };
 
 // Что-то пахнет говнецом

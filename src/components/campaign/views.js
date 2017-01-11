@@ -6,7 +6,7 @@ const usaStates = require('helpers/usaStates.js');
 
 const helpers = {
   text: textHelper,
-  mimetypeIcons: require('helpers/mimetypeIcons.js'),
+  icons: require('helpers/iconsHelper.js'),
 };
 
 let countries = {};
@@ -402,7 +402,7 @@ module.exports = {
       'keyup .us-fields :input[name*=zip_code]': 'changeZipCode',
       'click .update-location': 'updateLocation',
       'click .link-2': 'openPdf',
-      'change .country-select': 'changeCountry',
+      'change #country': 'changeCountry',
       'change #payment_information_type': 'changePaymentType',
       'keyup .typed-name': 'copyToSignature',
       'keyup #annual_income,#net_worth': 'updateLimitInModal',
@@ -454,6 +454,24 @@ module.exports = {
         }
       };
 
+      this.fields.payment_information_data.schema.ssn = _.extend(this.fields.payment_information_data.schema.ssn = {}, {
+        type: 'string',
+        fn: function(value, attr, fn, model, computed) {
+          if (this.ssn != this.ssn_re)
+            throw `Social security fields don't match`;
+        },
+      });
+
+      this.fields.payment_information_data.schema.ssn_re = _.extend(this.fields.payment_information_data.schema.ssn_re = {}, {
+        type: 'string',
+        fn: function(value, attr, fn, model, computed) {
+          if (this.ssn != this.ssn_re)
+            throw `Social security fields don't match`;
+        },
+      });
+
+      this.user.ssn_re = this.user.ssn;
+
       this.labels = {
         country: 'Country',
         personal_information_data: {
@@ -468,10 +486,12 @@ module.exports = {
           account_number: 'Account Number',
           account_number_re: 'Account Number Again',
           routing_number: 'Routing Number',
+          ssn: 'Social Security number (SSN) or Tax ID (ITIN/EIN)',
+          ssn_re: 'Re-enter',
         },
         payment_information_type: 'I Want to Pay Using',
         amount: 'Amount',
-        fee: 'Fee',
+        fee: 'Commission',
         is_reviewed_educational_material: `I confirm and represent that (a) I have reviewed
           the educational material that has been made available on this website, (b) I understand
           that the entire amount of my investment may be lost and (c) I am in a
@@ -491,6 +511,11 @@ module.exports = {
           any investment advice or recommendations.`,
       };
 
+      this.snippets = {
+        us: require('./templates/snippets/usFields.pug'),
+        nonUs: require('./templates/snippets/nonUsFields.pug'),
+      };
+
       this.assignLabels();
 
       this.getCityStateByZipCode = require("helpers/getSityStateByZipCode");
@@ -504,6 +529,7 @@ module.exports = {
       this.$el.html(
         this.template({
           serverUrl: serverUrl,
+          snippets: this.snippets,
           Urls: Urls,
           fields: this.fields,
           values: this.model,
@@ -778,14 +804,21 @@ module.exports = {
     },
 
     changeCountry(e) {
-      let val = $(e.target).val();
-      if (val == 'US') {
-        $('.us-fields').show().find(':input').prop('disabled', false);
-        $('.other-countries-fields').hide().find(':input').prop('disabled', true);
-      } else {
-        $('.us-fields').hide().find(':input').prop('disabled', true);
-        $('.other-countries-fields').show().find(':input').prop('disabled', false);
-      }
+      const isUS = e.target.value === 'US';
+
+      let $row = isUS ? $('.other-countries-fields') : $('.us-fields');
+
+      if (!$row.length)
+        return;
+
+      let args = {
+        fields: this.fields,
+        user: this.user,
+      };
+
+      $row.after(isUS ? this.snippets.us(args) : this.snippets.nonUs(args));
+
+      $row.remove();
     },
 
     submit(e) {
