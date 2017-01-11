@@ -454,7 +454,7 @@ module.exports = {
         }
       };
 
-      this.fields.payment_information_data.ssn = _.extend(this.fields.payment_information_data.ssn, {
+      this.fields.payment_information_data.schema.ssn = _.extend(this.fields.payment_information_data.schema.ssn = {}, {
         type: 'password',
         fn: function(value, attr, fn, model, computed) {
           if (this.ssn != this.ssn_re)
@@ -462,7 +462,7 @@ module.exports = {
         },
       });
 
-      this.fields.payment_information_data.ssn_re = _.extend(this.fields.payment_information_data.ssn_re = {}, {
+      this.fields.payment_information_data.schema.ssn_re = _.extend(this.fields.payment_information_data.schema.ssn_re = {}, {
         type: 'password',
         fn: function(value, attr, fn, model, computed) {
           if (this.ssn != this.ssn_re)
