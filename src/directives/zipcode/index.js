@@ -10,13 +10,17 @@ const mainElement = '#content';
 
 class GeoCoder {
 
-  constructor(view, template) { 
+  constructor(view, forUSA) {
     this.overlord = document.querySelector(mainElement);
 
     this.view = view;
     this.fields = view.fields;
     this.values = view.model;
-    this.template = require('./templates/teamMember.pug');
+    if(forUSA == 1) {
+      this.template = require('./templates/usa.pug');
+    } else {
+      this.template = require('./templates/non_usa.pug');
+    }
     this.resultHtml = '';
     if(!window.google || !window.google.maps) {
       let p = document.createElement("script");
