@@ -1,86 +1,164 @@
-section.home-section.bg-dark-alfa-30.hide-bg-fixed(style="background: url(/img/bg.jpg) center center no-repeat; background-size: cover; background-attachment: fixed;")
-    .container
-        .row
-            .js-height-full
-                .home-content
-                    .home-text-main.text-lg-center
-                        h1.text-uppercase.dosis your success is our success
-                        .col-lg-6.offset-lg-3.text-lg-center.text-sm-center.text-xs-center
-                            span.small-text Invest in your neighbor, your community, or entrepreneurs you believe in
-                        .col-lg-12.m-t-1.m-b-2
-                            a(href="/pg/education").link-6 Understand the Risks
-                        .col-lg-12
-                            a(href="/companies").btn.btn-lg.btn-primary INVEST
-                            span.hidden-xs  
-                            a(href="/company/create").btn.btn-lg.btn-primary RAISE CAPITAL
+//.home-section.hidden-sm-down
+  section.main-page-slider
+    div(data-ride="carousel" data-interval="5000")#carousel-main.carousel.carousel-main
+      ol.carousel-indicators
+        li(data-target="#carousel-main" data-slide-to="0").active
+        li(data-target="#carousel-main" data-slide-to="1")
+        li(data-target="#carousel-main" data-slide-to="2")
+        li(data-target="#carousel-main" data-slide-to="3")
+
+      div(role="listbox").carousel-inner
+        .carousel-item.active.t40
+          img(src="/img/slide_1.jpg" alt="...").img-fluid
+          .carousel-caption
+            .home-content
+              .home-text-main.text-lg-center
+                .col-lg-12
+                  h1.text-uppercase.dosis your success is our success
+                  .col-lg-6.offset-lg-3.text-lg-center.text-sm-center.text-xs-center
+                    span.small-text Invest in your neighbor, your community, or entrepreneurs you believe in
+                  .col-lg-12.m-t-1.m-b-2
+                    a(href="/pg/education").link-6 Understand the Risks
+                  .col-lg-12
+                    a(href="/companies").btn.btn-lg.btn-primary INVEST
+                    span.hidden-xs  
+                      a(href="/company/create").btn.btn-lg.btn-primary RAISE CAPITAL
+
+        .carousel-item.t40
+          img(src="/img/slide_2.jpg" alt="...").img-fluid
+          .carousel-caption
+            .home-content
+              .home-text-main.text-lg-center
+                .col-lg-12
+                  h1.text-uppercase.dosis your success is our success
+                  .col-lg-6.offset-lg-3.text-lg-center.text-sm-center.text-xs-center
+                    span.small-text Invest in your neighbor, your community, or entrepreneurs you believe in
+                  .col-lg-12.m-t-1.m-b-2
+                    a(href="/pg/education").link-6 Understand the Risks
+                  .col-lg-12
+                    a(href="/companies").btn.btn-lg.btn-primary INVEST
+                    span.hidden-xs  
+                      a(href="/company/create").btn.btn-lg.btn-primary RAISE CAPITAL
+        .carousel-item.t40
+          img(src="/img/slide_3.jpg" alt="...").img-fluid
+          .carousel-caption
+            .home-content
+              .home-text-main.text-lg-center
+                .col-lg-12
+                  h1.text-uppercase.dosis your success is our success
+                  .col-lg-6.offset-lg-3.text-lg-center.text-sm-center.text-xs-center
+                    span.small-text Invest in your neighbor, your community, or entrepreneurs you believe in
+                  .col-lg-12.m-t-1.m-b-2
+                    a(href="/pg/education").link-6 Understand the Risks
+                  .col-lg-12
+                    a(href="/companies").btn.btn-lg.btn-primary INVEST
+                    span.hidden-xs  
+                      a(href="/company/create").btn.btn-lg.btn-primary RAISE CAPITAL
+        .carousel-item.t40
+          img(src="/img/slide_4.jpg" alt="...").img-fluid
+          .carousel-caption
+            .home-content
+              .home-text-main.text-lg-center
+                .col-lg-12
+                  h1.text-uppercase.dosis your success is our success
+                  .col-lg-6.offset-lg-3.text-lg-center.text-sm-center.text-xs-center
+                    span.small-text Invest in your neighbor, your community, or entrepreneurs you believe in
+                  .col-lg-12.m-t-1.m-b-2
+                    a(href="/pg/education").link-6 Understand the Risks
+                  .col-lg-12
+                    a(href="/companies").btn.btn-lg.btn-primary INVEST
+                    span.hidden-xs  
+                      a(href="/company/create").btn.btn-lg.btn-primary RAISE CAPITAL
+
+    a(href="#carousel-main"
+    role="button" 
+    data-slide="prev").left.carousel-control
+      span(aria-hidden="true").icon-prev
+      span.sr-only Previous
+    a(href="#carousel-main"
+    role="button" 
+    data-slide="next").right.carousel-control
+      span(aria-hidden="true").icon-next
+      span.sr-only Next
+section.home-section.bg-dark-alfa-30.hide-bg-fixed(style="background: url(/img/bg_1.jpg) left center no-repeat; background-size: cover; background-attachment: fixed;")
+  .container
+    .row
+      .js-height-full
+        .home-content
+          .home-text-main.text-lg-center
+            h1.text-uppercase.dosis.m-b-1 your success is our success
+            .col-lg-6.offset-lg-3.text-lg-center.text-sm-center.text-xs-center
+              span.small-text Invest in your neighbor, your community, or entrepreneurs you believe in
+            .col-lg-12.m-t-1.m-b-2
+              a(href="/pg/education").link-6 Understand the Risks
+            .col-lg-12
+              a(href="/companies").btn.btn-lg.btn-primary INVEST
+              span.hidden-xs  
+                a(href="/company/create").btn.btn-lg.btn-primary RAISE CAPITAL
 
 section.campaing-list
-    .container#campaignList
-        .col-lg-12
-            h2.dosis.text-uppercase.text-sm-center.text-xs-center.m-t-85.m-b-3 What's Popular
+  .container#campaignList
+    .col-lg-12
+      h2.dosis.text-uppercase.text-sm-center.text-xs-center.m-t-85.m-b-3 What's Popular
+    include ../components/campaign/templates/_list.pug
+    .col-lg-12.text-lg-center.text-md-center.text-xs-center
+      a(href="/companies").link-4 See All
 
-        include ../components/campaign/templates/_list.pug
-
-        .col-lg-12.text-lg-center.text-md-center.text-xs-center
-            a(href="/companies").link-4 See All
-
-section.home-wrap-text-block.hide-bg-fixed(style="background: url(/img/section-bg-3.jpg) center center no-repeat; background-size: cover; background-attachment: fixed;")
-    .opasity-block
-        .container.text-lg-center.text-xs-center.text-sm-center
-            .col-lg-6.offset-lg-3
-                h2.dosis.text-uppercase INVEST IN YOUR LOCAL COMMUNITY
-                h3 Find companies in your neighborhood, and help them grow through your investment.
-            .col-lg-12
-                a(href="/account/login").btn.btn-lg.btn-secondary.text-uppercase Sign up to start investing
-                .learn-link
-                    a(href="/pg/education").link-3 Understand the Risks
+section.home-wrap-text-block.hide-bg-fixed(style="background: url(/img/section-bg-3.jpg) center center no-repeat; background-size: cover; background-attachment: fixed; height: 340px;")
+  .opasity-block
+    .container.text-lg-center.text-xs-center.text-sm-center
+      .col-lg-6.offset-lg-3.m-t-2
+        h2.dosis.text-uppercase.m-t-3 INVEST IN YOUR LOCAL COMMUNITY
+        h3 Find companies in your neighborhood, and help them grow through your investment.
+      .col-lg-12
+        a(href="/account/login").btn.btn-lg.btn-secondary.text-uppercase Sign up to start investing
+        .learn-link
+          a(href="/pg/education").link-3 Understand the Risks
 
 section.home-what-is
-    .container
-        .col-lg-8.offset-lg-2
-            h2.dosis.text-uppercase.text-sm-center.text-xs-center.m-t-3.mb30 WHAT IS GROWTHFOUNTAIN
-            .row
-                .col-lg-12
-                    h3.m-t-0.m-b-1.text-xs-center We banded together with a simple mission – to connect small businesses to the tools they need to succeed – including financial, human and social capital.
-                    h3.m-t-0.text-xs-center Our goal is to level the playing field and make things easy for entrepreneurs to focus on what matters – their product or service!
-            .row
-                .col-lg-12
-                    .embed-responsive.embed-responsive-16by9.boxshadow
-                        iframe(
-                            embed-responsive-item="true" 
-                            src="https://player.vimeo.com/video/198101157?title=0&amp;byline=0&amp;portrait=0" 
-                            data-webkitallowfullscreen="" 
-                            data-mozallowfullscreen="" 
-                            data-allowfullscreen=""
-                        )
+  .container
+    .col-lg-8.offset-lg-2
+      h2.dosis.text-uppercase.text-sm-center.text-xs-center.m-t-3.mb30 WHAT IS GROWTHFOUNTAIN
+      .row
+        .col-lg-12
+          h3.m-t-0.m-b-1.text-xs-center We banded together with a simple mission – to connect small businesses to the tools they need to succeed – including financial, human and social capital.
+          h3.m-t-0.text-xs-center Our goal is to level the playing field and make things easy for entrepreneurs to focus on what matters – their product or service!
+      .row
+        .col-lg-12
+          .embed-responsive.embed-responsive-16by9.boxshadow
+            iframe(
+              embed-responsive-item="true" 
+              src="https://player.vimeo.com/video/198101157?title=0&amp;byline=0&amp;portrait=0" 
+              data-webkitallowfullscreen="" 
+              data-mozallowfullscreen="" 
+              data-allowfullscreen=""
+            )
             
-
-section.home-wrap-text-block.raise-wrap.hide-bg-fixed(style="background: url(/img/raise-capital.png) center center no-repeat; background-size: cover; background-attachment: fixed;")
-    .opasity-block
-        .container.text-lg-center.text-xs-center
-            .col-lg-6.offset-lg-3
-                h2.dosis.text-uppercase  Raise capital with us
-                h3 How does conducting a Regulation Crowdfunding offering actually work? Access our investor network to raise capital for your company now.
-            .col-lg-12.m-b-3
-                a(href="/company/create").btn.btn-lg.btn-primary.text-uppercase raise capital
-                a(href="/pg/entrepreneurquestions").btn.btn-lg.btn-secondary.text-uppercase learn more
+section.home-wrap-text-block.raise-wrap.hide-bg-fixed(style="background: url(/img/raise-capital.png) center center no-repeat; background-size: cover; background-attachment: fixed; height: 340px;")
+  .opasity-block
+    .container.text-lg-center.text-xs-center
+      .col-lg-6.offset-lg-3.m-t-2
+        h2.dosis.text-uppercase  Raise capital with us
+        h3 How does conducting a Regulation Crowdfunding offering actually work? Access our investor network to raise capital for your company now.
+      .col-lg-12.m-b-3
+        a(href="/company/create").btn.btn-lg.btn-primary.text-uppercase raise capital
+        a(href="/pg/entrepreneurquestions").btn.btn-lg.btn-secondary.text-uppercase learn more
 section.home-our-partners
-    .container
-        .row
-            .col-lg-12
-                h2.dosis.text-uppercase.text-xs-center.mb25 OUR PARTNERS
-        .row
-
-            .col-lg-4.text-xs-center.p-b-3
-                a(href="http://www.callahan.com/" target="_blank")
-                    img(src="/img/callahan.png").img-fluid.text-lg-right.text-xs-center.m-x-auto
-            .col-lg-4.text-lg-center.text-xs-center.m-x-auto.p-b-3
-                a(href="https://www.jdcu.org/" target="_blank")
-                    img(src="/img/logo_jd.png").img-fluid.text-xs-center.m-x-auto
-            .col-lg-4.text-lg-left.m-x-auto.p-b-3
-                a(href="https://www.rivermarkcu.org/" target="_blank")
-                    img(src="/img/logo_rivermark.png" ).img-fluid.text-xs-center.m-x-auto
-        .row.text-xs-center
-            .col-lg-4.text-xs-center
-                a(href="https://www.dcu.org/" target="_blank")
-                    img(src="/img/logo_dcu.jpg").img-fluid.text-xs-center.m-x-auto.p-r-1
+  .container
+    .row
+      .col-lg-12
+        h2.dosis.text-uppercase.text-xs-center.mb25 OUR PARTNERS
+    .row
+      .col-lg-4.text-xs-center.p-b-3
+        a(href="http://www.callahan.com/" target="_blank")
+          img(src="/img/callahan.png").img-fluid.text-lg-right.text-xs-center.m-x-auto
+      .col-lg-4.text-lg-center.text-xs-center.m-x-auto.p-b-3
+        a(href="https://www.jdcu.org/" target="_blank")
+          img(src="/img/logo_jd.png").img-fluid.text-xs-center.m-x-auto
+      .col-lg-4.text-lg-left.m-x-auto.p-b-3
+        a(href="https://www.rivermarkcu.org/" target="_blank")
+          img(src="/img/logo_rivermark.png" ).img-fluid.text-xs-center.m-x-auto
+    .row.text-xs-center
+      .col-lg-12.text-xs-center
+        a(href="https://www.dcu.org/" target="_blank")
+          img(src="/img/logo_dcu.jpg").img-fluid.text-xs-center.m-x-auto

@@ -97,16 +97,10 @@ let userModel = Backbone.Model.extend({
   },
 
   logout: function () {
-    $.ajax({
-      type: 'POST',
-      url: serverUrl + Urls.rest_logout(),
-      success: (data) => {
-        localStorage.removeItem('token');
-        localStorage.removeItem('user');
-        app.trigger('userLogout', data);
-        window.location = '/';
-      },
-    });
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    app.trigger('userLogout', {});
+    window.location = '/';
   },
 
   company: null,
