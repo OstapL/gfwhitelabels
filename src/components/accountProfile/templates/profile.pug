@@ -1,5 +1,5 @@
 -
-  var zipCodeDirective = require('directives/zipcode/index.js');
+  var countryDirective = require('directives/country/index.js');
 
   pug_html += app.breadcrumbs('Profile', '', [ ['Home', '/'], ['Profile', ''],]);
 
@@ -79,76 +79,7 @@
                                 'placeholder': 'Last Name',
                                 'value': user.last_name,
                               });
-                      -
-                        pug_html += app.fields.fieldChoiceLabel('country', _.extend({
-                            'empty': { '': 'Choose Country' },
-                            'value': user.country,
-                          }, fields.country));
-
-                        pug_html += app.fields.textLabel('street_address_1', _.extend({
-                            'type': 'text',
-                            'value': user.street_address_1,
-                          }, fields.street_address_1))
-
-                        pug_html += app.fields.textLabel('street_address_2', _.extend({
-                            'type': 'text',
-                            'value': user.street_address_2,
-                          }, fields.street_address_2))
-
-                      .us-row(style="display:" + (user.country == 'US' ? 'block' : 'none'))
-                        -
-                          pug_html += zipCodeDirective(this, 'profile.pug').render().resultHtml;
-
-                        .row
-                          .col-xl-6.col-lg-6.us-phone
-                            if user.country == 'US'
-                              -
-                                pug_html += app.fields.textLabel('phone', _.extend({
-                                    'class1': 'col-xl-6 col-lg-12 text-xl-right text-lg-left',
-                                    'class2': 'col-xl-6 col-lg-12 input-min-width',
-                                    'type': 'text',
-                                    'value': user.phone,
-                                  }, fields.phone));
-
-                      .row.foreign-country-row(style="display:" + (user.country == 'US' ? 'none' : 'block'))
-                        .col-xl-6.col-lg-6
-                          -
-                            pug_html += app.fields.textLabel('city', _.extend({
-                                'class1': 'col-xl-6 col-lg-12 text-xl-right text-lg-left',
-                                'class2': 'col-xl-6 col-lg-12 input-min-width',
-                                'type': 'text',
-                                'value': user.city,
-                              }, fields.city))
-                        .col-xl-6.col-lg-6
-                          -
-                            pug_html += app.fields.textLabel('state', _.extend({
-                                'class1': 'text-lg-right col-xl-5 p-t-0 m-b-0 m-b-lg-1',
-                                'class2': 'col-xl-7 input-min-width',
-                                'type': 'text',
-                                'label': 'State/Province/ Region',
-                                'placeholder': 'State/Province/Region',
-                                'value': user.state,
-                              }))
-
-                      .row.foreign-country-row(style="display:" + (user.country == 'US' ? 'none' : 'block'))
-                        .col-xl-6.col-lg-6
-                          //if user.country != 'US'
-                          -
-                            pug_html += app.fields.textLabel('zip_code1', _.extend({
-                                'class1': 'col-xl-6 col-lg-12 text-xl-right text-lg-left',
-                                'class2': 'col-xl-6 col-lg-12 input-min-width',
-                                'type': 'text',
-                                'value': user.zip_code,
-                              }, fields.zip_code, { 'label': 'Postal Code' }))
-                        .col-xl-5.col-lg-6.foreign-country-phone
-                          if user.country != 'US'
-                            -
-                              pug_html += app.fields.textLabel('phone', _.extend({
-                                  'class1': 'col-xl-6 col-lg-12 text-xl-right text-lg-left',
-                                  'class2': 'col-xl-6 col-lg-12 input-min-width',
-                                  'type': 'text',
-                                  'value': user.phone,
-                                }, fields.phone))
+                      | !{ countryDirective(this).render() }
                       .row
                         .col-xl-12
                           .border-bottom.m-t-2.m-b-3

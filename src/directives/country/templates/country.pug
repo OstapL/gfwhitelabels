@@ -1,0 +1,22 @@
+-
+  pug_html += app.fields.fieldChoiceLabel('country', _.extend({
+      'empty': { '': 'Choose Country' },
+      'value': user.country,
+    }, fields.country));
+
+  pug_html += app.fields.textLabel('street_address_1', _.extend({
+      'type': 'text',
+      'value': user.street_address_1,
+    }, fields.street_address_1))
+
+  pug_html += app.fields.textLabel('street_address_2', _.extend({
+      'type': 'text',
+      'value': user.street_address_2,
+    }, fields.street_address_2))
+
+if user.country == 'US'
+  -
+    pug_html += snippets.us({user: user, fields: fields});
+else
+  -
+    pug_html += snippets.nonUs({user: user, fields: fields });
