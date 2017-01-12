@@ -2,11 +2,17 @@ const formatHelper = require('helpers/formatHelper');
 const textHelper = require('helpers/textHelper');
 const companyFees = require('consts/companyFees.json');
 const typeOfDocuments = require('consts/typeOfDocuments.json');
+
 const usaStates = require('helpers/usaStates.js');
 
 const helpers = {
   text: textHelper,
   icons: require('helpers/iconsHelper.js'),
+  format: formatHelper,
+};
+
+const constants = {
+  AccountType: require('consts/bankAccount.json'),
 };
 
 let countries = {};
@@ -423,6 +429,39 @@ module.exports = {
       this.fields.payment_information_data.schema.account_number_re = { required: false };
       this.fields.personal_information_data.schema.phone = { required: true };
 
+      // this.fields.account_number.required = true;
+      this.fields.payment_information_data.schema.account_number = {
+        type: 'password',
+        fn: function(value, attr, fn, model, computed) {
+          if (this.account_number != this.account_number_re)
+            throw `Account number fields don't match`;
+        },
+      };
+
+      this.fields.payment_information_data.schema.account_number_re = {
+        type: 'password',
+        fn: function(value, attr, fn, model, computed) {
+          if (this.account_number != this.account_number_re)
+            throw `Account number fields don't match`;
+        },
+      };
+
+      this.fields.payment_information_data.schema.ssn = {
+        type: 'password',
+        fn: function(value, attr, fn, model, computed) {
+          if (this.ssn != this.ssn_re)
+            throw `Social security fields don't match`;
+        },
+      };
+
+      this.fields.payment_information_data.schema.ssn_re = {
+        type: 'password',
+        fn: function(value, attr, fn, model, computed) {
+          if (this.ssn != this.ssn_re)
+            throw `Social security fields don't match`;
+        },
+      };
+
       const validateAmount = (amount) => {
         amount = Number(amount);
         let min = this.model.campaign.minimum_increment;
@@ -453,22 +492,6 @@ module.exports = {
           choices: countries,
         }
       };
-
-      this.fields.payment_information_data.schema.ssn = _.extend(this.fields.payment_information_data.schema.ssn = {}, {
-        type: 'string',
-        fn: function(value, attr, fn, model, computed) {
-          if (this.ssn != this.ssn_re)
-            throw `Social security fields don't match`;
-        },
-      });
-
-      this.fields.payment_information_data.schema.ssn_re = _.extend(this.fields.payment_information_data.schema.ssn_re = {}, {
-        type: 'string',
-        fn: function(value, attr, fn, model, computed) {
-          if (this.ssn != this.ssn_re)
-            throw `Social security fields don't match`;
-        },
-      });
 
       this.user.ssn_re = this.user.ssn;
 
@@ -536,6 +559,7 @@ module.exports = {
           user: this.user,
           states: this.usaStates,
           countries: countries,
+          constants: constants,
         })
       );
 

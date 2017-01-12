@@ -11,16 +11,14 @@ const helpers = {
   fields: require('./fields.js'),
 };
 
-// const InvestmentStatus = {
-//   New: 0,
-//   Approved: 1,
-//   CanceledByClient: 2,
-//   CanceledByBank: 3,
-//   CanceledByInkvisitor: 4,
-// };
+const constants = {
+  AccountType: require('consts/bankAccount.json'),
+  InvestmentStatus: require('consts/investmentStatus.json'),
+};
 
-const activeStatuses = [0, 1];
-const canceledStatuses = [2, 3, 4];
+const activeStatuses = [constants.InvestmentStatus.New, constants.InvestmentStatus.Approved];
+const canceledStatuses = [constants.InvestmentStatus.CanceledByClient,
+    constants.InvestmentStatus.CanceledByBank, constants.InvestmentStatus.CanceledByInquisitor];
 
 let countries = {};
 _.each(require('helpers/countries.json'), (c) => { countries[c.code] = c.name; });
@@ -157,7 +155,6 @@ module.exports = {
     },
 
     render() {
-      this.getCityStateByZipCode = require("helpers/getSityStateByZipCode");
       this.usaStates = require("helpers/usaStates.js");
 
       this.$el.html(
@@ -168,6 +165,7 @@ module.exports = {
           company: app.user.get('company'),
           fields: this.fields,
           states: this.usaStates,
+          constants: constants,
         })
       );
 
