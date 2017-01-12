@@ -1,7 +1,7 @@
 
 mixin row(value, index)
   - var index = index;
-  .col-xl-12
+  div
     .col-lg-12(data-index=index class=name + ' addSectionBlock')
       .delete-section-container
         a(href="#" data-section=name data-index=index).delete-sectionnew
@@ -35,10 +35,10 @@ mixin run()
 
   if first_run
     .row
-      b.col-lg-12.m-b-1 Previously held a different position with the issuer? Please list them:
+      p.font-weight-bold.col-lg-12.m-b-1 Previously held a different position with the issuer? Please list them:
 
     div(class=(attr.row == 0 ? '' : 'row ') + name + '_block' + (attr.required == true ? ' required ' : ' ') + ' nested')
-      div(class=(attr.row == 0 ? '' : 'row ') + name + '_container' + (attr.required == true ? ' required ' : ' ') + ' nested')
+      div(class=(attr.row == 0 ? '' : '') + name + '_container' + (attr.required == true ? ' required ' : ' ') + ' nested')
 
         if values == null || values.length == 0 || Object.keys(values).length == 0 
           +row({}, 0)

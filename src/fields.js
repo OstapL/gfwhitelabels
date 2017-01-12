@@ -127,6 +127,12 @@ let exports = {
   textLabel(name, attr) {
     attr.name = name;
     this.prepareField(name, attr);
+
+    attr.type = attr.type || 'text';
+    attr.value = attr.type == 'money'
+      ? helpers.format.formatPrice(attr.value)
+      : attr.value
+
     attr.class1 = attr.class1 || 'col-xl-3 col-lg-12 text-lg-left text-xl-right';
     attr.class2 = attr.class2 || 'col-xl-9 col-lg-12';
     const template = require('./templates/textLabel.pug');
