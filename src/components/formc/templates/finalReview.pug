@@ -100,7 +100,7 @@ section.formc-review
           |   MINIMUM OFFERING
         if values.campaign.security_type == 0 
           p.text-xs-center.font-weight-bold OFFERING PRICE: $ 
-            +frField('campaign.price_per_share', 'text')
+            +frField('campaign.price_per_share', 'money')
             |  per Share
           p.text-xs-center.font-weight-bold
             +frField('campaign.security_type', 'select')
@@ -233,12 +233,12 @@ section.formc-review
               .col-lg-6.col-md-6.col-sm-6.col-xs-12
                 p.font-weight-bold Price of security:
               .col-lg-6.col-md-6.col-sm-6.col-xs-12 $
-                +frField('campaign.price_per_share', 'text')
+                +frField('campaign.price_per_share', 'money')
           .row
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
               p.font-weight-bold Minimum target amount of offering:
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
-              +frField('campaign.minimum_raise', 'text')
+              +frField('campaign.minimum_raise', 'money')
           .row
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
               p.font-weight-bold Oversubscription allowed:
@@ -251,13 +251,7 @@ section.formc-review
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
               p.font-weight-bold Allocation method of oversubscription:
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
-              if values.campaign.security_type == 1
-                | Not Applicable
-              else
-                | First Come First Serve
-              //if values.campaign.minimum_raise == values.campaign.maximum_raise
-                | First Come First Served
-              //else
+              | First Come First Serve
           .row
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
               p.font-weight-bold Maximum amount of offering:
@@ -296,7 +290,7 @@ section.formc-review
             |  (the 
             u “Shares”)
             |  at an offering price of $
-            +frField('campaign.price_per_share', 'text')
+            +frField('campaign.price_per_share', 'money')
             |  per Share for a maximum aggregate offering price of 
             +frField('campaign.maximum_raise', 'money').
           p.pb10.text-indent The Company has established a minimum offering of at least 
@@ -332,7 +326,7 @@ section.formc-review
             |  (the “Company” also referred to as an “issuer"), is offering a Revenue Share Agreement similar to a promissory note in the form attached hereto as Exhibit D (each, a “Note” and collectively, the “
             u Notes
             | ”) minimum investment of 
-            +frField('campaign.minimum_increment')
+            +frField('campaign.minimum_increment', 'money')
             |   targeting a maximum aggregate offering price of 
             +frField('campaign.maximum_raise', 'money')
           p.pb10.text-indent The Company has established a minimum aggregate offering price of  
@@ -720,8 +714,11 @@ section.formc-review
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u Description of Securities, Material Terms and Other Rights:
         each v,k in values.formc.outstanding_securities
-          p.pb10
-            if values.formc.outstanding_securities[k].security_type == 5
+          if values.formc.outstanding_securities[k].security_type == 5
+            p.pb10
+              b 
+                +frField('formc.outstanding_securities[' + k + '].custom_security_type', 'text')
+              |: 
               +frField('formc.outstanding_securities[' + k + '].terms_and_rights', 'text')
 
       // page 14
@@ -984,18 +981,18 @@ section.formc-review
                     td.text-xs-center
                       +frField('formc.sold_securities_data[1].total_income', 'money')
                   tr
-                    td Taxes Paid
+                    td Tabable income
+                    td.text-xs-center
+                      +frField('formc.sold_securities_data[0].taxable_income', 'money')
+                    td.text-xs-center
+                      +frField('formc.sold_securities_data[1].taxable_income', 'money')
+                  tr
+                    td Total tax
                     td.text-xs-center
                       +frField('formc.sold_securities_data[0].total_tax', 'money')
                     td.text-xs-center
                       +frField('formc.sold_securities_data[1].total_tax', 'money')
 
-                  tr
-                    td Net Income
-                    td.text-xs-center
-                      +frField('formc.sold_securities_data[0].taxable_income', 'money')
-                    td.text-xs-center
-                      +frField('formc.sold_securities_data[1].taxable_income', 'money')
 
       // page 19
       section.page-formc-review.m-t-1
@@ -1380,7 +1377,7 @@ section.formc-review
         if values.formc.business_plan_data.length > 0
           - 
             pug_html += app.fields.fileDropzone('business_plan_file_id', {
-              data: values.formc.business_plan_data, 
+              data: values.formc.business_plan_data[0], 
               schema: fields.formc.business_plan_file_id,
               label: 'Your business plan'
             })

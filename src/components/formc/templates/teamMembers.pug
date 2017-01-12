@@ -19,9 +19,9 @@ section.create-company-team-add.container
   +menu('formc', 'team-members')
 
   //START RIGHT BLOCK
-  .col-lg-8
+  .col-lg-8.p-xs-0
     h2.text-uppercase.text-lg-center.text-xs-center.dosis.m-t-0.mb50 team members
-    .col-lg-12
+    .col-lg-12.p-xs-0
       .warning-block.warning-team-add.text-lg-left
         i.fa.fa-info-circle 
         span.warning-text Please enter all Officers, Directors and 20% Voting Shareholders.
@@ -30,9 +30,9 @@ section.create-company-team-add.container
           | 20% VOTING SHAREHOLDER means: no earlier than 120 days prior to the date of this offering, please list beneficial owners of 20% or more of issuer’s outstanding voting equity securities.
 
     form.form-section
-      .col-lg-12.m-t-1.m-b-2
+      .col-lg-12.m-t-1.m-b-2.p-xs-0
         b How many emploees do you have?
-      .col-xl-6.col-lg-6.required
+      .col-xl-6.col-lg-6.p-xs-0.required
         - 
           pug_html += app.fields.textLabel('full_time_employers', {
           class1:'col-xl-4 col-lg-12 text-lg-left text-xl-right p-t-0 m-b-0 m-b-lg-1',
@@ -41,7 +41,7 @@ section.create-company-team-add.container
           value: values.full_time_employers,
           required: true,
           })
-      .col-xl-6.col-lg-6.required
+      .col-xl-6.col-lg-6.p-xs-0.required
         - 
           pug_html += app.fields.textLabel('part_time_employers', {
           class1:'col-xl-4 col-lg-12 text-lg-left text-xl-right p-t-0 m-b-0 m-b-lg-1',
@@ -50,18 +50,18 @@ section.create-company-team-add.container
           value: values.part_time_employers,
           required: true,
           })
-      .col-lg-12.text-lg-center.text-md-center.text-sm-center.text-xs-center.m-t-2.m-b-2
+      .col-lg-12.text-lg-center.text-md-center.text-sm-center.text-xs-center.m-t-2.m-b-2.p-xs-0
         a(href='/formc/' + values.id + '/team-members/director/new').btn.text-uppercase.m-r-3 
           i.fa.fa-plus
           |  ADD DIRECTOR 
         a(href='/formc/' + values.id + '/team-members/officer/new').btn.text-uppercase 
           i.fa.fa-plus
           |  ADD OFFICER
-        a(href='/formc/' + values.id + '/team-members/shareholder/new').btn.text-uppercase.m-t-2 
+        a(href='/formc/' + values.id + '/team-members/shareholder/new').btn.text-uppercase.m-t-2.custom-btn 
           i.fa.fa-plus
           |  ADD 20% VOTING SHAREHOLDER
 
-      .col-lg-12.table-responsive.m-t-2
+      .col-lg-12.table-responsive.m-t-2.p-xs-0
         table.table.table-bordered.m-b-0.team-member-table
           thead
             tr.color-grey
@@ -108,19 +108,19 @@ section.create-company-team-add.container
                   td.text-xl-center &nbsp;
             each v,k in values.team_members
               - v.title = v.title ? v.title : [];
-              if (v.role.indexOf('0') != -11 && v.role.indexOf('1') != -1)
-                tr
-                  td 
-                    each r in v.role
-                      | #{ roles[r] },
-                  td.text-xs-center #{ v.first_name + ' ' + v.last_name }
-                  +isInvited(v)
-                  td.text-xl-center
-                    a(href="/formc/" + values.id + "/team-members/" + roles[v.role[0]].toLowerCase() + '/' + v.user_id).link-1
-                      i.fa.fa-pencil-square-o
-                  td.text-xl-center
-                    a(href="#" data-id=v.user_id data-role=roles[v.role]).link-1.delete-member
-                      i.fa.fa-times
+              for role,kk in v.role
+                if role != -1
+                  tr
+                    td 
+                      | #{ roles[role] }
+                    td.text-xs-center #{ v.first_name + ' ' + v.last_name }
+                    +isInvited(v)
+                    td.text-xl-center
+                      a(href="/formc/" + values.id + "/team-members/" + roles[role].toLowerCase() + '/' + v.user_id).link-1
+                        i.fa.fa-pencil-square-o
+                    td.text-xl-center
+                      a(href="#" data-id=v.user_id data-role=roles[v.role]).link-1.delete-member
+                        i.fa.fa-times
                 
 
       div(style="display: " +  (values.team_members.length >= 1 ? 'block' : 'none')).col-lg-12.pull-lg-right.p-r-0
