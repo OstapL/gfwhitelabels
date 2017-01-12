@@ -2,11 +2,17 @@ const formatHelper = require('helpers/formatHelper');
 const textHelper = require('helpers/textHelper');
 const companyFees = require('consts/companyFees.json');
 const typeOfDocuments = require('consts/typeOfDocuments.json');
+
 const usaStates = require('helpers/usaStates.js');
 
 const helpers = {
   text: textHelper,
   icons: require('helpers/iconsHelper.js'),
+  format: formatHelper,
+};
+
+const constants = {
+  AccountType: require('consts/bankAccount.json'),
 };
 
 let countries = {};
@@ -553,6 +559,7 @@ module.exports = {
           user: this.user,
           states: this.usaStates,
           countries: countries,
+          constants: constants,
         })
       );
 

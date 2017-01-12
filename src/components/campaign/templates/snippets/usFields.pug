@@ -1,6 +1,6 @@
 .row.us-fields
-  input(type="hidden" name="personal_information_data[state]" value=user.state disabled=(user.country != 'US'))
-  input(type="hidden" name="personal_information_data[city]" value=user.city disabled=(user.country != 'US'))
+  input(type="hidden" name="personal_information_data[state]" value=user.state)
+  input(type="hidden" name="personal_information_data[city]" value=user.city)
   .col-xl-7.col-lg-6.p-r-xl-0
     -
       pug_html += app.fields.nestedTextLabel(
