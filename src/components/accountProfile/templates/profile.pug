@@ -268,10 +268,20 @@
                           span.color-red *
                         .col-xl-9.col-lg-12.radio-input
                           label
-                            input(type="radio" name='bank_account_type' checked=!user.bank_account_type value=0)
+                            input(
+                              type="radio"
+                              name='bank_account_type'
+                              checked=(user.bank_account_type == constants.AccountType.Checking)
+                              value=constants.AccountType.Checking
+                            )
                             |  Checking
                           label
-                            input(type="radio" name='bank_account_type' checked=user.bank_account_type value=1)
+                            input(
+                              type="radio"
+                              name='bank_account_type'
+                              checked=(user.bank_account_type == constants.AccountType.Savings)
+                              value=constants.AccountType.Savings
+                            )
                             |  Savings
                       .row
                         .col-xl-12

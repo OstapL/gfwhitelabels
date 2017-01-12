@@ -108,7 +108,7 @@ module.exports = Backbone.Router.extend({
 
   teamMemberAdd(id, role, user_id) {
 
-    const optionsR = api.makeCacheRequest(formcServer + '/' + id + '/team-members/' + role, 'OPTIONS');
+    const optionsR = api.makeCacheRequest(formcServer + '/' + id + '/team-members', 'OPTIONS');
     getOCCF(optionsR, 'teamMemberAdd', {
       role: role,
       user_id: user_id
