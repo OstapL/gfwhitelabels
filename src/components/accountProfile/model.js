@@ -65,8 +65,9 @@ let userModel = Backbone.Model.extend({
       let userData = localStorage.getItem('user');
       this.set('token', token);
       cookies.set('token', token, {
-        domaine: global.esignServer,
-        expires: ONE_HOURS
+        domain: global.esignServer,
+        expires: ONE_HOURS,
+        path: '/'
       });
 
       // if (userData == null) {
