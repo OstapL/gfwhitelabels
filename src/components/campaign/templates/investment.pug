@@ -173,7 +173,8 @@ mixin confirmStatement(name, attr)
                       'placeholder': 'Social Security #',
                       'class1': 'col-xl-3 col-lg-12 text-xl-right text-lg-left m-b-0 p-t-0 m-b-lg-1',
                       'label': 'Social Security number (SSN) or Tax ID (ITIN/EIN)',
-                      'value': user.ssn
+                      'id': 'payment_information_data__ssn__0',
+                      'value': user.ssn,
                     },
                     fields.payment_information_data.schema.ssn);
 
@@ -184,6 +185,7 @@ mixin confirmStatement(name, attr)
                     -1, {
                       'class1': 'col-xl-3 col-lg-12 text-xl-right text-lg-left m-b-0 p-t-0 m-b-lg-1',
                       'label': 'Re-enter',
+                      'id': 'payment_information_data__ssn_re__0',
                       'value': user.ssn_re
                     },
                     fields.payment_information_data.schema.ssn_re);

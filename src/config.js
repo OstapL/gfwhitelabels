@@ -1,3 +1,4 @@
+global.domainUrl = "growthfountain.com"
 global.serverUrl = "https://django-api-dev.growthfountain.com";
 global.raiseCapitalServer = "https://api-raisecapital-dev.growthfountain.com";
 //global.raiseCapitalServer = "http://localhost:8003";
