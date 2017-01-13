@@ -16,7 +16,7 @@ let exports = {
     if(index != -1) {
       myAttr.id = nestedName + '__' + index + '__' + name + '';
     } else {
-      myAttr.id = myAttr.id || nestedName + '__' + name + '';
+      myAttr.id = nestedName + '__' + name + '';
     }
   },
 

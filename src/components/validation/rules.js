@@ -68,11 +68,11 @@ module.exports = {
 
   // Function validator
   // Lets you implement a custom function used for validation
-  fn: function (value, fn, attr, model, computed) {
+  fn: function (name, fn, attr, data, schema) {
     if (_.isString(fn)) {
       fn = model[fn];
     }
-    return fn.call(model, value, attr, computed);
+    return fn.call(this, name, this.getData(data, name), attr, data, schema);
   },
 
   toNumber: function(value) {
@@ -84,7 +84,7 @@ module.exports = {
   // Validates if the attribute is required or not
   // This can be specified as either a boolean value or a function that returns a boolean value
   required: function (name, rule, attr, data) {
-    if (rule && this.hasValue(data[name]) == false) {
+    if (rule && this.hasValue(this.getData(data, name)) == false) {
       throw this.format(
         attr.messageRequired || this.messages.required,
         attr.label
@@ -106,7 +106,7 @@ module.exports = {
   // Validates that the value has to be a number and equal to or greater than
   // the min value specified
   min: function (name, rule, attr, data) {
-    let value = this.toNumber(data[name]);
+    let value = this.toNumber(this.getData(data, name));
     if (value === false || value < rule) {
       throw this.format(this.messages.min, attr.label, rule);
     }
@@ -120,7 +120,7 @@ module.exports = {
   // Validates that the value has to be a number and equal to or less than
   // the max value specified
   max: function (name, rule, attr, data) {
-    let value = this.toNumber(data[name]);
+    let value = this.toNumber(this.getData(data, name));
     if (value === false || value > rule) {
       throw this.format(this.messages.max, attr.label, rule);
     }
