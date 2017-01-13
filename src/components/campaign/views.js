@@ -454,6 +454,7 @@ module.exports = {
       this.fields.payment_information_data.schema.ssn = {
         type: 'password',
         required: true,
+        length: 9,
         fn: function(name, value, attr, data, schema) {
           if (value != this.getData(data, 'payment_information_data.ssn_re')) {
             throw "Social security fields don't match";

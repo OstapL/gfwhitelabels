@@ -144,6 +144,7 @@ module.exports = {
   // Validates that the value has to be a string with length equal to
   // the length value specified
   length: function (name, rule, attr, data) {
+    console.log('hello lenght');
     let value = this.getData(data, name);
     if (!_.isString(value) || value.length !== rule) {
       throw this.format(this.messages.length, attr.label, rule);
