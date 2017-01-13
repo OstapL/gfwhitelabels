@@ -22,6 +22,26 @@ module.exports = Backbone.Router.extend({
             });
             app.cache[window.location.pathname] = html;
             $('#content').html(html);
+            $('.owl-carousel').owlCarousel({
+                  loop:true,
+                  nav:true,
+                  autoplay:true,
+                  autoplayTimeout:6000,
+                  smartSpeed:1000,
+                  responsiveClass:true,
+                  navText: ["<i class='fa fa-angle-left' aria-hidden='true'></i>","<i class='fa fa-angle-right' aria-hidden='true'></i>"],
+                  responsive:{
+                    0:{
+                      items:1
+                    },
+                    600:{
+                      items:1
+                    },
+                    1000:{
+                      items:1
+                    }
+                  }
+                });
             $('body').scrollTo();
             app.hideLoading();
           });

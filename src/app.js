@@ -5,6 +5,7 @@ global._ = require('underscore');
 global.Backbone = require('backbone');
 window.Tether = require('tether');
 global.Bootstrap = require('bootstrap/dist/js/bootstrap.js');
+global.OwlCarousel = require('owl.carousel/dist/owl.carousel.min.js');
 global.userModel = require('components/accountProfile/model.js');
 global.Urls = require('./jsreverse.js');
 require('jquery-serializejson/jquery.serializejson.min.js');
