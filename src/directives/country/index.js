@@ -4,10 +4,10 @@ class CountryBlock {
   constructor(view, options={}) {
     this.view = view;
 
-    this.template = require(options.template || `./templates/country.pug`);
+    this.template = require('./templates/country.pug');
 
-    this.usBlock = require(`./templates/snippets/us.pug`);
-    this.nonUsBlock = require(`./templates/snippets/nonUs.pug`);
+    this.usBlock = require('./templates/snippets/us.pug');
+    this.nonUsBlock = require('./templates/snippets/nonUs.pug');
 
     return this;
   }
