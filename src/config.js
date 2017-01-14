@@ -1,4 +1,5 @@
-global.serverUrl = "https://django-api.growthfountain.com";
+global.domainUrl = "growthfountain.com"
+global.serverUrl = "https://django-api-dev.growthfountain.com";
 global.raiseCapitalServer = "https://api-raisecapital-dev.growthfountain.com";
 //global.raiseCapitalServer = "http://localhost:8003";
 global.authServer = "https://api-auth-dev.growthfountain.com";
@@ -11,6 +12,7 @@ global.filerServer = "https://api-filer-dev.growthfountain.com";
 global.esignServer = 'https://api-esign-dev.growthfountain.com';
 global.commentsServer = "https://api-comments-dev.growthfountain.com";
 global.blogServer = "https://api-blog-dev.growthfountain.com";
+global.bucketServer = "http://growthfountain-dcu-storage.s3-website-us-west-1.amazonaws.com";
 
 global.teamName = 'GrowthFountain Team';
 global.teamTitle = "Meet The Team";
