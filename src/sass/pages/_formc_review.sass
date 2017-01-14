@@ -42,3 +42,22 @@
   .logic
     background-color: red
     color: $white
+
+@media print
+  .formc-review
+    .page-formc-review
+      border: none
+      padding: 10px 10px
+      min-height: auto
+      .link-1
+        color: #000
+    .no-print
+      display: none
+    .show-input
+      &:after
+        display: none
+  footer
+    display: none
+
+
+

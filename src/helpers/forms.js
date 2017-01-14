@@ -107,6 +107,15 @@ module.exports = {
           patchData[el.path[0]] = newArr;
         }
       });
+
+      if(this.fields.hasOwnProperty('dependies')) {
+        _(this.fields.dependies).each((k, v) => {
+          if(patchData.hasOwnProperty(k) == false) {
+            patchData[k] = newData[k];
+          }
+        });
+      }
+
       newData = patchData;
     };
 

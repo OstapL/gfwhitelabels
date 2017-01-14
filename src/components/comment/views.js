@@ -1,6 +1,7 @@
 const helpers = {
   date: require('helpers/dateHelper.js'),
   yesNo: require('helpers/yesNoHelper.js'),
+  fields: require('./fields.js'),
 };
 
 function initDates(c) {
@@ -126,7 +127,7 @@ module.exports = {
     submitComment(e) {
       e.preventDefault();
 
-      if (!app.user.ensureLoggedIn(e))
+      if (!app.user.ensureLoggedIn(window.location.pathname))
         return false;
 
       let $target = $(e.target);
@@ -203,10 +204,10 @@ module.exports = {
           this.keyupHandler(e);//remove related role checkbox
         }
 
-        let newCommentHtml = app.fields.comment(newCommentModel, level, {
+        let newCommentHtml = helpers.fields.comment(newCommentModel, level, {
           owner_id: this.model.owner_id,
           company_id: this.model.id,
-        });
+        }, helpers);
         $(newCommentHtml).appendTo(isChild ? $parentComment : this.$('.comments'));
 
         app.hideLoading();

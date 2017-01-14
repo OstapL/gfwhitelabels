@@ -17,8 +17,8 @@ div(class=attr.class data-content=(attr.help_text || ''))
                 .delete-file-container
                   a(href="#" class="delete-file" data-fileid=attr.data.id)
                     i.fa.fa-times
-                img(src='/img/icons/' + attr.fileIcon + '.png' alt=attr.label class=("img-file img-" + name))
+                img(src=attr.fileIcon alt=attr.label class=("img-file img-" + name))
                 div.row
                   a(class=("a-" + name) href=attr.data.urls[0] title=attr.data.name) #{ helpers.text.shortenFileName(attr.data.name) }
               else
-                img(src='/img/icons/' + attr.fileIcon + '.png' alt=attr.label class="img-file img-" + name)
+                img(src=attr.fileIcon alt=attr.label class="img-file img-" + name)

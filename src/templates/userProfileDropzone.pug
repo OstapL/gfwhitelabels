@@ -17,7 +17,10 @@ div(
           a(href="#" data-imageid=(attr.data.id || 0) data-noimage=noimg).delete-image
             i.fa.fa-times
         .user-photo-wrap.text-xs-center
-          img(class=(" img-" + name) src=(attr.data.urls[0] || noimg))
+          -
+            var url = app.getFilerUrl(attr.data.urls[0]);
+            url = url || noimg;
+          img(class=(" img-" + name) src=url)
       .row.border-dropzone.dropzone-profile
         .drop-image-title.text-xs-center.p-dropzone.p-l-2.p-r-2
           a(class='link-1' href="#" onclick="return false")

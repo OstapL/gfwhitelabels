@@ -12,7 +12,7 @@
     <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon">
     <!-- CSS -->
 
-    <link rel="stylesheet" href="/css/main2.css">
+    <link rel="stylesheet" href="/css/main2.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
 
 		<!-- Google Tag Manager -->
@@ -23,12 +23,6 @@
       }    
 
 		</script>
-    
-    <!--[if lt IE 9]>
-    <script type="text/javascript" src="https://raw.githubusercontent.com/es-shims/es5-shim/master/es5-shim.js"></script>
-    <![endif]-->
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/es6-shim/0.35.1/es6-shim.min.js"></script>
 
   </head>
 
@@ -63,10 +57,10 @@
             </ul>
         </div>
         <div class="wrap-toggle-menu">
-        <button class=" navbar-toggler hidden-lg-up" type="button" data-toggle="collapse" id="toggle_mobile_menu">
-          <!-- <i class="fa fa-bars"></i> -->
-          <span></span>
-        </button>
+          <button class=" navbar-toggler hidden-lg-up" type="button" data-toggle="collapse" id="toggle_mobile_menu">
+            <!-- <i class="fa fa-bars"></i> -->
+            <span></span>
+          </button>
         </div>
         <div class="mobile-menu full-height" id="">
           <ul class="nav navbar-nav pull-left" id="menuList">
@@ -89,7 +83,13 @@
       <footer class="footer_new pt50">
       </footer>
       <div class="hidden"></div>
+    </div>
 
+    <!--[if lt IE 9]>
+      <script type="text/javascript" src="https://raw.githubusercontent.com/es-shims/es5-shim/master/es5-shim.js"></script>
+    <![endif]-->
+
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/es6-shim/0.35.1/es6-shim.min.js"></script>
       <script type="text/javascript" src="https://js.stripe.com/v2/"></script>
     </body>
 </html>

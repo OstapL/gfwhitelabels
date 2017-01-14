@@ -1,3 +1,4 @@
+global.cookies = require('cookies-js');
 global.config = require('config');
 global.$ = global.jQuery = require('jquery');
 global._ = require('underscore');
@@ -14,7 +15,6 @@ document.title = pageTitle;
 
 
 global.formatHelper = require('helpers/formatHelper');
-
 
 $.fn.scrollTo = function (padding=0) {
   $('html, body').animate({
@@ -233,6 +233,13 @@ let app = {
       'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
     })(window,document,'script','dataLayer', id);
   },
+
+  getFilerUrl(file) {
+    if (file.startsWith('http://') || file.startsWith('https://'))
+      return file;
+
+    return `${bucketServer}/${file}`;
+  }
 
 };
 

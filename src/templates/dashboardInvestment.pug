@@ -50,7 +50,12 @@
       li
         a(href="#").link-3 Financials
       li
-        a(href="#").link-3 Agreement
+        a(
+          href="#"
+          data-object-id=i.id
+          data-security-type=i.security_type
+          target="_blank"
+        ).link-3.agreement-link Agreement
   .bottom_column
     .top_descript
       .left_text
