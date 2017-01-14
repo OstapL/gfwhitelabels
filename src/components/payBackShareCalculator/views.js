@@ -192,11 +192,14 @@ module.exports = {
 
         // get sum of last Annual Distributions
         getPreviousSum(index) {
+
             let selectedRange = this.outputData.slice(2, index + 1),
                 sum = 0;
-            for (let row of selectedRange) {
-                sum += +row.annual;
-            }
+
+            _.each(selectedRange, (el) => {
+               sum += el.annual;
+            });
+
             return sum;
         },
 

@@ -426,42 +426,63 @@ module.exports = {
         2: 'Wire',
       };
 
-      this.fields.payment_information_data.schema.account_number_re = { required: false };
-      this.fields.personal_information_data.schema.phone = { required: true };
-
-      // this.fields.account_number.required = true;
+      // Validation rules
       this.fields.payment_information_data.schema.account_number = {
         type: 'password',
-        fn: function(value, attr, fn, model, computed) {
-          if (this.account_number != this.account_number_re)
-            throw `Account number fields don't match`;
+        required: true,
+        minLength: 9,
+        fn: function(name, value, attr, data, schema) {
+          if (value != this.getData(data, 'payment_information_data.account_number_re')) {
+            throw "Account number fields don't match";
+          }
         },
       };
 
       this.fields.payment_information_data.schema.account_number_re = {
         type: 'password',
-        fn: function(value, attr, fn, model, computed) {
-          if (this.account_number != this.account_number_re)
-            throw `Account number fields don't match`;
+        required: true,
+        minLength: 9,
+        fn: function(name, value, attr, data, schema) {
+          if (value != this.getData(data, 'payment_information_data.account_number')) {
+            throw "Account number fields don't match";
+          }
         },
       };
+
+      this.fields.payment_information_data.schema.routing_number = {
+        required: true,
+        _length: 9,
+      }
 
       this.fields.payment_information_data.schema.ssn = {
         type: 'password',
         required: true,
-        fn: function(value, attr, fn, model, computed) {
-          if (this.ssn != this.ssn_re)
-            throw `Social security fields don't match`;
+        _length: 9,
+        fn: function(name, value, attr, data, computed) {
+          if (value != this.getData(data, 'payment_information_data.ssn_re')) {
+            throw "Social security fields don't match";
+          }
         },
       };
 
       this.fields.payment_information_data.schema.ssn_re = {
         type: 'password',
         required: true,
-        fn: function(value, attr, fn, model, computed) {
-          if (this.ssn != this.ssn_re)
-            throw `Social security fields don't match`;
+        _length: 9,
+        fn: function(name, value, attr, data, computed) {
+          if (value != this.getData(data, 'payment_information_data.ssn')) {
+            throw "Social security fields don't match";
+          }
         },
+      };
+
+      this.fields.signature = {
+        type: 'nested',
+        required: true,
+      };
+      this.fields.signature.schema = {};
+      this.fields.signature.schema.full_name = {
+        required: true,
       };
 
       const validateAmount = (amount) => {
@@ -504,7 +525,6 @@ module.exports = {
           street_address_2: 'Street Address 2',
           zip_code: 'Zip Code',
           city: 'City',
-          phone: 'Phone',
         },
         payment_information_data: {
           name_on_bank_account: 'Name On Bank Account',
