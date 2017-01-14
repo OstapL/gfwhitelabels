@@ -95,5 +95,5 @@ section.formc-team-members-director.container.m-b-85
           .col-lg-12.text-lg-right.text-sm-center.text-xs-center
             - console.log(this.values, values);
             a(href='/formc/' + values.formc_id + '/team-members').btn.btn-secondary.text-uppercas.m-r-1 Cancel
-            button(type='button' data-method=(values.user_id ? 'PUT' : 'POST'))#submitForm.btn.btn-primary.text-uppercase Save
+            button(type='button' data-method=(values.user_id ? 'PATCH' : 'POST'))#submitForm.btn.btn-primary.text-uppercase Save
               i.fa.fa-angle-right

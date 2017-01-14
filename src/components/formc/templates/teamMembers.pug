@@ -91,7 +91,7 @@ section.create-company-team-add.container
                   td.text-xs-center #{ person.first_name + ' ' + person.last_name }
                   +isInvited(person)
                   td.text-xl-center
-                    a(href="/formc/" + values.id + "/team-members/" +  person.role + '/' + person.user_id).link-1
+                    a(href="/formc/" + values.id + "/team-members/officer/" + person.user_id).link-1
                       i.fa.fa-pencil-square-o
                   td.text-xl-center
                     a(href="#" data-id=person.user_id data-role=roles[k]).link-1.delete-member
