@@ -452,13 +452,13 @@ module.exports = {
 
       this.fields.payment_information_data.schema.routing_number = {
         required: true,
-        _length: 10,
+        _length: 9,
       }
 
       this.fields.payment_information_data.schema.ssn = {
         type: 'password',
         required: true,
-        _length: 10,
+        _length: 9,
         fn: function(name, value, attr, data, computed) {
           if (value != this.getData(data, 'payment_information_data.ssn_re')) {
             throw "Social security fields don't match";
@@ -469,7 +469,7 @@ module.exports = {
       this.fields.payment_information_data.schema.ssn_re = {
         type: 'password',
         required: true,
-        _length: 10,
+        _length: 9,
         fn: function(name, value, attr, data, computed) {
           if (value != this.getData(data, 'payment_information_data.ssn')) {
             throw "Social security fields don't match";
