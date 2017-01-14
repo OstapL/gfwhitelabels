@@ -70,12 +70,12 @@ section.create-company-team-add.container
               th.text-xs-center Status
               th(colspan="2")
           tbody
-            - var requiredRoles = { 1: 'CEO/President', 2: 'Principal Financial Officer/Treasurer', 5: 'Controller/Principal Accounting Officer' };
+            - var requiredRoles = { 4: 'CEO/President', 8: 'Principal Financial Officer/Treasurer', 64: 'Controller/Principal Accounting Officer' };
             - var roleCounter = 0;
             tr
               td(colspan="5").p-x-0.p-y-0
                 each k,v in requiredRoles
-                  - var persons = values.team_members.filter(function(el) { return (el.title ? el.title.indexOf(v) != -1: false); })
+                  - var persons = values.team_members.filter(function(el) { return (el.role ? el.role & v: false); })
                   if persons.length > 0
                     - roleCounter ++;
                 if roleCounter < 3
@@ -84,14 +84,14 @@ section.create-company-team-add.container
                     span.warning-text Please identify the Officers in your company responsible for the following 3 roles. Please note that, if necessary, the same person may be identified with multiple roles.
 
             each k,v in requiredRoles
-              - var persons = values.team_members.filter(function(el) { return (el.title ? el.title.indexOf(v) != -1: false); })
+              - var persons = values.team_members.filter(function(el) { return (el.role ? el.role & v: false); })
               for person in persons
                 tr
                   td #{ k }
                   td.text-xs-center #{ person.first_name + ' ' + person.last_name }
                   +isInvited(person)
                   td.text-xl-center
-                    a(href="/formc/" + values.id + "/team-members/" +  roles[person.role[0]].toLowerCase() + '/' + person.user_id).link-1
+                    a(href="/formc/" + values.id + "/team-members/" +  person.role + '/' + person.user_id).link-1
                       i.fa.fa-pencil-square-o
                   td.text-xl-center
                     a(href="#" data-id=person.user_id data-role=roles[k]).link-1.delete-member
@@ -116,7 +116,7 @@ section.create-company-team-add.container
                     td.text-xs-center #{ v.first_name + ' ' + v.last_name }
                     +isInvited(v)
                     td.text-xl-center
-                      a(href="/formc/" + values.id + "/team-members/" + roles[role].toLowerCase() + '/' + v.user_id).link-1
+                      a(href="/formc/" + values.id + "/team-members/" + role + '/' + v.user_id).link-1
                         i.fa.fa-pencil-square-o
                     td.text-xl-center
                       a(href="#" data-id=v.user_id data-role=roles[v.role]).link-1.delete-member
