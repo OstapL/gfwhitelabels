@@ -1,16 +1,16 @@
 global.serverUrl = "https://django-api.growthfountain.com";
-global.raiseCapitalServer = "https://api-raisecapital.growthfountain.com";
+global.raiseCapitalServer = "https://api-raisecapital-dev.growthfountain.com";
 //global.raiseCapitalServer = "http://localhost:8003";
-global.authServer = "https://api-auth.growthfountain.com";
+global.authServer = "https://api-auth-dev.growthfountain.com";
 //global.authServer = "http://localhost:8002";
-global.formcServer = "https://api-formc.growthfountain.com";
+global.formcServer = "https://api-formc-dev.growthfountain.com";
 //global.formcServer = "http://localhost:8001";
-global.investmentServer = "https://api-investment.growthfountain.com";
+global.investmentServer = "https://api-investment-dev.growthfountain.com";
 //global.investmentServer = "http://localhost:8003";
-global.filerServer = "https://api-filer.growthfountain.com";
-global.esignServer = 'https://api-esign.growthfountain.com';
-global.commentsServer = "https://api-comments.growthfountain.com";
-global.blogServer = "https://api-blog.growthfountain.com";
+global.filerServer = "https://api-filer-dev.growthfountain.com";
+global.esignServer = 'https://api-esign-dev.growthfountain.com';
+global.commentsServer = "https://api-comments-dev.growthfountain.com";
+global.blogServer = "https://api-blog-dev.growthfountain.com";
 
 global.teamName = 'GrowthFountain Team';
 global.teamTitle = "Meet The Team";
