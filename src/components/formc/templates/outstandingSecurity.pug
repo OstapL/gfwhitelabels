@@ -1,0 +1,153 @@
+include ../../raiseFunds/templates/menu.pug
+
+- pug_html += app.breadcrumbs('create form c', '', [ ['Home', '/'], ['Create Form C', '/formc/' + values.id + '/introduction'], ['Outstanding Security', ''], ]);
+
+section.formc-team-members-director.container.m-b-85
+  - var campaignId = values.campaign_id;
+  +menu('formc', 'outstanding-security')
+
+  //START RIGHT BLOCK
+  .col-xl-8.col-lg-8.col-md-12
+    h2.text-uppercase.text-lg-center.text-xs-center.m-t-0.dosis.mb45 outstanding security
+
+    form(action="").form-section
+      input(name="outstanding_securities_choice" type="hidden" value="false")
+      .col-lg-12
+        -
+          pug_html += app.fields.radioLabel('business_loans_or_debt_choice',{
+          value: values.business_loans_or_debt_choice,
+          class1: 'bold',
+          class2: 'form-section col-lg-12 yesno',
+          class3: 'm-b-1',
+          schema: fields.business_loans_or_debt_choice,
+          });
+        .business_loans_or_debt_choice.shown-yes(style="display:" + (values['business_loans_or_debt_choice'] ? 'block' : 'none') + ";")
+          |!{ templates.business_loans_or_debt }
+
+        .m-t-0
+          -
+            pug_html += app.fields.radioLabel('exempt_offering_choice',{
+            value: values.exempt_offering_choice,
+            class1: 'bold',
+            class2: 'form-section col-lg-12 yesno',
+            class3: 'm-b-1',
+            schema: fields.exempt_offering_choice,
+            });
+        .exempt_offering_choice.shown-yes(style="display:" + (values['exempt_offering_choice'] ? 'block' : 'none') + ";")
+          | !{ templates.exempt_offering }
+
+        |!{ templates.outstanding_securities }
+        .row
+          .col-lg-12
+            .border-bottom.m-t-3.m-b-3 
+        - 
+          pug_html += app.fields.textareaLabel('rights_of_securities', {
+          schema: fields.rights_of_securities,
+          class1: 'col-xl-12 text-xl-left',
+          class2: 'col-xl-12 big-textarea',
+          placeholder: 'Description', 
+          value: values.rights_of_securities,})
+
+        - 
+          pug_html += app.fields.textareaLabel('terms_of_securities', {
+          schema: fields.terms_of_securities,
+          class1: 'col-xl-12 text-xl-left',
+          class2: 'col-xl-12 big-textarea',
+          value: values.terms_of_securities,})
+
+        - 
+          pug_html += app.fields.textareaLabel('security_differences', {
+          schema: fields.security_differences,
+          class1: 'col-xl-12 text-xl-left',
+          class2: 'col-xl-12 big-textarea',
+          value: values.security_differences,})
+
+        - 
+          pug_html += app.fields.textareaLabel('exercise_of_rights', {
+          schema: fields.exercise_of_rights,
+          class1: 'col-xl-12 text-xl-left',
+          class2: 'col-xl-12 big-textarea',
+          value: values.exercise_of_rights,})
+        
+        .row.form-group.form-section.required
+          .col-lg-12
+            label Please discuss risks to purchasers of securities relating to:
+              br
+              | - minority ownership
+              br
+              | - additional issuances of securities
+              br
+              | - company repurchases of securities
+              br
+              | - a sale of the company or company assets
+              br
+              | - transactions with related parties 
+              span.color-red *
+          .col-lg-12.big-textarea
+            textarea(placeholder="Description" id="risks_to_purchasers" name="risks_to_purchasers").form-control= values['risks_to_purchasers']
+        .col-lg-12.m-t-2
+          .row
+            .text-md-center.text-sm-center-text-xs-center
+              button#submitForm.btn.btn-primary.text-uppercase.pull-lg-right Save And Continue
+                i.fa.fa-angle-right
+#security_modal.modal.fade(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")
+  .modal-dialog(role="document")
+    .modal-content
+      .modal-header.p-b-0
+        button(type="button" class="close" data-dismiss="modal" aria-label="Close")
+          span(aria-hidden="true")
+            i.fa.fa-times
+
+      .modal-body.p-t-0
+        form(data-section='outstanding_securities')#security_model_form.modal-form
+          .form-section
+            -
+              pug_html += app.fields.fieldChoiceLabel('security_type', _.extend({
+              'value': security_type,
+              class1: 'col-lg-12 p-t-0',
+              class2: 'col-lg-12',
+              }, fields.outstanding_securities.schema.security_type));
+            
+            - 
+              pug_html += app.fields.textLabel('custom_security_type', {
+              schema: fields.outstanding_securities.schema.custom_security_type,
+              class1: 'col-lg-12',
+              class2: 'col-lg-12', 
+              value: values.custom_security_type,})
+
+            - 
+              pug_html += app.fields.textareaLabel('terms_and_rights', {
+              schema: fields.outstanding_securities.schema.terms_and_rights,
+              class1: 'col-lg-12',
+              class2: 'col-lg-12 big-textarea',
+              placeholder: 'Description', 
+              value: values.terms_and_rights,})
+
+            .row
+              .col-lg-6
+                - 
+                  pug_html += app.fields.textLabel('amount_authroized', {
+                  schema: fields.outstanding_securities.schema.amount_authroized,
+                  class1: 'col-lg-12',
+                  class2: 'col-lg-12', 
+                  value: values.amount_authroized,})
+              .col-lg-6
+                - 
+                  pug_html += app.fields.textLabel('amount_outstanding', {
+                  schema: fields.outstanding_securities.schema.amount_outstanding,
+                  class1: 'col-lg-12',
+                  class2: 'col-lg-12', 
+                  value: values.amount_outstanding,})
+            .row.form-group.m-b-0
+              -
+                pug_html += app.fields.radioLabel('voting_right',{
+                value: values.voting_right,
+                class1: 'col-lg-3',
+                class2: 'col-lg-9',
+                schema: fields.outstanding_securities.schema.voting_right,
+                });
+            .row.m-b-0
+              .col-lg-12.text-lg-center.text-md-center.text-xs-center
+                button.update-location.btn.btn-primary.text-uppercase.pull-lg-right.add-outstanding Save And Continue
+                  i.fa.fa-angle-right
+      .modal-footer

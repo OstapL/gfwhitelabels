@@ -1,12 +1,4 @@
-
-include ../../../templates/mixins.pug
-
-+breadcrumbs('Revenue Share Calculator ', 'step 1', 
-  [
-    ['Home', '/'],
-    ["Revenue Share Calculator", '']
-  ]
-)
+- pug_html += app.breadcrumbs('Revenue Share Calculator', 'step 1', [ ['Home', '/'], ["Revenue Share Calculator", ''],]);
 
 .container.calculator-container
   .row
@@ -17,7 +9,7 @@ include ../../../templates/mixins.pug
         li
           a(href="/calculator/paybackshare/step-2").current.btn.text-uppercase step 1
         li
-          a(href="/calculator/paybackshare/step-3").btn.text-uppercase finish
+          a(href="/calculator/paybackshare/step-3").next.btn.text-uppercase finish
 
   .row
     .offset-lg-3.col-lg-6
@@ -28,11 +20,11 @@ include ../../../templates/mixins.pug
 
   .row
     .offset-lg-3.col-lg-6
-      form(method="post" action="").js-calc-form
+      form(method="post" action="").js-calc-form.form-section
         .form-body.clearfix 
 
           .form-group.row
-            label(for="raiseMoney").col-lg-12 How much money do you plan to raise?
+            label(for="raiseMoney").col-lg-12.font-weight-normal How much money do you plan to raise?
 
             .col-lg-12
               input(
@@ -42,10 +34,11 @@ include ../../../templates/mixins.pug
                 autocomplete="off"
                 data-input-mask='price',
                 data-model-value='raiseMoney',
-                data-current-value= data.raiseMoney)#raiseMoney.form-control.js-field
+                data-current-value= data.raiseMoney
+                name="raiseMoney")#raiseMoney.form-control.js-field
 
           .form-group.row
-            label(for="nextYearRevenue").col-lg-12 What do you expect your revenue to be next year?
+            label(for="nextYearRevenue").col-lg-12.font-weight-normal What do you expect your revenue to be next year?
 
             .col-lg-12
               input(
@@ -55,18 +48,20 @@ include ../../../templates/mixins.pug
                 autocomplete="off"
                 data-input-mask='price',
                 data-model-value='nextYearRevenue',
+                name="nextYearRevenue",
                 data-current-value= data.nextYearRevenue)#nextYearRevenue.form-control.js-field
 
           .form-group.row
-            label(for="growLevel").col-lg-12 At what rate do you expect your revenue to grow each year?
+            label(for="growLevel").col-lg-12.font-weight-normal At what rate do you expect your revenue to grow each year?
 
             .col-lg-12
               input(
-                value= data.growLevel,
+                value=(data.growLevel ? data.growLevel + '%' : ''),
                 type='text',
                 placeholder='0%',
                 autocomplete="off"
                 data-input-mask='percent',
+                name="growLevel",
                 data-model-value='growLevel')#growLevel.form-control.js-field
 
           .form-group.row.clearfix.m0

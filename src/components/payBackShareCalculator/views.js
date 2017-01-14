@@ -2,11 +2,16 @@ import './styles/style.sass'
 //import 'jquery.inputmask/dist/jquery.inputmask.bundle.js';
 import calculatorHelper from '../../helpers/calculatorHelpers';
 import flyPriceFormatter from '../../helpers/flyPriceFormatter';
-import '../../js/graf/graf.js';
-import '../../js/graf/jquery.flot.growraf';
+import '../../js/graph/graph.js';
+import '../../js/graph/jquery.flot.growraf';
+
+const settings = calculatorHelper.settings;
 
 const formatPrice = calculatorHelper.formatPrice;
+const formatPercentage = calculatorHelper.formatPercentage;
 const minPersents = 200;
+
+const calculatorValidationHelper = require('helpers/calculatorValidationHelper.js');
 
 module.exports = {
     step1: Backbone.View.extend({
@@ -20,7 +25,7 @@ module.exports = {
         }
     }),
 
-    step2: Backbone.View.extend({
+    step2: Backbone.View.extend(_.extend({
         el: '#content',
 
         template: require('./templates/step2.pug'),
@@ -36,19 +41,74 @@ module.exports = {
                     'growLevel': ''
                 };
             }
+            this.fields = {
+                raiseMoney: {
+                    required: true,
+                    type: 'integer',
+                    validate: {},
+                },
+                nextYearRevenue: {
+                    required: true,
+                    type: 'integer',
+                    validate: {},
+                },
+                growLevel: {
+                    required: true,
+                    type: 'integer',
+                    validate: {},
+                },
+            };
         },
 
-        events: {
+        events: _.extend({
             // calculate your income
             'submit .js-calc-form': 'doCalculation',
             'keyup [data-input-mask="percent"]': 'savePercents',
-            'blur [data-input-mask="percent"]': 'cutZeros'
+            'keydown [data-input-mask="percent"]': 'filterKeyCodeForPercentage',
+            'blur [data-input-mask="percent"]': 'cutZeros',
+        }, calculatorValidationHelper.events),
+
+        validate: calculatorHelper.validate,
+        validateForLinks: calculatorHelper.validateForLinks,
+
+        filterKeyCodeForPercentage(e) {
+            let value = e.target.value.replace(/\%/g, '');
+            if (!((((e.keyCode >= 48 && e.keyCode <= 57) || (e.keyCode >= 96 && e.keyCode <= 105)) && !(value.match(/\.\d{2}$/))) ||
+                    ((e.keyCode == 110 || e.keyCode == 190) && !(value.match(/\./))))
+                && !(e.keyCode == settings.BACKSPACEKEYCODE ||
+                        e.keyCode == settings.TABKEYCODE ||
+                        e.keyCode == settings.LEFTARROWKEYCODE ||
+                        e.keyCode == settings.RIGHTARROWKEYCODE ||
+                        e.keyCode == settings.HOMEKEYCODE ||
+                        e.keyCode == settings.ENDKEYCODE ||
+                        e.keyCode == settings.F5KEYCODE ||
+                        e.keyCode == settings.ENTERKEYCODE ||
+                        ((e.ctrlKey || e.metaKey) && e.keyCode == settings.CKEYCODE) ||
+                        ((e.ctrlKey || e.metaKey) && e.keyCode == settings.AKEYCODE) ||
+                        ((e.ctrlKey || e.metaKey) && e.keyCode == settings.VKEYCODE)
+                    )
+                ) {
+                e.preventDefault();
+                e.stopPropagation();
+            }
+            if (e.keyCode == settings.BACKSPACEKEYCODE) {
+                e.preventDefault();
+                e.stopPropagation();
+                value = value.substring(0, value.length - 1);
+                e.target.value = value;
+            }
         },
 
         savePercents(e) {
             let target = e.target,
-                value = parseFloat(e.target.value.replace('$', '') || 0);
-            app.cache.payBackShareCalculator[target.dataset.modelValue] = value;
+                value = e.target.value.replace(/[\$\%\,]/g, '');
+
+            app.cache.payBackShareCalculator[target.dataset.modelValue] = Number(value);
+            let withDot = false
+            if (e.keyCode == 110 || e.keyCode == 190) {
+                withDot = true;
+            }
+            target.value = formatPercentage(value, withDot);
         },
 
         cutZeros(e) {
@@ -60,12 +120,14 @@ module.exports = {
                 elem.value = '';
             } else {
                 elem.dataset.currentValue = parseFloat(value);
-                elem.value = formatPrice(elem.dataset.currentValue);
+                elem.value = formatPercentage(elem.dataset.currentValue);
             }
         },
 
         doCalculation(e) {
             e.preventDefault();
+            if (!this.validate(e)) return;
+
             let maxOfMultipleReturned = 0,
                 countOfMultipleReturned = 0,
                 { raiseMoney, nextYearRevenue, growLevel } = app.cache.payBackShareCalculator;
@@ -121,7 +183,7 @@ module.exports = {
 
             // save data
             app.cache.payBackShareCalculator.outputData = this.outputData;
-            app.cache.payBackShareCalculator.nextYearRevenue = e.target.querySelector('#nextYearRevenue').value.replace('$', '').replace(',','');
+            app.cache.payBackShareCalculator.nextYearRevenue = e.target.querySelector('#nextYearRevenue').value.replace('$', '').replace(/\,/g,'');
             app.cache.payBackShareCalculator.maxOfMultipleReturned = maxOfMultipleReturned;
 
             // navigate to the finish step
@@ -166,7 +228,7 @@ module.exports = {
             */
             return this;
         }
-    }),
+    }, calculatorValidationHelper.methods)),
 
     step3: Backbone.View.extend({
         el: '#content',

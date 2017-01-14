@@ -1,0 +1,27 @@
+mixin showRisk(index, title, risk)
+  //- if values[name].hasOwnProperty(index)
+  //-   textarea(style="max-width:100%; height:150px" name="risk" readonly="true").form-control #{values[name][index].risk}
+  //- else
+  form(data-method="PATCH" data-index=(index) index=index)
+    input(type="hidden" name="title" value=title)
+    textarea(name="risk" readonly index=index).form-control.big-textarea.borderless-textarea #{ risk }
+    .text-md-center.text-lg-right
+      button(style="display: " + ('inline-block') + ';' data-index=index).btn.btn-secondary.btn-sm.m-t-1.edit-risk.risk-button.added-state  Edit risk
+      button(style="display: " + ('inline-block') + ';' data-index=index).btn.btn-secondary.btn-sm.m-t-1.delete.risk-button.added-state  Delete risk
+      button(type="submit" style="display: none;").btn.btn-secondary.btn-sm.m-t-1.add-risk.risk-button.editing-state Save and Add this Risk
+      button(style="display:" + ('none') + ";" data-index=index).btn.btn-secondary.btn-sm.m-t-1.edit-risk.risk-button.unadded-state Edit Risk
+
+
+.panel.panel-default.risk-panel(index=k)
+  #headingOne(role="tab").panel-heading
+    a(data-toggle="collapse"
+    data-parent="#accordion-risk" 
+    href="#collapse-" + k
+    aria-expanded="true"
+    aria-controls="collapse-" + k
+    class="list-group-item-action active added-risk-title"
+    )= v.title
+  .panel-collapse.collapse.in(role="tabpanel"
+  aria-labelledby="headingOne" id=("collapse-" + k)
+  )
+    +showRisk(k, v.title, v.risk)

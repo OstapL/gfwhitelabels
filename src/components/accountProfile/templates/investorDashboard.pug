@@ -1,0 +1,56 @@
+
+- pug_html += app.breadcrumbs('investor dashboard', '', [ ['Home', '/'], ['investor dashboard', ''],]);
+
+section.investor-dashboard
+  .container
+    .col-lg-12
+      if (!active || !active.length) && (!historical || !historical.length)
+        div(role="alert").alert.alert-warning
+          strong You have not invested yet
+      else
+        select.orderby.custom-select.pull-right.text-uppercase.hidden-xs-down
+          option(checked="checked" value="0") default sorting
+        ul(role="tablist").nav.standart-nav-tabs.row
+          li.nav-item
+            a.nav-link.text-uppercase.active#active-tab(
+              data-toggle="tab"
+              href="#active"
+              role="tab"
+              aria-controls="active"
+              aria-expanded="true"
+            ) active
+          li.nav-item
+            a.nav-link.text-uppercase#historical-tab(
+              data-toggle="tab"
+              href="#historical"
+              role="tab"
+              aria-controls="historical"
+              aria-expanded="false"
+            ) Historical
+              .clearfix
+
+        .row
+          .tab-content
+            .tab-pane.fade.active.in#active(
+              role="tabpanel"
+              aria-labelledby="active-tab"
+              aria-expanded="true"
+            )
+              .active-investor-dashboard.investor_table
+                each i in active
+                  - pug_html +=  app.fields.investment(i, { active: true });
+                else
+                  div(role="alert").alert.alert-warning
+                    strong You have no active investments
+
+            .tab-pane.fade#historical(
+              role="tabpanel"
+              aria-labelledby="historical-tab"
+              aria-expanded="false"
+            )
+              .active-investor-dashboard.investor_table
+                each i in historical
+                  - pug_html += app.fields.investment(i, {});
+                else
+                  div(role="alert").alert.alert-warning
+                    strong You have no historical investments

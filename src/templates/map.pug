@@ -17,4 +17,6 @@ script(type="text/javascript").
     google.maps.event.addListener(marker, "click", function(){infowindow.open(map,marker);});
     infowindow.open(map, marker);
   }
-script(async defer src="https://maps.googleapis.com/maps/api/js?key=" + googleMapKey + "&callback=initMap")
+
+if !window.google || !window.google.maps
+  script(async defer src="https://maps.googleapis.com/maps/api/js?key=" + googleMapKey + "&callback=initMap")
