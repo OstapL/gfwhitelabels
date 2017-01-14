@@ -1,0 +1,48 @@
+
+.col-lg-6.col-md-12.p-xs-0
+  h3.text-xs-center Most Recent Fiscal Year
+  | !{app.fields.nestedTextLabel(name, 'total_assets', values[0] ? values[0] : '', 0, {class1: 'col-xl-12 text-xl-left', class2: 'col-xl-12'}, attr.schema.total_assets)}
+
+  | !{app.fields.nestedTextLabel(name, 'cash_and_equivalents', values[0] ? values[0] : '', 0, {class1: 'col-xl-12 text-xl-left', class2: 'col-xl-12'}, attr.schema.cash_and_equivalents)}
+
+  | !{app.fields.nestedTextLabel(name, 'account_receivable', values[0] ? values[0] : '', 0, {class1: 'col-xl-12 text-xl-left', class2: 'col-xl-12'}, attr.schema.account_receivable)}
+
+  | !{app.fields.nestedTextLabel(name, 'short_term_debt', values[0] ? values[0] : '', 0, {class1: 'col-xl-12 text-xl-left', class2: 'col-xl-12'}, attr.schema.short_term_debt)}
+
+  | !{app.fields.nestedTextLabel(name, 'long_term_debt', values[0] ? values[0] : '', 0, {class1: 'col-xl-12 text-xl-left', class2: 'col-xl-12'}, attr.schema.long_term_debt)}
+
+  | !{app.fields.nestedTextLabel(name, 'revenues_sales', values[0] ? values[0] : '', 0, {class1: 'col-xl-12 text-xl-left', class2: 'col-xl-12'}, attr.schema.revenues_sales)}
+
+  | !{app.fields.nestedTextLabel(name, 'cost_of_goods_sold', values[0] ? values[0] : '', 0, {class1: 'col-xl-12 text-xl-left', class2: 'col-xl-12'}, attr.schema.cost_of_goods_sold)}
+
+  if campaign.maximum_raise <= 100000
+    | !{app.fields.nestedTextLabel(name, 'total_income', values[0] ? values[0] : '', 0, {class1: 'col-xl-12 text-xl-left', class2: 'col-xl-12'}, attr.schema.total_income)}
+
+    | !{app.fields.nestedTextLabel(name, 'taxable_income', values[0] ? values[0] : '', 0, {class1: 'col-xl-12 text-xl-left', class2: 'col-xl-12'}, attr.schema.taxable_income)}
+
+    | !{app.fields.nestedTextLabel(name, 'total_tax', values[0] ? values[0] : '', 0, {class1: 'col-xl-12 text-xl-left', class2: 'col-xl-12'}, attr.schema.total_tax)}
+
+.col-lg-6.col-md-12.p-xs-0
+  h3.text-xs-center Prior Fiscal Year
+  | !{app.fields.nestedTextLabel(name, 'total_assets', values[1] ? values[1] : '', 1, {class1: 'col-xl-12 text-xl-left', class2: 'col-xl-12'}, attr.schema.total_assets)}
+
+  | !{app.fields.nestedTextLabel(name, 'cash_and_equivalents', values[1] ? values[1] : '', 1, {class1: 'col-xl-12 text-xl-left', class2: 'col-xl-12'}, attr.schema.cash_and_equivalents)}
+
+  | !{app.fields.nestedTextLabel(name, 'account_receivable', values[1] ? values[1] : '', 1, {class1: 'col-xl-12 text-xl-left', class2: 'col-xl-12'}, attr.schema.account_receivable)}
+
+  | !{app.fields.nestedTextLabel(name, 'short_term_debt', values[1] ? values[1] : '', 1, {class1: 'col-xl-12 text-xl-left', class2: 'col-xl-12'}, attr.schema.short_term_debt)}
+
+  | !{app.fields.nestedTextLabel(name, 'long_term_debt', values[1] ? values[1] : '', 1, {class1: 'col-xl-12 text-xl-left', class2: 'col-xl-12'}, attr.schema.long_term_debt)}
+
+  | !{app.fields.nestedTextLabel(name, 'revenues_sales', values[1] ? values[1] : '', 1, {class1: 'col-xl-12 text-xl-left', class2: 'col-xl-12'}, attr.schema.revenues_sales)}
+
+  | !{app.fields.nestedTextLabel(name, 'cost_of_goods_sold', values[1] ? values[1] : '', 1, {class1: 'col-xl-12 text-xl-left', class2: 'col-xl-12'}, attr.schema.cost_of_goods_sold)}
+
+  
+  if campaign.maximum_raise <= 100000
+    | !{app.fields.nestedTextLabel(name, 'total_income', values[1] ? values[1] : '', 1, {class1: 'col-xl-12 text-xl-left', class2: 'col-xl-12'}, attr.schema.total_income)}
+
+    | !{app.fields.nestedTextLabel(name, 'taxable_income', values[1] ? values[1] : '', 1, {class1: 'col-xl-12 text-xl-left', class2: 'col-xl-12'}, attr.schema.taxable_income)}
+
+    | !{app.fields.nestedTextLabel(name, 'total_tax', values[1] ? values[1] : '', 1, {class1: 'col-xl-12 text-xl-left', class2: 'col-xl-12'}, attr.schema.total_tax)}
+

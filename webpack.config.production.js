@@ -61,6 +61,7 @@ module.exports = {
             {test: /bootstrap\/js\//, loader: 'imports?jQuery=$' },
             {test: /\.html?$/, loader: 'file?name=[name].[ext]'},
             {test: /\.pug$/, loader: 'pug-loader'},
+            {test: /\.json$/, exclude: /node_modules/, loader: 'json-loader'},
             {test: /\.js?$/, exclude: /node_modules/, loader: 'babel-loader', query: {presets: ['es2015']}},
             {test: /\.css$/, loaders: ['style-loader', 'css-loader']},
             {test: /\.sass$/, loaders: ['style-loader', 'css-loader', 'sass-loader']},

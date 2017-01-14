@@ -31,6 +31,10 @@ module.exports = {
   formatPrice: formatPrice,
   formatNumber: formatNumber,
 
+  unformatPrice(price) {
+    return price.replace(/[\$\,]/g, '');
+  },
+
   months: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
 
   formatDate: function (dateStr) {
@@ -38,6 +42,13 @@ module.exports = {
       var monthIndex = parseInt(strs[1]) - 1;
       // return strs[1] + "-" + strs[0];
       return this.months[monthIndex] + " " + strs[0];
+  },
+
+  formatMonthDate: function (dateStr) {
+      var strs = dateStr.split("-");
+      var monthIndex = parseInt(strs[1]) - 1;
+      // return strs[1] + "-" + strs[0];
+      return this.months[monthIndex] + " " + strs[2];
   },
 
   calculateRaisedPercentage: function (minimum_raise, amount_raised) {
@@ -69,4 +80,19 @@ module.exports = {
     l.href = href;
     return l.protocol + '//' +l.host;
   },
+
+  formatAmount(amount) {
+    if (amount < 1000)
+      return '$' + amount;
+
+    if (amount < 1000000)
+      return '$' + Math.round(amount/1000) + 'K';
+
+    if (amount < 1000000000)
+      return '$' + (amount/1000000).toFixed(3) + 'M';
+
+    return '$' + (amount / 1000000000).toFixed(2) + 'MM';
+  },
+
+
 };
