@@ -143,8 +143,14 @@ module.exports = {
   // Length validator
   // Validates that the value has to be a string with length equal to
   // the length value specified
+  _length: function (name, rule, attr, data) {
+    let value = this.getData(data, name);
+    if (!_.isString(value) || value.length !== rule) {
+      throw this.format(this.messages.length, attr.label, rule);
+    }
+  },
+
   length: function (name, rule, attr, data) {
-    console.log('hello lenght');
     let value = this.getData(data, name);
     if (!_.isString(value) || value.length !== rule) {
       throw this.format(this.messages.length, attr.label, rule);
