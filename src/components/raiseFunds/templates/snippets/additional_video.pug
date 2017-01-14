@@ -1,0 +1,40 @@
+mixin row(value, index)
+  - var index = index;
+  div
+    .col-xl-12(data-index=index class=name + ' addSectionBlock').video-container.p-sm-0.m-b-1
+      .delete-section-container.media-delete
+        a(href="#" data-section=name data-index=index).delete-sectionnew
+          i.fa.fa-times
+      .row.showPopover(data-content="You Tube or Vimeo links only please.")
+        .col-xl-7.col-lg-6.videoInteractive.text-xl-right.text-lg-left
+          
+          | !{app.fields.nestedTextLabel(name, 'headline', value, index,{class1: 'col-xl-5 col-lg-12 p-t-0 m-b-0 m-b-lg-1', class2: 'col-xl-7 col-lg-12', placeholder: 'Title',}, attr.schema.headline)}
+          | !{app.fields.nestedTextLabel(name, 'link', value, index,{class1: 'col-xl-5 col-lg-12', class2: 'col-xl-7 col-lg-12 additional-video-link', placeholder: 'http://www.',}, attr.schema.link)}
+          
+        .col-xl-5.col-lg-6
+          .embed-responsive.embed-responsive-16by9 
+            -
+              var additionalVideo = app.getVideoId(values && values[index] ? values[index].link : null);
+              var src = app.getVideoUrl(additionalVideo);
+            iframe.embed-responsive-item(src=src allowfullscreen="true")
+
+mixin run()
+  if first_run
+    div(class=(attr.row == 0 ? '' : '') + name + '_block' + (attr.required == true ? ' required ' : ' ') + ' nested')
+      div(class=(attr.row == 0 ? '' : '') + name + '_container' + (attr.required == true ? ' required ' : ' ') + ' nested')
+        if values == null || values.length == 0
+          +row({}, 0)
+        else
+          each value, index in values
+            +row(value, index)
+      .add-link.add-link-additional-video
+        .col-xl-6.offset-xl-3.p-sm-0
+          a(href="#" data-section=name data-comp="raiseFunds" data-template="additional_video").link-2.add-sectionnew
+            i.fa.fa-plus
+            |  Add Another Video
+    
+
+  else
+    +row({}, index)
+
++run()

@@ -1,0 +1,104 @@
+- 'use strict'
+- var campaign = {id: 1};
+- var values = {id: 1};
+
+- pug_html += app.breadcrumbs('some company name', '', [ ['Home', '/'], ['some company name', ''],]);
+
+section.formc-team-members-director.container.m-b-85
+  // need add left menu
+  //+menu('company', 'afterPaymentDashboard')
+  .col-lg-4.col-xl-3.create_compaign
+      .jumbotron.jumbotron-fluid.row
+        .raise-funds
+          h4.font-weight-bold.text-uppercase.m-b-0 Raise capital
+            .small-text (10% Done)
+        #accordion(role="tablist" aria-multiselectable="true")
+          .panel.panel-default
+            .panel-heading(role="tab")
+              a(data-toggle="collapse"
+              data-parent="#accordion"
+              href="#company"
+              aria-expanded="true"
+              class="list-group-item list-group-heading" + (currentSection == 'company' ? ' active ' : '')
+              )
+                i.fa.fa-briefcase
+                |  Company
+                span.pull-right
+                  i(class="arrow fa " + (currentSection == 'company' ? 'fa-angle-down' : 'fa-angle-left'))
+            #company(role="tabpanel" class="panel-collapse collapse " + (currentSection == 'company' ? 'in' : ''))
+              .list-group
+                a(href="/company/create" class="list-group-item list-group-item-action" + (currentSection == 'company' && currentStep == 'company' ? ' active' : '')) Company Detail
+                  if currentSection == 'company' && currentStep == 'create'
+                    .icon-check
+                      i.fa.fa-check-circle-o
+          .panel.panel-default
+            .panel-heading(role="tab")
+              a(data-toggle="collapse"
+              data-parent="#accordion"
+              href="#campaign-steps"
+              aria-expanded="true"
+              class="list-group-item list-group-heading" + (currentSection == 'campaign' ? ' active ' : '')
+              ).list-group-item
+                i.fa.fa-bar-chart
+                |  Campaign
+                span.pull-right
+                  //- i.fa.fa-angle-down
+                  i(class="arrow fa " + (currentSection == 'campaign' ? 'fa-angle-down' : 'fa-angle-left'))
+            #campaign-steps(role="tabpanel" class="panel-collapse collapse" + (currentSection == 'campaign' ? ' in' : ''))
+
+    
+  //START RIGHT BLOCK
+  .col-xl-9.col-lg-8.col-md-12
+    .col-lg-12
+      h3.m-t-0.m-b-1 Some Company Name is on the Form C reviewing process stage.
+      p.text-justify.pb10 The issuer of Some Company finished to fill Form C document. Now you can review and edit Form C document with all data which already filled by Some Company Issuer. 
+      p.text-justify Please, use left side menu for reviwing all existing data of Some Company Campaign and Form C document.
+    .col-lg-12
+      .border-bottom.m-t-3.m-b-3
+    .col-lg-12
+      h2.dosis.m-t-0.text-uppercase Team Members of SOme Company Name
+    .col-lg-12.m-b-2
+      .table-responsive
+        table.after-dashboard.table.table-bordered
+          thead
+            tr
+              th.text-xs-center Title
+              th.text-xs-center Full Name
+              th.text-xs-center Status
+          tbody
+            tr
+              td CEO/President
+              td Kenneth Staut
+              td.text-xs-center.check
+                i.fa.fa-check
+                |   Confirmed
+            tr
+              td Principal Financial Officer/Treasurer
+              td Please Identify
+              td.text-xs-center.check
+                i.fa.fa-check
+                |   Confirmed
+            tr
+              td Controller/Principal Accounting Officer
+              td Michael Jenkins
+              td.text-xs-center.check
+                i.fa.fa-check
+                |   Confirmed
+            tr
+              td Director
+              td Leon Stiel
+              td.text-xs-center.check
+                i.fa.fa-check
+                |   Confirmed
+            tr
+              td Secretary
+              td Michael Jenkins
+              td.text-xs-center.check
+                i.fa.fa-check
+                |   Confirmed
+            tr
+              td 20 % Voting Shareholder
+              td Vladislav Tarasenko
+              td.text-xs-center.check
+                i.fa.fa-check
+                |   Confirmed

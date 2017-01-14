@@ -1,0 +1,110 @@
+- 'use strict'
+- var fields = { title_risk: { label: 'Title for Risk'} };
+- var fields = { describe: { label: 'Describe Your Risk'} };
+- var campaign = {id: 1};
+- var values = {id: 1};
+
+- pug_html += app.breadcrumbs('company dashboard', '', [ ['Home', '/'], ['company dashboard', ''],]);
+
+section.formc-team-members-director.container.m-b-85
+  //+menu('company', 'companyDashboard')
+  .col-lg-4.col-xl-3.create_compaign
+  //START RIGHT BLOCK
+  .col-xl-9.col-lg-8.col-md-12
+    .col-lg-10
+      .warning-block
+        i.fa.fa-info-circle
+        .warning-text If you want to check or edit your answers and look & feel of campaign, please click on the side Raise Funds menu.
+    .col-lg-12
+      h3.m-t-0.m-b-1 Here’s how it works:
+      ol.m-b-0
+        li.pb10 Submit your campaign when you’re happy with your answers, look & feel;
+        li.pb10 We will generate an editable Form C based on your answers.  You’ll then have the opportunity to send to your legal counsel for review;
+        li.pb10 Upon your final submission, we require all background checks/signatures below;
+        li We’ll review your campaign for approval and go-live.
+    .col-lg-12
+      .border-bottom.m-t-3.m-b-3
+    .col-lg-12
+      h2.dosis.text-xs-center.m-t-0.text-uppercase Requirements
+    .col-lg-12.m-b-2
+      h3.m-b-1.m-t-0 Background Checks
+      .table-responsive
+        table.table-issuer-dashboard.table.table-bordered
+          thead
+            tr
+              th(width="25%")
+              th(width="20%").text-xs-center Title
+              th(width="15%").text-xs-center Completed Paperwork
+              th(width="20%").text-xs-center Status
+              th(width="20%").text-xs-center Send Reminder
+          tbody
+            tr
+              td John Robbins
+              td.color-gray CEO
+              td.text-xs-center.check
+                i.fa.fa-check
+              td.color-gray Approved
+              td.text-xs-center
+                a(href="")
+                  i.fa.fa-envelope-o
+                  |  Email 
+            tr
+              td Kenneth Stuart
+              td.color-gray Board Member
+              td.text-xs-center.no NO
+              td.color-gray Pending
+              td.text-xs-center
+                a(href="").link-3
+                  i.fa.fa-envelope-o
+                  |  Email 
+            tr
+              td Michael Jenkins
+              td.color-gray CFO
+              td.text-xs-center.no NO
+              td.color-gray Pending
+              td.text-xs-center
+                a(href="").link-3
+                  i.fa.fa-envelope-o
+                  |  Email 
+    .col-lg-12
+      h3.m-b-1.m-t-0 Required Signatures
+      .table-responsive
+        table.table-issuer-dashboard.table.table-bordered
+          thead
+            tr
+              th(width="25%")
+              th(width="15%").text-xs-center Form C 
+              th(width="15%").text-xs-center Permission to Obtain CIK Code
+              th(width="25%").text-xs-center Certification of Tax  Return (if raise $100K or less)
+              th(width="20%").text-xs-center Send Reminder
+          tbody
+            tr
+              td John Robbins
+              td.text-xs-center.check
+                i.fa.fa-check
+              td.text-xs-center.no NO
+              td.text-xs-center.color-gray N/A
+              td.text-xs-center
+                a(href="").link-3
+                  i.fa.fa-envelope-o
+                  |  Email 
+            tr
+              td Kenneth Stuart
+              td.text-xs-center.no NO
+              td.text-xs-center.color-gray N/A
+              td.text-xs-center.color-gray N/A
+              td.text-xs-center
+                a(href="").link-3
+                  i.fa.fa-envelope-o
+                  |  Email
+            tr
+              td Michael Jenkins
+              td.text-xs-center.no NO
+              td.text-xs-center.color-gray N/A
+              td.text-xs-center.color-gray N/A
+              td.text-xs-center
+                a(href="").link-3
+                  i.fa.fa-envelope-o
+                  |  Email
+
+

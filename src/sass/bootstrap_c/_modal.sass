@@ -5,7 +5,7 @@
 	.modal-content
 		border: none
 		border-radius: 0px
-		
+
 	.modal-header
 		border-bottom: none
 		h2
@@ -62,11 +62,20 @@
 		border: none
 		margin: 0
 		padding: 0
+
+#security_modal
+	label
+		font-size: rem(14)!important
+		font-weight: bold
+	.radio-input
+		label
+			font-weight: normal
 @media only screen and (max-width : 768px)
 	.modal-dialog	
 		.modal-body
 			padding: rem(10) rem(0)
 	[id^="videoModal"]
+		top: 30%!important
 		.modal-dialog
 			margin: auto
 			width: 100%
@@ -84,3 +93,33 @@
 		    z-index: 999
 		    color: $white
 		    font-size: rem(33)
+.modal-dropzone
+	top: 15%
+	.modal-dialog
+		max-width: 640px
+		.modal-header
+			.close
+				font-size: rem(30)
+		.img-preview
+			position: relative
+			border-radius: 100%
+			&.mini
+				top: 20px
+		.cropper-view-box
+			border-radius: 100%
+			outline: none
+		.cropper-crop-box
+			background-color: rgba(96,97,98, .5)
+		.cropper-point
+			background-color: $elm
+		.cropper-line
+			background-color: transparent
+
+	&.img-crop
+		.modal-dialog
+			max-width: 760px
+			.modal-body
+				padding: rem(15)
+		.cropper-view-box
+			border-radius: 0px
+

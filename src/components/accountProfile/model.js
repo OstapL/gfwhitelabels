@@ -9,6 +9,50 @@ let userModel = Backbone.Model.extend({
     return this.get('token') == '';
   },
 
+  // ensureLoggedIn1() {
+  //   return new Promise((resolve, reject) => {
+  //     if (!this.is_anonymous())
+  //       return resolve(true);
+  //
+  //     const View = require('components/anonymousAccount/views.js');
+  //
+  //     let view = new View.popupLogin1({
+  //
+  //     });
+  //     view.render();
+  //
+  //     new pView.popupLogin().render(window.location.pathname);
+  //     app.hideLoading();
+  //
+  //   });
+  // },
+
+  ensureLoggedIn(next) {
+    if (this.is_anonymous()) {
+      const pView = require('components/anonymousAccount/views.js');
+      let v = new pView.popupLogin({
+        next: next || window.location.pathname,
+      });
+      v.render();
+      app.hideLoading();
+
+      return false;
+    }
+
+    return true;
+  },
+
+  getRoleInfo() {
+    let role = this.get('role');
+    role.role = role.role || [];
+
+    return {
+      companyName: role.company_name || '',
+      companyId: role.company_id || 0,
+      role: role.role.join(', ') || '',
+    };
+  },
+
   get_full_name: function () {
     return this.get('first_name') + ' ' + this.get('last_name');
   },
@@ -19,13 +63,17 @@ let userModel = Backbone.Model.extend({
       let userData = localStorage.getItem('user');
       this.set('token', localStorage.getItem('token'));
 
-      if (userData == null || userData.image_data == null) {
+      // if (userData == null) {
+      if (1 == 1) {
         this.fetch({
-          url: serverUrl + Urls.rest_user_details(),
+          url: authServer + '/rest-auth/data-mini',
           success: (data) => {
             localStorage.setItem('user', JSON.stringify(this.toJSON()));
-            app.trigger('userLoaded', this.toJSON());
-            //app.routers.mainPage(); // TODO: FIX THAT !!!
+            this.getCompanyR().done((companyD) => {
+              this.set('company', companyD || null);
+              app.trigger('userLoaded', this.toJSON());
+              //app.routers.mainPage(); // TODO: FIX THAT !!!
+            });
           },
           error: (model, xhr, status) => {
             localStorage.removeItem('token');
@@ -42,21 +90,6 @@ let userModel = Backbone.Model.extend({
     }
   },
 
-  // ToDo
-  // Move login function from views/user.js to model
-  /*
-  login: function(cb) {
-      $.ajax({
-          url: serverUrl + Urls['rest_logout'](),
-          success: (data) {
-              localStorage.removeItem('token');
-              localStorage.removeItem('user');
-              cb();
-          }
-      });
-  },
-  */
-
   logout: function () {
     $.ajax({
       type: 'POST',
@@ -68,6 +101,46 @@ let userModel = Backbone.Model.extend({
         window.location = '/';
       },
     });
+  },
+
+  company: null,
+  campaign: null,
+  formc: null,
+
+  getCompanyR() {
+    if(this.company == null) {
+      return app.makeCacheRequest(authServer + '/user/company');
+    } else {
+      return '';
+    }
+  },
+
+  getCompany() {
+    return this.company;
+  },
+
+  getCampaignR() {
+    if(this.campaign == null) {
+      return app.makeCacheRequest(authServer + '/user/campaign');
+    } else {
+      return '';
+    }
+  },
+
+  getCampaign() {
+    return this.campaign;
+  },
+
+  getFormcR() {
+    if(this.formc == null) {
+      return app.makeCacheRequest(authServer + '/user/formc');
+    } else {
+      return '';
+    }
+  },
+
+  getFormc() {
+    return this.formc;
   },
 });
 
