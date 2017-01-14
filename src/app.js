@@ -11,6 +11,7 @@ const validation = require('components/validation/validation.js');
 
 global.formatHelper = require('helpers/formatHelper');
 
+document.title = pageTitle;
 
 $.fn.scrollTo = function (padding=0) {
   $('html, body').animate({
