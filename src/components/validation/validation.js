@@ -20,8 +20,31 @@ module.exports = {
   },
 
   invalidMsg: function (view, attr, error, selector) {
-    let $el = view.$('#' + attr);
-    var $group = null;
+
+    // If we have error for json/nested fieds
+    // we need get all keys and show error for each key
+    // individually
+    if(Array.isArray(error) !== true && typeof error == 'object') {
+      _(error).forEach((el, k) => {
+        _(el).forEach((errors, key) => {
+          this.invalidMsg(view, attr + '__' + k + '__' + key, errors, selector);
+        })
+      });
+      return false;
+    }
+
+    // Temp hack for nested fields
+    if(attr.indexOf('__') !== -1) {
+      let t = $('#' + attr).parents('.shown-yes');
+      if(t.length != 0 && t.css('display') == 'none') {
+        t.show();
+      }
+    }
+
+    let $el = null;
+    let $group = null;
+
+    $el = view.$('#' + attr);
 
     if ($el.length == 0) {
       $el = view.$('[name=' + attr + ']');
@@ -39,8 +62,8 @@ module.exports = {
       // first element in form
       if ($el.length == 0) {
 
-        $el = $('<div class="alert alert-warning" role="alert">' +
-            error.join(',') + '</div>');
+        $el = $('<div class="alert alert-warning" role="alert"><p><b>' + attr + 
+            ':</b> ' + error.join(',') + '</div>');
         if(view.$el.find('form').length == 0) {
           view.$el.prepend($el);
         } else {
@@ -48,7 +71,7 @@ module.exports = {
         }
       } else {
         $el.html(
-          $el.html() + '<p><b>' + view.fields[attr].label + ':</b> ' +
+          $el.html() + '<p><b>' + attr + ':</b> ' +
             error.join(',') + '</p>'
         );
       }
@@ -58,9 +81,9 @@ module.exports = {
       var $errorDiv = $group.find('.help-block');
 
       if ($errorDiv.length != 0) {
-        $errorDiv.html(error.join(','));
+        $errorDiv.html(error.join(', '));
       } else {
-        $group.append('<div class="help-block">' + error.join(',') + '</div>');
+        $group.append('<div class="help-block">' + error.join(', ') + '</div>');
       }
     }
   },
@@ -71,6 +94,7 @@ module.exports = {
         rules[rule](name, value, attr, this.data, this.schema);
     } catch (e) {
       this.finalResult = false;
+      name = name.replace(/\./g, '__');
       Array.isArray(this.errors[name]) ? this.errors[name].push(e) : this.errors[name] = [e];
     }
   },
@@ -90,7 +114,30 @@ module.exports = {
     this.errors = {};
 
     _(schema).each((attr, name) => {
-      if (fixedRegex.indexOf(attr.type) != -1) {
+      // TODO
+      // How to check nested one element if that can be blank ?
+      if (attr.type == 'nested') {
+        _(attr.schema1).each((attr, subname) => {
+          if (fixedRegex.indexOf(attr.type) != -1) {
+            _(attr.validate).each((jsonFields, index) => {
+              try {
+                rules.regex(name, attr, data, attr.type);
+                this.runRules(attr, name);
+              } catch (e) {
+                this.finalResult = false;
+                Array.isArray(this.errors[name]) ? this.errors[name].push(e) : this.errors[name] = [e];
+              }
+            });
+          } else {
+            _(attr.validate).each((jsonFields, index) => {
+              this.runRules(attr, name + '.' + index + '.' + subname);
+            });
+          }
+        });
+        if (attr.fn) {
+          this.runRule('fn', attr.fn, name, attr);
+        }
+      } else if (fixedRegex.indexOf(attr.type) != -1) {
         try {
           rules.regex(name, attr, data, attr.type);
           this.runRules(attr, name);

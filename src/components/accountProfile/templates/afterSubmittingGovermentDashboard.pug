@@ -1,0 +1,73 @@
+- 'use strict'
+- var campaign = {id: 1};
+- var values = {id: 1};
+
+- pug_html += app.breadcrumbs('some company name', '', [ ['Home', '/'], ['some company name', ''],]);
+
+section.formc-team-members-director.container.m-b-85
+  // need add left menu
+  //+menu('company', 'afterPaymentDashboard')
+  .col-lg-4.col-xl-3.create_compaign
+      .jumbotron.jumbotron-fluid.row
+        .raise-funds
+          h4.font-weight-bold.text-uppercase.m-b-0 Raise capital
+            .small-text (10% Done)
+        #accordion(role="tablist" aria-multiselectable="true")
+          .panel.panel-default
+            .panel-heading(role="tab")
+              a(data-toggle="collapse"
+              data-parent="#accordion"
+              href="#company"
+              aria-expanded="true"
+              class="list-group-item list-group-heading" + (currentSection == 'company' ? ' active ' : '')
+              )
+                i.fa.fa-briefcase
+                |  Company
+                span.pull-right
+                  i(class="arrow fa " + (currentSection == 'company' ? 'fa-angle-down' : 'fa-angle-left'))
+            #company(role="tabpanel" class="panel-collapse collapse " + (currentSection == 'company' ? 'in' : ''))
+              .list-group
+                a(href="/company/create" class="list-group-item list-group-item-action" + (currentSection == 'company' && currentStep == 'company' ? ' active' : '')) Company Detail
+                  if currentSection == 'company' && currentStep == 'create'
+                    .icon-check
+                      i.fa.fa-check-circle-o
+          .panel.panel-default
+            .panel-heading(role="tab")
+              a(data-toggle="collapse"
+              data-parent="#accordion"
+              href="#campaign-steps"
+              aria-expanded="true"
+              class="list-group-item list-group-heading" + (currentSection == 'campaign' ? ' active ' : '')
+              ).list-group-item
+                i.fa.fa-bar-chart
+                |  Campaign
+                span.pull-right
+                  //- i.fa.fa-angle-down
+                  i(class="arrow fa " + (currentSection == 'campaign' ? 'fa-angle-down' : 'fa-angle-left'))
+            #campaign-steps(role="tabpanel" class="panel-collapse collapse" + (currentSection == 'campaign' ? ' in' : ''))
+                
+    
+  //START RIGHT BLOCK
+  .col-xl-9.col-lg-8.col-md-12
+    .row
+      .col-xl-10.offset-xl-1
+        h2.text-xs-center.thankyou-title.m0.letter-spacing-normal 
+          i(aria-hidden="true").fa.fa-check-square-o.color-green
+          |  We sent Form C document for Some Company Name 
+          br
+          | to the government!
+
+    .row
+      .col-xl-10.offset-xl-1
+        hr.m-b-3.m-t-3
+    
+    .row
+      .col-xl-12
+        .text-xs-center
+          p We waiting for aproving your Form C document by goverment. 
+            br
+            |  Thank you for creating a campaign on GrowthFountain!
+            br
+            |  We will contact you shortly.
+        .text-xs-center.m-t-3
+          a(href="#").btn.btn-primary Go explore

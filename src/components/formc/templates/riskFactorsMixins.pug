@@ -1,0 +1,27 @@
+mixin showRisk(name, index, title, risk)
+  form(data-method="PATCH" data-index=(index) index=index)
+    input(type="hidden" name="title" value=title)
+    textarea(name="risk" readonly index=index data-index=index class="form-control big-textarea borderless-textarea " + (values[name].hasOwnProperty(index) ? "added" : "unadded")) #{ values[name].hasOwnProperty(index) ? values[name][index].risk : risk }
+    .text-md-center.text-lg-right
+      button(style="display: " + (values[name].hasOwnProperty(index) ? 'inline-block' : 'none') + ';' data-index=index).btn.btn-secondary.btn-sm.m-t-1.edit-risk.risk-button.added-state  Edit risk
+      button(style="display: " + (values[name].hasOwnProperty(index) ? 'inline-block' : 'none') + ';' data-index=index).btn.btn-secondary.btn-sm.m-t-1.delete.risk-button.added-state  Delete risk
+      button(type="submit" style="display: none").btn.btn-secondary.btn-sm.m-t-1.add-risk.risk-button.editing-state Save and Add this Risk
+      button(style="display:" + (values[name].hasOwnProperty(index) ? 'none' : 'inline-block') + ";" data-index=index).btn.btn-secondary.btn-sm.m-t-1.edit-risk.risk-button.unadded-state Edit Risk
+
+mixin showRiskForm(v, k, field)
+  if values.hasOwnProperty(field) === false
+    - values[field] = {};
+
+  .panel.panel-default.risk-panel(index=k)
+    .panel-heading(role="tab" id=("heading-" + k))
+      a(
+      data-parent="#accordion-risk" 
+      aria-expanded="false"
+      aria-controls="collapse-" + k
+      class=("list-group-item-action active" + (values[field].hasOwnProperty(k) ? ' added-risk-title' : ''))
+      )= v.title
+    .panel-collapse.collapse.in(role="tabpanel"
+    id="collapse-" + k
+    aria-labelledby=("heading-" + k)
+    )
+      +showRisk(field, k, v.title, v.risk)

@@ -1,13 +1,5 @@
+- pug_html += app.breadcrumbs('Established Business Valuation Calculator', 'Step 1', [ ['Home', '/'], ["What's My Business Worth?", '/calculator/selectYourBusiness'], ["Established Business Valuation Calculator", ''],]);
 
-include ../../../templates/mixins.pug
-
-+breadcrumbs('Established Business Valuation Calculator', 'Step 1',
-  [
-    ['Home', '/'],
-    ["What's My Business Worth?", '/calculator/selectYourBusiness'],
-    ["Established Business Valuation Calculator", '']
-  ]
-)
 
 .container.calculator-container
   .row
@@ -18,20 +10,20 @@ include ../../../templates/mixins.pug
         li
           a(href="/calculator/establishedBusiness/step-1").current.btn.text-uppercase step 1
         li
-          a(href="/calculator/establishedBusiness/step-2").btn.text-uppercase step 2
+          a(href="/calculator/establishedBusiness/step-2").next.btn.text-uppercase step 2
         li
-          a(href="/calculator/establishedBusiness/step-3").btn.text-uppercase step 3
+          a(href="/calculator/establishedBusiness/step-3").next.btn.text-uppercase step 3
         li
-          a(href="/calculator/establishedBusiness/finish").btn.text-uppercase Finish
+          a(href="/calculator/establishedBusiness/finish").next.btn.text-uppercase Finish
 
   .row
     .offset-lg-3.col-lg-6
-      form(method="post" action="")
+      form(method="post" action="").form-section
         .form-body.clearfix
           .form-group.row
-            label(for='industry').col-lg-12.col-form-label Please provide the industry to which your business belongs.
+            label(for='industry').col-lg-12.col-form-label.font-weight-normal Please provide the industry to which your business belongs.
             .col-lg-12
-              select(data-model-value='industry')#industry.form-control.js-select
+              select(data-model-value='industry' name="industry")#industry.form-control.js-select
                 each val, index in industryData
                   if val == data.industry
                     option(selected)= val
@@ -39,7 +31,7 @@ include ../../../templates/mixins.pug
                     option= val
 
           .form-group.row
-            label(for="raiseCash").col-lg-12 How much cash do you plan to raise?
+            label(for="raiseCash").col-lg-12.font-weight-normal How much cash do you plan to raise?
 
             .col-lg-12
               input(
@@ -49,10 +41,11 @@ include ../../../templates/mixins.pug
                 autocomplete='off'
                 data-input-mask='price',
                 data-model-value='raiseCash',
+                name="raiseCash"
                 data-current-value= data.raiseCash)#raiseCash.form-control.js-field
 
           .form-group.row
-            label(for="ownCache").col-lg-12 How much cash, beyond what's needed for immediate operating needs, does your business currently have?
+            label(for="ownCache").col-lg-12.font-weight-normal How much cash, beyond what's needed for immediate operating needs, does your business currently have?
 
             .col-lg-12
               input(
@@ -62,10 +55,11 @@ include ../../../templates/mixins.pug
                 autocomplete='off'
                 data-input-mask='price',
                 data-model-value='ownCache',
+                name="ownCache",
                 data-current-value= data.ownCache)#ownCache.form-control.js-field
 
           .form-group.row
-            label(for="currentDebt").col-lg-12 How much debt is your business currently carrying?
+            label(for="currentDebt").col-lg-12.font-weight-normal How much debt is your business currently carrying?
 
             .col-lg-12
               input(
@@ -75,6 +69,7 @@ include ../../../templates/mixins.pug
                 autocomplete='off'
                 data-input-mask='price',
                 data-model-value='currentDebt',
+                name="currentDebt",
                 data-current-value= data.currentDebt)#currentDebt.form-control.js-field
 
           .form-group.row.clearfix.m0
@@ -83,5 +78,5 @@ include ../../../templates/mixins.pug
 
             .col-xs-6.mt30
               .controls
-                a(href='/calculator/establishedBusiness/step-2').btn.btn-primary.pull-right.text-uppercase Next
+                button.btn.btn-primary.pull-right.text-uppercase Next
                 // add class .pointer-events-none to disable all events for this button

@@ -1,0 +1,66 @@
+
+mixin row(value, index)
+  - var index = index;
+  tr(data-index=index)
+      td
+          - var securityType;
+          case parseInt(value.security_type)
+              when 0
+                  - securityType = 'Preferred Stock';
+              when 1
+                  - securityType = 'Common Stock';
+              when 2
+                  - securityType = 'Debt';
+              when 3 
+                  - securityType = 'Warrants';
+              when 4 
+                  - securityType = 'Options';
+              when 5
+                  - securityType = value.custom_security_type;
+          | #{securityType}
+          .collapse
+      td
+          | #{value.amount_authroized}
+          .collapse
+      td
+          | #{value.amount_outstanding}
+          .collapse
+      td
+          | #{Number(value.voting_right) ? 'Yes' : 'No'}
+          .collapse
+      td 
+          .delete-section-container
+              a(href="#" data-section="outstanding_securities" data-index=index).delete-outstanding
+                  i.fa.fa-times
+
+
+mixin run()
+
+  if first_run
+    .row
+      .col-lg-12
+        .border-bottom.m-t-3.m-b-0
+    h3.text-xs-center Outstanding Securities
+    p What other securities are outstanding? Describe the material terms of any other outstanding securies.
+    a(data-toggle="modal" data-target="#security_modal" href="#security_modal").btn.text-uppercase.m-t-2.m-b-2
+      i.fa.fa-plus
+      |  add outstanding securities
+
+    div(class=(attr.row == 0 ? '' : 'row ') + (values.length == 0 ? ' collapse ' : '') + name + '_block' + (attr.required == true ? ' required ' : ' ') + ' nested')
+      .table-responsive.col-lg-12
+        table.table.table-bordered.table-striped.text-xs-center.table-outstanding.m-b-0.securities-table
+          thead
+            tr
+              th(width="22%").text-xs-center Security Type
+              th(width="21%").text-xs-center Amount Authorized
+              th(width="21%").text-xs-center Amount Outstanding
+              th(width="20%").text-xs-center Voting Rights
+              th(width="6%")
+          tbody(class=(attr.row == 0 ? '' : '') + name + '_container' + (attr.required == true ? ' required ' : ' ') + ' nested')
+            each value, index in values
+              +row(value, index)
+
+  else
+    +row(value || {}, index)
+
++run()
