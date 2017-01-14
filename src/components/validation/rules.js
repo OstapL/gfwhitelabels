@@ -145,14 +145,14 @@ module.exports = {
   // the length value specified
   _length: function (name, rule, attr, data) {
     let value = this.getData(data, name);
-    if (!_.isString(value) || value.length-1 !== rule) {
+    if (!_.isString(value) || value.length !== rule) {
       throw this.format(this.messages.length, attr.label, rule);
     }
   },
 
   length: function (name, rule, attr, data) {
     let value = this.getData(data, name);
-    if (!_.isString(value) || value.length-1 !== rule) {
+    if (!_.isString(value) || value.length !== rule) {
       throw this.format(this.messages.length, attr.label, rule);
     }
   },
@@ -162,7 +162,7 @@ module.exports = {
   // the min length value specified
   minLength: function (name, rule, attr, data) {
     let value = this.getData(data, name);
-    if (!_.isString(value) || value.length-1 < rule) {
+    if (!_.isString(value) || value.length < rule) {
       throw this.format(this.messages.minLength, attr.label, rule);
     }
   },
@@ -171,7 +171,7 @@ module.exports = {
   // Validates that the value has to be a string with length equal to or less than
   // the max length value specified
   maxLength: function (name, rule, attr, data) {
-    if (!_.isString(value) || value.length-1 > rule) {
+    if (!_.isString(value) || value.length > rule) {
       throw this.format(this.messages.maxLength, attr.label, rule);
     }
   },
@@ -181,7 +181,7 @@ module.exports = {
   // the two numbers specified
   rangeLength: function (name, rule, attr, data) {
     let value = this.getData(data, name);
-    if (!_.isString(value) || value.length-1 < rule[0] || value.length-1 > rule[1]) {
+    if (!_.isString(value) || value.length < rule[0] || value.length+1 > rule[1]) {
       throw this.format(this.messages.rangeLength, attr.label, rule[0], rule[1]);
     }
   },
