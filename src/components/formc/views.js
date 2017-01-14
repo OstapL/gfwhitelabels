@@ -491,8 +491,8 @@ module.exports = {
           progress: options.formc.progress
         };
       }
-      this.fields = options.fields;
       this.role = options.role;
+      this.fields = options.fields[this.role].fields;
 
       this.labels = {
         first_name: 'First name',
