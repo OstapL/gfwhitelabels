@@ -127,7 +127,7 @@ module.exports = {
     submitComment(e) {
       e.preventDefault();
 
-      if (!app.user.ensureLoggedIn(e))
+      if (!app.user.ensureLoggedIn(window.location.pathname))
         return false;
 
       let $target = $(e.target);

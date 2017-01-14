@@ -90,8 +90,9 @@ module.exports = {
 
   runRule(rule, value, name, attr) {
     try {
-      if (rules[rule])
+      if (rules[rule]) {
         rules[rule](name, value, attr, this.data, this.schema);
+      }
     } catch (e) {
       this.finalResult = false;
       name = name.replace(/\./g, '__');
@@ -116,8 +117,8 @@ module.exports = {
     _(schema).each((attr, name) => {
       // TODO
       // How to check nested one element if that can be blank ?
-      if (attr.type == 'nested') {
-        _(attr.schema1).each((attr, subname) => {
+      if (attr.type == 'nested' && attr.required == true) {
+        _(attr.schema).each((attr, subname) => {
           if (fixedRegex.indexOf(attr.type) != -1) {
             _(attr.validate).each((jsonFields, index) => {
               try {
@@ -129,9 +130,7 @@ module.exports = {
               }
             });
           } else {
-            _(attr.validate).each((jsonFields, index) => {
-              this.runRules(attr, name + '.' + index + '.' + subname);
-            });
+            this.runRules(attr, name + '.' + subname);
           }
         });
         if (attr.fn) {
