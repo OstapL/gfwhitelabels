@@ -117,7 +117,8 @@ module.exports = {
     _(schema).each((attr, name) => {
       // TODO
       // How to check nested one element if that can be blank ?
-      if (attr.type == 'nested' && attr.required == true) {
+      // requiredTemp - temp fix to validate fields on investment page only
+      if (attr.type == 'nested' && attr.requiredTemp == true) {
         _(attr.schema).each((attr, subname) => {
           if (fixedRegex.indexOf(attr.type) != -1) {
             _(attr.validate).each((jsonFields, index) => {

@@ -427,6 +427,8 @@ module.exports = {
       };
 
       // Validation rules
+      this.fields.personal_information_data.requiredTemp = true;
+      this.fields.payment_information_data.requiredTemp = true;
       this.fields.payment_information_data.schema.account_number = {
         type: 'password',
         required: true,
@@ -478,7 +480,7 @@ module.exports = {
 
       this.fields.signature = {
         type: 'nested',
-        required: true,
+        requiredTemp: true,
       };
       this.fields.signature.schema = {};
       this.fields.signature.schema.full_name = {
