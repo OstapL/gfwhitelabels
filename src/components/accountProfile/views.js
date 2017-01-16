@@ -79,12 +79,6 @@ module.exports = {
             height: 600,
           }
         },
-
-        // imgOptions: {
-        //   aspectRatio: 1 / 1,
-        //   cssClass : 'img-profile-crop',
-        //   showPreview: true,
-        // },
       });
 
       // this.fields.account_number.required = true;
@@ -107,22 +101,20 @@ module.exports = {
 
       this.fields.ssn = _.extend(this.fields.ssn, {
         type: 'password',
-        fn: function(value, attr, fn, model, computed) {
-          if (this.ssn != this.ssn_re)
-            throw 'Social security fields don\'t match';
+        fn: function(name, value, attr, data, schema) {
 
-          // if (this.ssn.length !== 9)
-          //   throw 'Please enter a social security number that is 9 digits';
+          if (!data.ssn.match(/^[0-9]{9}$/))
+            throw 'Please enter a social security number that is 9 digits.';
+
+          if (data.ssn != data.ssn_re)
+            throw 'Social security fields don\'t match.';
+
         },
       });
 
-      this.model.ssn_re = this.model.ssn;
+      // this.model.ssn_re = this.model.ssn;
       this.fields.ssn_re = _.extend(this.fields.ssn_re = {}, {
         type: 'password',
-        // fn: function(value, attr, fn, model, computed) {
-        //   if (this.ssn != this.ssn_re)
-        //     throw 'Social security fields don\'t match';
-        // },
       });
 
       this.labels = {
