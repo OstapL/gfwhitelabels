@@ -14,7 +14,7 @@ mixin row(value, index)
 
       .row.form-group
         .col-date(id='business_loans_or_debt__' + index + '__maturity_date')
-          label.col-xl-3.col-lg-12.text-xl-right.textlg-left Maturity Date
+          label.col-xl-3.col-lg-12.text-xl-right.textlg-left Date of Offering
             span.color-red *
           .col-xl-4.col-lg-6.p-r-0
             | !{app.fields.nestedDateMonth(name, 'maturity_date', value, index, attr.schema.maturity_date, {placeholder: 'MM',})}
