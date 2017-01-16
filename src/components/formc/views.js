@@ -422,9 +422,8 @@ module.exports = {
     repeatInvitation(e) {
       e.preventDefault();
       api.makeRequest(
-        formcServer + '/invitation/repeat',
+        formcServer + '/' + this.model.id + '/team-members/invitation/' +  e.target.dataset.id,
         'PUT',
-        {'user_id': e.target.dataset.id}
       ).then((data) => {
         e.target.innerHTML = 'sent';
         e.target.className = 'link-3 invite';
