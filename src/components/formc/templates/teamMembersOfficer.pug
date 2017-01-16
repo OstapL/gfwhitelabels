@@ -58,12 +58,12 @@ section.formc-team-members-director.container.m-b-85
               label.col-xl-3.col-lg-12.text-lg-left.text-xl-right Responsibilities
                 span.color-red *
               .col-xl-9.col-lg-12.showPopover(data-content=" Select all roles that currently apply.")
-                select(name="role[]" multiple="true" title="Responsibilities" data-type="array")#role.form-control.selectpicker.w-100.team-select
-                  option(value=4 data-value-type="number" ) CEO/President
-                  option(value=8 data-value-type="number" ) Principal Financial Officer/Treasurer
-                  option(value=16 data-value-type="number" ) Vice President
-                  option(value=32 data-value-type="number" ) Secretary
-                  option(value=64 data-value-type="number" ) Controller/Principal Accounting Officer
+                select(name="role" multiple="true" title="Responsibilities" data-type="array")#role.form-control.selectpicker.w-100.team-select
+                  option(value=1 data-value-type="number" selected=(values.title.indexOf("1") != -1 ? true : false )) CEO/President
+                  option(value=2 data-value-type="number" selected=(values.title.indexOf("2") != -1 ? true : false )) Principal Financial Officer/Treasurer
+                  option(value=3 data-value-type="number" selected=(values.title.indexOf("4") != -1 ? true : false )) Vice President
+                  option(value=4 data-value-type="number" selected=(values.title.indexOf("8") != -1 ? true : false )) Secretary
+                  option(value=5 data-value-type="number" selected=(values.title.indexOf("16") != -1 ? true : false )) Controller/Principal Accounting Officer
         .row
           .col-xl-6.col-lg-6
             .row
@@ -95,5 +95,5 @@ section.formc-team-members-director.container.m-b-85
           .col-lg-12.text-lg-right.text-sm-center.text-xs-center
             - console.log(this.values, values);
             a(href='/formc/' + values.formc_id + '/team-members').btn.btn-secondary.text-uppercas.m-r-1 Cancel
-            button(type='button' data-method=(values.user_id ? 'PATCH' : 'POST'))#submitForm.btn.btn-primary.text-uppercase Save
+            button(type='button' data-method=(values.user_id ? 'PUT' : 'POST'))#submitForm.btn.btn-primary.text-uppercase Save
               i.fa.fa-angle-right

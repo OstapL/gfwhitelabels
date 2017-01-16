@@ -456,12 +456,12 @@ module.exports = {
 
   }, menuHelper.methods, addSectionHelper.methods, leavingConfirmationHelper.methods)),
 
-  teamMemberAdd: Backbone.View.extend(_.extend({
+	teamMemberAdd: Backbone.View.extend(_.extend({
     urlRoot: formcServer + '/:id/team-members',
     doNotExtendModel: true,
     roles: ['shareholder', 'director', 'officer'],
     events: _.extend({
-      'click #submitForm': 'submit',
+      'click #submitForm': api.submitAction,
       'click .submit_formc': submitFormc,
     }, addSectionHelper.events, menuHelper.events, leavingConfirmationHelper.events),
 
@@ -490,8 +490,8 @@ module.exports = {
           progress: options.formc.progress
         };
       }
+      this.fields = options.fields;
       this.role = options.role;
-      this.fields = options.fields[this.role].fields;
 
       this.labels = {
         first_name: 'First name',
@@ -522,69 +522,7 @@ module.exports = {
 
       this.createIndexes();
       this.buildJsonTemplates('formc');
-    },
-
-    render() {
-      let template = null;
-
-      this.urlRoot = this.urlRoot.replace(':id', this.model.formc_id);
-      if(this.model.hasOwnProperty('user_id')  && this.model.user_id != '') {
-        this.model.id = this.model.formc_id;
-        this.urlRoot += '/' + this.model.user_id;
-      } else {
-        this.model.role = 0;
-      }
-
-      if (this.role == 'director') {
-        template = require('components/formc/templates/teamMembersDirector.pug');
-        this.buildJsonTemplates('formc');
-      } else if (this.role == 'officer') {
-        template = require('components/formc/templates/teamMembersOfficer.pug');
-        this.buildJsonTemplates('formc');
-      } else if (this.role == 'shareholder') {
-        template = require('components/formc/templates/teamMembersShareHolder.pug');
-      }
-
-      require('bootstrap-select/sass/bootstrap-select.scss');
-      let selectPicker = require('bootstrap-select');
-
-      this.$el.html(
-        template({
-          serverUrl: serverUrl,
-          Urls: Urls,
-          fields: this.fields,
-          values: this.model,
-          templates: this.jsonTemplates,
-        })
-      );
-      this.$el.find('.selectpicker').selectpicker();
-      disableEnterHelper.disableEnter.call(this);
-      return this;
-    },
-
-    _success(data, newData) {
-      window.location = '/formc/' + this.model.formc_id + '/team-members';
-      /*
-      this.model.team_members.push(newData);
-      this.undelegateEvents();
-      app.routers.navigate(
-        '/formc/' + this.model.id + '/team-members',
-        { trigger: true, replace: false }
-      );
-      //return '/campaign/' + this.model.id + '/team-members';
-      */
-    },
-
-    submit(e) {
-      this.fields = {};
-      let data = $(e.target).closest('form').serializeJSON({ useIntKeysAsArrayIndex: true });
-      data['role'] = data['role'].reduce((a,b) => { return parseInt(a)+parseInt(b)}, 0)
-      delete data['experiences'];
-      delete data['positions'];
-      api.submitAction.call(this, e, data);
-    },
-
-  }, addSectionHelper.methods, menuHelper.methods, leavingConfirmationHelper.methods)),
+	},
 
   relatedParties: Backbone.View.extend(_.extend({
     el: '#content',
