@@ -109,18 +109,20 @@ module.exports = {
         type: 'password',
         fn: function(value, attr, fn, model, computed) {
           if (this.ssn != this.ssn_re)
-            throw `Social security fields don't match`;
+            throw 'Social security fields don\'t match';
+
+          // if (this.ssn.length !== 9)
+          //   throw 'Please enter a social security number that is 9 digits';
         },
       });
 
       this.model.ssn_re = this.model.ssn;
       this.fields.ssn_re = _.extend(this.fields.ssn_re = {}, {
         type: 'password',
-        fn: function(value, attr, fn, model, computed) {
-          if (this.ssn != this.ssn_re)
-            throw `Social security fields don't match`;
-        },
-
+        // fn: function(value, attr, fn, model, computed) {
+        //   if (this.ssn != this.ssn_re)
+        //     throw 'Social security fields don\'t match';
+        // },
       });
 
       this.labels = {
