@@ -422,9 +422,8 @@ module.exports = {
     repeatInvitation(e) {
       e.preventDefault();
       api.makeRequest(
-        formcServer + '/invitation/repeat',
+        formcServer + '/' + this.model.id + '/team-members/invitation/' +  e.target.dataset.id,
         'PUT',
-        {'user_id': e.target.dataset.id}
       ).then((data) => {
         e.target.innerHTML = 'sent';
         e.target.className = 'link-3 invite';
@@ -462,7 +461,7 @@ module.exports = {
     doNotExtendModel: true,
     roles: ['shareholder', 'director', 'officer'],
     events: _.extend({
-      'click #submitForm': api.submitAction,
+      'click #submitForm': 'submit',
       'click .submit_formc': submitFormc,
     }, addSectionHelper.events, menuHelper.events, leavingConfirmationHelper.events),
 
@@ -491,8 +490,8 @@ module.exports = {
           progress: options.formc.progress
         };
       }
-      this.fields = options.fields;
       this.role = options.role;
+      this.fields = options.fields[this.role].fields;
 
       this.labels = {
         first_name: 'First name',
@@ -531,10 +530,9 @@ module.exports = {
       this.urlRoot = this.urlRoot.replace(':id', this.model.formc_id);
       if(this.model.hasOwnProperty('user_id')  && this.model.user_id != '') {
         this.model.id = this.model.formc_id;
-        this.urlRoot += '/' + this.role + '/' + this.model.user_id;
+        this.urlRoot += '/' + this.model.user_id;
       } else {
-        this.urlRoot += '/' + this.role;
-        this.model.title = [];
+        this.model.role = 0;
       }
 
       if (this.role == 'director') {
@@ -575,6 +573,15 @@ module.exports = {
       );
       //return '/campaign/' + this.model.id + '/team-members';
       */
+    },
+
+    submit(e) {
+      this.fields = {};
+      let data = $(e.target).closest('form').serializeJSON({ useIntKeysAsArrayIndex: true });
+      data['role'] = data['role'].reduce((a,b) => { return parseInt(a)+parseInt(b)}, 0)
+      delete data['experiences'];
+      delete data['positions'];
+      api.submitAction.call(this, e, data);
     },
 
   }, addSectionHelper.methods, menuHelper.methods, leavingConfirmationHelper.methods)),
