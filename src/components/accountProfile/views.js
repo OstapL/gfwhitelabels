@@ -82,44 +82,61 @@ module.exports = {
       });
 
       // this.fields.account_number.required = true;
-      this.fields.account_number = _.extend(this.fields.account_number, {
-        type: 'password',
-        _length: 9,
-        fn: function(value, attr, fn, model, computed) {
-          if (this.account_number != this.account_number_re)
-            throw "Account number fields don't match";
-        },
-      });
+      this.fields.dependies = {
+        account_number: 'account_number_re',
+        account_number_re: 'account_number',
+        ssn: 'ssn_re',
+        ssn_re: 'ssn'
+      };
 
-      this.model.account_number_re = this.model.account_number;
-      this.fields.account_number_re = {
+      this.fields.account_number = {
         type: 'password',
-        _length: 9,
-        fn: function(value, attr, fn, model, computed) {
-          if (this.account_number != this.account_number_re)
+        required: true,
+        minLength: 9,
+        fn: function(name, value, attr, data, schema) {
+          if (value != this.getData(data, 'account_number_re')) {
             throw "Account number fields don't match";
+          }
         },
       };
 
-      this.fields.ssn = _.extend(this.fields.ssn, {
+      this.fields.account_number_re = {
         type: 'password',
-        _length: 9,
+        required: true,
+        minLength: 9,
         fn: function(name, value, attr, data, schema) {
-
-          if (!data.ssn.match(/^[0-9]{9}$/))
-            throw 'Please enter a social security number that is 9 digits.';
-
-          if (data.ssn != data.ssn_re)
-            throw 'Social security fields don\'t match.';
-
+          if (value != this.getData(data, 'account_number')) {
+            throw "Account number fields don't match";
+          }
         },
-      });
+      };
 
-      // this.model.ssn_re = this.model.ssn;
-      this.fields.ssn_re = _.extend(this.fields.ssn_re = {}, {
-        type: 'password',
+      this.fields.routing_number = {
+        required: true,
         _length: 9,
-      });
+      }
+
+      this.fields.ssn = {
+        type: 'password',
+        required: true,
+        _length: 9,
+        fn: function(name, value, attr, data, computed) {
+          if (value != data.ssn_re) {
+            throw "Social security fields don't match";
+          }
+        },
+      };
+
+      this.fields.ssn_re = {
+        type: 'password',
+        required: true,
+        _length: 9,
+        fn: function(name, value, attr, data, computed) {
+          if (value != data.ssn) {
+            throw "Social security fields don't match";
+          }
+        },
+      };
 
       this.labels = {
         country: 'Country',
