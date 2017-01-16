@@ -1,0 +1,17 @@
+div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")#files-modal.modal.fade.files-modal
+  div().modal-dialog
+    .modal-content.files-content
+      .modal-header
+        button(type="button" data-dismiss="modal" aria-label="Close").close
+          span(aria-hidden="true")
+            i.fa.fa-times
+        h2.text-uppercase.text-xs-center.m-t-2.m-b-2 #{title}
+      .modal-body.container.p-l-3.p-r-3.text-xs-center
+        each f in files
+          - var iconPath = helpers.icons.resolveIconPath(f.mime, 'file');
+          .thumb-file-container
+            img(src=iconPath alt=f.name class="img-file")
+            .row
+              a(class="link-file" target="_blank" href=f.urls[0] title=f.name) #{ helpers.text.shortenFileName(f.name) }
+        else
+          p No docs

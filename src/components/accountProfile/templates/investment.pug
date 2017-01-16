@@ -43,13 +43,15 @@
         span.dark_grey #{i.perk}
   .right_buttons
     h4 Downloadable Files
+    -
+      var presentationUrl = "#";//i.formc.business_plan_data.urls[0];
     ul
       li
-        a(href="#" ).link-3 Investor Presentation
+        a(href=presentationUrl target="_blank").link-3 Investor Presentation
       li
-        a(href="#").link-3 Form C
+        a(href="#" data-id=i.id target="_blank").link-3.formc-docs-link Form C
       li
-        a(href="#").link-3 Financials
+        a(href="#" data-id=i.id target="_blank").link-3.financial-docs-link Financials
       li
         a(
           href="#"
