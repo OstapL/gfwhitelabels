@@ -66,7 +66,6 @@ module.exports = {
       'click .twitter-share': 'shareOnTwitter',
       'click .see-all-risks': 'seeAllRisks',
       'click .see-all-faq': 'seeAllFaq',
-      'click .linkresponse': 'checkResponse',
       'click .show-more-members': 'readMore',
       // 'click .see-all-article-press': 'seeAllArticlePress',
       'click .more-less': 'showMore',
@@ -427,6 +426,8 @@ module.exports = {
       };
 
       // Validation rules
+      this.fields.personal_information_data.requiredTemp = true;
+      this.fields.payment_information_data.requiredTemp = true;
       this.fields.payment_information_data.schema.account_number = {
         type: 'password',
         required: true,
@@ -478,7 +479,7 @@ module.exports = {
 
       this.fields.signature = {
         type: 'nested',
-        required: true,
+        requiredTemp: true,
       };
       this.fields.signature.schema = {};
       this.fields.signature.schema.full_name = {

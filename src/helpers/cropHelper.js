@@ -8,7 +8,7 @@ module.exports = {
 
   showCropper(imgUrl, options={}, cropData, callback) {
 
-    options = _.extend({
+    options.control = _.extend({
       viewMode: 0,
       dragMode: 'crop',
       aspectRatio: 1,
@@ -36,13 +36,14 @@ module.exports = {
 
     }, options.control);
 
+
     const cssClass = options.cropper && options.cropper.cssClass ? options.cropper.cssClass : '';
     const showPreview = options.cropper && options.cropper.preview;
 
     let cropperTemplateWithPreview =
       '<div class="row">' +
         '<div class="col-xl-7 col-lg-7 col-md-7 col-sm-7">' +
-            '<div class="crop-image-container ">' +
+            '<div class="crop-image-container "></div>' +
           '</div>' +
         '</div>' +
         '<div class="preview-container col-xl-5 col-lg-5 col-md-5 col-sm-5 hidden-xs-down text-xs-center p-r-0">' +
@@ -70,8 +71,7 @@ module.exports = {
       '<div class="form-group">' +
         '<div class="row">' +
           '<div class="col-xl-10 offset-xl-1">' +
-            '<div class="crop-image-container">' +
-            '</div>' +
+            '<div class="crop-image-container"></div>' +
           '</div>' +
         '</div>' +
         '<div class="row">' +
@@ -111,16 +111,16 @@ module.exports = {
 
       let img = new Image();
 
-			img.addEventListener("load", function() {
-				const $modal = $('.cropModal');
+      img.addEventListener("load", function() {
+        const $modal = $('.cropModal');
 
         let _closeModal = false;
 
-				$modal.on('hidden.bs.modal', (e) => {
-					$modal.remove();
-				});
+        $modal.on('hidden.bs.modal', (e) => {
+          $modal.remove();
+        });
 
-				$modal.on('shown.bs.modal', () => {
+        $modal.on('shown.bs.modal', () => {
 
           let $cropperOk = $modal.find('.cropper-ok');
 
@@ -148,11 +148,12 @@ module.exports = {
               callback();
           });
 
-          options.minContainerHeight = 100;
+          options.control.minContainerHeight = 100;
 
-          let cropper = new Cropper(this, options);
-          //todo set cropper data
-          cropper.setData(cropData);
+          let cropper = new Cropper(this, options.control);
+          cropData = cropData || (options.auto ? _.extend({x: 0, y: 0}, options.auto) : null);
+          if (cropData)
+            cropper.setData(cropData);
           // REMOVE LOADING SPIINER
         });
 
@@ -170,6 +171,7 @@ module.exports = {
 			}, false);
 
 			img.src = imgUrl;
+
       $('#content').append(modalTemplate);
 			$('.crop-image-container').append(img)
 
