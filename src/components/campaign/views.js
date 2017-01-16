@@ -892,11 +892,13 @@ module.exports = {
       const subscriptionAgreementPath = this.getSubscriptionAgreementPath();
       const participationAgreementPath = 'invest/participation_agreement.pdf';
       const data = [{
+        compaign_id: this.model.id,
         type: typeOfDocuments[participationAgreementPath],
         object_id: responseData.id,
         meta_data: formData,
         template: participationAgreementPath
       }, {
+        compaign_id: this.model.id,
         type: typeOfDocuments[subscriptionAgreementPath],
         object_id: responseData.id,
         meta_data: formData,
@@ -980,6 +982,7 @@ module.exports = {
       const aggregate_inclusive_purchase = formData.total_amount.replace(/\D/g, '');
 
       return {
+        compaign_id: this.model.id,
         signature: this.getSignature(),
 
         fees_to_investor: companyFees.fees_to_investor,
