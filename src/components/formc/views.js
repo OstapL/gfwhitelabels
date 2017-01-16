@@ -522,7 +522,62 @@ module.exports = {
 
       this.createIndexes();
       this.buildJsonTemplates('formc');
-	},
+    },
+
+    render() {
+      let template = null;
+
+      this.urlRoot = this.urlRoot.replace(':id', this.model.formc_id);
+      if(this.model.hasOwnProperty('user_id')  && this.model.user_id != '') {
+        this.model.id = this.model.formc_id;
+        this.urlRoot += '/' + this.role + '/' + this.model.user_id;
+      } else {
+        this.urlRoot += '/' + this.role;
+        this.model.title = [];
+      }
+
+      if (this.role == 'director') {
+        template = require('components/formc/templates/teamMembersDirector.pug');
+        this.buildJsonTemplates('formc');
+      } else if (this.role == 'officer') {
+        template = require('components/formc/templates/teamMembersOfficer.pug');
+        this.buildJsonTemplates('formc');
+      } else if (this.role == 'shareholder') {
+        template = require('components/formc/templates/teamMembersShareHolder.pug');
+      }
+
+      require('bootstrap-select/sass/bootstrap-select.scss');
+      let selectPicker = require('bootstrap-select');
+
+      this.$el.html(
+        template({
+          serverUrl: serverUrl,
+          Urls: Urls,
+          fields: this.fields,
+          values: this.model,
+          templates: this.jsonTemplates,
+        })
+      );
+      this.$el.find('.selectpicker').selectpicker();
+      disableEnterHelper.disableEnter.call(this);
+      return this;
+    },
+
+    _success(data, newData) {
+      window.location = '/formc/' + this.model.formc_id + '/team-members';
+      /*
+      this.model.team_members.push(newData);
+      this.undelegateEvents();
+      app.routers.navigate(
+        '/formc/' + this.model.id + '/team-members',
+        { trigger: true, replace: false }
+      );
+      //return '/campaign/' + this.model.id + '/team-members';
+      */
+    },
+
+  }, addSectionHelper.methods, menuHelper.methods, leavingConfirmationHelper.methods)),
+
 
   relatedParties: Backbone.View.extend(_.extend({
     el: '#content',
