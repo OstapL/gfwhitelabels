@@ -61,9 +61,11 @@ module.exports = {
       // If we don't have alert-warning - we should create it as
       // first element in form
       if ($el.length == 0) {
+        let msg = attr == 'non_field_errors' ? '' : ('<b>' + attr + ':</b> ');
+        msg += error.join(',');
 
-        $el = $('<div class="alert alert-warning" role="alert"><p><b>' + attr + 
-            ':</b> ' + error.join(',') + '</div>');
+        $el = $('<div class="alert alert-warning" role="alert"><p>' + msg + '</p></div>');
+
         if(view.$el.find('form').length == 0) {
           view.$el.prepend($el);
         } else {
