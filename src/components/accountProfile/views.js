@@ -9,6 +9,7 @@ const helpers = {
   dropzone: require('helpers/dropzoneHelpers.js'),
   yesNo: require('helpers/yesNoHelper.js'),
   fields: require('./fields.js'),
+  fileList: require('helpers/fileList.js'),
 };
 
 const constants = {
@@ -336,6 +337,8 @@ module.exports = {
     events: {
       'click .cancel-investment': 'cancelInvestment',
       'click .agreement-link': 'openAgreement',
+      'click .formc-docs-link': 'showFormcDocs',
+      'click .financial-docs-link': 'showFinancialDocs',
     },
 
     initialize(options) {
@@ -371,6 +374,36 @@ module.exports = {
       const securityType = e.target.dataset.securityType;
       const subscriptionAgreementLink = userDocuments.getUserDocumentsByType(objectId, securityType);
       e.target.href = subscriptionAgreementLink;
+    },
+
+    _findInvestment(id) {
+      return _.find(this.model.data, (inv) =>  {
+        return inv.id == id;
+      });
+    },
+
+    showFormcDocs(e) {
+      const i = this._findInvestment(e.target.dataset.id);
+
+      let data = {
+        title: 'Formc',
+        // files: [],//TODO: get formc links from Vlad
+        files: app.user.attributes.image_data,
+      };
+
+      helpers.fileList.show(data);
+    },
+
+    showFinancialDocs(e) {
+      const i = this._findInvestment(e.target.dataset.id);
+
+      let data = {
+        title: 'Financials',
+        files: app.user.attributes.image_data,
+        // files: _.union(i.fomc.fiscal_recent_data.urls, i.formc.fiscal_prior_data.urls),
+      };
+
+      helpers.fileList.show(data);
     },
 
     cancelInvestment(e) {
