@@ -225,7 +225,6 @@ module.exports = {
         $target.prop('disabled', false);
         app.hideLoading();
         alert(err);
-        this.errorAction();//TODO: implement
       });
     },
 
@@ -324,10 +323,6 @@ module.exports = {
         errorBlock.html(errors);
       else
         this.$el.prepend('<div class="alert alert-warning" role="alert"><p>' + errors + '</p></div>');
-    },
-
-    errorAction() {
-
     },
 
   }, helpers.yesNo.methods)),

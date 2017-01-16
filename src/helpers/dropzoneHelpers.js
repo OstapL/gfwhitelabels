@@ -6,10 +6,6 @@ const helpers = {
   text: require('./textHelper.js'),
 };
 
-const url = (file) => {
-  return `${bucketServer}/${file}`;
-};
-
 module.exports = {
 
   events: {
@@ -130,7 +126,12 @@ module.exports = {
             if (typeof(onSuccess) === 'function') {
               onSuccess(data, file);
             }
+          }).fail((xhr, status) => {
+            this._errorAction(name, xhr, status);
           });
+      });
+      dropbox.on('error', (file, error, xhr) => {
+        this._errorAction(name, xhr, error);
       });
     },
 
@@ -143,6 +144,8 @@ module.exports = {
     //data[0] - cropped image
     //data[1] - original image;
     _updateModelData(name, data) {
+      this._resetError(name);
+
       let f = this.fields[name];
 
       let dataFieldName = this._getDataFieldName(name);
@@ -214,13 +217,13 @@ module.exports = {
         this._notifyServer(name).then((r) => {
           return api.makeRequest(filerServer + '/' + fileId, 'DELETE');
         }).then((r) => {
-          console.log(r);
+
           $link.closest('.thumb-file-container')
             .empty()
             .append('<img src="/img/icons/file.png" alt="" class="img-file img-"' + name + '>' +
               '<a class="a-' + name + '" href="#"></a>');
-        }).fail((err) => {
-          console.log(err.responseJSON.error);
+        }).fail((xhr, status) => {
+          this._errorAction(name, xhr, status);
         });
 
         return false;
@@ -309,7 +312,8 @@ module.exports = {
                 '</div>');
           }
           $link.closest('.thumb-file-container').remove();
-        }).fail((err) => {
+        }).fail((zhr, status) => {
+          this._errorAction(name, xhr, status);
           console.log(err.responseJSON.error)
         });
 
@@ -418,8 +422,8 @@ module.exports = {
           if (typeof(this.onImageDelete) === 'function') {
             this.onImageDelete(name);
           }
-        }).fail((error) => {
-          console.log(error);
+        }).fail((xhr) => {
+          this._errorAction(name, xhr);
         });
 
         return false;
@@ -546,8 +550,8 @@ module.exports = {
           if (dataIdx >= 0) {
             $link.closest('.one-photo').remove();
           }
-        }).fail((err) => {
-          alert(err.responseJSON.error);
+        }).fail((xhr) => {
+          this._errorAction(name, xhr);
         });
 
         return false;
@@ -666,37 +670,36 @@ module.exports = {
       });
     },
 
-    //TODO: refactor due to same code in _cropImage
-    _cropImageWithDefaults(imgId, name, callback) {
-      let dataFieldName = this._getDataFieldName(name);
-      let imgModel = this.model[dataFieldName];
+    _errorAction(name, xhr={}, error) {
+      error = error || xhr.responseJSON || xhr.statusText || 'An error occurred';
 
-      let img = _.find(imgModel, (i) => {
-        return i.id == imgId;
-      });
+      let errMsg = '';
+      if (_.isString(error)) {
+        errMsg = error
+      } else {
+        let arr = [];
+        _.each(error, (value, key) => {
+          arr.push(value);
+        });
+        errMsg = arr.join(', ');
+      }
 
-      let url = _.last(img.urls);
-      let fileName = img.name;
+      //show general error
+      let group = $('.dropzone__' + name);
+      group.addClass('has-error');
 
-      let imgData = {
-        x: 0,
-        y: 0,
-        width: 1600,
-        height: 900,
-        id: img.id,
-        file_name: fileName,
-      };
+      let errorBlock = group.find('.help-block');
+      if (errorBlock.length)
+        errorBlock.html(errMsg);
+      else
+        group.append(`<div class="help-block">${errMsg}</div>`);
 
-      let extPos = fileName.lastIndexOf('.');
-      fileName = fileName.substring(0, extPos) +
-        imgData.width + 'x' + imgData.height + fileName.substring(extPos);
+    },
 
-      let reqOptions = {
-        contentType: 'application/json; charset=utf-8',
-      };
-
-      api.makeRequest(filerServer + '/crop', 'PUT', imgData, reqOptions).done(callback);
-
+    _resetError(name) {
+      let group = $('.dropzone__' + name);
+      group.removeClass('has-error');
+      group.find('.help-block').remove();
     },
 
   },
