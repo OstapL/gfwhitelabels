@@ -32,7 +32,7 @@ module.exports = {
     initialize(options) {
       this.fields = options.fields;
       this.fields.message = _.extend(this.fields.message, {
-        maxLength: 5,
+        maxLength: 1000,
         label: 'message',
       });
 
