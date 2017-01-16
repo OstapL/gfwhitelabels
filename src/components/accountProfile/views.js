@@ -84,23 +84,26 @@ module.exports = {
       // this.fields.account_number.required = true;
       this.fields.account_number = _.extend(this.fields.account_number, {
         type: 'password',
+        _length: 9,
         fn: function(value, attr, fn, model, computed) {
           if (this.account_number != this.account_number_re)
-            throw `Account number fields don't match`;
+            throw "Account number fields don't match";
         },
       });
 
       this.model.account_number_re = this.model.account_number;
       this.fields.account_number_re = {
         type: 'password',
+        _length: 9,
         fn: function(value, attr, fn, model, computed) {
           if (this.account_number != this.account_number_re)
-            throw `Account number fields don't match`;
+            throw "Account number fields don't match";
         },
       };
 
       this.fields.ssn = _.extend(this.fields.ssn, {
         type: 'password',
+        _length: 9,
         fn: function(name, value, attr, data, schema) {
 
           if (!data.ssn.match(/^[0-9]{9}$/))
@@ -115,6 +118,7 @@ module.exports = {
       // this.model.ssn_re = this.model.ssn;
       this.fields.ssn_re = _.extend(this.fields.ssn_re = {}, {
         type: 'password',
+        _length: 9,
       });
 
       this.labels = {
