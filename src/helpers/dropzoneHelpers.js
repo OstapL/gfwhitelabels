@@ -106,7 +106,7 @@ module.exports = {
           : null
         : null;
 
-      _.extend(options.params, autoCropParams);
+      // _.extend(options.params, autoCropParams);
 
       let dropbox = new Dropzone('.dropzone__' + name, options);
 
