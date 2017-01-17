@@ -85,7 +85,6 @@ module.exports = {
     api.deleteEmptyNested.call(this, this.fields, newData);
     api.fixDateFields.call(this, this.fields, newData);
     api.fixMoneyFields.call(this, this.fields, newData);
-    debugger;
 
     // if view already have some data - extend that info
     if(this.hasOwnProperty('model') && !this.doNotExtendModel && method != 'PATCH') {
