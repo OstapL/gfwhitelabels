@@ -348,10 +348,13 @@ mixin confirmStatement(name, attr)
               _.extend({}, fields.is_understand_investing_is_risky)
             )
             // FOR DCU
-            .dcu-confirmation
-              +confirmStatement('is_understand_growthfountain_securities',
-                _.extend({}, fields.is_understand_growthfountain_securities)
+            if 1 == 1
+              //if window.location.hostname == "dcu.growthfountain.com"
+              +confirmStatement('is_understand_securities_related',
+                _.extend({}, fields.is_understand_securities_related)
               )
+            else
+              input(type="hidden" id="is_understand_securities_related" name="is_understand_securities_related" value="1")
             .col-lg-12.m-t-2
               .row
                 span By Signing You Acknowledge and Agree to the 
