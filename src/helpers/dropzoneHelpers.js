@@ -160,7 +160,7 @@ module.exports = {
         this.model[dataFieldName].push(originalImage);
 
         if (croppedImage.id == originalImage.id) {
-          this.model.push(originalImage)
+          //nothing do, image is already done
         } else {
           originalImage.urls[1] = croppedImage.urls[0];//this is hack for gallery
         }
