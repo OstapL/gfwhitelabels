@@ -659,25 +659,6 @@ div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true
         else
           iframe.embed-responsive-item(src="//www.youtube.com/embed/?rel=0" allowfullscreen="true")
 
-div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")#documents-modal.modal.fade.document-modal
-  div().modal-dialog
-    .modal-content.company-documents-content
-      .modal-header
-        button(type="button" data-dismiss="modal" aria-label="Close").close
-          span(aria-hidden="true")
-            i.fa.fa-times
-        h2.text-uppercase.text-xs-center.m-t-2.m-b-2 FINANCIALS
-      .modal-body.container.p-l-3.p-r-3.text-xs-center
-        each doc in companyDocs
-          - var iconPath = helpers.icons.resolveIconPath(doc.mime, 'file');
-          .thumb-file-container
-            img(src=iconPath alt=doc.name class="img-file")
-            .row
-              a(class="link-file" target="_blank" href=doc.urls[0] title=doc.name) #{ helpers.text.shortenFileName(doc.name) }
-        else
-          p No company documents
-
-
 each v,k in values.campaign.additional_video
   if v
     div(id="videoModal-" + k tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true").modal.fade.video-modal

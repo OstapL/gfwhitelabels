@@ -400,6 +400,8 @@ module.exports = {
     },
 
     showFormcDocs(e) {
+      e.preventDefault();
+
       const i = this._findInvestment(e.target.dataset.id);
 
       let data = {
@@ -412,6 +414,8 @@ module.exports = {
     },
 
     showFinancialDocs(e) {
+      e.preventDefault();
+
       const i = this._findInvestment(e.target.dataset.id);
 
       let data = {

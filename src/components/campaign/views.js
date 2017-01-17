@@ -9,6 +9,7 @@ const helpers = {
   text: textHelper,
   icons: require('helpers/iconsHelper.js'),
   format: formatHelper,
+  fileList: require('helpers/fileList.js'),
 };
 
 const constants = {
@@ -101,9 +102,12 @@ module.exports = {
       }
       this.preview = params.preview ? true : false;
 
-      this.companyDocs = this.model.formc
-        ? _.union(this.model.formc.fiscal_prior_group_data, this.model.formc.fiscal_recent_group_data)
-        : [];
+      this.companyDocsData = {
+        title: 'Financials',
+        files: this.model.formc
+          ? _.union(this.model.formc.fiscal_prior_group_data, this.model.formc.fiscal_recent_group_data)
+          : []
+      };
 
     },
 
@@ -245,8 +249,7 @@ module.exports = {
 
     showDocumentsModal(e) {
       e.preventDefault();
-      $('#documents-modal').modal('show');
-      return false;
+      helpers.fileList.show(this.companyDocsData);
     },
 
     render() {
@@ -257,7 +260,6 @@ module.exports = {
       this.$el.html(
         this.template({
           serverUrl: serverUrl,
-          companyDocs: this.companyDocs,
           Urls: Urls,
           values: this.model,
           formatHelper: formatHelper,
