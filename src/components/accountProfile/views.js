@@ -354,7 +354,6 @@ module.exports = {
     events: {
       'click .cancel-investment': 'cancelInvestment',
       'click .agreement-link': 'openAgreement',
-      'click .formc-docs-link': 'showFormcDocs',
       'click .financial-docs-link': 'showFinancialDocs',
     },
 
@@ -397,20 +396,6 @@ module.exports = {
       return _.find(this.model.data, (inv) =>  {
         return inv.id == id;
       });
-    },
-
-    showFormcDocs(e) {
-      e.preventDefault();
-
-      const i = this._findInvestment(e.target.dataset.id);
-
-      let data = {
-        title: 'Formc',
-        // files: [],//TODO: get formc links from Vlad
-        files: app.user.attributes.image_data,
-      };
-
-      helpers.fileList.show(data);
     },
 
     showFinancialDocs(e) {
