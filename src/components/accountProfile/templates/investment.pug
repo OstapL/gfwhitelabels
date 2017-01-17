@@ -1,10 +1,9 @@
+- var formcLinks = require('../../campaign/helpers.js').formcLinks
 
 -
   function percentage(amount, goal) {
     return Math.round((amount / goal) * 100);
   };
-
-- var formcLinks = require('../../campaign/helpers.js').formcLinks
 
 .one_table
   -
@@ -47,12 +46,12 @@
   .right_buttons
     h4 Downloadable Files
     -
-      var presentationUrl = "#";//i.formc.business_plan_data.urls[0];
+      var presentationUrl = i.formc.business_plan_data[0].urls[0];
     ul
       li
         a(href=presentationUrl target="_blank").link-3 Investor Presentation
       li
-        a(href=(formcLinks[i.company_id] || "#") target="_blank").link-3 Form C
+        a(href=formcLinks[i.company_id] data-id=i.id target="_blank").link-3.formc-docs-link Form C
       li
         a(href="#" data-id=i.id target="_blank").link-3.financial-docs-link Financials
       li

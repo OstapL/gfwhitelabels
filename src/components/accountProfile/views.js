@@ -93,7 +93,7 @@ module.exports = {
       this.fields.account_number = {
         type: 'password',
         required: true,
-        minLength: 9,
+        minLength: 5,
         fn: function(name, value, attr, data, schema) {
           if (value != this.getData(data, 'account_number_re')) {
             throw "Account number fields don't match";
@@ -104,7 +104,7 @@ module.exports = {
       this.fields.account_number_re = {
         type: 'password',
         required: true,
-        minLength: 9,
+        minLength: 5,
         fn: function(name, value, attr, data, schema) {
           if (value != this.getData(data, 'account_number')) {
             throw "Account number fields don't match";
@@ -401,12 +401,14 @@ module.exports = {
     showFinancialDocs(e) {
       e.preventDefault();
 
-      const i = this._findInvestment(e.target.dataset.id);
+      const activeCompaign = this._findInvestment(e.target.dataset.id);
+      const fiscal_prior_group_data = activeCompaign.formc.fiscal_prior_group_data;
+      const fiscal_recent_group_data =  activeCompaign.formc.fiscal_recent_group_data;
+      const financialDocs = fiscal_prior_group_data.concat(fiscal_recent_group_data);
 
       let data = {
         title: 'Financials',
-        files: app.user.attributes.image_data,
-        // files: _.union(i.fomc.fiscal_recent_data.urls, i.formc.fiscal_prior_data.urls),
+        files: financialDocs,
       };
 
       helpers.fileList.show(data);
