@@ -26,9 +26,11 @@ module.exports = Backbone.Router.extend({
                   loop:true,
                   nav:true,
                   autoplay:true,
-                  autoplayTimeout:6000,
-                  smartSpeed:1000,
+                  autoplayTimeout:9000,
+                  smartSpeed:2000,
                   responsiveClass:true,
+                  //animateIn: 'fadeIn',
+                  items:1,
                   navText: ["<i class='fa fa-angle-left' aria-hidden='true'></i>","<i class='fa fa-angle-right' aria-hidden='true'></i>"],
                   responsive:{
                     0:{
