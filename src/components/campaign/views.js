@@ -575,6 +575,11 @@ module.exports = {
     },
 
     render() {
+      // Fixme, ToDo, really really dirty hack for dcu !
+      if(window.location.hostname == "dcu.growthfountain.com") {
+        this.fields.is_understand_growthfountain_securities = this.fields.is_understand_securities_related; 
+      }
+
       this.$el.html(
         this.template({
           serverUrl: serverUrl,

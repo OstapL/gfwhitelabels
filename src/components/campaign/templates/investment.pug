@@ -241,8 +241,8 @@ mixin confirmStatement(name, attr)
                   fields.payment_information_data.schema.routing_number);
               .form-group.row.radio.check-fields
                 label.text-md-right.col-lg-3 Account Type
-                #payment_information_data__account_type.col-lg-9.radio-input
-                  label 
+                .col-lg-9.radio-input
+                  label#payment_information_data__bank_account_type
                     input(
                       type="radio"
                       name="payment_information_data[bank_account_type]"
@@ -349,10 +349,9 @@ mixin confirmStatement(name, attr)
             )
             // FOR DCU
             .dcu-confirmation
-              +confirmStatement('is_understand_securities_related',
-                _.extend({}, fields.is_understand_securities_related)
+              +confirmStatement('is_understand_growthfountain_securities',
+                _.extend({}, fields.is_understand_growthfountain_securities)
               )
-            input(type='hidden' value='1' name='is_understand_securities_related')
             .col-lg-12.m-t-2
               .row
                 span By Signing You Acknowledge and Agree to the 
