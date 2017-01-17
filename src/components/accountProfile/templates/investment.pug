@@ -1,9 +1,10 @@
-- var formcLinks = require('../../campaign/helpers.js').formcLinks
 
 -
   function percentage(amount, goal) {
     return Math.round((amount / goal) * 100);
   };
+
+- var formcLinks = require('../../campaign/helpers.js').formcLinks
 
 .one_table
   -
@@ -51,7 +52,7 @@
       li
         a(href=presentationUrl target="_blank").link-3 Investor Presentation
       li
-        a(href=(formcLinks[i.id] || "#") data-id=i.id target="_blank").link-3 Form C
+        a(href=(formcLinks[i.campaign_id] || "#") data-id=i.id target="_blank").link-3 Form C
       li
         a(href="#" data-id=i.id target="_blank").link-3.financial-docs-link Financials
       li
