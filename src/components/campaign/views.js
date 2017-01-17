@@ -502,8 +502,8 @@ module.exports = {
         return true;
       };
 
-      this.fields.amount.fn = function (value, fn, attr, model, computed) {
-        return validateAmount(this.amount);
+      this.fields.amount.fn = function(name, value, attr, data, computed) {
+        return validateAmount(value);
       };
 
       this.model.campaign.expiration_date = new Date(this.model.campaign.expiration_date);
