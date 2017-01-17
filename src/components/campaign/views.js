@@ -9,6 +9,7 @@ const helpers = {
   text: textHelper,
   icons: require('helpers/iconsHelper.js'),
   format: formatHelper,
+  fileList: require('helpers/fileList.js'),
 };
 
 const constants = {
@@ -66,7 +67,6 @@ module.exports = {
       'click .twitter-share': 'shareOnTwitter',
       'click .see-all-risks': 'seeAllRisks',
       'click .see-all-faq': 'seeAllFaq',
-      'click .linkresponse': 'checkResponse',
       'click .show-more-members': 'readMore',
       // 'click .see-all-article-press': 'seeAllArticlePress',
       'click .more-less': 'showMore',
@@ -102,9 +102,12 @@ module.exports = {
       }
       this.preview = params.preview ? true : false;
 
-      this.companyDocs = this.model.formc
-        ? _.union(this.model.formc.fiscal_prior_group_data, this.model.formc.fiscal_recent_group_data)
-        : [];
+      this.companyDocsData = {
+        title: 'Financials',
+        files: this.model.formc
+          ? _.union(this.model.formc.fiscal_prior_group_data, this.model.formc.fiscal_recent_group_data)
+          : []
+      };
 
     },
 
@@ -246,8 +249,7 @@ module.exports = {
 
     showDocumentsModal(e) {
       e.preventDefault();
-      $('#documents-modal').modal('show');
-      return false;
+      helpers.fileList.show(this.companyDocsData);
     },
 
     render() {
@@ -258,7 +260,6 @@ module.exports = {
       this.$el.html(
         this.template({
           serverUrl: serverUrl,
-          companyDocs: this.companyDocs,
           Urls: Urls,
           values: this.model,
           formatHelper: formatHelper,
@@ -426,42 +427,65 @@ module.exports = {
         2: 'Wire',
       };
 
-      this.fields.payment_information_data.schema.account_number_re = { required: false };
-      this.fields.personal_information_data.schema.phone = { required: true };
-
-      // this.fields.account_number.required = true;
+      // Validation rules
+      this.fields.personal_information_data.requiredTemp = true;
+      this.fields.payment_information_data.requiredTemp = true;
       this.fields.payment_information_data.schema.account_number = {
         type: 'password',
-        fn: function(value, attr, fn, model, computed) {
-          if (this.account_number != this.account_number_re)
-            throw `Account number fields don't match`;
+        required: true,
+        minLength: 9,
+        fn: function(name, value, attr, data, schema) {
+          if (value != this.getData(data, 'payment_information_data.account_number_re')) {
+            throw "Account number fields don't match";
+          }
         },
       };
 
       this.fields.payment_information_data.schema.account_number_re = {
         type: 'password',
-        fn: function(value, attr, fn, model, computed) {
-          if (this.account_number != this.account_number_re)
-            throw `Account number fields don't match`;
+        required: true,
+        minLength: 9,
+        fn: function(name, value, attr, data, schema) {
+          if (value != this.getData(data, 'payment_information_data.account_number')) {
+            throw "Account number fields don't match";
+          }
         },
       };
+
+      this.fields.payment_information_data.schema.routing_number = {
+        required: true,
+        _length: 9,
+      }
 
       this.fields.payment_information_data.schema.ssn = {
         type: 'password',
         required: true,
-        fn: function(value, attr, fn, model, computed) {
-          if (this.ssn != this.ssn_re)
-            throw `Social security fields don't match`;
+        _length: 9,
+        fn: function(name, value, attr, data, computed) {
+          if (value != this.getData(data, 'payment_information_data.ssn_re')) {
+            throw "Social security fields don't match";
+          }
         },
       };
 
       this.fields.payment_information_data.schema.ssn_re = {
         type: 'password',
         required: true,
-        fn: function(value, attr, fn, model, computed) {
-          if (this.ssn != this.ssn_re)
-            throw `Social security fields don't match`;
+        _length: 9,
+        fn: function(name, value, attr, data, computed) {
+          if (value != this.getData(data, 'payment_information_data.ssn')) {
+            throw "Social security fields don't match";
+          }
         },
+      };
+
+      this.fields.signature = {
+        type: 'nested',
+        requiredTemp: true,
+      };
+      this.fields.signature.schema = {};
+      this.fields.signature.schema.full_name = {
+        required: true,
       };
 
       const validateAmount = (amount) => {
@@ -480,8 +504,8 @@ module.exports = {
         return true;
       };
 
-      this.fields.amount.fn = function (value, fn, attr, model, computed) {
-        return validateAmount(this.amount);
+      this.fields.amount.fn = function(name, value, attr, data, computed) {
+        return validateAmount(value);
       };
 
       this.model.campaign.expiration_date = new Date(this.model.campaign.expiration_date);
@@ -504,7 +528,6 @@ module.exports = {
           street_address_2: 'Street Address 2',
           zip_code: 'Zip Code',
           city: 'City',
-          phone: 'Phone',
         },
         payment_information_data: {
           name_on_bank_account: 'Name On Bank Account',
@@ -871,11 +894,13 @@ module.exports = {
       const subscriptionAgreementPath = this.getSubscriptionAgreementPath();
       const participationAgreementPath = 'invest/participation_agreement.pdf';
       const data = [{
+        compaign_id: this.model.id,
         type: typeOfDocuments[participationAgreementPath],
         object_id: responseData.id,
         meta_data: formData,
         template: participationAgreementPath
       }, {
+        compaign_id: this.model.id,
         type: typeOfDocuments[subscriptionAgreementPath],
         object_id: responseData.id,
         meta_data: formData,
@@ -959,6 +984,7 @@ module.exports = {
       const aggregate_inclusive_purchase = formData.total_amount.replace(/\D/g, '');
 
       return {
+        compaign_id: this.model.id,
         signature: this.getSignature(),
 
         fees_to_investor: companyFees.fees_to_investor,

@@ -3,6 +3,7 @@ const helpers = {
   yesNo: require('helpers/yesNoHelper.js'),
   fields: require('./fields.js'),
 };
+const validation = require('components/validation/validation.js');
 
 function initDates(c) {
   c.created_date = new Date(c.created_date);
@@ -30,6 +31,10 @@ module.exports = {
 
     initialize(options) {
       this.fields = options.fields;
+      this.fields.message = _.extend(this.fields.message, {
+        maxLength: 1000,
+        label: 'message',
+      });
 
       this.allowQuestion = _.isBoolean(options.allowQuestion) ? options.allowQuestion : true;
       this.allowResponse = _.isBoolean(options.allowResponse) ? options.allowResponse : true;
@@ -71,7 +76,8 @@ module.exports = {
           allowQuestion: this.allowQuestion,
           allowResponse: this.allowResponse,
           cssClass: this.cssClass,
-        }
+        },
+        fields: this.fields,
       }));
 
       this.$stubs = this.$('.stubs');
@@ -114,7 +120,7 @@ module.exports = {
 
         $relatedBlock = this.$stubs.find('.related-role').clone();
         //$form.append($relatedBlock);
-        $target.after($relatedBlock);
+        $target.parent().after($relatedBlock);
         $relatedBlock.show();
       } else {
         if(!hasRelatedBlock)
@@ -127,7 +133,7 @@ module.exports = {
     submitComment(e) {
       e.preventDefault();
 
-      if (!app.user.ensureLoggedIn(e))
+      if (!app.user.ensureLoggedIn(window.location.pathname))
         return false;
 
       let $target = $(e.target);
@@ -157,14 +163,24 @@ module.exports = {
       if (relatedCb.is(':checked')) {
         let relatedRole = $form.find('input[name=related]:checked').val();
         if (!relatedRole) {
-          // validation.invalidMsg(this, );
-          alert('Please, select role');
+          this.invalidMsg('related', ['Please, select role.'], $form);
+          $target.prop('disabled', false);
           return;
         }
         data.related = relatedRole;
       }
 
+      if(!validation.validate(this.fields, data)) {
+        _(validation.errors).each((errors, name) => {
+          this.invalidMsg(name, errors, $form);
+        });
+        $target.prop('disabled', false);
+        // this.$('.help-block').prev().scrollTo(5);
+        return false;
+      }
+
       app.showLoading();
+
       api.makeRequest(this.urlRoot, 'POST', data).done((newData) => {
         $target.prop('disabled', false);
         let role = app.user.get('role');
@@ -181,12 +197,6 @@ module.exports = {
             id: app.user.get('id'),
             image_data: app.user.get('image_data'),
             role: role,
-            // role: {
-            //   company_name: role.company_name,
-            //   // company_id: role.company_id,
-            //   company_id: this.model.id,
-            //   role: role.role,
-            // },
           },
         };
 
@@ -289,18 +299,30 @@ module.exports = {
       return false;
     },
 
-    checkResponse(e) {
-        e.preventDefault();
-        this.$el.find('.comment-form-div').remove();
-        var $el = $(e.currentTarget);
-        $el.parents('.comment').after(
-            new this.commentView.form({
-            }).getHtml({
-                model: {parent: e.currentTarget.dataset.id},
-                company: this.model.company,
-                app: app,
-            })
-        );
+    invalidMsg(name, errors, form) {
+      errors = errors.join(', ');
+      let el = form.find(`[name=${name}]`);
+      if (el.length) {
+        let group = el.closest('.field-' + name);
+        group = group.length ? group : el.parent();
+        group.addClass('has-error');
+
+        let errorBlock = group.find('.help-block');
+        if (errorBlock.length)
+          errorBlock.html(errors);
+        else
+          group.append(`<div class="help-block">${errors}</div>`);
+
+        return;
+      }
+
+      //show general error
+      let errorBlock = form.find('.alert-warning');
+
+      if (errorBlock.length)
+        errorBlock.html(errors);
+      else
+        this.$el.prepend('<div class="alert alert-warning" role="alert"><p>' + errors + '</p></div>');
     },
 
   }, helpers.yesNo.methods)),

@@ -311,8 +311,8 @@ module.exports = {
         //   cssClass: 'img-crop',
         //   showPreview: false,
         // },
-        fn: function checkNotEmpty(value, attr, fn, model, computed) {
-          if(!this.gallery_group_data || !this.gallery_group_data.length) {
+        fn: function checkNotEmpty(name, value, attr, data, computed) { 
+          if(!this.model.gallery_group_data || !this.model.gallery_group_data.length) {
             throw 'Please upload at least 1 image';
           }
         },

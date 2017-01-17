@@ -91,6 +91,7 @@
                                 'class1': 'col-xl-6 col-lg-12 text-lg-left text-xl-right',
                                 'class2': 'col-xl-6 col-lg-12 input-min-width',
                                 'type': 'text',
+                                'value': user.twitter,
                               }, fields.twitter))
                         .col-xl-6.col-lg-6
                           -
@@ -98,6 +99,7 @@
                                 'class1': 'col-xl-5 col-lg-12 text-lg-left text-xl-right p-t-0 m-b-0 m-b-lg-1',
                                 'class2': 'col-xl-7 col-lg-12',
                                 'type': 'text',
+                                'value': user.facebook,
                               }, fields.facebook))
                       .row.m-b-0
                         .col-xl-6.col-lg-6
@@ -106,6 +108,7 @@
                                 'class1': 'col-xl-6 col-lg-12 text-lg-left text-xl-right',
                                 'class2': 'col-xl-6 col-lg-12 input-min-width',
                                 'type': 'text',
+                                'value': user.instagram,
                               }, fields.instagram))
                         .col-xl-6.col-lg-6
                           -
@@ -113,6 +116,7 @@
                                 'class1': 'col-xl-5 col-lg-12 text-lg-left text-xl-right p-t-0 m-b-0 m-b-lg-1',
                                 'class2': 'col-xl-7 col-lg-12',
                                 'type': 'text',
+                                'value': user.linkedin,
                               }, fields.linkedin))
 
                       .form-group.row.clearfix.m0
@@ -254,7 +258,7 @@
                         pug_html += app.fields.textLabel('account_number_re', _.extend({
                             'class1': 'col-xl-3 col-lg-12 text-xl-right text-lg-left m-b-0 p-t-0 m-b-lg-1',
                             'type': 'text',
-                            'value': user.account_number_re
+                            'value': user.account_number
                           }, fields.account_number_re))
 
                         pug_html += app.fields.textLabel('routing_number', _.extend({

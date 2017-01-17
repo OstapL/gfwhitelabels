@@ -9,6 +9,7 @@ const helpers = {
   dropzone: require('helpers/dropzoneHelpers.js'),
   yesNo: require('helpers/yesNoHelper.js'),
   fields: require('./fields.js'),
+  fileList: require('helpers/fileList.js'),
 };
 
 const constants = {
@@ -79,49 +80,64 @@ module.exports = {
             height: 600,
           }
         },
-
-        // imgOptions: {
-        //   aspectRatio: 1 / 1,
-        //   cssClass : 'img-profile-crop',
-        //   showPreview: true,
-        // },
       });
 
       // this.fields.account_number.required = true;
-      this.fields.account_number = _.extend(this.fields.account_number, {
-        type: 'password',
-        fn: function(value, attr, fn, model, computed) {
-          if (this.account_number != this.account_number_re)
-            throw `Account number fields don't match`;
-        },
-      });
+      this.fields.dependies = {
+        account_number: 'account_number_re',
+        account_number_re: 'account_number',
+        ssn: 'ssn_re',
+        ssn_re: 'ssn'
+      };
 
-      this.model.account_number_re = this.model.account_number;
-      this.fields.account_number_re = {
+      this.fields.account_number = {
         type: 'password',
-        fn: function(value, attr, fn, model, computed) {
-          if (this.account_number != this.account_number_re)
-            throw `Account number fields don't match`;
+        required: true,
+        minLength: 9,
+        fn: function(name, value, attr, data, schema) {
+          if (value != this.getData(data, 'account_number_re')) {
+            throw "Account number fields don't match";
+          }
         },
       };
 
-      this.fields.ssn = _.extend(this.fields.ssn, {
+      this.fields.account_number_re = {
         type: 'password',
-        fn: function(value, attr, fn, model, computed) {
-          if (this.ssn != this.ssn_re)
-            throw `Social security fields don't match`;
+        required: true,
+        minLength: 9,
+        fn: function(name, value, attr, data, schema) {
+          if (value != this.getData(data, 'account_number')) {
+            throw "Account number fields don't match";
+          }
         },
-      });
+      };
 
-      this.model.ssn_re = this.model.ssn;
-      this.fields.ssn_re = _.extend(this.fields.ssn_re = {}, {
+      this.fields.routing_number = {
+        required: true,
+        _length: 9,
+      }
+
+      this.fields.ssn = {
         type: 'password',
-        fn: function(value, attr, fn, model, computed) {
-          if (this.ssn != this.ssn_re)
-            throw `Social security fields don't match`;
+        required: true,
+        _length: 9,
+        fn: function(name, value, attr, data, computed) {
+          if (value != data.ssn_re) {
+            throw "Social security fields don't match";
+          }
         },
+      };
 
-      });
+      this.fields.ssn_re = {
+        type: 'password',
+        required: true,
+        _length: 9,
+        fn: function(name, value, attr, data, computed) {
+          if (value != data.ssn) {
+            throw "Social security fields don't match";
+          }
+        },
+      };
 
       this.labels = {
         country: 'Country',
@@ -338,6 +354,7 @@ module.exports = {
     events: {
       'click .cancel-investment': 'cancelInvestment',
       'click .agreement-link': 'openAgreement',
+      'click .financial-docs-link': 'showFinancialDocs',
     },
 
     initialize(options) {
@@ -373,6 +390,28 @@ module.exports = {
       const securityType = e.target.dataset.securityType;
       const subscriptionAgreementLink = userDocuments.getUserDocumentsByType(objectId, securityType);
       e.target.href = subscriptionAgreementLink;
+    },
+
+    _findInvestment(id) {
+      return _.find(this.model.data, (inv) =>  {
+        return inv.id == id;
+      });
+    },
+
+    showFinancialDocs(e) {
+      e.preventDefault();
+
+      const activeCompaign = this._findInvestment(e.target.dataset.id);
+      const fiscal_prior_group_data = activeCompaign.formc.fiscal_prior_group_data;
+      const fiscal_recent_group_data =  activeCompaign.formc.fiscal_recent_group_data;
+      const financialDocs = fiscal_prior_group_data.concat(fiscal_recent_group_data);
+
+      let data = {
+        title: 'Financials',
+        files: financialDocs,
+      };
+
+      helpers.fileList.show(data);
     },
 
     cancelInvestment(e) {

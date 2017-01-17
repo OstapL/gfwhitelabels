@@ -422,9 +422,8 @@ module.exports = {
     repeatInvitation(e) {
       e.preventDefault();
       api.makeRequest(
-        formcServer + '/invitation/repeat',
+        formcServer + '/' + this.model.id + '/team-members/invitation/' +  e.target.dataset.id,
         'PUT',
-        {'user_id': e.target.dataset.id}
       ).then((data) => {
         e.target.innerHTML = 'sent';
         e.target.className = 'link-3 invite';
@@ -457,7 +456,7 @@ module.exports = {
 
   }, menuHelper.methods, addSectionHelper.methods, leavingConfirmationHelper.methods)),
 
-  teamMemberAdd: Backbone.View.extend(_.extend({
+	teamMemberAdd: Backbone.View.extend(_.extend({
     urlRoot: formcServer + '/:id/team-members',
     doNotExtendModel: true,
     roles: ['shareholder', 'director', 'officer'],
@@ -578,6 +577,7 @@ module.exports = {
     },
 
   }, addSectionHelper.methods, menuHelper.methods, leavingConfirmationHelper.methods)),
+
 
   relatedParties: Backbone.View.extend(_.extend({
     el: '#content',
