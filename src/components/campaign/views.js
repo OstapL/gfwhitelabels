@@ -9,6 +9,7 @@ const helpers = {
   text: textHelper,
   icons: require('helpers/iconsHelper.js'),
   format: formatHelper,
+  fileList: require('helpers/fileList.js'),
 };
 
 const constants = {
@@ -66,7 +67,6 @@ module.exports = {
       'click .twitter-share': 'shareOnTwitter',
       'click .see-all-risks': 'seeAllRisks',
       'click .see-all-faq': 'seeAllFaq',
-      'click .linkresponse': 'checkResponse',
       'click .show-more-members': 'readMore',
       // 'click .see-all-article-press': 'seeAllArticlePress',
       'click .more-less': 'showMore',
@@ -102,9 +102,12 @@ module.exports = {
       }
       this.preview = params.preview ? true : false;
 
-      this.companyDocs = this.model.formc
-        ? _.union(this.model.formc.fiscal_prior_group_data, this.model.formc.fiscal_recent_group_data)
-        : [];
+      this.companyDocsData = {
+        title: 'Financials',
+        files: this.model.formc
+          ? _.union(this.model.formc.fiscal_prior_group_data, this.model.formc.fiscal_recent_group_data)
+          : []
+      };
 
     },
 
@@ -247,8 +250,7 @@ module.exports = {
 
     showDocumentsModal(e) {
       e.preventDefault();
-      $('#documents-modal').modal('show');
-      return false;
+      helpers.fileList.show(this.companyDocsData);
     },
 
     render() {
@@ -259,7 +261,6 @@ module.exports = {
       this.$el.html(
         this.template({
           serverUrl: serverUrl,
-          companyDocs: this.companyDocs,
           Urls: Urls,
           values: this.model,
           formatHelper: formatHelper,
@@ -428,6 +429,8 @@ module.exports = {
       };
 
       // Validation rules
+      this.fields.personal_information_data.requiredTemp = true;
+      this.fields.payment_information_data.requiredTemp = true;
       this.fields.payment_information_data.schema.account_number = {
         type: 'password',
         required: true,
@@ -479,7 +482,7 @@ module.exports = {
 
       this.fields.signature = {
         type: 'nested',
-        required: true,
+        requiredTemp: true,
       };
       this.fields.signature.schema = {};
       this.fields.signature.schema.full_name = {
@@ -502,8 +505,8 @@ module.exports = {
         return true;
       };
 
-      this.fields.amount.fn = function (value, fn, attr, model, computed) {
-        return validateAmount(this.amount);
+      this.fields.amount.fn = function(name, value, attr, data, computed) {
+        return validateAmount(value);
       };
 
       this.model.campaign.expiration_date = new Date(this.model.campaign.expiration_date);
@@ -892,11 +895,13 @@ module.exports = {
       const subscriptionAgreementPath = this.getSubscriptionAgreementPath();
       const participationAgreementPath = 'invest/participation_agreement.pdf';
       const data = [{
+        compaign_id: this.model.id,
         type: typeOfDocuments[participationAgreementPath],
         object_id: responseData.id,
         meta_data: formData,
         template: participationAgreementPath
       }, {
+        compaign_id: this.model.id,
         type: typeOfDocuments[subscriptionAgreementPath],
         object_id: responseData.id,
         meta_data: formData,
@@ -980,6 +985,7 @@ module.exports = {
       const aggregate_inclusive_purchase = formData.total_amount.replace(/\D/g, '');
 
       return {
+        compaign_id: this.model.id,
         signature: this.getSignature(),
 
         fees_to_investor: companyFees.fees_to_investor,

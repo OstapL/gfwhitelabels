@@ -8,6 +8,7 @@ global.Bootstrap = require('bootstrap/dist/js/bootstrap.js');
 global.userModel = require('components/accountProfile/model.js');
 global.Urls = require('./jsreverse.js');
 require('jquery-serializejson/jquery.serializejson.min.js');
+require('js/html5-dataset.js');
 const validation = require('components/validation/validation.js');
 
 document.title = pageTitle;
@@ -15,6 +16,11 @@ document.title = pageTitle;
 
 
 global.formatHelper = require('helpers/formatHelper');
+
+if (!global.Intl) {
+  require('intl');
+  require('intl/locale-data/jsonp/en.js');
+}
 
 $.fn.scrollTo = function (padding=0) {
   $('html, body').animate({

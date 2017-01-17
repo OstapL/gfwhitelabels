@@ -171,6 +171,7 @@ module.exports = {
   // Validates that the value has to be a string with length equal to or less than
   // the max length value specified
   maxLength: function (name, rule, attr, data) {
+    let value = this.getData(data, name);
     if (!_.isString(value) || value.length > rule) {
       throw this.format(this.messages.maxLength, attr.label, rule);
     }

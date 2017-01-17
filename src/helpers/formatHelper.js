@@ -82,6 +82,11 @@ module.exports = {
   },
 
   formatAmount(amount) {
+    amount = amount || 0
+    
+    if (typeof amount === 'string')
+      amount = parseFloat(amount);
+
     if (amount < 1000)
       return '$' + amount;
 
