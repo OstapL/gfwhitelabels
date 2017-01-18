@@ -433,7 +433,7 @@ module.exports = {
       this.fields.payment_information_data.schema.account_number = {
         type: 'password',
         required: true,
-        minLength: 9,
+        minLength: 5,
         fn: function(name, value, attr, data, schema) {
           if (value != this.getData(data, 'payment_information_data.account_number_re')) {
             throw "Account number fields don't match";
@@ -444,7 +444,7 @@ module.exports = {
       this.fields.payment_information_data.schema.account_number_re = {
         type: 'password',
         required: true,
-        minLength: 9,
+        minLength: 5,
         fn: function(name, value, attr, data, schema) {
           if (value != this.getData(data, 'payment_information_data.account_number')) {
             throw "Account number fields don't match";
