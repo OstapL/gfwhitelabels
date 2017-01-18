@@ -14,7 +14,10 @@
     if attr.active
       span.img_tab #{helpers.date.daysLeft(i.campaign.expiration_date) + ' Days Left'}
     else
-      span.successfull.unsuccessfull  Unsuccessfully funded campaign
+      if i.status > 1
+        span.successfull.unsuccessfull  Cancelled
+      else
+        span.successfull.unsuccessfull  Unsuccessfully funded campaign
       span.end-date  #{i.campaign.expiration_date.format('MM/DD/YYYY')}
     p.text-uppercase.dosis #{i.company.name}
   .right-columns
@@ -46,7 +49,7 @@
   .right_buttons
     h4 Downloadable Files
     -
-      var presentationUrl = i.formc.business_plan_data[0] ? i.formc.business_plan_data[0].urls[0] : '#';
+      var presentationUrl = i.formc && i.formc.business_plan_data && i.formc.business_plan_data[0] ? i.formc.business_plan_data[0].urls[0] : '#';
     ul
       li
         a(href=presentationUrl target="_blank").link-3 Investor Presentation
