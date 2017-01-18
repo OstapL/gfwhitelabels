@@ -1,6 +1,6 @@
 module.exports = Backbone.Router.extend({
   routes: {
-    'account/profile': 'accountProfile',
+    'account/profile(?:active_tab)': 'accountProfile',
     'account/logout': 'logout',
     'account/change-password': 'changePassword',
     'account/password/new': 'setNewPassword',
@@ -21,7 +21,7 @@ module.exports = Backbone.Router.extend({
     if (callback) callback.apply(this, args);
   },  
 
-  accountProfile() {
+  accountProfile(active_tab) {
     if(!app.user.is_anonymous()) {
       require.ensure([], function() {
         const View = require('components/accountProfile/views.js');
@@ -33,7 +33,8 @@ module.exports = Backbone.Router.extend({
           const i = new View.profile({
             el: '#content',
             model: data[0],
-            fields: fields[0].fields
+            fields: fields[0].fields,
+            activeTab: active_tab,
           });
           i.render();
           app.hideLoading();

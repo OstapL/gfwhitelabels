@@ -64,6 +64,8 @@ module.exports = {
     },
 
     initialize(options) {
+      this.activeTab = options.activeTab;
+
       this.fields = options.fields;
 
       this.fields.image_image_id = _.extend(this.fields.image_image_id, {
@@ -175,6 +177,7 @@ module.exports = {
 
       this.$el.html(
         this.template({
+          tab: this.activeTab || 'account_info',
           serverUrl: serverUrl,
           user: this.model,
           roleInfo: app.user.getRoleInfo(),
@@ -267,6 +270,8 @@ module.exports = {
       cbInvestor1m.prop('disabled', this.model.net_worth < 1000);
       cbInvestor200k.prop('disabled', this.model.annual_income < 200);
 
+      // this.$('a[href="#financial_info"]').on('show.bs.tab', (e) => console.warn('!!!!!!!'));
+      
       this.$('a[href="#financial_info"]').on('show.bs.tab', (e) => {
         setTimeout(() => {
           this.$('.slider-net-worth').bootstrapSlider('setValue', this.model.net_worth);
