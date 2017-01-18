@@ -580,10 +580,8 @@ module.exports = {
         this.createIndexes();
         this.buildJsonTemplates('raiseFunds');
 
-        this.fields.dependies = {
-          'minimum_raise': 'maximum_raise',
-          'maximum_raise': 'minimum_raise'
-        };
+        this.fields.minimum_raise.dependies = ['maximum_raise',];
+        this.fields.maximum_raise.dependies = ['minimum_raise',];
 
       },
 
