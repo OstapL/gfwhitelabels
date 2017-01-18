@@ -22,15 +22,14 @@ module.exports = Backbone.Router.extend({
             });
             app.cache[window.location.pathname] = html;
             $('#content').html(html);
-            $('.owl-carousel').owlCarousel({
+            $('.carousel-test').owlCarousel({
                   loop:true,
                   nav:true,
                   autoplay:true,
                   autoplayTimeout:9000,
                   smartSpeed:2000,
                   responsiveClass:true,
-                  animateIn: 'fadeIn',
-                  animateOut: 'fadeOut',
+                  animateOut: 'fadeOuts',
                   items:1,
                   navText: ["<i class='fa fa-angle-left' aria-hidden='true'></i>","<i class='fa fa-angle-right' aria-hidden='true'></i>"],
                   responsive:{
