@@ -146,7 +146,7 @@
 		+mt(.2s)
 
 .js-height-full
-	height: 600px
+	height: 70vh
 //main page
 .home-section
 	&:before
@@ -156,9 +156,8 @@
 		position: absolute
 		top: 0
 		left: 0
-		background: rgba(17, 17, 17, .3)
-	.js-height-full
-		max-height: 90vh
+		background: rgba(17, 17, 17, .4)
+	
 	.home-text-main
 		vertical-align: middle
 		display: table-cell
@@ -221,6 +220,47 @@
 		max-width: 255px
 	h2
 		margin-bottom: rem(50)
+#carousel-main
+  
+	.carousel-item
+		&:before
+			width: 100%
+			background-color: $black
+			opacity: .3
+			position: absolute
+			z-index: 1
+			content: ''
+			height: 100%
+			left: 0
+			bottom: 0
+		img
+			width: 100vw
+			height: 92vh
+
+	.carousel-caption
+		transform: translate(-50%, -50%)
+
+		top: 50%
+		left: 50%
+		right: 0
+		bottom: 0
+
+		padding-top: 0
+		width: 82%
+
+		text-shadow: none
+
+		h1
+			font-size: rem(48)
+			color: $white
+			letter-spacing: rem(9.6)
+			margin-bottom: rem(50)
+		.small-text
+			line-height: rem(26)
+			color: $white
+			letter-spacing: rem(.6)
+			font-size: rem(24)
+			font-weight: 300
 
 @media only screen and (max-width : 992px)
 	.home-text-main
@@ -256,7 +296,7 @@
 	.home-what-is
 		h2
 			line-height: rem(28)
- 	.raise-wrap
+	.raise-wrap
 		.container
 			padding-left: 0
 			padding-right: 0
@@ -278,3 +318,34 @@
 		.btn
 			&:first-child
 				margin-right: 5px
+
+
+@-webkit-keyframes zoomOut
+  from
+    opacity: 1
+
+  50%
+    opacity: 0
+    -webkit-transform: scale3d(0.3, 0.3, 0.3)
+    transform: scale3d(0.3, 0.3, 0.3)
+
+  to
+    opacity: 0
+
+
+@keyframes zoomOut
+  from
+    opacity: 1
+
+  50%
+    opacity: 0
+    -webkit-transform: scale3d(0.3, 0.3, 0.3)
+    transform: scale3d(0.3, 0.3, 0.3)
+
+  to
+    opacity: 0
+
+
+.zoomOut
+  -webkit-animation-name: zoomOut
+  animation-name: zoomOut

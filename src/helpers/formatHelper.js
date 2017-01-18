@@ -32,7 +32,7 @@ module.exports = {
   formatNumber: formatNumber,
 
   unformatPrice(price) {
-    return price.replace(/[\$\,]/g, '');
+    return parseFloat(price.replace(/[\$\,]/g, ''));
   },
 
   months: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"],
@@ -82,6 +82,11 @@ module.exports = {
   },
 
   formatAmount(amount) {
+    amount = amount || 0
+    
+    if (typeof amount === 'string')
+      amount = parseFloat(amount);
+
     if (amount < 1000)
       return '$' + amount;
 

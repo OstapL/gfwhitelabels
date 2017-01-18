@@ -1,4 +1,5 @@
 const validation = require('components/validation/validation.js');
+const userDocuments = require('helpers/userDocuments.js');
 
 const helpers = {
   date: require('helpers/dateHelper.js'),
@@ -7,18 +8,20 @@ const helpers = {
   social: require('helpers/socialNetworksHelper.js'),
   dropzone: require('helpers/dropzoneHelpers.js'),
   yesNo: require('helpers/yesNoHelper.js'),
+  fields: require('./fields.js'),
+  fileList: require('helpers/fileList.js'),
 };
 
-// const InvestmentStatus = {
-//   New: 0,
-//   Approved: 1,
-//   CanceledByClient: 2,
-//   CanceledByBank: 3,
-//   CanceledByInkvisitor: 4,
-// };
+const moment = require('moment');
 
-const activeStatuses = [0, 1];
-const canceledStatuses = [2, 3, 4];
+const constants = {
+  AccountType: require('consts/bankAccount.json'),
+  InvestmentStatus: require('consts/investmentStatus.json'),
+};
+
+const activeStatuses = [constants.InvestmentStatus.New, constants.InvestmentStatus.Approved];
+const canceledStatuses = [constants.InvestmentStatus.CanceledByClient,
+    constants.InvestmentStatus.CanceledByBank, constants.InvestmentStatus.CanceledByInquisitor];
 
 let countries = {};
 _.each(require('helpers/countries.json'), (c) => { countries[c.code] = c.name; });
@@ -35,12 +38,6 @@ module.exports = {
     events: _.extend({
       'click #save-account-info': api.submitAction,
       'click #save-financial-info': api.submitAction,
-      'focus #ssn' : 'showSSNPopover',
-      'focuseout #ssn' : 'hideSSNPopover',
-      'keyup #zip_code': 'changeZipCode',
-      'change .js-city': 'changeAddressManually',
-      'change .js-state': 'changeAddressManually',
-      'change #country': 'changeCountry',
       'change #not-qualify': 'changeQualify',
       'change .investor-item-checkbox': 'changeAccreditedInvestorItem',
       'change #twitter,#facebook,#instagram,#linkedin': 'appendHttpsIfNecessary',
@@ -68,80 +65,81 @@ module.exports = {
       }
     },
 
-    changeCountry(e) {
-      const usClass1 = 'col-xl-6 text-xl-right text-lg-left ';
-      const usClass2 = 'col-xl-6 ';
-      const foreignClass1 = 'col-xl-5 text-xl-right text-lg-left ';
-      const foreignClass2 = 'col-xl-7';
-
-      let $target = $(e.target);
-      let country = $target.val();
-
-      let $foreignCountryRow = $('.foreign-country-row');
-      let $foreignCountryPhoneContainer = $foreignCountryRow.find('.foreign-country-phone');
-      let $foreignCountryPhoneField = $foreignCountryPhoneContainer.find('.phone');
-
-      let $usRow = $('.us-row');
-      let $usPhoneContainer = $usRow.find('.us-phone');
-      let $usPhonePhoneField = $usPhoneContainer.find('.phone');
-
-      if (country == 'US') {
-        $foreignCountryRow.hide();
-        $foreignCountryPhoneField.appendTo($usPhoneContainer);
-
-        $foreignCountryPhoneField.find('label')
-          .removeClass(foreignClass1)
-          .addClass(usClass1);
-
-        $foreignCountryPhoneField.find('div')
-          .removeClass(foreignClass2)
-          .addClass(usClass2);
-
-        $usRow.show();
-      } else {
-        $usRow.hide();
-        $usPhonePhoneField.appendTo($foreignCountryPhoneContainer);
-
-        $usPhonePhoneField.find('label')
-          .removeClass(usClass1)
-          .addClass(foreignClass1);
-
-        $usPhonePhoneField.find('div')
-          .removeClass(usClass2)
-          .addClass(foreignClass2);
-
-        $foreignCountryRow.show();
-      }
-    },
-
     initialize(options) {
+      this.activeTab = options.activeTab;
+
       this.fields = options.fields;
 
       this.fields.image_image_id = _.extend(this.fields.image_image_id, {
-        imgOptions: {
-          aspectRatio: 1 / 1,
-          cssClass : 'img-profile-crop',
-          showPreview: true,
-        }
+        crop: {
+          control: {
+            aspectRatio: 1 / 1,
+          },
+          cropper: {
+            cssClass : 'img-profile-crop',
+            preview: true,
+          },
+          auto: {
+            width: 600,
+            height: 600,
+          }
+        },
       });
 
       // this.fields.account_number.required = true;
-      this.fields.account_number = _.extend(this.fields.account_number, {
+      this.fields.account_number = {
         type: 'password',
-        fn: function(value, attr, fn, model, computed) {
-          if (this.account_number != this.account_number_re)
-            throw `Account number fields don't match`;
-        },
-      });
-
-      this.model.account_number_re = this.model.account_number;
-      this.fields.account_number_re = {
-        type: 'password',
-        fn: function(value, attr, fn, model, computed) {
-          if (this.account_number != this.account_number_re)
-            throw `Account number fields don't match`;
+        required: true,
+        minLength: 5,
+        dependies: ['account_number_re'],
+        fn: function(name, value, attr, data, schema) {
+          if (value != this.getData(data, 'account_number_re')) {
+            throw "Account number fields don't match";
+          }
         },
       };
+
+      this.fields.account_number_re = {
+        type: 'password',
+        required: true,
+        minLength: 5,
+        dependies: ['account_number'],
+        fn: function(name, value, attr, data, schema) {
+          if (value != this.getData(data, 'account_number')) {
+            throw "Account number fields don't match";
+          }
+        },
+      };
+
+      this.fields.routing_number = {
+        required: true,
+        _length: 9,
+      }
+
+      this.fields.ssn = {
+        type: 'password',
+        required: true,
+        _length: 9,
+        dependies: ['ssn_re'],
+        fn: function(name, value, attr, data, computed) {
+          if (value != data.ssn_re) {
+            throw "Social security fields don't match";
+          }
+        },
+      };
+
+      this.fields.ssn_re = {
+        type: 'password',
+        required: true,
+        _length: 9,
+        dependies: ['ssn'],
+        fn: function(name, value, attr, data, computed) {
+          if (value != data.ssn) {
+            throw "Social security fields don't match";
+          }
+        },
+      };
+
       this.labels = {
         country: 'Country',
         street_address_1: 'Street address 1',
@@ -161,6 +159,8 @@ module.exports = {
         linkedin: 'Your LinkedIn link',
         bank_name: 'Bank Name',
         name_on_bank_account: 'Name on Bank Account',
+        ssn: 'Social Security number (SSN) or Tax ID (ITIN/EIN)',
+        ssn_re: 'Re-enter',
       };
 
       this.assignLabels();
@@ -172,17 +172,18 @@ module.exports = {
     },
 
     render() {
-      this.getCityStateByZipCode = require("helpers/getSityStateByZipCode");
       this.usaStates = require("helpers/usaStates.js");
 
       this.$el.html(
         this.template({
+          tab: this.activeTab || 'account_info',
           serverUrl: serverUrl,
           user: this.model,
           roleInfo: app.user.getRoleInfo(),
           company: app.user.get('company'),
           fields: this.fields,
           states: this.usaStates,
+          constants: constants,
         })
       );
 
@@ -268,98 +269,13 @@ module.exports = {
       cbInvestor1m.prop('disabled', this.model.net_worth < 1000);
       cbInvestor200k.prop('disabled', this.model.annual_income < 200);
 
+      // this.$('a[href="#financial_info"]').on('show.bs.tab', (e) => console.warn('!!!!!!!'));
+      
       this.$('a[href="#financial_info"]').on('show.bs.tab', (e) => {
         setTimeout(() => {
           this.$('.slider-net-worth').bootstrapSlider('setValue', this.model.net_worth);
           this.$('.slider-annual-income').bootstrapSlider('setValue', this.model.annual_income);
         }, 200);
-      });
-    },
-
-    changeCountry(e) {
-      const usClass1 = 'col-lg-6 text-xl-right text-lg-left ';
-      const usClass2 = 'col-lg-6 ';
-      const foreignClass1 = 'col-lg-5 text-xl-right text-lg-left ';
-      const foreignClass2 = 'col-lg-7 ';
-
-      let $target = $(e.target);
-      let country = $target.val();
-
-      let $foreignCountryRow = $('.foreign-country-row');
-      let $foreignCountryPhoneContainer = $foreignCountryRow.find('.foreign-country-phone');
-      let $foreignCountryPhoneField = $foreignCountryPhoneContainer.find('.phone');
-
-      let $usRow = $('.us-row');
-      let $usPhoneContainer = $usRow.find('.us-phone');
-      let $usPhonePhoneField = $usPhoneContainer.find('.phone');
-
-      if (country == 'US') {
-        $foreignCountryRow.hide();
-        $foreignCountryPhoneField.appendTo($usPhoneContainer);
-
-        $foreignCountryPhoneField.find('label')
-          .removeClass(foreignClass1)
-          .addClass(usClass1);
-
-        $foreignCountryPhoneField.find('div')
-          .removeClass(foreignClass2)
-          .addClass(usClass2);
-
-        $usRow.show();
-      } else {
-        $usRow.hide();
-        $usPhonePhoneField.appendTo($foreignCountryPhoneContainer);
-
-        $usPhonePhoneField.find('label')
-          .removeClass(usClass1)
-          .addClass(foreignClass1);
-
-        $usPhonePhoneField.find('div')
-          .removeClass(usClass2)
-          .addClass(foreignClass2);
-
-        $foreignCountryRow.show();
-      }
-    },
-
-    showSSNPopover(event){
-      $('#ssn').popover({
-        trigger: 'focus',
-        placement(context, src) {
-          $(context).addClass('ssn-popover');
-          return 'right';
-        },
-        html: true,
-        content(){
-          var content = $('.profile').find('.popover-content-ssn ').html();
-          return content;
-        }
-      });
-
-      $('#ssn').popover('show');
-    },
-
-    hideSSNPopover(event){
-      $('#ssn').popover('hide');
-    },
-
-    changeZipCode(e) {
-      // if not 5 digit, return
-      if (e.target.value.length < 5) return;
-      if (!e.target.value.match(/\d{5}/)) return;
-      this.getCityStateByZipCode(e.target.value, ({ success=false, city='', state='' }) => {
-        if (success) {
-          this.$('.js-city-state').text(`${city}, ${state}`);
-          // this.$('#city').val(city);
-          this.$('.js-city').val(city);
-          $('form input[name=city]').val(city);
-          // this.$('#state').val(city);
-          this.$('.js-state').val(state);
-          $('form input[name=state]').val(state);
-
-        } else {
-          console.log('error');
-        }
       });
     },
 
@@ -370,16 +286,6 @@ module.exports = {
       validation.invalidMsg(this, 'zip_code', 'Sorry your zip code is not found');
     },
 
-    changeAddressManually() {
-      let city =  this.cityField.val();
-      let state = this.stateField.val();
-
-      this.$('input[name=city]').val(city);
-      this.$('input[name=state]').val(state);
-
-      this.cityStateArea.text(`${city}/${state}`);
-    },
-
     _success(data) {
       app.routers.navigate("/", {trigger: true});
       return 0;
@@ -388,8 +294,8 @@ module.exports = {
         app.routers.navigate("/", {trigger: true});
         return;
       }
-      app.hideLoading();
 
+      app.hideLoading();
 
       //todo: this is bad solution
       this.model.first_name = this.el.querySelector('#first_name').value;
@@ -451,6 +357,8 @@ module.exports = {
     el: '#content',
     events: {
       'click .cancel-investment': 'cancelInvestment',
+      'click .agreement-link': 'openAgreement',
+      'click .financial-docs-link': 'showFinancialDocs',
     },
 
     initialize(options) {
@@ -461,13 +369,13 @@ module.exports = {
         historical: [],
       };
 
-      let today = new Date();
+      let today = moment.utc();
 
       _.each(this.model.data, (i) => {
-        i.created_date = new Date(i.created_date);
-        i.campaign.expiration_date = new Date(i.campaign.expiration_date);
+        i.created_date = moment.parseZone(i.created_date);
+        i.campaign.expiration_date = moment(i.campaign.expiration_date);
 
-        if (_.contains(canceledStatuses, i.status) || i.campaign.expiration_date < today )
+        if (_.contains(canceledStatuses, i.status) || i.campaign.expiration_date.isBefore(today))
           this.investments.historical.push(i);
         else
           this.investments.active.push(i);
@@ -475,7 +383,39 @@ module.exports = {
     },
 
     render() {
-      this.$el.html(this.template(this.investments));
+      this.$el.html(this.template({
+        investments: this.investments,
+        helpers: helpers,
+      }));
+    },
+
+    openAgreement(e) {
+      const objectId = e.target.dataset.objectId;
+      const securityType = e.target.dataset.securityType;
+      const subscriptionAgreementLink = userDocuments.getUserDocumentsByType(objectId, securityType);
+      e.target.href = subscriptionAgreementLink;
+    },
+
+    _findInvestment(id) {
+      return _.find(this.model.data, (inv) =>  {
+        return inv.id == id;
+      });
+    },
+
+    showFinancialDocs(e) {
+      e.preventDefault();
+
+      const activeCompaign = this._findInvestment(e.target.dataset.id);
+      const fiscal_prior_group_data = activeCompaign.formc.fiscal_prior_group_data;
+      const fiscal_recent_group_data =  activeCompaign.formc.fiscal_recent_group_data;
+      const financialDocs = fiscal_prior_group_data.concat(fiscal_recent_group_data);
+
+      let data = {
+        title: 'Financials',
+        files: financialDocs,
+      };
+
+      helpers.fileList.show(data);
     },
 
     cancelInvestment(e) {
@@ -517,7 +457,7 @@ module.exports = {
         if (this.investments.historical.length === 1)
           historicalInvestmentsBlock.empty();
 
-        historicalInvestmentsBlock.append(app.fields.investment(investment));
+        historicalInvestmentsBlock.append(helpers.fields.investment(investment, {}, helpers));
 
       }).fail((err) => {
         alert(err.error);

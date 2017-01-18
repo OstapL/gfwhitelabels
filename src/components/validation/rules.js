@@ -17,22 +17,22 @@ module.exports = {
   },
 
   messages: {
-    required: 'Is required',
-    acceptance: '{0} must be accepted',
-    min: '{0} must be greater than or equal to {1}',
-    max: '{0} must be less than or equal to {1}',
-    range: '{0} must be between {1} and {2}',
-    length: '{0} must be {1} characters',
-    minLength: '{0} must be at least {1} characters',
-    maxLength: '{0} must be at most {1} characters',
-    rangeLength: '{0} must be between {1} and {2} characters',
-    oneOf: '{0} must be one of: {1}',
-    equalTo: '{0} must be the same as {1}',
-    digits: '{0} must only contain digits',
-    number: '{0} must be a number',
-    email: '{0} must be a valid email',
-    url: '{0} must be a valid url',
-    inlinePattern: '{0} is invalid',
+    required: 'Is required.',
+    acceptance: '{0} must be accepted.',
+    min: '{0} must be greater than or equal to {1}.',
+    max: '{0} must be less than or equal to {1}.',
+    range: '{0} must be between {1} and {2}.',
+    length: '{0} must be {1} characters.',
+    minLength: '{0} must be at least {1} characters.',
+    maxLength: '{0} must be at most {1} characters.',
+    rangeLength: '{0} must be between {1} and {2} characters.',
+    oneOf: '{0} must be one of: {1}.',
+    equalTo: '{0} must be the same as {1}.',
+    digits: '{0} must only contain digits.',
+    number: '{0} must be a number.',
+    email: '{0} must be a valid email.',
+    url: '{0} must be a valid url.',
+    inlinePattern: '{0} is invalid.',
   },
 
   format: function () {
@@ -68,11 +68,11 @@ module.exports = {
 
   // Function validator
   // Lets you implement a custom function used for validation
-  fn: function (value, fn, attr, model, computed) {
+  fn: function (name, fn, attr, data, schema) {
     if (_.isString(fn)) {
       fn = model[fn];
     }
-    return fn.call(model, value, attr, computed);
+    return fn.call(this, name, this.getData(data, name), attr, data, schema);
   },
 
   toNumber: function(value) {
@@ -84,7 +84,7 @@ module.exports = {
   // Validates if the attribute is required or not
   // This can be specified as either a boolean value or a function that returns a boolean value
   required: function (name, rule, attr, data) {
-    if (rule && this.hasValue(data[name]) == false) {
+    if (rule && this.hasValue(this.getData(data, name)) == false) {
       throw this.format(
         attr.messageRequired || this.messages.required,
         attr.label
@@ -106,7 +106,7 @@ module.exports = {
   // Validates that the value has to be a number and equal to or greater than
   // the min value specified
   min: function (name, rule, attr, data) {
-    let value = this.toNumber(data[name]);
+    let value = this.toNumber(this.getData(data, name));
     if (value === false || value < rule) {
       throw this.format(this.messages.min, attr.label, rule);
     }
@@ -120,7 +120,7 @@ module.exports = {
   // Validates that the value has to be a number and equal to or less than
   // the max value specified
   max: function (name, rule, attr, data) {
-    let value = this.toNumber(data[name]);
+    let value = this.toNumber(this.getData(data, name));
     if (value === false || value > rule) {
       throw this.format(this.messages.max, attr.label, rule);
     }
@@ -143,6 +143,13 @@ module.exports = {
   // Length validator
   // Validates that the value has to be a string with length equal to
   // the length value specified
+  _length: function (name, rule, attr, data) {
+    let value = this.getData(data, name);
+    if (!_.isString(value) || value.length !== rule) {
+      throw this.format(this.messages.length, attr.label, rule);
+    }
+  },
+
   length: function (name, rule, attr, data) {
     let value = this.getData(data, name);
     if (!_.isString(value) || value.length !== rule) {
@@ -164,6 +171,7 @@ module.exports = {
   // Validates that the value has to be a string with length equal to or less than
   // the max length value specified
   maxLength: function (name, rule, attr, data) {
+    let value = this.getData(data, name);
     if (!_.isString(value) || value.length > rule) {
       throw this.format(this.messages.maxLength, attr.label, rule);
     }
@@ -174,7 +182,7 @@ module.exports = {
   // the two numbers specified
   rangeLength: function (name, rule, attr, data) {
     let value = this.getData(data, name);
-    if (!_.isString(value) || value.length < rule[0] || value.length > rule[1]) {
+    if (!_.isString(value) || value.length < rule[0] || value.length+1 > rule[1]) {
       throw this.format(this.messages.rangeLength, attr.label, rule[0], rule[1]);
     }
   },

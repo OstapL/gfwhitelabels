@@ -1,11 +1,20 @@
 const formatHelper = require('helpers/formatHelper');
 const textHelper = require('helpers/textHelper');
 const companyFees = require('consts/companyFees.json');
+const typeOfDocuments = require('consts/typeOfDocuments.json');
+
 const usaStates = require('helpers/usaStates.js');
 
 const helpers = {
   text: textHelper,
-  mimetypeIcons: require('helpers/mimetypeIcons.js'),
+  icons: require('helpers/iconsHelper.js'),
+  format: formatHelper,
+  fileList: require('helpers/fileList.js'),
+  date: require('helpers/dateHelper.js'),
+};
+
+const constants = {
+  AccountType: require('consts/bankAccount.json'),
 };
 
 let countries = {};
@@ -59,7 +68,6 @@ module.exports = {
       'click .twitter-share': 'shareOnTwitter',
       'click .see-all-risks': 'seeAllRisks',
       'click .see-all-faq': 'seeAllFaq',
-      'click .linkresponse': 'checkResponse',
       'click .show-more-members': 'readMore',
       // 'click .see-all-article-press': 'seeAllArticlePress',
       'click .more-less': 'showMore',
@@ -95,9 +103,12 @@ module.exports = {
       }
       this.preview = params.preview ? true : false;
 
-      this.companyDocs = this.model.formc
-        ? _.union(this.model.formc.fiscal_prior_group_data, this.model.formc.fiscal_recent_group_data)
-        : [];
+      this.companyDocsData = {
+        title: 'Financials',
+        files: this.model.formc
+          ? _.union(this.model.formc.fiscal_prior_group_data, this.model.formc.fiscal_recent_group_data)
+          : []
+      };
 
     },
 
@@ -239,8 +250,7 @@ module.exports = {
 
     showDocumentsModal(e) {
       e.preventDefault();
-      $('#documents-modal').modal('show');
-      return false;
+      helpers.fileList.show(this.companyDocsData);
     },
 
     render() {
@@ -251,7 +261,6 @@ module.exports = {
       this.$el.html(
         this.template({
           serverUrl: serverUrl,
-          companyDocs: this.companyDocs,
           Urls: Urls,
           values: this.model,
           formatHelper: formatHelper,
@@ -401,7 +410,7 @@ module.exports = {
       'keyup .us-fields :input[name*=zip_code]': 'changeZipCode',
       'click .update-location': 'updateLocation',
       'click .link-2': 'openPdf',
-      'change .country-select': 'changeCountry',
+      'change #country': 'changeCountry',
       'change #payment_information_type': 'changePaymentType',
       'keyup .typed-name': 'copyToSignature',
       'keyup #annual_income,#net_worth': 'updateLimitInModal',
@@ -419,8 +428,70 @@ module.exports = {
         2: 'Wire',
       };
 
-      this.fields.payment_information_data.schema.account_number_re = { required: false };
-      this.fields.personal_information_data.schema.phone = { required: true };
+      // Validation rules
+      this.fields.personal_information_data.requiredTemp = true;
+      this.fields.payment_information_data.requiredTemp = true;
+      this.fields.payment_information_data.schema.account_number = {
+        type: 'password',
+        required: true,
+        minLength: 5,
+        dependies: ['account_number_re'],
+        fn: function(name, value, attr, data, schema) {
+          if (value != this.getData(data, 'payment_information_data.account_number_re')) {
+            throw "Account number fields don't match";
+          }
+        },
+      };
+
+      this.fields.payment_information_data.schema.account_number_re = {
+        type: 'password',
+        required: true,
+        minLength: 5,
+        dependies: ['account_number'],
+        fn: function(name, value, attr, data, schema) {
+          if (value != this.getData(data, 'payment_information_data.account_number')) {
+            throw "Account number fields don't match";
+          }
+        },
+      };
+
+      this.fields.payment_information_data.schema.routing_number = {
+        required: true,
+        _length: 9,
+      }
+
+      this.fields.payment_information_data.schema.ssn = {
+        type: 'password',
+        required: true,
+        _length: 9,
+        dependies: ['ssn_re'],
+        fn: function(name, value, attr, data, computed) {
+          if (value != this.getData(data, 'payment_information_data.ssn_re')) {
+            throw "Social security fields don't match";
+          }
+        },
+      };
+
+      this.fields.payment_information_data.schema.ssn_re = {
+        type: 'password',
+        required: true,
+        _length: 9,
+        dependies: ['ssn'],
+        fn: function(name, value, attr, data, computed) {
+          if (value != this.getData(data, 'payment_information_data.ssn')) {
+            throw "Social security fields don't match";
+          }
+        },
+      };
+
+      this.fields.signature = {
+        type: 'nested',
+        requiredTemp: true,
+      };
+      this.fields.signature.schema = {};
+      this.fields.signature.schema.full_name = {
+        required: true,
+      };
 
       const validateAmount = (amount) => {
         amount = Number(amount);
@@ -432,14 +503,14 @@ module.exports = {
         }
 
         if (amount > max) {
-          throw 'Sorry, your amount if too high, please update your income or change amount’';
+          throw 'Sorry, your amount is too high, please update your income or change amount’';
         }
 
         return true;
       };
 
-      this.fields.amount.fn = function (value, fn, attr, model, computed) {
-        return validateAmount(this.amount);
+      this.fields.amount.fn = function(name, value, attr, data, computed) {
+        return validateAmount(value);
       };
 
       this.model.campaign.expiration_date = new Date(this.model.campaign.expiration_date);
@@ -453,6 +524,8 @@ module.exports = {
         }
       };
 
+      this.user.ssn_re = this.user.ssn;
+
       this.labels = {
         country: 'Country',
         personal_information_data: {
@@ -460,17 +533,18 @@ module.exports = {
           street_address_2: 'Street Address 2',
           zip_code: 'Zip Code',
           city: 'City',
-          phone: 'Phone',
         },
         payment_information_data: {
           name_on_bank_account: 'Name On Bank Account',
           account_number: 'Account Number',
           account_number_re: 'Account Number Again',
           routing_number: 'Routing Number',
+          ssn: 'Social Security number (SSN) or Tax ID (ITIN/EIN)',
+          ssn_re: 'Re-enter',
         },
         payment_information_type: 'I Want to Pay Using',
         amount: 'Amount',
-        fee: 'Fee',
+        fee: 'Commission',
         is_reviewed_educational_material: `I confirm and represent that (a) I have reviewed
           the educational material that has been made available on this website, (b) I understand
           that the entire amount of my investment may be lost and (c) I am in a
@@ -490,6 +564,11 @@ module.exports = {
           any investment advice or recommendations.`,
       };
 
+      this.snippets = {
+        us: require('./templates/snippets/usFields.pug'),
+        nonUs: require('./templates/snippets/nonUsFields.pug'),
+      };
+
       this.assignLabels();
 
       this.getCityStateByZipCode = require("helpers/getSityStateByZipCode");
@@ -503,12 +582,14 @@ module.exports = {
       this.$el.html(
         this.template({
           serverUrl: serverUrl,
+          snippets: this.snippets,
           Urls: Urls,
           fields: this.fields,
           values: this.model,
           user: this.user,
           states: this.usaStates,
           countries: countries,
+          constants: constants,
         })
       );
 
@@ -777,14 +858,21 @@ module.exports = {
     },
 
     changeCountry(e) {
-      let val = $(e.target).val();
-      if (val == 'US') {
-        $('.us-fields').show().find(':input').prop('disabled', false);
-        $('.other-countries-fields').hide().find(':input').prop('disabled', true);
-      } else {
-        $('.us-fields').hide().find(':input').prop('disabled', true);
-        $('.other-countries-fields').show().find(':input').prop('disabled', false);
-      }
+      const isUS = e.target.value === 'US';
+
+      let $row = isUS ? $('.other-countries-fields') : $('.us-fields');
+
+      if (!$row.length)
+        return;
+
+      let args = {
+        fields: this.fields,
+        user: this.user,
+      };
+
+      $row.after(isUS ? this.snippets.us(args) : this.snippets.nonUs(args));
+
+      $row.remove();
     },
 
     submit(e) {
@@ -808,16 +896,21 @@ module.exports = {
       const reqUrl = global.esignServer + '/pdf-doc';
       const successRoute = this.getSuccessUrl(responseData);
       const formData = this.getDocMetaData();
-      const data = {
-        type: 1,
+      const subscriptionAgreementPath = this.getSubscriptionAgreementPath();
+      const participationAgreementPath = 'invest/participation_agreement.pdf';
+      const data = [{
+        compaign_id: this.model.id,
+        type: typeOfDocuments[participationAgreementPath],
         object_id: responseData.id,
-        esign: this.getSignature(),
         meta_data: formData,
-        template: [
-          this.getSubscriptionAgreementPath(),
-          'invest/participation_agreement.pdf'
-        ]
-      };
+        template: participationAgreementPath
+      }, {
+        compaign_id: this.model.id,
+        type: typeOfDocuments[subscriptionAgreementPath],
+        object_id: responseData.id,
+        meta_data: formData,
+        template: subscriptionAgreementPath
+      }];
 
       app.makeRequest(reqUrl, 'POST', data, {
         contentType: 'application/json; charset=utf-8',
@@ -896,6 +989,9 @@ module.exports = {
       const aggregate_inclusive_purchase = formData.total_amount.replace(/\D/g, '');
 
       return {
+        compaign_id: this.model.id,
+        signature: this.getSignature(),
+
         fees_to_investor: companyFees.fees_to_investor,
         trans_percent: companyFees.trans_percent,
         registration_fee: companyFees.registration_fee,

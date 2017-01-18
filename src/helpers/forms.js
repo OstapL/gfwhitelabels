@@ -98,6 +98,11 @@ module.exports = {
       _(d).forEach((el, i) => {
         if(el.kind == 'E' || el.kind == 'A') {
           patchData[el.path[0]] = newData[el.path[0]];
+          if(this.fields[el.path[0]].hasOwnProperty('dependies')) {
+            this.fields[el.path[0]].dependies.forEach((dep, index) => {
+              patchData[dep] = newData[dep]; 
+            });
+          }
         } else if(el.kind == 'N' && newData.hasOwnProperty(el.path[0])) {
           // In case if we delete data that was in the model
           var newArr = [];
@@ -105,8 +110,24 @@ module.exports = {
             newArr.push(arr);
           });
           patchData[el.path[0]] = newArr;
+          if(this.fields[el.path[0]].hasOwnProperty('dependies')) {
+            this.fields[el.path[0]].dependies.forEach((dep, index) => {
+              patchData[dep] = newData[dep];
+            });
+          }
         }
       });
+
+      /*
+      if(this.fields.hasOwnProperty('dependies')) {
+        _(this.fields.dependies).each((k, v) => {
+          if(patchData.hasOwnProperty(k) == false) {
+            patchData[k] = newData[k];
+          }
+        });
+      }
+      */
+
       newData = patchData;
     };
 

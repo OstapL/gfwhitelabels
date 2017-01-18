@@ -344,7 +344,7 @@ module.exports = {
   }, menuHelper.methods, yesNoHelper.methods, leavingConfirmationHelper.methods)),
 
   teamMembers: Backbone.View.extend(_.extend({
-    urlRoot: formcServer + '/:id/team-members',
+    urlRoot: formcServer + '/:id/team-members/employers',
     events: _.extend({
       'click #submitForm': api.submitAction,
       'click .inviteAction': 'repeatInvitation',
@@ -422,9 +422,8 @@ module.exports = {
     repeatInvitation(e) {
       e.preventDefault();
       api.makeRequest(
-        formcServer + '/invitation/repeat',
+        formcServer + '/' + this.model.id + '/team-members/invitation/' +  e.target.dataset.id,
         'PUT',
-        {'user_id': e.target.dataset.id}
       ).then((data) => {
         e.target.innerHTML = 'sent';
         e.target.className = 'link-3 invite';
@@ -457,14 +456,14 @@ module.exports = {
 
   }, menuHelper.methods, addSectionHelper.methods, leavingConfirmationHelper.methods)),
 
-  teamMemberAdd: Backbone.View.extend(_.extend({
+	teamMemberAdd: Backbone.View.extend(_.extend({
     urlRoot: formcServer + '/:id/team-members',
     doNotExtendModel: true,
     roles: ['shareholder', 'director', 'officer'],
     events: _.extend({
       'click #submitForm': api.submitAction,
       'click .submit_formc': submitFormc,
-    }, addSectionHelper.events, menuHelper.events, leavingConfirmationHelper.events),
+    }, addSectionHelper.events, menuHelper.events, yesNoHelper.events, leavingConfirmationHelper.events),
 
     preinitialize() {
       // ToDo
@@ -493,7 +492,6 @@ module.exports = {
       }
       this.fields = options.fields;
       this.role = options.role;
-
       this.labels = {
         first_name: 'First name',
         last_name: 'Last name',
@@ -505,6 +503,8 @@ module.exports = {
         number_of_shares: 'Number of Shares',
         class_of_securities: 'Class of Securities',
         voting_power_percent: '% of Voting Power Prior to Offering',
+        class_of_securities: 'Class of Securities',
+        voting_power: '% of Voting Power Prior to Offering',
         experiences: {
           employer: 'Employer',
           employer_principal: 'Employer Principal',
@@ -577,7 +577,8 @@ module.exports = {
       */
     },
 
-  }, addSectionHelper.methods, menuHelper.methods, leavingConfirmationHelper.methods)),
+  }, addSectionHelper.methods, menuHelper.methods, yesNoHelper.methods, leavingConfirmationHelper.methods)),
+
 
   relatedParties: Backbone.View.extend(_.extend({
     el: '#content',
@@ -1747,7 +1748,7 @@ module.exports = {
           securities_offered: 'Securities Offered',
         },
         business_loans_or_debt: {
-          maturity_date: 'Maturity Date',
+          maturity_date: 'Date of Offering',
           outstanding_amount: 'Outstanding Amount',
           interest_rate: 'Interest Rate',
           other_material_terms: 'Other Material Terms',

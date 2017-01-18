@@ -1,16 +1,23 @@
+global.cookies = require('cookies-js');
 global.config = require('config');
 global.$ = global.jQuery = require('jquery');
 global._ = require('underscore');
 global.Backbone = require('backbone');
 window.Tether = require('tether');
 global.Bootstrap = require('bootstrap/dist/js/bootstrap.js');
+global.OwlCarousel = require('owl.carousel/dist/owl.carousel.min.js');
 global.userModel = require('components/accountProfile/model.js');
 global.Urls = require('./jsreverse.js');
 require('jquery-serializejson/jquery.serializejson.min.js');
+require('js/html5-dataset.js');
 const validation = require('components/validation/validation.js');
 
 global.formatHelper = require('helpers/formatHelper');
 
+if (!global.Intl) {
+  require('intl');
+  require('intl/locale-data/jsonp/en.js');
+}
 
 $.fn.scrollTo = function (padding=0) {
   $('html, body').animate({
@@ -229,6 +236,13 @@ let app = {
       'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
     })(window,document,'script','dataLayer', id);
   },
+
+  getFilerUrl(file) {
+    if (file.startsWith('http://') || file.startsWith('https://'))
+      return file;
+
+    return `${bucketServer}/${file}`;
+  }
 
 };
 
