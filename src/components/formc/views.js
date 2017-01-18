@@ -463,7 +463,7 @@ module.exports = {
     events: _.extend({
       'click #submitForm': api.submitAction,
       'click .submit_formc': submitFormc,
-    }, addSectionHelper.events, menuHelper.events, leavingConfirmationHelper.events),
+    }, addSectionHelper.events, menuHelper.events, yesNoHelper.events, leavingConfirmationHelper.events),
 
     preinitialize() {
       // ToDo
@@ -492,7 +492,6 @@ module.exports = {
       }
       this.fields = options.fields;
       this.role = options.role;
-
       this.labels = {
         first_name: 'First name',
         last_name: 'Last name',
@@ -504,6 +503,8 @@ module.exports = {
         number_of_shares: 'Number of Shares',
         class_of_securities: 'Class of Securities',
         voting_power_percent: '% of Voting Power Prior to Offering',
+        class_of_securities: 'Class of Securities',
+        voting_power: '% of Voting Power Prior to Offering',
         experiences: {
           employer: 'Employer',
           employer_principal: 'Employer Principal',
@@ -576,7 +577,7 @@ module.exports = {
       */
     },
 
-  }, addSectionHelper.methods, menuHelper.methods, leavingConfirmationHelper.methods)),
+  }, addSectionHelper.methods, menuHelper.methods, yesNoHelper.methods, leavingConfirmationHelper.methods)),
 
 
   relatedParties: Backbone.View.extend(_.extend({

@@ -46,18 +46,23 @@
             data-toggle="tab"
             aria-expanded="true"
             role="tab"
-          ).active.nav-link.uppercase Profile information
+            class=tab === 'account_info'? 'active' : ''
+          ).nav-link.uppercase Profile information
         li.nav-item
           a(
             href="#financial_info"
             data-toggle="tab"
             role="tab"
             aria-expanded="true"
+            class=tab === 'financial_info'? 'active' : ''
           ).nav-link.uppercase Financial information
 
       .tab-content.profile-tabs-content.mt30
 
-        div(aria-expanded="true")#account_info.tab-pane.fade.active.in
+        div(
+          aria-expanded="true"
+          class=tab === 'account_info'? 'active in' : ''
+        )#account_info.tab-pane.fade
           div
             section.form-section.clearfix
               form(method="post" action="").form
@@ -127,7 +132,10 @@
                               data-method="PATCH"
                             )#save-account-info.btn.btn-primary.pull-lg-right Save
 
-        div(aria-expanded="true")#financial_info.tab-pane.fade
+        div(
+          aria-expanded="true"
+          class=tab === 'financial_info'? 'active in' : ''
+        )#financial_info.tab-pane.fade
           div
             section.form-section.clearfix
               form(method="post" action="")

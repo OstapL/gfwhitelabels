@@ -43,8 +43,7 @@ module.exports = {
     let cropperTemplateWithPreview =
       '<div class="row">' +
         '<div class="col-xl-7 col-lg-7 col-md-7 col-sm-7">' +
-            '<div class="crop-image-container "></div>' +
-          '</div>' +
+          '<div class="crop-image-container "></div>' +
         '</div>' +
         '<div class="preview-container col-xl-5 col-lg-5 col-md-5 col-sm-5 hidden-xs-down text-xs-center p-r-0">' +
           '<div class="row">' +

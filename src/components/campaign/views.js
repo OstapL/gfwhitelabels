@@ -10,6 +10,7 @@ const helpers = {
   icons: require('helpers/iconsHelper.js'),
   format: formatHelper,
   fileList: require('helpers/fileList.js'),
+  date: require('helpers/dateHelper.js'),
 };
 
 const constants = {
@@ -434,6 +435,7 @@ module.exports = {
         type: 'password',
         required: true,
         minLength: 5,
+        dependies: ['account_number_re'],
         fn: function(name, value, attr, data, schema) {
           if (value != this.getData(data, 'payment_information_data.account_number_re')) {
             throw "Account number fields don't match";
@@ -445,6 +447,7 @@ module.exports = {
         type: 'password',
         required: true,
         minLength: 5,
+        dependies: ['account_number'],
         fn: function(name, value, attr, data, schema) {
           if (value != this.getData(data, 'payment_information_data.account_number')) {
             throw "Account number fields don't match";
@@ -461,6 +464,7 @@ module.exports = {
         type: 'password',
         required: true,
         _length: 9,
+        dependies: ['ssn_re'],
         fn: function(name, value, attr, data, computed) {
           if (value != this.getData(data, 'payment_information_data.ssn_re')) {
             throw "Social security fields don't match";
@@ -472,6 +476,7 @@ module.exports = {
         type: 'password',
         required: true,
         _length: 9,
+        dependies: ['ssn'],
         fn: function(name, value, attr, data, computed) {
           if (value != this.getData(data, 'payment_information_data.ssn')) {
             throw "Social security fields don't match";
@@ -498,7 +503,7 @@ module.exports = {
         }
 
         if (amount > max) {
-          throw 'Sorry, your amount if too high, please update your income or change amount’';
+          throw 'Sorry, your amount is too high, please update your income or change amount’';
         }
 
         return true;

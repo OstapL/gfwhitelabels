@@ -252,7 +252,7 @@ module.exports = {
       this.fields.header_image_image_id = _.extend(this.fields.header_image_image_id, {
         crop: {
           control: {
-            aspectRatio: 16 / 9.55,
+            aspectRatio: 16 / 6.5,
           },
           cropper: {
             cssClass : 'img-crop',
@@ -260,14 +260,9 @@ module.exports = {
           },
           auto: {
             width: 1600,
-            height: 955,
+            height: 650,
           }
         },
-        // imgOptions: {
-        //   aspectRatio: 16 / 9.55,
-        //   cssClass : 'img-crop',
-        //   showPreview: false,
-        // },
       });
 
       this.fields.list_image_image_id = _.extend(this.fields.list_image_image_id, {
@@ -280,16 +275,10 @@ module.exports = {
             // preview: false,
           },
           auto: {
-            width: 1600,
-            height: 955,
+            width: 540,
+            height: 320,
           }
         },
-
-        // imgOptions: {
-        //   aspectRatio: 16 / 9.55,
-        //   cssClass: 'img-crop',
-        //   showPreview: false,
-        // },
       });
 
       this.fields.gallery_group_id = _.extend(this.fields.gallery_group_id, {
@@ -302,15 +291,11 @@ module.exports = {
             // preview: false,
           },
           auto: {
-            width: 1600,
-            height: 955,
+            width: 540,
+            height: 320,
           }
         },
-        // imgOptions: {
-        //   aspectRatio: 16 / 9.55,
-        //   cssClass: 'img-crop',
-        //   showPreview: false,
-        // },
+
         fn: function checkNotEmpty(name, value, attr, data, computed) { 
           if(!this.model.gallery_group_data || !this.model.gallery_group_data.length) {
             throw 'Please upload at least 1 image';
@@ -595,10 +580,8 @@ module.exports = {
         this.createIndexes();
         this.buildJsonTemplates('raiseFunds');
 
-        this.fields.dependies = {
-          'minimum_raise': 'maximum_raise',
-          'maximum_raise': 'minimum_raise'
-        };
+        this.fields.minimum_raise.dependies = ['maximum_raise',];
+        this.fields.maximum_raise.dependies = ['minimum_raise',];
 
       },
 

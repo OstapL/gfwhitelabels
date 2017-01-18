@@ -50,16 +50,30 @@ section.create-company-team-add.container
           value: values.part_time_employers,
           required: true,
           })
-      .col-lg-12.text-lg-center.text-md-center.text-sm-center.text-xs-center.m-t-2.m-b-2.p-xs-0
-        a(href='/formc/' + values.id + '/team-members/director/new').btn.text-uppercase.m-r-3 
-          i.fa.fa-plus
-          |  ADD DIRECTOR 
-        a(href='/formc/' + values.id + '/team-members/officer/new').btn.text-uppercase 
-          i.fa.fa-plus
-          |  ADD OFFICER
-        a(href='/formc/' + values.id + '/team-members/shareholder/new').btn.text-uppercase.m-t-2.custom-btn 
-          i.fa.fa-plus
-          |  ADD 20% VOTING SHAREHOLDER
+      .row
+        .col-lg-12.p-xs-0
+          .col-lg-2.text-lg-right
+            label Step 1
+          .col-lg-10
+            a(href='/formc/' + values.id + '/team-members/director/new').btn.text-uppercase
+              i.fa.fa-plus
+              |  ADD DIRECTOR
+      .row.m-t-1
+        .col-lg-12.p-xs-0
+          .col-lg-2.text-lg-right
+            label Step 2
+          .col-lg-10 
+            a(href='/formc/' + values.id + '/team-members/officer/new').btn.text-uppercase
+              i.fa.fa-plus
+              |  ADD OFFICER
+      .row.m-t-1
+        .col-lg-12.p-xs-0
+          .col-lg-2.text-lg-right
+            label Step 3
+          .col-lg-10
+            a(href='/formc/' + values.id + '/team-members/shareholder/new').btn.text-uppercase.custom-btn 
+              i.fa.fa-plus
+              |  ADD 20% VOTING SHAREHOLDER
 
       .col-lg-12.table-responsive.m-t-2.p-xs-0
         table.table.table-bordered.m-b-0.team-member-table
