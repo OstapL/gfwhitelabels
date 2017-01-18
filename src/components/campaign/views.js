@@ -498,7 +498,7 @@ module.exports = {
         }
 
         if (amount > max) {
-          throw 'Sorry, your amount if too high, please update your income or change amount’';
+          throw 'Sorry, your amount is too high, please update your income or change amount’';
         }
 
         return true;
