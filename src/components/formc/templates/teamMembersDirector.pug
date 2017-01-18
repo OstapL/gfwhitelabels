@@ -105,6 +105,35 @@ section.formc-team-members-director.container.m-b-85
                     'name': 'employer_start_date',
                     }, fields.employer_start_date));
 
+        .col-lg-12.p-xs-0.m-t-2
+          strong Is this individual also a 20%+ Voting Shareholder?
+          .form-group.form-section.m-t-1.m-b-0
+            .radio-input.m-b-2.yesno
+              - values['voting_shareholder_choice'] = 0
+              label 
+                input(type="radio" name="voting_shareholder_choice" value="1" checked=(values['voting_shareholder_choice'] == 1))
+                |  Yes
+              label 
+                input(type="radio" name="voting_shareholder_choice" value="0" checked=(values['voting_shareholder_choice'] == 0))
+                |  No
+        .voting_shareholder_choice.shown-yes(style="display:" + (values['voting_shareholder_choice'] == 1? 'block' : 'none'))
+          - 
+            pug_html += app.fields.textLabel('number_of_shares', {
+            schema: fields.number_of_shares,
+            label: 'Number of Shares', 
+            value: values.number_of_shares,})
+          - 
+            pug_html += app.fields.textLabel('class_of_securities', {
+            schema: fields.class_of_securities,
+            label: 'Class of Securities',
+            value: values.class_of_securities,})
+          - 
+            pug_html += app.fields.textLabel('voting_power', {
+            schema: fields.voting_power,
+            label: '% of Voting Power Prior to Offering',
+            class1: 'col-xl-3 col-lg-12 text-lg-left p-t-0 m-b-0 m-b-lg-1 text-xl-right',  
+            value: values.voting_power,})
+
         .row
           .col-xl-12
             .border-bottom.m-t-3.m-b-3
