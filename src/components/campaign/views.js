@@ -10,6 +10,7 @@ const helpers = {
   icons: require('helpers/iconsHelper.js'),
   format: formatHelper,
   fileList: require('helpers/fileList.js'),
+  date: require('helpers/dateHelper.js'),
 };
 
 const constants = {
