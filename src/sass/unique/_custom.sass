@@ -61,3 +61,33 @@
 			position: absolute;
 			left: 50%
 			opacity: .6
+
+
+@-webkit-keyframes fadeOuts
+  from
+    opacity: 1
+
+  to
+    opacity: 0
+
+
+@keyframes fadeOuts
+  from
+    opacity: 1
+
+  to
+    opacity: 0
+
+
+.fadeOuts
+  -webkit-animation-name: fadeOuts
+  animation-name: fadeOuts
+
+@-webkit-keyframes fadeOutsDown
+  from
+    opacity: 1
+
+  to
+    opacity: 0
+    -webkit-transform: translate3d(0, 100%, 0)
+    transform: translate3d(0, 100%, 0)
