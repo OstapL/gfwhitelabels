@@ -15,7 +15,7 @@
       span.img_tab #{helpers.date.daysLeft(i.campaign.expiration_date) + ' Days Left'}
     else
       span.successfull.unsuccessfull  Unsuccessfully funded campaign
-      span.end-date  #{i.campaign.expiration_date.toLocaleDateString()}
+      span.end-date  #{i.campaign.expiration_date.format('MM/DD/YYYY')}
     p.text-uppercase.dosis #{i.company.name}
   .right-columns
     .one_line
@@ -27,7 +27,7 @@
       .col40
         span.light_grey Investment Day
       .col60
-        span.dark_grey #{i.created_date.toLocaleDateString() }
+        span.dark_grey #{i.created_date.format('MM/DD/YYYY') }
     .one_line
       .col40
         span.light_grey Investment ID
@@ -46,7 +46,7 @@
   .right_buttons
     h4 Downloadable Files
     -
-      var presentationUrl = i.formc.business_plan_data[0].urls[0];
+      var presentationUrl = i.formc.business_plan_data[0] ? i.formc.business_plan_data[0].urls[0] : '#';
     ul
       li
         a(href=presentationUrl target="_blank").link-3 Investor Presentation

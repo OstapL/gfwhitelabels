@@ -12,6 +12,8 @@ const helpers = {
   fileList: require('helpers/fileList.js'),
 };
 
+const moment = require('moment');
+
 const constants = {
   AccountType: require('consts/bankAccount.json'),
   InvestmentStatus: require('consts/investmentStatus.json'),
@@ -365,13 +367,13 @@ module.exports = {
         historical: [],
       };
 
-      let today = new Date();
+      let today = moment.utc();
 
       _.each(this.model.data, (i) => {
-        i.created_date = new Date(i.created_date);
-        i.campaign.expiration_date = new Date(i.campaign.expiration_date);
+        i.created_date = moment.parseZone(i.created_date);
+        i.campaign.expiration_date = moment(i.campaign.expiration_date);
 
-        if (_.contains(canceledStatuses, i.status) || i.campaign.expiration_date < today )
+        if (_.contains(canceledStatuses, i.status) || i.campaign.expiration_date.isBefore(today))
           this.investments.historical.push(i);
         else
           this.investments.active.push(i);
