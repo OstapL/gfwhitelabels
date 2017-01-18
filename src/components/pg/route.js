@@ -24,7 +24,7 @@ module.exports = Backbone.Router.extend({
             $('#content').html(html);
             $('.carousel-test').owlCarousel({
                   loop:true,
-                  nav:true,
+                  nav:false,
                   autoplay:true,
                   autoplayTimeout:9000,
                   smartSpeed:2000,
