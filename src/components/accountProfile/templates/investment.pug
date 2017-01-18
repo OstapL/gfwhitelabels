@@ -14,8 +14,11 @@
     if attr.active
       span.img_tab #{helpers.date.daysLeft(i.campaign.expiration_date) + ' Days Left'}
     else
-      span.successfull.unsuccessfull  Unsuccessfully funded campaign
-      span.end-date  #{i.campaign.expiration_date.toLocaleDateString()}
+      if i.status > 1
+        span.successfull.unsuccessfull  Cancelled
+      else
+        span.successfull.unsuccessfull  Unsuccessfully funded campaign
+      span.end-date  #{i.campaign.expiration_date.format('MM/DD/YYYY')}
     p.text-uppercase.dosis #{i.company.name}
   .right-columns
     .one_line
@@ -27,7 +30,7 @@
       .col40
         span.light_grey Investment Day
       .col60
-        span.dark_grey #{i.created_date.toLocaleDateString() }
+        span.dark_grey #{i.created_date.format('MM/DD/YYYY') }
     .one_line
       .col40
         span.light_grey Investment ID

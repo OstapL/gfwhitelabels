@@ -43,7 +43,7 @@ section(style="background-image: url(" + (values.campaign.header_image_data && v
               h2.font-weight-bold #{ values.campaign.percentage_revenue }%
           .col-lg-2.p-r-0.p-sm-0.text-xs-center.text-lg-left
             p Days Left
-            h2.font-weight-bold #{ values.campaign.length_days }
+            h2.font-weight-bold #{ helpers.date.daysLeft(values.campaign.expiration_date) }
           .col-lg-4.p-sm-0.col-md-12.col-xs-12.pull-lg-right.text-xs-center
             a(href="/" + values.id + "/invest").btn.btn-primary.text-uppercase.pull-lg-right Invest
 
