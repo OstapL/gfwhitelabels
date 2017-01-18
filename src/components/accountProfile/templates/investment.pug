@@ -46,9 +46,10 @@
   .right_buttons
     h4 Downloadable Files
     -
-      var presentationUrl = i.formc.business_plan_data && i.formc.business_plan_data.length ?
-            i.formc.business_plan_data[0].urls && i.formc.business_plan_data[0].urls.length ? 
-            i.formc.business_plan_data[0].urls[0] : '#'
+      var investor_presentation = i.campaign.investor_presentation_data; 
+      var presentationUrl = investor_presentation && investor_presentation.length ?
+            investor_presentation[0].urls && investor_presentation[0].urls.length ? 
+            investor_presentation[0].urls[0] : '#'
             :'#';
     ul
       li
