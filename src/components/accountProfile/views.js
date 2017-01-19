@@ -550,7 +550,6 @@ module.exports = {
       'click .linkedin-share': 'shareOnLinkedIn',
       'click .facebook-share': 'shareOnFaceBook',
       'click .twitter-share': 'shareOnTwitter',
-      'click .email-share': 'shareWithEmail',
       'click .google-plus-share': 'shareWithGooglePlus',
       'click .cancel-campaign': 'cancelCampaign',
     },
@@ -643,18 +642,6 @@ module.exports = {
         href: 'http://growthfountain.com/' + this.model.id,
         hashtags: ['investment', 'fundraising'],
         text: 'Check out ',
-      });
-    },
-
-    shareWithEmail(e) {
-      e.preventDefault();
-
-      let text = "Check out " + this.model.name + "'s fundraise on GrowthFountain";
-
-      helpers.social.email.share({
-        subject: text,
-        message: text,
-        href: 'http://growthfountain.com/' + this.model.id,
       });
     },
 
