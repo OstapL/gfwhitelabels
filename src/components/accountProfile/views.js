@@ -12,6 +12,8 @@ const helpers = {
   fileList: require('helpers/fileList.js'),
 };
 
+const moment = require('moment');
+
 const constants = {
   AccountType: require('consts/bankAccount.json'),
   InvestmentStatus: require('consts/investmentStatus.json'),
@@ -64,6 +66,8 @@ module.exports = {
     },
 
     initialize(options) {
+      this.activeTab = options.activeTab;
+
       this.fields = options.fields;
 
       this.fields.image_image_id = _.extend(this.fields.image_image_id, {
@@ -83,17 +87,11 @@ module.exports = {
       });
 
       // this.fields.account_number.required = true;
-      this.fields.dependies = {
-        account_number: 'account_number_re',
-        account_number_re: 'account_number',
-        ssn: 'ssn_re',
-        ssn_re: 'ssn'
-      };
-
       this.fields.account_number = {
         type: 'password',
         required: true,
         minLength: 5,
+        dependies: ['account_number_re'],
         fn: function(name, value, attr, data, schema) {
           if (value != this.getData(data, 'account_number_re')) {
             throw "Account number fields don't match";
@@ -105,6 +103,7 @@ module.exports = {
         type: 'password',
         required: true,
         minLength: 5,
+        dependies: ['account_number'],
         fn: function(name, value, attr, data, schema) {
           if (value != this.getData(data, 'account_number')) {
             throw "Account number fields don't match";
@@ -121,6 +120,7 @@ module.exports = {
         type: 'password',
         required: true,
         _length: 9,
+        dependies: ['ssn_re'],
         fn: function(name, value, attr, data, computed) {
           if (value != data.ssn_re) {
             throw "Social security fields don't match";
@@ -132,6 +132,7 @@ module.exports = {
         type: 'password',
         required: true,
         _length: 9,
+        dependies: ['ssn'],
         fn: function(name, value, attr, data, computed) {
           if (value != data.ssn) {
             throw "Social security fields don't match";
@@ -175,6 +176,7 @@ module.exports = {
 
       this.$el.html(
         this.template({
+          tab: this.activeTab || 'account_info',
           serverUrl: serverUrl,
           user: this.model,
           roleInfo: app.user.getRoleInfo(),
@@ -267,6 +269,8 @@ module.exports = {
       cbInvestor1m.prop('disabled', this.model.net_worth < 1000);
       cbInvestor200k.prop('disabled', this.model.annual_income < 200);
 
+      // this.$('a[href="#financial_info"]').on('show.bs.tab', (e) => console.warn('!!!!!!!'));
+      
       this.$('a[href="#financial_info"]').on('show.bs.tab', (e) => {
         setTimeout(() => {
           this.$('.slider-net-worth').bootstrapSlider('setValue', this.model.net_worth);
@@ -365,13 +369,13 @@ module.exports = {
         historical: [],
       };
 
-      let today = new Date();
+      let today = moment.utc();
 
       _.each(this.model.data, (i) => {
-        i.created_date = new Date(i.created_date);
-        i.campaign.expiration_date = new Date(i.campaign.expiration_date);
+        i.created_date = moment.parseZone(i.created_date);
+        i.campaign.expiration_date = moment(i.campaign.expiration_date);
 
-        if (_.contains(canceledStatuses, i.status) || i.campaign.expiration_date < today )
+        if (_.contains(canceledStatuses, i.status) || i.campaign.expiration_date.isBefore(today))
           this.investments.historical.push(i);
         else
           this.investments.active.push(i);

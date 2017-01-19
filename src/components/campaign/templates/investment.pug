@@ -241,8 +241,8 @@ mixin confirmStatement(name, attr)
                   fields.payment_information_data.schema.routing_number);
               .form-group.row.radio.check-fields
                 label.text-md-right.col-lg-3 Account Type
-                .col-lg-9.radio-input
-                  label#payment_information_data__bank_account_type
+                #payment_information_data__bank_account_type.col-lg-9.radio-input
+                  label 
                     input(
                       type="radio"
                       name="payment_information_data[bank_account_type]"
@@ -348,12 +348,11 @@ mixin confirmStatement(name, attr)
               _.extend({}, fields.is_understand_investing_is_risky)
             )
             // FOR DCU
-            if window.location.hostname == "dcu.growthfountain.com"
+            //.dcu-confirmation
               +confirmStatement('is_understand_securities_related',
                 _.extend({}, fields.is_understand_securities_related)
               )
-            else
-              input(type="hidden" id="is_understand_securities_related" name="is_understand_securities_related" value="1")
+            input(type='hidden' value='1' name='is_understand_securities_related')
             .col-lg-12.m-t-2
               .row
                 span By Signing You Acknowledge and Agree to the 
