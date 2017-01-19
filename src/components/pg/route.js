@@ -21,9 +21,10 @@ module.exports = Backbone.Router.extend({
             Urls: Urls,
           });
 
-          app.cache[window.location.pathname] = html;
+          // app.cache[window.location.pathname] = html;
 
           $('#content').html(html);
+
           $('.carousel-test').owlCarousel({
             loop: true,
             nav: false,
@@ -43,7 +44,7 @@ module.exports = Backbone.Router.extend({
               1000: {items: 1}
             }
           });
-          
+
           $('body').scrollTo();
           app.hideLoading();
         });
