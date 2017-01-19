@@ -119,6 +119,7 @@ module.exports = {
           return;
 
         $relatedBlock = this.$stubs.find('.related-role').clone();
+        $relatedBlock.find('.field-related').addClass('shown-yes');
         //$form.append($relatedBlock);
         $target.parent().after($relatedBlock);
         $relatedBlock.show();
