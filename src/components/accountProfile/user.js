@@ -5,32 +5,32 @@ class User {
     this.campaign = null;
     this.formc = null;
 
-    this.user = { token: '', id: ''};
+    this.data = { token: '', id: ''};
     this.token = null;
   }
 
   get(key) {
-    return this.user[key];
+    return this.data[key];
   }
 
   set(key, value) {
-    this.user[key] = value;
+    this.data[key] = value;
   }
 
   get first_name() {
-    return this.user.first_name;
+    return this.data.first_name;
   }
 
   set first_name(value) {
-    this.user.first_name = value;
+    this.data.first_name = value;
   }
 
   get last_name() {
-    return this.user.last_name;
+    return this.data.last_name;
   }
 
   set last_name(value) {
-    this.user.last_name = value;
+    this.data.last_name = value;
   }
 
   load() {
@@ -55,13 +55,13 @@ class User {
     // return;
 
     api.makeRequest(authServer + '/rest-auth/data-mini', 'GET').then((data) => {
-      this.user = data;
-      localStorage.setItem('user', JSON.stringify(this.user));
+      this.data = data;
+      localStorage.setItem('user', JSON.stringify(this.data));
 
       return this.getCompanyR();
     }).then((company) => {
-      this.user.company = company;
-      app.trigger('userLoaded', this.user);
+      this.data.company = company;
+      app.trigger('userLoaded', this.data);
     }).fail((xhr, status) => {
       localStorage.removeItem('token');
       app.defaultSaveActions.error(app, xhr, status, '');
@@ -73,15 +73,15 @@ class User {
   }
 
   get_full_name() {
-    return `${this.user.first_name} ${this.user.last_name}`;
+    return this.data.first_name + ' ' + this.data.last_name;
   }
 
   toJSON() {
-    return this.user;
+    return this.data;
   }
 
   getRoleInfo() {
-    let role = this.user.role;
+    let role = this.data.role;
     role.role = role.role || [];
 
     return {
