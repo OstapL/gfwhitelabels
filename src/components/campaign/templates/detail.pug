@@ -128,7 +128,9 @@ section.campaigndetail
               i.fa.fa-twitter.link-1
             a(href=values.linkedin).linkedin-share
               i.fa.fa-linkedin.link-1
-            a(href=values.linkedin).email-share
+            - let text = "Check out " + (values.short_name || values.name) + "'s fundraise on GrowthFountain";
+            - var mailtoLink = "mailto:?subject=" + text + "&body=" + text + "%0D%0A" + window.location.href;
+            a(href=mailtoLink).email-share
               i.fa.fa-envelope.link-1
             //- a(href=values.company.instagram).link-1
             //-   i.fa.fa-google-plus
