@@ -492,6 +492,9 @@ module.exports = {
       }
       this.fields = options.fields;
       this.role = options.role;
+      this.fields = options.fields[this.role].fields;
+      debugger;
+
       this.labels = {
         first_name: 'First name',
         last_name: 'Last name',
