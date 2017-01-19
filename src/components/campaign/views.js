@@ -62,7 +62,6 @@ module.exports = {
       'click .tabs-scroll .nav .nav-link': 'smoothScroll',
       'hide.bs.collapse .panel': 'onCollapse',
       'show.bs.collapse .panel': 'onCollapse',
-      'click .email-share': 'shareWithEmail',
       'click .linkedin-share': 'shareOnLinkedin',
       'click .facebook-share': 'shareOnFacebook',
       'click .twitter-share': 'shareOnTwitter',
@@ -214,12 +213,6 @@ module.exports = {
           currLink.removeClass("active");
         }
       });
-    },
-
-    shareWithEmail (e) {
-      event.preventDefault();
-      let text = "Check out " + (this.model.short_name || this.model.name) + "'s fundraise on GrowthFountain";
-      window.open("mailto:?subject=" + text + "&body=" + text + "%0D%0A" + window.location.href);
     },
 
     shareOnFacebook(event) {
