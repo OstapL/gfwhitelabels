@@ -23,8 +23,8 @@ const activeStatuses = [constants.InvestmentStatus.New, constants.InvestmentStat
 const canceledStatuses = [constants.InvestmentStatus.CanceledByClient,
     constants.InvestmentStatus.CanceledByBank, constants.InvestmentStatus.CanceledByInquisitor];
 
-let countries = {};
-_.each(require('helpers/countries.json'), (c) => { countries[c.code] = c.name; });
+// let countries = {};
+// _.each(require('helpers/countries.json'), (c) => { countries[c.code] = c.name; });
 
 import 'bootstrap-slider/dist/bootstrap-slider'
 import 'bootstrap-slider/dist/css/bootstrap-slider.css'
