@@ -423,7 +423,7 @@ mixin confirmStatement(name, attr)
           .col-md-7
             .row
               span Offering deadline
-              p.font-weight-bold.m-b-0 #{values.campaign.expiration_date.toLocaleDateString()}
+              p.font-weight-bold.m-b-0 #{values.campaign.expiration_date.toLocaleDateString('en-US', {timeZone: 'UTC'})}
           .col-md-5
             .row
               span Type of security
