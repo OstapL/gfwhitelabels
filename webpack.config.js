@@ -27,6 +27,7 @@ module.exports = {
     resolve: {
         extensions: ['', '.js', '.pug', '.sass', '.scss'],
         modulesDirectories: [
+            './consts',
             './src',
             './node_modules'
         ]
