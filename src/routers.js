@@ -26,6 +26,20 @@ let appRoutes = Backbone.Router.extend({
     }
   },
 
+  execute(callback, args, name) {
+    console.debug('/src/routers.js');
+
+    const slashAtTheEnd= /\/$/;
+    const isSlashAtTheEnd = slashAtTheEnd.test(Backbone.history.fragment);
+    
+    if (isSlashAtTheEnd) {
+      let fragment = Backbone.history.fragment.replace(slashAtTheEnd, '');
+      this.navigate(fragment, {trigger: true, replace: true});
+    } else if (callback) {
+      callback.apply(this, args)
+    };
+  },
+
   initialize() {
     const copyRoutes = (router) => {
       _.each(router.routes, (funcName, path) => this.routes[path] = r1[funcName]);
