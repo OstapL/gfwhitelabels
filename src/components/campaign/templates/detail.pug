@@ -1,5 +1,3 @@
-- var formcLinks = require('./../helpers.js').formcLinks
-
 section(style="background-image: url(" + (values.campaign.header_image_data && values.campaign.header_image_data[0] ? values.campaign.header_image_data[0].urls[0] : '/img/default.png') + ")")#home.home-section.bg-dark-alfa-70.parallax-2.fixed-height-small.hide-bg-fixed
   .js-height-parent.container-fluid
     .home-content
@@ -454,7 +452,7 @@ section
         .col-xl-8.offset-xl-2.col-lg-10.offset-lg-1.col-sm-12.offset-sm-0
           .col-lg-4.text-xs-center
             p Official filing on SEC.gov
-            a(href=formcLinks[values.id] target="_blank")
+            a(href=helpers.campaign.formcLinks[values.id] target="_blank")
               img(src="/img/lrg_US_Department_of_State35.gif").img-document.d-inline-block
               h3.d-inline-block  Form C
           .col-lg-4.text-xs-center
