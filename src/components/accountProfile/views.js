@@ -556,8 +556,8 @@ module.exports = {
     },
 
     initialize(options) {
-      this.model.description = "Something long comes from here. Something long comes from here. Something long comes from here. Something long comes from here. Something long comes from here. ";
-      this.model.thumbnail = '/img/smartbe-intelligent-stroller.jpg';
+      this.model.description = this.model.description || "Something long comes from here. Something long comes from here. Something long comes from here. Something long comes from here. Something long comes from here. ";
+      this.model.thumbnail = this.model.thumbnail ||'/img/smartbe-intelligent-stroller.jpg';
       this.model.campaign = _.extend({
         minimum_raise: 80000,
         amount_raised: 20000,
