@@ -98,7 +98,7 @@ module.exports = {
       _(d).forEach((el, i) => {
         if(el.kind == 'E' || el.kind == 'A') {
           patchData[el.path[0]] = newData[el.path[0]];
-          if(this.fields[el.path[0]].hasOwnProperty('dependies')) {
+          if(this.fields[el.path[0]] && this.fields[el.path[0]].hasOwnProperty('dependies')) {
             this.fields[el.path[0]].dependies.forEach((dep, index) => {
               patchData[dep] = newData[dep]; 
             });

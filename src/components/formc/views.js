@@ -461,7 +461,7 @@ module.exports = {
     doNotExtendModel: true,
     roles: ['shareholder', 'director', 'officer'],
     events: _.extend({
-      'click #submitForm': api.submitAction,
+      'click #submitForm': 'submit',
       'click .submit_formc': submitFormc,
     }, addSectionHelper.events, menuHelper.events, yesNoHelper.events, leavingConfirmationHelper.events),
 
@@ -493,7 +493,6 @@ module.exports = {
       this.fields = options.fields;
       this.role = options.role;
       this.fields = options.fields[this.role].fields;
-      debugger;
 
       this.labels = {
         first_name: 'First name',
@@ -534,9 +533,9 @@ module.exports = {
       this.urlRoot = this.urlRoot.replace(':id', this.model.formc_id);
       if(this.model.hasOwnProperty('user_id')  && this.model.user_id != '') {
         this.model.id = this.model.formc_id;
-        this.urlRoot += '/' + this.role + '/' + this.model.user_id;
+        this.urlRoot += '/' +  this.model.user_id;
       } else {
-        this.urlRoot += '/' + this.role;
+        // this.urlRoot += '/' + this.role;
         this.model.title = [];
       }
 
@@ -578,6 +577,15 @@ module.exports = {
       );
       //return '/campaign/' + this.model.id + '/team-members';
       */
+    },
+
+    submit(e) {
+      let data = $(e.target).closest('form').serializeJSON({ useIntKeysAsArrayIndex: true });
+      data['role'] = data['role'].reduce((a,b) => { return parseInt(a)+parseInt(b)}, 0)
+      // delete data['experiences'];
+      // delete data['positions'];
+      data['number_of_shares'] = 100;
+      api.submitAction.call(this, e, data);
     },
 
   }, addSectionHelper.methods, menuHelper.methods, yesNoHelper.methods, leavingConfirmationHelper.methods)),
