@@ -14,8 +14,8 @@ const helpers = {
   campaign: require('./helpers.js'),
 };
 
-const constants = {
-  AccountType: require('consts/bankAccount.json'),
+const CONST = {
+  auth: require('auth/file.json'),
 };
 
 let countries = {};
@@ -583,7 +583,7 @@ module.exports = {
           user: this.user,
           states: this.usaStates,
           countries: countries,
-          constants: constants,
+          constants: CONST,
         })
       );
 

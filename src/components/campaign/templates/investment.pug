@@ -246,16 +246,16 @@ mixin confirmStatement(name, attr)
                     input(
                       type="radio"
                       name="payment_information_data[bank_account_type]"
-                      value=constants.AccountType.Checking
-                      checked=(user.bank_account_type == constants.AccountType.Checking)
+                      value=constants.auth.bank_account_type.Checking
+                      checked=(user.bank_account_type == constants.auth.bank_account_type.Checking)
                     )
                     |  Checking
                   label
                     input(
                       type="radio"
                       name="payment_information_data[bank_account_type]"
-                      value=constants.AccountType.Savings
-                      checked=(user.bank_account_type == constants.AccountType.Savings)
+                      value=constants.auth.bank_account_type.Savings
+                      checked=(user.bank_account_type == constants.auth.bank_account_type.Savings)
                     )
                     |  Savings
             // IF CHECK

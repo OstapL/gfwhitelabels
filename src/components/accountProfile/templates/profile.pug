@@ -283,16 +283,16 @@
                             input(
                               type="radio"
                               name='bank_account_type'
-                              checked=(user.bank_account_type == constants.AccountType.Checking)
-                              value=constants.AccountType.Checking
+                              checked=(user.bank_account_type == constants.auth.bank_account_type.Checking)
+                              value=constants.auth.bank_account_type.Checking
                             )
                             |  Checking
                           label
                             input(
                               type="radio"
                               name='bank_account_type'
-                              checked=(user.bank_account_type == constants.AccountType.Savings)
-                              value=constants.AccountType.Savings
+                              checked=(user.bank_account_type == constants.auth.bank_account_type.Savings)
+                              value=constants.auth.bank_account_type.Savings
                             )
                             |  Savings
                       .row
