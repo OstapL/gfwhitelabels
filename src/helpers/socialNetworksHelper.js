@@ -36,25 +36,26 @@ module.exports = {
     },
 
     share(data) {
-      window.open(encodeURI(`https://plus.google.com/share?url=${data.href}`), 'Growth Fountain Campaign', 'width=550, height=420');
+      window.open(encodeURI('https://plus.google.com/share?url=' + data.href), 'Growth Fountain Campaign', 'width=550, height=420');
     },
   },
 
   twitter: {
     share(data) {
-      window.open(encodeURI(`https://twitter.com/share?url=${data.href}
-        &via=growthfountain
-        &hashtags=${data.hashtags.join(',')}
-        &text=${data.text}`),'Growth Fountain Campaign','width=550,height=420');
+      window.open(encodeURI('https://twitter.com/share?url='
+        + data.href
+        + '&via=growthfountain'
+        + '&hashtags=' + data.hashtags.join(',')
+        + '&text=' + data.text),'Growth Fountain Campaign','width=550,height=420');
     },
   },
 
   linkedIn: {
     share(data) {
-      window.open(encodeURI(`https://www.linkedin.com/shareArticle?mini=true&url=${data.href}
-        '&title=${data.title}
-        '&summary=${data.description}
-        '&source=Growth Fountain`),'Growth Fountain Campaign','width=605,height=545');
+      window.open(encodeURI('https://www.linkedin.com/shareArticle?mini=true&url=' + data.href
+        + '&title=' + data.title
+        + '&summary=' + data.description
+        + '&source=Growth Fountain'),'Growth Fountain Campaign','width=605,height=545');
     },
   },
 
