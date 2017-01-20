@@ -11,6 +11,7 @@ const helpers = {
   format: formatHelper,
   fileList: require('helpers/fileList.js'),
   date: require('helpers/dateHelper.js'),
+  campaign: require('./helpers.js'),
 };
 
 const constants = {
