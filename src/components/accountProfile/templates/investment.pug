@@ -71,7 +71,7 @@
   .bottom_column
     .top_descript
       .left_text
-        b #{helpers.format.formatAmount(i.amount_raised)}
+        b #{helpers.format.formatAmount(i.campaign.amount_raised)}
         span Raised
       .right_text
         b #{helpers.format.formatAmount((i.campaign.minimum_raise || i.campaign.maximum_raise))}

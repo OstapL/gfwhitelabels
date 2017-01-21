@@ -46,7 +46,7 @@
           .clear
         .description
           if company.description
-            p= company.description.substr(0,250)
+            p= company.description.replace(/(<([^>]+)>)/ig,"").substr(0,250)
 
         .progress_bar_container
           span.left_text #{ percentage_raised <= 20 ? 'Less than 20' : percentage_raised } % Funded
