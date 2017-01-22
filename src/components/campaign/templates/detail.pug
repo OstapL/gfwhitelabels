@@ -671,13 +671,25 @@ section
   section.ask.border-bottom
     .container.comments-container
 
-  section.like
+  section.like-detail
     .container
-      .col-lg-12.text-lg-center.text-xs-center
-        h2
-          i.fa.fa-thumbs-up
-          |  I’d Like to Invest in #{ values.short_name || values.name }!
-        a(href="/" + values.id + "/invest").btn.btn-primary.text-uppercase Invest
+      .col-lg-12.p-r-0
+        img(src="/img/bg-detail-invest.png")
+        .like-wrap
+          h1.like-detail-text Become a part of this company!
+          .like-text-wrap
+            h2
+              .like-detail-icon
+                i.fa.fa-thumbs-up
+              |  I’d Like to Invest in #{ values.short_name || values.name }!
+            a(href="/" + values.id + "/invest").btn.btn-lg.btn-secondary.text-uppercase.m-t-2 invest in this company
+      //.col-lg-5.col-md-6.p-l-0.p-r-0.text-xs-center
+        .like-text-wrap.m-t-1.m-b-1
+          h2
+            .like-detail-icon
+              i.fa.fa-thumbs-up
+            |  I’d Like to Invest in #{ values.short_name || values.name }!
+          a(href="/" + values.id + "/invest").btn.btn-lg.btn-secondary.text-uppercase.m-t-2 invest in this company
 
 div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")#videoModal.modal.fade.video-modal
   div(role="document").modal-dialog.modal-lg
