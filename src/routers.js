@@ -9,6 +9,8 @@ const accountProfile = require('components/accountProfile/route');
 const establishedBusinessCalc = require('components/establishedBusinessCalculator/route');
 const formc = require('components/formc/route');
 const blog = require('components/blog/route');
+const errorPageHelper = require('helpers/errorPageHelper.js');
+
 
 Backbone.Router.execute = function (callback, args, name) {
   if (name == '/company/create' && !app.user.ensureLoggedIn(name))
@@ -20,8 +22,7 @@ Backbone.Router.execute = function (callback, args, name) {
 let appRoutes = Backbone.Router.extend({
   routes: {
     '*notFound': function () {
-      var notFound = require('./templates/404.pug');
-      $('#content').html(notFound);
+      errorPageHelper({status: 404});
       app.hideLoading();
     }
   },
