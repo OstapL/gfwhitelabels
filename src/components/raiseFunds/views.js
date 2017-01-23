@@ -252,15 +252,15 @@ module.exports = {
       this.fields.header_image_image_id = _.extend(this.fields.header_image_image_id, {
         crop: {
           control: {
-            aspectRatio: 16 / 6.5,
+            aspectRatio: 192 / 108,
           },
           cropper: {
             cssClass : 'img-crop',
             // preview: false,
           },
           auto: {
-            width: 1600,
-            height: 650,
+            width: 1920,
+            height: 1080,
           }
         },
       });
@@ -268,15 +268,15 @@ module.exports = {
       this.fields.list_image_image_id = _.extend(this.fields.list_image_image_id, {
         crop: {
           control:  {
-            aspectRatio: 16 / 9.55,
+            aspectRatio: 350 / 209,
           },
           cropper: {
             cssClass: 'img-crop',
             // preview: false,
           },
           auto: {
-            width: 540,
-            height: 320,
+            width: 350,
+            height: 209,
           }
         },
       });
@@ -284,15 +284,15 @@ module.exports = {
       this.fields.gallery_group_id = _.extend(this.fields.gallery_group_id, {
         crop: {
           control: {
-            aspectRatio: 16 / 9.55,
+            aspectRatio: 526 / 317,
           },
           cropper: {
             cssClass: 'img-crop',
             // preview: false,
           },
           auto: {
-            width: 540,
-            height: 320,
+            width: 526,
+            height: 317,
           }
         },
 
@@ -401,11 +401,6 @@ module.exports = {
             height: 800,
           },
         },
-        // imgOptions: {
-        //   aspectRatio: 1 / 1,
-        //   cssClass: 'img-profile-crop',
-        //   showPreview: true,
-        // },
       });
 
       this.model = options.campaign;
