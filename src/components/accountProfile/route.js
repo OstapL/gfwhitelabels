@@ -144,22 +144,24 @@ module.exports = Backbone.Router.extend({
       app.hideLoading();
   },
   issuerDashboard: function() {
-    app.makeCacheRequest(authServer + '/user/company').done((company) => {
+    $.when(app.user.getCompanyR(), app.user.getCampaignR()).done((company, campaign) => {
+      if(company[0]) {
+        app.user.company = company[0];
+      }
+      if(campaign[0]) {
+        app.user.campaign = campaign[0];
+      }
 
-      app.makeCacheRequest(raiseCapitalServer + '/' + company.id).done((detail) => {
-        const View = require('components/accountProfile/views.js');
-        let i = new View.issuerDashboard({
-          el: '#content',
-          model: detail,
-          company: company,
-        });
-        i.render();
-        app.hideLoading();
-      });;
+      var model = app.user.company;
+      model.campaign = app.user.campaign;
+      
+      const View = require('components/accountProfile/views.js');
+      let i = new View.issuerDashboard({
+        el: '#content',
+        model: model
+      });
+      i.render();
+      app.hideLoading();
     });
-    //
-    // require.ensure([], function() {
-    //
-    //   });
   },
 });    

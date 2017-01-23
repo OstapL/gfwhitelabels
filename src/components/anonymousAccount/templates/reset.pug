@@ -5,10 +5,11 @@ section.reset
 
     .col-lg-4.offset-lg-4
       form(data-method="PUT").form-section.login-form
+        input(type="hidden" name="domain" value=window.location.host)
         .col-lg-12
           .form-group.row.clearfix.required
             input(type="email" placeholder="E-mail" name="email")#email.form-control
-            input(type="hidden" name="url" value=window.location.host)#domain.form-control
+            input(type="hidden" name="domain" value=window.location.host)#domain.form-control
         .col-lg-12
           .row.text-sm-center
             button(type="submit").btn.btn-primary.text-uppercase Reset

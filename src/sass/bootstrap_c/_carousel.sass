@@ -2,10 +2,11 @@
 #carousel-investor
   
   .carousel-item
+    height: 100%
     &:before
       width: 100%
       background-color: $black
-      opacity: .3
+      opacity: .5
       position: absolute
       z-index: 1
       content: ''
@@ -35,12 +36,14 @@
         margin-bottom: 0
 
   .carousel-caption
-    top: 50%
-    left: 30%
-    transform: translate(-22%, -50%)
-    padding-top: 0
-    right: 0
-    bottom: 0
+    position: absolute 
+    left: 50%
+    top: 40%
+    -ms-transform: translate(-50%,-50%)
+    -webkit-transform: translate(-50%,-50%)
+    transform: translate(-50%,-50%)
+    bottom: initial
+    width: 100%
 
   @media screen and (max-width: 768px)
     .carousel-indicators

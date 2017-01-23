@@ -1,4 +1,5 @@
 -
+  var auth = require('auth/file.json');
   pug_html += app.breadcrumbs('Invest', '', [ ['Home', '/'], ['Explore', '/companies'], [values.name, '/' + values.id], ['Invest in ' + values.name, '']]);
 
 mixin fieldInput(name, attr)
@@ -246,16 +247,16 @@ mixin confirmStatement(name, attr)
                     input(
                       type="radio"
                       name="payment_information_data[bank_account_type]"
-                      value=constants.AccountType.Checking
-                      checked=(user.bank_account_type == constants.AccountType.Checking)
+                      value=auth.bank_account_type.Checking
+                      checked=(user.bank_account_type == auth.bank_account_type.Checking)
                     )
                     |  Checking
                   label
                     input(
                       type="radio"
                       name="payment_information_data[bank_account_type]"
-                      value=constants.AccountType.Savings
-                      checked=(user.bank_account_type == constants.AccountType.Savings)
+                      value=auth.bank_account_type.Savings
+                      checked=(user.bank_account_type == auth.bank_account_type.Savings)
                     )
                     |  Savings
             // IF CHECK
@@ -423,7 +424,7 @@ mixin confirmStatement(name, attr)
           .col-md-7
             .row
               span Offering deadline
-              p.font-weight-bold.m-b-0 #{values.campaign.expiration_date.toLocaleDateString()}
+              p.font-weight-bold.m-b-0 #{values.campaign.expiration_date.toLocaleDateString('en-US', {timeZone: 'UTC'})}
           .col-md-5
             .row
               span Type of security

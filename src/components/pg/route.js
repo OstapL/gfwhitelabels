@@ -10,47 +10,47 @@ module.exports = Backbone.Router.extend({
     },
 
     mainPage(id) {
-        require.ensure([], () => {
-            const model = require('components/campaign/models.js');
-            const template = require('templates/mainPage.pug');
+      require.ensure([], () => {
+        const model = require('components/campaign/models.js');
+        const template = require('templates/mainPage.pug');
+        const campaigns = new model.collection();
 
-            const campaigns = new model.collection();
-          api.makeCacheRequest(raiseCapitalServer + '?limit=6').then((data) => {
-            var html = template({
-                collection: data,
-                Urls: Urls,
-            });
-            app.cache[window.location.pathname] = html;
-            $('#content').html(html);
-            $('.carousel-test').owlCarousel({
-                  loop:true,
-                  nav:false,
-                  autoplay:true,
-                  autoplayTimeout:9000,
-                  smartSpeed:2000,
-                  responsiveClass:true,
-                  animateOut: 'fadeOuts',
-                  items:1,
-                  navText: ["<i class='fa fa-angle-left' aria-hidden='true'></i>","<i class='fa fa-angle-right' aria-hidden='true'></i>"],
-                  responsive:{
-                    0:{
-                      items:1
-                    },
-                    600:{
-                      items:1
-                    },
-                    1000:{
-                      items:1
-                    }
-                  }
-                });
-            $('body').scrollTo();
-            app.hideLoading();
+        api.makeCacheRequest(raiseCapitalServer + '?limit=6').then((data) => {
+          var html = template({
+            collection: data,
+            Urls: Urls,
           });
 
-        });
-    },
+          // app.cache[window.location.pathname] = html;
 
+          $('#content').html(html);
+
+          $('.carousel-test').owlCarousel({
+            loop: true,
+            nav: false,
+            autoplay: true,
+            autoplayTimeout: 9000,
+            smartSpeed: 2000,
+            responsiveClass: true,
+            animateOut: 'fadeOuts',
+            items: 1,
+            navText: [
+              "<i class='fa fa-angle-left' aria-hidden='true'></i>",
+              "<i class='fa fa-angle-right' aria-hidden='true'></i>"
+            ],
+            responsive: {
+              0:    {items: 1},
+              600:  {items: 1},
+              1000: {items: 1}
+            }
+          });
+
+          $('body').scrollTo();
+          app.hideLoading();
+        });
+
+      });
+    },
     pagePG: function(name) {
         require.ensure([], () => {
             let view = require('templates/' + name + '.pug');

@@ -11,14 +11,10 @@ const helpers = {
   format: formatHelper,
   fileList: require('helpers/fileList.js'),
   date: require('helpers/dateHelper.js'),
+  campaign: require('./helpers.js'),
 };
 
-const constants = {
-  AccountType: require('consts/bankAccount.json'),
-};
-
-let countries = {};
-_.each(require('helpers/countries.json'), (c) => { countries[c.code] = c.name; });
+const auth = require('auth/file.json');
 
 module.exports = {
   list: Backbone.View.extend({
@@ -62,10 +58,9 @@ module.exports = {
       'click .tabs-scroll .nav .nav-link': 'smoothScroll',
       'hide.bs.collapse .panel': 'onCollapse',
       'show.bs.collapse .panel': 'onCollapse',
-      'click .email-share': 'shareWithEmail',
-      'click .linkedin-share': 'shareOnLinkedin',
-      'click .facebook-share': 'shareOnFacebook',
-      'click .twitter-share': 'shareOnTwitter',
+      'click .linkedin-share': 'socialPopup',
+      'click .facebook-share': 'socialPopup',
+      'click .twitter-share': 'socialPopup',
       'click .see-all-risks': 'seeAllRisks',
       'click .see-all-faq': 'seeAllFaq',
       'click .show-more-members': 'readMore',
@@ -216,36 +211,10 @@ module.exports = {
       });
     },
 
-    shareWithEmail (e) {
-      event.preventDefault();
-      let text = "Check out " + (this.model.short_name || this.model.name) + "'s fundraise on GrowthFountain";
-      window.open("mailto:?subject=" + text + "&body=" + text + "%0D%0A" + window.location.href);
-    },
-
-    shareOnFacebook(event) {
-      event.preventDefault();
-      FB.ui({
-        method: 'share',
-        href: window.location.href,
-        caption: this.model.tagline,
-        description: this.model.description,
-        title: 'Check out ' + (this.model.short_name || this.model.name) + "'s fundraise on GrowthFountain.com",
-        picture: (this.model.campaign.header_image_data.url ? this.model.campaign.header_image_data.url : null),
-      }, function(response){});
-    },
-
-    shareOnLinkedin(event) {
-      event.preventDefault();
-      window.open(encodeURI('https://www.linkedin.com/shareArticle?mini=true&url=' + window.location.href +
-        '&title=' + 'Check out ' + (this.model.short_name || this.model.name) + "'s fundraise on GrowthFountain.com" +
-            '&summary=' + this.model.description +
-            '&source=Growth Fountain'),'Growth Fountain Campaign','width=605,height=545');
-    },
-
-    shareOnTwitter(event) {
-      event.preventDefault();
-      window.open(encodeURI('https://twitter.com/share?url=' + window.location.href +
-            '&text=Check out ' + (this.model.short_name || this.model.name) + "'s fundraise on @growthfountain "),'Growth Fountain Campaingn','width=550,height=420');
+    socialPopup (e) {
+      e.preventDefault();
+      var popupOpt = 'toolbar=0,status=0,width=626,height=545';
+      window.open(e.currentTarget.href, '', popupOpt);
     },
 
     showDocumentsModal(e) {
@@ -254,7 +223,6 @@ module.exports = {
     },
 
     render() {
-      const socialMediaScripts = require('helpers/shareButtonHelper.js');
       const fancybox = require('components/fancybox/js/jquery.fancybox.js');
       const fancyboxCSS = require('components/fancybox/css/jquery.fancybox.css');
 
@@ -276,9 +244,6 @@ module.exports = {
         $('.nav-tabs li').removeClass('active');
         $(this).addClass('active');
       });
-
-      // Will run social media scripts after content render
-      socialMediaScripts.facebook();
 
       setTimeout(() => {
         var stickyToggle = function(sticky, stickyWrapper, scrollElement) {
@@ -518,9 +483,9 @@ module.exports = {
       this.fields.country = {
         validate: {
           OneOf: {
-            choices: _.keys(countries),
+            choices: _.keys(auth.countries),
           },
-          choices: countries,
+          choices: auth.countries,
         }
       };
 
@@ -588,8 +553,6 @@ module.exports = {
           values: this.model,
           user: this.user,
           states: this.usaStates,
-          countries: countries,
-          constants: constants,
         })
       );
 

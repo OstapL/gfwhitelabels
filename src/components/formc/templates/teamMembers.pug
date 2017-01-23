@@ -14,7 +14,7 @@ mixin isInvited(data)
         i.fa.fa-envelope-o 
         | Invite
 
-section.create-company-team-add.container
+section.formc-team-add.container
   - var campaignId = values.campaign_id;
   +menu('formc', 'team-members')
 
@@ -24,10 +24,17 @@ section.create-company-team-add.container
     .col-lg-12.p-xs-0
       .warning-block.warning-team-add.text-lg-left
         i.fa.fa-info-circle 
-        span.warning-text Please enter all Officers, Directors and 20% Voting Shareholders.
-          p.pb10  We are required by law to run background checks on all of these individuals.  We will email them separately to collect the information required to run these checks - and you'll see the status on your Issuer Dashboard.
-          p.pb10 OFFICER means:  president, vice president, secretary, treasurer or principal financial officer, comptroller or principal accounting officer, and any person routinely performing similar functions.
-          | 20% VOTING SHAREHOLDER means: no earlier than 120 days prior to the date of this offering, please list beneficial owners of 20% or more of issuer’s outstanding voting equity securities.
+        span.warning-text Please enter all Officers, Directors and 20%+ Voting Shareholders. We are required by law to run background checks on all these individuals.
+          p.pb10  OFFICER means: president, vice president, secretary, treasurer or principal financial officer, comptroller or principal accounting officer, and any person routinely performing similar functions.
+          span.pb10 DIRECTORS means: individuals that are elected or established through incorporating documents to act as representatives of the stockholders to establish corporate management related policies and to make decisions on major company issues or 
+            u any person routinely performing similar functions
+            | &nbsp;
+            div.showPopover(data-content="If an ‘advisor’ or any individual meets any of the following, but not limited to, you may need to add them as a Director. <br> <u>Please note</u> that more disclosure will help with investor transparency.<br>Has a fiduciary Duty of Loyalty or Duty of Care to the company:<br> <ul> <li>Oversees decision making for company functions</li><li>Has the ability to exert control over management</li><li>Participates in meeting quorum requirements</li><li>Exercises voting power in the same manner as individuals on the Board of Directors</li><li>Review and approval of Board of Directors is subject to their recommendation, review or vote</li></ul>").d-inline-block
+              i.fa.fa-question-circle.team-member-question
+            | .
+          br
+          br
+          span 20%+ VOTING SHAREHOLDER means: no earlier than 120 days prior to the date of this offering, please list beneficial owners of 20% or more of your outstanding voting equity securities.
 
     form.form-section
       .col-lg-12.m-t-1.m-b-2.p-xs-0
@@ -55,17 +62,17 @@ section.create-company-team-add.container
           .col-lg-2.text-lg-right
             label Step 1
           .col-lg-10
-            a(href='/formc/' + values.id + '/team-members/director/new').btn.text-uppercase
+            a(href='/formc/' + values.id + '/team-members/officer/new').btn.text-uppercase
               i.fa.fa-plus
-              |  ADD DIRECTOR
+              |  ADD OFFICER
       .row.m-t-1
         .col-lg-12.p-xs-0
           .col-lg-2.text-lg-right
             label Step 2
           .col-lg-10 
-            a(href='/formc/' + values.id + '/team-members/officer/new').btn.text-uppercase
+            a(href='/formc/' + values.id + '/team-members/director/new').btn.text-uppercase
               i.fa.fa-plus
-              |  ADD OFFICER
+              |  ADD DIRECTOR
       .row.m-t-1
         .col-lg-12.p-xs-0
           .col-lg-2.text-lg-right

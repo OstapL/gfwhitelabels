@@ -18,55 +18,70 @@ Backbone.Router.execute = function (callback, args, name) {
 };
 
 let appRoutes = Backbone.Router.extend({
-  routes: {},
+  routes: {
+    '*notFound': function () {
+      var notFound = require('./templates/404.pug');
+      $('#content').html(notFound);
+      app.hideLoading();
+    }
+  },
+
+  execute(callback, args, name) {
+    console.debug('/src/routers.js');
+
+    const slashAtTheEnd= /\/$/;
+    const isSlashAtTheEnd = slashAtTheEnd.test(Backbone.history.fragment);
+    
+    if (isSlashAtTheEnd) {
+      let fragment = Backbone.history.fragment.replace(slashAtTheEnd, '');
+      this.navigate(fragment, {trigger: true, replace: true});
+    } else if (callback) {
+      callback.apply(this, args)
+    };
+  },
+
   initialize() {
+    const copyRoutes = (router) => {
+      _.each(router.routes, (funcName, path) => this.routes[path] = r1[funcName]);
+      return router;
+    };
+
     // add routes of components
     // ToDo
     // So messy code
+    
     let r1  = new payBackShareCalculator;
-    _.each(r1.routes, (funcName, path) => {
-      this.routes[path] = r1[funcName];
-    });
+    copyRoutes(r1);
+    
     let r2  = new capitalRaiseCalculator;
-    _.each(r2.routes, (funcName, path) => {
-      this.routes[path] = r2[funcName];
-    });
+    copyRoutes(r2);
+    
     let r3  = new campaignRoute;
-    _.each(r3.routes, (funcName, path) => {
-      this.routes[path] = r3[funcName];
-    });
+    copyRoutes(r3);
+    
     let r4  = new pageRoute;
-    _.each(r4.routes, (funcName, path) => {
-      this.routes[path] = r4[funcName];
-    });
+    copyRoutes(r4);
+    
     let r5  = new raiseFunds;
-    _.each(r5.routes, (funcName, path) => {
-      this.routes[path] = r5[funcName];
-    });
+    copyRoutes(r5);
+    
     let r6  = new anonymousAccount;
-    _.each(r6.routes, (funcName, path) => {
-      this.routes[path] = r6[funcName];
-    });
+    copyRoutes(r6);
+    
     let r7  = new accountProfile;
-    _.each(r7.routes, (funcName, path) => {
-      this.routes[path] = r7[funcName];
-    });
+    copyRoutes(r7);
+    
     let r8  = new whatMyBusinessWorthCalc;
-    _.each(r8.routes, (funcName, path) => {
-      this.routes[path] = r8[funcName];
-    });
+    copyRoutes(r8);
+    
     let r9  = new establishedBusinessCalc;
-    _.each(r9.routes, (funcName, path) => {
-      this.routes[path] = r9[funcName];
-    });
+    copyRoutes(r9);
+    
     let r10  = new formc;
-    _.each(r10.routes, (funcName, path) => {
-      this.routes[path] = r10[funcName];
-    });
+    copyRoutes(r10);
+    
     let r11  = new blog;
-    _.each(r11.routes, (funcName, path) => {
-      this.routes[path] = r11[funcName];
-    });
+    copyRoutes(r11);
   },
 
   back: function (e) {

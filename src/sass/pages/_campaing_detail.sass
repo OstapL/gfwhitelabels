@@ -5,12 +5,14 @@
 	position: absolute
 	top: 0
 	left: 0
-	background: rgba(17, 17, 17, .4)
+	background: rgba(17, 17, 17, .5)
 .js-height-parent
-	height: rem(545)
+	height: 84vh
 .border-bottom-scroll
 	box-shadow: 0px 1px 1px 0px rgba(0,0,0,0.1)
-	margin-top: rem(25)
+	padding-top: rem(25)
+	background-color: #fdfdfd
+
 .home-section
 	position: relative
 	background-repeat: no-repeat
@@ -100,7 +102,7 @@
 				margin-top: 0
 			p
 				color: $small-text
-				margin-bottom: rem(7)
+				margin-bottom: rem(3)
 
 		.btn
 			margin-top: rem(8)
@@ -113,16 +115,17 @@
 	padding: 50px
 	text-align: center
 .campaigndetail
-	margin-top: rem(85)
+	background-color: #fdfdfd
+	padding-top: rem(50)
 	h1
 		letter-spacing: rem(.75)
 		margin-bottom: 0
 		font-weight: 300
-		line-height: rem(30)
+		line-height: rem(35)
 	h2
 		letter-spacing: rem(.6)
 	p
-		margin-bottom: rem(10)
+		margin-bottom: rem(3)
 		color: $small-text
 		line-height: rem(14)
 	.sity-detail
@@ -164,8 +167,11 @@
 	.share
 		padding-top: rem(15)
 		a
-			font-size: rem(24)
-			padding: 0 rem(10)
+			i
+				font-size: rem(24)
+				margin-left: rem(15)
+			:hover
+				color: $detail-shate-hover-color
 
 
 
@@ -324,34 +330,49 @@
 			font-size: rem(11)
 .overview
 	h3
-		margin-top: 0
-	.fundraising
-		.jumbotron
-			margin-bottom: 0
-			padding-bottom: 0
+		margin-top: 0 
+	.fundraising, .perks
+		text-align: center
+		.bgc-row-top
 			background-color: $detail-overview-background //переменная находится в файле /unique/variables
-			p
-				color: $white
-				margin-bottom: rem(5)
-			h2
-				color: $white
-				letter-spacing: rem(.6)
-				margin-top: 0
-				margin-bottom: rem(25)
-			.col-lg-4
-				padding-left: rem(5)
-				padding-right: rem(5)
-.perks
-	.jumbotron
-		margin-bottom: rem(5)
+		.bgc-row-middle
+			background-color: $gallery
+			td
+				padding: 5px 0
 		h3
+			color: $white
 			margin-top: 0
-			margin-bottom: rem(20)
-			span
-				color: $perks-money-color
-		p
-			color: $small-text
 			margin-bottom: 0
+			letter-spacing: normal
+		h2
+			margin-top: 0
+			margin-bottom: 0
+			letter-spacing: normal
+		.width-50
+			width: 50%
+		@media only screen and (max-width : 480px)
+			h2
+				font-size: rem(18)
+	.perks
+		text-align: left
+		.perks-invest
+			h3
+				color: $black
+				margin-top: 0
+				margin-bottom: 0
+				span
+					color: $perks-money-color
+		.bgc-row-middle
+			td
+				padding-left: 20px
+				padding-right: 20px
+		td
+			padding-left: 20px
+			padding-right: 20px
+		.perks-intro
+			color: $small-text
+
+
 .investors-all
 	padding-bottom: rem(45)
 	h3
@@ -446,14 +467,62 @@
 		p
 			margin-bottom: rem(5)
 			margin-top: rem(10)
-.like
-	h2
-		margin-bottom: 0
-		letter-spacing: rem(1)
-	i
-		color: $campaign-like-color
-	.btn
-		margin-top: rem(50)
+.like-detail
+	background-color: $bgc-like-detail
+	h1.like-detail-text
+		font-size: rem(36)
+		color: $white
+		font-weight: bold
+		letter-spacing: normal
+		float: left
+		width: 40%
+	.like-wrap
+		top: 50%
+		left: 50%
+		-ms-transform: translate(-50%,-50%)
+		-webkit-transform: translate(-50%,-50%)
+		transform: translate(-50%,-50%)
+		position: absolute
+		width: 100%
+	.like-text-wrap
+		float: right
+		width: 60%
+		text-align: center
+		padding-left: 210px
+
+		h2
+			margin-bottom: 0
+			letter-spacing: rem(1)
+			margin-top: 0
+			color: $campaign-like-color-h2
+		.like-detail-icon
+			width: 35px
+			height: 35px
+			padding: rem(3)
+			border-radius: 100px
+			vertical-align: middle
+			background-color: rgba(255,255,255,.5)
+			display: inline-block
+			i
+				color: $campaign-like-color
+	@media only screen and (max-width : 992px)
+		h1.like-detail-text
+			width: 100%
+			text-align: center
+			margin-bottom: rem(25)
+		.like-text-wrap
+			width: 100%
+			padding-left: 0
+			text-align: center
+	@media only screen and (max-width : 460px)
+		img
+			height: 240px
+		h1.like-detail-text
+			font-size: rem(24)
+		.like-text-wrap
+			h2
+				font-size: rem(18)
+
 @media only screen and (max-width : 992px)
 	.hs-line-14
 		font-size: rem(28)

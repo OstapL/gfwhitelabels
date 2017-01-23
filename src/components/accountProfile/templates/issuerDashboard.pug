@@ -1,34 +1,36 @@
 | !{ app.breadcrumbs('issuer dashboard', '', [ ['Home', '/'], ['issuer dashboard', ''],])}
 
--
-  console.log('model');
-  console.log(values);
-  console.log('company');
-  console.log(company);
-
-  var amt_raised_in_ks = Math.round(values.campaign.amount_raised/1000).toLocaleString('en-US');
+- var amt_raised_in_ks = Math.round(values.campaign.amount_raised/1000).toLocaleString('en-US');
 
 section.issuer-dashbord-top
   .container
     .row
       .col-md-4
         .img_under_text
-          img(src=values.campaign.header_image_data[0].urls[0] alt="")
+          if values.campaign.header_image_data[0]
+            img(src=values.campaign.header_image_data[0].urls[0] alt="")
           h2.text-uppercase.dosis.m-t-0 #{values.name}
           .timer_day #{helpers.date.daysLeft(values.campaign.expiration_date)} Days Left
         .share-block.d-inline-block
+          - var mailtoLink = `mailto:?subject=Check out ${values.name}'s fundraise on GrowthFountain&body=Check out ${values.name}'s fundraise on GrowthFountain%0D%0A${window.location.origin}/${values.id}`
+
+          - var facebookLink = `https://www.facebook.com/dialog/share?app_id=${global.facebookClientId}&href=${window.location.origin}/${values.id}&description=${values.description}&locale=en_US&picture=${values.campaign.header_image_data.length ? values.campaign.header_image_data[0].urls[0] : ''}&title=${values.name}&caption=${values.campaign.caption || ''}`;
+          
+          - var twitterLink = `https://twitter.com/share?url=${window.location.origin}/${values.id}&via=growthfountain&hashtags=investment,fundraising&text=Check out `;
+          
+          - var linkedinLink = `https://www.linkedin.com/shareArticle?mini=true&url=${window.location.origin}/${values.id}&title=${values.name}&summary=${values.description}&source=Growth Fountain`;
           span.font-weight-bold Share:
           .social-dark.d-inline-block
-            a(href="#").link-1.email-share
+            a(href=mailtoLink).link-1.email-share
               i.fa.fa-envelope-o
-            a(href="#").link-1.facebook-share
+            a(href=facebookLink target="_blank").link-1.facebook-share
               i.fa.fa-facebook
-            a(href="#").link-1.twitter-share
+            a(href=twitterLink target="_blank").link-1.twitter-share
               i.fa.fa-twitter
-            a(href="#").link-1.google-plus-share
-              i(aria-hidden="true").fa.fa-google-plus
-            a(href="#").link-1.linkedin-share
+            a(href=linkedinLink target="_blank").link-1.linkedin-share
               i.fa.fa-linkedin
+            //- a(href="#" target="_blank").link-1.google-plus-share
+              i(aria-hidden="true").fa.fa-google-plus
 
       .col-md-2.col-sm-6
         a(href="").dashboard-stat
@@ -49,7 +51,7 @@ section.issuer-dashbord-top
             .number
               span(
                 data-counter="counterup"
-                data-value=values.campaign.investors) #{values.campaign.investors.toLocaleString('en-US')}
+                data-value=values.campaign.number_of_investors) #{values.number_of_investors.toLocaleString('en-US')}
             .desc Number of Investors
 
       .col-md-2.col-sm-6
@@ -60,7 +62,7 @@ section.issuer-dashbord-top
             .number
               span(
                 data-counter="counterup"
-                data-value=values.campaign.views) #{(Math.round(values.campaign.views/100)/10).toLocaleString('en-US')}
+                data-value=0) 0
             .desc Page Views
 
       .col-md-2.col-sm-6
@@ -71,7 +73,7 @@ section.issuer-dashbord-top
             .number
               span(
                 data-counter="counterup"
-                data-value=values.campaign.interactions).interactions-count #{values.campaign.interactions.toLocaleString('en-US')}
+                data-value=0).interactions-count 0
             .desc New Interactions
 
       .col-md-7.col-sm-7.p-r-0

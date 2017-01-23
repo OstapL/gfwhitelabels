@@ -6,12 +6,13 @@ global.Backbone = require('backbone');
 window.Tether = require('tether');
 global.Bootstrap = require('bootstrap/dist/js/bootstrap.js');
 global.OwlCarousel = require('owl.carousel/dist/owl.carousel.min.js');
-global.userModel = require('components/accountProfile/model.js');
+// global.userModel = require('components/accountProfile/model.js');
 global.Urls = require('./jsreverse.js');
 require('jquery-serializejson/jquery.serializejson.min.js');
 require('js/html5-dataset.js');
 const validation = require('components/validation/validation.js');
 
+const User = require('components/accountProfile/user.js');
 global.formatHelper = require('helpers/formatHelper');
 
 if (!global.Intl) {
@@ -248,7 +249,9 @@ let app = {
 
 // Что-то пахнет говнецом
 _.extend(app, Backbone.Events);
-app.user = new userModel();
+
+// app.user = new userModel();
+app.user = new User();
 global.api = require('helpers/forms.js');
 _.extend(app, api);
 global.app = app;
