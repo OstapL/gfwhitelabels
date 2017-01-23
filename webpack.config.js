@@ -25,10 +25,10 @@ module.exports = {
     },
 
     resolve: {
-        extensions: ['', '.js', '.json', '.pug', '.sass', '.scss'],
+        extensions: ['', '.js', '.pug', '.sass', '.scss'],
         modulesDirectories: [
             './src',
-            './consts',
+            './',
             './node_modules',
         ]
     },

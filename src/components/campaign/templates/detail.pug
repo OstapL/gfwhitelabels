@@ -119,15 +119,22 @@ section.campaigndetail
       .row
         .col-lg-12.share
           span.font-weight-bold.d-inline-block Share:
+          
           .d-inline-block
-            a(href=values.facebook).facebook-share
+          - var mailtoLink = 'mailto:?subject=Check out ' + values.name + '\'s fundraise on GrowthFountain&body=Check out ' + values.name + '\'s fundraise on GrowthFountain%0D%0A' + window.location.origin + '/' + values.id;
+
+          - var facebookLink = 'https://www.facebook.com/dialog/share?app_id=' + global.facebookClientId + '&href=' + window.location.origin + '/' + values.id + '&description=' + values.description + '&locale=en_US&picture=' + (values.campaign.header_image_data.length ? values.campaign.header_image_data[0].urls[0] : '') + '&title=' + values.name + '&caption=' + (values.campaign.caption || '');
+
+          - var twitterLink = 'https://twitter.com/share?url=' + window.location.origin + '/' + values.id + '&via=growthfountain&hashtags=investment,fundraising&text=Check out ';
+
+var linkedinLink = 'https://www.linkedin.com/shareArticle?mini=true&url=' + window.location.origin + '/' + values.id + '&title=' + values.name + '&summary=' + values.description + '&source=Growth Fountain';
+
+            a(href=facebookLink target="_blank").facebook-share
               i.fa.fa-facebook-square.link-1
-            a(href=values.twitter).twitter-share
+            a(href=twitterLink target="_blank").twitter-share
               i.fa.fa-twitter-square.link-1
-            a(href=values.linkedin).linkedin-share
+            a(href=linkedinLink target="_blank").linkedin-share
               i.fa.fa-linkedin-square.link-1
-            - let text = "Check out " + (values.short_name || values.name) + "'s fundraise on GrowthFountain";
-            - var mailtoLink = "mailto:?subject=" + text + "&body=" + text + "%0D%0A" + window.location.href;
             a(href=mailtoLink).email-share
               i.fa.fa-envelope-square.link-1
             //- a(href=values.company.instagram).link-1

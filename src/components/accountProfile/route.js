@@ -151,9 +151,14 @@ module.exports = Backbone.Router.extend({
       if(campaign[0]) {
         app.user.campaign = campaign[0];
       }
+
+      var model = app.user.company;
+      model.campaign = app.user.campaign;
+      
       const View = require('components/accountProfile/views.js');
       let i = new View.issuerDashboard({
         el: '#content',
+        model: model
       });
       i.render();
       app.hideLoading();

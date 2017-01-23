@@ -5,7 +5,6 @@ const helpers = {
   date: require('helpers/dateHelper.js'),
   format: require('helpers/formatHelper.js'),
   phone: require('helpers/phoneHelper.js'),
-  social: require('helpers/socialNetworksHelper.js'),
   dropzone: require('helpers/dropzoneHelpers.js'),
   yesNo: require('helpers/yesNoHelper.js'),
   fields: require('./fields.js'),
@@ -15,7 +14,7 @@ const helpers = {
 
 const moment = require('moment');
 
-const invest = require('investment/file.json');
+const invest = require('consts/financialInformation.json');
 
 const activeStatuses = [invest.investment_status.New, invest.investment_status.Approved];
 const canceledStatuses = [invest.investment_status.CanceledByClient,
@@ -541,40 +540,19 @@ module.exports = {
   issuerDashboard: Backbone.View.extend({
     template: require('./templates/issuerDashboard.pug'),
     events: {
-      'click .linkedin-share': 'shareOnLinkedIn',
-      'click .facebook-share': 'shareOnFaceBook',
-      'click .twitter-share': 'shareOnTwitter',
-      'click .google-plus-share': 'shareWithGooglePlus',
+      'click .linkedin-share': 'socialPopup',
+      'click .facebook-share': 'socialPopup',
+      'click .twitter-share': 'socialPopup',
+      'click .google-plus-share': 'socialPopup',
       'click .cancel-campaign': 'cancelCampaign',
     },
 
-    initialize(options) {
-      this.model = {}
-      this.model.id = app.user.company.id;
-      /*
-      this.model.description = this.model.description || "Something long comes from here. Something long comes from here. Something long comes from here. Something long comes from here. Something long comes from here. ";
-      this.model.thumbnail = this.model.thumbnail ||'/img/smartbe-intelligent-stroller.jpg';
-      this.model.campaign = _.extend({
-        minimum_raise: 80000,
-        amount_raised: 20000,
-        starting_date: "2016-04-04",
-        expiration_date: "2017-02-04",
-        investors: 0,
-        views: 0,
-        interactions: 4567,
-      }, this.model.campaign);
-      */
-
-      this.company = options.company;
-
-      helpers.social.init();
-    },
+    initialize(options) {},
 
     render(){
       this.$el.html(
         this.template({
           values: this.model,
-          company: this.company,
           helpers: helpers,
         })
       );
@@ -610,45 +588,10 @@ module.exports = {
       return this;
     },
 
-    shareOnLinkedIn(e) {
+    socialPopup (e) {
       e.preventDefault();
-
-      helpers.social.linkedIn.share({
-        href: 'http://growthfountain.com/' + this.model.id,
-        title: this.model.name,
-        description: this.model.description,
-      });
-    },
-
-    shareOnFaceBook(e) {
-      e.preventDefault();
-
-      helpers.social.facebook.share({
-        href: 'http://growthfountain.com/' + this.model.id,
-        caption: this.model.tagline,
-        title: this.model.name,
-        description: this.model.description,
-        picture: this.model.campaign.header_image_data[0].urls[0],
-      });
-
-    },
-
-    shareOnTwitter(e) {
-      e.preventDefault();
-
-      helpers.social.twitter.share({
-        href: 'http://growthfountain.com/' + this.model.id,
-        hashtags: ['investment', 'fundraising'],
-        text: 'Check out ',
-      });
-    },
-
-    shareWithGooglePlus(e) {
-      e.preventDefault();
-
-      helpers.social.googlePlus.share({
-        href: 'http://growthfountain.com/' + this.model.id,
-      });
+      var popupOpt = 'toolbar=0,status=0,width=626,height=436';
+      window.open(e.currentTarget.href, '', popupOpt);
     },
 
     cancelCampaign(e) {
