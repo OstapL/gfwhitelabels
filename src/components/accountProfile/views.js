@@ -14,7 +14,7 @@ const helpers = {
 
 const moment = require('moment');
 
-const invest = require('investment/file.json');
+const invest = require('consts/financialInformation.json');
 
 const activeStatuses = [invest.investment_status.New, invest.investment_status.Approved];
 const canceledStatuses = [invest.investment_status.CanceledByClient,
