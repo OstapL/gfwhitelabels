@@ -14,7 +14,7 @@ const helpers = {
   campaign: require('./helpers.js'),
 };
 
-const auth = require('auth/file.json');
+const COUNTRIES = require('consts/countries.json');
 
 module.exports = {
   list: Backbone.View.extend({
@@ -483,9 +483,9 @@ module.exports = {
       this.fields.country = {
         validate: {
           OneOf: {
-            choices: _.keys(auth.countries),
+            choices: _.keys(COUNTRIES),
           },
-          choices: auth.countries,
+          choices: COUNTRIES
         }
       };
 

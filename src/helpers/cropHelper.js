@@ -129,8 +129,21 @@ module.exports = {
 
             $modal.modal('hide');
 
-            if (typeof(callback) === 'function')
-              callback(cropper.getData(true));
+            if (typeof(callback) === 'function') {
+              const imageData = cropper.getImageData();
+              const maxWidth = imageData.naturalWidth,
+                    maxHeight = imageData.naturalHeight;
+
+              let data = _.pick(cropper.getData(true), ['x', 'y', 'width', 'height']);
+
+              data.x = data.x < 0 ? 0 : data.x;
+              data.y = data.y < 0 ? 0 : data.y;
+
+              data.width = data.width > maxWidth ? maxWidth : data.width;
+              data.height = data.height > maxHeight ? maxHeight : data.height;
+
+              callback(data);
+            }
 
             return false;
           });
