@@ -423,7 +423,7 @@ module.exports = {
       this.fields.payment_information_data.schema.routing_number = {
         required: true,
         _length: 9,
-      }
+      };
 
       this.fields.payment_information_data.schema.ssn = {
         type: 'password',
@@ -497,6 +497,7 @@ module.exports = {
           street_address_1: 'Street Address 1',
           street_address_2: 'Street Address 2',
           zip_code: 'Zip Code',
+          phone: 'Phone',
           city: 'City',
         },
         payment_information_data: {
