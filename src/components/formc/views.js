@@ -580,11 +580,17 @@ module.exports = {
     },
 
     submit(e) {
-      let data = $(e.target).closest('form').serializeJSON({ useIntKeysAsArrayIndex: true });
+      let data = $(e.target).closest('form').serializeJSON({ useIntKeysAsArrayIndex: true, parseAll: true });
       data['role'] = data['role'].reduce((a,b) => { return parseInt(a)+parseInt(b)}, 0)
       // delete data['experiences'];
       // delete data['positions'];
-      data['number_of_shares'] = 100;
+      // data['number_of_shares'] = 100;
+      if(data['voting_shareholder_choice'] == 1) {
+        data['role'] += 1;
+      }
+      if(data['individual_director_choice'] == 1) {
+        data['role'] += 2;
+      }
       api.submitAction.call(this, e, data);
     },
 

@@ -89,11 +89,68 @@ section.formc-team-members-director.container.m-b-85
             .radio-input.m-b-0.yesno
               
               label 
-                input(type="radio" name="individual_director_choice_yes" value="1" )
+                input(type="radio" name="individual_director_choice" value="1" )
                 |  Yes
               label 
-                input(type="radio" name="individual_director_choice_no" value="0" checked)
+                input(type="radio" name="individual_director_choice" value="0" checked)
                 |  No
+        - values['individual_director_choice'] = 0
+        .individual_director_choice.shown-yes(style="display:" + (values['individual_director_choice'] == 1? 'block' : 'none'))
+          .row
+            .col-xl-6.col-lg-6.form-group
+              .row
+                label.col-xl-6.col-lg-12.text-xl-right.text-lg-left.m-b-0.p-t-0.m-b-lg-1 Board Service Start Date
+                  span.color-red *
+                .col-xl-6.col-lg-12
+                  .row#board_service_start_date
+                    - 
+                      pug_html += app.fields.dateMonth('board_service_start_date', _.extend({
+                      'empty': { '': 'Choose' },
+                      'class1': 'col-xl-6 col-lg-6 col-sm-6 col-xs-6 m-d-p-r-5',
+                      'value': values.board_service_start_date,
+                      }, fields.board_service_start_date));
+                    - 
+                      pug_html += app.fields.dateYear('board_service_start_date', _.extend({
+                      'value': values.board_service_start_date,
+                      'class1': 'col-xl-6 col-lg-6 col-sm-6 col-xs-6 m-d-p-l-5',
+                      'placeholder': 'YYYY',
+                      }, fields.board_service_start_date));
+
+          - 
+            pug_html += app.fields.textLabel('principal_occupation', {
+            class1: 'col-xl-3 col-lg-12 text-lg-left text-xl-right p-t-0 m-b-0 m-b-lg-1', 
+            schema: fields.principal_occupation, 
+            value: values.principal_occupation, 
+            placeholder: 'Principal Occupation and Name of Employer',})
+          
+          - 
+            pug_html += app.fields.textLabel('employer_principal_businesss', {
+            class1: 'col-xl-3 col-lg-12 text-lg-left p-t-0 m-b-0 m-b-lg-1 text-xl-right', 
+            schema: fields.employer_principal_businesss, 
+            value: values.employer_principal_businesss, 
+            placeholder: 'Provide short description of the business',})
+          .row
+            .col-xl-6.col-lg-6
+              .row
+                label.col-xl-6.col-lg-12.text-xl-right.text-lg-left.m-b-0.p-t-0.m-b-lg-1 Employment Start Date
+                  span.color-red *
+                .col-xl-6.col-lg-12
+                  .row#employer_start_date
+
+                    - 
+                      pug_html += app.fields.dateMonth('employer_start_date', _.extend({
+                      'empty': { '': 'Choose' },
+                      'class1': 'col-xl-6 col-lg-6 col-sm-6 col-xs-6 m-d-p-r-5',
+                      'value': values.employer_start_date,
+                      'name': 'employer_start_date',
+                      }, fields.employer_start_date));
+                    - 
+                      pug_html += app.fields.dateYear('employer_start_date', _.extend({
+                      'value': values.employer_start_date,
+                      'class1': 'col-xl-6 col-lg-6 col-sm-6 col-xs-6 m-d-p-l-5',
+                      'placeholder': 'YYYY',
+                      'name': 'employer_start_date',
+                      }, fields.employer_start_date));
         .col-lg-12.p-xs-0.m-t-2
           strong Is this individual also a 20%+ Voting Shareholder?
           .form-group.form-section.m-t-1.m-b-0

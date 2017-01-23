@@ -1,6 +1,7 @@
 include ../../raiseFunds/templates/menu.pug
 
 - pug_html += app.breadcrumbs('create form c', '', [ ['Home', '/'], ['Create Form C', '/formc/' + values.id + '/introduction'], ['team members', ''], ]);
+- var helpers = require('../helpers.js');
 
 mixin isInvited(data)
   if data.is_invited == true
@@ -92,14 +93,9 @@ section.formc-team-add.container
               th(colspan="2")
           tbody
             - var requiredRoles = { 4: 'CEO/President', 8: 'Principal Financial Officer/Treasurer', 64: 'Controller/Principal Accounting Officer' };
-            - var roleCounter = 0;
-            tr
-              td(colspan="5").p-x-0.p-y-0
-                each k,v in requiredRoles
-                  - var persons = values.team_members.filter(function(el) { return (el.role ? el.role & v: false); })
-                  if persons.length > 0
-                    - roleCounter ++;
-                if roleCounter < 3
+            if helpers.haveRequiredMembers(values.team_members) != true 
+              tr
+                td(colspan="5").p-x-0.p-y-0
                   #membersMessage.warning-block.warning-team-add.team-member-no-border.text-lg-left.m-b-0
                     i.fa.fa-info-circle 
                     span.warning-text Please identify the Officers in your company responsible for the following 3 roles. Please note that, if necessary, the same person may be identified with multiple roles.
