@@ -108,8 +108,9 @@ if app.getParams().preview == '1'
 section.campaigndetail
   .container
     .col-lg-6.p-md-0
-      h1.text-xs-center.text-lg-left.m-t-0 #{ values.tagline }
-      .row.mt20
+      if values.tagline.length > 0
+        h1.text-xs-center.text-lg-left.m-t-0.m-b-1 #{ values.tagline }
+      .row
         .col-lg-4.col-xs-6
           .sity-detail
             i.fa.fa-map-marker
@@ -123,15 +124,15 @@ section.campaigndetail
           span.font-weight-bold.d-inline-block Share:
           .d-inline-block
             a(href=values.facebook).facebook-share
-              i.fa.fa-facebook.link-1
+              i.fa.fa-facebook-square.link-1
             a(href=values.twitter).twitter-share
-              i.fa.fa-twitter.link-1
+              i.fa.fa-twitter-square.link-1
             a(href=values.linkedin).linkedin-share
-              i.fa.fa-linkedin.link-1
+              i.fa.fa-linkedin-square.link-1
             - let text = "Check out " + (values.short_name || values.name) + "'s fundraise on GrowthFountain";
             - var mailtoLink = "mailto:?subject=" + text + "&body=" + text + "%0D%0A" + window.location.href;
             a(href=mailtoLink).email-share
-              i.fa.fa-envelope.link-1
+              i.fa.fa-envelope-square.link-1
             //- a(href=values.company.instagram).link-1
             //-   i.fa.fa-google-plus
     .col-lg-6.right-block-investors.p-l-0.p-sm-0
