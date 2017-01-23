@@ -42,7 +42,7 @@ module.exports = {
       url = serverUrl + url
     } 
 
-    if(type == 'POST' || type == 'PUT' || type == 'PATCH') {
+    if(type == 'POST' || type == 'PUT' || type == 'PATCH' || type == 'DELETE') {
       if (type == 'POST' || type == 'PUT') {
         data = data || {};
         data.domain = window.location.host;
