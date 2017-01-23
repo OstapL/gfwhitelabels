@@ -221,32 +221,6 @@ module.exports = {
       window.open(e.currentTarget.href, '', popupOpt);
     },
 
-    // shareOnFacebook(event) {
-    //   event.preventDefault();
-    //   FB.ui({
-    //     method: 'share',
-    //     href: window.location.href,
-    //     caption: this.model.tagline,
-    //     description: this.model.description,
-    //     title: 'Check out ' + (this.model.short_name || this.model.name) + "'s fundraise on GrowthFountain.com",
-    //     picture: (this.model.campaign.header_image_data.url ? this.model.campaign.header_image_data.url : null),
-    //   }, function(response){});
-    // },
-
-    // shareOnLinkedin(event) {
-    //   event.preventDefault();
-    //   window.open(encodeURI('https://www.linkedin.com/shareArticle?mini=true&url=' + window.location.href +
-    //     '&title=' + 'Check out ' + (this.model.short_name || this.model.name) + "'s fundraise on GrowthFountain.com" +
-    //         '&summary=' + this.model.description +
-    //         '&source=Growth Fountain'),'Growth Fountain Campaign','width=605,height=545');
-    // },
-
-    // shareOnTwitter(event) {
-    //   event.preventDefault();
-    //   window.open(encodeURI('https://twitter.com/share?url=' + window.location.href +
-    //         '&text=Check out ' + (this.model.short_name || this.model.name) + "'s fundraise on @growthfountain "),'Growth Fountain Campaingn','width=550,height=420');
-    // },
-
     showDocumentsModal(e) {
       e.preventDefault();
       helpers.fileList.show(this.companyDocsData);
