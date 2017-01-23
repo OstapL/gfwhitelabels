@@ -62,9 +62,9 @@ module.exports = {
       'click .tabs-scroll .nav .nav-link': 'smoothScroll',
       'hide.bs.collapse .panel': 'onCollapse',
       'show.bs.collapse .panel': 'onCollapse',
-      'click .linkedin-share': 'shareOnLinkedin',
-      'click .facebook-share': 'shareOnFacebook',
-      'click .twitter-share': 'shareOnTwitter',
+      'click .linkedin-share': 'socialPopup',
+      'click .facebook-share': 'socialPopup',
+      'click .twitter-share': 'socialPopup',
       'click .see-all-risks': 'seeAllRisks',
       'click .see-all-faq': 'seeAllFaq',
       'click .show-more-members': 'readMore',
@@ -215,31 +215,37 @@ module.exports = {
       });
     },
 
-    shareOnFacebook(event) {
-      event.preventDefault();
-      FB.ui({
-        method: 'share',
-        href: window.location.href,
-        caption: this.model.tagline,
-        description: this.model.description,
-        title: 'Check out ' + (this.model.short_name || this.model.name) + "'s fundraise on GrowthFountain.com",
-        picture: (this.model.campaign.header_image_data.url ? this.model.campaign.header_image_data.url : null),
-      }, function(response){});
+    socialPopup (e) {
+      e.preventDefault();
+      var popupOpt = 'toolbar=0,status=0,width=626,height=545';
+      window.open(e.currentTarget.href, '', popupOpt);
     },
 
-    shareOnLinkedin(event) {
-      event.preventDefault();
-      window.open(encodeURI('https://www.linkedin.com/shareArticle?mini=true&url=' + window.location.href +
-        '&title=' + 'Check out ' + (this.model.short_name || this.model.name) + "'s fundraise on GrowthFountain.com" +
-            '&summary=' + this.model.description +
-            '&source=Growth Fountain'),'Growth Fountain Campaign','width=605,height=545');
-    },
+    // shareOnFacebook(event) {
+    //   event.preventDefault();
+    //   FB.ui({
+    //     method: 'share',
+    //     href: window.location.href,
+    //     caption: this.model.tagline,
+    //     description: this.model.description,
+    //     title: 'Check out ' + (this.model.short_name || this.model.name) + "'s fundraise on GrowthFountain.com",
+    //     picture: (this.model.campaign.header_image_data.url ? this.model.campaign.header_image_data.url : null),
+    //   }, function(response){});
+    // },
 
-    shareOnTwitter(event) {
-      event.preventDefault();
-      window.open(encodeURI('https://twitter.com/share?url=' + window.location.href +
-            '&text=Check out ' + (this.model.short_name || this.model.name) + "'s fundraise on @growthfountain "),'Growth Fountain Campaingn','width=550,height=420');
-    },
+    // shareOnLinkedin(event) {
+    //   event.preventDefault();
+    //   window.open(encodeURI('https://www.linkedin.com/shareArticle?mini=true&url=' + window.location.href +
+    //     '&title=' + 'Check out ' + (this.model.short_name || this.model.name) + "'s fundraise on GrowthFountain.com" +
+    //         '&summary=' + this.model.description +
+    //         '&source=Growth Fountain'),'Growth Fountain Campaign','width=605,height=545');
+    // },
+
+    // shareOnTwitter(event) {
+    //   event.preventDefault();
+    //   window.open(encodeURI('https://twitter.com/share?url=' + window.location.href +
+    //         '&text=Check out ' + (this.model.short_name || this.model.name) + "'s fundraise on @growthfountain "),'Growth Fountain Campaingn','width=550,height=420');
+    // },
 
     showDocumentsModal(e) {
       e.preventDefault();
@@ -247,7 +253,6 @@ module.exports = {
     },
 
     render() {
-      const socialMediaScripts = require('helpers/shareButtonHelper.js');
       const fancybox = require('components/fancybox/js/jquery.fancybox.js');
       const fancyboxCSS = require('components/fancybox/css/jquery.fancybox.css');
 
@@ -269,9 +274,6 @@ module.exports = {
         $('.nav-tabs li').removeClass('active');
         $(this).addClass('active');
       });
-
-      // Will run social media scripts after content render
-      socialMediaScripts.facebook();
 
       setTimeout(() => {
         var stickyToggle = function(sticky, stickyWrapper, scrollElement) {
