@@ -14,12 +14,7 @@ const helpers = {
   campaign: require('./helpers.js'),
 };
 
-const CONST = {
-  auth: require('auth/file.json'),
-};
-
-let countries = {};
-_.each(require('helpers/countries.json'), (c) => { countries[c.code] = c.name; });
+const auth = require('auth/file.json');
 
 module.exports = {
   list: Backbone.View.extend({
@@ -512,9 +507,9 @@ module.exports = {
       this.fields.country = {
         validate: {
           OneOf: {
-            choices: _.keys(countries),
+            choices: _.keys(auth.countries),
           },
-          choices: countries,
+          choices: auth.countries,
         }
       };
 
@@ -582,8 +577,6 @@ module.exports = {
           values: this.model,
           user: this.user,
           states: this.usaStates,
-          countries: countries,
-          constants: CONST,
         })
       );
 

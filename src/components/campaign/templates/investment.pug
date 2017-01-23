@@ -1,4 +1,5 @@
 -
+  var auth = require('auth/file.json');
   pug_html += app.breadcrumbs('Invest', '', [ ['Home', '/'], ['Explore', '/companies'], [values.name, '/' + values.id], ['Invest in ' + values.name, '']]);
 
 mixin fieldInput(name, attr)
@@ -246,16 +247,16 @@ mixin confirmStatement(name, attr)
                     input(
                       type="radio"
                       name="payment_information_data[bank_account_type]"
-                      value=constants.auth.bank_account_type.Checking
-                      checked=(user.bank_account_type == constants.auth.bank_account_type.Checking)
+                      value=auth.bank_account_type.Checking
+                      checked=(user.bank_account_type == auth.bank_account_type.Checking)
                     )
                     |  Checking
                   label
                     input(
                       type="radio"
                       name="payment_information_data[bank_account_type]"
-                      value=constants.auth.bank_account_type.Savings
-                      checked=(user.bank_account_type == constants.auth.bank_account_type.Savings)
+                      value=auth.bank_account_type.Savings
+                      checked=(user.bank_account_type == auth.bank_account_type.Savings)
                     )
                     |  Savings
             // IF CHECK

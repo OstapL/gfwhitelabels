@@ -8,7 +8,8 @@ class CountryBlock {
     this.usBlock = require('./templates/snippets/us.pug');
     this.nonUsBlock = require('./templates/snippets/nonUs.pug');
     let country = this.view.fields.country;
-    country.validate.choices = require('consts/countries.json');
+    const auth = require('auth/file.json');
+    country.validate.choices = auth.countries;
     return this;
   }
 

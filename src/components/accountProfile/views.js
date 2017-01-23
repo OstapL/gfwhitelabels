@@ -15,14 +15,11 @@ const helpers = {
 
 const moment = require('moment');
 
-const CONST = {
-  auth: require('auth/file.json'),
-  investment: require('investment/file.json'),
-};
+const invest = require('investment/file.json');
 
-const activeStatuses = [CONST.investment.investment_status.New, CONST.investment.investment_status.Approved];
-const canceledStatuses = [CONST.investment.investment_status.CanceledByClient,
-    CONST.investment.investment_status.CanceledByBank, CONST.investment.investment_status.CanceledByInquisitor];
+const activeStatuses = [invest.investment_status.New, invest.investment_status.Approved];
+const canceledStatuses = [invest.investment_status.CanceledByClient,
+    invest.investment_status.CanceledByBank, invest.investment_status.CanceledByInquisitor];
 
 import 'bootstrap-slider/dist/bootstrap-slider'
 import 'bootstrap-slider/dist/css/bootstrap-slider.css'
@@ -181,7 +178,6 @@ module.exports = {
           company: app.user.get('company'),
           fields: this.fields,
           states: this.usaStates,
-          constants: CONST,
         })
       );
 
