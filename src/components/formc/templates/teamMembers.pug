@@ -108,7 +108,7 @@ section.create-company-team-add.container
                     a(href="/formc/" + values.id + "/team-members/officer/" + person.user_id).link-1
                       i.fa.fa-pencil-square-o
                   td.text-xl-center
-                    a(href="#" data-id=person.user_id data-role=roles[k]).link-1.delete-member
+                    a(href="#" data-id=person.user_id data-role=v).link-1.delete-member
                       i.fa.fa-times
                   - roleCounter ++;
               else
@@ -131,7 +131,7 @@ section.create-company-team-add.container
                     a(href="/formc/" + values.id + "/team-members/director/" + v.user_id).link-1
                       i.fa.fa-pencil-square-o
                   td.text-xl-center
-                    a(href="#" data-id=v.user_id data-role=v.role).link-1.delete-member
+                    a(href="#" data-id=v.user_id data-role=2).link-1.delete-member
                       i.fa.fa-times
             each v,k in values.team_members
               if (v.role & 1) == 1
@@ -144,7 +144,7 @@ section.create-company-team-add.container
                     a(href="/formc/" + values.id + "/team-members/shareholder/" + v.user_id).link-1
                       i.fa.fa-pencil-square-o
                   td.text-xl-center
-                    a(href="#" data-id=v.user_id data-role=v.role).link-1.delete-member
+                    a(href="#" data-id=v.user_id data-role=1).link-1.delete-member
                       i.fa.fa-times
                 
 

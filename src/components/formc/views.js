@@ -344,7 +344,7 @@ module.exports = {
   }, menuHelper.methods, yesNoHelper.methods, leavingConfirmationHelper.methods)),
 
   teamMembers: Backbone.View.extend(_.extend({
-    urlRoot: formcServer + '/:id/team-members/employers',
+    urlRoot: formcServer + '/:id/team-members',
     events: _.extend({
       'click #submitForm': api.submitAction,
       'click .inviteAction': 'repeatInvitation',
@@ -383,9 +383,9 @@ module.exports = {
 
       if (confirm('Are you sure you would like to delete this team member?')) {
         api.makeRequest(
-          this.urlRoot.replace(':id', this.model.id) + '/delete',
-          'PUT',
-          {'user_id': userId}
+          this.urlRoot.replace(':id', this.model.id) +  '/' + userId,
+          'DELETE',
+          {'role': e.currentTarget.dataset.role }
         ).
         then((data) => {
           let index = this.model.team_members.findIndex((el) => { return el.user_id == userId });
@@ -410,7 +410,7 @@ module.exports = {
     updateEmployees(e) {
       e.preventDefault();
       api.makeRequest(
-        this.urlRoot.replace(':id', this.model.id),
+        this.urlRoot.replace(':id', this.model.id) + '/employers',
         'PUT',
         {
           'full_time_employers': this.el.querySelector('#full_time_employers').value,
