@@ -1,6 +1,3 @@
-- var percentage_raised = formatHelper.calculateRaisedPercentage(values.campaign.minimum_raise, values.campaign.amount_raised)
-- var formcLinks = require('./../helpers.js').formcLinks
-
 section(style="background-image: url(" + (values.campaign.header_image_data && values.campaign.header_image_data[0] ? values.campaign.header_image_data[0].urls[0] : '/img/default.png') + ")")#home.home-section.bg-dark-alfa-70.parallax-2.fixed-height-small.hide-bg-fixed
   .js-height-parent.container-fluid
     .home-content
@@ -43,7 +40,7 @@ section(style="background-image: url(" + (values.campaign.header_image_data && v
               h2.font-weight-bold #{ values.campaign.percentage_revenue }%
           .col-lg-2.p-r-0.p-sm-0.text-xs-center.text-lg-left
             p Days Left
-            h2.font-weight-bold #{ helpers.date.daysLeft(values.campaign.expiration_date) }
+            h2.font-weight-bold #{ helpers.campaign.daysLeft(values.campaign.expiration_date) }
           .col-lg-4.p-sm-0.col-md-12.col-xs-12.pull-lg-right.text-xs-center
             a(href="/" + values.id + "/invest").btn.btn-primary.text-uppercase.pull-lg-right Invest
 
@@ -146,6 +143,9 @@ section.campaigndetail
     .col-lg-6.right-block-investors.p-l-0.p-sm-0
       .progress_bar_container
         //- span Less than 20% Funded
+        -
+          var percentage_raised = helpers.campaign.percentage(values.campaign.amount_raised, values.campaign.minimum_raise);
+          percentage_raised = percentage_raised < 20 ? 20 : percentage_raised;
         span #{ percentage_raised <= 20 ? 'Less than 20' : percentage_raised }% Funded
         span.pull-right Committed 
           span.committed #{ formatHelper.formatPrice(values.campaign.amount_raised)}
@@ -461,7 +461,7 @@ section
         .col-xl-8.offset-xl-2.col-lg-10.offset-lg-1.col-sm-12.offset-sm-0
           .col-lg-4.text-xs-center
             p Official filing on SEC.gov
-            a(href=formcLinks[values.id] target="_blank")
+            a(href=helpers.campaign.formcLinks[values.id] target="_blank")
               img(src="/img/lrg_US_Department_of_State35.gif").img-document.d-inline-block
               h3.d-inline-block  Form C
           .col-lg-4.text-xs-center

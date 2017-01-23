@@ -11,14 +11,10 @@ const helpers = {
   format: formatHelper,
   fileList: require('helpers/fileList.js'),
   date: require('helpers/dateHelper.js'),
+  campaign: require('./helpers.js'),
 };
 
-const constants = {
-  AccountType: require('consts/bankAccount.json'),
-};
-
-let countries = {};
-_.each(require('helpers/countries.json'), (c) => { countries[c.code] = c.name; });
+const auth = require('auth/file.json');
 
 module.exports = {
   list: Backbone.View.extend({
@@ -487,9 +483,9 @@ module.exports = {
       this.fields.country = {
         validate: {
           OneOf: {
-            choices: _.keys(countries),
+            choices: _.keys(auth.countries),
           },
-          choices: countries,
+          choices: auth.countries,
         }
       };
 
@@ -557,8 +553,6 @@ module.exports = {
           values: this.model,
           user: this.user,
           states: this.usaStates,
-          countries: countries,
-          constants: constants,
         })
       );
 

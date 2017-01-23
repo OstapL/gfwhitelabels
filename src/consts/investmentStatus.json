@@ -1,7 +1,0 @@
-{
-   "New": 0,
-   "Approved": 1,
-   "CanceledByClient": 2,
-   "CanceledByBank": 3,
-   "CanceledByInquisitor": 4
- }

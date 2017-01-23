@@ -9,21 +9,16 @@ const helpers = {
   yesNo: require('helpers/yesNoHelper.js'),
   fields: require('./fields.js'),
   fileList: require('helpers/fileList.js'),
+  campaign: require('components/campaign/helpers.js'),
 };
 
 const moment = require('moment');
 
-const constants = {
-  AccountType: require('consts/bankAccount.json'),
-  InvestmentStatus: require('consts/investmentStatus.json'),
-};
+const invest = require('investment/file.json');
 
-const activeStatuses = [constants.InvestmentStatus.New, constants.InvestmentStatus.Approved];
-const canceledStatuses = [constants.InvestmentStatus.CanceledByClient,
-    constants.InvestmentStatus.CanceledByBank, constants.InvestmentStatus.CanceledByInquisitor];
-
-let countries = {};
-_.each(require('helpers/countries.json'), (c) => { countries[c.code] = c.name; });
+const activeStatuses = [invest.investment_status.New, invest.investment_status.Approved];
+const canceledStatuses = [invest.investment_status.CanceledByClient,
+    invest.investment_status.CanceledByBank, invest.investment_status.CanceledByInquisitor];
 
 import 'bootstrap-slider/dist/bootstrap-slider'
 import 'bootstrap-slider/dist/css/bootstrap-slider.css'
@@ -182,7 +177,6 @@ module.exports = {
           company: app.user.get('company'),
           fields: this.fields,
           states: this.usaStates,
-          constants: constants,
         })
       );
 
