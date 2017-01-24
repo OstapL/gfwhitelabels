@@ -344,7 +344,7 @@ module.exports = {
   }, menuHelper.methods, yesNoHelper.methods, leavingConfirmationHelper.methods)),
 
   teamMembers: Backbone.View.extend(_.extend({
-    urlRoot: formcServer + '/:id/team-members',
+    urlRoot: formcServer + '/:id/team-members/employers',
     events: _.extend({
       'click #submitForm': api.submitAction,
       'click .inviteAction': 'repeatInvitation',
@@ -366,6 +366,7 @@ module.exports = {
       this.fields = options.fields;
       this.fields.full_time_employers = { label: 'Full Time Employees' };
       this.fields.part_time_employers = { label: 'Part Time Employees' };
+      this.urlRoot = this.urlRoot.replace(':id', this.model.id);
     },
 
     _success(data, newData) {
@@ -383,7 +384,7 @@ module.exports = {
 
       if (confirm('Are you sure you would like to delete this team member?')) {
         api.makeRequest(
-          this.urlRoot.replace(':id', this.model.id) +  '/' + userId,
+          this.urlRoot.replace('employers', '') +  '/' + userId,
           'DELETE',
           {'role': e.currentTarget.dataset.role }
         ).
@@ -410,7 +411,7 @@ module.exports = {
     updateEmployees(e) {
       e.preventDefault();
       api.makeRequest(
-        this.urlRoot.replace(':id', this.model.id) + '/employers',
+        this.urlRoot,
         'PUT',
         {
           'full_time_employers': this.el.querySelector('#full_time_employers').value,
@@ -581,15 +582,17 @@ module.exports = {
 
     submit(e) {
       let data = $(e.target).closest('form').serializeJSON({ useIntKeysAsArrayIndex: true, parseAll: true });
-      data['role'] = data['role'].reduce((a,b) => { return parseInt(a)+parseInt(b)}, 0)
+      if(data.role) { 
+        data.role = data.role.reduce((a,b) => { return parseInt(a)+parseInt(b)}, 0)
+      }
       // delete data['experiences'];
       // delete data['positions'];
       // data['number_of_shares'] = 100;
-      if(data['voting_shareholder_choice'] == 1) {
-        data['role'] += 1;
+      if(data.voting_shareholder_choice == 1) {
+        data.role += 1;
       }
-      if(data['individual_director_choice'] == 1) {
-        data['role'] += 2;
+      if(data.individual_director_choice == 1) {
+        data.role += 2;
       }
       api.submitAction.call(this, e, data);
     },
@@ -599,7 +602,7 @@ module.exports = {
 
   relatedParties: Backbone.View.extend(_.extend({
     el: '#content',
-    urlRoot: formcServer + '/:id' + '/related-parties',
+    urlRoot: formcServer + '/:id/related-parties',
 
     events: _.extend({
       'submit form': 'submit',

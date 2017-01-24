@@ -121,14 +121,17 @@ section.formc-team-members-director.container.m-b-85
             class1: 'col-xl-3 col-lg-12 text-lg-left text-xl-right p-t-0 m-b-0 m-b-lg-1', 
             schema: fields.principal_occupation, 
             value: values.principal_occupation, 
-            placeholder: 'Principal Occupation and Name of Employer',})
+            placeholder: 'Principal Occupation and Name of Employer',}, 
+            fields.principal_occupation)
           
           - 
             pug_html += app.fields.textLabel('employer_principal_businesss', {
             class1: 'col-xl-3 col-lg-12 text-lg-left p-t-0 m-b-0 m-b-lg-1 text-xl-right', 
             schema: fields.employer_principal_businesss, 
             value: values.employer_principal_businesss, 
-            placeholder: 'Provide short description of the business',})
+            placeholder: 'Provide short description of the business',},
+            fields.employer_principal_businesss)
+            )
           .row
             .col-xl-6.col-lg-6
               .row
