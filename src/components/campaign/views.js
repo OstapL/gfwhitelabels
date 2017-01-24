@@ -393,6 +393,7 @@ module.exports = {
       this.fields = options.fields;
       this.user = options.user;
       this.user.account_number_re = this.user.account_number;
+      this.user.routing_number_re = this.user.routing_number;
       this.fields.payment_information_type.validate.choices = {
         0: 'Echeck (ACH)',
         1: 'Check',
@@ -429,6 +430,23 @@ module.exports = {
       this.fields.payment_information_data.schema.routing_number = {
         required: true,
         _length: 9,
+        dependies: ['routing_number_re'],
+        fn: function(name, value, attr, data, schema) {
+          if (value != this.getData(data, 'payment_information_data.routing_number_re')) {
+            throw "Routing number fields don't match";
+          }
+        },
+      };
+
+      this.fields.payment_information_data.schema.routing_number_re = {
+        required: true,
+        _length: 9,
+        dependies: ['routing_number'],
+        fn: function(name, value, attr, data, schema) {
+          if (value != this.getData(data, 'payment_information_data.routing_number')) {
+            throw "Routing number fields don't match";
+          }
+        },
       };
 
       this.fields.payment_information_data.schema.ssn = {
@@ -511,6 +529,7 @@ module.exports = {
           account_number: 'Account Number',
           account_number_re: 'Account Number Again',
           routing_number: 'Routing Number',
+          routing_number_re: 'Routing Number Again',
           ssn: 'Social Security number (SSN) or Tax ID (ITIN/EIN)',
           ssn_re: 'Re-enter',
         },
