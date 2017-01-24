@@ -252,7 +252,7 @@ module.exports = {
       this.fields.header_image_image_id = _.extend(this.fields.header_image_image_id, {
         crop: {
           control: {
-            aspectRatio: 1600 / 735,
+            aspectRatio: 1600/960,
           },
           cropper: {
             cssClass : 'img-crop',
@@ -260,7 +260,7 @@ module.exports = {
           },
           auto: {
             width: 1600,
-            height: 735,
+            height: 960
           }
         },
       });
