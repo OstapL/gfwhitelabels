@@ -108,7 +108,24 @@ module.exports = {
       this.fields.routing_number = {
         required: true,
         _length: 9,
-      }
+        dependies: ['routing_number_re'],
+        fn: function(name, value, attr, data, computed) {
+          if (value != data.routing_number_re) {
+            throw "Routing number fields don't match";
+          }
+        },
+      };
+
+      this.fields.routing_number_re = {
+        required: true,
+        _lenngth: 9,
+        dependies: ['routing_number'],
+        fn: function(name, value, attr, data, computed) {
+          if (value != data.routing_number) {
+            throw "Routing number fields don't match";
+          }
+        },
+      };
 
       this.fields.ssn = {
         type: 'password',
@@ -145,6 +162,7 @@ module.exports = {
         account_number: 'Account Number',
         account_number_re: 'Re-Enter Account Number',
         routing_number: 'Routing Number',
+        routing_number_re: "Re-Enter Routing Number",
         annual_income: 'My Annual Income',
         net_worth: 'My Net Worth',
         twitter: 'Your Twitter link',
@@ -383,10 +401,27 @@ module.exports = {
     },
 
     openAgreement(e) {
+      e.preventDefault();
+      const PARTICIPATION_AGREEMENT_ID = 2;
       const objectId = e.target.dataset.objectId;
       const securityType = e.target.dataset.securityType;
       const subscriptionAgreementLink = userDocuments.getUserDocumentsByType(objectId, securityType);
-      e.target.href = subscriptionAgreementLink;
+      const participationAgreementLink = userDocuments.getUserDocumentsByType(objectId, PARTICIPATION_AGREEMENT_ID);
+
+      const data = {
+        title: 'Agreements',
+        files: [{
+          mime: 'application/pdf',
+          name: 'Subscription Agreement.pdf',
+          urls: [subscriptionAgreementLink]
+        }, {
+          mime: 'application/pdf',
+          name: 'Participation Agreement.pdf',
+          urls: [participationAgreementLink]
+        }],
+      };
+
+      helpers.fileList.show(data);
     },
 
     _findInvestment(id) {
