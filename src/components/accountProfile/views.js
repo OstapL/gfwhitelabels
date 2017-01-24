@@ -108,7 +108,24 @@ module.exports = {
       this.fields.routing_number = {
         required: true,
         _length: 9,
-      }
+        dependies: ['routing_number_re'],
+        fn: function(name, value, attr, data, computed) {
+          if (value != data.routing_number_re) {
+            throw "Routing number fields don't match";
+          }
+        },
+      };
+
+      this.fields.routing_number_re = {
+        required: true,
+        _lenngth: 9,
+        dependies: ['routing_number'],
+        fn: function(name, value, attr, data, computed) {
+          if (value != data.routing_number) {
+            throw "Routing number fields don't match";
+          }
+        },
+      };
 
       this.fields.ssn = {
         type: 'password',
@@ -145,6 +162,7 @@ module.exports = {
         account_number: 'Account Number',
         account_number_re: 'Re-Enter Account Number',
         routing_number: 'Routing Number',
+        routing_number_re: "Re-Enter Routing Number",
         annual_income: 'My Annual Income',
         net_worth: 'My Net Worth',
         twitter: 'Your Twitter link',
