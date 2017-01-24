@@ -88,7 +88,7 @@ module.exports = {
         dependies: ['account_number_re'],
         fn: function(name, value, attr, data, schema) {
           if (value != this.getData(data, 'account_number_re')) {
-            throw "Account number fields don't match";
+            throw "Account number fields don't match.";
           }
         },
       };
@@ -100,7 +100,7 @@ module.exports = {
         dependies: ['account_number'],
         fn: function(name, value, attr, data, schema) {
           if (value != this.getData(data, 'account_number')) {
-            throw "Account number fields don't match";
+            throw "Account number fields don't match.";
           }
         },
       };
@@ -108,7 +108,24 @@ module.exports = {
       this.fields.routing_number = {
         required: true,
         _length: 9,
-      }
+        dependies: ['routing_number_re'],
+        fn: function(name, value, attr, data, computed) {
+          if (value != data.routing_number_re) {
+            throw "Routing number fields don't match.";
+          }
+        },
+      };
+
+      this.fields.routing_number_re = {
+        required: true,
+        _length: 9,
+        dependies: ['routing_number'],
+        fn: function(name, value, attr, data, computed) {
+          if (value != data.routing_number) {
+            throw "Routing number fields don't match.";
+          }
+        },
+      };
 
       this.fields.ssn = {
         type: 'password',
@@ -117,7 +134,7 @@ module.exports = {
         dependies: ['ssn_re'],
         fn: function(name, value, attr, data, computed) {
           if (value != data.ssn_re) {
-            throw "Social security fields don't match";
+            throw "Social security fields don't match.";
           }
         },
       };
@@ -129,7 +146,7 @@ module.exports = {
         dependies: ['ssn'],
         fn: function(name, value, attr, data, computed) {
           if (value != data.ssn) {
-            throw "Social security fields don't match";
+            throw "Social security fields don't match.";
           }
         },
       };
@@ -145,6 +162,7 @@ module.exports = {
         account_number: 'Account Number',
         account_number_re: 'Re-Enter Account Number',
         routing_number: 'Routing Number',
+        routing_number_re: "Re-Enter Routing Number",
         annual_income: 'My Annual Income',
         net_worth: 'My Net Worth',
         twitter: 'Your Twitter link',
@@ -383,10 +401,27 @@ module.exports = {
     },
 
     openAgreement(e) {
+      e.preventDefault();
+      const PARTICIPATION_AGREEMENT_ID = 2;
       const objectId = e.target.dataset.objectId;
       const securityType = e.target.dataset.securityType;
       const subscriptionAgreementLink = userDocuments.getUserDocumentsByType(objectId, securityType);
-      e.target.href = subscriptionAgreementLink;
+      const participationAgreementLink = userDocuments.getUserDocumentsByType(objectId, PARTICIPATION_AGREEMENT_ID);
+
+      const data = {
+        title: 'Agreements',
+        files: [{
+          mime: 'application/pdf',
+          name: 'Subscription Agreement.pdf',
+          urls: [subscriptionAgreementLink]
+        }, {
+          mime: 'application/pdf',
+          name: 'Participation Agreement.pdf',
+          urls: [participationAgreementLink]
+        }],
+      };
+
+      helpers.fileList.show(data);
     },
 
     _findInvestment(id) {
@@ -540,6 +575,7 @@ module.exports = {
   issuerDashboard: Backbone.View.extend({
     template: require('./templates/issuerDashboard.pug'),
     events: {
+      'click .email-share': 'socialPopup',
       'click .linkedin-share': 'socialPopup',
       'click .facebook-share': 'socialPopup',
       'click .twitter-share': 'socialPopup',
@@ -590,8 +626,13 @@ module.exports = {
 
     socialPopup (e) {
       e.preventDefault();
-      var popupOpt = 'toolbar=0,status=0,width=626,height=436';
-      window.open(e.currentTarget.href, '', popupOpt);
+      var popupOpt = e.currentTarget.dataset.popupOpt || 'toolbar=0,status=0,left=45%,top=45%,width=626,height=436';
+      var windowChild = window.open(e.currentTarget.href, '', popupOpt);
+   
+      if (e.currentTarget.dataset.close) {
+        let closeScript = "<script>setTimeout(window.close.bind(window), 400);</script>";
+        windowChild.document.write(closeScript);
+      }
     },
 
     cancelCampaign(e) {

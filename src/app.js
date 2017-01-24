@@ -243,15 +243,22 @@ let app = {
       return file;
 
     return `${bucketServer}/${file}`;
-  }
+  },
+
+  breadcrumbs (title, subtitle, data) {
+    const template = require('templates/breadcrumbs.pug');
+    return template({
+      title: title,
+      subtitle: subtitle,
+      data: data
+    });
+  },
 
 };
 
 // Что-то пахнет говнецом
 _.extend(app, Backbone.Events);
 
-// app.user = new userModel();
-app.user = new User();
 global.api = require('helpers/forms.js');
 _.extend(app, api);
 global.app = app;
@@ -259,18 +266,14 @@ global.app = app;
 // app routers
 app.routers = require('routers');
 app.fields = require('fields');
+
+// app.user = new userModel();
+app.user = new User();
 app.user.load();
 app.trigger('userReady');
+
 app.runGoogleAnalytics(global.googleAnalyticsId);
 
-app.breadcrumbs = function(title, subtitle, data) {
-  const template = require('templates/breadcrumbs.pug');
-  return template({
-    title: title,
-    subtitle: subtitle,
-    data: data
-  });
-}
 
 const popoverTemplate = '<div class="popover  divPopover"  role="tooltip"><span class="popover-arrow"></span> <h3 class="popover-title"></h3> <span class="icon-popover"><i class="fa fa-info-circle" aria-hidden="true"></i></span> <span class="popover-content"> XXX </span></div>';
 
