@@ -63,10 +63,11 @@ module.exports = {
 
     const promise = $.ajax(params);
 
-    promise.always( (error) => {
+    promise.always( (xhr, status) => {
+      if (status === 'success') return;
       errorPageHelper({
-        status: error.status,
-        statusText: error.statusText,
+        status: xhr.status,
+        statusText: xhr.statusText,
       });
       app.hideLoading();
     } );
