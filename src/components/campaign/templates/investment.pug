@@ -240,6 +240,15 @@ mixin confirmStatement(name, attr)
                   -1, {
                   },
                   fields.payment_information_data.schema.routing_number);
+              -
+                pug_html += app.fields.nestedTextLabel(
+                  'payment_information_data',
+                  'routing_number_re',
+                  user,
+                  -1, {
+                  },
+                fields.payment_information_data.schema.routing_number_re);
+
               .form-group.row.radio.check-fields
                 label.text-md-right.col-lg-3 Account Type
                 #payment_information_data__bank_account_type.col-lg-9.radio-input
