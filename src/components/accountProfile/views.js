@@ -88,7 +88,7 @@ module.exports = {
         dependies: ['account_number_re'],
         fn: function(name, value, attr, data, schema) {
           if (value != this.getData(data, 'account_number_re')) {
-            throw "Account number fields don't match";
+            throw "Account number fields don't match.";
           }
         },
       };
@@ -100,7 +100,7 @@ module.exports = {
         dependies: ['account_number'],
         fn: function(name, value, attr, data, schema) {
           if (value != this.getData(data, 'account_number')) {
-            throw "Account number fields don't match";
+            throw "Account number fields don't match.";
           }
         },
       };
@@ -111,18 +111,18 @@ module.exports = {
         dependies: ['routing_number_re'],
         fn: function(name, value, attr, data, computed) {
           if (value != data.routing_number_re) {
-            throw "Routing number fields don't match";
+            throw "Routing number fields don't match.";
           }
         },
       };
 
       this.fields.routing_number_re = {
         required: true,
-        _lenngth: 9,
+        _length: 9,
         dependies: ['routing_number'],
         fn: function(name, value, attr, data, computed) {
           if (value != data.routing_number) {
-            throw "Routing number fields don't match";
+            throw "Routing number fields don't match.";
           }
         },
       };
@@ -134,7 +134,7 @@ module.exports = {
         dependies: ['ssn_re'],
         fn: function(name, value, attr, data, computed) {
           if (value != data.ssn_re) {
-            throw "Social security fields don't match";
+            throw "Social security fields don't match.";
           }
         },
       };
@@ -146,7 +146,7 @@ module.exports = {
         dependies: ['ssn'],
         fn: function(name, value, attr, data, computed) {
           if (value != data.ssn) {
-            throw "Social security fields don't match";
+            throw "Social security fields don't match.";
           }
         },
       };
