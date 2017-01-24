@@ -132,6 +132,7 @@ mixin confirmStatement(name, attr)
                     'class': 'col-lg-4-5 col-md-12 ',
                     'placeholder': 'Last Name',
                   }, fields.personal_information_data.schema.last_name);
+            input(type="hidden" name="personal_information_data[country]" value="US")
             -
               pug_html += app.fields.fieldChoiceLabel('country', _.extend({
                 'class2': 'col-xl-9 col-lg-12 country-select',
