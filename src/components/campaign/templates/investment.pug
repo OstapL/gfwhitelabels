@@ -134,7 +134,7 @@ mixin confirmStatement(name, attr)
                     'placeholder': 'Last Name',
                   }, fields.personal_information_data.schema.last_name);
             -
-              pug_html += app.fields.fieldChoiceLabel('country', _.extend({
+              pug_html += app.fields.fieldChoiceLabel('personal_information_data[country]', _.extend({
                 'class2': 'col-xl-9 col-lg-12 country-select',
                 'required': true,
                 'empty': { '': 'Choose Country' },
