@@ -133,6 +133,7 @@ mixin confirmStatement(name, attr)
                     'class': 'col-lg-4-5 col-md-12 ',
                     'placeholder': 'Last Name',
                   }, fields.personal_information_data.schema.last_name);
+            input(type="hidden" name="personal_information_data[country]" value="US")
             -
               pug_html += app.fields.fieldChoiceLabel('country', _.extend({
                 'class2': 'col-xl-9 col-lg-12 country-select',
@@ -175,7 +176,6 @@ mixin confirmStatement(name, attr)
                       'class1': 'col-xl-3 col-lg-12 text-xl-right text-lg-left m-b-0 p-t-0 m-b-lg-1',
                       'label': 'Social Security number (SSN) or Tax ID (ITIN/EIN)',
                       'id': 'payment_information_data__ssn__0',
-                      'value': user.ssn,
                     },
                     fields.payment_information_data.schema.ssn);
 
@@ -187,7 +187,6 @@ mixin confirmStatement(name, attr)
                       'class1': 'col-xl-3 col-lg-12 text-xl-right text-lg-left m-b-0 p-t-0 m-b-lg-1',
                       'label': 'Re-enter',
                       'id': 'payment_information_data__ssn_re__0',
-                      'value': user.ssn_re
                     },
                     fields.payment_information_data.schema.ssn_re);
 
