@@ -21,7 +21,7 @@ section.issuer-dashbord-top
           - var linkedinLink = 'https://www.linkedin.com/shareArticle?mini=true&url=' + window.location.origin + '/' + values.id + '&title=' + values.name + '&summary=' + values.description + '&source=Growth Fountain';
           span.font-weight-bold Share:
           .social-dark.d-inline-block
-            a(href=mailtoLink).link-1.email-share
+            a(href=mailtoLink data-close="true" data-popup-opt="width=1,height=1").link-1.email-share
               i.fa.fa-envelope-o
             a(href=facebookLink target="_blank").link-1.facebook-share
               i.fa.fa-facebook

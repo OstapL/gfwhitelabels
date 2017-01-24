@@ -540,6 +540,7 @@ module.exports = {
   issuerDashboard: Backbone.View.extend({
     template: require('./templates/issuerDashboard.pug'),
     events: {
+      'click .email-share': 'socialPopup',
       'click .linkedin-share': 'socialPopup',
       'click .facebook-share': 'socialPopup',
       'click .twitter-share': 'socialPopup',
@@ -590,8 +591,13 @@ module.exports = {
 
     socialPopup (e) {
       e.preventDefault();
-      var popupOpt = 'toolbar=0,status=0,width=626,height=436';
-      window.open(e.currentTarget.href, '', popupOpt);
+      var popupOpt = e.currentTarget.dataset.popupOpt || 'toolbar=0,status=0,left=45%,top=45%,width=626,height=436';
+      var windowChild = window.open(e.currentTarget.href, '', popupOpt);
+   
+      if (e.currentTarget.dataset.close) {
+        let closeScript = "<script>setTimeout(window.close.bind(window), 400);</script>";
+        windowChild.document.write(closeScript);
+      }
     },
 
     cancelCampaign(e) {
