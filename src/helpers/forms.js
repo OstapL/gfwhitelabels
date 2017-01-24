@@ -3,6 +3,7 @@
 const formatHelper = require('helpers/formatHelper');
 const validation = require('components/validation/validation.js');
 const deepDiff = require('deep-diff').diff;
+const errorPageHelper = require('helpers/errorPageHelper.js');
 
 module.exports = {
   makeCacheRequest(url, type, data) {
@@ -60,7 +61,17 @@ module.exports = {
       },
     }, options);
 
-    return $.ajax(params);
+    const promise = $.ajax(params);
+
+    promise.always( (error) => {
+      errorPageHelper({
+        status: error.status,
+        statusText: error.statusText,
+      });
+      app.hideLoading();
+    } );
+
+    return promise;
   },
 
   submitAction(e, newData) {

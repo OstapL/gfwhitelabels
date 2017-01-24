@@ -1,0 +1,24 @@
+- pug_html += app.breadcrumbs('oops!', '', [ [ ] ]);
+
+- status = status ? status : 404;
+section.information-page-404
+  .container
+    .row
+      .col-lg-12.text-xs-center
+        img(src="/img/error.png" alt="#{status} page").p-r-3.p-xs-0.d-inline-block.vertical-align-top
+        h1.not-found-page.d-inline-block #{status}
+    .row
+      .col-lg-12.text-xs-center.m-t-3.m-b-3
+        h3.m-t-0.m-b-0 
+          case status
+            when 404
+              | Sorry, the page you were looking for could not be found.
+            when 500
+              | Sorry, but service is temporarily unavailable.
+            default
+              | #{statusText || 'Unexpected error.\nPlease try again later.'}
+    .row
+      .col-lg-12.text-xs-center
+        a(href="/").btn.btn-secondary
+          i.fa.fa-angle-left
+          |  back to home page
