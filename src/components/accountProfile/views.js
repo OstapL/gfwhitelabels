@@ -401,10 +401,27 @@ module.exports = {
     },
 
     openAgreement(e) {
+      e.preventDefault();
+      const PARTICIPATION_AGREEMENT_ID = 2;
       const objectId = e.target.dataset.objectId;
       const securityType = e.target.dataset.securityType;
       const subscriptionAgreementLink = userDocuments.getUserDocumentsByType(objectId, securityType);
-      e.target.href = subscriptionAgreementLink;
+      const participationAgreementLink = userDocuments.getUserDocumentsByType(objectId, PARTICIPATION_AGREEMENT_ID);
+
+      const data = {
+        title: 'Agreements',
+        files: [{
+          mime: 'application/pdf',
+          name: 'Subscription Agreement.pdf',
+          urls: [subscriptionAgreementLink]
+        }, {
+          mime: 'application/pdf',
+          name: 'Participation Agreement.pdf',
+          urls: [participationAgreementLink]
+        }],
+      };
+
+      helpers.fileList.show(data);
     },
 
     _findInvestment(id) {
