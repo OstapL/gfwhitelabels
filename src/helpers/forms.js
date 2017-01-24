@@ -64,7 +64,7 @@ module.exports = {
     const promise = $.ajax(params);
 
     promise.always( (xhr, status) => {
-      if (status === 'success') return;
+      if (status === 'success' || type.toUpperCase() !== 'GET') return;
       errorPageHelper({
         status: xhr.status,
         statusText: xhr.statusText,
