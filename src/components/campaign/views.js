@@ -381,7 +381,7 @@ module.exports = {
       'keyup .us-fields :input[name*=zip_code]': 'changeZipCode',
       'click .update-location': 'updateLocation',
       'click .link-2': 'openPdf',
-      'change #country': 'changeCountry',
+      'change #personal_information_data__country': 'changeCountry',
       'change #payment_information_type': 'changePaymentType',
       'keyup .typed-name': 'copyToSignature',
       'keyup #annual_income,#net_worth': 'updateLimitInModal',
