@@ -44,5 +44,4 @@
             label: 'Phone',
             class1: 'col-xl-5 col-lg-12 text-lg-left text-xl-right',
             class2: 'col-xl-7 col-lg-12',
-          },
-          fields.personal_information_data.schema.phone);
+          }, _.extend({}, fields.personal_information_data.schema.phone, { required: true }));
