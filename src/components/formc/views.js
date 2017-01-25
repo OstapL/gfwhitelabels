@@ -412,7 +412,7 @@ module.exports = {
       e.preventDefault();
       api.makeRequest(
         this.urlRoot,
-        'PUT',
+        'PATCH',
         {
           'full_time_employers': this.el.querySelector('#full_time_employers').value,
           'part_time_employers': this.el.querySelector('#part_time_employers').value,

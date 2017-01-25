@@ -89,13 +89,12 @@ section.formc-team-members-director.container.m-b-85
             .radio-input.m-b-0.yesno
               
               label 
-                input(type="radio" name="individual_director_choice" value="1" )
+                input(type="radio" name="individual_director_choice" value="1" checked=((values.role & 1) == 1 ? true : false))
                 |  Yes
               label 
-                input(type="radio" name="individual_director_choice" value="0" checked)
+                input(type="radio" name="individual_director_choice" value="0" checked=((values.role & 1) != 1 ? true : false))
                 |  No
-        - values['individual_director_choice'] = 0
-        .individual_director_choice.shown-yes(style="display:" + (values['individual_director_choice'] == 1? 'block' : 'none'))
+        .individual_director_choice.shown-yes(style="display:" + (values.role & 1 == 1? 'block' : 'none'))
           .row
             .col-xl-6.col-lg-6.form-group
               .row
@@ -157,14 +156,13 @@ section.formc-team-members-director.container.m-b-85
           strong Is this individual also a 20%+ Voting Shareholder?
           .form-group.form-section.m-t-1.m-b-0
             .radio-input.m-b-2.yesno
-              - values['voting_shareholder_choice'] = 0
               label 
-                input(type="radio" name="voting_shareholder_choice" value="1" checked=(values['voting_shareholder_choice'] == 1))
+                input(type="radio" name="voting_shareholder_choice" value="1" checked=((values.role & 2) == 2 ? true : false))
                 |  Yes
               label 
-                input(type="radio" name="voting_shareholder_choice" value="0" checked=(values['voting_shareholder_choice'] == 0))
+                input(type="radio" name="voting_shareholder_choice" value="0" checked=((values.role & 2) != 2 ? true : false))
                 |  No
-        .voting_shareholder_choice.shown-yes(style="display:" + (values['voting_shareholder_choice'] == 1? 'block' : 'none'))
+        .voting_shareholder_choice.shown-yes(style="display:" + (values.role & 2 == 2? 'block' : 'none'))
           - 
             pug_html += app.fields.textLabel('number_of_shares', {
             schema: fields.number_of_shares,
