@@ -384,7 +384,7 @@ module.exports = {
 
       if (confirm('Are you sure you would like to delete this team member?')) {
         api.makeRequest(
-          this.urlRoot.replace('employers', '') +  '/' + userId,
+          this.urlRoot.replace('employers', '') +  userId,
           'DELETE',
           {'role': e.currentTarget.dataset.role }
         ).
