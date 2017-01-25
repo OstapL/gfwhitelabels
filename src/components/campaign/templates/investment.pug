@@ -140,7 +140,8 @@ mixin confirmStatement(name, attr)
                 'required': true,
                 'empty': { '': 'Choose Country' },
                 'value': user.country,
-              }, fields.country));
+                'id': 'personal_information_data__country',
+              }, this.fields.personal_information_data.schema.country));
             -
               pug_html += app.fields.nestedTextLabel(
                 'personal_information_data',

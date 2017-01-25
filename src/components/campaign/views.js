@@ -381,7 +381,7 @@ module.exports = {
       'keyup .us-fields :input[name*=zip_code]': 'changeZipCode',
       'click .update-location': 'updateLocation',
       'click .link-2': 'openPdf',
-      'change #country': 'changeCountry',
+      'change #personal_information_data__country': 'changeCountry',
       'change #payment_information_type': 'changePaymentType',
       'keyup .typed-name': 'copyToSignature',
       'keyup #annual_income,#net_worth': 'updateLimitInModal',
@@ -504,7 +504,7 @@ module.exports = {
 
       this.model.campaign.expiration_date = new Date(this.model.campaign.expiration_date);
 
-      this.fields.country = {
+      this.fields.personal_information_data.schema.country = {
         validate: {
           OneOf: {
             choices: _.keys(COUNTRIES),
@@ -513,11 +513,19 @@ module.exports = {
         }
       };
 
+      this.fields.personal_information_data.schema.phone.fn = function(name, value, attr, data, schema) {
+        let country = this.getData(data, 'personal_information_data.country');
+        if (country == 'US')
+          return;
+
+        return this.required(name, true, attr, data);
+      };
+
       this.user.ssn_re = this.user.ssn;
 
       this.labels = {
-        country: 'Country',
         personal_information_data: {
+          country: 'Country',
           street_address_1: 'Street Address 1',
           street_address_2: 'Street Address 2',
           zip_code: 'Zip Code',
