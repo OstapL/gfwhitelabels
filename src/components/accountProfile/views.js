@@ -1,6 +1,8 @@
 const validation = require('components/validation/validation.js');
 const userDocuments = require('helpers/userDocuments.js');
 
+const disableEnterHelper = require('helpers/disableEnterHelper.js');
+
 const helpers = {
   date: require('helpers/dateHelper.js'),
   format: require('helpers/formatHelper.js'),
@@ -196,6 +198,7 @@ module.exports = {
       this.cityStateArea = this.$('.js-city-state');
       this.cityField = this.$('.js-city');
       this.stateField = this.$('.js-state');
+      disableEnterHelper.disableEnter.call(this);
 
       return this;
     },

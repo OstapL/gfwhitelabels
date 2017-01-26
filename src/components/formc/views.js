@@ -265,10 +265,11 @@ module.exports = {
 
       Stripe.card.createToken(card, (status, stripeResponse) => {
         if (stripeResponse.error) {
+          app.hideLoading();
+          alert(stripeResponse.error.message);
           validation.invalidMsg({ $: $ }, 'form-section', [stripeResponse.error.message]);
           $payBtn.prop('disabled', false); // Re-enable submission
           $('#certify').scrollTo(20);
-          app.hideLoading();
           return;
         }
 
