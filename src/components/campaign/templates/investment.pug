@@ -164,7 +164,7 @@ mixin confirmStatement(name, attr)
 
             .row
               .col-xl-12
-                p.m-b-1 In order to pay you any dividends or revenue share, regulations require GrowthFountain to collect your Taxpayer Identification Number.  Don’t worry we keep this information safe, secure and encrypted on a separate server.
+                p.m-b-1.m-t-1 In order to pay you any dividends or revenue share, regulations require GrowthFountain to collect your Taxpayer Identification Number.  Don’t worry we keep this information safe, secure and encrypted on a separate server.
                 -
                   pug_html += app.fields.nestedTextLabel(
                     'payment_information_data',
@@ -416,7 +416,7 @@ mixin confirmStatement(name, attr)
                 i.fa.fa-check(style="display:none;")
               p.list-group-item-text.text-justify #{v.perk}
 
-      h2.text-uppercase.dosis.text-md-center.text-sm-center.text-xs-center Investment Summary
+      h2.text-uppercase Investment Summary
       .jumbotron.jumbotron-fluid.investment-summary
         .container
           .col-md-7
