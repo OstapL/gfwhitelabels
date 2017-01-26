@@ -8,9 +8,7 @@ let exports = {
   },
 
   daysLeft(dateTo) {
-    //expect utc string here
-    dateTo = _.isString(dateTo) ? moment.parseZone(dateTo) : moment(dateTo);
-    return dateTo.diff(moment(), 'days');
+    return moment(dateTo).diff(moment(), 'days');
   },
 
   percentage(n, total) {
