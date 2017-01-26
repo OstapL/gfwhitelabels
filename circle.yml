@@ -4,7 +4,6 @@ machine:
 
 dependencies:
     override:
-        - nvm use 6
         - npm install
         - git submodule init
         - git submodule update
