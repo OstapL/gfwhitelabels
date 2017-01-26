@@ -1,9 +1,10 @@
-machine:
-    node:
-        version:  6.2.1
+#machine:
+#    node:
+#        version:  6.2.1
 
 dependencies:
     override:
+        - nvm use 6
         - npm install
         - git submodule init
         - git submodule update
