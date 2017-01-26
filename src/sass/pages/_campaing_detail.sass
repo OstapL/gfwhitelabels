@@ -40,14 +40,10 @@
 .hs-line-14
 	margin-top: 0
 	position: relative
-	font-size: rem(48)
-	font-weight: $campain_main_name_font_weight
-	line-height: 1.4
-	text-transform: uppercase  
-	letter-spacing: rem(14.4)
+	font-weight: $campain_main_name_font_weight 
 	font-family: $one_block_h3_font_family
 	color: $white
-	padding-left: rem(13)
+	//padding-left: rem(13)
 
 	
 .big-icon
@@ -188,8 +184,7 @@
 
 .about-detail
 	padding-bottom: rem(50)
-	p
-		line-height: rem(18)
+
 	.no-padding-img
 		padding: 5px
 	.card
@@ -228,7 +223,7 @@
 	.show-more-members
 		position: absolute
 		right: 0
-		bottom: -2px
+		bottom: -5px
 		z-index: 2
 		background-color: white
 		padding-left: rem(17)
@@ -304,7 +299,7 @@
 			height: rem(180)
 		.color-grey
 			color: $small-text
-			font-size: rem(11)
+			font-size: rem(12)
 
 .document
 	padding-bottom: rem(45)
@@ -453,8 +448,9 @@
 				padding-right: 10px
 				color: $small-text
 		.name-comments
-			font-size: rem(14)
-			letter-spacing: rem(2.8)
+			font-size: rem(15)
+			letter-spacing: rem(1.5)
+			font-family: $company-comments-ff
 			color: $black
 		.kvalificatio-comments
 			font-size: rem(11)
@@ -466,7 +462,7 @@
 			margin-left: rem(10) 
 			text-transform: capitalize
 		.date-comments
-			font-size: rem(11)
+			font-size: rem(12)
 			color: $small-text
 		.responce
 		
@@ -476,16 +472,13 @@
 				display: inline-block
 		p
 			margin-bottom: rem(5)
-			margin-top: rem(10)
+			margin-top: rem(5)
 .like-detail
 	background-color: $bgc-like-detail
 	h1.like-detail-text
-		font-size: rem(36)
 		color: $white
-		font-weight: bold
-		letter-spacing: normal
 		float: left
-		width: 40%
+		width: 50%
 	.like-wrap
 		top: 50%
 		left: 50%
@@ -496,13 +489,15 @@
 		width: 100%
 	.like-text-wrap
 		float: right
-		width: 60%
+		width: 50%
 		text-align: center
-		padding-left: 210px
+		padding-left: rem(150)
+		margin-top: rem(15)
 
 		h2
 			margin-bottom: 0
 			letter-spacing: rem(1)
+			font-weight: 300
 			margin-top: 0
 			color: $campaign-like-color-h2
 		.like-detail-icon

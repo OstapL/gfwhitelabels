@@ -2,7 +2,7 @@ section(style="background-image: url(" + (values.campaign.header_image_data && v
   .js-height-parent.container-fluid
     .home-content
       .home-text.text-lg-center
-        h1.hs-line-14.font-alt.margin-bottom-50.mb-xs-30 #{ values.short_name || values.name }
+        h1.hs-line-14.font-alt.margin-bottom-50.mb-xs-30.big-h1.text-uppercase #{ values.short_name || values.name }
         .local-scroll
           if values.campaign.video
             a(data-toggle="modal" href="#videoModal" data-target="#videoModal").big-icon.link-6.youtube_popup
@@ -684,7 +684,7 @@ section
       .col-lg-12.p-r-0
         img(src="/img/bg-detail-invest.png")
         .like-wrap
-          h1.like-detail-text Become a part of this company!
+          h1.like-detail-text.big-h1.text-uppercase.m-t-1 Become a part of this company!
           .like-text-wrap
             h2
               .like-detail-icon
