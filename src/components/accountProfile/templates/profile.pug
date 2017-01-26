@@ -9,7 +9,7 @@
   .row
     aside.col-xl-3.col-lg-4.m-b-1
       form(method="post" action="").form.form-section
-        h3.m-t-0.m-b-1.profile-user-name.text-xs-center #{user.first_name + ' ' + user.last_name}
+        h4.m-t-0.m-b-1.profile-user-name.text-xs-center.text-uppercase #{user.first_name + ' ' + user.last_name}
         -
           pug_html += app.fields.userProfileDropzone('image_image_id', _.extend({
             thumbSize: '255x135',
