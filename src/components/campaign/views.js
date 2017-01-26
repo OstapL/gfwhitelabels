@@ -571,7 +571,7 @@ module.exports = {
         fee: 'Commission',
         is_reviewed_educational_material: `I confirm and represent that (a) I have reviewed
           the educational material that has been made available on this website, (b) I understand
-          that the entire amount of my investment may be lost and (c) I am in a
+          that the entire amount of my investment may be lost, (c) I am in a
           financial condition to bear the loss of the investment and (d) I represent that
           I have not exceeded my investment limitations.`,
         is_understand_restrictions_to_cancel_investment: `I understand that there are restrictions
