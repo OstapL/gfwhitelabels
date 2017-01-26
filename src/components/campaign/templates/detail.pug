@@ -123,7 +123,7 @@ section.campaigndetail
           .d-inline-block
           - var mailtoLink = 'mailto:?subject=Check out ' + values.name + '\'s fundraise on GrowthFountain&body=Check out ' + values.name + '\'s fundraise on GrowthFountain%0D%0A' + window.location.origin + '/' + values.id;
 
-          - var facebookLink = 'https://www.facebook.com/dialog/share?app_id=' + global.facebookClientId + '&href=' + window.location.origin + '/' + values.id + '&description=' + values.description + '&locale=en_US&picture=' + (values.campaign.header_image_data.length ? values.campaign.header_image_data[0].urls[0] : '') + '&title=' + values.name + '&caption=' + (values.campaign.caption || '');
+          - var facebookLink = 'https://www.facebook.com/dialog/share?app_id=' + global.facebookClientId + '&href=' + window.location.origin + '/' + values.id + '&description=' + values.description + '&locale=en_US&picture=' + helpers.campaign.getImageCampaign(values.campaign) + '&title=' + values.name + '&caption=' + (values.campaign.caption || '');
 
           - var twitterLink = 'https://twitter.com/share?url=' + window.location.origin + '/' + values.id + '&via=growthfountain&hashtags=investment,fundraising&text=Check out ';
 

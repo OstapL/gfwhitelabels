@@ -8,15 +8,18 @@ let exports = {
   },
 
   daysLeft(dateTo) {
-    //expect utc string here
-    dateTo = _.isString(dateTo) ? moment.parseZone(dateTo) : moment(dateTo);
-    return dateTo.diff(moment(), 'days');
+    return moment(dateTo).diff(moment(), 'days');
   },
 
   percentage(n, total) {
     return Math.round((n / total) * 100);
   },
 
+  getImageCampaign (campaign) {
+    const imgObj = campaign.header_image_data && campaign.header_image_data.length ? campaign.header_image_data[0] : {};
+    const link = imgObj.urls && imgObj.urls.length ? imgObj.urls[0] : location.origin + '/img/default/1600x548.png';
+    return link;
+  },
 };
 
 module.exports = exports;

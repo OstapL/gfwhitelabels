@@ -9,7 +9,6 @@ const helpers = {
   yesNo: require('helpers/yesNoHelper.js'),
   fields: require('./fields.js'),
   fileList: require('helpers/fileList.js'),
-  campaign: require('components/campaign/helpers.js'),
 };
 
 const moment = require('moment');
