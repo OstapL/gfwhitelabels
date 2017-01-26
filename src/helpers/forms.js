@@ -39,6 +39,8 @@ module.exports = {
       delete data.type;
     }
 
+    type = type || 'GET';
+
     if(url.indexOf('http') == -1) {
       url = serverUrl + url
     }
