@@ -473,6 +473,7 @@ module.exports = {
         },
       };
 
+
       this.fields.signature = {
         type: 'nested',
         requiredTemp: true,
@@ -504,20 +505,38 @@ module.exports = {
 
       this.model.campaign.expiration_date = new Date(this.model.campaign.expiration_date);
 
-      this.fields.personal_information_data.schema.country = {
+      this.fields.personal_information_data.schema.country = _.extend(this.fields.personal_information_data.schema.country, {
+        type: 'select',
         validate: {
           OneOf: {
             choices: _.keys(COUNTRIES),
           },
           choices: COUNTRIES
-        }
-      };
+        },
+        // fn: function(name, value, attr, data, schema) {
+        //   return this.required(name, true, attr, data);
+        // },
+      });
 
       this.fields.personal_information_data.schema.phone.fn = function(name, value, attr, data, schema) {
         let country = this.getData(data, 'personal_information_data.country');
         if (country == 'US')
           return;
 
+        return this.required(name, true, attr, data);
+      };
+
+      this.fields.personal_information_data.schema.city.fn = function(name, value, attr, data, schema) {
+        let country = this.getData(data, 'personal_information_data.country');
+        if (country == 'US')
+          return;
+        return this.required(name, true, attr, data);
+      };
+
+      this.fields.personal_information_data.schema.state.fn = function(name, value, attr, data, schema) {
+        let country = this.getData(data, 'personal_information_data.country');
+        if (country == 'US')
+          return;
         return this.required(name, true, attr, data);
       };
 
