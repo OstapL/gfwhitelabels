@@ -581,7 +581,7 @@ module.exports = {
     },
 
     submit(e) {
-      let data = $(e.target).closest('form').serializeJSON({ useIntKeysAsArrayIndex: true, parseAll: true });
+      let data = $(e.target).closest('form').serializeJSON({ useIntKeysAsArrayIndex: true });
       if(data.role) { 
         data.role = data.role.reduce((a,b) => { return parseInt(a)+parseInt(b)}, 0)
       }
