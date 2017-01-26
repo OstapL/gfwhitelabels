@@ -1,8 +1,7 @@
 .one_table
   -
     var campaignHelpers = require('components/campaign/helpers.js');
-    var data = i.campaign.header_image_data[0] || { urls: []};
-    var url = data.urls[0] || "/img/test.png";
+    var url = campaignHelpers.getImageCampaign(i.campaign);
     var background = 'background: url(' + url + ') center center no-repeat; background-size: cover;';
   .img_column.text-lg-center.text-sm-center(style=background)
     if attr.active
