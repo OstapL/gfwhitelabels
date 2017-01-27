@@ -39,27 +39,6 @@ module.exports = {
       // 'change input[name=accredited_investor]': 'changeAccreditedInvestor',
     }, helpers.phone.events, helpers.dropzone.events, helpers.yesNo.events),
 
-    changeAccreditedInvestorItem(e) {
-      let $target = $(e.target);
-      let name = $target.data('name');
-      let checked = $target.prop('checked');
-      this.$('input[name=' + name + ']').val(checked);
-      if (checked) {
-        this.$('#not-qualify').prop('checked', false).change();
-      }
-    },
-
-    changeQualify(e) {
-      let $target = $(e.target);
-      if ($target.prop('checked')) {
-        this.$('.investor-item-checkbox').prop('checked', false).change();
-
-        this.$('input[name=accredited_investor_choice]').val(false);
-      } else {
-        this.$('input[name=accredited_investor_choice]').val(true);
-      }
-    },
-
     initialize(options) {
       this.activeTab = options.activeTab;
 
@@ -81,7 +60,6 @@ module.exports = {
         },
       });
 
-      // this.fields.account_number.required = true;
       this.fields.account_number = {
         type: 'password',
         required: true,
@@ -152,6 +130,10 @@ module.exports = {
         },
       };
 
+      this.model.account_number_re = this.model.account_number;
+      this.model.routing_number_re = this.model.routing_number;
+      this.model.ssn_re = this.model.ssn;
+
       this.labels = {
         country: 'Country',
         street_address_1: 'Street address 1',
@@ -211,6 +193,27 @@ module.exports = {
       disableEnterHelper.disableEnter.call(this);
 
       return this;
+    },
+
+    changeAccreditedInvestorItem(e) {
+      let $target = $(e.target);
+      let name = $target.data('name');
+      let checked = $target.prop('checked');
+      this.$('input[name=' + name + ']').val(checked);
+      if (checked) {
+        this.$('#not-qualify').prop('checked', false).change();
+      }
+    },
+
+    changeQualify(e) {
+      let $target = $(e.target);
+      if ($target.prop('checked')) {
+        this.$('.investor-item-checkbox').prop('checked', false).change();
+
+        this.$('input[name=accredited_investor_choice]').val(false);
+      } else {
+        this.$('input[name=accredited_investor_choice]').val(true);
+      }
     },
 
     onImageCrop(name) {
