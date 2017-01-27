@@ -75,6 +75,56 @@ module.exports = {
     return promise;
   },
 
+  diffData(data) {
+    let diffData = {};
+    let diffFields = {};
+
+    //optimization
+    let diffs = _.filter(deepDiff(this.model, data), (diff) => {
+      return diff.kind !== 'D';
+    });
+
+    const fillDependecies = (dependencies) => {
+      if (!dependencies || !dependencies.length)
+        return;
+
+      _.each(dependencies, (dep) => {
+        let dependentChanged = _.find(diffs, (diff) => {
+          return diff.path[0] == dep;
+        });
+
+        //if dependent field is changed data will be added to diffData
+        if (dependentChanged)
+          return;
+
+        //field is already added
+        if (diffFields[dep])
+          return;
+
+        //if dependent field wasn't changed we should add data from model
+        diffData[dep] = this.model[dep];
+        diffFields[dep] = this.fields[dep];
+
+        fillDependecies(this.fields[dep].dependies);
+      });
+    }
+
+    _.each(diffs, (d) => {
+      let changedName = d.path[0];
+
+      // if (d.kind == 'A' || d.kind == 'E' || d.kind == 'N') {
+      diffData[changedName] = data[changedName];
+      diffFields[changedName] = this.fields[changedName];
+      // }
+      fillDependecies(this.fields[changedName].dependies)
+    });
+
+    return {
+      data: diffData,
+      fields: diffFields,
+    };
+  },
+
   submitAction(e, newData) {
     e.preventDefault();
 
@@ -107,7 +157,7 @@ module.exports = {
           patchData[el.path[0]] = newData[el.path[0]];
           if(this.fields[el.path[0]].hasOwnProperty('dependies')) {
             this.fields[el.path[0]].dependies.forEach((dep, index) => {
-              patchData[dep] = newData[dep]; 
+              patchData[dep] = newData[dep];
             });
           }
         } else if(el.kind == 'N' && newData.hasOwnProperty(el.path[0])) {
@@ -137,7 +187,14 @@ module.exports = {
 
       newData = patchData;
     };
-
+    
+    // let fields = this.fields;
+    // if (method == 'PATCH') {
+    //   let diff = api.diffData.call(this, newData);
+    //   fields = diff.fields;
+    //   newData = diff.data;
+    // }
+    
     this.$('.help-block').remove();
     let fields = this.fields;
     if (method == 'PATCH') {
