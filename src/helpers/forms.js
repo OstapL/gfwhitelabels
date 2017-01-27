@@ -109,7 +109,7 @@ module.exports = {
           patchData[el.path[0]] = newData[el.path[0]];
           if(this.fields[el.path[0]].hasOwnProperty('dependies')) {
             this.fields[el.path[0]].dependies.forEach((dep, index) => {
-              patchData[dep] = newData[dep]; 
+              patchData[dep] = newData[dep];
             });
           }
         } else if(el.kind == 'N' && newData.hasOwnProperty(el.path[0])) {
@@ -150,7 +150,7 @@ module.exports = {
         } else {
           console.error('field meta data not found: ' + key);
         }
-      })
+      });
       fields = patchFields;
     }
 
