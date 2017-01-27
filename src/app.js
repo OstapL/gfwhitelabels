@@ -238,11 +238,23 @@ let app = {
     })(window,document,'script','dataLayer', id);
   },
 
+  getUrl(data) {
+    data = Array.isArray(data) ? data[0] : data;
+
+    if (!data || !data.urls || !data.urls.length || !data.urls[0])
+      return null;
+
+    return this.getFilerUrl(data.urls[0]);
+  },
+
   getFilerUrl(file) {
+    if (!file || !_.isString(file))
+      return null;
+
     if (file.startsWith('http://') || file.startsWith('https://'))
       return file;
 
-    return `${bucketServer}/${file}`;
+    return bucketServer + '/' + file;
   },
 
   breadcrumbs (title, subtitle, data) {

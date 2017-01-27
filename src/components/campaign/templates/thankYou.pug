@@ -1,4 +1,4 @@
-| !{app.breadcrumbs('Invest', '', [ ['Home', '/'], ['Explore', '/companies'], ['Smartbe', '/' + investment.company_id], ['Invest in ' + investment.company_id, '']])}
+| !{app.breadcrumbs('Invest', '', [ ['Home', '/'], ['Explore', '/companies'], [investment.company.name, '/' + investment.company_id], ['Invest in ' + investment.company.name, '']])}
 .container
   .row
     .col-sm-8.offset-sm-2
