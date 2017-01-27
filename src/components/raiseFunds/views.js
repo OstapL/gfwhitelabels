@@ -10,6 +10,7 @@ const phoneHelper = require('helpers/phoneHelper.js');
 const validation = require('components/validation/validation.js');
 const menuHelper = require('helpers/menuHelper.js');
 const disableEnterHelper = require('helpers/disableEnterHelper.js');
+const COUNTRIES = require('consts/countries.json');
 
 module.exports = {
   company: Backbone.View.extend(_.extend({

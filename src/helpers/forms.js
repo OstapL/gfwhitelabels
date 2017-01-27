@@ -39,10 +39,6 @@ module.exports = {
       delete data.type;
     }
 
-    if(url.indexOf('http') == -1) {
-      url = serverUrl + url
-    }
-
     if(type == 'POST' || type == 'PUT' || type == 'PATCH' || type == 'DELETE') {
       data = JSON.stringify(data);
     }
@@ -52,7 +48,7 @@ module.exports = {
       type: type,
       data: data,
       dataType: 'json',
-      contentType: "application/x-www-form-urlencoded",
+      contentType: "application/json; charset=utf-8",
       beforeSend: function (xhr) {
         let token = localStorage.getItem('token');
         if (token !== null && token !== '') {
@@ -106,7 +102,7 @@ module.exports = {
       _(d).forEach((el, i) => {
         if(el.kind == 'E' || el.kind == 'A') {
           patchData[el.path[0]] = newData[el.path[0]];
-          if(this.fields[el.path[0]] && this.fields[el.path[0]] && this.fields[el.path[0]].hasOwnProperty('dependies')) {
+          if(this.fields[el.path[0]] && this.fields[el.path[0]].hasOwnProperty('dependies')) {
             this.fields[el.path[0]].dependies.forEach((dep, index) => {
               patchData[dep] = newData[dep]; 
             });
@@ -152,6 +148,9 @@ module.exports = {
       })
       fields = patchFields;
     }
+
+    if (method == 'POST' || method == 'PUT')
+      newData.domain = window.location.host;
 
     if(!validation.validate(fields, newData, this)) {
       _(validation.errors).each((errors, key) => {
