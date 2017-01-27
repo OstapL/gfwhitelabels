@@ -30,6 +30,15 @@ section(style="background-image: url(" + (values.campaign.header_image_data && v
           .col-lg-3.p-r-0.p-sm-0.text-xs-center.text-lg-left
             p Type of Security
             h2.font-weight-bold #{ values.campaign.security_type == 0 ? 'Common Equity' : 'Revenue Share' }
+              if values.campaign.security_type == 0
+                div.d-inline-block
+                  div.showPopover.hidden-xs-down(data-content="Equity represents ownership in a Company. As owners, equity investors will generally receive a share of the proceeds upon trade sale or IPO. Alternatively, investors can theoretically sell their ownership interest when the overall value of the Company has increased – though shares of common stock purchased in a crowdfunding transaction would have certain holding restrictions which are described in greater detail in our educational material. <br>The Pre-Money valuation is the valuation prior to this round of financing. Post-Money valuation is based on Pre-Money valuation plus the proceeds from the financing.")
+                    i(aria-hidden="true").fa.fa-question-circle.text-muted.detail-security-type-icon
+              else
+                div.d-inline-block
+                  div.showPopover.hidden-xs-down(data-content="A Revenue Share Agreement is a form of investment contract in which the Company shares 5% of its revenue annually with investors.<br> Here’s how it works:<ol class='p-l-1'><li>Investors earn 5% of the company’s revenue annually;</li><li>No distributions are required until the second full calendar year and the company is allowed one year of orbearance as needed;</li><li>Distributions are capped at two times the invested amount (2x);</li><li>In the event of default, investors become general unsecured creditors (senior to equity).</li>")
+                    i(aria-hidden="true").fa.fa-question-circle.text-muted.detail-security-type-icon
+
           if values.campaign.security_type == 0
             .col-lg-2.p-r-0.p-sm-0.text-xs-center.text-lg-left
               p Pre-Money Valuation
@@ -311,21 +320,23 @@ section
               each v,k in values.campaign.team_members
                 .col-xl-4.col-lg-4.col-md-6.col-sm-12.col-xs-12.team
                   .card.text-lg-center.text-xs-center
-                    img(src=(v.photo_data && v.photo_data[0] && v.photo_data[0].urls && v.photo_data[0].urls[0] ? v.photo_data[0].urls[0] : '') alt="").img-circle
+                    .team-photo-wrap.text-xs-center
+                      img(src=(v.photo_data && v.photo_data[0] && v.photo_data[0].urls && v.photo_data[0].urls[0] ? v.photo_data[0].urls[0] : '') alt="").img-circle
+                      .overflow-block
+                        .team-social
+                          if v.linkedin
+                          a(href=v.linkedin target="_blank").link-1.linkedin-share-team
+                            i.fa.fa-linkedin-square.more
+                          if v.facebook
+                            a(href=v.facebook target="_blank").link-1.facebook-share-team
+                              i.fa.fa-facebook-square
+                          //if !(v.linkedin || v.facebook)
+                            a.linkedin-share-team.link-1(style="visibility:hidden;")
+                              i.fa.fa-linkedin-square.more
                     .card-block
                       h4.text-xs-center.card-title.text-uppercase #{v.first_name} #{v.last_name }
                       p.card-text
                         small.text-muted #{v.title }
-                        
-                      if v.linkedin
-                        a(href=v.linkedin target="_blank").link-1
-                          i.fa.fa-linkedin.more
-                      if v.facebook
-                        a(href=v.facebook target="_blank").link-1
-                          i.fa.fa-facebook
-                      if !(v.linkedin || v.facebook)
-                        a.link-1(style="visibility:hidden;")
-                          i.fa.fa-linkedin.more
                       p.card-text.text-justify.hide-more-detail !{textHelper.restoreLineBreak(v.bio)}
                         if v.bio.length > 180
                           a(href="#").show-more-members.link-3 Read More
@@ -494,6 +505,9 @@ section
                 tr
                   td.width-50
                     h2.font-weight-bold Common Equity
+                      div.d-inline-block
+                        div.showPopover.hidden-xs-down(data-content="Equity represents ownership in a Company. As owners, equity investors will generally receive a share of the proceeds upon trade sale or IPO. Alternatively, investors can theoretically sell their ownership interest when the overall value of the Company has increased – though shares of common stock purchased in a crowdfunding transaction would have certain holding restrictions which are described in greater detail in our educational material. <br>The Pre-Money valuation is the valuation prior to this round of financing. Post-Money valuation is based on Pre-Money valuation plus the proceeds from the financing.")
+                          i(aria-hidden="true").fa.fa-question-circle.text-muted.detail-security-type-icon
                   td
                     h2.font-weight-bold #{ formatHelper.formatPrice(values.campaign.premoney_valuation) }
                 tr.bgc-row-middle
@@ -530,6 +544,9 @@ section
                 tr
                   td.width-50
                     h2.font-weight-bold Revenue Share
+                      div.d-inline-block
+                        div.showPopover.hidden-xs-down(data-content="A Revenue Share Agreement is a form of investment contract in which the Company shares 5% of its revenue annually with investors.<br> Here’s how it works:<ol class='p-l-1'><li>Investors earn 5% of the company’s revenue annually;</li><li>No distributions are required until the second full calendar year and the company is allowed one year of orbearance as needed;</li><li>Distributions are capped at two times the invested amount (2x);</li><li>In the event of default, investors become general unsecured creditors (senior to equity).</li>")
+                          i(aria-hidden="true").fa.fa-question-circle.text-muted.detail-security-type-icon
                   td
                     h2.font-weight-bold #{ values.campaign.percentage_revenue }%
                 tr.bgc-row-middle
@@ -564,16 +581,15 @@ section
             table.table.table-bordered.m-b-0
               tbody
                 tr.bgc-row-top
-                  td
+                  td(colspan="2")
                     h3.text-lg-center.text-xs-center.campaign-subheading Perks
               each v,k in values.campaign.perks
                 if v
-                  tr.bgc-row-middle.perks-invest
-                    td
+                  tr.perks-invest
+                    td.bgc-row-middle.w-35
                       h3 Invest 
                         span #{ formatHelper.formatPrice(v.amount) }
                         |  or more
-                  tr
                     td
                       p.text-justify.perks-intro #{ v.perk }
 
@@ -681,23 +697,14 @@ section
 
   section.like-detail
     .container
-      .col-lg-12.p-r-0
-        img(src="/img/bg-detail-invest.png")
-        .like-wrap
-          h1.like-detail-text.big-h1.text-uppercase.m-t-1 Become a part of this company!
+      .col-lg-12
           .like-text-wrap
             h2
               .like-detail-icon
                 i.fa.fa-thumbs-o-up
               |  I’d Like to Invest in #{ values.short_name || values.name }!
-            a(href="/" + values.id + "/invest").btn.btn-lg.btn-secondary.text-uppercase.m-t-2 invest in this company
-      //.col-lg-5.col-md-6.p-l-0.p-r-0.text-xs-center
-        .like-text-wrap.m-t-1.m-b-1
-          h2
-            .like-detail-icon
-              i.fa.fa-thumbs-up
-            |  I’d Like to Invest in #{ values.short_name || values.name }!
-          a(href="/" + values.id + "/invest").btn.btn-lg.btn-secondary.text-uppercase.m-t-2 invest in this company
+            a(href="/" + values.id + "/invest").btn.btn-lg.btn-primary.text-uppercase.m-t-2 invest in this company
+  
 
 div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")#videoModal.modal.fade.video-modal
   div(role="document").modal-dialog.modal-lg
