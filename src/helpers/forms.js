@@ -90,6 +90,7 @@ module.exports = {
 
     newData = newData || $(e.target).closest('form').serializeJSON({ useIntKeysAsArrayIndex: true });
     api.deleteEmptyNested.call(this, this.fields, newData);
+    debugger;
     api.fixDateFields.call(this, this.fields, newData);
     api.fixMoneyFields.call(this, this.fields, newData);
 
@@ -105,7 +106,7 @@ module.exports = {
       _(d).forEach((el, i) => {
         if(el.kind == 'E' || el.kind == 'A') {
           patchData[el.path[0]] = newData[el.path[0]];
-          if(this.fields[el.path[0]].hasOwnProperty('dependies')) {
+          if(this.fields[el.path[0]] && this.fields[el.path[0]] && this.fields[el.path[0]].hasOwnProperty('dependies')) {
             this.fields[el.path[0]].dependies.forEach((dep, index) => {
               patchData[dep] = newData[dep]; 
             });
@@ -117,7 +118,7 @@ module.exports = {
             newArr.push(arr);
           });
           patchData[el.path[0]] = newArr;
-          if(this.fields[el.path[0]].hasOwnProperty('dependies')) {
+          if(this.fields[el.path[0]] && this.fields[el.path[0]].hasOwnProperty('dependies')) {
             this.fields[el.path[0]].dependies.forEach((dep, index) => {
               patchData[dep] = newData[dep];
             });
@@ -288,7 +289,11 @@ module.exports = {
             if(Object.keys(el).length == emptyValues) {
               delete data[key][i];
               if(Object.keys(data[key]).length == 0) {
-                data[key] = this.model[key];
+                if(this.model[key]) {
+                  data[key] = this.model[key];
+                } else {
+                  delete data[key];
+                }
               }
             };
           });
