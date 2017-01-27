@@ -581,18 +581,48 @@ module.exports = {
     },
 
     submit(e) {
-      let data = $(e.target).closest('form').serializeJSON({ useIntKeysAsArrayIndex: true, parseAll: true });
-      if(data.role) { 
+      let data = $(e.target).closest('form').serializeJSON({ useIntKeysAsArrayIndex: true });
+
+      if(data.role) {
         data.role = data.role.reduce((a,b) => { return parseInt(a)+parseInt(b)}, 0)
-      }
-      // delete data['experiences'];
-      // delete data['positions'];
-      // data['number_of_shares'] = 100;
-      if(data.voting_shareholder_choice == 1) {
-        data.role += 1;
-      }
-      if(data.individual_director_choice == 1) {
-        data.role += 2;
+        let newRole = data.role;
+
+        // delete data['experiences'];
+        // delete data['positions'];
+        // data['number_of_shares'] = 100;
+        if(data.voting_shareholder_choice == 1) {
+          if(newRole & 1 != 1) {
+            newRole += 1;
+          }
+        } else {
+          if(newRole & 1 == 1) {
+            newRole -= 1;
+          }
+          delete data.number_of_shares;
+          delete data.class_of_securities;
+          delete data.voting_power_percent;
+        }
+        if(data.individual_director_choice == 1) {
+          if(newRole & 2 != 2) {
+            newRole += 2;
+          }
+        } else {
+          if(newRole & 2 == 2) {
+            newRole -= 2;
+          }
+          delete data.board_service_start_date__month;
+          delete data.board_service_start_date__year;
+          delete data.principal_occupation;
+          delete data.employer_principal_businesss;
+          delete data.employer_start_date__year;
+          delete data.employer_start_date__month;
+        }
+        if(data.role != newRole) {
+          data.role = newRole;
+        }
+        else if(this.model.hasOwnProperty('id') == true) {
+          delete data.role;
+        }
       }
       api.submitAction.call(this, e, data);
     },

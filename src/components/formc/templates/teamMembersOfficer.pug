@@ -120,6 +120,7 @@ section.formc-team-members-director.container.m-b-85
             class1: 'col-xl-3 col-lg-12 text-lg-left text-xl-right p-t-0 m-b-0 m-b-lg-1', 
             schema: fields.principal_occupation, 
             value: values.principal_occupation, 
+            label: 'Principal Occupation',
             placeholder: 'Principal Occupation and Name of Employer',}, 
             fields.principal_occupation))
           
@@ -128,6 +129,7 @@ section.formc-team-members-director.container.m-b-85
             class1: 'col-xl-3 col-lg-12 text-lg-left p-t-0 m-b-0 m-b-lg-1 text-xl-right', 
             schema: fields.employer_principal_businesss, 
             value: values.employer_principal_businesss, 
+            label: 'Principal Business',
             placeholder: 'Provide short description of the business',},
             fields.employer_principal_businesss))
           .row
@@ -174,11 +176,11 @@ section.formc-team-members-director.container.m-b-85
             label: 'Class of Securities',
             value: values.class_of_securities,})
           - 
-            pug_html += app.fields.textLabel('voting_power', {
-            schema: fields.voting_power,
+            pug_html += app.fields.textLabel('voting_power_percent', {
+            schema: fields.voting_power_percent,
             label: '% of Voting Power Prior to Offering',
             class1: 'col-xl-3 col-lg-12 text-lg-left p-t-0 m-b-0 m-b-lg-1 text-xl-right',  
-            value: values.voting_power,})
+            value: values.voting_power_percent,})
         .row
           .col-xl-12
             .border-bottom.m-t-3.m-b-3
