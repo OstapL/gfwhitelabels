@@ -133,7 +133,6 @@ mixin confirmStatement(name, attr)
                     'class': 'col-lg-4-5 col-md-12 ',
                     'placeholder': 'Last Name',
                   }, fields.personal_information_data.schema.last_name);
-            //input(type="hidden" name="personal_information_data[country]" value="US")
             -
               pug_html += app.fields.fieldChoiceLabel('personal_information_data[country]', _.extend({
                 'class2': 'col-xl-9 col-lg-12 country-select',
@@ -249,8 +248,9 @@ mixin confirmStatement(name, attr)
                   },
                 fields.payment_information_data.schema.routing_number_re);
 
-              .form-group.row.radio.check-fields
+              .form-group.row.radio.check-fields.required
                 label.text-md-right.col-lg-3 Account Type
+                  span.color-red *
                 #payment_information_data__bank_account_type.col-lg-9.radio-input
                   label 
                     input(
