@@ -3,11 +3,11 @@ const isBoolean = function(val) {
 }
 
 const haveRequiredMembers = function(teamMembers) {
-  var requiredRoles = { 1: 'CEO/President', 2: 'Principal Financial Officer/Treasurer', 5: 'Controller/Principal Accounting Officer' };
+  var requiredRoles = { 4: 'CEO/President', 8: 'Principal Financial Officer/Treasurer', 64: 'Controller/Principal Accounting Officer' };
   var roleCounter = 0;
 
   _(requiredRoles).each((k, v) => {
-    var persons = teamMembers.filter(function(el) { return (el.title ? el.title.indexOf(v) != -1: false); });
+    var persons = teamMembers.filter(function(el) { return (el.role ? (el.role & v) && (el.is_invited == 1): false); })
     
     if(persons.length > 0) {
       roleCounter ++;

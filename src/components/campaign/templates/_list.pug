@@ -15,9 +15,9 @@
           .more_inform
             .title.text-center
               if company.campaign.security_type == 0
-                h3 Valuation: #{format.formatPrice(company.campaign.premoney_valuation)}
+                h3.text-uppercase Valuation: #{format.formatPrice(company.campaign.premoney_valuation)}
               else
-                h3 Percentage Revenue: #{company.campaign.percentage_revenue}%
+                h3.text-uppercase Percentage Revenue: #{company.campaign.percentage_revenue}%
 
             .small_text
               if company.tagline
@@ -39,7 +39,7 @@
                 p Percentage Revenue: #{company.campaign.percentage_revenue}%
 
         .title.text-xs-center
-          h3.m-t-0.m-x-auto= company.short_name || company.name
+          h3.text-uppercase.m-t-0.m-x-auto= company.short_name || company.name
           span.place
             i.fa.fa-map-marker
             = company.city + ' ' + company.state
@@ -59,7 +59,7 @@
         .bottom_text
           span.left_desc
             b Security:
-            | #{company.campaign.security_type == 0 ? 'Common Equity' : 'Revenue Share'}
+            |  #{company.campaign.security_type == 0 ? 'Common Equity' : 'Revenue Share'}
           span.right_desc
             b Industry: 
             case company.industry
