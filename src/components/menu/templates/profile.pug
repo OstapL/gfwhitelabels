@@ -23,8 +23,9 @@ if user.token != ""
   li.nav-item.user-info
     a.nav-link.notification.user-info-name
       span
-        if user.image_data[0]
-          - var url = app.getFilerUrl(user.image_data[0].urls[0]);
+        -
+          var url = app.getUrl(user.image_data);
+        if url
           img(src=url)#user-thumbnail.img-fluid.img-circle
         else
           i.fa.fa-user

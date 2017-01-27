@@ -13,7 +13,7 @@ section.issuer-dashbord-top
         .share-block.d-inline-block
           - var mailtoLink = 'mailto:?subject=Check out ' + values.name + '\'s fundraise on GrowthFountain&body=Check out ' + values.name + '\'s fundraise on GrowthFountain%0D%0A' + window.location.origin + '/' + values.id;
 
-          - var facebookLink = 'https://www.facebook.com/dialog/share?app_id=' + global.facebookClientId + '&href=' + window.location.origin + '/' + values.id + '&description=' + values.description + '&locale=en_US&picture=' + campaignHelpers.getImageCampaign(values.campaign) + '&title=' + values.name + '&caption=' + (values.campaign.caption || '');
+          - var facebookLink = 'https://www.facebook.com/dialog/share?app_id=' + global.facebookClientId + '&href=' + window.location.origin + '/' + values.id + '?r=' + Math.random() + '&description=' + values.description + '&locale=en_US&picture=' + campaignHelpers.getImageCampaign(values.campaign) + '&title=' + values.name + '&caption=' + (values.campaign.caption || '');
 
           - var twitterLink = 'https://twitter.com/share?url=' + window.location.origin + '/' + values.id + '&via=growthfountain&hashtags=investment,fundraising&text=Check out ';
 
@@ -77,7 +77,12 @@ section.issuer-dashbord-top
 
       .col-md-7.col-sm-7.p-r-0
         -
-          var percentage_raised = Math.round(values.campaign.amount_raised / (values.campaign.minimum_raise || values.campaign.maximum_raise) * 100);
+          var now = new Date();
+          var starting_date = helpers.date.formatDate(values.approved_date);
+          var expiration_date = helpers.date.formatDate(values.campaign.expiration_date);
+          var daysPassed = helpers.date.differenceInDays(starting_date, now);
+          var durationOfCampaign = helpers.date.differenceInDays(starting_date, expiration_date);
+          var percentage_raised = Math.round(100/durationOfCampaign * daysPassed);
         .tpl-progress
           progress(
             value=percentage_raised
@@ -85,19 +90,16 @@ section.issuer-dashbord-top
           span(
             style="width:" + percentage_raised + "%").circle_progress
             i.fa.fa-circle-o
-          - var now = new Date();
           span(style="left:" + percentage_raised + "%").text_position
             | #{now.toLocaleString('en-US', { month: "short" })} #{ now.getDate() }
             br
             | #{ helpers.format.formatAmount(values.campaign.amount_raised) } Raised
         .progress_description
-          -
-            var starting_date = helpers.date.getStartDate(values.campaign.expiration_date, values.campaign.length_days);
           .pull-left
             p #{helpers.format.formatMonthDate(starting_date)}
             span Begining of campaign
           .pull-right.text-lg-right
-            p #{helpers.format.formatMonthDate(values.campaign.expiration_date)}
+            p #{helpers.format.formatMonthDate(expiration_date)}
             span End of campaign
           .clearfix
       .col-md-1.col-sm-1
