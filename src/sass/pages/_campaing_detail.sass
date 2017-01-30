@@ -557,11 +557,6 @@
 		padding-right: 0!important
 	.tabs-scroll
 		display: none
-	.top-info
-		.top-info-wrap
-			.top-info-wrap-item
-				h2
-					margin-bottom: rem(25)
 	.campaigndetail
 		.share
 			margin-bottom: rem(20)
@@ -588,4 +583,24 @@
 	.p-xs-0
 		padding-left: 0!important
 		padding-right: 0!important
+@media only screen and (max-width : 576px)
+	.js-height-parent
+		height: 40vh
+	.top-info-wrap-item
+		h2
+			font-size: rem(16)
+			margin-bottom: rem(25)!important
+			&.no-margin
+				margin-bottom: 0!important
+		p
+			font-size: rem(13)
+	.right-block-investors
+		margin-top: 25px
+	.campaigndetail h1
+		font-size: rem(18)
+	.campaigndetail 
+		.share 
+			a 
+				i.fa-facebook-square
+					margin-left: 0
 

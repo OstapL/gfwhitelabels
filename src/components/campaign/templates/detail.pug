@@ -7,8 +7,8 @@ section(style="background-image: url(" + (values.campaign.header_image_data && v
           if values.campaign.video
             a(data-toggle="modal" href="#videoModal" data-target="#videoModal").big-icon.link-6.youtube_popup
               i.fa.fa-play-circle-o
-          a(href=values.website target="_blank").link-6.link-campaing-detail #{ formatHelper.getWebsiteUrl(values.website) }
-          .row.social-link
+          a(href=values.website target="_blank").link-6.link-campaing-detail.hidden-xs-down #{ formatHelper.getWebsiteUrl(values.website) }
+          .row.social-link.hidden-xs-down
             if values.facebook
               a(href=values.facebook target="_blank").link-6.link-campaing-detail
                 i.fa.fa-facebook
@@ -27,7 +27,7 @@ section(style="background-image: url(" + (values.campaign.header_image_data && v
     .container
       .top-info-wrap
         .top-info-wrap-item
-          .col-lg-3.p-r-0.p-sm-0.text-xs-center.text-lg-left
+          .col-xl-3.col-lg-4.col-md-4.col-xs-6.p-r-0.p-sm-0.text-xs-center.text-lg-left
             p Type of Security
             h2.font-weight-bold #{ values.campaign.security_type == 0 ? 'Common Equity' : 'Revenue Share' }
               if values.campaign.security_type == 0
@@ -40,17 +40,20 @@ section(style="background-image: url(" + (values.campaign.header_image_data && v
                     i(aria-hidden="true").fa.fa-question-circle.text-muted.detail-security-type-icon
 
           if values.campaign.security_type == 0
-            .col-lg-2.p-r-0.p-sm-0.text-xs-center.text-lg-left
+            .col-xl-2.col-lg-3.col-md-3.col-xs-6.p-r-0.p-sm-0.text-xs-center.text-lg-left
               p Pre-Money Valuation
               h2.font-weight-bold #{ formatHelper.formatPrice(values.campaign.premoney_valuation) }
           else
-            .col-lg-2.p-r-0.p-sm-0.text-xs-center.text-lg-left
+            .col-xl-2.col-lg-3.col-md-3.col-xs-6.p-r-0.p-sm-0.text-xs-center.text-lg-left
               p Percentage Revenue
               h2.font-weight-bold #{ values.campaign.percentage_revenue }%
-          .col-lg-2.p-r-0.p-sm-0.text-xs-center.text-lg-left
+          .col-xs-6.p-r-0.p-sm-0.text-xs-center.text-lg-left.hidden-sm-up
+            p Minimum Investment
+            h2.font-weight-bold.no-margin #{ formatHelper.formatPrice(values.campaign.minimum_increment) }
+          .col-xl-2.col-lg-2.col-md-2.col-xs-6.p-r-0.p-sm-0.text-xs-center.text-lg-left
             p Days Left
-            h2.font-weight-bold #{ helpers.campaign.daysLeft(values.campaign.expiration_date) }
-          .col-lg-4.p-sm-0.col-md-12.col-xs-12.pull-lg-right.text-xs-center
+            h2.font-weight-bold.no-margin #{ helpers.campaign.daysLeft(values.campaign.expiration_date) }
+          .col-xl-4.col-lg-3.col-md-2.hidden-xs-down.p-sm-0.pull-lg-right.text-xs-center
             a(href="/" + values.id + "/invest").btn.btn-primary.text-uppercase.pull-lg-right Invest
 
 if app.getParams().preview == '1'
@@ -121,11 +124,11 @@ section.campaigndetail
           .sity-detail
             i.fa.fa-map-marker
             |  #{ values.city }, #{ values.state }
-        .col-lg-6.col-xs-6
+        .col-lg-6.col-xs-6.text-xs-right.text-lg-left
           .date-detail.pull-md-right.pull-lg-left
             i.fa.fa-calendar-check-o
             |  Founded #{ formatHelper.formatDate(values.founding_date) }
-      .row
+      .row.hidden-xs-down
         .col-lg-12.share
           span.d-inline-block 
             i.fa.fa-share
@@ -165,7 +168,7 @@ section.campaigndetail
         .row.col-xl-8.col-md-6.text-xs-center.text-sm-center.text-md-left
           p Target
           h2.font-weight-bold #{ formatHelper.formatPrice(values.campaign.minimum_raise) } - #{ formatHelper.formatPrice(values.campaign.maximum_raise) }
-        .row.col-xl-4.col-md-6.pull-lg-right.text-xs-center.text-sm-center.text-md-left
+        .row.col-xl-4.col-md-6.pull-lg-right.text-xs-center.text-sm-center.text-md-left.hidden-sm-down
           p Minimum Investment
           h2.font-weight-bold #{ formatHelper.formatPrice(values.campaign.minimum_increment) }
         div(style="display: none").row.col-lg-12.investors-block
@@ -190,6 +193,22 @@ section.campaigndetail
                 a(href="")
                   img(src="/img/avatar1.jpg" alt="...").img-circle
               a(href="#" style="display: none").link-1 see all...
+        .col-xl-4.col-lg-3.col-md-2.hidden-sm-up.p-sm-0.pull-lg-right.text-xs-center
+            a(href="/" + values.id + "/invest").btn.btn-primary.text-uppercase.pull-lg-right Invest
+        .row
+          .col-lg-12.share.hidden-sm-up.text-xs-center
+            span.d-block 
+              i.fa.fa-share
+              |  Share:
+            .d-block.m-t-1
+              a(href=facebookLink target="_blank").facebook-share
+                i.fa.fa-facebook-square
+              a(href=twitterLink target="_blank").twitter-share
+                i.fa.fa-twitter-square
+              a(href=linkedinLink target="_blank").linkedin-share
+                i.fa.fa-linkedin-square
+              a(href=mailtoLink data-close="true" data-popup-opt="width=1,height=1").email-share
+                i.fa.fa-envelope-square
 section.border-bottom-scroll.hidden-lg-down
   .container.tabs-scroll.p-t-2
     nav(data-toggle="sticky-onscroll").navbar.navbar-default.sticky
