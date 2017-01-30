@@ -4,6 +4,7 @@ class User {
     this.company = null;
     this.campaign = null;
     this.formc = null;
+    this.companiesMember = [];
 
     this.data = { token: '', id: ''};
     this.token = null;
@@ -53,11 +54,15 @@ class User {
     // this.set(userData);
     // app.trigger('userLoaded', userData);
     // return;
-
-    api.makeRequest(authServer + '/rest-auth/data-mini', 'GET').then((data) => {
-      this.data = data;
+    //
+    $.when(
+        api.makeRequest(authServer + '/rest-auth/data-mini', 'GET'),
+        this.getCompaniesMemberR()
+    ).then((data, members) => {
+      debugger;
+      this.data = data[0];
+      this.companiesMember = members[0];
       localStorage.setItem('user', JSON.stringify(this.data));
-
       return this.getCompanyR();
     }).then((company) => {
       this.data.company = company;
@@ -66,6 +71,7 @@ class User {
       localStorage.removeItem('token');
       app.defaultSaveActions.error(app, xhr, status, '');
     });
+
   }
 
   is_anonymous() {
@@ -77,7 +83,8 @@ class User {
   }
 
   toJSON() {
-    return this.data;
+    const data = Object.assign({}, this.data, {'companiesMember': this.companiesMember});
+    return data;
   }
 
   getRoleInfo() {
@@ -135,6 +142,14 @@ class User {
 
   getFormc() {
     return this.formc;
+  }
+
+  getCompaniesMemberR() {
+    return this.companiesMember.length != 0 ? '' : app.makeCacheRequest(raiseCapitalServer + '/info');
+  }
+
+  getCompaniesMember() {
+    return this.companiesMember;
   }
 
 }

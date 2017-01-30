@@ -36,9 +36,10 @@ if user.token != ""
       ul.submenu.list-unstyled 
         li
           a(href="/account/profile").nav-link Profile
-        if user.company && user.company.name
-          li
-            a(href="/dashboard/issuer-dashboard").nav-link #{user.company.name}
+        if user.companiesMember && user.companiesMember.data
+          each v,k in user.companiesMember.data
+            li
+              a(href="/dashboard/issuer-dashboard?id=" + v.company_id).nav-link #{v.company}
         li
           a(href="/account/investor-dashboard").nav-link Investor Dashboard
         li
