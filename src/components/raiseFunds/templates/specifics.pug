@@ -105,7 +105,7 @@ section.campaign-specifics.container.m-b-85
           div(class=(values.valuation_determination == 2 ? '' : 'collapse'))
             - 
               pug_html += app.fields.textareaLabel('valuation_determination_other', {
-                  schema: fields.valuation_determination_other,
+                  schema: _.extend({}, fields.valuation_determination_other, { required: true }),
                   class2: 'col-xl-9 col-lg-12',
                   help_text: 'How are the securities being offered being valued? Include examples of methods for how such securities may be valued by the issuer in the future, including during subsequent corporate actions.',
                   value: values.valuation_determination_other,

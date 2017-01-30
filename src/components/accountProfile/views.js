@@ -9,7 +9,6 @@ const helpers = {
   phone: require('helpers/phoneHelper.js'),
   dropzone: require('helpers/dropzoneHelpers.js'),
   yesNo: require('helpers/yesNoHelper.js'),
-  fields: require('./fields.js'),
   fileList: require('helpers/fileList.js'),
 };
 
@@ -396,12 +395,16 @@ module.exports = {
         else
           this.investments.active.push(i);
       });
+
+      this.snippets = {
+        investment: require('./templates/investment.pug'),
+      };
     },
 
     render() {
       this.$el.html(this.template({
         investments: this.investments,
-        helpers: helpers,
+        snippets: this.snippets,
       }));
     },
 
@@ -490,7 +493,10 @@ module.exports = {
         if (this.investments.historical.length === 1)
           historicalInvestmentsBlock.empty();
 
-        historicalInvestmentsBlock.append(helpers.fields.investment(investment, {}, helpers));
+        historicalInvestmentsBlock.append(this.snippets.investment({
+          i: investment,
+          attr: {},
+        }));
 
       }).fail((err) => {
         alert(err.error);

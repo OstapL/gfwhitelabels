@@ -88,7 +88,6 @@ module.exports = {
 
     newData = newData || $(e.target).closest('form').serializeJSON({ useIntKeysAsArrayIndex: true });
     api.deleteEmptyNested.call(this, this.fields, newData);
-    debugger;
     api.fixDateFields.call(this, this.fields, newData);
     api.fixMoneyFields.call(this, this.fields, newData);
 
