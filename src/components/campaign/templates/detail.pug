@@ -1,7 +1,7 @@
 - var percentage_raised = formatHelper.calculateRaisedPercentage(values.campaign.minimum_raise, values.campaign.amount_raised)
 - var formcLinks = require('./../helpers.js').formcLinks
 
-section(style="background-image: url(" + (values.campaign.header_image_data && values.campaign.header_image_data[0] ? values.campaign.header_image_data[0].urls[0] : '/img/default.png') + ")")#home.home-section.bg-dark-alfa-70.parallax-2.fixed-height-small.hide-bg-fixed
+section(style="background-image: url(" + (values.campaign.header_image_data && values.campaign.header_image_data[0] ? values.campaign.header_image_data[0].urls[0] + '?v=2' : '/img/default.png') + ")")#home.home-section.bg-dark-alfa-70.parallax-2.fixed-height-small.hide-bg-fixed
   .js-height-parent.container-fluid
     .home-content
       .home-text.text-lg-center
@@ -205,7 +205,7 @@ section
           each v,k in values.campaign.gallery_group_data
             .col-lg-4.col-sm-12.col-xs-12.col-md-6.no-padding-img
               a(href=v.urls[v.urls.length - 1] data-size='1440x900' rel="gallery1").fancybox
-                img(src=v.urls[0] + '?v=1' alt=(values.short_name || values.name)).w-100.img-responsive
+                img(src=v.urls[0] + '?v=2' alt=(values.short_name || values.name)).w-100.img-responsive
         else
 
           .col-lg-3.col-sm-12.col-xs-12.no-padding-img
