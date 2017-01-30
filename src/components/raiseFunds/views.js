@@ -556,6 +556,17 @@ module.exports = {
         this.formc = options.formc;
         this.model = options.campaign;
         this.company = options.company;
+        this.fields.valuation_determination_other = _.extend(this.fields.valuation_determination_other, {
+          dependies: ['valuation_determination'],
+          fn: function(name, value, attr, data, schema) {
+            let valuation_determination = this.getData(data, 'valuation_determination');
+            if (valuation_determination == 2)
+              return this.required(name, true, attr, data);
+          }
+        });
+        this.fields.valuation_determination = _.extend(this.fields.valuation_determination, {
+          dependies: ['valuation_determination_other'],
+        });
         this.labels = {
           minimum_raise: 'Our Minimum Total Raise is',
           maximum_raise: 'Our Maximum Total Raise is',
