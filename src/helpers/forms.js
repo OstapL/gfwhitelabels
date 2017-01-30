@@ -150,9 +150,6 @@ module.exports = {
       fields = patchFields;
     }
 
-    if (method == 'POST' || method == 'PUT')
-      newData.domain = window.location.host;
-
     if(!validation.validate(fields, newData, this)) {
       _(validation.errors).each((errors, key) => {
         validation.invalidMsg(this, key, errors);

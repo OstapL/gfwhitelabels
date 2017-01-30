@@ -591,11 +591,11 @@ module.exports = {
         // delete data['positions'];
         // data['number_of_shares'] = 100;
         if(data.voting_shareholder_choice == 1) {
-          if(newRole & 1 != 1) {
+          if((newRole & 1) != 1) {
             newRole += 1;
           }
         } else {
-          if(newRole & 1 == 1) {
+          if((newRole & 1) == 1) {
             newRole -= 1;
           }
           delete data.number_of_shares;
@@ -603,11 +603,11 @@ module.exports = {
           delete data.voting_power_percent;
         }
         if(data.individual_director_choice == 1) {
-          if(newRole & 2 != 2) {
+          if((newRole & 2) != 2) {
             newRole += 2;
           }
         } else {
-          if(newRole & 2 == 2) {
+          if((newRole & 2) == 2) {
             newRole -= 2;
           }
           delete data.board_service_start_date__month;

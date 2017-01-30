@@ -59,7 +59,6 @@ class User {
         api.makeRequest(authServer + '/rest-auth/data-mini', 'GET'),
         this.getCompaniesMemberR()
     ).then((data, members) => {
-      debugger;
       this.data = data[0];
       this.companiesMember = members[0];
       localStorage.setItem('user', JSON.stringify(this.data));

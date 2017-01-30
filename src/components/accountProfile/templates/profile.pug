@@ -20,14 +20,15 @@
           }, fields.image));
       .row.m-t-2.m-b-2
         .col-xl-12.col-lg-12.col-md-6.offset-md-3.col-xs-8.offset-xs-2.offset-xl-0.offset-lg-0.p-l-0.p-r-0
-          if roleInfo && roleInfo.role && roleInfo.companyId
-            .profile-type-user
-              span.user-type #{roleInfo.role}
-              .user-company
-                | in
-                a(href="/dashboard/issuer-dashboard").link-3  #{roleInfo.companyName}
-                |  company.
-            hr.m-t-1.m-b-1
+          if companiesMember && companiesMember.data
+            each v,k in companiesMember.data
+              .profile-type-user
+                span.user-type #{ v.role }
+                .user-company
+                  | in
+                  a(href="/dashboard/issuer-dashboard?id=" + v.company_id).link-3  #{v.company}
+                  |  company.
+              hr.m-t-1.m-b-1
           else if company && company.name
             .profile-type-user
               //span.user-type
