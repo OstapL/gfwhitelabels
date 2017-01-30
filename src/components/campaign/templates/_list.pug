@@ -12,8 +12,10 @@
         .for_img
           -
             var url = app.getUrl(company.campaign.list_image_data);
-            url = url ? url + '?v=2' : '/img/default/255x153.png';
-          img(src=url alt=(company.short_name || company.name))
+            url = url ? (url + '?v=2') : '/img/default/255x153.png';
+            var alternate = company.short_name || company.name;
+
+          img(src=url alt=alternate)
 
           .more_inform
             .title.text-center

@@ -130,7 +130,9 @@ section.campaigndetail
             |  Founded #{ formatHelper.formatDate(values.founding_date) }
       .row
         .col-lg-12.share
-          span.font-weight-bold.d-inline-block Share:
+          span.d-inline-block
+            i.fa.fa-share
+            |  Share:
           
           .d-inline-block
           - var mailtoLink = 'mailto:?subject=Check out ' + values.name + '\'s fundraise on GrowthFountain&body=Check out ' + values.name + '\'s fundraise on GrowthFountain%0D%0A' + window.location.origin + '/' + values.id;
@@ -142,13 +144,13 @@ section.campaigndetail
           - var linkedinLink = 'https://www.linkedin.com/shareArticle?mini=true&url=' + window.location.origin + '/' + values.id + '&title=Check out ' + (values.short_name || values.name) + '\'s fundraise on GrowthFountain.com&summary=' + values.description + '&source=Growth Fountain';
 
             a(href=facebookLink target="_blank").facebook-share
-              i.fa.fa-facebook-square.link-1
+              i.fa.fa-facebook-square
             a(href=twitterLink target="_blank").twitter-share
-              i.fa.fa-twitter-square.link-1
+              i.fa.fa-twitter-square
             a(href=linkedinLink target="_blank").linkedin-share
-              i.fa.fa-linkedin-square.link-1
+              i.fa.fa-linkedin-square
             a(href=mailtoLink data-close="true" data-popup-opt="width=1,height=1").email-share
-              i.fa.fa-envelope-square.link-1
+              i.fa.fa-envelope-square
             //- a(href=values.company.instagram).link-1
             //-   i.fa.fa-google-plus
     .col-lg-6.right-block-investors.p-l-0.p-sm-0
@@ -324,25 +326,22 @@ section
               each v,k in values.campaign.team_members
                 .col-xl-4.col-lg-4.col-md-6.col-sm-12.col-xs-12.team
                   .card.text-lg-center.text-xs-center
-                    .team-photo-wrap.text-xs-center
-                      -
-                        var url = app.getUrl(v.photo_data) || ''
-                      img(src=url alt="").img-circle
-                      .overflow-block
-                        .team-social
-                          if v.linkedin
-                            a(href=v.linkedin target="_blank").link-1.linkedin-share-team
-                              i.fa.fa-linkedin-square.more
-                          if v.facebook
-                            a(href=v.facebook target="_blank").link-1.facebook-share-team
-                              i.fa.fa-facebook-square
-                          if !v.linkedin &&  !v.facebook
-                            a.linkedin-share-team.link-1(style="visibility:hidden;")
-                              i.fa.fa-linkedin-square.more
+                    - var url = app.getUrl(v.photo_data) || ''
+                    img(src=url alt="").img-circle
                     .card-block
                       h4.text-xs-center.card-title.text-uppercase #{v.first_name} #{v.last_name }
                       p.card-text
                         small.text-muted #{v.title }
+                      .team-social
+                        if v.linkedin
+                          a(href=v.linkedin target="_blank").link-1.linkedin-share-team
+                            i.fa.fa-linkedin-square.more
+                        if v.facebook
+                          a(href=v.facebook target="_blank").link-1.facebook-share-team
+                            i.fa.fa-facebook-square
+                        if !v.linkedin && !v.facebook
+                          a.linkedin-share-team.link-1(style="visibility:hidden;")
+                            i.fa.fa-linkedin-square.more
                       p.card-text.text-justify.hide-more-detail !{textHelper.restoreLineBreak(v.bio)}
                         if v.bio.length > 180
                           a(href="#").show-more-members.link-3 Read More

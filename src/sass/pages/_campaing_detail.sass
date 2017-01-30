@@ -164,23 +164,35 @@
 			span
 				margin-bottom: rem(5)
 	.share
+		span
+			color: $small-text
+
 		padding-top: rem(25)
 		a
 			i
-				font-size: rem(24)
+				font-size: rem(30)
 				margin-left: rem(15)
 		.facebook-share
-			:hover
-				color: $btn-facebook-bg
+			color: $btn-facebook-bg
+			+mt(.2s)
+			&:hover
+				color: $btn-facebook-hover-bg
+				
 		.linkedin-share
-			:hover
-				color: $btn-linkedin-bg
+			color: $btn-linkedin-bg
+			+mt(.2s)
+			&:hover
+				color: $btn-linkedin-hover-bg
 		.twitter-share
-			:hover
-				color: #55acee
+			color: $btn-twitter-bg
+			+mt(.2s)
+			&:hover
+				color: $btn-twitter-hover-bg
 		.email-share
-			:hover
-				color: $puerto_rico
+			color: $btn-email-bg
+			+mt(.2s)
+			&:hover
+				color: $btn-email-hover-bg
 
 
 
@@ -286,59 +298,23 @@
 	a,a:hover
 		.card-text,.card-title
 			color: $black_text
-	.team-photo-wrap
-		&:hover
-			+mt(.5s)
-			.overflow-block
-				+mt(.5s)
-				opacity: 1
-	.team-photo-wrap
-		width: rem(180)
-		height: rem(180)
-		position: relative
-		text-align: center
-		margin: auto
-		+mt(.5s)
-		.overflow-block
-			+mt(.5s)
-			content: " "
-			width: 100%
-			height: 100%
-			background: rgba(17, 17, 17, .7)
-			border-radius: 100px
-			position: absolute
-			top: 0
-			opacity: 0
-			.team-social
-				position: relative
-				z-index: 999
-				bottom: -10px
-				left: 50%
-				-ms-transform: translate(-50%,-50%)
-				-webkit-transform: translate(-50%,-50%)
-				transform: translate(-50%,-50%)
-				position: absolute
-				.facebook-share-team
-					
-					font-size: 24px
-					margin: 2px
-					&:hover
-						color: $btn-facebook-bg
-					i
-						background-color: #FFF
-						width: 20px
-						line-height: 18px
-						border-radius: 100px
-				.linkedin-share-team
-					font-size: 24px
-					margin: 2px
-					&:hover
-						color: $btn-linkedin-bg
-					i
-						background-color: #FFF
-						width: 20px
-						line-height: 18px
-						border-radius: 100px
+	.team-social	
+		.linkedin-share-team
+			font-size: 18px
+			margin: 2px
+			color: $btn-linkedin-bg
+			+mt(.2s)
+			&:hover
+				color: $btn-linkedin-hover-bg
+		.facebook-share-team
+			font-size: 18px
+			margin: 2px
+			color: $btn-facebook-bg
+			+mt(.2s)
+			&:hover
+				color: $btn-facebook-hover-bg
+
+
 
 	.card
 		border: none
