@@ -55,7 +55,10 @@
 	width: 60px
 	text-decoration: none
 	outline: none
-		
+
+.detail-security-type-icon
+	font-size: rem(18)!important
+	padding-left: rem(5)
 
 
 .small-icon
@@ -283,6 +286,60 @@
 	a,a:hover
 		.card-text,.card-title
 			color: $black_text
+	.team-photo-wrap
+		&:hover
+			+mt(.5s)
+			.overflow-block
+				+mt(.5s)
+				opacity: 1
+	.team-photo-wrap
+		width: rem(180)
+		height: rem(180)
+		position: relative
+		text-align: center
+		margin: auto
+		+mt(.5s)
+		.overflow-block
+			+mt(.5s)
+			content: " "
+			width: 100%
+			height: 100%
+			background: rgba(17, 17, 17, .7)
+			border-radius: 100px
+			position: absolute
+			top: 0
+			opacity: 0
+			.team-social
+				position: relative
+				z-index: 999
+				bottom: -10px
+				left: 50%
+				-ms-transform: translate(-50%,-50%)
+				-webkit-transform: translate(-50%,-50%)
+				transform: translate(-50%,-50%)
+				position: absolute
+				.facebook-share-team
+					
+					font-size: 24px
+					margin: 2px
+					&:hover
+						color: $btn-facebook-bg
+					i
+						background-color: #FFF
+						width: 20px
+						line-height: 18px
+						border-radius: 100px
+				.linkedin-share-team
+					font-size: 24px
+					margin: 2px
+					&:hover
+						color: $btn-linkedin-bg
+					i
+						background-color: #FFF
+						width: 20px
+						line-height: 18px
+						border-radius: 100px
+
 	.card
 		border: none
 		margin-bottom: 0
@@ -341,7 +398,7 @@
 		.bgc-row-top
 			background-color: $detail-overview-background //переменная находится в файле /unique/variables
 		.bgc-row-middle
-			background-color: $gallery
+			background-color: $alabaster
 			td
 				padding: 5px 0
 		h3
@@ -367,6 +424,8 @@
 				margin-bottom: 0
 				span
 					color: $perks-money-color
+		.w-35
+			width: 40%
 		.bgc-row-middle
 			td
 				padding-left: 20px
@@ -376,7 +435,10 @@
 			padding-right: 20px
 		.perks-intro
 			color: $small-text
-
+#perks
+	table
+		th, td
+			border: 1px solid #ebebeb
 
 .investors-all
 	padding-bottom: rem(45)
@@ -474,30 +536,13 @@
 			margin-bottom: rem(5)
 			margin-top: rem(5)
 .like-detail
-	background-color: $bgc-like-detail
-	h1.like-detail-text
-		color: $white
-		float: left
-		width: 50%
-	.like-wrap
-		top: 50%
-		left: 50%
-		-ms-transform: translate(-50%,-50%)
-		-webkit-transform: translate(-50%,-50%)
-		transform: translate(-50%,-50%)
-		position: absolute
-		width: 100%
 	.like-text-wrap
-		float: right
-		width: 50%
 		text-align: center
-		padding-left: rem(150)
-		margin-top: rem(15)
+		margin-top: rem(50)
 
 		h2
 			margin-bottom: 0
 			letter-spacing: rem(1)
-			font-weight: 300
 			margin-top: 0
 			color: $campaign-like-color-h2
 		.like-detail-icon
@@ -506,7 +551,7 @@
 			padding: rem(3)
 			border-radius: 100px
 			vertical-align: middle
-			background-color: rgba(255,255,255,.5)
+			background-color: $campaign-like-bgc
 			display: inline-block
 			i
 				color: $campaign-like-color
