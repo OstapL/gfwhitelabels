@@ -1,4 +1,6 @@
-- var format = require('helpers/formatHelper.js');
+-
+  var format = require('helpers/formatHelper.js');
+  var c = require('consts/campaign/file.json');
 
 .row
   for company in collection.data
@@ -8,9 +10,12 @@
       a(href="/" + company.id).block_link
       .one_block
         .for_img
-          img(
-            src=((company.campaign.list_image_data && company.campaign.list_image_data[0]) ? company.campaign.list_image_data[0].urls[0] + '?v=2' : '/img/default/255x153.png')
-            alt=(company.short_name || company.name))
+          -
+            var url = app.getUrl(company.campaign.list_image_data);
+            url = url ? (url + '?v=2') : '/img/default/255x153.png';
+            var alternate = company.short_name || company.name;
+
+          img(src=url alt=alternate)
 
           .more_inform
             .title.text-center
@@ -30,7 +35,7 @@
                 i.fa.fa-list
 
             .bottom_pr
-              if company.campaign.security_type == 0
+              if company.campaign.security_type == c.security_type.CommonEquity
                 p Price per share: #{format.formatPrice(company.campaign.price_per_share)}
                 p Number of shares: #{(Math.round(company.campaign.minimum_raise / company.campaign.price_per_share) || 0).toLocaleString('en-US')}
               else
@@ -59,28 +64,28 @@
         .bottom_text
           span.left_desc
             b Security:
-            |  #{company.campaign.security_type == 0 ? 'Common Equity' : 'Revenue Share'}
+            |  #{company.campaign.security_type == c.security_type.CommonEquity ? 'Common Equity' : 'Revenue Share'}
           span.right_desc
-            b Industry: 
+            b Industry:
             case company.industry
-              when 1
+              when c.industry.Entertainment
                 | Entertainment
-              when 2
+              when c.industry.FoodService
                 | Food Service
-              when 3
+              when c.industry.Technology
                 | Technology
-              when 4
+              when c.industry.Wellness
                 | Wellness
-              when 5
+              when c.industry.Fashion
                 | Fashion
-              when 6
+              when c.industry.Sports
                 | Sports
-              when 7
+              when c.industry.Environment
                 | Environment
-              when 8
+              when c.industry.Education
                 | Education
-              when 9
+              when c.industry.Community
                 | Community
               default
-                | Other 
+                | Other
           .clear
