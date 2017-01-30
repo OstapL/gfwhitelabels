@@ -493,6 +493,7 @@ module.exports = {
       }
       this.fields = options.fields;
       this.role = options.role;
+      this.allFields = options.fields;
       this.fields = options.fields[this.role].fields;
 
       this.labels = {
@@ -552,6 +553,7 @@ module.exports = {
 
       require('bootstrap-select/sass/bootstrap-select.scss');
       let selectPicker = require('bootstrap-select');
+      debugger;
 
       this.$el.html(
         template({
@@ -591,6 +593,7 @@ module.exports = {
         // delete data['positions'];
         // data['number_of_shares'] = 100;
         if(data.voting_shareholder_choice == 1) {
+          _.extend(this.fields, this.allFields.shareholder.fields);
           if((newRole & 1) != 1) {
             newRole += 1;
           }
@@ -603,6 +606,7 @@ module.exports = {
           delete data.voting_power_percent;
         }
         if(data.individual_director_choice == 1) {
+          _.extend(this.fields, this.allFields.director.fields);
           if((newRole & 2) != 2) {
             newRole += 2;
           }
@@ -624,6 +628,7 @@ module.exports = {
           delete data.role;
         }
       }
+      debugger;
       api.submitAction.call(this, e, data);
     },
 
