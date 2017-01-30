@@ -339,7 +339,7 @@ section
           .row
             .col-lg-12.text-center-flex
               each v,k in values.campaign.team_members
-                .col-xl-4.col-lg-4.col-md-6.col-sm-12.col-xs-12.team
+                .col-xl-4.col-lg-4.col-md-6.col-sm-12.col-xs-12.team.p-xs-0
                   .card.text-lg-center.text-xs-center
                     img(src=(v.photo_data && v.photo_data[0] && v.photo_data[0].urls && v.photo_data[0].urls[0] ? v.photo_data[0].urls[0] : '') alt="").img-circle
                     .card-block
@@ -388,7 +388,7 @@ section
                     if v
                       - counter++;
                       - lastArticleIdx = k;
-                      div.col-xl-4.col-xs-12.col-sm-12.col-md-12.col-lg-6.articles_press
+                      div.col-xl-4.col-xs-12.col-sm-12.col-md-12.col-lg-6.articles_press.p-xs-0
                         a(href=v.link target="_blank")
                           .card.card-inverse.m-b-2
                             .card-title
@@ -509,7 +509,7 @@ section
     .container
       div
         h2#overview.col-lg-12.dosis.text-uppercase.text-lg-center.text-xs-center.campaign-subheading overview and terms
-        .col-xl-8.offset-xl-2.col-lg-10.offset-lg-1.col-md-12.offset-md-0.fundraising
+        .col-xl-8.offset-xl-2.col-lg-10.offset-lg-1.col-md-12.offset-md-0.fundraising.p-xs-0
           if values.campaign.security_type == 0
             table.table.table-bordered.pb10
               tbody
@@ -596,7 +596,7 @@ section
       - values.campaign.perks.sort(function (a, b) { return Number(a.amount) - Number(b.amount); });
       .container
         div
-          .col-xl-8.offset-xl-2.col-lg-10.offset-lg-1.col-md-12.offset-md-0.perks
+          .col-xl-8.offset-xl-2.col-lg-10.offset-lg-1.col-md-12.offset-md-0.perks.p-xs-0
             table.table.table-bordered.m-b-0
               tbody
                 tr.bgc-row-top
