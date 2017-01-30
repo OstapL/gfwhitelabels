@@ -284,7 +284,7 @@ section.formc-review
             | !{' '}
             +frField('company.corporate_structure', 'select')
             |  (the “Company”), is offering up to 
-            b #{ formatHelper.formatPrice(Math.round(values.campaign.maximum_raise / values.campaign.price_per_share)) }
+            b #{ formatHelper.formatNumber(Math.round(values.campaign.maximum_raise / values.campaign.price_per_share)) }
             |   shares of 
             +frField('campaign.security_type', 'select')
             |  (the 
@@ -294,7 +294,7 @@ section.formc-review
             |  per Share for a maximum aggregate offering price of 
             +frField('campaign.maximum_raise', 'money').
           p.pb10.text-indent The Company has established a minimum offering of at least 
-            b #{ formatHelper.formatPrice(Math.round(values.campaign.minimum_raise / values.campaign.price_per_share)) }
+            b #{ formatHelper.formatNumber(Math.round(values.campaign.minimum_raise / values.campaign.price_per_share)) }
             |  Shares for a minimum aggregate offering price of 
             +frField('campaign.minimum_raise', 'money')
               |  prior to #{ values.campaign.expiration_date }
