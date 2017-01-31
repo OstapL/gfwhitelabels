@@ -1,6 +1,7 @@
 -
   var format = require('helpers/formatHelper.js');
-  var c = require('consts/campaign/file.json');
+  var security_type = require('consts/raiseCapital/security_type.json');
+  var industry = require('consts/raisecapital/industry.json');
 
 .row
   for company in collection.data
@@ -35,7 +36,7 @@
                 i.fa.fa-list
 
             .bottom_pr
-              if company.campaign.security_type == c.security_type.CommonEquity
+              if company.campaign.security_type == security_type.CommonEquity
                 p Price per share: #{format.formatPrice(company.campaign.price_per_share)}
                 p Number of shares: #{(Math.round(company.campaign.minimum_raise / company.campaign.price_per_share) || 0).toLocaleString('en-US')}
               else
@@ -64,28 +65,8 @@
         .bottom_text
           span.left_desc
             b Security:
-            |  #{company.campaign.security_type == c.security_type.CommonEquity ? 'Common Equity' : 'Revenue Share'}
+            |  #{company.campaign.security_type == security_type.CommonEquity ? 'Common Equity' : 'Revenue Share'}
           span.right_desc
             b Industry:
-            case company.industry
-              when c.industry.Entertainment
-                | Entertainment
-              when c.industry.FoodService
-                | Food Service
-              when c.industry.Technology
-                | Technology
-              when c.industry.Wellness
-                | Wellness
-              when c.industry.Fashion
-                | Fashion
-              when c.industry.Sports
-                | Sports
-              when c.industry.Environment
-                | Environment
-              when c.industry.Education
-                | Education
-              when c.industry.Community
-                | Community
-              default
-                | Other
+            | !{ industry[company.industry] || "Other" }
           .clear
