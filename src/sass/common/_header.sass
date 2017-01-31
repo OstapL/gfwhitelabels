@@ -9,7 +9,7 @@
   position: relative
   top: 50%;
   left: 0;
-
+//======================================
 // show main menu list on mobile devaices
 html.show-menu
   overflow: hidden !important
@@ -101,39 +101,73 @@ html.show-menu
       -ms-transition: opacity 0.5s ease-out, transform 0.5s ease-out, -webkit-transform 0.5s ease-out
       -o-transition: opacity 0.5s ease-out, transform 0.5s ease-out, -webkit-transform 0.5s ease-out
       transition: opacity 0.5s ease-out, transform 0.5s ease-out, -webkit-transform 0.5s ease-out
-
+//================================
+//right menu
 header.no-overflow
-  overflow: visible
-  nav
-    overflow: visible
+  overflow: hidden !important
+  height: 100% !important
+  overflow-y: scroll !important
 
-    // show profile menu on mobile devaices
-    .list-container.user-info-drop.notification-container
+  body
+    overflow: hidden !important 
+    height: 100% !important
+
+  header
+    height: 100%
+    -webkit-transition: height 0.35s ease-in 200ms
+    -moz-transition: height 0.35s ease-in 200ms
+    -ms-transition: height 0.35s ease-in 200ms
+    -o-transition: height 0.35s ease-in 200ms
+    transition: height 0.35s ease-in 200ms
+  .list-container.user-info-drop.notification-container
+    visibility: visible
+    -webkit-transition-delay: 0s
+    -moz-transition-delay: 0s
+    -ms-transition-delay: 0s
+    -o-transition-delay: 0s
+    transition-delay: 0s
+    opacity: 1
+
+    li
       -webkit-transition-delay: 300ms, 300ms
       -moz-transition-delay: 300ms, 300ms
       -ms-transition-delay: 300ms, 300ms
       -o-transition-delay: 300ms, 300ms
       transition-delay: 300ms, 300ms
 
-      -webkit-transition: height 0.35s ease-out, opacity 0.25s ease-out, transform 0.25s ease-out, -webkit-transform 0.25s ease-out
-      -moz-transition: height 0.35s ease-out, opacity 0.25s ease-out, transform 0.25s ease-out, -webkit-transform 0.25s ease-out
-      -ms-transition: height 0.35s ease-out, opacity 0.25s ease-out, transform 0.25s ease-out, -webkit-transform 0.25s ease-out
-      -o-transition: height 0.35s ease-out, opacity 0.25s ease-out, transform 0.25s ease-out, -webkit-transform 0.25s ease-out
-      transition: height 0.35s ease-out, opacity 0.25s ease-out, transform 0.25s ease-out, -webkit-transform 0.25s ease-out
       -webkit-transition: none
       -moz-transition: none
       -ms-transition: none
       -o-transition: none
       transform: none
-  
-      height: auto
-      opacity: 1
 
-      background: rgba( $menu_backgound_from, .96)
-      
-      // show login signin button and set it diff height on mobile devaices
-      &.not-log-in-user
-        height: 66px
+      opacity: 1
+      -webkit-transition: opacity 0.5s ease-out, transform 0.5s ease-out, -webkit-transform 0.5s ease-out
+      -moz-transition: opacity 0.5s ease-out, transform 0.5s ease-out, -webkit-transform 0.5s ease-out
+      -ms-transition: opacity 0.5s ease-out, transform 0.5s ease-out, -webkit-transform 0.5s ease-out
+      -o-transition: opacity 0.5s ease-out, transform 0.5s ease-out, -webkit-transform 0.5s ease-out
+      transition: opacity 0.5s ease-out, transform 0.5s ease-out, -webkit-transform 0.5s ease-out
+
+  form.form-inline
+    -webkit-transition-delay: 200ms, 200ms
+    -moz-transition-delay: 200ms, 200ms
+    -ms-transition-delay: 200ms, 200ms
+    -o-transition-delay: 200ms, 200ms
+    transition-delay: 200ms, 200ms
+
+    -webkit-transition: none
+    -moz-transition: none
+    -ms-transition: none
+    -o-transition: none
+    transform: none
+    opacity: 1
+    -webkit-transition: opacity 0.5s ease-out, transform 0.5s ease-out, -webkit-transform 0.5s ease-out
+    -moz-transition: opacity 0.5s ease-out, transform 0.5s ease-out, -webkit-transform 0.5s ease-out
+    -ms-transition: opacity 0.5s ease-out, transform 0.5s ease-out, -webkit-transform 0.5s ease-out
+    -o-transition: opacity 0.5s ease-out, transform 0.5s ease-out, -webkit-transform 0.5s ease-out
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out, -webkit-transform 0.5s ease-out
+//=================================
+// bell menu
 header.no-overflow-bell
   overflow: visible
   nav
@@ -640,7 +674,7 @@ header
         height: auto
         float: none!important
         margin: 0
-        padding: rem(10) rem(30) 0
+        padding: rem(10) rem(10) 0
         overflow: hidden
         overflow-y: auto
         visibility: hidden
@@ -677,7 +711,8 @@ header
           border-bottom: 1px rgba($menu_text_color, .5) solid
 
           a 
-            padding: rem(10) rem(3)
+            padding: rem(20) rem(3)
+            font-size: rem(18)
       
       .mobile-menu
         display: block
@@ -837,7 +872,11 @@ header
 
     .list-container
       position: static
-
+  .mobile-singup-wrap
+    .btn-login-mobile
+      display: block
+      width: 145px
+      font-size: rem(15)
   @media screen and (max-width: 385px)
 
     .notification-container
