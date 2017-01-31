@@ -449,9 +449,10 @@ module.exports = {
         },
       };
 
+      /*
       this.fields.payment_information_data.schema.ssn = {
         type: 'password',
-        required: true,
+        required: false,
         _length: 9,
         dependies: ['ssn_re'],
         fn: function(name, value, attr, data, computed) {
@@ -472,6 +473,7 @@ module.exports = {
           }
         },
       };
+      */
 
 
       this.fields.signature = {
@@ -546,7 +548,7 @@ module.exports = {
         },
       });
 
-      this.user.ssn_re = this.user.ssn;
+      // this.user.ssn_re = this.user.ssn;
 
       this.labels = {
         personal_information_data: {
