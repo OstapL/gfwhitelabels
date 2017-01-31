@@ -251,7 +251,7 @@ let app = {
     if (!file || !_.isString(file))
       return null;
 
-    if (file.startsWith('http://') || file.startsWith('https://'))
+    if (file.startsWith('http://') || file.startsWith('https://') || file.startsWith('/'))
       return file;
 
     return bucketServer + '/' + file;
