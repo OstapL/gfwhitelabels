@@ -1,30 +1,24 @@
 const validation = require('components/validation/validation.js');
 const userDocuments = require('helpers/userDocuments.js');
 
+const disableEnterHelper = require('helpers/disableEnterHelper.js');
+
 const helpers = {
   date: require('helpers/dateHelper.js'),
   format: require('helpers/formatHelper.js'),
   phone: require('helpers/phoneHelper.js'),
-  social: require('helpers/socialNetworksHelper.js'),
   dropzone: require('helpers/dropzoneHelpers.js'),
   yesNo: require('helpers/yesNoHelper.js'),
-  fields: require('./fields.js'),
   fileList: require('helpers/fileList.js'),
 };
 
 const moment = require('moment');
 
-const constants = {
-  AccountType: require('consts/bankAccount.json'),
-  InvestmentStatus: require('consts/investmentStatus.json'),
-};
+const invest = require('consts/financialInformation.json');
 
-const activeStatuses = [constants.InvestmentStatus.New, constants.InvestmentStatus.Approved];
-const canceledStatuses = [constants.InvestmentStatus.CanceledByClient,
-    constants.InvestmentStatus.CanceledByBank, constants.InvestmentStatus.CanceledByInquisitor];
-
-let countries = {};
-_.each(require('helpers/countries.json'), (c) => { countries[c.code] = c.name; });
+const activeStatuses = [invest.investment_status.New, invest.investment_status.Approved];
+const canceledStatuses = [invest.investment_status.CanceledByClient,
+    invest.investment_status.CanceledByBank, invest.investment_status.CanceledByInquisitor];
 
 import 'bootstrap-slider/dist/bootstrap-slider'
 import 'bootstrap-slider/dist/css/bootstrap-slider.css'
@@ -43,27 +37,6 @@ module.exports = {
       'change #twitter,#facebook,#instagram,#linkedin': 'appendHttpsIfNecessary',
       // 'change input[name=accredited_investor]': 'changeAccreditedInvestor',
     }, helpers.phone.events, helpers.dropzone.events, helpers.yesNo.events),
-
-    changeAccreditedInvestorItem(e) {
-      let $target = $(e.target);
-      let name = $target.data('name');
-      let checked = $target.prop('checked');
-      this.$('input[name=' + name + ']').val(checked);
-      if (checked) {
-        this.$('#not-qualify').prop('checked', false).change();
-      }
-    },
-
-    changeQualify(e) {
-      let $target = $(e.target);
-      if ($target.prop('checked')) {
-        this.$('.investor-item-checkbox').prop('checked', false).change();
-
-        this.$('input[name=accredited_investor_choice]').val(false);
-      } else {
-        this.$('input[name=accredited_investor_choice]').val(true);
-      }
-    },
 
     initialize(options) {
       this.activeTab = options.activeTab;
@@ -86,7 +59,6 @@ module.exports = {
         },
       });
 
-      // this.fields.account_number.required = true;
       this.fields.account_number = {
         type: 'password',
         required: true,
@@ -94,7 +66,7 @@ module.exports = {
         dependies: ['account_number_re'],
         fn: function(name, value, attr, data, schema) {
           if (value != this.getData(data, 'account_number_re')) {
-            throw "Account number fields don't match";
+            throw "Account number fields don't match.";
           }
         },
       };
@@ -106,7 +78,7 @@ module.exports = {
         dependies: ['account_number'],
         fn: function(name, value, attr, data, schema) {
           if (value != this.getData(data, 'account_number')) {
-            throw "Account number fields don't match";
+            throw "Account number fields don't match.";
           }
         },
       };
@@ -114,7 +86,24 @@ module.exports = {
       this.fields.routing_number = {
         required: true,
         _length: 9,
-      }
+        dependies: ['routing_number_re'],
+        fn: function(name, value, attr, data, computed) {
+          if (value != data.routing_number_re) {
+            throw "Routing number fields don't match.";
+          }
+        },
+      };
+
+      this.fields.routing_number_re = {
+        required: true,
+        _length: 9,
+        dependies: ['routing_number'],
+        fn: function(name, value, attr, data, computed) {
+          if (value != data.routing_number) {
+            throw "Routing number fields don't match.";
+          }
+        },
+      };
 
       this.fields.ssn = {
         type: 'password',
@@ -123,7 +112,7 @@ module.exports = {
         dependies: ['ssn_re'],
         fn: function(name, value, attr, data, computed) {
           if (value != data.ssn_re) {
-            throw "Social security fields don't match";
+            throw "Social security fields don't match.";
           }
         },
       };
@@ -135,10 +124,14 @@ module.exports = {
         dependies: ['ssn'],
         fn: function(name, value, attr, data, computed) {
           if (value != data.ssn) {
-            throw "Social security fields don't match";
+            throw "Social security fields don't match.";
           }
         },
       };
+
+      this.model.account_number_re = this.model.account_number;
+      this.model.routing_number_re = this.model.routing_number;
+      this.model.ssn_re = this.model.ssn;
 
       this.labels = {
         country: 'Country',
@@ -151,6 +144,7 @@ module.exports = {
         account_number: 'Account Number',
         account_number_re: 'Re-Enter Account Number',
         routing_number: 'Routing Number',
+        routing_number_re: "Re-Enter Routing Number",
         annual_income: 'My Annual Income',
         net_worth: 'My Net Worth',
         twitter: 'Your Twitter link',
@@ -179,11 +173,11 @@ module.exports = {
           tab: this.activeTab || 'account_info',
           serverUrl: serverUrl,
           user: this.model,
+          companiesMembers: this.model.companiesMembers,
           roleInfo: app.user.getRoleInfo(),
           company: app.user.get('company'),
           fields: this.fields,
           states: this.usaStates,
-          constants: constants,
         })
       );
 
@@ -196,8 +190,30 @@ module.exports = {
       this.cityStateArea = this.$('.js-city-state');
       this.cityField = this.$('.js-city');
       this.stateField = this.$('.js-state');
+      disableEnterHelper.disableEnter.call(this);
 
       return this;
+    },
+
+    changeAccreditedInvestorItem(e) {
+      let $target = $(e.target);
+      let name = $target.data('name');
+      let checked = $target.prop('checked');
+      this.$('input[name=' + name + ']').val(checked);
+      if (checked) {
+        this.$('#not-qualify').prop('checked', false).change();
+      }
+    },
+
+    changeQualify(e) {
+      let $target = $(e.target);
+      if ($target.prop('checked')) {
+        this.$('.investor-item-checkbox').prop('checked', false).change();
+
+        this.$('input[name=accredited_investor_choice]').val(false);
+      } else {
+        this.$('input[name=accredited_investor_choice]').val(true);
+      }
     },
 
     onImageCrop(name) {
@@ -380,20 +396,41 @@ module.exports = {
         else
           this.investments.active.push(i);
       });
+
+      this.snippets = {
+        investment: require('./templates/investment.pug'),
+      };
     },
 
     render() {
       this.$el.html(this.template({
         investments: this.investments,
-        helpers: helpers,
+        snippets: this.snippets,
       }));
     },
 
     openAgreement(e) {
+      e.preventDefault();
+      const PARTICIPATION_AGREEMENT_ID = 2;
       const objectId = e.target.dataset.objectId;
       const securityType = e.target.dataset.securityType;
       const subscriptionAgreementLink = userDocuments.getUserDocumentsByType(objectId, securityType);
-      e.target.href = subscriptionAgreementLink;
+      const participationAgreementLink = userDocuments.getUserDocumentsByType(objectId, PARTICIPATION_AGREEMENT_ID);
+
+      const data = {
+        title: 'Agreements',
+        files: [{
+          mime: 'application/pdf',
+          name: 'Subscription Agreement.pdf',
+          urls: [subscriptionAgreementLink]
+        }, {
+          mime: 'application/pdf',
+          name: 'Participation Agreement.pdf',
+          urls: [participationAgreementLink]
+        }],
+      };
+
+      helpers.fileList.show(data);
     },
 
     _findInvestment(id) {
@@ -457,7 +494,10 @@ module.exports = {
         if (this.investments.historical.length === 1)
           historicalInvestmentsBlock.empty();
 
-        historicalInvestmentsBlock.append(helpers.fields.investment(investment, {}, helpers));
+        historicalInvestmentsBlock.append(this.snippets.investment({
+          i: investment,
+          attr: {},
+        }));
 
       }).fail((err) => {
         alert(err.error);
@@ -547,37 +587,20 @@ module.exports = {
   issuerDashboard: Backbone.View.extend({
     template: require('./templates/issuerDashboard.pug'),
     events: {
-      'click .linkedin-share': 'shareOnLinkedIn',
-      'click .facebook-share': 'shareOnFaceBook',
-      'click .twitter-share': 'shareOnTwitter',
-      'click .email-share': 'shareWithEmail',
-      'click .google-plus-share': 'shareWithGooglePlus',
+      'click .email-share': 'socialPopup',
+      'click .linkedin-share': 'socialPopup',
+      'click .facebook-share': 'socialPopup',
+      'click .twitter-share': 'socialPopup',
+      'click .google-plus-share': 'socialPopup',
       'click .cancel-campaign': 'cancelCampaign',
     },
 
-    initialize(options) {
-      this.model.description = "Something long comes from here. Something long comes from here. Something long comes from here. Something long comes from here. Something long comes from here. ";
-      this.model.thumbnail = '/img/smartbe-intelligent-stroller.jpg';
-      this.model.campaign = _.extend({
-        minimum_raise: 80000,
-        amount_raised: 20000,
-        starting_date: "2016-04-04",
-        expiration_date: "2017-02-04",
-        investors: 0,
-        views: 0,
-        interactions: 4567,
-      }, this.model.campaign);
-
-      this.company = options.company;
-
-      helpers.social.init();
-    },
+    initialize(options) {},
 
     render(){
       this.$el.html(
         this.template({
           values: this.model,
-          company: this.company,
           helpers: helpers,
         })
       );
@@ -613,57 +636,15 @@ module.exports = {
       return this;
     },
 
-    shareOnLinkedIn(e) {
+    socialPopup (e) {
       e.preventDefault();
-
-      helpers.social.linkedIn.share({
-        href: 'http://growthfountain.com/' + this.model.id,
-        title: this.model.name,
-        description: this.model.description,
-      });
-    },
-
-    shareOnFaceBook(e) {
-      e.preventDefault();
-
-      helpers.social.facebook.share({
-        href: 'http://growthfountain.com/' + this.model.id,
-        caption: this.model.tagline,
-        title: this.model.name,
-        description: this.model.description,
-        picture: this.model.campaign.header_image_data[0].urls[0],
-      });
-
-    },
-
-    shareOnTwitter(e) {
-      e.preventDefault();
-
-      helpers.social.twitter.share({
-        href: 'http://growthfountain.com/' + this.model.id,
-        hashtags: ['investment', 'fundraising'],
-        text: 'Check out ',
-      });
-    },
-
-    shareWithEmail(e) {
-      e.preventDefault();
-
-      let text = "Check out " + this.model.name + "'s fundraise on GrowthFountain";
-
-      helpers.social.email.share({
-        subject: text,
-        message: text,
-        href: 'http://growthfountain.com/' + this.model.id,
-      });
-    },
-
-    shareWithGooglePlus(e) {
-      e.preventDefault();
-
-      helpers.social.googlePlus.share({
-        href: 'http://growthfountain.com/' + this.model.id,
-      });
+      var popupOpt = e.currentTarget.dataset.popupOpt || 'toolbar=0,status=0,left=45%,top=45%,width=626,height=436';
+      var windowChild = window.open(e.currentTarget.href, '', popupOpt);
+   
+      if (e.currentTarget.dataset.close) {
+        let closeScript = "<script>setTimeout(window.close.bind(window), 400);</script>";
+        windowChild.document.write(closeScript);
+      }
     },
 
     cancelCampaign(e) {

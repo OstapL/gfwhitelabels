@@ -1,6 +1,7 @@
 include ../../raiseFunds/templates/menu.pug
 
 - pug_html += app.breadcrumbs('create form c', '', [ ['Home', '/'], ['Create Form C', '/formc/' + values.id + '/introduction'], ['team members', ''], ]);
+- var helpers = require('../helpers.js');
 
 mixin isInvited(data)
   if data.is_invited == true
@@ -14,20 +15,27 @@ mixin isInvited(data)
         i.fa.fa-envelope-o 
         | Invite
 
-section.create-company-team-add.container
+section.formc-team-add.container
   - var campaignId = values.campaign_id;
   +menu('formc', 'team-members')
 
   //START RIGHT BLOCK
   .col-lg-8.p-xs-0
-    h2.text-uppercase.text-lg-center.text-xs-center.dosis.m-t-0.mb50 team members
+    h2.text-uppercase.text-lg-center.text-xs-center.m-t-0 team members
     .col-lg-12.p-xs-0
       .warning-block.warning-team-add.text-lg-left
         i.fa.fa-info-circle 
-        span.warning-text Please enter all Officers, Directors and 20% Voting Shareholders.
-          p.pb10  We are required by law to run background checks on all of these individuals.  We will email them separately to collect the information required to run these checks - and you'll see the status on your Issuer Dashboard.
-          p.pb10 OFFICER means:  president, vice president, secretary, treasurer or principal financial officer, comptroller or principal accounting officer, and any person routinely performing similar functions.
-          | 20% VOTING SHAREHOLDER means: no earlier than 120 days prior to the date of this offering, please list beneficial owners of 20% or more of issuer’s outstanding voting equity securities.
+        span.warning-text Please enter all Officers, Directors and 20%+ Voting Shareholders. We are required by law to run background checks on all these individuals.
+          p.pb10  OFFICER means: president, vice president, secretary, treasurer or principal financial officer, comptroller or principal accounting officer, and any person routinely performing similar functions.
+          span.pb10 DIRECTORS means: individuals that are elected or established through incorporating documents to act as representatives of the stockholders to establish corporate management related policies and to make decisions on major company issues or 
+            u any person routinely performing similar functions
+            | &nbsp;
+            div.showPopover(data-content="If an ‘advisor’ or any individual meets any of the following, but not limited to, you may need to add them as a Director. <br> <u>Please note</u> that more disclosure will help with investor transparency.<br>Has a fiduciary Duty of Loyalty or Duty of Care to the company:<br> <ul> <li>Oversees decision making for company functions</li><li>Has the ability to exert control over management</li><li>Participates in meeting quorum requirements</li><li>Exercises voting power in the same manner as individuals on the Board of Directors</li><li>Review and approval of Board of Directors is subject to their recommendation, review or vote</li></ul>").d-inline-block
+              i.fa.fa-question-circle.team-member-question
+            | .
+          br
+          br
+          span 20%+ VOTING SHAREHOLDER means: no earlier than 120 days prior to the date of this offering, please list beneficial owners of 20% or more of your outstanding voting equity securities.
 
     form.form-section
       .col-lg-12.m-t-1.m-b-2.p-xs-0
@@ -55,17 +63,17 @@ section.create-company-team-add.container
           .col-lg-2.text-lg-right
             label Step 1
           .col-lg-10
-            a(href='/formc/' + values.id + '/team-members/director/new').btn.text-uppercase
+            a(href='/formc/' + values.id + '/team-members/officer/new').btn.text-uppercase
               i.fa.fa-plus
-              |  ADD DIRECTOR
+              |  ADD OFFICER
       .row.m-t-1
         .col-lg-12.p-xs-0
           .col-lg-2.text-lg-right
             label Step 2
           .col-lg-10 
-            a(href='/formc/' + values.id + '/team-members/officer/new').btn.text-uppercase
+            a(href='/formc/' + values.id + '/team-members/director/new').btn.text-uppercase
               i.fa.fa-plus
-              |  ADD OFFICER
+              |  ADD DIRECTOR
       .row.m-t-1
         .col-lg-12.p-xs-0
           .col-lg-2.text-lg-right
@@ -85,14 +93,9 @@ section.create-company-team-add.container
               th(colspan="2")
           tbody
             - var requiredRoles = { 4: 'CEO/President', 8: 'Principal Financial Officer/Treasurer', 64: 'Controller/Principal Accounting Officer' };
-            - var roleCounter = 0;
-            tr
-              td(colspan="5").p-x-0.p-y-0
-                each k,v in requiredRoles
-                  - var persons = values.team_members.filter(function(el) { return (el.role ? el.role & v: false); })
-                  if persons.length > 0
-                    - roleCounter ++;
-                if roleCounter < 3
+            if helpers.haveRequiredMembers(values.team_members) != true 
+              tr
+                td(colspan="5").p-x-0.p-y-0
                   #membersMessage.warning-block.warning-team-add.team-member-no-border.text-lg-left.m-b-0
                     i.fa.fa-info-circle 
                     span.warning-text Please identify the Officers in your company responsible for the following 3 roles. Please note that, if necessary, the same person may be identified with multiple roles.
@@ -108,7 +111,7 @@ section.create-company-team-add.container
                     a(href="/formc/" + values.id + "/team-members/officer/" + person.user_id).link-1
                       i.fa.fa-pencil-square-o
                   td.text-xl-center
-                    a(href="#" data-id=person.user_id data-role=roles[k]).link-1.delete-member
+                    a(href="#" data-id=person.user_id data-role=v).link-1.delete-member
                       i.fa.fa-times
                   - roleCounter ++;
               else
@@ -121,24 +124,61 @@ section.create-company-team-add.container
                   td.text-xl-center &nbsp;
                   td.text-xl-center &nbsp;
             each v,k in values.team_members
-              - v.title = v.title ? v.title : [];
-              for role,kk in v.role
-                if role != -1
-                  tr
-                    td 
-                      | #{ roles[role] }
-                    td.text-xs-center #{ v.first_name + ' ' + v.last_name }
-                    +isInvited(v)
-                    td.text-xl-center
-                      a(href="/formc/" + values.id + "/team-members/" + role + '/' + v.user_id).link-1
-                        i.fa.fa-pencil-square-o
-                    td.text-xl-center
-                      a(href="#" data-id=v.user_id data-role=roles[v.role]).link-1.delete-member
-                        i.fa.fa-times
+              if (v.role & 16) == 16
+                tr
+                  td 
+                    | Vice President
+                  td.text-xs-center #{ v.first_name + ' ' + v.last_name }
+                  +isInvited(v)
+                  td.text-xl-center
+                    a(href="/formc/" + values.id + "/team-members/officer/" + v.user_id).link-1
+                      i.fa.fa-pencil-square-o
+                  td.text-xl-center
+                    a(href="#" data-id=v.user_id data-role=16).link-1.delete-member
+                      i.fa.fa-times
+            each v,k in values.team_members
+              if (v.role & 32) == 32
+                tr
+                  td 
+                    | Secretary
+                  td.text-xs-center #{ v.first_name + ' ' + v.last_name }
+                  +isInvited(v)
+                  td.text-xl-center
+                    a(href="/formc/" + values.id + "/team-members/officer/" + v.user_id).link-1
+                      i.fa.fa-pencil-square-o
+                  td.text-xl-center
+                    a(href="#" data-id=v.user_id data-role=32).link-1.delete-member
+                      i.fa.fa-times
+            each v,k in values.team_members
+              if (v.role & 2) == 2
+                tr
+                  td 
+                    | Director
+                  td.text-xs-center #{ v.first_name + ' ' + v.last_name }
+                  +isInvited(v)
+                  td.text-xl-center
+                    a(href="/formc/" + values.id + "/team-members/director/" + v.user_id).link-1
+                      i.fa.fa-pencil-square-o
+                  td.text-xl-center
+                    a(href="#" data-id=v.user_id data-role=2).link-1.delete-member
+                      i.fa.fa-times
+            each v,k in values.team_members
+              if (v.role & 1) == 1
+                tr
+                  td 
+                    | Sharesholder
+                  td.text-xs-center #{ v.first_name + ' ' + v.last_name }
+                  +isInvited(v)
+                  td.text-xl-center
+                    a(href="/formc/" + values.id + "/team-members/shareholder/" + v.user_id).link-1
+                      i.fa.fa-pencil-square-o
+                  td.text-xl-center
+                    a(href="#" data-id=v.user_id data-role=1).link-1.delete-member
+                      i.fa.fa-times
                 
 
       div(style="display: " +  (values.team_members.length >= 1 ? 'block' : 'none')).col-lg-12.pull-lg-right.p-r-0
 
       .col-lg-12.text-md-center.text-sm-center.text-xs-center.m-t-3
-        button(data-method="PUT")#submitForm.btn.btn-primary.text-uppercase.pull-lg-right Save And Continue
+        button#submitForm.btn.btn-primary.text-uppercase.pull-lg-right Save And Continue
           i.fa.fa-angle-right

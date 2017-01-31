@@ -18,9 +18,9 @@
 
 div(id=id class=cssClass data-level=level data-id=comment.uid).p-r-0.p-t-0.p-xs-0
   .border-bottom.m-t-1.m-b-1
-  .col-lg-1.text-xs-center
+  .col-lg-1.col-xs-2.text-xs-center
     img(src=avatar alt="").img-circle
-  .col-lg-11.p-xs-0
+  .col-lg-11.col-xs-10.p-xs-0
     .comments-wrap.col-lg-12.p-r-0.p-xs-0
       span.name-comments.text-uppercase #{ userName }
       -
@@ -33,7 +33,7 @@ div(id=id class=cssClass data-level=level data-id=comment.uid).p-r-0.p-t-0.p-xs-
       if title
         span.kvalificatio-comments #{ title }
 
-      span.date-comments.pull-right #{ passedTime }
+      span.date-comments.pull-right.hidden-xs-down #{ passedTime }
       p #{ comment.message }
       div.responce.comment-actions
         if level <= 0

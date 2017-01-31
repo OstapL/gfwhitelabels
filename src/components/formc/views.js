@@ -366,6 +366,7 @@ module.exports = {
       this.fields = options.fields;
       this.fields.full_time_employers = { label: 'Full Time Employees' };
       this.fields.part_time_employers = { label: 'Part Time Employees' };
+      this.urlRoot = this.urlRoot.replace(':id', this.model.id);
     },
 
     _success(data, newData) {
@@ -383,9 +384,9 @@ module.exports = {
 
       if (confirm('Are you sure you would like to delete this team member?')) {
         api.makeRequest(
-          this.urlRoot.replace(':id', this.model.id) + '/delete',
-          'PUT',
-          {'user_id': userId}
+          this.urlRoot.replace('employers', '') +  userId,
+          'DELETE',
+          {'role': e.currentTarget.dataset.role }
         ).
         then((data) => {
           let index = this.model.team_members.findIndex((el) => { return el.user_id == userId });
@@ -410,8 +411,8 @@ module.exports = {
     updateEmployees(e) {
       e.preventDefault();
       api.makeRequest(
-        this.urlRoot.replace(':id', this.model.id),
-        'PUT',
+        this.urlRoot,
+        'PATCH',
         {
           'full_time_employers': this.el.querySelector('#full_time_employers').value,
           'part_time_employers': this.el.querySelector('#part_time_employers').value,
@@ -461,7 +462,7 @@ module.exports = {
     doNotExtendModel: true,
     roles: ['shareholder', 'director', 'officer'],
     events: _.extend({
-      'click #submitForm': api.submitAction,
+      'click #submitForm': 'submit',
       'click .submit_formc': submitFormc,
     }, addSectionHelper.events, menuHelper.events, yesNoHelper.events, leavingConfirmationHelper.events),
 
@@ -492,6 +493,9 @@ module.exports = {
       }
       this.fields = options.fields;
       this.role = options.role;
+      this.allFields = options.fields;
+      this.fields = options.fields[this.role].fields;
+
       this.labels = {
         first_name: 'First name',
         last_name: 'Last name',
@@ -531,9 +535,9 @@ module.exports = {
       this.urlRoot = this.urlRoot.replace(':id', this.model.formc_id);
       if(this.model.hasOwnProperty('user_id')  && this.model.user_id != '') {
         this.model.id = this.model.formc_id;
-        this.urlRoot += '/' + this.role + '/' + this.model.user_id;
+        this.urlRoot += '/' +  this.model.user_id;
       } else {
-        this.urlRoot += '/' + this.role;
+        // this.urlRoot += '/' + this.role;
         this.model.title = [];
       }
 
@@ -549,6 +553,7 @@ module.exports = {
 
       require('bootstrap-select/sass/bootstrap-select.scss');
       let selectPicker = require('bootstrap-select');
+      debugger;
 
       this.$el.html(
         template({
@@ -577,12 +582,62 @@ module.exports = {
       */
     },
 
+    submit(e) {
+      let data = $(e.target).closest('form').serializeJSON({ useIntKeysAsArrayIndex: true });
+
+      if(data.role) {
+        data.role = data.role.reduce((a,b) => { return parseInt(a)+parseInt(b)}, 0)
+        let newRole = data.role;
+
+        // delete data['experiences'];
+        // delete data['positions'];
+        // data['number_of_shares'] = 100;
+        if(data.voting_shareholder_choice == 1) {
+          _.extend(this.fields, this.allFields.shareholder.fields);
+          if((newRole & 1) != 1) {
+            newRole += 1;
+          }
+        } else {
+          if((newRole & 1) == 1) {
+            newRole -= 1;
+          }
+          delete data.number_of_shares;
+          delete data.class_of_securities;
+          delete data.voting_power_percent;
+        }
+        if(data.individual_director_choice == 1) {
+          _.extend(this.fields, this.allFields.director.fields);
+          if((newRole & 2) != 2) {
+            newRole += 2;
+          }
+        } else {
+          if((newRole & 2) == 2) {
+            newRole -= 2;
+          }
+          delete data.board_service_start_date__month;
+          delete data.board_service_start_date__year;
+          delete data.principal_occupation;
+          delete data.employer_principal_businesss;
+          delete data.employer_start_date__year;
+          delete data.employer_start_date__month;
+        }
+        if(data.role != newRole) {
+          data.role = newRole;
+        }
+        else if(this.model.hasOwnProperty('id') == true) {
+          delete data.role;
+        }
+      }
+      debugger;
+      api.submitAction.call(this, e, data);
+    },
+
   }, addSectionHelper.methods, menuHelper.methods, yesNoHelper.methods, leavingConfirmationHelper.methods)),
 
 
   relatedParties: Backbone.View.extend(_.extend({
     el: '#content',
-    urlRoot: formcServer + '/:id' + '/related-parties',
+    urlRoot: formcServer + '/:id/related-parties',
 
     events: _.extend({
       'submit form': 'submit',

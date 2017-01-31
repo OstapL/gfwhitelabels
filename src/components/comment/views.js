@@ -32,8 +32,10 @@ module.exports = {
     initialize(options) {
       this.fields = options.fields;
       this.fields.message = _.extend(this.fields.message, {
-        maxLength: 1000,
-        label: 'message',
+        fn: function(name, value, attr, data, schema) {
+          if (value.length > 1000)
+            throw 'Length of comment should not exceed more than 1000 characters.'
+        },
       });
 
       this.allowQuestion = _.isBoolean(options.allowQuestion) ? options.allowQuestion : true;
@@ -119,6 +121,7 @@ module.exports = {
           return;
 
         $relatedBlock = this.$stubs.find('.related-role').clone();
+        $relatedBlock.find('.field-related').addClass('shown-yes');
         //$form.append($relatedBlock);
         $target.parent().after($relatedBlock);
         $relatedBlock.show();

@@ -18,6 +18,10 @@ var config = {
     owlCarousel: './node_modules/owl.carousel/src/scss',
     publicDir: './dist',
 };
+//include custom FONTS
+var buildFonts = gulp.src([
+        'src/fonts/**/*',
+        ]).pipe(gulp.dest('dist/fonts'));
 
 gulp.task('browser-sync', ['styles', 'scripts'], function() {
     var browserSync = require('browser-sync').create();

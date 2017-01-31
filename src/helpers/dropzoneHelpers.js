@@ -106,7 +106,7 @@ module.exports = {
           : null
         : null;
 
-      // _.extend(options.params, autoCropParams);
+      _.extend(options.params, autoCropParams);
 
       let dropbox = new Dropzone('.dropzone__' + name, options);
 
@@ -159,10 +159,8 @@ module.exports = {
 
         this.model[dataFieldName].push(originalImage);
 
-        if (croppedImage.id == originalImage.id) {
-          //nothing do, image is already done
-        } else {
-          originalImage.urls[1] = croppedImage.urls[0];//this is hack for gallery
+        if (croppedImage.id != originalImage.id) {
+          originalImage.urls.unshift(croppedImage.urls[0]); //this is hack for gallery
         }
       } else {
         this.model[dataFieldName] = data;
@@ -370,10 +368,13 @@ module.exports = {
         const fieldDataName = this._getDataFieldName(name);
         let model = this.model[fieldDataName];
 
-        if (model[1])
+        if (model[1]) {
           model[0] = imgData;
-        else
+        } else {
           model.unshift(imgData);
+        }
+
+        _.each($('.' + name + ' .img-dropzone .one-photo .delete-image-container a'), (link) => { $(link).data('imageid', model[1].id);});
 
         $('.img-' + name).attr('src', app.getFilerUrl(imgData.urls[0]));
 
@@ -569,10 +570,10 @@ module.exports = {
           return this.originImageId == i.id;
         });
 
-        if (img.urls.length <= 1) {
-          img.urls.unshift(imgData.urls[0]);
-        } else {
+        if (img.urls[1]) {
           img.urls[0] = imgData.urls[0];
+        } else {
+          img.urls.unshift(imgData.urls[0]);
         }
 
         $('a.crop-image[data-imageid=' + img.id + ']').closest('.one-photo').find('img').attr('src', app.getFilerUrl(imgData.urls[0]));
@@ -642,7 +643,7 @@ module.exports = {
 
       this.originImageId = imgId;
 
-      let url = img.urls[0];
+      let url = _.last(img.urls);
       let fileName = img.name;
 
       let options = f.crop ? _.pick(f.crop, 'control', 'cropper', 'auto') : {};
@@ -655,7 +656,7 @@ module.exports = {
         fileName = fileName.substring(0, extPos) +
             imgData.width + 'x' + imgData.height + fileName.substring(extPos);
 
-        this._cropInfo = _.pick(imgData, ['x', 'y', 'width', 'height']);
+        this._cropInfo = imgData;
 
         let reqData = _.extend({
           id: img.id,
@@ -666,7 +667,11 @@ module.exports = {
           contentType: 'application/json; charset=utf-8',
         };
 
-        api.makeRequest(filerServer + '/crop', 'PUT', reqData, reqOptions).done(callback);
+        api.makeRequest(filerServer + '/crop', 'PUT', reqData, reqOptions)
+          .done(callback)
+          .fail((xhr, status) => {
+            this._errorAction(name, xhr, status)
+          });
       });
     },
 

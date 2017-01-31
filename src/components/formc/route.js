@@ -108,7 +108,7 @@ module.exports = Backbone.Router.extend({
 
   teamMemberAdd(id, role, user_id) {
 
-    const optionsR = api.makeCacheRequest(formcServer + '/' + id + '/team-members', 'OPTIONS');
+    const optionsR = api.makeCacheRequest(formcServer + '/' + id + '/team-members/' + role, 'OPTIONS');
     getOCCF(optionsR, 'teamMemberAdd', {
       role: role,
       user_id: user_id
@@ -190,31 +190,36 @@ module.exports = Backbone.Router.extend({
 
   finalReview(id) {
 
-    let companyR = api.makeCacheRequest(raiseCapitalServer + '/company', 'OPTIONS');
-    let campaignR = api.makeCacheRequest(raiseCapitalServer + '/campaign', 'OPTIONS');
-    let formcR = api.makeCacheRequest(formcServer + '/' + id + '/final-review', 'OPTIONS');
-    let dataR = api.makeCacheRequest(formcServer + '/' + id + '/final-review');
+    let companyFieldsR = api.makeCacheRequest(raiseCapitalServer + '/company', 'OPTIONS');
+    let campaignFieldsR = api.makeCacheRequest(raiseCapitalServer + '/campaign', 'OPTIONS');
+    let formcFieldsR = api.makeCacheRequest(formcServer + '/' + id, 'OPTIONS');
 
     $('#content').scrollTo();
-    $.when(companyR, campaignR, formcR, dataR).done((company, campaign, formc, data) => {
+    $.when(
+      companyFieldsR,
+      campaignFieldsR,
+      formcFieldsR,
+      app.user.getCompanyR(),
+      app.user.getCampaignR(),
+      app.user.getFormcR(),
+    ).done((companyFields, campaignFields, formcFields, company, campaign, formc) => {
+    
+      app.user.company = company[0];
+      app.user.campaign = campaign[0];
+      app.user.formc = formc[0];
 
-      app.user.company = data[0].company;
-      app.user.campaign = data[0].campaign;
-      app.user.formc = data[0].formc;
-
-      data[0].id = id;
       const fields = {
-        company: company[0].fields,
-        campaign: campaign[0].fields,
-        formc: formc[0].fields,
+        company: companyFields[0].fields,
+        campaign: campaignFields[0].fields,
+        formc: formcFields[0].fields,
       };
-      const i = new View.finalReview({
+      const finalReviewView = new View.finalReview({
         el: '#content',
-        model: data[0],
         fields: fields
       });
-      i.render();
+      finalReviewView.render();
       app.hideLoading();
+
     }).fail((response, error, status) => {
       if(response.responseJSON.location) {
          app.routers.navigate('/formc' + response.responseJSON.location +  '?notPaid=1', { trigger: true, replace: true } );
