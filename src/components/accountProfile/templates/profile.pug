@@ -1,5 +1,6 @@
 -
   var auth = require('consts/auth/user.json');
+  var formcConst = require('consts/formc/formc.json');
   var countryDirective = require('directives/country/index.js');
   var ssnDirective = require('directives/ssn/index.js');
 
@@ -23,7 +24,9 @@
           if companiesMember && companiesMember.data
             each v,k in companiesMember.data
               .profile-type-user
-                span.user-type #{ v.role }
+                each vv,kk in formcConst.ROLES
+                  if (kk & v.role) == kk
+                    span.user-type #{ vv }
                 .user-company
                   | in
                   a(href="/dashboard/issuer-dashboard?id=" + v.company_id).link-3  #{v.company}
