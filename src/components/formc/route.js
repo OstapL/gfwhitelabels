@@ -215,7 +215,8 @@ module.exports = Backbone.Router.extend({
       };
       const finalReviewView = new View.finalReview({
         el: '#content',
-        fields: fields
+        fields: fields,
+        formcId: id,
       });
       finalReviewView.render();
       app.hideLoading();
