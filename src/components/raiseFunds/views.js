@@ -10,7 +10,6 @@ const phoneHelper = require('helpers/phoneHelper.js');
 const validation = require('components/validation/validation.js');
 const menuHelper = require('helpers/menuHelper.js');
 const disableEnterHelper = require('helpers/disableEnterHelper.js');
-const COUNTRIES = require('consts/countries.json');
 
 module.exports = {
   company: Backbone.View.extend(_.extend({
@@ -36,6 +35,11 @@ module.exports = {
       this.formc = options.formc || {};
       this.campaign = options.campaign || {};
       this.model = options.company || {};
+
+      this.fields.industry.validate.choices = require('consts/raiseCapital/industry.json');
+      this.fields.founding_state.validate.choices = require('consts/usaStatesChoices.json');
+      this.fields.corporate_structure.validate.choices = require('consts/raiseCapital/corporate_structure.json');
+
       this.labels = {
         name: 'Legal Name of Company',
         short_name: 'Doing Business as Another Name?',
