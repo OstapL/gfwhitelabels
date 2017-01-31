@@ -523,9 +523,9 @@ module.exports = {
           'PUT',
           {
             'activation_code': this.code,
+            'domain': window.location.host,
           }
       ).then((data) => {
-        debugger;
         localStorage.setItem('token', data.token);
         setTimeout(() => {
           window.location = this.next ? this.next : '/account/profile';

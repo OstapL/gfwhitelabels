@@ -162,6 +162,7 @@ module.exports = Backbone.Router.extend({
     $('#content').scrollTo();
     api.makeRequest(authServer + '/reset-password/code', 'PUT', {
       'reset_password_code': code,
+      'domain': window.location.host
     }).done((data) => {
       localStorage.setItem('token', data.key);
       window.location = '/account/password/new';
