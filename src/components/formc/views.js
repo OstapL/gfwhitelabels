@@ -2006,6 +2006,7 @@ module.exports = {
       }
     },
     initialize(options) {
+      this.formcId = options.formcId;
       this.fields = options.fields;
       disableEnterHelper.disableEnter.call(this);
     },
@@ -2211,6 +2212,7 @@ module.exports = {
           serverUrl: serverUrl,
           Urls: Urls,
           fields: this.fields,
+          formcId: this.formcId,
           values: {
             company: app.user.company,
             campaign: app.user.campaign,
