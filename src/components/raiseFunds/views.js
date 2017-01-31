@@ -11,6 +11,8 @@ const validation = require('components/validation/validation.js');
 const menuHelper = require('helpers/menuHelper.js');
 const disableEnterHelper = require('helpers/disableEnterHelper.js');
 
+const valuation_determination = require('consts/raisecapital/valuation_determination.json');
+
 module.exports = {
   company: Backbone.View.extend(_.extend({
     urlRoot: raiseCapitalServer + '/company',
@@ -563,14 +565,17 @@ module.exports = {
         this.fields.valuation_determination_other = _.extend(this.fields.valuation_determination_other, {
           dependies: ['valuation_determination'],
           fn: function(name, value, attr, data, schema) {
-            let valuation_determination = this.getData(data, 'valuation_determination');
-            if (valuation_determination == 2)
+            let valuation_determination_val = this.getData(data, 'valuation_determination');
+            if (valuation_determination_val == valuation_determination.Other)
               return this.required(name, true, attr, data);
           }
         });
         this.fields.valuation_determination = _.extend(this.fields.valuation_determination, {
           dependies: ['valuation_determination_other'],
         });
+        this.fields.length_days.validate.choices = require('consts/raisecapital/length_days_options.json');
+        this.fields.security_type.validate.choices = require('consts/raisecapital/security_type_options.json');
+        this.fields.valuation_determination.validate.choices = require('consts/raisecapital/valuation_determination_options.json');
         this.labels = {
           minimum_raise: 'Our Minimum Total Raise is',
           maximum_raise: 'Our Maximum Total Raise is',
