@@ -573,7 +573,7 @@ module.exports = {
         this.fields.valuation_determination = _.extend(this.fields.valuation_determination, {
           dependies: ['valuation_determination_other'],
         });
-        this.fields.length_days.validate.choices = require('consts/raisecapital/length_days_options.json');
+        this.fields.length_days.validate.choices = require('consts/raisecapital/length_days.json');
         this.fields.security_type.validate.choices = require('consts/raisecapital/security_type_options.json');
         this.fields.valuation_determination.validate.choices = require('consts/raisecapital/valuation_determination_options.json');
         this.labels = {

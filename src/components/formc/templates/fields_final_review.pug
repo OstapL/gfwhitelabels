@@ -52,6 +52,9 @@ mixin frField(name, type)
           - value = valuesList.labels[valuesList.choices.indexOf(value.toString())]
         else
           - value = valuesList.labels[valuesList.choices.indexOf(parseFloat(+value))]
+    else
+      if valuesList.validate && valuesList.validate.choices
+        - value = valuesList.validate.choices[value] || valuesList.validate.choices[+value]
   if type == 'textarea'
     - value = value.replace(/\n/g, "<br />")
   if type == 'money'

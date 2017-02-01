@@ -2,7 +2,9 @@
 
 const companyFees = require('consts/companyFees.json');
 const formcHelpers = require('./helpers.js');
-const formatHelper = require('../../helpers/formatHelper');
+const formatHelper = require('../../helpers/formatHelper.js');
+const securityTypeConsts = require('consts/formc/securityType.json');
+const yesNoConsts = require('consts/yesNo.json');
 const roles = ['Shareholder', 'Director', 'Officer'];
 
 const menuHelper = require('helpers/menuHelper.js');
@@ -1771,14 +1773,7 @@ module.exports = {
       };
       this.fields.outstanding_securities.schema.security_type.type = 'choice';
       this.fields.outstanding_securities.schema.security_type.validate = {};
-      this.fields.outstanding_securities.schema.security_type.validate.choices = {
-        0: 'Preferred Stock',
-        1: 'Common Stock',
-        2: 'Debt',
-        3: 'Warrants',
-        4: 'Options',
-        5: 'Other',
-      };
+      this.fields.outstanding_securities.schema.security_type.validate.choices = securityTypeConsts.SECURITY_TYPES;
       this.fields.outstanding_securities.schema.voting_right.type = 'radio';
       this.fields.outstanding_securities.schema.voting_right.validate = {};
       this.fields.outstanding_securities.schema.voting_right.validate.choices = {
@@ -2051,12 +2046,12 @@ module.exports = {
         element.name = target.dataset.name;
         element.onblur = (e) => this.update(e);
 
-        let v = app.valByKeyReplaceArray(this.fields, target.dataset.name).validate.OneOf;
-        v.choices.forEach((el, i) => {
+        let v = app.valByKeyReplaceArray(this.fields, target.dataset.name).validate;
+        _(v.choices).each((el, i) => {
           let e = document.createElement('option');
-          e.innerHTML = v.labels[i];
-          e.value = v.choices[i];
-          if(v.choices[i] == target.dataset.value) {
+          e.innerHTML = el;
+          e.value = i;
+          if(i == target.dataset.value) {
             e.setAttribute('selected', true);
           }
           element.appendChild(e);
@@ -2207,6 +2202,15 @@ module.exports = {
 
     render() {
       let template = require('./templates/finalReview.pug');
+      this.fields.company.industry.validate.choices = require('consts/raisecapital/industry.json');
+      this.fields.company.founding_state.validate.choices = require('consts/usaStatesChoices.json');
+      this.fields.company.state.validate.choices = require('consts/usaStatesChoices.json');
+      this.fields.company.corporate_structure.validate.choices = require('consts/raisecapital/corporate_structure.json');
+      this.fields.campaign.length_days.validate.choices = require('consts/raisecapital/length_days.json');
+      this.fields.campaign.security_type.validate.choices = yesNoConsts.YESNO;
+      this.fields.campaign.valuation_determination.validate.choices = require('consts/raisecapital/valuation_determination_options.json');
+      this.fields.formc.outstanding_securities.schema.security_type.validate.choices = securityTypeConsts.SECURITY_TYPES;
+      this.fields.formc.outstanding_securities.schema.voting_right.validate.choices = yesNoConsts.YESNO;
       this.$el.html(
         template({
           serverUrl: serverUrl,
