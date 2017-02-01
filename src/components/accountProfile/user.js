@@ -1,3 +1,32 @@
+const ROLE_NAMES = [
+  "SHAREHOLDER",
+  "DIRECTOR",
+  "OFFICER_CEO",
+  "OFFICER_PFO",
+  "OFFICER_VP",
+  "OFFICER_SECRETARY",
+  "OFFICER_PAO"
+];
+
+const roles = require('consts/team_member/roles.json');
+
+function hasRole(rolesBitmap, role) {
+  return !!(rolesBitmap & role);
+};
+
+function extractRoles(roleBitmap) {
+  let res = [];
+
+  _.each(ROLE_NAMES, (name, role) => {
+    if (hasRole(roleBitmap, roles[name]))
+      res.push({
+        id: role,
+        name: name
+      });
+  });
+
+  return res;
+};
 
 class User {
   constructor() {
@@ -7,6 +36,8 @@ class User {
     this.companiesMember = [];
 
     this.data = { token: '', id: ''};
+
+    this.role_data = null;
     this.token = null;
   }
 
@@ -54,7 +85,7 @@ class User {
     // this.set(userData);
     // app.trigger('userLoaded', userData);
     // return;
-    //
+
     $.when(
         api.makeRequest(authServer + '/rest-auth/data-mini', 'GET'),
         this.getCompaniesMemberR()
@@ -86,15 +117,32 @@ class User {
     return data;
   }
 
-  getRoleInfo() {
-    let role = this.data.role;
-    role.role = role.role || [];
+  _initRoles() {
+    if (!this.companiesMember || !this.companiesMember.data || !this.companiesMember.data.length)
+      return;
 
-    return {
-      companyName: role.company_name || '',
-      companyId: role.company_id || 0,
-      role: role.role.join(', ') || '',
-    };
+    this.role_data = [];
+
+    _.each(this.companiesMember.data, (data) => {
+      let roles = extractRoles(data.role);
+      let allRoles = roles.map(r => r.name).join(', ');
+      this.role_data.push({
+        company: {
+          id: data.company_id,
+          name: data.company,
+        },
+        roles: roles,
+        allRoles: allRoles,
+      })
+    });
+
+  }
+
+  getRoleInfo() {
+    if (!this.role_data)
+      this._initRoles();
+
+    return this.role_data;
   }
 
   ensureLoggedIn(next) {
