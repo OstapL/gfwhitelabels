@@ -172,27 +172,33 @@ class User {
     window.location = '/';
   }
 
-  getCompanyR() {
-    return this.company ? '' : app.makeCacheRequest(authServer + '/user/company');
+  getCompanyR(id, requestMethod='GET') {
+    if(id) 
+      return this.company ? '' : app.makeCacheRequest(raiseCapitalServer + '/company/' + id + '/edit', requestMethod);
+    else
+      return this.company ? '' : app.makeCacheRequest(authServer + '/user/company', requestMethod);
   }
 
   getCompany() {
     return this.company;
   }
 
-  getCampaignR() {
-    return this.campaign ? '' : app.makeCacheRequest(authServer + '/user/campaign');
+  getCampaignR(id, requestMethod='GET') {
+    if(id) 
+      return this.campaign ? '' : app.makeCacheRequest(raiseCapitalServer + '/campaign/' + id + '/edit', requestMethod);
+    else
+      return this.campaign ? '' : app.makeCacheRequest(authServer + '/user/campaign', requestMethod);
   }
 
   getCampaign() {
     return this.campaign;
   }
 
-  getFormcR(id) {
+  getFormcR(id, requestMethod='GET') {
     if(id) 
-      return this.formc ? '' : app.makeCacheRequest(formcServer + '/' + id);
+      return this.formc ? '' : app.makeCacheRequest(formcServer + '/' + id, requestMethod);
     else
-      return this.formc ? '' : app.makeCacheRequest(authServer + '/user/formc');
+      return this.formc ? '' : app.makeCacheRequest(authServer + '/user/formc', requestMethod);
   }
 
   getFormc() {

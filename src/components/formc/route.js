@@ -4,7 +4,7 @@ const formcHelpers = require('./helpers.js');
 function getOCCF(optionsR, viewName, params = {}) {
   $('#content').scrollTo();
   params.el = '#content';
-  $.when(optionsR, app.user.getCompanyR(), app.user.getCampaignR(), app.user.getFormcR())
+  $.when(optionsR, app.user.getCompanyR(), app.user.getCampaignR(), app.user.getFormcR(params.id))
     .done((options, company, campaign, formc) => {
 
       if(options != '') {
@@ -98,12 +98,12 @@ module.exports = Backbone.Router.extend({
 
   introduction(id) {
     const optionsR = api.makeCacheRequest(formcServer + '/' + id + '/introduction', 'OPTIONS');
-    getOCCF(optionsR, 'introduction', {});
+    getOCCF(optionsR, 'introduction', {id: id});
   },
   
   teamMembers(id) {
     const optionsR = api.makeCacheRequest(formcServer + '/' + id + '/team-members/employers', 'OPTIONS');
-    getOCCF(optionsR, 'teamMembers', {});
+    getOCCF(optionsR, 'teamMembers', {id: id});
   },
 
   teamMemberAdd(id, role, user_id) {
@@ -111,7 +111,8 @@ module.exports = Backbone.Router.extend({
     const optionsR = api.makeCacheRequest(formcServer + '/' + id + '/team-members/' + role, 'OPTIONS');
     getOCCF(optionsR, 'teamMemberAdd', {
       role: role,
-      user_id: user_id
+      user_id: user_id,
+      id: id
     });
 
   },
@@ -122,52 +123,52 @@ module.exports = Backbone.Router.extend({
       formcServer + '/' + id + '/related-parties',
       'OPTIONS'
     );
-    getOCCF(optionsR, 'relatedParties', {});
+    getOCCF(optionsR, 'relatedParties', {'id': id});
 
   },
 
   useOfProceeds(id) {
     const optionsR = api.makeCacheRequest(formcServer + '/' + id + '/use-of-proceeds', 'OPTIONS');
-    getOCCF(optionsR, 'useOfProceeds', {});
+    getOCCF(optionsR, 'useOfProceeds', {'id': id});
   },
 
   riskFactorsInstruction(id) {
-    getOCCF('', 'riskFactorsInstruction', {});
+    getOCCF('', 'riskFactorsInstruction', {'id': id});
   },
 
   riskFactorsMarket(id) {
     const optionsR = api.makeCacheRequest(formcServer + '/' + id + '/risk-factors-market', 'OPTIONS');
-    getOCCF(optionsR, 'riskFactorsMarket', {});
+    getOCCF(optionsR, 'riskFactorsMarket', {'id': id});
   },
 
   riskFactorsFinancial(id) {
     const optionsR = api.makeCacheRequest(formcServer + '/' + id + '/risk-factors-financial', 'OPTIONS');
-    getOCCF(optionsR, 'riskFactorsFinancial', {});
+    getOCCF(optionsR, 'riskFactorsFinancial', {'id': id});
   },
 
   riskFactorsOperational(id) {
     const optionsR = api.makeCacheRequest(formcServer + '/' + id + '/risk-factors-operational', 'OPTIONS');
-    getOCCF(optionsR, 'riskFactorsOperational', {});
+    getOCCF(optionsR, 'riskFactorsOperational', {'id': id});
   },
 
   riskFactorsCompetitive(id) {
     const optionsR = api.makeCacheRequest(formcServer + '/' + id + '/risk-factors-competitive', 'OPTIONS');
-    getOCCF(optionsR, 'riskFactorsCompetitive', {});
+    getOCCF(optionsR, 'riskFactorsCompetitive', {'id': id});
   },
 
   riskFactorsPersonnel(id) {
     const optionsR = api.makeCacheRequest(formcServer + '/' + id + '/risk-factors-personnel', 'OPTIONS');
-    getOCCF(optionsR, 'riskFactorsPersonnel', {});
+    getOCCF(optionsR, 'riskFactorsPersonnel', {'id': id});
   },
 
   riskFactorsLegal(id) {
     const optionsR = api.makeCacheRequest(formcServer + '/' + id + '/risk-factors-legal', 'OPTIONS');
-    getOCCF(optionsR, 'riskFactorsLegal', {});
+    getOCCF(optionsR, 'riskFactorsLegal', {'id': id});
   },
 
   riskFactorsMisc(id) {
     const optionsR = api.makeCacheRequest(formcServer + '/' + id + '/risk-factors-misc', 'OPTIONS');
-    getOCCF(optionsR, 'riskFactorsMisc', {});
+    getOCCF(optionsR, 'riskFactorsMisc', {'id': id});
   },
 
   financialCondition(id) {
@@ -175,87 +176,55 @@ module.exports = Backbone.Router.extend({
       formcServer + '/' + id + '/financial-condition', 
       'OPTIONS'
     );
-    getOCCF(optionsR, 'financialCondition', {});
+    getOCCF(optionsR, 'financialCondition', {'id': id});
   },
 
   outstandingSecurity(id) {
     const optionsR = api.makeCacheRequest(formcServer + '/' + id + '/outstanding-security', 'OPTIONS');
-    getOCCF(optionsR, 'outstandingSecurity', {});
+    getOCCF(optionsR, 'outstandingSecurity', {'id': id});
   },
 
   backgroundCheck(id) {
     const optionsR = api.makeCacheRequest(formcServer + '/' + id + '/background-check', 'OPTIONS');
-    getOCCF(optionsR, 'backgroundCheck', {});
+    getOCCF(optionsR, 'backgroundCheck', {'id': id});
   },
 
   finalReview(id) {
 
-    let companyFieldsR = api.makeCacheRequest(raiseCapitalServer + '/company', 'OPTIONS');
-    let campaignFieldsR = api.makeCacheRequest(raiseCapitalServer + '/campaign', 'OPTIONS');
-    let formcFieldsR = api.makeCacheRequest(formcServer + '/' + id, 'OPTIONS');
-
     $('#content').scrollTo();
     $.when(
-      companyFieldsR,
-      campaignFieldsR,
-      formcFieldsR,
-      app.user.getCompanyR(),
-      app.user.getCampaignR(),
-      app.user.getFormcR(id),
-    ).done((companyFields, campaignFields, formcFields, company, campaign, formc) => {
-    
-      app.user.company = company[0];
-      app.user.campaign = campaign[0];
-      app.user.formc = formc[0];
+        app.user.getFormcR(id, 'OPTIONS'),
+        app.user.getFormcR(id),
+    ).then((formcFields, formc) => {
+        app.user.formc = formc[0];
 
-      const fields = {
-        company: companyFields[0].fields,
-        campaign: campaignFields[0].fields,
-        formc: formcFields[0].fields,
-      };
-      const finalReviewView = new View.finalReview({
-        el: '#content',
-        fields: fields,
-        formcId: id,
-      });
-      finalReviewView.render();
-      app.hideLoading();
+        $.when(
+          app.user.getCompanyR(formc[0].company_id, 'OPTIONS'),
+          app.user.getCampaignR(formc[0].campaign_id, 'OPTIONS'),
+          app.user.getCompanyR(formc[0].company_id, 'GET'),
+          app.user.getCampaignR(formc[0].campaign_id, 'GET'),
+        ).done((companyFields, campaignFields,  company, campaign) => {
+        
+          app.user.company = company[0];
+          app.user.campaign = campaign[0];
 
-    }).fail((response, error, status) => {
-      if(response.responseJSON.location) {
-         app.routers.navigate('/formc' + response.responseJSON.location +  '?notPaid=1', { trigger: true, replace: true } );
-      }
-    });
+          const fields = {
+            company: companyFields[0].fields,
+            campaign: campaignFields[0].fields,
+            formc: formcFields[0].fields,
+          };
+          const finalReviewView = new View.finalReview({
+            el: '#content',
+            fields: fields,
+            formcId: id,
+          });
+          finalReviewView.render();
+          app.hideLoading();
+
+        });
+      })
   },
 
-  finalReviewTwo: function(id) {
-
-    let companyR = api.makeCacheRequest(raiseCapitalServer + '/company', 'OPTIONS');
-    let campaignR = api.makeCacheRequest(raiseCapitalServer + '/campaign', 'OPTIONS');
-    let formcR = api.makeCacheRequest(formcServer + '/' + id + '/final-review', 'OPTIONS');
-    let dataR = api.makeCacheRequest(formcServer + '/' + id + '/final-review');
-
-    $('#content').scrollTo();
-    $.when(companyR, campaignR, formcR, dataR).done((company, campaign, formc, data) => {
-      data[0].id = id;
-      const fields = {
-        company: company[0].fields,
-        campaign: campaign[0].fields,
-        formc: formc[0].fields,
-      };
-      const i = new View.finalReviewTwo({
-        el: '#content',
-        model: data[0],
-        fields: fields
-      });
-      i.render();
-      app.hideLoading();
-    }).fail((response, error, status) => {
-      if(response.responseJSON.location) {
-         app.routers.navigate('/formc' + response.responseJSON.location +  '?notPaid=1', { trigger: true, replace: true } );
-      }
-    });
-  },
   electronicSignature(id) {
       let i = new View.electronicSignature({
         el: '#content',

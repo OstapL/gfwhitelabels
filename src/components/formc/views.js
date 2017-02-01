@@ -2231,65 +2231,6 @@ module.exports = {
     },
   }),
 
-  finalReviewTwo: Backbone.View.extend({
-    el: '#content',
-    template: require('./templates/finalReviewTwo.pug'),
-
-    preinitialize() {
-      // ToDo
-      // Hack for undelegate previous events
-      for (let k in this.events) {
-        $('#content ' + k.split(' ')[1]).undelegate();
-      }
-    },
-    initialize(options) {
-      this.fields = options.fields;
-    },
-    events: {
-      'click .show-input': 'showInput'
-    }, 
-    showInput: function (event) {
-      event.preventDefault();
-      if ($(event.target).hasClass('noactive')) {
-          return false;
-      }
-      var $this = $(event.target),
-          inputId = $this.data('name'),
-          $input = $('input' + '#' + inputId);
-
-      $this.hide();
-
-      if ($input.length == 0) {
-        $input = $('<input type="text" id="' + inputId + '" name="' + inputId + '" class="text-input"/>');
-        $this.after($input);
-      }
-
-      $input.fadeIn().focus();
-
-      $('body').on('focusout', '.text-input', function(event) {
-      var $this = $(event.target),
-          value = $this.val(),
-          inputId = $this.attr('id'),
-          $span = $('[data-name="' + inputId + '"]');
-      if (value !== '') {
-          $span.text(value);
-      }
-
-      $this.hide();
-      $span.fadeIn();
-      });
-    },
-    render() {
-      this.$el.html(
-        this.template({
-          values: this.model,
-          fields: this.fields,
-        })
-      );
-      return this;
-    },
-  }),
-
   electronicSignature: Backbone.View.extend({
     el: '#content',
     template: require('./templates/formc_els_company_formc_first.pug'),
