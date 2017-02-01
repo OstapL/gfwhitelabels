@@ -201,7 +201,7 @@ module.exports = Backbone.Router.extend({
       formcFieldsR,
       app.user.getCompanyR(),
       app.user.getCampaignR(),
-      app.user.getFormcR(),
+      app.user.getFormcR(id),
     ).done((companyFields, campaignFields, formcFields, company, campaign, formc) => {
     
       app.user.company = company[0];

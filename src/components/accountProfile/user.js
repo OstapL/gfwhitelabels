@@ -183,8 +183,11 @@ class User {
     return this.campaign;
   }
 
-  getFormcR() {
-    return this.formc ? '' : app.makeCacheRequest(authServer + '/user/formc');
+  getFormcR(id) {
+    if(id) 
+      return this.formc ? '' : app.makeCacheRequest(formcServer + '/' + id);
+    else
+      return this.formc ? '' : app.makeCacheRequest(authServer + '/user/formc');
   }
 
   getFormc() {
