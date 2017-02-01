@@ -1,18 +1,19 @@
 include fields_final_review.pug
-- var formatHelper = require('helpers/formatHelper.js');
-- var customFields = require('../fields.js');
-- var fees = require('consts/companyFees.json');
-- var rolesConsts = require('consts/team_member/roles.json');
+-
+  var formatHelper = require('helpers/formatHelper.js');
+  var roleHelper = require('helpers/roleHelper.js');
+  var customFields = require('../fields.js');
+  var fees = require('consts/companyFees.json');
 
 - pug_html += app.breadcrumbs('Form C Review', '', [ ['Home', '/'], ['Form C Review', '']]);
 
 - fields.formc.team_members = {};
-- fields.formc.team_members.schema = {};
-- fields.formc.team_members.schema.title = {};
-- fields.formc.team_members.schema.title.validate = {};
-- fields.formc.team_members.schema.title.validate.OneOf = {};
-- fields.formc.team_members.schema.title.validate.OneOf.choices = [1, 2, 3, 4, 5];
-- fields.formc.team_members.schema.title.validate.OneOf.labels = ['CEO/President','Principal Financial Officer/Treasurer','Vice President','Secretary','Controller/Principal Accounting Officer'];
+  fields.formc.team_members.schema = {};
+  fields.formc.team_members.schema.title = {};
+  fields.formc.team_members.schema.title.validate = {};
+  fields.formc.team_members.schema.title.validate.OneOf = {};
+  fields.formc.team_members.schema.title.validate.OneOf.choices = [1, 2, 3, 4, 5];
+  fields.formc.team_members.schema.title.validate.OneOf.labels = ['CEO/President','Principal Financial Officer/Treasurer','Vice President','Secretary','Controller/Principal Accounting Officer'];
 
 - var titles = ['', 'CEO/President', 'Principal Financial Officer/Treasurer', 'Vice President', 'Secretary', 'Controller/Principal Accounting Officer', ];
 
@@ -463,21 +464,23 @@ section.formc-review
                 th.text-xs-center.w-30 Tenure
                 th.text-xs-center.w-40 Title and Responsibilities
             tbody
-              each v,k in values.formc.team_members
-                if (v.role > 3)
+              each member, idx in values.formc.team_members
+                - var officerRoles = roleHelper.extractOfficerRoles(member.role);
+                if officerRoles.length > 0
                   tr
                     td.text-xs-center
-                      +frField('formc.team_members[' + k + '].first_name', 'text')
+                      +frField('formc.team_members[' + idx + '].first_name', 'text')
                       br
-                      +frField('formc.team_members[' + k + '].last_name', 'text')
+                      +frField('formc.team_members[' + idx + '].last_name', 'text')
                     td.text-xs-center
-                      +frField('formc.team_members[' + k + '].start_date', 'text')
+                      +frField('formc.team_members[' + idx + '].start_date', 'text')
                     td.text-xs-center
-                      each vv,kk in rolesConsts.ROLES
-                        if (kk & v.role) == kk
-                          span.user-type #{ vv }
+                      | !{"(" + member.role + ")"} &nbsp;
+                      each officerRole, officerIdx in officerRoles
+                          span.user-type #{ '(' + officerRole.title + ')'} &nbsp;
                       br
                       +frField('formc.team_members[' + k + '].responsibilities', 'text')
+
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u Board of Directors
         p.pb10.text-indent The following information has been provided by the Company as true and correct regarding each of the Company’s directors (and any person performing a similar function):
@@ -489,21 +492,22 @@ section.formc-review
                 th.text-xs-center.w-30 Dates of Board Service (Year Begin)
                 th.text-xs-center.w-40 Principal Occupation + Employer & Start Date
             tbody
-              each v,k in values.formc.team_members
-                if (v.role & 2) == 2
+              each m, mIdx in values.formc.team_members
+                - var directors = roleHelper.extractDirectorRoles(v.role)
+                if directors.length > 0
                   tr
                     td.text-xs-center
-                      +frField('formc.team_members[' + k + '].first_name', 'text')
+                      +frField('formc.team_members[' + mIdx + '].first_name', 'text')
                       br
-                      +frField('formc.team_members[' + k + '].last_name', 'text')
+                      +frField('formc.team_members[' + mIdx + '].last_name', 'text')
                     td.text-xs-center
-                      +frField('formc.team_members[' + k + '].board_service_start_date', 'text')
+                      +frField('formc.team_members[' + mIdx + '].board_service_start_date', 'text')
                     td.text-xs-center
-                      +frField('formc.team_members[' + k + '].principal_occupation', 'text')
+                      +frField('formc.team_members[' + mIdx + '].principal_occupation', 'text')
                       br
-                      +frField('formc.team_members[' + k + '].employer_principal_business', 'text')
+                      +frField('formc.team_members[' + mIdx + '].employer_principal_business', 'text')
                       br
-                      +frField('formc.team_members[' + k + '].employer_start_date', 'text')
+                      +frField('formc.team_members[' + mIdx + '].employer_start_date', 'text')
 
       // page 7
       section.page-formc-review.m-t-1
@@ -524,19 +528,20 @@ section.formc-review
                 th.text-xs-center Number Held
                 th.text-xs-center % of Voting Power
             tbody
-              each v,k in values.formc.team_members
-                if (v.role & 1) == 1
+              each m, mIdx in values.formc.team_members
+                - var shareHolders = roleHelper.extractShareHolderRoles(v.role);
+                if shareHolders.length > 0
                   tr
                     td.text-xs-center
-                      +frField('formc.team_members[' + k + '].first_name', 'text')
+                      +frField('formc.team_members[' + mIdx + '].first_name', 'text')
                       br
-                      +frField('formc.team_members[' + k + '].last_name', 'text')
+                      +frField('formc.team_members[' + mIdx + '].last_name', 'text')
                     td.text-xs-center
-                      +frField('formc.team_members[' + k + '].class_of_securities', 'text')
+                      +frField('formc.team_members[' + mIdx + '].class_of_securities', 'text')
                     td.text-xs-center
-                      +frField('formc.team_members[' + k + '].number_of_shares', 'text')
+                      +frField('formc.team_members[' + mIdx + '].number_of_shares', 'text')
                     td.text-xs-center
-                      +frField('formc.team_members[' + k + '].voting_power_percent', 'text')
+                      +frField('formc.team_members[' + mIdx + '].voting_power_percent', 'text')
 
         p.text-indent The Company has confirmed that the information above is accurate for the period spanning 120 days prior to the date of filing of this Material.   For any calculation above of total voting power, all securities are included for which the person directly or indirectly has or shares the voting power, which includes the power to vote or to direct the voting of such securities. If the person has the right to acquire voting power of such securities within 60 days, including through the exercise of any option, warrant or right, the conversion of a security, or other arrangement, or if securities are held by a member of the family, through corporations or partnerships, or otherwise in a manner that would allow a person to direct or control the voting of the securities (or share in such direction or control — as, for example, a co-trustee) they are included as being “beneficially owned.” For any calculation of outstanding voting equity securities, all outstanding options are assumed to be exercised and all outstanding convertible securities converted.
         p.text-uppercase.m-t-3.m-b-0.pb10 
@@ -1407,7 +1412,7 @@ section.formc-review
         p.pb10.text-indent Employment information from previous employers over the last three years for each of the Company’s officers is as follows:
         p.pb10
           each v,k in values.formc.team_members
-            if (v.role & rolesConsts.DIRECTOR) == rolesConsts.DIRECTOR
+            if roleHelper.isDirector(v.role)
               if v.experiences && v.experiences.length > 0
                 +frField('formc.team_members[' + k + '].first_name', 'text')
                 +frField('formc.team_members[' + k + '].last_name', 'text')
@@ -1456,7 +1461,7 @@ section.formc-review
         p.pb10.text-indent Employment information from previous employers over the last three years for each of the Company’s directors is as follows:
         p.pb10
           each v,k in values.formc.team_members
-            if (v.role & rolesConsts.SHAREHOLDER) == rolesConsts.SHAREHOLDER
+            if roleHelper.isShareholder(v.role)
               if v.experiences && v.experiences.length > 0
                 +frField('formc.team_members[' + k + '].first_name', 'text')
                 +frField('formc.team_members[' + k + '].last_name', 'text')

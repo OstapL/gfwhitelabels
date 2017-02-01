@@ -1,3 +1,5 @@
+//TODO: refactor, remove this code
+
 const ROLE_NAMES = [
   "SHAREHOLDER",
   "DIRECTOR",
@@ -9,12 +11,12 @@ const ROLE_NAMES = [
 ];
 
 const roles = require('consts/team_member/roles.json');
-
 function hasRole(rolesBitmap, role) {
   return !!(rolesBitmap & role);
 };
 
 function extractRoles(roleBitmap) {
+
   let res = [];
 
   _.each(ROLE_NAMES, (name, role) => {
@@ -24,9 +26,12 @@ function extractRoles(roleBitmap) {
         name: name
       });
   });
-
   return res;
+
 };
+///////
+
+const roleHelper = require('helpers/roleHelper.js');
 
 class User {
   constructor() {
@@ -36,7 +41,7 @@ class User {
     this.companiesMember = [];
 
     this.data = { token: '', id: ''};
-
+    this.roleHelper = roleHelper;
     this.role_data = null;
     this.token = null;
   }
