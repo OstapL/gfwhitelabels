@@ -163,12 +163,12 @@ mixin confirmStatement(name, attr)
             else
               | !{ snippets.nonUs({ fields: fields, user: user }) }
 
-            .row
+            //.row
               .col-xl-12
                 p.m-b-1.m-t-1 In order to pay you any dividends or revenue share, regulations require GrowthFountain to collect your Taxpayer Identification Number.  Don’t worry we keep this information safe, secure and encrypted on a separate server.
 
                 -
-                //
+                
                   pug_html += app.fields.nestedTextLabel(
                     'payment_information_data',
                     'ssn',
