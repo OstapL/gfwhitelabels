@@ -7,7 +7,8 @@ include fields_final_review.pug
 
 - pug_html += app.breadcrumbs('Form C Review', '', [ ['Home', '/'], ['Form C Review', '']]);
 
-- fields.formc.team_members = {};
+-
+  fields.formc.team_members = {};
   fields.formc.team_members.schema = {};
   fields.formc.team_members.schema.title = {};
   fields.formc.team_members.schema.title.validate = {};
@@ -464,8 +465,9 @@ section.formc-review
                 th.text-xs-center.w-30 Tenure
                 th.text-xs-center.w-40 Title and Responsibilities
             tbody
-              each member, idx in values.formc.team_members
-                - var officerRoles = roleHelper.extractOfficerRoles(member.role);
+              - console.log(values.formc);
+              each m, idx in values.formc.team_members
+                - var officerRoles = roleHelper.extractOfficerRoles(m.role);
                 if officerRoles.length > 0
                   tr
                     td.text-xs-center
@@ -475,11 +477,11 @@ section.formc-review
                     td.text-xs-center
                       +frField('formc.team_members[' + idx + '].start_date', 'text')
                     td.text-xs-center
-                      | !{"(" + member.role + ")"} &nbsp;
                       each officerRole, officerIdx in officerRoles
-                          span.user-type #{ '(' + officerRole.title + ')'} &nbsp;
+                        +teamMemberRoleField(officerRole)
+                        //span.user-type #{ '(' + officerRole.title + ')'} &nbsp;
                       br
-                      +frField('formc.team_members[' + k + '].responsibilities', 'text')
+                      +frField('formc.team_members[' + idx + '].responsibilities', 'text')
 
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u Board of Directors
@@ -493,7 +495,7 @@ section.formc-review
                 th.text-xs-center.w-40 Principal Occupation + Employer & Start Date
             tbody
               each m, mIdx in values.formc.team_members
-                - var directors = roleHelper.extractDirectorRoles(v.role)
+                - var directors = roleHelper.extractDirectorRoles(m.role)
                 if directors.length > 0
                   tr
                     td.text-xs-center
@@ -529,7 +531,7 @@ section.formc-review
                 th.text-xs-center % of Voting Power
             tbody
               each m, mIdx in values.formc.team_members
-                - var shareHolders = roleHelper.extractShareHolderRoles(v.role);
+                - var shareHolders = roleHelper.extractShareHolderRoles(m.role);
                 if shareHolders.length > 0
                   tr
                     td.text-xs-center

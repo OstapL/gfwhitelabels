@@ -21,7 +21,7 @@ module.exports = {
     return !!(role & OFFICER_ROLES_MASK);
   },
 
-  isDirector() {
+  isDirector(role) {
     return !!(role & roles.DIRECTOR);
   },
 
