@@ -65,3 +65,11 @@ mixin frField(name, type)
     data-type=type || 'text'
     data-value=(type == 'select' ? ggetData(name) : " ")
     ).createField.show-input.link-1 !{ value }
+
+mixin teamMemberRoleField(role)
+  a(
+    href="#"
+    data-name=("role-" + role.id)
+    data-type="text"
+    data-value=role.id
+  ).createField.show-input.link-1 !{ role.title }
