@@ -3,7 +3,7 @@
 const companyFees = require('consts/companyFees.json');
 const formcHelpers = require('./helpers.js');
 const formatHelper = require('../../helpers/formatHelper.js');
-const securityTypeConsts = require('consts/formc/securityType.json');
+const securityTypeConsts = require('consts/formc/security_type.json');
 const yesNoConsts = require('consts/yesNo.json');
 const roles = ['Shareholder', 'Director', 'Officer'];
 

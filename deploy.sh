@@ -10,4 +10,6 @@ DIR=src/img/
 aws  s3 sync $DIR s3://$BUCKET/img/ --profile "$PROFILE"
 DIR=src/js/
 aws  s3 sync $DIR s3://$BUCKET/js/ --profile "$PROFILE"
+DIR=src/docs/
+aws  s3 sync $DIR s3://$BUCKET/docs/ --profile "$PROFILE"
 echo  'done'
