@@ -2,6 +2,7 @@ include fields_final_review.pug
 - var formatHelper = require('helpers/formatHelper.js');
 - var customFields = require('../fields.js');
 - var fees = require('consts/companyFees.json');
+- var rolesConsts = require('consts/team_member/roles.json');
 
 - pug_html += app.breadcrumbs('Form C Review', '', [ ['Home', '/'], ['Form C Review', '']]);
 
@@ -12,10 +13,6 @@ include fields_final_review.pug
 - fields.formc.team_members.schema.title.validate.OneOf = {};
 - fields.formc.team_members.schema.title.validate.OneOf.choices = [1, 2, 3, 4, 5];
 - fields.formc.team_members.schema.title.validate.OneOf.labels = ['CEO/President','Principal Financial Officer/Treasurer','Vice President','Secretary','Controller/Principal Accounting Officer'];
-
-- fields.formc.outstanding_securities.schema.voting_right.validate.OneOf = {};
-- fields.formc.outstanding_securities.schema.voting_right.validate.OneOf.labels = ['No', 'Yes'];
-- fields.formc.outstanding_securities.schema.voting_right.validate.OneOf.choices = [0, 1];
 
 - var titles = ['', 'CEO/President', 'Principal Financial Officer/Treasurer', 'Vice President', 'Secretary', 'Controller/Principal Accounting Officer', ];
 
@@ -467,7 +464,7 @@ section.formc-review
                 th.text-xs-center.w-40 Title and Responsibilities
             tbody
               each v,k in values.formc.team_members
-                if v.role.indexOf('2') != -1 
+                if (v.role > 3)
                   tr
                     td.text-xs-center
                       +frField('formc.team_members[' + k + '].first_name', 'text')
@@ -476,8 +473,9 @@ section.formc-review
                     td.text-xs-center
                       +frField('formc.team_members[' + k + '].start_date', 'text')
                     td.text-xs-center
-                      each vv,kk in v.title
-                        +frField('formc.team_members[' + k + '].title[' + kk + ']', 'select')
+                      each vv,kk in rolesConsts.ROLES
+                        if (kk & v.role) == kk
+                          span.user-type #{ vv }
                       br
                       +frField('formc.team_members[' + k + '].responsibilities', 'text')
         p.text-uppercase.m-t-3.m-b-0.pb10 
@@ -492,7 +490,7 @@ section.formc-review
                 th.text-xs-center.w-40 Principal Occupation + Employer & Start Date
             tbody
               each v,k in values.formc.team_members
-                if v.role.indexOf('1') != -1
+                if (v.role & 2) == 2
                   tr
                     td.text-xs-center
                       +frField('formc.team_members[' + k + '].first_name', 'text')
@@ -503,7 +501,7 @@ section.formc-review
                     td.text-xs-center
                       +frField('formc.team_members[' + k + '].principal_occupation', 'text')
                       br
-                      +frField('formc.team_members[' + k + '].employer_principal_businesss', 'text')
+                      +frField('formc.team_members[' + k + '].employer_principal_business', 'text')
                       br
                       +frField('formc.team_members[' + k + '].employer_start_date', 'text')
 
@@ -527,7 +525,7 @@ section.formc-review
                 th.text-xs-center % of Voting Power
             tbody
               each v,k in values.formc.team_members
-                if v.role.indexOf('0') != -1
+                if (v.role & 1) == 1
                   tr
                     td.text-xs-center
                       +frField('formc.team_members[' + k + '].first_name', 'text')
@@ -1409,7 +1407,7 @@ section.formc-review
         p.pb10.text-indent Employment information from previous employers over the last three years for each of the Company’s officers is as follows:
         p.pb10
           each v,k in values.formc.team_members
-            if v.role.indexOf('2') != -1
+            if (v.role & rolesConsts.DIRECTOR) == rolesConsts.DIRECTOR
               if v.experiences && v.experiences.length > 0
                 +frField('formc.team_members[' + k + '].first_name', 'text')
                 +frField('formc.team_members[' + k + '].last_name', 'text')
@@ -1458,7 +1456,7 @@ section.formc-review
         p.pb10.text-indent Employment information from previous employers over the last three years for each of the Company’s directors is as follows:
         p.pb10
           each v,k in values.formc.team_members
-            if v.role.indexOf('1') != -1
+            if (v.role & rolesConsts.SHAREHOLDER) == rolesConsts.SHAREHOLDER
               if v.experiences && v.experiences.length > 0
                 +frField('formc.team_members[' + k + '].first_name', 'text')
                 +frField('formc.team_members[' + k + '].last_name', 'text')

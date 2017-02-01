@@ -96,7 +96,7 @@ mixin confirmStatement(name, attr)
                 data-toggle="modal"
                 data-target="#income_worth_modal"
                 href="#income_worth_modal"
-              ).link-2.update-income-worth update your annual income and net worth.
+              ).link-6.update-income-worth update your annual income and net worth.
 
           div.popover-content-rounding
             i.fa.fa-info-circle
@@ -166,7 +166,9 @@ mixin confirmStatement(name, attr)
             .row
               .col-xl-12
                 p.m-b-1.m-t-1 In order to pay you any dividends or revenue share, regulations require GrowthFountain to collect your Taxpayer Identification Number.  Don’t worry we keep this information safe, secure and encrypted on a separate server.
+
                 -
+                //
                   pug_html += app.fields.nestedTextLabel(
                     'payment_information_data',
                     'ssn',

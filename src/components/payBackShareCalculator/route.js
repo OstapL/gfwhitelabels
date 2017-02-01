@@ -4,8 +4,13 @@ module.exports = Backbone.Router.extend({
     'calculator/paybackshare/step-2': 'calculatorPaybackshareStep2',
     'calculator/paybackshare/step-3': 'calculatorPaybackshareStep3'
   },
-
-  calculatorPaybackshareStep1: function() {
+  execute: function (callback, args, name) {
+        if ((name=='calculatorPaybackshareStep1')  && !app.user.ensureLoggedIn(window.location.pathname)) {
+      return false;
+        };
+        if (callback) callback.apply(this, args)
+    },
+  calculatorPaybackshareStep1: function( ) {
     require.ensure([], () => {
       const View = require('./views');
 
