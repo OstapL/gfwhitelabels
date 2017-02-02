@@ -1170,7 +1170,7 @@ module.exports = {
       this.fields.risk = { label: 'Describe Your Risk' };
       this.defaultRisks = {
         0: {
-          title: 'We have a limited operating history upon which you can e valuate ' +
+          title: 'We have a limited operating history upon which you can evaluate ' +
                   'our performance.',
           risk: 'We have a limited history upon which an evaluation of our prospects and ' +
                 'future performance can be made. Our proposed operations are subject to all ' +
@@ -1347,7 +1347,7 @@ module.exports = {
         },
         3: {
           title: 'New competitors may enter our market in a manner that could make it difficult ' +
-                  'to differentiate our Comapny.',
+                  'to differentiate our Company.',
           risk: 'While the Company is aware of certain competitors in the market, there is ' +
                 'the possibility that new competitors may enter and that they may be better ' +
                 'funded.  To the extent that the market becomes more crowded, this may make it ' +
