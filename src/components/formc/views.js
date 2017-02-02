@@ -554,7 +554,6 @@ module.exports = {
 
       require('bootstrap-select/sass/bootstrap-select.scss');
       let selectPicker = require('bootstrap-select');
-      debugger;
 
       this.$el.html(
         template({
@@ -629,7 +628,6 @@ module.exports = {
           delete data.role;
         }
       }
-      debugger;
       api.submitAction.call(this, e, data);
     },
 
