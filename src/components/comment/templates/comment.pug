@@ -1,5 +1,5 @@
 -
-  var rolesConsts = require('consts/team_member/roles.json');
+  var roleHelper = require('helpers/roleHelper.js');
   level = level || 0;
 
   var cssClass = level > 12
@@ -25,18 +25,14 @@ div(id=id class=cssClass data-level=level data-id=comment.uid).p-r-0.p-t-0.p-xs-
     .comments-wrap.col-lg-12.p-r-0.p-xs-0
       span.name-comments.text-uppercase #{ userName }
       -
-        var title = (comment.user.id == attr.owner_id)
-        ? 'FOUNDER'
-        : (comment.user.role.company_id == attr.company_id)
-        ? comment.user.role.role.join(', ')
-        : (comment.related || '');
+        var title = (comment.user.id == attr.owner_id) ? 'FOUNDER' : '';
+        var roles = roleHelper.extractRoles(comment.user.role);
 
-      each vv,kk in rolesConsts.ROLES
-        if (kk & comment.role) == kk
-          span.kvalificatio-comments #{ vv }
       if title
         span.kvalificatio-comments #{ title }
 
+      each role in roles
+        span.kvalificatio-comments #{ role.title }
 
       span.date-comments.pull-right.hidden-xs-down #{ passedTime }
       p #{ comment.message }
