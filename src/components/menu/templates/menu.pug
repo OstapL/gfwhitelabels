@@ -52,14 +52,24 @@ li.nav-item.hidden-md-down
         //-     a.nav-link(href=Urls['campaign-list']()) Campaign Material
         li
           a(href="/pg/success_guide").nav-link Success Guide
+            if app.user.is_anonymous() 
+              i.fa.fa-lock.pull-right.align-middle
         li
           a(href="/pg/advertising").nav-link Advertising and Communication
+            if app.user.is_anonymous() 
+              i.fa.fa-lock.pull-right.align-middle
         li
           a(href="/calculator/paybackshare/step-1").nav-link Revenue Share Calculator
+            if app.user.is_anonymous() 
+              i.fa.fa-lock.pull-right
         li
           a(href="/calculator/whatmybusinessworth/intro").nav-link How Much Should I Raise?
+            if app.user.is_anonymous() 
+              i.fa.fa-lock.pull-right
         li
           a(href="/calculator/selectYourBusiness").nav-link What's My Business Worth?
+            if app.user.is_anonymous() 
+              i.fa.fa-lock.pull-right
         li
           a(href="/pg/entrepreneurquestions").nav-link FAQ
   li.nav-item.hidden-md-down

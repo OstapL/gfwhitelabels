@@ -52,6 +52,9 @@ module.exports = Backbone.Router.extend({
       });
     },
     pagePG: function(name) {
+        if ((name=='success_guide' || name=='advertising')  && !app.user.ensureLoggedIn(window.location.pathname)) {
+      return false;
+        };
         require.ensure([], () => {
             let view = require('templates/' + name + '.pug');
             $('#content').html(view({

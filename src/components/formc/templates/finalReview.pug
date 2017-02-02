@@ -1,21 +1,20 @@
 include fields_final_review.pug
-- var formatHelper = require('helpers/formatHelper.js');
-- var customFields = require('../fields.js');
-- var fees = require('consts/companyFees.json');
+-
+  var formatHelper = require('helpers/formatHelper.js');
+  var roleHelper = require('helpers/roleHelper.js');
+  var customFields = require('../fields.js');
+  var fees = require('consts/companyFees.json');
 
 - pug_html += app.breadcrumbs('Form C Review', '', [ ['Home', '/'], ['Form C Review', '']]);
 
-- fields.formc.team_members = {};
-- fields.formc.team_members.schema = {};
-- fields.formc.team_members.schema.title = {};
-- fields.formc.team_members.schema.title.validate = {};
-- fields.formc.team_members.schema.title.validate.OneOf = {};
-- fields.formc.team_members.schema.title.validate.OneOf.choices = [1, 2, 3, 4, 5];
-- fields.formc.team_members.schema.title.validate.OneOf.labels = ['CEO/President','Principal Financial Officer/Treasurer','Vice President','Secretary','Controller/Principal Accounting Officer'];
-
-- fields.formc.outstanding_securities.schema.voting_right.validate.OneOf = {};
-- fields.formc.outstanding_securities.schema.voting_right.validate.OneOf.labels = ['No', 'Yes'];
-- fields.formc.outstanding_securities.schema.voting_right.validate.OneOf.choices = [0, 1];
+-
+  fields.formc.team_members = {};
+  fields.formc.team_members.schema = {};
+  fields.formc.team_members.schema.title = {};
+  fields.formc.team_members.schema.title.validate = {};
+  fields.formc.team_members.schema.title.validate.OneOf = {};
+  fields.formc.team_members.schema.title.validate.OneOf.choices = [1, 2, 3, 4, 5];
+  fields.formc.team_members.schema.title.validate.OneOf.labels = ['CEO/President','Principal Financial Officer/Treasurer','Vice President','Secretary','Controller/Principal Accounting Officer'];
 
 - var titles = ['', 'CEO/President', 'Principal Financial Officer/Treasurer', 'Vice President', 'Secretary', 'Controller/Principal Accounting Officer', ];
 
@@ -235,7 +234,7 @@ section.formc-review
             .row
               .col-lg-6.col-md-6.col-sm-6.col-xs-12
                 p.font-weight-bold Price of security:
-              .col-lg-6.col-md-6.col-sm-6.col-xs-12 $
+              .col-lg-6.col-md-6.col-sm-6.col-xs-12 
                 +frField('campaign.price_per_share', 'money')
           .row
             .col-lg-6.col-md-6.col-sm-6.col-xs-12
@@ -287,7 +286,7 @@ section.formc-review
             | !{' '}
             +frField('company.corporate_structure', 'select')
             |  (the “Company”), is offering up to 
-            b #{ formatHelper.formatPrice(Math.round(values.campaign.maximum_raise / values.campaign.price_per_share)) }
+            b #{ formatHelper.formatNumber(Math.round(values.campaign.maximum_raise / values.campaign.price_per_share)) }
             |   shares of 
             +frField('campaign.security_type', 'select')
             |  (the 
@@ -297,7 +296,7 @@ section.formc-review
             |  per Share for a maximum aggregate offering price of 
             +frField('campaign.maximum_raise', 'money').
           p.pb10.text-indent The Company has established a minimum offering of at least 
-            b #{ formatHelper.formatPrice(Math.round(values.campaign.minimum_raise / values.campaign.price_per_share)) }
+            b #{ formatHelper.formatNumber(Math.round(values.campaign.minimum_raise / values.campaign.price_per_share)) }
             |  Shares for a minimum aggregate offering price of 
             +frField('campaign.minimum_raise', 'money')
               |  prior to #{ values.campaign.expiration_date }
@@ -466,20 +465,24 @@ section.formc-review
                 th.text-xs-center.w-30 Tenure
                 th.text-xs-center.w-40 Title and Responsibilities
             tbody
-              each v,k in values.formc.team_members
-                if v.role.indexOf('2') != -1 
+              - console.log(values.formc);
+              each m, idx in values.formc.team_members
+                - var officerRoles = roleHelper.extractOfficerRoles(m.role);
+                if officerRoles.length > 0
                   tr
                     td.text-xs-center
-                      +frField('formc.team_members[' + k + '].first_name', 'text')
+                      +frField('formc.team_members[' + idx + '].first_name', 'text')
                       br
-                      +frField('formc.team_members[' + k + '].last_name', 'text')
+                      +frField('formc.team_members[' + idx + '].last_name', 'text')
                     td.text-xs-center
-                      +frField('formc.team_members[' + k + '].start_date', 'text')
+                      +frField('formc.team_members[' + idx + '].start_date', 'text')
                     td.text-xs-center
-                      each vv,kk in v.title
-                        +frField('formc.team_members[' + k + '].title[' + kk + ']', 'select')
+                      each officerRole, officerIdx in officerRoles
+                        +teamMemberRoleField(officerRole)
+                        //span.user-type #{ '(' + officerRole.title + ')'} &nbsp;
                       br
-                      +frField('formc.team_members[' + k + '].responsibilities', 'text')
+                      +frField('formc.team_members[' + idx + '].responsibilities', 'text')
+
         p.text-uppercase.m-t-3.m-b-0.pb10 
           u Board of Directors
         p.pb10.text-indent The following information has been provided by the Company as true and correct regarding each of the Company’s directors (and any person performing a similar function):
@@ -491,21 +494,22 @@ section.formc-review
                 th.text-xs-center.w-30 Dates of Board Service (Year Begin)
                 th.text-xs-center.w-40 Principal Occupation + Employer & Start Date
             tbody
-              each v,k in values.formc.team_members
-                if v.role.indexOf('1') != -1
+              each m, mIdx in values.formc.team_members
+                - var directors = roleHelper.extractDirectorRoles(m.role)
+                if directors.length > 0
                   tr
                     td.text-xs-center
-                      +frField('formc.team_members[' + k + '].first_name', 'text')
+                      +frField('formc.team_members[' + mIdx + '].first_name', 'text')
                       br
-                      +frField('formc.team_members[' + k + '].last_name', 'text')
+                      +frField('formc.team_members[' + mIdx + '].last_name', 'text')
                     td.text-xs-center
-                      +frField('formc.team_members[' + k + '].board_service_start_date', 'text')
+                      +frField('formc.team_members[' + mIdx + '].board_service_start_date', 'text')
                     td.text-xs-center
-                      +frField('formc.team_members[' + k + '].principal_occupation', 'text')
+                      +frField('formc.team_members[' + mIdx + '].principal_occupation', 'text')
                       br
-                      +frField('formc.team_members[' + k + '].employer_principal_business', 'text')
+                      +frField('formc.team_members[' + mIdx + '].employer_principal_business', 'text')
                       br
-                      +frField('formc.team_members[' + k + '].employer_start_date', 'text')
+                      +frField('formc.team_members[' + mIdx + '].employer_start_date', 'text')
 
       // page 7
       section.page-formc-review.m-t-1
@@ -526,19 +530,20 @@ section.formc-review
                 th.text-xs-center Number Held
                 th.text-xs-center % of Voting Power
             tbody
-              each v,k in values.formc.team_members
-                if v.role.indexOf('0') != -1
+              each m, mIdx in values.formc.team_members
+                - var shareHolders = roleHelper.extractShareHolderRoles(m.role);
+                if shareHolders.length > 0
                   tr
                     td.text-xs-center
-                      +frField('formc.team_members[' + k + '].first_name', 'text')
+                      +frField('formc.team_members[' + mIdx + '].first_name', 'text')
                       br
-                      +frField('formc.team_members[' + k + '].last_name', 'text')
+                      +frField('formc.team_members[' + mIdx + '].last_name', 'text')
                     td.text-xs-center
-                      +frField('formc.team_members[' + k + '].class_of_securities', 'text')
+                      +frField('formc.team_members[' + mIdx + '].class_of_securities', 'text')
                     td.text-xs-center
-                      +frField('formc.team_members[' + k + '].number_of_shares', 'text')
+                      +frField('formc.team_members[' + mIdx + '].number_of_shares', 'text')
                     td.text-xs-center
-                      +frField('formc.team_members[' + k + '].voting_power_percent', 'text')
+                      +frField('formc.team_members[' + mIdx + '].voting_power_percent', 'text')
 
         p.text-indent The Company has confirmed that the information above is accurate for the period spanning 120 days prior to the date of filing of this Material.   For any calculation above of total voting power, all securities are included for which the person directly or indirectly has or shares the voting power, which includes the power to vote or to direct the voting of such securities. If the person has the right to acquire voting power of such securities within 60 days, including through the exercise of any option, warrant or right, the conversion of a security, or other arrangement, or if securities are held by a member of the family, through corporations or partnerships, or otherwise in a manner that would allow a person to direct or control the voting of the securities (or share in such direction or control — as, for example, a co-trustee) they are included as being “beneficially owned.” For any calculation of outstanding voting equity securities, all outstanding options are assumed to be exercised and all outstanding convertible securities converted.
         p.text-uppercase.m-t-3.m-b-0.pb10 
@@ -604,8 +609,8 @@ section.formc-review
             | Each Offering is listed on the Platform for a minimum of twenty-one (21) days and the Offering period may extend beyond such twenty-one days if set forth in the Material or each investor is properly notified. During that period (or later if the investor is notified of a change), the Company must aggregate investor commitments that are equal to or greater than the Offering minimum target amount. The process generally involves the following steps: (1) an investor registered on the Platform identifies a desired offering and communicates an investment commitment to purchase securities in such offering by completing a subscription agreement; (2) the Intermediary confirms the investor’s eligibility to participate in the Offering; (3) the investor transfers the funds required to purchase the offered securities to the Intermediary’s designated third-party FDIC insured depository (4) once the targeted minimum offering amount is achieved or exceeded through investor commitments collectively, the issuer would be able to close the transaction on the original target closing date or an earlier date with at least five business days prior notice to the investors; and (5) the subscription agreement will be countersigned by the issuer; and (6) the funds would be released by the third-party depository to the issuer, less any required fees sent to the Intermediary, and the issuer would issue the securities to the investor.
           else
             | Each Offering is listed on the Platform for a minimum of twenty-one (21) days and the Offering period may extend beyond such twenty-one days if set forth in the Material and each investor is properly notified.  During that period (or later if the investor is notified of a change), the Company must aggregate investor commitments that are equal to or greater than the Offering’s   minimum target amount.  The process generally involves the following steps: (1) an investor registered on
-            | the Platform identifies a desired offering and communicates an investment commitment to purchase securities in such offering by completing a subscription agreement; (2) the Intermediary confirms the investor’s eligibility to participate in the Offering and then has the subscription agreement countersigned by the issuer; (3) the investor transfers the funds required to purchase the offered securities to the Intermediary’s designated escrow agent; (4) once the targeted minimum
-            | offering amount is achieved or exceeded through investor  commitments collectively, the issuer would be able to close the transaction on the original target closing date or an earlier date with at least five business days prior notice to the investors; and (5) the funds would be released by the escrow agent to the issuer, less any required fees sent to the intermediary, and the issuer would issue the securities to the investor
+            | the Platform identifies a desired offering and communicates an investment commitment to purchase securities in such offering by completing a subscription agreement; (2) the Intermediary confirms the investor’s eligibility to participate in the Offering and then has the subscription agreement countersigned by the issuer; (3) the investor transfers the funds required to purchase the offered securities to a third-party FDIC insured account designated by the Intermediary as being for the benefit of issuers and investors (the “FBO Account”); (4) once the targeted minimum
+            | offering amount is achieved or exceeded through investor  commitments collectively, the issuer would be able to close the transaction on the original target closing date or an earlier date with at least five business days prior notice to the investors; and (5) the funds would be released by the FBO Account agent to the issuer, less any required fees sent to the intermediary, and the issuer would issue the securities to the investor
 
       // page 10
       section.page-formc-review.m-t-1
@@ -652,9 +657,9 @@ section.formc-review
             |  aggregate amount raised in the Offering 
           |  if the Offering is successfully completed and closed.  Such compensation is paid only if the Company’s total Offering proceeds meet or exceed the target minimum offering amount indicated in this Material. Additionally, the Company reimburses the Intermediary for certain fees that the Intermediary passes through to the Company, such as the costs related to performing background checks and establishing 
           if values.campaign.security_type == 0
-            | a depository account for the benefit of investors.
+            | an FBO Account.
           else
-            | an escrow account.
+            | an FBO Account.
           |  These fees are one-time fees and are not dependent on the success of the Offering. In total, the Intermediary will receive, directly or indirectly, a dollar amount equal to the sum of all the following: (a) a transaction fee equal to 
           | #{ fees.trans_percent }% of the total amount of monies raised in the Offering for the purchase of securities offered by the Company, payable upon success, (b) a registration and processing fee equal to 
           | $#{ fees.registration_fee } payable upon registration, and (c) a participation fee equal to 
@@ -1409,7 +1414,7 @@ section.formc-review
         p.pb10.text-indent Employment information from previous employers over the last three years for each of the Company’s officers is as follows:
         p.pb10
           each v,k in values.formc.team_members
-            if v.role.indexOf('2') != -1
+            if roleHelper.isDirector(v.role)
               if v.experiences && v.experiences.length > 0
                 +frField('formc.team_members[' + k + '].first_name', 'text')
                 +frField('formc.team_members[' + k + '].last_name', 'text')
@@ -1458,7 +1463,7 @@ section.formc-review
         p.pb10.text-indent Employment information from previous employers over the last three years for each of the Company’s directors is as follows:
         p.pb10
           each v,k in values.formc.team_members
-            if v.role.indexOf('1') != -1
+            if roleHelper.isShareholder(v.role)
               if v.experiences && v.experiences.length > 0
                 +frField('formc.team_members[' + k + '].first_name', 'text')
                 +frField('formc.team_members[' + k + '].last_name', 'text')

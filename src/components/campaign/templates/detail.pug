@@ -1,3 +1,6 @@
+- var percentage_raised = formatHelper.calculateRaisedPercentage(values.campaign.minimum_raise, values.campaign.amount_raised)
+- var formcLinks = require('./../helpers.js').formcLinks
+
 -
   var campaignHelpers = require('components/campaign/helpers.js');
   var c = require('consts/campaign/file.json');
@@ -577,7 +580,7 @@ section
                     h2.font-weight-bold #{ values.campaign.percentage_revenue }%
                 tr.bgc-row-middle
                   td.width-50
-                    p Target Minimum Raise Amonunt
+                    p Target Minimum Raise Amount
                   td
                     p Target Maximum Raise Amount
                 tr
@@ -726,8 +729,8 @@ section
       .col-lg-12
           .like-text-wrap
             h2
-              .like-detail-icon
-                i.fa.fa-thumbs-o-up
+              .like-detail-icon.d-inline-block
+                i.fa.fa-thumbs-o-up.like-icon-circle
               |  I’d Like to Invest in #{ values.short_name || values.name }!
             a(href="/" + values.id + "/invest").btn.btn-lg.btn-primary.text-uppercase.m-t-2 invest in this company
   

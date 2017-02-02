@@ -15,6 +15,7 @@ const helpers = {
 };
 
 const COUNTRIES = require('consts/countries.json');
+const validation = require('components/validation/validation.js');
 
 module.exports = {
   list: Backbone.View.extend({
@@ -827,11 +828,11 @@ module.exports = {
     },
 
     updateIncomeWorth(e) {
+
       let netWorth = $('#net_worth')
         .val()
         .trim()
-        .replace(/\,/g, '')
-        / 1000;
+        .replace(/\,/g, '') / 1000;
 
       let annualIncome = $('#annual_income')
         .val()
@@ -843,6 +844,39 @@ module.exports = {
         annual_income: annualIncome
       };
 
+      const validateRange = (value, min=0, max, prefix) => {
+        if (value < min)
+          throw `${prefix || ''} must not be less than ${helpers.format.formatNumber(min)}.`;
+
+        if (value > max)
+          throw `${prefix || ''} must not be greater than ${helpers.format.formatNumber(max)}.`;
+      };
+
+      let fields = {
+        net_worth: {
+          required: true,
+          fn: function(name, value, attr, data, schema) {
+            return validateRange(value * 1000, 0, 5000000 * 2, 'Net Worth')
+          },
+        },
+        annual_income: {
+          required: true,
+          fn: function(name, value, attr, data, schema) {
+            return validateRange(value * 1000, 0, 500000 * 2, 'Annual Income');
+          },
+        }
+      };
+
+      $('#income_worth_modal .helper-block').remove();
+
+      if(!validation.validate(fields, data, this)) {
+        e.preventDefault();
+        _(validation.errors).each((errors, key) => {
+          validation.invalidMsg(this, key, errors);
+        });
+        return false;
+      }
+
       api.makeRequest(authServer + '/rest-auth/data', 'PATCH', data).done((data) => {
         this.user.net_worth = netWorth;
         this.user.annual_income = annualIncome;
@@ -851,7 +885,10 @@ module.exports = {
         $('span.current-limit').text(this._maxAllowedAmount.toLocaleString('en-US'));
         this.$amount.data('max', this._maxAllowedAmount);
 
+        $('#income_worth_modal').modal('hide');
+
         this.$amount.keyup();
+
       }).fail((xhr, status, text) => {
         alert('Update failed. Please try again!');
       });

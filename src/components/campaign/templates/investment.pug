@@ -96,7 +96,7 @@ mixin confirmStatement(name, attr)
                 data-toggle="modal"
                 data-target="#income_worth_modal"
                 href="#income_worth_modal"
-              ).link-2.update-income-worth update your annual income and net worth.
+              ).link-6.update-income-worth update your annual income and net worth.
 
           div.popover-content-rounding
             i.fa.fa-info-circle
@@ -163,12 +163,12 @@ mixin confirmStatement(name, attr)
             else
               | !{ snippets.nonUs({ fields: fields, user: user }) }
 
-            .row
+            //.row
               .col-xl-12
                 p.m-b-1.m-t-1 In order to pay you any dividends or revenue share, regulations require GrowthFountain to collect your Taxpayer Identification Number.  Don’t worry we keep this information safe, secure and encrypted on a separate server.
 
                 -
-                //
+                
                   pug_html += app.fields.nestedTextLabel(
                     'payment_information_data',
                     'ssn',
@@ -482,7 +482,7 @@ div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true
         .container.form-section
           form.col-lg-10.offset-lg-1.border-bottom.update-income-worth
             .row
-              | Your current limit is
+              | Your current limit is&nbsp;
               b.color-green $
                 span.current-limit.color-green 1000
               | .
@@ -496,7 +496,7 @@ div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true
               .row
                 .col-lg-12
                   .col-lg-12.text-lg-center
-                    button(data-dismiss="modal" type="button").btn.btn-primary.text-uppercase.submit-income-worth update
+                    button(type="button").btn.btn-primary.text-uppercase.submit-income-worth update
         .modal-footer
 
 if !window.google || !window.google.maps
