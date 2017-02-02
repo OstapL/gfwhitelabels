@@ -5,12 +5,14 @@
 	position: absolute
 	top: 0
 	left: 0
-	background: rgba(17, 17, 17, .4)
+	background: rgba(17, 17, 17, .5)
 .js-height-parent
-	height: rem(545)
+	height: 70vh
 .border-bottom-scroll
 	box-shadow: 0px 1px 1px 0px rgba(0,0,0,0.1)
-	margin-top: rem(25)
+	padding-top: rem(25)
+	background-color: #fdfdfd
+
 .home-section
 	position: relative
 	background-repeat: no-repeat
@@ -38,14 +40,10 @@
 .hs-line-14
 	margin-top: 0
 	position: relative
-	font-size: rem(48)
-	font-weight: $campain_main_name_font_weight
-	line-height: 1.4
-	text-transform: uppercase  
-	letter-spacing: rem(14.4)
+	font-weight: $campain_main_name_font_weight 
 	font-family: $one_block_h3_font_family
 	color: $white
-	padding-left: rem(13)
+	padding-left: rem(4)
 
 	
 .big-icon
@@ -57,7 +55,10 @@
 	width: 60px
 	text-decoration: none
 	outline: none
-		
+
+.detail-security-type-icon
+	font-size: rem(18)!important
+	padding-left: rem(5)
 
 
 .small-icon
@@ -100,7 +101,7 @@
 				margin-top: 0
 			p
 				color: $small-text
-				margin-bottom: rem(7)
+				margin-bottom: rem(3)
 
 		.btn
 			margin-top: rem(8)
@@ -113,16 +114,17 @@
 	padding: 50px
 	text-align: center
 .campaigndetail
-	margin-top: rem(85)
+	background-color: #fdfdfd
+	padding-top: rem(50)
 	h1
 		letter-spacing: rem(.75)
 		margin-bottom: 0
 		font-weight: 300
-		line-height: rem(30)
+		line-height: rem(35)
 	h2
 		letter-spacing: rem(.6)
 	p
-		margin-bottom: rem(10)
+		margin-bottom: rem(3)
 		color: $small-text
 		line-height: rem(14)
 	.sity-detail
@@ -162,18 +164,42 @@
 			span
 				margin-bottom: rem(5)
 	.share
-		padding-top: rem(15)
+		span
+			color: $small-text
+
+		padding-top: rem(25)
 		a
-			font-size: rem(24)
-			padding: 0 rem(10)
+			i
+				font-size: rem(30)
+				margin-left: rem(15)
+		.facebook-share
+			color: $btn-facebook-bg
+			+mt(.2s)
+			&:hover
+				color: $btn-facebook-hover-bg
+				
+		.linkedin-share
+			color: $btn-linkedin-bg
+			+mt(.2s)
+			&:hover
+				color: $btn-linkedin-hover-bg
+		.twitter-share
+			color: $btn-twitter-bg
+			+mt(.2s)
+			&:hover
+				color: $btn-twitter-hover-bg
+		.email-share
+			color: $btn-email-bg
+			+mt(.2s)
+			&:hover
+				color: $btn-email-hover-bg
 
 
 
 
 .about-detail
 	padding-bottom: rem(50)
-	p
-		line-height: rem(18)
+
 	.no-padding-img
 		padding: 5px
 	.card
@@ -212,7 +238,7 @@
 	.show-more-members
 		position: absolute
 		right: 0
-		bottom: -2px
+		bottom: -5px
 		z-index: 2
 		background-color: white
 		padding-left: rem(17)
@@ -272,6 +298,24 @@
 	a,a:hover
 		.card-text,.card-title
 			color: $black_text
+	.team-social	
+		.linkedin-share-team
+			font-size: 18px
+			margin: 2px
+			color: $btn-linkedin-bg
+			+mt(.2s)
+			&:hover
+				color: $btn-linkedin-hover-bg
+		.facebook-share-team
+			font-size: 18px
+			margin: 2px
+			color: $btn-facebook-bg
+			+mt(.2s)
+			&:hover
+				color: $btn-facebook-hover-bg
+
+
+
 	.card
 		border: none
 		margin-bottom: 0
@@ -288,7 +332,7 @@
 			height: rem(180)
 		.color-grey
 			color: $small-text
-			font-size: rem(11)
+			font-size: rem(12)
 
 .document
 	padding-bottom: rem(45)
@@ -324,34 +368,53 @@
 			font-size: rem(11)
 .overview
 	h3
-		margin-top: 0
-	.fundraising
-		.jumbotron
-			margin-bottom: 0
-			padding-bottom: 0
+		margin-top: 0 
+	.fundraising, .perks
+		text-align: center
+		.bgc-row-top
 			background-color: $detail-overview-background //переменная находится в файле /unique/variables
-			p
-				color: $white
-				margin-bottom: rem(5)
-			h2
-				color: $white
-				letter-spacing: rem(.6)
-				margin-top: 0
-				margin-bottom: rem(25)
-			.col-lg-4
-				padding-left: rem(5)
-				padding-right: rem(5)
-.perks
-	.jumbotron
-		margin-bottom: rem(5)
+		.bgc-row-middle
+			background-color: $alabaster
+			td
+				padding: 5px 0
 		h3
+			color: $white
 			margin-top: 0
-			margin-bottom: rem(20)
-			span
-				color: $perks-money-color
-		p
-			color: $small-text
 			margin-bottom: 0
+			letter-spacing: normal
+		h2
+			margin-top: 0
+			margin-bottom: 0
+			letter-spacing: normal
+		.width-50
+			width: 50%
+		@media only screen and (max-width : 480px)
+			h2
+				font-size: rem(18)
+	.perks
+		text-align: left
+		.perks-invest
+			h3
+				color: $black
+				margin-top: 0
+				margin-bottom: 0
+				span
+					color: $perks-money-color
+		.w-35
+			width: 40%
+		.bgc-row-middle
+			td
+				padding-left: 20px
+				padding-right: 20px
+		td
+			padding-left: 20px
+			padding-right: 20px
+
+#perks
+	table
+		th, td
+			border: 1px solid #ebebeb
+
 .investors-all
 	padding-bottom: rem(45)
 	h3
@@ -422,8 +485,9 @@
 				padding-right: 10px
 				color: $small-text
 		.name-comments
-			font-size: rem(14)
-			letter-spacing: rem(2.8)
+			font-size: rem(15)
+			letter-spacing: rem(1.5)
+			font-family: $company-comments-ff
 			color: $black
 		.kvalificatio-comments
 			font-size: rem(11)
@@ -435,7 +499,7 @@
 			margin-left: rem(10) 
 			text-transform: capitalize
 		.date-comments
-			font-size: rem(11)
+			font-size: rem(12)
 			color: $small-text
 		.responce
 		
@@ -445,15 +509,36 @@
 				display: inline-block
 		p
 			margin-bottom: rem(5)
-			margin-top: rem(10)
-.like
-	h2
-		margin-bottom: 0
-		letter-spacing: rem(1)
-	i
-		color: $campaign-like-color
-	.btn
+			margin-top: rem(5)
+.like-detail
+	.like-text-wrap
+		text-align: center
 		margin-top: rem(50)
+
+		h2
+			margin-bottom: 0
+			letter-spacing: rem(1)
+			margin-top: 0
+			color: $campaign-like-color-h2
+
+	@media only screen and (max-width : 992px)
+		h1.like-detail-text
+			width: 100%
+			text-align: center
+			margin-bottom: rem(25)
+		.like-text-wrap
+			width: 100%
+			padding-left: 0
+			text-align: center
+	@media only screen and (max-width : 460px)
+		img
+			height: 240px
+		h1.like-detail-text
+			font-size: rem(24)
+		.like-text-wrap
+			h2
+				font-size: rem(18)
+
 @media only screen and (max-width : 992px)
 	.hs-line-14
 		font-size: rem(28)
@@ -462,11 +547,6 @@
 		padding-right: 0!important
 	.tabs-scroll
 		display: none
-	.top-info
-		.top-info-wrap
-			.top-info-wrap-item
-				h2
-					margin-bottom: rem(25)
 	.campaigndetail
 		.share
 			margin-bottom: rem(20)
@@ -493,4 +573,71 @@
 	.p-xs-0
 		padding-left: 0!important
 		padding-right: 0!important
+@media only screen and (max-width : 576px)
+	.js-height-parent
+		height: 40vh
+	h1.big-h1
+		font-size: rem(28)
+	.top-info-wrap-item
+		h2
+			font-size: rem(19)
+			margin-bottom: rem(25)!important
+			&.no-margin
+				margin-bottom: 0!important
+		p
+			font-size: rem(15)
+	.right-block-investors
+		margin-top: 25px
+	.campaigndetail
+		padding-top: rem(30) 
+		h1
+			font-size: rem(21)
+		.sity-detail
+			font-size: rem(15)
+		.date-detail
+			font-size: rem(15)
+	.right-block-investors
+		span
+			font-size: rem(15)
+		.committed
+			font-size: rem(19)!important
+		h2
+			font-size: rem(19)
+			margin-bottom: rem(30)!important
+	.campaigndetail
+		border-bottom: solid 1px $gallery
+		.share
+			margin-bottom: rem(30)
+			span
+				font-size: rem(18) 
+			a 
+				i.fa-facebook-square
+					margin-left: 0
+			.m-t-1
+				margin-top: rem(4)!important
+	.show-more-members
+		bottom: 0!important
+	.fundraising 
+		.bgc-row-middle
+			p
+				font-size: rem(15)
+	.perks 
+		td
+			padding-left: rem(10)!important
+			padding-right: rem(10)!important
+	.ask
+		.comment-form
+			margin-top: rem(15)
+		.btn.ask-question
+			margin-top: rem(10)
+			margin-bottom: rem(10)
+		.kvalificatio-comments
+			font-size: rem(13)!important
+			padding: rem(2) rem(7)!important
+			margin-left: rem(5)!important
+	.big-icon
+		margin: auto!important
+	.comment-form
+		textarea
+			margin-top: 25px
 

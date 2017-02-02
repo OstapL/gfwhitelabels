@@ -9,24 +9,6 @@ let userModel = Backbone.Model.extend({
     return this.get('token') == '';
   },
 
-  // ensureLoggedIn1() {
-  //   return new Promise((resolve, reject) => {
-  //     if (!this.is_anonymous())
-  //       return resolve(true);
-  //
-  //     const View = require('components/anonymousAccount/views.js');
-  //
-  //     let view = new View.popupLogin1({
-  //
-  //     });
-  //     view.render();
-  //
-  //     new pView.popupLogin().render(window.location.pathname);
-  //     app.hideLoading();
-  //
-  //   });
-  // },
-
   ensureLoggedIn(next) {
     if (this.is_anonymous()) {
       const pView = require('components/anonymousAccount/views.js');

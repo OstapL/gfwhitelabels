@@ -1,4 +1,7 @@
-- var format = require('helpers/formatHelper.js');
+-
+  var format = require('helpers/formatHelper.js');
+  var security_type = require('consts/raisecapital/security_type.json');
+  var industry = require('consts/raisecapital/industry.json');
 
 .row
   for company in collection.data
@@ -8,16 +11,19 @@
       a(href="/" + company.id).block_link
       .one_block
         .for_img
-          img(
-            src=((company.campaign.list_image_data && company.campaign.list_image_data[0]) ? company.campaign.list_image_data[0].urls[0] + '?v2=22' : '/img/default/255x153.png')
-            alt=(company.short_name || company.name))
+          -
+            var url = app.getUrl(company.campaign.list_image_data);
+            url = url ? (url + '?v=2') : '/img/default/255x153.png';
+            var alternate = company.short_name || company.name;
+
+          img(src=url alt=alternate)
 
           .more_inform
             .title.text-center
               if company.campaign.security_type == 0
-                h3 Valuation: #{format.formatPrice(company.campaign.premoney_valuation)}
+                h3.text-uppercase Valuation: #{format.formatPrice(company.campaign.premoney_valuation)}
               else
-                h3 Percentage Revenue: #{company.campaign.percentage_revenue}%
+                h3.text-uppercase Percentage Revenue: #{company.campaign.percentage_revenue}%
 
             .small_text
               if company.tagline
@@ -30,7 +36,7 @@
                 i.fa.fa-list
 
             .bottom_pr
-              if company.campaign.security_type == 0
+              if company.campaign.security_type == security_type.CommonEquity
                 p Price per share: #{format.formatPrice(company.campaign.price_per_share)}
                 p Number of shares: #{(Math.round(company.campaign.minimum_raise / company.campaign.price_per_share) || 0).toLocaleString('en-US')}
               else
@@ -39,7 +45,7 @@
                 p Percentage Revenue: #{company.campaign.percentage_revenue}%
 
         .title.text-xs-center
-          h3.m-t-0.m-x-auto= company.short_name || company.name
+          h3.text-uppercase.m-t-0.m-x-auto= company.short_name || company.name
           span.place
             i.fa.fa-map-marker
             = company.city + ' ' + company.state
@@ -59,28 +65,8 @@
         .bottom_text
           span.left_desc
             b Security:
-            | #{company.campaign.security_type == 0 ? 'Common Equity' : 'Revenue Share'}
+            |  #{company.campaign.security_type == security_type.CommonEquity ? 'Common Equity' : 'Revenue Share'}
           span.right_desc
-            b Industry: 
-            case company.industry
-              when 1
-                | Entertainment
-              when 2
-                | Food Service
-              when 3
-                | Technology
-              when 4
-                | Wellness
-              when 5
-                | Fashion
-              when 6
-                | Sports
-              when 7
-                | Environment
-              when 8
-                | Education
-              when 9
-                | Community
-              default
-                | Other 
+            b Industry:
+            | !{ industry[company.industry] || "Other" }
           .clear

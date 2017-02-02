@@ -5,10 +5,10 @@ class CountryBlock {
     this.view = view;
 
     this.template = require('./templates/country.pug');
-
     this.usBlock = require('./templates/snippets/us.pug');
     this.nonUsBlock = require('./templates/snippets/nonUs.pug');
-
+    let country = this.view.fields.country;
+    country.validate.choices = require('consts/countries.json');
     return this;
   }
 
@@ -27,6 +27,7 @@ class CountryBlock {
 
     let html = this.template({
       fields: this.view.fields,
+      countries: this.countries,
       user: this.view.model,
       view: this.view,
       snippets: {

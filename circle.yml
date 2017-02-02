@@ -1,12 +1,15 @@
 machine:
     node:
-        version:  6.2.1
+      version: 6.1.0
 
 dependencies:
     override:
         - npm install
+        - git submodule init
+        - git submodule update
+        - git submodule foreach git pull origin master
         - ls -la 
-        - ./node_modules/webpack/bin/webpack.js -p --config ./webpack.config.production.js 
+        - ./node_modules/webpack/bin/webpack.js -p --config ./webpack.config.js 
         - ./node_modules/gulp/bin/gulp.js styles
         - sudo apt-get update
         - sudo apt-get install python-dev

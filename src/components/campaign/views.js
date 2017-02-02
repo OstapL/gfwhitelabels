@@ -11,14 +11,11 @@ const helpers = {
   format: formatHelper,
   fileList: require('helpers/fileList.js'),
   date: require('helpers/dateHelper.js'),
+  campaign: require('./helpers.js'),
 };
 
-const constants = {
-  AccountType: require('consts/bankAccount.json'),
-};
-
-let countries = {};
-_.each(require('helpers/countries.json'), (c) => { countries[c.code] = c.name; });
+const COUNTRIES = require('consts/countries.json');
+const validation = require('components/validation/validation.js');
 
 module.exports = {
   list: Backbone.View.extend({
@@ -62,10 +59,10 @@ module.exports = {
       'click .tabs-scroll .nav .nav-link': 'smoothScroll',
       'hide.bs.collapse .panel': 'onCollapse',
       'show.bs.collapse .panel': 'onCollapse',
-      'click .email-share': 'shareWithEmail',
-      'click .linkedin-share': 'shareOnLinkedin',
-      'click .facebook-share': 'shareOnFacebook',
-      'click .twitter-share': 'shareOnTwitter',
+      'click .email-share': 'socialPopup',
+      'click .linkedin-share': 'socialPopup',
+      'click .facebook-share': 'socialPopup',
+      'click .twitter-share': 'socialPopup',
       'click .see-all-risks': 'seeAllRisks',
       'click .see-all-faq': 'seeAllFaq',
       'click .show-more-members': 'readMore',
@@ -216,36 +213,15 @@ module.exports = {
       });
     },
 
-    shareWithEmail (e) {
-      event.preventDefault();
-      let text = "Check out " + (this.model.short_name || this.model.name) + "'s fundraise on GrowthFountain";
-      window.open("mailto:?subject=" + text + "&body=" + text + "%0D%0A" + window.location.href);
-    },
-
-    shareOnFacebook(event) {
-      event.preventDefault();
-      FB.ui({
-        method: 'share',
-        href: window.location.href,
-        caption: this.model.tagline,
-        description: this.model.description,
-        title: 'Check out ' + (this.model.short_name || this.model.name) + "'s fundraise on GrowthFountain.com",
-        picture: (this.model.campaign.header_image_data.url ? this.model.campaign.header_image_data.url : null),
-      }, function(response){});
-    },
-
-    shareOnLinkedin(event) {
-      event.preventDefault();
-      window.open(encodeURI('https://www.linkedin.com/shareArticle?mini=true&url=' + window.location.href +
-        '&title=' + 'Check out ' + (this.model.short_name || this.model.name) + "'s fundraise on GrowthFountain.com" +
-            '&summary=' + this.model.description +
-            '&source=Growth Fountain'),'Growth Fountain Campaign','width=605,height=545');
-    },
-
-    shareOnTwitter(event) {
-      event.preventDefault();
-      window.open(encodeURI('https://twitter.com/share?url=' + window.location.href +
-            '&text=Check out ' + (this.model.short_name || this.model.name) + "'s fundraise on @growthfountain "),'Growth Fountain Campaingn','width=550,height=420');
+    socialPopup (e) {
+      e.preventDefault();
+      var popupOpt = e.currentTarget.dataset.popupOpt || 'toolbar=0,status=0,left=45%,top=45%,width=626,height=436';
+      var windowChild = window.open(e.currentTarget.href, '', popupOpt);
+   
+      if (e.currentTarget.dataset.close) {
+        let closeScript = "<script>setTimeout(window.close.bind(window), 400);</script>";
+        windowChild.document.write(closeScript);
+      }
     },
 
     showDocumentsModal(e) {
@@ -254,7 +230,6 @@ module.exports = {
     },
 
     render() {
-      const socialMediaScripts = require('helpers/shareButtonHelper.js');
       const fancybox = require('components/fancybox/js/jquery.fancybox.js');
       const fancyboxCSS = require('components/fancybox/css/jquery.fancybox.css');
 
@@ -276,9 +251,6 @@ module.exports = {
         $('.nav-tabs li').removeClass('active');
         $(this).addClass('active');
       });
-
-      // Will run social media scripts after content render
-      socialMediaScripts.facebook();
 
       setTimeout(() => {
         var stickyToggle = function(sticky, stickyWrapper, scrollElement) {
@@ -410,7 +382,7 @@ module.exports = {
       'keyup .us-fields :input[name*=zip_code]': 'changeZipCode',
       'click .update-location': 'updateLocation',
       'click .link-2': 'openPdf',
-      'change #country': 'changeCountry',
+      'change #personal_information_data__country': 'changeCountry',
       'change #payment_information_type': 'changePaymentType',
       'keyup .typed-name': 'copyToSignature',
       'keyup #annual_income,#net_worth': 'updateLimitInModal',
@@ -422,6 +394,7 @@ module.exports = {
       this.fields = options.fields;
       this.user = options.user;
       this.user.account_number_re = this.user.account_number;
+      this.user.routing_number_re = this.user.routing_number;
       this.fields.payment_information_type.validate.choices = {
         0: 'Echeck (ACH)',
         1: 'Check',
@@ -458,11 +431,29 @@ module.exports = {
       this.fields.payment_information_data.schema.routing_number = {
         required: true,
         _length: 9,
-      }
+        dependies: ['routing_number_re'],
+        fn: function(name, value, attr, data, schema) {
+          if (value != this.getData(data, 'payment_information_data.routing_number_re')) {
+            throw "Routing number fields don't match";
+          }
+        },
+      };
 
+      this.fields.payment_information_data.schema.routing_number_re = {
+        required: true,
+        _length: 9,
+        dependies: ['routing_number'],
+        fn: function(name, value, attr, data, schema) {
+          if (value != this.getData(data, 'payment_information_data.routing_number')) {
+            throw "Routing number fields don't match";
+          }
+        },
+      };
+
+      /*
       this.fields.payment_information_data.schema.ssn = {
         type: 'password',
-        required: true,
+        required: false,
         _length: 9,
         dependies: ['ssn_re'],
         fn: function(name, value, attr, data, computed) {
@@ -483,6 +474,8 @@ module.exports = {
           }
         },
       };
+      */
+
 
       this.fields.signature = {
         type: 'nested',
@@ -515,23 +508,56 @@ module.exports = {
 
       this.model.campaign.expiration_date = new Date(this.model.campaign.expiration_date);
 
-      this.fields.country = {
+      this.fields.personal_information_data.schema.country = _.extend(this.fields.personal_information_data.schema.country, {
+        type: 'select',
         validate: {
           OneOf: {
-            choices: _.keys(countries),
+            choices: _.keys(COUNTRIES),
           },
-          choices: countries,
-        }
-      };
+          choices: COUNTRIES
+        },
+      });
 
-      this.user.ssn_re = this.user.ssn;
+      this.fields.personal_information_data.schema.phone = _.extend(this.fields.personal_information_data.schema.phone, {
+        required: false,
+        fn: function(name, value, attr, data, schema) {
+          let country = this.getData(data, 'personal_information_data.country');
+          if (country == 'US')
+            return;
+
+          return this.required(name, true, attr, data);
+        },
+      });
+
+      this.fields.personal_information_data.schema.city = _.extend(this.fields.personal_information_data.schema.city, {
+        fn: function(name, value, attr, data, schema) {
+          let country = this.getData(data, 'personal_information_data.country');
+          if (country == 'US')
+            return;
+          return this.required(name, true, attr, data);
+        },
+        required: false,
+      });
+
+      this.fields.personal_information_data.schema.state = _.extend(this.fields.personal_information_data.schema.state, {
+        required: false,
+        fn: function(name, value, attr, data, schema) {
+          let country = this.getData(data, 'personal_information_data.country');
+          if (country == 'US')
+            return;
+          return this.required(name, true, attr, data);
+        },
+      });
+
+      // this.user.ssn_re = this.user.ssn;
 
       this.labels = {
-        country: 'Country',
         personal_information_data: {
+          country: 'Country',
           street_address_1: 'Street Address 1',
           street_address_2: 'Street Address 2',
           zip_code: 'Zip Code',
+          phone: 'Phone',
           city: 'City',
         },
         payment_information_data: {
@@ -539,6 +565,7 @@ module.exports = {
           account_number: 'Account Number',
           account_number_re: 'Account Number Again',
           routing_number: 'Routing Number',
+          routing_number_re: 'Routing Number Again',
           ssn: 'Social Security number (SSN) or Tax ID (ITIN/EIN)',
           ssn_re: 'Re-enter',
         },
@@ -547,7 +574,7 @@ module.exports = {
         fee: 'Commission',
         is_reviewed_educational_material: `I confirm and represent that (a) I have reviewed
           the educational material that has been made available on this website, (b) I understand
-          that the entire amount of my investment may be lost and (c) I am in a
+          that the entire amount of my investment may be lost, (c) I am in a
           financial condition to bear the loss of the investment and (d) I represent that
           I have not exceeded my investment limitations.`,
         is_understand_restrictions_to_cancel_investment: `I understand that there are restrictions
@@ -588,8 +615,6 @@ module.exports = {
           values: this.model,
           user: this.user,
           states: this.usaStates,
-          countries: countries,
-          constants: constants,
         })
       );
 
@@ -803,11 +828,11 @@ module.exports = {
     },
 
     updateIncomeWorth(e) {
+
       let netWorth = $('#net_worth')
         .val()
         .trim()
-        .replace(/\,/g, '')
-        / 1000;
+        .replace(/\,/g, '') / 1000;
 
       let annualIncome = $('#annual_income')
         .val()
@@ -819,6 +844,39 @@ module.exports = {
         annual_income: annualIncome
       };
 
+      const validateRange = (value, min=0, max, prefix) => {
+        if (value < min)
+          throw `${prefix || ''} must not be less than ${helpers.format.formatNumber(min)}.`;
+
+        if (value > max)
+          throw `${prefix || ''} must not be greater than ${helpers.format.formatNumber(max)}.`;
+      };
+
+      let fields = {
+        net_worth: {
+          required: true,
+          fn: function(name, value, attr, data, schema) {
+            return validateRange(value * 1000, 0, 5000000 * 2, 'Net Worth')
+          },
+        },
+        annual_income: {
+          required: true,
+          fn: function(name, value, attr, data, schema) {
+            return validateRange(value * 1000, 0, 500000 * 2, 'Annual Income');
+          },
+        }
+      };
+
+      $('#income_worth_modal .helper-block').remove();
+
+      if(!validation.validate(fields, data, this)) {
+        e.preventDefault();
+        _(validation.errors).each((errors, key) => {
+          validation.invalidMsg(this, key, errors);
+        });
+        return false;
+      }
+
       api.makeRequest(authServer + '/rest-auth/data', 'PATCH', data).done((data) => {
         this.user.net_worth = netWorth;
         this.user.annual_income = annualIncome;
@@ -827,7 +885,10 @@ module.exports = {
         $('span.current-limit').text(this._maxAllowedAmount.toLocaleString('en-US'));
         this.$amount.data('max', this._maxAllowedAmount);
 
+        $('#income_worth_modal').modal('hide');
+
         this.$amount.keyup();
+
       }).fail((xhr, status, text) => {
         alert('Update failed. Please try again!');
       });
