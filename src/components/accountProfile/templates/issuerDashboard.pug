@@ -94,6 +94,8 @@ section.issuer-dashbord-top
             | #{now.toLocaleString('en-US', { month: "short" })} #{ now.getDate() }
             br
             | #{ helpers.format.formatAmount(values.campaign.amount_raised) } Raised
+            br
+            | #{ helpers.format.formatAmount(values.campaign.amount_commited) } Commited
         .progress_description
           .pull-left
             p #{helpers.format.formatMonthDate(starting_date)}
