@@ -196,33 +196,35 @@ module.exports = Backbone.Router.extend({
         app.user.getFormcR(id, 'OPTIONS'),
         app.user.getFormcR(id),
     ).then((formcFields, formc) => {
+      if(formc[0]) {
         app.user.formc = formc[0];
+      }
 
-        $.when(
-          app.user.getCompanyR(formc[0].company_id, 'OPTIONS'),
-          app.user.getCampaignR(formc[0].campaign_id, 'OPTIONS'),
-          app.user.getCompanyR(formc[0].company_id, 'GET'),
-          app.user.getCampaignR(formc[0].campaign_id, 'GET'),
-        ).done((companyFields, campaignFields,  company, campaign) => {
-        
-          app.user.company = company[0];
-          app.user.campaign = campaign[0];
+      $.when(
+        app.user.getCompanyR(formc[0].company_id, 'OPTIONS'),
+        app.user.getCampaignR(formc[0].campaign_id, 'OPTIONS'),
+        app.user.getCompanyR(formc[0].company_id, 'GET'),
+        app.user.getCampaignR(formc[0].campaign_id, 'GET'),
+      ).done((companyFields, campaignFields,  company, campaign) => {
+      
+        app.user.company = company[0];
+        app.user.campaign = campaign[0];
 
-          const fields = {
-            company: companyFields[0].fields,
-            campaign: campaignFields[0].fields,
-            formc: formcFields[0].fields,
-          };
-          const finalReviewView = new View.finalReview({
-            el: '#content',
-            fields: fields,
-            formcId: id,
-          });
-          finalReviewView.render();
-          app.hideLoading();
-
+        const fields = {
+          company: companyFields[0].fields,
+          campaign: campaignFields[0].fields,
+          formc: formcFields[0].fields,
+        };
+        const finalReviewView = new View.finalReview({
+          el: '#content',
+          fields: fields,
+          formcId: id,
         });
-      })
+        finalReviewView.render();
+        app.hideLoading();
+
+      });
+    })
   },
 
   electronicSignature(id) {

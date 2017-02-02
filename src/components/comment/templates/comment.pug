@@ -31,12 +31,11 @@ div(id=id class=cssClass data-level=level data-id=comment.uid).p-r-0.p-t-0.p-xs-
         ? comment.user.role.role.join(', ')
         : (comment.related || '');
 
+      each vv,kk in rolesConsts.ROLES
+        if (kk & comment.role) == kk
+          span.kvalificatio-comments #{ vv }
       if title
         span.kvalificatio-comments #{ title }
-      else
-        each vv,kk in rolesConsts.ROLES
-          if (kk & comment.role) == kk
-            span.kvalificatio-comments #{ vv }
 
 
       span.date-comments.pull-right.hidden-xs-down #{ passedTime }
