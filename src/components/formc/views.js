@@ -509,7 +509,6 @@ module.exports = {
         number_of_shares: 'Number of Shares',
         class_of_securities: 'Class of Securities',
         voting_power_percent: '% of Voting Power Prior to Offering',
-        class_of_securities: 'Class of Securities',
         voting_power: '% of Voting Power Prior to Offering',
         experiences: {
           employer: 'Employer',
