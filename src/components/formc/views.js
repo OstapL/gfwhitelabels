@@ -2235,6 +2235,9 @@ module.exports = {
       this.fields.campaign.length_days.validate.choices = require('consts/raisecapital/length_days.json');
       this.fields.campaign.security_type.validate.choices = yesNoConsts.YESNO;
       this.fields.campaign.valuation_determination.validate.choices = require('consts/raisecapital/valuation_determination_options.json');
+      this.fields.formc.outstanding_securities.schema.security_type.type = 'choice';
+      this.fields.formc.outstanding_securities.schema.security_type.validate = {};
+      this.fields.formc.outstanding_securities.schema.security_type.validate.choices = securityTypeConsts.SECURITY_TYPES;
       this.fields.formc.outstanding_securities.schema.custom_security_type.validate.choices = securityTypeConsts.SECURITY_TYPES;
       this.fields.formc.outstanding_securities.schema.voting_right.validate.choices = yesNoConsts.YESNO;
 
