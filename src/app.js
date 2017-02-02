@@ -177,15 +177,17 @@ let app = {
   },
 
   fieldChoiceList(metaData, currentValue) {
-    let resultVal = '';
-    metaData = metaData.validate.OneOf;
-    if(metaData.labels) {
-      return metaData.labels[metaData.choices.indexOf(currentValue.toString())]
-         || metaData.labels[metaData.choices.indexOf(parseFloat(currentValue))];
-    } else {
-      return metaData.choices.indexOf(currentValue.toString())
-        || metaData.choices.indexOf(parseFloat(currentValue));
-    }
+    metaData = metaData.validate;
+    if (Array.isArray(metaData.choices))//it looks like this is old approach
+      return (metaData.labels)
+        ? metaData.labels[metaData.choices.indexOf(currentValue.toString())]
+           || metaData.labels[metaData.choices.indexOf(parseFloat(currentValue))]
+        : metaData.choices.indexOf(currentValue.toString())
+          || metaData.choices.indexOf(parseFloat(currentValue));
+
+    //this is new approach
+    return metaData.choices[currentValue] || currentValue;
+
   },
 
   getVideoId(url) {
