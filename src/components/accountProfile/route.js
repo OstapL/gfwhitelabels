@@ -146,7 +146,7 @@ module.exports = Backbone.Router.extend({
   issuerDashboard: function(id) {
     $('#content').scrollTo();
     $.when(
-        app.user.getFormcR(id, 'OPTIONS'),
+        api.makeCacheRequest(formcServer + '/' + id, 'OPTIONS'),
         app.user.getFormcR(id),
     ).then((formcFields, formc) => {
 
@@ -157,7 +157,7 @@ module.exports = Backbone.Router.extend({
       // noi=1 means that server should return number_of_investrs for company
       $.when(
         app.makeCacheRequest(raiseCapitalServer + '/company/' + id + '/edit?noi=1', 'GET'),
-        app.user.getCampaignR(formc[0].campaign_id, 'GET'),
+        app.user.getCampaignR(app.user.formc.campaign_id, 'GET'),
       ).done((company, campaign) => {
       
         app.user.company = company[0];

@@ -78,7 +78,6 @@ module.exports = Backbone.Router.extend({
     'formc/:id/outstanding-security': 'outstandingSecurity',
     'formc/:id/background-check': 'backgroundCheck',
     'formc/:id/final-review': 'finalReview',
-    'formc/:id/final-review-two': 'finalReviewTwo',
     'formc/:id/formc-elecrtonic-signature': 'electronicSignature',
     'formc/:id/formc-elecrtonic-signature-company': 'electronicSignatureCompany',
     'formc/:id/formc-elecrtonic-signature-cik': 'electronicSignatureCik',
@@ -193,7 +192,7 @@ module.exports = Backbone.Router.extend({
 
     $('#content').scrollTo();
     $.when(
-        app.user.getFormcR(id, 'OPTIONS'),
+        api.makeCacheRequest(formcServer + '/' + id, 'OPTIONS'),
         app.user.getFormcR(id),
     ).then((formcFields, formc) => {
       if(formc[0]) {
@@ -201,23 +200,29 @@ module.exports = Backbone.Router.extend({
       }
 
       $.when(
-        app.user.getCompanyR(formc[0].company_id, 'OPTIONS'),
-        app.user.getCampaignR(formc[0].campaign_id, 'OPTIONS'),
-        app.user.getCompanyR(formc[0].company_id, 'GET'),
-        app.user.getCampaignR(formc[0].campaign_id, 'GET'),
+        api.makeCacheRequest(raiseCapitalServer + '/company/' + app.user.formc.company_id + '/edit', 'OPTIONS'),
+        api.makeCacheRequest(raiseCapitalServer + '/campaign/' + app.user.formc.company_id + '/edit', 'OPTIONS'),
+        app.user.getCompanyR(app.user.formc.company_id, 'GET'),
+        app.user.getCampaignR(app.user.formc.campaign_id, 'GET'),
       ).done((companyFields, campaignFields,  company, campaign) => {
       
-        app.user.company = company[0];
-        app.user.campaign = campaign[0];
-
         const fields = {
           company: companyFields[0].fields,
           campaign: campaignFields[0].fields,
           formc: formcFields[0].fields,
         };
+
+        if(company[0]) app.user.company = company[0];
+        if(campaign[0]) app.user.campaign = campaign[0];
+
+        var model = app.user.company;
+        model.campaign = app.user.campaign;
+        model.formc = app.user.formc;
+        
         const finalReviewView = new View.finalReview({
           el: '#content',
           fields: fields,
+          model: model,
           formcId: id,
         });
         finalReviewView.render();
