@@ -173,8 +173,6 @@ module.exports = {
           tab: this.activeTab || 'account_info',
           serverUrl: serverUrl,
           user: this.model,
-          companiesMember: app.user.companiesMember,
-          roleInfo: app.user.getRoleInfo(),
           company: app.user.get('company'),
           fields: this.fields,
           states: this.usaStates,

@@ -21,25 +21,26 @@
           }, fields.image));
       .row.m-t-2.m-b-2
         .col-xl-12.col-lg-12.col-md-6.offset-md-3.col-xs-8.offset-xs-2.offset-xl-0.offset-lg-0.p-l-0.p-r-0
-          if companiesMember && companiesMember.data
-            each v,k in companiesMember.data
+          -
+            var roles = app.user.getRoles();
+            var company = app.user.getCompany();
+          if roles && roles.length
+            each roleInfo, idx in roles
               .profile-type-user
-                each vv,kk in rolesConsts.ROLES
-                  if (kk & v.role) == kk
-                    span.user-type #{ vv }
-                .user-company
-                  | in
-                  a(href="/dashboard/issuer-dashboard?id=" + v.company_id).link-3  #{v.company}
-                  |  company.
-              hr.m-t-1.m-b-1
+                if roleInfo.roles && roleInfo.roles.length
+                  each role in roleInfo.roles
+                    span.user-type #{ role.title }
+                  .user-company
+                    | in
+                    a(href="/dashboard/issuer-dashboard?id=" + roleInfo.company.id).link-3  #{ roleInfo.company.name }
+                    |  company.
+                  hr
           else if company && company.name
             .profile-type-user
-              //span.user-type
               .user-company
-                a(href="/dashboard/issuer-dashboard").link-3  #{company.name}
+                a(href="/dashboard/issuer-dashboard").link-3  #{ company.name }
                 |  company.
-            hr
-          a(href="/account/change-password").link-3 
+          a(href="/account/change-password").link-3
             i.fa.fa-lock
             |  Need to change your password?
 
@@ -145,7 +146,7 @@
             section.form-section.clearfix
               form(method="post" action="")
                 .form-body.clearfix
-                  
+
                   .col-xl-12.p-xs-0
                     section.right-block
                       .form-group.row
@@ -177,8 +178,8 @@
                           div.d-inline-block
                             div.showPopover.hidden-xs-down(data-content="An accredited investor is a natural person who has individual net worth, or joint net worth with the persons spouse, that exceeds $1mm at the time of the purchase, excluding the value of the primary residence of such person; or a natural person with income exceeding $200k in each of the two most recent years or joint income with a spouse exceeding $300k for those years and a reasonable expectation of the same income level in the current year.")
                               i(aria-hidden="true").fa.fa-question-circle.text-muted
-                            
-                          
+
+
 
                       .form-group.m-t-1
                         label.accredited_investor.shown-yes
@@ -233,7 +234,7 @@
                             name="accredited_investor_poor"
                             value=String(user.accredited_investor_poor)
                           )
-                          span.font-weight-normal.col-xl-10.p-l-0 I am an Accredited Investor because I am authorized to invest on behalf of a trust with at least $5M in assets and I acknowledge that I have sufficient knowledge to evaluate the merits and risks of private offerings. 
+                          span.font-weight-normal.col-xl-10.p-l-0 I am an Accredited Investor because I am authorized to invest on behalf of a trust with at least $5M in assets and I acknowledge that I have sufficient knowledge to evaluate the merits and risks of private offerings.
                         .row
                           label.accredited_investor.shown-yes.col-xl-12
                             input(
@@ -246,7 +247,7 @@
                               name="accredited_investor_choice"
                               value=String(user.accredited_investor_choice)
                             )
- 
+
                       .row
                         .col-sm-12
                           hr.m-b-3.m-t-1
