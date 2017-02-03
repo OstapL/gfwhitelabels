@@ -28,11 +28,15 @@ div(id=id class=cssClass data-level=level data-id=comment.uid).p-r-0.p-t-0.p-xs-
         var title = (comment.user.id == attr.owner_id) ? 'FOUNDER' : '';
         var roles = roleHelper.extractRoles(comment.user.role);
 
+
       if title
-        span.kvalificatio-comments #{ title }
+        span.kvalificatio-comments.text-uppercase #{ title }
 
       each role in roles
-        span.kvalificatio-comments #{ role.title }
+        span.kvalificatio-comments.text-uppercase #{ role.title }
+      else
+        if comment.related
+          span.kvalificatio-comments.text-uppercase #{ comment.related }
 
       span.date-comments.pull-right.hidden-xs-down #{ passedTime }
       p #{ comment.message }
