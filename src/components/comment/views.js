@@ -43,6 +43,12 @@ module.exports = {
       this.cssClass = _.isString(options.cssClass) ? options.cssClass : '';
 
       this.urlRoot = this.urlRoot.replace(':model', 'company').replace(':id', this.model.id);
+
+      this.userRole = 0;
+      _.each(app.user.companiesMember.data, (company) => {
+        if (company.company_id == this.model.id)
+          this.userRole = company.role;
+      });
       //init dates
       _.each(this.model.data, (c) => {
         initDates(c);
@@ -80,6 +86,7 @@ module.exports = {
           cssClass: this.cssClass,
         },
         fields: this.fields,
+        userRole: this.userRole,
       }));
 
       this.$stubs = this.$('.stubs');
@@ -108,7 +115,7 @@ module.exports = {
     },
 
     keyupHandler(e) {
-      if (this.model.id == app.user.get('role').company_id)
+      if (this.userRole)
         return;
 
       let $target = $(e.target);
@@ -186,7 +193,6 @@ module.exports = {
 
       api.makeRequest(this.urlRoot, 'POST', data).done((newData) => {
         $target.prop('disabled', false);
-        let role = app.user.get('role');
 
         let newCommentModel = {
           related: data.related,
@@ -195,11 +201,10 @@ module.exports = {
           uid: newData.new_message_id,
           created_date: new Date(),
           user: {
-            first_name: app.user.get('first_name'),
-            last_name: app.user.get('last_name'),
-            id: app.user.get('id'),
+            first_name: app.user.first_name,
+            last_name: app.user.last_name,
             image_data: app.user.get('image_data'),
-            role: role,
+            role: this.userRole,
           },
         };
 
