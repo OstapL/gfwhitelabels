@@ -9,6 +9,8 @@ const accountProfile = require('components/accountProfile/route');
 const establishedBusinessCalc = require('components/establishedBusinessCalculator/route');
 const formc = require('components/formc/route');
 const blog = require('components/blog/route');
+const errorPageHelper = require('helpers/errorPageHelper.js');
+
 
 Backbone.Router.execute = function (callback, args, name) {
   if (name == '/company/create' && !app.user.ensureLoggedIn(name))
@@ -18,55 +20,69 @@ Backbone.Router.execute = function (callback, args, name) {
 };
 
 let appRoutes = Backbone.Router.extend({
-  routes: {},
+  routes: {
+    '*notFound': function () {
+      errorPageHelper({status: 404});
+      app.hideLoading();
+    }
+  },
+
+  execute(callback, args, name) {
+    console.debug('/src/routers.js');
+
+    const slashAtTheEnd= /\/$/;
+    const isSlashAtTheEnd = slashAtTheEnd.test(Backbone.history.fragment);
+    
+    if (isSlashAtTheEnd) {
+      let fragment = Backbone.history.fragment.replace(slashAtTheEnd, '');
+      this.navigate(fragment, {trigger: true, replace: true});
+    } else if (callback) {
+      callback.apply(this, args)
+    };
+  },
+
   initialize() {
+    const copyRoutes = (router) => {
+      _.each(router.routes, (funcName, path) => this.routes[path] = r1[funcName]);
+      return router;
+    };
+
     // add routes of components
     // ToDo
     // So messy code
+    
     let r1  = new payBackShareCalculator;
-    _.each(r1.routes, (funcName, path) => {
-      this.routes[path] = r1[funcName];
-    });
+    copyRoutes(r1);
+    
     let r2  = new capitalRaiseCalculator;
-    _.each(r2.routes, (funcName, path) => {
-      this.routes[path] = r2[funcName];
-    });
+    copyRoutes(r2);
+    
     let r3  = new campaignRoute;
-    _.each(r3.routes, (funcName, path) => {
-      this.routes[path] = r3[funcName];
-    });
+    copyRoutes(r3);
+    
     let r4  = new pageRoute;
-    _.each(r4.routes, (funcName, path) => {
-      this.routes[path] = r4[funcName];
-    });
+    copyRoutes(r4);
+    
     let r5  = new raiseFunds;
-    _.each(r5.routes, (funcName, path) => {
-      this.routes[path] = r5[funcName];
-    });
+    copyRoutes(r5);
+    
     let r6  = new anonymousAccount;
-    _.each(r6.routes, (funcName, path) => {
-      this.routes[path] = r6[funcName];
-    });
+    copyRoutes(r6);
+    
     let r7  = new accountProfile;
-    _.each(r7.routes, (funcName, path) => {
-      this.routes[path] = r7[funcName];
-    });
+    copyRoutes(r7);
+    
     let r8  = new whatMyBusinessWorthCalc;
-    _.each(r8.routes, (funcName, path) => {
-      this.routes[path] = r8[funcName];
-    });
+    copyRoutes(r8);
+    
     let r9  = new establishedBusinessCalc;
-    _.each(r9.routes, (funcName, path) => {
-      this.routes[path] = r9[funcName];
-    });
+    copyRoutes(r9);
+    
     let r10  = new formc;
-    _.each(r10.routes, (funcName, path) => {
-      this.routes[path] = r10[funcName];
-    });
+    copyRoutes(r10);
+    
     let r11  = new blog;
-    _.each(r11.routes, (funcName, path) => {
-      this.routes[path] = r11[funcName];
-    });
+    copyRoutes(r11);
   },
 
   back: function (e) {
@@ -88,33 +104,6 @@ app.on('userLoaded', function (data) {
   Backbone.history.start({ pushState: true });
 
   window.addEventListener('popstate', app.routers.back);
-
-  // if user is not authenticated - add login/sign up popup
-  // if (data.id == '') {
-  //   $('body').after(
-  //     `<div class="modal fade" id="loginModal" tabindex="-1" role="dialog" aria-labelledby="loginModalLabel" aria-hidden="true">
-  //     <div class="modal-dialog" role="document">
-  //     <div class="modal-content">
-  //     <div class="modal-header">
-  //     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-  //     <span aria-hidden="true">&times;</span>
-  //     </button>
-  //     <h4 class="modal-title" id="loginModalLabel">Login</h4>
-  //     </div>
-  //     <div class="modal-body">
-  //     <form>
-  //     <div class="clearfix"><div class="form-group row email"><div class="col-lg-3 col-md-3 text-md-right"><label for="email">email</label></div><div class="col-lg-7 col-md-7"><input class="form-control" id="email" name="email" placeholder="email" type="email" value=""><span class="help-block"> </span></div></div><div class="form-group row password"><div class="col-lg-3 col-md-3 text-md-right"><label for="password">password</label></div><div class="col-lg-7 col-md-7"><input class="form-control" id="password" name="password" placeholder="password" type="password" value=""><span class="help-block"> </span></div></div><div class="socialaccount_ballot clearfix"><div class="col-lg-12 col-sm-12 col-xs-12 text-sm-left"><p>Or login with</p></div><div class="col-sm-12 col-xs-12 col-lg-12"><ul class="social-icons list-inline clearfix text-lg-left"><li><a class="fa fa-facebook social-icon-color facebook" data-original-title="facebook" href="/accounts/facebook/login/?process=login"> </a></li><li><a class="fa fa-google-plus social-icon-color googleplus" data-original-title="Google Plus" href="/accounts/google/login/?process=login"></a></li><li><a class="fa fa-linkedin social-icon-color linkedin" data-original-title="Linkedin" href="/accounts/linkedin_oauth2/login/?process=login"></a></li></ul></div></div></div>
-  //     </form>
-  //     </div>
-  //     <div class="modal-footer">
-  //     <button type="button" class="btn btn-primary">Login</button>
-  //     </div>
-  //     </div>
-  //     </div>
-  //     </div>
-  //     `
-  //     );
-  // }
 
   let menu = require('components/menu/views.js');
   app.menu = new menu.menu({

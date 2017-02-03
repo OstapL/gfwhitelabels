@@ -11,7 +11,7 @@ module.exports = Backbone.Router.extend({
     'account/after-complete-dashboard': 'afterCompleteDashboard',
     'account/after-final-submit-dashboard': 'afterFinalDashboard',
     'account/after-submitting-goverment-dashboard': 'afterSubmittingGovermentDashboard',
-    'dashboard/issuer-dashboard': 'issuerDashboard',
+    'dashboard/:id/issuer-dashboard': 'issuerDashboard',
   },
 
   execute: function (callback, args, name) {
@@ -143,23 +143,60 @@ module.exports = Backbone.Router.extend({
       i.render();
       app.hideLoading();
   },
-  issuerDashboard: function() {
-    app.makeCacheRequest(authServer + '/user/company').done((company) => {
+  issuerDashboard: function(id) {
+    $('#content').scrollTo();
+    $.when(
+        api.makeCacheRequest(formcServer + '/' + id, 'OPTIONS'),
+        app.user.getFormcR(id),
+    ).then((formcFields, formc) => {
 
-      app.makeCacheRequest(raiseCapitalServer + '/' + company.id).done((detail) => {
+      if(formc[0]) {
+        app.user.formc = formc[0];
+      }
+
+      // noi=1 means that server should return number_of_investrs for company
+      $.when(
+        app.makeCacheRequest(raiseCapitalServer + '/company/' + id + '/edit?noi=1', 'GET'),
+        app.user.getCampaignR(app.user.formc.campaign_id, 'GET'),
+      ).done((company, campaign) => {
+      
+        app.user.company = company[0];
+        app.user.campaign = campaign[0];
+
+        var model = app.user.company;
+        model.campaign = app.user.campaign;
+        model.formc = app.user.formc;
+
         const View = require('components/accountProfile/views.js');
-        let i = new View.issuerDashboard({
+        new View.issuerDashboard({
           el: '#content',
-          model: detail,
-          company: company,
-        });
-        i.render();
+          model: model
+        }).render();
         app.hideLoading();
-      });;
+
+      });
+    })
+
+    /*
+    $.when(app.user.getCompanyR(), app.user.getCampaignR()).done((company, campaign) => {
+      if(company[0]) {
+        app.user.company = company[0];
+      }
+      if(campaign[0]) {
+        app.user.campaign = campaign[0];
+      }
+
+      var model = app.user.company;
+      model.campaign = app.user.campaign;
+      
+      const View = require('components/accountProfile/views.js');
+      let i = new View.issuerDashboard({
+        el: '#content',
+        model: model
+      });
+      i.render();
+      app.hideLoading();
     });
-    //
-    // require.ensure([], function() {
-    //
-    //   });
+    */
   },
 });    

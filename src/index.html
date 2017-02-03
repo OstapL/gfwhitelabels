@@ -5,18 +5,15 @@
     <meta name="description" content="GrowthFountain is an SEC registered Funding Portal and FINRA Member where individuals can come together to support entrepreneurs and small businesses across America. Turn your customers, your social network, your neighbors and community members into owners who can become your brand ambassadors and evangelists. To learn more about GrowthFountain and the risks of crowdfunding, please visit www.growthfountain.com">
     <meta name="keywords" content="GrowthFountain is an SEC registered Funding Portal and FINRA Member where individuals can come together to support entrepreneurs and small businesses across America. Turn your customers, your social network, your neighbors and community members into owners who can become your brand ambassadors and evangelists. To learn more about GrowthFountain and the risks of crowdfunding, please visit www.growthfountain.com">
     <meta charset="utf-8">
-    <meta name="author" content="Growthfountain">
-
+    <!-- <meta name="author" content="Growthfountain"> -->
     <!--[if IE]><meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'><![endif]-->
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
     <!-- Favicons -->
     <link rel="shortcut icon" href="/img/favicon.ico" type="image/x-icon">
     <!-- CSS -->
-
-    <link rel="stylesheet" href="/css/main2.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
-    
-
+    <script>!function(e){"use strict";function t(e,t,n){e.addEventListener?e.addEventListener(t,n,!1):e.attachEvent&&e.attachEvent("on"+t,n)}function n(t,n){return e.localStorage&&localStorage[t+"_content"]&&localStorage[t+"_file"]===n}function a(t,a){if(e.localStorage&&e.XMLHttpRequest)n(t,a)?o(localStorage[t+"_content"]):l(t,a);else{var s=r.createElement("link");s.href=a,s.id=t,s.rel="stylesheet",s.type="text/css",r.getElementsByTagName("head")[0].appendChild(s),r.cookie=t}}function l(e,t){var n=new XMLHttpRequest;n.open("GET",t,!0),n.onreadystatechange=function(){4===n.readyState&&200===n.status&&(o(n.responseText),localStorage[e+"_content"]=n.responseText,localStorage[e+"_file"]=t)},n.send()}function o(e){var t=r.createElement("style");t.setAttribute("type","text/css"),r.getElementsByTagName("head")[0].appendChild(t),t.styleSheet?t.styleSheet.cssText=e:t.innerHTML=e}var r=e.document;e.loadCSS=function(e,t,n){var a,l=r.createElement("link");if(t)a=t;else{var o;o=r.querySelectorAll?r.querySelectorAll("style,link[rel=stylesheet],script"):(r.body||r.getElementsByTagName("head")[0]).childNodes,a=o[o.length-1]}var s=r.styleSheets;l.rel="stylesheet",l.href=e,l.media="only x",a.parentNode.insertBefore(l,t?a:a.nextSibling);var c=function(e){for(var t=l.href,n=s.length;n--;)if(s[n].href===t)return e();setTimeout(function(){c(e)})};return l.onloadcssdefined=c,c(function(){l.media=n||"all"}),l},e.loadLocalStorageCSS=function(l,o){n(l,o)||r.cookie.indexOf(l)>-1?a(l,o):t(e,"load",function(){a(l,o)})}}(this);</script>
+    <script>loadCSS( "/css/main2.min.css", false, "all" );</script>
+      
   </head>
 
   <body class="appear-animate"> 
@@ -42,8 +39,9 @@
         </a>
         
         <div class="navbar-toggleable-md pull-right">
-            <ul class="nav navbar-nav" id="menuProfile">
-            </ul>
+            <div  id="menuProfile">
+            </div>
+            
         </div>
         <div class="navbar-toggleable-md pull-right">
             <ul class="nav navbar-nav" id="menuNotification">
@@ -58,11 +56,6 @@
         <div class="mobile-menu full-height" id="">
           <ul class="nav navbar-nav pull-left" id="menuList">
           </ul>
-
-          <form class="form-inline hidden-lg-up">
-            <input class="form-control" type="text" placeholder="search for companies">
-            <button class="btn" type="submit"><i class="fa fa-search" aria-hidden="true"></i></button>
-          </form>
         </div>
       </nav>
     </header>
@@ -77,6 +70,7 @@
       </footer>
       <div class="hidden"></div>
     </div>
+    
     <!--[if lt IE 9]>
       <script type="text/javascript" src="https://raw.githubusercontent.com/es-shims/es5-shim/master/es5-shim.js"></script>
     <![endif]-->

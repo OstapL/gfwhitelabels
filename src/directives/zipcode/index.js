@@ -74,7 +74,10 @@ class GeoCoder {
             let state = strs[1].substr(0, 2);
 
             // Use overlord
-            document.querySelector('.js-city-state').innerHTML = city + ', ' + state;
+            let cityStateElem = document.querySelector('.js-city-state');
+            if (cityStateElem)
+              cityStateElem.innerHTML = city + ', ' + state;
+
             this.view.model.city = city;
             this.view.model.state = state;
             document.querySelector('#city').value = city;

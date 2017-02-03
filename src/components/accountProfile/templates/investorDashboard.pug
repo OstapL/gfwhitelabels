@@ -38,7 +38,7 @@ section.investor-dashboard
             )
               .active-investor-dashboard.investor_table
                 each i in investments.active
-                  | !{ helpers.fields.investment(i, { active: true }, helpers) }
+                  | !{ snippets.investment({ i: i, attr: { active: true } }) }
                 else
                   div(role="alert").alert.alert-warning
                     strong You have no active investments
@@ -50,7 +50,8 @@ section.investor-dashboard
             )
               .active-investor-dashboard.investor_table
                 each i in investments.historical
-                  | !{ helpers.fields.investment(i, {}, helpers) }
+                  | !{ snippets.investment({ i: i } ) }
                 else
                   div(role="alert").alert.alert-warning
                     strong You have no historical investments
+
