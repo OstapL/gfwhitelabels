@@ -388,6 +388,8 @@ module.exports = {
       'keyup #annual_income,#net_worth': 'updateLimitInModal',
       'click button.submit-income-worth': 'updateIncomeWorth',
       'click': 'hidePopover',
+      'hidden.bs.collapse #hidden-article-press' :'onArticlePressCollapse',
+      'shown.bs.collapse #hidden-article-press' :'onArticlePressCollapse',
     },
 
     initialize(options) {
@@ -628,7 +630,13 @@ module.exports = {
 
       return this;
     },
-
+    onArticlePressCollapse(e) {
+      if (e.type == 'hidden') {
+        this.$('.see-all-perks').text('Show More')
+      } else if (e.type == 'shown') {
+        this.$('.see-all-perks').text('Show Less')
+      }
+    },
     initAmountPopover() {
       this.$amount = this.$el.find('#amount');
       this.$amount.data('contentselector', 'amount-campaign');
