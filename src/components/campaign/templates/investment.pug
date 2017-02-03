@@ -132,53 +132,40 @@ mixin confirmStatement(name, attr)
                     span Type of security
                     p.font-weight-bold.m-b-0
                       | #{values.campaign.security_type == 0 ? 'Common Equity' : 'Revenue Share'}
-          section.hidden-sm-up
-            if values.campaign.perks && Object.keys(values.campaign.perks).length > 0 && values.campaign.perks[0].amount != ''
-              - var showMore = false;
+          section.hidden-sm-up.invest-perks-mobile
+            - var perks = values.campaign.perks;
+            if perks && perks.length
+              - perks.sort(function (a, b) { return Number(b.amount) - Number(a.amount); });
               h2.text-uppercase.dosis.m-t-3.text-xs-center PERKS
                 span.small-text.open-sans.hidden-xs-up
                   | Investor Perks are not intended to affect the value of the security and
                   | investors should evaluate the merits of each investment without regard to any
                   | Investor Perks.
-
               .list-group.list-group-border-invest.invest-right-margin
-                - var keys = Object.keys(values.campaign.perks);
-                - var counter = 0;
-                - var lastArticleIdx = 0;
-                - 
-                  values.campaign.perks.sort(function (a, b) {
-                  return Number(b.amount) - Number(a.amount);
-                  });
-                  values.campaign.perks = Object.keys(values.campaign.perks).map(function(key) {
-                  return values.campaign.perks[key];
-                  });
                 div
-                  each k in keys
-                    if counter >= 2
-                      - break;
-                    - var v = values.campaign.perks[k]
-                    if v
-                      - counter++;
-                      - lastArticleIdx = k;
-                      a(href="#" data-amount=v.amount).list-group-item.list-group-item-action.perk
-                        h3.list-group-item-heading
-                          span.text-color-puerto_rico.font-weight-bold $#{v.amount}
-                          |  Investment 
-                          i.fa.fa-check(style="display:none;")
-                        p.list-group-item-text.text-justify #{v.perk}
+                  -
+                    var idx = 0;
+                  while (idx < 2 && perks[idx])
+                    - var p = perks[idx];
+                    a(href="#" data-amount=p.amount).list-group-item.list-group-item-action.perk
+                      h3.list-group-item-heading
+                        span.text-color-puerto_rico.font-weight-bold $#{p.amount}
+                        |  Investment
+                        i.fa.fa-check(style="display:none;")
+                      p.list-group-item-text.text-justify #{p.perk}
+                    - idx += 1;
+
                 #hidden-article-press.hidden-article-press.collapse
-                  each k in keys
-                    if k <= lastArticleIdx
-                      - continue;
-                    - var v = values.campaign.perks[k]
-                    if v
-                      - showMore = true;
-                      a(href="#" data-amount=v.amount).list-group-item.list-group-item-action.perk
-                        h3.list-group-item-heading
-                          span.text-color-puerto_rico.font-weight-bold $#{v.amount}
-                          |  Investment 
-                          i.fa.fa-check(style="display:none;")
-                        p.list-group-item-text.text-justify #{v.perk}
+                  - var showMore = perks.length > 2
+                  while idx < perks.length && perks[idx]
+                    - var p = perks[idx];
+                    a(href="#" data-amount=p.amount).list-group-item.list-group-item-action.perk
+                      h3.list-group-item-heading
+                        span.text-color-puerto_rico.font-weight-bold $#{p.amount}
+                        |  Investment
+                        i.fa.fa-check(style="display:none;")
+                      p.list-group-item-text.text-justify #{p.perk}
+                    - idx += 1;
               div(style="display:" + (showMore ? 'block' : 'none') + ";").row
                 .col-lg-12.text-xs-center.m-t-1
                   a(href="#hidden-article-press" data-toggle="collapse").link-4.see-all-perks Show More
@@ -466,7 +453,7 @@ mixin confirmStatement(name, attr)
                   type="submit").btn.btn-primary.pull-lg-right.text-uppercase invest
     //END LEFT BLOCK
     //START RIGHT BLOCK
-    .col-xl-4.col-lg-5.pull-right.hidden-xs-down
+    .col-xl-4.col-lg-5.pull-right.hidden-xs-down.invest-perks
       if values.campaign.perks
         h2.text-uppercase.dosis.m-t-0 PERKS
           span.small-text.open-sans
@@ -479,6 +466,7 @@ mixin confirmStatement(name, attr)
             values.campaign.perks = Object.keys(values.campaign.perks).map(function(key) {
               return values.campaign.perks[key];
             });
+
             values.campaign.perks.sort(function (a, b) {
               return Number(b.amount) - Number(a.amount);
             });

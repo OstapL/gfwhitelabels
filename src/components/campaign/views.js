@@ -783,19 +783,18 @@ module.exports = {
     },
 
     updatePerks(amount) {
-      //update perks
-      let $targetPerk;
-      let $perks = this.$('.perk');
-      $perks.each((i, el) => {
-        if(parseInt(el.dataset.amount) <= amount) {
-          $targetPerk = $(el);
-          return false;
-        }
-      });
+      function updatePerkElements($elms, amount) {
+        $elms.removeClass('active').find('i.fa.fa-check').hide();
+        $elms.each((idx, el) => {
+          if(parseInt(el.dataset.amount) <= amount) {
+            $(el).addClass('active').find('i.fa.fa-check').show();
+            return false;
+          }
+        });
+      }
 
-      $perks.removeClass('active').find('i.fa.fa-check').hide();
-      if ($targetPerk)
-        $targetPerk.addClass('active').find('i.fa.fa-check').show();
+      updatePerkElements($('.invest-perks-mobile .perk'), amount);
+      updatePerkElements($('.invest-perks .perk'), amount);
     },
 
     _updateTotalAmount() {
