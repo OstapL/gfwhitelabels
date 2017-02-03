@@ -25,9 +25,8 @@ div(id=id class=cssClass data-level=level data-id=comment.uid).p-r-0.p-t-0.p-xs-
     .comments-wrap.col-lg-12.p-r-0.p-xs-0
       span.name-comments.text-uppercase #{ userName }
       -
-        var title = (comment.user.id == attr.owner_id) ? 'FOUNDER' : '';
-        var roles = roleHelper.extractRoles(comment.user.role);
-
+        var title = (attr.isCompanyMember && comment.user.id == attr.owner_id) ? 'FOUNDER' : '';
+        var roles = attr.isCompanyMember ? roleHelper.extractRoles(comment.user.role) : [];
 
       if title
         span.kvalificatio-comments.text-uppercase #{ title }
