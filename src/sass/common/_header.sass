@@ -562,6 +562,7 @@ header
       display: inline-block
       height: $navbar_height_mobile
       width: 180px
+      z-index: 999
 
     .navbar-nav
       height: $navbar_height_mobile
@@ -717,6 +718,7 @@ header
           a 
             padding: rem(20) rem(3)
             font-size: rem(18)
+            font-family: $font-family-menu
       
       .mobile-menu
         display: block
@@ -913,10 +915,19 @@ header
     left: 0!important
     width: 100%
     .mobile-profile-menu
+      padding: 15px 10px 0px 25px !important
       opacity: 0
+      li
+        &:hover
+          background-color: rgba($white, .09)
+
     .user-info
       position: relative
       left: 95%
+  .nav-item
+    &:hover
+      background-color: rgba($white, .09)
+
 @media screen and (max-width: 576px)
   #menuProfile
     .user-info

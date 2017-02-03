@@ -54,15 +54,14 @@ module.exports = Backbone.Router.extend({
   },
 
   changePassword: function() {
-    require.ensure([], function() {
-      const View = require('components/accountProfile/views.js');
-      let i = new View.changePassword({
-        el: '#content',
-        model: {},
-      });
-      i.render();
-      app.hideLoading();
+    $('#content').scrollTo();
+    const View = require('components/accountProfile/views.js');
+    let i = new View.changePassword({
+      el: '#content',
+      model: {},
     });
+    i.render();
+    app.hideLoading();
   },
 
   setNewPassword: function() {
@@ -156,7 +155,7 @@ module.exports = Backbone.Router.extend({
 
       // noi=1 means that server should return number_of_investrs for company
       $.when(
-        app.makeCacheRequest(raiseCapitalServer + '/company/' + id + '/edit?noi=1', 'GET'),
+        app.makeCacheRequest(raiseCapitalServer + '/company/' + app.user.formc.company_id + '/edit?noi=1', 'GET'),
         app.user.getCampaignR(app.user.formc.campaign_id, 'GET'),
       ).done((company, campaign) => {
       
