@@ -482,7 +482,7 @@ module.exports = {
   }),
 
   membershipConfirmation: Backbone.View.extend({
-    urlRoot: formcServer + '/invitation',
+    urlRoot: formcServer + '/:id/team-members/invitation',
 
     template: require('./templates/confirmation.pug'),
 
@@ -495,9 +495,11 @@ module.exports = {
       this.code = options.code;
       this.title = options.title;
       this.company_name = options.company_name;
+      this.id = options.id;
     },
 
     render() {
+      this.urlRoot = this.urlRoot.replace(':id', this.id);
       this.$el.html(
         this.template({
           title: this.title,
@@ -521,6 +523,7 @@ module.exports = {
           'PUT',
           {
             'activation_code': this.code,
+            'domain': window.location.host,
           }
       ).then((data) => {
         localStorage.setItem('token', data.token);

@@ -11,6 +11,8 @@ const validation = require('components/validation/validation.js');
 const menuHelper = require('helpers/menuHelper.js');
 const disableEnterHelper = require('helpers/disableEnterHelper.js');
 
+const valuation_determination = require('consts/raisecapital/valuation_determination.json');
+
 module.exports = {
   company: Backbone.View.extend(_.extend({
     urlRoot: raiseCapitalServer + '/company',
@@ -35,6 +37,11 @@ module.exports = {
       this.formc = options.formc || {};
       this.campaign = options.campaign || {};
       this.model = options.company || {};
+
+      this.fields.industry.validate.choices = require('consts/raisecapital/industry.json');
+      this.fields.founding_state.validate.choices = require('consts/usaStatesChoices.json');
+      this.fields.corporate_structure.validate.choices = require('consts/raisecapital/corporate_structure.json');
+
       this.labels = {
         name: 'Legal Name of Company',
         short_name: 'Doing Business as Another Name?',
@@ -252,7 +259,7 @@ module.exports = {
       this.fields.header_image_image_id = _.extend(this.fields.header_image_image_id, {
         crop: {
           control: {
-            aspectRatio: 16 / 6.5,
+            aspectRatio: 1600/960,
           },
           cropper: {
             cssClass : 'img-crop',
@@ -260,7 +267,7 @@ module.exports = {
           },
           auto: {
             width: 1600,
-            height: 650,
+            height: 960
           }
         },
       });
@@ -268,15 +275,15 @@ module.exports = {
       this.fields.list_image_image_id = _.extend(this.fields.list_image_image_id, {
         crop: {
           control:  {
-            aspectRatio: 16 / 9.55,
+            aspectRatio: 350 / 209,
           },
           cropper: {
             cssClass: 'img-crop',
             // preview: false,
           },
           auto: {
-            width: 540,
-            height: 320,
+            width: 350,
+            height: 209,
           }
         },
       });
@@ -284,15 +291,15 @@ module.exports = {
       this.fields.gallery_group_id = _.extend(this.fields.gallery_group_id, {
         crop: {
           control: {
-            aspectRatio: 16 / 9.55,
+            aspectRatio: 526 / 317,
           },
           cropper: {
             cssClass: 'img-crop',
             // preview: false,
           },
           auto: {
-            width: 540,
-            height: 320,
+            width: 526,
+            height: 317,
           }
         },
 
@@ -401,11 +408,6 @@ module.exports = {
             height: 800,
           },
         },
-        // imgOptions: {
-        //   aspectRatio: 1 / 1,
-        //   cssClass: 'img-profile-crop',
-        //   showPreview: true,
-        // },
       });
 
       this.model = options.campaign;
@@ -560,6 +562,20 @@ module.exports = {
         this.formc = options.formc;
         this.model = options.campaign;
         this.company = options.company;
+        this.fields.valuation_determination_other = _.extend(this.fields.valuation_determination_other, {
+          dependies: ['valuation_determination'],
+          fn: function(name, value, attr, data, schema) {
+            let valuation_determination_val = this.getData(data, 'valuation_determination');
+            if (valuation_determination_val == valuation_determination.Other)
+              return this.required(name, true, attr, data);
+          }
+        });
+        this.fields.valuation_determination = _.extend(this.fields.valuation_determination, {
+          dependies: ['valuation_determination_other'],
+        });
+        this.fields.length_days.validate.choices = require('consts/raisecapital/length_days.json');
+        this.fields.security_type.validate.choices = require('consts/raisecapital/security_type_options.json');
+        this.fields.valuation_determination.validate.choices = require('consts/raisecapital/valuation_determination_options.json');
         this.labels = {
           minimum_raise: 'Our Minimum Total Raise is',
           maximum_raise: 'Our Maximum Total Raise is',

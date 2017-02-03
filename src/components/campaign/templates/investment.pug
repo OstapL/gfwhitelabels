@@ -1,4 +1,5 @@
 -
+  var auth = require('consts/auth/user.json');
   pug_html += app.breadcrumbs('Invest', '', [ ['Home', '/'], ['Explore', '/companies'], [values.name, '/' + values.id], ['Invest in ' + values.name, '']]);
 
 mixin fieldInput(name, attr)
@@ -95,7 +96,7 @@ mixin confirmStatement(name, attr)
                 data-toggle="modal"
                 data-target="#income_worth_modal"
                 href="#income_worth_modal"
-              ).link-2.update-income-worth update your annual income and net worth.
+              ).link-6.update-income-worth update your annual income and net worth.
 
           div.popover-content-rounding
             i.fa.fa-info-circle
@@ -132,14 +133,14 @@ mixin confirmStatement(name, attr)
                     'class': 'col-lg-4-5 col-md-12 ',
                     'placeholder': 'Last Name',
                   }, fields.personal_information_data.schema.last_name);
-            input(type="hidden" name="personal_information_data[country]" value="US")
             -
-              pug_html += app.fields.fieldChoiceLabel('country', _.extend({
+              pug_html += app.fields.fieldChoiceLabel('personal_information_data[country]', _.extend({
                 'class2': 'col-xl-9 col-lg-12 country-select',
                 'required': true,
-                'empty': { '': 'Choose Country' },
+                'empty': { '': 'Choose Country', 'value': '' },
                 'value': user.country,
-              }, fields.country));
+                'id': 'personal_information_data__country',
+              }, this.fields.personal_information_data.schema.country));
             -
               pug_html += app.fields.nestedTextLabel(
                 'personal_information_data',
@@ -162,10 +163,12 @@ mixin confirmStatement(name, attr)
             else
               | !{ snippets.nonUs({ fields: fields, user: user }) }
 
-            .row
+            //.row
               .col-xl-12
-                p.m-b-1 In order to pay you any dividends or revenue share, regulations require GrowthFountain to collect your Taxpayer Identification Number.  Don’t worry we keep this information safe, secure and encrypted on a separate server.
+                p.m-b-1.m-t-1 In order to pay you any dividends or revenue share, regulations require GrowthFountain to collect your Taxpayer Identification Number.  Don’t worry we keep this information safe, secure and encrypted on a separate server.
+
                 -
+                
                   pug_html += app.fields.nestedTextLabel(
                     'payment_information_data',
                     'ssn',
@@ -238,23 +241,33 @@ mixin confirmStatement(name, attr)
                   -1, {
                   },
                   fields.payment_information_data.schema.routing_number);
-              .form-group.row.radio.check-fields
+              -
+                pug_html += app.fields.nestedTextLabel(
+                  'payment_information_data',
+                  'routing_number_re',
+                  user,
+                  -1, {
+                  },
+                fields.payment_information_data.schema.routing_number_re);
+
+              .form-group.row.radio.check-fields.required
                 label.text-md-right.col-lg-3 Account Type
+                  span.color-red *
                 #payment_information_data__bank_account_type.col-lg-9.radio-input
                   label 
                     input(
                       type="radio"
                       name="payment_information_data[bank_account_type]"
-                      value=constants.AccountType.Checking
-                      checked=(user.bank_account_type == constants.AccountType.Checking)
+                      value=auth.bank_account_type.Checking
+                      checked=(user.bank_account_type == auth.bank_account_type.Checking)
                     )
                     |  Checking
                   label
                     input(
                       type="radio"
                       name="payment_information_data[bank_account_type]"
-                      value=constants.AccountType.Savings
-                      checked=(user.bank_account_type == constants.AccountType.Savings)
+                      value=auth.bank_account_type.Savings
+                      checked=(user.bank_account_type == auth.bank_account_type.Savings)
                     )
                     |  Savings
             // IF CHECK
@@ -405,7 +418,7 @@ mixin confirmStatement(name, attr)
                 i.fa.fa-check(style="display:none;")
               p.list-group-item-text.text-justify #{v.perk}
 
-      h2.text-uppercase.dosis.text-md-center.text-sm-center.text-xs-center Investment Summary
+      h2.text-uppercase Investment Summary
       .jumbotron.jumbotron-fluid.investment-summary
         .container
           .col-md-7
@@ -469,7 +482,7 @@ div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true
         .container.form-section
           form.col-lg-10.offset-lg-1.border-bottom.update-income-worth
             .row
-              | Your current limit is
+              | Your current limit is&nbsp;
               b.color-green $
                 span.current-limit.color-green 1000
               | .
@@ -483,7 +496,7 @@ div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true
               .row
                 .col-lg-12
                   .col-lg-12.text-lg-center
-                    button(data-dismiss="modal" type="button").btn.btn-primary.text-uppercase.submit-income-worth update
+                    button(type="button").btn.btn-primary.text-uppercase.submit-income-worth update
         .modal-footer
 
 if !window.google || !window.google.maps

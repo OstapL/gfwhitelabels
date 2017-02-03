@@ -1,64 +1,64 @@
-.home-section.hidden-sm-down
-  section.main-page-slider
-    div(data-ride="carousel" data-interval="2500")#carousel-main.carousel.carousel-main
-      ol.carousel-indicators
-        li(data-target="#carousel-main" data-slide-to="0").active
-        li(data-target="#carousel-main" data-slide-to="1")
-        li(data-target="#carousel-main" data-slide-to="2")
+section.slider-main
+  .owl-carousel.owl-theme.carousel-test
+    div
+      div(style="background: url(/img/slide_1.jpg)").slide_1.main-slider-item
+      //img(src="/img/slide_1.jpg" alt="...")
+      .slider-content.container
+        .text-xs-center
+          .col-lg-12
+            h1.text-uppercase.big-h1.hidden-sm-down your success is our success
+          .col-lg-6.offset-lg-3.text-lg-center.text-sm-center.text-xs-center
+            span.small-text Start investing locally
+          .col-lg-12.m-t-1.m-b-3
+            a(href="/pg/education").link-6 Understand the Risks
+          .col-lg-12.hidden-xs-down
+            a(href="/companies").btn.btn-lg.btn-primary.m-r-2 INVEST
+            a(href="/company/create").btn.btn-lg.btn-primary RAISE CAPITAL
+          .col-lg-12.hidden-sm-up
+            if app.user.is_anonymous()
+              a(href="/account/signup").btn.btn-lg.btn-primary sign up
+            else
+              a(href="/companies").btn.btn-lg.btn-primary INVEST
+    div
+      div(style="background: url(/img/slide_2.jpg)").slide_2.main-slider-item
+      //img(src="/img/slide_1.jpg" alt="...")
+      .slider-content.container
+        .text-xs-right
+          .col-lg-12
+            h1.text-uppercase.big-h1.hidden-sm-down your success is our success
+          .col-lg-12.text-xs-right
+            span.small-text.text-xs-right Start investing locally
+          .col-lg-12.m-t-1.m-b-3
+            a(href="/pg/education").link-6 Understand the Risks
+          .col-lg-12.hidden-xs-down
+            a(href="/companies").btn.btn-lg.btn-primary.m-r-2 INVEST
+            a(href="/company/create").btn.btn-lg.btn-primary RAISE CAPITAL
+          .col-lg-12.hidden-sm-up
+            if app.user.is_anonymous()
+              a(href="/account/signup").btn.btn-lg.btn-primary sign up
+            else
+              a(href="/companies").btn.btn-lg.btn-primary INVEST
+    div
+      div(style="background: url(/img/slide_3.jpg)").slide_3.main-slider-item
+      //img(src="/img/slide_1.jpg" alt="...")
+      .slider-content.container
+        .text-xs-left
+          .col-lg-12
+            h1.text-uppercase.big-h1.hidden-sm-down your success is our success
+          .col-lg-12
+            span.small-text Start investing locally
+          .col-lg-12.m-t-1.m-b-3
+            a(href="/pg/education").link-6 Understand the Risks
+          .col-lg-12.hidden-xs-down
+            a(href="/companies").btn.btn-lg.btn-primary.m-r-2 INVEST
+            a(href="/company/create").btn.btn-lg.btn-primary RAISE CAPITAL
+          .col-lg-12.hidden-sm-up
+            if app.user.is_anonymous()
+              a(href="/account/signup").btn.btn-lg.btn-primary sign up
+            else
+              a(href="/companies").btn.btn-lg.btn-primary INVEST
 
-      div(role="listbox").carousel-inner
-        .carousel-item.active.t40
-          img(src="/img/slide_1.jpg" alt="...").img-fluid
-          .carousel-caption
-            .home-content
-              .home-text-main.text-lg-center
-                .col-lg-12
-                  h1.text-uppercase.font-weight-bold.m0 YOUR SUCCESS IS OUR SUCCESS
-                .col-lg-12
-                  h2.mt15.mb15.letter-spacing-normal Start investing locally
-                  a(href="/pg/education").link-2.main-link-while Understand the Risks
-                .col-lg-12.mt45.m-t-m-10
-                  a(href="/companies").btn.btn-lg.btn-primary.m-r-2 invest
-                  a(href="/company/create").btn.btn-lg.btn-primary RAISE CAPITAL
-
-        .carousel-item.t40
-          img(src="/img/slide_2.jpg" alt="...").img-fluid
-          .carousel-caption
-            .home-content
-              .home-text-main.text-lg-right
-                .col-lg-12
-                  h1.text-uppercase.text-lg-right.font-weight-bold.m0 YOUR SUCCESS IS OUR SUCCESS
-                .col-lg-12.text-lg-right
-                  h2.mt15.mb15.letter-spacing-normal Start investing locally
-                  a(href="/pg/education").link-2.main-link-while Understand the Risks
-                .col-lg-12.text-lg-right.mt45.m-t-m-10
-                  a(href="/companies").btn.btn-lg.btn-primary.m-r-3 invest
-                  a(href="#").btn.btn-lg.btn-primary raise capital
-        .carousel-item.t40
-          img(src="/img/slide_3.jpg" alt="...").img-fluid
-          .carousel-caption
-            .home-content
-              .home-text-main.text-lg-left
-                .col-lg-12
-                  h1.text-uppercase.text-lg-left.font-weight-bold.m0 YOUR SUCCESS IS OUR SUCCESS
-                .col-lg-12.text-lg-left
-                  h2.mt15.mb15.letter-spacing-normal Start investing locally
-                  a(href="/pg/education").link-2.main-link-while Understand the Risks
-                .col-lg-12.text-lg-left.mt45.m-t-m-10
-                  a(href="/companies").btn.btn-lg.btn-primary.m-r-3 invest
-                  a(href="/company/create").btn.btn-lg.btn-primary raise capital
-
-    a(href="#carousel-main"
-    role="button" 
-    data-slide="prev").left.carousel-control
-      span(aria-hidden="true").icon-prev
-      span.sr-only Previous
-    a(href="#carousel-main"
-    role="button" 
-    data-slide="next").right.carousel-control
-      span(aria-hidden="true").icon-next
-      span.sr-only Next
-section(style="background: url(/img/slide_3.jpg) right no-repeat; background-size: cover; background-attachment: fixed;").home-section.bg-dark-alfa-30.hide-bg-fixed.hidden-md-up
+//section(style="background: url(/img/slide_3.jpg) right no-repeat; background-size: cover; background-attachment: fixed;").home-section.bg-dark-alfa-30.hide-bg-fixed.hidden-md-up
   .container
     .row
       .js-height-full
@@ -93,7 +93,7 @@ section.campaing-list.m-t-85
       .col-lg-12
         h2.text-uppercase.text-xs-center.m-t-0.mb50.font-weight-bold.main-page-title TRENDING
 
-    include ../components/campaign/templates/_list.pug
+      include ../components/campaign/templates/_list.pug
 
     if global.commingSoon != 1
       .col-lg-12.text-lg-center.text-md-center.text-xs-center
