@@ -3,17 +3,15 @@
   level = level || 0;
 
   var cssClass = level > 12
-  ? 'col-lg-10 offset-lg-1'
-  : 'col-lg-' + (12 - level) + ' offset-lg-' + level + ' col-xs-12 offset-xs-0';
+    ? 'col-lg-10 offset-lg-1'
+    : 'col-lg-' + (12 - level) + ' offset-lg-' + level + ' col-xs-12 offset-xs-0';
   cssClass += ' pt30 comment ';
-  var avatar = comment.user.image_data.length && comment.user.image_data[0].urls.length
-  ? comment.user.image_data[0].urls[0]
-  : '/img/default/Default_photo.png';
+  var avatar = app.getUrl(comment.user.image_data) || '/img/default/Default_photo.png';
 
   var userName = comment.user.first_name + ' ' + comment.user.last_name;
   var id = comment.uid
-  ? 'comment_' + comment.uid
-  : 'comment_empty_' + level;
+    ? 'comment_' + comment.uid
+    : 'comment_empty_' + level;
 
   var passedTime = helpers.date.fromNow(comment.created_date);
 
@@ -25,19 +23,18 @@ div(id=id class=cssClass data-level=level data-id=comment.uid).p-r-0.p-t-0.p-xs-
     .comments-wrap.col-lg-12.p-r-0.p-xs-0
       span.name-comments.text-uppercase #{ userName }
       -
-        var title = (attr.isCompanyMember && comment.user.id == attr.owner_id) ? 'FOUNDER' : '';
-        var roles = attr.isCompanyMember ? roleHelper.extractRoles(comment.user.role) : [];
-
-      if title
-        span.kvalificatio-comments.text-uppercase #{ title }
+        //ignore Director/Shareholder role
+        var roleBitmap = 0b1111111100 & comment.user.role;
+        roleBitmap = roleBitmap || comment.user.role;
+        var roles = roleHelper.extractRoles(roleBitmap);
 
       each role in roles
-        span.kvalificatio-comments.text-uppercase #{ role.title }
+        span.kvalificatio-comments #{ role.title }
       else
         if comment.related
-          span.kvalificatio-comments.text-uppercase #{ comment.related }
+          span.kvalificatio-comments #{ comment.related }
 
-      span.date-comments.pull-right.hidden-xs-down #{ passedTime }
+      span.date-comments.pull-right #{ passedTime }
       p #{ comment.message }
       div.responce.comment-actions
         if level <= 0
