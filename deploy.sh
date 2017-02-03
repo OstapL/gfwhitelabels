@@ -4,7 +4,7 @@ PROFILE=${AWS_PROFILE:-$DEFAULT}
 BUCKET="growthfountain-$CIRCLE_BRANCH"
 BUCKET=`echo $BUCKET | sed -e "s/_/-/g"`
 BUCKETSTORAGE="growthfountain-$CIRCLE_BRANCH-storage"
-BUCKET=`echo $BUCKETSTORAGE | sed -e "s/_/-/g"`
+BUCKETSTORAGE=`echo $BUCKETSTORAGE | sed -e "s/_/-/g"`
 aws s3 rm s3://$BUCKET --recursive
 DIR=dist
 aws  s3 sync $DIR s3://$BUCKET/ --profile "$PROFILE"

@@ -160,8 +160,8 @@ module.exports = Backbone.Router.extend({
         app.user.getCampaignR(app.user.formc.campaign_id, 'GET'),
       ).done((company, campaign) => {
       
-        app.user.company = company[0];
-        app.user.campaign = campaign[0];
+        if(company[0]) app.user.company = company[0];
+        if(campaign[0]) app.user.campaign = campaign[0];
 
         var model = app.user.company;
         model.campaign = app.user.campaign;
