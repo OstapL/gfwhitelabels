@@ -1,6 +1,7 @@
 | !{ app.breadcrumbs('issuer dashboard', '', [ ['Home', '/'], ['issuer dashboard', ''],])}
 - var campaignHelpers = require('components/campaign/helpers.js');
 - var amt_raised_in_ks = Math.round(values.campaign.amount_raised/1000).toLocaleString('en-US');
+- var formcLinks = require('../../campaign/helpers.js').formcLinks
 
 section.issuer-dashbord-top
   .container
@@ -112,6 +113,21 @@ section.issuer-dashbord-top
         a(href="/" + values.id).btn-sm.btn.btn-secondary.text-uppercase view Campaign
           i(aria-hidden="true").fa.fa-angle-right
     .col-lg-12.border-bottom-50
+
+section.investors-dashbord-comment
+  .container
+    .row
+      .col-xl-10
+        h2.dosis.text-uppercase.m-t-0.m-b-0 documents with growthfountain
+        a(href=formcLinks[values.campaign.id] target="_blank")
+          img(src="/img/lrg_US_Department_of_State35.gif").img-document.d-inline-block
+          h3.d-inline-block  Form C
+        br
+        a(href="https://api-esign-dev.growthfountain.com/pdf-doc/formc/listing_agreement.pdf?trans_percent=6&registration_fee=500&nonrefundable_fees=50&amendment_fee=200&commencement_date_x=2%2F6%2F2017&zip_code=20000&city=City+1&state=ID&address_1=Street+Address+1&address_2=Optional+Address+1&issuer_legal_name=Ratmir%27s+Company+Legal+Name&issuer_email=ratmir.asanov.1%40yandex.ru&issuer_signer=" target="_blank")
+          img(src="/img/lrg_US_Department_of_State35.gif").img-document.d-inline-block
+          h3.d-inline-block  Listing Agreement
+
+
 section.grafic-dashboard
   div(style="display: none").container
     .row
