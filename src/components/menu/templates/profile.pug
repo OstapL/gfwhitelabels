@@ -1,64 +1,67 @@
 if user.token != ""
+  ul.nav.navbar-nav
+    //li.nav-item.notification.notification-bell.text-center.drop-container
+      a(href="#").nav-link.notification.bell-drop-li
+        i.fa.fa-bell-o
+        span.count-notific 2
 
-  //li.nav-item.notification.notification-bell.text-center.drop-container
-    a(href="#").nav-link.notification.bell-drop-li
-      i.fa.fa-bell-o
-      span.count-notific 2
+      .list-container.notification-container.bell-drop
+        ul.submenu.list-unstyled 
+          li.clearfix.title.nav-link
+            span.pull-left
+              b 2 pending 
+              |  comments
+            a(href="#").pull-right  view all
 
-    .list-container.notification-container.bell-drop
-      ul.submenu.list-unstyled 
-        li.clearfix.title.nav-link
-          span.pull-left
-            b 2 pending 
-            |  comments
-          a(href="#").pull-right  view all
+          li.clearfix.nav-link
+            span.pull-left Maria Kravchuk wrote...
+            i.pull-right just now
 
-        li.clearfix.nav-link
-          span.pull-left Maria Kravchuk wrote...
-          i.pull-right just now
-
-        li.clearfix.nav-link
-          span.pull-left Maria Kravchuk wrote...
-          i.pull-right just now
-  li.nav-item.user-info
-    a.nav-link.notification.user-info-name
-      span
-        if user.image_data[0]
-          img(src=user.image_data[0].urls[0])#user-thumbnail.img-fluid.img-circle
-        else
-          i.fa.fa-user
-            
-      v#user_name.hidden-md-down #{ user.first_name } #{user.last_name}&nbsp;
-      i.fa.fa-angle-down
-    .list-container.user-info-drop.notification-container.drop-container
-      ul.submenu.list-unstyled 
-        li
-          a(href="/account/profile").nav-link Profile
-        if user.company && user.company.name
+          li.clearfix.nav-link
+            span.pull-left Maria Kravchuk wrote...
+            i.pull-right just now
+    li.nav-item.user-info
+      a.nav-link.notification.user-info-name
+        span
+          -
+            var url = app.getUrl(user.image_data);
+          if url
+            img(src=url)#user-thumbnail.img-fluid.img-circle
+          else
+            i.fa.fa-user
+              
+        v#user_name.hidden-md-down #{ user.first_name } #{user.last_name}&nbsp;
+        i.fa.fa-angle-down
+      .list-container.user-info-drop.notification-container.drop-container.hidden-md-down
+        ul.submenu.list-unstyled 
           li
-            a(href="/dashboard/issuer-dashboard").nav-link #{user.company.name}
-        li
-          a(href="/account/investor-dashboard").nav-link Investor Dashboard
-        li
-          a(href="/account/logout").nav-link Logout
+            a(href="/account/profile").nav-link Profile
+          if user.companiesMember && user.companiesMember.data
+            each v,k in user.companiesMember.data
+              li
+                a(href="/dashboard/" + v.formc_id + "/issuer-dashboard" ).nav-link #{v.company}
+          li
+            a(href="/account/investor-dashboard").nav-link Investor Dashboard
+          li
+            a(href="/account/logout").nav-link Logout
     
 else
-  // for desktop
-  li.login-sinup.hidden-md-down
-    a(href="/account/login").btn.btn-primary Log in
-  
-  li.login-sinup.hidden-md-down
-    a(href="/account/signup").btn.btn-primary Sign up
+  ul.nav.navbar-nav
+    // for desktop
+    li.login-sinup.hidden-md-down
+      a(href="/account/login").btn.btn-primary Log in
+    
+    li.login-sinup.hidden-md-down
+      a(href="/account/signup").btn.btn-primary Sign up
 
-  // for mobile
-  li.nav-item.user-info.hidden-lg-up
-    a.nav-link.notification.user-info-name
-      span
-        i.fa.fa-sign-in
-    .list-container.user-info-drop.notification-container.drop-container.not-log-in-user
-      ul.submenu.list-unstyled 
-        li
-          a(href="/account/login").nav-link Log in
-        
-        li
-          a(href="/account/signup").nav-link Sign up
+ul.submenu.list-unstyled.mobile-profile-menu.hidden-lg-up
+  li
+    a(href="/account/profile").nav-link Profile
+  if user.companiesMember && user.companiesMember.data
+    each v,k in user.companiesMember.data
+      li
+        a(href="/dashboard/issuer-dashboard?id=" + v.company_id).nav-link #{v.company}
+  li
+    a(href="/account/investor-dashboard").nav-link Investor Dashboard
+  li
+    a(href="/account/logout").nav-link Logout

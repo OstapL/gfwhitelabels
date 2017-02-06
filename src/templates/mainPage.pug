@@ -1,91 +1,63 @@
-.home-section.hidden-sm-down
-  section.main-page-slider
-    div(data-ride="carousel" data-interval="3000")#carousel-main.carousel.carousel-main
-      ol.carousel-indicators
-        li(data-target="#carousel-main" data-slide-to="0").active
-        li(data-target="#carousel-main" data-slide-to="1")
-        li(data-target="#carousel-main" data-slide-to="2")
-      .carousel-inner(role="listbox")
-        .carousel-item.active.t40
-          img(src="/img/JDA-Scenic-2.jpg" alt="...").img-fluid
-          .carousel-caption
-            .home-content
-              .home-text-main.text-lg-center
-                .col-lg-12
-                  h1.text-uppercase.font-weight-bold.m-b-2 RAISE CAPITAL WITH US
-                .col-lg-12.m-b-2.m-t-0
-                  h2.m-t-0.m-b-1.small-text.letter-spacing-normal Start investing locally
-                  a(href="/pg/education").link-3 Understand the Risks
-                .col-lg-12
-                  a(href="/companies").btn.btn-lg.btn-primary.m-r-3 invest
-                  a(href="/company/create").btn.btn-lg.btn-primary RAISE CAPITAL
+section.slider-main
+  .owl-carousel.owl-theme.carousel-test
+    div
+      div(style="background: url(/img/JDA-Scenic-2.jpg)").slide_1.main-slider-item
+      //img(src="/img/slide_1.jpg" alt="...")
+      .slider-content.container
+        .text-xs-center
+          .col-lg-12
+            h1.text-uppercase.big-h1.hidden-sm-down RAISE CAPITAL WITH US
+          .col-lg-12
+            span.small-text Start investing locally
+          .col-lg-12.m-t-1.m-b-3
+            a(href="/pg/education").link-6 Understand the Risks
+          .col-lg-12.hidden-xs-down
+            a(href="/companies").btn.btn-lg.btn-primary.m-r-2 INVEST
+            a(href="/company/create").btn.btn-lg.btn-primary RAISE CAPITAL
+          .col-lg-12.hidden-sm-up
+            if app.user.is_anonymous()
+              a(href="/account/signup").btn.btn-lg.btn-primary sign up
+            else
+              a(href="/companies").btn.btn-lg.btn-primary INVEST
 
-        .carousel-item.t40
-          img(src="/img/JDA-Scenic-3.jpg" alt="...").img-fluid
-          .carousel-caption
-            .home-content
-              .home-text-main.text-lg-right
-                .col-lg-12
-                  h1.text-uppercase.text-lg-right.font-weight-bold.m-b-2.color-black_pearl RAISE CAPITAL WITH US
-                .col-lg-12.text-lg-right.m-b-2.m-t-0
-                  h2.m-t-0.m-b-1.small-text.color-black_pearl.letter-spacing-normal Start investing locally
-                  a(href="/pg/education").link-3 Understand the Risks
-                .col-lg-12.text-lg-right
-                  a(href="/companies").btn.btn-lg.btn-primary.m-r-3 invest
-                  a(href="#").btn.btn-lg.btn-primary raise capital
-        .carousel-item.t40
-          img(src="/img/JDA-Scenic-4.jpg" alt="...").img-fluid
-          .carousel-caption
-            .home-content
-              .home-text-main.text-lg-left
-                .col-lg-12
-                  h1.text-uppercase.text-lg-left.font-weight-bold.m-b-2.color-black_pearl YOUR SUCCESS IS OUR SUCCESS
-                .col-lg-12.text-lg-left.m-b-2.m-t-0
-                  h2.m-t-0.m-b-1.small-text.color-black_pearl.letter-spacing-normal Start investing locally
-                  a(href="/pg/education").link-3 Understand the Risks
-                .col-lg-12.text-lg-left
-                  a(href="/companies").btn.btn-lg.btn-primary.m-r-3 invest
-                  a(href="/company/create").btn.btn-lg.btn-primary raise capital
-
-    a(href="#carousel-main"
-      role="button" 
-      data-slide="prev").left.carousel-control
-      span(aria-hidden="true").icon-prev
-      span.sr-only Previous
-    a(href="#carousel-main"
-      role="button" 
-      data-slide="next").right.carousel-control
-      span(aria-hidden="true").icon-next
-      span.sr-only Next
-section.home-section.bg-dark-alfa-30.hide-bg-fixed.hidden-md-up(style="background: url(/img/JDA-Scenic-2.jpg) center center no-repeat; background-size: cover; background-attachment: fixed;")
-  .container
-    .row
-      .js-height-full
-        .home-content
-          .home-text-main.text-lg-center
-            h1.text-uppercase.dosis RAISE CAPITAL WITH US
-            .col-lg-6.offset-lg-3.text-lg-center.text-sm-center.text-xs-center
-              span.small-text Start investing locally
-            .col-lg-12.m-t-1.m-b-2
-              a(href="/pg/education").link-3 Understand the Risks
-            .col-lg-12
-              a(href="/companies").btn.btn-lg.btn-primary.m-r-3 invest
-              span.hidden-xs  
-                a(href="/company/create").btn.btn-lg.btn-primary RAISE CAPITAL
-//section.jeanne_footer.top-block
-  .container 
-    .row.text-lg-center 
-      .col-lg-3.col-md-6.col-sm-12.text-xl-right.text-xs-center.m-x-auto 
-        img(src="/img/footer_com_logo.png" alt="")
-
-      .col-lg-6.col-md-6.col-sm-12.m-t-m-25 
-        .container_block.text-left 
-          h3.text-uppercase.font-weight-bold.m-t-0.text-xs-center Need help getting your idea started?
-          p "Build" Business Solutions offer everything from business loansand credit cards to business checking and savings products.Let us help you take your concept or business to the next level.
-
-      .col-lg-3.col-md-12.text-xs-center.m-t-m-25 
-        h4.text-uppercase.m-b-2.text-xs-center READY TO BUILD YOUR BUSINESS
-        a(href="/pg/investor_tutorial").btn.btn-primary.text-uppercase Start today
+    div
+      div(style="background: url(/img/JDA-Scenic-3.jpg)").slide_1.main-slider-item
+      //img(src="/img/slide_1.jpg" alt="...")
+      .slider-content.container
+        .text-xs-right
+          .col-lg-12
+            h1.text-uppercase.big-h1.hidden-sm-down RAISE CAPITAL WITH US
+          .col-lg-12
+            span.small-text Start investing locally
+          .col-lg-12.m-t-1.m-b-3
+            a(href="/pg/education").link-6 Understand the Risks
+          .col-lg-12.hidden-xs-down
+            a(href="/companies").btn.btn-lg.btn-primary.m-r-2 INVEST
+            a(href="/company/create").btn.btn-lg.btn-primary RAISE CAPITAL
+          .col-lg-12.hidden-sm-up
+            if app.user.is_anonymous()
+              a(href="/account/signup").btn.btn-lg.btn-primary sign up
+            else
+              a(href="/companies").btn.btn-lg.btn-primary INVEST
+    div
+      div(style="background: url(/img/JDA-Scenic-4.jpg)").slide_1.main-slider-item
+      //img(src="/img/slide_1.jpg" alt="...")
+      .slider-content.container
+        .text-xs-left
+          .col-lg-12
+            h1.text-uppercase.big-h1.hidden-sm-down YOUR SUCCESS IS OUR SUCCESS
+          .col-lg-12
+            span.small-text Start investing locally
+          .col-lg-12.m-t-1.m-b-3
+            a(href="/pg/education").link-6 Understand the Risks
+          .col-lg-12.hidden-xs-down
+            a(href="/companies").btn.btn-lg.btn-primary.m-r-2 INVEST
+            a(href="/company/create").btn.btn-lg.btn-primary RAISE CAPITAL
+          .col-lg-12.hidden-sm-up
+            if app.user.is_anonymous()
+              a(href="/account/signup").btn.btn-lg.btn-primary sign up
+            else
+              a(href="/companies").btn.btn-lg.btn-primary INVEST
 
 section.campaing-list.m-t-85
   .container#campaignList

@@ -10,7 +10,7 @@ module.exports = Backbone.Router.extend({
     'account/finish/login/': 'finishSocialLogin',
     'account/reset': 'resetForm',
     'reset-password/code/:code': 'resetPassword',
-    'code/:code': 'membershipConfirmation',
+    'code/:formcId/:code': 'membershipConfirmation',
   },
 
   login(id) {
@@ -162,6 +162,7 @@ module.exports = Backbone.Router.extend({
     $('#content').scrollTo();
     api.makeRequest(authServer + '/reset-password/code', 'PUT', {
       'reset_password_code': code,
+      'domain': window.location.host
     }).done((data) => {
       localStorage.setItem('token', data.key);
       window.location = '/account/password/new';
@@ -174,7 +175,7 @@ module.exports = Backbone.Router.extend({
   },
 
 
-  membershipConfirmation(code) {
+  membershipConfirmation(formcId, code) {
     if(localStorage.getItem('token') !== null) {
       localStorage.removeItem('token', '');
       localStorage.removeItem('user');
@@ -182,9 +183,10 @@ module.exports = Backbone.Router.extend({
       return false;
     }
 
-    api.makeRequest(formcServer + '/invitation/' + code, 'GET').done((response) => {
+    api.makeRequest(formcServer + '/' + formcId + '/team-members/invitation/' + code, 'GET').done((response) => {
 
       const data = {
+        id: formcId,
         company_name: response.company_name,
         title: response.title,
         code: code,

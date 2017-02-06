@@ -30,6 +30,12 @@
 	@media screen and (max-width: 540px)
 		i
 			padding-bottom: 25px
+.like-icon-circle
+	background-color: $campaign-like-bgc
+	color: $campaign-like-color
+	padding: 10px 11px
+	border-radius: 100px
+	font-size: rem(24)
 //
 .m-d-p-r-5
 	padding-right: 5px!important
@@ -37,6 +43,12 @@
 	padding-left: 5px!important
 .m-d-p-l-10
 	padding-left: 10px!important
+@media screen and (min-width: 1200px)
+	.p-xl-0
+		padding-right: 0!important
+		padding-left: 0!important
+	.p-r-xl-0
+		padding-right: 0!important
 @media screen and (max-width: 1200px)
 	.p-l-sm-0
 		padding-left: 0!important
@@ -63,6 +75,8 @@
 		margin-top: 1rem
 	.p-r-0.p-r-lg-1
 		padding-right: 1rem!important
+	.m-b-md-25
+		margin-bottom: 25px!important
 @media screen and (max-width: 544px)
 	.m-t-xs-1
 		margin-top: 1rem
@@ -164,7 +178,9 @@
 				i
 					font-size: 14px!important
 					margin-top: 0
-
+.uploading
+	i.fa-spinner
+		font-size: 22px
 .fileFolderDropzone
 	.border-dropzone
 		min-height: 155px

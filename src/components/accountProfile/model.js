@@ -9,24 +9,6 @@ let userModel = Backbone.Model.extend({
     return this.get('token') == '';
   },
 
-  // ensureLoggedIn1() {
-  //   return new Promise((resolve, reject) => {
-  //     if (!this.is_anonymous())
-  //       return resolve(true);
-  //
-  //     const View = require('components/anonymousAccount/views.js');
-  //
-  //     let view = new View.popupLogin1({
-  //
-  //     });
-  //     view.render();
-  //
-  //     new pView.popupLogin().render(window.location.pathname);
-  //     app.hideLoading();
-  //
-  //   });
-  // },
-
   ensureLoggedIn(next) {
     if (this.is_anonymous()) {
       const pView = require('components/anonymousAccount/views.js');
@@ -58,10 +40,17 @@ let userModel = Backbone.Model.extend({
   },
 
   load: function () {
+    const ONE_HOURS = 1000 * 60 * 60;
+    const token = localStorage.getItem('token');
     // if we have a token we can get information about user
-    if (localStorage.getItem('token') !== null) {
+    if (token !== null) {
       let userData = localStorage.getItem('user');
-      this.set('token', localStorage.getItem('token'));
+      this.set('token', token);
+      cookies.set('token', token, {
+        domain: '.' + domainUrl,
+        expires: ONE_HOURS,
+        path: '/',
+      });
 
       // if (userData == null) {
       if (1 == 1) {
@@ -91,16 +80,10 @@ let userModel = Backbone.Model.extend({
   },
 
   logout: function () {
-    $.ajax({
-      type: 'POST',
-      url: serverUrl + Urls.rest_logout(),
-      success: (data) => {
-        localStorage.removeItem('token');
-        localStorage.removeItem('user');
-        app.trigger('userLogout', data);
-        window.location = '/';
-      },
-    });
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    app.trigger('userLogout', {});
+    window.location = '/';
   },
 
   company: null,

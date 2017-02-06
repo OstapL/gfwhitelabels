@@ -1,10 +1,9 @@
-| !{app.breadcrumbs('Invest', '', [ ['Home', '/'], ['Explore', '/companies'], ['Smartbe', '/' + investment.company_id], ['Invest in ' + investment.company_id, '']])}
-- console.log(investment);
+| !{app.breadcrumbs('Invest', '', [ ['Home', '/'], ['Explore', '/companies'], [investment.company.name, '/' + investment.company_id], ['Invest in ' + investment.company.name, '']])}
 .container
   .row
     .col-sm-8.offset-sm-2
       h2.text-xs-center.thankyou-title.m0 
-        i(aria-hidden="true").color-green.fa.fa-thumbs-o-up 
+        i(aria-hidden="true").like-icon-circle.fa.fa-thumbs-o-up 
         | You have invested $#{ investment.amount } in #{ investment.company.name }
 
   .row
@@ -36,5 +35,5 @@
               strong #{ investment.perk }
 
         .info-btn-block.pt50
-          a(href="account/investor-dashboard").btn.btn-secondary INVESTOR DASHBOARD &nbsp;
+          a(href="/account/investor-dashboard").btn.btn-secondary INVESTOR DASHBOARD &nbsp;
             i.fa.fa-angle-right
