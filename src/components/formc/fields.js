@@ -9,8 +9,8 @@ let exports = {
       resultVal = values.custom_security_type;
       name = "custom_security_type";
     } else {
-      let oneOf = fields.outstanding_securities.schema.security_type.validate.OneOf;
-      resultVal = oneOf.labels[oneOf.choices[parseFloat(value)]];
+      let oneOf = fields.outstanding_securities.schema.security_type.validate.choices;
+      resultVal = oneOf[value];
     }
 
     return `<a href="#" data-name="formc.outstanding_securities[${ index }].${ name }"

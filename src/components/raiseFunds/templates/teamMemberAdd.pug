@@ -15,7 +15,7 @@ section.team-members.container.m-b-85
 
   //START RIGHT BLOCK
   .col-xl-8.col-lg-8.col-md-12.p-sm-0
-    h2.text-uppercase.text-lg-center.text-xs-center.dosis.m-t-0.m-b-3 #{type == 'advisor' ? 'advisor' : 'team member'}
+    h2.text-uppercase.text-lg-center.text-xs-center.m-t-0 #{type == 'advisor' ? 'advisor' : 'team member'}
 
     form.form-section.col-xl-12.p-sm-0
       - 
@@ -51,7 +51,7 @@ section.team-members.container.m-b-85
         class2: 'col-xl-9 col-lg-12 big-textarea', 
         schema: fields.bio, 
         placeholder: 'At least 150 characters', value: member.bio, label: 'Bio',})
-      - pug_html += zipCodeDirective(this, 'teamMember.pug').render().resultHtml;
+      - pug_html += zipCodeDirective(this, 1).render().resultHtml;
       - 
         pug_html += app.fields.textLabel('college', {
         class1: 'col-xl-3 col-lg-12 p-t-0 text-lg-left text-xl-right m-b-0 m-b-lg-1', 

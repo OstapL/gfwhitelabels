@@ -10,14 +10,20 @@ const mainElement = '#content';
 
 class GeoCoder {
 
-  constructor(view, template) { 
+  constructor(view, forUSA) {
     this.overlord = document.querySelector(mainElement);
 
     this.view = view;
     this.fields = view.fields;
     this.values = view.model;
-    this.template = require('./templates/teamMember.pug');
+    // if(forUSA == 1) {
+      this.template = require('./templates/usa.pug');
+    // } else {
+    //   this.template = require('./templates/non_usa.pug');
+    // }
     this.resultHtml = '';
+    // fix me
+    // as script loads async we can add multiple google api scripts
     if(!window.google || !window.google.maps) {
       let p = document.createElement("script");
       p.type = "text/javascript";
@@ -44,6 +50,10 @@ class GeoCoder {
     });
     this.$resultHtml = $(this.resultHtml);
     this.attacheEvents();
+
+    if (this.values.zip_code)
+      setTimeout(() => { $('#zip_code').trigger('change'); }, 50);
+
     return this;
   }
 
@@ -64,7 +74,10 @@ class GeoCoder {
             let state = strs[1].substr(0, 2);
 
             // Use overlord
-            document.querySelector('.js-city-state').innerHTML = city + ', ' + state;
+            let cityStateElem = document.querySelector('.js-city-state');
+            if (cityStateElem)
+              cityStateElem.innerHTML = city + ', ' + state;
+
             this.view.model.city = city;
             this.view.model.state = state;
             document.querySelector('#city').value = city;

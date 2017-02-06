@@ -1,27 +1,24 @@
 const validation = require('components/validation/validation.js');
+const userDocuments = require('helpers/userDocuments.js');
+
+const disableEnterHelper = require('helpers/disableEnterHelper.js');
 
 const helpers = {
   date: require('helpers/dateHelper.js'),
   format: require('helpers/formatHelper.js'),
   phone: require('helpers/phoneHelper.js'),
-  social: require('helpers/socialNetworksHelper.js'),
   dropzone: require('helpers/dropzoneHelpers.js'),
   yesNo: require('helpers/yesNoHelper.js'),
+  fileList: require('helpers/fileList.js'),
 };
 
-// const InvestmentStatus = {
-//   New: 0,
-//   Approved: 1,
-//   CanceledByClient: 2,
-//   CanceledByBank: 3,
-//   CanceledByInkvisitor: 4,
-// };
+const moment = require('moment');
 
-const activeStatuses = [0, 1];
-const canceledStatuses = [2, 3, 4];
+const invest = require('consts/financialInformation.json');
 
-let countries = {};
-_.each(require('helpers/countries.json'), (c) => { countries[c.code] = c.name; });
+const activeStatuses = [invest.investment_status.New, invest.investment_status.Approved];
+const canceledStatuses = [invest.investment_status.CanceledByClient,
+    invest.investment_status.CanceledByBank, invest.investment_status.CanceledByInquisitor];
 
 import 'bootstrap-slider/dist/bootstrap-slider'
 import 'bootstrap-slider/dist/css/bootstrap-slider.css'
@@ -35,17 +32,168 @@ module.exports = {
     events: _.extend({
       'click #save-account-info': api.submitAction,
       'click #save-financial-info': api.submitAction,
-      'focus #ssn' : 'showSSNPopover',
-      'focuseout #ssn' : 'hideSSNPopover',
-      'keyup #zip_code': 'changeZipCode',
-      'change .js-city': 'changeAddressManually',
-      'change .js-state': 'changeAddressManually',
-      'change #country': 'changeCountry',
       'change #not-qualify': 'changeQualify',
       'change .investor-item-checkbox': 'changeAccreditedInvestorItem',
       'change #twitter,#facebook,#instagram,#linkedin': 'appendHttpsIfNecessary',
       // 'change input[name=accredited_investor]': 'changeAccreditedInvestor',
     }, helpers.phone.events, helpers.dropzone.events, helpers.yesNo.events),
+
+    initialize(options) {
+      this.activeTab = options.activeTab;
+
+      this.fields = options.fields;
+
+      this.fields.image_image_id = _.extend(this.fields.image_image_id, {
+        crop: {
+          control: {
+            aspectRatio: 1 / 1,
+          },
+          cropper: {
+            cssClass : 'img-profile-crop',
+            preview: true,
+          },
+          auto: {
+            width: 600,
+            height: 600,
+          }
+        },
+      });
+
+      this.fields.account_number = {
+        type: 'password',
+        required: true,
+        minLength: 5,
+        dependies: ['account_number_re'],
+        fn: function(name, value, attr, data, schema) {
+          if (value != this.getData(data, 'account_number_re')) {
+            throw "Account number fields don't match.";
+          }
+        },
+      };
+
+      this.fields.account_number_re = {
+        type: 'password',
+        required: true,
+        minLength: 5,
+        dependies: ['account_number'],
+        fn: function(name, value, attr, data, schema) {
+          if (value != this.getData(data, 'account_number')) {
+            throw "Account number fields don't match.";
+          }
+        },
+      };
+
+      this.fields.routing_number = {
+        required: true,
+        _length: 9,
+        dependies: ['routing_number_re'],
+        fn: function(name, value, attr, data, computed) {
+          if (value != data.routing_number_re) {
+            throw "Routing number fields don't match.";
+          }
+        },
+      };
+
+      this.fields.routing_number_re = {
+        required: true,
+        _length: 9,
+        dependies: ['routing_number'],
+        fn: function(name, value, attr, data, computed) {
+          if (value != data.routing_number) {
+            throw "Routing number fields don't match.";
+          }
+        },
+      };
+
+      this.fields.ssn = {
+        type: 'password',
+        required: true,
+        _length: 9,
+        dependies: ['ssn_re'],
+        fn: function(name, value, attr, data, computed) {
+          if (value != data.ssn_re) {
+            throw "Social security fields don't match.";
+          }
+        },
+      };
+
+      this.fields.ssn_re = {
+        type: 'password',
+        required: true,
+        _length: 9,
+        dependies: ['ssn'],
+        fn: function(name, value, attr, data, computed) {
+          if (value != data.ssn) {
+            throw "Social security fields don't match.";
+          }
+        },
+      };
+
+      this.model.account_number_re = this.model.account_number;
+      this.model.routing_number_re = this.model.routing_number;
+      this.model.ssn_re = this.model.ssn;
+
+      this.labels = {
+        country: 'Country',
+        street_address_1: 'Street address 1',
+        street_address_2: 'Street address 2',
+        zip_code: 'Zip code',
+        state: 'State/Province/Region',
+        city: 'City',
+        phone: 'Phone',
+        account_number: 'Account Number',
+        account_number_re: 'Re-Enter Account Number',
+        routing_number: 'Routing Number',
+        routing_number_re: "Re-Enter Routing Number",
+        annual_income: 'My Annual Income',
+        net_worth: 'My Net Worth',
+        twitter: 'Your Twitter link',
+        facebook: 'Your Facebook link',
+        instagram: 'Your Instagram link',
+        linkedin: 'Your LinkedIn link',
+        bank_name: 'Bank Name',
+        name_on_bank_account: 'Name on Bank Account',
+        ssn: 'Social Security number (SSN) or Tax ID (ITIN/EIN)',
+        ssn_re: 'Re-enter',
+      };
+
+      this.assignLabels();
+
+      // define ui elements
+      this.cityStateArea = null;
+      this.cityField = null;
+      this.stateField = null;
+    },
+
+    render() {
+      this.usaStates = require("helpers/usaStates.js");
+
+      this.$el.html(
+        this.template({
+          tab: this.activeTab || 'account_info',
+          serverUrl: serverUrl,
+          user: this.model,
+          companiesMember: app.user.companiesMember,
+          roleInfo: app.user.getRoleInfo(),
+          company: app.user.get('company'),
+          fields: this.fields,
+          states: this.usaStates,
+        })
+      );
+
+      this._initSliders();
+
+      setTimeout(() => { this.createDropzones() } , 1000);
+
+      this.onImageCrop();
+
+      this.cityStateArea = this.$('.js-city-state');
+      this.cityField = this.$('.js-city');
+      this.stateField = this.$('.js-state');
+      disableEnterHelper.disableEnter.call(this);
+
+      return this;
+    },
 
     changeAccreditedInvestorItem(e) {
       let $target = $(e.target);
@@ -66,137 +214,6 @@ module.exports = {
       } else {
         this.$('input[name=accredited_investor_choice]').val(true);
       }
-    },
-
-    changeCountry(e) {
-      const usClass1 = 'col-xl-6 text-xl-right text-lg-left ';
-      const usClass2 = 'col-xl-6 ';
-      const foreignClass1 = 'col-xl-5 text-xl-right text-lg-left ';
-      const foreignClass2 = 'col-xl-7';
-
-      let $target = $(e.target);
-      let country = $target.val();
-
-      let $foreignCountryRow = $('.foreign-country-row');
-      let $foreignCountryPhoneContainer = $foreignCountryRow.find('.foreign-country-phone');
-      let $foreignCountryPhoneField = $foreignCountryPhoneContainer.find('.phone');
-
-      let $usRow = $('.us-row');
-      let $usPhoneContainer = $usRow.find('.us-phone');
-      let $usPhonePhoneField = $usPhoneContainer.find('.phone');
-
-      if (country == 'US') {
-        $foreignCountryRow.hide();
-        $foreignCountryPhoneField.appendTo($usPhoneContainer);
-
-        $foreignCountryPhoneField.find('label')
-          .removeClass(foreignClass1)
-          .addClass(usClass1);
-
-        $foreignCountryPhoneField.find('div')
-          .removeClass(foreignClass2)
-          .addClass(usClass2);
-
-        $usRow.show();
-      } else {
-        $usRow.hide();
-        $usPhonePhoneField.appendTo($foreignCountryPhoneContainer);
-
-        $usPhonePhoneField.find('label')
-          .removeClass(usClass1)
-          .addClass(foreignClass1);
-
-        $usPhonePhoneField.find('div')
-          .removeClass(usClass2)
-          .addClass(foreignClass2);
-
-        $foreignCountryRow.show();
-      }
-    },
-
-    initialize(options) {
-      this.fields = options.fields;
-
-      this.fields.image_image_id = _.extend(this.fields.image_image_id, {
-        imgOptions: {
-          aspectRatio: 1 / 1,
-          cssClass : 'img-profile-crop',
-          showPreview: true,
-        }
-      });
-
-      // this.fields.account_number.required = true;
-      this.fields.account_number = _.extend(this.fields.account_number, {
-        type: 'password',
-        fn: function(value, attr, fn, model, computed) {
-          if (this.account_number != this.account_number_re)
-            throw `Account number fields don't match`;
-        },
-      });
-
-      this.model.account_number_re = this.model.account_number;
-      this.fields.account_number_re = {
-        type: 'password',
-        fn: function(value, attr, fn, model, computed) {
-          if (this.account_number != this.account_number_re)
-            throw `Account number fields don't match`;
-        },
-      };
-      this.labels = {
-        country: 'Country',
-        street_address_1: 'Street address 1',
-        street_address_2: 'Street address 2',
-        zip_code: 'Zip code',
-        state: 'State/Province/Region',
-        city: 'City',
-        phone: 'Phone',
-        account_number: 'Account Number',
-        account_number_re: 'Re-Enter Account Number',
-        routing_number: 'Routing Number',
-        annual_income: 'My Annual Income',
-        net_worth: 'My Net Worth',
-        twitter: 'Your Twitter link',
-        facebook: 'Your Facebook link',
-        instagram: 'Your Instagram link',
-        linkedin: 'Your LinkedIn link',
-        bank_name: 'Bank Name',
-        name_on_bank_account: 'Name on Bank Account',
-      };
-
-      this.assignLabels();
-
-      // define ui elements
-      this.cityStateArea = null;
-      this.cityField = null;
-      this.stateField = null;
-    },
-
-    render() {
-      this.getCityStateByZipCode = require("helpers/getSityStateByZipCode");
-      this.usaStates = require("helpers/usaStates.js");
-
-      this.$el.html(
-        this.template({
-          serverUrl: serverUrl,
-          user: this.model,
-          roleInfo: app.user.getRoleInfo(),
-          company: app.user.get('company'),
-          fields: this.fields,
-          states: this.usaStates,
-        })
-      );
-
-      this._initSliders();
-
-      setTimeout(() => { this.createDropzones() } , 1000);
-
-      this.onImageCrop();
-
-      this.cityStateArea = this.$('.js-city-state');
-      this.cityField = this.$('.js-city');
-      this.stateField = this.$('.js-state');
-
-      return this;
     },
 
     onImageCrop(name) {
@@ -268,98 +285,13 @@ module.exports = {
       cbInvestor1m.prop('disabled', this.model.net_worth < 1000);
       cbInvestor200k.prop('disabled', this.model.annual_income < 200);
 
+      // this.$('a[href="#financial_info"]').on('show.bs.tab', (e) => console.warn('!!!!!!!'));
+      
       this.$('a[href="#financial_info"]').on('show.bs.tab', (e) => {
         setTimeout(() => {
           this.$('.slider-net-worth').bootstrapSlider('setValue', this.model.net_worth);
           this.$('.slider-annual-income').bootstrapSlider('setValue', this.model.annual_income);
         }, 200);
-      });
-    },
-
-    changeCountry(e) {
-      const usClass1 = 'col-lg-6 text-xl-right text-lg-left ';
-      const usClass2 = 'col-lg-6 ';
-      const foreignClass1 = 'col-lg-5 text-xl-right text-lg-left ';
-      const foreignClass2 = 'col-lg-7 ';
-
-      let $target = $(e.target);
-      let country = $target.val();
-
-      let $foreignCountryRow = $('.foreign-country-row');
-      let $foreignCountryPhoneContainer = $foreignCountryRow.find('.foreign-country-phone');
-      let $foreignCountryPhoneField = $foreignCountryPhoneContainer.find('.phone');
-
-      let $usRow = $('.us-row');
-      let $usPhoneContainer = $usRow.find('.us-phone');
-      let $usPhonePhoneField = $usPhoneContainer.find('.phone');
-
-      if (country == 'US') {
-        $foreignCountryRow.hide();
-        $foreignCountryPhoneField.appendTo($usPhoneContainer);
-
-        $foreignCountryPhoneField.find('label')
-          .removeClass(foreignClass1)
-          .addClass(usClass1);
-
-        $foreignCountryPhoneField.find('div')
-          .removeClass(foreignClass2)
-          .addClass(usClass2);
-
-        $usRow.show();
-      } else {
-        $usRow.hide();
-        $usPhonePhoneField.appendTo($foreignCountryPhoneContainer);
-
-        $usPhonePhoneField.find('label')
-          .removeClass(usClass1)
-          .addClass(foreignClass1);
-
-        $usPhonePhoneField.find('div')
-          .removeClass(usClass2)
-          .addClass(foreignClass2);
-
-        $foreignCountryRow.show();
-      }
-    },
-
-    showSSNPopover(event){
-      $('#ssn').popover({
-        trigger: 'focus',
-        placement(context, src) {
-          $(context).addClass('ssn-popover');
-          return 'right';
-        },
-        html: true,
-        content(){
-          var content = $('.profile').find('.popover-content-ssn ').html();
-          return content;
-        }
-      });
-
-      $('#ssn').popover('show');
-    },
-
-    hideSSNPopover(event){
-      $('#ssn').popover('hide');
-    },
-
-    changeZipCode(e) {
-      // if not 5 digit, return
-      if (e.target.value.length < 5) return;
-      if (!e.target.value.match(/\d{5}/)) return;
-      this.getCityStateByZipCode(e.target.value, ({ success=false, city='', state='' }) => {
-        if (success) {
-          this.$('.js-city-state').text(`${city}, ${state}`);
-          // this.$('#city').val(city);
-          this.$('.js-city').val(city);
-          $('form input[name=city]').val(city);
-          // this.$('#state').val(city);
-          this.$('.js-state').val(state);
-          $('form input[name=state]').val(state);
-
-        } else {
-          console.log('error');
-        }
       });
     },
 
@@ -370,16 +302,6 @@ module.exports = {
       validation.invalidMsg(this, 'zip_code', 'Sorry your zip code is not found');
     },
 
-    changeAddressManually() {
-      let city =  this.cityField.val();
-      let state = this.stateField.val();
-
-      this.$('input[name=city]').val(city);
-      this.$('input[name=state]').val(state);
-
-      this.cityStateArea.text(`${city}/${state}`);
-    },
-
     _success(data) {
       app.routers.navigate("/", {trigger: true});
       return 0;
@@ -388,8 +310,8 @@ module.exports = {
         app.routers.navigate("/", {trigger: true});
         return;
       }
-      app.hideLoading();
 
+      app.hideLoading();
 
       //todo: this is bad solution
       this.model.first_name = this.el.querySelector('#first_name').value;
@@ -452,6 +374,8 @@ module.exports = {
     el: '#content',
     events: {
       'click .cancel-investment': 'cancelInvestment',
+      'click .agreement-link': 'openAgreement',
+      'click .financial-docs-link': 'showFinancialDocs',
     },
 
     initialize(options) {
@@ -462,21 +386,74 @@ module.exports = {
         historical: [],
       };
 
-      let today = new Date();
+      let today = moment.utc();
 
       _.each(this.model.data, (i) => {
-        i.created_date = new Date(i.created_date);
-        i.campaign.expiration_date = new Date(i.campaign.expiration_date);
+        i.created_date = moment.parseZone(i.created_date);
+        i.campaign.expiration_date = moment(i.campaign.expiration_date);
 
-        if (_.contains(canceledStatuses, i.status) || i.campaign.expiration_date < today )
+        if (_.contains(canceledStatuses, i.status) || i.campaign.expiration_date.isBefore(today))
           this.investments.historical.push(i);
         else
           this.investments.active.push(i);
       });
+
+      this.snippets = {
+        investment: require('./templates/investment.pug'),
+      };
     },
 
     render() {
-      this.$el.html(this.template(this.investments));
+      this.$el.html(this.template({
+        investments: this.investments,
+        snippets: this.snippets,
+      }));
+    },
+
+    openAgreement(e) {
+      e.preventDefault();
+      const PARTICIPATION_AGREEMENT_ID = 2;
+      const objectId = e.target.dataset.objectId;
+      const securityType = e.target.dataset.securityType;
+      const subscriptionAgreementLink = userDocuments.getUserDocumentsByType(objectId, securityType);
+      const participationAgreementLink = userDocuments.getUserDocumentsByType(objectId, PARTICIPATION_AGREEMENT_ID);
+
+      const data = {
+        title: 'Agreements',
+        files: [{
+          mime: 'application/pdf',
+          name: 'Subscription Agreement.pdf',
+          urls: [subscriptionAgreementLink]
+        }, {
+          mime: 'application/pdf',
+          name: 'Participation Agreement.pdf',
+          urls: [participationAgreementLink]
+        }],
+      };
+
+      helpers.fileList.show(data);
+    },
+
+    _findInvestment(id) {
+      return _.find(this.model.data, (inv) =>  {
+        return inv.id == id;
+      });
+    },
+
+    showFinancialDocs(e) {
+      e.preventDefault();
+
+      const activeCompaign = this._findInvestment(e.target.dataset.id);
+      const fiscal_prior_group_data = activeCompaign.formc.fiscal_prior_group_data;
+      const fiscal_recent_group_data =  activeCompaign.formc.fiscal_recent_group_data;
+      const financialDocs = fiscal_prior_group_data.concat(fiscal_recent_group_data);
+
+      let data = {
+        title: 'Financials',
+        files: financialDocs,
+      };
+
+      helpers.fileList.show(data);
     },
 
     cancelInvestment(e) {
@@ -518,7 +495,10 @@ module.exports = {
         if (this.investments.historical.length === 1)
           historicalInvestmentsBlock.empty();
 
-        historicalInvestmentsBlock.append(app.fields.investment(investment));
+        historicalInvestmentsBlock.append(this.snippets.investment({
+          i: investment,
+          attr: {},
+        }));
 
       }).fail((err) => {
         alert(err.error);
@@ -608,37 +588,20 @@ module.exports = {
   issuerDashboard: Backbone.View.extend({
     template: require('./templates/issuerDashboard.pug'),
     events: {
-      'click .linkedin-share': 'shareOnLinkedIn',
-      'click .facebook-share': 'shareOnFaceBook',
-      'click .twitter-share': 'shareOnTwitter',
-      'click .email-share': 'shareWithEmail',
-      'click .google-plus-share': 'shareWithGooglePlus',
+      'click .email-share': 'socialPopup',
+      'click .linkedin-share': 'socialPopup',
+      'click .facebook-share': 'socialPopup',
+      'click .twitter-share': 'socialPopup',
+      'click .google-plus-share': 'socialPopup',
       'click .cancel-campaign': 'cancelCampaign',
     },
 
-    initialize(options) {
-      this.model.description = "Something long comes from here. Something long comes from here. Something long comes from here. Something long comes from here. Something long comes from here. ";
-      this.model.thumbnail = '/img/smartbe-intelligent-stroller.jpg';
-      this.model.campaign = _.extend({
-        minimum_raise: 80000,
-        amount_raised: 20000,
-        starting_date: "2016-04-04",
-        expiration_date: "2017-02-04",
-        investors: 0,
-        views: 0,
-        interactions: 4567,
-      }, this.model.campaign);
-
-      this.company = options.company;
-
-      helpers.social.init();
-    },
+    initialize(options) {},
 
     render(){
       this.$el.html(
         this.template({
           values: this.model,
-          company: this.company,
           helpers: helpers,
         })
       );
@@ -674,57 +637,15 @@ module.exports = {
       return this;
     },
 
-    shareOnLinkedIn(e) {
+    socialPopup (e) {
       e.preventDefault();
-
-      helpers.social.linkedIn.share({
-        href: 'http://growthfountain.com/' + this.model.id,
-        title: this.model.name,
-        description: this.model.description,
-      });
-    },
-
-    shareOnFaceBook(e) {
-      e.preventDefault();
-
-      helpers.social.facebook.share({
-        href: 'http://growthfountain.com/' + this.model.id,
-        caption: this.model.tagline,
-        title: this.model.name,
-        description: this.model.description,
-        picture: this.model.campaign.header_image_data[0].urls[0],
-      });
-
-    },
-
-    shareOnTwitter(e) {
-      e.preventDefault();
-
-      helpers.social.twitter.share({
-        href: 'http://growthfountain.com/' + this.model.id,
-        hashtags: ['investment', 'fundraising'],
-        text: 'Check out ',
-      });
-    },
-
-    shareWithEmail(e) {
-      e.preventDefault();
-
-      let text = "Check out " + this.model.name + "'s fundraise on GrowthFountain";
-
-      helpers.social.email.share({
-        subject: text,
-        message: text,
-        href: 'http://growthfountain.com/' + this.model.id,
-      });
-    },
-
-    shareWithGooglePlus(e) {
-      e.preventDefault();
-
-      helpers.social.googlePlus.share({
-        href: 'http://growthfountain.com/' + this.model.id,
-      });
+      var popupOpt = e.currentTarget.dataset.popupOpt || 'toolbar=0,status=0,left=45%,top=45%,width=626,height=436';
+      var windowChild = window.open(e.currentTarget.href, '', popupOpt);
+   
+      if (e.currentTarget.dataset.close) {
+        let closeScript = "<script>setTimeout(window.close.bind(window), 400);</script>";
+        windowChild.document.write(closeScript);
+      }
     },
 
     cancelCampaign(e) {

@@ -1,17 +1,14 @@
 const CROP_IMG_CLASS = 'img-crop';
 const CROP_IMG_PROFILE_CLASS = 'img-profile-crop';
 
-const nonCropperProps = ['showPreview', 'cssClass'];
-
-
 require('cropperjs/dist/cropper.css');
 const Cropper = require('cropperjs').default;
 
 module.exports = {
 
-  showCropper(imgUrl, options, cropData, callback) {
+  showCropper(imgUrl, options={}, cropData, callback) {
 
-    options = _.extend({
+    options.control = _.extend({
       viewMode: 0,
       dragMode: 'crop',
       aspectRatio: 1,
@@ -37,20 +34,16 @@ module.exports = {
       //   cropper.enable();
       // }
 
-    }, options);
+    }, options.control);
 
-    //extract non cropper options
-    let customOptions = {};
-    _.each(nonCropperProps, (prop) => {
-      customOptions[prop] = options[prop];
-      delete options[prop];
-    });
+
+    const cssClass = options.cropper && options.cropper.cssClass ? options.cropper.cssClass : '';
+    const showPreview = options.cropper && options.cropper.preview;
 
     let cropperTemplateWithPreview =
       '<div class="row">' +
         '<div class="col-xl-7 col-lg-7 col-md-7 col-sm-7">' +
-            '<div class="crop-image-container ">' +
-          '</div>' +
+          '<div class="crop-image-container "></div>' +
         '</div>' +
         '<div class="preview-container col-xl-5 col-lg-5 col-md-5 col-sm-5 hidden-xs-down text-xs-center p-r-0">' +
           '<div class="row">' +
@@ -77,8 +70,7 @@ module.exports = {
       '<div class="form-group">' +
         '<div class="row">' +
           '<div class="col-xl-10 offset-xl-1">' +
-            '<div class="crop-image-container">' +
-            '</div>' +
+            '<div class="crop-image-container"></div>' +
           '</div>' +
         '</div>' +
         '<div class="row">' +
@@ -95,7 +87,7 @@ module.exports = {
 
     //todo
     let modalTemplate =
-      '<div class="modal fade cropModal modal-dropzone ' + (customOptions.cssClass || '') + '"' +
+      '<div class="modal fade cropModal modal-dropzone ' + cssClass + '"' +
           'tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">' +
         '<div class="modal-dialog" role="document">' +
           '<div class="modal-content">' +
@@ -106,7 +98,7 @@ module.exports = {
               '<h4 class="modal-title" id="exampleModalLabel"></h4>' +
             '</div>' +
           '<div class="modal-body">' +
-            (customOptions.showPreview ? cropperTemplateWithPreview : cropperTemplate) +
+            (showPreview ? cropperTemplateWithPreview : cropperTemplate) +
           '</div>' +
           '<div class="modal-footer "></div>' +
         '</div>' +
@@ -118,16 +110,16 @@ module.exports = {
 
       let img = new Image();
 
-			img.addEventListener("load", function() {
-				const $modal = $('.cropModal');
+      img.addEventListener("load", function() {
+        const $modal = $('.cropModal');
 
         let _closeModal = false;
 
-				$modal.on('hidden.bs.modal', (e) => {
-					$modal.remove();
-				});
+        $modal.on('hidden.bs.modal', (e) => {
+          $modal.remove();
+        });
 
-				$modal.on('shown.bs.modal', () => {
+        $modal.on('shown.bs.modal', () => {
 
           let $cropperOk = $modal.find('.cropper-ok');
 
@@ -137,8 +129,21 @@ module.exports = {
 
             $modal.modal('hide');
 
-            if (typeof(callback) === 'function')
-              callback(cropper.getData(true));
+            if (typeof(callback) === 'function') {
+              const imageData = cropper.getImageData();
+              const maxWidth = imageData.naturalWidth,
+                    maxHeight = imageData.naturalHeight;
+
+              let data = _.pick(cropper.getData(true), ['x', 'y', 'width', 'height']);
+
+              data.x = data.x < 0 ? 0 : data.x;
+              data.y = data.y < 0 ? 0 : data.y;
+
+              data.width = data.width > maxWidth ? maxWidth : data.width;
+              data.height = data.height > maxHeight ? maxHeight : data.height;
+
+              callback(data);
+            }
 
             return false;
           });
@@ -155,11 +160,12 @@ module.exports = {
               callback();
           });
 
-          options.minContainerHeight = 100;
+          options.control.minContainerHeight = 100;
 
-          let cropper = new Cropper(this, options);
-          //todo set cropper data
-          cropper.setData(cropData);
+          let cropper = new Cropper(this, options.control);
+          cropData = cropData || (options.auto ? _.extend({x: 0, y: 0}, options.auto) : null);
+          if (cropData)
+            cropper.setData(cropData);
           // REMOVE LOADING SPIINER
         });
 
@@ -177,6 +183,7 @@ module.exports = {
 			}, false);
 
 			img.src = imgUrl;
+
       $('#content').append(modalTemplate);
 			$('.crop-image-container').append(img)
 

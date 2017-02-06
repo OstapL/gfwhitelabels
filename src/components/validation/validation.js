@@ -61,9 +61,11 @@ module.exports = {
       // If we don't have alert-warning - we should create it as
       // first element in form
       if ($el.length == 0) {
+        let msg = attr == 'non_field_errors' ? '' : ('<b>' + attr + ':</b> ');
+        msg += error.join(',');
 
-        $el = $('<div class="alert alert-warning" role="alert"><p><b>' + attr + 
-            ':</b> ' + error.join(',') + '</div>');
+        $el = $('<div class="alert alert-warning" role="alert"><p>' + msg + '</p></div>');
+
         if(view.$el.find('form').length == 0) {
           view.$el.prepend($el);
         } else {
@@ -90,8 +92,9 @@ module.exports = {
 
   runRule(rule, value, name, attr) {
     try {
-      if (rules[rule])
+      if (rules[rule]) {
         rules[rule](name, value, attr, this.data, this.schema);
+      }
     } catch (e) {
       this.finalResult = false;
       name = name.replace(/\./g, '__');
@@ -116,8 +119,9 @@ module.exports = {
     _(schema).each((attr, name) => {
       // TODO
       // How to check nested one element if that can be blank ?
-      if (attr.type == 'nested') {
-        _(attr.schema1).each((attr, subname) => {
+      // requiredTemp - temp fix to validate fields on investment page only
+      if (attr.type == 'nested' && attr.requiredTemp == true) {
+        _(attr.schema).each((attr, subname) => {
           if (fixedRegex.indexOf(attr.type) != -1) {
             _(attr.validate).each((jsonFields, index) => {
               try {
@@ -129,9 +133,7 @@ module.exports = {
               }
             });
           } else {
-            _(attr.validate).each((jsonFields, index) => {
-              this.runRules(attr, name + '.' + index + '.' + subname);
-            });
+            this.runRules(attr, name + '.' + subname);
           }
         });
         if (attr.fn) {

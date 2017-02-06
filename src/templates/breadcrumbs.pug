@@ -2,10 +2,10 @@ section.header_title
   .container
     .row
       .col-lg-7.br-title
-        h1.text-uppercase= title
+        h1.text-uppercase.m-t-0= title
           span.small-text= subtitle
-      .col-lg-5.br-list
-          ol.breadcrumb.text-lg-right.m0
+      .col-lg-5.br-list.p-r-0
+          ol.breadcrumb.text-lg-right.m0.p-r-0
             each elem in data
               - var active = (elem[1] == '') ? 'active' : ''
               li.breadcrumb-item(class=" " + active)
