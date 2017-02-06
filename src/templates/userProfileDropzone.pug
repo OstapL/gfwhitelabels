@@ -9,7 +9,7 @@ div(
   div(class=((attr.class || '') + ' dropzone__' + name))
     div(class=" col-xl-12 col-lg-12 offset-xl-0 offset-lg-0 col-md-6 offset-md-3 col-xs-8 offset-xs-2")
       div(class="uploading collapse")
-        img(alt="activity indicator" src="/img/ajax-loader.gif")
+        i.fa.fa-spinner.fa-pulse.fa-3x.fa-fw
       div(data-id=(attr.data.id || 0) data-noimage=noimg).data-container.row.one-photo
         .delete-image-container
           a(href="#" data-imageid=(attr.data.id || 0)).crop-image
@@ -17,7 +17,10 @@ div(
           a(href="#" data-imageid=(attr.data.id || 0) data-noimage=noimg).delete-image
             i.fa.fa-times
         .user-photo-wrap.text-xs-center
-          img(class=(" img-" + name) src=(attr.data.urls[0] || noimg))
+          -
+            var url = app.getFilerUrl(attr.data.urls[0]);
+            url = url || noimg;
+          img(class=(" img-" + name) src=url)
       .row.border-dropzone.dropzone-profile
         .drop-image-title.text-xs-center.p-dropzone.p-l-2.p-r-2
           a(class='link-1' href="#" onclick="return false")

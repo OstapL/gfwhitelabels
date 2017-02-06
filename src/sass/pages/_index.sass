@@ -282,3 +282,41 @@
 		.btn
 			&:first-child
 				margin-right: 5px
+
+@-webkit-keyframes zoomOut
+  from
+    opacity: 1
+
+  50%
+    opacity: 0
+    -webkit-transform: scale3d(0.3, 0.3, 0.3)
+    transform: scale3d(0.3, 0.3, 0.3)
+
+  to
+    opacity: 0
+
+
+@keyframes zoomOut
+  from
+    opacity: 1
+
+  50%
+    opacity: 0
+    -webkit-transform: scale3d(0.3, 0.3, 0.3)
+    transform: scale3d(0.3, 0.3, 0.3)
+
+  to
+    opacity: 0
+    
+.main-slider-item
+	height: 70vh!important
+	background-size: cover!important
+	background-repeat: no-repeat!important
+	background-position: center center!important
+@media only screen and (max-width : 480px)
+	.slide_1
+		background-position-x: -60px!important
+	.slide_2
+		background-position-x: -60px!important
+	.slide_3
+		background-position-x: -650px!important

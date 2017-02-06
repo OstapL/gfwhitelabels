@@ -28,7 +28,8 @@ module.exports = {
         extensions: ['', '.js', '.pug', '.sass', '.scss'],
         modulesDirectories: [
             './src',
-            './node_modules'
+            './',
+            './node_modules',
         ]
     },
 

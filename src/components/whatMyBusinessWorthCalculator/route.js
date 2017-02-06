@@ -8,7 +8,12 @@ module.exports = Backbone.Router.extend({
     'calculator/whatmybusinessworth/step-2': 'calculatorWhatMyBusinessWorthStep2',
     'calculator/whatmybusinessworth/finish': 'calculatorWhatMyBusinessWorthFinish'
   },
-
+  execute: function (callback, args, name) {
+        if ((name=='calculatorWhatMyBusinessWorthIntro' || name=='selectYourBusiness')  && !app.user.ensureLoggedIn(window.location.pathname)) {
+      return false;
+        };
+        if (callback) callback.apply(this, args)
+    },
   selectYourBusiness() {
     let View = Backbone.View.extend({
       el: '#content',
