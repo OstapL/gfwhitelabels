@@ -170,8 +170,6 @@ module.exports = {
     },
 
     render() {
-      this.usaStates = require("helpers/usaStates.js");
-
       this.$el.html(
         this.template({
           tab: this.activeTab || 'account_info',
@@ -179,7 +177,6 @@ module.exports = {
           user: this.model,
           company: app.user.get('company'),
           fields: this.fields,
-          states: this.usaStates,
         })
       );
 
@@ -304,36 +301,37 @@ module.exports = {
       validation.invalidMsg(this, 'zip_code', 'Sorry your zip code is not found');
     },
 
+    _updateUserInfo() {
+      let first_name = this.el.querySelector('#first_name').value;
+      let last_name = this.el.querySelector('#last_name').value;
+
+      if (app.user.first_name == first_name && app.user.last_name == last_name)
+        return;
+
+      app.user.first_name = first_name;
+      app.user.last_name = last_name;
+
+      //TODO: move this code to user.js
+      let userData = app.user.toJSON();
+      localStorage.setItem('user', JSON.stringify(userData));
+
+      let full_name = `${first_name} ${last_name}`;
+
+      $('#user_name').text(full_name);
+      $('.image_image_id').siblings('h3').text(full_name);
+    },
+
     _success(data) {
+      this._updateUserInfo();
+
       app.routers.navigate("/", {trigger: true});
       return 0;
 
-      if ($("#financial_info").hasClass("active")) {
-        app.routers.navigate("/", {trigger: true});
-        return;
-      }
+      // if ($("#financial_info").hasClass("active")) {
+      //   app.routers.navigate("/", {trigger: true});
+      //   return;
+      // }
 
-      app.hideLoading();
-
-      //todo: this is bad solution
-      this.model.first_name = this.el.querySelector('#first_name').value;
-      this.model.last_name = this.el.querySelector('#last_name').value;
-
-      app.user.set('first_name', this.model.first_name);
-      app.user.set('last_name', this.model.last_name);
-
-      let userData = app.user.toJSON();
-
-      localStorage.setItem('user', JSON.stringify(userData));
-      // app.trigger('userLoaded', userData);
-      let fullName = app.user.get('first_name') + ' ' + app.user.get('last_name');
-      $('#user_name').text(fullName);
-      $('.image_image_id').siblings('h3').text(fullName);
-
-      $('#content').scrollTo();
-
-      //switch to financial info tab
-      // this.$('.profile-tabs a[href="#financial_info"]').tab('show');
     },
 
   }, helpers.phone.methods, helpers.dropzone.methods, helpers.yesNo.methods)),
