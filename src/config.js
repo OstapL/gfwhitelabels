@@ -1,3 +1,4 @@
+global.domainUrl = "growthfountain.com"
 global.serverUrl = "https://django-api.growthfountain.com";
 global.raiseCapitalServer = "https://api-raisecapital.growthfountain.com";
 //global.raiseCapitalServer = "http://localhost:8003";
@@ -9,8 +10,10 @@ global.investmentServer = "https://api-investment.growthfountain.com";
 //global.investmentServer = "http://localhost:8003";
 global.filerServer = "https://api-filer.growthfountain.com";
 global.esignServer = 'https://api-esign.growthfountain.com';
+// global.esignServer = 'https://api-esign.growthfountain.com';
 global.commentsServer = "https://api-comments.growthfountain.com";
 global.blogServer = "https://api-blog.growthfountain.com";
+global.bucketServer = "http://growthfountain-rivermarkcu-storage.s3-website-us-west-1.amazonaws.com";
 
 //var data = 'Crowdfunding | Rivermark Community CU';
 global.pageTitle ="Crowdfunding | Rivermark Community CU";

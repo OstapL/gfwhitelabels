@@ -1,8 +1,8 @@
 const helpers = {
   date: require('./helpers/dateHelper.js'),
   format: require('./helpers/formatHelper.js'),
-  text: require('helpers/textHelper.js'),
-  mimetypeIcons: require('helpers/mimetypeIcons.js'),//TODO: add resolve method and make resolveIconHelper
+  text: require('./helpers/textHelper.js'),
+  icons: require('./helpers/iconsHelper.js'),
 };
 
 let exports = {
@@ -13,72 +13,79 @@ let exports = {
     }
     _.extend(myAttr, schema);
     myAttr.value = value.hasOwnProperty(name) ? value[name]: '';
-    myAttr.id = nestedName + '__' + index + '__' + name + '';
+    if(index != -1) {
+      myAttr.id = nestedName + '__' + index + '__' + name + '';
+    } else {
+      myAttr.id = nestedName + '__' + name + '';
+    }
   },
-
-  /*
-   * VLAD: я не знаю где это используется
-   nestedTextLabel(nestedName, name, myAttr, vals) {
-   vals = vals || values;
-   myAttr = _.extend(myAttr, fields[nestedName].schema[name]);
-   myAttr.value = vals[name] ? vals[name] : '';
-
-   return this.textLabel(
-   nestedName + '[' + name + ']',
-   myAttr
-   )
-   },
-
-   nestedText(nestedName, name, myAttr, vals) {
-   vals = vals || values;
-   myAttr = _.extend(myAttr, fields[nestedName].schema[name]);
-   myAttr.value = vals[name] ? vals[name] : '';
-
-   return this.fieldText(
-   nestedName + '[' + name + ']',
-   myAttr
-   )
-   },
-   */
 
   nestedTextLabel(nestedName, name, value, index, myAttr, schema) {
     this.prepareNestedField(nestedName, name, value, index, myAttr, schema);
     myAttr.class1 = myAttr.class1 || 'col-xl-3 col-lg-12 text-lg-left text-xl-right';
     myAttr.class2 = myAttr.class2 || 'col-xl-9 col-lg-12';
-    return this.textLabel(
-      nestedName + '[' + index + '][' + name + ']',
-      myAttr
-    )
+    if(index != -1) {
+      return this.textLabel(
+        nestedName + '[' + index + '][' + name + ']',
+        myAttr
+      )
+    } else {
+      return this.textLabel(
+        nestedName + '[' + name + ']',
+        myAttr
+      )
+    }
   },
 
   nestedTextareaLabel(nestedName, name, value, index, myAttr, schema) {
     this.prepareNestedField(nestedName, name, value, index, myAttr, schema);
     myAttr.class1 = myAttr.class1 ? myAttr.class1 : 'text-lg-right col-lg-3 col-md-12 text-md-left';
     myAttr.class2 = myAttr.class2 ? myAttr.class2 : 'col-lg-9 col-md-12';
-    return this.textareaLabel(
-      nestedName + '[' + index + '][' + name + ']',
-      myAttr
-    )
+    if(index != -1) {
+      return this.textareaLabel(
+        nestedName + '[' + index + '][' + name + ']',
+        myAttr
+      )
+    } else {
+      return this.textareaLabel(
+        nestedName + '[' + name + ']',
+        myAttr
+      )
+    }
   },
 
   nestedChoiceLabel(nestedName, name, value, index, myAttr, schema) {
     this.prepareNestedField(nestedName, name, value, index, myAttr, schema);
     myAttr.class1 = myAttr.class1 ? myAttr.class1 : 'text-lg-right col-lg-3 col-md-12 text-md-left';
     myAttr.class2 = myAttr.class2 ? myAttr.class2 : 'col-lg-9 col-md-12';
-    return this.choiceLabel(
-      nestedName + '[' + index + '][' + name + ']',
-      myAttr
-    )
+    if(index != -1) {
+      return this.choiceLabel(
+        nestedName + '[' + index + '][' + name + ']',
+        myAttr
+      )
+    } else {
+      return this.choiceLabel(
+        nestedName + '[' + name + ']',
+        myAttr
+      )
+    }
   },
 
   nestedRadioLabel(nestedName, name, value, index, myAttr, schema) {
     this.prepareNestedField(nestedName, name, value, index, myAttr, schema);
     myAttr.class1 = myAttr.class1 ? myAttr.class1 : 'text-lg-right col-lg-3 col-md-12 text-md-left';
     myAttr.class2 = myAttr.class2 ? myAttr.class2 : 'col-lg-9 col-md-12';
-    return this.radioLabel(
-      nestedName + '[' + index + '][' + name + ']',
-      myAttr
-    )
+    if(index != -1) {
+      return this.radioLabel(
+        nestedName + '[' + index + '][' + name + ']',
+        myAttr
+      )
+    } else {
+      return this.radioLabel(
+        nestedName + '[' + name + ']',
+        myAttr
+      )
+    }
   },
 
   nestedDateDay(nestedName, name, value, index, myAttr, schema) {
@@ -112,12 +119,18 @@ let exports = {
   },
 
   nestedText(nestedName, name, value, index, myAttr, schema) {
-    console.log(arguments);
     this.prepareNestedField(nestedName, name, value, index, myAttr, schema);
-    return this.fieldText(
-      `${nestedName}[${index}][${name}]`,
-      myAttr
-    );
+    if(index != -1) {
+      return this.fieldText(
+        nestedName + '[' + index + '][' + name + ']',
+        myAttr
+      );
+    } else {
+      return this.fieldText(
+        nestedName + '[' + name + ']',
+        myAttr
+      );
+    }
   },
 
   prepareField(name, attr) {
@@ -182,31 +195,6 @@ let exports = {
     attr.class1 = attr.class1 || 'col-xl-4 col-lg-4 col-xs-4 p-r-0 p-r-lg-1 m-d-p-l-10';
     const template = require('./templates/dateYear.pug');
     return template(attr);
-  },
-
-  // Fixme 
-  // Что это за название филда такое ? и шаблон с целым dashboard ?
-  investment(i, attr) {
-    attr = attr || {};
-    const template =  require('./templates/dashboardInvestment.pug');
-    return template({
-      i: i,
-      attr: attr,
-      helpers: helpers
-    });
-  },
-
-  comment(c, level, attr) {
-    const template = require('./templates/comment.pug');
-    attr = attr || {};
-    if (!attr.helpers)
-      attr.helpers = helpers;
-
-    return template({
-      comment: c,
-      level: level,
-      attr: attr,
-    });
   },
 
   userProfileDropzone(name, attr) {
@@ -326,9 +314,7 @@ let exports = {
 
     attr.icon = attr.icon || 'file';
 
-    attr.fileIcon = attr.data.mime
-      ? helpers.mimetypeIcons[attr.data.mime.split('/')[1]]
-      : attr.type;
+    attr.fileIcon = helpers.icons.resolveIconPath(attr.data.mime, 'file');
 
     attr.default = attr.default || '/img/default/file.png';
     attr.text = attr.text || 'Drop your PDF or DOC here or click to upload';

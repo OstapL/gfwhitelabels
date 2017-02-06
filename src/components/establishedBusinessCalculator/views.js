@@ -497,10 +497,10 @@ module.exports = {
                     autoscaleMargin: 0.1,
                     tickLength: 0,
                     ticks: [
-                        [0, "GF Valuation"],
-                        [1, "P/S"],
-                        [2, "EV/EBITDA"],
-                        [3, "P/E"]
+                        [0, "Blended Valuation"],
+                        [1, "Price/Sales"],
+                        [2, "Enterprise Value/EBITDA"],
+                        [3, "Price/Earnings"]
                     ]
                 },
                 yaxis: {

@@ -5,7 +5,7 @@ mixin row(value, index)
       .delete-section-container
         a(href="#" data-section=name data-index=index).delete-sectionnew
           i.fa.fa-times
-      | !{app.fields.nestedTextLabel(name, 'amount_of_interest', value, index, attr.schema.amount_of_interest)}
+      | !{app.fields.nestedTextLabel(name, 'amount_of_interest', value, index, {placeholder: '$ Amount of Interest',}, attr.schema.amount_of_interest)}
       | !{app.fields.nestedTextLabel(name, 'relationship_to_issuer', value, index, {class1:'col-xl-3 col-lg-12 text-lg-left text-xl-right m-b-0 p-t-0 m-b-lg-1'}, attr.schema.relationship_to_issuer)}
       | !{app.fields.nestedTextLabel(name, 'nature_of_interest', value, index, {class1:'col-xl-3 col-lg-12 text-lg-left text-xl-right m-b-0 p-t-0 m-b-lg-1'}, attr.schema.nature_of_interest)}
       | !{app.fields.nestedTextLabel(name, 'specified_person', value, index, attr.schema.specified_person)}

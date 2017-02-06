@@ -12,6 +12,7 @@ div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true
       .modal-body
         .container.form-section
           form#sign-up-form.signup-form.col-lg-10.offset-lg-1
+            input(type="hidden" name="domain" value=window.location.host)
             .form-group.row.clearfix.required
               input(type="text"
               placeholder="First name"
