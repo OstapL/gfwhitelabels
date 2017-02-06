@@ -24,7 +24,8 @@ div(id=id class=cssClass data-level=level data-id=comment.uid).p-r-0.p-t-0.p-xs-
       span.name-comments.text-uppercase #{ userName }
       -
         //ignore Director/Shareholder role
-        var roleBitmap = 0b1111111100 & comment.user.role;
+        // var roleBitmap = 0b1111111100 & comment.user.role;
+        var roleBitmap = comment.user.role;
         roleBitmap = roleBitmap || comment.user.role;
         var roles = roleHelper.extractRoles(roleBitmap);
 
