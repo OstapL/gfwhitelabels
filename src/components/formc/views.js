@@ -749,6 +749,16 @@ module.exports = {
           this.model[key].push({max: 0, min: 0, title: titles[i]});
         }
       }
+
+      let less_offering_expense = this.model['less_offering_express'];
+      let commission = _(less_offering_expense).find((item) => {
+        return item.title == 'Commissions and Broker Expenses';
+      });
+
+      commission.min = Math.round(this.campaign.minimum_raise * companyFees.trans_percent / 100);
+      commission.max = Math.round(this.campaign.maximum_raise * companyFees.trans_percent / 100);
+      commission.fee = true;
+
       this.assignLabels();
       this.createIndexes();
       this.buildJsonTemplates('formc');
