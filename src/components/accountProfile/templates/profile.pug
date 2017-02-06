@@ -322,36 +322,5 @@
                               data-method="PATCH"
                             )#save-financial-info.btn.btn-primary.pull-lg-right SAVE
 
-
-//MODAL
-div(tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true")#city_state_modal.modal.fade
-  div(role="document").modal-dialog
-    .modal-content
-      .modal-header
-        button(type="button" data-dismiss="modal" aria-label="Close").close
-          span(aria-hidden="true")
-            i.fa.fa-times
-        h2.text-xs-center.text-uppercase.dosis.modal-title City/State
-
-      .modal-body.m-b-2
-        .container.form-section
-          .col-lg-10.offset-lg-1.border-bottom
-            .form-group.row.clearfix.required
-              input(type="text" placeholder="City" value=user.city)#city.js-city.form-control
-            .form-group.row.clearfix.required
-              select(name='state')#state.js-state.form-control.custom-select
-                option(checked='checked', value="") State
-                each state in states
-                  if state.abbreviation == user.state
-                    option(value=state.abbreviation selected)= state.name
-                  else
-                    option(value=state.abbreviation)= state.name
-            .form-group.row.clearfix.required.mb30
-              .row
-                .col-lg-12
-                  .col-lg-12.text-xs-center
-                    button(data-dismiss="modal").btn.btn-primary.text-uppercase save
-        .modal-footer
-
 if !window.google || !window.google.maps
   script(src= window.location.protocol + "//maps.google.com/maps/api/js?language=en&key=" + googleMapKey)
