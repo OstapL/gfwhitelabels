@@ -43,6 +43,10 @@ module.exports = {
 
       this.fields = options.fields;
 
+      this.fields.phone = _.extend(this.fields.phone, {
+        required: true,
+      });
+
       this.fields.image_image_id = _.extend(this.fields.image_image_id, {
         crop: {
           control: {
@@ -135,9 +139,9 @@ module.exports = {
 
       this.labels = {
         country: 'Country',
-        street_address_1: 'Street address 1',
-        street_address_2: 'Street address 2',
-        zip_code: 'Zip code',
+        street_address_1: 'Street Address 1',
+        street_address_2: 'Street Address 2',
+        zip_code: 'Zip Code',
         state: 'State/Province/Region',
         city: 'City',
         phone: 'Phone',
@@ -147,13 +151,13 @@ module.exports = {
         routing_number_re: "Re-Enter Routing Number",
         annual_income: 'My Annual Income',
         net_worth: 'My Net Worth',
-        twitter: 'Your Twitter link',
-        facebook: 'Your Facebook link',
-        instagram: 'Your Instagram link',
-        linkedin: 'Your LinkedIn link',
+        twitter: 'Your Twitter Link',
+        facebook: 'Your Facebook Link',
+        instagram: 'Your Instagram Link',
+        linkedin: 'Your LinkedIn Link',
         bank_name: 'Bank Name',
-        name_on_bank_account: 'Name on Bank Account',
-        ssn: 'Social Security number (SSN) or Tax ID (ITIN/EIN)',
+        name_on_bank_account: 'Name On Bank Account',
+        ssn: 'Social Security Number (SSN) Or Tax ID (ITIN/EIN)',
         ssn_re: 'Re-enter',
       };
 
