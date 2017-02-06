@@ -10,7 +10,7 @@ section.issuer-dashbord-top
           img(src=campaignHelpers.getImageCampaign(values.campaign) alt="")
           h2.text-uppercase.dosis.m-t-0 #{values.name}
           .timer_day #{campaignHelpers.daysLeft(values.campaign.expiration_date)} Days Left
-        .share-block.d-inline-block
+        .share-block.d-inline-block.share
           - var mailtoLink = 'mailto:?subject=Check out ' + (values.short_name || values.name) + '\'s fundraise on GrowthFountain&body=Check out ' + values.name + '\'s fundraise on GrowthFountain%0D%0A' + window.location.origin + '/' + values.id;
 
           - var facebookLink = 'https://www.facebook.com/dialog/share?app_id=' + global.facebookClientId + '&href=' + window.location.origin + '/' + values.id + '?r=' + Math.random() + '&description=' + values.description + '&locale=en_US&picture=' + campaignHelpers.getImageCampaign(values.campaign) + '&title=Check out ' + (values.short_name || values.name) + '\'s fundraise on GrowthFountain.com&caption=' + (values.campaign.caption || '');
@@ -18,20 +18,25 @@ section.issuer-dashbord-top
           - var twitterLink = 'https://twitter.com/share?url=' + window.location.origin + '/' + values.id + '&text=Check out ' + (values.short_name || values.name) + '\'s fundraise on @growthfountain ';
 
           - var linkedinLink = 'https://www.linkedin.com/shareArticle?mini=true&url=' + window.location.origin + '/' + values.id + '&title=Check out ' + (values.short_name || values.name) + '\'s fundraise on GrowthFountain.com&summary=' + values.description + '&source=Growth Fountain';
-          span.font-weight-bold Share:
+          span.d-inline-block 
+            i.fa.fa-share
+            |  Share:
           .social-dark.d-inline-block
-            a(href=mailtoLink data-close="true" data-popup-opt="width=1,height=1").link-1.email-share
-              i.fa.fa-envelope-o
             a(href=facebookLink target="_blank").link-1.facebook-share
-              i.fa.fa-facebook
+              i.fa.fa-facebook-square
             a(href=twitterLink target="_blank").link-1.twitter-share
-              i.fa.fa-twitter
+              i.fa.fa-twitter-square
             a(href=linkedinLink target="_blank").link-1.linkedin-share
-              i.fa.fa-linkedin
+              i.fa.fa-linkedin-square
+            a(href=mailtoLink data-close="true" data-popup-opt="width=1,height=1").link-1.email-share
+              i.fa.fa-envelope-square
+            
+            
+            
             //- a(href="#" target="_blank").link-1.google-plus-share
               i(aria-hidden="true").fa.fa-google-plus
 
-      .col-md-2.col-sm-6
+      .col-md-2.col-sm-6.col-xs-6
         a(href="").dashboard-stat
           .visual
             i.fa.fa-bar-chart
@@ -42,7 +47,7 @@ section.issuer-dashbord-top
                 data-value=values.campaign.amount_raised) $#{amt_raised_in_ks}K
             .desc Amount Raised
 
-      .col-md-2.col-sm-6
+      .col-md-2.col-sm-6.col-xs-6
         a(href="").dashboard-stat.dashboard-stat-v2.grey
           .visual
             i.fa.fa-briefcase
@@ -53,7 +58,7 @@ section.issuer-dashbord-top
                 data-value=values.campaign.number_of_investors) #{values.number_of_investors.toLocaleString('en-US')}
             .desc Number of Investors
 
-      .col-md-2.col-sm-6
+      .col-md-2.col-sm-6.col-xs-6
         a(href="").dashboard-stat.dashboard-stat-v2.grey
           .visual
             i.fa.fa-users
@@ -64,7 +69,7 @@ section.issuer-dashbord-top
                 data-value=0) 0
             .desc Page Views
 
-      .col-md-2.col-sm-6
+      .col-md-2.col-sm-6.col-xs-6
         a(href="").dashboard-stat.dashboard-stat-v2.grey
           .visual
             i.fa.fa-comments
@@ -75,7 +80,7 @@ section.issuer-dashbord-top
                 data-value=0).interactions-count 0
             .desc New Interactions
 
-      .col-md-7.col-sm-7.p-r-0
+      .col-md-7.col-sm-10.p-r-0.col-xs-10.hidden-xs-down
         -
           var now = new Date();
           var starting_date = helpers.date.formatDate(values.approved_date);
@@ -104,11 +109,11 @@ section.issuer-dashbord-top
             p #{helpers.format.formatMonthDate(expiration_date)}
             span End of campaign
           .clearfix
-      .col-md-1.col-sm-1
+      .col-md-1.col-sm-2.col-xs-2.hidden-xs-down
         .right_fixed_text.text-lg-center
           b #{ helpers.format.formatAmount(values.campaign.minimum_raise || values.campaign.maximum_raise)}
           span Goal
-      .col-md-8.col-sm-12.text-lg-center
+      .col-md-8.col-sm-12.text-xs-center
         a(href="/" + values.id).btn-sm.btn.btn-secondary.text-uppercase view Campaign
           i(aria-hidden="true").fa.fa-angle-right
     .col-lg-12.border-bottom-50

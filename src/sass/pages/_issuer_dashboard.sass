@@ -2,6 +2,8 @@
 	.border-bottom-50
 		border-bottom: solid 1px $light_grey
 		padding-bottom: rem(50)
+	.share
+		padding-top: 0!important
 	.img_under_text
 		position: relative
 		margin-bottom: rem(20)
@@ -46,13 +48,10 @@
 			font-weight: bold
 			font-size: 14px
 			line-height: 27px
-	.share-block
-		span
-			margin-right: rem(12)
+
 	.social-dark
 		a
 			font-size: rem(24)
-			padding-right: rem(20)
 
 	.dashboard-stat
 		display: block
@@ -291,3 +290,13 @@
 		padding-top: 6px
 	.m-b-25
 		margin-bottom: rem(18)
+@media only screen and (max-width : 460px)
+	.issuer-dashbord-top
+		.right_fixed_text
+			top: rem(45)
+		.share
+@media only screen and (max-width : 768px)
+	.issuer-dashbord-top
+		.share
+			margin-bottom: 25px		
+
