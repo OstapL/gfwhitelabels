@@ -51,7 +51,13 @@ section.team-members.container.m-b-85
         class2: 'col-xl-9 col-lg-12 big-textarea', 
         schema: fields.bio, 
         placeholder: 'At least 150 characters', value: member.bio, label: 'Bio',})
-      - pug_html += zipCodeDirective(this, 1).render().resultHtml;
+      - 
+        pug_html += app.fields.textLabel('city', {
+        class1: 'col-xl-3 col-lg-12 p-t-0 text-lg-left text-xl-right m-b-0 m-b-lg-1', 
+        schema: fields.city, 
+        value: member.city, 
+        label:  'Where did you grow up?', 
+        placeholder: 'Name of Hometown',})
       - 
         pug_html += app.fields.textLabel('college', {
         class1: 'col-xl-3 col-lg-12 p-t-0 text-lg-left text-xl-right m-b-0 m-b-lg-1', 
