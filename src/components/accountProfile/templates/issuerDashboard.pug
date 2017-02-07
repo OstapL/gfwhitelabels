@@ -1,6 +1,5 @@
 | !{ app.breadcrumbs('issuer dashboard', '', [ ['Home', '/'], ['issuer dashboard', ''],])}
 - var campaignHelpers = require('components/campaign/helpers.js');
-- var amt_raised_in_ks = Math.round(values.campaign.amount_raised/1000).toLocaleString('en-US');
 - var formcLinks = require('../../campaign/helpers.js').formcLinks
 
 section.issuer-dashbord-top
@@ -45,7 +44,7 @@ section.issuer-dashbord-top
             .number
               span(
                 data-counter="counterup"
-                data-value=values.campaign.amount_raised) $#{amt_raised_in_ks}K
+                data-value=values.campaign.amount_raised) $#{ values.campaign.amount_raised }
             .desc Amount Raised
 
       .col-md-2.col-sm-6.col-xs-6
@@ -82,14 +81,11 @@ section.issuer-dashbord-top
             .desc New Interactions
 
       .col-md-7.col-sm-10.p-r-0.col-xs-10.hidden-xs-down
-        -
-          var now = new Date();
-          var starting_date = helpers.date.formatDate(values.approved_date);
-          var expiration_date = helpers.date.formatDate(values.campaign.expiration_date);
-          var daysPassed = helpers.date.differenceInDays(starting_date, now);
-          var durationOfCampaign = helpers.date.differenceInDays(starting_date, expiration_date);
-          var percentage_raised = Math.round(100/durationOfCampaign * daysPassed);
         .tpl-progress
+          - 
+            var percentage_raised = campaignHelpers.daysLeftPercentage(values);
+            if(percentage_raised > 100) 
+              percentage_raised = 100;
           progress(
             value=percentage_raised
             max="100").progress.big_prog #{ percentage_raised }%
@@ -97,17 +93,20 @@ section.issuer-dashbord-top
             style="width:" + percentage_raised + "%").circle_progress
             i.fa.fa-circle-o
           span(style="left:" + percentage_raised + "%").text_position
+            - var now = new Date();
             .font-weight-bold
               | #{now.toLocaleString('en-US', { month: "short" })} #{ now.getDate() }
             | #{ helpers.format.formatAmount(values.campaign.amount_raised) } Raised
             br
-            | #{ helpers.format.formatAmount(values.campaign.amount_commited) } Commited
+            | #{ helpers.format.formatAmount(values.campaign.amount_commited) } Approved
+            br
+            | Chances: #{ Math.round(percentage_raised / (values.campaign.minimum_raise  / values.campaign.amount_commited) * 100) }%
         .progress_description
           .pull-left
-            p #{helpers.format.formatMonthDate(starting_date)}
+            p #{helpers.format.formatMonthDate(values.approved_date)}
             span Begining of campaign
           .pull-right.text-lg-right
-            p #{helpers.format.formatMonthDate(expiration_date)}
+            p #{helpers.format.formatMonthDate(values.campaign.expiration_date)}
             span End of campaign
           .clearfix
       .col-md-1.col-sm-2.col-xs-2.hidden-xs-down

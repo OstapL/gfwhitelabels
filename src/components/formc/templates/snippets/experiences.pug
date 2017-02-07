@@ -26,6 +26,12 @@ mixin row(value, index)
               div(id=name + '__' + index + '__' + 'end_date_of_service').row
                 | !{app.fields.nestedDateMonth(name, 'end_date_of_service', value, index, {class1:'col-xl-6 col-lg-6 col-sm-6 col-xs-6 m-d-p-r-5'}, attr.schema.end_date_of_service)}
                 | !{app.fields.nestedDateYear(name, 'end_date_of_service', value, index, {class1:'col-xl-6 col-lg-6 col-sm-6 col-xs-6 m-d-p-l-5', placeholder: 'YYYY',}, attr.schema.end_date_of_service)}
+              .row.team-current
+                label.col-xl-12
+                  input(
+                    type="checkbox"
+                  ).col-xl-1
+                  span.font-weight-normal.col-xl-5 Current
                 
 
 mixin run()

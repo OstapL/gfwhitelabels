@@ -8,7 +8,16 @@ let exports = {
   },
 
   daysLeft(dateTo) {
+    // ToDo
+    // Refactor this
     return moment(dateTo).diff(moment(), 'days');
+  },
+
+  daysLeftPercentage(data) {
+    var daysToExpirate = moment(data.campaign.expiration_date).diff(moment(), 'days')
+    return Math.round(
+      (moment(data.campaign.expiration_date).diff(data.approved_date, 'days') - daysToExpirate) * 100 / daysToExpirate
+    );
   },
 
   percentage(n, total) {
