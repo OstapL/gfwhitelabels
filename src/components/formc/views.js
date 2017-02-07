@@ -470,6 +470,7 @@ module.exports = {
     events: _.extend({
       'click #submitForm': 'submit',
       'click .submit_formc': submitFormc,
+      'click .team-current-date': 'setCurrentDate',
     }, addSectionHelper.events, menuHelper.events, yesNoHelper.events, leavingConfirmationHelper.events),
 
     preinitialize() {
@@ -633,6 +634,21 @@ module.exports = {
         }
       }
       api.submitAction.call(this, e, data);
+    },
+
+    setCurrentDate(e) {
+      let $target = $(e.target);
+      const isCurrentDate = $target.is(':checked');
+
+      let $container = $target.parent().parent().parent();
+      let monthControl = $container.find('select');
+      let yearControl = $container.find('input[type=text]');
+
+      monthControl.val('');
+      monthControl.prop('disabled', isCurrentDate);
+
+      yearControl.val('');
+      yearControl.prop('disabled', isCurrentDate);
     },
 
   }, addSectionHelper.methods, menuHelper.methods, yesNoHelper.methods, leavingConfirmationHelper.methods)),
