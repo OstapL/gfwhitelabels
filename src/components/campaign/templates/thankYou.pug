@@ -5,44 +5,91 @@
 .container
   .row
     .col-sm-8.offset-sm-2
-      h2.text-xs-center.thankyou-title.m0 
+      h2.text-xs-center.m-b-1.font-weight-light.m-t-0
         i(aria-hidden="true").like-icon-circle.fa.fa-thumbs-o-up.m-r-1
-        | Here is a summary of your transaction:
+        | Thank you for your investment.
+      h2.text-xs-center.m-t-0.m-b-0.font-weight-light #{ investment.company.name } is now $#{ investment.amount } closer to their goal!
 
   .row
     .col-sm-8.offset-sm-2.mb50.mt50
-      hr
-  
+      hr.m-t-0.m-b-0
   .row
-    .col-sm-12
-      .result-info-block.m-x-auto
-        ul.info-text-block.list-unstyled
-          li 
-            span Transaction ID: &nbsp;
-            strong #{ investment.id }
-          li
-            span Company: &nbsp;
-            strong #{ investment.company.name }
-          case investment.security_type
-            when SECURITY_TYPE.CommonEquity
-              li
-                span Common Equity: &nbsp;
-                strong Nonvoting Common Stack
-              li
-                span Number of Shares: &nbsp;
-                strong #{ investment.number_of_shares }
-            when SECURITY_TYPE.RevenueShare
-              li
-                span Revenue Share: &nbsp;
-                strong #{ investment.percentage_revenue}% Revenue Share Capped at #{investment.cap}x
-          li
-            span Investment: &nbsp;
-            strong $#{ investment.amount }
-          if investment.perk
-            li
-              span Perks: &nbsp;
-              strong You will receive #{ investment.perk }
-
-        .info-btn-block.pt50
-          a(href="/account/investor-dashboard").btn.btn-secondary INVESTOR DASHBOARD &nbsp;
+    .col-xl-12.text-xs-center
+      h3.font-weight-light.m-t-0 “I just invested in #{ investment.company.name }!”
+    .col-lg-12.share.p-t-0.text-xs-center.m-b-2
+      span.d-inline-block 
+        i.fa.fa-share
+        |  Share:
+          
+      .d-inline-block
+        a(href=facebookLink target="_blank").facebook-share
+          i.fa.fa-facebook-square
+        a(href=twitterLink target="_blank").twitter-share
+          i.fa.fa-twitter-square
+        a(href=linkedinLink target="_blank").linkedin-share
+          i.fa.fa-linkedin-square
+        a(href=mailtoLink data-close="true" data-popup-opt="width=1,height=1").email-share
+          i.fa.fa-envelope-square
+  .row.thank-you-page
+    .col-xl-8.offset-xl-2.overview
+      .thankyou-page
+        table.table.table-bordered.pb10
+          tbody
+            tr.bgc-row-top
+              td(colspan="2")
+                h3.text-lg-center.text-xs-center.campaign-subheading Here is a summary of your transaction:
+            tr.bgc-row-middle
+              td.width-50
+                p Transaction ID
+              td
+                p Company
+            tr
+              td
+                h3.font-weight-bold #{ investment.id }
+              td
+                h3.font-weight-bold #{ investment.company.name }
+            case investment.security_type
+              when SECURITY_TYPE.RevenueShare
+                tr.bgc-row-middle
+                  td.width-50
+                    p Revenue Share
+                  td
+                    p Investment
+                tr
+                  td
+                    h3.font-weight-bold #{ investment.percentage_revenue}% Revenue Share Capped at #{investment.cap}x
+                  td
+                    h3.font-weight-bold $#{ investment.amount }
+                tr.bgc-row-middle
+                  td(colspan="2") Perk
+                tr
+                  td(colspan="2")
+                    if investment.perk
+                      h3.font-weight-bold #{ investment.perk }
+              when SECURITY_TYPE.CommonEquity
+                tr.bgc-row-middle
+                  td.width-50
+                    p Common Equity
+                  td
+                    p Number of Shares
+                tr
+                  td
+                    h3.font-weight-bold Nonvoting Common Stack
+                  td
+                    h3.font-weight-bold #{ investment.number_of_shares }
+                tr.bgc-row-middle
+                  td.width-50
+                    p Investment
+                  td
+                    p Perk
+                tr
+                  td
+                    h3.font-weight-bold $#{ investment.amount }
+                  td
+                    h3.font-weight-bold
+                      if investment.perk
+                        h3.font-weight-bold #{ investment.perk }
+        h3.m-b-2 You will have the opportunity to track your investments in the Investor Dashboard
+        .info-btn-block
+          a(href="/account/investor-dashboard").btn.btn-secondary INVESTOR DASHBOARD
             i.fa.fa-angle-right
