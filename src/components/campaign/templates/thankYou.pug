@@ -1,10 +1,13 @@
 | !{app.breadcrumbs('Invest', '', [ ['Home', '/'], ['Explore', '/companies'], [investment.company.name, '/' + investment.company_id], ['Invest in ' + investment.company.name, '']])}
+-
+  var SECURITY_TYPE = require('consts/raisecapital/security_type.json');
+  console.log(investment)
 .container
   .row
     .col-sm-8.offset-sm-2
       h2.text-xs-center.thankyou-title.m0 
-        i(aria-hidden="true").like-icon-circle.fa.fa-thumbs-o-up 
-        | You have invested $#{ investment.amount } in #{ investment.company.name }
+        i(aria-hidden="true").like-icon-circle.fa.fa-thumbs-o-up.m-r-1
+        | Here is a summary of your transaction:
 
   .row
     .col-sm-8.offset-sm-2.mb50.mt50
@@ -17,22 +20,28 @@
           li 
             span Transaction ID: &nbsp;
             strong #{ investment.id }
+          li
+            span Company: &nbsp;
+            strong #{ investment.company.name }
           case investment.security_type
-            when 0
+            when SECURITY_TYPE.CommonEquity
               li
-                span Amount of Shares: &nbsp;
+                span Common Equity: &nbsp;
+                strong Nonvoting Common Stack
+              li
+                span Number of Shares: &nbsp;
                 strong #{ investment.number_of_shares }
-            when 1
+            when SECURITY_TYPE.RevenueShare
               li
-                span Cap: &nbsp;
-                strong #{ investment.cap }
-              li
-                span Percentage Revenue: &nbsp;
-                strong #{ investment.percentage_revenue }
+                span Revenue Share: &nbsp;
+                strong #{ investment.percentage_revenue}% Revenue Share Capped at #{investment.cap}x
+          li
+            span Investment: &nbsp;
+            strong $#{ investment.amount }
           if investment.perk
             li
               span Perks: &nbsp;
-              strong #{ investment.perk }
+              strong You will receive #{ investment.perk }
 
         .info-btn-block.pt50
           a(href="/account/investor-dashboard").btn.btn-secondary INVESTOR DASHBOARD &nbsp;
