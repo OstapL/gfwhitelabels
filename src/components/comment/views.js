@@ -33,8 +33,8 @@ module.exports = {
       this.fields = options.fields;
       this.fields.message = _.extend(this.fields.message, {
         fn: function(name, value, attr, data, schema) {
-          if (value.length > 1000)
-            throw 'Length of comment should not exceed more than 1000 characters.'
+          if (value.length > 2000)
+            throw 'Length of comment should not exceed more than 2000 characters.'
         },
       });
 
