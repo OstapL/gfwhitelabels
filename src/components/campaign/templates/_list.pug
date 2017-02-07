@@ -65,13 +65,13 @@ else
             if company.description
               p= company.description.replace(/(<([^>]+)>)/ig,"").substr(0,250)
 
-            .progress_bar_container
-              span.left_text #{ percentage_raised <= 20 ? 'Less than 20' : percentage_raised } % Funded
-              span.right_text 
-                b #{format.formatPrice(company.campaign.amount_raised)} 
-                | of #{format.formatPrice(company.campaign.minimum_raise)}
-              .clear
-                progress(value=percentage_raised max="100").progress #{company.campaign.progress} %
+          .progress_bar_container
+            span.left_text #{ percentage_raised <= 20 ? 'Less than 20' : percentage_raised } % Funded
+            span.right_text 
+              b #{format.formatPrice(company.campaign.amount_raised)} 
+              | of #{format.formatPrice(company.campaign.minimum_raise)}
+            .clear
+              progress(value=percentage_raised max="100").progress #{company.campaign.progress} %
 
           .bottom_text
             span.left_desc
