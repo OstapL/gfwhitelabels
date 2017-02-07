@@ -82,7 +82,10 @@ section.issuer-dashbord-top
 
       .col-md-7.col-sm-10.p-r-0.col-xs-10.hidden-xs-down
         .tpl-progress
-          - var percentage_raised = campaignHelpers.daysLeftPercentage(values);
+          - 
+            var percentage_raised = campaignHelpers.daysLeftPercentage(values);
+            if(percentage_raised > 100) 
+              percentage_raised = 100;
           progress(
             value=percentage_raised
             max="100").progress.big_prog #{ percentage_raised }%
