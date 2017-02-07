@@ -97,8 +97,8 @@ section.issuer-dashbord-top
             style="width:" + percentage_raised + "%").circle_progress
             i.fa.fa-circle-o
           span(style="left:" + percentage_raised + "%").text_position
-            | #{now.toLocaleString('en-US', { month: "short" })} #{ now.getDate() }
-            br
+            .font-weight-bold
+              | #{now.toLocaleString('en-US', { month: "short" })} #{ now.getDate() }
             | #{ helpers.format.formatAmount(values.campaign.amount_raised) } Raised
             br
             | #{ helpers.format.formatAmount(values.campaign.amount_commited) } Commited
@@ -119,19 +119,21 @@ section.issuer-dashbord-top
           i(aria-hidden="true").fa.fa-angle-right
     .col-lg-12.border-bottom-50
 
-section.investors-dashbord-comment
+section.investors-dashbord-document
   .container
     .row
-      .col-xl-10
-        h2.dosis.text-uppercase.m-t-0.m-b-0 documents with growthfountain
-        a(href=formcLinks[values.campaign.id] target="_blank")
+      .col-xl-12
+        h2.text-uppercase documents with growthfountain
+        a(href=formcLinks[values.campaign.id] target="_blank").link-1
           img(src="/img/lrg_US_Department_of_State35.gif").img-document.d-inline-block
-          h3.d-inline-block  Form C
+          h3.d-inline-block.m-t-0.m-b-0  Form C
         br
-        a(href="https://api-esign-dev.growthfountain.com/pdf-doc/formc/listing_agreement.pdf?trans_percent=6&registration_fee=500&nonrefundable_fees=50&amendment_fee=200&commencement_date_x=2%2F6%2F2017&zip_code=20000&city=City+1&state=ID&address_1=Street+Address+1&address_2=Optional+Address+1&issuer_legal_name=Ratmir%27s+Company+Legal+Name&issuer_email=ratmir.asanov.1%40yandex.ru&issuer_signer=" target="_blank")
-          img(src="/img/lrg_US_Department_of_State35.gif").img-document.d-inline-block
-          h3.d-inline-block  Listing Agreement
-
+        a(href="https://api-esign-dev.growthfountain.com/pdf-doc/formc/listing_agreement.pdf?trans_percent=6&registration_fee=500&nonrefundable_fees=50&amendment_fee=200&commencement_date_x=2%2F6%2F2017&zip_code=20000&city=City+1&state=ID&address_1=Street+Address+1&address_2=Optional+Address+1&issuer_legal_name=Ratmir%27s+Company+Legal+Name&issuer_email=ratmir.asanov.1%40yandex.ru&issuer_signer=" target="_blank").link-1
+          h2.d-inline-block.m-t-1.m-b-0
+            i.fa.fa-file-pdf-o
+          h3.d-inline-block.m-t-0.m-b-0  Listing Agreement
+      .col-lg-12
+        .border-bottom.m-t-3.m-b-0
 
 section.grafic-dashboard
   div(style="display: none").container
