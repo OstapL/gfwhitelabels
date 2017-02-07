@@ -14,7 +14,10 @@ let exports = {
   },
 
   daysLeftPercentage(data) {
-    return Math.round((this.daysLeft(data.campaign.expiration_date)/data.campaign.length_days) * 100);
+    var daysToExpirate = moment(data.campaign.expiration_date).diff(moment(), 'days')
+    return Math.round(
+      (moment(data.campaign.expiration_date).diff(data.approved_date, 'days') - daysToExpirate) * 100 / daysToExpirate
+    );
   },
 
   percentage(n, total) {
