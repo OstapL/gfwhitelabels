@@ -5,6 +5,12 @@
   var campaignHelpers = require('components/campaign/helpers.js');
   var c = require('consts/campaign/file.json');
   var backgroundImgUrl = app.getUrl(values.campaign.header_image_data) || '/img/default.png';
+
+
+//- linkedin sdk
+script( type="text/javascript" src="//platform.linkedin.com/in.js").
+    api_key:   #{global.linkedinClientId}
+    
 section(style="background-image: url(" + backgroundImgUrl + ")")#home.home-section.bg-dark-alfa-70.parallax-2.fixed-height-small.hide-bg-fixed
   .js-height-parent.container-fluid
     .home-content
