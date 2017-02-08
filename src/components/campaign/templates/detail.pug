@@ -248,7 +248,19 @@ section
         p !{ textHelper.restoreLineBreak(values.campaign.pitch) }
     .container-fluid.p-l-0.p-r-0
       #gallery1.col-lg-12.pt50.photo-gallegy.text-center-flex
-        if values.campaign.gallery_group_data
+        - var gallery_company_film = require('components/campaign/templates/snippets/gallery_company_film')
+        - var gallery_company_cogent = require('components/campaign/templates/snippets/gallery_company_cogent')
+        - var gallery_company_venue = require('components/campaign/templates/snippets/gallery_company_venue')
+        - var gallery_company_oma = require('components/campaign/templates/snippets/gallery_company_oma')
+        if values.id == 564
+          | !{ gallery_company_film()}
+        else if values.id == 52
+          | !{ gallery_company_cogent()}
+        else if values.id == 51
+          | !{ gallery_company_venue()}
+        else if values.id == 536
+          | !{ gallery_company_oma()}
+        else if values.campaign.gallery_group_data
           each v,k in values.campaign.gallery_group_data
             .col-lg-4.col-sm-12.col-xs-12.col-md-6.no-padding-img
               a(href=v.urls[v.urls.length - 1] data-size='1440x900' rel="gallery1").fancybox
