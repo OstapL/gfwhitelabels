@@ -93,7 +93,8 @@ module.exports = {
     urlRoot: formcServer + '/:id/introduction',
 
     events: _.extend({
-      'submit form': 'submit',
+      'click .save-and-continue': 'submit',
+      // 'submit form': 'submit',
       'click .link-2': 'openPdf',
       'click .submit_formc': submitFormc,
       'keyup #full_name': 'changeSign',
@@ -307,6 +308,7 @@ module.exports = {
 
           this.$('#save-button-block').removeClass('collapse');
 
+          this.$('.save-and-continue').click();
           app.hideLoading();
 
         }).fail((xhr, ajaxOptions, err) => {
@@ -325,10 +327,12 @@ module.exports = {
       e.preventDefault();
 
       let $target = $(e.target);
-      let $submitBtn = $target.find('#pay-btn');
+      let $form = $target.closest('form');
+
+      let $submitBtn = $form.find('#pay-btn');
       $submitBtn.prop('disabled', true);
 
-      let data = $target.serializeJSON({ checkboxUncheckedValue: 'false', useIntKeysAsArrayIndex: true });
+      let data = $form.serializeJSON({ checkboxUncheckedValue: 'false', useIntKeysAsArrayIndex: true });
 
       if (data.certify == 0) {
         delete data.certify;
@@ -466,6 +470,7 @@ module.exports = {
     events: _.extend({
       'click #submitForm': 'submit',
       'click .submit_formc': submitFormc,
+      'click .team-current-date': 'setCurrentDate',
     }, addSectionHelper.events, menuHelper.events, yesNoHelper.events, leavingConfirmationHelper.events),
 
     preinitialize() {
@@ -554,7 +559,6 @@ module.exports = {
 
       require('bootstrap-select/sass/bootstrap-select.scss');
       let selectPicker = require('bootstrap-select');
-      debugger;
 
       this.$el.html(
         template({
@@ -629,8 +633,22 @@ module.exports = {
           delete data.role;
         }
       }
-      debugger;
       api.submitAction.call(this, e, data);
+    },
+
+    setCurrentDate(e) {
+      let $target = $(e.target);
+      const isCurrentDate = $target.is(':checked');
+
+      let $container = $target.parent().parent().parent();
+      let monthControl = $container.find('select');
+      let yearControl = $container.find('input[type=text]');
+
+      monthControl.val('');
+      monthControl.prop('disabled', isCurrentDate);
+
+      yearControl.val('');
+      yearControl.prop('disabled', isCurrentDate);
     },
 
   }, addSectionHelper.methods, menuHelper.methods, yesNoHelper.methods, leavingConfirmationHelper.methods)),
@@ -751,6 +769,16 @@ module.exports = {
           this.model[key].push({max: 0, min: 0, title: titles[i]});
         }
       }
+
+      let less_offering_expense = this.model['less_offering_express'];
+      let commission = _(less_offering_expense).find((item) => {
+        return item.title == 'Commissions and Broker Expenses';
+      });
+
+      commission.min = Math.round(this.campaign.minimum_raise * companyFees.trans_percent / 100);
+      commission.max = Math.round(this.campaign.maximum_raise * companyFees.trans_percent / 100);
+      commission.fee = true;
+
       this.assignLabels();
       this.createIndexes();
       this.buildJsonTemplates('formc');
@@ -2235,6 +2263,9 @@ module.exports = {
       this.fields.campaign.length_days.validate.choices = require('consts/raisecapital/length_days.json');
       this.fields.campaign.security_type.validate.choices = yesNoConsts.YESNO;
       this.fields.campaign.valuation_determination.validate.choices = require('consts/raisecapital/valuation_determination_options.json');
+      this.fields.formc.outstanding_securities.schema.security_type.type = 'choice';
+      this.fields.formc.outstanding_securities.schema.security_type.validate = {};
+      this.fields.formc.outstanding_securities.schema.security_type.validate.choices = securityTypeConsts.SECURITY_TYPES;
       this.fields.formc.outstanding_securities.schema.custom_security_type.validate.choices = securityTypeConsts.SECURITY_TYPES;
       this.fields.formc.outstanding_securities.schema.voting_right.validate.choices = yesNoConsts.YESNO;
 

@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "webpack-dev-server --config ./webpack.config.js",
-    "build": "webpack -p --config ./webpack.config.js",
+    "build": "webpack -p --config ./webpack.config.production.js",
     "webpack_analyzer": "webpack --json | ./node_modules/webpack-bundle-size-analyzer/webpack-bundle-size-analyzer",
     "lint": "jshint src/**/*.js",
     "jscs": "jscs src/**/*.js",

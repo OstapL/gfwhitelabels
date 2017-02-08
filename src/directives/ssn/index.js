@@ -21,32 +21,38 @@ class SsnBlock {
    return html;
  }
 
+ initPopover(selector) {
+    let $control = null;
+
+    $(mainContent).on('focus', selector, (e) => {
+      if (!$control) {
+        $control = $(selector);
+        $control.popover({
+          trigger: 'focus',
+          placement(context, src) {
+            $(context).addClass('ssn-popover');
+            return 'top';
+          },
+          html: true,
+          content(){
+            return $('.profile').find('.popover-content-ssn ').html();
+          }
+        });
+      }
+
+      $control.popover('show');
+    });
+
+    $(mainContent).on('focusout', selector, (e) => {
+      $control.popover('hide');
+    });
+
+    return $control;
+  }
+
  attachEvents() {
-   $(mainContent).on('focus', '#ssn', (e) => {
-     if (!this.$input) {
-
-       this.$input = $('#ssn');
-
-       this.$input.popover({
-         trigger: 'focus',
-         placement(context, src) {
-           $(context).addClass('ssn-popover');
-           return 'right';
-         },
-         html: true,
-         content(){
-           var content = $('.profile').find('.popover-content-ssn ').html();
-           return content;
-         }
-       });
-     }
-
-     this.$input.popover('show');
-   });
-
-   $(mainContent).on('focusout', '#ssn', (e) => {
-     this.$input.popover('hide');
-   });
+   this.initPopover('#ssn');
+   this.initPopover('#ssn_re');
  }
 
 }

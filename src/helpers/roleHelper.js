@@ -44,7 +44,12 @@ module.exports = {
   extractRoles(roleBitmap, extractRoles=ALL_ROLES) {
     return _(extractRoles)
       .filter((r) => { return !!(r & roleBitmap); })
-      .map((r) => { return { title: roles.ROLES[r], id: r }; });
+      .map((r) => {
+        return {
+          title: roles.ROLES_SHORT[r],
+          id: r,
+        };
+      });
   },
 
 };
