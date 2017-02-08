@@ -5,6 +5,12 @@
   var campaignHelpers = require('components/campaign/helpers.js');
   var c = require('consts/campaign/file.json');
   var backgroundImgUrl = app.getUrl(values.campaign.header_image_data) || '/img/default.png';
+
+
+//- linkedin sdk
+script( type="text/javascript" src="//platform.linkedin.com/in.js").
+    api_key:   #{global.linkedinClientId}
+    
 section(style="background-image: url(" + backgroundImgUrl + ")")#home.home-section.bg-dark-alfa-70.parallax-2.fixed-height-small.hide-bg-fixed
   .js-height-parent.container-fluid
     .home-content
@@ -148,7 +154,7 @@ section.campaigndetail
 
           - var twitterLink = 'https://twitter.com/share?url=' + window.location.origin + '/' + values.id + '&text=Check out ' + (values.short_name || values.name) + '\'s fundraise on @growthfountain ';
 
-          - var linkedinLink = 'https://www.linkedin.com/shareArticle?mini=true&url=' + window.location.origin + '/' + values.id + '&title=Check out ' + (values.short_name || values.name) + '\'s fundraise on GrowthFountain.com&summary=' + values.description + '&source=Growth Fountain';
+          - var linkedinLink = '#'; // 'https://www.linkedin.com/shareArticle?mini=true&url=' + window.location.origin + '/' + values.id + '&title=Check out ' + (values.short_name || values.name) + '\'s fundraise on GrowthFountain.com&summary=' + values.description + '&source=Growth Fountain';
 
             a(href=facebookLink target="_blank").facebook-share
               i.fa.fa-facebook-square

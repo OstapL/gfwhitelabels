@@ -588,9 +588,9 @@ module.exports = {
     template: require('./templates/issuerDashboard.pug'),
     events: {
       'click .email-share': 'socialPopup',
-      'click .linkedin-share': 'socialPopup',
       'click .facebook-share': 'socialPopup',
       'click .twitter-share': 'socialPopup',
+      'click .linkedin-share': 'shareLinkedin',
       'click .google-plus-share': 'socialPopup',
       'click .cancel-campaign': 'cancelCampaign',
     },
@@ -636,6 +636,36 @@ module.exports = {
       return this;
     },
 
+    loginLinkedin () {
+      const promise = new Promise( (resolve, reject) => IN.User.authorize(resolve) );
+      return promise;
+    },
+
+    shareLinkedin (e) {
+      e.preventDefault();
+      
+      const payload = { 
+        content: {
+          'title': 'Check out ' + (this.model.short_name || this.model.name) + '\'s fundraise on GrowthFountain.com',
+          'description': this.model.description,
+          'submitted-url': window.location.origin + '/' + this.model.id,
+          'submitted-image-url': campaignHelpers.getImageCampaign(this.model.campaign)
+        }, 
+        'visibility': { 
+          'code': 'anyone'
+        } 
+      };
+      
+      this.loginLinkedin().then( res => {
+        IN.API.Raw('/people/~/shares?format=json')
+          .method('POST')
+          .body(JSON.stringify(payload))
+          .result( console.log.bind(console, 'linkedin success: ') )
+          .error( console.log.bind(console, 'linkedin error: ') );
+      })
+      
+    },
+    
     socialPopup (e) {
       e.preventDefault();
       var popupOpt = e.currentTarget.dataset.popupOpt || 'toolbar=0,status=0,left=45%,top=45%,width=626,height=436';
