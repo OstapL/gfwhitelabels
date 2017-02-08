@@ -1867,7 +1867,7 @@ module.exports = {
 
       data.amount_authorized = data.amount_authorized.replace(/[\$\,]/g, '');
       if(data.amount_authorized.toLocaleLowerCase() == 'n/a' || data.amount_authorized.toLocaleLowerCase() == 'not available') {
-        data.amount_authorized = "";
+        data.amount_authorized = null;
       }
       data.amount_outstanding = data.amount_outstanding.replace(/[\$\,]/g, '');
       if (!validation.validate(this.fields.outstanding_securities.schema, data, this)) {

@@ -20,7 +20,10 @@ mixin row(value, index)
           | #{securityType}
           .collapse
       td
-          | #{value.amount_authorized}
+          if value.amount_authorized == null 
+            | n/a
+          else
+            | #{value.amount_authorized}
           .collapse
       td
           | #{value.amount_outstanding}
