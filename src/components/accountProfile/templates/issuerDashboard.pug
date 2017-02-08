@@ -1,6 +1,7 @@
 | !{ app.breadcrumbs('issuer dashboard', '', [ ['Home', '/'], ['issuer dashboard', ''],])}
 - var campaignHelpers = require('components/campaign/helpers.js');
 - var formcLinks = require('../../campaign/helpers.js').formcLinks
+- var moment = require('moment');
 
 //- linkedin sdk
 script( type="text/javascript" src="//platform.linkedin.com/in.js").
@@ -108,10 +109,10 @@ section.issuer-dashbord-top
             | Chances: #{ Math.round(percentage_raised / (values.campaign.minimum_raise  / values.campaign.amount_commited) * 100) }%
         .progress_description
           .pull-left
-            p #{helpers.format.formatMonthDate(values.approved_date)}
+            p #{ moment(values.approved_date).format('MM/DD/YYYY') }
             span Begining of campaign
           .pull-right.text-lg-right
-            p #{helpers.format.formatMonthDate(values.campaign.expiration_date)}
+            p #{ moment(values.campaign.expiration_date).format('MM/DD/YYYY') }
             span End of campaign
           .clearfix
       .col-md-1.col-sm-2.col-xs-2.hidden-xs-down
