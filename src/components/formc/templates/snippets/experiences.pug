@@ -23,14 +23,14 @@ mixin row(value, index)
           .row
             label.col-xl-6.col-lg-12.text-xl-right.text-lg-left.p-l-3.p-l-lg-1.p-t-0.m-b-0.m-b-lg-1 End Date of Service
             .col-xl-6.col-lg-12
+              -
+                var isDateCurrent = !value.end_date_of_service;
               div(id=name + '__' + index + '__' + 'end_date_of_service').row
-                | !{app.fields.nestedDateMonth(name, 'end_date_of_service', value, index, {class1:'col-xl-6 col-lg-6 col-sm-6 col-xs-6 m-d-p-r-5'}, attr.schema.end_date_of_service)}
-                | !{app.fields.nestedDateYear(name, 'end_date_of_service', value, index, {class1:'col-xl-6 col-lg-6 col-sm-6 col-xs-6 m-d-p-l-5', placeholder: 'YYYY',}, attr.schema.end_date_of_service)}
+                | !{app.fields.nestedDateMonth(name, 'end_date_of_service', value, index, {class1:'col-xl-6 col-lg-6 col-sm-6 col-xs-6 m-d-p-r-5', disabled: !!isDateCurrent, }, attr.schema.end_date_of_service)}
+                | !{app.fields.nestedDateYear(name, 'end_date_of_service', value, index, {class1:'col-xl-6 col-lg-6 col-sm-6 col-xs-6 m-d-p-l-5', placeholder: 'YYYY', disabled: !!isDateCurrent, }, attr.schema.end_date_of_service)}
               .row.team-current
                 label.col-xl-12
-                  input(
-                    type="checkbox"
-                  ).col-xl-1
+                  input(type="checkbox" checked=isDateCurrent).col-xl-1.team-current-date
                   span.font-weight-normal.col-xl-5 Current
                 
 
