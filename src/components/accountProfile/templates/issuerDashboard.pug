@@ -36,9 +36,6 @@ section.issuer-dashbord-top
               i.fa.fa-linkedin-square
             a(href=mailtoLink data-close="true" data-popup-opt="width=1,height=1").link-1.email-share
               i.fa.fa-envelope-square
-            
-            
-            
             //- a(href="#" target="_blank").link-1.google-plus-share
               i(aria-hidden="true").fa.fa-google-plus
 
@@ -103,10 +100,10 @@ section.issuer-dashbord-top
             .font-weight-bold
               | #{now.toLocaleString('en-US', { month: "short" })} #{ now.getDate() }
             | #{ helpers.format.formatAmount(values.campaign.amount_raised) } Raised
-            br
-            | #{ helpers.format.formatAmount(values.campaign.amount_commited) } Approved
-            br
-            | Chances: #{ Math.round(percentage_raised / (values.campaign.minimum_raise  / values.campaign.amount_commited) * 100) }%
+            //br
+            //| #{ helpers.format.formatAmount(values.campaign.amount_commited) } Approved
+            //br
+            //| Chances: #{ Math.round(percentage_raised / (values.campaign.minimum_raise  / values.campaign.amount_commited) * 100) }%
         .progress_description
           .pull-left
             p #{ moment(values.approved_date).format('MM/DD/YYYY') }
