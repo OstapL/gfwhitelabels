@@ -163,36 +163,36 @@
 		.progress_bar_container
 			span
 				margin-bottom: rem(5)
-	.share
-		span
-			color: $small-text
+.share
+	span
+		color: $small-text
 
-		padding-top: rem(25)
-		a
-			i
-				font-size: rem(30)
-				margin-left: rem(15)
-		.facebook-share
-			color: $btn-facebook-bg
-			+mt(.2s)
-			&:hover
-				color: $btn-facebook-hover-bg
+	padding-top: rem(25)
+	a
+		i
+			font-size: rem(30)
+			margin-left: rem(15)
+	.facebook-share
+		color: $btn-facebook-bg
+		+mt(.2s)
+		&:hover
+			color: $btn-facebook-hover-bg
 				
-		.linkedin-share
-			color: $btn-linkedin-bg
-			+mt(.2s)
-			&:hover
-				color: $btn-linkedin-hover-bg
-		.twitter-share
-			color: $btn-twitter-bg
-			+mt(.2s)
-			&:hover
-				color: $btn-twitter-hover-bg
-		.email-share
-			color: $btn-email-bg
-			+mt(.2s)
-			&:hover
-				color: $btn-email-hover-bg
+	.linkedin-share
+		color: $btn-linkedin-bg
+		+mt(.2s)
+		&:hover
+			color: $btn-linkedin-hover-bg
+	.twitter-share
+		color: $btn-twitter-bg
+		+mt(.2s)
+		&:hover
+			color: $btn-twitter-hover-bg
+	.email-share
+		color: $btn-email-bg
+		+mt(.2s)
+		&:hover
+			color: $btn-email-hover-bg
 
 
 
@@ -215,8 +215,17 @@
 		.card-img
 			border-radius: 0
 			max-height: 210px
-		.card-img-overlay
+		.card-img-overlays
 			text-align: center!important
+			top: 50%
+			left: 50%
+			-ms-transform: translate(-50%,-50%)
+			-webkit-transform: translate(-50%,-50%)
+			transform: translate(-50%,-50%)
+			position: absolute
+			padding: 0
+			width: 100%
+
 		h3
 			color: $white
 			margin-top: 0
@@ -369,7 +378,7 @@
 .overview
 	h3
 		margin-top: 0 
-	.fundraising, .perks
+	.fundraising, .perks, .thankyou-page
 		text-align: center
 		.bgc-row-top
 			background-color: $detail-overview-background //переменная находится в файле /unique/variables

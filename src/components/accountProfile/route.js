@@ -54,15 +54,14 @@ module.exports = Backbone.Router.extend({
   },
 
   changePassword: function() {
-    require.ensure([], function() {
-      const View = require('components/accountProfile/views.js');
-      let i = new View.changePassword({
-        el: '#content',
-        model: {},
-      });
-      i.render();
-      app.hideLoading();
+    $('#content').scrollTo();
+    const View = require('components/accountProfile/views.js');
+    let i = new View.changePassword({
+      el: '#content',
+      model: {},
     });
+    i.render();
+    app.hideLoading();
   },
 
   setNewPassword: function() {
@@ -156,12 +155,12 @@ module.exports = Backbone.Router.extend({
 
       // noi=1 means that server should return number_of_investrs for company
       $.when(
-        app.makeCacheRequest(raiseCapitalServer + '/company/' + id + '/edit?noi=1', 'GET'),
+        app.makeCacheRequest(raiseCapitalServer + '/company/' + app.user.formc.company_id + '/edit?noi=1', 'GET'),
         app.user.getCampaignR(app.user.formc.campaign_id, 'GET'),
       ).done((company, campaign) => {
       
-        app.user.company = company[0];
-        app.user.campaign = campaign[0];
+        if(company[0]) app.user.company = company[0];
+        if(campaign[0]) app.user.campaign = campaign[0];
 
         var model = app.user.company;
         model.campaign = app.user.campaign;
@@ -176,27 +175,5 @@ module.exports = Backbone.Router.extend({
 
       });
     })
-
-    /*
-    $.when(app.user.getCompanyR(), app.user.getCampaignR()).done((company, campaign) => {
-      if(company[0]) {
-        app.user.company = company[0];
-      }
-      if(campaign[0]) {
-        app.user.campaign = campaign[0];
-      }
-
-      var model = app.user.company;
-      model.campaign = app.user.campaign;
-      
-      const View = require('components/accountProfile/views.js');
-      let i = new View.issuerDashboard({
-        el: '#content',
-        model: model
-      });
-      i.render();
-      app.hideLoading();
-    });
-    */
   },
 });    

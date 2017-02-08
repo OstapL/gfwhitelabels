@@ -43,6 +43,10 @@ module.exports = {
 
       this.fields = options.fields;
 
+      this.fields.phone = _.extend(this.fields.phone, {
+        required: true,
+      });
+
       this.fields.image_image_id = _.extend(this.fields.image_image_id, {
         crop: {
           control: {
@@ -135,9 +139,9 @@ module.exports = {
 
       this.labels = {
         country: 'Country',
-        street_address_1: 'Street address 1',
-        street_address_2: 'Street address 2',
-        zip_code: 'Zip code',
+        street_address_1: 'Street Address 1',
+        street_address_2: 'Street Address 2',
+        zip_code: 'Zip Code',
         state: 'State/Province/Region',
         city: 'City',
         phone: 'Phone',
@@ -147,13 +151,13 @@ module.exports = {
         routing_number_re: "Re-Enter Routing Number",
         annual_income: 'My Annual Income',
         net_worth: 'My Net Worth',
-        twitter: 'Your Twitter link',
-        facebook: 'Your Facebook link',
-        instagram: 'Your Instagram link',
-        linkedin: 'Your LinkedIn link',
+        twitter: 'Your Twitter Link',
+        facebook: 'Your Facebook Link',
+        instagram: 'Your Instagram Link',
+        linkedin: 'Your LinkedIn Link',
         bank_name: 'Bank Name',
-        name_on_bank_account: 'Name on Bank Account',
-        ssn: 'Social Security number (SSN) or Tax ID (ITIN/EIN)',
+        name_on_bank_account: 'Name On Bank Account',
+        ssn: 'Social Security Number (SSN) Or Tax ID (ITIN/EIN)',
         ssn_re: 'Re-enter',
       };
 
@@ -166,18 +170,13 @@ module.exports = {
     },
 
     render() {
-      this.usaStates = require("helpers/usaStates.js");
-
       this.$el.html(
         this.template({
           tab: this.activeTab || 'account_info',
           serverUrl: serverUrl,
           user: this.model,
-          companiesMember: app.user.companiesMember,
-          roleInfo: app.user.getRoleInfo(),
           company: app.user.get('company'),
           fields: this.fields,
-          states: this.usaStates,
         })
       );
 
@@ -302,36 +301,37 @@ module.exports = {
       validation.invalidMsg(this, 'zip_code', 'Sorry your zip code is not found');
     },
 
+    _updateUserInfo() {
+      let first_name = this.el.querySelector('#first_name').value;
+      let last_name = this.el.querySelector('#last_name').value;
+
+      if (app.user.first_name == first_name && app.user.last_name == last_name)
+        return;
+
+      app.user.first_name = first_name;
+      app.user.last_name = last_name;
+
+      //TODO: move this code to user.js
+      let userData = app.user.toJSON();
+      localStorage.setItem('user', JSON.stringify(userData));
+
+      let full_name = `${first_name} ${last_name}`;
+
+      $('#user_name').text(full_name);
+      $('.image_image_id').siblings('h3').text(full_name);
+    },
+
     _success(data) {
+      this._updateUserInfo();
+
       app.routers.navigate("/", {trigger: true});
       return 0;
 
-      if ($("#financial_info").hasClass("active")) {
-        app.routers.navigate("/", {trigger: true});
-        return;
-      }
+      // if ($("#financial_info").hasClass("active")) {
+      //   app.routers.navigate("/", {trigger: true});
+      //   return;
+      // }
 
-      app.hideLoading();
-
-      //todo: this is bad solution
-      this.model.first_name = this.el.querySelector('#first_name').value;
-      this.model.last_name = this.el.querySelector('#last_name').value;
-
-      app.user.set('first_name', this.model.first_name);
-      app.user.set('last_name', this.model.last_name);
-
-      let userData = app.user.toJSON();
-
-      localStorage.setItem('user', JSON.stringify(userData));
-      // app.trigger('userLoaded', userData);
-      let fullName = app.user.get('first_name') + ' ' + app.user.get('last_name');
-      $('#user_name').text(fullName);
-      $('.image_image_id').siblings('h3').text(fullName);
-
-      $('#content').scrollTo();
-
-      //switch to financial info tab
-      // this.$('.profile-tabs a[href="#financial_info"]').tab('show');
     },
 
   }, helpers.phone.methods, helpers.dropzone.methods, helpers.yesNo.methods)),
@@ -588,9 +588,9 @@ module.exports = {
     template: require('./templates/issuerDashboard.pug'),
     events: {
       'click .email-share': 'socialPopup',
-      'click .linkedin-share': 'socialPopup',
       'click .facebook-share': 'socialPopup',
       'click .twitter-share': 'socialPopup',
+      'click .linkedin-share': 'shareLinkedin',
       'click .google-plus-share': 'socialPopup',
       'click .cancel-campaign': 'cancelCampaign',
     },
@@ -636,6 +636,36 @@ module.exports = {
       return this;
     },
 
+    loginLinkedin () {
+      const promise = new Promise( (resolve, reject) => IN.User.authorize(resolve) );
+      return promise;
+    },
+
+    shareLinkedin (e) {
+      e.preventDefault();
+      
+      const payload = { 
+        content: {
+          'title': 'Check out ' + (this.model.short_name || this.model.name) + '\'s fundraise on GrowthFountain.com',
+          'description': this.model.description,
+          'submitted-url': window.location.origin + '/' + this.model.id,
+          'submitted-image-url': campaignHelpers.getImageCampaign(this.model.campaign)
+        }, 
+        'visibility': { 
+          'code': 'anyone'
+        } 
+      };
+      
+      this.loginLinkedin().then( res => {
+        IN.API.Raw('/people/~/shares?format=json')
+          .method('POST')
+          .body(JSON.stringify(payload))
+          .result( console.log.bind(console, 'linkedin success: ') )
+          .error( console.log.bind(console, 'linkedin error: ') );
+      })
+      
+    },
+    
     socialPopup (e) {
       e.preventDefault();
       var popupOpt = e.currentTarget.dataset.popupOpt || 'toolbar=0,status=0,left=45%,top=45%,width=626,height=436';

@@ -2,6 +2,7 @@ const formatHelper = require('helpers/formatHelper');
 const textHelper = require('helpers/textHelper');
 const companyFees = require('consts/companyFees.json');
 const typeOfDocuments = require('consts/typeOfDocuments.json');
+const campaignHelpers = require('components/campaign/helpers.js');
 
 const usaStates = require('helpers/usaStates.js');
 
@@ -60,7 +61,7 @@ module.exports = {
       'hide.bs.collapse .panel': 'onCollapse',
       'show.bs.collapse .panel': 'onCollapse',
       'click .email-share': 'socialPopup',
-      'click .linkedin-share': 'socialPopup',
+      'click .linkedin-share': 'shareLinkedin',
       'click .facebook-share': 'socialPopup',
       'click .twitter-share': 'socialPopup',
       'click .see-all-risks': 'seeAllRisks',
@@ -211,6 +212,36 @@ module.exports = {
           currLink.removeClass("active");
         }
       });
+    },
+
+    loginLinkedin () {
+      const promise = new Promise( (resolve, reject) => IN.User.authorize(resolve) );
+      return promise;
+    },
+
+    shareLinkedin (e) {
+      e.preventDefault();
+      
+      const payload = { 
+        content: {
+          'title': 'Check out ' + (this.model.short_name || this.model.name) + '\'s fundraise on GrowthFountain.com',
+          'description': this.model.description,
+          'submitted-url': window.location.origin + '/' + this.model.id,
+          'submitted-image-url': campaignHelpers.getImageCampaign(this.model.campaign)
+        }, 
+        'visibility': { 
+          'code': 'anyone'
+        } 
+      };
+      
+      this.loginLinkedin().then( res => {
+        IN.API.Raw('/people/~/shares?format=json')
+          .method('POST')
+          .body(JSON.stringify(payload))
+          .result( console.log.bind(console, 'linkedin success: ') )
+          .error( console.log.bind(console, 'linkedin error: ') );
+      })
+      
     },
 
     socialPopup (e) {
@@ -388,6 +419,8 @@ module.exports = {
       'keyup #annual_income,#net_worth': 'updateLimitInModal',
       'click button.submit-income-worth': 'updateIncomeWorth',
       'click': 'hidePopover',
+      'hidden.bs.collapse #hidden-article-press' :'onArticlePressCollapse',
+      'shown.bs.collapse #hidden-article-press' :'onArticlePressCollapse',
     },
 
     initialize(options) {
@@ -628,7 +661,13 @@ module.exports = {
 
       return this;
     },
-
+    onArticlePressCollapse(e) {
+      if (e.type == 'hidden') {
+        this.$('.see-all-perks').text('Show More')
+      } else if (e.type == 'shown') {
+        this.$('.see-all-perks').text('Show Less')
+      }
+    },
     initAmountPopover() {
       this.$amount = this.$el.find('#amount');
       this.$amount.data('contentselector', 'amount-campaign');
@@ -775,19 +814,18 @@ module.exports = {
     },
 
     updatePerks(amount) {
-      //update perks
-      let $targetPerk;
-      let $perks = this.$('.perk');
-      $perks.each((i, el) => {
-        if(parseInt(el.dataset.amount) <= amount) {
-          $targetPerk = $(el);
-          return false;
-        }
-      });
+      function updatePerkElements($elms, amount) {
+        $elms.removeClass('active').find('i.fa.fa-check').hide();
+        $elms.each((idx, el) => {
+          if(parseInt(el.dataset.amount) <= amount) {
+            $(el).addClass('active').find('i.fa.fa-check').show();
+            return false;
+          }
+        });
+      }
 
-      $perks.removeClass('active').find('i.fa.fa-check').hide();
-      if ($targetPerk)
-        $targetPerk.addClass('active').find('i.fa.fa-check').show();
+      updatePerkElements($('.invest-perks-mobile .perk'), amount);
+      updatePerkElements($('.invest-perks .perk'), amount);
     },
 
     _updateTotalAmount() {

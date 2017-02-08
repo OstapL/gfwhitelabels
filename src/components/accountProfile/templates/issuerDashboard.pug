@@ -1,7 +1,13 @@
 | !{ app.breadcrumbs('issuer dashboard', '', [ ['Home', '/'], ['issuer dashboard', ''],])}
 - var campaignHelpers = require('components/campaign/helpers.js');
-- var amt_raised_in_ks = Math.round(values.campaign.amount_raised/1000).toLocaleString('en-US');
+- var formcLinks = require('../../campaign/helpers.js').formcLinks
+- var moment = require('moment');
 
+//- linkedin sdk
+script( type="text/javascript" src="//platform.linkedin.com/in.js").
+    api_key:   #{global.linkedinClientId}
+    
+    
 section.issuer-dashbord-top
   .container
     .row
@@ -10,28 +16,33 @@ section.issuer-dashbord-top
           img(src=campaignHelpers.getImageCampaign(values.campaign) alt="")
           h2.text-uppercase.dosis.m-t-0 #{values.name}
           .timer_day #{campaignHelpers.daysLeft(values.campaign.expiration_date)} Days Left
-        .share-block.d-inline-block
+        .share-block.d-inline-block.share
           - var mailtoLink = 'mailto:?subject=Check out ' + (values.short_name || values.name) + '\'s fundraise on GrowthFountain&body=Check out ' + values.name + '\'s fundraise on GrowthFountain%0D%0A' + window.location.origin + '/' + values.id;
 
           - var facebookLink = 'https://www.facebook.com/dialog/share?app_id=' + global.facebookClientId + '&href=' + window.location.origin + '/' + values.id + '?r=' + Math.random() + '&description=' + values.description + '&locale=en_US&picture=' + campaignHelpers.getImageCampaign(values.campaign) + '&title=Check out ' + (values.short_name || values.name) + '\'s fundraise on GrowthFountain.com&caption=' + (values.campaign.caption || '');
 
-          - var twitterLink = 'https://twitter.com/share?url=' + window.location.origin + '/' + values.id + '&via=growthfountain&hashtags=investment,fundraising&text=Check out ' + (values.short_name || values.name) + '\'s fundraise on @growthfountain ';
+          - var twitterLink = 'https://twitter.com/share?url=' + window.location.origin + '/' + values.id + '&text=Check out ' + (values.short_name || values.name) + '\'s fundraise on @growthfountain ';
 
-          - var linkedinLink = 'https://www.linkedin.com/shareArticle?mini=true&url=' + window.location.origin + '/' + values.id + '&title=Check out ' + (values.short_name || values.name) + '\'s fundraise on GrowthFountain.com&summary=' + values.description + '&source=Growth Fountain';
-          span.font-weight-bold Share:
+          - var linkedinLink = '#';// 'https://www.linkedin.com/shareArticle?mini=true&url=' + window.location.origin + '/' + values.id + '&title=Check out ' + (values.short_name || values.name) + '\'s fundraise on GrowthFountain.com&summary=' + values.description + '&source=Growth Fountain';
+          span.d-inline-block 
+            i.fa.fa-share
+            |  Share:
           .social-dark.d-inline-block
-            a(href=mailtoLink data-close="true" data-popup-opt="width=1,height=1").link-1.email-share
-              i.fa.fa-envelope-o
             a(href=facebookLink target="_blank").link-1.facebook-share
-              i.fa.fa-facebook
+              i.fa.fa-facebook-square
             a(href=twitterLink target="_blank").link-1.twitter-share
-              i.fa.fa-twitter
+              i.fa.fa-twitter-square
             a(href=linkedinLink target="_blank").link-1.linkedin-share
-              i.fa.fa-linkedin
+              i.fa.fa-linkedin-square
+            a(href=mailtoLink data-close="true" data-popup-opt="width=1,height=1").link-1.email-share
+              i.fa.fa-envelope-square
+            
+            
+            
             //- a(href="#" target="_blank").link-1.google-plus-share
               i(aria-hidden="true").fa.fa-google-plus
 
-      .col-md-2.col-sm-6
+      .col-md-2.col-sm-6.col-xs-6
         a(href="").dashboard-stat
           .visual
             i.fa.fa-bar-chart
@@ -39,10 +50,10 @@ section.issuer-dashbord-top
             .number
               span(
                 data-counter="counterup"
-                data-value=values.campaign.amount_raised) $#{amt_raised_in_ks}K
+                data-value=values.campaign.amount_raised) $#{ values.campaign.amount_raised }
             .desc Amount Raised
 
-      .col-md-2.col-sm-6
+      .col-md-2.col-sm-6.col-xs-6
         a(href="").dashboard-stat.dashboard-stat-v2.grey
           .visual
             i.fa.fa-briefcase
@@ -53,7 +64,7 @@ section.issuer-dashbord-top
                 data-value=values.campaign.number_of_investors) #{values.number_of_investors.toLocaleString('en-US')}
             .desc Number of Investors
 
-      .col-md-2.col-sm-6
+      .col-md-2.col-sm-6.col-xs-6
         a(href="").dashboard-stat.dashboard-stat-v2.grey
           .visual
             i.fa.fa-users
@@ -64,7 +75,7 @@ section.issuer-dashbord-top
                 data-value=0) 0
             .desc Page Views
 
-      .col-md-2.col-sm-6
+      .col-md-2.col-sm-6.col-xs-6
         a(href="").dashboard-stat.dashboard-stat-v2.grey
           .visual
             i.fa.fa-comments
@@ -75,15 +86,12 @@ section.issuer-dashbord-top
                 data-value=0).interactions-count 0
             .desc New Interactions
 
-      .col-md-7.col-sm-7.p-r-0
-        -
-          var now = new Date();
-          var starting_date = helpers.date.formatDate(values.approved_date);
-          var expiration_date = helpers.date.formatDate(values.campaign.expiration_date);
-          var daysPassed = helpers.date.differenceInDays(starting_date, now);
-          var durationOfCampaign = helpers.date.differenceInDays(starting_date, expiration_date);
-          var percentage_raised = Math.round(100/durationOfCampaign * daysPassed);
+      .col-md-7.col-sm-10.p-r-0.col-xs-10.hidden-xs-down
         .tpl-progress
+          - 
+            var percentage_raised = campaignHelpers.daysLeftPercentage(values);
+            if(percentage_raised > 100) 
+              percentage_raised = 100;
           progress(
             value=percentage_raised
             max="100").progress.big_prog #{ percentage_raised }%
@@ -91,27 +99,47 @@ section.issuer-dashbord-top
             style="width:" + percentage_raised + "%").circle_progress
             i.fa.fa-circle-o
           span(style="left:" + percentage_raised + "%").text_position
-            | #{now.toLocaleString('en-US', { month: "short" })} #{ now.getDate() }
-            br
+            - var now = new Date();
+            .font-weight-bold
+              | #{now.toLocaleString('en-US', { month: "short" })} #{ now.getDate() }
             | #{ helpers.format.formatAmount(values.campaign.amount_raised) } Raised
             br
-            | #{ helpers.format.formatAmount(values.campaign.amount_commited) } Commited
+            | #{ helpers.format.formatAmount(values.campaign.amount_commited) } Approved
+            br
+            | Chances: #{ Math.round(percentage_raised / (values.campaign.minimum_raise  / values.campaign.amount_commited) * 100) }%
         .progress_description
           .pull-left
-            p #{helpers.format.formatMonthDate(starting_date)}
+            p #{ moment(values.approved_date).format('MM/DD/YYYY') }
             span Begining of campaign
           .pull-right.text-lg-right
-            p #{helpers.format.formatMonthDate(expiration_date)}
+            p #{ moment(values.campaign.expiration_date).format('MM/DD/YYYY') }
             span End of campaign
           .clearfix
-      .col-md-1.col-sm-1
+      .col-md-1.col-sm-2.col-xs-2.hidden-xs-down
         .right_fixed_text.text-lg-center
           b #{ helpers.format.formatAmount(values.campaign.minimum_raise || values.campaign.maximum_raise)}
           span Goal
-      .col-md-8.col-sm-12.text-lg-center
+      .col-md-8.col-sm-12.text-xs-center
         a(href="/" + values.id).btn-sm.btn.btn-secondary.text-uppercase view Campaign
           i(aria-hidden="true").fa.fa-angle-right
     .col-lg-12.border-bottom-50
+
+section.investors-dashbord-document
+  .container
+    .row
+      .col-xl-12
+        h2.text-uppercase documents with growthfountain
+        a(href=formcLinks[values.campaign.id] target="_blank").link-1
+          img(src="/img/lrg_US_Department_of_State35.gif").img-document.d-inline-block
+          h3.d-inline-block.m-t-0.m-b-0  Form C
+        br
+        a(href="https://api-esign-dev.growthfountain.com/pdf-doc/formc/listing_agreement.pdf?trans_percent=6&registration_fee=500&nonrefundable_fees=50&amendment_fee=200&commencement_date_x=2%2F6%2F2017&zip_code=20000&city=City+1&state=ID&address_1=Street+Address+1&address_2=Optional+Address+1&issuer_legal_name=Ratmir%27s+Company+Legal+Name&issuer_email=ratmir.asanov.1%40yandex.ru&issuer_signer=" target="_blank").link-1
+          h2.d-inline-block.m-t-1.m-b-0
+            i.fa.fa-file-pdf-o
+          h3.d-inline-block.m-t-0.m-b-0  Listing Agreement
+      .col-lg-12
+        .border-bottom.m-t-3.m-b-0
+
 section.grafic-dashboard
   div(style="display: none").container
     .row
