@@ -342,6 +342,7 @@ module.exports = {
       'submit form': api.submitAction,
     },
     getSuccessUrl(data) {
+      localStorage.setItem('token', data.token);
       return '/account/profile';
     },
     render(){
