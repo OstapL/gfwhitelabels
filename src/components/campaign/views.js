@@ -2,6 +2,7 @@ const formatHelper = require('helpers/formatHelper');
 const textHelper = require('helpers/textHelper');
 const companyFees = require('consts/companyFees.json');
 const typeOfDocuments = require('consts/typeOfDocuments.json');
+  var campaignHelpers = require('components/campaign/helpers.js');
 
 const usaStates = require('helpers/usaStates.js');
 
@@ -60,7 +61,7 @@ module.exports = {
       'hide.bs.collapse .panel': 'onCollapse',
       'show.bs.collapse .panel': 'onCollapse',
       'click .email-share': 'socialPopup',
-      'click .linkedin-share': 'socialPopup',
+      'click .linkedin-share': 'shareLinkedin',
       'click .facebook-share': 'socialPopup',
       'click .twitter-share': 'socialPopup',
       'click .see-all-risks': 'seeAllRisks',
@@ -211,6 +212,36 @@ module.exports = {
           currLink.removeClass("active");
         }
       });
+    },
+
+    loginLinkedin () {
+      const promise = new Promise( (resolve, reject) => IN.User.authorize(resolve) );
+      return promise;
+    },
+
+    shareLinkedin (e) {
+      e.preventDefault();
+      
+      const payload = { 
+        content: {
+          'title': 'Check out ' + (this.model.short_name || this.model.name) + '\'s fundraise on GrowthFountain.com',
+          'description': this.model.description,
+          'submitted-url': window.location.origin + '/' + this.model.id,
+          'submitted-image-url': campaignHelpers.getImageCampaign(this.model.campaign)
+        }, 
+        'visibility': { 
+          'code': 'anyone'
+        } 
+      };
+      
+      this.loginLinkedin().then( res => {
+        IN.API.Raw('/people/~/shares?format=json')
+          .method('POST')
+          .body(JSON.stringify(payload))
+          .result( console.log.bind(console, 'linkedin success: ') )
+          .error( console.log.bind(console, 'linkedin error: ') );
+      })
+      
     },
 
     socialPopup (e) {
