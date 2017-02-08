@@ -27,7 +27,6 @@ div(id=id class=cssClass data-level=level data-id=comment.uid).p-r-0.p-t-0.p-xs-
         // var roleBitmap = 0b1111111100 & comment.user.role;
         var roleBitmap = comment.user.role;
         //roleBitmap = roleBitmap || comment.user.role;
-        console.log(roleBitmap);
         var roles = roleHelper.extractRolesByPriority(roleBitmap);
 
       each role in roles
