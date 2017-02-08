@@ -2,7 +2,7 @@ const formatHelper = require('helpers/formatHelper');
 const textHelper = require('helpers/textHelper');
 const companyFees = require('consts/companyFees.json');
 const typeOfDocuments = require('consts/typeOfDocuments.json');
-  var campaignHelpers = require('components/campaign/helpers.js');
+const campaignHelpers = require('components/campaign/helpers.js');
 
 const usaStates = require('helpers/usaStates.js');
 
