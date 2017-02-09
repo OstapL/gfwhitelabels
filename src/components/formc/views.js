@@ -1812,7 +1812,7 @@ module.exports = {
           security_type: "Security Type",
           custom_security_type: "Custom Security Type",
           other_rights: "Other Rights",
-          amount_authroized: "Amount Authorized",
+          amount_authorized: "Amount Authorized",
           amount_outstanding: "Amount Outstanding",
           voting_right: "Voting right",
           terms_and_rights: "Describe all material terms and rights",
@@ -1865,7 +1865,10 @@ module.exports = {
       const sectionName = e.target.dataset.section;
       const template = require('./templates/snippets/outstanding_securities.pug');
 
-      data.amount_authroized = data.amount_authroized.replace(/[\$\,]/g, '');
+      data.amount_authorized = data.amount_authorized.replace(/[\$\,]/g, '');
+      if(data.amount_authorized.toLocaleLowerCase() == 'n/a' || data.amount_authorized.toLocaleLowerCase() == 'not available') {
+        data.amount_authorized = null;
+      }
       data.amount_outstanding = data.amount_outstanding.replace(/[\$\,]/g, '');
       if (!validation.validate(this.fields.outstanding_securities.schema, data, this)) {
         _(validation.errors).each((errors, key) => {
@@ -1896,6 +1899,7 @@ module.exports = {
         });
 
         e.target.querySelector('textarea').value = '';
+        debugger;
         api.makeRequest(
           this.urlRoot.replace(':id', this.model.id),
           'PATCH',
