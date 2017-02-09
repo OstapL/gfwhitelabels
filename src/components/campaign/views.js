@@ -13,6 +13,7 @@ const helpers = {
   fileList: require('helpers/fileList.js'),
   date: require('helpers/dateHelper.js'),
   campaign: require('./helpers.js'),
+  social: require('helpers/socialNetworks.js'),
 };
 
 const COUNTRIES = require('consts/countries.json');
@@ -53,7 +54,7 @@ module.exports = {
     },
   }),
 
-  detail: Backbone.View.extend({
+  detail: Backbone.View.extend(_.extend({
     el: '#content',
     template: require('./templates/detail.pug'),
     events: {
@@ -221,19 +222,19 @@ module.exports = {
 
     shareLinkedin (e) {
       e.preventDefault();
-      
-      const payload = { 
+
+      const payload = {
         content: {
           'title': 'Check out ' + (this.model.short_name || this.model.name) + '\'s fundraise on GrowthFountain.com',
           'description': this.model.description,
           'submitted-url': window.location.origin + '/' + this.model.id,
           'submitted-image-url': campaignHelpers.getImageCampaign(this.model.campaign)
-        }, 
-        'visibility': { 
+        },
+        'visibility': {
           'code': 'anyone'
-        } 
+        }
       };
-      
+
       this.loginLinkedin().then( res => {
         IN.API.Raw('/people/~/shares?format=json')
           .method('POST')
@@ -241,18 +242,7 @@ module.exports = {
           .result( console.log.bind(console, 'linkedin success: ') )
           .error( console.log.bind(console, 'linkedin error: ') );
       })
-      
-    },
 
-    socialPopup (e) {
-      e.preventDefault();
-      var popupOpt = e.currentTarget.dataset.popupOpt || 'toolbar=0,status=0,left=45%,top=45%,width=626,height=436';
-      var windowChild = window.open(e.currentTarget.href, '', popupOpt);
-   
-      if (e.currentTarget.dataset.close) {
-        let closeScript = "<script>setTimeout(window.close.bind(window), 400);</script>";
-        windowChild.document.write(closeScript);
-      }
     },
 
     showDocumentsModal(e) {
@@ -398,7 +388,7 @@ module.exports = {
       $(e.target).parent().addClass('show-more-detail');
     },
 
-  }),
+  }, helpers.social.methods)),
 
   investment: Backbone.View.extend({
     el: '#content',
@@ -1134,9 +1124,11 @@ module.exports = {
 
   }),
 
-  investmentThankYou: Backbone.View.extend({
+  investmentThankYou: Backbone.View.extend(_.extend({
     template: require('./templates/thankYou.pug'),
     el: '#content',
+    events: _.extend({}, helpers.social.events),
+
     initialize(options) {
       // this.render();
     },
@@ -1151,6 +1143,7 @@ module.exports = {
       );
       return this;
     },
-  }),
+
+  }, helpers.social.methods)),
 };
 

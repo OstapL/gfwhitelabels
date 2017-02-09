@@ -10,6 +10,8 @@ const helpers = {
   dropzone: require('helpers/dropzoneHelpers.js'),
   yesNo: require('helpers/yesNoHelper.js'),
   fileList: require('helpers/fileList.js'),
+  socialNetworks: require('helpers/socialNetworks.js'),
+  campaign: require('components/campaign/helpers.js'),
 };
 
 const moment = require('moment');
@@ -518,6 +520,7 @@ module.exports = {
       return this;
     },
   }),
+
   companyDashboardFirst: Backbone.View.extend({
     el: '#content',
     template: require('./templates/companyDashboardFirst.pug'),
@@ -531,6 +534,7 @@ module.exports = {
       return this;
     },
   }),
+
   afterPaymentDashboard: Backbone.View.extend({
     el: '#content',
     template: require('./templates/afterPaymentDashboard.pug'),
@@ -544,6 +548,7 @@ module.exports = {
       return this;
     },
   }),
+
   afterCompleteDashboard: Backbone.View.extend({
     el: '#content',
     template: require('./templates/afterCompleteFillingDashboard.pug'),
@@ -557,6 +562,7 @@ module.exports = {
       return this;
     },
   }),
+
   afterFinalDashboard: Backbone.View.extend({
     el: '#content',
     template: require('./templates/afterFinalSubmitDashboard.pug'),
@@ -570,6 +576,7 @@ module.exports = {
       return this;
     },
   }),
+
   afterSubmittingGovermentDashboard: Backbone.View.extend({
     el: '#content',
     template: require('./templates/afterSubmittingGovermentDashboard.pug'),
@@ -595,13 +602,50 @@ module.exports = {
       'click .cancel-campaign': 'cancelCampaign',
     },
 
-    initialize(options) {},
+    initialize(options) {
+
+      const url = window.location.origin + '/' + this.model.id;
+      const description = this.model.description;
+      const title = 'Check out ' + (this.model.short_name || this.model.name) + 's fundraise on GrowthFountain.com';
+      const caption = this.model.campaign.caption || '';
+      const picture = helpers.campaign.getImageCampaign(this.model.campaign);
+
+      this.shareLinks = {
+        facebook: helpers.socialNetworks.getFacebookLink({
+          //{ app_id, url, description, locale, picture, title, caption }
+          app_id: global.facebookClientId,
+          url: url,
+          description: description,
+          // locale: 'en_US',
+          picture: picture,
+          title: title,
+          caption: caption,
+        }),
+        twitter: helpers.socialNetworks.getTwitterLink({
+          //{ url, text }
+          url: url,
+          text: 'Check out ' + (this.model.short_name || this.model.name) + 's fundraise on @growthfountain ',
+        }),
+        linkedin: helpers.socialNetworks.getLinkedinLink({
+          //{ url, title, description || summary, source }
+          url: url,
+          title: title,
+          summary: description,
+          // source: `Growth Fountain`,
+        }),
+        mailTo: helpers.socialNetworks.getMailToLink({
+          subject: title,
+          text: 'Check out '  + this.model.name + '\'s fundraise on GrowthFountain%0D%0A' + url,
+        }),
+      }
+    },
 
     render(){
       this.$el.html(
         this.template({
           values: this.model,
           helpers: helpers,
+          shareLinks: this.shareLinks,
         })
       );
 
@@ -643,19 +687,19 @@ module.exports = {
 
     shareLinkedin (e) {
       e.preventDefault();
-      
-      const payload = { 
+
+      const payload = {
         content: {
           'title': 'Check out ' + (this.model.short_name || this.model.name) + '\'s fundraise on GrowthFountain.com',
           'description': this.model.description,
           'submitted-url': window.location.origin + '/' + this.model.id,
           'submitted-image-url': campaignHelpers.getImageCampaign(this.model.campaign)
-        }, 
-        'visibility': { 
+        },
+        'visibility': {
           'code': 'anyone'
-        } 
+        }
       };
-      
+
       this.loginLinkedin().then( res => {
         IN.API.Raw('/people/~/shares?format=json')
           .method('POST')
@@ -663,9 +707,9 @@ module.exports = {
           .result( console.log.bind(console, 'linkedin success: ') )
           .error( console.log.bind(console, 'linkedin error: ') );
       })
-      
+
     },
-    
+
     socialPopup (e) {
       e.preventDefault();
       var popupOpt = e.currentTarget.dataset.popupOpt || 'toolbar=0,status=0,left=45%,top=45%,width=626,height=436';
@@ -713,6 +757,7 @@ module.exports = {
         $('.interactions-count').text(commentsCount);
       });
     },
-  }),
+
+  }, helpers.socialNetworks.methods)),
 
 };

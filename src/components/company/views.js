@@ -1,4 +1,5 @@
 const formatHelper = require('helpers/formatHelper');
+const socialNetworks = require('helpers/socialNetworks.js');
 
 module.exports = { 
   list: Backbone.View.extend({
@@ -26,16 +27,12 @@ module.exports = {
     },
   }),
 
-  detail: Backbone.View.extend({
+  detail: Backbone.View.extend(_.extend({
     template: require('./templates/detail.pug'),
-    events: {
+    events: _.extend({
       'click .tabs-scroll .nav .nav-link': 'smoothScroll',
       'hide.bs.collapse .panel': 'onCollapse',
       'show.bs.collapse .panel': 'onCollapse',
-      'click .email-share': 'shareWithEmail',
-      'click .linkedin-share': 'shareOnLinkedin',
-      'click .facebook-share': 'shareOnFacebook',
-      'click .twitter-share': 'shareOnTwitter',
       'click .see-all-risks': 'seeAllRisks',
       'click .see-all-faq': 'seeAllFaq',
       'click .linkresponse': 'checkResponse',
@@ -46,7 +43,7 @@ module.exports = {
       'shown.bs.collapse #hidden-article-press' :'onArticlePressCollapse',
       'submit .comment-form': 'submitComment',
       'click .submit_form': 'submitCampaign',
-    },
+    }, socialNetworks.events),
 
     onCollapse (e) {
       let $elem = $(e.currentTarget);
@@ -402,8 +399,9 @@ module.exports = {
           this.$el.find('.has-error').scrollTo();
         }
       }
-    }
-  }),
+    },
+
+  }, socialNetworks.methods)),
 
   investment: Backbone.View.extend({
     template: require('./templates/investment.pug'),
