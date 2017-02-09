@@ -13,7 +13,6 @@ const helpers = {
   fileList: require('helpers/fileList.js'),
   date: require('helpers/dateHelper.js'),
   campaign: require('./helpers.js'),
-  social: require('helpers/socialNetworks.js'),
 };
 
 const COUNTRIES = require('consts/countries.json');
@@ -54,17 +53,13 @@ module.exports = {
     },
   }),
 
-  detail: Backbone.View.extend(_.extend({
+  detail: Backbone.View.extend({
     el: '#content',
     template: require('./templates/detail.pug'),
     events: {
       'click .tabs-scroll .nav .nav-link': 'smoothScroll',
       'hide.bs.collapse .panel': 'onCollapse',
       'show.bs.collapse .panel': 'onCollapse',
-      'click .email-share': 'socialPopup',
-      'click .linkedin-share': 'shareLinkedin',
-      'click .facebook-share': 'socialPopup',
-      'click .twitter-share': 'socialPopup',
       'click .see-all-risks': 'seeAllRisks',
       'click .see-all-faq': 'seeAllFaq',
       'click .show-more-members': 'readMore',
@@ -215,36 +210,6 @@ module.exports = {
       });
     },
 
-    loginLinkedin () {
-      const promise = new Promise( (resolve, reject) => IN.User.authorize(resolve) );
-      return promise;
-    },
-
-    shareLinkedin (e) {
-      e.preventDefault();
-
-      const payload = {
-        content: {
-          'title': 'Check out ' + (this.model.short_name || this.model.name) + '\'s fundraise on GrowthFountain.com',
-          'description': this.model.description,
-          'submitted-url': window.location.origin + '/' + this.model.id,
-          'submitted-image-url': campaignHelpers.getImageCampaign(this.model.campaign)
-        },
-        'visibility': {
-          'code': 'anyone'
-        }
-      };
-
-      this.loginLinkedin().then( res => {
-        IN.API.Raw('/people/~/shares?format=json')
-          .method('POST')
-          .body(JSON.stringify(payload))
-          .result( console.log.bind(console, 'linkedin success: ') )
-          .error( console.log.bind(console, 'linkedin error: ') );
-      })
-
-    },
-
     showDocumentsModal(e) {
       e.preventDefault();
       helpers.fileList.show(this.companyDocsData);
@@ -388,7 +353,7 @@ module.exports = {
       $(e.target).parent().addClass('show-more-detail');
     },
 
-  }, helpers.social.methods)),
+  }),
 
   investment: Backbone.View.extend({
     el: '#content',
@@ -1124,11 +1089,9 @@ module.exports = {
 
   }),
 
-  investmentThankYou: Backbone.View.extend(_.extend({
+  investmentThankYou: Backbone.View.extend({
     template: require('./templates/thankYou.pug'),
     el: '#content',
-    events: _.extend({}, helpers.social.events),
-
     initialize(options) {
       // this.render();
     },
@@ -1143,7 +1106,6 @@ module.exports = {
       );
       return this;
     },
-
-  }, helpers.social.methods)),
+  }),
 };
 

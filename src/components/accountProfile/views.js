@@ -10,8 +10,6 @@ const helpers = {
   dropzone: require('helpers/dropzoneHelpers.js'),
   yesNo: require('helpers/yesNoHelper.js'),
   fileList: require('helpers/fileList.js'),
-  socialNetworks: require('helpers/socialNetworks.js'),
-  campaign: require('components/campaign/helpers.js'),
 };
 
 const moment = require('moment');
@@ -594,58 +592,16 @@ module.exports = {
   issuerDashboard: Backbone.View.extend({
     template: require('./templates/issuerDashboard.pug'),
     events: {
-      'click .email-share': 'socialPopup',
-      'click .facebook-share': 'socialPopup',
-      'click .twitter-share': 'socialPopup',
-      'click .linkedin-share': 'shareLinkedin',
-      'click .google-plus-share': 'socialPopup',
       'click .cancel-campaign': 'cancelCampaign',
     },
 
-    initialize(options) {
-
-      const url = window.location.origin + '/' + this.model.id;
-      const description = this.model.description;
-      const title = 'Check out ' + (this.model.short_name || this.model.name) + 's fundraise on GrowthFountain.com';
-      const caption = this.model.campaign.caption || '';
-      const picture = helpers.campaign.getImageCampaign(this.model.campaign);
-
-      this.shareLinks = {
-        facebook: helpers.socialNetworks.getFacebookLink({
-          //{ app_id, url, description, locale, picture, title, caption }
-          app_id: global.facebookClientId,
-          url: url,
-          description: description,
-          // locale: 'en_US',
-          picture: picture,
-          title: title,
-          caption: caption,
-        }),
-        twitter: helpers.socialNetworks.getTwitterLink({
-          //{ url, text }
-          url: url,
-          text: 'Check out ' + (this.model.short_name || this.model.name) + 's fundraise on @growthfountain ',
-        }),
-        linkedin: helpers.socialNetworks.getLinkedinLink({
-          //{ url, title, description || summary, source }
-          url: url,
-          title: title,
-          summary: description,
-          // source: `Growth Fountain`,
-        }),
-        mailTo: helpers.socialNetworks.getMailToLink({
-          subject: title,
-          text: 'Check out '  + this.model.name + '\'s fundraise on GrowthFountain%0D%0A' + url,
-        }),
-      }
-    },
+    initialize(options) {},
 
     render(){
       this.$el.html(
         this.template({
           values: this.model,
           helpers: helpers,
-          shareLinks: this.shareLinks,
         })
       );
 
@@ -678,47 +634,6 @@ module.exports = {
       //   $('.notification-container ul').append($('<li>').html('<a>' + msg + '</a>'));
       // });
       return this;
-    },
-
-    loginLinkedin () {
-      const promise = new Promise( (resolve, reject) => IN.User.authorize(resolve) );
-      return promise;
-    },
-
-    shareLinkedin (e) {
-      e.preventDefault();
-
-      const payload = {
-        content: {
-          'title': 'Check out ' + (this.model.short_name || this.model.name) + '\'s fundraise on GrowthFountain.com',
-          'description': this.model.description,
-          'submitted-url': window.location.origin + '/' + this.model.id,
-          'submitted-image-url': campaignHelpers.getImageCampaign(this.model.campaign)
-        },
-        'visibility': {
-          'code': 'anyone'
-        }
-      };
-
-      this.loginLinkedin().then( res => {
-        IN.API.Raw('/people/~/shares?format=json')
-          .method('POST')
-          .body(JSON.stringify(payload))
-          .result( console.log.bind(console, 'linkedin success: ') )
-          .error( console.log.bind(console, 'linkedin error: ') );
-      })
-
-    },
-
-    socialPopup (e) {
-      e.preventDefault();
-      var popupOpt = e.currentTarget.dataset.popupOpt || 'toolbar=0,status=0,left=45%,top=45%,width=626,height=436';
-      var windowChild = window.open(e.currentTarget.href, '', popupOpt);
-   
-      if (e.currentTarget.dataset.close) {
-        let closeScript = "<script>setTimeout(window.close.bind(window), 400);</script>";
-        windowChild.document.write(closeScript);
-      }
     },
 
     cancelCampaign(e) {
@@ -757,7 +672,6 @@ module.exports = {
         $('.interactions-count').text(commentsCount);
       });
     },
-
-  }, helpers.socialNetworks.methods)),
+  }),
 
 };
