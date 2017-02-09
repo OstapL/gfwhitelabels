@@ -32,7 +32,7 @@ const COMMENTS_ROLES_PRIORITY = [
 
 module.exports = {
   isOfficer(role) {
-    return !!(role & OFFICER_ROLES_MASK);
+    return role > 2;
   },
 
   isDirector(role) {
