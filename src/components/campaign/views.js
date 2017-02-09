@@ -60,10 +60,6 @@ module.exports = {
       'click .tabs-scroll .nav .nav-link': 'smoothScroll',
       'hide.bs.collapse .panel': 'onCollapse',
       'show.bs.collapse .panel': 'onCollapse',
-      'click .email-share': 'socialPopup',
-      'click .linkedin-share': 'shareLinkedin',
-      'click .facebook-share': 'socialPopup',
-      'click .twitter-share': 'socialPopup',
       'click .see-all-risks': 'seeAllRisks',
       'click .see-all-faq': 'seeAllFaq',
       'click .show-more-members': 'readMore',
@@ -212,47 +208,6 @@ module.exports = {
           currLink.removeClass("active");
         }
       });
-    },
-
-    loginLinkedin () {
-      const promise = new Promise( (resolve, reject) => IN.User.authorize(resolve) );
-      return promise;
-    },
-
-    shareLinkedin (e) {
-      e.preventDefault();
-      
-      const payload = { 
-        content: {
-          'title': 'Check out ' + (this.model.short_name || this.model.name) + '\'s fundraise on GrowthFountain.com',
-          'description': this.model.description,
-          'submitted-url': window.location.origin + '/' + this.model.id,
-          'submitted-image-url': campaignHelpers.getImageCampaign(this.model.campaign)
-        }, 
-        'visibility': { 
-          'code': 'anyone'
-        } 
-      };
-      
-      this.loginLinkedin().then( res => {
-        IN.API.Raw('/people/~/shares?format=json')
-          .method('POST')
-          .body(JSON.stringify(payload))
-          .result( console.log.bind(console, 'linkedin success: ') )
-          .error( console.log.bind(console, 'linkedin error: ') );
-      })
-      
-    },
-
-    socialPopup (e) {
-      e.preventDefault();
-      var popupOpt = e.currentTarget.dataset.popupOpt || 'toolbar=0,status=0,left=45%,top=45%,width=626,height=436';
-      var windowChild = window.open(e.currentTarget.href, '', popupOpt);
-   
-      if (e.currentTarget.dataset.close) {
-        let closeScript = "<script>setTimeout(window.close.bind(window), 400);</script>";
-        windowChild.document.write(closeScript);
-      }
     },
 
     showDocumentsModal(e) {

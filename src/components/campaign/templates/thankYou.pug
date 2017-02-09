@@ -1,7 +1,10 @@
 | !{app.breadcrumbs('Invest', '', [ ['Home', '/'], ['Explore', '/companies'], [investment.company.name, '/' + investment.company_id], ['Invest in ' + investment.company.name, '']])}
 -
   var SECURITY_TYPE = require('consts/raisecapital/security_type.json');
-  console.log(investment)
+  var socialDirective = require('directives/social/index.js');
+  var socialShare = _.extend({
+    campaign: investment.campaign,
+  }, investment.company);
 .container
   .row
     .col-sm-8.offset-sm-2
@@ -17,19 +20,7 @@
     .col-xl-12.text-xs-center
       h3.font-weight-light.m-t-0 “I just invested in #{ investment.company.name }!”
     .col-lg-12.share.p-t-0.text-xs-center.m-b-2
-      span.d-inline-block 
-        i.fa.fa-share
-        |  Share:
-          
-      .d-inline-block
-        a(href=facebookLink target="_blank").facebook-share
-          i.fa.fa-facebook-square
-        a(href=twitterLink target="_blank").twitter-share
-          i.fa.fa-twitter-square
-        a(href=linkedinLink target="_blank").linkedin-share
-          i.fa.fa-linkedin-square
-        a(href=mailtoLink data-close="true" data-popup-opt="width=1,height=1").email-share
-          i.fa.fa-envelope-square
+      | !{ socialDirective(socialShare).render() }
   .row.thank-you-page
     .col-xl-8.offset-xl-2.overview
       .thankyou-page
