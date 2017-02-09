@@ -76,10 +76,10 @@ section.issuer-dashbord-top
             .font-weight-bold
               | #{now.toLocaleString('en-US', { month: "short" })} #{ now.getDate() }
             | #{ helpers.format.formatAmount(values.campaign.amount_raised) } Raised
-            br
-            | #{ helpers.format.formatAmount(values.campaign.amount_commited) } Approved
-            br
-            | Chances: #{ Math.round(percentage_raised / (values.campaign.minimum_raise  / values.campaign.amount_commited) * 100) }%
+            //br
+            //| #{ helpers.format.formatAmount(values.campaign.amount_commited) } Approved
+            //br
+            //| Chances: #{ Math.round(percentage_raised / (values.campaign.minimum_raise  / values.campaign.amount_commited) * 100) }%
         .progress_description
           .pull-left
             p #{ moment(values.approved_date).format('MM/DD/YYYY') }
@@ -110,6 +110,16 @@ section.investors-dashbord-document
           h2.d-inline-block.m-t-1.m-b-0
             i.fa.fa-file-pdf-o
           h3.d-inline-block.m-t-0.m-b-0  Listing Agreement
+        br
+        a(href=bucketServer + '/docs/GrowthFountain_Crowdfunding_Success_Checklist.pdf' target="_blank").link-1
+          h2.d-inline-block.m-t-1.m-b-0
+            i.fa.fa-file-pdf-o
+          h3.d-inline-block.m-t-0.m-b-0  GrowthFountain Crowdfunding Success Checklist
+        br
+        a(href=bucketServer + '/docs/How_to_Run_a_Successful_Crowdfunding_Campaign_MoneyInc.pdf' target="_blank").link-1
+          h2.d-inline-block.m-t-1.m-b-0
+            i.fa.fa-file-pdf-o
+          h3.d-inline-block.m-t-0.m-b-0  How to Run a Successful Crowdfunding Campaign
       .col-lg-12
         .border-bottom.m-t-3.m-b-0
 
