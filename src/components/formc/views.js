@@ -151,8 +151,10 @@ module.exports = {
         template: 'formc/funding_portal_listing_agreement.pdf'
       };
 
-      $.post(reqUrl, data)
-        .fail( (err) => console.log(err));
+      app.makeRequest(reqUrl, 'POST', data, {
+        contentType: 'application/json; charset=utf-8',
+        crossDomain: true
+      })
     },
 
     openPdf (e) {
