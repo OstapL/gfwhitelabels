@@ -2,12 +2,8 @@
 - var campaignHelpers = require('components/campaign/helpers.js');
 - var formcLinks = require('../../campaign/helpers.js').formcLinks
 - var moment = require('moment');
+- var socialDirective = require('directives/social/index.js');
 
-//- linkedin sdk
-script( type="text/javascript" src="//platform.linkedin.com/in.js").
-    api_key:   #{global.linkedinClientId}
-    
-    
 section.issuer-dashbord-top
   .container
     .row
@@ -17,27 +13,7 @@ section.issuer-dashbord-top
           h2.text-uppercase.dosis.m-t-0 #{values.name}
           .timer_day #{campaignHelpers.daysLeft(values.campaign.expiration_date)} Days Left
         .share-block.d-inline-block.share
-          - var mailtoLink = 'mailto:?subject=Check out ' + (values.short_name || values.name) + '\'s fundraise on GrowthFountain&body=Check out ' + values.name + '\'s fundraise on GrowthFountain%0D%0A' + window.location.origin + '/' + values.id;
-
-          - var facebookLink = 'https://www.facebook.com/dialog/share?app_id=' + global.facebookClientId + '&href=' + window.location.origin + '/' + values.id + '?r=' + Math.random() + '&description=' + values.description + '&locale=en_US&picture=' + campaignHelpers.getImageCampaign(values.campaign) + '&title=Check out ' + (values.short_name || values.name) + '\'s fundraise on GrowthFountain.com&caption=' + (values.campaign.caption || '');
-
-          - var twitterLink = 'https://twitter.com/share?url=' + window.location.origin + '/' + values.id + '&text=Check out ' + (values.short_name || values.name) + '\'s fundraise on @growthfountain ';
-
-          - var linkedinLink = '#';// 'https://www.linkedin.com/shareArticle?mini=true&url=' + window.location.origin + '/' + values.id + '&title=Check out ' + (values.short_name || values.name) + '\'s fundraise on GrowthFountain.com&summary=' + values.description + '&source=Growth Fountain';
-          span.d-inline-block 
-            i.fa.fa-share
-            |  Share:
-          .social-dark.d-inline-block
-            a(href=facebookLink target="_blank").link-1.facebook-share
-              i.fa.fa-facebook-square
-            a(href=twitterLink target="_blank").link-1.twitter-share
-              i.fa.fa-twitter-square
-            a(href=linkedinLink target="_blank").link-1.linkedin-share
-              i.fa.fa-linkedin-square
-            a(href=mailtoLink data-close="true" data-popup-opt="width=1,height=1").link-1.email-share
-              i.fa.fa-envelope-square
-            //- a(href="#" target="_blank").link-1.google-plus-share
-              i(aria-hidden="true").fa.fa-google-plus
+          | !{ socialDirective(this.model).render() }
 
       .col-md-2.col-sm-6.col-xs-6
         a(href="").dashboard-stat
