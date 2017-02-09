@@ -217,48 +217,15 @@
 	img
 		max-width: 255px
 
-#carousel-main
-  
-	.carousel-item
-		&:before
-			width: 100%
-			background-color: $black
-			opacity: .3
-			position: absolute
-			z-index: 1
-			content: ''
-			height: 100%
-			left: 0
-			bottom: 0
-		img
-			width: 100vw
-			height: 92vh
-
-	.carousel-caption
-		transform: translate(-50%, -50%)
-
-		top: 50%
+.home-wrap-text-block
+	.wrap
+		position: absolute 
 		left: 50%
-		right: 0
-		bottom: 0
-
-		padding-top: 0
-		width: 82%
-
-		text-shadow: none
-
-		h1
-			font-size: rem(48)
-			color: $white
-			letter-spacing: rem(9.6)
-			margin-bottom: rem(50)
-		.small-text
-			line-height: rem(26)
-			color: $white
-			letter-spacing: rem(.6)
-			font-size: rem(24)
-			font-weight: 300
-
+		top: 50%
+		-ms-transform: translate(-50%,-50%)
+		-webkit-transform: translate(-50%,-50%)
+		transform: translate(-50%,-50%)
+		width: 100%
 @media only screen and (max-width : 992px)
 	.home-text-main
 		h1
