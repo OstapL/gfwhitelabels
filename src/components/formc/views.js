@@ -1780,6 +1780,8 @@ module.exports = {
       'change #security_type': 'outstandingSecurityUpdate',
       'click #submitForm': api.submitAction,
       'click .submit_formc': submitFormc,
+      'click .newOustanding': 'newOustanding',
+      'click .editOutstanding': 'editOutstanding',
       'click .delete-outstanding': 'deleteOutstanding',
     }, addSectionHelper.events, menuHelper.events, yesNoHelper.events, /*leavingConfirmationHelper.events*/),
 
@@ -1856,12 +1858,48 @@ module.exports = {
 
     },
 
+    newOustanding(e) {
+      e.preventDefault();
+      this.el.querySelector('#security_type').selectedIndex = "";
+      this.el.querySelector('#terms_and_rights').value = "";
+      this.el.querySelector('#amount_authorized').value = "";
+      this.el.querySelector('#amount_outstanding').value = "";
+      this.el.querySelector('input[name="voting_right"][value="0"]').checked = false;
+      this.el.querySelector('input[name="voting_right"][value="1"]').checked = false;
+      this.el.querySelector('#custom_security_type').value = '';
+      this.el.querySelector('#security_model_form').dataset.update = -1;
+      this.el.querySelector('.custom_security_type').style.display = 'none';
+      $('#security_modal').modal();
+    },
+
     outstandingSecurityUpdate(e) {
       if (e.target.options[e.target.selectedIndex].value == '5') {
         $('#security_modal #custom_security_type').parent().parent().show();
       } else {
         $('#security_modal #custom_security_type').parent().parent().hide();
       }
+    },
+
+    editOutstanding(e) {
+      e.preventDefault();
+      const data = this.model.outstanding_securities[e.currentTarget.dataset.index];
+
+      if(data.amount_authorized == null || data.amount_authorized == "") {
+        data.amount_authorized = 'n/a';
+      }
+
+      this.el.querySelector('#security_type').selectedIndex = data.security_type;
+      this.el.querySelector('#terms_and_rights').value = data.terms_and_rights;
+      this.el.querySelector('#amount_authorized').value = data.amount_authorized;
+      this.el.querySelector('#amount_outstanding').value = data.amount_outstanding;
+      this.el.querySelector('input[name="voting_right"][value="' + (+data.voting_right) + '"]').checked = true;
+      this.el.querySelector('#custom_security_type').value = data.custom_security_type;
+      this.el.querySelector('#security_model_form').dataset.update = e.currentTarget.dataset.index;
+
+      if(data.security_type == 5) {
+          this.el.querySelector('.custom_security_type').style.display = 'block';
+      }
+      $('#security_modal').modal();
     },
 
     addOutstanding(e) {
@@ -1871,11 +1909,20 @@ module.exports = {
       const sectionName = e.target.dataset.section;
       const template = require('./templates/snippets/outstanding_securities.pug');
 
-      data.amount_authorized = data.amount_authorized.replace(/[\$\,]/g, '');
-      if(data.amount_authorized.toLocaleLowerCase() == 'n/a' || data.amount_authorized.toLocaleLowerCase() == 'not available') {
+      if(data.amount_authorized.toLocaleLowerCase() == 'n/a' ||
+          data.amount_authorized.toLocaleLowerCase() == 'not available' ||
+          data.amount_authorized.toLocaleLowerCase() == 'na') {
         data.amount_authorized = null;
+      } else {
+        data.amount_authorized = Math.round(
+            data.amount_authorized.replace(/[\$\,]/g, '') * 100 
+        ) / 100;
       }
-      data.amount_outstanding = data.amount_outstanding.replace(/[\$\,]/g, '');
+
+      data.amount_outstanding = Math.round(
+          data.amount_outstanding.replace(/[\$\,]/g, '') * 100
+      ) / 100;
+
       if (!validation.validate(this.fields.outstanding_securities.schema, data, this)) {
         _(validation.errors).each((errors, key) => {
           validation.invalidMsg(this, key, errors);
@@ -1883,19 +1930,27 @@ module.exports = {
         this.$('.help-block').prev().scrollTo(5);
         return;
       } else {
-        this.$el.find('.outstanding_securities_block').show();
-        $('.' + sectionName + '_container').append(
-          template({
-            fields: this.fields[sectionName],
-            name: sectionName,
-            attr: this.fields[sectionName],
-            value: data,
-            index: this[sectionName + 'Index'],
-          })
-        );
+        debugger;
 
-        this.model[sectionName].push(data);
-        this[sectionName + 'Index']++;
+        if(e.currentTarget.dataset.update == -1) {
+          this.$el.find('.outstanding_securities_block').show();
+          $('.' + sectionName + '_container').append(
+            template({
+              fields: this.fields[sectionName],
+              name: sectionName,
+              attr: this.fields[sectionName],
+              value: data,
+              index: this[sectionName + 'Index'],
+            })
+          );
+
+          this.model[sectionName].push(data);
+          this[sectionName + 'Index']++;
+        } else {
+          this.model[sectionName][e.currentTarget.dataset.update]= data;
+        }
+
+        this.el.querySelector('#security_model_form').dataset.update = -1;
 
         $('#security_modal').modal('hide');
 
@@ -1905,7 +1960,6 @@ module.exports = {
         });
 
         e.target.querySelector('textarea').value = '';
-        debugger;
         api.makeRequest(
           this.urlRoot.replace(':id', this.model.id),
           'PATCH',

@@ -99,7 +99,7 @@ section.formc-team-members-director.container.m-b-85
             i.fa.fa-times
 
       .modal-body.p-t-0
-        form(data-section='outstanding_securities')#security_model_form.modal-form
+        form(data-section='outstanding_securities' data-update=-1)#security_model_form.modal-form
           .form-section
             -
               pug_html += app.fields.fieldChoiceLabel('security_type', _.extend({
