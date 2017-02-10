@@ -183,18 +183,7 @@ section.campaigndetail
             a(href="/" + values.id + "/invest").btn.btn-primary.text-uppercase.pull-lg-right Invest
         .row
           .col-lg-12.share.hidden-sm-up.text-xs-center
-            span.d-block 
-              i.fa.fa-share
-              |  Share:
-            .d-block.m-t-1
-              a(href=facebookLink target="_blank").facebook-share
-                i.fa.fa-facebook-square
-              a(href=twitterLink target="_blank").twitter-share
-                i.fa.fa-twitter-square
-              a(href=linkedinLink target="_blank").linkedin-share
-                i.fa.fa-linkedin-square
-              a(href=mailtoLink data-close="true" data-popup-opt="width=1,height=1").email-share
-                i.fa.fa-envelope-square
+            | !{ socialDirective(this.model).render() }
 section.border-bottom-scroll.hidden-lg-down
   .container.tabs-scroll.p-t-2
     nav(data-toggle="sticky-onscroll").navbar.navbar-default.sticky
