@@ -113,7 +113,7 @@ class SocialNetworks {
               '&locale=en_US' +
               '&picture=' + values.picture +
               '&title=' + (values.title || '') +
-              '&caption=' + (values.caption || 'Shared by FINRA approved company');
+              '&caption=Shared by FINRA approved company';
   }
 
   //{ url, title, description || summary, source }
