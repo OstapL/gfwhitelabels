@@ -42,6 +42,12 @@
 	.accredited_investor {
 		font-size: rem(15);
 		line-height: rem(22);
+		@media screen and (max-width: 768px) {
+			input {
+			margin-right: 10px;
+		}
+		}
+		
 	}
 	.icon-delete-edit {
 		position: absolute;
