@@ -342,6 +342,7 @@ module.exports = {
       'submit form': api.submitAction,
     },
     getSuccessUrl(data) {
+      localStorage.setItem('token', data.key);
       return '/account/profile';
     },
     render(){
@@ -518,6 +519,7 @@ module.exports = {
       return this;
     },
   }),
+
   companyDashboardFirst: Backbone.View.extend({
     el: '#content',
     template: require('./templates/companyDashboardFirst.pug'),
@@ -531,6 +533,7 @@ module.exports = {
       return this;
     },
   }),
+
   afterPaymentDashboard: Backbone.View.extend({
     el: '#content',
     template: require('./templates/afterPaymentDashboard.pug'),
@@ -544,6 +547,7 @@ module.exports = {
       return this;
     },
   }),
+
   afterCompleteDashboard: Backbone.View.extend({
     el: '#content',
     template: require('./templates/afterCompleteFillingDashboard.pug'),
@@ -557,6 +561,7 @@ module.exports = {
       return this;
     },
   }),
+
   afterFinalDashboard: Backbone.View.extend({
     el: '#content',
     template: require('./templates/afterFinalSubmitDashboard.pug'),
@@ -570,6 +575,7 @@ module.exports = {
       return this;
     },
   }),
+
   afterSubmittingGovermentDashboard: Backbone.View.extend({
     el: '#content',
     template: require('./templates/afterSubmittingGovermentDashboard.pug'),
@@ -587,11 +593,6 @@ module.exports = {
   issuerDashboard: Backbone.View.extend({
     template: require('./templates/issuerDashboard.pug'),
     events: {
-      'click .email-share': 'socialPopup',
-      'click .facebook-share': 'socialPopup',
-      'click .twitter-share': 'socialPopup',
-      'click .linkedin-share': 'shareLinkedin',
-      'click .google-plus-share': 'socialPopup',
       'click .cancel-campaign': 'cancelCampaign',
     },
 
@@ -634,47 +635,6 @@ module.exports = {
       //   $('.notification-container ul').append($('<li>').html('<a>' + msg + '</a>'));
       // });
       return this;
-    },
-
-    loginLinkedin () {
-      const promise = new Promise( (resolve, reject) => IN.User.authorize(resolve) );
-      return promise;
-    },
-
-    shareLinkedin (e) {
-      e.preventDefault();
-      
-      const payload = { 
-        content: {
-          'title': 'Check out ' + (this.model.short_name || this.model.name) + '\'s fundraise on GrowthFountain.com',
-          'description': this.model.description,
-          'submitted-url': window.location.origin + '/' + this.model.id,
-          'submitted-image-url': campaignHelpers.getImageCampaign(this.model.campaign)
-        }, 
-        'visibility': { 
-          'code': 'anyone'
-        } 
-      };
-      
-      this.loginLinkedin().then( res => {
-        IN.API.Raw('/people/~/shares?format=json')
-          .method('POST')
-          .body(JSON.stringify(payload))
-          .result( console.log.bind(console, 'linkedin success: ') )
-          .error( console.log.bind(console, 'linkedin error: ') );
-      })
-      
-    },
-    
-    socialPopup (e) {
-      e.preventDefault();
-      var popupOpt = e.currentTarget.dataset.popupOpt || 'toolbar=0,status=0,left=45%,top=45%,width=626,height=436';
-      var windowChild = window.open(e.currentTarget.href, '', popupOpt);
-   
-      if (e.currentTarget.dataset.close) {
-        let closeScript = "<script>setTimeout(window.close.bind(window), 400);</script>";
-        windowChild.document.write(closeScript);
-      }
     },
 
     cancelCampaign(e) {

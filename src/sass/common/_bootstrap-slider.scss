@@ -4,7 +4,7 @@
 
 	.slider-track {
 		height: 15px!important;
-
+		box-shadow: none;
 		border-radius: 0!important;
 	}
 
@@ -48,7 +48,7 @@
 	.slider-tick-label-container {
 		.slider-tick-label {
 			position: absolute;
-			top: -15px;
+			top: -20px;
 			font-size: 11px;
 			color: $small-text;
 			margin-left: -15px!important;
@@ -98,3 +98,6 @@
 	}
 	}
 
+.slider-track {
+	box-shadow: none;
+}

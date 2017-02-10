@@ -15,7 +15,7 @@
 
   var passedTime = helpers.date.fromNow(comment.created_date);
 
-div(id=id class=cssClass data-level=level data-id=comment.uid).p-r-0.p-t-0.p-xs-0
+div(id=id class=cssClass data-level=level data-id=comment.uid).p-r-0.p-t-0.p-xs-0.p-l-0
   .border-bottom.m-t-1.m-b-1
   .col-lg-1.col-xs-2.text-xs-center
     img(src=avatar alt="").img-circle
@@ -26,8 +26,8 @@ div(id=id class=cssClass data-level=level data-id=comment.uid).p-r-0.p-t-0.p-xs-
         //ignore Director/Shareholder role
         // var roleBitmap = 0b1111111100 & comment.user.role;
         var roleBitmap = comment.user.role;
-        roleBitmap = roleBitmap || comment.user.role;
-        var roles = roleHelper.extractRoles(roleBitmap);
+        //roleBitmap = roleBitmap || comment.user.role;
+        var roles = roleHelper.extractRolesByPriority(roleBitmap);
 
       each role in roles
         span.kvalificatio-comments #{ role.title }
@@ -35,7 +35,7 @@ div(id=id class=cssClass data-level=level data-id=comment.uid).p-r-0.p-t-0.p-xs-
         if comment.related
           span.kvalificatio-comments #{ comment.related }
 
-      span.date-comments.pull-right #{ passedTime }
+      span.date-comments.pull-right.hidden-xs-down #{ passedTime }
       p !{ comment.message.replace(/\n/g, '<br />') }
       div.responce.comment-actions
         if level <= 0
