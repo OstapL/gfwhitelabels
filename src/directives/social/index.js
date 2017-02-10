@@ -5,6 +5,13 @@ const defaultOptions = {
   descriptionPrefix: '',
 };
 
+function stripHtml(content) {
+  if (!_.isString(content))
+    return content;
+
+  return content.replace(/(<([^>]+)>)/ig,"");
+}
+
 class SocialNetworks {
   constructor(company, options={}) {
     this.template = require('./templates/social.pug');
@@ -17,10 +24,10 @@ class SocialNetworks {
 
     this.data = {
       url: url,
-      title: this.options.titlePrefix + companyName + '\'s fundraise on GrowthFountain.com',
-      description: this.options.descriptionPrefix + (this.model.description || ''),
+      title: stripHtml(this.options.titlePrefix + companyName + '\'s fundraise on GrowthFountain.com'),
+      description: stripHtml(this.options.descriptionPrefix + (this.model.description || '')),
       picture: campaignHelper.getImageCampaign(this.model.campaign),
-      text: this.options.titlePrefix + companyName + '\'s fundraise on @growthfountain '
+      text: stripHtml(this.options.titlePrefix + companyName + '\'s fundraise on @growthfountain '),
     };
 
     this.shareLinks = {
@@ -117,7 +124,7 @@ class SocialNetworks {
               '&locale=en_US' +
               '&picture=' + values.picture +
               '&title=' + (values.title || '') +
-              '&caption=Shared by FINRA approved company';
+              '&caption=GROWTHFOUNTAIN.COM';
   }
 
   //{ url, title, description || summary, source }
