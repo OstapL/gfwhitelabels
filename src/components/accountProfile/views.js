@@ -392,7 +392,10 @@ module.exports = {
         i.created_date = moment.parseZone(i.created_date);
         i.campaign.expiration_date = moment(i.campaign.expiration_date);
 
-        if (_.contains(canceledStatuses, i.status) || i.campaign.expiration_date.isBefore(today))
+        i.expired = i.campaign.expiration_date.isBefore(today);
+        i.cancelled = _.contains(canceledStatuses, i.status);
+
+        if (i.cancelled || i.expired)
           this.investments.historical.push(i);
         else
           this.investments.active.push(i);

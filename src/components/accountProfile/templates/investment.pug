@@ -11,11 +11,10 @@
     if attr.active
       span.img_tab #{campaignHelper.daysLeft(i.campaign.expiration_date) + ' Days Left'}
     else
-      if i.status > 1
+      if i.cancelled
         span.successfull.unsuccessfull  Cancelled
-      else
-        span.successfull.unsuccessfull  Unsuccessfully funded campaign
-      span.end-date  #{i.campaign.expiration_date.format('MM/DD/YYYY')}
+      else if i.expired
+        span.end-date  #{i.campaign.expiration_date.format('MM/DD/YYYY')}
 
     h2.text-uppercase #{i.company.name}
   .right-columns
