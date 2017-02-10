@@ -1,5 +1,6 @@
 'use strict';
 
+const typeOfDocuments = require('consts/typeOfDocuments.json');
 const companyFees = require('consts/companyFees.json');
 const formcHelpers = require('./helpers.js');
 const formatHelper = require('../../helpers/formatHelper.js');
@@ -141,17 +142,22 @@ module.exports = {
     },
 
     saveEsign() {
+      const listingAgreement = 'formc/listing_agreement.pdf';
       const reqUrl = global.esignServer + '/pdf-doc';
       const formData = this.getDocMetaData();
-      const data = {
-        type: 2,
+      const data = [{
+        type: typeOfDocuments[listingAgreement],
         esign: formData.issuer_signer,
         meta_data: formData,
-        template: 'formc/funding_portal_listing_agreement.pdf'
-      };
+        template: listingAgreement
+      }];
 
-      $.post(reqUrl, data)
-        .fail( (err) => console.log(err));
+      app.makeRequest(reqUrl, 'POST', data, {
+        contentType: 'application/json; charset=utf-8',
+        crossDomain: true,
+      })
+      .done( (res) => console.log(res))
+      .fail( (err) => console.log(err));
     },
 
     openPdf (e) {
