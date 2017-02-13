@@ -227,11 +227,11 @@ header
 
     .navbar-brand
       position: relative
-
       height: $navbar_height
       padding-bottom: 0
       padding-top: 0
       width: 20%
+      margin-right: 0!important
 
       img
         +centered
@@ -561,8 +561,9 @@ header
     .navbar .navbar-brand
       display: inline-block
       height: $navbar_height_mobile
-      width: 180px
+      width: 190px
       z-index: 999
+      left: -4px
 
     .navbar-nav
       height: $navbar_height_mobile
@@ -759,12 +760,11 @@ header
 
     .navbar-brand
       float: none
-      margin-left: rem(-25)
 
     .wrap-toggle-menu
       position: absolute
       top: 0
-      left: 10px
+      left: 20px
 
       display: inline-block
       float: left
@@ -911,6 +911,7 @@ header
     text-align: left
     text-transform: uppercase
     color: rgba($menu_text_color, .5)
+    display: block
     &:hover
       color:#fff
 
@@ -937,3 +938,6 @@ header
   #menuProfile
     .user-info
       left: 90%
+  .navbar-brand 
+    img
+      left: -10px
