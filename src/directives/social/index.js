@@ -1,22 +1,33 @@
 const mainContent = '#content';
 const campaignHelper = require('components/campaign/helpers.js');
+const defaultOptions = {
+  titlePrefix: 'Check out ',
+  descriptionPrefix: '',
+};
+
+function stripHtml(content) {
+  if (!_.isString(content))
+    return content;
+
+  return content.replace(/(<([^>]+)>)/ig,"");
+}
 
 class SocialNetworks {
-  constructor(company) {
+  constructor(company, options={}) {
     this.template = require('./templates/social.pug');
 
     this.model = company;
+    this.options = _.extend({}, defaultOptions, options);
 
     const companyName = this.model.short_name || this.model.name || '';
     const url = window.location.origin + '/' + this.model.id;
 
     this.data = {
       url: url,
-      title: 'Check out ' + companyName + '\'s fundraise on GrowthFountain.com',
-      description: this.model.description || '',
-      caption: this.model.campaign.caption || '',
+      title: stripHtml(this.options.titlePrefix + companyName + '\'s fundraise on GrowthFountain.com'),
+      description: stripHtml(this.options.descriptionPrefix + (this.model.description || '')),
       picture: campaignHelper.getImageCampaign(this.model.campaign),
-      text: 'Check out ' + companyName + '\'s fundraise on @growthfountain '
+      text: stripHtml(this.options.titlePrefix + companyName + '\'s fundraise on @growthfountain '),
     };
 
     this.shareLinks = {
@@ -104,7 +115,7 @@ class SocialNetworks {
               '&text=' + values.text;
   }
 
-  //{ app_id, url, description, locale, picture, title, caption }
+  //{ app_id, url, description, locale, picture, title }
   getFacebookLink(values) {
     return 'https://www.facebook.com/dialog/share' +
               '?app_id=' + facebookClientId +
@@ -113,7 +124,7 @@ class SocialNetworks {
               '&locale=en_US' +
               '&picture=' + values.picture +
               '&title=' + (values.title || '') +
-              '&caption=Shared by FINRA approved company';
+              '&caption=GROWTHFOUNTAIN.COM';
   }
 
   //{ url, title, description || summary, source }
