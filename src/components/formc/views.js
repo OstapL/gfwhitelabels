@@ -142,13 +142,16 @@ module.exports = {
       return this;
     },
 
+    formData () {
+      this.formData = this.$el.find('form').serializeJSON();
+    },
+
     saveEsign() {
       const listingAgreement = 'formc/listing_agreement.pdf';
       const reqUrl = global.esignServer + '/pdf-doc';
       const formData = this.getDocMetaData();
       const data = [{
         type: typeOfDocuments[listingAgreement],
-        esign: formData.issuer_signer,
         meta_data: formData,
         template: listingAgreement
       }];
@@ -157,8 +160,8 @@ module.exports = {
         contentType: 'application/json; charset=utf-8',
         crossDomain: true,
       })
-      .done( (res) => console.log(res))
-      .fail( (err) => console.log(err));
+      .done( (res) => console.log('esign success: ', res))
+      .fail( (err) => console.log('esign error: ', err));
     },
 
     openPdf (e) {
@@ -168,10 +171,11 @@ module.exports = {
     },
 
     getDocMetaData () {
-      const formData = this.$el.find('form').serializeJSON();
+      const formData = this.formData;
       const issuer_legal_name = app.user.get('first_name') + ' ' + app.user.get('last_name');
       
       return {
+        esign: formData.full_name,
         trans_percent: companyFees.trans_percent,
         registration_fee: companyFees.registration_fee,
         nonrefundable_fees: companyFees.nonrefundable_fees,
@@ -207,7 +211,8 @@ module.exports = {
 
     stripeSubmit(e) {
       e.preventDefault();
-
+      
+      this.formData()
       let $stripeForm = $('.payment-block');
 
       function validateCard(form, selectors) {
