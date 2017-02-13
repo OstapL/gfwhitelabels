@@ -4,7 +4,7 @@
 section.investor-dashboard
   .container
     .col-lg-12
-      if (!investments.active || !investments.active.length) && (!investments.historical || !investments.historical.length)
+      if (!investments && !investments.length)
         div(role="alert").alert.alert-warning
           strong You have not invested yet
       else
@@ -37,9 +37,13 @@ section.investor-dashboard
               aria-expanded="true"
             )
               .active-investor-dashboard.investor_table
-                each i in investments.active
-                  | !{ snippets.investment({ i: i, attr: { active: true } }) }
-                else
+                - var hasActiveInvestments = false;
+                each i in investments
+                  if i.active
+                    - hasActiveInvestments = true;
+                    | !{ snippets.investment(i) }
+
+                if !hasActiveInvestments
                   div(role="alert").alert.alert-warning
                     strong You have no active investments
 
@@ -49,9 +53,13 @@ section.investor-dashboard
               aria-expanded="false"
             )
               .active-investor-dashboard.investor_table
-                each i in investments.historical
-                  | !{ snippets.investment({ i: i } ) }
-                else
+                - var hasHistoricalInvestments = false;
+                each i in investments
+                  if i.historical
+                    - hasHistoricalInvestments = true;
+                    | !{ snippets.investment(i) }
+
+                if !hasHistoricalInvestments
                   div(role="alert").alert.alert-warning
                     strong You have no historical investments
 

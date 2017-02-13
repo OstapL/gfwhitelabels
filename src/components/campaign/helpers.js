@@ -1,4 +1,9 @@
 const moment = require('moment');
+const today = moment.utc();
+
+const FINANCIAL_INFO = require('consts/financialInformation.json');
+const ACTIVE_STATUSES = FINANCIAL_INFO.INVESTMENT_STATUS_ACTIVE;
+const HISTORICAL_STATUSES = FINANCIAL_INFO.INVESTMENT_STATUS_HISTORICAL;
 
 let exports = {
   formcLinks: {
@@ -30,6 +35,20 @@ let exports = {
     const link = imgObj.urls && imgObj.urls.length ? imgObj.urls[0] : location.origin + '/img/default/1600x548.png';
     return link;
   },
+
+  initInvestment(i) {
+    i.created_date = moment.isMoment(i.created_date)
+      ? i.created_date
+      : moment.parseZone(i.created_date);
+
+    i.campaign.expiration_date = moment.isMoment(i.campaign.expiration_date)
+      ? i.campaign.expiration_date
+      : moment(i.campaign.expiration_date);
+
+    i.expired = i.campaign.expiration_date.isBefore(today);
+    i.historical = i.expired || _.contains(HISTORICAL_STATUSES, i.status);
+    i.active = !i.historical  && _.contains(ACTIVE_STATUSES, i.status);
+  }
 };
 
 module.exports = exports;
