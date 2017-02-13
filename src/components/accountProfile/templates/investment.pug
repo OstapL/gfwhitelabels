@@ -7,21 +7,22 @@
     var url = campaignHelper.getImageCampaign(i.campaign);
     var background = 'background: url(' + url + ') center center no-repeat; background-size: cover;';
   .img_column.text-lg-center.text-sm-center(style=background)
+
     if attr.active
       span.img_tab #{campaignHelper.daysLeft(i.campaign.expiration_date) + ' Days Left'}
     else
-      if i.status > 1
+      if i.cancelled
         span.successfull.unsuccessfull  Cancelled
-      else
-        span.successfull.unsuccessfull  Unsuccessfully funded campaign
-      span.end-date  #{i.campaign.expiration_date.format('MM/DD/YYYY')}
+      else if i.expired
+        span.end-date  #{i.campaign.expiration_date.format('MM/DD/YYYY')}
+
     h2.text-uppercase #{i.company.name}
   .right-columns
     .one_line
       .col40
         span.light_grey Amount Invested
       .col60
-        span.bold-grey.font-weight-bold #{formatHelper.formatAmount(i.amount)}
+        span.bold-grey.font-weight-bold #{'$' + i.amount}
     .one_line
       .col40
         span.light_grey Investment Day
