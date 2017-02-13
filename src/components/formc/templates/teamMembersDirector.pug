@@ -12,6 +12,7 @@ section.formc-team-members-director.container.m-b-85
     h2.text-uppercase.text-lg-center.text-xs-center.m-t-0 Team members (director)
     form.form-section
       input(type="hidden" value=2 name="role[]")
+      input(type="hidden" value=1 name="individual_director_choice")
       .col-xl-12.p-xs-0
         - 
           pug_html += app.fields.textLabel('first_name', {
