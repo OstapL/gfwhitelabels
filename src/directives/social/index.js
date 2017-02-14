@@ -124,7 +124,7 @@ class SocialNetworks {
               '&locale=en_US' +
               '&picture=' + values.picture +
               '&title=' + (values.title || '') +
-              '&caption=GROWTHFOUNTAIN.COM';
+              '&caption=' + window.location.host.toUpperCase();
   }
 
   //{ url, title, description || summary, source }

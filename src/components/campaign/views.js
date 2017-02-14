@@ -2,7 +2,6 @@ const formatHelper = require('helpers/formatHelper');
 const textHelper = require('helpers/textHelper');
 const companyFees = require('consts/companyFees.json');
 const typeOfDocuments = require('consts/typeOfDocuments.json');
-const campaignHelpers = require('components/campaign/helpers.js');
 
 const usaStates = require('helpers/usaStates.js');
 
@@ -616,6 +615,7 @@ module.exports = {
 
       return this;
     },
+
     onArticlePressCollapse(e) {
       if (e.type == 'hidden') {
         this.$('.see-all-perks').text('Show More')
@@ -623,6 +623,7 @@ module.exports = {
         this.$('.see-all-perks').text('Show Less')
       }
     },
+
     initAmountPopover() {
       this.$amount = this.$el.find('#amount');
       this.$amount.data('contentselector', 'amount-campaign');
