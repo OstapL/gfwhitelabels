@@ -15,7 +15,7 @@ let exports = {
   },
 
   daysLeftPercentage(data) {
-    var daysToExpirate = moment(data.campaign.expiration_date).diff(moment(), 'days')
+    var daysToExpirate = moment(data.campaign.expiration_date).diff(moment(), 'days');
     return Math.round(
       (moment(data.campaign.expiration_date).diff(data.approved_date, 'days') - daysToExpirate) * 100 / daysToExpirate
     );
@@ -25,11 +25,24 @@ let exports = {
     return Math.round((n / total) * 100);
   },
 
+  fundedPercentage(campaign, minThreshold=20) {
+    let funded = Number(this.percentage(campaign.amount_raised, campaign.minimum_raise));
+    funded = isNaN(funded) ? 0 : funded;
+    return {
+      actual: funded,
+      value: funded < minThreshold ? minThreshold : funded,
+      text: funded < minThreshold
+        ? `Less than ${minThreshold}% Funded`
+        : `${funded}% Funded`,
+    };
+  },
+
   getImageCampaign (campaign) {
     const imgObj = campaign.header_image_data && campaign.header_image_data.length ? campaign.header_image_data[0] : {};
     const link = imgObj.urls && imgObj.urls.length ? imgObj.urls[0] : location.origin + '/img/default/1600x548.png';
     return link;
   },
+
 };
 
 module.exports = exports;

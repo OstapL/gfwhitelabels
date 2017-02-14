@@ -51,12 +51,6 @@ module.exports = {
       return this.months[monthIndex] + " " + strs[2].split('T')[0];
   },
 
-  calculateRaisedPercentage: function (minimum_raise, amount_raised) {
-      var percentage_raised = Math.round(amount_raised / minimum_raise * 100);
-      if (!percentage_raised || percentage_raised < 20) percentage_raised = 20;
-      return percentage_raised;
-  },
-
   appendHttpIfNecessary(e, https) {
     // var $el = $('#website');
       var $el = $(e.target);
