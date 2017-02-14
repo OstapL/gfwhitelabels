@@ -1,20 +1,26 @@
 
-$btn-color: #197471
-$btn-border: #197471
+$btn-color: $puerto_rico
+$btn-border: $puerto_rico
 $btn-bg: transparent
-$btn-hover-bg: #197471
+$btn-hover-bg: $puerto_rico
 $btn-hover-color: #fff
 
-$btn-primary-bg: #197471
-$btn-primary-hover-bg: #42bab6
-$btn-primary-border: #197471
-$btn-primary-hover-border: #42bab6
+$btn-primary-bg: $puerto_rico
+$btn-primary-hover-bg: rgba(60, 189, 185, 0.6)
+$btn-primary-border: $puerto_rico
+$btn-primary-hover-border: #44d4cf
 $btn-primary-color: $white
-$btn-primary-active-border: #0e4240
-$btn-primary-active-bg: #104a48
-$btn-secondary-hover-color: $light_grey
-$btn-secondary-border: $light_grey
-$btn-secondary-bg: $light_grey
+$btn-primary-active-border: $puerto_rico
+$btn-primary-active-bg: $puerto_rico
+
+$btn-primary-bg-bottom: #38a8a5
+$btn-primary-bg-top: $puerto_rico
+$btn-primary-hover-bg: #40c8c4
+$btn-primary-color: $white
+
+$btn-secondary-hover-color: #e8e8e8
+$btn-secondary-border: #e8e8e8
+$btn-secondary-bg: #e8e8e8
 $btn-secondary-hover-bg: transparent
 $btn-secondary-color: $black
 
@@ -49,10 +55,11 @@ $btn-email-hover-bg: rgba(76,212,208, .6)
 	background: $btn-bg
 	color: $btn-color
 	border-color: $btn-border
-	letter-spacing: 2px
+	letter-spacing: 1.4px
 	border: 2px solid $btn-border
-	font-size: rem(13)
+	font-size: rem(14)
 	text-transform: uppercase
+	font-family: $brandon-grotesque-medium
 	+mt(.2s)
 	
 	&:hover
@@ -64,22 +71,43 @@ $btn-email-hover-bg: rgba(76,212,208, .6)
 		padding-left: 5px
 
 .btn-primary
-	background: $btn-primary-bg
+	background: $btn-primary-bg-top
+	background-image: -webkit-linear-gradient(top, $btn-primary-bg-top,  $btn-primary-bg-bottom)
+	background-image: -moz-linear-gradient(top, $btn-primary-bg-top,  $btn-primary-bg-bottom)
+	background-image: -ms-linear-gradient(top, $btn-primary-bg-top,  $btn-primary-bg-bottom)
+	background-image: -o-linear-gradient(top, $btn-primary-bg-top,  $btn-primary-bg-bottom)
+	background-image: linear-gradient(to bottom, $btn-primary-bg-top,  $btn-primary-bg-bottom)
 	color: $btn-primary-color
-	border-color: $btn-primary-border
-
+	-moz-border-image: -moz-linear-gradient(top, $btn-primary-bg-top 0%, $btn-primary-bg-bottom 100%)
+	-webkit-border-image: -webkit-linear-gradient(top, $btn-primary-bg-top 0%, $btn-primary-bg-bottom 100%)
+	border-image: linear-gradient(to bottom, $btn-primary-bg-top 0%, $btn-primary-bg-bottom 100%)
+	border-image-slice: 1
+	+mt(.2s)
 	&:hover
+		+mt(.2s)
 		background: $btn-primary-hover-bg
-		border-color: $btn-primary-hover-border
+		border-color: $btn-primary-hover-bg
+		border-image-slice: 0
+		border-image: none
+	+mt(.2s)
 	&:active,
 	&:focus
+		+mt(.2s)
 		background: $btn-primary-active-bg
 		border-color: $btn-primary-active-border
+		border-image-slice: 0
+		border-image: none
+		+mt(.2s)
 		&:focus,
 		&:hover
+			+mt(.2s)
 			background: $btn-primary-active-bg
 			border-color: $btn-primary-active-border
-
+			border-image-slice: 0
+			border-image: none
+.btn-lg
+	letter-spacing: 1.5px
+	font-weight: bold
 .btn-secondary
 	background: $btn-secondary-bg
 	color: $btn-secondary-color
@@ -122,7 +150,9 @@ $btn-email-hover-bg: rgba(76,212,208, .6)
 	background: $btn-facebook-bg
 	border: none
 	color: $white
-	border-radius: 2px
+	border-radius: 50px
+	padding-top: 11px
+	padding-bottom: 11px
 	&:hover
 		background: $btn-facebook-hover-bg
 
@@ -130,7 +160,9 @@ $btn-email-hover-bg: rgba(76,212,208, .6)
 	background: $btn-linkedin-bg
 	border: none
 	color: $white
-	border-radius: 2px
+	border-radius: 50px
+	padding-top: 11px
+	padding-bottom: 11px
 	&:hover
 		background: $btn-linkedin-hover-bg
 
@@ -138,7 +170,9 @@ $btn-email-hover-bg: rgba(76,212,208, .6)
 	background: $btn-google-bg
 	border: none
 	color: $white
-	border-radius: 2px
+	border-radius: 50px
+	padding-top: 11px
+	padding-bottom: 11px
 	&:hover
 		background: $btn-google-hover-bg
 
