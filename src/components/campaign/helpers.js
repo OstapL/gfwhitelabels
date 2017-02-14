@@ -8,6 +8,20 @@ let exports = {
     564: 'https://www.sec.gov/cgi-bin/browse-edgar?company=have+not&owner=exclude&action=getcompany',
   },
 
+  slugs: {
+    'venue': 51,
+    'cogent-education': 52,
+    'omas-spirits': 536,
+    'have-not-films': 564
+  },
+
+  urls: {
+    51: 'venue',
+    52: 'cogent-education',
+    536: 'omas-spirits',
+    564: 'have-not-films',
+  },
+
   daysLeft(dateTo) {
     // ToDo
     // Refactor this
