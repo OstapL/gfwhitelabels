@@ -10,15 +10,12 @@ const helpers = {
   dropzone: require('helpers/dropzoneHelpers.js'),
   yesNo: require('helpers/yesNoHelper.js'),
   fileList: require('helpers/fileList.js'),
+  campaign: require('components/campaign/helpers.js'),
 };
 
 const moment = require('moment');
 
-const invest = require('consts/financialInformation.json');
-
-const activeStatuses = [invest.investment_status.New, invest.investment_status.Approved];
-const canceledStatuses = [invest.investment_status.CanceledByClient,
-    invest.investment_status.CanceledByBank, invest.investment_status.CanceledByInquisitor];
+const FINANCIAL_INFORMATION = require('consts/financialInformation.json');
 
 import 'bootstrap-slider/dist/bootstrap-slider'
 import 'bootstrap-slider/dist/css/bootstrap-slider.css'
@@ -381,25 +378,7 @@ module.exports = {
     initialize(options) {
       this.fields = options.fields;
 
-      this.investments = {
-        active: [],
-        historical: [],
-      };
-
-      let today = moment.utc();
-
-      _.each(this.model.data, (i) => {
-        i.created_date = moment.parseZone(i.created_date);
-        i.campaign.expiration_date = moment(i.campaign.expiration_date);
-
-        i.expired = i.campaign.expiration_date.isBefore(today);
-        i.cancelled = _.contains(canceledStatuses, i.status);
-
-        if (i.cancelled || i.expired)
-          this.investments.historical.push(i);
-        else
-          this.investments.active.push(i);
-      });
+      _.each(this.model.data, helpers.campaign.initInvestment);
 
       this.snippets = {
         investment: require('./templates/investment.pug'),
@@ -408,7 +387,7 @@ module.exports = {
 
     render() {
       this.$el.html(this.template({
-        investments: this.investments,
+        investments: this.model.data,
         snippets: this.snippets,
       }));
     },
@@ -468,25 +447,22 @@ module.exports = {
       if (!id)
         return false;
 
-      let idx = _.findIndex(this.investments.active, (i) => {
-        return i.id == id;
-      });
+      let investment = this._findInvestment(id);
 
-      if (idx < 0)
-        return console.error(`Investment doesn't exist: ${id}`);
+      if (!investment)
+        return console.error('Investment doesn\'t exist: ' + id);
 
       if (!confirm('Are you sure?'))
         return false;
 
       api.makeRequest(investmentServer + '/' + id + '/decline', 'PUT').done((response) => {
-        console.log(response);
-        let investment = this.investments.active.splice(idx, 1)[0];
-        investment.status = 2;
-        this.investments.historical.push(investment);
+        investment.status = FINANCIAL_INFORMATION.INVESTMENT_STATUS.CancelledByUser;
+        helpers.campaign.initInvestment(investment);
 
         $target.closest('.one_table').remove();
 
-        if (this.investments.active.length <= 0)
+        let hasActiveInvestments = _.some(this.model.data, i => i.active);
+        if (!hasActiveInvestments)
           $('#active .investor_table')
             .append(
               '<div role="alert" class="alert alert-warning">' +
@@ -494,14 +470,11 @@ module.exports = {
               '</div>');
 
         let historicalInvestmentsBlock = this.$el.find('#historical .investor_table');
-
-        if (this.investments.historical.length === 1)
+        let historicalInvestments = _.filter(this.model.data, i => !i.active);
+        if (historicalInvestments && historicalInvestments.length === 1)
           historicalInvestmentsBlock.empty();
 
-        historicalInvestmentsBlock.append(this.snippets.investment({
-          i: investment,
-          attr: {},
-        }));
+        historicalInvestmentsBlock.append(this.snippets.investment(investment));
 
       }).fail((err) => {
         alert(err.error);

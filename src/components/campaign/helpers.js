@@ -1,4 +1,9 @@
 const moment = require('moment');
+const today = moment.utc();
+
+const FINANCIAL_INFO = require('consts/financialInformation.json');
+const ACTIVE_STATUSES = FINANCIAL_INFO.INVESTMENT_STATUS_ACTIVE;
+const HISTORICAL_STATUSES = FINANCIAL_INFO.INVESTMENT_STATUS_HISTORICAL;
 
 let exports = {
   formcLinks: {
@@ -8,6 +13,20 @@ let exports = {
     564: 'https://www.sec.gov/cgi-bin/browse-edgar?company=have+not&owner=exclude&action=getcompany',
   },
 
+  slugs: {
+    'venue': 51,
+    'cogent-education': 52,
+    'omas-spirits': 536,
+    'have-not-films': 564
+  },
+
+  urls: {
+    51: 'venue',
+    52: 'cogent-education',
+    536: 'omas-spirits',
+    564: 'have-not-films',
+  },
+
   daysLeft(dateTo) {
     // ToDo
     // Refactor this
@@ -15,7 +34,7 @@ let exports = {
   },
 
   daysLeftPercentage(data) {
-    var daysToExpirate = moment(data.campaign.expiration_date).diff(moment(), 'days')
+    var daysToExpirate = moment(data.campaign.expiration_date).diff(moment(), 'days');
     return Math.round(
       (moment(data.campaign.expiration_date).diff(data.approved_date, 'days') - daysToExpirate) * 100 / daysToExpirate
     );
@@ -25,11 +44,37 @@ let exports = {
     return Math.round((n / total) * 100);
   },
 
+  fundedPercentage(campaign, minThreshold=20) {
+    let funded = Number(this.percentage(campaign.amount_raised, campaign.minimum_raise));
+    funded = isNaN(funded) ? 0 : funded;
+    return {
+      actual: funded,
+      value: funded < minThreshold ? minThreshold : funded,
+      text: funded < minThreshold
+        ? `Less than ${minThreshold}% Funded`
+        : `${funded}% Funded`,
+    };
+  },
+
   getImageCampaign (campaign) {
     const imgObj = campaign.header_image_data && campaign.header_image_data.length ? campaign.header_image_data[0] : {};
     const link = imgObj.urls && imgObj.urls.length ? imgObj.urls[0] : location.origin + '/img/default/1600x548.png';
     return link;
   },
+
+  initInvestment(i) {
+    i.created_date = moment.isMoment(i.created_date)
+      ? i.created_date
+      : moment.parseZone(i.created_date);
+
+    i.campaign.expiration_date = moment.isMoment(i.campaign.expiration_date)
+      ? i.campaign.expiration_date
+      : moment(i.campaign.expiration_date);
+
+    i.expired = i.campaign.expiration_date.isBefore(today);
+    i.historical = i.expired || _.contains(HISTORICAL_STATUSES, i.status);
+    i.active = !i.historical  && _.contains(ACTIVE_STATUSES, i.status);
+  }
 };
 
 module.exports = exports;
