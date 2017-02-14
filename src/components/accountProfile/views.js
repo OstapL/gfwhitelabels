@@ -438,6 +438,17 @@ module.exports = {
       helpers.fileList.show(data);
     },
 
+    onCancel(investment) {
+      _.each(this.model.data, (i) => {
+        if (i.campaign_id != investment.campaign_id)
+          return;
+
+        i.campaign.amount_raised -= investment.amount;
+        this.$('[data-investmentid=' + i.id + ']').replaceWith(this.snippets.investment(i));
+      });
+    },
+
+    //TODO: sort investments in dom on historical tab after cancel investment
     cancelInvestment(e) {
       e.preventDefault();
 
@@ -456,6 +467,7 @@ module.exports = {
         return false;
 
       api.makeRequest(investmentServer + '/' + id + '/decline', 'PUT').done((response) => {
+      // setTimeout(() => {
         investment.status = FINANCIAL_INFORMATION.INVESTMENT_STATUS.CancelledByUser;
         helpers.campaign.initInvestment(investment);
 
@@ -475,6 +487,10 @@ module.exports = {
           historicalInvestmentsBlock.empty();
 
         historicalInvestmentsBlock.append(this.snippets.investment(investment));
+
+        this.onCancel(investment);
+
+      // }, 500);
 
       }).fail((err) => {
         alert(err.error);
