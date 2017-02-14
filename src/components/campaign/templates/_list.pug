@@ -2,13 +2,14 @@
   var format = require('helpers/formatHelper.js');
   var security_type = require('consts/raisecapital/security_type.json');
   var industry = require('consts/raisecapital/industry.json');
+  var campaignHelpers = require('../helpers.js');
 
 .row
   for company in collection.data
     - var percentage_raised = format.calculateRaisedPercentage(company.campaign.minimum_raise, company.campaign.amount_raised);
 
     .col-xl-4.col-lg-6.col-xs-12.col-sm-12.col-md-12
-      a(href="/" + company.id).block_link
+      a(href="/" + (campaignHelpers.urls[company.id] || company.id)).block_link
       .one_block
         .for_img
           -
