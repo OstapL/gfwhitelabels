@@ -17,10 +17,14 @@ mixin row(value, index)
                   - securityType = 'Options';
               when 5
                   - securityType = value.custom_security_type;
-          | #{securityType}
+          a(href="#" data-index=index).link-2.editOutstanding
+            | #{securityType}
           .collapse
       td
-          | #{value.amount_authroized}
+          if value.amount_authorized == null 
+            | n/a
+          else
+            | #{value.amount_authorized}
           .collapse
       td
           | #{value.amount_outstanding}
@@ -42,7 +46,7 @@ mixin run()
         .border-bottom.m-t-3.m-b-0
     h3.text-xs-center Outstanding Securities
     p What other securities are outstanding? Describe the material terms of any other outstanding securies.
-    a(data-toggle="modal" data-target="#security_modal" href="#security_modal").btn.text-uppercase.m-t-2.m-b-2
+    a(href="#security_modal").newOustanding.btn.text-uppercase.m-t-2.m-b-2
       i.fa.fa-plus
       |  add outstanding securities
 

@@ -10,8 +10,8 @@
     "lint": "jshint src/**/*.js",
     "jscs": "jscs src/**/*.js",
     "sass-lint": "sass-lint -c ./.sass-link.yml  '**/*.scss' -v -q",
-    "test": "export NODE_PATH=\"`pwd`/src\" && mocha -r test/init.js",
-    "dist": "./node_modules/gulp/bin/gulp.js styles && cp -rf src/img dist/ && cp -rf src/js dist/"
+    "test": "echo ok",
+    "dist": "./node_modules/gulp/bin/gulp.js styles && cp -rf src/img dist/ && cp -rf src/js dist/ && cp src/BingSiteAuth.xml dist/"
   },
   "devDependencies": {
     "as-jqplot": "^1.0.8",
@@ -81,13 +81,14 @@
     "jquery.appear": "^1.0.1",
     "json-loader": "^0.5.4",
     "moment": "^2.17.1",
+    "owl.carousel": "^2.2.0",
     "photoswipe": "^4.1.1",
     "pug": "^2.0.0-beta6",
     "pug-loader": "^2.3.0",
     "pug-walk": "0.0.4",
     "requirejs": "^2.2.0",
     "socket.io": "^1.4.8",
-    "socket.io-client": "^1.4.8",
+    "socket.io-client": "^1.7.2",
     "underscore": "^1.8.3"
   }
 }

@@ -1,3 +1,5 @@
+const Notifications = require('./notifications');
+
 module.exports = {
   menu: Backbone.View.extend({
     template: require('./templates/menu.pug'),
@@ -55,6 +57,11 @@ module.exports = {
 
   notification: Backbone.View.extend({
     template: require('./templates/notification.pug'),
+
+    initialize(options) {
+      this.notifications = new Notifications();
+    },
+
     render: function () {
       if (app.user.token) {
 

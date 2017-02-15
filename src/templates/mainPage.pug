@@ -1,92 +1,72 @@
-//.home-section.hidden-sm-down
-  section.main-page-slider
-    div(data-ride="carousel" data-interval="5000")#carousel-main.carousel.carousel-main
-      ol.carousel-indicators
-        li(data-target="#carousel-main" data-slide-to="0").active
-        li(data-target="#carousel-main" data-slide-to="1")
-        li(data-target="#carousel-main" data-slide-to="2")
-        li(data-target="#carousel-main" data-slide-to="3")
+section.slider-main
+  .owl-carousel.owl-theme.carousel-test
+    div
+      div(style="background: url(/img/slide_1.jpg)").slide_1.main-slider-item
+      //img(src="/img/slide_1.jpg" alt="...")
+      .slider-content.container
+        .text-xs-center
+          .col-lg-12
+            h1.text-uppercase.big-h1.hidden-sm-down your success is our success
+          .col-lg-6.offset-lg-3.text-lg-center.text-sm-center.text-xs-center
+            span.small-text Invest in your neighbor, your community, or entrepreneurs you believe in
+          .col-lg-12.m-t-1.m-b-3
+            a(href="/pg/education").link-6 Understand the Risks
+          .col-lg-12.hidden-xs-down
+            a(href="/companies").btn.btn-lg.btn-primary.m-r-2 INVEST
+            a(href="/company/create").btn.btn-lg.btn-primary RAISE CAPITAL
+          .col-lg-12.hidden-sm-up
+            if app.user.is_anonymous()
+              a(href="/account/signup").btn.btn-lg.btn-primary sign up
+            else
+              a(href="/companies").btn.btn-lg.btn-primary INVEST
 
-      div(role="listbox").carousel-inner
-        .carousel-item.active.t40
-          img(src="/img/slide_1.jpg" alt="...").img-fluid
-          .carousel-caption
-            .home-content
-              .home-text-main.text-lg-center
-                .col-lg-12
-                  h1.text-uppercase.dosis your success is our success
-                  .col-lg-6.offset-lg-3.text-lg-center.text-sm-center.text-xs-center
-                    span.small-text Invest in your neighbor, your community, or entrepreneurs you believe in
-                  .col-lg-12.m-t-1.m-b-2
-                    a(href="/pg/education").link-6 Understand the Risks
-                  .col-lg-12
-                    a(href="/companies").btn.btn-lg.btn-primary INVEST
-                    span.hidden-xs  
-                      a(href="/company/create").btn.btn-lg.btn-primary RAISE CAPITAL
 
-        .carousel-item.t40
-          img(src="/img/slide_2.jpg" alt="...").img-fluid
-          .carousel-caption
-            .home-content
-              .home-text-main.text-lg-center
-                .col-lg-12
-                  h1.text-uppercase.dosis your success is our success
-                  .col-lg-6.offset-lg-3.text-lg-center.text-sm-center.text-xs-center
-                    span.small-text Invest in your neighbor, your community, or entrepreneurs you believe in
-                  .col-lg-12.m-t-1.m-b-2
-                    a(href="/pg/education").link-6 Understand the Risks
-                  .col-lg-12
-                    a(href="/companies").btn.btn-lg.btn-primary INVEST
-                    span.hidden-xs  
-                      a(href="/company/create").btn.btn-lg.btn-primary RAISE CAPITAL
-        .carousel-item.t40
-          img(src="/img/slide_3.jpg" alt="...").img-fluid
-          .carousel-caption
-            .home-content
-              .home-text-main.text-lg-center
-                .col-lg-12
-                  h1.text-uppercase.dosis your success is our success
-                  .col-lg-6.offset-lg-3.text-lg-center.text-sm-center.text-xs-center
-                    span.small-text Invest in your neighbor, your community, or entrepreneurs you believe in
-                  .col-lg-12.m-t-1.m-b-2
-                    a(href="/pg/education").link-6 Understand the Risks
-                  .col-lg-12
-                    a(href="/companies").btn.btn-lg.btn-primary INVEST
-                    span.hidden-xs  
-                      a(href="/company/create").btn.btn-lg.btn-primary RAISE CAPITAL
-        .carousel-item.t40
-          img(src="/img/slide_4.jpg" alt="...").img-fluid
-          .carousel-caption
-            .home-content
-              .home-text-main.text-lg-center
-                .col-lg-12
-                  h1.text-uppercase.dosis your success is our success
-                  .col-lg-6.offset-lg-3.text-lg-center.text-sm-center.text-xs-center
-                    span.small-text Invest in your neighbor, your community, or entrepreneurs you believe in
-                  .col-lg-12.m-t-1.m-b-2
-                    a(href="/pg/education").link-6 Understand the Risks
-                  .col-lg-12
-                    a(href="/companies").btn.btn-lg.btn-primary INVEST
-                    span.hidden-xs  
-                      a(href="/company/create").btn.btn-lg.btn-primary RAISE CAPITAL
+    div
+      div(style="background: url(/img/slide_2.jpg)").main-slider-item.slide_2
+      //img(src="/img/slide_2.jpg" alt="...")
+      .slider-content.container
+        .text-xs-center
+          .col-lg-12
+            h1.text-uppercase.big-h1.hidden-sm-down your success is our success
+          .col-lg-6.offset-lg-3.text-lg-center.text-sm-center.text-xs-center
+            span.small-text Invest in your neighbor, your community, or entrepreneurs you believe in
+          .col-lg-12.m-t-1.m-b-3
+            a(href="/pg/education").link-6 Understand the Risks
+          .col-lg-12.hidden-xs-down
+            a(href="/companies").btn.btn-lg.btn-primary.m-r-2 INVEST
+            a(href="/company/create").btn.btn-lg.btn-primary RAISE CAPITAL
+          .col-lg-12.hidden-sm-up
+            if app.user.is_anonymous()
+              a(href="/account/signup").btn.btn-lg.btn-primary sign up
+            else
+              a(href="/companies").btn.btn-lg.btn-primary INVEST
+    div
+      div(style="background: url(/img/slide_3.jpg)").main-slider-item.slide_3
+      //img(src="/img/slide_3.jpg" alt="...")
+      .slider-content.container
+        .text-xs-center
+          .col-lg-12
+            h1.text-uppercase.big-h1.hidden-sm-down your success is our success
+          .col-lg-6.offset-lg-3.text-lg-center.text-sm-center.text-xs-center
+            span.small-text Invest in your neighbor, your community, or entrepreneurs you believe in
+          .col-lg-12.m-t-1.m-b-3
+            a(href="/pg/education").link-6 Understand the Risks
+          .col-lg-12.hidden-xs-down
+            a(href="/companies").btn.btn-lg.btn-primary.m-r-2 INVEST
+            a(href="/company/create").btn.btn-lg.btn-primary RAISE CAPITAL
+          .col-lg-12.hidden-sm-up
+            if app.user.is_anonymous()
+              a(href="/account/signup").btn.btn-lg.btn-primary sign up
+            else
+              a(href="/companies").btn.btn-lg.btn-primary INVEST
 
-    a(href="#carousel-main"
-    role="button" 
-    data-slide="prev").left.carousel-control
-      span(aria-hidden="true").icon-prev
-      span.sr-only Previous
-    a(href="#carousel-main"
-    role="button" 
-    data-slide="next").right.carousel-control
-      span(aria-hidden="true").icon-next
-      span.sr-only Next
-section.home-section.bg-dark-alfa-30.hide-bg-fixed(style="background: url(/img/bg_2.png) center center no-repeat; background-size: cover;")
+//section.home-section.bg-dark-alfa-30.hide-bg-fixed.hidden-md-up(style="background: url(/img/slide_3.jpg) center center no-repeat; background-size: cover;")
   .container
     .row
       .js-height-full
         .home-content
           .home-text-main.text-lg-center
-            h1.text-uppercase.dosis.m-b-1 your success is our success
+            h1.text-uppercase.dosis.m-b-1.hidden-sm-down your success is our success
             .col-lg-6.offset-lg-3.text-lg-center.text-sm-center.text-xs-center
               span.small-text Invest in your neighbor, your community, or entrepreneurs you believe in
             .col-lg-12.m-t-1.m-b-2
@@ -99,25 +79,26 @@ section.home-section.bg-dark-alfa-30.hide-bg-fixed(style="background: url(/img/b
 section.campaing-list
   .container#campaignList
     .col-lg-12
-      h2.dosis.text-uppercase.text-sm-center.text-xs-center.mt50.m-b-3 What's Popular
+      h2.dosis.text-uppercase.text-sm-center.text-xs-center.mt50 What's Popular
     include ../components/campaign/templates/_list.pug
     .col-lg-12.text-lg-center.text-md-center.text-xs-center
       a(href="/companies").link-4 See All
 
-section.home-wrap-text-block.hide-bg-fixed(style="background: url(/img/section-bg-3.jpg) center center no-repeat; background-size: cover; background-attachment: fixed; height: 340px;")
+section.home-wrap-text-block.hide-bg-fixed.main-section-invest
   .opasity-block
     .container.text-lg-center.text-xs-center.text-sm-center
-      .col-lg-6.offset-lg-3.m-t-2
-        h2.dosis.text-uppercase.m-t-3 INVEST IN YOUR LOCAL COMMUNITY
-        h3 Find companies in your neighborhood, and help them grow through your investment.
-      .col-lg-12
-        a(href="/account/login").btn.btn-lg.btn-secondary.text-uppercase Sign up to start investing
-        .learn-link
-          a(href="/pg/education").link-3 Understand the Risks
+      .wrap
+        .col-lg-6.offset-lg-3
+          h2.dosis.text-uppercase.m-t-0 INVEST IN YOUR LOCAL COMMUNITY
+          h3 Find companies in your neighborhood, and help them grow through your investment.
+        .col-lg-12
+          a(href="/account/login").btn.btn-lg.btn-secondary.text-uppercase Sign up to start investing
+          .learn-link.m-b-0
+            a(href="/pg/education").link-3 Understand the Risks
 
 section.home-what-is
   .container
-    .col-lg-8.offset-lg-2
+    .col-lg-8.offset-lg-2.p-xs-0
       h2.dosis.text-uppercase.text-sm-center.text-xs-center.m-t-3.mb30 WHAT IS GROWTHFOUNTAIN
       .row
         .col-lg-12
@@ -134,20 +115,21 @@ section.home-what-is
               data-allowfullscreen=""
             )
             
-section.home-wrap-text-block.raise-wrap.hide-bg-fixed(style="background: url(/img/raise-capital.png) center center no-repeat; background-size: cover; background-attachment: fixed; height: 340px;")
+section.home-wrap-text-block.raise-wrap.hide-bg-fixed.main-section-raise
   .opasity-block
     .container.text-lg-center.text-xs-center
-      .col-lg-6.offset-lg-3.m-t-2
-        h2.dosis.text-uppercase  Raise capital with us
-        h3 How does conducting a Regulation Crowdfunding offering actually work? Access our investor network to raise capital for your company now.
-      .col-lg-12.m-b-3
-        a(href="/company/create").btn.btn-lg.btn-primary.text-uppercase raise capital
-        a(href="/pg/entrepreneurquestions").btn.btn-lg.btn-secondary.text-uppercase learn more
+      .wrap
+        .col-lg-6.offset-lg-3
+          h2.dosis.text-uppercase.m-t-0  Raise capital with us
+          h3 How does conducting a Regulation Crowdfunding offering actually work? Access our investor network to raise capital for your company now.
+        .col-lg-12
+          a(href="/company/create").btn.btn-lg.btn-primary.text-uppercase raise capital
+          a(href="/pg/entrepreneurquestions").btn.btn-lg.btn-secondary.text-uppercase learn more
 section.home-our-partners
   .container
     .row
       .col-lg-12
-        h2.dosis.text-uppercase.text-xs-center.mb25 OUR PARTNERS
+        h2.dosis.text-uppercase.text-xs-center OUR PARTNERS
     .row
       .col-lg-4.text-xs-center.p-b-3
         a(href="http://www.callahan.com/" target="_blank")

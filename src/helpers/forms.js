@@ -3,6 +3,7 @@
 const formatHelper = require('helpers/formatHelper');
 const validation = require('components/validation/validation.js');
 const deepDiff = require('deep-diff').diff;
+const errorPageHelper = require('helpers/errorPageHelper.js');
 
 module.exports = {
   makeCacheRequest(url, type, data) {
@@ -38,16 +39,9 @@ module.exports = {
       delete data.type;
     }
 
-    if(url.indexOf('http') == -1) {
-      url = serverUrl + url
-    } 
+    type = type || 'GET';
 
-    if(type == 'POST' || type == 'PUT' || type == 'PATCH') {
-      if (type == 'POST' || type == 'PUT') {
-        data = data || {};
-        data.domain = window.location.host;
-      }
-
+    if(type == 'POST' || type == 'PUT' || type == 'PATCH' || type == 'DELETE') {
       data = JSON.stringify(data);
     }
 
@@ -56,7 +50,7 @@ module.exports = {
       type: type,
       data: data,
       dataType: 'json',
-      contentType: "application/x-www-form-urlencoded",
+      contentType: "application/json; charset=utf-8",
       beforeSend: function (xhr) {
         let token = localStorage.getItem('token');
         if (token !== null && token !== '') {
@@ -65,7 +59,18 @@ module.exports = {
       },
     }, options);
 
-    return $.ajax(params);
+    const promise = $.ajax(params);
+
+    promise.always( (xhr, status) => {
+      if (status === 'success' || type.toUpperCase() !== 'GET') return;
+      errorPageHelper({
+        status: xhr.status,
+        statusText: xhr.statusText,
+      });
+      app.hideLoading();
+    } );
+
+    return promise;
   },
 
   submitAction(e, newData) {
@@ -98,6 +103,11 @@ module.exports = {
       _(d).forEach((el, i) => {
         if(el.kind == 'E' || el.kind == 'A') {
           patchData[el.path[0]] = newData[el.path[0]];
+          if(this.fields[el.path[0]] && this.fields[el.path[0]].hasOwnProperty('dependies')) {
+            this.fields[el.path[0]].dependies.forEach((dep, index) => {
+              patchData[dep] = newData[dep];
+            });
+          }
         } else if(el.kind == 'N' && newData.hasOwnProperty(el.path[0])) {
           // In case if we delete data that was in the model
           var newArr = [];
@@ -105,9 +115,15 @@ module.exports = {
             newArr.push(arr);
           });
           patchData[el.path[0]] = newArr;
+          if(this.fields[el.path[0]] && this.fields[el.path[0]].hasOwnProperty('dependies')) {
+            this.fields[el.path[0]].dependies.forEach((dep, index) => {
+              patchData[dep] = newData[dep];
+            });
+          }
         }
       });
 
+      /*
       if(this.fields.hasOwnProperty('dependies')) {
         _(this.fields.dependies).each((k, v) => {
           if(patchData.hasOwnProperty(k) == false) {
@@ -115,6 +131,7 @@ module.exports = {
           }
         });
       }
+      */
 
       newData = patchData;
     };
@@ -129,12 +146,9 @@ module.exports = {
         } else {
           console.error('field meta data not found: ' + key);
         }
-      })
+      });
       fields = patchFields;
     }
-
-    if (method == 'POST' || method == 'PUT')
-      newData.domain = window.location.host;
 
     if(!validation.validate(fields, newData, this)) {
       _(validation.errors).each((errors, key) => {
@@ -272,7 +286,11 @@ module.exports = {
             if(Object.keys(el).length == emptyValues) {
               delete data[key][i];
               if(Object.keys(data[key]).length == 0) {
-                data[key] = this.model[key];
+                if(this.model[key]) {
+                  data[key] = this.model[key];
+                } else {
+                  delete data[key];
+                }
               }
             };
           });

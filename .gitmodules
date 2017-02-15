@@ -1,0 +1,3 @@
+[submodule "consts"]
+    path = consts
+    url = git@github.com:Growth-fountain/consts

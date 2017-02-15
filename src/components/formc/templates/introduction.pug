@@ -7,14 +7,23 @@ include ../../raiseFunds/templates/menu.pug
 section.formc.introduction.create-company-media.container
   +menu('formc', 'introduction')
   .col-lg-8.p-xs-0
-    h2.text-uppercase.text-lg-center.text-xs-center.dosis.m-t-0.mb-50 introduction
+    h2.text-uppercase.text-lg-center.text-xs-center.m-t-0 introduction
     .col-lg-12.p-xs-0
       .welcome-text
         h3.m-t-0 Welcome!
-        p.m-b-1 Our goal is to get you all the resources you need to succeed, and to do so in a way that brings you closer to the most important people of all: your potential customers.
-        p.m-b-1 This is a lengthy process and we will need a robust amount of information about your business, as required by law. Don’t worry, we’re here to help in any way we can! The process includes creating a company profile, submitting to a background check and ultimately launching your fundraising campaign.
-        p.m-b-1 Much of the information you provide will be filed with the SEC. So, be very careful and precise in answering all questions. Give full and complete answers so that they are not misleading under the circumstances involved. Do not discuss any future performance or other anticipated event unless you have a reasonable basis to believe that it will actually occur within the foreseeable future. If any answer requiring significant information is materially inaccurate, incomplete or misleading, the Company, its management and principal shareholders may be liable to investors based on that information.
-        p At the end, you’ll have the opportunity to review all material before submission, including the ability to have your attorney approve.
+        p.pb10 Congratulations on taking your first step toward fundraising in a way that brings you closer to the most important people of all: your potential customers. 
+        p.pb10 As you shift from Campaign to Form C, you are now populating your legal offering document. This requires a change in tone from marketing to disclosure. In fact, this document requires 
+          strong substantial and accurate financial and business disclosure 
+          |  and is subject to review by the Securities and Exchange Commission.
+        p.pb10 
+          strong 
+            u ALWAYS
+          |  provide full, complete and non-misleading answers to all questions. Please note if any answer is materially inaccurate, incomplete or misleading, the Company, its management and principal shareholders may be liable to investors based on that information.
+        p.pb10 The purpose of the Form C is to ensure that investors receive enough disclosure to make an informed decision about your offering.
+          strong 
+            u AVOID
+          |  answering questions with marketing-type or exaggerative language, your goal is to protect your company and investors by providing adequate disclosure.
+        p You may want to have an attorney prepare this document with you since certain sections will address legal distinctions between different securities. Upon completion of your Form C, you will have an additional opportunity to review all documents with your attorney.
         form(action="").form-section
           .certify-checkbox
             .form-group.required
@@ -121,5 +130,5 @@ section.formc.introduction.create-company-media.container
                   span.warning-text Thank you for your payment, you can now complete your Form C.
               .col-lg-12
                 .btn-save.text-lg-right.text-sm-center.text-xs-center.m-t-2
-                  button(type='submit').btn.btn-primary.text-uppercase save and continue
+                  button(type='submit').btn.btn-primary.text-uppercase.save-and-continue save and continue
                     i.fa.fa-angle-right

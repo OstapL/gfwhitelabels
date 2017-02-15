@@ -13,7 +13,7 @@ hello.init({
 const SUPPORTED_NETWORKS = ['facebook', 'linkedin', 'google'];
 const SCOPES = {
   facebook: 'public_profile,email',
-  linkedin: 'r_basicprofile,r_emailaddress',
+  linkedin: 'r_basicprofile,r_emailaddress,w_share',
   google: 'profile,email',
 };
 

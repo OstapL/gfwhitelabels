@@ -3,6 +3,7 @@ const helpers = {
   yesNo: require('helpers/yesNoHelper.js'),
   fields: require('./fields.js'),
 };
+
 const validation = require('components/validation/validation.js');
 
 function initDates(c) {
@@ -32,8 +33,10 @@ module.exports = {
     initialize(options) {
       this.fields = options.fields;
       this.fields.message = _.extend(this.fields.message, {
-        maxLength: 5,
-        label: 'message',
+        fn: function(name, value, attr, data, schema) {
+          if (value.length > 2000)
+            throw 'Length of comment should not exceed more than 2000 characters.'
+        },
       });
 
       this.allowQuestion = _.isBoolean(options.allowQuestion) ? options.allowQuestion : true;
@@ -41,10 +44,22 @@ module.exports = {
       this.cssClass = _.isString(options.cssClass) ? options.cssClass : '';
 
       this.urlRoot = this.urlRoot.replace(':model', 'company').replace(':id', this.model.id);
+
+      this.userRole = 0;
+      _.each(app.user.companiesMember.data, (company) => {
+        if (company.company_id == this.model.id)
+          this.userRole = company.role;
+      });
       //init dates
       _.each(this.model.data, (c) => {
         initDates(c);
       });
+
+      this.snippets = {
+        related: require('./templates/snippets/related.pug'),
+        add: require('./templates/snippets/add.pug'),
+        edit: require('./templates/snippets/edit.pug'),
+      };
     },
 
     getComment(uid) {
@@ -78,6 +93,8 @@ module.exports = {
           cssClass: this.cssClass,
         },
         fields: this.fields,
+        userRole: this.userRole,
+        snippets: this.snippets,
       }));
 
       this.$stubs = this.$('.stubs');
@@ -105,8 +122,19 @@ module.exports = {
       }
     },
 
-    keyupHandler(e) {
-      if (this.model.id == app.user.get('role').company_id)
+    resizeArea() {
+      setTimeout(() => {
+        var area = document.querySelector('.text-body');
+        if (!area)
+          return;
+        area.style.height = 'auto';
+        area.style.height = area.scrollHeight+'px';
+        console.log(area.scrollHeight+'px')
+      }, 0);
+    },
+
+    ensureRelatedRolesBlock(e) {
+      if (this.userRole)
         return;
 
       let $target = $(e.target);
@@ -118,8 +146,7 @@ module.exports = {
         if (hasRelatedBlock)
           return;
 
-        $relatedBlock = this.$stubs.find('.related-role').clone();
-        //$form.append($relatedBlock);
+        $relatedBlock = $(this.snippets.related());
         $target.parent().after($relatedBlock);
         $relatedBlock.show();
       } else {
@@ -127,7 +154,11 @@ module.exports = {
           return;
         $relatedBlock.remove();
       }
+    },
 
+    keyupHandler(e) {
+      this.resizeArea(e);
+      this.ensureRelatedRolesBlock(e)
     },
 
     submitComment(e) {
@@ -183,7 +214,6 @@ module.exports = {
 
       api.makeRequest(this.urlRoot, 'POST', data).done((newData) => {
         $target.prop('disabled', false);
-        let role = app.user.get('role');
 
         let newCommentModel = {
           related: data.related,
@@ -192,11 +222,10 @@ module.exports = {
           uid: newData.new_message_id,
           created_date: new Date(),
           user: {
-            first_name: app.user.get('first_name'),
-            last_name: app.user.get('last_name'),
-            id: app.user.get('id'),
+            first_name: app.user.first_name,
+            last_name: app.user.last_name,
             image_data: app.user.get('image_data'),
-            role: role,
+            role: this.userRole,
           },
         };
 
@@ -225,7 +254,6 @@ module.exports = {
         $target.prop('disabled', false);
         app.hideLoading();
         alert(err);
-        this.errorAction();//TODO: implement
       });
     },
 
@@ -249,16 +277,11 @@ module.exports = {
       let $commentBlock = $(e.target).closest('.comment');
 
       let $newCommentBlock = $commentBlock.find('.comment-form');
-      if ($newCommentBlock && $newCommentBlock.length) {
+      if ($newCommentBlock && $newCommentBlock.length)
         return false;
-      }
 
-      $newCommentBlock = this.$stubs.find('.edit-comment').clone();
-
-      $newCommentBlock.removeClass('edit-comment collapse');
-
+      $newCommentBlock = $(this.snippets.edit());
       $newCommentBlock.appendTo($commentBlock);
-
       $newCommentBlock.find('.text-body').focus();
 
       return false;
@@ -324,10 +347,6 @@ module.exports = {
         errorBlock.html(errors);
       else
         this.$el.prepend('<div class="alert alert-warning" role="alert"><p>' + errors + '</p></div>');
-    },
-
-    errorAction() {
-
     },
 
   }, helpers.yesNo.methods)),

@@ -163,9 +163,7 @@
 		display: table-cell
 		height: 100%
 		h1
-			font-size: rem(48)
 			color: $white
-			letter-spacing: rem(9.6)
 			margin-bottom: rem(50)
 		.small-text
 			line-height: rem(26)
@@ -217,51 +215,17 @@
 		font-weight: lighter
 .home-our-partners
 	img
-		max-width: 255px
-	h2
-		margin-bottom: rem(50)
-#carousel-main
-  
-	.carousel-item
-		&:before
-			width: 100%
-			background-color: $black
-			opacity: .3
-			position: absolute
-			z-index: 1
-			content: ''
-			height: 100%
-			left: 0
-			bottom: 0
-		img
-			width: 100vw
-			height: 92vh
+		width: 230px
 
-	.carousel-caption
-		transform: translate(-50%, -50%)
-
-		top: 50%
+.home-wrap-text-block
+	.wrap
+		position: absolute 
 		left: 50%
-		right: 0
-		bottom: 0
-
-		padding-top: 0
-		width: 82%
-
-		text-shadow: none
-
-		h1
-			font-size: rem(48)
-			color: $white
-			letter-spacing: rem(9.6)
-			margin-bottom: rem(50)
-		.small-text
-			line-height: rem(26)
-			color: $white
-			letter-spacing: rem(.6)
-			font-size: rem(24)
-			font-weight: 300
-
+		top: 50%
+		-ms-transform: translate(-50%,-50%)
+		-webkit-transform: translate(-50%,-50%)
+		transform: translate(-50%,-50%)
+		width: 100%
 @media only screen and (max-width : 992px)
 	.home-text-main
 		h1
@@ -303,6 +267,11 @@
 		.btn
 			&:first-child
 				margin-right: 5px
+	.slider-main 
+		.slider-content 
+			.small-text
+				font-size: rem(18)
+				line-height: 20px
 
 @media only screen and (max-width : 360px)
 	.raise-wrap
@@ -318,3 +287,68 @@
 		.btn
 			&:first-child
 				margin-right: 5px
+
+
+@-webkit-keyframes zoomOut
+  from
+    opacity: 1
+
+  50%
+    opacity: 0
+    -webkit-transform: scale3d(0.3, 0.3, 0.3)
+    transform: scale3d(0.3, 0.3, 0.3)
+
+  to
+    opacity: 0
+
+
+@keyframes zoomOut
+  from
+    opacity: 1
+
+  50%
+    opacity: 0
+    -webkit-transform: scale3d(0.3, 0.3, 0.3)
+    transform: scale3d(0.3, 0.3, 0.3)
+
+  to
+    opacity: 0
+
+
+.zoomOut
+  -webkit-animation-name: zoomOut
+  animation-name: zoomOut
+.main-section-invest
+	background: url(/img/main-bg-section-one.jpg)
+	background-position: center center
+	background-attachment: fixed
+	height: 340px
+	background-repeat: no-repeat
+	background-size: cover
+.main-section-raise
+	background: url(/img/main-bg-section-raise.jpg)
+	background-position: center center
+	background-attachment: fixed
+	height: 340px
+	background-repeat: no-repeat
+	background-size: cover
+.main-slider-item
+	height: 70vh!important
+	background-size: cover!important
+	background-repeat: no-repeat!important
+	background-position: center center!important
+@media only screen and (max-width : 480px)
+	.slide_1
+		background-position-x: -60px!important
+	.slide_2
+		background-position-x: -60px!important
+	.slide_3
+		background-position-x: -400px!important
+@media only screen and (max-width : 320px)
+	.slide_3
+		background-position-x: -400px!important
+@media only screen and (max-width : 768px)
+	.slider-main
+		.slider-content
+			top: 60%
+

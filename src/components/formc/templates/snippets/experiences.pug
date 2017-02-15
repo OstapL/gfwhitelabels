@@ -23,17 +23,23 @@ mixin row(value, index)
           .row
             label.col-xl-6.col-lg-12.text-xl-right.text-lg-left.p-l-3.p-l-lg-1.p-t-0.m-b-0.m-b-lg-1 End Date of Service
             .col-xl-6.col-lg-12
+              -
+                var isDateCurrent = !value.end_date_of_service;
               div(id=name + '__' + index + '__' + 'end_date_of_service').row
-                | !{app.fields.nestedDateMonth(name, 'end_date_of_service', value, index, {class1:'col-xl-6 col-lg-6 col-sm-6 col-xs-6 m-d-p-r-5'}, attr.schema.end_date_of_service)}
-                | !{app.fields.nestedDateYear(name, 'end_date_of_service', value, index, {class1:'col-xl-6 col-lg-6 col-sm-6 col-xs-6 m-d-p-l-5', placeholder: 'YYYY',}, attr.schema.end_date_of_service)}
+                | !{app.fields.nestedDateMonth(name, 'end_date_of_service', value, index, {class1:'col-xl-6 col-lg-6 col-sm-6 col-xs-6 m-d-p-r-5', disabled: !!isDateCurrent, }, attr.schema.end_date_of_service)}
+                | !{app.fields.nestedDateYear(name, 'end_date_of_service', value, index, {class1:'col-xl-6 col-lg-6 col-sm-6 col-xs-6 m-d-p-l-5', placeholder: 'YYYY', disabled: !!isDateCurrent, }, attr.schema.end_date_of_service)}
+              .row.team-current
+                label.col-xl-12
+                  input(type="checkbox" checked=isDateCurrent).col-xl-1.team-current-date
+                  span.font-weight-normal.col-xl-5 Current
                 
 
 mixin run()
 
   if first_run
-    h3.text-lg-center.text-xs-center.m-t-3.m-b-0 We Need Information for Last 3 Years
+    h3.text-lg-center.text-xs-center.m-t-0 We Need Information for Last 3 Years
     .row
-      p.font-weight-bold.col-lg-12.m-t-2.m-b-1.m-t-3 If you’ve been at your current employer fewer than 3 years, please provide additional information below:
+      p.font-weight-bold.col-lg-12.m-b-1.m-t-0 If you’ve been at your current employer fewer than 3 years, please provide additional information below:
 
     div(class=(attr.row == 0 ? '' : 'row ') + name + '_block' + (attr.required == true ? ' required ' : ' ') + ' nested')
       div(class=(attr.row == 0 ? '' : '') + name + '_container' + (attr.required == true ? ' required ' : ' ') + ' nested')

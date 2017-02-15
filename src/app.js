@@ -5,12 +5,14 @@ global._ = require('underscore');
 global.Backbone = require('backbone');
 window.Tether = require('tether');
 global.Bootstrap = require('bootstrap/dist/js/bootstrap.js');
-global.userModel = require('components/accountProfile/model.js');
+global.OwlCarousel = require('owl.carousel/dist/owl.carousel.min.js');
+// global.userModel = require('components/accountProfile/model.js');
 global.Urls = require('./jsreverse.js');
 require('jquery-serializejson/jquery.serializejson.min.js');
 require('js/html5-dataset.js');
 const validation = require('components/validation/validation.js');
 
+const User = require('components/accountProfile/user.js');
 global.formatHelper = require('helpers/formatHelper');
 
 if (!global.Intl) {
@@ -175,15 +177,17 @@ let app = {
   },
 
   fieldChoiceList(metaData, currentValue) {
-    let resultVal = '';
-    metaData = metaData.validate.OneOf;
-    if(metaData.labels) {
-      return metaData.labels[metaData.choices.indexOf(currentValue.toString())]
-         || metaData.labels[metaData.choices.indexOf(parseFloat(currentValue))];
-    } else {
-      return metaData.choices.indexOf(currentValue.toString())
-        || metaData.choices.indexOf(parseFloat(currentValue));
-    }
+    metaData = metaData.validate;
+    if (Array.isArray(metaData.choices))//it looks like this is old approach
+      return (metaData.labels)
+        ? metaData.labels[metaData.choices.indexOf(currentValue.toString())]
+           || metaData.labels[metaData.choices.indexOf(parseFloat(currentValue))]
+        : metaData.choices.indexOf(currentValue.toString())
+          || metaData.choices.indexOf(parseFloat(currentValue));
+
+    //this is new approach
+    return metaData.choices[currentValue] || currentValue;
+
   },
 
   getVideoId(url) {
@@ -236,18 +240,39 @@ let app = {
     })(window,document,'script','dataLayer', id);
   },
 
+  getUrl(data) {
+    data = Array.isArray(data) ? data[0] : data;
+
+    if (!data || !data.urls || !data.urls.length || !data.urls[0])
+      return null;
+
+    return this.getFilerUrl(data.urls[0]);
+  },
+
   getFilerUrl(file) {
-    if (file.startsWith('http://') || file.startsWith('https://'))
+    if (!file || !_.isString(file))
+      return null;
+
+    if (file.startsWith('http://') || file.startsWith('https://') || file.startsWith('/'))
       return file;
 
-    return `${bucketServer}/${file}`;
-  }
+    return bucketServer + '/' + file;
+  },
+
+  breadcrumbs (title, subtitle, data) {
+    const template = require('templates/breadcrumbs.pug');
+    return template({
+      title: title,
+      subtitle: subtitle,
+      data: data
+    });
+  },
 
 };
 
 // Что-то пахнет говнецом
 _.extend(app, Backbone.Events);
-app.user = new userModel();
+
 global.api = require('helpers/forms.js');
 _.extend(app, api);
 global.app = app;
@@ -255,18 +280,14 @@ global.app = app;
 // app routers
 app.routers = require('routers');
 app.fields = require('fields');
+
+// app.user = new userModel();
+app.user = new User();
 app.user.load();
 app.trigger('userReady');
+
 app.runGoogleAnalytics(global.googleAnalyticsId);
 
-app.breadcrumbs = function(title, subtitle, data) {
-  const template = require('templates/breadcrumbs.pug');
-  return template({
-    title: title,
-    subtitle: subtitle,
-    data: data
-  });
-}
 
 const popoverTemplate = '<div class="popover  divPopover"  role="tooltip"><span class="popover-arrow"></span> <h3 class="popover-title"></h3> <span class="icon-popover"><i class="fa fa-info-circle" aria-hidden="true"></i></span> <span class="popover-content"> XXX </span></div>';
 

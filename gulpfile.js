@@ -15,8 +15,13 @@ var config = {
     bourbonDir: './node_modules/bourbon/app/assets/stylesheets',
     tatherDir: './node_modules/tether',
     fontAwesomeDir: './node_modules/font-awesome/scss',
+    owlCarousel: './node_modules/owl.carousel/src/scss',
     publicDir: './dist',
 };
+//include custom FONTS
+var buildFonts = gulp.src([
+        'src/fonts/**/*',
+        ]).pipe(gulp.dest('dist/fonts'));
 
 gulp.task('browser-sync', ['styles', 'scripts'], function() {
     var browserSync = require('browser-sync').create();
@@ -36,6 +41,7 @@ gulp.task('styles', function () {
             config.bootstrapDir,
             require('node-bourbon').includePaths,
             config.tetherDir,
+            config.owlCarousel,
             config.fontAwesomeDir
         ]
     }).on('error', sass.logError))
