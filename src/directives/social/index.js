@@ -5,6 +5,8 @@ const defaultOptions = {
   descriptionPrefix: '',
 };
 
+const CORPORATE_STRUCTURE = require('consts/raisecapital/corporate_structure.json');
+
 function stripHtml(content) {
   if (!_.isString(content))
     return content;
@@ -20,14 +22,16 @@ class SocialNetworks {
     this.options = _.extend({}, defaultOptions, options);
 
     const companyName = this.model.short_name || this.model.name || '';
+    let corporateStructure = (CORPORATE_STRUCTURE[this.model.corporate_structure] || '');
+    corporateStructure += corporateStructure ? ' ' : '';
     const url = window.location.origin + '/' + this.model.id;
 
     this.data = {
       url: url,
-      title: stripHtml(this.options.titlePrefix + companyName + '\'s fundraise on GrowthFountain.com'),
+      title: stripHtml(this.options.titlePrefix + companyName + '\'s ' + corporateStructure + 'on GrowthFountain.com'),
       description: stripHtml(this.options.descriptionPrefix + (this.model.description || '')),
       picture: campaignHelper.getImageCampaign(this.model.campaign),
-      text: stripHtml(this.options.titlePrefix + companyName + '\'s fundraise on @growthfountain '),
+      text: stripHtml(this.options.titlePrefix + companyName + '\'s' + corporateStructure + 'on @growthfountain '),
     };
 
     this.shareLinks = {
