@@ -2,7 +2,7 @@
 
 .row.showPopover(data-content="Why do we ask? These affinity based questions can help us share your campaign with potential investors with similar backgrounds.")
   .col-xl-6.col-lg-6.input-min-width
-    - pug_html += app.fields.textLabel('zip_code', { class1: 'col-xl-6 col-lg-12 text-xl-right text-lg-left p-t-0 m-b-0 m-b-lg-1', class2: 'col-xl-6 col-lg-12', label: 'Where did you grow up?', value: values.zip_code, schema: this.fields.zip_code, placeholder: 'Zip code', })
+    - pug_html += app.fields.textLabel('zip_code', { class1: 'col-xl-6 col-lg-12 text-xl-right text-lg-left', class2: 'col-xl-6 col-lg-12', label: 'Where did you grow up?', value: values.zip_code, schema: this.fields.zip_code, placeholder: 'Zip code', })
 
   .col-xl-6.col-lg-6.col-sm-12.city_states.required.form-group
     .row
