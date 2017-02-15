@@ -69,6 +69,8 @@ $btn-email-hover-bg: rgba(76,212,208, .6)
 			+mt(.2s)
 	.fa-angle-right
 		padding-left: 5px
+	&:focus
+		color: $btn-color
 
 .btn-primary
 	background: $btn-primary-bg-top
@@ -93,6 +95,7 @@ $btn-email-hover-bg: rgba(76,212,208, .6)
 	&:active,
 	&:focus
 		+mt(.2s)
+		color: $btn-primary-color
 		background: $btn-primary-active-bg
 		border-color: $btn-primary-active-border
 		border-image-slice: 0
@@ -101,6 +104,7 @@ $btn-email-hover-bg: rgba(76,212,208, .6)
 		&:focus,
 		&:hover
 			+mt(.2s)
+			color: $btn-primary-color
 			background: $btn-primary-active-bg
 			border-color: $btn-primary-active-border
 			border-image-slice: 0
