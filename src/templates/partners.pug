@@ -1,6 +1,6 @@
 - pug_html += app.breadcrumbs('PARTNERS', '', [ ['Home', '/'], ['Partners', ''], ]);
 
-section.text_block 
+section.text_block.partner-page 
   .container
     .row
       .col-lg-3.hidden-md-down  
@@ -32,29 +32,42 @@ section.text_block
             
         .row
           .col-lg-12.mt25
-            p.text-xs-center GrowthFountain is proud to partner with companies that share our passion for supporting entrepreneurs, uplifting small businesses and fostering meaningful bonds in local communities.
+            p.text-xs-center.m-b-3 GrowthFountain is proud to partner with companies that share our passion for supporting entrepreneurs, uplifting small businesses and fostering meaningful bonds in local communities.
 
-        h3.dosis Credit Union Companies
+        h4.section-partner.text-uppercase Credit Union Companies
         .row
-          .col-sm-4.pt55.text-xs-center
+          .col-sm-4.mt30.text-xs-center
             a(href="http://www.callahan.com/" target="_blank").d-inline-block
               img(src="/img/pages/partners1.png").img-fluid
 
-          .col-sm-4.pt55.text-xs-center
+          .col-sm-4.mt30.text-xs-center
             a(href="https://www.jdcu.org/" target="_blank").d-inline-block
               img(src="/img/pages/partners2.png").img-fluid
 
-          .col-sm-4.pt55.text-xs-center
+          .col-sm-4.mt30.text-xs-center
             a(href="https://www.rivermarkcu.org/" target="_blank").d-inline-block
               img(src="/img/pages/partners3.png").img-fluid
 
         .row
-          .col-sm-4.pt55.text-xs-center
+          .col-sm-4.m-t-2.m-b-3.text-xs-center
             a(href="https://www.dcu.org/" target="_blank").d-inline-block
               img(src="/img/pages/dcu.png").img-fluid
 
-        h3.dosis Incubators
+        h4.section-partner.text-uppercase Incubators
         .row
-          .col-lg-4.text-xs-center
+          .col-lg-4.mt30.text-xs-center
             a(href="http://momentum3growth.com/" target="_blank")
               img(src="/img/momentum3growth.png").img-fluid.text-lg-right.text-xs-center.m-x-auto
+  section.home-wrap-text-block.hide-bg-fixed.partners-bgi.m-t-3
+    .opasity-block
+      .container.text-lg-center.text-xs-center.text-sm-center
+        .wrap
+          .col-lg-6.offset-lg-3
+            h2.dosis.text-uppercase.m-t-0 Be our partner
+            h3 Lead an affinity based group? Interested in obtaining 
+              br
+              | a white labeled platform and partnering with 
+              br
+              | GrowthFountain?
+          .col-lg-12
+            a(href="mailto:info@growthfountain.com").btn.btn-lg.btn-secondary.text-uppercase E-mail us
