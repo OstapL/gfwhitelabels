@@ -15,6 +15,7 @@ section.formc-team-members-director.container.m-b-85
 
     form(action="").form-section
       input(type="hidden" value=1 name="role[]")
+      input(type="hidden" value=1 name="voting_shareholder_choice")
       .col-xl-12.p-xs-0
         - 
           pug_html += app.fields.textLabel('first_name', {
