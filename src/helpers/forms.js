@@ -69,7 +69,9 @@ module.exports = {
       }
       // If we have location in responseJSON
       // do not show error
-      if (xhr.hasOwnProperty('responseJSON') && xhr.responseJSON.hasOwnProperty('location')) {
+      if (xhr.hasOwnProperty('responseJSON') && 
+          xhr.responseJSON !== undefined &&
+          xhr.responseJSON.hasOwnProperty('location')) {
         return;
       }
       errorPageHelper({

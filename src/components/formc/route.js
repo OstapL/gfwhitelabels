@@ -21,7 +21,12 @@ function getOCCF(optionsR, viewName, params = {}) {
         if(Object.keys(company[0]).length > 0) {
           params.company = app.user.company = app.user.company || company[0];
           params.campaign = app.user.campaign = app.user.campaign || campaign[0];
-          params.formc = app.user.formc = app.user.formc || formc[0];
+          params.formc = app.user.formc || formc[0];
+
+          if(formc[0].is_paid == true) {
+            app.user.formc = formc[0];
+          }
+          
         } else {
           params.company = {};
           params.campaign = {};
