@@ -5,16 +5,23 @@ mixin row(value, index)
     td.border-t-n.d-block.input-w-80
       .d-inline-block.pull-left.p-r-1
       input(type="text" value=value.title name="less_offering_express[" + index + "][title]").input-border-bottom.form-control.font-size-12.pull-left
-      .d-inline-block.pull-right
-        .delete-section-container
-          a(href="#" data-index=index data-section=name).delete-sectionnew
-            i.fa.fa-times
+      if !value.fee
+        .d-inline-block.pull-right
+          .delete-section-container
+            a(href="#" data-index=index data-section=name).delete-sectionnew
+              i.fa.fa-times
     td.border-b-t-none.w-25.font-size-12
       .form-section
-        input(type="money" value=('$' + (value.min || 0)) name="less_offering_express[" + index + "][min]").input-border-bottom.form-control.text-xs-center.min-expense
+        if value.fee
+          input(type="money" value=('$' + (value.min || 0)) name="less_offering_express[" + index + "][min]" readonly).input-border-bottom.form-control.text-xs-center.min-expense
+        else
+          input(type="money" value=('$' + (value.min || 0)) name="less_offering_express[" + index + "][min]").input-border-bottom.form-control.text-xs-center.min-expense
     td.border-b-t-none.w-25.font-size-12
       .form-section
-        input(type="money" value=('$' + (value.max || 0)) name="less_offering_express[" + index + "][max]").input-border-bottom.form-control.text-xs-center.max-expense
+        if value.fee
+          input(type="money" value=('$' + (value.max || 0)) name="less_offering_express[" + index + "][max]" readonly).input-border-bottom.form-control.text-xs-center.max-expense
+        else
+          input(type="money" value=('$' + (value.max || 0)) name="less_offering_express[" + index + "][max]").input-border-bottom.form-control.text-xs-center.max-expense
 
 mixin run()
   if first_run

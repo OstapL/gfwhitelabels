@@ -7,6 +7,7 @@
 // ToDo
 // extend Backbone.Events ?
 const mainElement = '#content';
+const usaStates = require('consts/usaStatesChoices.json');
 
 class GeoCoder {
 
@@ -51,7 +52,7 @@ class GeoCoder {
     this.$resultHtml = $(this.resultHtml);
     this.attacheEvents();
 
-    if (this.values.zip_code)
+    if (this.values.zip_code && !this.values.city && !this.values.state)
       setTimeout(() => { $('#zip_code').trigger('change'); }, 50);
 
     return this;
@@ -102,7 +103,7 @@ class GeoCoder {
     };
 
     document.querySelector('.js-city-state').innerHTML = 
-      this.view.model.city + ', ' + this.view.model.state;
+      (this.view.model.city || '(City)') + ', ' + (usaStates[this.view.model.state] || '(State)');
 
     api.makeRequest(this.view.urlRoot.replace(':id', this.view.model.id), 'PATCH', data)
       .fail((response) => {

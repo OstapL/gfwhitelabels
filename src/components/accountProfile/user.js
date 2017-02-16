@@ -1,36 +1,3 @@
-//TODO: refactor, remove this code
-
-const ROLE_NAMES = [
-  "SHAREHOLDER",
-  "DIRECTOR",
-  "OFFICER_CEO",
-  "OFFICER_PFO",
-  "OFFICER_VP",
-  "OFFICER_SECRETARY",
-  "OFFICER_PAO"
-];
-
-const roles = require('consts/team_member/roles.json');
-function hasRole(rolesBitmap, role) {
-  return !!(rolesBitmap & role);
-};
-
-function extractRoles(roleBitmap) {
-
-  let res = [];
-
-  _.each(ROLE_NAMES, (name, role) => {
-    if (hasRole(roleBitmap, roles[name]))
-      res.push({
-        id: role,
-        name: name
-      });
-  });
-  return res;
-
-};
-///////
-
 const roleHelper = require('helpers/roleHelper.js');
 
 class User {
@@ -113,10 +80,6 @@ class User {
     return !this.token;
   }
 
-  get_full_name() {
-    return this.data.first_name + ' ' + this.data.last_name;
-  }
-
   toJSON() {
     const data = Object.assign({}, this.data, {'companiesMember': this.companiesMember});
     return data;
@@ -129,21 +92,29 @@ class User {
     this.role_data = [];
 
     _.each(this.companiesMember.data, (data) => {
-      let roles = extractRoles(data.role);
-      let allRoles = roles.map(r => r.name).join(', ');
+      let roles = roleHelper.extractRoles(data.role);
       this.role_data.push({
         company: {
           id: data.company_id,
           name: data.company,
         },
         roles: roles,
-        allRoles: allRoles,
-      })
+      });
     });
 
   }
 
-  getRoleInfo() {
+  getRolesInCompany(company_id) {
+    if (!this.role_data)
+      this._initRoles();
+
+    if (!_.isNumber(company_id))
+      return;
+
+    return _(this.role_data).find((data) => { return data.company.id == company_id; });
+  }
+
+  getRoles() {
     if (!this.role_data)
       this._initRoles();
 
