@@ -57,23 +57,41 @@ module.exports = {
 
   notification: Backbone.View.extend({
     template: require('./templates/notification.pug'),
+    events: {
+
+    },
 
     initialize(options) {
       this.notifications = new Notifications();
+      this.notifications.on('notification', (data) => {
+        console.log(JSON.stringify(data))
+        this.$notificationsCount.text((+this.$notificationsCount.text() || 0) + data.length)
+        _.each(data, (m) => {
+          //update unread count
+          this.$notifications.append(this.snippets.message(m))
+        });
+      });
+
+      this.snippets = {
+        message: require('./templates/snippets/message.pug'),
+      };
     },
 
     render: function () {
-      if (app.user.token) {
+      if (app.user.is_anonymous())
+        return this;
 
-        this.$el.html(
-          this.template({
-            serverUrl: serverUrl,
-            user: app.user.toJSON(),
-            nofiticaiton: [],
-            Urls: Urls,
-          })
-        );
-      }
+      this.$el.html(
+        this.template({
+          serverUrl: serverUrl,
+          user: app.user.toJSON(),
+          notifications: [],
+          Urls: Urls,
+        })
+      );
+
+      this.$notifications = $('.notification-container ul.notifications');
+      this.$notificationsCount = $('.count-notific');
 
       return this;
     },
