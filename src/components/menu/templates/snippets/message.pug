@@ -1,4 +1,9 @@
-li(data-id=message_id).clearfix.nav-link.server-message
-  a(href=message.href)
+-
+  var dateHelper = require('helpers/dateHelper.js');
+  var cssClass = "clearfix nav-link ";
+  cssClass += read_flag ? 'read' : '';
+
+li(class=cssClass)
+  a(href=message.href data-messageid=id).server-message
     span.pull-left #{ message.text }
-    i.pull-right #{ time }
+    i.pull-right #{ dateHelper.formatTime(time) }
