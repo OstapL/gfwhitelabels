@@ -22,6 +22,11 @@ function getOCCF(optionsR, viewName, params = {}) {
           params.company = app.user.company = app.user.company || company[0];
           params.campaign = app.user.campaign = app.user.campaign || campaign[0];
           params.formc = app.user.formc = app.user.formc || formc[0];
+
+          if(params.formc.id == null) {
+            params.formc.id = params.id;
+          }
+
         } else {
           params.company = {};
           params.campaign = {};
