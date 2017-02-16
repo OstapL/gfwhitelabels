@@ -58,23 +58,19 @@ module.exports = {
   notification: Backbone.View.extend({
     template: require('./templates/notification.pug'),
     events: {
-
+      'click .server-message': 'markAsRead',
     },
 
     initialize(options) {
-      this.notifications = new Notifications();
-      this.notifications.on('notification', (data) => {
-        console.log(JSON.stringify(data))
-        this.$notificationsCount.text((+this.$notificationsCount.text() || 0) + data.length)
-        _.each(data, (m) => {
-          //update unread count
-          this.$notifications.append(this.snippets.message(m))
-        });
-      });
+      this.model = {
+        data: [],
+      };
 
       this.snippets = {
         message: require('./templates/snippets/message.pug'),
       };
+
+      this.initNotifications();
     },
 
     render: function () {
@@ -85,8 +81,9 @@ module.exports = {
         this.template({
           serverUrl: serverUrl,
           user: app.user.toJSON(),
-          notifications: [],
-          Urls: Urls,
+          notifications: this.model.data,
+          unreadCount: this.countUnreadMessages(),
+          snippets: this.snippets,
         })
       );
 
@@ -95,5 +92,52 @@ module.exports = {
 
       return this;
     },
+
+    countUnreadMessages() {
+      let count = 0;
+      _.each(this.model.data, (n) => {
+        count += n.read_flag ? 0 : 1;
+      });
+      return count;
+    },
+
+    updateUnreadCount() {
+      const unreadCount = this.countUnreadMessages();
+      if (unreadCount)
+        this.$notificationsCount.show()
+      else
+        this.$notificationsCount.hide();
+
+      this.$notificationsCount.text(unreadCount || '');
+    },
+
+    initNotifications() {
+      this.notifications = new Notifications();
+      this.notifications.on('notification', (data) => {
+        console.log(data);
+        this.model.data = this.model.data.concat(data);
+        this.updateUnreadCount();
+        _.each(data, (m) => {
+          this.$notifications.append(this.snippets.message(m));
+        });
+      });
+    },
+
+    markAsRead(e) {
+      e.preventDefault();
+
+      const message_id = $(e.target).closest('a.server-message').data('messageid');
+
+      let message = _.find(this.model.data, m => m.id == message_id);
+      this.notifications.markAsRead(message_id);
+      message.read_flag = true;
+
+      $(e.target).closest('li').replaceWith(this.snippets.message(message));
+
+      this.updateUnreadCount();
+
+      return false;
+    },
+
   }),
 };
