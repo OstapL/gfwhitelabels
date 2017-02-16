@@ -133,6 +133,10 @@ module.exports = {
         })
       );
 
+      if(app.user.formc.is_paid == 0) {
+        app.user.formc = null;
+      }
+
       let eSignForm = this.$('.electronically-sign');
       this.eSignCompanyName = eSignForm.find('#company-name');
       this.eSignFullName = eSignForm.find('#full_name');
