@@ -62,7 +62,16 @@ module.exports = {
     const promise = $.ajax(params);
 
     promise.always( (xhr, status) => {
-      if (status === 'success' || type.toUpperCase() !== 'GET') return;
+      // If status is success or it is not get request
+      // do not show error
+      if (status === 'success' || type.toUpperCase() !== 'GET') {
+        return;
+      }
+      // If we have location in responseJSON
+      // do not show error
+      if (xhr.hasOwnProperty('responseJSON') && xhr.responseJSON.hasOwnProperty('location')) {
+        return;
+      }
       errorPageHelper({
         status: xhr.status,
         statusText: xhr.statusText,

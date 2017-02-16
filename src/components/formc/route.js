@@ -49,11 +49,8 @@ function getOCCF(optionsR, viewName, params = {}) {
 
       formcHelpers.updateFormcMenu(formcHelpers.formcCalcProgress(app.user.formc));
     }).fail(function(xhr, response, error) {
-      if(response.responseJSON.location) {
-         app.routers.navigate('/formc' + response.responseJSON.location +  '?notPaid=1', { trigger: true, replace: true } );
-      }
-      else {
-        api.errorAction.call(this, $('#content'), xhr, response, error);
+      if(xhr.responseJSON.location) {
+        app.routers.navigate('/formc' + response.responseJSON.location +  '?notPaid=1', { trigger: true, replace: true } );
       }
     });
 };
