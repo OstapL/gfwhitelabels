@@ -1,6 +1,6 @@
 const Dropzone = require('dropzone');
 
-class SetDropZone {
+class FileDropZone {
 
   constructor(view, element, fieldName, fieldDataName, imgContainer) {
     this.element = document.querySelector(element);
