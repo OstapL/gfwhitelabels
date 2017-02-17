@@ -80,38 +80,33 @@ $btn-email-hover-bg: rgba(76,212,208, .6)
 	background-image: -o-linear-gradient(top, $btn-primary-bg-top,  $btn-primary-bg-bottom)
 	background-image: linear-gradient(to bottom, $btn-primary-bg-top,  $btn-primary-bg-bottom)
 	color: $btn-primary-color
-	-moz-border-image: -moz-linear-gradient(top, $btn-primary-bg-top 0%, $btn-primary-bg-bottom 100%)
-	-webkit-border-image: -webkit-linear-gradient(top, $btn-primary-bg-top 0%, $btn-primary-bg-bottom 100%)
-	border-image: linear-gradient(to bottom, $btn-primary-bg-top 0%, $btn-primary-bg-bottom 100%)
-	border-image-slice: 1
+	border: none
+	padding-top: rem(12)
+	padding-bottom: rem(12)
+	
 	+mt(.2s)
 	&:hover
 		+mt(.2s)
 		background: $btn-primary-hover-bg
-		border-color: $btn-primary-hover-bg
-		border-image-slice: 0
-		border-image: none
 	+mt(.2s)
 	&:active,
 	&:focus
 		+mt(.2s)
 		color: $btn-primary-color
 		background: $btn-primary-active-bg
-		border-color: $btn-primary-active-border
-		border-image-slice: 0
-		border-image: none
 		+mt(.2s)
 		&:focus,
 		&:hover
 			+mt(.2s)
 			color: $btn-primary-color
 			background: $btn-primary-active-bg
-			border-color: $btn-primary-active-border
-			border-image-slice: 0
-			border-image: none
 .btn-lg
 	letter-spacing: 1.4px
 	font-weight: bold
+	&.btn-primary
+		border: none
+		padding-top: rem(16)
+		padding-bottom: rem(16)
 .btn-secondary
 	background: $btn-secondary-bg
 	color: $btn-secondary-color
