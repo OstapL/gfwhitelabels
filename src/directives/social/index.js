@@ -31,7 +31,7 @@ class SocialNetworks {
       title: stripHtml(this.options.titlePrefix + companyName + '\'s ' + corporateStructure + 'on GrowthFountain.com'),
       description: stripHtml(this.options.descriptionPrefix + (this.model.description || '')),
       picture: campaignHelper.getImageCampaign(this.model.campaign),
-      text: stripHtml(this.options.titlePrefix + companyName + '\'s' + corporateStructure + 'on @growthfountain '),
+      text: stripHtml(this.options.titlePrefix + companyName + '\'s ' + corporateStructure + 'on @growthfountain '),
     };
 
     this.shareLinks = {
