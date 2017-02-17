@@ -155,6 +155,7 @@ module.exports = {
       const reqUrl = global.esignServer + '/pdf-doc';
       const formData = this.getDocMetaData();
       const data = [{
+        object_id: this.model.id,
         type: typeOfDocuments[listingAgreement],
         meta_data: formData,
         template: listingAgreement
