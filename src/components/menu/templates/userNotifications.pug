@@ -13,8 +13,7 @@ li.nav-item.notification.notification-bell.text-center.drop-container
             span.count-notific
               #{ unreadCount || ''}
             | &nbsp;
-            | pending comment(s)
-        a(href="#").view-all.pull-right  view all
+            | pending notifications
     each n in notifications
       snippets.message(n)
           
